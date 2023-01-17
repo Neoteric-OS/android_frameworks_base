@@ -16,26 +16,18 @@
 
 package android.security.net.config;
 
-import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.test.AndroidTestCase;
 import android.test.MoreAsserts;
-import android.util.ArraySet;
-import android.util.Pair;
+
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.Socket;
-import java.net.URL;
 import java.security.KeyStore;
 import java.security.Provider;
-import java.security.Security;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
-import javax.net.ssl.HttpsURLConnection;
+
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
@@ -426,7 +418,7 @@ public class XmlConfigTests extends AndroidTestCase {
         KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
         keystore.load(null);
         int i = 0;
-        for (X509Certificate cert : SystemCertificateSource.getInstance().getCertificates()) {
+        for (X509Certificate cert : SystemCertificateSource.getInstanceSystem().getCertificates()) {
             keystore.setEntry(String.valueOf(i),
                     new KeyStore.TrustedCertificateEntry(cert),
                     null);
@@ -504,7 +496,8 @@ public class XmlConfigTests extends AndroidTestCase {
                         TestUtils.makeApplicationInfo());
         ApplicationConfig appConfig = new ApplicationConfig(source);
         NetworkSecurityConfig defaultConfig = appConfig.getConfigForHostname("");
-        MoreAsserts.assertNotEqual(defaultConfig, appConfig.getConfigForHostname("developer.android.com"));
+        MoreAsserts.assertNotEqual(
+                defaultConfig, appConfig.getConfigForHostname("developer.android.com"));
         MoreAsserts.assertNotEqual(defaultConfig, appConfig.getConfigForHostname("android.com"));
         SSLContext context = TestUtils.getSSLContext(source);
         TestUtils.assertConnectionSucceeds(context, "android.com", 443);

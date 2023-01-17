@@ -179,11 +179,16 @@ public final class NetworkSecurityConfig {
      * @hide
      */
     public static Builder getDefaultBuilder(ApplicationInfo info) {
-        Builder builder = new Builder()
-                .setHstsEnforced(DEFAULT_HSTS_ENFORCED)
-                // System certificate store, does not bypass static pins.
-                .addCertificatesEntryRef(
-                        new CertificatesEntryRef(SystemCertificateSource.getInstance(), false));
+        Builder builder = new Builder().setHstsEnforced(DEFAULT_HSTS_ENFORCED);
+        if (SystemCertificateSource.getInstanceUpdatable() != null) {
+            // Apex certificate store
+            builder.addCertificatesEntryRef(
+                    new CertificatesEntryRef(
+                            SystemCertificateSource.getInstanceUpdatable(), false));
+        }
+        // System certificate store, does not bypass static pins.
+        builder.addCertificatesEntryRef(
+                new CertificatesEntryRef(SystemCertificateSource.getInstanceSystem(), false));
         final boolean cleartextTrafficPermitted = info.targetSdkVersion < Build.VERSION_CODES.P
                 && !info.isInstantApp();
         builder.setCleartextTrafficPermitted(cleartextTrafficPermitted);

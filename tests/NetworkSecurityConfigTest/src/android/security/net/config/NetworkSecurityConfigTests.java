@@ -22,23 +22,17 @@ import android.os.Build;
 import android.test.ActivityUnitTestCase;
 import android.util.ArraySet;
 import android.util.Pair;
+
+import com.android.org.conscrypt.TrustedCertificateStore;
+
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.URL;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLHandshakeException;
-import javax.net.ssl.TrustManager;
 
-import com.android.org.conscrypt.TrustedCertificateStore;
+import javax.net.ssl.SSLContext;
 
 public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
 
@@ -117,13 +111,14 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
     private NetworkSecurityConfig getSystemStoreConfig() {
         return new NetworkSecurityConfig.Builder()
                 .addCertificatesEntryRef(
-                        new CertificatesEntryRef(SystemCertificateSource.getInstance(), false))
+                        new CertificatesEntryRef(
+                                SystemCertificateSource.getInstanceSystem(), false))
                 .build();
     }
 
     public void testEmptyConfig() throws Exception {
-        ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
-                = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
+        ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap =
+                new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
         ConfigSource testSource =
                 new TestConfigSource(domainMap, getEmptyConfig());
         SSLContext context = TestUtils.getSSLContext(testSource);
@@ -144,13 +139,15 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
     public void testBadPin() throws Exception {
         ArraySet<Pin> pins = new ArraySet<Pin>();
         pins.add(new Pin("SHA-256", new byte[0]));
-        NetworkSecurityConfig domain = new NetworkSecurityConfig.Builder()
-                .setPinSet(new PinSet(pins, Long.MAX_VALUE))
-                .addCertificatesEntryRef(
-                        new CertificatesEntryRef(SystemCertificateSource.getInstance(), false))
-                .build();
-        ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
-                = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
+        NetworkSecurityConfig domain =
+                new NetworkSecurityConfig.Builder()
+                        .setPinSet(new PinSet(pins, Long.MAX_VALUE))
+                        .addCertificatesEntryRef(
+                                new CertificatesEntryRef(
+                                        SystemCertificateSource.getInstanceSystem(), false))
+                        .build();
+        ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap =
+                new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
         domainMap.add(new Pair<Domain, NetworkSecurityConfig>(
                 new Domain("android.com", true), domain));
         SSLContext context
@@ -162,11 +159,13 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
     public void testGoodPin() throws Exception {
         ArraySet<Pin> pins = new ArraySet<Pin>();
         pins.add(new Pin("SHA-256", G2_SPKI_SHA256));
-        NetworkSecurityConfig domain = new NetworkSecurityConfig.Builder()
-                .setPinSet(new PinSet(pins, Long.MAX_VALUE))
-                .addCertificatesEntryRef(
-                        new CertificatesEntryRef(SystemCertificateSource.getInstance(), false))
-                .build();
+        NetworkSecurityConfig domain =
+                new NetworkSecurityConfig.Builder()
+                        .setPinSet(new PinSet(pins, Long.MAX_VALUE))
+                        .addCertificatesEntryRef(
+                                new CertificatesEntryRef(
+                                        SystemCertificateSource.getInstanceSystem(), false))
+                        .build();
         ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
                 = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
         domainMap.add(new Pair<Domain, NetworkSecurityConfig>(
@@ -181,11 +180,13 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         // Use a bad pin + granting the system CA store the ability to override pins.
         ArraySet<Pin> pins = new ArraySet<Pin>();
         pins.add(new Pin("SHA-256", new byte[0]));
-        NetworkSecurityConfig domain = new NetworkSecurityConfig.Builder()
-                .setPinSet(new PinSet(pins, Long.MAX_VALUE))
-                .addCertificatesEntryRef(
-                        new CertificatesEntryRef(SystemCertificateSource.getInstance(), true))
-                .build();
+        NetworkSecurityConfig domain =
+                new NetworkSecurityConfig.Builder()
+                        .setPinSet(new PinSet(pins, Long.MAX_VALUE))
+                        .addCertificatesEntryRef(
+                                new CertificatesEntryRef(
+                                        SystemCertificateSource.getInstanceSystem(), true))
+                        .build();
         ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
                 = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
         domainMap.add(new Pair<Domain, NetworkSecurityConfig>(
@@ -248,11 +249,13 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
     public void testWithUrlConnection() throws Exception {
         ArraySet<Pin> pins = new ArraySet<Pin>();
         pins.add(new Pin("SHA-256", G2_SPKI_SHA256));
-        NetworkSecurityConfig domain = new NetworkSecurityConfig.Builder()
-                .setPinSet(new PinSet(pins, Long.MAX_VALUE))
-                .addCertificatesEntryRef(
-                        new CertificatesEntryRef(SystemCertificateSource.getInstance(), false))
-                .build();
+        NetworkSecurityConfig domain =
+                new NetworkSecurityConfig.Builder()
+                        .setPinSet(new PinSet(pins, Long.MAX_VALUE))
+                        .addCertificatesEntryRef(
+                                new CertificatesEntryRef(
+                                        SystemCertificateSource.getInstanceSystem(), false))
+                        .build();
         ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
                 = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
         domainMap.add(new Pair<Domain, NetworkSecurityConfig>(

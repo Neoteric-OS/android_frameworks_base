@@ -186,7 +186,11 @@ public class XmlConfigSource implements ConfigSource {
             // TODO: Cache ResourceCertificateSources by sourceId
             source = new ResourceCertificateSource(sourceId, mContext);
         } else if ("system".equals(sourceString)) {
-            source = SystemCertificateSource.getInstance();
+            if (SystemCertificateSource.getInstanceUpdatable() != null) {
+                source = SystemCertificateSource.getInstanceUpdatable();
+            } else {
+                source = SystemCertificateSource.getInstanceSystem();
+            }
         } else if ("user".equals(sourceString)) {
             source = UserCertificateSource.getInstance();
         } else if ("wfa".equals(sourceString)) {

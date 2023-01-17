@@ -27,28 +27,34 @@ import java.io.File;
  */
 public final class SystemCertificateSource extends DirectoryCertificateSource {
     private static class NoPreloadHolder {
-        private static final SystemCertificateSource INSTANCE = new SystemCertificateSource();
+        private static final SystemCertificateSource INSTANCE_UPDATABLE = getUpdatable();
+        private static final SystemCertificateSource INSTANCE_SYSTEM =
+                new SystemCertificateSource(
+                        new File(System.getenv("ANDROID_ROOT") + "/etc/security/cacerts"));
     }
 
     private final File mUserRemovedCaDir;
 
-    private SystemCertificateSource() {
-        super(getDirectory());
+    private SystemCertificateSource(File directory) {
+        super(directory);
         File configDir = Environment.getUserConfigDirectory(UserHandle.myUserId());
         mUserRemovedCaDir = new File(configDir, "cacerts-removed");
     }
 
-    private static File getDirectory() {
-        // TODO(miguelaranda): figure out correct code path.
+    private static SystemCertificateSource getUpdatable() {
         File updatable_dir = new File("/apex/com.android.conscrypt/cacerts");
         if (updatable_dir.exists() && !(updatable_dir.list().length == 0)) {
-            return updatable_dir;
+            return new SystemCertificateSource(updatable_dir);
         }
-        return new File(System.getenv("ANDROID_ROOT") + "/etc/security/cacerts");
+        return null;
     }
 
-    public static SystemCertificateSource getInstance() {
-        return NoPreloadHolder.INSTANCE;
+    public static SystemCertificateSource getInstanceSystem() {
+        return NoPreloadHolder.INSTANCE_SYSTEM;
+    }
+
+    public static SystemCertificateSource getInstanceUpdatable() {
+        return NoPreloadHolder.INSTANCE_UPDATABLE;
     }
 
     @Override
