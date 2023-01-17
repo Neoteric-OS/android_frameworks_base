@@ -17115,7 +17115,12 @@ public class ActivityManagerService extends IActivityManager.Stub
                 proc = mPidsSelfLocked.get(pid);
             }
             if (proc != null) {
-                mAppErrors.handleDismissAnrDialogs(proc);
+                synchronized (mProcLock) {
+                    final ProcessErrorStateRecord errState = proc.mErrorState;
+                    long anrDispathRestoreTime = SystemClock.uptimeMillis();
+                    errState.setAnrDispathRestoreTime(anrDispathRestoreTime);
+                    mAppErrors.handleDismissAnrDialogs(proc);
+                }
             }
         }
 

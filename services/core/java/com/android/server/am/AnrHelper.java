@@ -196,7 +196,7 @@ class AnrHelper {
 
         void appNotResponding(boolean onlyDumpSelf) {
             mApp.mErrorState.appNotResponding(mActivityShortComponentName, mAppInfo,
-                    mParentShortComponentName, mParentProcess, mAboveSystem, mAnnotation,
+                    mParentShortComponentName, mParentProcess, mAboveSystem, mTimestamp, mAnnotation,
                     onlyDumpSelf);
         }
     }
