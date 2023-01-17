@@ -1,5 +1,40 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c9cf5ab_c3e22882",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-17T09:48:26Z",
+      "side": 1,
+      "message": "would fit better in StubLibraries.bp next to the droidstubs module IMO",
+      "revId": "bf3a364f8a3c99d214579d0840be258c5809a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2657ac44_a1481ef0",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-17T09:48:26Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this and the public variant have the same naming scheme?",
+      "revId": "bf3a364f8a3c99d214579d0840be258c5809a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
