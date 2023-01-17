@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27a9f3f5_c81848eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-01-17T17:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f01f8f8_2f550423",
+      "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab87e7bd_a1884d16",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-13T20:24:19Z",
       "side": 1,
       "message": "Can remove this line.",
+      "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dc34d79_d803b20c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-01-17T17:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab87e7bd_a1884d16",
       "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -52,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b7e03ac_ba59b2c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-01-17T17:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0963abdd_de5d734e",
+      "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29ede6bd_06f5b547",
@@ -65,6 +119,24 @@
       "writtenOn": "2023-01-13T20:24:19Z",
       "side": 1,
       "message": "Pl add this after l.1015, change the constant accordingly, and describe with a comment. Can follow existing comment style.",
+      "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df238ec0_d5c1f432",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-01-17T17:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ede6bd_06f5b547",
       "revId": "828490c53cef68740f05cd65483fe00f6dcb6f98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
