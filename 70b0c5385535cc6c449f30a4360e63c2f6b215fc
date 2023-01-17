@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb1898d0_a3367248",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/CentralSurfacesImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2023-01-17T15:58:32Z",
+      "side": 1,
+      "message": "The problem you\u0027re trying to fix seems to be deeper in the stack.\n`depth` should never be `NaN`, it should be a float between 0 and 1.",
+      "revId": "70b0c5385535cc6c449f30a4360e63c2f6b215fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
