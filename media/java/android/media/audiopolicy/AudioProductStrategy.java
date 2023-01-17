@@ -16,6 +16,8 @@
 
 package android.media.audiopolicy;
 
+import static android.media.audiopolicy.AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
+
 import static java.util.stream.Collectors.toList;
 
 import android.annotation.NonNull;
@@ -28,6 +30,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.internal.annotations.GuardedBy;
 
@@ -50,6 +53,14 @@ public final class AudioProductStrategy implements Parcelable {
      */
     public static final int DEFAULT_GROUP = -1;
 
+    private static final int MATCH_ON_TAGS_SCORE = 1 << 3;
+    private static final int MATCH_ON_FLAGS_SCORE = 1 << 2;
+    private static final int MATCH_ON_USAGE_SCORE = 1 << 1;
+    private static final int MATCH_ON_CONTENT_TYPE_SCORE = 1 << 0;
+    private static final int MATCH_ON_DEFAULT_SCORE = 0;
+    private static final int NO_MATCH = -1;
+    private static final int MATCH_EQUALS = MATCH_ON_TAGS_SCORE | MATCH_ON_FLAGS_SCORE
+            | MATCH_ON_CONTENT_TYPE_SCORE |MATCH_ON_USAGE_SCORE;
 
     private static final String TAG = "AudioProductStrategy";
 
@@ -85,6 +96,23 @@ public final class AudioProductStrategy implements Parcelable {
     }
 
     /**
+     * Select the best {@link AudioProductStrategy} object for the given {@link AudioAttributes}.
+     * @param attributes to consider
+     * @param fallbackOnDefault if set, allows to fallback on the default strategy (e.g. the
+     * strategyassociated to {@code DEFAULT_ATTRIBUTES}).
+     * @return the highest matching score {@link AudioProductStrategy} if found, default if fallback
+     * on default is set, {@code null} otherwise.
+     * @hide
+     */
+    @Nullable
+    public static AudioProductStrategy getAudioProductStrategyForAudioAttributes(
+            @NonNull AudioAttributes attributes, boolean fallbackOnDefault) {
+        AudioAttributesGroup aag
+                = getAudioAttributesGroupForAttributes(attributes, fallbackOnDefault);
+        return aag != null ? getAudioProductStrategyWithId(aag.getStrategyId()) :  null;
+    }
+
+    /**
      * @hide
      * Return the AudioProductStrategy object for the given strategy ID.
      * @param id the ID of the strategy to find
@@ -92,14 +120,9 @@ public final class AudioProductStrategy implements Parcelable {
      *     exists.
      */
     public static @Nullable AudioProductStrategy getAudioProductStrategyWithId(int id) {
-        synchronized (sLock) {
-            if (sAudioProductStrategies == null) {
-                sAudioProductStrategies = initializeAudioProductStrategies();
-            }
-            for (AudioProductStrategy strategy : sAudioProductStrategies) {
-                if (strategy.getId() == id) {
-                    return strategy;
-                }
+        for (AudioProductStrategy strategy : getAudioProductStrategies()) {
+            if (strategy.getId() == id) {
+                return strategy;
             }
         }
         return null;
@@ -129,8 +152,7 @@ public final class AudioProductStrategy implements Parcelable {
     @NonNull
     public static AudioAttributes getAudioAttributesForStrategyWithLegacyStreamType(
             int streamType) {
-        for (final AudioProductStrategy productStrategy :
-                AudioProductStrategy.getAudioProductStrategies()) {
+        for (AudioProductStrategy productStrategy : getAudioProductStrategies()) {
             AudioAttributes aa = productStrategy.getAudioAttributesForLegacyStreamType(streamType);
             if (aa != null) {
                 return aa;
@@ -150,20 +172,18 @@ public final class AudioProductStrategy implements Parcelable {
     public static int getLegacyStreamTypeForStrategyWithAudioAttributes(
             @NonNull AudioAttributes audioAttributes) {
         Objects.requireNonNull(audioAttributes, "AudioAttributes must not be null");
-        for (final AudioProductStrategy productStrategy :
-                AudioProductStrategy.getAudioProductStrategies()) {
-            if (productStrategy.supportsAudioAttributes(audioAttributes)) {
-                int streamType = productStrategy.getLegacyStreamTypeForAudioAttributes(
-                        audioAttributes);
-                if (streamType == AudioSystem.STREAM_DEFAULT) {
-                    Log.w(TAG, "Attributes " + audioAttributes + " supported by strategy "
-                            + productStrategy.getId() + " have no associated stream type, "
-                            + "therefore falling back to STREAM_MUSIC");
-                    return AudioSystem.STREAM_MUSIC;
-                }
-                if (streamType < AudioSystem.getNumStreamTypes()) {
-                    return streamType;
-                }
+        AudioAttributesGroup aag = getAudioAttributesGroupForAttributes(audioAttributes,
+                /* fallbackOnDefault= */ false);
+        if (aag != null) {
+            int streamType = aag.getStreamType();
+            if (streamType == AudioSystem.STREAM_DEFAULT) {
+                Log.w(TAG, "Attributes " + audioAttributes + " supported by strategy "
+                        + aag.getStrategyId() + " have no associated stream type, "
+                        + "therefore falling back to STREAM_MUSIC");
+                return AudioSystem.STREAM_MUSIC;
+            }
+            if (streamType < AudioSystem.getNumStreamTypes()) {
+                return streamType;
             }
         }
         return AudioSystem.STREAM_MUSIC;
@@ -178,19 +198,35 @@ public final class AudioProductStrategy implements Parcelable {
      *     default volume group id if fallbackOnDefault is set
      * <p>By convention, the product strategy with default attributes will be associated to the
      * default volume group (e.g. associated to {@link AudioManager#STREAM_MUSIC})
-     * or {@link AudioVolumeGroup#DEFAULT_VOLUME_GROUP} if not found.
+     * or {@code DEFAULT_VOLUME_GROUP} if not found.
      */
     public static int getVolumeGroupIdForAudioAttributes(
             @NonNull AudioAttributes attributes, boolean fallbackOnDefault) {
+        AudioAttributesGroup aag = getAudioAttributesGroupForAttributes(attributes,
+                fallbackOnDefault);
+        return aag != null ? aag.getVolumeGroupId() : DEFAULT_VOLUME_GROUP;
+    }
+
+    @Nullable
+    private static AudioAttributesGroup getAudioAttributesGroupForAttributes(
+            @NonNull AudioAttributes attributes, boolean fallbackOnDefault) {
         Objects.requireNonNull(attributes, "attributes must not be null");
-        int volumeGroupId = getVolumeGroupIdForAudioAttributesInt(attributes);
-        if (volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP) {
-            return volumeGroupId;
+        int matchScore = NO_MATCH;
+        AudioAttributesGroup bestAudioAttributesGroupOrDefault = null;
+        for (AudioProductStrategy productStrategy : getAudioProductStrategies()) {
+            Pair<Integer, AudioAttributesGroup> scoredAag =
+                    productStrategy.getScoredAttributeGroupForAttribute(attributes);
+            int score = scoredAag.first;
+            if (score == MATCH_EQUALS) {
+                return scoredAag.second;
+            }
+            if (score > matchScore) {
+                matchScore = score;
+                bestAudioAttributesGroupOrDefault = scoredAag.second;
+            }
         }
-        if (fallbackOnDefault) {
-            return getVolumeGroupIdForAudioAttributesInt(getDefaultAttributes());
-        }
-        return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
+        return (matchScore != MATCH_ON_DEFAULT_SCORE || fallbackOnDefault) ?
+                bestAudioAttributesGroupOrDefault : null;
     }
 
     private static List<AudioProductStrategy> initializeAudioProductStrategies() {
@@ -235,6 +271,9 @@ public final class AudioProductStrategy implements Parcelable {
         mName = name;
         mId = id;
         mAudioAttributesGroups = aag;
+        for (AudioAttributesGroup audioAttributesGroup : mAudioAttributesGroups) {
+            audioAttributesGroup.setProductStrategyId(mId);
+        }
     }
 
     /**
@@ -274,13 +313,10 @@ public final class AudioProductStrategy implements Parcelable {
      * @return the {@link AudioAttributes} relevant for the given streamType.
      *         If none is found, it builds the default attributes.
      */
-    public @Nullable AudioAttributes getAudioAttributesForLegacyStreamType(int streamType) {
-        for (final AudioAttributesGroup aag : mAudioAttributesGroups) {
-            if (aag.supportsStreamType(streamType)) {
-                return aag.getAudioAttributes();
-            }
-        }
-        return null;
+    @Nullable
+    public AudioAttributes getAudioAttributesForLegacyStreamType(int streamType) {
+        AudioAttributesGroup aag = getAudioAttributeGroupForLegacyStreamType(streamType);
+        return aag != null ? aag.getAudioAttributes() : null;
     }
 
     /**
@@ -290,14 +326,13 @@ public final class AudioProductStrategy implements Parcelable {
      *         If none is found, it return DEFAULT stream type.
      */
     @TestApi
-    public int getLegacyStreamTypeForAudioAttributes(@NonNull AudioAttributes aa) {
-        Objects.requireNonNull(aa, "AudioAttributes must not be null");
-        for (final AudioAttributesGroup aag : mAudioAttributesGroups) {
-            if (aag.supportsAttributes(aa)) {
-                return aag.getStreamType();
-            }
-        }
-        return AudioSystem.STREAM_DEFAULT;
+    public int getLegacyStreamTypeForAudioAttributes(@NonNull AudioAttributes attributes) {
+        Pair<Integer, AudioAttributesGroup> scoredAag =
+                getScoredAttributeGroupForAttribute(attributes);
+        AudioAttributesGroup aag = scoredAag.second;
+        int score = scoredAag.first;
+        return (aag != null && score != MATCH_ON_DEFAULT_SCORE)
+                ? aag.getStreamType() : AudioSystem.STREAM_DEFAULT;
     }
 
     /**
@@ -308,57 +343,66 @@ public final class AudioProductStrategy implements Parcelable {
      */
     @SystemApi
     public boolean supportsAudioAttributes(@NonNull AudioAttributes aa) {
+        return getAudioAttributesSupportScore(aa) > 0;
+    }
+
+    /**
+     * Checks if the strategy supports the given {@link AudioAttributes} and gives a
+     * compatibility score.
+     * @param attributes to evaluate
+     * @return {@code NO_MATCH} if not supporting the given {@link AudioAttributes},
+     * positive or zero score otherwise.
+     */
+    private int getAudioAttributesSupportScore(@NonNull AudioAttributes aa) {
+        return getScoredAttributeGroupForAttribute(aa).first;
+    }
+
+    private Pair<Integer, AudioAttributesGroup> getScoredAttributeGroupForAttribute(
+            @NonNull AudioAttributes aa) {
         Objects.requireNonNull(aa, "AudioAttributes must not be null");
-        for (final AudioAttributesGroup aag : mAudioAttributesGroups) {
-            if (aag.supportsAttributes(aa)) {
-                return true;
+        int bestScore = NO_MATCH;
+        AudioAttributesGroup bestAttributGroupOrDefault = null;
+        for (AudioAttributesGroup aag : mAudioAttributesGroups) {
+            int score = aag.getAttributesMatchingScore(aa);
+            if (score == MATCH_EQUALS) {
+                return new Pair<>(MATCH_EQUALS, aag);
+            }
+            if (score > bestScore) {
+                bestAttributGroupOrDefault = aag;
+                bestScore = score;
             }
         }
-        return false;
+        return new Pair<>(bestScore, bestAttributGroupOrDefault);
     }
 
     /**
      * @hide
      * @param streamType legacy stream type used for volume operation only
      * @return the volume group id relevant for the given streamType.
-     *         If none is found, {@link AudioVolumeGroup#DEFAULT_VOLUME_GROUP} is returned.
+     *         If none is found, {@code DEFAULT_VOLUME_GROUP} is returned.
      */
     @TestApi
     public int getVolumeGroupIdForLegacyStreamType(int streamType) {
-        for (final AudioAttributesGroup aag : mAudioAttributesGroups) {
-            if (aag.supportsStreamType(streamType)) {
-                return aag.getVolumeGroupId();
-            }
-        }
-        return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
+        AudioAttributesGroup aag = getAudioAttributeGroupForLegacyStreamType(streamType);
+        return aag != null ? aag.getVolumeGroupId() : DEFAULT_VOLUME_GROUP;
     }
 
     /**
-     * @hide
+     * Selects the {@link AudioVolumeGroup} id associated with highest matching
+     * {@link AudioAttributes} score.
      * @param aa the {@link AudioAttributes} to be considered
-     * @return the volume group id associated with the given audio attributes if found,
-     *         {@link AudioVolumeGroup#DEFAULT_VOLUME_GROUP} otherwise.
+     * @return the volume group id associated with the highest and non zero matching
+     * {@link AudioAttributes} score, {@code DEFAULT_VOLUME_GROUP} otherwise.
+     * @hide
      */
     @TestApi
-    public int getVolumeGroupIdForAudioAttributes(@NonNull AudioAttributes aa) {
-        Objects.requireNonNull(aa, "AudioAttributes must not be null");
-        for (final AudioAttributesGroup aag : mAudioAttributesGroups) {
-            if (aag.supportsAttributes(aa)) {
-                return aag.getVolumeGroupId();
-            }
-        }
-        return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
-    }
-
-    private static int getVolumeGroupIdForAudioAttributesInt(@NonNull AudioAttributes attributes) {
-        Objects.requireNonNull(attributes, "attributes must not be null");
-        for (AudioProductStrategy productStrategy : getAudioProductStrategies()) {
-            int volumeGroupId = productStrategy.getVolumeGroupIdForAudioAttributes(attributes);
-            if (volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP) {
-                return volumeGroupId;
-            }
-        }
-        return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
+    public int getVolumeGroupIdForAudioAttributes(@NonNull AudioAttributes attributes) {
+        Pair<Integer, AudioAttributesGroup> scoredAag
+                = getScoredAttributeGroupForAttribute(attributes);
+        AudioAttributesGroup aag = scoredAag.second;
+        int score = scoredAag.first;
+        return (aag != null && score != MATCH_ON_DEFAULT_SCORE)
+                ? aag.getVolumeGroupId() : DEFAULT_VOLUME_GROUP;
     }
 
     @Override
@@ -432,27 +476,64 @@ public final class AudioProductStrategy implements Parcelable {
     /**
      * To avoid duplicating the logic in java and native, we shall make use of
      * native API native_get_product_strategies_from_audio_attributes
-     * Keep in sync with frameworks/av/media/libaudioclient/AudioProductStrategy::attributesMatches
+     * Keep in sync with native counterpart code in
+     * frameworks/av/media/libaudioclient/AudioProductStrategy::attributesMatchesScore
      * @param refAttr {@link AudioAttributes} to be taken as the reference
      * @param attr {@link AudioAttributes} of the requester.
      */
-    private static boolean attributesMatches(@NonNull AudioAttributes refAttr,
-            @NonNull AudioAttributes attr) {
-        Objects.requireNonNull(refAttr, "reference AudioAttributes must not be null");
-        Objects.requireNonNull(attr, "requester's AudioAttributes must not be null");
+    private static int attributesMatchesScore(@NonNull AudioAttributes refAttr,
+                                             @NonNull AudioAttributes attr) {
+        Objects.requireNonNull(refAttr, "refAttr must not be null");
+        Objects.requireNonNull(attr, "attr must not be null");
+        if (refAttr.equals(attr)) {
+            return MATCH_EQUALS;
+        }
+        if (refAttr.equals(DEFAULT_ATTRIBUTES)) {
+            return MATCH_ON_DEFAULT_SCORE;
+        }
+        int score = MATCH_ON_DEFAULT_SCORE;
+        if (refAttr.getSystemUsage() == AudioAttributes.USAGE_UNKNOWN) {
+            score |= MATCH_ON_DEFAULT_SCORE;
+        } else if (attr.getSystemUsage() == refAttr.getSystemUsage()) {
+            score |= MATCH_ON_USAGE_SCORE;
+        } else {
+            return NO_MATCH;
+        }
+        if (refAttr.getContentType() == AudioAttributes.CONTENT_TYPE_UNKNOWN) {
+            score |= MATCH_ON_DEFAULT_SCORE;
+        } else if (attr.getContentType() == refAttr.getContentType()) {
+            score |= MATCH_ON_CONTENT_TYPE_SCORE;
+        } else {
+            return NO_MATCH;
+        }
         String refFormattedTags = TextUtils.join(";", refAttr.getTags());
         String cliFormattedTags = TextUtils.join(";", attr.getTags());
-        if (refAttr.equals(DEFAULT_ATTRIBUTES)) {
-            return false;
+        if (refFormattedTags.length() == 0) {
+            score |= MATCH_ON_DEFAULT_SCORE;
+        } else if (refFormattedTags.equals(cliFormattedTags)) {
+            score |= MATCH_ON_TAGS_SCORE;
+        } else {
+            return NO_MATCH;
         }
-        return ((refAttr.getSystemUsage() == AudioAttributes.USAGE_UNKNOWN)
-                || (attr.getSystemUsage() == refAttr.getSystemUsage()))
-            && ((refAttr.getContentType() == AudioAttributes.CONTENT_TYPE_UNKNOWN)
-                || (attr.getContentType() == refAttr.getContentType()))
-            && ((refAttr.getAllFlags() == 0)
-                || (attr.getAllFlags() != 0
-                && (attr.getAllFlags() & refAttr.getAllFlags()) == refAttr.getAllFlags()))
-            && ((refFormattedTags.length() == 0) || refFormattedTags.equals(cliFormattedTags));
+        if (refAttr.getAllFlags() == 0) {
+            score |= MATCH_ON_DEFAULT_SCORE;
+        } else if ((attr.getAllFlags() != 0)
+                && ((attr.getAllFlags() & refAttr.getAllFlags()) == refAttr.getAllFlags())) {
+            score |= MATCH_ON_FLAGS_SCORE;
+        } else {
+            return NO_MATCH;
+        }
+        return score;
+    }
+
+    @Nullable
+    private AudioAttributesGroup getAudioAttributeGroupForLegacyStreamType(int streamType) {
+        for (AudioAttributesGroup aag : mAudioAttributesGroups) {
+            if (aag.supportsStreamType(streamType)) {
+                return aag;
+            }
+        }
+        return null;
     }
 
     private boolean isInternalStrategy() {
@@ -470,6 +551,7 @@ public final class AudioProductStrategy implements Parcelable {
         private int mVolumeGroupId;
         private int mLegacyStreamType;
         private final AudioAttributes[] mAudioAttributes;
+        private int mProductStrategyId;
 
         AudioAttributesGroup(int volumeGroupId, int streamType,
                 @NonNull AudioAttributes[] audioAttributes) {
@@ -514,19 +596,31 @@ public final class AudioProductStrategy implements Parcelable {
             return mAudioAttributes.length == 0 ? DEFAULT_ATTRIBUTES : mAudioAttributes[0];
         }
 
+        void setProductStrategyId(int strategyId) {
+            mProductStrategyId = strategyId;
+        }
+
+        int getStrategyId() {
+            return mProductStrategyId;
+        }
+
         /**
-         * Checks if a {@link AudioAttributes} is supported by this product strategy.
-         * @param {@link AudioAttributes} to check upon support
-         * @return true if the {@link AudioAttributes} follows this product strategy,
-                   false otherwise.
+         * Checks if the {@link AudioProductStrategy.AudioAttributesGroup} supports the given
+         * {@link AudioAttributes} and gives a compatibility score.
+         * @param attributes to evaluate
+         * @return {@code NO_MATCH} if not supporting the given {@link AudioAttributes},
+         * positive or zero score otherwise.
          */
-        public boolean supportsAttributes(@NonNull AudioAttributes attributes) {
-            for (final AudioAttributes refAa : mAudioAttributes) {
-                if (refAa.equals(attributes) || attributesMatches(refAa, attributes)) {
-                    return true;
+        public int getAttributesMatchingScore(@NonNull AudioAttributes attributes) {
+            int strategyScore = NO_MATCH;
+            for (AudioAttributes refAa : mAudioAttributes) {
+                int attributesGroupScore = attributesMatchesScore(refAa, attributes);
+                if (attributesGroupScore == MATCH_EQUALS) {
+                    return attributesGroupScore;
                 }
+                strategyScore = Math.max(strategyScore, attributesGroupScore);
             }
-            return false;
+            return strategyScore;
         }
 
         public boolean supportsStreamType(int streamType) {
