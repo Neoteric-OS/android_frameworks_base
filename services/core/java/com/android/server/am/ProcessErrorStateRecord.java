@@ -133,6 +133,12 @@ class ProcessErrorStateRecord {
     private String mAnrAnnotation;
 
     /**
+     * Last Input Dispath Anr Restore Time
+     */
+    @GuardedBy({"mService","mProcLock"})
+    private long mAnrDispathRestoreTime;
+
+    /**
      * Optional local handler to be invoked in the process crash.
      */
     @CompositeRWLock({"mService", "mProcLock"})
@@ -146,6 +152,11 @@ class ProcessErrorStateRecord {
     @GuardedBy({"mService", "mProcLock"})
     void setBad(boolean bad) {
         mBad = bad;
+    }
+
+    @GuardedBy({"mService", "mProcLock"})
+    void setAnrDispathRestoreTime(long anrDispathRestoreTime) {
+        mAnrDispathRestoreTime = anrDispathRestoreTime;
     }
 
     @GuardedBy(anyOf = {"mService", "mProcLock"})
@@ -254,7 +265,7 @@ class ProcessErrorStateRecord {
 
     void appNotResponding(String activityShortComponentName, ApplicationInfo aInfo,
             String parentShortComponentName, WindowProcessController parentProcess,
-            boolean aboveSystem, String annotation, boolean onlyDumpSelf) {
+            boolean aboveSystem, long anrHappenTime, String annotation, boolean onlyDumpSelf) {
         ArrayList<Integer> firstPids = new ArrayList<>(5);
         SparseArray<Boolean> lastPids = new SparseArray<>(20);
 
@@ -557,21 +568,30 @@ class ProcessErrorStateRecord {
             }
 
             synchronized (mProcLock) {
+                 // After the occurrence of this InputDispath, app has recovered normally and no ANR window is required.
+                if(anrHappenTime <= mAnrDispathRestoreTime){
+                    setNotResponding(false);
+                    setNotRespondingReport(null);
+                    Slog.e(TAG, "AppNotResponding has been restored ,the time of appNotResponding " + (SystemClock.uptimeMillis() - appNotRespondingStartTime) + " ms");
+                    return;
+                }
+
                 // Set the app's notResponding state, and look up the errorReportReceiver
                 makeAppNotRespondingLSP(activityShortComponentName,
                         annotation != null ? "ANR " + annotation : "ANR", info.toString());
                 mDialogController.setAnrController(anrController);
-            }
 
-            // mUiHandler can be null if the AMS is constructed with injector only. This will only
-            // happen in tests.
-            if (mService.mUiHandler != null) {
-                // Bring up the infamous App Not Responding dialog
-                Message msg = Message.obtain();
-                msg.what = ActivityManagerService.SHOW_NOT_RESPONDING_UI_MSG;
-                msg.obj = new AppNotRespondingDialog.Data(mApp, aInfo, aboveSystem);
+                // Anrdialog message needs to be synchronized to ensure that the expired window is removed.
+                // mUiHandler can be null if the AMS is constructed with injector only. This will only
+                // happen in tests.
+                if (mService.mUiHandler != null) {
+                    // Bring up the infamous App Not Responding dialog
+                    Message msg = Message.obtain();
+                    msg.what = ActivityManagerService.SHOW_NOT_RESPONDING_UI_MSG;
+                    msg.obj = new AppNotRespondingDialog.Data(mApp, aInfo, aboveSystem);
 
-                mService.mUiHandler.sendMessageDelayed(msg, anrDialogDelayMs);
+                    mService.mUiHandler.sendMessageDelayed(msg, anrDialogDelayMs);
+                }
             }
         }
     }
