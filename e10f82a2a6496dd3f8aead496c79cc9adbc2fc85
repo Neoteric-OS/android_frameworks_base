@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1a94554_13d8f9d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2023-01-18T16:25:13Z",
+      "side": 1,
+      "message": "Hi Julia, would you also follow up this CL again? This thing\u0027s also been kept waiting too long. Thanks.",
+      "revId": "e10f82a2a6496dd3f8aead496c79cc9adbc2fc85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
