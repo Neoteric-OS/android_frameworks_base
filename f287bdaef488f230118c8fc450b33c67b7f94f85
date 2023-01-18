@@ -16,6 +16,23 @@
       "message": "Hi @juliacr@google.com would you mind following up this CL? Thanks!",
       "revId": "f287bdaef488f230118c8fc450b33c67b7f94f85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eec99ba_a5e010a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2023-01-18T09:50:37Z",
+      "side": 1,
+      "message": "Hi Julia, would you help me to view the Presubmit log for the reason that I do not have the permission.",
+      "revId": "f287bdaef488f230118c8fc450b33c67b7f94f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
