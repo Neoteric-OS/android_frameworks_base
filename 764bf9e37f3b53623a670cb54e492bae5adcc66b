@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe150ddb_37beafe8",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-01-18T23:38:52Z",
+      "side": 1,
+      "message": "How about \"The carrier allows only a specific IP version (IPv4 or IPv6), but the UE is on a network with a different IP version\".",
+      "revId": "764bf9e37f3b53623a670cb54e492bae5adcc66b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bed8a0de_8a8408ee",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-01-18T23:38:52Z",
+      "side": 1,
+      "message": "IWLAN_EPDG_IP_VERSION_MISMATCH?\n\nIP type can be misunderstood as public, private, static etc..",
+      "revId": "764bf9e37f3b53623a670cb54e492bae5adcc66b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
