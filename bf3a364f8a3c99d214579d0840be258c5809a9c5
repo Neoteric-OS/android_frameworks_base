@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cab19698_c8960178",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-01-18T18:47:35Z",
+      "side": 1,
+      "message": "Understood. I have moved the module definitions in [aosp/2392793](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2392793).",
+      "parentUuid": "4c9cf5ab_c3e22882",
+      "revId": "bf3a364f8a3c99d214579d0840be258c5809a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2657ac44_a1481ef0",
         "filename": "StubLibraries.bp",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-17T09:48:26Z",
       "side": 1,
       "message": "Why doesn\u0027t this and the public variant have the same naming scheme?",
+      "revId": "bf3a364f8a3c99d214579d0840be258c5809a9c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2987d72_eec93312",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-01-18T18:47:35Z",
+      "side": 1,
+      "message": "My apologies for the inconsistency in the naming scheme -- this is also addressed in [aosp/2392793](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2392793).",
+      "parentUuid": "2657ac44_a1481ef0",
       "revId": "bf3a364f8a3c99d214579d0840be258c5809a9c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
