@@ -42293,6 +42293,7 @@ package android.telephony {
     field public static final int IWLAN_RAT_TYPE_NOT_ALLOWED = 11001; // 0x2af9
     field public static final int IWLAN_SEMANTIC_ERRORS_IN_PACKET_FILTERS = 8244; // 0x2034
     field public static final int IWLAN_SEMANTIC_ERROR_IN_THE_TFT_OPERATION = 8241; // 0x2031
+    field public static final int IWLAN_SIM_NOT_READY = 16392; // 0x4008
     field public static final int IWLAN_SYNTACTICAL_ERRORS_IN_PACKET_FILTERS = 8245; // 0x2035
     field public static final int IWLAN_SYNTACTICAL_ERROR_IN_THE_TFT_OPERATION = 8242; // 0x2032
     field public static final int IWLAN_UNAUTHENTICATED_EMERGENCY_NOT_SUPPORTED = 11055; // 0x2b2f
