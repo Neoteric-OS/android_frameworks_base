@@ -42289,6 +42289,12 @@ package android.telephony {
     field public static final int IWLAN_IKEV2_CERT_INVALID = 16387; // 0x4003
     field public static final int IWLAN_IKEV2_CONFIG_FAILURE = 16384; // 0x4000
     field public static final int IWLAN_IKEV2_MSG_TIMEOUT = 16386; // 0x4002
+    field public static final int IWLAN_IKE_DPD_TIMEOUT = 16396; // 0x400c
+    field public static final int IWLAN_IKE_INIT_TIMEOUT = 16395; // 0x400b
+    field public static final int IWLAN_IKE_MOBILITY_TIMEOUT = 16397; // 0x400d
+    field public static final int IWLAN_IKE_NETWORK_LOST_EXCEPTION = 16392; // 0x4008
+    field public static final int IWLAN_IKE_PRIVATE_PROTOCOL_ERROR = 16393; // 0x4009
+    field public static final int IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED = 16394; // 0x400a
     field public static final int IWLAN_ILLEGAL_ME = 9006; // 0x232e
     field public static final int IWLAN_IMEI_NOT_ACCEPTED = 11005; // 0x2afd
     field public static final int IWLAN_MAX_CONNECTION_REACHED = 8193; // 0x2001
@@ -42303,6 +42309,7 @@ package android.telephony {
     field public static final int IWLAN_SYNTACTICAL_ERRORS_IN_PACKET_FILTERS = 8245; // 0x2035
     field public static final int IWLAN_SYNTACTICAL_ERROR_IN_THE_TFT_OPERATION = 8242; // 0x2032
     field public static final int IWLAN_TUNNEL_NOT_FOUND = 16390; // 0x4006
+    field public static final int IWLAN_TUNNEL_TRANSFORM_FAILED = 16391; // 0x4007
     field public static final int IWLAN_UNAUTHENTICATED_EMERGENCY_NOT_SUPPORTED = 11055; // 0x2b2f
     field public static final int IWLAN_USER_UNKNOWN = 9001; // 0x2329
     field public static final int LIMITED_TO_IPV4 = 2234; // 0x8ba
