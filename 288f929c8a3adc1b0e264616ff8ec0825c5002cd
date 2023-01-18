@@ -33,6 +33,23 @@
       "message": "Hi Julia, would you help me to view the Presubmit log for the reason that I do not have the permission.",
       "revId": "288f929c8a3adc1b0e264616ff8ec0825c5002cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4afe670_0f96b6c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2023-01-18T14:02:47Z",
+      "side": 1,
+      "message": "Unrelated TH failure; try to rerun",
+      "revId": "288f929c8a3adc1b0e264616ff8ec0825c5002cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
