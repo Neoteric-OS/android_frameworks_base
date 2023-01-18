@@ -41,11 +41,14 @@ import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Display;
+import android.view.IWindow;
 import android.view.IWindowManager;
 import android.view.ViewDebug;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.ByteTransferPipe;
 import com.android.internal.protolog.ProtoLogImpl;
+import com.android.server.IoThread;
 import com.android.server.wm.LetterboxConfiguration.LetterboxBackgroundType;
 import com.android.server.wm.LetterboxConfiguration.LetterboxHorizontalReachabilityPosition;
 import com.android.server.wm.LetterboxConfiguration.LetterboxVerticalReachabilityPosition;
@@ -551,6 +554,25 @@ public class WindowManagerShellCommand extends ShellCommand {
         return 0;
     }
 
+    @GuardedBy("mInternal.mGlobalLock")
+    private void dumpLocalWindowLocked(IWindow client, ParcelFileDescriptor pfd) {
+        // Make it asynchronous to avoid from writer being blocked by
+        // waiting for buffer to be consumed.
+        IoThread.getExecutor().execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            client.executeCommand(
+                                    ViewDebug.REMOTE_COMMAND_DUMP_ENCODED, null, pfd);
+                        } catch (RemoteException e) {
+                            // Ignore for local call.
+                        }
+                    }
+                }
+        );
+    }
+
     private int runDumpVisibleWindowViews(PrintWriter pw) {
         if (!mInternal.checkCallingPermission(android.Manifest.permission.DUMP,
                 "runDumpVisibleWindowViews()")) {
@@ -571,8 +593,12 @@ public class WindowManagerShellCommand extends ShellCommand {
                         ByteTransferPipe pipe = null;
                         try {
                             pipe = new ByteTransferPipe();
-                            w.mClient.executeCommand(ViewDebug.REMOTE_COMMAND_DUMP_ENCODED, null,
-                                    pipe.getWriteFd());
+                            if (w.isClientLocal()) {
+                                dumpLocalWindowLocked(w.mClient, pipe.getWriteFd());
+                            } else {
+                                client.executeCommand(
+                                        ViewDebug.REMOTE_COMMAND_DUMP_ENCODED, null, pfd);
+                            }
                             requestList.add(Pair.create(w.getName(), pipe));
                         } catch (IOException | RemoteException e) {
                             // Skip this window
