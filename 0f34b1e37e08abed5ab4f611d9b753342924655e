@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929bf472_2d2a359a",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-01-18T23:34:26Z",
+      "side": 1,
+      "message": "Can you pl add a comment noting that the below IWLAN error codes are defined by the UE and do not relate to any 3GPP spec value?",
+      "revId": "0f34b1e37e08abed5ab4f611d9b753342924655e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cba00abd_777ef52e",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-01-18T23:34:26Z",
+      "side": 1,
+      "message": "Put this below l.1511, next to IWLAN_DNS_RESOLUTION_TIMEOUT?",
+      "revId": "0f34b1e37e08abed5ab4f611d9b753342924655e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
