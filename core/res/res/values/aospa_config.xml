@@ -60,4 +60,7 @@
     <!-- Whether usage of the proximity sensor during doze is supported -->
     <bool name="config_doze_proximity_sensor_supported">true</bool>
 
+    <!-- Display color inversion availability -->
+    <bool name="config_displayInversionAvailable">true</bool>
+
 </resources>
