@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72ee8169_ff5e04cb",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-19T08:37:12Z",
+      "side": 1,
+      "message": "Is there a reason not to have java_sdk_library create all of these internally? This boilerplate isn\u0027t adding any new information that the java_sdk_library doesn\u0027t already have provided to it.\n\n+paulduffin too",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f334d1f6_203d61ae",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-19T08:37:12Z",
+      "side": 1,
+      "message": "framework-graphics isn\u0027t a module, it\u0027s a completely stalled effort that we shouldn\u0027t really be putting effort into TBH. I\u0027d advise against chasing every java_sdk_library in the platform individually, only some of them matter (probably mostly the mainline modules).",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
