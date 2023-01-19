@@ -6988,4 +6988,7 @@
 
     <!-- The key containing the branching boolean for legacy Search. -->
     <string name="config_defaultContextualSearchLegacyEnabled" translatable="false" />
+
+    <!-- Whether the swap navbar feature is available -->
+    <bool name="config_navBarButtonSwapAvailable">false</bool>
 </resources>
