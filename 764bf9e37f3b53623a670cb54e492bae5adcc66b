@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2828671c_d3a57329",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-01-19T00:37:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe150ddb_37beafe8",
+      "revId": "764bf9e37f3b53623a670cb54e492bae5adcc66b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bed8a0de_8a8408ee",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-18T23:38:52Z",
       "side": 1,
       "message": "IWLAN_EPDG_IP_VERSION_MISMATCH?\n\nIP type can be misunderstood as public, private, static etc..",
+      "revId": "764bf9e37f3b53623a670cb54e492bae5adcc66b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f95b949_56f703fd",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-01-19T00:37:46Z",
+      "side": 1,
+      "message": "oops, it should be ip version not ip type.\nDoes IWLAN_EPDG_IP_VERSION_PREFERENCE_CONFLICT sounds better?",
+      "parentUuid": "bed8a0de_8a8408ee",
       "revId": "764bf9e37f3b53623a670cb54e492bae5adcc66b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
