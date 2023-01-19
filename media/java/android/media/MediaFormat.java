@@ -168,6 +168,15 @@ public final class MediaFormat {
     public static final String MIMETYPE_AUDIO_AC3 = "audio/ac3";
     public static final String MIMETYPE_AUDIO_EAC3 = "audio/eac3";
     public static final String MIMETYPE_AUDIO_EAC3_JOC = "audio/eac3-joc";
+    /**
+     * MIME type for Dolby AC-4.
+     *
+     * For API level 34 or higher, the track's MediaFormat will contain the
+     * {@link #KEY_CODECS_STRING} key, which describes the AC-4 track's profile and level
+     * information in the string format {@code "ac-4.xx.yy.zz" }, where {@code xx} refers to
+     * {@code bitstream_version}, {@code yy} refers to {@code presentation_version} and {@code zz}
+     * refers to {@code mdcompat}, as described in ETSI TS 103 190-2 v1.2.1.
+     */
     public static final String MIMETYPE_AUDIO_AC4 = "audio/ac4";
     public static final String MIMETYPE_AUDIO_SCRAMBLED = "audio/scrambled";
     /** MIME type for MPEG-H Audio single stream */
