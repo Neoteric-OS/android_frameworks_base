@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b1689bf_7139e7e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956290
+      },
+      "writtenOn": "2023-01-19T19:29:31Z",
+      "side": 1,
+      "message": "This is a simple typo fix. Do we need to add owners for every file?",
+      "revId": "b5a4e77ffcb011d611c5ea3bfc1b627e16229efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
