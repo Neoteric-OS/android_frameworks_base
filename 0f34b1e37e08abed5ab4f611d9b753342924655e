@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d99ab5db_c4141712",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-01-19T00:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "929bf472_2d2a359a",
+      "revId": "0f34b1e37e08abed5ab4f611d9b753342924655e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cba00abd_777ef52e",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-18T23:34:26Z",
       "side": 1,
       "message": "Put this below l.1511, next to IWLAN_DNS_RESOLUTION_TIMEOUT?",
+      "revId": "0f34b1e37e08abed5ab4f611d9b753342924655e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed4f5be6_86ade689",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-01-19T00:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba00abd_777ef52e",
       "revId": "0f34b1e37e08abed5ab4f611d9b753342924655e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
