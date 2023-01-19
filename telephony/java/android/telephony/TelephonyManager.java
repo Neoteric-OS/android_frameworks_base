@@ -90,6 +90,7 @@ import android.telephony.Annotation.ThermalMitigationResult;
 import android.telephony.Annotation.UiccAppType;
 import android.telephony.Annotation.UiccAppTypeExt;
 import android.telephony.CallForwardingInfo.CallForwardingReason;
+import android.telephony.UplmnInfo;
 import android.telephony.VisualVoicemailService.VisualVoicemailTask;
 import android.telephony.data.ApnSetting;
 import android.telephony.data.ApnSetting.MvnoType;
@@ -102,6 +103,7 @@ import android.telephony.ims.aidl.IImsConfig;
 import android.telephony.ims.aidl.IImsRegistration;
 import android.telephony.ims.feature.MmTelFeature;
 import android.telephony.ims.stub.ImsRegistrationImplBase;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -8313,6 +8315,60 @@ public class TelephonyManager {
             // This could happen before phone starts
             return null;
         }
+    }
+
+    /**
+     * Returns an array of user controlled PLMNs from the specified SIM App family
+     * Returns null if the query fails.
+     *
+     * @param subId subscription ID used for authentication
+     * @param appType the icc application type, like {@link #APPTYPE_USIM}
+     * @return uplmns an array of user controlled PLMNs
+     * @hide
+     */
+    @NonNull
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public List<UplmnInfo> getUserControlledPlmns(int subId, int appType) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) return null;
+            return telephony.getUserControlledPlmns(subId, appType, mContext.getOpPackageName(),
+                    getAttributionTag());
+        } catch (RemoteException ex) {
+            Rlog.e(TAG, "getUserControlledPlmns RemoteException: " + ex.getMessage());
+            return null;
+        } catch (NullPointerException ex) {
+            Rlog.e(TAG, "getUserControlledPlmns NullPointerException: " + ex.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Replace the contents of the user controlled PLMN SIM file with the provided values.
+     *
+     * <p>Requires Permission: {@link android.Manifest.permission#MODIFY_PHONE_STATE}
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     * @param uplmns a list of user controlled PLMNs.
+     *
+     * @return number of PLMNs that were successfully written to the SIM UPLMN list.
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    @SystemApi
+    public int setUserControlledPlmns(int subId, @NonNull List<UplmnInfo> uplmns) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) return -1;
+            return telephony.setUserControlledPlmns(
+                    subId, APPTYPE_USIM, uplmns, getOpPackageName(), getAttributionTag());
+        } catch (RemoteException ex) {
+            Rlog.e(TAG, "setUserControlledPlmns RemoteException: " + ex.getMessage());
+        } catch (NullPointerException ex) {
+            Rlog.e(TAG, "setUserControlledPlmns NullPointerException: " + ex.getMessage());
+        }
+        return -1;
     }
 
     /**
