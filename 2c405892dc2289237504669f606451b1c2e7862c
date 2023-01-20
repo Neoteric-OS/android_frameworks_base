@@ -16,6 +16,23 @@
       "message": "Please, review my commit",
       "revId": "2c405892dc2289237504669f606451b1c2e7862c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67b96e48_99d88125",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2023-01-20T02:50:46Z",
+      "side": 1,
+      "message": "IDC files are a low-level implementation detail of the native InputDevice. Why do you need them this high up? What are you trying to do?",
+      "revId": "2c405892dc2289237504669f606451b1c2e7862c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
