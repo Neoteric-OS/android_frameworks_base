@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4bbb3598_ab349d6f",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-01-20T16:18:37Z",
+      "side": 1,
+      "message": "Jihoon: Adding the logic into `java_sdk_library` to create the `java_api_contribution` and maybe even `java_api_library` is the fastest way to check the feasibility of what you are doing. With one stroke you can modify all `java_sdk_library` instances. Adding separate `java_api_contribution` modules is a lot of TOIL for little benefit, not just TOIL for you but ongoing TOIL for Android developers.\n\nThe `java_sdk_library` was created with the express purpose of reducing TOIL for Android developers, this seems like a huge regression.\n\nJust because `java_sdk_library` creates a module does not mean it becomes a dependency of (or depend upon) the module it creates. You can have whatever dependency structure you like.\n\nThere is no reason why you cannot have separate modules in the generated `BUILD.bazel` files.\n\nI don\u0027t see why creating the `java_api_contribution` manually in each file will help the Roboleaf team. There is a LOT more manual work to do, any change to the structure will require changes to lots of repositories. It definitely increases the cost to Android developers. Having the bp2build support in `java_sdk_library` generate `java_api_contribution` modules would be a lot cheaper than that.\n\nJoe: Separating out APIs is only one small part of the work needed to create lightweight branches. That is a long way down the road and past experience has shown that doing something now because it might be needed later is more often than not a waste of time, e.g. versioned SDK snapshots.",
+      "parentUuid": "f37a66cd_b30abc5c",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f334d1f6_203d61ae",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
