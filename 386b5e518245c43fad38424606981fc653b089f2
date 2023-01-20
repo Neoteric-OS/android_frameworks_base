@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5333ffc3_401cc247",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-01-20T00:30:17Z",
+      "side": 1,
+      "message": "I believe there are some benefits in adding the `java_api_contribution` modules to each api domains, without `java_sdk_library` providing these internally. These modules have a sole purpose of providing the API files to the `java_api_library` modules, which are responsible for generating the from-text stubs. Adding a lightweight module is advantageous to adding complexity in an already complicated module, both in future migration (from from-source stubs to from-text stubs) perspective and the Roboleaf team\u0027s perspective (because generating a bazel rule for `java_api_contribution` should be less burdening than that for `java_sdk_library`). \n\nIf `java_sdk_library` were to create and provide these info to `java_api_library`, I believe the implementation would look like multiple `java_sdk_library` being listed as dependencies of `java_api_library`, which is basically registering from-source stubs generating modules as dependencies of a from-text stub generating module -- I am not quite sure if this is the most optimal solution.",
+      "parentUuid": "72ee8169_ff5e04cb",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f334d1f6_203d61ae",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-19T08:37:12Z",
       "side": 1,
       "message": "framework-graphics isn\u0027t a module, it\u0027s a completely stalled effort that we shouldn\u0027t really be putting effort into TBH. I\u0027d advise against chasing every java_sdk_library in the platform individually, only some of them matter (probably mostly the mainline modules).",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4760b4f2_5d88f452",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-01-20T00:30:17Z",
+      "side": 1,
+      "message": "Looking closer into the `java_sdk_library` module definition for module lib API surface, I have noted that this module (or all except these [modules](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/StubLibraries.bp;drc\u003da7916faa4ca60b6c91e6c15ee526edbbac74a100;l\u003d356)) do not contribute to the module lib api surface. Thank you for the clarification.",
+      "parentUuid": "f334d1f6_203d61ae",
       "revId": "386b5e518245c43fad38424606981fc653b089f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
