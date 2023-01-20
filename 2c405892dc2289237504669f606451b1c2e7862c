@@ -51,6 +51,24 @@
       "parentUuid": "67b96e48_99d88125",
       "revId": "2c405892dc2289237504669f606451b1c2e7862c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00d4eced_7d78db35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2023-01-20T18:39:23Z",
+      "side": 1,
+      "message": "Why can\u0027t you distinguish your remote controls using the more conventional vid/pid approach?\nI don\u0027t think exposing the IDC raw data is a good idea.\nIf you have speicfic properties of input devices that you\u0027d like to expose, we could consider them separately.",
+      "parentUuid": "a64ee01a_f8e94508",
+      "revId": "2c405892dc2289237504669f606451b1c2e7862c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
