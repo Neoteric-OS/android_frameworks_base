@@ -16,6 +16,23 @@
       "message": "To put it another way for this change:\n- When a callback is called *on time* from continueDisplayChange, isWaitingForRemoteDisplayChange will always be false for that callback.\n- When a callback is called *due to timeout* from onContinueTimedOut, isWaitingForRemoteDisplayChange will always be true, even if there\u0027s only one callback, and it\u0027s the one being called.\n- This causes DisplayContent#sendNewConfiguration to never do anything when called as a result of a timeout, which has contributed to screens sometimes getting stuck \"off\" (black) on some AOSP-derived operating systems, if the screen turns off in landscape.\n\nAlthough this change doesn\u0027t fix whatever is causing timeouts to occur, when they do occur, this change will hopefully help them to be handled as intended.",
       "revId": "b678d2e021a65cd05ecbc5a914544f070590a583",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "840a60b7_098a7956",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2023-01-20T16:13:01Z",
+      "side": 1,
+      "message": "Anything I can do to fix whatever the nice robot is unhappy about (can\u0027t see it)?",
+      "revId": "b678d2e021a65cd05ecbc5a914544f070590a583",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
