@@ -33,6 +33,24 @@
       "message": "IDC files are a low-level implementation detail of the native InputDevice. Why do you need them this high up? What are you trying to do?",
       "revId": "2c405892dc2289237504669f606451b1c2e7862c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a64ee01a_f8e94508",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-01-20T15:29:35Z",
+      "side": 1,
+      "message": "We are going to add custom properties to IDC files for input devices produced by our company and we need to have the possibility to distinguish different input devices(different remote controls for example) by reading these properties from application level in Android.\nTo add hidden API is enough, because we build our applications for our Android smart devices inside AOSP tree and these applications will be able to read these IDC properties and make decision based on properties values about different input devices.\nIt can be useful for device vendors to have access to these properties from framework layer.",
+      "parentUuid": "67b96e48_99d88125",
+      "revId": "2c405892dc2289237504669f606451b1c2e7862c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
