@@ -16,6 +16,24 @@
       "message": "This is a simple typo fix. Do we need to add owners for every file?",
       "revId": "b5a4e77ffcb011d611c5ea3bfc1b627e16229efe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23fba9e4_8d3ee2f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1456881
+      },
+      "writtenOn": "2023-01-20T01:22:17Z",
+      "side": 1,
+      "message": "Yes, you will need owners approval for each file to submit.",
+      "parentUuid": "4b1689bf_7139e7e6",
+      "revId": "b5a4e77ffcb011d611c5ea3bfc1b627e16229efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
