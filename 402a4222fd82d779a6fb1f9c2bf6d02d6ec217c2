@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05421ec9_fcebcf12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2023-01-20T07:09:04Z",
+      "side": 1,
+      "message": "Generally fine, but please hold until we discuss in the telephony API council meeting.",
+      "revId": "402a4222fd82d779a6fb1f9c2bf6d02d6ec217c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
