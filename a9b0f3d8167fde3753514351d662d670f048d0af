@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c79a688e_f93fc88b",
+        "filename": "media/tests/MediaFrameworkTest/src/com/android/mediaframeworktest/MediaProfileReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2023-01-20T23:17:57Z",
+      "side": 1,
+      "message": "also add OPUS",
+      "revId": "a9b0f3d8167fde3753514351d662d670f048d0af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86ee2bff_06963782",
+        "filename": "media/tests/MediaFrameworkTest/src/com/android/mediaframeworktest/MediaProfileReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2023-01-20T23:17:57Z",
+      "side": 1,
+      "message": "need to add HE_AAC_PS and FLAC here.\n\nalso add OPUS",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 74
+      },
+      "revId": "a9b0f3d8167fde3753514351d662d670f048d0af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
