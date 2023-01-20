@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f37a66cd_b30abc5c",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2023-01-20T00:44:00Z",
+      "side": 1,
+      "message": "The other piece that isn\u0027t necessarily obvious from the code, and that we need to have some more conversations about, is that the way to get lightweight branches working is through APIs.  After this set of changes, it will be possible to build against the stubs generated from the api .txt files.  So we should have a conversation about whether we should move the .txt files into a separate location from the source it represents, so that others can use it without downloading the original source code.\n\nThere are pros and cons, and this thread definitely isn\u0027t the place to hash it out, but I think having the api_contributions spelled out explicitly makes it easier to separate out if that\u0027s the direction to go in, and identify what will need to be separated out, etc.",
+      "parentUuid": "5333ffc3_401cc247",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f334d1f6_203d61ae",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
