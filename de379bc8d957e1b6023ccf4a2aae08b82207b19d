@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c39520e_652e789e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949600
+      },
+      "writtenOn": "2023-01-20T18:57:56Z",
+      "side": 1,
+      "message": "That logic branch serves a very specific purpose of silently unbinding the companion when `stopObservingDevicePresence()` is called on the last remaining association that keeps the service bound. It would not be an appropriate place to call `onDeviceDisappearedInternal()` which serves far more purpose than triggering a simple UI notification.",
+      "revId": "de379bc8d957e1b6023ccf4a2aae08b82207b19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
