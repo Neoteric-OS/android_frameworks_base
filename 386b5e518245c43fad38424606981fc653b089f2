@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1382f834_a93de93c",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2023-01-20T20:11:09Z",
+      "side": 1,
+      "message": "I don\u0027t want to put more glop into java_sdk_library. This thing is an abomination. It creates a ton of modules, all with mysterious names. There is no way to find out what those names are going to be without looking at the source code for java_sdk_library.  The visibility flags aren\u0027t named \u0027visibility\u0027, they\u0027re named something else. We\u0027re going to move away from these magical macros, not put more stuff in there.\n\nIt\u0027s true that there\u0027s some extra verbosity in listing it separately.  But deliberately taking the build system in the direction of being more explicit and less mysterious, even at the expense of a little bit more typing.",
+      "parentUuid": "4bbb3598_ab349d6f",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f334d1f6_203d61ae",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
