@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69982ff8_eebead53",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-23T09:05:45Z",
+      "side": 1,
+      "message": "I feel like this argument could be used to say we shouldn\u0027t have `java_sdk_library` at all, which IMO would be a huge mistake/regression. Having a shared macro like that is the only reason we can maintain consistency between modules and share code effectively. And override things in partner trees.\n\nIt is an abstraction that lets module authors define their own build rules without screwing up. This new `java_api_contribution` module is going to require every module author define one. Are you going to add this to our existing documentation for creating a new module? I feel like it\u0027s giving the module author an opportunity to make mistakes, which only seems worth it if it adds some significant benefits. \n\nPhrased in a different way, do we expect each module repository to be tweaking their java_api_contribution rule to their liking? Is that safe? Currently it just looks like boilerplate. Bear in mind that ~0 of the \u003e30 module teams have designated \"build people\" that actively maintain \u0026 understand their build rules.\n\n\u003e It creates a ton of modules, all with mysterious names\n\n..and now we\u0027re manually creating a ton of modules, all with mysterious (and inconsistent) names.",
+      "parentUuid": "1382f834_a93de93c",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f334d1f6_203d61ae",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
@@ -121,6 +139,24 @@
       "side": 1,
       "message": "Looking closer into the `java_sdk_library` module definition for module lib API surface, I have noted that this module (or all except these [modules](https://cs.android.com/android/platform/superproject/+/master:frameworks/base/StubLibraries.bp;drc\u003da7916faa4ca60b6c91e6c15ee526edbbac74a100;l\u003d356)) do not contribute to the module lib api surface. Thank you for the clarification.",
       "parentUuid": "f334d1f6_203d61ae",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cf3823c_aa96a463",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-23T09:05:45Z",
+      "side": 1,
+      "message": "How will you know when framework-graphics starts contributing to the module lib API surface and breaks this assumption?",
+      "parentUuid": "4760b4f2_5d88f452",
       "revId": "386b5e518245c43fad38424606981fc653b089f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
