@@ -31,6 +31,7 @@ import android.net.metrics.DnsEvent;
 import android.net.metrics.INetdEventListener;
 import android.net.metrics.NetworkMetrics;
 import android.net.metrics.WakeupEvent;
+import android.net.metrics.WakeupEventInfo;
 import android.net.metrics.WakeupStats;
 import android.os.RemoteException;
 import android.text.format.DateUtils;
@@ -74,7 +75,7 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     // TODO: dedup this String constant with the one used in
     // ConnectivityService#wakeupModifyInterface().
     @VisibleForTesting
-    static final String WAKEUP_EVENT_IFACE_PREFIX = "iface:";
+    static final String WAKEUP_EVENT_IFACE_PREFIX = WakeupEventInfo.IFACE_PREFIX;
 
     // Array of aggregated DNS and connect events sent by netd, grouped by net id.
     @GuardedBy("this")
@@ -265,30 +266,48 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     @Override
     public synchronized void onWakeupEvent(String prefix, int uid, int ethertype, int ipNextHeader,
             byte[] dstHw, String srcIp, String dstIp, int srcPort, int dstPort, long timestampNs) {
-        String iface = prefix.replaceFirst(WAKEUP_EVENT_IFACE_PREFIX, "");
-        final long timestampMs;
-        if (timestampNs > 0) {
-            timestampMs = timestampNs / NANOS_PER_MS;
-        } else {
-            timestampMs = System.currentTimeMillis();
-        }
+        final WakeupEventInfo wakeupEventInfo = new WakeupEventInfo();
+        wakeupEventInfo.prefix = prefix;
+        wakeupEventInfo.uid = uid;
+        wakeupEventInfo.ethertype = ethertype;
+        wakeupEventInfo.ipNextHeader = ipNextHeader;
+        wakeupEventInfo.dstHw = dstHw;
+        wakeupEventInfo.srcIp = srcIp;
+        wakeupEventInfo.dstIp = dstIp;
+        wakeupEventInfo.srcPort = srcPort;
+        wakeupEventInfo.dstPort = dstPort;
+        wakeupEventInfo.timestampNs = timestampNs;
+        // netHandle is 0L which can cause an exception downstream.
+        onWakeupEventParcel(wakeupEventInfo);
+    }
 
+    @Override
+    public synchronized void onWakeupEventParcel(WakeupEventInfo wakeupEventInfo) {
         WakeupEvent event = new WakeupEvent();
-        event.iface = iface;
-        event.timestampMs = timestampMs;
-        event.uid = uid;
-        event.ethertype = ethertype;
-        event.dstHwAddr = MacAddress.fromBytes(dstHw);
-        event.srcIp = srcIp;
-        event.dstIp = dstIp;
-        event.ipNextHeader = ipNextHeader;
-        event.srcPort = srcPort;
-        event.dstPort = dstPort;
+
+        event.iface = wakeupEventInfo.prefix.replaceFirst(WAKEUP_EVENT_IFACE_PREFIX, "");
+        event.uid = wakeupEventInfo.uid;
+        event.ethertype = wakeupEventInfo.ethertype;
+        event.dstHwAddr = MacAddress.fromBytes(wakeupEventInfo.dstHw);
+        event.srcIp = wakeupEventInfo.srcIp;
+        event.dstIp = wakeupEventInfo.dstIp;
+        event.ipNextHeader = wakeupEventInfo.ipNextHeader;
+        event.srcPort = wakeupEventInfo.srcPort;
+        event.dstPort = wakeupEventInfo.dstPort;
+        if (wakeupEventInfo.timestampNs > 0) {
+            event.timestampMs = wakeupEventInfo.timestampNs / NANOS_PER_MS;
+        } else {
+            event.timestampMs = System.currentTimeMillis();
+        }
         addWakeupEvent(event);
+
+        System.out.println("Wakeup happened on network " + Network.fromNetworkHandle(
+                wakeupEventInfo.netHandle));
 
         String dstMac = event.dstHwAddr.toString();
         FrameworkStatsLog.write(FrameworkStatsLog.PACKET_WAKEUP_OCCURRED,
-                uid, iface, ethertype, dstMac, srcIp, dstIp, ipNextHeader, srcPort, dstPort);
+                event.uid, event.iface, event.ethertype, dstMac, event.srcIp, event.dstIp,
+                event.ipNextHeader, event.srcPort, event.dstPort);
     }
 
     @Override
