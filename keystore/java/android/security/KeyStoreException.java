@@ -378,7 +378,7 @@ public class KeyStoreException extends Exception {
 
     private static boolean isRkpRelatedError(int errorCode) {
         return errorCode == ResponseCode.OUT_OF_KEYS
-                  || errorCode == ResponseCode.OUT_OF_KEYS_REQUIRES_UPGRADE;
+                  || errorCode == ResponseCode.OUT_OF_KEYS_REQUIRES_SECURITY_PATCH;
     }
 
     /**
@@ -657,7 +657,7 @@ public class KeyStoreException extends Exception {
                 new PublicErrorInformation(0, ERROR_KEY_DOES_NOT_EXIST));
         sErrorCodeToFailureInfo.put(ResponseCode.OUT_OF_KEYS,
                 new PublicErrorInformation(IS_SYSTEM_ERROR, ERROR_ATTESTATION_KEYS_UNAVAILABLE));
-        sErrorCodeToFailureInfo.put(ResponseCode.OUT_OF_KEYS_REQUIRES_UPGRADE,
+        sErrorCodeToFailureInfo.put(ResponseCode.OUT_OF_KEYS_REQUIRES_SECURITY_PATCH,
                 new PublicErrorInformation(IS_SYSTEM_ERROR | IS_TRANSIENT_ERROR,
                         ERROR_DEVICE_REQUIRES_UPGRADE_FOR_ATTESTATION));
     }

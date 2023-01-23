@@ -635,8 +635,9 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
 
         // RKP failure
         if (result.rkpStatus != KeyStoreException.RKP_SUCCESS) {
-            KeyStoreException ksException = new KeyStoreException(ResponseCode.OUT_OF_KEYS,
-                    "Could not get RKP keys", result.rkpStatus);
+            KeyStoreException ksException = new KeyStoreException(
+                    ResponseCode.OUT_OF_KEYS_TRANSIENT_ERROR, "Could not get RKP keys",
+                    result.rkpStatus);
             throw new ProviderException("Failed to provision new attestation keys.", ksException);
         }
 
@@ -715,7 +716,7 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
             switch (e.getErrorCode()) {
                 case KeymasterDefs.KM_ERROR_HARDWARE_TYPE_UNAVAILABLE:
                     throw new StrongBoxUnavailableException("Failed to generated key pair.", e);
-                case ResponseCode.OUT_OF_KEYS:
+                case ResponseCode.OUT_OF_KEYS_TRANSIENT_ERROR:
                     return checkIfRetryableOrThrow(e, securityLevel);
                 default:
                     ProviderException p = new ProviderException("Failed to generate key pair.", e);
@@ -742,8 +743,8 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
         }
     }
 
-    // In case keystore reports OUT_OF_KEYS, call this handler in an attempt to remotely provision
-    // some keys.
+    // In case keystore reports OUT_OF_KEYS_TRANSIENT_ERROR, call this handler in an attempt to
+    // remotely provision some keys.
     GenerateKeyPairHelperResult checkIfRetryableOrThrow(KeyStoreException e, int securityLevel) {
         GenerateRkpKey keyGen = new GenerateRkpKey(ActivityThread
                 .currentApplication());
@@ -778,12 +779,12 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                     break;
             }
             ksException = new KeyStoreException(
-                    ResponseCode.OUT_OF_KEYS,
+                    ResponseCode.OUT_OF_KEYS_TRANSIENT_ERROR,
                     "Out of RKP keys due to IGenerateRkpKeyService status: " + keyGenStatus,
                     rkpStatus);
         } catch (RemoteException f) {
             ksException = new KeyStoreException(
-                    ResponseCode.OUT_OF_KEYS,
+                    ResponseCode.OUT_OF_KEYS_TRANSIENT_ERROR,
                     "Remote exception: " + f.getMessage(),
                     KeyStoreException.RKP_TEMPORARILY_UNAVAILABLE);
         }

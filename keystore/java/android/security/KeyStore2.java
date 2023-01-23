@@ -345,7 +345,7 @@ public class KeyStore2 {
                 case ResponseCode.KEY_PERMANENTLY_INVALIDATED:
                     return new KeyStoreException(errorCode, "Key permanently invalidated",
                             serviceErrorMessage);
-                case ResponseCode.OUT_OF_KEYS:
+                case ResponseCode.OUT_OF_KEYS_TRANSIENT_ERROR:
                     // Getting a more specific RKP status requires the security level, which we
                     // don't have here. Higher layers of the stack can interpret this exception
                     // and add more flavor.
