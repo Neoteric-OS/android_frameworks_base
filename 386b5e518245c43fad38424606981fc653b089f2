@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "166ee186_1e801110",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2023-01-23T22:36:46Z",
+      "side": 1,
+      "message": "I\u0027m not objecting to the existence of java_sdk_library. The problem with java_sdk_library is that it **isn\u0027t** just a macro that combines a bunch of other module types.  It has its own logic. It has become a dumping ground for every little workaround and hack that anyone ever needed to add.\n\nI just opened the file and scrolled to a random line, and this is the first one I found: https://source.corp.google.com/android/build/soong/java/sdk_library.go;l\u003d1839\n\nThis is one of many.  The whole of sdk_library.go is filled with these kind of special cases.  This kind of stuff is too subtle and complicated to document, especially when the complexity of all of them starts to multiply together.\n\nSo I don\u0027t want to add more into there.  If we need to make convenience wrappers, then that\u0027s definitely something the build team will do, but starting with the convenience wrappers isn\u0027t the right way to do it.  We\u0027ll start at the bottom and build up as needed.",
+      "parentUuid": "16ab5e0a_bbd21d9c",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f334d1f6_203d61ae",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
