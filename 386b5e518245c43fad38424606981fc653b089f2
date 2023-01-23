@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16ab5e0a_bbd21d9c",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-01-23T11:21:01Z",
+      "side": 1,
+      "message": "\u003e This thing is an abomination.\n\nI disagree. It provides a very useful abstraction. Yes, it has problems but they are far outweighed by its benefits. The problems can be addressed:\n1. Legacy capabilities can be discarded during the transition to Bazel.\n2. Some weird edge cases are due to limitations elsewhere in Soong and if there is no time to address them in Soong can be addressed properly in Bazel.\n3. The `visibility` property *IS* named `visibility`. The few `*_visibility` property names are not a big issue.\n4. Having one complex macro that exposes everything to everyone can be avoided by having separate macros geared towards different usages, e.g. updatable mainline modules could use a different macro to say platform libraries\n5. The unknown module names can be addressed by documenting, in the same way that Bazel handles its implicit output targets capability - e.g. https://bazel.build/reference/be/java#java_library. If it\u0027s good enough for Bazel built in rules it should be good enough for Bazel macros.\n\n\u003e It creates a ton of modules, all with mysterious names\n\nMost of the modules it creates are implementation details that the Android developers know nothing about. I suspect that Android developers who use `java_sdk_library` much prefer having to deal with the few issues it has than having to manually create and maintain the implementation.\n\nThere is a **LOT** of knowledge embedded in those implementation details, knowledge which most Android developers don\u0027t know and don\u0027t need to know.\n\nAlso, one of the issues with `java_sdk_library` is that due to limitations in `metalava` it has to process the source files once for each API surface which takes a lot of time. As owners of metalava we have plans to improve it so that we can process the source files once and then reuse that information to generate the APIs. Taking advantage of that will require changes to the **implementation details** of the `java_sdk_library`.\n\nExpanding `java_sdk_library` would make it extremely, maybe even prohibitively expensive, to make changes like that.\n\nThe mainline modularization team relies heavily on `java_sdk_library` and defaults in Soong to ensure consistent, correct, simple to use, with safe behavior across all the mainline modularization teams. Bazel macros will allow us to do that job even better. As our productivity would be severely hampered by not having a macro similar to `java_sdk_library` we would have no choice but to create one.\n\nSo, the question isn\u0027t really between whether there will be a macro or not but rather whether the macro will be written by the Android build team or Android developers.",
+      "parentUuid": "69982ff8_eebead53",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f334d1f6_203d61ae",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
