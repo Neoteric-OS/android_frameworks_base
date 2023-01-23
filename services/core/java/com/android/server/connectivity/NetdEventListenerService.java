@@ -31,11 +31,15 @@ import android.net.metrics.DnsEvent;
 import android.net.metrics.INetdEventListener;
 import android.net.metrics.NetworkMetrics;
 import android.net.metrics.WakeupEvent;
+import android.net.metrics.WakeupEventParcel;
 import android.net.metrics.WakeupStats;
+import android.os.BatteryStatsInternal;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.text.format.DateUtils;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.util.Slog;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
@@ -44,6 +48,7 @@ import com.android.internal.util.BitUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.RingBuffer;
 import com.android.internal.util.TokenBucket;
+import com.android.server.LocalServices;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 
 import java.io.PrintWriter;
@@ -74,7 +79,7 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     // TODO: dedup this String constant with the one used in
     // ConnectivityService#wakeupModifyInterface().
     @VisibleForTesting
-    static final String WAKEUP_EVENT_IFACE_PREFIX = "iface:";
+    static final String WAKEUP_EVENT_IFACE_PREFIX = WakeupEventParcel.IFACE_PREFIX;
 
     // Array of aggregated DNS and connect events sent by netd, grouped by net id.
     @GuardedBy("this")
@@ -262,33 +267,67 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
         }
     }
 
+    private static WakeupEvent wakeupEventFromParcelable(WakeupEventParcel parcel) {
+        WakeupEvent event = new WakeupEvent();
+        event.iface = parcel.tag.replaceFirst(WAKEUP_EVENT_IFACE_PREFIX, "");
+        event.uid = parcel.uid;
+        event.ethertype = parcel.ethertype;
+        event.dstHwAddr = MacAddress.fromBytes(parcel.dstHw);
+        event.srcIp = parcel.srcIp;
+        event.dstIp = parcel.dstIp;
+        event.ipNextHeader = parcel.ipNextHeader;
+        event.srcPort = parcel.srcPort;
+        event.dstPort = parcel.dstPort;
+        if (parcel.timestampNs > 0) {
+            event.timestampMs = parcel.timestampNs / NANOS_PER_MS;
+        } else {
+            event.timestampMs = System.currentTimeMillis();
+        }
+        return event;
+    }
+
+
     @Override
     public synchronized void onWakeupEvent(String prefix, int uid, int ethertype, int ipNextHeader,
             byte[] dstHw, String srcIp, String dstIp, int srcPort, int dstPort, long timestampNs) {
-        String iface = prefix.replaceFirst(WAKEUP_EVENT_IFACE_PREFIX, "");
-        final long timestampMs;
-        if (timestampNs > 0) {
-            timestampMs = timestampNs / NANOS_PER_MS;
-        } else {
-            timestampMs = System.currentTimeMillis();
-        }
+        final WakeupEventParcel wakeupEventParcel = new WakeupEventParcel();
+        wakeupEventParcel.tag = prefix;
+        wakeupEventParcel.uid = uid;
+        wakeupEventParcel.ethertype = ethertype;
+        wakeupEventParcel.ipNextHeader = ipNextHeader;
+        wakeupEventParcel.dstHw = dstHw;
+        wakeupEventParcel.srcIp = srcIp;
+        wakeupEventParcel.dstIp = dstIp;
+        wakeupEventParcel.srcPort = srcPort;
+        wakeupEventParcel.dstPort = dstPort;
+        wakeupEventParcel.timestampNs = timestampNs;
+        // Note that netHandle is 0L here. This implementation is only meant to be a fallback for
+        // compatibility reasons.
+        onWakeupEventParcel(wakeupEventParcel);
+    }
 
-        WakeupEvent event = new WakeupEvent();
-        event.iface = iface;
-        event.timestampMs = timestampMs;
-        event.uid = uid;
-        event.ethertype = ethertype;
-        event.dstHwAddr = MacAddress.fromBytes(dstHw);
-        event.srcIp = srcIp;
-        event.dstIp = dstIp;
-        event.ipNextHeader = ipNextHeader;
-        event.srcPort = srcPort;
-        event.dstPort = dstPort;
+    @Override
+    public synchronized void onWakeupEventParcel(WakeupEventParcel wakeupEventParcel) {
+        WakeupEvent event = wakeupEventFromParcelable(wakeupEventParcel);
         addWakeupEvent(event);
+
+        long netHandle = wakeupEventParcel.netHandle;
+        if (netHandle != 0L) {
+            BatteryStatsInternal bsi = LocalServices.getService(BatteryStatsInternal.class);
+            if (bsi != null) {
+                long elapsedMs = SystemClock.elapsedRealtime() + event.timestampMs
+                        - System.currentTimeMillis();
+                bsi.noteCpuWakingNetworkPacket(Network.fromNetworkHandle(netHandle), elapsedMs,
+                        event.uid);
+            }
+        } else {
+            Slog.e(TAG, "No netHandle received in WakeupEventParcel");
+        }
 
         String dstMac = event.dstHwAddr.toString();
         FrameworkStatsLog.write(FrameworkStatsLog.PACKET_WAKEUP_OCCURRED,
-                uid, iface, ethertype, dstMac, srcIp, dstIp, ipNextHeader, srcPort, dstPort);
+                event.uid, event.iface, event.ethertype, dstMac, event.srcIp, event.dstIp,
+                event.ipNextHeader, event.srcPort, event.dstPort);
     }
 
     @Override
