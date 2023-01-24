@@ -38,6 +38,8 @@ public final class PnoSettings implements Parcelable {
     private int mMin2gRssi;
     private int mMin5gRssi;
     private int mMin6gRssi;
+    private int mScanIterations;
+    private int mScanIntervalMultiplier;
     private List<PnoNetwork> mPnoNetworks;
 
     /** Construct an uninitialized PnoSettings object */
@@ -122,6 +124,42 @@ public final class PnoSettings implements Parcelable {
     }
 
     /**
+     * Get the requested PNO scan iterations.
+     *
+     * @return PNO scan iterations.
+     */
+    public int getScanIterations() {
+        return mScanIterations;
+    }
+
+    /**
+     * Set the requested PNO scan iterations.
+     *
+     * @param scanIterations the PNO scan iterations.
+     */
+    public void setScanIterations(int scanIterations) {
+        this.mScanIterations = scanIterations;
+    }
+
+    /**
+     * Get the requested PNO scan interval multiplier.
+     *
+     * @return PNO scan interval multiplier.
+     */
+    public int getScanIntervalMultiplier() {
+        return mScanIntervalMultiplier;
+    }
+
+    /**
+     * Set the requested PNO scan interval multiplier.
+     *
+     * @param scanIntervalMultiplier the PNO scan interval multiplier.
+     */
+    public void setScanIntervalMultiplier(int scanIntervalMultiplier) {
+        this.mScanIntervalMultiplier = scanIntervalMultiplier;
+    }
+
+    /**
      * Return the configured list of specific networks to search for in a PNO scan.
      *
      * @return A list of {@link PnoNetwork} objects, possibly empty if non configured.
@@ -156,13 +194,16 @@ public final class PnoSettings implements Parcelable {
                 && mMin2gRssi == settings.mMin2gRssi
                 && mMin5gRssi == settings.mMin5gRssi
                 && mMin6gRssi == settings.mMin6gRssi
+                && mScanIterations == settings.mScanIterations
+                && mScanIntervalMultiplier == settings.mScanIntervalMultiplier
                 && mPnoNetworks.equals(settings.mPnoNetworks);
     }
 
     /** override hash code */
     @Override
     public int hashCode() {
-        return Objects.hash(mIntervalMs, mMin2gRssi, mMin5gRssi, mMin6gRssi, mPnoNetworks);
+        return Objects.hash(mIntervalMs, mMin2gRssi, mMin5gRssi, mMin6gRssi,
+                mScanIterations, mScanIntervalMultiplier, mPnoNetworks);
     }
 
     /** implement Parcelable interface */
@@ -181,6 +222,8 @@ public final class PnoSettings implements Parcelable {
         out.writeInt(mMin2gRssi);
         out.writeInt(mMin5gRssi);
         out.writeInt(mMin6gRssi);
+        out.writeInt(mScanIterations);
+        out.writeInt(mScanIntervalMultiplier);
         out.writeTypedList(mPnoNetworks);
     }
 
@@ -194,6 +237,8 @@ public final class PnoSettings implements Parcelable {
             result.mMin2gRssi = in.readInt();
             result.mMin5gRssi = in.readInt();
             result.mMin6gRssi = in.readInt();
+            result.mScanIterations = in.readInt();
+            result.mScanIntervalMultiplier = in.readInt();
 
             result.mPnoNetworks = new ArrayList<>();
             in.readTypedList(result.mPnoNetworks, PnoNetwork.CREATOR);
