@@ -1023,6 +1023,8 @@ public final class DataFailCause {
     /** IWLAN PDN setup failed due to Wi-Fi lost during IKE tunnel setup,
      * match exception reported by IKE module*/
     public static final int IWLAN_IKE_NETWORK_LOST_EXCEPTION = 0x400A;
+    /** Carrier-specific error codes during IKEv2 SA setup*/
+    public static final int IWLAN_IKE_PRIVATE_ERROR_TYPE = 0x400B;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1521,6 +1523,7 @@ public final class DataFailCause {
         sFailCauseMap.put(IWLAN_TUNNEL_TRANSFORM_FAILED, "IWLAN_TUNNEL_TRANSFORM_FAILED");
         sFailCauseMap.put(IWLAN_IKE_INIT_TIMEOUT, "IWLAN_IKE_INIT_TIMEOUT");
         sFailCauseMap.put(IWLAN_IKE_NETWORK_LOST_EXCEPTION, "IWLAN_IKE_NETWORK_LOST_EXCEPTION");
+        sFailCauseMap.put(IWLAN_IKE_PRIVATE_ERROR_TYPE, "IWLAN_IKE_PRIVATE_ERROR_TYPE");
         sFailCauseMap.put(OEM_DCFAILCAUSE_1, "OEM_DCFAILCAUSE_1");
         sFailCauseMap.put(OEM_DCFAILCAUSE_2, "OEM_DCFAILCAUSE_2");
         sFailCauseMap.put(OEM_DCFAILCAUSE_3, "OEM_DCFAILCAUSE_3");

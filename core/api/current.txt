@@ -42291,6 +42291,7 @@ package android.telephony {
     field public static final int IWLAN_IKEV2_MSG_TIMEOUT = 16386; // 0x4002
     field public static final int IWLAN_IKE_INIT_TIMEOUT = 16393; // 0x4009
     field public static final int IWLAN_IKE_NETWORK_LOST_EXCEPTION = 16394; // 0x400a
+    field public static final int IWLAN_IKE_PRIVATE_ERROR_TYPE = 16395; // 0x400b
     field public static final int IWLAN_ILLEGAL_ME = 9006; // 0x232e
     field public static final int IWLAN_IMEI_NOT_ACCEPTED = 11005; // 0x2afd
     field public static final int IWLAN_MAX_CONNECTION_REACHED = 8193; // 0x2001
