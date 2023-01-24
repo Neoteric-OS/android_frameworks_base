@@ -146,6 +146,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c811ad57_9e3f54e5",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-01-24T08:19:51Z",
+      "side": 1,
+      "message": "I\u0027m not convinced. Adding a mountain of boilerplate across the tree feels like a big mistake. One module per api visibility seems especially bad, and it feels like an implementation detail. Even the visibility repeated everywhere: `//build/orchestrator/apis`, is an implementation detail of the build system and not realistically something the maintainer of this build file could have an opinion on.\n\nCould it be an implementation detail of `droidstubs` if sdk_library is such a big problem? There seems to be a 1:1 mapping between each `droidstubs` module and `java_api_contribution`\n\nIf we must add boilerplate, please expand on the already too long docs for how to add java libraries here: go/mainline-java-lib.\n\nWe could continue this discussion in the meeting this evening. I think my opinion might be different if we had 10 `java_api_contributions` but I think we\u0027re going to end up with hundreds.",
+      "parentUuid": "166ee186_1e801110",
+      "revId": "386b5e518245c43fad38424606981fc653b089f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f334d1f6_203d61ae",
         "filename": "libs/hwui/Android.bp",
         "patchSetId": 1
