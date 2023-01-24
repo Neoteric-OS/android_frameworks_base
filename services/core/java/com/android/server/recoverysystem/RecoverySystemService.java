@@ -36,7 +36,7 @@ import android.content.Context;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.hardware.boot.V1_0.IBootControl;
+import android.hardware.boot.IBootControl;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.Binder;
@@ -48,6 +48,7 @@ import android.os.Process;
 import android.os.RecoverySystem;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
+import android.os.ServiceManager;
 import android.os.ShellCallback;
 import android.os.SystemProperties;
 import android.provider.DeviceConfig;
@@ -66,6 +67,7 @@ import com.android.internal.widget.RebootEscrowListener;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.pm.ApexManager;
+import com.android.server.recoverysystem.hal.BootControlHIDL;
 
 import libcore.io.IoUtils;
 
@@ -306,19 +308,24 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
          * Throws remote exception if there's an error getting the boot control HAL.
          * Returns null if the boot control HAL's version is older than V1_2.
          */
-        public android.hardware.boot.V1_2.IBootControl getBootControl() throws RemoteException {
-            IBootControl bootControlV10 = IBootControl.getService(true);
-            if (bootControlV10 == null) {
-                throw new RemoteException("Failed to get boot control HAL V1_0.");
+        public IBootControl getBootControl() throws RemoteException {
+            String serviceName = IBootControl.DESCRIPTOR + "/default";
+            if (ServiceManager.isDeclared(serviceName)) {
+                Slog.i(TAG, "AIDL version of BootControl HAL present, using instance " + serviceName);
+                return IBootControl.Stub.asInterface(ServiceManager.waitForDeclaredService(serviceName));
             }
 
-            android.hardware.boot.V1_2.IBootControl bootControlV12 =
-                    android.hardware.boot.V1_2.IBootControl.castFrom(bootControlV10);
-            if (bootControlV12 == null) {
+            IBootControl bootcontrol = BootControlHIDL.getService();
+            if (!BootControlHIDL.isServicePresent()) {
+                Slog.e(TAG, "Neither AIDL nor HIDL version of the BootControl HAL is present.");
+                return null;
+            }
+
+            if (!BootControlHIDL.isV1_2ServicePresent()) {
                 Slog.w(TAG, "Device doesn't implement boot control HAL V1_2.");
                 return null;
             }
-            return bootControlV12;
+            return bootcontrol;
         }
 
         public void threadSleep(long millis) throws InterruptedException {
@@ -738,7 +745,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
             return true;
         }
 
-        android.hardware.boot.V1_2.IBootControl bootControl;
+        IBootControl bootControl;
         try {
             bootControl = mInjector.getBootControl();
         } catch (RemoteException e) {
