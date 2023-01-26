@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b5c4d83_9ac10799",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-01-26T15:40:46Z",
+      "side": 1,
+      "message": "cts/tests/tests/keystore/src/android/keystore/cts/KeyStoreExceptionTest.java also needs to be changed. This is where we test handling of RKP errors and is the authoritative documentation of the behaviour.\n\nThe constants are not used there, rather the numeric values. We need to make sure that exception handles both the old error value and the new one correctly.",
+      "revId": "2382a9ad333129962b282914a1145d33b6d197ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eabb87ca_6565075a",
+        "filename": "keystore/java/android/security/KeyStoreException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-01-26T15:40:46Z",
+      "side": 1,
+      "message": "This needs to be changed - to include both OUT_OF_KEYS and OUT_OF_KEYS_TRANSIENT_ERROR (and all other RKP-related errors)",
+      "range": {
+        "startLine": 380,
+        "startChar": 41,
+        "endLine": 380,
+        "endChar": 52
+      },
+      "revId": "2382a9ad333129962b282914a1145d33b6d197ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6846b23_136b44d0",
+        "filename": "keystore/java/android/security/KeyStoreException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-01-26T15:40:46Z",
+      "side": 1,
+      "message": "This needs to be changed too",
+      "range": {
+        "startLine": 658,
+        "startChar": 49,
+        "endLine": 658,
+        "endChar": 60
+      },
+      "revId": "2382a9ad333129962b282914a1145d33b6d197ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
