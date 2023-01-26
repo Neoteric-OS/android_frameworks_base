@@ -86,6 +86,24 @@
       "parentUuid": "33c35f39_cc4e42e7",
       "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66b622e3_1f24f4fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1506910
+      },
+      "writtenOn": "2023-01-26T14:43:49Z",
+      "side": 1,
+      "message": "updated to Android 13, the error is now no more than 0.4 seconds with often updates from NITZ on both SIMs and so I have -4 milliseconds error right now from an ntp server in my city (I use https://play.google.com/store/apps/details?id\u003dpartl.atomicclock). Very nice work!\n\nstill, GNSS signals would be even more interesting.",
+      "parentUuid": "0e8327e4_9ca44138",
+      "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
