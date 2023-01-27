@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "632bd0d8_e820e82a",
+        "filename": "keystore/java/android/security/KeyStoreException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-01-27T16:52:50Z",
+      "side": 1,
+      "message": "Adding the other OUT_OF_KEYS_* errors here is actually incorrect, because this method should only return true when we need to consider `mRkpdStatus`. However, `mRkpdStatus` is obsolete as of API 34.\n\nIt was actually a mistake to include the new \"require upgrade\" status in this method.\n\nIn U, we will drop `mRkpdStatus` as we\u0027re getting the info we need directly in `mErrorCode`. I\u0027ve started the cleanup in this change by removing this method. This way, folks can just look for `\\bOUT_OF_KEYS\\b` and remove it once we make the permanent swap to rkpd.\n\nAll the special-case handling for OUT_OF_KEYS is obsolete and we can start to remove it.",
+      "parentUuid": "eabb87ca_6565075a",
+      "range": {
+        "startLine": 380,
+        "startChar": 41,
+        "endLine": 380,
+        "endChar": 52
+      },
+      "revId": "2382a9ad333129962b282914a1145d33b6d197ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6846b23_136b44d0",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-01-26T15:40:46Z",
       "side": 1,
       "message": "This needs to be changed too",
+      "range": {
+        "startLine": 658,
+        "startChar": 49,
+        "endLine": 658,
+        "endChar": 60
+      },
+      "revId": "2382a9ad333129962b282914a1145d33b6d197ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cea41637_31faf503",
+        "filename": "keystore/java/android/security/KeyStoreException.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-01-27T16:52:50Z",
+      "side": 1,
+      "message": "I\u0027ve added all the new errors here.\n\nOnce we decide `OUT_OF_KEYS` is totally obsolete, we\u0027ll have to decide what to do with it. I\u0027m thinking we should map it to some \"unknown error\" or something, as it _should_ be impossible.",
+      "parentUuid": "e6846b23_136b44d0",
       "range": {
         "startLine": 658,
         "startChar": 49,
