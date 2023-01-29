@@ -11,4 +11,6 @@ public class CustomVibrationAttributes {
 
     public static final VibrationAttributes VIBRATION_ATTRIBUTES_QS_TILE =
             VibrationAttributes.createForUsage(VibrationAttributes.USAGE_CUSTOM_QS_TILE);
+    public static final VibrationAttributes VIBRATION_ATTRIBUTES_MISC_SCENES =
+            VibrationAttributes.createForUsage(VibrationAttributes.USAGE_CUSTOM_MISC_SCENES);
 }
