@@ -104,6 +104,24 @@
       "parentUuid": "0e8327e4_9ca44138",
       "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37648a8f_baeb038e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1506910
+      },
+      "writtenOn": "2023-01-29T07:22:55Z",
+      "side": 1,
+      "message": "Okay, I suppose I was too fast to say it. So, since that NTP sync on 2023-01-26T00:14:19.464013Z (Z means UTC+0) I never got another sync! So it got 0.2 seconds off. And then I just now manualy changed the time (Manual time suggestion received) and when I set auto time and it finally got updated, to +50 milliseconds or so. Do you want output of adb.exe shell dumpsys time_detector? I see there that:\n\n  Gnss suggestion history:\n    {Empty}\n    \n and that I have 89 NITZ TelephonyTimeSuggestions from slot 0 and only 5 from mSlotIndex\u003d\u00271\u0027\n \n Network suggestion history\n \n also has 4 values.\n \n Meanwhile my windows 11 PC has 5 millisecond precision from NTP server in my city. Always.",
+      "parentUuid": "66b622e3_1f24f4fd",
+      "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
