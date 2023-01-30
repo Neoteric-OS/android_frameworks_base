@@ -22,6 +22,30 @@
       },
       "revId": "9ae19e5001dcc17e4e1308710851eedf5f75f508",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8509cbc6_8b77e4a9",
+        "filename": "keystore/java/android/security/KeyStoreException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-01-30T17:10:48Z",
+      "side": 1,
+      "message": "We\u0027re going to fully migrate to rkpd in U (should be sometime in February).\n\nSo we\u0027ll be able to remove all that dead code soon 🎉",
+      "parentUuid": "90c69189_5f4c556c",
+      "range": {
+        "startLine": 341,
+        "startChar": 41,
+        "endLine": 341,
+        "endChar": 79
+      },
+      "revId": "9ae19e5001dcc17e4e1308710851eedf5f75f508",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
