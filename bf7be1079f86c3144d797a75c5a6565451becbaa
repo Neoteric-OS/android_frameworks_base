@@ -22,6 +22,30 @@
       },
       "revId": "bf7be1079f86c3144d797a75c5a6565451becbaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2014819e_b407ed41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2023-01-30T22:16:38Z",
+      "side": 1,
+      "message": "Haha, yeah.  Apparently I was in a hurry to get to my meeting.  Thanks for catching that.",
+      "parentUuid": "40d94d2f_e1cba2a8",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 57
+      },
+      "revId": "bf7be1079f86c3144d797a75c5a6565451becbaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
