@@ -122,6 +122,24 @@
       "parentUuid": "66b622e3_1f24f4fd",
       "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14ce3e76_bc8cb91b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2023-01-30T11:50:48Z",
+      "side": 1,
+      "message": "As mentioned above, discussing issues on Android\u0027s public gerrit is not scaleable. I won\u0027t engage again here.\n\nIf you would like to raise a bug about the Android system clock being 200ms / 50ms adrift from server time then please do. If you do, we\u0027ll like you understand your expectations (what would be acceptable to you?), your \"role\" (i.e. Android user? Android platform developer? Android app developer?) and needs (i.e. why do you want / need it to be so close to the server\u0027s time?).\n\nThe stock Android implementation can be discussed in more detail there and if I get involved I\u0027ll link to stock Android\u0027s relevant code as needed. I can already say that 50-200ms is well within my expectations given the current implementation. Understanding your needs would help me to understand why Android users could need better than Android currently provides, and justify spending time on improving it in future releases.\n\n------\n\nIf you do create Android issues, attaching a full bug report is most revealing for us to understand what you\u0027re seeing. It obviously includes more, and unrelated, information you\u0027ll have to consent to sharing.\n\nIf you want to be selective for time-related issues: \n\nThe dumpsys from time_detector by itself is better than nothing.\n\nAlso network_time_update_service has increasing amounts of information as I look more deeply into sources of error and reducing them over time.\n\nI\u0027m less clear on the networking side, but there are various services like \"wifi\" and \"network\" that can help in some circumstances to understand your connectivity situation over time. This is why a full bug report can be best because it means we get the full picture, but does mean sharing quite a lot of information / logs.",
+      "parentUuid": "37648a8f_baeb038e",
+      "revId": "fd127c62e7792ed473598b0d702b142fffbd9b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
