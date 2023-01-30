@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "545ac112_25c5c822",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1958248
+      },
+      "writtenOn": "2023-01-30T16:02:26Z",
+      "side": 1,
+      "message": "In the (hopefully unlikely) case that it\u0027s the wallpaper that\u0027s causing OOM, this would be called repeatedly. Could you add a limit on the number of retries?",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1458,
+        "endChar": 0
+      },
+      "revId": "0f3a1673c61905bac9d39bf67a5a9fce87a03570",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
