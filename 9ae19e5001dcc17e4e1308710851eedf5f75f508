@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90c69189_5f4c556c",
+        "filename": "keystore/java/android/security/KeyStoreException.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-01-30T17:06:52Z",
+      "side": 1,
+      "message": "Nit (completely optional):\nKeep isRkpRelatedError and rename it to isObsoleteRkpErrorCode so it\u0027s clear to us this relates to the obsolete RKP error handling.\n\nWorth (in the method documentation) to explain that we now rely on explicit error codes from rkpd instead of the Java layer inferring the RKP status for us, and that\u0027s why we\u0027re moving away from it.\n\nIIUC until we fully migrate to rkpd we will not be able to get rid of the mRkpStatus variable.",
+      "range": {
+        "startLine": 341,
+        "startChar": 41,
+        "endLine": 341,
+        "endChar": 79
+      },
+      "revId": "9ae19e5001dcc17e4e1308710851eedf5f75f508",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
