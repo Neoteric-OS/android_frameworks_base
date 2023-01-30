@@ -33,6 +33,23 @@
       "message": "This still requires your kindly help to do merge.",
       "revId": "e10f82a2a6496dd3f8aead496c79cc9adbc2fc85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d0af9f9_ce931235",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2023-01-30T18:52:18Z",
+      "side": 1,
+      "message": "There\u0027s a merge conflict - I\u0027ll have to make the change internally",
+      "revId": "e10f82a2a6496dd3f8aead496c79cc9adbc2fc85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
