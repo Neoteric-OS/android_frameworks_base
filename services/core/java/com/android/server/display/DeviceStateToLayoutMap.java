@@ -91,10 +91,8 @@ class DeviceStateToLayoutMap {
      * Reads display-layout-configuration files to get the layouts to use for this device.
      */
     private void loadLayoutsFromConfig() {
-        final File configFile = Environment.buildPath(
-                Environment.getVendorDirectory(), CONFIG_FILE_PATH);
-
-        if (!configFile.exists()) {
+        final File configFile = getConfigurationFile();
+        if (configFile == null) {
             return;
         }
 
@@ -119,5 +117,21 @@ class DeviceStateToLayoutMap {
             Slog.e(TAG, "Encountered an error while reading/parsing display layout config file: "
                     + configFile, e);
         }
+    }
+
+    private File getConfigurationFile() {
+        final File configFileFromOdmDir = Environment.buildPath(
+                Environment.getOdmDirectory(), CONFIG_FILE_PATH);
+        if (configFileFromOdmDir.exists()) {
+            return configFileFromOdmDir;
+        }
+
+        final File configFileFromVendorDir = Environment.buildPath(
+                Environment.getVendorDirectory(), CONFIG_FILE_PATH);
+        if (configFileFromVendorDir.exists()) {
+            return configFileFromVendorDir;
+        }
+
+        return null;
     }
 }
