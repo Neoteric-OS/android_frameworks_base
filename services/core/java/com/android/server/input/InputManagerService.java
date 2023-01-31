@@ -3109,8 +3109,13 @@ public class InputManagerService extends IInputManager.Stub
      * directory.
      */
     private static Map<String, Integer> loadStaticInputPortAssociations() {
-        final File baseDir = Environment.getVendorDirectory();
-        final File confFile = new File(baseDir, PORT_ASSOCIATIONS_PATH);
+        File baseDir = Environment.getVendorDirectory();
+        File confFile = new File(baseDir, PORT_ASSOCIATIONS_PATH);
+
+        if (!confFile.exists()) {
+            baseDir = Environment.getOdmDirectory();
+            confFile = new File(baseDir, PORT_ASSOCIATIONS_PATH);
+        }
 
         try (final InputStream stream = new FileInputStream(confFile)) {
             return ConfigurationProcessor.processInputPortAssociations(stream);
