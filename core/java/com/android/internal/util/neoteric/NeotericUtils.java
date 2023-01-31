@@ -78,7 +78,8 @@ public class NeotericUtils {
     public static boolean isUdfps(Context context) {
         final int[] udfpsProps = context.getResources().getIntArray(
                 com.android.internal.R.array.config_udfps_sensor_props);
-        return !ArrayUtils.isEmpty(udfpsProps);
+        return (!ArrayUtils.isEmpty(udfpsProps)
+                || context.getResources().getBoolean(com.android.internal.R.bool.config_supportsUdfps));
     }
 
     public static void switchScreenOff(Context ctx) {
