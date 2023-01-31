@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.proton;
+package com.android.internal.util.zeph;
 
 import android.Manifest;
 import android.content.Context;
@@ -45,7 +45,13 @@ import com.android.internal.statusbar.IStatusBarService;
 /**
  * Some custom utilities
  */
-public class ProtonUtils {
+public class ZephyrusUtils {
+
+    private static final String TAG = "ZephyrusUtils";
+
+    private static final boolean DEBUG = false;
+
+    private static final int NO_CUTOUT = -1;
 
     public static void switchScreenOff(Context ctx) {
         PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
