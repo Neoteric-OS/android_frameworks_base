@@ -224,7 +224,7 @@ import com.android.systemui.util.Utils;
 import com.android.systemui.util.time.SystemClock;
 import com.android.wm.shell.animation.FlingAnimationUtils;
 
-import com.android.internal.util.proton.ProtonUtils;
+import com.android.internal.util.zeph.ZephyrusUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -932,7 +932,7 @@ public final class NotificationPanelViewController extends PanelViewController {
                 new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                ProtonUtils.switchScreenOff(mView.getContext());
+                ZephyrusUtils.switchScreenOff(mView.getContext());
                 return true;
             }
         });
