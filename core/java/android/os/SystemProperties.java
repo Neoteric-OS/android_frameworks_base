@@ -145,6 +145,7 @@ public class SystemProperties {
     @NonNull
     @SystemApi
     public static String get(@NonNull String key) {
+        Log.i(TAG, "SystemProperties.get key='" + key + "'");
         if (TRACK_KEY_ACCESS) onKeyAccess(key);
         return native_get(key);
     }
@@ -161,6 +162,7 @@ public class SystemProperties {
     @NonNull
     @SystemApi
     public static String get(@NonNull String key, @Nullable String def) {
+        Log.i(TAG, "SystemProperties.get key='" + key + "'" + " def='" + def + "'");
         if (TRACK_KEY_ACCESS) onKeyAccess(key);
         return native_get(key, def);
     }

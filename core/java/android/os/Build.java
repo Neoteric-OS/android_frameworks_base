@@ -32,6 +32,7 @@ import android.sysprop.SocProperties;
 import android.sysprop.TelephonyProperties;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.Log;
 import android.util.Slog;
 import android.view.View;
 
@@ -1528,6 +1529,7 @@ public class Build {
 
     @UnsupportedAppUsage
     private static String getString(String property) {
+        Log.i(TAG, "android.os.Build getString property='" + property + "'");
         return SystemProperties.get(property, UNKNOWN);
     }
 
