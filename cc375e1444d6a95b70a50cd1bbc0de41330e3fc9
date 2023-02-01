@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4414b6b8_c5f340b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-01T04:12:51Z",
+      "side": 1,
+      "message": "Based on discussion, here\u0027s the proposed OWNER update; this should swap OWNERS to the OWNERS in hardware/, but it\u0027s hard to test until it\u0027s merged.",
+      "revId": "cc375e1444d6a95b70a50cd1bbc0de41330e3fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
