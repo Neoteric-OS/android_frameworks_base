@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4df7a035_6d55ed94",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-02-01T00:43:48Z",
+      "side": 1,
+      "message": "\"In general\" is probably sufficient.\n\nThe alternative is \"In the general case\", but then it begs the question of \"what\u0027s the non-general case\"",
+      "range": {
+        "startLine": 327,
+        "startChar": 14,
+        "endLine": 327,
+        "endChar": 29
+      },
+      "revId": "9a7ae4fa27ec658fdbc2806a093c879929cc7ea4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1378687_8a46f325",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-02-01T00:43:48Z",
+      "side": 1,
+      "message": "\"will not be able to bind to, or use a restricted network.\"\n\nAlternatively, it might be useful to discuss what apps can do if networks aren\u0027t restricted - \"Unless the network type is marked restricted, any application can opt to use underlying networks, instead of through the VCN\"",
+      "range": {
+        "startLine": 327,
+        "startChar": 56,
+        "endLine": 327,
+        "endChar": 67
+      },
+      "revId": "9a7ae4fa27ec658fdbc2806a093c879929cc7ea4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
