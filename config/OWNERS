@@ -1,8 +1,0 @@
-include /ZYGOTE_OWNERS
-
-# art-team@ manages the boot image profiles
-per-file boot-* = ngeoffray@google.com, vmarko@google.com
-per-file dirty-image-objects = ngeoffray@google.com, vmarko@google.com
-per-file generate-preloaded-classes.sh = ngeoffray@google.com, vmarko@google.com
-per-file preloaded-classes* = ngeoffray@google.com, vmarko@google.com
-
