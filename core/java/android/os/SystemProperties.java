@@ -145,6 +145,7 @@ public class SystemProperties {
     @NonNull
     @SystemApi
     public static String get(@NonNull String key) {
+        Log.d(TAG, "SystemProperties.get key='" + key + "'", new Exception());
         if (TRACK_KEY_ACCESS) onKeyAccess(key);
         return native_get(key);
     }
