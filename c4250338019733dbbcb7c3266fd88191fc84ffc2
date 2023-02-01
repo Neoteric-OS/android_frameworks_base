@@ -16,6 +16,29 @@
       "message": "Plz help review. Thx!",
       "revId": "c4250338019733dbbcb7c3266fd88191fc84ffc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afa093ea_74d3834e",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-02-01T05:55:58Z",
+      "side": 1,
+      "message": "How about extract this to a dump method, and then\n```\nif (w.isClientLocal()) {\n    // Make it asynchronous to avoiding from writer being blocked by \n    // waitingfor buffer to be consumed.\n    IoThread.getExecutor().execute(() -\u003e dump(cleint, writeFd));\n} else {\n    dump(cleint, writeFd);\n}\n```",
+      "range": {
+        "startLine": 623,
+        "startChar": 24,
+        "endLine": 634,
+        "endChar": 25
+      },
+      "revId": "c4250338019733dbbcb7c3266fd88191fc84ffc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
