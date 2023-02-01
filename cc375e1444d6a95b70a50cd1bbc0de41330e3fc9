@@ -16,6 +16,23 @@
       "message": "Based on discussion, here\u0027s the proposed OWNER update; this should swap OWNERS to the OWNERS in hardware/, but it\u0027s hard to test until it\u0027s merged.",
       "revId": "cc375e1444d6a95b70a50cd1bbc0de41330e3fc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5a2522f_1c1bc5cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-01T04:14:56Z",
+      "side": 1,
+      "message": "That said, it does look like the top-level hardware/ OWNERS can already approve, so if you\u0027d prefer to leave this as is for now, it\u0027s not a blocker for changes here.",
+      "revId": "cc375e1444d6a95b70a50cd1bbc0de41330e3fc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
