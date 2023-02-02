@@ -778,8 +778,7 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
 
     @VisibleForTesting
     boolean shouldDisplayBugReport(UserInfo currentUser) {
-        return mGlobalSettings.getInt(Settings.Global.BUGREPORT_IN_POWER_MENU, 0) != 0
-                && (currentUser == null || currentUser.isPrimary());
+        return false;
     }
 
     @Override
@@ -1208,13 +1207,12 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         }
 
         public boolean showDuringKeyguard() {
-            return true;
+            return false;
         }
 
         @Override
         public boolean showBeforeProvisioning() {
-            return Build.isDebuggable() && mGlobalSettings.getInt(
-                    Settings.Global.BUGREPORT_IN_POWER_MENU, 0) != 0;
+            return false;
         }
     }
 
