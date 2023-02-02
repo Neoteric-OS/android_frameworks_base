@@ -5885,4 +5885,8 @@
     <!-- List of certificate to be used for font fs-verity integrity verification -->
     <string-array translatable="false" name="config_fontManagerServiceCerts">
     </string-array>
+
+    <!-- Array of allowed USB interfaces to remove from sDenyInterfaces. -->
+    <integer-array translatable="false" name="config_allowedUsbInterfaces">
+    </integer-array>
 </resources>
