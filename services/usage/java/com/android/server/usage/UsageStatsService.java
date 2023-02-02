@@ -995,7 +995,7 @@ public class UsageStatsService extends SystemService implements
      * convert it to a system wall time. System and real time snapshots are updated before
      * conversion.
      */
-    private void convertToSystemTimeLocked(Event event) {
+    private long getSystemTimeLocked(Event event) {
         final long actualSystemTime = System.currentTimeMillis();
         if (ENABLE_TIME_CHANGE_CORRECTION) {
             final long actualRealtime = SystemClock.elapsedRealtime();
@@ -1009,7 +1009,7 @@ public class UsageStatsService extends SystemService implements
                 mSystemTimeSnapshot = actualSystemTime;
             }
         }
-        event.mTimeStamp = Math.max(0, event.mTimeStamp - mRealTimeSnapshot) + mSystemTimeSnapshot;
+        return Math.max(0, event.mTimeStamp - mRealTimeSnapshot) + mSystemTimeSnapshot;
     }
 
     /**
@@ -1170,8 +1170,8 @@ public class UsageStatsService extends SystemService implements
                 case Event.USER_INTERACTION:
                     // Fall through
                 case Event.APP_COMPONENT_USED:
-                    convertToSystemTimeLocked(event);
-                    mLastTimeComponentUsedGlobal.put(event.mPackage, event.mTimeStamp);
+                    long systemTimeStamp = getSystemTimeLocked(event);
+                    mLastTimeComponentUsedGlobal.put(event.mPackage, systemTimeStamp);
                     break;
             }
 
