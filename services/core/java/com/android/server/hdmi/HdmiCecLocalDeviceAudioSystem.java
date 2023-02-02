@@ -229,6 +229,10 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDeviceSource {
         super.disableDevice(initiatedByCec, callback);
         assertRunOnServiceThread();
         mService.unregisterTvInputCallback(mTvInputCallback);
+        terminateSystemAudioMode();
+        removeAllActions();
+        // Make sure the callback is called instantly or else it will be called 5 seconds later.
+        checkIfPendingActionsCleared();
     }
 
     @Override
@@ -246,7 +250,6 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDeviceSource {
                     Constants.PROPERTY_LAST_SYSTEM_AUDIO_CONTROL,
                     isSystemAudioActivated() ? "true" : "false");
         }
-        terminateSystemAudioMode();
     }
 
     @Override
