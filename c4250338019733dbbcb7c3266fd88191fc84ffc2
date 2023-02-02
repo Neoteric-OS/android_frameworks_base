@@ -63,6 +63,30 @@
       },
       "revId": "c4250338019733dbbcb7c3266fd88191fc84ffc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46510ed1_cc7c0099",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1902133
+      },
+      "writtenOn": "2023-02-02T12:25:55Z",
+      "side": 1,
+      "message": "I\u0027ve updated the patch. I didn\u0027t wrap whole logic about pipe since it will intrudoce more maintaince about requestList. Is it OK?",
+      "parentUuid": "7f5cb345_f40a40d0",
+      "range": {
+        "startLine": 623,
+        "startChar": 24,
+        "endLine": 634,
+        "endChar": 25
+      },
+      "revId": "c4250338019733dbbcb7c3266fd88191fc84ffc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
