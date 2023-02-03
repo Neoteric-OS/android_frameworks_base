@@ -16,6 +16,23 @@
       "message": "Generally fine, but please hold until we discuss in the telephony API council meeting.",
       "revId": "402a4222fd82d779a6fb1f9c2bf6d02d6ec217c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "380e46e6_92e9d7a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2023-02-03T19:10:52Z",
+      "side": 1,
+      "message": "number conflict with aosp/2390956",
+      "revId": "402a4222fd82d779a6fb1f9c2bf6d02d6ec217c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
