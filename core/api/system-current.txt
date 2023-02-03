@@ -9152,6 +9152,7 @@ package android.os {
 
   public class BatteryManager {
     method @RequiresPermission(android.Manifest.permission.POWER_SAVER) public boolean setChargingStateUpdateDelayMillis(int);
+    field public static final int BATTERY_PROPERTY_CHARGING_POLICY = 9; // 0x9
     field public static final int BATTERY_PROPERTY_FIRST_USAGE_DATE = 8; // 0x8
     field public static final int BATTERY_PROPERTY_MANUFACTURING_DATE = 7; // 0x7
     field public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";

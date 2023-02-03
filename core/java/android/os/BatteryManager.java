@@ -293,6 +293,13 @@ public class BatteryManager {
     @SystemApi
     public static final int BATTERY_PROPERTY_FIRST_USAGE_DATE = 8;
 
+    /**
+     * Battery charging policy.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_PROPERTY_CHARGING_POLICY = 9;
+
     private final Context mContext;
     private final IBatteryStats mBatteryStats;
     private final IBatteryPropertiesRegistrar mBatteryPropertiesRegistrar;
