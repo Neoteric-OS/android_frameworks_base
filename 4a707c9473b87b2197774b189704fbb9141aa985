@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e7afb7f_c65f6c4d",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-02-03T11:30:13Z",
+      "side": 1,
+      "message": "Oh sorry I thought there are more code need to extract.\nBut it seems to only executeCommand needs to be wrapped.\nCould you just inline here\n```\n// Make it asynchronous to avoid writer being blocked by waiting for buffer to\n// be consumed.\nfinal IWindow client \u003d w.mClient;\nfinal ParcelFileDescriptor pfd \u003d pipe.getWriteFd();\nIoThread.getExecutor().execute(() -\u003e {\n    try {\n        client.executeCommand(\n                ViewDebug.REMOTE_COMMAND_DUMP_ENCODED, null, pfd);\n    } catch (RemoteException e) {\n        // Ignore for local call.\n    }\n});\n```",
+      "range": {
+        "startLine": 597,
+        "startChar": 32,
+        "endLine": 597,
+        "endChar": 84
+      },
+      "revId": "4a707c9473b87b2197774b189704fbb9141aa985",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
