@@ -142,6 +142,9 @@ class HealthServiceWrapperAidl extends HealthServiceWrapper {
                     healthData = service.getBatteryHealthData();
                     prop.setLong(healthData.batteryFirstUsageSeconds);
                     break;
+                case BatteryManager.BATTERY_PROPERTY_CHARGING_POLICY:
+                    prop.setLong(service.getChargingPolicy());
+                    break;
             }
         } catch (UnsupportedOperationException e) {
             // Leave prop untouched.
