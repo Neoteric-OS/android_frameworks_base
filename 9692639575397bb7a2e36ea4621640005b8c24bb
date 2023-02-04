@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f8379fc_2ff570bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060825
+      },
+      "writtenOn": "2023-02-04T19:49:17Z",
+      "side": 1,
+      "message": "Added manifest_services.xml for services vintf_fragments. Can likely be used to remove additional framework entries within libhidl/vintfdata/manifests.",
+      "revId": "9692639575397bb7a2e36ea4621640005b8c24bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
