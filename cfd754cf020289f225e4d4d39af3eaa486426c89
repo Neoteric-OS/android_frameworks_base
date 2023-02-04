@@ -16,6 +16,24 @@
       "message": "unrelated",
       "revId": "cfd754cf020289f225e4d4d39af3eaa486426c89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26387131_7277ff97",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1060825
+      },
+      "writtenOn": "2023-02-04T01:02:55Z",
+      "side": 1,
+      "message": "formatter complains on upload, but happy to revert if you prefer (just let me know which)",
+      "parentUuid": "47cb2860_da78516a",
+      "revId": "cfd754cf020289f225e4d4d39af3eaa486426c89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
