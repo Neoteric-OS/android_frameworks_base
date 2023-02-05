@@ -1770,7 +1770,6 @@ public final class SystemServer implements Dumpable {
         }
         t.traceEnd();
 
-
         if (!mOnlyCore) {
             t.traceBegin("UpdatePackagesIfNeeded");
             try {
