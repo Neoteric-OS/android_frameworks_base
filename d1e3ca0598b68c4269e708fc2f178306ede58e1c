@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c818fcd_fa643619",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-02-06T06:31:42Z",
+      "side": 1,
+      "message": "Needs import ParcelFileDescriptor and put w.client to a local final var.\n```\ncannot find symbol\n                            final ParcelFileDescriptor pfd \u003d pipe.getWriteFd();\n                                  ^\n  symbol:   class ParcelFileDescriptor\n  location: class WindowManagerShellCommand\nout/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/shard32/srcjars/frameworks/base/services/core/java/com/android/server/wm/WindowManagerShellCommand.java:579: error: cannot find symbol\n                                        w.client.executeCommand(\n                                         ^\n  symbol:   variable client\n  location: variable w of type WindowState\nout/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/shard32/srcjars/frameworks/base/services/core/java/com/android/server/wm/WindowManagerShellCommand.java:586: error: cannot find symbol\n                                w.client.executeCommand(\n                                 ^\n  symbol:   variable client\n  location: variable w of type WindowState\n3 errors\n```",
+      "revId": "d1e3ca0598b68c4269e708fc2f178306ede58e1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
