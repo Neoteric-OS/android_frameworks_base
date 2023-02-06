@@ -33,6 +33,23 @@
       "message": "Please add a bug id and tests",
       "revId": "5abc5e123494fd97bf7327dd3b0bb733cded60f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f587eab7_8eb22a7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1591163
+      },
+      "writtenOn": "2023-02-06T16:13:04Z",
+      "side": 1,
+      "message": "I don\u0027t have any knowledge on this. So removing myself from the reviewers list",
+      "revId": "5abc5e123494fd97bf7327dd3b0bb733cded60f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
