@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a6e49e0_ccebd813",
+        "filename": "services/autofill/java/com/android/server/autofill/Session.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3843,
+      "author": {
+        "id": 1381976
+      },
+      "writtenOn": "2023-02-06T09:42:04Z",
+      "side": 1,
+      "message": "The right way is used isRequestSupportFillDialog(flags) like the line #964. code: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/autofill/java/com/android/server/autofill/Session.java;drc\u003dd4a2a5601bcdb7b5db4d35051d4f07b1bb94396e;l\u003d964",
+      "range": {
+        "startLine": 3843,
+        "startChar": 50,
+        "endLine": 3843,
+        "endChar": 71
+      },
+      "revId": "a4a19b208ff842048c787901ba037da7bf0518f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
