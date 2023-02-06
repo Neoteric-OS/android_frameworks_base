@@ -3629,11 +3629,32 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         List<SubscriptionInfo> list = getSubscriptionInfo(false /* forceReload */);
         int resultId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
         int bestSlotId = Integer.MAX_VALUE; // Favor lowest slot first
+        int mSimState;
         for (int i = 0; i < list.size(); i++) {
             final SubscriptionInfo info = list.get(i);
             final int id = info.getSubscriptionId();
-            int slotId = getSlotId(id);
-            if (state == getSimState(id) && bestSlotId > slotId) {
+            int slotId = info.getSimSlotIndex();
+            if (!mSimDatas.containsKey(slotId)) {
+                boolean changed = refreshSimState(id, slotId);
+                if (changed) {
+                    SimData data = mSimDatas.get(slotId);
+                    if (data != null) {
+                        for (int j = 0; j < mCallbacks.size(); j++) {
+                            KeyguardUpdateMonitorCallback cb = mCallbacks.get(j).get();
+                            if (cb != null) {
+                                cb.onSimStateChanged(data.subId, data.slotId, data.simState);
+                            }
+                        }
+                    }
+                }
+            }
+            slotId = mSimDatas.get(slotId).slotId;
+            if (mSimDatas.containsKey(slotId)) {
+                mSimState = mSimDatas.get(slotId).simState;
+            } else {
+                mSimState = TelephonyManager.SIM_STATE_UNKNOWN;
+            }
+            if (state == mSimState && bestSlotId > slotId) {
                 resultId = id;
                 bestSlotId = slotId;
             }
