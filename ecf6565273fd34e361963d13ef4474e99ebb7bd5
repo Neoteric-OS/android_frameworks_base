@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a5cb48e_212d9c61",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2023-02-06T18:51:52Z",
+      "side": 1,
+      "message": "BATTERY_PROPERTY_MANUFACTURING_DATE and  BATTERY_PROPERTY_FIRST_USAGE_DATE should not be exposed to BatteryManager",
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
