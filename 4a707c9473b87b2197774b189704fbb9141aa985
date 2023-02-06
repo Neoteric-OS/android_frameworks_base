@@ -22,6 +22,30 @@
       },
       "revId": "4a707c9473b87b2197774b189704fbb9141aa985",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c6f2b19_e0a37969",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1902133
+      },
+      "writtenOn": "2023-02-06T02:33:56Z",
+      "side": 1,
+      "message": "I\u0027ve updated the patch, plz review again.\nI\u0027m sorry about the low quality of last patch, which couldn\u0027t event been compiled. Local compile is slow even just for framework and it stucks my PC and stop my work. 😞 Could I just rely on presubmit robot? ;)",
+      "parentUuid": "7e7afb7f_c65f6c4d",
+      "range": {
+        "startLine": 597,
+        "startChar": 32,
+        "endLine": 597,
+        "endChar": 84
+      },
+      "revId": "4a707c9473b87b2197774b189704fbb9141aa985",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
