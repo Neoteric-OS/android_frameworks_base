@@ -16,6 +16,29 @@
       "message": "LGTM",
       "revId": "2bb383d9f2ecb7d53551dcfea2fecd3bce720070",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55d07c62_fb6d1f7c",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1394985
+      },
+      "writtenOn": "2023-02-06T08:12:22Z",
+      "side": 1,
+      "message": "Are these three gonna be System APIs or public APIs?",
+      "range": {
+        "startLine": 171,
+        "startChar": 4,
+        "endLine": 171,
+        "endChar": 10
+      },
+      "revId": "2bb383d9f2ecb7d53551dcfea2fecd3bce720070",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
