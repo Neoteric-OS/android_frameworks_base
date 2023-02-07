@@ -22,25 +22,33 @@ import android.os.Build;
 import android.test.ActivityUnitTestCase;
 import android.util.ArraySet;
 import android.util.Pair;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.URL;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLHandshakeException;
-import javax.net.ssl.TrustManager;
 
 import com.android.org.conscrypt.TrustedCertificateStore;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
+
+import java.io.ByteArrayInputStream;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.net.ssl.SSLContext;
+
+@RunWith(Parameterized.class)
 public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
+
+    @Parameter public String mApexCertsEnabled;
+
+    @Parameters(name = "{0}")
+    public static Object[] data() {
+        return new Object[] {"true", "false"};
+    }
 
     public NetworkSecurityConfigTests() {
         super(Activity.class);
@@ -94,7 +102,6 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         }
     }
 
-
     private static byte[] hexToBytes(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
@@ -121,6 +128,7 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
                 .build();
     }
 
+    @Test
     public void testEmptyConfig() throws Exception {
         ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
                 = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
@@ -130,7 +138,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         TestUtils.assertConnectionFails(context, "android.com", 443);
     }
 
+    @Test
     public void testEmptyPerNetworkSecurityConfig() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
                 = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
         domainMap.add(new Pair<Domain, NetworkSecurityConfig>(
@@ -141,7 +151,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         TestUtils.assertConnectionSucceeds(context, "google.com", 443);
     }
 
+    @Test
     public void testBadPin() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         ArraySet<Pin> pins = new ArraySet<Pin>();
         pins.add(new Pin("SHA-256", new byte[0]));
         NetworkSecurityConfig domain = new NetworkSecurityConfig.Builder()
@@ -159,7 +171,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         TestUtils.assertConnectionSucceeds(context, "google.com", 443);
     }
 
+    @Test
     public void testGoodPin() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         ArraySet<Pin> pins = new ArraySet<Pin>();
         pins.add(new Pin("SHA-256", G2_SPKI_SHA256));
         NetworkSecurityConfig domain = new NetworkSecurityConfig.Builder()
@@ -177,7 +191,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         TestUtils.assertConnectionSucceeds(context, "developer.android.com", 443);
     }
 
+    @Test
     public void testOverridePins() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         // Use a bad pin + granting the system CA store the ability to override pins.
         ArraySet<Pin> pins = new ArraySet<Pin>();
         pins.add(new Pin("SHA-256", new byte[0]));
@@ -195,7 +211,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         TestUtils.assertConnectionSucceeds(context, "android.com", 443);
     }
 
+    @Test
     public void testMostSpecificNetworkSecurityConfig() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
                 = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
         domainMap.add(new Pair<Domain, NetworkSecurityConfig>(
@@ -208,7 +226,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         TestUtils.assertConnectionSucceeds(context, "developer.android.com", 443);
     }
 
+    @Test
     public void testSubdomainIncluded() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         // First try connecting to a subdomain of a domain entry that includes subdomains.
         ArraySet<Pair<Domain, NetworkSecurityConfig>> domainMap
                 = new ArraySet<Pair<Domain, NetworkSecurityConfig>>();
@@ -225,6 +245,7 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         TestUtils.assertConnectionFails(context, "developer.android.com", 443);
     }
 
+    @Test
     public void testConfigBuilderUsesParents() throws Exception {
         // Check that a builder with a parent uses the parent's values when non is set.
         NetworkSecurityConfig config = new NetworkSecurityConfig.Builder()
@@ -234,7 +255,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         assert(!config.getTrustAnchors().isEmpty());
     }
 
+    @Test
     public void testConfigBuilderParentLoop() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         NetworkSecurityConfig.Builder config1 = new NetworkSecurityConfig.Builder();
         NetworkSecurityConfig.Builder config2 = new NetworkSecurityConfig.Builder();
         config1.setParent(config2);
@@ -245,7 +268,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         }
     }
 
+    @Test
     public void testWithUrlConnection() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         ArraySet<Pin> pins = new ArraySet<Pin>();
         pins.add(new Pin("SHA-256", G2_SPKI_SHA256));
         NetworkSecurityConfig domain = new NetworkSecurityConfig.Builder()
@@ -264,7 +289,9 @@ public class NetworkSecurityConfigTests extends ActivityUnitTestCase<Activity> {
         TestUtils.assertUrlConnectionFails(context, "google.com", 443);
     }
 
+    @Test
     public void testUserAddedCaOptIn() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         TrustedCertificateStore store = new TrustedCertificateStore();
         try {
             // Install the test CA.
