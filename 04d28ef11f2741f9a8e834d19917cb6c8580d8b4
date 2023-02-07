@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ad2e0f6_b95b468d",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-02-07T07:55:23Z",
+      "side": 1,
+      "message": "Add comment:\n```\n// Make it asynchronous to avoid writer being blocked by waiting for the buffer\n// to be consumed in the same process.\n```",
+      "revId": "04d28ef11f2741f9a8e834d19917cb6c8580d8b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
