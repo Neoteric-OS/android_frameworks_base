@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84cc691b_feead907",
+        "filename": "core/java/android/net/vcn/persistablebundleutils/IkeSessionParamsUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-02-07T22:47:32Z",
+      "side": 1,
+      "message": "We should include this CL and the IKE CL in one topic",
+      "range": {
+        "startLine": 96,
+        "startChar": 41,
+        "endLine": 96,
+        "endChar": 78
+      },
+      "revId": "7427a2a5eef6bcd3dca7b2154a4677bf5fad170c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ba0a7e1_3427cd1e",
+        "filename": "tests/vcn/java/android/net/vcn/persistablebundleutils/IkeSessionParamsUtilsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-02-07T22:47:32Z",
+      "side": 1,
+      "message": "In Android U all of these three options must be valid. Previously in T QPR we do isIkeOptionValid check before adding `AUTOMATIC_ADDRESS_FAMILY_SELECTION` and `AUTOMATIC_NATT_KEEPALIVES` is because T QPR build might be used with an older IKE mainline module where two flags are not defined yet.",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 9
+      },
+      "revId": "7427a2a5eef6bcd3dca7b2154a4677bf5fad170c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
