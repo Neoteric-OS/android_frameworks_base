@@ -3,6 +3,144 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43344008_124bb56a",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 9153,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-02-07T04:29:08Z",
+      "side": 1,
+      "message": "I think we don\u0027t have to add the new definition for this file",
+      "range": {
+        "startLine": 9153,
+        "startChar": 15,
+        "endLine": 9153,
+        "endChar": 29
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bae8066c_6a3e03f1",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-02-07T04:29:08Z",
+      "side": 1,
+      "message": "nit: \"battery charging cycle count\"",
+      "range": {
+        "startLine": 168,
+        "startChar": 34,
+        "endLine": 168,
+        "endChar": 53
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65fdf72f_01f63138",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-02-07T04:29:08Z",
+      "side": 1,
+      "message": "there is an existing `public static final String EXTRA_HEALTH \u003d \"health\";` field, what is the difference between \u0027health\u0027 and \u0027state_of_health\u0027? need more context for developers to understand it",
+      "range": {
+        "startLine": 180,
+        "startChar": 31,
+        "endLine": 180,
+        "endChar": 52
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "610b0598_4343bd07",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-02-07T04:29:08Z",
+      "side": 1,
+      "message": "1) move these definition after L147 to put all extra fields for `ACTION_BATTERY_CHANGED` intent in the near block\n\n2) remove the prefix `android.os.extra.` from these definition and use the lowercase string for the extra field (reference to other extra definition in the ACTION_BATTERY_CHANGED)",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 90
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51f0acef_d761238d",
+        "filename": "services/core/java/com/android/server/BatteryService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-02-07T04:29:08Z",
+      "side": 1,
+      "message": "nit: move them to L151 to put similar concept of variables together",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 34
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51cbede5_4705f8bb",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-02-07T04:29:08Z",
+      "side": 1,
+      "message": "nit: add import",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a5cb48e_212d9c61",
         "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
         "patchSetId": 12
@@ -32,6 +170,24 @@
       "side": 1,
       "message": "Do you mean these should not be part of the public API?",
       "parentUuid": "7a5cb48e_212d9c61",
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fac5422_ad5152e3",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-02-07T04:29:08Z",
+      "side": 1,
+      "message": "I think this is in EU regulation requirement, and we want to export it out, is it correct?",
+      "parentUuid": "505cca1e_5dbd5ab4",
       "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
