@@ -419,6 +419,7 @@ public final class NfcAdapter {
     // Guarded by NfcAdapter.class
     static boolean sIsInitialized = false;
     static boolean sHasNfcFeature;
+    static boolean sHasHceFeature;
     static boolean sHasBeamFeature;
 
     // Final after first constructor, except for
@@ -616,11 +617,11 @@ public final class NfcAdapter {
             pm = context.getPackageManager();
             sHasNfcFeature = pm.hasSystemFeature(PackageManager.FEATURE_NFC);
             sHasBeamFeature = pm.hasSystemFeature(PackageManager.FEATURE_NFC_BEAM);
-            boolean hasHceFeature =
+            sHasHceFeature =
                     pm.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION)
                     || pm.hasSystemFeature(PackageManager.FEATURE_NFC_HOST_CARD_EMULATION_NFCF);
             /* is this device meant to have NFC */
-            if (!sHasNfcFeature && !hasHceFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 Log.v(TAG, "this device does not have NFC support");
                 throw new UnsupportedOperationException();
             }
@@ -637,7 +638,7 @@ public final class NfcAdapter {
                     throw new UnsupportedOperationException();
                 }
             }
-            if (hasHceFeature) {
+            if (sHasHceFeature) {
                 try {
                     sNfcFCardEmulationService = sService.getNfcFCardEmulationInterface();
                 } catch (RemoteException e) {
@@ -1110,7 +1111,7 @@ public final class NfcAdapter {
     @java.lang.Deprecated
     public void setBeamPushUris(Uri[] uris, Activity activity) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -1198,7 +1199,7 @@ public final class NfcAdapter {
     @java.lang.Deprecated
     public void setBeamPushUrisCallback(CreateBeamUrisCallback callback, Activity activity) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -1289,7 +1290,7 @@ public final class NfcAdapter {
     public void setNdefPushMessage(NdefMessage message, Activity activity,
             Activity ... activities) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -1326,7 +1327,7 @@ public final class NfcAdapter {
     @SystemApi
     public void setNdefPushMessage(NdefMessage message, Activity activity, int flags) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -1408,7 +1409,7 @@ public final class NfcAdapter {
     public void setNdefPushMessageCallback(CreateNdefMessageCallback callback, Activity activity,
             Activity ... activities) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -1495,7 +1496,7 @@ public final class NfcAdapter {
     public void setOnNdefPushCompleteCallback(OnNdefPushCompleteCallback callback,
             Activity activity, Activity ... activities) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -1711,7 +1712,7 @@ public final class NfcAdapter {
     @java.lang.Deprecated
     public boolean invokeBeam(Activity activity) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -1777,7 +1778,7 @@ public final class NfcAdapter {
     @Deprecated
     public void enableForegroundNdefPush(Activity activity, NdefMessage message) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -1814,7 +1815,7 @@ public final class NfcAdapter {
     @Deprecated
     public void disableForegroundNdefPush(Activity activity) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -1839,7 +1840,7 @@ public final class NfcAdapter {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
     public boolean enableSecureNfc(boolean enable) {
-        if (!sHasNfcFeature) {
+        if (!sHasNfcFeature && !sHasHceFeature) {
             throw new UnsupportedOperationException();
         }
         try {
@@ -1867,7 +1868,7 @@ public final class NfcAdapter {
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
      */
     public boolean isSecureNfcSupported() {
-        if (!sHasNfcFeature) {
+        if (!sHasNfcFeature && !sHasHceFeature) {
             throw new UnsupportedOperationException();
         }
         try {
@@ -1897,7 +1898,7 @@ public final class NfcAdapter {
      */
     @Nullable
     public NfcAntennaInfo getNfcAntennaInfo() {
-        if (!sHasNfcFeature) {
+        if (!sHasNfcFeature && !sHasHceFeature) {
             throw new UnsupportedOperationException();
         }
         try {
@@ -1927,7 +1928,7 @@ public final class NfcAdapter {
      *         Secure NFC functionality. {@link #isSecureNfcSupported}
      */
     public boolean isSecureNfcEnabled() {
-        if (!sHasNfcFeature) {
+        if (!sHasNfcFeature && !sHasHceFeature) {
             throw new UnsupportedOperationException();
         }
         try {
@@ -1956,7 +1957,7 @@ public final class NfcAdapter {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
     public boolean enableNdefPush() {
-        if (!sHasNfcFeature) {
+        if (!sHasNfcFeature && !sHasHceFeature) {
             throw new UnsupportedOperationException();
         }
         try {
@@ -1976,7 +1977,7 @@ public final class NfcAdapter {
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
     public boolean disableNdefPush() {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -2018,7 +2019,7 @@ public final class NfcAdapter {
 
     public boolean isNdefPushEnabled() {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
             if (!sHasBeamFeature) {
@@ -2151,7 +2152,7 @@ public final class NfcAdapter {
     public boolean addNfcUnlockHandler(final NfcUnlockHandler unlockHandler,
                                        String[] tagTechnologies) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -2200,7 +2201,7 @@ public final class NfcAdapter {
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
     public boolean removeNfcUnlockHandler(NfcUnlockHandler unlockHandler) {
         synchronized (NfcAdapter.class) {
-            if (!sHasNfcFeature) {
+            if (!sHasNfcFeature && !sHasHceFeature) {
                 throw new UnsupportedOperationException();
             }
         }
@@ -2281,7 +2282,7 @@ public final class NfcAdapter {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.NFC_SET_CONTROLLER_ALWAYS_ON)
     public boolean setControllerAlwaysOn(boolean value) {
-        if (!sHasNfcFeature) {
+        if (!sHasNfcFeature && !sHasHceFeature) {
             throw new UnsupportedOperationException();
         }
         try {
@@ -2340,7 +2341,7 @@ public final class NfcAdapter {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.NFC_SET_CONTROLLER_ALWAYS_ON)
     public boolean isControllerAlwaysOnSupported() {
-        if (!sHasNfcFeature) {
+        if (!sHasNfcFeature && !sHasHceFeature) {
             throw new UnsupportedOperationException();
         }
         try {
