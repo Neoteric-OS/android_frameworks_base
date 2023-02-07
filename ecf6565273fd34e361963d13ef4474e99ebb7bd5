@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b586f03_edfdff8d",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-07T13:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bae8066c_6a3e03f1",
+      "range": {
+        "startLine": 168,
+        "startChar": 34,
+        "endLine": 168,
+        "endChar": 53
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65fdf72f_01f63138",
@@ -60,6 +84,30 @@
       "writtenOn": "2023-02-07T04:29:08Z",
       "side": 1,
       "message": "there is an existing `public static final String EXTRA_HEALTH \u003d \"health\";` field, what is the difference between \u0027health\u0027 and \u0027state_of_health\u0027? need more context for developers to understand it",
+      "range": {
+        "startLine": 180,
+        "startChar": 31,
+        "endLine": 180,
+        "endChar": 52
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b6a449d_9575c53a",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-07T13:36:22Z",
+      "side": 1,
+      "message": "Thanks for the reminding. updated.",
+      "parentUuid": "65fdf72f_01f63138",
       "range": {
         "startLine": 180,
         "startChar": 31,
@@ -116,6 +164,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10503ec3_4d144e72",
+        "filename": "services/core/java/com/android/server/BatteryService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-07T13:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51f0acef_d761238d",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 34
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51cbede5_4705f8bb",
@@ -129,6 +201,30 @@
       "writtenOn": "2023-02-07T04:29:08Z",
       "side": 1,
       "message": "nit: add import",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec48897a_fd4afdf0",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-07T13:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51cbede5_4705f8bb",
       "range": {
         "startLine": 116,
         "startChar": 8,
