@@ -16,34 +16,41 @@
 
 package android.security.net.config;
 
-import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.test.AndroidTestCase;
 import android.test.MoreAsserts;
-import android.util.ArraySet;
-import android.util.Pair;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
+
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.Socket;
-import java.net.URL;
 import java.security.KeyStore;
 import java.security.Provider;
-import java.security.Security;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
-import javax.net.ssl.HttpsURLConnection;
+
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
+@RunWith(Parameterized.class)
 public class XmlConfigTests extends AndroidTestCase {
 
     private final static String DEBUG_CA_SUBJ = "O=AOSP, CN=Test debug CA";
 
+    @Parameters(name = "{0}")
+    public static Object[] data() {
+        return new Object[] {"true", "false"};
+    }
+
+    @Parameter public String mApexCertsEnabled;
+
+    @Test
     public void testEmptyConfigFile() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.empty_config,
                 TestUtils.makeApplicationInfo());
@@ -64,6 +71,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionSucceeds(context, "google.com", 443);
     }
 
+    @Test
     public void testEmptyAnchors() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.empty_trust,
                 TestUtils.makeApplicationInfo());
@@ -83,6 +91,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionFails(context, "google.com", 443);
     }
 
+    @Test
     public void testBasicDomainConfig() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.domain1,
                 TestUtils.makeApplicationInfo());
@@ -120,6 +129,7 @@ public class XmlConfigTests extends AndroidTestCase {
         }
     }
 
+    @Test
     public void testBasicPinning() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.pins1,
                 TestUtils.makeApplicationInfo());
@@ -136,6 +146,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionSucceeds(context, "google.com", 443);
     }
 
+    @Test
     public void testExpiredPin() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.expired_pin,
                 TestUtils.makeApplicationInfo());
@@ -151,6 +162,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionSucceeds(context, "android.com", 443);
     }
 
+    @Test
     public void testOverridesPins() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.override_pins,
                 TestUtils.makeApplicationInfo());
@@ -166,6 +178,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionSucceeds(context, "android.com", 443);
     }
 
+    @Test
     public void testBadPin() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.bad_pin,
                 TestUtils.makeApplicationInfo());
@@ -182,6 +195,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionSucceeds(context, "google.com", 443);
     }
 
+    @Test
     public void testMultipleDomains() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.multiple_domains,
                 TestUtils.makeApplicationInfo());
@@ -204,6 +218,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionSucceeds(context, "android.com", 443);
     }
 
+    @Test
     public void testMultipleDomainConfigs() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.multiple_configs,
                 TestUtils.makeApplicationInfo());
@@ -220,6 +235,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionSucceeds(context, "android.com", 443);
     }
 
+    @Test
     public void testIncludeSubdomains() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.subdomains,
                 TestUtils.makeApplicationInfo());
@@ -234,6 +250,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionFails(context, "google.com", 443);
     }
 
+    @Test
     public void testAttributes() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.attributes,
                 TestUtils.makeApplicationInfo());
@@ -244,7 +261,9 @@ public class XmlConfigTests extends AndroidTestCase {
         assertFalse(config.isCleartextTrafficPermitted());
     }
 
+    @Test
     public void testResourcePemCertificateSource() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.resource_anchors_pem,
                 TestUtils.makeApplicationInfo());
         ApplicationConfig appConfig = new ApplicationConfig(source);
@@ -261,7 +280,9 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionSucceeds(context, "android.com", 443);
     }
 
+    @Test
     public void testResourceDerCertificateSource() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.resource_anchors_der,
                 TestUtils.makeApplicationInfo());
         ApplicationConfig appConfig = new ApplicationConfig(source);
@@ -278,6 +299,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionSucceeds(context, "android.com", 443);
     }
 
+    @Test
     public void testNestedDomainConfigs() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.nested_domains,
                 TestUtils.makeApplicationInfo());
@@ -297,6 +319,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionSucceeds(context, "developer.android.com", 443);
     }
 
+    @Test
     public void testNestedDomainConfigsOverride() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.nested_domains_override,
                 TestUtils.makeApplicationInfo());
@@ -309,6 +332,7 @@ public class XmlConfigTests extends AndroidTestCase {
         assertFalse(child.isCleartextTrafficPermitted());
     }
 
+    @Test
     public void testDebugOverridesDisabled() throws Exception {
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.debug_basic,
                 TestUtils.makeApplicationInfo());
@@ -321,6 +345,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionFails(context, "developer.android.com", 443);
     }
 
+    @Test
     public void testBasicDebugOverrides() throws Exception {
         ApplicationInfo info = TestUtils.makeApplicationInfo();
         info.flags |= ApplicationInfo.FLAG_DEBUGGABLE;
@@ -337,7 +362,9 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionSucceeds(context, "developer.android.com", 443);
     }
 
+    @Test
     public void testDebugOverridesWithDomain() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         ApplicationInfo info = TestUtils.makeApplicationInfo();
         info.flags |= ApplicationInfo.FLAG_DEBUGGABLE;
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.debug_domain, info);
@@ -357,7 +384,9 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionSucceeds(context, "developer.android.com", 443);
     }
 
+    @Test
     public void testDebugInherit() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         ApplicationInfo info = TestUtils.makeApplicationInfo();
         info.flags |= ApplicationInfo.FLAG_DEBUGGABLE;
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.debug_domain, info);
@@ -392,31 +421,39 @@ public class XmlConfigTests extends AndroidTestCase {
         }
     }
 
+    @Test
     public void testBadConfig0() throws Exception {
         testBadConfig(R.xml.bad_config0);
     }
 
+    @Test
     public void testBadConfig1() throws Exception {
         testBadConfig(R.xml.bad_config1);
     }
 
+    @Test
     public void testBadConfig2() throws Exception {
         testBadConfig(R.xml.bad_config2);
     }
 
+    @Test
     public void testBadConfig3() throws Exception {
         testBadConfig(R.xml.bad_config3);
     }
 
+    @Test
     public void testBadConfig4() throws Exception {
         testBadConfig(R.xml.bad_config4);
     }
 
+    @Test
     public void testBadConfig5() throws Exception {
         testBadConfig(R.xml.bad_config4);
     }
 
+    @Test
     public void testTrustManagerKeystore() throws Exception {
+        System.setProperty("apex.certs.enabled", mApexCertsEnabled);
         XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.bad_pin,
                 TestUtils.makeApplicationInfo());
         ApplicationConfig appConfig = new ApplicationConfig(source);
@@ -439,6 +476,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionSucceeds(context, "android.com" , 443);
     }
 
+    @Test
     public void testDebugDedup() throws Exception {
         ApplicationInfo info = TestUtils.makeApplicationInfo();
         info.flags |= ApplicationInfo.FLAG_DEBUGGABLE;
@@ -459,6 +497,7 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertUrlConnectionSucceeds(context, "android.com", 443);
     }
 
+    @Test
     public void testExtraDebugResource() throws Exception {
         ApplicationInfo info = TestUtils.makeApplicationInfo();
         info.flags |= ApplicationInfo.FLAG_DEBUGGABLE;
@@ -478,6 +517,7 @@ public class XmlConfigTests extends AndroidTestCase {
         MoreAsserts.assertEmpty(config.getTrustAnchors());
     }
 
+    @Test
     public void testExtraDebugResourceIgnored() throws Exception {
         // Verify that parsing the extra debug config resource fails only when debugging is true.
         XmlConfigSource source =
@@ -498,13 +538,15 @@ public class XmlConfigTests extends AndroidTestCase {
         }
     }
 
+    @Test
     public void testDomainWhitespaceTrimming() throws Exception {
         XmlConfigSource source =
                 new XmlConfigSource(getContext(), R.xml.domain_whitespace,
                         TestUtils.makeApplicationInfo());
         ApplicationConfig appConfig = new ApplicationConfig(source);
         NetworkSecurityConfig defaultConfig = appConfig.getConfigForHostname("");
-        MoreAsserts.assertNotEqual(defaultConfig, appConfig.getConfigForHostname("developer.android.com"));
+        MoreAsserts.assertNotEqual(
+                defaultConfig, appConfig.getConfigForHostname("developer.android.com"));
         MoreAsserts.assertNotEqual(defaultConfig, appConfig.getConfigForHostname("android.com"));
         SSLContext context = TestUtils.getSSLContext(source);
         TestUtils.assertConnectionSucceeds(context, "android.com", 443);
