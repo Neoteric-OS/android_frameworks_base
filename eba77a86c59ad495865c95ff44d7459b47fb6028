@@ -16,6 +16,23 @@
       "message": "Sorry everyone, I removed the merged-in line and it erased the votes.  Can I please have review (@yuhany@google.com) and owners (@smoreland@google.com) votes again?",
       "revId": "eba77a86c59ad495865c95ff44d7459b47fb6028",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "263da1c5_360875b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060825
+      },
+      "writtenOn": "2023-02-08T16:12:33Z",
+      "side": 1,
+      "message": "@sooniln@google.com for +2 vote",
+      "revId": "eba77a86c59ad495865c95ff44d7459b47fb6028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
