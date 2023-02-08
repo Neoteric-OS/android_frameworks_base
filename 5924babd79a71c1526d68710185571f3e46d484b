@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "597dda27_308126cb",
+        "filename": "services/accessibility/java/com/android/server/accessibility/AccessibilitySecurityPolicy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1472174
+      },
+      "writtenOn": "2023-02-08T10:16:47Z",
+      "side": 1,
+      "message": "From the statement, TYPE_WINDOW_CONTENT_CHANGED should fallback to the default condition.",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 45
+      },
+      "revId": "5924babd79a71c1526d68710185571f3e46d484b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
