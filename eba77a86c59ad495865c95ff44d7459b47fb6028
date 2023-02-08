@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "557075a4_5bfa0525",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060825
+      },
+      "writtenOn": "2023-02-08T00:35:36Z",
+      "side": 1,
+      "message": "Sorry everyone, I removed the merged-in line and it erased the votes.  Can I please have review (@yuhany@google.com) and owners (@smoreland@google.com) votes again?",
+      "revId": "eba77a86c59ad495865c95ff44d7459b47fb6028",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
