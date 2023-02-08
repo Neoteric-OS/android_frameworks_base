@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.telephony.UiccPortInfo;
+import android.telephony.UplmnInfo;
 import android.text.TextUtils;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -32,6 +33,7 @@ import com.android.telephony.Rlog;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +46,33 @@ public class IccUtils {
     // Spec reference TS 31.102 section 4.2.16
     @VisibleForTesting
     static final int FPLMN_BYTE_SIZE = 3;
+
+    // Values specified in 3GPP 31.102 sec. 4.2.5
+    public static final int ACCESS_TECH_UTRAN = 0x8000;
+    public static final int ACCESS_TECH_EUTRAN = 0x4000;
+    public static final int ACCESS_TECH_GSM = 0x0080;
+    public static final int ACCESS_TECH_GSM_COMPACT = 0x0040;
+    public static final int ACCESS_TECH_CDMA2000_HRPD = 0x0020;
+    public static final int ACCESS_TECH_CDMA2000_1XRTT = 0x0010;
+    public static final int ACCESS_TECH_RESERVED = 0x3F0F;
+
+    /* 5n bytes:
+    1 to 3  nth PLMN (highest priority)
+    4 to 5  nth PLMN Access Technology Identifier */
+    private static final int UPLMN_SEL_DATA_LEN = 5;
+    private static final int GSM_MASK = 1;
+    /**
+     * GSM compact access technology.
+     */
+    private static final int GSM_COMPACT_MASK = 2;
+    /**
+     * UMTS radio access technology.
+     */
+    private static final int UMTS_MASK = 4;
+    /**
+     * LTE radio access technology.
+     */
+    private static final int LTE_MASK = 8;
 
     // ICCID used for tests by some OEMs
     public static final String TEST_ICCID = UiccPortInfo.ICCID_REDACTED;
@@ -977,5 +1006,102 @@ public class IccUtils {
             serializedFplmns[offset++] = (byte) 0xff;
         }
         return serializedFplmns;
+    }
+
+    /**
+     * Encode the Uplmns into byte array to write to EF.
+     *
+     * @param uplmns Array list of uplmns to be serialized.
+     * @param dataLength the size of the EF file.
+     * @return the encoded byte array in the correct format for UPLMN file.
+     */
+    public static byte[] encodeUplmns(ArrayList<UplmnInfo> uplmns, int dataLength) {
+        byte[] data = new byte[dataLength];
+        byte[] mccmnc = new byte[6];
+        int numRec = dataLength/UPLMN_SEL_DATA_LEN;
+        for (int i = 0; i < numRec; i++) {
+            data[i * UPLMN_SEL_DATA_LEN] = (byte) 0xFF;
+            data[i * UPLMN_SEL_DATA_LEN + 1] = (byte) 0xFF;
+            data[i * UPLMN_SEL_DATA_LEN + 2] = (byte) 0xFF;
+
+            data[i * UPLMN_SEL_DATA_LEN + 3] = 0;
+            data[i * UPLMN_SEL_DATA_LEN + 4] = 0;
+        }
+        for (int i = 0; ((i < uplmns.size()) && (i < numRec)); i++) {
+            UplmnInfo ni = uplmns.get(i);
+            String strOperNumeric = ni.getOperatorNumeric();
+            if (TextUtils.isEmpty(strOperNumeric)) {
+                break;
+            }
+            Rlog.d(LOG_TAG, "strOperNumeric = " + strOperNumeric);
+
+            System.arraycopy(stringToBcdUplmn(strOperNumeric),
+                        0, data, i * UPLMN_SEL_DATA_LEN, 3);
+            Rlog.d(LOG_TAG, "data[0] = " + data[i * UPLMN_SEL_DATA_LEN]);
+            Rlog.d(LOG_TAG, "data[1] = " + data[i * UPLMN_SEL_DATA_LEN +1]);
+            Rlog.d(LOG_TAG, "data[2] = " + data[i * UPLMN_SEL_DATA_LEN +2]);
+
+            int accessTech = convertNetworkMode2AccessTech(ni.getNetworkMode());
+            data[i * UPLMN_SEL_DATA_LEN + 3] = (byte) (accessTech >> 8);
+            data[i * UPLMN_SEL_DATA_LEN + 4] = (byte) (accessTech & 0xFF);
+            Rlog.d(LOG_TAG,"accessTech = " + accessTech);
+            Rlog.d(LOG_TAG,"data[3] = " + data[i * UPLMN_SEL_DATA_LEN +3]);
+            Rlog.d(LOG_TAG,"data[4] = " + data[i * UPLMN_SEL_DATA_LEN +4]);
+        }
+
+        return data;
+    }
+
+    public static int convertNetworkMode2AccessTech(int networkMode) {
+        int accessTechs = 0;
+
+        if ((networkMode & LTE_MASK) != 0) {
+            accessTechs = accessTechs | ACCESS_TECH_EUTRAN;
+        }
+        if ((networkMode & UMTS_MASK) != 0) {
+            accessTechs = accessTechs | ACCESS_TECH_UTRAN;
+        }
+        if ((networkMode & GSM_MASK) != 0) {
+            accessTechs = accessTechs | ACCESS_TECH_GSM;
+        }
+        if ((networkMode & GSM_COMPACT_MASK) != 0) {
+            accessTechs = accessTechs | ACCESS_TECH_GSM_COMPACT;
+        }
+
+        return accessTechs;
+    }
+
+    public static int convertAccessTech2NetworkMode(int accessTechs) {
+        int networkMode = 0;
+
+        if ((accessTechs & ACCESS_TECH_EUTRAN) != 0) {
+            networkMode = networkMode | LTE_MASK;
+        }
+        if ((accessTechs & ACCESS_TECH_UTRAN) != 0) {
+            networkMode = networkMode | UMTS_MASK;
+        }
+        if ((accessTechs & ACCESS_TECH_GSM) != 0) {
+            networkMode = networkMode | GSM_MASK;
+        }
+        if ((accessTechs & ACCESS_TECH_GSM_COMPACT) != 0) {
+            networkMode = networkMode | GSM_COMPACT_MASK;
+        }
+
+        return networkMode;
+    }
+
+    public static byte[] stringToBcdUplmn(String str) {
+        if (str.length() == 5) {
+                str = str + "f";
+        }
+
+        byte[] trans = IccUtils.hexStringToBytes(str);
+
+        byte[] data = new byte[3];;
+        data[0] = (byte) ((trans[0] >> 4) | ((trans[0] << 4) & 0xF0));
+        data[1] = (byte) ((trans[1] >> 4) | ((trans[2] << 4) & 0xF0));
+        data[2] = (byte) ((trans[2] & 0xF0) | (trans[1] & 0xF));
+
+        return data;
     }
 }
