@@ -35,6 +35,10 @@ public class DropboxRateLimiter {
     // The number of entries to keep per breakdown of process/eventType.
     private static final int RATE_LIMIT_ALLOWED_ENTRIES = 6;
 
+    // If a process is rate limited twice in a row we consider it crash-looping and rate limit it
+    // more aggressively.
+    private static final int STRICT_RATE_LIMIT_ALLOWED_ENTRIES = 1;
+
     @GuardedBy("mErrorClusterRecords")
     private final ArrayMap<String, ErrorRecord> mErrorClusterRecords = new ArrayMap<>();
     private final Clock mClock;
@@ -70,15 +74,27 @@ public class DropboxRateLimiter {
                 return new RateLimitResult(false, 0);
             }
 
-            if (now - errRecord.getStartTime() > RATE_LIMIT_BUFFER_DURATION) {
+            final long timeSinceFirstError = now - errRecord.getStartTime();
+            if (timeSinceFirstError > RATE_LIMIT_BUFFER_DURATION) {
                 final int errCount = recentlyDroppedCount(errRecord);
                 errRecord.setStartTime(now);
                 errRecord.setCount(1);
+
+                // If this error happened exactly the next "rate limiting cycle" after the last
+                // error and the previous cycle was rate limiting then mark this as a repeated
+                // occurrence. If a full "cycle" has passed since the last error then this is no
+                // longer a continuous occurrence and will be rate limited normally instead.
+                final boolean isRepeated = errCount > 0
+                        && timeSinceFirstError < 2 * RATE_LIMIT_BUFFER_DURATION;
+                errRecord.setIsRepeated(isRepeated);
+
                 return new RateLimitResult(false, errCount);
             }
 
             errRecord.incrementCount();
-            if (errRecord.getCount() > RATE_LIMIT_ALLOWED_ENTRIES) {
+            if (errRecord.getCount() > RATE_LIMIT_ALLOWED_ENTRIES
+                    || (errRecord.isRepeated()
+                            && errRecord.getCount() > STRICT_RATE_LIMIT_ALLOWED_ENTRIES)) {
                 return new RateLimitResult(true, recentlyDroppedCount(errRecord));
             }
         }
@@ -91,7 +107,9 @@ public class DropboxRateLimiter {
      * RATE_LIMIT_BUFFER_EXPIRY if not. */
     private int recentlyDroppedCount(ErrorRecord errRecord) {
         if (errRecord == null || errRecord.getCount() < RATE_LIMIT_ALLOWED_ENTRIES) return 0;
-        return errRecord.getCount() - RATE_LIMIT_ALLOWED_ENTRIES;
+        int allowedEntries = errRecord.isRepeated()
+                ? STRICT_RATE_LIMIT_ALLOWED_ENTRIES : RATE_LIMIT_ALLOWED_ENTRIES;
+        return errRecord.getCount() - allowedEntries;
     }
 
 
@@ -149,10 +167,12 @@ public class DropboxRateLimiter {
     private class ErrorRecord {
         long mStartTime;
         int mCount;
+        boolean mIsRepeated;
 
         ErrorRecord(long startTime, int count) {
             mStartTime = startTime;
             mCount = count;
+            mIsRepeated = false;
         }
 
         public void setStartTime(long startTime) {
@@ -167,12 +187,20 @@ public class DropboxRateLimiter {
             mCount++;
         }
 
+        public void setIsRepeated(boolean isRepeated) {
+            mIsRepeated = isRepeated;
+        }
+
         public long getStartTime() {
             return mStartTime;
         }
 
         public int getCount() {
             return mCount;
+        }
+
+        public boolean isRepeated() {
+            return mIsRepeated;
         }
     }
 
