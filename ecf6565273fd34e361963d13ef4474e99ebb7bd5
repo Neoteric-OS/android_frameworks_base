@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ab7dc77_ecbdb125",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 9153,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-09T03:54:07Z",
+      "side": 1,
+      "message": "The definitions are needed if they are going to be SystemApi. (Also updated in BatteryManager.java)",
+      "parentUuid": "43344008_124bb56a",
+      "range": {
+        "startLine": 9153,
+        "startChar": 15,
+        "endLine": 9153,
+        "endChar": 29
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bae8066c_6a3e03f1",
@@ -131,6 +155,30 @@
       "writtenOn": "2023-02-07T04:29:08Z",
       "side": 1,
       "message": "1) move these definition after L147 to put all extra fields for `ACTION_BATTERY_CHANGED` intent in the near block\n\n2) remove the prefix `android.os.extra.` from these definition and use the lowercase string for the extra field (reference to other extra definition in the ACTION_BATTERY_CHANGED)",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 90
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dca6dfe_eea2d35d",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-09T03:54:07Z",
+      "side": 1,
+      "message": "1) Thanks for the advice. done!\n2) We change it on both BatteryManager.java and system-current.txt but hit a build break. Any suggestion?",
+      "parentUuid": "610b0598_4343bd07",
       "range": {
         "startLine": 166,
         "startChar": 0,
