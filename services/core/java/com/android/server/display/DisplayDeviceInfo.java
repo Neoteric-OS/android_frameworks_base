@@ -190,6 +190,15 @@ final class DisplayDeviceInfo {
     public static final int FLAG_STEAL_TOP_FOCUS_DISABLED = 1 << 19;
 
     /**
+     * Flag: Indicates that this display should not freeze when display freezing is
+     * requested.
+     *
+     * @see Display#FLAG_NO_FREEZE
+     * @hide
+     */
+    public static final int FLAG_NO_FREEZE = 1 << 20;
+
+    /**
      * Touch attachment: Display does not receive touch.
      */
     public static final int TOUCH_NONE = 0;

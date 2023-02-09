@@ -32,6 +32,7 @@ import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_STEAL
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_SUPPORTS_TOUCH;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_TOUCH_FEEDBACK_DISABLED;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_TRUSTED;
+import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_NO_FREEZE;
 
 import static com.android.server.display.DisplayDeviceInfo.FLAG_ALWAYS_UNLOCKED;
 import static com.android.server.display.DisplayDeviceInfo.FLAG_DEVICE_DISPLAY_GROUP;
@@ -554,6 +555,9 @@ public class VirtualDisplayAdapter extends DisplayAdapter {
                                         + "requires VIRTUAL_DISPLAY_FLAG_OWN_FOCUS which requires "
                                         + "VIRTUAL_DISPLAY_FLAG_TRUSTED.");
                     }
+                }
+                if ((mFlags & VIRTUAL_DISPLAY_FLAG_NO_FREEZE) != 0) {
+                    mInfo.flags |= DisplayDeviceInfo.FLAG_NO_FREEZE;
                 }
 
                 mInfo.type = Display.TYPE_VIRTUAL;

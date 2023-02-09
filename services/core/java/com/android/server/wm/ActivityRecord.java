@@ -6882,7 +6882,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                 mWmService.startFreezingDisplay(0 /* exitAnim */, 0 /* enterAnim */,
                         mDisplayContent, overrideOriginalDisplayRotation);
                 mWmService.mH.removeMessages(H.APP_FREEZE_TIMEOUT);
-                mWmService.mH.sendEmptyMessageDelayed(H.APP_FREEZE_TIMEOUT, 2000);
+                mWmService.mH.sendEmptyMessageDelayed(H.APP_FREEZE_TIMEOUT, 4000);
             }
         }
         if (forceRotation) {

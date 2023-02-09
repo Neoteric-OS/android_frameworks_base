@@ -181,6 +181,7 @@ public final class DisplayManager {
             VIRTUAL_DISPLAY_FLAG_TOUCH_FEEDBACK_DISABLED,
             VIRTUAL_DISPLAY_FLAG_OWN_FOCUS,
             VIRTUAL_DISPLAY_FLAG_STEAL_TOP_FOCUS_DISABLED,
+            VIRTUAL_DISPLAY_FLAG_NO_FREEZE
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface VirtualDisplayFlag {}
@@ -492,6 +493,16 @@ public final class DisplayManager {
      */
     @SystemApi
     public static final int VIRTUAL_DISPLAY_FLAG_STEAL_TOP_FOCUS_DISABLED = 1 << 16;
+
+    /**
+     * Virtual display flags: Indicates that this display should not freeze when display freezing is
+     * requested.
+     *
+     * @see Display#FLAG_NO_FREEZE
+     * @see #createVirtualDisplay
+     * @hide
+     */
+    public static final int VIRTUAL_DISPLAY_FLAG_NO_FREEZE = 1 << 17;
 
     /** @hide */
     @IntDef(prefix = {"MATCH_CONTENT_FRAMERATE_"}, value = {

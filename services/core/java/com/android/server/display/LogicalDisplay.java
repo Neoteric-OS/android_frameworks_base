@@ -481,6 +481,9 @@ final class LogicalDisplay {
             if ((deviceInfo.flags & DisplayDeviceInfo.FLAG_STEAL_TOP_FOCUS_DISABLED) != 0) {
                 mBaseDisplayInfo.flags |= Display.FLAG_STEAL_TOP_FOCUS_DISABLED;
             }
+            if ((deviceInfo.flags & DisplayDeviceInfo.FLAG_NO_FREEZE) != 0) {
+                mBaseDisplayInfo.flags |= Display.FLAG_NO_FREEZE;
+            }
             Rect maskingInsets = getMaskingInsets(deviceInfo);
             int maskedWidth = deviceInfo.width - maskingInsets.left - maskingInsets.right;
             int maskedHeight = deviceInfo.height - maskingInsets.top - maskingInsets.bottom;

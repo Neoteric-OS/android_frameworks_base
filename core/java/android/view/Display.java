@@ -386,6 +386,13 @@ public final class Display {
     public static final int FLAG_ROTATES_WITH_CONTENT = 1 << 14;
 
     /**
+     * Display flag: Indicates that this display should not freeze when display freezing is
+     * requested.
+     * @hide
+     */
+    public static final int FLAG_NO_FREEZE = 1 << 15;
+
+    /**
      * Display flag: Indicates that the contents of the display should not be scaled
      * to fit the physical screen dimensions.  Used for development only to emulate
      * devices with smaller physicals screens while preserving density.
