@@ -62,6 +62,10 @@ java_sdk_library {
     compile_dex: true,
     default_to_stubs: true,
 
+    permitted_packages: [
+        "android.test",
+    ],
+
     // Additional hiddenapi annotations are provided in a separate module.
     // TODO(b/180295980) - investigate whether this can be removed
     hiddenapi_additional_annotations: [
