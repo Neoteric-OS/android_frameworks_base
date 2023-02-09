@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86863031_8d1e5f33",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-09T17:32:30Z",
+      "side": 1,
+      "message": "The naming here seems to line up with go/android-api-guidelines#constants-keys , though obviously batterymanager hasn\u0027t historically always followed that naming. Given that there\u0027s both kinds of names already, I think it\u0027s best to follow the current guidelines and leave these as is.",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ec8923b_5eec17c0",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-09T17:32:30Z",
+      "side": 1,
+      "message": "Please explain what \u0027in epoch\u0027 means a bit more - Is this an int value, or a long, and what\u0027s the unit?",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
