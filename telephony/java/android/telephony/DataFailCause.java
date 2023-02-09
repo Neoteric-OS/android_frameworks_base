@@ -1028,6 +1028,8 @@ public final class DataFailCause {
     public static final int IWLAN_IKE_PRIVATE_ERROR_TYPE = 0x400B;
     /** IKE Session closed before child session opened*/
     public static final int IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED = 0x400C;
+    /** DPD message does not get an ack after the re-tx attempts and duration, i.e., times out.*/
+    public static final int IWLAN_IKE_DPD_TIMEOUT = 0x400D;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1529,6 +1531,7 @@ public final class DataFailCause {
         sFailCauseMap.put(IWLAN_IKE_PRIVATE_ERROR_TYPE, "IWLAN_IKE_PRIVATE_ERROR_TYPE");
         sFailCauseMap.put(IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED,
                 "IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED");
+        sFailCauseMap.put(IWLAN_IKE_DPD_TIMEOUT, "IWLAN_IKE_DPD_TIMEOUT");
         sFailCauseMap.put(OEM_DCFAILCAUSE_1, "OEM_DCFAILCAUSE_1");
         sFailCauseMap.put(OEM_DCFAILCAUSE_2, "OEM_DCFAILCAUSE_2");
         sFailCauseMap.put(OEM_DCFAILCAUSE_3, "OEM_DCFAILCAUSE_3");
