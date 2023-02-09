@@ -334,6 +334,24 @@
       "parentUuid": "505cca1e_5dbd5ab4",
       "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1082cad1_0ad2eff8",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-09T11:11:10Z",
+      "side": 1,
+      "message": "The properties are going to be SyetemAPI",
+      "parentUuid": "6fac5422_ad5152e3",
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
