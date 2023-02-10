@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c19231_66316d77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1928988
+      },
+      "writtenOn": "2023-02-10T15:15:02Z",
+      "side": 1,
+      "message": "This event is late by 0.5sec, and for this fraction of time, the media stream can be played with ViOP stream volume level.",
+      "revId": "9899e457d2e26b3b770f5e04a52b66c68467719d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
