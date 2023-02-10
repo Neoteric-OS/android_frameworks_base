@@ -141,6 +141,24 @@
       "parentUuid": "48649bb9_8b305420",
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de935bbf_f94c12e9",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-10T22:51:55Z",
+      "side": 1,
+      "message": "If you can, you could include short sample code for converting to a time object of some kind, to make it easy to interpret.",
+      "parentUuid": "457bda6d_48a5b16e",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
