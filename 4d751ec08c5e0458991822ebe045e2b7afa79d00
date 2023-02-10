@@ -69,6 +69,24 @@
       "parentUuid": "0ec8923b_5eec17c0",
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d06ffb40_851e345f",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-10T20:29:26Z",
+      "side": 1,
+      "message": "Sorry to be unclear - I meant that you should add the information to the javadoc. Not the explanation of epoch itself, just what the value type is, what the time unit is, and what is 0 time.\n\nEspecially that it\u0027s a `long` and that it\u0027s seconds (and not milliseconds, etc), since that\u0027s not obvious right now (though guessable since time units can\u0027t fit in an int, generally).  Ideally reference to an API that produces time in the same timebase for simplicity, such as something in https://developer.android.com/reference/java/time/Clock for example.",
+      "parentUuid": "58a04c16_742106af",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
