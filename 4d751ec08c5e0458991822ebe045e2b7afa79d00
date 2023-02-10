@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "868f49b6_1d39262c",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-10T09:41:38Z",
+      "side": 1,
+      "message": "Thanks for the advice.",
+      "parentUuid": "86863031_8d1e5f33",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ec8923b_5eec17c0",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-02-09T17:32:30Z",
       "side": 1,
       "message": "Please explain what \u0027in epoch\u0027 means a bit more - Is this an int value, or a long, and what\u0027s the unit?",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58a04c16_742106af",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-10T09:41:38Z",
+      "side": 1,
+      "message": "In a computing context, an epoch is the date and time relative to which a computer\u0027s clock and timestamp values are determined. The epoch traditionally corresponds to 0 hours, 0 minutes, and 0 seconds (00:00:00) Coordinated Universal Time (UTC) on a specific date, which varies from system to system. Most versions of Unix, for example, use January 1, 1970 as the epoch date.\n\nIt is an long value, the unit is second.",
+      "parentUuid": "0ec8923b_5eec17c0",
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

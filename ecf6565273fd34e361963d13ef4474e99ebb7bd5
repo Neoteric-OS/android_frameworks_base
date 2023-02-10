@@ -189,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ece3c57_74c45338",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-10T09:41:38Z",
+      "side": 1,
+      "message": "According to current guidelines go/android-api-guidelines#constants-keys we should keep prefix `android.os.extra`.",
+      "parentUuid": "2dca6dfe_eea2d35d",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 90
+      },
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51f0acef_d761238d",
@@ -350,6 +374,24 @@
       "side": 1,
       "message": "The properties are going to be SyetemAPI",
       "parentUuid": "6fac5422_ad5152e3",
+      "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07da2742_a2c1743c",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-10T09:41:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1082cad1_0ad2eff8",
       "revId": "ecf6565273fd34e361963d13ef4474e99ebb7bd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
