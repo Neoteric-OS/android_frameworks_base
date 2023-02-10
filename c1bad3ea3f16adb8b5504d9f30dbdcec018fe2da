@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85293b46_b05bdf9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-02-10T16:49:49Z",
+      "side": 1,
+      "message": "Do you have any benchmark? How would it increase the memory consumption?",
+      "revId": "c1bad3ea3f16adb8b5504d9f30dbdcec018fe2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
