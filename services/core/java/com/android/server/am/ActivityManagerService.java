@@ -9607,6 +9607,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             } else if ("processes".equals(cmd) || "p".equals(cmd)) {
                 if (opti < args.length) {
                     dumpPackage = args[opti];
+                    dumpAppId = getAppId(dumpPackage);
                     opti++;
                 }
                 synchronized (this) {
