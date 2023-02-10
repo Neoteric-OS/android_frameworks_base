@@ -87,6 +87,24 @@
       "parentUuid": "58a04c16_742106af",
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b796edd_d9dc24b5",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2023-02-10T21:05:38Z",
+      "side": 1,
+      "message": "The epoch is a moment in time that is used as a reference point for other dates and times. It is defined as the time that begins at midnight Coordinated Universal Time (UTC) on January 1, 1970. Epoch time is often used in computer systems to store and manipulate dates and times. \n\nEpoch time is a signed 32-bit integer, which means that it can store dates and times from 1970-01-01T00:00:00Z to 2038-01-19T03:14:07Z. After this date, the value will overflow and become negative.\n\nEpoch time is a useful way to represent dates and times because it is a simple and consistent format. It is also easy to convert between epoch time and other formats, such as UTC or local time.",
+      "parentUuid": "d06ffb40_851e345f",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
