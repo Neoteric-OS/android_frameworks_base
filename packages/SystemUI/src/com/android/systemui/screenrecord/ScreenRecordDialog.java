@@ -39,7 +39,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -58,6 +57,8 @@ import com.android.systemui.statusbar.phone.SystemUIDialog;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.zeph.support.preference.Switch;
 
 /**
  * Dialog to select screen recording options

@@ -79,6 +79,7 @@ android_library {
         "SettingsLibDeviceStateRotationLock",
         "setupdesign",
         "zxing-core-1.7",
+        "VendorSupport-Libs",
     ],
 
     // ANDROIDMK TRANSLATION ERROR: unsupported assignment to LOCAL_SHARED_JAVA_LIBRARIES

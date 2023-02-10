@@ -60,7 +60,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.MainThread;
@@ -89,6 +88,8 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+
+import org.zeph.support.preference.Switch;
 
 /**
  * Dialog for showing mobile network, connected Wi-Fi network and Wi-Fi networks.

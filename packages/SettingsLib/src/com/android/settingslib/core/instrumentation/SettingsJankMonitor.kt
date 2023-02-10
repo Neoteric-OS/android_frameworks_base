@@ -18,7 +18,7 @@ package com.android.settingslib.core.instrumentation
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.preference.PreferenceGroupAdapter
-import androidx.preference.SwitchPreference
+import org.zeph.support.preference.SwitchPreference
 import androidx.recyclerview.widget.RecyclerView
 import com.android.internal.jank.InteractionJankMonitor
 import java.util.concurrent.Executors
