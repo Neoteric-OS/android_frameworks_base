@@ -105,6 +105,24 @@
       "parentUuid": "d06ffb40_851e345f",
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48649bb9_8b305420",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2023-02-10T22:08:08Z",
+      "side": 1,
+      "message": "Would it perhaps be more natural to report the manufacturing date as a string in the YYYYMMDD or YYYY-MM-DD format? I cannot imagine anyone caring about the exact second when the battery got off the conveyor belt.",
+      "parentUuid": "0b796edd_d9dc24b5",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
