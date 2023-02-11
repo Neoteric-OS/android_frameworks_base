@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f87e0a1b_96703628",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2023-02-11T03:24:28Z",
+      "side": 1,
+      "message": "Aren\u0027t there already ONLY_IPV4_ALLOWED and ONLY_IPV6_ALLOWED fail causes?",
+      "range": {
+        "startLine": 1017,
+        "startChar": 5,
+        "endLine": 1017,
+        "endChar": 68
+      },
+      "revId": "39b29d4ce124f9320f341f71e2098badfb65959b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
