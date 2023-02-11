@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e802660a_c57e945b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1626001
+      },
+      "writtenOn": "2023-02-11T02:36:15Z",
+      "side": 1,
+      "message": "Will recommending submitting new DFCs in same topic as the change which uses them, so the reader has context. Like https://android-review.git.corp.google.com/q/topic:%22IWLAN_IKE_NETWORK_LOST_EXCEPTION%22",
+      "revId": "d1d70fbc49e3526361deeb596c3b3e38262977f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
