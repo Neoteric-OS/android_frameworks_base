@@ -159,6 +159,24 @@
       "parentUuid": "457bda6d_48a5b16e",
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f432ede5_2760458c",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2023-02-12T00:51:06Z",
+      "side": 1,
+      "message": "Sure. Here\u0027s how to convert epoch timestamp to date in Android:\n\nImport the java.util.Date class create data and calendar:\n\n    import java.util.Date;\n    Date date \u003d new Date(1563370941000L);\n    Calendar calendar \u003d Calendar.getInstance();\n    calendar.setTime(date);\n\nuse this to get ymd and hms:\n\n    int year \u003d calendar.get(Calendar.YEAR);\n    int month \u003d calendar.get(Calendar.MONTH);\n    int day \u003d calendar.get(Calendar.DAY_OF_MONTH);\n    int hour \u003d calendar.get(Calendar.HOUR_OF_DAY);\n    int minute \u003d calendar.get(Calendar.MINUTE);\n    int second \u003d calendar.get(Calendar.SECOND);\n\nuse this to log\n\n    SimpleDateFormat sdf \u003d new SimpleDateFormat(\"yyyy-MM-dd HH:mm:ss\");\n    String dateString \u003d sdf.format(date);\n    Display the String representation of the date:\n    Log.d(\"TAG\", dateString);",
+      "parentUuid": "de935bbf_f94c12e9",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
