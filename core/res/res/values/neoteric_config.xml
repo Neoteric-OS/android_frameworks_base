@@ -30,4 +30,7 @@
     <!-- Names of the key handler classes -->
     <string-array name="config_deviceKeyHandlerClasses" translatable="false">
     </string-array>
+
+    <!-- Whether device supports QTI Boost Framework -->
+    <bool name="config_supportsBoostFramework">true</bool>
 </resources>
