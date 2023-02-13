@@ -8614,6 +8614,18 @@ public class CarrierConfigManager {
     public static final String KEY_IWLAN_HANDOVER_POLICY_STRING_ARRAY =
             "iwlan_handover_policy_string_array";
 
+    /**
+     * Boolean indicating whether to warn that mobile data will be temporarily disabled while
+     * finding the network.
+     *
+     * {@code true}: show warning dialog before finding the network.
+     * {@code false}: default value, not show warning dialog before finding the network.
+     *
+     * @hide
+     */
+    public static final String KEY_SHOW_WARNING_DISABLE_DATA_FOR_FINDING_NETWORK_BOOL =
+            "show_warning_disable_data_for_finding_network_bool";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -9261,6 +9273,7 @@ public class CarrierConfigManager {
                 new long[] {180000, 180000, 180000, 180000});
         sDefaults.putBooleanArray(KEY_DATA_STALL_RECOVERY_SHOULD_SKIP_BOOL_ARRAY,
                 new boolean[] {false, false, true, false, false});
+        sDefaults.putBoolean(KEY_SHOW_WARNING_DISABLE_DATA_FOR_FINDING_NETWORK_BOOL, false);
     }
 
     /**
