@@ -33,6 +33,29 @@
       "message": "+Wei as the relevant owner to review this",
       "revId": "fe28510555513496dbbf2f771f63dd3abcc4bf7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f69aac3b_0edc44ed",
+        "filename": "native/android/performance_hint.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1905031
+      },
+      "writtenOn": "2023-02-13T22:29:15Z",
+      "side": 1,
+      "message": "This all looks entirely reasonable, my only comment is that you could probably just say something like `// Ensure the hint session is supported` instead, this is the expected way to check for hint session support so I don\u0027t know if it needs extensive inline documentation. \n\nIt\u0027s also worth considering just factoring this check into its own private helper method, something like `HintManager-\u003eisSupported()` that wraps this idea.",
+      "range": {
+        "startLine": 123,
+        "startChar": 1,
+        "endLine": 129,
+        "endChar": 65
+      },
+      "revId": "fe28510555513496dbbf2f771f63dd3abcc4bf7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
