@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cbc49ef_468f7122",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6473,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2023-02-13T13:42:41Z",
+      "side": 1,
+      "message": "Can you comment that this has to be after `AppCompatCallbacks.install()`?",
+      "revId": "f357c8ca60924e0dc50c0a59ecb33acb34400d36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
