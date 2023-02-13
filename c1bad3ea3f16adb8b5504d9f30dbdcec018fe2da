@@ -16,6 +16,24 @@
       "message": "Do you have any benchmark? How would it increase the memory consumption?",
       "revId": "c1bad3ea3f16adb8b5504d9f30dbdcec018fe2da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4227173c_cec73ea2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1980045
+      },
+      "writtenOn": "2023-02-13T03:26:10Z",
+      "side": 1,
+      "message": "This may indeed result in a slight increase in memory, but when SYSTEM_SERVICE_FETCHERS contains 134 entries, at which HashMap is 54% faster than ArrayMap for lookups and 74% faster for insertions. \nSo the increased memory usage should be a worthwhile trade-off at this size?",
+      "parentUuid": "85293b46_b05bdf9d",
+      "revId": "c1bad3ea3f16adb8b5504d9f30dbdcec018fe2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
