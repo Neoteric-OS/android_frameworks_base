@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a42cfdb_5f97a6ad",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-02-13T17:03:25Z",
+      "side": 1,
+      "message": "Thinking about this a bit more, I wonder if we should produce this api-versions.xml like this instead:\n\n- feed metalava android_module-stubs_current _as well_ as all the module\u0027s module-lib stubs. It should now be able to resolve everything\n- post-process it with the \"trimmer\": https://source.corp.google.com/android-internal/frameworks/base/api/api_versions_trimmer.py\n\nThat\u0027d avoid the extra metalava arg, but result in the identical artifact I believe. Might have some practical problems, not entirely sure. Anyway, I think this is OK too, but does add complexity into an already too-complex tool.",
+      "range": {
+        "startLine": 536,
+        "startChar": 11,
+        "endLine": 536,
+        "endChar": 34
+      },
+      "revId": "165c17853521cb323090b49bf78c545f1f4bdfad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
