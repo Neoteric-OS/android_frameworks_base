@@ -56,6 +56,52 @@
       },
       "revId": "fe28510555513496dbbf2f771f63dd3abcc4bf7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec0ec524_61684dcb",
+        "filename": "native/android/performance_hint.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2023-02-13T22:49:09Z",
+      "side": 1,
+      "message": "Update the comment to:\n\n```\n\n```",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 65
+      },
+      "revId": "fe28510555513496dbbf2f771f63dd3abcc4bf7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b25e41cb_0ea35c99",
+        "filename": "native/android/performance_hint.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2023-02-13T22:49:09Z",
+      "side": 1,
+      "message": "update comments to:\n\n```\nIf |mPreferredRateNanos| is -1, it means hint session is not supported. Hence no need to attempt to create hint session.\n```",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 65
+      },
+      "revId": "fe28510555513496dbbf2f771f63dd3abcc4bf7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
