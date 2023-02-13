@@ -22,6 +22,30 @@
       },
       "revId": "39b29d4ce124f9320f341f71e2098badfb65959b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d33d328_724f8be0",
+        "filename": "telephony/java/android/telephony/DataFailCause.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1976391
+      },
+      "writtenOn": "2023-02-13T19:24:16Z",
+      "side": 1,
+      "message": "Thanks for pointing it out. Abandon CL.",
+      "parentUuid": "f87e0a1b_96703628",
+      "range": {
+        "startLine": 1017,
+        "startChar": 5,
+        "endLine": 1017,
+        "endChar": 68
+      },
+      "revId": "39b29d4ce124f9320f341f71e2098badfb65959b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
