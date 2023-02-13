@@ -22,6 +22,30 @@
       },
       "revId": "165c17853521cb323090b49bf78c545f1f4bdfad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a4562fb_12ef3492",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2023-02-13T18:41:19Z",
+      "side": 1,
+      "message": "yeah that would also work. I decided to go with this solution though because now we can remove the trimmer entirely, which I think gets rid of more complexity than the metalava flag introduces.",
+      "parentUuid": "9a42cfdb_5f97a6ad",
+      "range": {
+        "startLine": 536,
+        "startChar": 11,
+        "endLine": 536,
+        "endChar": 34
+      },
+      "revId": "165c17853521cb323090b49bf78c545f1f4bdfad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
