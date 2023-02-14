@@ -74,6 +74,7 @@ public final class IkeSessionParamsUtils {
     private static final String DPD_DELAY_SEC_KEY = "DPD_DELAY_SEC_KEY";
     private static final String NATT_KEEPALIVE_DELAY_SEC_KEY = "NATT_KEEPALIVE_DELAY_SEC_KEY";
     private static final String IKE_OPTIONS_KEY = "IKE_OPTIONS_KEY";
+    private static final String IKE_PROTOCOL_PREFERENCE_KEY = "mIkeProtocolPreference";
 
     // TODO: b/243181760 Use the IKE API when they are exposed
     @VisibleForTesting(visibility = Visibility.PRIVATE)
@@ -155,6 +156,7 @@ public final class IkeSessionParamsUtils {
         result.putInt(SOFT_LIFETIME_SEC_KEY, params.getSoftLifetimeSeconds());
         result.putInt(DPD_DELAY_SEC_KEY, params.getDpdDelaySeconds());
         result.putInt(NATT_KEEPALIVE_DELAY_SEC_KEY, params.getNattKeepAliveDelaySeconds());
+        result.putInt(IKE_PROTOCOL_PREFERENCE_KEY, params.getProtocolPreference());
 
         // TODO: b/185941731 Make sure IkeSessionParamsUtils is automatically updated when a new
         // IKE_OPTION is defined in IKE module and added in the IkeSessionParams
@@ -206,6 +208,7 @@ public final class IkeSessionParamsUtils {
                 in.getInt(HARD_LIFETIME_SEC_KEY), in.getInt(SOFT_LIFETIME_SEC_KEY));
         builder.setDpdDelaySeconds(in.getInt(DPD_DELAY_SEC_KEY));
         builder.setNattKeepAliveDelaySeconds(in.getInt(NATT_KEEPALIVE_DELAY_SEC_KEY));
+        builder.setProtocolPreference(in.getInt(IKE_PROTOCOL_PREFERENCE_KEY));
 
         final PersistableBundle configReqListBundle = in.getPersistableBundle(CONFIG_REQUESTS_KEY);
         Objects.requireNonNull(configReqListBundle, "Config request list was null");
