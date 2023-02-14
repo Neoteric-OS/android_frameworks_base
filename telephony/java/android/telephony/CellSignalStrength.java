@@ -39,6 +39,11 @@ public abstract class CellSignalStrength {
 
     public static final int SIGNAL_STRENGTH_GREAT =
             TelephonyProtoEnums.SIGNAL_STRENGTH_GREAT; // 4
+            
+    //Add by kayun.kuang start
+    public static final int SIGNAL_STRENGTH_HIGHEST =
+            TelephonyProtoEnums.SIGNAL_STRENGTH_HIGHEST; // 5
+    //Add by kayun.kuang end
 
     /** @hide */
     public static final int NUM_SIGNAL_STRENGTH_BINS = 5;
