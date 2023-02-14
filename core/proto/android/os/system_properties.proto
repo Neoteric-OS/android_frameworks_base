@@ -477,6 +477,11 @@ message SystemPropertiesProto {
                 optional string manufacturer = 3;
                 optional string model = 4;
                 optional string name = 5;
+                optional string brand_for_attestation = 6;
+                optional string device_for_attestation = 7;
+                optional string manufacturer_for_attestation = 8;
+                optional string model_for_attestation = 9;
+                optional string name_for_attestation = 10;
             }
             optional Vendor vendor = 12;
 
