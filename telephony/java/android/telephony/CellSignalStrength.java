@@ -40,11 +40,18 @@ public abstract class CellSignalStrength {
     public static final int SIGNAL_STRENGTH_GREAT =
             TelephonyProtoEnums.SIGNAL_STRENGTH_GREAT; // 4
 
+    //Add by kayun.kuang start
+    public static final int SIGNAL_STRENGTH_HIGHEST =
+            TelephonyProtoEnums.SIGNAL_STRENGTH_HIGHEST; // 5
+    //Add by kayun.kuang end
+
     /** @hide */
     public static final int NUM_SIGNAL_STRENGTH_BINS = 5;
 
     /** @hide */
-    protected static final int NUM_SIGNAL_STRENGTH_THRESHOLDS = NUM_SIGNAL_STRENGTH_BINS - 1;
+    //Modify by kayun.kuang start
+    protected static final int NUM_SIGNAL_STRENGTH_THRESHOLDS = NUM_SIGNAL_STRENGTH_BINS;
+    //Modify by kayun.kuang end
 
     /** @hide */
     protected CellSignalStrength() {
@@ -60,7 +67,9 @@ public abstract class CellSignalStrength {
      *     0 represents very poor or unknown signal quality while 4 represents excellent
      *     signal quality.
      */
-    @IntRange(from = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to = SIGNAL_STRENGTH_GREAT)
+    //Modify by kayun.kuang start
+    @IntRange(from = SIGNAL_STRENGTH_NONE_OR_UNKNOWN, to = SIGNAL_STRENGTH_HIGHEST)
+    //Modify by kayun.kuang end
     public abstract int getLevel();
 
     /**
