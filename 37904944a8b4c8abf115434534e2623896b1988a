@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e08543a_98896a04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2023-02-14T17:19:21Z",
+      "side": 1,
+      "message": "Please file a bug and add\n\nBug: b/BUG_ID",
+      "revId": "37904944a8b4c8abf115434534e2623896b1988a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4ab3ce4b_c0d8de83",
