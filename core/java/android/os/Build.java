@@ -70,7 +70,7 @@ public class Build {
     @Nullable
     @TestApi
     public static final String PRODUCT_FOR_ATTESTATION =
-            getString("ro.product.name_for_attestation");
+            getAttestationPropertyForAospOrGsi("name");
 
     /** The name of the industrial design. */
     public static final String DEVICE = getString("ro.product.device");
@@ -109,7 +109,7 @@ public class Build {
     @Nullable
     @TestApi
     public static final String BRAND_FOR_ATTESTATION =
-                getString("ro.product.brand_for_attestation");
+            getAttestationPropertyForAospOrGsi("brand");
 
     /** The end-user-visible name for the end product. */
     public static final String MODEL = getString("ro.product.model");
@@ -123,7 +123,7 @@ public class Build {
     @Nullable
     @TestApi
     public static final String MODEL_FOR_ATTESTATION =
-                getString("ro.product.model_for_attestation");
+            getAttestationPropertyForAospOrGsi("model");
 
     /** The manufacturer of the device's primary system-on-chip. */
     @NonNull
@@ -1529,6 +1529,29 @@ public class Build {
     @UnsupportedAppUsage
     private static String getString(String property) {
         return SystemProperties.get(property, UNKNOWN);
+    }
+
+    /**
+     * Return attestation specific proerties from vendor properties in case of AOSP or GSI builds.
+     * @param property model, name or brand
+     * @return property value or UNKNOWN
+     */
+    @UnsupportedAppUsage
+    private static String getAttestationPropertyForAospOrGsi(String property) {
+        boolean isAospOrGsiBuild = getString("ro.product.name").contains("aosp")
+                || getString("ro.product.model").contains("aosp")
+                || getString("ro.product.name").contains("AOSP")
+                || getString("ro.product.model").contains("AOSP");
+
+        String propertyPrefix = "ro.product.";
+        if (!isAospOrGsiBuild) {
+            // If this is not AOSP or GSI build return UNKNOWN
+            return UNKNOWN;
+        }
+        // In case of AOSP or GSI build read attestation properties from vendor properties as
+        // product properties are generic (eg. aosp_arm64)
+        String vendorPropertyPrefix = "ro.product.vendor.";
+        return getString(vendorPropertyPrefix + property);
     }
 
     private static String[] getStringList(String property, String separator) {
