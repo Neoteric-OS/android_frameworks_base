@@ -28,7 +28,6 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.metrics.ConnectStats;
 import android.net.metrics.DnsEvent;
-import android.net.metrics.INetdEventListener;
 import android.net.metrics.NetworkMetrics;
 import android.net.metrics.WakeupEvent;
 import android.net.metrics.WakeupStats;
@@ -44,6 +43,7 @@ import com.android.internal.util.BitUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.RingBuffer;
 import com.android.internal.util.TokenBucket;
+import com.android.net.module.util.BaseNetdEventListener;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
 
 import java.io.PrintWriter;
@@ -54,7 +54,7 @@ import java.util.StringJoiner;
 /**
  * Implementation of the INetdEventListener interface.
  */
-public class NetdEventListenerService extends INetdEventListener.Stub {
+public class NetdEventListenerService extends BaseNetdEventListener {
 
     public static final String SERVICE_NAME = "netd_listener";
 
@@ -315,7 +315,7 @@ public class NetdEventListenerService extends INetdEventListener.Stub {
     }
 
     @Override
-    public int getInterfaceVersion() throws RemoteException {
+    public int getInterfaceVersion() {
         return this.VERSION;
     }
 
