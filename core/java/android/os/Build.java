@@ -70,10 +70,21 @@ public class Build {
     @Nullable
     @TestApi
     public static final String PRODUCT_FOR_ATTESTATION =
-            getString("ro.product.name_for_attestation");
+            getVendorDeviceIDProperty("name");
 
     /** The name of the industrial design. */
     public static final String DEVICE = getString("ro.product.device");
+
+    /**
+     * The device name for attestation. In non-default builds (like the AOSP build) the value of
+     * the 'DEVICE' system property may be different to the one provisioned to KeyMint,
+     * and Keymint attestation would still attest to the device name, it's running on.
+     * @hide
+     */
+    @Nullable
+    @TestApi
+    public static final String DEVICE_FOR_ATTESTATION =
+            getVendorDeviceIDProperty("device");
 
     /** The name of the underlying board, like "goldfish". */
     public static final String BOARD = getString("ro.product.board");
@@ -97,6 +108,17 @@ public class Build {
     /** The manufacturer of the product/hardware. */
     public static final String MANUFACTURER = getString("ro.product.manufacturer");
 
+    /**
+     * The manufacturer name for attestation. In non-default builds (like the AOSP build) the value
+     * of the 'MANUFACTURER' system property may be different to the one provisioned to KeyMint,
+     * and Keymint attestation would still attest to the manufacturer, it's running on.
+     * @hide
+     */
+    @Nullable
+    @TestApi
+    public static final String MANUFACTURER_FOR_ATTESTATION =
+            getVendorDeviceIDProperty("manufacturer");
+
     /** The consumer-visible brand with which the product/hardware will be associated, if any. */
     public static final String BRAND = getString("ro.product.brand");
 
@@ -109,7 +131,7 @@ public class Build {
     @Nullable
     @TestApi
     public static final String BRAND_FOR_ATTESTATION =
-                getString("ro.product.brand_for_attestation");
+            getVendorDeviceIDProperty("brand");
 
     /** The end-user-visible name for the end product. */
     public static final String MODEL = getString("ro.product.model");
@@ -123,7 +145,7 @@ public class Build {
     @Nullable
     @TestApi
     public static final String MODEL_FOR_ATTESTATION =
-                getString("ro.product.model_for_attestation");
+            getVendorDeviceIDProperty("model");
 
     /** The manufacturer of the device's primary system-on-chip. */
     @NonNull
@@ -1529,6 +1551,18 @@ public class Build {
     @UnsupportedAppUsage
     private static String getString(String property) {
         return SystemProperties.get(property, UNKNOWN);
+    }
+
+    /**
+     * Return attestation specific proerties from vendor properties.
+     * @param property model, name, brand, device or manufacturer.
+     * @return property value or UNKNOWN
+     */
+    @UnsupportedAppUsage
+    private static String getVendorDeviceIDProperty(String property) {
+        // Return device IDs from vendor properties
+        String vendorPropertyPrefix = "ro.product.vendor.";
+        return getString(vendorPropertyPrefix + property);
     }
 
     private static String[] getStringList(String property, String separator) {
