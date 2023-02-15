@@ -177,6 +177,47 @@
       "parentUuid": "de935bbf_f94c12e9",
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b1320d9_f647dbbd",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-15T04:18:53Z",
+      "side": 1,
+      "message": "AleX, I\u0027m not asking for an explanation of epoch for _me_, I\u0027m asking the documentation here to be improved for future API users.\n\nI don\u0027t think we need a lengthy explanation of epochs in general, but we need to explain how API users can access and interpret this data.\n\nSo please add more detail to the javadoc that covers the 0 timepoint and the time unit, for example referencing existing APIs that share the same timebase. Or ideally, a version of your sample code that uses the value of MANUFACTURING_DATE or FIRST_USAGE_DATE as input.",
+      "parentUuid": "f432ede5_2760458c",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec98dcdf_aedd111a",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-15T04:18:53Z",
+      "side": 1,
+      "message": "which permission will gate access to this? System APIs must be gated by a privileged permission, role, SELinux rules, or similar.",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 14
+      },
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
