@@ -81,6 +81,12 @@ import java.util.concurrent.TimeUnit;
  * </ul>
  */
 public final class VcnGatewayConnectionConfig {
+    /** @hide */
+    public static final int UDP_PORT_4500_NAT_TIMEOUT_UNSET = -1;
+
+    /** @hide */
+    public static final int MIN_UDP_PORT_4500_NAT_TIMEOUT_SECONDS = 30;
+
     // TODO: Use MIN_MTU_V6 once it is public, @hide
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final int MIN_MTU_V6 = 1280;
@@ -225,6 +231,10 @@ public final class VcnGatewayConnectionConfig {
     private static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
     @NonNull private final long[] mRetryIntervalsMs;
 
+    private static final String UDP_PORT_4500_NAT_TIMEOUT_SECONDS_KEY =
+            "mUdpPort4500NatTimeoutSeconds";
+    private final int mUdpPort4500NatTimeoutSeconds;
+
     private static final String GATEWAY_OPTIONS_KEY = "mGatewayOptions";
     @NonNull private final Set<Integer> mGatewayOptions;
 
@@ -236,12 +246,14 @@ public final class VcnGatewayConnectionConfig {
             @NonNull List<VcnUnderlyingNetworkTemplate> underlyingNetworkTemplates,
             @NonNull long[] retryIntervalsMs,
             @IntRange(from = MIN_MTU_V6) int maxMtu,
+            @NonNull int udpPort4500NatTimeoutSeconds,
             @NonNull Set<Integer> gatewayOptions) {
         mGatewayConnectionName = gatewayConnectionName;
         mTunnelConnectionParams = tunnelConnectionParams;
         mExposedCapabilities = new TreeSet(exposedCapabilities);
         mRetryIntervalsMs = retryIntervalsMs;
         mMaxMtu = maxMtu;
+        mUdpPort4500NatTimeoutSeconds = udpPort4500NatTimeoutSeconds;
         mGatewayOptions = Collections.unmodifiableSet(new ArraySet(gatewayOptions));
 
         mUnderlyingNetworkTemplates = new ArrayList<>(underlyingNetworkTemplates);
@@ -301,6 +313,8 @@ public final class VcnGatewayConnectionConfig {
 
         mRetryIntervalsMs = in.getLongArray(RETRY_INTERVAL_MS_KEY);
         mMaxMtu = in.getInt(MAX_MTU_KEY);
+        mUdpPort4500NatTimeoutSeconds =
+                in.getInt(UDP_PORT_4500_NAT_TIMEOUT_SECONDS_KEY, UDP_PORT_4500_NAT_TIMEOUT_UNSET);
 
         validate();
     }
@@ -322,6 +336,11 @@ public final class VcnGatewayConnectionConfig {
 
         Preconditions.checkArgument(
                 mMaxMtu >= MIN_MTU_V6, "maxMtu must be at least IPv6 min MTU (1280)");
+
+        Preconditions.checkArgument(
+                mUdpPort4500NatTimeoutSeconds == UDP_PORT_4500_NAT_TIMEOUT_UNSET
+                        || mUdpPort4500NatTimeoutSeconds >= MIN_UDP_PORT_4500_NAT_TIMEOUT_SECONDS,
+                "udpPort4500NatTimeoutSeconds must be at least 30s");
 
         for (int option : mGatewayOptions) {
             validateGatewayOption(option);
@@ -452,6 +471,15 @@ public final class VcnGatewayConnectionConfig {
     }
 
     /**
+     * Retrieves the maximum supported IKEv2/IPsec NATT keepalive timeout.
+     *
+     * @see Builder#setUdpPort4500NatTimeoutSeconds(int)
+     */
+    public int getUdpPort4500NatTimeoutSeconds() {
+        return mUdpPort4500NatTimeoutSeconds;
+    }
+
+    /**
      * Checks if the given VCN gateway option is enabled.
      *
      * @param option the option to check.
@@ -496,6 +524,7 @@ public final class VcnGatewayConnectionConfig {
         result.putPersistableBundle(GATEWAY_OPTIONS_KEY, gatewayOptionsBundle);
         result.putLongArray(RETRY_INTERVAL_MS_KEY, mRetryIntervalsMs);
         result.putInt(MAX_MTU_KEY, mMaxMtu);
+        result.putInt(UDP_PORT_4500_NAT_TIMEOUT_SECONDS_KEY, mUdpPort4500NatTimeoutSeconds);
 
         return result;
     }
@@ -509,6 +538,7 @@ public final class VcnGatewayConnectionConfig {
                 mUnderlyingNetworkTemplates,
                 Arrays.hashCode(mRetryIntervalsMs),
                 mMaxMtu,
+                mUdpPort4500NatTimeoutSeconds,
                 mGatewayOptions);
     }
 
@@ -525,6 +555,7 @@ public final class VcnGatewayConnectionConfig {
                 && mUnderlyingNetworkTemplates.equals(rhs.mUnderlyingNetworkTemplates)
                 && Arrays.equals(mRetryIntervalsMs, rhs.mRetryIntervalsMs)
                 && mMaxMtu == rhs.mMaxMtu
+                && mUdpPort4500NatTimeoutSeconds == rhs.mUdpPort4500NatTimeoutSeconds
                 && mGatewayOptions.equals(rhs.mGatewayOptions);
     }
 
@@ -542,6 +573,7 @@ public final class VcnGatewayConnectionConfig {
 
         @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
         private int mMaxMtu = DEFAULT_MAX_MTU;
+        private int mUdpPort4500NatTimeoutSeconds = UDP_PORT_4500_NAT_TIMEOUT_UNSET;
 
         @NonNull private final Set<Integer> mGatewayOptions = new ArraySet<>();
 
@@ -703,6 +735,29 @@ public final class VcnGatewayConnectionConfig {
         }
 
         /**
+         * Sets the maximum supported IKEv2/IPsec NATT keepalive timeout.
+         *
+         * <p>This is used as a power-optimization hint for other IKEv2/IPsec use cases (e.g. VPNs,
+         * or IWLAN) to reduce the necessary keepalive frequency, thus conserving power and data.
+         *
+         * @param udpPort4500NatTimeoutSeconds the maximum keepalive timeout supported by the VCN
+         *     Gateway Connection, generally the minimum duration a NAT mapping is cached on the VCN
+         *     Gateway.
+         * @return this {@link Builder} instance, for chaining
+         */
+        @NonNull
+        public Builder setUdpPort4500NatTimeoutSeconds(
+                @IntRange(from = MIN_UDP_PORT_4500_NAT_TIMEOUT_SECONDS)
+                        int udpPort4500NatTimeoutSeconds) {
+            Preconditions.checkArgument(
+                    udpPort4500NatTimeoutSeconds >= MIN_UDP_PORT_4500_NAT_TIMEOUT_SECONDS,
+                    "Timeout must be at least 30s (see RFC ???");
+
+            mUdpPort4500NatTimeoutSeconds = udpPort4500NatTimeoutSeconds;
+            return this;
+        }
+
+        /**
          * Enables the specified VCN gateway option.
          *
          * @param option the option to be enabled
@@ -744,6 +799,7 @@ public final class VcnGatewayConnectionConfig {
                     mUnderlyingNetworkTemplates,
                     mRetryIntervalsMs,
                     mMaxMtu,
+                    mUdpPort4500NatTimeoutSeconds,
                     mGatewayOptions);
         }
     }
