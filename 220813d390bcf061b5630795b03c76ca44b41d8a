@@ -121,6 +121,24 @@
       "parentUuid": "9067d8e1_eba2dacc",
       "revId": "220813d390bcf061b5630795b03c76ca44b41d8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "253efec2_bfceabb2",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2023-02-15T23:00:18Z",
+      "side": 1,
+      "message": "BATTERY_PROPERTY_MANUFACTURING_DATE and BATTERY_PROPERTY_FIRST_USAGE_DATE requires access control. We should limit to android.permission.BATTERY_STATS",
+      "parentUuid": "b3a930f8_ba266376",
+      "revId": "220813d390bcf061b5630795b03c76ca44b41d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
