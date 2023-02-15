@@ -284,6 +284,30 @@
       },
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c26b050b_dafce40f",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-15T19:15:24Z",
+      "side": 1,
+      "message": "\u003e There\u0027s no mention of any permission required in https://developer.android.com/reference/android/os/BatteryManager?hl\u003den#getLongProperty(int)  \n\u003e \n\u003e So I don\u0027t see there being any access control to this information right now, and that needs to be added if this is going to be SystemAPI. go/android-api-types#systemapi has details on expectations.",
+      "parentUuid": "0daa0c89_2f9a8de1",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 14
+      },
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

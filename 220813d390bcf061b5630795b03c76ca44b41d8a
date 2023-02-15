@@ -68,6 +68,23 @@
       },
       "revId": "220813d390bcf061b5630795b03c76ca44b41d8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8041b889_b7c89abd",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-15T19:15:24Z",
+      "side": 1,
+      "message": "Access control would be needed here. As one common option, the service could verify the caller has the right privileged permission before returning this data, and throw SecurityException otherwise.",
+      "revId": "220813d390bcf061b5630795b03c76ca44b41d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
