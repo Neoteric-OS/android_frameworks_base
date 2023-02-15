@@ -197,6 +197,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6565b8c2_1fbc8c2a",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-02-15T11:57:27Z",
+      "side": 1,
+      "message": "Thanks for the advice. Updated in jave doc.",
+      "parentUuid": "0b1320d9_f647dbbd",
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec98dcdf_aedd111a",
