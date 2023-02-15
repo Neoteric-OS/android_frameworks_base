@@ -103,6 +103,24 @@
       "parentUuid": "8041b889_b7c89abd",
       "revId": "220813d390bcf061b5630795b03c76ca44b41d8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3a930f8_ba266376",
+        "filename": "services/core/java/com/android/server/health/HealthServiceWrapperAidl.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-02-15T22:12:19Z",
+      "side": 1,
+      "message": "Those seem to all be public API: https://developer.android.com/reference/android/os/BatteryManager#BATTERY_PROPERTY_CHARGE_COUNTER for example.\n\nSo since they are public, they don\u0027t need permission restrictions unless you want them to have them. And yes, it\u0027d be a compatibility break to add some now, so generally not allowed unless you have a compelling security or privacy concern.\n\nWe just require all system API to have some kind of access control limiting them to privileged users - if there\u0027s no such access control, they\u0027re the same as public API (since anyone can call them, with just a bit of effort with reflection or similar) and should be marked as such.",
+      "parentUuid": "9067d8e1_eba2dacc",
+      "revId": "220813d390bcf061b5630795b03c76ca44b41d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
