@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1eed3dd0_15edb3b8",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2023-02-15T18:49:59Z",
+      "side": 1,
+      "message": "nit: wrap this in `\u003ccode\u003e`?",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 32
+      },
+      "revId": "220813d390bcf061b5630795b03c76ca44b41d8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e98a5839_c3662972",
         "filename": "core/java/android/os/BatteryManager.java",
         "patchSetId": 20
