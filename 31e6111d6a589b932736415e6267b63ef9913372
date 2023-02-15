@@ -80,6 +80,24 @@
       "message": "Help to evaluate whether the change can be integrated, thank you very much.",
       "revId": "31e6111d6a589b932736415e6267b63ef9913372",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9086d4bd_94539509",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1945881
+      },
+      "writtenOn": "2023-02-15T13:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "178b7f6b_d54a87b8",
+      "revId": "31e6111d6a589b932736415e6267b63ef9913372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
