@@ -236,6 +236,30 @@
       },
       "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4220511c_37b4824c",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2023-02-15T18:54:07Z",
+      "side": 1,
+      "message": "This is just an integer; an app can always handcraft that integer, so permission control on the integer itself doesn\u0027t make sense.\n\nFor the usage of the integer (i.e. the operation getting manufacturing date), it is the same permission as talking to the `batteryproperties` service.",
+      "parentUuid": "ec98dcdf_aedd111a",
+      "range": {
+        "startLine": 293,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 14
+      },
+      "revId": "4d751ec08c5e0458991822ebe045e2b7afa79d00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
