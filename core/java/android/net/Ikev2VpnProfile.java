@@ -138,6 +138,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
     private final int mMaxMtu; // Defaults in builder
     private final boolean mIsRestrictedToTestNetworks;
     @Nullable private final IkeTunnelConnectionParams mIkeTunConnParams;
+    private final boolean mAutomaticNattKeepaliveTimerEnabled;
+    private final boolean mAutomaticIpVersionSelectionEnabled;
 
     private Ikev2VpnProfile(
             int type,
@@ -157,7 +159,9 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             boolean restrictToTestNetworks,
             boolean excludeLocalRoutes,
             boolean requiresInternetValidation,
-            @Nullable IkeTunnelConnectionParams ikeTunConnParams) {
+            @Nullable IkeTunnelConnectionParams ikeTunConnParams,
+            boolean automaticNattKeepaliveTimerEnabled,
+            boolean automaticIpVersionSelectionEnabled) {
         super(type, excludeLocalRoutes, requiresInternetValidation);
 
         checkNotNull(allowedAlgorithms, MISSING_PARAM_MSG_TMPL, "Allowed Algorithms");
@@ -185,6 +189,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         mMaxMtu = maxMtu;
         mIsRestrictedToTestNetworks = restrictToTestNetworks;
         mIkeTunConnParams = ikeTunConnParams;
+        mAutomaticNattKeepaliveTimerEnabled = automaticNattKeepaliveTimerEnabled;
+        mAutomaticIpVersionSelectionEnabled = automaticIpVersionSelectionEnabled;
 
         validate();
     }
@@ -420,6 +426,24 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         return mIsRestrictedToTestNetworks;
     }
 
+    /**
+     * Returns whether or not this VPN profile is restricted to test networks.
+     *
+     * @hide
+     */
+    public boolean isAutomaticNattKeepaliveTimerEnabled() {
+        return mAutomaticNattKeepaliveTimerEnabled;
+    }
+
+    /**
+     * Returns whether or not this VPN profile is restricted to test networks.
+     *
+     * @hide
+     */
+    public boolean isAutomaticIpVersionSelectionEnabled() {
+        return mAutomaticIpVersionSelectionEnabled;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(
@@ -440,7 +464,9 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 mIsRestrictedToTestNetworks,
                 mExcludeLocalRoutes,
                 mRequiresInternetValidation,
-                mIkeTunConnParams);
+                mIkeTunConnParams,
+                mAutomaticNattKeepaliveTimerEnabled,
+                mAutomaticIpVersionSelectionEnabled);
     }
 
     @Override
@@ -467,7 +493,9 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 && mIsRestrictedToTestNetworks == other.mIsRestrictedToTestNetworks
                 && mExcludeLocalRoutes == other.mExcludeLocalRoutes
                 && mRequiresInternetValidation == other.mRequiresInternetValidation
-                && Objects.equals(mIkeTunConnParams, other.mIkeTunConnParams);
+                && Objects.equals(mIkeTunConnParams, other.mIkeTunConnParams)
+                && mAutomaticNattKeepaliveTimerEnabled == other.mAutomaticNattKeepaliveTimerEnabled
+                && mAutomaticIpVersionSelectionEnabled == other.mAutomaticIpVersionSelectionEnabled;
     }
 
     /**
@@ -482,7 +510,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
     public VpnProfile toVpnProfile() throws IOException, GeneralSecurityException {
         final VpnProfile profile = new VpnProfile("" /* Key; value unused by IKEv2VpnProfile(s) */,
                 mIsRestrictedToTestNetworks, mExcludeLocalRoutes, mRequiresInternetValidation,
-                mIkeTunConnParams);
+                mIkeTunConnParams, mAutomaticNattKeepaliveTimerEnabled,
+                mAutomaticIpVersionSelectionEnabled);
         profile.proxy = mProxyInfo;
         profile.isBypassable = mIsBypassable;
         profile.isMetered = mIsMetered;
@@ -773,6 +802,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         private int mMaxMtu = PlatformVpnProfile.MAX_MTU_DEFAULT;
         private boolean mIsRestrictedToTestNetworks = false;
         private boolean mExcludeLocalRoutes = false;
+        private boolean mAutomaticNattKeepaliveTimerEnabled = false;
+        private boolean mAutomaticIpVersionSelectionEnabled = false;
         @Nullable private final IkeTunnelConnectionParams mIkeTunConnParams;
 
         /**
@@ -1080,6 +1111,34 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         }
 
         /**
+         * Sets the enabled state of the automatic NATT keepalive timers
+         *
+         * @param isEnabled {@code true} to enable automatic keepalive timers, based on internal
+         *     platform signals. Defaults to {@code false}.
+         * @return this {@link Builder} object to facilitate chaining of method calls
+         */
+        @NonNull
+        @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
+        public Builder setAutomaticNattKeepaliveTimer(boolean isEnabled) {
+            mAutomaticNattKeepaliveTimerEnabled = isEnabled;
+            return this;
+        }
+
+        /**
+         * Sets the enabled state of the automatic IP version selection
+         *
+         * @param isEnabled {@code true} to enable automatic IP version selection, based on internal
+         *     platform signals. Defaults to {@code false}.
+         * @return this {@link Builder} object to facilitate chaining of method calls
+         */
+        @NonNull
+        @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
+        public Builder setAutomaticIpVersionSelection(boolean isEnabled) {
+            mAutomaticIpVersionSelectionEnabled = isEnabled;
+            return this;
+        }
+
+        /**
          * Sets whether the local traffic is exempted from the VPN.
          *
          * When this is set, the system will not use the VPN network when an app
@@ -1129,7 +1188,9 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                     mIsRestrictedToTestNetworks,
                     mExcludeLocalRoutes,
                     mRequiresInternetValidation,
-                    mIkeTunConnParams);
+                    mIkeTunConnParams,
+                    mAutomaticNattKeepaliveTimerEnabled,
+                    mAutomaticIpVersionSelectionEnabled);
         }
     }
 }
