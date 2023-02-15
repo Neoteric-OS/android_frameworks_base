@@ -82,6 +82,7 @@ public class VcnGatewayConnectionConfigTest {
                 TimeUnit.MINUTES.toMillis(30)
             };
     public static final int MAX_MTU = 1360;
+    public static final int UDP_PORT_4500_NAT_TIMEOUT = 30;
 
     private static final Set<Integer> GATEWAY_OPTIONS =
             Collections.singleton(VCN_GATEWAY_OPTION_ENABLE_DATA_STALL_RECOVERY_WITH_MOBILITY);
@@ -104,7 +105,9 @@ public class VcnGatewayConnectionConfigTest {
     public static VcnGatewayConnectionConfig buildTestConfig(
             List<VcnUnderlyingNetworkTemplate> nwTemplates) {
         final VcnGatewayConnectionConfig.Builder builder =
-                newBuilder().setVcnUnderlyingNetworkPriorities(nwTemplates);
+                newBuilder()
+                        .setVcnUnderlyingNetworkPriorities(nwTemplates)
+                        .setUdpPort4500NatTimeoutSeconds(UDP_PORT_4500_NAT_TIMEOUT);
 
         return buildTestConfigWithExposedCaps(builder, EXPOSED_CAPS);
     }

@@ -19,6 +19,7 @@ package android.net.vcn;
 import static android.net.NetworkCapabilities.REDACT_FOR_ACCESS_FINE_LOCATION;
 import static android.net.NetworkCapabilities.REDACT_FOR_NETWORK_SETTINGS;
 import static android.net.NetworkCapabilities.REDACT_NONE;
+import static android.net.vcn.VcnGatewayConnectionConfig.UDP_PORT_4500_NAT_TIMEOUT_UNSET;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static org.junit.Assert.assertEquals;
@@ -37,11 +38,14 @@ import java.util.Arrays;
 public class VcnTransportInfoTest {
     private static final int SUB_ID = 1;
     private static final int NETWORK_ID = 5;
+    private static final int UDP_PORT_4500_NAT_TIMEOUT = 30;
     private static final WifiInfo WIFI_INFO =
             new WifiInfo.Builder().setNetworkId(NETWORK_ID).build();
 
-    private static final VcnTransportInfo CELL_UNDERLYING_INFO = new VcnTransportInfo(SUB_ID);
-    private static final VcnTransportInfo WIFI_UNDERLYING_INFO = new VcnTransportInfo(WIFI_INFO);
+    private static final VcnTransportInfo CELL_UNDERLYING_INFO =
+            new VcnTransportInfo(SUB_ID, UDP_PORT_4500_NAT_TIMEOUT);
+    private static final VcnTransportInfo WIFI_UNDERLYING_INFO =
+            new VcnTransportInfo(WIFI_INFO, UDP_PORT_4500_NAT_TIMEOUT);
 
     @Test
     public void testGetWifiInfo() {
@@ -58,6 +62,14 @@ public class VcnTransportInfoTest {
     }
 
     @Test
+    public void testGetUdpPort4500NatTimeoutSeconds() {
+        assertEquals(
+                UDP_PORT_4500_NAT_TIMEOUT, CELL_UNDERLYING_INFO.getUdpPort4500NatTimeoutSeconds());
+        assertEquals(
+                UDP_PORT_4500_NAT_TIMEOUT, WIFI_UNDERLYING_INFO.getUdpPort4500NatTimeoutSeconds());
+    }
+
+    @Test
     public void testMakeCopyRedactForNetworkSettings() {
         for (VcnTransportInfo info : Arrays.asList(CELL_UNDERLYING_INFO, WIFI_UNDERLYING_INFO)) {
             assertEquals(
@@ -67,6 +79,10 @@ public class VcnTransportInfoTest {
             assertNull(
                     ((VcnTransportInfo) info.makeCopy(REDACT_FOR_NETWORK_SETTINGS))
                             .getWifiInfo());
+            assertEquals(
+                    UDP_PORT_4500_NAT_TIMEOUT_UNSET,
+                    ((VcnTransportInfo) info.makeCopy(REDACT_FOR_NETWORK_SETTINGS))
+                            .getUdpPort4500NatTimeoutSeconds());
         }
     }
 
@@ -77,9 +93,17 @@ public class VcnTransportInfoTest {
                 ((VcnTransportInfo) CELL_UNDERLYING_INFO.makeCopy(REDACT_FOR_ACCESS_FINE_LOCATION))
                         .getSubId());
         assertEquals(
+                UDP_PORT_4500_NAT_TIMEOUT,
+                ((VcnTransportInfo) CELL_UNDERLYING_INFO.makeCopy(REDACT_FOR_ACCESS_FINE_LOCATION))
+                        .getUdpPort4500NatTimeoutSeconds());
+        assertEquals(
                 WifiConfiguration.INVALID_NETWORK_ID,
                 ((VcnTransportInfo) WIFI_UNDERLYING_INFO.makeCopy(REDACT_FOR_ACCESS_FINE_LOCATION))
                         .getWifiInfo().getNetworkId());
+        assertEquals(
+                UDP_PORT_4500_NAT_TIMEOUT,
+                ((VcnTransportInfo) WIFI_UNDERLYING_INFO.makeCopy(REDACT_FOR_ACCESS_FINE_LOCATION))
+                        .getUdpPort4500NatTimeoutSeconds());
     }
 
     @Test
@@ -110,8 +134,10 @@ public class VcnTransportInfoTest {
     public void testParcelNotRedactedForSysUi() {
         VcnTransportInfo cellRedacted = parcelForSysUi(CELL_UNDERLYING_INFO);
         assertEquals(SUB_ID, cellRedacted.getSubId());
+        assertEquals(UDP_PORT_4500_NAT_TIMEOUT, cellRedacted.getUdpPort4500NatTimeoutSeconds());
         VcnTransportInfo wifiRedacted = parcelForSysUi(WIFI_UNDERLYING_INFO);
         assertEquals(NETWORK_ID, wifiRedacted.getWifiInfo().getNetworkId());
+        assertEquals(UDP_PORT_4500_NAT_TIMEOUT, wifiRedacted.getUdpPort4500NatTimeoutSeconds());
     }
 
     private VcnTransportInfo parcelForSysUi(VcnTransportInfo vcnTransportInfo) {
