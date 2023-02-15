@@ -26620,6 +26620,8 @@ package android.net {
     method @NonNull public android.net.Ikev2VpnProfile.Builder setAuthDigitalSignature(@NonNull java.security.cert.X509Certificate, @NonNull java.security.PrivateKey, @Nullable java.security.cert.X509Certificate);
     method @NonNull public android.net.Ikev2VpnProfile.Builder setAuthPsk(@NonNull byte[]);
     method @NonNull public android.net.Ikev2VpnProfile.Builder setAuthUsernamePassword(@NonNull String, @NonNull String, @Nullable java.security.cert.X509Certificate);
+    method @NonNull public android.net.Ikev2VpnProfile.Builder setAutomaticIpVersionSelection(boolean);
+    method @NonNull public android.net.Ikev2VpnProfile.Builder setAutomaticNattKeepaliveTimer(boolean);
     method @NonNull public android.net.Ikev2VpnProfile.Builder setBypassable(boolean);
     method @NonNull public android.net.Ikev2VpnProfile.Builder setLocalRoutesExcluded(boolean);
     method @NonNull public android.net.Ikev2VpnProfile.Builder setMaxMtu(int);
