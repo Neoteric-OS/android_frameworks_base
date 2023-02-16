@@ -3179,6 +3179,7 @@ public class WindowManagerService extends IWindowManager.Stub
     @Override
     public void onUserSwitched() {
         mSettingsObserver.updateSystemUiSettings(true /* handleChange */);
+        mSettingsObserver.updatePointerLocation();
         synchronized (mGlobalLock) {
             // force a re-application of focused window sysui visibility on each display.
             mRoot.forAllDisplayPolicies(DisplayPolicy::resetSystemBarAttributes);
