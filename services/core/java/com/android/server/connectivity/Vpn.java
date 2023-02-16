@@ -25,6 +25,11 @@ import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.RouteInfo.RTN_THROW;
 import static android.net.RouteInfo.RTN_UNREACHABLE;
 import static android.net.VpnManager.NOTIFICATION_CHANNEL_VPN;
+import static android.net.ipsec.ike.IkeSessionParams.ESP_ENCAP_TYPE_AUTO;
+import static android.net.ipsec.ike.IkeSessionParams.ESP_ENCAP_TYPE_NONE;
+import static android.net.ipsec.ike.IkeSessionParams.ESP_IP_VERSION_AUTO;
+import static android.net.ipsec.ike.IkeSessionParams.ESP_IP_VERSION_IPV4;
+import static android.net.ipsec.ike.IkeSessionParams.IKE_OPTION_AUTOMATIC_KEEPALIVE_ON_OFF;
 import static android.os.PowerWhitelistManager.REASON_VPN;
 import static android.os.UserHandle.PER_USER_RANGE;
 
@@ -250,6 +255,9 @@ public class Vpn {
      * The initial token value of IKE session.
      */
     private static final int STARTING_TOKEN = -1;
+
+    // TODO : read this from carrier config instead of a constant
+    private static final int AUTOMATIC_KEEPALIVE_DELAY_SECONDS = 30;
 
     // TODO: create separate trackers for each unique VPN to support
     // automated reconnection
@@ -3071,6 +3079,7 @@ public class Vpn {
                             prepareStatusIntent();
                         }
                         agentConnect(this::onValidationStatus);
+                        mSession.setUnderpinnedNetwork(mNetworkAgent.getNetwork());
                         return; // Link properties are already sent.
                     } else {
                         // Underlying networks also set in agentConnect()
@@ -3179,6 +3188,7 @@ public class Vpn {
                     if (!removedAddrs.isEmpty()) {
                         startNewNetworkAgent(
                                 mNetworkAgent, "MTU too low for IPv6; restarting network agent");
+                        mSession.setUnderpinnedNetwork(mNetworkAgent.getNetwork());
 
                         for (LinkAddress removed : removedAddrs) {
                             mTunnelIface.removeAddress(
@@ -3255,6 +3265,14 @@ public class Vpn {
                 final IkeSessionParams.Builder builder =
                         new IkeSessionParams.Builder(ikeTunConnParams.getIkeSessionParams())
                                 .setNetwork(underlyingNetwork);
+                if (mProfile.isAutomaticNattKeepaliveTimerEnabled()) {
+                    builder.addIkeOption(IKE_OPTION_AUTOMATIC_KEEPALIVE_ON_OFF);
+                    builder.setNattKeepAliveDelaySeconds(AUTOMATIC_KEEPALIVE_DELAY_SECONDS);
+                }
+                if (mProfile.isAutomaticIpVersionSelectionEnabled()) {
+                    builder.setIpVersion(ESP_IP_VERSION_AUTO);
+                    builder.setEncapType(ESP_ENCAP_TYPE_AUTO);
+                }
                 return builder.build();
             } else {
                 return VpnIkev2Utils.buildIkeSessionParams(mContext, mProfile, underlyingNetwork);
@@ -3331,7 +3349,19 @@ public class Vpn {
                     + mCurrentToken
                     + " to network "
                     + underlyingNetwork);
-            mSession.setNetwork(underlyingNetwork);
+            // TODO : guess the IP version based on carrier if auto IP version selection is enabled
+            final int ipVersion = mProfile.isAutomaticIpVersionSelectionEnabled()
+                    ? ESP_IP_VERSION_AUTO : ESP_IP_VERSION_IPV4;
+            // TODO : guess the ESP encap type based on carrier if auto IP version selection is
+            // enabled
+            final int encapType = mProfile.isAutomaticIpVersionSelectionEnabled()
+                    ? ESP_ENCAP_TYPE_NONE : ESP_ENCAP_TYPE_AUTO;
+            // TODO : guess the keepalive delay based on carrier if auto keepalive timer is enabled
+            final int keepaliveDelaySeconds = mProfile.isAutomaticNattKeepaliveTimerEnabled()
+                    ? AUTOMATIC_KEEPALIVE_DELAY_SECONDS
+                    : mProfile.getIkeTunnelConnectionParams().getIkeSessionParams()
+                            .getNattKeepAliveDelaySeconds();
+            mSession.setNetwork(underlyingNetwork, ipVersion, encapType, keepaliveDelaySeconds);
             return true;
         }
 
@@ -4661,8 +4691,14 @@ public class Vpn {
         }
 
         /** Update the underlying network of the IKE Session */
-        public void setNetwork(@NonNull Network network) {
-            mImpl.setNetwork(network);
+        public void setNetwork(@NonNull Network network, int ipVersion, int encapType,
+                int keepaliveDelaySeconds) {
+            mImpl.setNetwork(network, ipVersion, encapType, keepaliveDelaySeconds);
+        }
+
+        /** Set the underpinned network */
+        public void setUnderpinnedNetwork(@NonNull Network underpinnedNetwork) {
+            mImpl.setUnderpinnedNetwork(underpinnedNetwork);
         }
 
         /** Forcibly terminate the IKE Session */
