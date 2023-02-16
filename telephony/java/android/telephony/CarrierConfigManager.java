@@ -4280,6 +4280,24 @@ public class CarrierConfigManager {
         public static final String KEY_ES_SUPL_DATA_PLANE_ONLY_ROAMING_PLMN_STRING_ARRAY =
                 KEY_PREFIX + "es_supl_data_plane_only_roaming_plmn_string_array";
 
+        /**
+         * Default LONGTERM_PSDS_SERVER_1.
+         * @hide
+         */
+        public static final String KEY_LONGTERM_PSDS_SERVER_1_STRING = KEY_PREFIX + "longterm_psds_server_1";
+
+        /**
+         * Default LONGTERM_PSDS_SERVER_2.
+         * @hide
+         */
+        public static final String KEY_LONGTERM_PSDS_SERVER_2_STRING = KEY_PREFIX + "longterm_psds_server_2";
+
+        /**
+         * Default LONGTERM_PSDS_SERVER_3.
+         * @hide
+         */
+        public static final String KEY_LONGTERM_PSDS_SERVER_3_STRING = KEY_PREFIX + "longterm_psds_server_3";
+
         private static PersistableBundle getDefaults() {
             PersistableBundle defaults = new PersistableBundle();
             defaults.putBoolean(KEY_PERSIST_LPP_MODE_BOOL, true);
@@ -4297,6 +4315,9 @@ public class CarrierConfigManager {
             defaults.putInt(KEY_ES_SUPL_CONTROL_PLANE_SUPPORT_INT,
                     SUPL_EMERGENCY_MODE_TYPE_CP_ONLY);
             defaults.putStringArray(KEY_ES_SUPL_DATA_PLANE_ONLY_ROAMING_PLMN_STRING_ARRAY, null);
+            defaults.putString(KEY_LONGTERM_PSDS_SERVER_1_STRING, "http://xtrapath4.izatcloud.net/xtra2.bin");
+            defaults.putString(KEY_LONGTERM_PSDS_SERVER_2_STRING, "http://xtrapath5.izatcloud.net/xtra2.bin");
+            defaults.putString(KEY_LONGTERM_PSDS_SERVER_3_STRING, "http://xtrapath6.izatcloud.net/xtra2.bin");
             return defaults;
         }
     }
