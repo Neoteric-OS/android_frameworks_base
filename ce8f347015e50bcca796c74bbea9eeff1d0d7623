@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4152b4f9_9812bedd",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2023-02-16T22:10:57Z",
+      "side": 1,
+      "message": "moved to https://android-review.git.corp.google.com/q/topic:%22251427118_perms%22",
+      "parentUuid": "dbb6ba24_8a8a7fd2",
+      "revId": "ce8f347015e50bcca796c74bbea9eeff1d0d7623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a957aa5c_b496a360",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "To add: this _must_ be done in the service or AIDL wrapper. This code runs in the app process, and can\u0027t be trusted - a malicious app can simply bypass the check and call `mBatteryPropertyRegistrar.getProperty()` directly (or use the underlying Binder link directly, if it really wants to).\n\nAll permission checking has to occur in a system service or it is not effective.",
       "parentUuid": "a957aa5c_b496a360",
+      "revId": "ce8f347015e50bcca796c74bbea9eeff1d0d7623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6ce5583_5590ef60",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2023-02-16T22:10:57Z",
+      "side": 1,
+      "message": "moved to https://android-review.git.corp.google.com/q/topic:%22251427118_perms%22",
+      "parentUuid": "73358c12_e6d73ed6",
       "revId": "ce8f347015e50bcca796c74bbea9eeff1d0d7623",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
