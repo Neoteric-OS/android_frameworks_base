@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a957aa5c_b496a360",
+        "filename": "core/java/android/os/BatteryManager.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2023-02-16T17:39:34Z",
+      "side": 1,
+      "message": "this shoud be done in the service or in the AIDL wrapper",
+      "revId": "ce8f347015e50bcca796c74bbea9eeff1d0d7623",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
