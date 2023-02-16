@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a29d00a_2e948363",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3466,
+      "author": {
+        "id": 1092583
+      },
+      "writtenOn": "2023-02-16T18:12:28Z",
+      "side": 1,
+      "message": "I just realized that this needs corresponding fix in metadata_definitions.xml. \n\nBy only fixing here, the 2 places go out of sync.",
+      "range": {
+        "startLine": 3466,
+        "startChar": 49,
+        "endLine": 3466,
+        "endChar": 62
+      },
+      "revId": "02d4085c6508361d12de000f0ebf2bde7253c519",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
