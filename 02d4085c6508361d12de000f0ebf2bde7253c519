@@ -22,6 +22,30 @@
       },
       "revId": "02d4085c6508361d12de000f0ebf2bde7253c519",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40023722_247fb4e8",
+        "filename": "core/java/android/hardware/camera2/CameraCharacteristics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3466,
+      "author": {
+        "id": 1121338
+      },
+      "writtenOn": "2023-02-16T18:16:07Z",
+      "side": 1,
+      "message": "ah thats right, let me create a fix there.",
+      "parentUuid": "1a29d00a_2e948363",
+      "range": {
+        "startLine": 3466,
+        "startChar": 49,
+        "endLine": 3466,
+        "endChar": 62
+      },
+      "revId": "02d4085c6508361d12de000f0ebf2bde7253c519",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
