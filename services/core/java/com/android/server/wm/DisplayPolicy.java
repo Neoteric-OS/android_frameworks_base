@@ -2860,7 +2860,7 @@ public class DisplayPolicy {
         mPointerLocationView = new PointerLocationView(mContext);
         mPointerLocationView.setPrintCoords(false);
         final WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.type = WindowManager.LayoutParams.TYPE_SECURE_SYSTEM_OVERLAY;
+        lp.type = LayoutParams.TYPE_POINTER;
         lp.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
@@ -2874,6 +2874,7 @@ public class DisplayPolicy {
         lp.format = PixelFormat.TRANSLUCENT;
         lp.setTitle("PointerLocation - display " + getDisplayId());
         lp.inputFeatures |= WindowManager.LayoutParams.INPUT_FEATURE_NO_INPUT_CHANNEL;
+        lp.setTrustedOverlay();
         final WindowManager wm = mContext.getSystemService(WindowManager.class);
         wm.addView(mPointerLocationView, lp);
         mDisplayContent.registerPointerEventListener(mPointerLocationView);
