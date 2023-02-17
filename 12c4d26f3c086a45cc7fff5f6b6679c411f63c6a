@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f4eb9f7_b8bd1cba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2023-02-17T14:58:49Z",
+      "side": 1,
+      "message": "Hi Linnan!\n\nIs marking the layer as a trusted overlay enough to resolve the issue? It\u0027s not clear to me exactly what this CL is trying to fix. We should avoid making this a pointer layer, since that has a special meaning when it comes to graphics composition.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c7d2822_4ee29cf4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2023-02-17T14:58:49Z",
+      "side": 1,
+      "message": "Please file a bug and add a `Bug:` tag for this.\n\nIt would also be helpful if you can list the repro steps on the bug.",
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40c628dc_247251b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2023-02-17T14:58:49Z",
+      "side": 1,
+      "message": "Could you please list the manual test steps that you used? Thanks.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
