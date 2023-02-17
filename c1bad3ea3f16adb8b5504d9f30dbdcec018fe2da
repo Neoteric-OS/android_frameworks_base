@@ -34,6 +34,24 @@
       "parentUuid": "85293b46_b05bdf9d",
       "revId": "c1bad3ea3f16adb8b5504d9f30dbdcec018fe2da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af23bbb7_df8b54a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-02-17T16:35:31Z",
+      "side": 1,
+      "message": "Do you have any absolute numbers? Say, on a pixel device?\n- Insertion only happens at the boot time in zygote, so the insertion performance isn\u0027t that important as long as the total time is still \"short enough\". (Though we may want to increase the initial array map size?)\n\n- Look up time does matter too, but if it was \"10 nanoseconds vs 15 nanoseconds\", then I don\u0027t believe it\u0027s worth the switch. If it was \"1 second vs 1.5 seconds\" then we should probably make a switch -- or maybe figure out an even faster way, because 1 second would still be too slow. The question is on which side we are...",
+      "parentUuid": "4227173c_cec73ea2",
+      "revId": "c1bad3ea3f16adb8b5504d9f30dbdcec018fe2da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
