@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c840c9b8_5e4d7b50",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-02-18T06:35:20Z",
+      "side": 1,
+      "message": "Maybe not so important if we\u0027re going to read this from carrier config anyway but probably better align with the default value of CarrierConfig key(KEY_MIN_UDP_PORT_4500_NAT_TIMEOUT_SEC_INT) which is 5 min?",
+      "range": {
+        "startLine": 260,
+        "startChar": 65,
+        "endLine": 260,
+        "endChar": 67
+      },
+      "revId": "fb016b3bd843b276ef45cb8a4fe2d75d86e128d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af99e97f_05aeefee",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3278,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-02-18T06:35:20Z",
+      "side": 1,
+      "message": "Do we only want to enable this feature when the Ikev2VpnProfile is constructed with a IkeTunnelConnectionParams? The java doc for the API did not specify this behavior. If it\u0027s not intended, I think we should also update the logic in VpnIkev2Utils.buildIkeSessionParams() to also honor the value set in the Ikev2VpnProfile.",
+      "range": {
+        "startLine": 3278,
+        "startChar": 23,
+        "endLine": 3278,
+        "endChar": 58
+      },
+      "revId": "fb016b3bd843b276ef45cb8a4fe2d75d86e128d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c49071b_78f5fed0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3358,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-02-18T06:35:20Z",
+      "side": 1,
+      "message": "`ESP_ENCAP_TYPE_AUTO : ESP_ENCAP_TYPE_NONE`?\n\nWhile reviewing this, I found the java doc for this is unclear to me. I cannot easily know what is the expected type if isAutomaticIpVersionSelectionEnabled() is true.",
+      "range": {
+        "startLine": 3358,
+        "startChar": 22,
+        "endLine": 3358,
+        "endChar": 63
+      },
+      "revId": "fb016b3bd843b276ef45cb8a4fe2d75d86e128d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "607f4f9e_822cde44",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3363,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-02-18T06:35:20Z",
+      "side": 1,
+      "message": "This means that if wildlife enables this. They should not need to set the timer because the setting timer will never be used. I can see they still set it. If it\u0027s expected, we may need to ask them to not to set the timer since the setting timer will be useless.",
+      "range": {
+        "startLine": 3360,
+        "startChar": 45,
+        "endLine": 3363,
+        "endChar": 60
+      },
+      "revId": "fb016b3bd843b276ef45cb8a4fe2d75d86e128d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
