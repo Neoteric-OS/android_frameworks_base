@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ef691c4_40d85b13",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1566,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-02-18T22:14:28Z",
+      "side": 1,
+      "message": "Use String.format here",
+      "range": {
+        "startLine": 1566,
+        "startChar": 38,
+        "endLine": 1566,
+        "endChar": 89
+      },
+      "revId": "ff6f1b13555a2fa26540f7c7d91c0710fb7f9466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c65dfde0_4a5e2351",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-02-18T22:14:28Z",
+      "side": 1,
+      "message": "Suggested code:\nfinal String vendorPropertyPrefix \u003d \"...\"\nString basePropertyName \u003d String.format(\"%s.%s\", vendorPropertyPrefix, property);\nString attestationPropertyName \u003d String.format(\"%s_for_attestation\", basePropertyName);\n\nString basePropertyValue \u003d getString(basePropertyName);\nString forAttestationPropertyValue \u003d getString(attestationPropertyName);\n\nthe return statement just checks basePropertyValue and forAttestationPropertyValue",
+      "range": {
+        "startLine": 1568,
+        "startChar": 28,
+        "endLine": 1568,
+        "endChar": 59
+      },
+      "revId": "ff6f1b13555a2fa26540f7c7d91c0710fb7f9466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
