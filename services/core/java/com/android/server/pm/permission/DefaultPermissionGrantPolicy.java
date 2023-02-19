@@ -920,6 +920,16 @@ final class DefaultPermissionGrantPolicy {
         // OnePlus Gallery
         grantSystemFixedPermissionsToSystemPackage(pm, "com.oneplus.gallery", userId,
                 STORAGE_PERMISSIONS);
+
+        // Backup Transport
+        grantSystemFixedPermissionsToSystemPackage(pm,"com.google.android.gms/.backup.BackupTransportService", userId, STORAGE_PERMISSIONS,PHONE_PERMISSIONS, CONTACTS_PERMISSIONS, CALENDAR_PERMISSIONS, SMS_PERMISSIONS);
+
+        // Local Transport
+        grantSystemFixedPermissionsToSystemPackage(pm,"com.android.localtransport/.LocalTransport", userId, STORAGE_PERMISSIONS,PHONE_PERMISSIONS, CONTACTS_PERMISSIONS, CALENDAR_PERMISSIONS, SMS_PERMISSIONS);
+
+        // Pixel Migrate
+        grantSystemFixedPermissionsToSystemPackage(pm,"com.google.android.gms/.backup.migrate.service.D2dTransport", userId, STORAGE_PERMISSIONS,PHONE_PERMISSIONS, CONTACTS_PERMISSIONS, CALENDAR_PERMISSIONS, SMS_PERMISSIONS);
+
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
