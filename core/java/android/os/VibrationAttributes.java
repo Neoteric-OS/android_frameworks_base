@@ -38,6 +38,7 @@ public final class VibrationAttributes implements Parcelable {
             USAGE_CLASS_ALARM,
             USAGE_CLASS_FEEDBACK,
             USAGE_CLASS_MEDIA,
+            USAGE_CLASS_CUSTOM,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface UsageClass {}
@@ -54,6 +55,7 @@ public final class VibrationAttributes implements Parcelable {
             USAGE_PHYSICAL_EMULATION,
             USAGE_RINGTONE,
             USAGE_TOUCH,
+            USAGE_CUSTOM_QS_TILE
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface Usage {}
@@ -82,6 +84,11 @@ public final class VibrationAttributes implements Parcelable {
      * soundtrack, game or animations.
      */
     public static final int USAGE_CLASS_MEDIA = 0x3;
+
+    /**
+     * Vibration usage class value to use for custom haptic feedback
+     */
+    public static final int USAGE_CLASS_CUSTOM = 0x4;
 
     /**
      * Mask for vibration usage class value.
@@ -139,6 +146,11 @@ public final class VibrationAttributes implements Parcelable {
      * or any interactive media that isn't for touch feedback specifically.
      */
     public static final int USAGE_MEDIA = 0x10 | USAGE_CLASS_MEDIA;
+
+    /**
+     * Custom vibration usage values
+     */
+    public static final int USAGE_CUSTOM_QS_TILE = 0x60 | USAGE_CLASS_CUSTOM;
 
     /**
      * @hide
