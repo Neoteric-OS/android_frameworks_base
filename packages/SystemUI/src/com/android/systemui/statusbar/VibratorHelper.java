@@ -97,9 +97,31 @@ public class VibratorHelper {
     }
 
     /**
+     * @see Vibrator#vibrate(VibrationEffect, VibrationAttributes)
+     */
+    public void vibrate(final int effectId, @NonNull VibrationAttributes attributes) {
+        if (!hasVibrator()) {
+            return;
+        }
+        mExecutor.execute(() ->
+                mVibrator.vibrate(VibrationEffect.get(effectId, false /* fallback */),
+                        attributes));
+    }
+
+    /**
      * @see Vibrator#vibrate(VibrationEffect, AudioAttributes)
      */
     public void vibrate(@NonNull VibrationEffect effect, @NonNull AudioAttributes attributes) {
+        if (!hasVibrator()) {
+            return;
+        }
+        mExecutor.execute(() -> mVibrator.vibrate(effect, attributes));
+    }
+
+    /**
+     * @see Vibrator#vibrate(VibrationEffect, VibrationAttributes)
+     */
+    public void vibrate(@NonNull VibrationEffect effect, @NonNull VibrationAttributes attributes) {
         if (!hasVibrator()) {
             return;
         }

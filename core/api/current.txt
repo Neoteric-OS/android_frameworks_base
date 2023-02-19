@@ -31102,6 +31102,10 @@ package android.os {
     field @NonNull public static final android.os.Parcelable.Creator<android.os.CpuUsageInfo> CREATOR;
   }
 
+  public class CustomVibrationAttributes {
+    field public static final android.os.VibrationAttributes VIBRATION_ATTRIBUTES_QS_TILE;
+  }
+
   public class DeadObjectException extends android.os.RemoteException {
     ctor public DeadObjectException();
     ctor public DeadObjectException(String);
@@ -32311,11 +32315,13 @@ package android.os {
     field public static final int USAGE_ACCESSIBILITY = 66; // 0x42
     field public static final int USAGE_ALARM = 17; // 0x11
     field public static final int USAGE_CLASS_ALARM = 1; // 0x1
+    field public static final int USAGE_CLASS_CUSTOM = 4; // 0x4
     field public static final int USAGE_CLASS_FEEDBACK = 2; // 0x2
     field public static final int USAGE_CLASS_MASK = 15; // 0xf
     field public static final int USAGE_CLASS_MEDIA = 3; // 0x3
     field public static final int USAGE_CLASS_UNKNOWN = 0; // 0x0
     field public static final int USAGE_COMMUNICATION_REQUEST = 65; // 0x41
+    field public static final int USAGE_CUSTOM_QS_TILE = 100; // 0x64
     field public static final int USAGE_HARDWARE_FEEDBACK = 50; // 0x32
     field public static final int USAGE_MEDIA = 19; // 0x13
     field public static final int USAGE_NOTIFICATION = 49; // 0x31
