@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "87271575_311afce2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-02-20T11:44:02Z",
+      "side": 1,
+      "message": "Or we should find a new type for pointer location window, and it should on the top of TYPE_SECURE_SYSTEM_OVERLAY, any suggestion?",
+      "parentUuid": "68d6d9ec_8b18dbc4",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c7d2822_4ee29cf4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
