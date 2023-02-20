@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fd6bcef_0c304e67",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3278,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-20T14:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af99e97f_05aeefee",
+      "range": {
+        "startLine": 3278,
+        "startChar": 23,
+        "endLine": 3278,
+        "endChar": 58
+      },
+      "revId": "fb016b3bd843b276ef45cb8a4fe2d75d86e128d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c49071b_78f5fed0",
@@ -94,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a12726e_29ca62ce",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3358,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-20T14:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c49071b_78f5fed0",
+      "range": {
+        "startLine": 3358,
+        "startChar": 22,
+        "endLine": 3358,
+        "endChar": 63
+      },
+      "revId": "fb016b3bd843b276ef45cb8a4fe2d75d86e128d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "607f4f9e_822cde44",
@@ -107,6 +155,30 @@
       "writtenOn": "2023-02-18T06:35:20Z",
       "side": 1,
       "message": "This means that if wildlife enables this. They should not need to set the timer because the setting timer will never be used. I can see they still set it. If it\u0027s expected, we may need to ask them to not to set the timer since the setting timer will be useless.",
+      "range": {
+        "startLine": 3360,
+        "startChar": 45,
+        "endLine": 3363,
+        "endChar": 60
+      },
+      "revId": "fb016b3bd843b276ef45cb8a4fe2d75d86e128d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ea6f804_356eca1d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3363,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-20T14:44:22Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter if they do, but you\u0027re right – this should be documented. Done.",
+      "parentUuid": "607f4f9e_822cde44",
       "range": {
         "startLine": 3360,
         "startChar": 45,
