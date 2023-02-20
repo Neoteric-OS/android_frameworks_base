@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4f041271_0dedc0d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-02-20T13:03:07Z",
+      "side": 1,
+      "message": "Or we can use TYPE_BOOT_PROGRESS ?\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/policy/WindowManagerPolicy.java;l\u003d608?q\u003dcase%20TYPE_POINTER",
+      "parentUuid": "ea13b9f4_aedd79e1",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c7d2822_4ee29cf4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
