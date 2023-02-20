@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "68d6d9ec_8b18dbc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-02-20T11:41:20Z",
+      "side": 1,
+      "message": "Mark the layer as a trusted overlay can\u0027t resolve this issue, because TYPE_SECURE_SYSTEM_OVERLAY in multiuser systems shows only on the owning user\u0027s window.\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/view/WindowManager.java;l\u003d1447?q\u003dWindowManager.java\u0026ss\u003dandroid%2Fplatform%2Fsuperproject",
+      "parentUuid": "5f4eb9f7_b8bd1cba",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c7d2822_4ee29cf4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -37,6 +61,24 @@
       "writtenOn": "2023-02-17T14:58:49Z",
       "side": 1,
       "message": "Please file a bug and add a `Bug:` tag for this.\n\nIt would also be helpful if you can list the repro steps on the bug.",
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ad1ff06_8d2ba854",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-02-20T11:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c7d2822_4ee29cf4",
       "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -54,6 +96,30 @@
       "writtenOn": "2023-02-17T14:58:49Z",
       "side": 1,
       "message": "Could you please list the manual test steps that you used? Thanks.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6ea07de_d1b3e12a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-02-20T11:41:20Z",
+      "side": 1,
+      "message": "\u003e Could you please list the manual test steps that you used? Thanks.\n\nThe step list is add to the issue 269556690",
+      "parentUuid": "40c628dc_247251b3",
       "range": {
         "startLine": 13,
         "startChar": 6,
