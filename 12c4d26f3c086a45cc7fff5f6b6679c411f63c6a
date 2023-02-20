@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ea13b9f4_aedd79e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-02-20T11:47:24Z",
+      "side": 1,
+      "message": "I mark the layer as a trusted overlay because the TYPE_POINTER window not trusted by default.",
+      "parentUuid": "87271575_311afce2",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c7d2822_4ee29cf4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
