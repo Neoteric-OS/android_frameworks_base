@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0b93ebc_9de8a454",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-20T05:10:03Z",
+      "side": 1,
+      "message": "I discussed this with Sherif on Friday and for testing he\u0027d like 30 seconds, so let\u0027s keep this for now. As you mention, it\u0027s not really important since we\u0027ll read this from carrier config anyway.",
+      "parentUuid": "c840c9b8_5e4d7b50",
+      "range": {
+        "startLine": 260,
+        "startChar": 65,
+        "endLine": 260,
+        "endChar": 67
+      },
+      "revId": "fb016b3bd843b276ef45cb8a4fe2d75d86e128d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af99e97f_05aeefee",
