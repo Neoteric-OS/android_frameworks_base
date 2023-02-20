@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39b89e54_d7d009ea",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/media/dialog/MediaOutputBroadcastDialogTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1308560
+      },
+      "writtenOn": "2023-02-20T08:52:41Z",
+      "side": 1,
+      "message": "Since the AOSP did not have the ag/20607486, I will remove the test case.\nAOSP code:\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/packages/SystemUI/src/com/android/systemui/media/dialog/MediaOutputController.java?q\u003dMediaOutputController\n\nIn the future, the public code base will be released and then it will add back here.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 82
+      },
+      "revId": "c0fff70219df7f51e4d60a0781302af5e9d1e02e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
