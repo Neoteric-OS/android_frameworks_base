@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f97f47d4_ac260aff",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3277,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-02-21T01:26:38Z",
+      "side": 1,
+      "message": "Do we need to also mention that this IKE option will be set if isAutomaticNattKeepaliveTimerEnabled is true because it is not only automatic timer setting but also automatic on/off?",
+      "range": {
+        "startLine": 3277,
+        "startChar": 37,
+        "endLine": 3277,
+        "endChar": 74
+      },
+      "revId": "bbc22f66f461be03831106d6248e0046ff50ee72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
