@@ -933,7 +933,7 @@ public final class MediaCodecInfo {
                         }
                     }
                 }
-                levelCaps = createFromProfileLevel(mMime, profile, maxLevel);
+                levelCaps = createFromProfileLevel(mMime, profile, maxLevel, isEncoder());
                 // remove profile from this format otherwise levelCaps.isFormatSupported will
                 // get into this same conditon and loop forever.
                 Map<String, Object> mapWithoutProfile = new HashMap<>(map);
@@ -1030,8 +1030,8 @@ public final class MediaCodecInfo {
                 if (pl.level >= level) {
                     // if we recognize the listed profile/level, we must also recognize the
                     // profile/level arguments.
-                    if (createFromProfileLevel(mMime, profile, pl.level) != null) {
-                        return createFromProfileLevel(mMime, profile, level) != null;
+                    if (createFromProfileLevel(mMime, profile, pl.level, isEncoder()) != null) {
+                        return createFromProfileLevel(mMime, profile, level, isEncoder()) != null;
                     }
                     return true;
                 }
@@ -1140,8 +1140,8 @@ public final class MediaCodecInfo {
          * method without calling any method of the {@link MediaCodecList} class beforehand
          * results in a {@link NullPointerException}.</p>
          */
-        public static CodecCapabilities createFromProfileLevel(
-                String mime, int profile, int level) {
+        /* package private */ static CodecCapabilities createFromProfileLevel(
+                String mime, int profile, int level, boolean encoder) {
             CodecProfileLevel pl = new CodecProfileLevel();
             pl.profile = profile;
             pl.level = level;
@@ -1149,12 +1149,26 @@ public final class MediaCodecInfo {
             defaultFormat.setString(MediaFormat.KEY_MIME, mime);
 
             CodecCapabilities ret = new CodecCapabilities(
-                new CodecProfileLevel[] { pl }, new int[0], true /* encoder */,
+                new CodecProfileLevel[] { pl }, new int[0], encoder,
                 defaultFormat, new MediaFormat() /* info */);
             if (ret.mError != 0) {
                 return null;
             }
             return ret;
+        }
+
+        /**
+         * Retrieve the codec capabilities for a certain {@code mime type}, {@code
+         * profile} and {@code level}.  If the type, or profile-level combination
+         * is not understood by the framework, it returns null.
+         * <p class=note> In {@link android.os.Build.VERSION_CODES#M}, calling this
+         * method without calling any method of the {@link MediaCodecList} class beforehand
+         * results in a {@link NullPointerException}.</p>
+         */
+        public static CodecCapabilities createFromProfileLevel(
+                String mime, int profile, int level) {
+            return createFromProfileLevel (mime, profile, level,
+                true /* encoder */);
         }
 
         /* package private */ CodecCapabilities(
