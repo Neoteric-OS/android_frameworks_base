@@ -64,6 +64,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf683b93_7e09da83",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-21T10:51:49Z",
+      "side": 1,
+      "message": "Good catch. This is just a placeholder in fact – I should have put a comment here like I did below. Done.",
+      "parentUuid": "fb535417_9ebd05ec",
+      "range": {
+        "startLine": 3279,
+        "startChar": 16,
+        "endLine": 3280,
+        "endChar": 58
+      },
+      "revId": "647a9328258038013a9063f01096f3b1d132e432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06c9b02c_872ff775",
@@ -87,6 +111,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d443681b_b8d5bebc",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3357,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-21T10:51:49Z",
+      "side": 1,
+      "message": "Instead of adding comments, I refactored the code to make it a lot more obvious. Thanks, this helped clarify a lot.",
+      "parentUuid": "06c9b02c_872ff775",
+      "range": {
+        "startLine": 3356,
+        "startChar": 34,
+        "endLine": 3357,
+        "endChar": 64
+      },
+      "revId": "647a9328258038013a9063f01096f3b1d132e432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f7cbc763_692b1618",
@@ -100,6 +148,30 @@
       "writtenOn": "2023-02-21T07:52:56Z",
       "side": 1,
       "message": "Ditto.",
+      "range": {
+        "startLine": 3360,
+        "startChar": 34,
+        "endLine": 3361,
+        "endChar": 64
+      },
+      "revId": "647a9328258038013a9063f01096f3b1d132e432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81605b14_621e4291",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3361,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-21T10:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7cbc763_692b1618",
       "range": {
         "startLine": 3360,
         "startChar": 34,
