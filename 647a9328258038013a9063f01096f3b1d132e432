@@ -16,6 +16,75 @@
       "message": "LGTM but +1 first to see if Lucas would like take another look",
       "revId": "647a9328258038013a9063f01096f3b1d132e432",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb535417_9ebd05ec",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3280,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2023-02-21T07:52:56Z",
+      "side": 1,
+      "message": "ESP_IP_VERSION_AUTO and ESP_ENCAP_TYPE_AUTO are the default values, is there any reason that we need to set them again explicitly?",
+      "range": {
+        "startLine": 3279,
+        "startChar": 16,
+        "endLine": 3280,
+        "endChar": 58
+      },
+      "revId": "647a9328258038013a9063f01096f3b1d132e432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06c9b02c_872ff775",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3357,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2023-02-21T07:52:56Z",
+      "side": 1,
+      "message": "Can we have a comment to describe why choosing ESP_IP_VERSION_AUTO when isAutomaticIpVersionSelectionEnabled is true and why choosing ESP_IP_VERSION_IPV4 when isAutomaticIpVersionSelectionEnabled is false?",
+      "range": {
+        "startLine": 3356,
+        "startChar": 34,
+        "endLine": 3357,
+        "endChar": 64
+      },
+      "revId": "647a9328258038013a9063f01096f3b1d132e432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7cbc763_692b1618",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3361,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2023-02-21T07:52:56Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 3360,
+        "startChar": 34,
+        "endLine": 3361,
+        "endChar": 64
+      },
+      "revId": "647a9328258038013a9063f01096f3b1d132e432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
