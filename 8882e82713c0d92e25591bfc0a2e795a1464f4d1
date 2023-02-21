@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c22482a4_19ddaaf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2023-02-21T11:28:00Z",
+      "side": 1,
+      "message": "For the naming, we can update it in a follow-up commit.",
+      "revId": "8882e82713c0d92e25591bfc0a2e795a1464f4d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0c0c973_2062f759",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3344,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2023-02-21T11:28:00Z",
+      "side": 1,
+      "message": "I think you use \"guess\" here is because we don\u0027t know what the value that the carrier will set.\n\nMaybe we can rename it to \"getEspIpVersionForNetworkFromCarrier\"? Or something like that?",
+      "range": {
+        "startLine": 3344,
+        "startChar": 20,
+        "endLine": 3344,
+        "endChar": 47
+      },
+      "revId": "8882e82713c0d92e25591bfc0a2e795a1464f4d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a6ba0ef_5f90fbae",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3349,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2023-02-21T11:28:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 3349,
+        "startChar": 20,
+        "endLine": 3349,
+        "endChar": 47
+      },
+      "revId": "8882e82713c0d92e25591bfc0a2e795a1464f4d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e2b4269_7dc2bd33",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3355,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2023-02-21T11:28:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 3355,
+        "startChar": 20,
+        "endLine": 3355,
+        "endChar": 53
+      },
+      "revId": "8882e82713c0d92e25591bfc0a2e795a1464f4d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
