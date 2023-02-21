@@ -1035,7 +1035,8 @@ public final class DataFailCause {
      * MOBIKE/rekey mobility message in the expected manner
      */
     public static final int IWLAN_IKE_MOBILITY_TIMEOUT = 0x400D;
-
+    /** No internal addresses can be assigned */
+    public static final int IWLAN_EPDG_INTERNAL_ADDRESS_FAILURE = 0x400E;
 
     // OEM sepecific error codes. To be used by OEMs when they don't
     // want to reveal error code which would be replaced by ERROR_UNSPECIFIED
@@ -1538,6 +1539,8 @@ public final class DataFailCause {
                 "IWLAN_IKE_SESSION_CLOSED_BEFORE_CHILD_SESSION_OPENED");
         sFailCauseMap.put(IWLAN_IKE_DPD_TIMEOUT, "IWLAN_IKE_DPD_TIMEOUT");
         sFailCauseMap.put(IWLAN_IKE_MOBILITY_TIMEOUT, "IWLAN_IKE_MOBILITY_TIMEOUT");
+        sFailCauseMap.put(IWLAN_EPDG_INTERNAL_ADDRESS_FAILURE,
+                "IWLAN_EPDG_INTERNAL_ADDRESS_FAILURE");
         sFailCauseMap.put(OEM_DCFAILCAUSE_1, "OEM_DCFAILCAUSE_1");
         sFailCauseMap.put(OEM_DCFAILCAUSE_2, "OEM_DCFAILCAUSE_2");
         sFailCauseMap.put(OEM_DCFAILCAUSE_3, "OEM_DCFAILCAUSE_3");
