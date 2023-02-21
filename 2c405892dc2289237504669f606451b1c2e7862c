@@ -87,6 +87,24 @@
       "parentUuid": "00d4eced_7d78db35",
       "revId": "2c405892dc2289237504669f606451b1c2e7862c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31e5131e_d6c45d3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2023-02-21T16:54:26Z",
+      "side": 1,
+      "message": "Great! Can this CL be abandoned, then?",
+      "parentUuid": "fa7c5f75_0149bc14",
+      "revId": "2c405892dc2289237504669f606451b1c2e7862c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
