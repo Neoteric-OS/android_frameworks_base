@@ -69,6 +69,24 @@
       "parentUuid": "a64ee01a_f8e94508",
       "revId": "2c405892dc2289237504669f606451b1c2e7862c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa7c5f75_0149bc14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-02-21T16:53:02Z",
+      "side": 1,
+      "message": "Thanks for your answer. We solved this problem using vid/pid approach. To know vid/pid is enough for distinguishing different input devices.",
+      "parentUuid": "00d4eced_7d78db35",
+      "revId": "2c405892dc2289237504669f606451b1c2e7862c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
