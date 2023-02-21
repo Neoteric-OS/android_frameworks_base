@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ece25fd9_1fc782c8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3277,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-02-21T10:22:23Z",
+      "side": 1,
+      "message": "I find this is sort of duplication with l.3366. The timer will be always AUTOMATIC_KEEPALIVE_DELAY_SECONDS if isAutomaticNattKeepaliveTimerEnabled() is true.\n\nSimilar to the if condition of isAutomaticIpVersionSelectionEnabled.\n\nThat being said, do we need to change here if we have the logic in the maybeMigrateIkeSession?",
+      "range": {
+        "startLine": 3275,
+        "startChar": 12,
+        "endLine": 3277,
+        "endChar": 13
+      },
+      "revId": "647a9328258038013a9063f01096f3b1d132e432",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fb535417_9ebd05ec",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 6
