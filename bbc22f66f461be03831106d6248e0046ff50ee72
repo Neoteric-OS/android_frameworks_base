@@ -46,6 +46,30 @@
       },
       "revId": "bbc22f66f461be03831106d6248e0046ff50ee72",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d3504f7_157be423",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3277,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-02-21T04:42:46Z",
+      "side": 1,
+      "message": "It looks like the option is correctly forwarded by the builder in l.3270, since it will simply copy the ike options member. This line can simply be removed.",
+      "parentUuid": "62ce3141_f6631f95",
+      "range": {
+        "startLine": 3277,
+        "startChar": 37,
+        "endLine": 3277,
+        "endChar": 74
+      },
+      "revId": "bbc22f66f461be03831106d6248e0046ff50ee72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
