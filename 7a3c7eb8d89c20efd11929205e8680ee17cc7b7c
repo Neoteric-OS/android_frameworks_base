@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a2639b6_aa89515a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-02-22T01:54:57Z",
+      "side": 1,
+      "message": "This should be combining with underpinned network update as aosp/2440293. I think we may have a refactor so that people use this will not forget set underpinned network.",
+      "range": {
+        "startLine": 1019,
+        "startChar": 16,
+        "endLine": 1019,
+        "endChar": 36
+      },
+      "revId": "7a3c7eb8d89c20efd11929205e8680ee17cc7b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
