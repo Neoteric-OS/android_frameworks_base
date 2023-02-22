@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aa0057e_79e0d0f4",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 8619,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2023-02-22T03:01:08Z",
+      "side": 1,
+      "message": "We may need your help to provide more specific description of the scenario when this carrier config is actually applied. Current description doesn\u0027t reveal the user case clearly.\n \n (think about you are the developer from a carrier that firstly read the javadoc of here, could he/she makes the confident decision on if this carrier config should be overridden for this carrier?)",
+      "range": {
+        "startLine": 8618,
+        "startChar": 6,
+        "endLine": 8619,
+        "endChar": 27
+      },
+      "revId": "00c5da96c1963283e6006b181af432428f35d027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
