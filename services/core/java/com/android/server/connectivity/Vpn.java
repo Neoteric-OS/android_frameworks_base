@@ -29,6 +29,7 @@ import static android.net.ipsec.ike.IkeSessionParams.ESP_ENCAP_TYPE_AUTO;
 import static android.net.ipsec.ike.IkeSessionParams.ESP_IP_VERSION_AUTO;
 import static android.os.PowerWhitelistManager.REASON_VPN;
 import static android.os.UserHandle.PER_USER_RANGE;
+import static android.telephony.CarrierConfigManager.KEY_MIN_UDP_PORT_4500_NAT_TIMEOUT_SEC_INT;
 
 import static com.android.net.module.util.NetworkStackConstants.IPV6_MIN_MTU;
 import static com.android.server.vcn.util.PersistableBundleUtils.STRING_DESERIALIZER;
@@ -127,12 +128,17 @@ import android.security.keystore.KeyProperties;
 import android.system.keystore2.Domain;
 import android.system.keystore2.KeyDescriptor;
 import android.system.keystore2.KeyPermission;
+import android.telephony.CarrierConfigManager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.IndentingPrintWriter;
 import android.util.LocalLog;
 import android.util.Log;
 import android.util.Range;
+import android.util.SparseArray;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -268,6 +274,10 @@ public class Vpn {
     private final ConnectivityManager mConnectivityManager;
     private final AppOpsManager mAppOpsManager;
     private final ConnectivityDiagnosticsManager mConnectivityDiagnosticsManager;
+    private final TelephonyManager mTelephonyManager;
+    private final CarrierConfigManager mCarrierConfigManager;
+    private final SubscriptionManager mSubscriptionManager;
+
     // The context is for specific user which is created from mUserId
     private final Context mUserIdContext;
     @VisibleForTesting final Dependencies mDeps;
@@ -312,6 +322,14 @@ public class Vpn {
     private static final int MAX_EVENTS_LOGS = 20;
     private final LocalLog mUnderlyNetworkChanges = new LocalLog(MAX_EVENTS_LOGS);
     private final LocalLog mVpnManagerEvents = new LocalLog(MAX_EVENTS_LOGS);
+
+    /**
+     * Cached Map of <subscription ID, Integer keepalive> since retrieving the PersistableBundle
+     * and the target value from CarrierConfigManager is somewhat expensive as it has hundreds of
+     * fields. This cache is cleared when the carrier config changes to ensure data freshness.
+     */
+    @GuardedBy("this")
+    private final SparseArray<Integer> mCachedKeepalivePerSubId = new SparseArray<>();
 
     /**
      * Whether to keep the connection active after rebooting, or upgrading or reinstalling. This
@@ -626,6 +644,10 @@ public class Vpn {
         mUserIdContext = context.createContextAsUser(UserHandle.of(userId), 0 /* flags */);
         mConnectivityDiagnosticsManager =
                 mContext.getSystemService(ConnectivityDiagnosticsManager.class);
+        mCarrierConfigManager = mContext.getSystemService(CarrierConfigManager.class);
+        mTelephonyManager = mContext.getSystemService(TelephonyManager.class);
+        mSubscriptionManager = mContext.getSystemService(SubscriptionManager.class);
+
         mDeps = deps;
         mNms = netService;
         mNetd = netd;
@@ -2893,6 +2915,16 @@ public class Vpn {
          */
         private int mRetryCount = 0;
 
+        private final BroadcastReceiver mCarrierConfigReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED
+                        .equals(intent.getAction())) {
+                    mExecutor.execute(() -> onCarrierConfigChanged());
+                }
+            }
+        };
+
         IkeV2VpnRunner(
                 @NonNull Ikev2VpnProfile profile, @NonNull ScheduledThreadPoolExecutor executor) {
             super(TAG);
@@ -2918,6 +2950,41 @@ public class Vpn {
             setVpnNetworkPreference(mSessionKey,
                     createUserAndRestrictedProfilesRanges(mUserId,
                             mConfig.allowedApplications, mConfig.disallowedApplications));
+            // Monitor carrier config changes.
+            final IntentFilter filter = new IntentFilter();
+            filter.addAction(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED);
+            mContext.registerReceiver(mCarrierConfigReceiver, filter);
+        }
+
+        private void onCarrierConfigChanged() {
+            final List<SubscriptionInfo> subs =
+                    mSubscriptionManager.getActiveSubscriptionInfoList();
+
+            synchronized (Vpn.this) {
+                // Ignore stale runner.
+                if (mVpnRunner != this) return;
+
+                mCachedKeepalivePerSubId.clear();
+
+                if (subs == null) return;
+
+                // Reload carrier config.
+                for (final SubscriptionInfo sub : subs) {
+                    final int subId = sub.getSubscriptionId();
+                    final PersistableBundle carrierConfig =
+                            mCarrierConfigManager.getConfigForSubId(subId);
+                    if (CarrierConfigManager.isConfigForIdentifiedCarrier(carrierConfig)) {
+                        final int natKeepalive =
+                                carrierConfig.getInt(KEY_MIN_UDP_PORT_4500_NAT_TIMEOUT_SEC_INT);
+                        mCachedKeepalivePerSubId.put(subId, natKeepalive);
+                        // TODO: Also read EspEncapType and EspIpVersion when the carrier config
+                        // key is defined.
+                    }
+                }
+                maybeMigrateIkeSession(mActiveNetwork);
+            }
+            // TODO: update the longLivedTcpConnectionsExpensive value in the networkcapabilities of
+            // the VPN network.
         }
 
         @Override
@@ -3354,9 +3421,40 @@ public class Vpn {
         }
 
         private int guessNattKeepaliveTimerForNetwork() {
-            // TODO : guess the keepalive delay based on carrier if auto keepalive timer is
-            // enabled
-            return AUTOMATIC_KEEPALIVE_DELAY_SECONDS;
+            // A networkCapabilities theoretically contains more than one subId. In current
+            // implementation of each NetworkFactory, only one subId will be put in the
+            // networkcapabilities. Thus, get the first subId as the target subId.
+            // TODO: determine which subId should be used if there are multiple subIds.
+            final int subId = getFirstSubIdForNetworkCapabilities(mUnderlyingNetworkCapabilities);
+            if (subId == SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
+                Log.d(TAG, "Invalid subId");
+                return AUTOMATIC_KEEPALIVE_DELAY_SECONDS;
+            }
+
+            synchronized (Vpn.this) {
+                if (mCachedKeepalivePerSubId.contains(subId)) {
+                    Log.d(TAG, "Get cached keepalive config");
+                    return mCachedKeepalivePerSubId.get(subId).intValue();
+                }
+
+                final TelephonyManager perSubTm = mTelephonyManager.createForSubscriptionId(subId);
+                if (perSubTm.getSimApplicationState() != TelephonyManager.SIM_STATE_LOADED) {
+                    Log.d(TAG, "SIM card is not ready on sub " + subId);
+                    return AUTOMATIC_KEEPALIVE_DELAY_SECONDS;
+                }
+
+                final PersistableBundle carrierConfig =
+                        mCarrierConfigManager.getConfigForSubId(subId);
+                if (!CarrierConfigManager.isConfigForIdentifiedCarrier(carrierConfig)) {
+                    return AUTOMATIC_KEEPALIVE_DELAY_SECONDS;
+                }
+
+                final int natKeepalive =
+                        carrierConfig.getInt(KEY_MIN_UDP_PORT_4500_NAT_TIMEOUT_SEC_INT);
+                mCachedKeepalivePerSubId.put(subId, natKeepalive);
+                Log.d(TAG, "Get customized keepalive=" + natKeepalive);
+                return natKeepalive;
+            }
         }
 
         boolean maybeMigrateIkeSession(@NonNull Network underlyingNetwork) {
@@ -3455,6 +3553,8 @@ public class Vpn {
         /** Called when the NetworkCapabilities of underlying network is changed */
         public void onDefaultNetworkCapabilitiesChanged(@NonNull NetworkCapabilities nc) {
             mUnderlyingNetworkCapabilities = nc;
+            // Update carrierConfig.
+            maybeMigrateIkeSession(mActiveNetwork);
         }
 
         /** Called when the LinkProperties of underlying network is changed */
@@ -3810,6 +3910,7 @@ public class Vpn {
 
             resetIkeState();
 
+            mContext.unregisterReceiver(mCarrierConfigReceiver);
             mConnectivityManager.unregisterNetworkCallback(mNetworkCallback);
             mConnectivityDiagnosticsManager.unregisterConnectivityDiagnosticsCallback(
                     mDiagnosticsCallback);
@@ -4802,6 +4903,8 @@ public class Vpn {
                     pw.println("Reset session scheduled");
                 }
             }
+            pw.println("mCachedKeepalivePerSubId=" + mCachedKeepalivePerSubId);
+
             pw.println("mUnderlyNetworkChanges (most recent first):");
             pw.increaseIndent();
             mUnderlyNetworkChanges.reverseDump(pw);
@@ -4812,5 +4915,14 @@ public class Vpn {
             mVpnManagerEvents.reverseDump(pw);
             pw.decreaseIndent();
         }
+    }
+
+    private static int getFirstSubIdForNetworkCapabilities(@Nullable NetworkCapabilities nc) {
+        if (nc == null) return SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+
+        for (int subId : nc.getSubscriptionIds()) {
+            return subId;
+        }
+        return SubscriptionManager.INVALID_SUBSCRIPTION_ID;
     }
 }
