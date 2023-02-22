@@ -16,6 +16,69 @@
       "message": "This LGTM but I\u0027m no speciaist ; over to Yan",
       "revId": "56950b7990c88d7efc9f87c843a90696d0309dc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9299d4e_aa7424fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-02-22T00:54:43Z",
+      "side": 1,
+      "message": "Do we also need to update `Ikev2VpnProfile#getUserIdentityFromIkeSession`? Have we done any tests to make sure it work?",
+      "revId": "56950b7990c88d7efc9f87c843a90696d0309dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6630bbe_d2f1c542",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-02-22T00:54:43Z",
+      "side": 1,
+      "message": "Can we also update the comment?",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 442,
+        "endChar": 18
+      },
+      "revId": "56950b7990c88d7efc9f87c843a90696d0309dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e08e5916_78915a1b",
+        "filename": "services/core/java/com/android/server/connectivity/VpnIkev2Utils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-02-22T00:54:43Z",
+      "side": 1,
+      "message": "A valid ASN.1 DN does not necessarily contain \"CN\". For example: https://osscs.corp.google.com/android/platform/superproject/+/master:packages/apps/KeyChain/tests/src/com/android/keychain/tests/KeyChainActivityTest.java;l\u003d157?q\u003d%22new%20X500Principal%22\u0026start\u003d41\n\nMaybe do a try catch of constructing a X500Principal or requires a special prefix?",
+      "range": {
+        "startLine": 472,
+        "startChar": 40,
+        "endLine": 472,
+        "endChar": 45
+      },
+      "revId": "56950b7990c88d7efc9f87c843a90696d0309dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
