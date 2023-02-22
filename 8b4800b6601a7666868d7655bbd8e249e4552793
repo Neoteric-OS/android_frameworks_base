@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01dc724e_a0775eff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2023-02-22T23:29:36Z",
+      "side": 1,
+      "message": "Fuzzing AIDL generated parcelables for now.",
+      "revId": "8b4800b6601a7666868d7655bbd8e249e4552793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
