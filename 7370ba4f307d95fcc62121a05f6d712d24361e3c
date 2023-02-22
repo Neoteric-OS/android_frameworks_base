@@ -16,6 +16,24 @@
       "message": "Maybe just add `synchronized (mInternal.mGlobalLock) {` here?\n\nThe build is failed because IWindow class is not imported.",
       "revId": "7370ba4f307d95fcc62121a05f6d712d24361e3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "981e0de9_fc094ceb",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-02-22T12:36:07Z",
+      "side": 0,
+      "message": "And it\u0027s hard to say the lock can really protects the view detached on other thread. Or maybe just simply change catching from `RemoteException` to `Exception`.",
+      "parentUuid": "a711a827_b29ed93f",
+      "revId": "7370ba4f307d95fcc62121a05f6d712d24361e3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
