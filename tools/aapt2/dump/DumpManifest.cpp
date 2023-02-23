@@ -1727,6 +1727,33 @@ class InputType : public ManifestExtractor::Element {
   }
 };
 
+/** Represents <install-constraints> elements. **/
+class InstallConstraints : public ManifestExtractor::Element {
+ public:
+  InstallConstraints() = default;
+  std::vector<std::string> fingerprint_prefixes;
+
+  void Extract(xml::Element* element) override {
+    for (xml::Element* child : element->GetChildElements()) {
+      if (child->name == "fingerprint-prefix") {
+        xml::Attribute* attr = child->FindAttribute(kAndroidNamespace, "value");
+        if (attr) {
+          fingerprint_prefixes.push_back(attr->value);
+        }
+      }
+    }
+  }
+
+  void Print(text::Printer* printer) override {
+    if (fingerprint_prefixes.size() > 0) {
+      printer->Print(StringPrintf("install-constraints:\n"));
+      for (const auto& prefix : fingerprint_prefixes) {
+        printer->Print(StringPrintf("  fingerprint-prefix='%s'\n", prefix.c_str()));
+      }
+    }
+  }
+};
+
 /** Represents <original-package> elements. **/
 class OriginalPackage : public ManifestExtractor::Element {
  public:
@@ -2411,6 +2438,7 @@ T* ElementCast(ManifestExtractor::Element* element) {
       {"compatible-screens", std::is_base_of<CompatibleScreens, T>::value},
       {"feature-group", std::is_base_of<FeatureGroup, T>::value},
       {"input-type", std::is_base_of<InputType, T>::value},
+      {"install-constraints", std::is_base_of<InstallConstraints, T>::value},
       {"intent-filter", std::is_base_of<IntentFilter, T>::value},
       {"meta-data", std::is_base_of<MetaData, T>::value},
       {"manifest", std::is_base_of<Manifest, T>::value},
@@ -2467,6 +2495,7 @@ std::unique_ptr<ManifestExtractor::Element> ManifestExtractor::Element::Inflate(
           {"compatible-screens", &CreateType<CompatibleScreens>},
           {"feature-group", &CreateType<FeatureGroup>},
           {"input-type", &CreateType<InputType>},
+          {"install-constraints", &CreateType<InstallConstraints>},
           {"intent-filter", &CreateType<IntentFilter>},
           {"manifest", &CreateType<Manifest>},
           {"meta-data", &CreateType<MetaData>},
