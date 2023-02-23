@@ -1618,6 +1618,10 @@ public class Vpn {
             Binder.restoreCallingIdentity(token);
         }
         updateState(DetailedState.CONNECTED, "agentConnect");
+
+        if (isIkev2VpnRunner()) {
+            ((IkeV2VpnRunner) mVpnRunner).setUnderpinnedNetwork(mNetworkAgent.getNetwork());
+        }
     }
 
     private boolean canHaveRestrictedProfile(int userId) {
@@ -2953,6 +2957,11 @@ public class Vpn {
                     diagRequest, mExecutor, mDiagnosticsCallback);
         }
 
+        public void setUnderpinnedNetwork(Network network) {
+            if (mSession == null) return;
+            mSession.setUnderpinnedNetwork(network);
+        }
+
         private boolean isActiveNetwork(@Nullable Network network) {
             return Objects.equals(mActiveNetwork, network) && mIsRunning;
         }
@@ -3081,7 +3090,6 @@ public class Vpn {
                             prepareStatusIntent();
                         }
                         agentConnect(this::onValidationStatus);
-                        mSession.setUnderpinnedNetwork(mNetworkAgent.getNetwork());
                         return; // Link properties are already sent.
                     } else {
                         // Underlying networks also set in agentConnect()
@@ -3190,7 +3198,6 @@ public class Vpn {
                     if (!removedAddrs.isEmpty()) {
                         startNewNetworkAgent(
                                 mNetworkAgent, "MTU too low for IPv6; restarting network agent");
-                        mSession.setUnderpinnedNetwork(mNetworkAgent.getNetwork());
 
                         for (LinkAddress removed : removedAddrs) {
                             mTunnelIface.removeAddress(
