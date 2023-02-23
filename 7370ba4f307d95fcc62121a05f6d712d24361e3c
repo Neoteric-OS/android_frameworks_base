@@ -52,6 +52,24 @@
       "parentUuid": "981e0de9_fc094ceb",
       "revId": "7370ba4f307d95fcc62121a05f6d712d24361e3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af5299aa_7f82ef30",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-02-23T07:34:05Z",
+      "side": 0,
+      "message": "Originally the race might already exist, just non-local windows will abort (throw exception) silently on binder thread without crashing the process.\nWhile for local window, if the dump is not executed on binder thread (e.g. from adb command), it should always add the error handle.\nBecause a local window can still remove a child view on its thread, e.g. android.ui, then `ViewGroup#encodeProperties` may still encounter `IndexOutOfBoundsException`, or any other random places.\n\nMemoryFile doesn\u0027t take a ParcelFileDescriptor. Not sure what that would be like.\nYou can upload another patch if that will simplify the current implementation.\nFor fixing the current issue, I think a simple error handle is enough, as the race should not happen frequently.",
+      "parentUuid": "51eebb51_aabfeb0f",
+      "revId": "7370ba4f307d95fcc62121a05f6d712d24361e3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
