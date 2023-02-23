@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95ddea45_656e5ca1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-02-23T09:52:17Z",
+      "side": 1,
+      "message": "Nit: \n\nHow about\n\n\u003e Calling agentConnect() should follow with setting underpinned network to update the VPN network to IkeSession. It\u0027s error-prone in current design, so set the underpinned network together with agentConnect() to prevent human error.\n\n\nI think you forget to mention that these two methods should be set together, so that you could say \"To prevent the people forget ...). Also, I am not a fan of describe what is the call flow in the commit message. I tend to mention the overall design but not the call stack?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "c4c6af3776ccb5f68475ef61a460f1ec61b5acf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
