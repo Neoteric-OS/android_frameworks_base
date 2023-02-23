@@ -34,6 +34,24 @@
       "parentUuid": "a711a827_b29ed93f",
       "revId": "7370ba4f307d95fcc62121a05f6d712d24361e3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51eebb51_aabfeb0f",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1902133
+      },
+      "writtenOn": "2023-02-23T06:52:37Z",
+      "side": 0,
+      "message": "I think this may lose debug info for the window. Recently I found a class android.os.MemoryFile. Maybe we could use it to dump local window instead of dumping in io thread?",
+      "parentUuid": "981e0de9_fc094ceb",
+      "revId": "7370ba4f307d95fcc62121a05f6d712d24361e3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
