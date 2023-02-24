@@ -91,6 +91,7 @@ import android.util.Slog;
 import android.util.SparseArray;
 import android.view.InputChannel;
 import android.view.Surface;
+
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.content.PackageMonitor;
@@ -101,7 +102,9 @@ import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.IoThread;
 import com.android.server.SystemService;
+
 import dalvik.annotation.optimization.NeverCompile;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -2942,7 +2945,9 @@ public final class TvInputManagerService extends SystemService {
                         // is removed if the related sessionState is null. So need to check again
                         // to avoid death curculation.
                         if (clientState.sessionTokens.contains(sessionToken)) {
-                            Slog.d(TAG, "remove sessionToken " + sessionToken + " for " + clientToken);
+                            Slog.d(
+                                    TAG,
+                                    "remove sessionToken " + sessionToken + " for " + clientToken);
                             clientState.sessionTokens.remove(sessionToken);
                         }
                     }
@@ -3077,8 +3082,16 @@ public final class TvInputManagerService extends SystemService {
         }
     }
 
+    private static long totalBindTime = 0;
+    private static long totalBindCount = 0;
+    private static long totalUnbindTime = 0;
+    private static long totalUnbindCount = 0;
+    private static long slowestBindTime = 0;
+    private static long slowestUnbindTime = 0;
+
     @GuardedBy("mLock")
     private void bindService(ServiceState serviceState, int userId) {
+        long start = System.currentTimeMillis();
         if (serviceState.bound) {
             // We have already bound to the service so we don't try to bind again until after we
             // unbind later on.
@@ -3094,10 +3107,29 @@ public final class TvInputManagerService extends SystemService {
         serviceState.bound = mContext.bindServiceAsUser(i, serviceState.connection,
                 Context.BIND_AUTO_CREATE | Context.BIND_FOREGROUND_SERVICE_WHILE_AWAKE,
                 new UserHandle(userId));
+        long end = System.currentTimeMillis();
+        long time = end - start;
+        totalBindTime += time;
+        totalBindCount++;
+        if (slowestBindTime < time) {
+            slowestBindTime = time;
+        }
+        Slog.d(
+                TAG,
+                "bindService takes "
+                        + time
+                        + "ms. Bind count: "
+                        + totalBindCount
+                        + ". Average = "
+                        + ((float) totalBindTime / totalBindCount
+                                + "ms. Slowest Bind Time = "
+                                + slowestBindTime
+                                + "ms"));
     }
 
     @GuardedBy("mLock")
     private void unbindService(ServiceState serviceState) {
+        long start = System.currentTimeMillis();
         if (!serviceState.bound) {
             return;
         }
@@ -3106,6 +3138,24 @@ public final class TvInputManagerService extends SystemService {
         }
         mContext.unbindService(serviceState.connection);
         serviceState.bound = false;
+        long end = System.currentTimeMillis();
+        long time = end - start;
+        totalUnbindTime += time;
+        totalUnbindCount++;
+        if (slowestUnbindTime < time) {
+            slowestUnbindTime = time;
+        }
+        Slog.d(
+                TAG,
+                "unbindService takes "
+                        + time
+                        + "ms. Unbind count: "
+                        + totalUnbindCount
+                        + ". Average = "
+                        + ((float) totalUnbindTime / totalUnbindCount
+                                + "ms. Slowest Unbind Time = "
+                                + slowestUnbindTime
+                                + "ms"));
     }
 
     private final class InputServiceConnection implements ServiceConnection {
