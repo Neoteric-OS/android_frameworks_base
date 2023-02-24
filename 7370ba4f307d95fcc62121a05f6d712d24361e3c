@@ -70,6 +70,24 @@
       "parentUuid": "51eebb51_aabfeb0f",
       "revId": "7370ba4f307d95fcc62121a05f6d712d24361e3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "952007b4_7eb4da54",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1902133
+      },
+      "writtenOn": "2023-02-24T02:07:15Z",
+      "side": 0,
+      "message": "Updated. You\u0027re an expert on WMS so I believe in you. MemoryFile could be adapted to PFD by method PFD.fromFd(). Since there\u0027s still possible race condition even without exploiting other thread, it\u0027s nonnecessary to insist dumping in current thread.\nBut I still want to wrap it in a method since the indentation is too deep and make readability bad. Would you agree with me?\nThanks for your patient reply! ：）",
+      "parentUuid": "af5299aa_7f82ef30",
+      "revId": "7370ba4f307d95fcc62121a05f6d712d24361e3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
