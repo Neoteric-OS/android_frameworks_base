@@ -146,6 +146,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9306698_2a0dfd5a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-02-24T02:55:39Z",
+      "side": 1,
+      "message": "Hi Prabir, can you upload the patch file on IssueTracker, I don\u0027t have permission to view internal branches, thanks.",
+      "parentUuid": "b17522c1_558b231c",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c7d2822_4ee29cf4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
