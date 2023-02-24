@@ -122,6 +122,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b17522c1_558b231c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2023-02-24T01:02:02Z",
+      "side": 1,
+      "message": "Hi Linnan, I\u0027ve fixed this issue internally. Please look at https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2455345, thanks.",
+      "parentUuid": "4f041271_0dedc0d9",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "12c4d26f3c086a45cc7fff5f6b6679c411f63c6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c7d2822_4ee29cf4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
