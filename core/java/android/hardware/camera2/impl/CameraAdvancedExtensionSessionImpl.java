@@ -511,13 +511,14 @@ public final class CameraAdvancedExtensionSessionImpl extends CameraExtensionSes
         public void onConfigured(@NonNull CameraCaptureSession session) {
             synchronized (mInterfaceLock) {
                 mCaptureSession = session;
-                try {
-                    CameraExtensionCharacteristics.initializeSession(mInitializeHandler);
-                } catch (RemoteException e) {
-                    Log.e(TAG, "Failed to initialize session! Extension service does"
-                            + " not respond!");
-                    notifyConfigurationFailure();
-                }
+            }
+
+            try {
+                CameraExtensionCharacteristics.initializeSession(mInitializeHandler);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to initialize session! Extension service does"
+                        + " not respond!");
+                notifyConfigurationFailure();
             }
         }
     }
@@ -535,13 +536,12 @@ public final class CameraAdvancedExtensionSessionImpl extends CameraExtensionSes
                         Log.v(TAG, "Failed to start capture session, session released before " +
                                 "extension start!");
                         status = false;
-                        mCaptureSession.close();
                     }
                 } catch (RemoteException e) {
                     Log.e(TAG, "Failed to start capture session,"
                             + " extension service does not respond!");
                     status = false;
-                    mCaptureSession.close();
+                    mInitialized = false;
                 }
             }
 
@@ -554,7 +554,7 @@ public final class CameraAdvancedExtensionSessionImpl extends CameraExtensionSes
                     Binder.restoreCallingIdentity(ident);
                 }
             } else {
-                notifyConfigurationFailure();
+                onFailure();
             }
         }
 
