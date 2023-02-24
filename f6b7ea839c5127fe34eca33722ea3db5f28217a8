@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e7c50ee_c28c1e92",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3123,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2023-02-24T16:22:24Z",
+      "side": 1,
+      "message": "Hey Linnan, I didn\u0027t realize pointer_location was a per-user setting, thanks for this!\n\nHowever, when I\u0027m testing it locally, I don\u0027t see the pointer_location overly update properly when switching users. I see the value update for the new user when I run `adb shell settings get system pointer_location`, but the overlay doesn\u0027t match that value.\n\nDo you mind doing some more testing to see if this alone is enough? I\u0027m not sure why this isn\u0027t working for me.",
+      "range": {
+        "startLine": 3123,
+        "startChar": 8,
+        "endLine": 3123,
+        "endChar": 50
+      },
+      "revId": "f6b7ea839c5127fe34eca33722ea3db5f28217a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
