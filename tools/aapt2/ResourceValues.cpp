@@ -473,7 +473,7 @@ void BinaryPrimitive::PrettyPrint(Printer* printer) const {
       break;
 
     case Res_value::TYPE_DIMENSION:
-      printer->Print(ComplexToString(value.data, false /*fraction*/));
+      printer->Print(ComplexToString(value.data, false /*dimension*/));
       break;
 
     case Res_value::TYPE_FRACTION:
