@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09ee5e16_2e5d99aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1878380
+      },
+      "writtenOn": "2023-02-25T02:58:44Z",
+      "side": 1,
+      "message": "I have also uploaded this change to internal T branch ag/21595019. I will submit the aosp one after the T one has landed and automerged to main.",
+      "revId": "70bae3a13123d45b67b3e638d4adea870f2d9aec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
