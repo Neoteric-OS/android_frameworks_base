@@ -29,6 +29,7 @@ import android.content.res.Resources;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageInfo;
+import android.content.pm.ResolveInfo;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.input.InputManager;
@@ -58,6 +59,7 @@ import android.view.DisplayCutout;
 import android.view.DisplayInfo;
 import com.android.internal.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.android.internal.statusbar.IStatusBarService;
@@ -72,6 +74,24 @@ public class NeotericUtils {
     private static final boolean DEBUG = false;
 
     private static final int NO_CUTOUT = -1;
+
+    public static List<String> launchablePackages(Context context) {
+        List<String> list = new ArrayList<>();
+
+        Intent filter = new Intent(Intent.ACTION_MAIN, null);
+        filter.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        List<ResolveInfo> apps = context.getPackageManager().queryIntentActivities(filter,
+                PackageManager.GET_META_DATA);
+
+        int numPackages = apps.size();
+        for (int i = 0; i < numPackages; i++) {
+            ResolveInfo app = apps.get(i);
+            list.add(app.activityInfo.packageName);
+        }
+
+        return list;
+    }
 
     public static void switchScreenOff(Context ctx) {
         PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
