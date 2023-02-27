@@ -472,6 +472,15 @@ filegroup {
     ],
 }
 
+filegroup {
+    name: "framework-core-sources-for-hint-fuzzers",
+    srcs: [
+        "android/os/IHintManager.aidl",
+        "android/app/IUidObserver.aidl",
+        "android/os/IHintSession.aidl",
+    ],
+}
+
 aidl_interface {
     name: "android.os.statsbootstrap_aidl",
     unstable: true,

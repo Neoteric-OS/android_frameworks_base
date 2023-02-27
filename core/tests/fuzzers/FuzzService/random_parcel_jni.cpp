@@ -34,8 +34,11 @@ JNIEXPORT void JNICALL Java_randomparcel_FuzzBinder_fuzzServiceInternal(JNIEnv *
 }
 
 // API used by AIDL fuzzers to access JNI functions from libandroid_runtime.
-JNIEXPORT jint JNICALL Java_randomparcel_FuzzBinder_registerNatives(JNIEnv* env) {
-    return registerFrameworkNatives(env);
+JNIEXPORT void JNICALL Java_randomparcel_FuzzBinder_registerNatives(JNIEnv* env) {
+    JavaVM* jvm;
+    env->GetJavaVM(&jvm);
+    registerServerNatives(jvm, env);
+    registerFrameworkNatives(env);
 }
 
 JNIEXPORT void JNICALL Java_randomparcel_FuzzBinder_fillParcelInternal(JNIEnv *env, jobject thiz, jobject jparcel, jbyteArray fuzzData) {

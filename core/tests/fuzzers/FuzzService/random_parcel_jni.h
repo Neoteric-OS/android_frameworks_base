@@ -19,10 +19,13 @@ extern "C" {
     JNIEXPORT void JNICALL Java_randomparcel_FuzzBinder_fuzzServiceInternal(JNIEnv *env, jobject thiz, jobject javaBinder, jbyteArray fuzzData);
 
     // Function to register libandroid_runtime JNI functions with java env.
-    JNIEXPORT jint JNICALL Java_randomparcel_FuzzBinder_registerNatives(JNIEnv* env);
+    JNIEXPORT void JNICALL Java_randomparcel_FuzzBinder_registerNatives(JNIEnv* env);
 
     // Function from AndroidRuntime
     jint registerFrameworkNatives(JNIEnv* env);
+
+    // Function from libandroid_servers
+    jint registerServerNatives(JavaVM* vm, JNIEnv* env);
 
     JNIEXPORT void JNICALL Java_randomparcel_FuzzBinder_fillParcelInternal(JNIEnv *env, jobject thiz, jobject parcel, jbyteArray fuzzData);
 }

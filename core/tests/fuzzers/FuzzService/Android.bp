@@ -17,6 +17,7 @@ cc_library_shared {
         "libandroid_runtime",
         "libbase",
         "liblog",
+        "libandroid_servers",
     ],
     static_libs: [
         "libnativehelper_lazy",
