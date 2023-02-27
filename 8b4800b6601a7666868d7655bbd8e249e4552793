@@ -107,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e9a79c1_7c8bb659",
+        "filename": "core/tests/fuzzers/ParcelFuzzer/ReadUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-02-27T21:39:13Z",
+      "side": 1,
+      "message": "Note also b/267837866 - if we use the untyped methods, where the class is written to Parcel, we can read it and then re-write it, and it can do the same thing.\n\nGetting the explicit list would also be great, and we could make it iterate over all the parcelables types, so that we can always get good coverage for parcelables. The way Bernardo suggests looks great.\n\nThis could be done in two steps.",
+      "parentUuid": "14ad9c4c_3a429e27",
+      "range": {
+        "startLine": 438,
+        "startChar": 54,
+        "endLine": 438,
+        "endChar": 74
+      },
+      "revId": "8b4800b6601a7666868d7655bbd8e249e4552793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "03c300b7_e1f9cc33",
         "filename": "core/tests/fuzzers/ParcelFuzzer/ReadUtils.java",
         "patchSetId": 2
