@@ -557,6 +557,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
 
     Drawable mEnterpriseThumbnailDrawable;
 
+    boolean mPauseSchedulePendingForPip = false;
+
     private void updateEnterpriseThumbnailDrawable(Context context) {
         DevicePolicyManager dpm = context.getSystemService(DevicePolicyManager.class);
         mEnterpriseThumbnailDrawable = dpm.getResources().getDrawable(
@@ -6135,7 +6137,6 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
     void activityPaused(boolean timeout) {
         ProtoLog.v(WM_DEBUG_STATES, "Activity paused: token=%s, timeout=%b", token,
                 timeout);
-
         final TaskFragment taskFragment = getTaskFragment();
         if (taskFragment != null) {
             removePauseTimeout();
