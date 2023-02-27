@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6140cfa0_2042e1ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903387
+      },
+      "writtenOn": "2023-02-27T11:58:41Z",
+      "side": 1,
+      "message": "Julia for OWNERS in SettingsLib.",
+      "revId": "a7983df3e96c7fc77d185081f24f090f10f8b2ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
