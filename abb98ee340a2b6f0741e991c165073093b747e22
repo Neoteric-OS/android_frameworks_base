@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c022eb21_67fc822c",
+        "filename": "core/java/com/android/internal/expresslog/Histogram.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1373412
+      },
+      "writtenOn": "2023-02-27T12:39:12Z",
+      "side": 1,
+      "message": "Should we use log/subtract formula to find the bucket instead of binary search?",
+      "range": {
+        "startLine": 199,
+        "startChar": 19,
+        "endLine": 199,
+        "endChar": 45
+      },
+      "revId": "abb98ee340a2b6f0741e991c165073093b747e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
