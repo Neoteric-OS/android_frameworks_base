@@ -33,6 +33,24 @@
       "message": "This annotation is in frameworks/libs/modules-utils/. Should the tests for it be there as well?",
       "revId": "8a698935f471307a5863d755c8758e362f35eb30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1754b518_b19398ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2023-02-27T23:27:10Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. These tests are covering more than just the annotations. They are end-to-end to ensure that an AIDL annotated service is usable by an arbitrary client. For instance, it also covers the usage of the PermissionEnforcer class. This directory is an adequate location for such test (integration tests), see for instance frameworks/base/tests/ApkVerityTest or frameworks/base/tests/BinaryTransparencyHostTest).",
+      "parentUuid": "9c586513_84084374",
+      "revId": "8a698935f471307a5863d755c8758e362f35eb30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
