@@ -1768,6 +1768,9 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         }
 
         mLetterboxUiController.onMovedToDisplay(mDisplayContent.getDisplayId());
+        if (getDisplayId() != mLastReportedDisplayId) {
+            mActivityRecordInputSink.onDisplayChanged(getSyncTransaction());
+        }
     }
 
     void layoutLetterbox(WindowState winHint) {
