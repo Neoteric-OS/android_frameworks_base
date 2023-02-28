@@ -16,6 +16,24 @@
       "message": "There\u0027s no file update?",
       "revId": "92c2c0262ab535e3d04706d458464cec4c5d24a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2396c79_4a2bef40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1993835
+      },
+      "writtenOn": "2023-02-28T00:01:10Z",
+      "side": 1,
+      "message": "Apologies, was my first time using the git source editor and seems I didn\u0027t push the right button to finalize the edit.",
+      "parentUuid": "f1d6b9ae_1826ae5f",
+      "revId": "92c2c0262ab535e3d04706d458464cec4c5d24a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
