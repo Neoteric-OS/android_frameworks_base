@@ -16,6 +16,23 @@
       "message": "Cherry-pick from internal master",
       "revId": "9762753c0a05fecf7d75d2253929225f0f8474cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4ae25f7_1a5f7c66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2023-02-28T02:43:47Z",
+      "side": 1,
+      "message": "Friendly ping on cherry-pick, thanks",
+      "revId": "9762753c0a05fecf7d75d2253929225f0f8474cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
