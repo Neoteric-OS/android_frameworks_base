@@ -34,6 +34,24 @@
       "parentUuid": "f1d6b9ae_1826ae5f",
       "revId": "92c2c0262ab535e3d04706d458464cec4c5d24a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9817dca_df01bcee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2023-02-28T13:10:31Z",
+      "side": 1,
+      "message": "No worries. Kind of surprised it let you create an empty commit!",
+      "parentUuid": "c2396c79_4a2bef40",
+      "revId": "92c2c0262ab535e3d04706d458464cec4c5d24a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
