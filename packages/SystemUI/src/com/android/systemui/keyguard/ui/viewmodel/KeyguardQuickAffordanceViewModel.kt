@@ -31,6 +31,7 @@ data class KeyguardQuickAffordanceViewModel(
     val icon: ContainedDrawable = ContainedDrawable.WithResource(0),
     @StringRes val contentDescriptionResourceId: Int = 0,
     val onClicked: (OnClickedParameters) -> Unit = {},
+    val onTouched: (Int) -> Unit = {},
     val isClickable: Boolean = false,
 ) {
     data class OnClickedParameters(

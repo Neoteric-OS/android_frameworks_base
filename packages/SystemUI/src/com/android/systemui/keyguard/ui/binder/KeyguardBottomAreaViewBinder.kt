@@ -18,6 +18,7 @@ package com.android.systemui.keyguard.ui.binder
 
 import android.util.Size
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
@@ -243,29 +244,36 @@ object KeyguardBottomAreaViewBinder {
         view.contentDescription = view.context.getString(viewModel.contentDescriptionResourceId)
         view.isClickable = viewModel.isClickable
         if (viewModel.isClickable) {
-            view.setOnClickListener(OnClickListener(viewModel, falsingManager))
+            view.setOnTouchListener(OnTouchListener(viewModel, falsingManager))
         } else {
-            view.setOnClickListener(null)
+            view.setOnTouchListener(null)
         }
     }
 
-    private class OnClickListener(
+    private class OnTouchListener(
         private val viewModel: KeyguardQuickAffordanceViewModel,
         private val falsingManager: FalsingManager,
-    ) : View.OnClickListener {
-        override fun onClick(view: View) {
+    ) : View.OnTouchListener {
+        override fun onTouch(view: View, event: MotionEvent): Boolean {
             if (falsingManager.isFalseTap(FalsingManager.LOW_PENALTY)) {
-                return
+                return false
+            }
+            if (viewModel.configKey == null) {
+                return false
             }
 
-            if (viewModel.configKey != null) {
-                viewModel.onClicked(
-                    KeyguardQuickAffordanceViewModel.OnClickedParameters(
-                        configKey = viewModel.configKey,
-                        animationController = ActivityLaunchAnimator.Controller.fromView(view),
+            event.actionMasked.let {
+                viewModel.onTouched(it)
+                if (it == MotionEvent.ACTION_UP) {
+                    viewModel.onClicked(
+                        KeyguardQuickAffordanceViewModel.OnClickedParameters(
+                            configKey = viewModel.configKey,
+                            animationController = ActivityLaunchAnimator.Controller.fromView(view),
+                        )
                     )
-                )
+                }
             }
+            return true
         }
     }
 

@@ -18,7 +18,12 @@
 package com.android.systemui.keyguard.domain.interactor
 
 import android.content.Intent
+import android.os.CustomVibrationAttributes.VIBRATION_ATTRIBUTES_MISC_SCENES
+import android.os.SystemClock
+import android.os.VibrationEffect
+import android.view.MotionEvent
 import com.android.internal.widget.LockPatternUtils
+import com.android.systemui.Dependency
 import com.android.systemui.animation.ActivityLaunchAnimator
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.keyguard.domain.model.KeyguardQuickAffordanceModel
@@ -27,6 +32,7 @@ import com.android.systemui.keyguard.domain.quickaffordance.KeyguardQuickAfforda
 import com.android.systemui.keyguard.domain.quickaffordance.KeyguardQuickAffordanceRegistry
 import com.android.systemui.plugins.ActivityStarter
 import com.android.systemui.settings.UserTracker
+import com.android.systemui.statusbar.VibratorHelper
 import com.android.systemui.statusbar.policy.KeyguardStateController
 import javax.inject.Inject
 import kotlin.reflect.KClass
@@ -45,6 +51,10 @@ constructor(
     private val userTracker: UserTracker,
     private val activityStarter: ActivityStarter,
 ) {
+
+    private val vibratorHelper = Dependency.get(VibratorHelper::class.java)
+    private var lastPressedTime = 0L
+
     /** Returns an observable for the quick affordance at the given position. */
     fun quickAffordance(
         position: KeyguardQuickAffordancePosition
@@ -82,6 +92,20 @@ constructor(
                     animationController = animationController
                 )
             is KeyguardQuickAffordanceConfig.OnClickedResult.Handled -> Unit
+        }
+    }
+
+    fun onQuickAffordanceTouched(action: Int) {
+        when (action) {
+            MotionEvent.ACTION_DOWN -> {
+                lastPressedTime = SystemClock.uptimeMillis()
+                vibratorHelper.vibrate(EFFECT_CLICK, VIBRATION_ATTRIBUTES_MISC_SCENES)
+            }
+            MotionEvent.ACTION_UP -> {
+                if (SystemClock.uptimeMillis() - lastPressedTime >= FINGER_UP_THRESHOLD) {
+                    vibratorHelper.vibrate(EFFECT_HEAVY_CLICK, VIBRATION_ATTRIBUTES_MISC_SCENES)
+                }
+            }
         }
     }
 
@@ -145,5 +169,11 @@ constructor(
                 true /* showOverLockscreenWhenLocked */,
             )
         }
+    }
+
+    companion object {
+        private val EFFECT_CLICK = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK)
+        private val EFFECT_HEAVY_CLICK = VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
+        private val FINGER_UP_THRESHOLD = 120L
     }
 }

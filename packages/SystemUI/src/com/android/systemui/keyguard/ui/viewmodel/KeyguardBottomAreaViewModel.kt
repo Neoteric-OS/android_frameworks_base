@@ -123,6 +123,11 @@ constructor(
                             animationController = parameters.animationController,
                         )
                     },
+                    onTouched = { action ->
+                        quickAffordanceInteractor.onQuickAffordanceTouched(
+                            action = action
+                        )
+                    },
                     isClickable = isClickable,
                 )
             is KeyguardQuickAffordanceModel.Hidden -> KeyguardQuickAffordanceViewModel()
