@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8edcc0a9_d185e90f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2023-03-01T15:26:32Z",
+      "side": 1,
+      "message": "1. Open Any JioTv app\n2. Play any video\n3. Press home\n\nHere when home key is pressed, auto pip is not enabled so we just the pause the top and wait for its pause to complete\n4. Jio calls enter picture in picture mode api in its on pause\n5. As state of the app is still pausing (pause is not completed)\n6. We/Framework is triggering the pause again with auto-pip tag.\n7. So wm_pause_activity are being scheduled without any onResume",
+      "parentUuid": "535205c4_6306dbec",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "d88632cdc04f409382211d754aa6123e0d3a057a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "512300b0_4d6ab5e0",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -37,6 +61,24 @@
       "writtenOn": "2023-03-01T14:41:14Z",
       "side": 1,
       "message": "Could you create a bug, describe the issue with reproduce steps in the bug?\n\nPlease also update the commit message as below format.\n```\nBug: \nTest:\n```",
+      "revId": "d88632cdc04f409382211d754aa6123e0d3a057a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "145ab973_87948144",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2023-03-01T15:26:32Z",
+      "side": 1,
+      "message": "sure i will create and update",
+      "parentUuid": "512300b0_4d6ab5e0",
       "revId": "d88632cdc04f409382211d754aa6123e0d3a057a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -54,6 +96,23 @@
       "writtenOn": "2023-02-27T06:03:05Z",
       "side": 1,
       "message": "@louischang@google.com\nPlease help to review",
+      "revId": "d88632cdc04f409382211d754aa6123e0d3a057a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "882e372a_7494ce9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2023-03-01T15:26:32Z",
+      "side": 1,
+      "message": "reason is updated will create bug also",
       "revId": "d88632cdc04f409382211d754aa6123e0d3a057a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
