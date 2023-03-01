@@ -1,2 +1,6 @@
+<<<<<<< TARGET BRANCH (55ff23 Merge "Add new owner to the resume-on-reboot module." into a)
 michaelwr@google.com
 santoscordon@google.com
+=======
+include /media/java/android/media/projection/OWNERS
+>>>>>>> SOURCE BRANCH (9a4ae9 Merge "Merge "Merge "Update OWNERS for MediaProjection & rel)

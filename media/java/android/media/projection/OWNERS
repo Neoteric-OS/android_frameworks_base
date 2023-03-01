@@ -1,2 +1,7 @@
 michaelwr@google.com
 santoscordon@google.com
+<<<<<<< TARGET BRANCH (55ff23 Merge "Add new owner to the resume-on-reboot module." into a)
+=======
+chaviw@google.com
+nmusgrave@google.com
+>>>>>>> SOURCE BRANCH (9a4ae9 Merge "Merge "Merge "Update OWNERS for MediaProjection & rel)
