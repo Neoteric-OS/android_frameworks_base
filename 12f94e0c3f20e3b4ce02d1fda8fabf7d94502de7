@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e4f9fcb_7a35038d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-03-01T08:41:45Z",
+      "side": 1,
+      "message": "Please update the comment to\n`Catch the potential exception if the local window/view is changing.`.",
+      "revId": "12f94e0c3f20e3b4ce02d1fda8fabf7d94502de7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
