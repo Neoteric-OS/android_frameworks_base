@@ -16,6 +16,23 @@
       "message": "Cherry-pick from internal.",
       "revId": "e35b29f1a0cdf66f017ce0851e10d080262ea6f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1523a019_e2953300",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2023-03-01T02:23:33Z",
+      "side": 1,
+      "message": "It\u0027s covered by the CTS",
+      "revId": "e35b29f1a0cdf66f017ce0851e10d080262ea6f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
