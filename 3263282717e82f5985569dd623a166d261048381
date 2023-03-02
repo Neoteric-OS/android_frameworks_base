@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c297510_bf71f886",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2023-03-02T05:39:52Z",
+      "side": 1,
+      "message": "Bug Id is created for tracking",
+      "revId": "3263282717e82f5985569dd623a166d261048381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
