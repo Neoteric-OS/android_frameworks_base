@@ -16,6 +16,23 @@
       "message": "Bug Id is created for tracking",
       "revId": "3263282717e82f5985569dd623a166d261048381",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c267d44_fb2c6f5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1977516
+      },
+      "writtenOn": "2023-03-02T05:44:25Z",
+      "side": 1,
+      "message": "Line  92504: 03-02 11:12:53.456  1000  1897  8951 I wm_task_moved: [1,1,3]\n\tLine  92642: 03-02 11:12:53.466  1000  1897  8951 I wm_task_moved: [8,1,2147483647]\n\tLine  92643: 03-02 11:12:53.466  1000  1897  8951 I wm_task_to_front: [0,8]\n\tLine  92646: 03-02 11:12:53.466  1000  1897  8951 I wm_focused_root_task: [0,0,1,204,RecentsAnimation.onAnimationFinished()]\n\tLine  92676: 03-02 11:12:53.469  1000  1897  8951 I wm_set_resumed_activity: [0,com.android.launcher/.Launcher,RecentsAnimation.onAnimationFinished()]\n\tLine  92703: 03-02 11:12:53.472  1000  1897  8951 I wm_pause_activity: [0,78240885,com.jio.jioplay.tv/.activities.HomeActivity,userLeaving\u003dtrue,pauseBackTasks] \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\n\tLine  92756: 03-02 11:12:53.474  1000  1897  8951 I wm_add_to_stopping: [0,78240885,com.jio.jioplay.tv/.activities.HomeActivity,makeInvisible]\n\tLine  92848: 03-02 11:12:53.477 10311 28650 28650 I wm_on_top_resumed_lost_called: [78240885,com.jio.jioplay.tv.activities.HomeActivity,topStateChangedWhenResumed]\n\tLine  93281: 03-02 11:12:53.508  1000  1897  5343 I wm_task_windowing_mode_changed: [204,204,2,1]\n\tLine  93283: 03-02 11:12:53.509  1000  1897  5343 I wm_task_moved: [204,1,3]\n\tLine  93284: 03-02 11:12:53.509  1000  1897  5343 I wm_task_to_front: [0,204]\n\tLine  93302: 03-02 11:12:53.510  1000  1897  5343 I wm_task_moved: [204,1,3]\n\tLine  93692: 03-02 11:12:53.528  1000  1897  5343 I wm_pause_activity: [0,78240885,com.jio.jioplay.tv/.activities.HomeActivity,userLeaving\u003dfalse,auto-pip] \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e",
+      "revId": "3263282717e82f5985569dd623a166d261048381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
