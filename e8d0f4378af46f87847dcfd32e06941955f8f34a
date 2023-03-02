@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbea84c2_b165a1b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060688
+      },
+      "writtenOn": "2023-03-02T22:23:37Z",
+      "side": 1,
+      "message": "Please update the ProtoLogImpl constructor in ProtoLogImplTest\n\n```\nframeworks/base/tests/Internal/src/com/android/internal/protolog/ProtoLogImplTest.java:89: error: constructor ProtoLogImpl in class ProtoLogImpl cannot be applied to given types;\n        mProtoLog \u003d new ProtoLogImpl(mFile, 1024 * 1024, mReader);\n                    ^\n  required: File,int,ProtoLogViewerConfigReader,int\n  found:    File,int,ProtoLogViewerConfigReader\n```",
+      "revId": "e8d0f4378af46f87847dcfd32e06941955f8f34a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
