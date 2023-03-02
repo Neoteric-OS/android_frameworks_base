@@ -125,6 +125,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c3aef83_84487a80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2023-03-02T02:08:22Z",
+      "side": 1,
+      "message": "Could you share the bug id?",
+      "parentUuid": "9dfebdd8_bd465f99",
+      "revId": "d88632cdc04f409382211d754aa6123e0d3a057a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c9e1f57a_2eda6a36",
