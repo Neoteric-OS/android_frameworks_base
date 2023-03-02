@@ -4448,6 +4448,32 @@ public class CarrierConfigManager {
             "data_stall_recovery_should_skip_bool_array";
 
     /**
+     * String array containing list of service numbers provided by carriers.
+     *
+     * Format:
+     * For each service number a pair of item added to string-array. First item
+     * denotes service name and second item denotes service number. So, number
+     * of items in string-array is equal to twice the number of service numbers.
+     *
+     * Invalid criteria:
+     * - If odd number of items are provided, whole CarrierConfig list won’t be
+     * considered.
+     * - Second item must be either all numbers or "+" followed by all numbers.
+     * In other case the current item (service number) and previous item (service
+     * name) will be dropped.
+     *
+     * Example:
+     * <string-array name="carrier_service_dialing_numbers_list" num="4">
+     *   <item value="Police"/>
+     *   <item value="123"/>
+     *   <item value="Ambulance"/>
+     *   <item value="+343"/>
+     * </string-array>
+     */
+    public static final String KEY_CARRIER_SERVICE_DIALING_NUMBERS_LIST_STRING_ARRAY =
+            "carrier_service_dialing_numbers_list";
+
+    /**
      * Configs used by ImsServiceEntitlement.
      */
     public static final class ImsServiceEntitlement {
@@ -9261,6 +9287,8 @@ public class CarrierConfigManager {
                 new long[] {180000, 180000, 180000, 180000});
         sDefaults.putBooleanArray(KEY_DATA_STALL_RECOVERY_SHOULD_SKIP_BOOL_ARRAY,
                 new boolean[] {false, false, true, false, false});
+        sDefaults.putStringArray(KEY_CARRIER_SERVICE_DIALING_NUMBERS_LIST_STRING_ARRAY,
+                new String[0]);
     }
 
     /**
