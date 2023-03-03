@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66ebfd67_6f68946d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4336,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-03T08:19:22Z",
+      "side": 1,
+      "message": "We don\u0027t want two new keys, because this allows combinations that we do not want to make available. IKE takes this in this form for technical reasons.\n\nWhat we want is a single key that can take one of four values :\n- auto \u003d 0\n- v4 UDP\n- v6 ESP\n- v6 UDP (this one should be hidden)\n\nSuggest\n\n   String KEY_PREFERRED_IKE_PROTOCOL\n\nThe v4 UDP and v6 ESP values should be documented. The v6 UDP value should be declared but hidden and not documented.",
+      "range": {
+        "startLine": 4326,
+        "startChar": 0,
+        "endLine": 4336,
+        "endChar": 91
+      },
+      "revId": "57d83d36bb99fe0583cf8d26b676aaa187a61ed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
