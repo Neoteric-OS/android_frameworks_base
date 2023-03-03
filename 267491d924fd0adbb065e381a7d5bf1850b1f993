@@ -91,6 +91,30 @@
       },
       "revId": "267491d924fd0adbb065e381a7d5bf1850b1f993",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8731aaa_1a4b34e3",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1929540
+      },
+      "writtenOn": "2023-03-03T13:23:36Z",
+      "side": 1,
+      "message": "Now it will happen only in case of real issues with the connection - meaning, when the UX says \"there is a problem with a connection, please restart device\" or similar. I would keep it.",
+      "parentUuid": "4caa4546_8b1cec5e",
+      "range": {
+        "startLine": 277,
+        "startChar": 12,
+        "endLine": 277,
+        "endChar": 13
+      },
+      "revId": "267491d924fd0adbb065e381a7d5bf1850b1f993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
