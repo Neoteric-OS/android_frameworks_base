@@ -2753,7 +2753,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
 
         mRebootEscrowManager.callToRebootEscrowIfNeeded(userId, auth.getVersion(),
-                auth.getSyntheticPassword());
+                auth.getSyntheticPassword(), mHandler);
 
         callToAuthSecretIfNeeded(userId, auth);
     }

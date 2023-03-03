@@ -788,7 +788,7 @@ class RebootEscrowManager {
     }
 
     void callToRebootEscrowIfNeeded(@UserIdInt int userId, byte spVersion,
-            byte[] syntheticPassword) {
+            byte[] syntheticPassword, Handler handler) {
         if (!mRebootEscrowWanted) {
             return;
         }
@@ -815,7 +815,7 @@ class RebootEscrowManager {
             escrowData = RebootEscrowData.fromSyntheticPassword(escrowKey, spVersion,
                     syntheticPassword, kk);
         } catch (IOException e) {
-            setRebootEscrowReady(false);
+            handler.post(() -> setRebootEscrowReady(false));
             Slog.w(TAG, "Could not escrow reboot data", e);
             return;
         }
@@ -823,7 +823,7 @@ class RebootEscrowManager {
         mStorage.writeRebootEscrow(userId, escrowData.getBlob());
         mEventLog.addEntry(RebootEscrowEvent.STORED_LSKF_FOR_USER, userId);
 
-        setRebootEscrowReady(true);
+        handler.post(() -> setRebootEscrowReady(true));
     }
 
     private RebootEscrowKey generateEscrowKeyIfNeeded() {

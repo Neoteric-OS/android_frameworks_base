@@ -346,7 +346,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mRebootEscrow, never()).storeKey(any());
     }
@@ -358,7 +361,10 @@ public class RebootEscrowManagerTests {
         mService.setRebootEscrowListener(mockListener);
         mService.prepareRebootEscrow();
 
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
         assertFalse(mStorage.hasRebootEscrowServerBlob());
@@ -369,7 +375,10 @@ public class RebootEscrowManagerTests {
         RebootEscrowListener mockListener = mock(RebootEscrowListener.class);
         mService.setRebootEscrowListener(mockListener);
         mService.prepareRebootEscrow();
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
 
         clearInvocations(mRebootEscrow);
@@ -393,7 +402,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mRebootEscrow, never()).storeKey(any());
 
@@ -417,7 +429,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -438,7 +453,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mRebootEscrow, never()).storeKey(any());
 
@@ -456,10 +474,15 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         mService.callToRebootEscrowIfNeeded(SECURE_SECONDARY_USER_ID, FAKE_SP_VERSION,
-                FAKE_AUTH_TOKEN);
+                FAKE_AUTH_TOKEN, mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mRebootEscrow, never()).storeKey(any());
 
         assertTrue(mStorage.hasRebootEscrow(PRIMARY_USER_ID));
@@ -491,7 +514,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mRebootEscrow, never()).storeKey(any());
 
@@ -514,7 +540,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
 
         verify(mRebootEscrow, never()).storeKey(any());
@@ -557,7 +586,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -601,7 +633,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -646,7 +681,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -692,7 +730,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -741,7 +782,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -794,7 +838,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -849,7 +896,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -896,7 +946,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -952,7 +1005,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -1011,7 +1067,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -1071,7 +1130,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -1127,7 +1189,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mServiceConnection);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         verify(mServiceConnection, never()).wrapBlob(any(), anyLong(), anyLong());
 
@@ -1179,7 +1244,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
 
         verify(mRebootEscrow, never()).storeKey(any());
@@ -1210,7 +1278,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
 
         verify(mRebootEscrow, never()).storeKey(any());
@@ -1238,7 +1309,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
 
         verify(mRebootEscrow, never()).storeKey(any());
@@ -1277,7 +1351,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
 
         verify(mRebootEscrow, never()).storeKey(any());
@@ -1312,7 +1389,10 @@ public class RebootEscrowManagerTests {
         mService.prepareRebootEscrow();
 
         clearInvocations(mRebootEscrow);
-        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN);
+        mService.callToRebootEscrowIfNeeded(PRIMARY_USER_ID, FAKE_SP_VERSION, FAKE_AUTH_TOKEN,
+                mHandler);
+        // Sleep 1ms for the handler to complete processing.
+        Thread.sleep(1);
         verify(mockListener).onPreparedForReboot(eq(true));
         assertTrue(mStorage.hasRebootEscrow(PRIMARY_USER_ID));
         verify(mRebootEscrow, never()).storeKey(any());
