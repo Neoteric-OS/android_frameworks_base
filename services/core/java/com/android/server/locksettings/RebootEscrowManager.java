@@ -205,6 +205,8 @@ class RebootEscrowManager {
 
     private final RebootEscrowKeyStoreManager mKeyStoreManager;
 
+    private final Handler mHandler;
+
     PowerManager.WakeLock mWakeLock;
 
     private ConnectivityManager.NetworkCallback mNetworkCallback;
@@ -399,19 +401,21 @@ class RebootEscrowManager {
         }
     }
 
-    RebootEscrowManager(Context context, Callbacks callbacks, LockSettingsStorage storage) {
-        this(new Injector(context, storage), callbacks, storage);
+    RebootEscrowManager(Context context, Callbacks callbacks, LockSettingsStorage storage,
+            Handler handler) {
+        this(new Injector(context, storage), callbacks, storage, handler);
     }
 
     @VisibleForTesting
     RebootEscrowManager(Injector injector, Callbacks callbacks,
-            LockSettingsStorage storage) {
+            LockSettingsStorage storage, Handler handler) {
         mInjector = injector;
         mCallbacks = callbacks;
         mStorage = storage;
         mUserManager = injector.getUserManager();
         mEventLog = injector.getEventLog();
         mKeyStoreManager = injector.getKeyStoreManager();
+        mHandler = handler;
     }
 
     /** Wrapper function to set error code serialized through handler, */
@@ -815,7 +819,7 @@ class RebootEscrowManager {
             escrowData = RebootEscrowData.fromSyntheticPassword(escrowKey, spVersion,
                     syntheticPassword, kk);
         } catch (IOException e) {
-            setRebootEscrowReady(false);
+            mHandler.post(() -> setRebootEscrowReady(false));
             Slog.w(TAG, "Could not escrow reboot data", e);
             return;
         }
@@ -823,7 +827,7 @@ class RebootEscrowManager {
         mStorage.writeRebootEscrow(userId, escrowData.getBlob());
         mEventLog.addEntry(RebootEscrowEvent.STORED_LSKF_FOR_USER, userId);
 
-        setRebootEscrowReady(true);
+        mHandler.post(() -> setRebootEscrowReady(true));
     }
 
     private RebootEscrowKey generateEscrowKeyIfNeeded() {
