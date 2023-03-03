@@ -515,6 +515,10 @@ droidstubs {
     ],
     api_levels_sdk_type: "public",
     extensions_info_file: ":sdk-extensions-info",
+    visibility: [
+        "//frameworks/base",
+        "//frameworks/base/api",
+    ],
 }
 
 droidstubs {
