@@ -2610,14 +2610,17 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
             }
         }
 
+        List<String> uidPackageNames;
         Collection<String> uidRequestedPermissions;
         Collection<String> uidImplicitPermissions;
         int uidTargetSdkVersion;
         if (!ps.hasSharedUser()) {
+            uidPackageNames = Collections.singletonList(pkg.getPackageName());
             uidRequestedPermissions = pkg.getRequestedPermissions();
             uidImplicitPermissions = pkg.getImplicitPermissions();
             uidTargetSdkVersion = pkg.getTargetSdkVersion();
         } else {
+            uidPackageNames = new ArrayList<>();
             uidRequestedPermissions = new ArraySet<>();
             uidImplicitPermissions = new ArraySet<>();
             uidTargetSdkVersion = Build.VERSION_CODES.CUR_DEVELOPMENT;
@@ -2630,6 +2633,7 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
                 if (sharedUserPackage == null) {
                     continue;
                 }
+                uidPackageNames.add(sharedUserPackage.getPackageName());
                 uidRequestedPermissions.addAll(
                         sharedUserPackage.getRequestedPermissions());
                 uidImplicitPermissions.addAll(
@@ -2645,6 +2649,11 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
                 final UidPermissionState uidState = userState.getOrCreateUidState(ps.getAppId());
 
                 if (uidState.isMissing()) {
+                    final int uidPackageNamesSize = uidPackageNames.size();
+                    for (int i = 0; i < uidPackageNamesSize; i++) {
+                        final String uidPackageName = uidPackageNames.get(i);
+                        userState.setInstallPermissionsFixed(uidPackageName, false);
+                    }
                     for (String permissionName : uidRequestedPermissions) {
                         Permission permission = mRegistry.getPermission(permissionName);
                         if (permission == null) {
