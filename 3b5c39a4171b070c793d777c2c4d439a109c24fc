@@ -22,6 +22,30 @@
       },
       "revId": "3b5c39a4171b070c793d777c2c4d439a109c24fc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34e993c9_e0da11c5",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1973670
+      },
+      "writtenOn": "2023-03-06T07:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff4a4b4_5ee3fbe2",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 82
+      },
+      "revId": "3b5c39a4171b070c793d777c2c4d439a109c24fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
