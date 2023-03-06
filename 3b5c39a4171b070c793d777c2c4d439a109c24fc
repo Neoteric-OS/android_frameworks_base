@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff4a4b4_5ee3fbe2",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1308560
+      },
+      "writtenOn": "2023-03-06T07:36:31Z",
+      "side": 1,
+      "message": "Please remove this log since the log has printed at line#198.\nIf we print this log, there are a lot of the same logs. Since this api is called at line#212, this api reset the isFailed.",
+      "range": {
+        "startLine": 283,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 82
+      },
+      "revId": "3b5c39a4171b070c793d777c2c4d439a109c24fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
