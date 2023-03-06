@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae499f77_d57cbe0b",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1973670
+      },
+      "writtenOn": "2023-03-06T06:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5861100_61df3837",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 118
+      },
+      "revId": "267491d924fd0adbb065e381a7d5bf1850b1f993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f21deb20_0d648621",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5ac14ee_fe40259d",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1973670
+      },
+      "writtenOn": "2023-03-06T06:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f21deb20_0d648621",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 102
+      },
+      "revId": "267491d924fd0adbb065e381a7d5bf1850b1f993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fc4f89c_501db453",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-03-03T12:02:33Z",
       "side": 1,
       "message": "nit: this comment is talking about \"else\" state.\n\nMaybe here we should also add that \n\"Connection profile is considered as failed, when connection policy indicates that profile should be connected, but it got disconnected\"",
+      "range": {
+        "startLine": 231,
+        "startChar": 34,
+        "endLine": 232,
+        "endChar": 55
+      },
+      "revId": "267491d924fd0adbb065e381a7d5bf1850b1f993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caf6c4fc_1505b940",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1973670
+      },
+      "writtenOn": "2023-03-06T06:28:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fc4f89c_501db453",
       "range": {
         "startLine": 231,
         "startChar": 34,
