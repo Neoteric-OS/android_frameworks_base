@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b025d17_3660079e",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1308560
+      },
+      "writtenOn": "2023-03-06T07:43:25Z",
+      "side": 1,
+      "message": "Please add them into one line and add the anonymizedAddress too.\n```\n\"anonymizedAddress\u003d\"+ mDevice.getAnonymizedAddress()\n```",
+      "range": {
+        "startLine": 1206,
+        "startChar": 0,
+        "endLine": 1210,
+        "endChar": 72
+      },
+      "revId": "60067147092a59a245ce9a51400d07ebad6b91d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
