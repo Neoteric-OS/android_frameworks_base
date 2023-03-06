@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c73ada0_c0fb390a",
+        "filename": "packages/SettingsLib/tests/robotests/src/com/android/settingslib/bluetooth/CachedBluetoothDeviceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1308560
+      },
+      "writtenOn": "2023-03-06T11:45:43Z",
+      "side": 1,
+      "message": "Please move them into the new method for testing since the test case verifies one thing at a time.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 58
+      },
+      "revId": "ddba42d615fb734099dd8906edefd163c9911984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
