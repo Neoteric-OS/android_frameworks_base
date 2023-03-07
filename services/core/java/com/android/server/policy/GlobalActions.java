@@ -19,8 +19,8 @@ import android.os.Handler;
 import android.util.Slog;
 
 import com.android.server.LocalServices;
-import com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs;
 import com.android.server.policy.GlobalActionsProvider;
+import com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs;
 
 class GlobalActions implements GlobalActionsProvider.GlobalActionsListener {
 
@@ -93,7 +93,8 @@ class GlobalActions implements GlobalActionsProvider.GlobalActionsListener {
         mGlobalActionsAvailable = available;
         if (mShowing && !mGlobalActionsAvailable) {
             // Global actions provider died but we need to be showing global actions still, show the
-            // legacy global acrions provider.
+            // legacy global actions provider and remove timeout callbacks to avoid legacy re-show.
+            mHandler.removeCallbacks(mShowTimeout);
             ensureLegacyCreated();
             mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
         }
