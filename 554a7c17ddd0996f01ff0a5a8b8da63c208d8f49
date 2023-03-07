@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfb6e99d_247b06bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1802129
+      },
+      "writtenOn": "2023-03-07T16:40:44Z",
+      "side": 1,
+      "message": "I guess we need to bypass presubmit because of flaky tests, as that string would not fail any tests.",
+      "revId": "554a7c17ddd0996f01ff0a5a8b8da63c208d8f49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
