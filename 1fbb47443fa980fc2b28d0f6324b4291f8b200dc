@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d93d3824_40d871e5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3443,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-07T09:26:51Z",
+      "side": 1,
+      "message": "Functions should always return values that make sense. Imagine you\u0027re adding javadoc to this function with an @return tag. What would you write there ?\nWith the old code it\u0027s very simple :\n\n    @return whether the session was migrated\n\nBut with your new code... it becomes extremely hard to express, isn\u0027t it ?\n\nHere, you are changing this code so it has an effect in l.3387. But other maintainers will not understand this kind of design because the action is somewhere else. This is one way you could have noticed that this is not a clean way of writing it : because you are writing code *here* **so that** it has an effect *somewhere else*. You already noticed it a little bit, because you added comments explaining that.\n\nInstead, why not make sure this is not called in onAvailable ? In fact, onAvailable should probably do nothing, except maybe reset mUnderlyingNetworkCapabilites and some other members ; you can then call startOrMigrate in onCapabilitiesChanged if the underlying capabilities are null.",
+      "range": {
+        "startLine": 3443,
+        "startChar": 0,
+        "endLine": 3443,
+        "endChar": 68
+      },
+      "revId": "1fbb47443fa980fc2b28d0f6324b4291f8b200dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
