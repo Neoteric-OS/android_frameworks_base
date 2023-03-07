@@ -2308,8 +2308,8 @@ public class ProgressBar extends View {
         if (mIndeterminate) {
             startAnimation();
         }
-        if (mRefreshData != null) {
-            synchronized (this) {
+        synchronized (this) {
+            if (mRefreshData != null) {
                 final int count = mRefreshData.size();
                 for (int i = 0; i < count; i++) {
                     final RefreshData rd = mRefreshData.get(i);
