@@ -2308,16 +2308,14 @@ public class ProgressBar extends View {
         if (mIndeterminate) {
             startAnimation();
         }
-        if (mRefreshData != null) {
-            synchronized (this) {
-                final int count = mRefreshData.size();
-                for (int i = 0; i < count; i++) {
-                    final RefreshData rd = mRefreshData.get(i);
-                    doRefreshProgress(rd.id, rd.progress, rd.fromUser, true, rd.animate);
-                    rd.recycle();
-                }
-                mRefreshData.clear();
+        synchronized (this) {
+            final int count = mRefreshData.size();
+            for (int i = 0; i < count; i++) {
+                final RefreshData rd = mRefreshData.get(i);
+                doRefreshProgress(rd.id, rd.progress, rd.fromUser, true, rd.animate);
+                rd.recycle();
             }
+            mRefreshData.clear();
         }
         mAttached = true;
     }
