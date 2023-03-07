@@ -16,6 +16,23 @@
       "message": "Thanks for this update - good for power, and comparably useful for sunrise/set time detection.",
       "revId": "99398a303cb343b9864dc747e0920016bd7dfdc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea760c5d_c47f6bc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1972300
+      },
+      "writtenOn": "2023-03-07T07:45:09Z",
+      "side": 1,
+      "message": "Please review test code also.",
+      "revId": "99398a303cb343b9864dc747e0920016bd7dfdc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
