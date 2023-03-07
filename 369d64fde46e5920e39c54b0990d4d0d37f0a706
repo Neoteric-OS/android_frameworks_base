@@ -16,6 +16,23 @@
       "message": "Looks like Patrick is OOO through this week, adding Joe instead.",
       "revId": "369d64fde46e5920e39c54b0990d4d0d37f0a706",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ded70a87_fb8c344c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2023-03-07T22:20:06Z",
+      "side": 1,
+      "message": "Voting Bypass-Presubmit: this is a no-op change (OWNERS) so failures are unrelated.",
+      "revId": "369d64fde46e5920e39c54b0990d4d0d37f0a706",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
