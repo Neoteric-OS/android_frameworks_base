@@ -41,6 +41,9 @@ public class AmbientDisplayConfiguration {
     private final Context mContext;
     private final boolean mAlwaysOnByDefault;
     private final boolean mPickupGestureEnabledByDefault;
+    private final boolean mDozeEnabledByDefault;
+    private final boolean mTapGestureEnabledByDefault;
+    private final boolean mDoubleTapGestureEnabledByDefault;
 
     /** Copied from android.provider.Settings.Secure since these keys are hidden. */
     private static final String[] DOZE_SETTINGS = {
@@ -68,6 +71,12 @@ public class AmbientDisplayConfiguration {
         mAlwaysOnByDefault = mContext.getResources().getBoolean(R.bool.config_dozeAlwaysOnEnabled);
         mPickupGestureEnabledByDefault =
                 mContext.getResources().getBoolean(R.bool.config_dozePickupGestureEnabled);
+        mDozeEnabledByDefault =
+                mContext.getResources().getBoolean(R.bool.config_dozeEnabled);
+        mTapGestureEnabledByDefault =
+                mContext.getResources().getBoolean(R.bool.config_dozeTapGestureEnabled);
+        mDoubleTapGestureEnabledByDefault =
+                mContext.getResources().getBoolean(R.bool.config_dozeDoubleTapGestureEnabled);
     }
 
     /** @hide */
@@ -86,7 +95,8 @@ public class AmbientDisplayConfiguration {
 
     /** @hide */
     public boolean pulseOnNotificationEnabled(int user) {
-        return boolSettingDefaultOn(Settings.Secure.DOZE_ENABLED, user)
+        return boolSetting(Settings.Secure.DOZE_ENABLED, user,
+                mDozeEnabledByDefault ? 1 : 0)
                 && pulseOnNotificationAvailable();
     }
 
@@ -110,7 +120,8 @@ public class AmbientDisplayConfiguration {
 
     /** @hide */
     public boolean tapGestureEnabled(int user) {
-        return boolSettingDefaultOn(Settings.Secure.DOZE_TAP_SCREEN_GESTURE, user)
+        return boolSetting(Settings.Secure.DOZE_TAP_SCREEN_GESTURE, user,
+                mTapGestureEnabledByDefault ? 1 : 0)
                 && tapSensorAvailable();
     }
 
@@ -126,7 +137,8 @@ public class AmbientDisplayConfiguration {
 
     /** @hide */
     public boolean doubleTapGestureEnabled(int user) {
-        return boolSettingDefaultOn(Settings.Secure.DOZE_DOUBLE_TAP_GESTURE, user)
+        return boolSetting(Settings.Secure.DOZE_DOUBLE_TAP_GESTURE, user,
+                mDoubleTapGestureEnabledByDefault ? 1 : 0)
                 && doubleTapSensorAvailable();
     }
 
