@@ -17,6 +17,9 @@
 package android.provider.settings.validators;
 
 import static android.media.AudioFormat.SURROUND_SOUND_ENCODING;
+import static android.net.ConnectivitySettingsManager.NETWORK_AVOID_BAD_WIFI_AVOID;
+import static android.net.ConnectivitySettingsManager.NETWORK_AVOID_BAD_WIFI_IGNORE;
+import static android.net.ConnectivitySettingsManager.NETWORK_AVOID_BAD_WIFI_PROMPT;
 import static android.provider.settings.validators.SettingsValidators.ANY_INTEGER_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.ANY_STRING_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.BOOLEAN_VALIDATOR;
@@ -336,6 +339,12 @@ public class GlobalSettingsValidators {
         VALIDATORS.put(Global.USER_PREFERRED_RESOLUTION_WIDTH, ANY_INTEGER_VALIDATOR);
         VALIDATORS.put(Global.Wearable.WET_MODE_ON, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Global.Wearable.COOLDOWN_MODE_ON, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(Global.NETWORK_AVOID_BAD_WIFI,
+                new DiscreteValueValidator(
+                        new String[] {
+                                String.valueOf(NETWORK_AVOID_BAD_WIFI_IGNORE),
+                                String.valueOf(NETWORK_AVOID_BAD_WIFI_PROMPT),
+                                String.valueOf(NETWORK_AVOID_BAD_WIFI_AVOID),
+                        }));
     }
 }
-
