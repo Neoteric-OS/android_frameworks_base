@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdf999a4_f4f37a8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-09T07:09:43Z",
+      "side": 1,
+      "message": "Why does VpnTest#testNattKeepaliveTimerFromCarrierConfig pass without changes ? Was this not supposed to fix the bug ?",
+      "revId": "84dd61d2113ff6c2d044023a0396849162bf586c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
