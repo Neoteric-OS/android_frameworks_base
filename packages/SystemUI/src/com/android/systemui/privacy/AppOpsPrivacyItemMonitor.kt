@@ -56,6 +56,9 @@ class AppOpsPrivacyItemMonitor @Inject constructor(
         val CAMERA_WHITELIST_PKG = arrayOf(
             "org.pixelexperience.faceunlock",
         )
+        val LOCATION_WHITELIST_PKG = arrayOf(
+            "com.google.android.gms",
+        )
         val OPS_MIC_CAMERA = intArrayOf(AppOpsManager.OP_CAMERA,
                 AppOpsManager.OP_PHONE_CALL_CAMERA, AppOpsManager.OP_RECORD_AUDIO,
                 AppOpsManager.OP_PHONE_CALL_MICROPHONE,
@@ -92,7 +95,8 @@ class AppOpsPrivacyItemMonitor @Inject constructor(
                         || packageName in CAMERA_WHITELIST_PKG) {
                     return
                 }
-                if (code in OPS_LOCATION && !locationAvailable) {
+                if (code in OPS_LOCATION && !locationAvailable
+                        || packageName in LOCATION_WHITELIST_PKG) {
                     return
                 }
                 if (userTracker.userProfiles.any { it.id == UserHandle.getUserId(uid) } ||
@@ -219,6 +223,10 @@ class AppOpsPrivacyItemMonitor @Inject constructor(
         }
         if (type == PrivacyType.TYPE_CAMERA && !micCameraAvailable
                 || appOpItem.packageName in CAMERA_WHITELIST_PKG) {
+            return null
+        }
+        if (type == PrivacyType.TYPE_LOCATION && !locationAvailable
+                || appOpItem.packageName in LOCATION_WHITELIST_PKG) {
             return null
         }
         val app = PrivacyApplication(appOpItem.packageName, appOpItem.uid)
