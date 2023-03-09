@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adf5cfa1_9a44b74c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4329,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-09T07:13:46Z",
+      "side": 1,
+      "message": "Can you detail a little bit how AUTO behaves ?",
+      "range": {
+        "startLine": 4329,
+        "startChar": 7,
+        "endLine": 4329,
+        "endChar": 21
+      },
+      "revId": "137dd4e145a7eb854155fa6cd998977c32fd916c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cef5b98c_727c0e25",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4336,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-09T07:13:46Z",
+      "side": 1,
+      "message": "nit : will fit on one line",
+      "range": {
+        "startLine": 4336,
+        "startChar": 36,
+        "endLine": 4336,
+        "endChar": 37
+      },
+      "revId": "137dd4e145a7eb854155fa6cd998977c32fd916c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
