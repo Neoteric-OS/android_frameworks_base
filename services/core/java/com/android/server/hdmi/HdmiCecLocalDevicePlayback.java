@@ -49,6 +49,7 @@ import java.util.Locale;
  */
 public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
     private static final String TAG = "HdmiCecLocalDevicePlayback";
+    private PowerManager mPowerManager;
 
     // How long to wait after hotplug out before possibly going to Standby.
     @VisibleForTesting
@@ -525,6 +526,26 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
             case NONE:
                 break;
         }
+    }
+    @Override
+    @ServiceThreadOnly
+    @Constants.HandleMessageResult
+    protected int handleRequestActiveSource(HdmiCecMessage message) {
+        assertRunOnServiceThread();
+        mPowerManager = mService.getContext().getSystemService(PowerManager.class);
+        if(mPowerManager.isInteractive()){
+            //Force to change to active source since the device is already alive.
+            if(!isActiveSource()){
+                mService.setAndBroadcastActiveSource(mService.getPhysicalAddress(),
+                getDeviceInfo().getDeviceType(), Constants.ADDR_BROADCAST,
+                &quot;HdmiCecLocalDevicePlayback#HandleRequestActiveSource()&quot;);
+            }else{
+                mService.sendCecCommand(HdmiCecMessageBuilder.buildActiveSource(mService.getPhysicalAddress(), getActivePath()));
+            }
+        }else{
+            HdmiLogger.debug(&quot;&lt;Request Active Source&gt; is not handled as system is in standby!&quot;);
+        }
+        return Constants.HANDLED;
     }
 
     @Override
