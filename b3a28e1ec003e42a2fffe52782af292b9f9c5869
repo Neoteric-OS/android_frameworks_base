@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a295b9e_59420f78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1888650
+      },
+      "writtenOn": "2023-03-09T16:51:33Z",
+      "side": 1,
+      "message": "It looks like this didn\u0027t turn out to cause the issue in the bug you\u0027re pointing to, can we abandon this revert then?",
+      "revId": "b3a28e1ec003e42a2fffe52782af292b9f9c5869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
