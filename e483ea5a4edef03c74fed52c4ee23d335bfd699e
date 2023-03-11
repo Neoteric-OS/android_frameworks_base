@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9222c6f4_f0c36270",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2023-03-11T21:36:10Z",
+      "side": 1,
+      "message": "Hi Mike,\nThis is my first Android change after a half decade hiatus.\nI welcome any feedback that you may have!\nThank you.",
+      "revId": "e483ea5a4edef03c74fed52c4ee23d335bfd699e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
