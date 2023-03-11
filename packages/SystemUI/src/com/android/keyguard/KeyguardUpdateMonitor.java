@@ -99,6 +99,7 @@ import android.hardware.fingerprint.FingerprintManager.AuthenticationCallback;
 import android.hardware.fingerprint.FingerprintManager.AuthenticationResult;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.IRemoteCallback;
@@ -122,6 +123,7 @@ import android.telephony.SubscriptionManager.OnSubscriptionsChangedListener;
 import android.telephony.TelephonyCallback;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import com.android.internal.annotations.VisibleForTesting;
@@ -178,6 +180,12 @@ import javax.inject.Provider;
 public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpable {
 
     private static final String TAG = "KeyguardUpdateMonitor";
+    private static final boolean DEBUG = KeyguardConstants.DEBUG;
+    private static final boolean DEBUG_SIM_STATES = KeyguardConstants.DEBUG_SIM_STATES;
+    private static final boolean DEBUG_FACE = Build.IS_DEBUGGABLE;
+    private static final boolean DEBUG_FINGERPRINT = Build.IS_DEBUGGABLE;
+    private static final boolean DEBUG_ACTIVE_UNLOCK = Build.IS_DEBUGGABLE;
+    private static final boolean DEBUG_SPEW = false;
     private static final int BIOMETRIC_LOCKOUT_RESET_DELAY_MS = 600;
 
     // Callback messages
