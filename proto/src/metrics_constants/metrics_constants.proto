@@ -7442,6 +7442,9 @@ message MetricsEvent {
     EXTENSIONS = 1150;
 
     //Zephyrus
-    ZEPH = 9999;
+    ZEPH = 1999;
+
+    // CustomSettings 
+    CUSTOM_SETTINGS = 9999;
   }
 }
