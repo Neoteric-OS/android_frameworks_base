@@ -16,6 +16,23 @@
       "message": "get presubmit results",
       "revId": "e106aa909b2aafb12644a695cf4e1d36a8e1f60e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "477aaeec_12f030e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2023-03-13T22:24:13Z",
+      "side": 1,
+      "message": "cherry picked from partner repos at\nhttps://partner-android-review.git.corp.google.com/c/platform/frameworks/base/+/2408603",
+      "revId": "e106aa909b2aafb12644a695cf4e1d36a8e1f60e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
