@@ -5883,9 +5883,14 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
         @Override
         public void onProcessUnMapped(int pid) {
+	    final WindowProcessController app;
             synchronized (mGlobalLock) {
+		app = mProcessMap.getProcess(pid);
                 mProcessMap.remove(pid);
             }
+	    if (app != null && app.hasImeService) {
+	        app.unregisterDisplayAreaConfigurationListener();
+	    }
         }
 
         @Override
