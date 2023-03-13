@@ -102,6 +102,7 @@ android_test {
     },
 
     data: [
+        ":SimpleServiceTestApp3",
         ":JobTestApp",
         ":StubTestApp",
     ],

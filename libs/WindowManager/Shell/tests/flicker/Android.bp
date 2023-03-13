@@ -50,4 +50,7 @@ android_test {
         "platform-test-annotations",
         "wmshell-flicker-test-components",
     ],
+    data: [
+        ":WMShellFlickerTestApp",
+    ],
 }
