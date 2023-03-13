@@ -8371,14 +8371,14 @@ public class ActivityManagerService extends IActivityManager.Stub
         final String processName = app == null ? "system_server"
                 : (r == null ? "unknown" : r.processName);
 
-        handleApplicationCrashInner("crash", r, processName, crashInfo);
+        handleApplicationCrashInner("crash", r, processName, crashInfo, false);
     }
 
     /* Native crash reporting uses this inner version because it needs to be somewhat
      * decoupled from the AM-managed cleanup lifecycle
      */
     void handleApplicationCrashInner(String eventType, ProcessRecord r, String processName,
-            ApplicationErrorReport.CrashInfo crashInfo) {
+            ApplicationErrorReport.CrashInfo crashInfo, boolean recoverable) {
         float loadingProgress = 1;
         IncrementalMetrics incrementalMetrics = null;
         // Obtain Incremental information if available
@@ -8405,59 +8405,11 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
         }
 
-        EventLogTags.writeAmCrash(Binder.getCallingPid(),
-                UserHandle.getUserId(Binder.getCallingUid()), processName,
-                r == null ? -1 : r.info.flags,
-                crashInfo.exceptionClassName,
-                crashInfo.exceptionMessage,
-                crashInfo.throwFileName,
-                crashInfo.throwLineNumber);
-
         int processClassEnum = processName.equals("system_server") ? ServerProtoEnums.SYSTEM_SERVER
                 : (r != null) ? r.getProcessClassEnum()
                         : ServerProtoEnums.ERROR_SOURCE_UNKNOWN;
         int uid = (r != null) ? r.uid : -1;
         int pid = (r != null) ? r.getPid() : -1;
-        FrameworkStatsLog.write(FrameworkStatsLog.APP_CRASH_OCCURRED,
-                uid,
-                eventType,
-                processName,
-                pid,
-                (r != null && r.info != null) ? r.info.packageName : "",
-                (r != null && r.info != null) ? (r.info.isInstantApp()
-                        ? FrameworkStatsLog.APP_CRASH_OCCURRED__IS_INSTANT_APP__TRUE
-                        : FrameworkStatsLog.APP_CRASH_OCCURRED__IS_INSTANT_APP__FALSE)
-                        : FrameworkStatsLog.APP_CRASH_OCCURRED__IS_INSTANT_APP__UNAVAILABLE,
-                r != null ? (r.isInterestingToUserLocked()
-                        ? FrameworkStatsLog.APP_CRASH_OCCURRED__FOREGROUND_STATE__FOREGROUND
-                        : FrameworkStatsLog.APP_CRASH_OCCURRED__FOREGROUND_STATE__BACKGROUND)
-                        : FrameworkStatsLog.APP_CRASH_OCCURRED__FOREGROUND_STATE__UNKNOWN,
-                processClassEnum,
-                incrementalMetrics != null /* isIncremental */, loadingProgress,
-                incrementalMetrics != null ? incrementalMetrics.getMillisSinceOldestPendingRead()
-                        : -1,
-                incrementalMetrics != null ? incrementalMetrics.getStorageHealthStatusCode()
-                        : -1,
-                incrementalMetrics != null ? incrementalMetrics.getDataLoaderStatusCode()
-                        : -1,
-                incrementalMetrics != null && incrementalMetrics.getReadLogsEnabled(),
-                incrementalMetrics != null ? incrementalMetrics.getMillisSinceLastDataLoaderBind()
-                        : -1,
-                incrementalMetrics != null ? incrementalMetrics.getDataLoaderBindDelayMillis()
-                        : -1,
-                incrementalMetrics != null ? incrementalMetrics.getTotalDelayedReads()
-                        : -1,
-                incrementalMetrics != null ? incrementalMetrics.getTotalFailedReads()
-                        : -1,
-                incrementalMetrics != null ? incrementalMetrics.getLastReadErrorUid()
-                        : -1,
-                incrementalMetrics != null ? incrementalMetrics.getMillisSinceLastReadError()
-                        : -1,
-                incrementalMetrics != null ? incrementalMetrics.getLastReadErrorNumber()
-                        : 0,
-                incrementalMetrics != null ? incrementalMetrics.getTotalDelayedReadsDurationMillis()
-                        : -1
-        );
 
         if (eventType.equals("native_crash")) {
             CriticalEventLog.getInstance().logNativeCrash(processClassEnum, processName, uid, pid);
@@ -8478,6 +8430,68 @@ public class ActivityManagerService extends IActivityManager.Stub
         addErrorToDropBox(
                 eventType, r, processName, null, null, null, null, null, null, crashInfo,
                 new Float(loadingProgress), incrementalMetrics, null);
+
+        // For GWP-ASan recoverable crashes, we want to elide some behaviour, primarily:
+        //  1. Don't make the app crash (the whole point of 'recoverable' is that the app doesn't
+        //     crash). Normally, for native crashes, debuggerd will terminate the process, but
+        //     there's a backup where ActivityManager will also kill it. Avoid that.
+        //  2. Don't log any APP_CRASH_OCCURRED or other statistics. The app didn't crash, and we
+        //     don't want apps to be falsely penalised.
+        if (recoverable) {
+            return;
+        }
+
+        EventLogTags.writeAmCrash(Binder.getCallingPid(),
+                    UserHandle.getUserId(Binder.getCallingUid()), processName,
+                    r == null ? -1 : r.info.flags,
+                    crashInfo.exceptionClassName,
+                    crashInfo.exceptionMessage,
+                    crashInfo.throwFileName,
+                    crashInfo.throwLineNumber);
+
+        FrameworkStatsLog.write(FrameworkStatsLog.APP_CRASH_OCCURRED,
+                uid,
+                eventType,
+                processName,
+                pid,
+                (r != null && r.info != null) ? r.info.packageName : "",
+                (r != null && r.info != null) ? (r.info.isInstantApp()
+                        ? FrameworkStatsLog.APP_CRASH_OCCURRED__IS_INSTANT_APP__TRUE
+                        : FrameworkStatsLog.APP_CRASH_OCCURRED__IS_INSTANT_APP__FALSE)
+                        : FrameworkStatsLog.APP_CRASH_OCCURRED__IS_INSTANT_APP__UNAVAILABLE,
+                r != null ? (r.isInterestingToUserLocked()
+                        ? FrameworkStatsLog.APP_CRASH_OCCURRED__FOREGROUND_STATE__FOREGROUND
+                        : FrameworkStatsLog.APP_CRASH_OCCURRED__FOREGROUND_STATE__BACKGROUND)
+                        : FrameworkStatsLog.APP_CRASH_OCCURRED__FOREGROUND_STATE__UNKNOWN,
+                processClassEnum,
+                incrementalMetrics != null /* isIncremental */, loadingProgress,
+                incrementalMetrics != null
+                        ? incrementalMetrics.getMillisSinceOldestPendingRead()
+                        : -1,
+                incrementalMetrics != null ? incrementalMetrics.getStorageHealthStatusCode()
+                        : -1,
+                incrementalMetrics != null ? incrementalMetrics.getDataLoaderStatusCode()
+                        : -1,
+                incrementalMetrics != null && incrementalMetrics.getReadLogsEnabled(),
+                incrementalMetrics != null
+                        ? incrementalMetrics.getMillisSinceLastDataLoaderBind()
+                        : -1,
+                incrementalMetrics != null ? incrementalMetrics.getDataLoaderBindDelayMillis()
+                        : -1,
+                incrementalMetrics != null ? incrementalMetrics.getTotalDelayedReads()
+                        : -1,
+                incrementalMetrics != null ? incrementalMetrics.getTotalFailedReads()
+                        : -1,
+                incrementalMetrics != null ? incrementalMetrics.getLastReadErrorUid()
+                        : -1,
+                incrementalMetrics != null ? incrementalMetrics.getMillisSinceLastReadError()
+                        : -1,
+                incrementalMetrics != null ? incrementalMetrics.getLastReadErrorNumber()
+                        : 0,
+                incrementalMetrics != null
+                        ? incrementalMetrics.getTotalDelayedReadsDurationMillis()
+                        : -1
+        );
 
         mAppErrors.crashApplication(r, crashInfo);
     }
