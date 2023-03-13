@@ -1248,8 +1248,7 @@ public class Instrumentation {
                 .instantiateApplication(cl, className);
         app.attach(context);
         AttestationHooks.initApplicationBeforeOnCreate(app);
-        String packageName = app.getPackageName();
-        PixelPropsUtils.setProps(packageName);
+        PixelPropsUtils.setProps(app);
         return app;
     }
     
@@ -1268,8 +1267,7 @@ public class Instrumentation {
         Application app = (Application)clazz.newInstance();
         app.attach(context);
         AttestationHooks.initApplicationBeforeOnCreate(app);
-        String packageName = app.getPackageName();
-        PixelPropsUtils.setProps(packageName);
+        PixelPropsUtils.setProps(app);
         return app;
     }
 
