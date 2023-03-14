@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acffc155_6fa7d0c3",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4333,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-03-14T00:53:56Z",
+      "side": 1,
+      "message": "Updated but you may not find in until the follow-up commit(aosp/2479756) is merged later.",
+      "parentUuid": "bcfbdcdf_86d326e1",
+      "range": {
+        "startLine": 4331,
+        "startChar": 7,
+        "endLine": 4333,
+        "endChar": 62
+      },
+      "revId": "4f0e1491f1e3568f81fc8183a6253479d4bde75c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3b915a2_6dc6433a",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-03-13T15:38:29Z",
       "side": 1,
       "message": "KEY_PREFERRED_IKE_PROTOCOL_INT / \"preferred_ike_protocol_int\"",
+      "range": {
+        "startLine": 4337,
+        "startChar": 31,
+        "endLine": 4337,
+        "endChar": 57
+      },
+      "revId": "4f0e1491f1e3568f81fc8183a6253479d4bde75c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "449bb4fd_a014a947",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4337,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-03-14T00:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3b915a2_6dc6433a",
       "range": {
         "startLine": 4337,
         "startChar": 31,
