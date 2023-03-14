@@ -87,6 +87,30 @@
       },
       "revId": "23db4a68353e4e7dc61af3c3f685b61722f77a90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5432aa8_da17b187",
+        "filename": "services/core/java/com/android/server/pm/UserSystemPackageInstaller.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2023-03-14T18:53:13Z",
+      "side": 1,
+      "message": "I think because the `shouldChangeInstallationState` check below does\n\n```\n// Only proceed with uninstall if the package is new to the device.\nreturn isFirstBoot || (isUpgrade \u0026\u0026 !preOtaPkgs.contains(packageState.getPackageName()));\n```",
+      "parentUuid": "5c006de2_e0cdab2f",
+      "range": {
+        "startLine": 225,
+        "startChar": 67,
+        "endLine": 225,
+        "endChar": 75
+      },
+      "revId": "23db4a68353e4e7dc61af3c3f685b61722f77a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
