@@ -93,19 +93,29 @@ filegroup {
 }
 
 java_api_contribution {
-    name: "api-stubs-docs-non-updatable-public-stubs",
+    name: "api-stubs-docs-non-updatable-contribution",
     api_surface: "public",
     api_file: "current.txt",
-    visibility: [
-        "//build/orchestrator/apis",
-    ],
+    visibility: ["//visibility:public"],
 }
 
 java_api_contribution {
-    name: "frameworks-base-core-api-module-lib-stubs",
+    name: "system-api-stubs-docs-non-updatable-contribution",
+    api_surface: "system",
+    api_file: "system-current.txt",
+    visibility: ["//visibility:public"],
+}
+
+java_api_contribution {
+    name: "test-api-stubs-docs-non-updatable-contribution",
+    api_surface: "test",
+    api_file: "test-current.txt",
+    visibility: ["//visibility:public"],
+}
+
+java_api_contribution {
+    name: "module-lib-api-stubs-docs-non-updatable-contribution",
     api_surface: "module-lib",
     api_file: "module-lib-current.txt",
-    visibility: [
-        "//build/orchestrator/apis",
-    ],
+    visibility: ["//visibility:public"],
 }

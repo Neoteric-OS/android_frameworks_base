@@ -33,3 +33,10 @@ filegroup {
     srcs: ["removed.txt"],
     visibility: ["//frameworks/base/api"],
 }
+
+java_api_contribution {
+    name: "services-non-updatable-stubs-contribution",
+    api_surface: "system-server",
+    api_file: "current.txt",
+    visibility: ["//visibility:public"],
+}
