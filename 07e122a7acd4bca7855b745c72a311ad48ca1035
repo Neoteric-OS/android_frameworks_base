@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "384e206f_d445843a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1883619
+      },
+      "writtenOn": "2023-03-14T05:46:28Z",
+      "side": 1,
+      "message": "Please check the comments",
+      "revId": "07e122a7acd4bca7855b745c72a311ad48ca1035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ac8376a_40913542",
+        "filename": "media/java/android/media/MediaRecorder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1883619
+      },
+      "writtenOn": "2023-03-14T05:46:28Z",
+      "side": 1,
+      "message": "@rakesh.kumar@ittiam.com\nI believe, HE-AAC V2 aka HE_AAC_PS only supports stereo only recording.\nIn this case, Are we handling \nMediaRecorder.setAudioChannels API ?",
+      "range": {
+        "startLine": 677,
+        "startChar": 0,
+        "endLine": 677,
+        "endChar": 0
+      },
+      "revId": "07e122a7acd4bca7855b745c72a311ad48ca1035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
