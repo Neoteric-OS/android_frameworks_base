@@ -63,6 +63,30 @@
       },
       "revId": "23db4a68353e4e7dc61af3c3f685b61722f77a90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c006de2_e0cdab2f",
+        "filename": "services/core/java/com/android/server/pm/UserSystemPackageInstaller.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-03-14T18:51:20Z",
+      "side": 1,
+      "message": "Also, why wouldn\u0027t this bug have had a huge effect on devices that use strict mode, uninstalling all the 3p apps each OTA or something?",
+      "parentUuid": "6b97df6c_6a0a672b",
+      "range": {
+        "startLine": 225,
+        "startChar": 67,
+        "endLine": 225,
+        "endChar": 75
+      },
+      "revId": "23db4a68353e4e7dc61af3c3f685b61722f77a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
