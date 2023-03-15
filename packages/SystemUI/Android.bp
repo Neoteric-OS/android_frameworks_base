@@ -125,6 +125,7 @@ android_library {
         "jsr330",
         "lottie",
         "LowLightDreamLib",
+        "renderscript_toolkit",
     ],
     manifest: "AndroidManifest.xml",
 
