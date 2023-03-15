@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aecdb8d6_fa4df744",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4333,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2023-03-15T16:47:18Z",
+      "side": 1,
+      "message": "That entire class is hidden; now sure what your intentions are here.  Carrier config keys should normally be public; you\u0027re never going to be able to make this a proper API in the future if it refers to hidden implementation details.\n\nAlso, other IKE keys appear to be in the IWLAN section, not at the top level; eg \nKEY_IKE_REKEY_HARD_TIMER_SEC_INT  Should this key be in the same grouping class?",
+      "parentUuid": "acffc155_6fa7d0c3",
+      "range": {
+        "startLine": 4331,
+        "startChar": 7,
+        "endLine": 4333,
+        "endChar": 62
+      },
+      "revId": "4f0e1491f1e3568f81fc8183a6253479d4bde75c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3b915a2_6dc6433a",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 4
