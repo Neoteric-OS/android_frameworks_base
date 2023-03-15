@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5af8883d_d82ee9b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-03-15T16:12:43Z",
+      "side": 1,
+      "message": "I think we also need to update the api docs - `frameworks/base/core/api/current.txt`. Please run `make update-api` to generate the updated API files.",
+      "revId": "b8b01c9647cd16099318fcfb0243ee6920afdc65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
