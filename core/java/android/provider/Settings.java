@@ -5703,6 +5703,11 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_REFRESH_INTERVAL = "network_traffic_refresh_interval";
 
         /**
+         * @hide
+         */
+        public static final String QS_TILE_VERTICAL_LAYOUT = "qs_tile_vertical_layout";
+
+	/**
          * Whether edge light is enabled.
          * Default 0
          * @hide

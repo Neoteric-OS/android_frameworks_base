@@ -206,6 +206,7 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         registerObserver(Settings.System.QS_SHOW_BRIGHTNESS);
         registerObserver(Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM);
         registerObserver(Settings.System.QS_TILE_LABEL_HIDE);
+        registerObserver(Settings.System.QS_TILE_VERTICAL_LAYOUT);
         mQsTileRevealController = createTileRevealController();
         if (mQsTileRevealController != null) {
             mQsTileRevealController.setExpansion(mRevealExpansion);

@@ -25,6 +25,12 @@ public class TileUtils {
                 0, UserHandle.USER_CURRENT) != 0;
     }
 
+    public static boolean getQSTileVerticalLayout(Context context) {
+        return Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_VERTICAL_LAYOUT,
+                0, UserHandle.USER_CURRENT) != 0;
+    }
+
     public static boolean updateLayout(Context context) {
         final IOverlayManager overlayManager = IOverlayManager.Stub.asInterface(
                 ServiceManager.getService(Context.OVERLAY_SERVICE));
