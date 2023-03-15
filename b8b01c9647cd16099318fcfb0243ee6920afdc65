@@ -16,6 +16,23 @@
       "message": "I think we also need to update the api docs - `frameworks/base/core/api/current.txt`. Please run `make update-api` to generate the updated API files.",
       "revId": "b8b01c9647cd16099318fcfb0243ee6920afdc65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbb0d7f8_b7f0f212",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-03-15T16:13:11Z",
+      "side": 1,
+      "message": "Also, I think this CL needs to be merged to udc-dev since it is modifying hte API surface (i.e Android SDK).",
+      "revId": "b8b01c9647cd16099318fcfb0243ee6920afdc65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
