@@ -167,6 +167,7 @@ public final class IsoDep extends BasicTagTechnology {
      * @return response bytes received, will not be null
      * @throws TagLostException if the tag leaves the field
      * @throws IOException if there is an I/O failure, or this operation is canceled
+     * @throws SecurityException if the tag object is reused after the tag has left the field
      */
     public byte[] transceive(byte[] data) throws IOException {
         return transceive(data, true);
