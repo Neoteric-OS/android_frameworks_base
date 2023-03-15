@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9b34996_3a404fa6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2023-03-15T16:18:58Z",
+      "side": 1,
+      "message": "@hakan.kvist@sony.com\n\nPlease rebase this when you get the chance.  Thanks!",
+      "revId": "04519c9d0e0a9cbce7d163f77627ad1d8c0c96bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
