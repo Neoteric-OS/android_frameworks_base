@@ -88,6 +88,7 @@ public final class IsoDep extends BasicTagTechnology {
      * <p class="note">Requires the {@link android.Manifest.permission#NFC} permission.
      *
      * @param timeout timeout value in milliseconds
+     * @throws SecurityException if the tag object is reused after the tag has left the field
      */
     public void setTimeout(int timeout) {
         try {
@@ -105,6 +106,7 @@ public final class IsoDep extends BasicTagTechnology {
      *
      * <p class="note">Requires the {@link android.Manifest.permission#NFC} permission.
      *
+     * @throws SecurityException if the tag object is reused after the tag has left the field
      * @return timeout value in milliseconds
      */
     public int getTimeout() {
@@ -167,6 +169,7 @@ public final class IsoDep extends BasicTagTechnology {
      * @return response bytes received, will not be null
      * @throws TagLostException if the tag leaves the field
      * @throws IOException if there is an I/O failure, or this operation is canceled
+     * @throws SecurityException if the tag object is reused after the tag has left the field
      */
     public byte[] transceive(byte[] data) throws IOException {
         return transceive(data, true);
@@ -192,6 +195,7 @@ public final class IsoDep extends BasicTagTechnology {
      * in the future though. Use this method to check for extended length APDU
      * support.
      *
+     * @throws SecurityException if the tag object is reused after the tag has left the field
      * @return whether the NFC adapter on this device supports extended length APDUs.
      */
     public boolean isExtendedLengthApduSupported() {
