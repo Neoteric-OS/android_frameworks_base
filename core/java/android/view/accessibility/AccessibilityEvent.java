@@ -683,6 +683,12 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
      */
     public static final int CONTENT_CHANGE_TYPE_DRAG_CANCELLED = 0x0000200;
 
+    /**
+     * Change type for {@link #TYPE_WINDOW_CONTENT_CHANGED} event:
+     * The node's required state has changed.
+     */
+    public static final int CONTENT_CHANGE_TYPE_IS_REQUIRED = 0x0000400;
+
     /** Change type for {@link #TYPE_SPEECH_STATE_CHANGE} event: another service is speaking. */
     public static final int SPEECH_STATE_SPEAKING_START = 0x00000001;
 
@@ -808,6 +814,7 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
                 CONTENT_CHANGE_TYPE_DRAG_STARTED,
                 CONTENT_CHANGE_TYPE_DRAG_DROPPED,
                 CONTENT_CHANGE_TYPE_DRAG_CANCELLED,
+                CONTENT_CHANGE_TYPE_IS_REQUIRED
             })
     public @interface ContentChangeTypes {}
 
@@ -1047,6 +1054,7 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
      *         <li>{@link #CONTENT_CHANGE_TYPE_UNDEFINED}
      *         <li>{@link #CONTENT_CHANGE_TYPE_PANE_APPEARED}
      *         <li>{@link #CONTENT_CHANGE_TYPE_PANE_DISAPPEARED}
+     *         <li>{@link #CONTENT_CHANGE_TYPE_IS_REQUIRED}
      *         </ul>
      */
     @ContentChangeTypes
@@ -1074,6 +1082,7 @@ public final class AccessibilityEvent extends AccessibilityRecord implements Par
             case CONTENT_CHANGE_TYPE_DRAG_STARTED: return "CONTENT_CHANGE_TYPE_DRAG_STARTED";
             case CONTENT_CHANGE_TYPE_DRAG_DROPPED: return "CONTENT_CHANGE_TYPE_DRAG_DROPPED";
             case CONTENT_CHANGE_TYPE_DRAG_CANCELLED: return "CONTENT_CHANGE_TYPE_DRAG_CANCELLED";
+            case CONTENT_CHANGE_TYPE_IS_REQUIRED: return "CONTENT_CHANGE_TYPE_IS_REQUIRED";
             default: return Integer.toHexString(type);
         }
     }

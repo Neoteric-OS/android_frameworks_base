@@ -792,6 +792,8 @@ public class AccessibilityNodeInfo implements Parcelable {
 
     private static final int BOOLEAN_PROPERTY_IS_TEXT_SELECTABLE = 0x0800000;
 
+    private static final int BOOLEAN_PROPERTY_IS_REQUIRED = 0x1000000;
+
     /**
      * Bits that provide the id of a virtual descendant of a view.
      */
@@ -2440,6 +2442,32 @@ public class AccessibilityNodeInfo implements Parcelable {
      */
     public void setEditable(boolean editable) {
         setBooleanProperty(BOOLEAN_PROPERTY_EDITABLE, editable);
+    }
+
+    /**
+     * Get if the node is required.
+     *
+     * @return True is the node is required, false otherwise.
+     */
+    public boolean isRequired() {
+        return getBooleanProperty(BOOLEAN_PROPERTY_IS_REQUIRED);
+    }
+
+    /**
+     * Sets whether this node is required. This should be set to true for a node that requires
+     * user input for a given flow (e.g. an email on a registration page, a CC# at checkout, etc).
+     * <p>
+     *   <strong>Note:</strong> Cannot be called from an
+     *   {@link android.accessibilityservice.AccessibilityService}.
+     *   This class is made immutable before being delivered to an AccessibilityService.
+     * </p>
+     *
+     * @param required True if the node is required.
+     *
+     * @throws IllegalStateException If called from an AccessibilityService.
+     */
+    public void setRequired(boolean required) {
+        setBooleanProperty(BOOLEAN_PROPERTY_IS_REQUIRED, required);
     }
 
     /**
@@ -4605,6 +4633,7 @@ public class AccessibilityNodeInfo implements Parcelable {
         builder.append("; visible: ").append(isVisibleToUser());
         builder.append("; actions: ").append(mActions);
         builder.append("; isTextSelectable: ").append(isTextSelectable());
+        builder.append("; isRequired: ").append(isRequired());
 
         return builder.toString();
     }

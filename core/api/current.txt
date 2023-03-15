@@ -51773,6 +51773,7 @@ package android.view.accessibility {
     field public static final int CONTENT_CHANGE_TYPE_DRAG_CANCELLED = 512; // 0x200
     field public static final int CONTENT_CHANGE_TYPE_DRAG_DROPPED = 256; // 0x100
     field public static final int CONTENT_CHANGE_TYPE_DRAG_STARTED = 128; // 0x80
+    field public static final int CONTENT_CHANGE_TYPE_IS_REQUIRED = 1024; // 0x400
     field public static final int CONTENT_CHANGE_TYPE_PANE_APPEARED = 16; // 0x10
     field public static final int CONTENT_CHANGE_TYPE_PANE_DISAPPEARED = 32; // 0x20
     field public static final int CONTENT_CHANGE_TYPE_PANE_TITLE = 8; // 0x8
@@ -51950,6 +51951,7 @@ package android.view.accessibility {
     method public boolean isLongClickable();
     method public boolean isMultiLine();
     method public boolean isPassword();
+    method public boolean isRequired();
     method public boolean isScreenReaderFocusable();
     method public boolean isScrollable();
     method public boolean isSelected();
@@ -52010,6 +52012,7 @@ package android.view.accessibility {
     method public void setParent(android.view.View, int);
     method public void setPassword(boolean);
     method public void setRangeInfo(android.view.accessibility.AccessibilityNodeInfo.RangeInfo);
+    method public void setRequired(boolean);
     method public void setScreenReaderFocusable(boolean);
     method public void setScrollable(boolean);
     method public void setSelected(boolean);
