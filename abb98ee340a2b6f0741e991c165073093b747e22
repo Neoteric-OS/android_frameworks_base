@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91c1d24c_70b20a04",
+        "filename": "core/java/com/android/internal/expresslog/Histogram.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2023-03-16T19:11:11Z",
+      "side": 1,
+      "message": "I think you can also annotate the function parameters with android.annotation.IntRange to specify valid input range. This would enforce a build-time check. I\u0027m just not sure if that annotation is available here.",
+      "revId": "abb98ee340a2b6f0741e991c165073093b747e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c022eb21_67fc822c",
         "filename": "core/java/com/android/internal/expresslog/Histogram.java",
         "patchSetId": 2
@@ -43,6 +60,29 @@
         "startChar": 19,
         "endLine": 199,
         "endChar": 45
+      },
+      "revId": "abb98ee340a2b6f0741e991c165073093b747e22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6e0d8f9_2bc6ee78",
+        "filename": "core/tests/expresslog/src/com/android/internal/expresslog/ScaledRangeOptionsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1431413
+      },
+      "writtenOn": "2023-03-16T19:11:11Z",
+      "side": 1,
+      "message": "I think you can just annotate the class with @SmallTest and it will apply to all methods",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 14
       },
       "revId": "abb98ee340a2b6f0741e991c165073093b747e22",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
