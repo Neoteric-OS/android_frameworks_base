@@ -3396,15 +3396,17 @@ public class AudioService extends IAudioService.Stub
                 if (mHdmiManager != null) {
                     // At most one of mHdmiPlaybackClient and mHdmiTvClient should be non-null
                     HdmiClient fullVolumeHdmiClient = mHdmiPlaybackClient;
+                    boolean isFullDevice = isFullVolumeDevice(device);
                     if (mHdmiTvClient != null) {
                         fullVolumeHdmiClient = mHdmiTvClient;
+                        isFullDevice |= mHdmiSystemAudioSupported;
                     }
 
                     if (fullVolumeHdmiClient != null
                             && mHdmiCecVolumeControlEnabled
                             && streamTypeAlias == AudioSystem.STREAM_MUSIC
                             // vol change on a full volume device
-                            && isFullVolumeDevice(device)) {
+                            && isFullDevice) {
                         int keyCode = KeyEvent.KEYCODE_UNKNOWN;
                         switch (direction) {
                             case AudioManager.ADJUST_RAISE:
