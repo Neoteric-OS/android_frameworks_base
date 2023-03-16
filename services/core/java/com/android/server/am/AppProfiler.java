@@ -2043,7 +2043,7 @@ public class AppProfiler {
                 }
             } else if (instr != null && instr.mProfileFile != null) {
                 profilerInfo = new ProfilerInfo(instr.mProfileFile, null, 0, false, false,
-                        null, false, 0);
+                        null, false);
             }
             if (mAppAgentMap != null && mAppAgentMap.containsKey(processName)) {
                 // We need to do a debuggable check here. See setAgentApp for why the check is
@@ -2053,7 +2053,7 @@ public class AppProfiler {
                     // Do not overwrite already requested agent.
                     if (profilerInfo == null) {
                         profilerInfo = new ProfilerInfo(null, null, 0, false, false,
-                                mAppAgentMap.get(processName), true, 0);
+                                mAppAgentMap.get(processName), true);
                     } else if (profilerInfo.agent == null) {
                         profilerInfo = profilerInfo.setAgent(mAppAgentMap.get(processName), true);
                     }
@@ -2185,9 +2185,7 @@ public class AppProfiler {
                             + " mAutoStopProfiler="
                             + mProfileData.getProfilerInfo().autoStopProfiler
                             + " mStreamingOutput="
-                            + mProfileData.getProfilerInfo().streamingOutput
-                            + " mClockType="
-                            + mProfileData.getProfilerInfo().clockType);
+                            + mProfileData.getProfilerInfo().streamingOutput);
                     pw.println("  mProfileType=" + mProfileType);
                 }
             }
