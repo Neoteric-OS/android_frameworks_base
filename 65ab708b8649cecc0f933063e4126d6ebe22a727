@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85ca4d63_dc1a33f5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-16T07:28:14Z",
+      "side": 1,
+      "message": "This is a bit hard to read locally, can you make a helper method ?",
+      "range": {
+        "startLine": 1679,
+        "startChar": 60,
+        "endLine": 1682,
+        "endChar": 24
+      },
+      "revId": "65ab708b8649cecc0f933063e4126d6ebe22a727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c059f002_50d27d74",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-16T07:28:14Z",
+      "side": 1,
+      "message": "Maybe we should only do this if the connection was migrated ? CS knows not to trigger updates when the NC are identical, but we probably still shouldn\u0027t send NCs if we know for sure they haven\u0027t changed",
+      "range": {
+        "startLine": 3005,
+        "startChar": 24,
+        "endLine": 3005,
+        "endChar": 55
+      },
+      "revId": "65ab708b8649cecc0f933063e4126d6ebe22a727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "615a8201_9a4a6e2c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3498,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-16T07:28:14Z",
+      "side": 1,
+      "message": "This method is not pure so it should not be called liberally from various places with an expectation it returns the same value as last time. I think you need to have some mechanism in place that guarantees the basis for the VpnTransportInfo is the same that was sent to IKE, and such a guarantee necessarily involves not calling an impure method multiple times in different places.",
+      "range": {
+        "startLine": 3498,
+        "startChar": 40,
+        "endLine": 3498,
+        "endChar": 73
+      },
+      "revId": "65ab708b8649cecc0f933063e4126d6ebe22a727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61d4cbd9_5ba30471",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3686,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-16T07:28:14Z",
+      "side": 1,
+      "message": "Likewise, let\u0027s not send the caps when it\u0027s easy to know they haven\u0027t changed (e.g. maybeMigrateIkeSession returned false)",
+      "range": {
+        "startLine": 3686,
+        "startChar": 12,
+        "endLine": 3686,
+        "endChar": 43
+      },
+      "revId": "65ab708b8649cecc0f933063e4126d6ebe22a727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
