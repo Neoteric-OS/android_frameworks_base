@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "718a562d_c667d96f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4333,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-03-16T02:37:02Z",
+      "side": 1,
+      "message": "Other IKE keys may be used for IWLAN only but this key is used for general IKE purpose, including VPN. So I think it does not fit into to the IWLAN group.",
+      "parentUuid": "aecdb8d6_fa4df744",
+      "range": {
+        "startLine": 4331,
+        "startChar": 7,
+        "endLine": 4333,
+        "endChar": 62
+      },
+      "revId": "4f0e1491f1e3568f81fc8183a6253479d4bde75c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3b915a2_6dc6433a",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 4
