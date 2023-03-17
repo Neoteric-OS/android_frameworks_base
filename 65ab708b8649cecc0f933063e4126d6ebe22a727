@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f7ab6dc8_142c9454",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3498,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-17T05:44:18Z",
+      "side": 1,
+      "message": "No, this is still not readable. It\u0027s very hard to track calls to this function to see that eventually it\u0027s called in two places called in quick succession.\n\nIt\u0027s fair to call this every time there is a migration. But it\u0027s not fine to call it twice in the call stack and expect it returns the same thing.",
+      "parentUuid": "8406743a_676be2ef",
+      "range": {
+        "startLine": 3498,
+        "startChar": 40,
+        "endLine": 3498,
+        "endChar": 73
+      },
+      "revId": "65ab708b8649cecc0f933063e4126d6ebe22a727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61d4cbd9_5ba30471",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 2

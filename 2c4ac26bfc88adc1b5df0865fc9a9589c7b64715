@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e12721c_e90991a7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3696,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-17T05:44:18Z",
+      "side": 1,
+      "message": "Suggest moving this to immediately below maybeMigrateIkeSession since that\u0027s the only place where it\u0027s used.",
+      "range": {
+        "startLine": 3696,
+        "startChar": 20,
+        "endLine": 3696,
+        "endChar": 51
+      },
+      "revId": "2c4ac26bfc88adc1b5df0865fc9a9589c7b64715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ef32b47_76560d00",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3697,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-17T05:44:18Z",
+      "side": 1,
+      "message": "How is this possible ?",
+      "range": {
+        "startLine": 3697,
+        "startChar": 0,
+        "endLine": 3697,
+        "endChar": 47
+      },
+      "revId": "2c4ac26bfc88adc1b5df0865fc9a9589c7b64715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9f23294_f8154cb5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3708,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-17T05:44:18Z",
+      "side": 1,
+      "message": "Only the transportInfo can have changed right ? If so, then you don\u0027t want to create a new NC and reassign mNetworkCapabilities.",
+      "range": {
+        "startLine": 3708,
+        "startChar": 12,
+        "endLine": 3708,
+        "endChar": 63
+      },
+      "revId": "2c4ac26bfc88adc1b5df0865fc9a9589c7b64715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
