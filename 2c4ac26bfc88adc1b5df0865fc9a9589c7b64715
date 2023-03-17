@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67d3d2b3_73131fdc",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3696,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-03-17T07:18:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e12721c_e90991a7",
+      "range": {
+        "startLine": 3696,
+        "startChar": 20,
+        "endLine": 3696,
+        "endChar": 51
+      },
+      "revId": "2c4ac26bfc88adc1b5df0865fc9a9589c7b64715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ef32b47_76560d00",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f34def96_c0d24b23",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3697,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-03-17T07:18:48Z",
+      "side": 1,
+      "message": "Now it\u0027s only called when the session is successfully migrated, so I agree it should not be possible. I added to prevent this triggering from a carrierconfig change before networkAgent is successfuly connected. But in current code, this is just more likely a protection only. Removed.",
+      "parentUuid": "0ef32b47_76560d00",
+      "range": {
+        "startLine": 3697,
+        "startChar": 0,
+        "endLine": 3697,
+        "endChar": 47
+      },
+      "revId": "2c4ac26bfc88adc1b5df0865fc9a9589c7b64715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9f23294_f8154cb5",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-03-17T05:44:18Z",
       "side": 1,
       "message": "Only the transportInfo can have changed right ? If so, then you don\u0027t want to create a new NC and reassign mNetworkCapabilities.",
+      "range": {
+        "startLine": 3708,
+        "startChar": 12,
+        "endLine": 3708,
+        "endChar": 63
+      },
+      "revId": "2c4ac26bfc88adc1b5df0865fc9a9589c7b64715",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9ee4687_09d5b675",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3708,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-03-17T07:18:48Z",
+      "side": 1,
+      "message": "Update it to reassign and send change if the transportInfo is different.",
+      "parentUuid": "d9f23294_f8154cb5",
       "range": {
         "startLine": 3708,
         "startChar": 12,

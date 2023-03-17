@@ -168,6 +168,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8104d16_8f1d0294",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3498,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-03-17T07:18:48Z",
+      "side": 1,
+      "message": "Update to call it only once and take the keepalive timeout value as a parameter into maybeMigrateIkeSession() and updateVpnTransportInfoAndNetCap(). Does it works better to you?",
+      "parentUuid": "f7ab6dc8_142c9454",
+      "range": {
+        "startLine": 3498,
+        "startChar": 40,
+        "endLine": 3498,
+        "endChar": 73
+      },
+      "revId": "65ab708b8649cecc0f933063e4126d6ebe22a727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61d4cbd9_5ba30471",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 2
