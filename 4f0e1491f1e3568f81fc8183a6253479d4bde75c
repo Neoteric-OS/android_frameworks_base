@@ -120,6 +120,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a1a5873_5814b832",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4333,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2023-03-17T15:30:58Z",
+      "side": 1,
+      "message": "I guess this isn\u0027t the time to debate it, but we\u0027ve seen teams using hidden carrier configurations as a convenience with the expectation that they can be made public in the future.  Of course that means they\u0027ll go through API council review, which means that there is a possibility that the key name and constant would be required to change if review indicates it is necessary.  \n\nAs long as you\u0027re aware that is a possibility, then this is fine.",
+      "parentUuid": "6af29bc6_244c6c76",
+      "range": {
+        "startLine": 4331,
+        "startChar": 7,
+        "endLine": 4333,
+        "endChar": 62
+      },
+      "revId": "4f0e1491f1e3568f81fc8183a6253479d4bde75c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3b915a2_6dc6433a",
