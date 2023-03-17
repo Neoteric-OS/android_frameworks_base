@@ -16,6 +16,23 @@
       "message": "Hi Sally,\n\nPlease see this CL which does minimal changes to add an \"isRequired\" boolean to AccessibilityNodeInfo. \n\nThanks,\n\nMark",
       "revId": "44f9b7aa9af0461168b6f4e4c5228b0ea89b91e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18bb328e_ba6e83e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2023-03-17T18:08:44Z",
+      "side": 1,
+      "message": "Hey Mark, you\u0027ll need to move this to ag/ and use the internal branch for the next Android release. These new APIs cannot be added to AOSP.",
+      "revId": "44f9b7aa9af0461168b6f4e4c5228b0ea89b91e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
