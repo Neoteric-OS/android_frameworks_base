@@ -8481,6 +8481,7 @@ public class Activity extends ContextThemeWrapper
         // invisible activities must be finished before onResume) completes
         if (!mVisibleFromClient && !mFinished) {
             Log.w(TAG, "An activity without a UI must call finish() before onResume() completes");
+            Log.w(TAG, "An activity without a UI must call finish() before onResume() completes");
             if (getApplicationInfo().targetSdkVersion
                     > android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
                 throw new IllegalStateException(
