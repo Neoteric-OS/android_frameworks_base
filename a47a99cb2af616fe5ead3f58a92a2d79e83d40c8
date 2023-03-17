@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21a24bd0_a371da82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-03-17T21:09:13Z",
+      "side": 1,
+      "message": "hey - any chance you could use imports of files rather than having multiple lists like these? They can be hard to maintain",
+      "revId": "a47a99cb2af616fe5ead3f58a92a2d79e83d40c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
