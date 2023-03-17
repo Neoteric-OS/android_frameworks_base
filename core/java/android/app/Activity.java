@@ -4414,6 +4414,7 @@ public class Activity extends ContextThemeWrapper
                 mActionBar.dispatchMenuVisibilityChanged(true);
             } else {
                 Log.e(TAG, "Tried to open action bar menu with no action bar");
+                Log.e(TAG, "Tried to open action bar menu with no action bar");
             }
         }
         return true;
