@@ -753,6 +753,7 @@ public class Activity extends ContextThemeWrapper
         Window.OnWindowDismissedCallback,
         ContentCaptureManager.ContentCaptureClient {
     private static final String TAG = "Activity";
+    private static final String TAG4 = "Activity";
     private static final boolean DEBUG_LIFECYCLE = false;
 
     /** Standard activity result: operation canceled. */
