@@ -92,5 +92,7 @@ public class SystemSettings {
         Settings.System.OMNI_ADVANCED_REBOOT,
         Settings.System.SMALL_LANDSCAPE_NOTIFICATION,
         Settings.System.HAPTIC_ON_SLIDER,
+        Settings.System.STATUS_BAR_BATTERY_STYLE,
+        Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT,
     };
 }
