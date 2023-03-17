@@ -367,7 +367,11 @@ public class Vpn {
 
     private static final int MAX_EVENTS_LOGS = 20;
     private final LocalLog mUnderlyNetworkChanges = new LocalLog(MAX_EVENTS_LOGS);
+    private final LocalLog mUnderlyNetworkNetCapChanges = new LocalLog(MAX_EVENTS_LOGS);
+    private final LocalLog mUnderlyNetworkLpChanges = new LocalLog(MAX_EVENTS_LOGS);
     private final LocalLog mVpnManagerEvents = new LocalLog(MAX_EVENTS_LOGS);
+    private final LocalLog mCarrierConfigChange = new LocalLog(MAX_EVENTS_LOGS);
+    private final LocalLog mAlwaysOnLockdownChange = new LocalLog(MAX_EVENTS_LOGS);
 
     /**
      * Cached Map of <subscription ID, CarrierConfigInfo> since retrieving the PersistableBundle
@@ -1107,6 +1111,8 @@ public class Vpn {
         mLockdownAllowlist = (mLockdown && lockdownAllowlist != null)
                 ? Collections.unmodifiableList(new ArrayList<>(lockdownAllowlist))
                 : Collections.emptyList();
+        mAlwaysOnLockdownChange.log("Mode changed: lockdown=" + mLockdown + " alwaysOn="
+                + mAlwaysOn + " calling from " + Binder.getCallingUid());
 
         if (isCurrentPreparedPackage(packageName)) {
             updateAlwaysOnNotification(mNetworkInfo.getDetailedState());
@@ -2998,6 +3004,9 @@ public class Vpn {
 
                             maybeMigrateIkeSessionAndUpdateVpnTransportInfo(mActiveNetwork);
                         }
+                        mCarrierConfigChange.log("Changed on slot " + slotIndex + " subId="
+                                + subId + " carrerId=" + carrierId
+                                + " specificCarrierId=" + specificCarrierId);
                     }
         };
 
@@ -3677,6 +3686,8 @@ public class Vpn {
 
         /** Called when the NetworkCapabilities of underlying network is changed */
         public void onDefaultNetworkCapabilitiesChanged(@NonNull NetworkCapabilities nc) {
+            mUnderlyNetworkNetCapChanges.log(
+                    "Changed from " + mUnderlyingNetworkCapabilities + " to " + nc);
             final NetworkCapabilities oldNc = mUnderlyingNetworkCapabilities;
             mUnderlyingNetworkCapabilities = nc;
             if (oldNc == null) {
@@ -3690,6 +3701,8 @@ public class Vpn {
 
         /** Called when the LinkProperties of underlying network is changed */
         public void onDefaultNetworkLinkPropertiesChanged(@NonNull LinkProperties lp) {
+            mUnderlyNetworkLpChanges.log(
+                    "Changed from " + mUnderlyingLinkProperties + " to " + lp);
             mUnderlyingLinkProperties = lp;
         }
 
@@ -5048,11 +5061,13 @@ public class Vpn {
                 final IkeV2VpnRunner runner = ((IkeV2VpnRunner) mVpnRunner);
                 pw.println("Token: " + runner.mSessionKey);
                 pw.println("MOBIKE " + (runner.mMobikeEnabled ? "enabled" : "disabled"));
+                pw.println("Profile: " + runner.mProfile);
                 if (mDataStallSuspected) pw.println("Data stall suspected");
                 if (runner.mScheduledHandleDataStallFuture != null) {
                     pw.println("Reset session scheduled");
                 }
             }
+            pw.println();
             pw.println("mCachedCarrierConfigInfoPerSubId=" + mCachedCarrierConfigInfoPerSubId);
 
             pw.println("mUnderlyNetworkChanges (most recent first):");
@@ -5063,6 +5078,30 @@ public class Vpn {
             pw.println("mVpnManagerEvent (most recent first):");
             pw.increaseIndent();
             mVpnManagerEvents.reverseDump(pw);
+            pw.decreaseIndent();
+            pw.println();
+
+            pw.println("mCarrierConfigChange (most recent first):");
+            pw.increaseIndent();
+            mCarrierConfigChange.reverseDump(pw);
+            pw.decreaseIndent();
+            pw.println();
+
+            pw.println("mUnderlyNetworkNetCapChanges (most recent first):");
+            pw.increaseIndent();
+            mUnderlyNetworkNetCapChanges.reverseDump(pw);
+            pw.decreaseIndent();
+            pw.println();
+
+            pw.println("mUnderlyNetworkLpChanges (most recent first):");
+            pw.increaseIndent();
+            mUnderlyNetworkLpChanges.reverseDump(pw);
+            pw.decreaseIndent();
+            pw.println();
+
+            pw.println("mAlwaysOnLockdownChange (most recent first):");
+            pw.increaseIndent();
+            mAlwaysOnLockdownChange.reverseDump(pw);
             pw.decreaseIndent();
         }
     }
