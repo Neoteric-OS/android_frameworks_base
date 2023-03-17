@@ -33,6 +33,29 @@
       "message": "Hey Mark, you\u0027ll need to move this to ag/ and use the internal branch for the next Android release. These new APIs cannot be added to AOSP.",
       "revId": "44f9b7aa9af0461168b6f4e4c5228b0ea89b91e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e093a9c_4ba54c95",
+        "filename": "core/java/android/view/accessibility/AccessibilityEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1410358
+      },
+      "writtenOn": "2023-03-17T18:38:57Z",
+      "side": 1,
+      "message": "Content change types are typically used when there is a UI change a service should know about.\n\nI\u0027m curious how often this will change on web when the node already has focus (versus be set by the time TalkBack puts focus on it), and what UI is updated. Is there an equivalent event on the web side?",
+      "range": {
+        "startLine": 690,
+        "startChar": 28,
+        "endLine": 690,
+        "endChar": 59
+      },
+      "revId": "44f9b7aa9af0461168b6f4e4c5228b0ea89b91e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
