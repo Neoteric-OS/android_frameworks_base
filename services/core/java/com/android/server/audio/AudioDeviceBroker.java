@@ -297,8 +297,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
                         return;
                     }
                 }
-                postSetCommunicationRouteForClient(new CommunicationClientInfo(
-                        cb, pid, device, BtHelper.SCO_MODE_UNDEFINED, eventSource));
+                setCommunicationRouteForClient(
+                        cb, pid, device, BtHelper.SCO_MODE_UNDEFINED, eventSource);
             }
         }
     }
@@ -328,8 +328,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
                         return false;
                     }
                 }
-                postSetCommunicationRouteForClient(new CommunicationClientInfo(
-                        cb, pid, deviceAttr, BtHelper.SCO_MODE_UNDEFINED, eventSource));
+                setCommunicationRouteForClient(
+                        cb, pid, deviceAttr, BtHelper.SCO_MODE_UNDEFINED, eventSource);
             }
         }
         return true;
@@ -828,9 +828,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
             synchronized (mDeviceStateLock) {
                 AudioDeviceAttributes device =
                         new AudioDeviceAttributes(AudioSystem.DEVICE_OUT_BLUETOOTH_SCO, "");
-
-                postSetCommunicationRouteForClient(new CommunicationClientInfo(
-                        cb, pid, device, scoAudioMode, eventSource));
+                setCommunicationRouteForClient(cb, pid, device, scoAudioMode, eventSource);
             }
         }
     }
@@ -848,8 +846,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
                 if (client == null || !client.requestsBluetoothSco()) {
                     return;
                 }
-                postSetCommunicationRouteForClient(new CommunicationClientInfo(
-                        cb, pid, null, BtHelper.SCO_MODE_UNDEFINED, eventSource));
+                setCommunicationRouteForClient(
+                        cb, pid, null, BtHelper.SCO_MODE_UNDEFINED, eventSource);
             }
         }
     }
