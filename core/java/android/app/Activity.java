@@ -1613,6 +1613,8 @@ public class Activity extends ContextThemeWrapper
         if (service == null) {
             Log.w(TAG, "notifyVoiceInteractionManagerServiceActivityEvent: Can not get "
                     + "VoiceInteractionManagerService");
+            Log.w(TAG, "notifyVoiceInteractionManagerServiceActivityEvent: Can not get "
+                    + "VoiceInteractionManagerService");
             return;
         }
 
