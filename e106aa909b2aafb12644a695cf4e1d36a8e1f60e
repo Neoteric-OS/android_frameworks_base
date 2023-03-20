@@ -67,6 +67,23 @@
       "message": "waiting on review from an owner -- anyone within the media playback group.",
       "revId": "e106aa909b2aafb12644a695cf4e1d36a8e1f60e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0043221_e52faaba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2023-03-20T11:39:49Z",
+      "side": 1,
+      "message": "I\u0027d like to discuss my concerns about r.android.com/2469521 before approving this",
+      "revId": "e106aa909b2aafb12644a695cf4e1d36a8e1f60e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
