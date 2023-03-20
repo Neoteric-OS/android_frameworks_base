@@ -192,6 +192,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f16537c6_40275cbf",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3498,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-20T07:29:16Z",
+      "side": 1,
+      "message": "You still have two separate calls. It\u0027s now fine in terms of call stacks (where and when it\u0027s called) but there are still severe readability problems – namely, this will be called when you call `getKeepaliveDelaySeconds` (you do not expect a getter to do side effects) and also when you call `areLongLivedTcpConnectionsExpensive` without arguments (which is all the more confusing as there is a version that takes an argument) which is a landmine.\n\nYou\u0027re getting close – I would advise just removing completely the `areLongLivedTcpConnectionsExpensive` version without arguments, and calling getKeepaliveDelaySeconds directly in agentConnect instead.",
+      "parentUuid": "b8104d16_8f1d0294",
+      "range": {
+        "startLine": 3498,
+        "startChar": 40,
+        "endLine": 3498,
+        "endChar": 73
+      },
+      "revId": "65ab708b8649cecc0f933063e4126d6ebe22a727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61d4cbd9_5ba30471",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 2
