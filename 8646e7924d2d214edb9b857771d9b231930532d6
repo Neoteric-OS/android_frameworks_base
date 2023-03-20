@@ -22,6 +22,30 @@
       },
       "revId": "8646e7924d2d214edb9b857771d9b231930532d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40d771c3_affb8968",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5088,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-03-20T09:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8513bbe8_3260f135",
+      "range": {
+        "startLine": 5088,
+        "startChar": 0,
+        "endLine": 5088,
+        "endChar": 46
+      },
+      "revId": "8646e7924d2d214edb9b857771d9b231930532d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
