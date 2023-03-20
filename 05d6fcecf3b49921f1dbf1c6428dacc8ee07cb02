@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dcab4b3_edd1e520",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-03-20T21:47:51Z",
+      "side": 1,
+      "message": "thanks, this was a previous patchset and i forgot to update the patch description. done now.",
+      "parentUuid": "ceb4ecf8_e46c9171",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "05d6fcecf3b49921f1dbf1c6428dacc8ee07cb02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94bbfb48_f2a29cf4",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-03-18T04:34:46Z",
       "side": 1,
       "message": "Not sure IIUC here, but we\u0027re adding this to the dropbox, yet not the statsd, would this cause some confusions? Some system might be monitoring the dropbox for crash reports and some other might be checking for statsd, there would be mismatches.. So, maybe we should add a flag into the statsd atom to lable if this is a recoverable crash or not?",
+      "range": {
+        "startLine": 8438,
+        "startChar": 15,
+        "endLine": 8439,
+        "endChar": 55
+      },
+      "revId": "05d6fcecf3b49921f1dbf1c6428dacc8ee07cb02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f35831f1_be3d4b58",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8439,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-03-20T21:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94bbfb48_f2a29cf4",
       "range": {
         "startLine": 8438,
         "startChar": 15,
