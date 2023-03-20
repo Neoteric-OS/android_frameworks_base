@@ -213,12 +213,14 @@ public class CriticalEventLog {
      * @param uid              uid of the crashed process.
      * @param pid              pid of the crashed process.
      */
-    public void logNativeCrash(int processClassEnum, String processName, int uid, int pid) {
+    public void logNativeCrash(
+            int processClassEnum, String processName, int uid, int pid, boolean recoverable) {
         NativeCrash crash = new NativeCrash();
         crash.processClass = processClassEnum;
         crash.process = processName;
         crash.uid = uid;
         crash.pid = pid;
+        crash.recoverable = recoverable;
         CriticalEventProto event = new CriticalEventProto();
         event.setNativeCrash(crash);
         log(event);

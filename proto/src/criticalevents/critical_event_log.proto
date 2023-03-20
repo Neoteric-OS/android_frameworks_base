@@ -139,6 +139,12 @@ message CriticalEventProto {
     // Category of the crashed process (DATA_APP, SYSTEM_APP, etc).
     // Required.
     optional ProcessClass process_class = 4;
+
+    // Whether the crash was recoverable or not. When this flag is set, the app
+    // in question didn't actually crash, but encountered a native memory safety
+    // bug that we were able to recover from.
+    // Required.
+    optional bool recoverable = 5;
   }
 
 

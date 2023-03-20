@@ -276,7 +276,7 @@ public class CriticalEventLogTest {
     public void logNativeCrash() {
         mCriticalEventLog.incTimeSeconds(1);
         mCriticalEventLog.logNativeCrash(ServerProtoEnums.SYSTEM_APP, "AID_RADIO", SYSTEM_APP_UID,
-                1);
+                1, /* recoverable */ false);
         mCriticalEventLog.incTimeSeconds(1);
 
         CriticalEventLogProto logProto = getLogOutput();
@@ -460,7 +460,7 @@ public class CriticalEventLogTest {
         mCriticalEventLog.logJavaCrash("com.foo.MyClass", ServerProtoEnums.DATA_APP, "com.foo",
                 10_001, DATA_APP_UID);
         mCriticalEventLog.logNativeCrash(ServerProtoEnums.DATA_APP, "com.foo", 10_001,
-                DATA_APP_UID);
+                DATA_APP_UID, /* recoverable */ false);
 
         CriticalEventLogProto unredactedLogBefore = getLogOutput(ServerProtoEnums.SYSTEM_SERVER,
                 "AID_SYSTEM", SYSTEM_SERVER_UID);
