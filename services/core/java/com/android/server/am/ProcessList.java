@@ -4643,6 +4643,9 @@ public final class ProcessList {
                     procs.add(proc);
                 } else if (proc.processName.equals(args[start])) {
                     procs.add(proc);
+                } else if ("system_server".equals(args[start]) &&
+                        proc.getProcessClassEnum() == ServerProtoEnums.SYSTEM_SERVER) {
+                    procs.add(proc);
                 }
             }
             if (procs.size() <= 0) {
