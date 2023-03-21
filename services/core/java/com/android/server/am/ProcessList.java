@@ -105,6 +105,7 @@ import android.os.Trace;
 import android.os.UserHandle;
 import android.os.storage.StorageManagerInternal;
 import android.system.Os;
+import android.server.ServerProtoEnums;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -4642,6 +4643,9 @@ public final class ProcessList {
                         && proc.getPkgList().containsKey(args[start])) {
                     procs.add(proc);
                 } else if (proc.processName.equals(args[start])) {
+                    procs.add(proc);
+                } else if ("system_server".equals(args[start]) &&
+                        proc.getProcessClassEnum() == ServerProtoEnums.SYSTEM_SERVER) {
                     procs.add(proc);
                 }
             }
