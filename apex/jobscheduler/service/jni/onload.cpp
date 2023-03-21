@@ -21,6 +21,7 @@
 
 namespace android {
 int register_android_server_alarm_AlarmManagerService(JNIEnv* env);
+extern int register_com_android_internal_expresslog_Utils(JNIEnv* env);
 };
 
 using namespace android;
@@ -37,5 +38,6 @@ extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */)
     ALOG_ASSERT(env, "Could not retrieve the env!");
 
     register_android_server_alarm_AlarmManagerService(env);
+    register_com_android_internal_expresslog_Utils(env);
     return JNI_VERSION_1_4;
 }

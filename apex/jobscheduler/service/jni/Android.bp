@@ -16,6 +16,8 @@ cc_library_shared {
         "-Werror",
         "-Wno-unused-parameter",
         "-Wthread-safety",
+
+        "-DNAMESPACE_FOR_HASH_FUNCTIONS=farmhash",
     ],
 
     srcs: [
@@ -27,5 +29,10 @@ cc_library_shared {
         "libnativehelper",
         "liblog",
         "libbase",
+    ],
+
+    static_libs: [
+        "libexpresslog_jni",
+        "libtextclassifier_hash_static",
     ],
 }
