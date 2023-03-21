@@ -11216,9 +11216,12 @@ public class ActivityManagerService extends IActivityManager.Stub
                                 pw.println("\n** MEMINFO in pid " + pid + " ["
                                         + r.baseName + "] **");
                             }
+                            long nativeMax = Debug.getNativeHeapSize() / 1024;
+                            long nativeAllocated = Debug.getNativeHeapAllocatedSize() / 1024;
+                            long nativeFree = Debug.getNativeHeapFreeSize() / 1024;
                             ActivityThread.dumpMemInfoTable(pw, mi, opts.isCheckinRequest,
                                     opts.dumpFullDetails, opts.dumpDalvik, opts.dumpSummaryOnly,
-                                    pid, r.baseName, 0, 0, 0, 0, 0, 0);
+                                    pid, r.baseName, nativeMax, nativeAllocated, nativeFree, 0, 0, 0);
                             if (opts.isCheckinRequest) {
                                 pw.println();
                             }
