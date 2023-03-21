@@ -105,7 +105,11 @@ import android.os.Trace;
 import android.os.UserHandle;
 import android.os.storage.StorageManagerInternal;
 import android.system.Os;
+<<<<<<< PATCH SET (1a31b3 Correct the type of system_server to Java process when dumpi)
+import android.server.ServerProtoEnums;
+=======
 import android.system.OsConstants;
+>>>>>>> BASE      (7f84ed Merge "Camera: Bump up the extension jpeg processor blob siz)
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -4652,6 +4656,9 @@ public final class ProcessList {
                         && proc.getPkgList().containsKey(args[start])) {
                     procs.add(proc);
                 } else if (proc.processName.equals(args[start])) {
+                    procs.add(proc);
+                } else if ("system_server".equals(args[start]) &&
+                        proc.getProcessClassEnum() == ServerProtoEnums.SYSTEM_SERVER) {
                     procs.add(proc);
                 }
             }
