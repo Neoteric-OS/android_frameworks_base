@@ -44861,6 +44861,8 @@ Lcom/android/internal/widget/ViewClippingUtil;
 Lcom/android/internal/widget/floatingtoolbar/FloatingToolbar$$ExternalSyntheticLambda0;
 Lcom/android/internal/widget/floatingtoolbar/FloatingToolbar;
 Lcom/android/internal/widget/floatingtoolbar/FloatingToolbarPopup;
+Lcom/android/modules/expresslog/Counter;
+Lcom/android/modules/expresslog/Utils;
 Lcom/android/modules/utils/BasicShellCommandHandler;
 Lcom/android/net/module/util/Inet4AddressUtils;
 Lcom/android/net/module/util/InetAddressUtils;

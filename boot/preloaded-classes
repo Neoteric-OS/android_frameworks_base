@@ -12226,6 +12226,8 @@ com.android.internal.widget.VerifyCredentialResponse
 com.android.internal.widget.ViewClippingUtil$ClippingParameters
 com.android.internal.widget.ViewClippingUtil
 com.android.internal.widget.floatingtoolbar.FloatingToolbar
+com.android.modules.expresslog.Counter
+com.android.modules.expresslog.Utils
 com.android.modules.utils.BasicShellCommandHandler
 com.android.net.module.util.Inet4AddressUtils
 com.android.net.module.util.InetAddressUtils
