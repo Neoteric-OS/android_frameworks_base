@@ -103,5 +103,6 @@ public class SystemSettings {
         Settings.System.USE_OLD_MOBILETYPE,
         Settings.System.IMMERSIVE_GESTURES,
         Settings.System.FULLSCREEN_GESTURES,
+	Settings.System.NAVIGATION_BAR_IME_SPACE,
     };
 }

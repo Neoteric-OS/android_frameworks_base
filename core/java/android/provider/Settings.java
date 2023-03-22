@@ -5751,6 +5751,13 @@ public final class Settings {
          */
         public static final String FULLSCREEN_GESTURES = "fullscreen_gestures";
 
+	/**
+         * Gesture navbar IME space.
+         * Default 0.
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_IME_SPACE = "navigation_bar_ime_space";
+
         /**
          * Heads up timeout configuration
          * @hide
