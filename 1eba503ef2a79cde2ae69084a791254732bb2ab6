@@ -16,6 +16,24 @@
       "message": "Do we want to add: \n\nBinder MAY throw RuntimeException OR this class directly on interface version mismatch or an unhandled service exception",
       "revId": "1eba503ef2a79cde2ae69084a791254732bb2ab6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c44fde3d_190c49d9",
+        "filename": "core/java/android/os/RemoteException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-03-22T22:28:07Z",
+      "side": 1,
+      "message": "No, because interface versions don\u0027t really exist in the SDK, and app developers are the target audience of this doc. This may change in the future, but I want to see if we can have a better or cleaner resolution of this difference first.",
+      "parentUuid": "85763f1c_458fa2d5",
+      "revId": "1eba503ef2a79cde2ae69084a791254732bb2ab6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
