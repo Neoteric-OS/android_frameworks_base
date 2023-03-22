@@ -5976,6 +5976,12 @@ public final class Settings {
         public static final String HEADS_UP_NOTIFICATIONS_THRESHOLD = "heads_up_notifications_threshold";
 
         /**
+         * Timeout on ambient display
+         * @hide
+         */
+        public static final String AMBIENT_NOTIF_TIMEOUT = "ambient_notif_timeout";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
