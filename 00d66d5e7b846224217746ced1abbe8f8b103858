@@ -16,6 +16,40 @@
       "message": "+gaillard for critical_event_log.proto",
       "revId": "00d66d5e7b846224217746ced1abbe8f8b103858",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dab75ba_40c21392",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1337780
+      },
+      "writtenOn": "2023-03-22T21:40:19Z",
+      "side": 1,
+      "message": "How often can these recoverable issues happen? Can they happen at a high frequency on a single device?\n\nIt might slow down the device and increase the dropbox crash loss if this happens.",
+      "revId": "00d66d5e7b846224217746ced1abbe8f8b103858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51dae3bd_41d4751d",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8467,
+      "author": {
+        "id": 1337780
+      },
+      "writtenOn": "2023-03-22T21:40:19Z",
+      "side": 1,
+      "message": "We should probably not log it to the CriticalEventLog if that\u0027s not a fatal crash",
+      "revId": "00d66d5e7b846224217746ced1abbe8f8b103858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
