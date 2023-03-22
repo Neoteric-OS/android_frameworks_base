@@ -10,6 +10,7 @@
 static JavaVM* javaVM;
 
 extern int register_libcore_util_NativeAllocationRegistry(JNIEnv* env);
+extern int register_android_media_ImageReader(JNIEnv* env);
 
 namespace android {
 
@@ -35,6 +36,7 @@ static const RegJNIRec graphicsJNI[] = {
         REG_JNI(register_android_view_Surface),
         REG_JNI(register_com_android_internal_util_VirtualRefBasePtr),
         REG_JNI(register_libcore_util_NativeAllocationRegistry),
+        REG_JNI(register_android_media_ImageReader),
 };
 
 JNIEnv* AndroidRuntime::getJNIEnv() {

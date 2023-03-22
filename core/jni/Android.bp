@@ -411,6 +411,7 @@ cc_library_shared {
         },
         host: {
             srcs: [
+            ":libmedia_host_common",
                 "android_animation_PropertyValuesHolder.cpp",
                 "libcore_util_NativeAllocationRegistry.cpp",
                 "android_database_CursorWindow.cpp",
@@ -454,6 +455,10 @@ cc_library_shared {
             include_dirs: [
                 "frameworks/native/libs/nativebase/include",
                 "frameworks/native/libs/nativewindow/include",
+            ],
+            cflags: [
+                "-D__INTRODUCED_IN(n)=",
+                //"-D__ANDROID_API__=10000",
             ],
             stl: "libc++_static",
         },
