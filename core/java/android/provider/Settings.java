@@ -5875,6 +5875,13 @@ public final class Settings {
         public static final String FULLSCREEN_GESTURES = "fullscreen_gestures";
 
 	/**
+         * Gesture navbar IME space.
+         * Default 0.
+         * @hide
+         */
+        public static final String NAVIGATION_BAR_IME_SPACE = "navigation_bar_ime_space";
+
+	/**
          * Whether allowing pocket service to register sensors and dispatch informations.
          *   0 = disabled
          *   1 = enabled

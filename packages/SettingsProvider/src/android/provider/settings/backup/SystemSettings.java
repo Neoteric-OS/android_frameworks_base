@@ -119,5 +119,6 @@ public class SystemSettings {
         Settings.System.IMMERSIVE_GESTURES,
         Settings.System.FULLSCREEN_GESTURES,
         Settings.System.KEYGUARD_QUICK_TOGGLES,
+	Settings.System.NAVIGATION_BAR_IME_SPACE,
     };
 }
