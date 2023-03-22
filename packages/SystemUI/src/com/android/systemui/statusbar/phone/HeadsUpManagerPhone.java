@@ -105,6 +105,7 @@ public class HeadsUpManagerPhone extends BaseHeadsUpManager implements
     private int mStatusBarState;
     private AnimationStateHandler mAnimationStateHandler;
     private int mHeadsUpInset;
+    private boolean mDozing;
 
     // Used for determining the region for touch interaction
     private final Region mTouchableRegion = new Region();
@@ -636,7 +637,15 @@ public class HeadsUpManagerPhone extends BaseHeadsUpManager implements
 
         @Override
         protected long calculateFinishTime() {
-            return super.calculateFinishTime() + (extended ? mExtensionTime : 0);
+            return mPostTime + getDecayDuration() + (extended ? mExtensionTime : 0);
+        }
+
+        private int getDecayDuration() {
+            if (mDozing) {
+                return super.getRecommendedHeadsUpTimeoutMs(mPulseDurationTime);
+            } else {
+                return super.getRecommendedHeadsUpTimeoutMs(mAutoDismissTime);
+            }
         }
 
         @Override
@@ -673,6 +682,7 @@ public class HeadsUpManagerPhone extends BaseHeadsUpManager implements
 
         @Override
         public void onDozingChanged(boolean isDozing) {
+	    mDozing = isDozing;
             if (!isDozing) {
                 // Let's make sure all huns we got while dozing time out within the normal timeout
                 // duration. Otherwise they could get stuck for a very long time

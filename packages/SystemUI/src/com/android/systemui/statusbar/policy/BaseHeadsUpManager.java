@@ -81,6 +81,7 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
     protected final HeadsUpManagerLogger mLogger;
     protected int mMinimumDisplayTime;
     protected int mStickyForSomeTimeAutoDismissTime;
+    protected int mPulseDurationTime;
     protected int mAutoDismissTime;
     protected DelayableExecutor mExecutor;
 
@@ -121,6 +122,7 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
                 ? 500 : resources.getInteger(R.integer.heads_up_notification_minimum_time);
         mStickyForSomeTimeAutoDismissTime = resources.getInteger(
                 R.integer.sticky_heads_up_notification_time);
+        mPulseDurationTime = resources.getInteger(R.integer.heads_up_notification_decay);
         mAutoDismissTime = Settings.System.getInt(
                 context.getContentResolver(),
                 Settings.System.HEADS_UP_TIMEOUT,
