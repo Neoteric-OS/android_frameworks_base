@@ -5797,6 +5797,12 @@ public final class Settings {
         public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
 
         /**
+         * Timeout on ambient display
+         * @hide
+         */
+        public static final String AMBIENT_NOTIF_TIMEOUT = "ambient_notif_timeout";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
