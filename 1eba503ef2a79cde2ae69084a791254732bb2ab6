@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85763f1c_458fa2d5",
+        "filename": "core/java/android/os/RemoteException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1494236
+      },
+      "writtenOn": "2023-03-22T22:21:46Z",
+      "side": 1,
+      "message": "Do we want to add: \n\nBinder MAY throw RuntimeException OR this class directly on interface version mismatch or an unhandled service exception",
+      "revId": "1eba503ef2a79cde2ae69084a791254732bb2ab6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
