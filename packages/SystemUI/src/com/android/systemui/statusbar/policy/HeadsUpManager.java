@@ -64,6 +64,7 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
     private final AccessibilityManagerWrapper mAccessibilityMgr;
 
     private final UiEventLogger mUiEventLogger;
+    protected int mPulseDurationDecay;
 
     /**
      * Enum entry for notification peek logged from this class.
@@ -92,6 +93,7 @@ public abstract class HeadsUpManager extends AlertingNotificationManager {
         mUiEventLogger = uiEventLogger;
         Resources resources = context.getResources();
         mMinimumDisplayTime = resources.getInteger(R.integer.heads_up_notification_minimum_time);
+        mPulseDurationDecay = resources.getInteger(R.integer.heads_up_notification_decay);
         mAutoDismissNotificationDecay = Settings.System.getInt(
                 context.getContentResolver(),
                 Settings.System.HEADS_UP_TIMEOUT,

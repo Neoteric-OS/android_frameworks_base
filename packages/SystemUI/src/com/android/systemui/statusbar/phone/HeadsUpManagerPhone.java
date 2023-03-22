@@ -78,6 +78,7 @@ public class HeadsUpManagerPhone extends HeadsUpManager implements Dumpable,
     private int mStatusBarState;
     private AnimationStateHandler mAnimationStateHandler;
     private int mHeadsUpInset;
+    private boolean mDozing;
 
     // Used for determining the region for touch interaction
     private final Region mTouchableRegion = new Region();
@@ -404,6 +405,38 @@ public class HeadsUpManagerPhone extends HeadsUpManager implements Dumpable,
 
         return headsUpEntry == null || headsUpEntry != topEntry || super.canRemoveImmediately(key);
     }
+    
+    private final StateListener mStatusBarStateListener = new StateListener() {
+        @Override
+        public void onStateChanged(int newState) {
+            boolean wasKeyguard = mStatusBarState == StatusBarState.KEYGUARD;
+            boolean isKeyguard = newState == StatusBarState.KEYGUARD;
+            mStatusBarState = newState;
+            if (wasKeyguard && !isKeyguard && mBypassController.getBypassEnabled()) {
+                ArrayList<String> keysToRemove = new ArrayList<>();
+                for (AlertEntry entry : mAlertEntries.values()) {
+                    if (entry.mEntry != null && entry.mEntry.isBubble() && !entry.isSticky()) {
+                        keysToRemove.add(entry.mEntry.getKey());
+                    }
+                }
+                for (String key : keysToRemove) {
+                    removeAlertEntry(key);
+                }
+            }
+        }
+
+        @Override
+        public void onDozingChanged(boolean isDozing) {
+            mDozing = isDozing;
+            if (!isDozing) {
+                // Let's make sure all huns we got while dozing time out within the normal timeout
+                // duration. Otherwise they could get stuck for a very long time
+                for (AlertEntry entry : mAlertEntries.values()) {
+                    entry.updateEntry(true /* updatePostTime */);
+                }
+            }
+        }
+    };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //  HeadsUpEntryPhone:
@@ -497,7 +530,15 @@ public class HeadsUpManagerPhone extends HeadsUpManager implements Dumpable,
 
         @Override
         protected long calculateFinishTime() {
-            return super.calculateFinishTime() + (extended ? mExtensionTime : 0);
+            return mPostTime + getDecayDuration() + (extended ? mExtensionTime : 0);
+        }
+        
+        private int getDecayDuration() {
+            if (mDozing) {
+                return super.getRecommendedHeadsUpTimeoutMs(mPulseDurationDecay);
+            } else {
+                return super.getRecommendedHeadsUpTimeoutMs(mAutoDismissNotificationDecay);
+            }
         }
     }
 
@@ -515,35 +556,4 @@ public class HeadsUpManagerPhone extends HeadsUpManager implements Dumpable,
          */
         void onHeadsUpGoingAwayStateChanged(boolean headsUpGoingAway);
     }
-
-    private final StateListener mStatusBarStateListener = new StateListener() {
-        @Override
-        public void onStateChanged(int newState) {
-            boolean wasKeyguard = mStatusBarState == StatusBarState.KEYGUARD;
-            boolean isKeyguard = newState == StatusBarState.KEYGUARD;
-            mStatusBarState = newState;
-            if (wasKeyguard && !isKeyguard && mBypassController.getBypassEnabled()) {
-                ArrayList<String> keysToRemove = new ArrayList<>();
-                for (AlertEntry entry : mAlertEntries.values()) {
-                    if (entry.mEntry != null && entry.mEntry.isBubble() && !entry.isSticky()) {
-                        keysToRemove.add(entry.mEntry.getKey());
-                    }
-                }
-                for (String key : keysToRemove) {
-                    removeAlertEntry(key);
-                }
-            }
-        }
-
-        @Override
-        public void onDozingChanged(boolean isDozing) {
-            if (!isDozing) {
-                // Let's make sure all huns we got while dozing time out within the normal timeout
-                // duration. Otherwise they could get stuck for a very long time
-                for (AlertEntry entry : mAlertEntries.values()) {
-                    entry.updateEntry(true /* updatePostTime */);
-                }
-            }
-        }
-    };
 }
