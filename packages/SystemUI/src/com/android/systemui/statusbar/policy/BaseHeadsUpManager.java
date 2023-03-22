@@ -122,7 +122,10 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
                 ? 500 : resources.getInteger(R.integer.heads_up_notification_minimum_time);
         mStickyForSomeTimeAutoDismissTime = resources.getInteger(
                 R.integer.sticky_heads_up_notification_time);
-        mPulseDurationTime = resources.getInteger(R.integer.heads_up_notification_decay);
+        mPulseDurationTime = Settings.System.getInt(
+                context.getContentResolver(),
+                Settings.System.AMBIENT_NOTIF_TIMEOUT,
+                resources.getInteger(R.integer.heads_up_notification_decay));
         mAutoDismissTime = Settings.System.getInt(
                 context.getContentResolver(),
                 Settings.System.HEADS_UP_TIMEOUT,
@@ -142,6 +145,12 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
                             context.getContentResolver(),
                             Settings.System.HEADS_UP_TIMEOUT,
                             context.getResources().getInteger(R.integer.heads_up_notification_decay));
+		} else if (uri.equals(Settings.System.getUriFor(
+                        Settings.System.AMBIENT_NOTIF_TIMEOUT))) {
+                        mPulseDurationTime = Settings.System.getInt(
+                            context.getContentResolver(),
+                            Settings.System.AMBIENT_NOTIF_TIMEOUT,
+                            context.getResources().getInteger(R.integer.heads_up_notification_decay));
                 } else {
                     mSnoozedPackages.clear();
                     mSnoozeLengthMs = Settings.System.getInt(
@@ -153,6 +162,9 @@ public abstract class BaseHeadsUpManager implements HeadsUpManager {
         };
 	context.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.HEADS_UP_TIMEOUT), false,
+                settingsObserver, UserHandle.USER_ALL);
+	context.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.AMBIENT_NOTIF_TIMEOUT), false,
                 settingsObserver, UserHandle.USER_ALL);
 	context.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.HEADS_UP_NOTIFICATION_SNOOZE), false,
