@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9dc59998_b20aaf7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-03-23T09:49:32Z",
+      "side": 1,
+      "message": "Each app has a 1/128 chance of having recoverable gwp-asan enabled -\u003e 1/2500 chance of malloc() being serviced by gwp-asan -\u003e ??% chance that the malloc is used for a heap-use-after-free or heap-buffer-overflow.\n\nI reckon the order of magnitude is \u003c\u003d ~1 crash/day for real users. Maybe some really awful apps could inflate that to ~a few/day.",
+      "parentUuid": "5dab75ba_40c21392",
+      "revId": "00d66d5e7b846224217746ced1abbe8f8b103858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51dae3bd_41d4751d",
@@ -48,6 +66,24 @@
       "writtenOn": "2023-03-22T21:40:19Z",
       "side": 1,
       "message": "We should probably not log it to the CriticalEventLog if that\u0027s not a fatal crash",
+      "revId": "00d66d5e7b846224217746ced1abbe8f8b103858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7c1d75e_53b28ffa",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8467,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-03-23T09:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51dae3bd_41d4751d",
       "revId": "00d66d5e7b846224217746ced1abbe8f8b103858",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
