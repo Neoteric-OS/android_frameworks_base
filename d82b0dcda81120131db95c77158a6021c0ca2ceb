@@ -16,6 +16,24 @@
       "message": "I am not sure how this code works: https://source.corp.google.com/search?q\u003dsetForceCrashReport%20p:%5Eandroid$\u0026sq\u003d\n\nIf it is set to true, there are not other logic that sets it back to false. It probably works for crashes because the process is killed and a new error stats record is created.\n\nIt is only used here: https://source.corp.google.com/android/frameworks/base/services/core/java/com/android/server/am/AppErrors.java;l\u003d824?q\u003disForceCrashReport%20p:%5Eandroid$\n\nYou might not need to set it to true at all.",
       "revId": "d82b0dcda81120131db95c77158a6021c0ca2ceb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26fce03c_ae469ce9",
+        "filename": "services/core/java/com/android/server/am/NativeCrashListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-03-23T13:58:37Z",
+      "side": 1,
+      "message": "done, may as well avoid the lock as well",
+      "parentUuid": "79dd3aa5_95fc1496",
+      "revId": "d82b0dcda81120131db95c77158a6021c0ca2ceb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
