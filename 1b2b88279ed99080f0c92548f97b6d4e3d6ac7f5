@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcda10eb_965df299",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8415,
+      "author": {
+        "id": 1337780
+      },
+      "writtenOn": "2023-03-23T11:48:30Z",
+      "side": 1,
+      "message": "nit: extract a boolean to do this check as you are doing it multiple time",
+      "revId": "1b2b88279ed99080f0c92548f97b6d4e3d6ac7f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ddbb81b_6f0625fd",
+        "filename": "services/core/java/com/android/server/am/NativeCrashListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1337780
+      },
+      "writtenOn": "2023-03-23T11:48:30Z",
+      "side": 1,
+      "message": "I guess we should not set that to true for recoverable crash since the process is not crashing",
+      "range": {
+        "startLine": 284,
+        "startChar": 26,
+        "endLine": 284,
+        "endChar": 29
+      },
+      "revId": "1b2b88279ed99080f0c92548f97b6d4e3d6ac7f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
