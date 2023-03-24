@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d4a039c_4277d1ce",
+        "filename": "media/java/android/media/MediaRecorder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1883619
+      },
+      "writtenOn": "2023-03-24T18:17:31Z",
+      "side": 1,
+      "message": "With this there should be change in \ncore/api/current.txt",
+      "revId": "07e122a7acd4bca7855b745c72a311ad48ca1035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ac8376a_40913542",
         "filename": "media/java/android/media/MediaRecorder.java",
         "patchSetId": 4
