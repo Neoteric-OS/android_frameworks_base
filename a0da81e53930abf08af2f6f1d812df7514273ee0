@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f2e9044_bfe42d56",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-03-24T23:05:41Z",
+      "side": 1,
+      "message": "I see!",
+      "parentUuid": "60e28a0e_a86b1641",
+      "range": {
+        "startLine": 1304,
+        "startChar": 8,
+        "endLine": 1304,
+        "endChar": 47
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c907ea4c_24003a55",
@@ -142,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da097ed2_9a34cc3f",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-03-24T23:05:41Z",
+      "side": 1,
+      "message": "Ah I saw it now",
+      "parentUuid": "11beac28_ad4f7574",
+      "range": {
+        "startLine": 1319,
+        "startChar": 8,
+        "endLine": 1319,
+        "endChar": 49
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "718e029e_ad7eec67",
@@ -179,6 +227,30 @@
       "side": 1,
       "message": "I think non-vcn-network means \"not-vcn-managed network\"\n\nSee the different subscription IDs.",
       "parentUuid": "718e029e_ad7eec67",
+      "range": {
+        "startLine": 1345,
+        "startChar": 8,
+        "endLine": 1345,
+        "endChar": 93
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c61aed3d_6997a408",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-03-24T23:05:41Z",
+      "side": 1,
+      "message": "I see. Thanks for the context",
+      "parentUuid": "84e7ed4d_45e9b064",
       "range": {
         "startLine": 1345,
         "startChar": 8,
