@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "76f5a57d_8d04f589",
+        "filename": "media/java/android/media/MediaRecorder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2023-03-24T18:46:00Z",
+      "side": 1,
+      "message": "Yes, API change is expected and that is the reason why these aren\u0027t planned to be merged at this point.",
+      "parentUuid": "2d4a039c_4277d1ce",
+      "revId": "07e122a7acd4bca7855b745c72a311ad48ca1035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ac8376a_40913542",
         "filename": "media/java/android/media/MediaRecorder.java",
         "patchSetId": 4
