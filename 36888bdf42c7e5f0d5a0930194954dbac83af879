@@ -16,6 +16,24 @@
       "message": "nit: Suggest also add TRANSPORT_CELLULAR and NET_CAPABILITY_INTERNET to make them more similar.",
       "revId": "36888bdf42c7e5f0d5a0930194954dbac83af879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6c26b33_d1bfad8d",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1381,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-03-24T23:22:15Z",
+      "side": 1,
+      "message": "They\u0027re already there :) I built it off of nc1, so it is jsut incremental on top of nc1",
+      "parentUuid": "23b49571_5a41f341",
+      "revId": "36888bdf42c7e5f0d5a0930194954dbac83af879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
