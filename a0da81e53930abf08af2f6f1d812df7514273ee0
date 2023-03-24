@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2a5f9d0_c56f9695",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-03-24T22:52:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a04277c_d1ffffcd",
+      "range": {
+        "startLine": 1424,
+        "startChar": 22,
+        "endLine": 1424,
+        "endChar": 74
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3b151b1_8083abe2",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-03-24T22:34:47Z",
       "side": 1,
       "message": "Presubmit fails here. I think it is because there is no VCN instance, then getUnderlyingNetworkPolicy will just return the input NetworkCapabilities as it.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 8,
+        "endLine": 1304,
+        "endChar": 47
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60e28a0e_a86b1641",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-03-24T22:52:51Z",
+      "side": 1,
+      "message": "Ahh, that is a logical bug; we can\u0027t just early-out in the no-VCN-instance case, since that would result in us never unrestricting/un-managing all networks when a VCN disappears.\n\nI\u0027ve removed that logic, i think it still fixes the issue.",
+      "parentUuid": "f3b151b1_8083abe2",
       "range": {
         "startLine": 1304,
         "startChar": 8,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "11beac28_ad4f7574",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-03-24T22:52:51Z",
+      "side": 1,
+      "message": "Ahh, because this test starts the VCN.",
+      "parentUuid": "c907ea4c_24003a55",
+      "range": {
+        "startLine": 1319,
+        "startChar": 8,
+        "endLine": 1319,
+        "endChar": 49
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "718e029e_ad7eec67",
         "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
         "patchSetId": 1
@@ -83,6 +155,30 @@
       "writtenOn": "2023-03-24T22:34:47Z",
       "side": 1,
       "message": "My understanding is that we should not set up a VCN here because the test method name indicates there is no VCN network.",
+      "range": {
+        "startLine": 1345,
+        "startChar": 8,
+        "endLine": 1345,
+        "endChar": 93
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84e7ed4d_45e9b064",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-03-24T22:52:51Z",
+      "side": 1,
+      "message": "I think non-vcn-network means \"not-vcn-managed network\"\n\nSee the different subscription IDs.",
+      "parentUuid": "718e029e_ad7eec67",
       "range": {
         "startLine": 1345,
         "startChar": 8,
