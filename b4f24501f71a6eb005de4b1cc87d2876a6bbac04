@@ -16,6 +16,23 @@
       "message": "I\u0027ve verified this works with upload hooks for both C++ and Java. go/cstyle#Function_Declarations_and_Definitions doesn\u0027t give any guidance either way on this detail, except that it shows a green example of an empty function on a single line.",
       "revId": "b4f24501f71a6eb005de4b1cc87d2876a6bbac04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "157567af_674c1f24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2023-03-24T22:57:17Z",
+      "side": 1,
+      "message": "+svv who created the .clang-format file with the old setting.",
+      "revId": "b4f24501f71a6eb005de4b1cc87d2876a6bbac04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
