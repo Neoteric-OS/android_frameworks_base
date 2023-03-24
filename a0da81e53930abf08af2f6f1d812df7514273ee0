@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a04277c_d1ffffcd",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-03-24T22:34:47Z",
+      "side": 1,
+      "message": "Can we do the \"NET_CAPABILITY_NOT_RESTRICTED\" check here and return?",
+      "range": {
+        "startLine": 1424,
+        "startChar": 22,
+        "endLine": 1424,
+        "endChar": 74
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b151b1_8083abe2",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-03-24T22:34:47Z",
+      "side": 1,
+      "message": "Presubmit fails here. I think it is because there is no VCN instance, then getUnderlyingNetworkPolicy will just return the input NetworkCapabilities as it.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 8,
+        "endLine": 1304,
+        "endChar": 47
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c907ea4c_24003a55",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-03-24T22:34:47Z",
+      "side": 1,
+      "message": "Similar to the previous test. I thought it would fail too but it passed in presubmit.",
+      "range": {
+        "startLine": 1319,
+        "startChar": 8,
+        "endLine": 1319,
+        "endChar": 49
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "718e029e_ad7eec67",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-03-24T22:34:47Z",
+      "side": 1,
+      "message": "My understanding is that we should not set up a VCN here because the test method name indicates there is no VCN network.",
+      "range": {
+        "startLine": 1345,
+        "startChar": 8,
+        "endLine": 1345,
+        "endChar": 93
+      },
+      "revId": "a0da81e53930abf08af2f6f1d812df7514273ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
