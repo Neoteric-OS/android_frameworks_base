@@ -16,6 +16,24 @@
       "message": "Hi @wilczynskip@google.com,\nThe Presubmit-Verified is failed, Could you please check if is there something wrong and trigger PV again?  Thank you very much.",
       "revId": "c1d06d2df23fa32c44502faba602b0d916c868ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e32e6ea_62cd1bd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2023-03-24T12:23:23Z",
+      "side": 1,
+      "message": "Hi, we\u0027ll have to merge the CL into our internal branch first and then we\u0027ll be able to merge this one.",
+      "parentUuid": "d558e063_197feab5",
+      "revId": "c1d06d2df23fa32c44502faba602b0d916c868ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
