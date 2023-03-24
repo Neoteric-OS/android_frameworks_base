@@ -11362,12 +11362,6 @@ public final class Settings {
         public static final String BERRY_BLACK_THEME = "berry_black_theme";
 
         /**
-         * Pulse navbar music visualizer
-         * @hide
-         */
-        public static final String NAVBAR_PULSE_ENABLED = "navbar_pulse_enabled";
-
-        /**
          * Pulse ambient music visualizer
          * @hide
          */
