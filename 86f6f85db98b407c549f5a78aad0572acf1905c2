@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3eb4d02_ccce8ca6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-24T10:59:09Z",
+      "side": 1,
+      "message": "You\u0027ll need to log a way to identify the runner too (the session for example). If we have multiple runners we won\u0027t know.\n\nOr you could only log the session if there are multiple runners since this is pretty rare",
+      "range": {
+        "startLine": 3105,
+        "startChar": 12,
+        "endLine": 3105,
+        "endChar": 22
+      },
+      "revId": "86f6f85db98b407c549f5a78aad0572acf1905c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca082f97_6e939104",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-03-24T10:59:09Z",
+      "side": 1,
+      "message": "How about we add some info from the argument. I think we\u0027d benefit from logging the ike connection info contents.\n\nLikewise for other events, where reasonable (in some cases you may want to log just the pointer if the contents are big or something)",
+      "range": {
+        "startLine": 3127,
+        "startChar": 71,
+        "endLine": 3127,
+        "endChar": 72
+      },
+      "revId": "86f6f85db98b407c549f5a78aad0572acf1905c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
