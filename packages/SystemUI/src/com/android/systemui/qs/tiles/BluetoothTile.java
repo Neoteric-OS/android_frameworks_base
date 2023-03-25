@@ -56,7 +56,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 /** Quick settings tile: Bluetooth **/
-public class BluetoothTile extends SecureQSTile<BooleanState> {
+public class BluetoothTile extends SecureLongQSTile<BooleanState> {
     private static final Intent BLUETOOTH_SETTINGS = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
 
     private final Handler mHandler;
@@ -106,7 +106,10 @@ public class BluetoothTile extends SecureQSTile<BooleanState> {
     }
 
     @Override
-    protected void handleLongClick(@Nullable View view) {
+    protected void handleLongClick(@Nullable View view, boolean keyguardShowing) {
+        if (checkLongKeyguard(view, keyguardShowing)) {
+            return;
+        }
         mHandler.post(() -> mBluetoothDialogFactory.create(true, view));
     }
 
