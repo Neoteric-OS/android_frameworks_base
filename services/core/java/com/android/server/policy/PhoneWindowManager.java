@@ -2143,8 +2143,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mSwipeToScreenshot = new SwipeToScreenshotListener(context, new SwipeToScreenshotListener.Callbacks() {
             @Override
             public void onSwipeThreeFinger() {
-                interceptScreenshotChord(
-                        SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
+                int swipeType = Settings.System.getIntForUser(mContext.getContentResolver(),
+                                    Settings.System.SWIPE_TYPE, 0, UserHandle.USER_CURRENT);
+                switch (swipeType) {
+                    case 0:
+                        interceptScreenshotChord(
+                                TAKE_SCREENSHOT_FULLSCREEN, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
+                        break;
+                    case 1:
+                        interceptScreenshotChord(
+                                TAKE_SCREENSHOT_SELECTED_REGION, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
+                        break;
+                }
             }
         });
         mWakeGestureListener = new MyWakeGestureListener(mContext, mHandler);
