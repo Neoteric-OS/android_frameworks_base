@@ -143,6 +143,8 @@ class DefaultClock(
         override fun onFontSettingChanged() {
             val customTextSize = Secure.getIntForUser(ctx.getContentResolver(),
                 Secure.KG_BIG_CLOCK_TEXT_SIZE, 180, UserHandle.USER_CURRENT)
+            val isCustomSize = Secure.getIntForUser(ctx.getContentResolver(),
+                    Secure.IS_KG_BIG_CLOCK_TEXT_SIZE, 0, UserHandle.USER_CURRENT) != 0
             smallClock.setTypeface(
                 Typeface.create(
                 resources.getString(com.android.internal.R.string.config_clockFontFamily), Typeface.NORMAL)
@@ -157,7 +159,8 @@ class DefaultClock(
             )
             largeClock.setTextSize(
                 TypedValue.COMPLEX_UNIT_PX,
-                resources.getDimensionPixelSize(R.dimen.clock_text_size_base).toFloat() * customTextSize
+                if (isCustomSize) resources.getDimensionPixelSize(R.dimen.clock_text_size_base).toFloat() * customTextSize 
+                else resources.getDimensionPixelSize(R.dimen.large_clock_text_size).toFloat()
             )
             currFont = resources.getString(com.android.internal.R.string.config_clockFontFamily)
             if (currFont.toString().toLowerCase().contains("sans") && !currFont.toString().toLowerCase().contains("google")) {
@@ -292,8 +295,14 @@ class DefaultClock(
     private fun recomputePadding() {
         val customTopMargin = Secure.getIntForUser(ctx.getContentResolver(),
                 Secure.KG_CUSTOM_CLOCK_TOP_MARGIN, 120, UserHandle.USER_CURRENT)
+        val isCustomMargin = Secure.getIntForUser(ctx.getContentResolver(),
+                Secure.IS_KG_CUSTOM_CLOCK_TOP_MARGIN, 0, UserHandle.USER_CURRENT) != 0
         val lp = largeClock.getLayoutParams() as FrameLayout.LayoutParams
+        if (isCustomMargin) {
         lp.topMargin = (-1f * customTopMargin).toInt()
+        } else {
+        lp.topMargin = (-0.5f * largeClock.bottom).toInt()
+        }
         largeClock.setLayoutParams(lp)
     }
 

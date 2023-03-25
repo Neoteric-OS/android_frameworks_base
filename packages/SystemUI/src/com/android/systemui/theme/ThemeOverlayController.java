@@ -474,6 +474,18 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
                 UserHandle.USER_ALL);
 
         mSecureSettings.registerContentObserverForUser(
+                Settings.Secure.getUriFor(Settings.Secure.IS_KG_CUSTOM_CLOCK_TOP_MARGIN),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
+
+        mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.KG_CUSTOM_CLOCK_TOP_MARGIN),
                 false,
                 new ContentObserver(mBgHandler) {
@@ -487,6 +499,18 @@ public class ThemeOverlayController extends CoreStartable implements Dumpable {
 
         mSecureSettings.registerContentObserverForUser(
                 Settings.Secure.getUriFor(Settings.Secure.KG_BIG_CLOCK_TEXT_SIZE),
+                false,
+                new ContentObserver(mBgHandler) {
+                    @Override
+                    public void onChange(boolean selfChange, Collection<Uri> collection, int flags,
+                            int userId) {
+                        reevaluateSystemTheme(true /* forceReload */);
+                    }
+                },
+                UserHandle.USER_ALL);
+
+        mSecureSettings.registerContentObserverForUser(
+                Settings.Secure.getUriFor(Settings.Secure.IS_KG_BIG_CLOCK_TEXT_SIZE),
                 false,
                 new ContentObserver(mBgHandler) {
                     @Override
