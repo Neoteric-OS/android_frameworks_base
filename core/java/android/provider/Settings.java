@@ -6000,6 +6000,12 @@ public final class Settings {
         public static final String ALERT_SLIDER_PULSE = "alert_slider_pulse";
 
         /**
+         * Whether to take a full or partial screenshot with 3 finger swipe
+         * @hide
+         */
+        public static final String SWIPE_TYPE = "swipe_type";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
