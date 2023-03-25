@@ -57,7 +57,7 @@ import javax.inject.Inject;
 import com.android.systemui.qs.tiles.SecureQSTile;
 
 /** Quick settings tile: Bluetooth **/
-public class BluetoothTile extends SecureQSTile<BooleanState> {
+public class BluetoothTile extends SecureLongQSTile<BooleanState> {
 
     public static final String TILE_SPEC = "bt";
 
@@ -101,7 +101,14 @@ public class BluetoothTile extends SecureQSTile<BooleanState> {
         if (checkKeyguard(view, keyguardShowing)) {
             return;
         }
-        mHandler.post(() -> mBluetoothDialogFactory.create(true, view));
+	mHandler.post(() -> mBluetoothDialogFactory.create(true, view));
+    }
+
+    @Override
+    protected void handleLongClick(@Nullable View view, boolean keyguardShowing) {
+        if (checkLongKeyguard(view, keyguardShowing)) {
+            return;
+        }
     }
 
     @Override
