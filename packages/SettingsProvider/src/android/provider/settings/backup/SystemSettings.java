@@ -122,7 +122,8 @@ public class SystemSettings {
 		Settings.System.VOLBTN_MUSIC_CONTROLS,
 		Settings.System.TORCH_POWER_BUTTON_GESTURE,
 		Settings.System.ADVANCED_REBOOT,
-		Settings.System.CLICK_PARTIAL_SCREENSHOT
+		Settings.System.CLICK_PARTIAL_SCREENSHOT,
+		Settings.System.SWIPE_TYPE
         ));
         if (Flags.backUpSmoothDisplayAndForcePeakRefreshRate()) {
             settings.add(Settings.System.PEAK_REFRESH_RATE);
