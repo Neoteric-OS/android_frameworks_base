@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
@@ -35,6 +36,7 @@ import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 
+import com.android.internal.jank.InteractionJankMonitor;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settingslib.graph.SignalDrawable;
@@ -53,6 +55,7 @@ import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.qs.tiles.dialog.InternetDialogFactory;
+import com.android.systemui.animation.ActivityLaunchAnimator;
 import com.android.systemui.statusbar.connectivity.AccessPointController;
 import com.android.systemui.statusbar.connectivity.IconState;
 import com.android.systemui.statusbar.connectivity.MobileDataIndicators;
@@ -62,12 +65,13 @@ import com.android.systemui.statusbar.connectivity.WifiIcons;
 import com.android.systemui.statusbar.connectivity.WifiIndicators;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 
+
 import java.io.PrintWriter;
 
 import javax.inject.Inject;
 
 /** Quick settings tile: Internet **/
-public class InternetTile extends SecureQSTile<SignalState> {
+public class InternetTile extends SecureLongQSTile<SignalState> {
     private static final Intent WIFI_SETTINGS = new Intent(Settings.ACTION_WIFI_SETTINGS);
 
     protected final NetworkController mController;
@@ -79,6 +83,8 @@ public class InternetTile extends SecureQSTile<SignalState> {
     protected final InternetSignalCallback mSignalCallback = new InternetSignalCallback();
     private final InternetDialogFactory mInternetDialogFactory;
     final Handler mHandler;
+    private WifiManager mWifiManager;
+    protected final ActivityStarter mActivityStarter;
 
     @Inject
     public InternetTile(
@@ -103,6 +109,8 @@ public class InternetTile extends SecureQSTile<SignalState> {
         mAccessPointController = accessPointController;
         mDataController = mController.getMobileDataController();
         mController.observe(getLifecycle(), mSignalCallback);
+        mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        mActivityStarter = activityStarter;
     }
 
     @Override
@@ -119,7 +127,43 @@ public class InternetTile extends SecureQSTile<SignalState> {
 
     @Override
     public Intent getLongClickIntent() {
-        return WIFI_SETTINGS;
+        return null;
+    }
+
+    @Override
+    protected void handleLongClick(@Nullable View view, boolean keyguardShowing) {
+        if (checkLongKeyguard(view, keyguardShowing)) {
+            return;
+        }
+         int longClickBehavior = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.QS_LONG_CLICK_BEHAVIOR, 0, UserHandle.USER_CURRENT);
+        switch (longClickBehavior) {
+            case 0:
+                ActivityLaunchAnimator.Controller animationController =
+                        view != null ? ActivityLaunchAnimator.Controller.fromView(view,
+                                InteractionJankMonitor.CUJ_SHADE_APP_LAUNCH_FROM_QS_TILE) : null;
+                mActivityStarter.postStartActivityDismissingKeyguard(WIFI_SETTINGS, 0,
+                        animationController);
+                break;
+            case 1:
+                mHandler.post(() -> mInternetDialogFactory.create(true,
+                    mAccessPointController.canConfigMobileData(),
+                    mAccessPointController.canConfigWifi(), view));
+                break;
+            case 2:
+                if (isWifiEnabled() && mDataController.isMobileDataEnabled()) {
+                    mDataController.setMobileDataEnabled(false);
+                    mController.setWifiEnabled(false);
+                } else if (!isWifiEnabled() && !mDataController.isMobileDataEnabled()) {
+                    mDataController.setMobileDataEnabled(true);
+                    mController.setWifiEnabled(true);
+                } else if (isWifiEnabled() && !mDataController.isMobileDataEnabled()) {
+                    mDataController.setMobileDataEnabled(true);
+                } else if (!isWifiEnabled() && mDataController.isMobileDataEnabled()) {
+                    mController.setWifiEnabled(true);
+                }
+                break;
+        } 
     }
 
     @Override
@@ -127,9 +171,53 @@ public class InternetTile extends SecureQSTile<SignalState> {
         if (checkKeyguard(view, keyguardShowing)) {
             return;
         }
-        mHandler.post(() -> mInternetDialogFactory.create(true,
-                mAccessPointController.canConfigMobileData(),
-                mAccessPointController.canConfigWifi(), view));
+        int clickBehavior = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.QS_CLICK_BEHAVIOR, 0, UserHandle.USER_CURRENT);
+        switch (clickBehavior) {
+            case 0:
+                mHandler.post(() -> mInternetDialogFactory.create(true,
+                        mAccessPointController.canConfigMobileData(),
+                        mAccessPointController.canConfigWifi(), view));
+                break;
+            case 1:
+                if (isWifiEnabled() && mDataController.isMobileDataEnabled()) {
+                    mDataController.setMobileDataEnabled(false);
+                    mController.setWifiEnabled(false);
+                } else if (!isWifiEnabled() && !mDataController.isMobileDataEnabled()) {
+                    mDataController.setMobileDataEnabled(true);
+                    mController.setWifiEnabled(true);
+                } else if (isWifiEnabled() && !mDataController.isMobileDataEnabled()) {
+                    mDataController.setMobileDataEnabled(true);
+                } else if (!isWifiEnabled() && mDataController.isMobileDataEnabled()) {
+                    mController.setWifiEnabled(true);
+                }
+                break;
+            case 2:
+                if (isWifiEnabled()) {
+                    mController.setWifiEnabled(false);
+                } else if (!isWifiEnabled()) {
+                    mController.setWifiEnabled(true);
+                }
+                break;
+            case 3:
+                if (mDataController.isMobileDataEnabled()) {
+                    mDataController.setMobileDataEnabled(false);
+                } else if (!mDataController.isMobileDataEnabled()) {
+                    mDataController.setMobileDataEnabled(true);
+                }
+                break;
+        }   
+    }
+
+    private boolean isWifiEnabled() {
+        if (mWifiManager == null) {
+            mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        }
+        try {
+            return mWifiManager.isWifiEnabled();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
