@@ -56,6 +56,7 @@ import com.android.systemui.qs.external.TileServiceRequestController;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.nano.QsTileState;
 import com.android.systemui.qs.tiles.SecureQSTile;
+import com.android.systemui.qs.tiles.SecureLongQSTile;
 import com.android.systemui.settings.UserFileManager;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.statusbar.phone.AutoTileManager;
@@ -174,10 +175,12 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, P
         mSecureSettings = secureSettings;
         mCustomTileStatePersister = customTileStatePersister;
         backgroundHandler.post(this::setSecureTileDisabledOnLockscreen);
+        backgroundHandler.post(this::setLongSecureTileDisabledOnLockscreen);
         mSettingsObserver = new ContentObserver(backgroundHandler) {
             @Override
             public void onChange(boolean selfChange) {
                 setSecureTileDisabledOnLockscreen();
+                setLongSecureTileDisabledOnLockscreen();
             }
         };
         mSecureSettings.registerContentObserverForUser(
@@ -204,6 +207,20 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, P
             mTiles.values().stream()
                 .filter(tile -> tile instanceof SecureQSTile)
                 .map(tile -> (SecureQSTile) tile)
+                .forEach(tile ->
+                    tile.setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen));
+        });
+    }
+
+    private void setLongSecureTileDisabledOnLockscreen() {
+        final boolean disabled = mSecureSettings.getIntForUser(
+            Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
+            1, UserHandle.USER_CURRENT) == 1;
+        mMainExecutor.execute(() -> {
+            mIsSecureTileDisabledOnLockscreen = disabled;
+            mTiles.values().stream()
+                .filter(tile -> tile instanceof SecureLongQSTile)
+                .map(tile -> (SecureLongQSTile) tile)
                 .forEach(tile ->
                     tile.setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen));
         });
@@ -367,6 +384,9 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, P
                     if (tile instanceof SecureQSTile) {
                         ((SecureQSTile) tile).setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen);
                     }
+                    if (tile instanceof SecureLongQSTile) {
+                        ((SecureLongQSTile) tile).setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen);
+                    }
                     newTiles.put(tileSpec, tile);
                     mQSLogger.logTileAdded(tileSpec);
                 } else {
@@ -390,6 +410,9 @@ public class QSTileHost implements QSHost, Tunable, PluginListener<QSFactory>, P
                         if (tile.isAvailable()) {
                             if (tile instanceof SecureQSTile) {
                                 ((SecureQSTile) tile).setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen);
+                            }
+                            if (tile instanceof SecureLongQSTile) {
+                                ((SecureLongQSTile) tile).setDisabledOnLockscreen(mIsSecureTileDisabledOnLockscreen);
                             }
                             newTiles.put(tileSpec, tile);
                             mQSLogger.logTileAdded(tileSpec);
