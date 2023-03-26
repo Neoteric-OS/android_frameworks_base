@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.Looper;
+import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
@@ -156,11 +157,16 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
     }
 
     private void handleClickEvent(@Nullable Expandable expandable) {
-        if (mFeatureFlags.isEnabled(Flags.BLUETOOTH_QS_TILE_DIALOG)) {
-            mDetailsContentViewModel.get().showDialog(expandable);
-        } else {
-            // Secondary clicks are header clicks, just toggle.
-            toggleBluetooth();
+        int clickBehavior = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.QS_BT_CLICK_BEHAVIOR, 0, UserHandle.USER_CURRENT);
+        switch (clickBehavior) {
+            case 0:
+                // Secondary clicks are header clicks, just toggle.
+                toggleBluetooth();
+                break;
+            case 1:
+                mDetailsContentViewModel.get().showDialog(expandable);
+                break;
         }
     }
 
