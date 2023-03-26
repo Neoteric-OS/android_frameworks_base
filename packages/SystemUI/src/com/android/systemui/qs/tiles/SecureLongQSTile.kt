@@ -43,12 +43,18 @@ internal abstract class SecureLongQSTile<TState : QSTile.State> protected constr
 
     protected abstract fun handleLongClick(view: View?, keyguardShowing: Boolean)
 
+    private var disableOnLockscreen = true
+
+    fun setDisabledOnLockscreen(disable: Boolean) {
+        disableOnLockscreen = disable
+    }
+
     override fun handleClick(view: View?) {
-        handleClick(view, mKeyguard.isMethodSecure && mKeyguard.isShowing)
+        handleClick(view, mKeyguard.isMethodSecure && mKeyguard.isShowing && disableOnLockscreen)
     }
 
     override fun handleLongClick(view: View?) {
-        handleLongClick(view, mKeyguard.isMethodSecure && mKeyguard.isShowing)
+        handleLongClick(view, mKeyguard.isMethodSecure && mKeyguard.isShowing && disableOnLockscreen)
     }
 
     protected fun checkKeyguard(view: View?, keyguardShowing: Boolean): Boolean {
