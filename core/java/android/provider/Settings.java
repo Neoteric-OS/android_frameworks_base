@@ -5889,6 +5889,18 @@ public final class Settings {
         public static final String QS_CLICK_BEHAVIOR = "qs_click_behavior";
 
         /**
+         * Behavior of long click on the Bluetooth QS tile
+         * @hide
+         */
+        public static final String QS_BT_LONG_CLICK_BEHAVIOR = "qs_bt_long_click_behavior";
+
+        /**
+         * Behavior of click on the Bluetooth QS tile
+         * @hide
+         */
+        public static final String QS_BT_CLICK_BEHAVIOR = "qs_bt_click_behavior";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *

@@ -24,6 +24,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
@@ -33,11 +34,13 @@ import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 
+import com.android.internal.jank.InteractionJankMonitor;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settingslib.Utils;
 import com.android.settingslib.bluetooth.CachedBluetoothDevice;
 import com.android.systemui.R;
+import com.android.systemui.animation.ActivityLaunchAnimator;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.plugins.ActivityStarter;
@@ -62,10 +65,12 @@ public class BluetoothTile extends SecureLongQSTile<BooleanState> {
     public static final String TILE_SPEC = "bt";
 
     private static final Intent BLUETOOTH_SETTINGS = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+    private static final Intent BLUETOOTH_PAIRING = new Intent(Settings.ACTION_BLUETOOTH_PAIRING_SETTINGS);
 
     private final Handler mHandler;
     private final BluetoothController mController;
     private final BluetoothDialogFactory mBluetoothDialogFactory;
+    protected final ActivityStarter mActivityStarter;
 
     @Inject
     public BluetoothTile(
@@ -87,6 +92,7 @@ public class BluetoothTile extends SecureLongQSTile<BooleanState> {
         mController = bluetoothController;
         mBluetoothDialogFactory = bluetoothDialogFactory;
         mController.observe(getLifecycle(), mCallback);
+        mActivityStarter = activityStarter;
     }
 
     @Override
@@ -101,13 +107,44 @@ public class BluetoothTile extends SecureLongQSTile<BooleanState> {
         if (checkKeyguard(view, keyguardShowing)) {
             return;
         }
-	mHandler.post(() -> mBluetoothDialogFactory.create(true, view));
+        int clickBehavior = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.QS_BT_CLICK_BEHAVIOR, 0, UserHandle.USER_CURRENT);
+        switch (clickBehavior) {
+            case 0:
+                // Secondary clicks are header clicks, just toggle.
+                final boolean isEnabled = mState.value;
+                // Immediately enter transient enabling state when turning bluetooth on.
+                refreshState(isEnabled ? null : ARG_SHOW_TRANSIENT_ENABLING);
+                mController.setBluetoothEnabled(!isEnabled);
+                break;
+            case 1:
+                mHandler.post(() -> mBluetoothDialogFactory.create(true, view));
+                break;
+        }
     }
 
     @Override
     protected void handleLongClick(@Nullable View view, boolean keyguardShowing) {
         if (checkLongKeyguard(view, keyguardShowing)) {
             return;
+        }
+        int longClickBehavior = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.QS_BT_LONG_CLICK_BEHAVIOR, 0, UserHandle.USER_CURRENT);
+        ActivityLaunchAnimator.Controller animationController =
+            view != null ? ActivityLaunchAnimator.Controller.fromView(view,
+                InteractionJankMonitor.CUJ_SHADE_APP_LAUNCH_FROM_QS_TILE) : null;
+        switch (longClickBehavior) {
+            case 0:
+                mActivityStarter.postStartActivityDismissingKeyguard(BLUETOOTH_SETTINGS, 0,
+                        animationController);
+                break;
+            case 1:
+                mHandler.post(() -> mBluetoothDialogFactory.create(true, view));
+                break;
+            case 2:
+                mActivityStarter.postStartActivityDismissingKeyguard(BLUETOOTH_PAIRING, 0,
+                        animationController);
+                break;
         }
     }
 
