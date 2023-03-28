@@ -53,7 +53,8 @@ public class PixelPropsUtils {
         "com.android.chrome",
         "com.android.vending",
         "com.breel.wallpapers20",
-        "com.nothing.smartcenter"
+        "com.nothing.smartcenter",
+        "com.snapchat.android"
     );
 
     private static final Map<String, Set<String>> propsToKeep;
@@ -128,11 +129,6 @@ public class PixelPropsUtils {
         "com.mobile.legends"
     );
 
-    private static final Map<String, Object> propsToChangePixel2;
-    private static final Set<String> packagesToChangePixel2 = Set.of(
-        "com.snapchat.android"
-    );
-
     private static volatile boolean sIsGms = false;
     private static volatile boolean sIsFinsky = false;
 
@@ -160,13 +156,6 @@ public class PixelPropsUtils {
         propsToChangePixelXL.put("PRODUCT", "marlin");
         propsToChangePixelXL.put("MODEL", "Pixel XL");
         propsToChangePixelXL.put("FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
-        propsToChangePixel2 = new HashMap<>();
-        propsToChangePixel2.put("BRAND", "google");
-        propsToChangePixel2.put("MANUFACTURER", "Google");
-        propsToChangePixel2.put("MODEL", "Pixel 2");
-        propsToChangePixel2.put("PRODUCT", "walleye");
-        propsToChangePixel2.put("DEVICE", "walleye");
-        propsToChangePixel2.put("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
         propsToChangeROG1 = new HashMap<>();
         propsToChangeROG1.put("MODEL", "ASUS_Z01QD");
         propsToChangeROG1.put("MANUFACTURER", "asus");
@@ -240,8 +229,6 @@ public class PixelPropsUtils {
                 propsToChange.putAll(propsToChangeIqoo10P);
             } else if (packagesToChangeMI11.contains(packageName)) {
                 propsToChange.putAll(propsToChangeMI11);
-            } else if (packagesToChangePixel2.contains(packageName)) {
-                propsToChange.putAll(propsToChangePixel2);
             }
         }
         if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
