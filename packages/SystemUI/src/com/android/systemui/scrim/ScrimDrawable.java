@@ -33,13 +33,14 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.graphics.ColorUtils;
-import com.android.systemui.statusbar.notification.stack.StackStateAnimator;
 
 /**
  * Drawable used on SysUI scrims.
  */
 public class ScrimDrawable extends Drawable {
     private static final String TAG = "ScrimDrawable";
+
+    private static final long COLOR_ANIMATION_DURATION = 1250;
 
     private final Paint mPaint;
     private int mAlpha = 255;
@@ -76,7 +77,7 @@ public class ScrimDrawable extends Drawable {
             final int mainFrom = mMainColor;
 
             ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
-            anim.setDuration(StackStateAnimator.ANIMATION_DURATION_STANDARD);
+            anim.setDuration(COLOR_ANIMATION_DURATION);
             anim.addUpdateListener(animation -> {
                 float ratio = (float) animation.getAnimatedValue();
                 mMainColor = ColorUtils.blendARGB(mainFrom, mainColor, ratio);
