@@ -652,7 +652,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
                 }
                 break;
             case TYPE_IKEV2_IPSEC_RSA:
-                if (profile.ipsecSecret.isEmpty() || profile.ipsecUserCert.isEmpty()) {
+                if (profile.ipsecUserCert.isEmpty()) {
                     return false;
                 }
                 break;
