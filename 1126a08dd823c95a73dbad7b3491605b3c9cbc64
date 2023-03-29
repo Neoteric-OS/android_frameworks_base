@@ -16,6 +16,24 @@
       "message": "The only concern I have is, since we\u0027ve added this to dropbox, but this is recovered, I\u0027m not sure if this would cause any confusions to the logging/pitot pipeline",
       "revId": "1126a08dd823c95a73dbad7b3491605b3c9cbc64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d56725_2b5627f7",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 8483,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2023-03-29T17:27:37Z",
+      "side": 1,
+      "message": "if you can add this \"recoverable\" tag into the crashInfo, that\u0027ll be easier for other parties, if they want to check the dropbox to see that\u0027s a recoverable crash or not?",
+      "parentUuid": "d7c19f14_ae7dd543",
+      "revId": "1126a08dd823c95a73dbad7b3491605b3c9cbc64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
