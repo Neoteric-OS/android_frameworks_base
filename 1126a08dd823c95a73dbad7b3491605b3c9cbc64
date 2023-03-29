@@ -34,6 +34,24 @@
       "parentUuid": "d7c19f14_ae7dd543",
       "revId": "1126a08dd823c95a73dbad7b3491605b3c9cbc64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4a99d8a_5b185c38",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 8483,
+      "author": {
+        "id": 1453063
+      },
+      "writtenOn": "2023-03-29T18:05:53Z",
+      "side": 1,
+      "message": "as discussed offline: need to add some glue to server-side crash handling for the new dropbox type (native_recoverable_crash) but it\u0027ll be pushed up by gmscore as-is.\n\nalso, no need to add it to crashInfo, as that\u0027d just be duplicating the data which is already observable via. the crash type (native_recoverable_crash vs. native_crash).",
+      "parentUuid": "29d56725_2b5627f7",
+      "revId": "1126a08dd823c95a73dbad7b3491605b3c9cbc64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
