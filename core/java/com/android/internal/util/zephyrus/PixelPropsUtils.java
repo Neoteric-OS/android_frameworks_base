@@ -46,15 +46,15 @@ public class PixelPropsUtils {
     private static final Map<String, Object> propsToChangePixelXL;
     private static final Set<String> packagesToChangePixelXL = Set.of(
         "com.google.android.apps.photos",
-        "com.google.android.inputmethod.latin"
+        "com.google.android.inputmethod.latin",
+        "com.snapchat.android"
     );
 
     private static final Set<String> extraPackagesToChange = Set.of(
         "com.android.chrome",
         "com.android.vending",
         "com.breel.wallpapers20",
-        "com.nothing.smartcenter",
-        "com.snapchat.android"
+        "com.nothing.smartcenter"
     );
 
     private static final Map<String, Set<String>> propsToKeep;
