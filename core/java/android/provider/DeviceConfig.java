@@ -250,6 +250,14 @@ public final class DeviceConfig {
     public static final String NAMESPACE_DISPLAY_MANAGER = "display_manager";
 
     /**
+     * Namespace for all EdgeTpu related features.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String NAMESPACE_EDGETPU_NATIVE = "edgetpu_native";
+
+    /**
      * Namespace for all Game Driver features.
      *
      * @hide
