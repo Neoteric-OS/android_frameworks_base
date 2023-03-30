@@ -686,6 +686,8 @@ public final class SystemServer implements Dumpable {
         TimeUtils.formatDuration(mRuntimeStartElapsedTime, pw); pw.println();
     }
 
+    private static native void runBenchmark(int fd, String filter);
+
     /**
      * Service used to dump {@link SystemServer} state that is not associated with any service.
      *
@@ -736,6 +738,11 @@ public final class SystemServer implements Dumpable {
                         final String[] actualArgs = Arrays.copyOfRange(args, 2, args.length);
                         dumpable.dump(ipw, actualArgs);
                     }
+                    return;
+                }
+
+                if (hasArgs && "--benchmark".equals(args[0])) {
+                    runBenchmark(fd.getInt$(), args.length > 1 ? args[1] : null);
                     return;
                 }
 

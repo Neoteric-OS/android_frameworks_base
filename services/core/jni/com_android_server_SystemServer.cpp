@@ -18,6 +18,7 @@
 #include <android/binder_manager.h>
 #include <android/binder_stability.h>
 #include <android/hidl/manager/1.2/IServiceManager.h>
+#include <benchmark/benchmark.h>
 #include <binder/IServiceManager.h>
 #include <bionic/malloc.h>
 #include <bionic/reserved_signals.h>
@@ -174,6 +175,36 @@ static void android_server_SystemServer_setIncrementalServiceSystemReady(JNIEnv*
     Incremental_IncrementalService_OnSystemReady(handle);
 }
 
+static void android_server_SystemServer_runBenchmark(JNIEnv* env, jclass klass, jint fd,
+                                                     jstring filter) {
+    std::vector<char*> args;
+    args.push_back((char*)"benchmark");
+
+    char* benchmark_out_arg = nullptr;
+    asprintf(&benchmark_out_arg, "--benchmark_out=/proc/self/fd/%d", fd);
+    args.push_back(benchmark_out_arg);
+
+    args.push_back((char*)"--benchmark_out_format=csv");
+
+    char* benchmark_filter_arg = nullptr;
+    if (filter) {
+        const char* filter_str = env->GetStringUTFChars(filter, nullptr);
+        asprintf(&benchmark_filter_arg, "--benchmark_filter=%s", filter_str);
+        env->ReleaseStringUTFChars(filter, filter_str);
+        args.push_back(benchmark_filter_arg);
+    } else {
+        // Reset global variable.
+        args.push_back((char*)"--benchmark_filter=");
+    }
+
+    int argc = args.size();
+    benchmark::Initialize(&argc, args.data());
+    benchmark::RunSpecifiedBenchmarks();
+
+    free(benchmark_out_arg);
+    free(benchmark_filter_arg);
+}
+
 /*
  * JNI registration.
  */
@@ -192,6 +223,8 @@ static const JNINativeMethod gMethods[] = {
          (void*)android_server_SystemServer_startIncrementalService},
         {"setIncrementalServiceSystemReady", "(J)V",
          (void*)android_server_SystemServer_setIncrementalServiceSystemReady},
+        {"runBenchmark", "(ILjava/lang/String;)V",
+         (void*)android_server_SystemServer_runBenchmark},
 };
 
 int register_android_server_SystemServer(JNIEnv* env)

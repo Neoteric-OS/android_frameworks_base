@@ -85,6 +85,8 @@ cc_library_static {
     header_libs: [
         "bionic_libc_platform_headers",
     ],
+
+    whole_static_libs: ["libbionic_spawn_benchmark"],
 }
 
 cc_defaults {
@@ -192,6 +194,7 @@ cc_defaults {
 
     static_libs: [
         "android.hardware.broadcastradio@common-utils-1x-lib",
+        "libgoogle-benchmark",
     ],
 
     product_variables: {
