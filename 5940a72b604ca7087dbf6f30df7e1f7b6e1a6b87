@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a1813ab_d10dc1fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2023-03-30T15:06:43Z",
+      "side": 1,
+      "message": "Only creating reverts to look into b/275596204. Expecting an issue with the test itself and even if not, will look into targeted fix vs revert.",
+      "revId": "5940a72b604ca7087dbf6f30df7e1f7b6e1a6b87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
