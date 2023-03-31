@@ -118,6 +118,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
@@ -181,6 +183,8 @@ public class HdmiControlService extends SystemService {
     }
 
     static final String PERMISSION = "android.permission.HDMI_CEC";
+    private static final int AWAIT_TIME = 5000;
+    private CountDownLatch mStandbyLatch;
 
     // The reason code to initiate initializeCec().
     static final int INITIATED_BY_ENABLE_CEC = 0;
@@ -3325,6 +3329,9 @@ public class HdmiControlService extends SystemService {
         assertRunOnServiceThread();
         mPowerStatusController.setPowerStatus(HdmiControlManager.POWER_STATUS_TRANSIENT_TO_STANDBY,
                 false);
+        if (!isControlEnabled()) {
+            return;
+        }
         invokeVendorCommandListenersOnControlStateChanged(false,
                 HdmiControlManager.CONTROL_STATE_CHANGED_REASON_STANDBY);
 
@@ -3337,6 +3344,8 @@ public class HdmiControlService extends SystemService {
             }
             return;
         }
+
+        mStandbyLatch = new CountDownLatch(1);
 
         disableDevices(new PendingActionClearedCallback() {
             @Override
@@ -3351,6 +3360,15 @@ public class HdmiControlService extends SystemService {
                 }
             }
         });
+
+        if (mStandbyLatch != null) {
+            try {
+                mStandbyLatch.await(AWAIT_TIME, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                Slog.e(TAG, "standby lock notify fail " + e);
+            }
+        }
+        HdmiLogger.debug("onStandby finished");
     }
 
     boolean canGoToStandby() {
@@ -3430,6 +3448,13 @@ public class HdmiControlService extends SystemService {
 
         // Always reset this flag to set up for the next standby
         mStandbyMessageReceived = false;
+
+        mCecController.runOnIoThread(()->{
+            // Release the latch on IoThread
+            if (mStandbyLatch != null) {
+                mStandbyLatch.countDown();
+            }
+        });
     }
 
     @VisibleForTesting
