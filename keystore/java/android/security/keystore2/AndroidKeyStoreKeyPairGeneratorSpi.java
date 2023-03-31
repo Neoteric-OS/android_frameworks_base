@@ -111,13 +111,26 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
         }
     }
 
+    private static final int ALGORITHM_XDH = KeymasterDefs.KM_ALGORITHM_EC + 10;
+    private static final int ALGORITHM_ED25519 = ALGORITHM_XDH + 1;
+
     /**
-     * XDH represents Curve 25519 providers.
+     * XDH represents Curve 25519 agreement key provider.
      */
     public static class XDH extends AndroidKeyStoreKeyPairGeneratorSpi {
         // XDH is treated as EC.
         public XDH() {
-            super(KeymasterDefs.KM_ALGORITHM_EC);
+            super(ALGORITHM_XDH);
+        }
+    }
+
+    /**
+     * ED25519 represents Curve 25519 signing key provider.
+     */
+    public static class ED25519 extends AndroidKeyStoreKeyPairGeneratorSpi {
+        // ED25519 is treated as EC.
+        public ED25519() {
+            super(ALGORITHM_ED25519);
         }
     }
 
@@ -242,7 +255,9 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
 
             KeyGenParameterSpec spec;
             boolean encryptionAtRestRequired = false;
-            int keymasterAlgorithm = mOriginalKeymasterAlgorithm;
+            int keymasterAlgorithm = (mOriginalKeymasterAlgorithm == ALGORITHM_XDH
+                    || mOriginalKeymasterAlgorithm == ALGORITHM_ED25519)
+                    ? KeymasterDefs.KM_ALGORITHM_EC : mOriginalKeymasterAlgorithm;
             if (params instanceof KeyGenParameterSpec) {
                 spec = (KeyGenParameterSpec) params;
             } else if (params instanceof KeyPairGeneratorSpec) {
@@ -595,6 +610,15 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                 if (algSpecificSpec instanceof ECGenParameterSpec) {
                     ECGenParameterSpec ecSpec = (ECGenParameterSpec) algSpecificSpec;
                     mEcCurveName = ecSpec.getName();
+                    if (mOriginalKeymasterAlgorithm == ALGORITHM_XDH
+                            && !mEcCurveName.equalsIgnoreCase("x25519")) {
+                        throw new InvalidAlgorithmParameterException("XDH algorithm only supports"
+                                + " x25519 curve.");
+                    } else if (mOriginalKeymasterAlgorithm == ALGORITHM_ED25519
+                            && !mEcCurveName.equalsIgnoreCase("ed25519")) {
+                        throw new InvalidAlgorithmParameterException("Ed25519 algorithm only"
+                                + " supports ed25519 curve.");
+                    }
                     final Integer ecSpecKeySizeBits = SUPPORTED_EC_CURVE_NAME_TO_SIZE.get(
                             mEcCurveName.toLowerCase(Locale.US));
                     if (ecSpecKeySizeBits == null) {
