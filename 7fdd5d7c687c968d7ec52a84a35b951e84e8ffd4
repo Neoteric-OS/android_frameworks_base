@@ -68,6 +68,23 @@
       "message": "@roosa@google.com - Request for Code-Owners approval. - PTAL",
       "revId": "7fdd5d7c687c968d7ec52a84a35b951e84e8ffd4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07300098_7e568e25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953015
+      },
+      "writtenOn": "2023-04-01T03:03:32Z",
+      "side": 1,
+      "message": "@roosa@google.com request for code-owner approval.",
+      "revId": "7fdd5d7c687c968d7ec52a84a35b951e84e8ffd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
