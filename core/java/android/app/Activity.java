@@ -167,6 +167,7 @@ import dalvik.system.VMRuntime;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.lang.IllegalArgumentException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
@@ -1318,6 +1319,9 @@ public class Activity extends ContextThemeWrapper
      */
     public void registerActivityLifecycleCallbacks(
             @NonNull Application.ActivityLifecycleCallbacks callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("callback must be non null.");
+        }
         synchronized (mActivityLifecycleCallbacks) {
             mActivityLifecycleCallbacks.add(callback);
         }
@@ -1333,6 +1337,9 @@ public class Activity extends ContextThemeWrapper
      */
     public void unregisterActivityLifecycleCallbacks(
             @NonNull Application.ActivityLifecycleCallbacks callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("callback must be non null.");
+        }
         synchronized (mActivityLifecycleCallbacks) {
             mActivityLifecycleCallbacks.remove(callback);
         }

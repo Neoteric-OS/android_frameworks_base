@@ -33,6 +33,7 @@ import android.util.Log;
 import android.view.autofill.AutofillManager;
 
 import java.util.ArrayList;
+import java.lang.IllegalArgumentException;
 
 /**
  * Base class for maintaining global application state. You can provide your own
@@ -297,13 +298,21 @@ public class Application extends ContextWrapper implements ComponentCallbacks2 {
         mCallbacksController.unregisterCallbacks(callback);
     }
 
+    // TODO(b/272687382): Add @NonNull annotation
     public void registerActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("callback must be non null.");
+        }
         synchronized (mActivityLifecycleCallbacks) {
             mActivityLifecycleCallbacks.add(callback);
         }
     }
 
+    // TODO(b/272687382): Add @NonNull annotation
     public void unregisterActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("callback must be non null.");
+        }
         synchronized (mActivityLifecycleCallbacks) {
             mActivityLifecycleCallbacks.remove(callback);
         }
