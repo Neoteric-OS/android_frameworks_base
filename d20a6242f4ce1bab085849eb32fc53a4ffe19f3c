@@ -16,6 +16,24 @@
       "message": "It is possible that use case is solved Icda80b7a98d5510747bc92ef12a3c7647131b18d\n\nWe will try to confirm internally, but it will take some time.",
       "revId": "d20a6242f4ce1bab085849eb32fc53a4ffe19f3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e777349d_af2c8f0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956704
+      },
+      "writtenOn": "2023-04-04T14:36:28Z",
+      "side": 1,
+      "message": "No longer reproducible, so most likely fixed by the commit mentioned above",
+      "parentUuid": "bdc99e6b_966c6f0c",
+      "revId": "d20a6242f4ce1bab085849eb32fc53a4ffe19f3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
