@@ -220,6 +220,9 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
+            if (TextUtils.equals(uri.getLastPathSegment(), STATUS_BAR_SHOW_BATTERY_PERCENT)) {
+                mView.updateShowPercentSettings();
+            }
             mView.updateShowPercent();
             if (TextUtils.equals(uri.getLastPathSegment(),
                     Settings.Global.BATTERY_ESTIMATES_LAST_UPDATE_TIME)) {
