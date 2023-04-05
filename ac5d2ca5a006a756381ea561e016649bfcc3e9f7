@@ -16,6 +16,23 @@
       "message": "Hi. This change Ifc008d98b893b099c31c1fc8b96de9ed18dd4fbe should fix selinux issues introduce with I63ac7f4dd5103bea3f67a491a3fe030bafce075c. Please let me know if revertion is still needed. Thanks.",
       "revId": "ac5d2ca5a006a756381ea561e016649bfcc3e9f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43512ae6_6d63d282",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1981835
+      },
+      "writtenOn": "2023-04-05T18:07:03Z",
+      "side": 1,
+      "message": "I believe that we can abandon this revert, since issue is already fixed by Ifc008d98b893b099c31c1fc8b96de9ed18dd4fbe. Thanks.",
+      "revId": "ac5d2ca5a006a756381ea561e016649bfcc3e9f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
