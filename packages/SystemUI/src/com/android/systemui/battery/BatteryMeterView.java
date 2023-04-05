@@ -64,6 +64,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     protected static final int BATTERY_STYLE_PORTRAIT = 0;
     protected static final int BATTERY_STYLE_CIRCLE = 1;
     protected static final int BATTERY_STYLE_TEXT = 2;
+    protected static final int BATTERY_STYLE_HIDDEN = 3;
 
     @Retention(SOURCE)
     @IntDef({MODE_DEFAULT, MODE_ON, MODE_OFF, MODE_ESTIMATE})
@@ -379,6 +380,15 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     }
 
     void updateShowPercent() {
+        final boolean isHidden = mBatteryStyle == BATTERY_STYLE_HIDDEN;
+        if (isHidden) {
+            if (mBatteryPercentView != null) {
+                removeView(mBatteryPercentView);
+                mBatteryPercentView = null;
+            }
+            return;
+        }
+
         final boolean showing = mBatteryPercentView != null;
         final boolean drawPercentInside = mShowPercentMode == MODE_DEFAULT &&
                 mBatteryShowPercent == 1;
@@ -513,6 +523,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 addOrRemoveIcon(mCircleDrawable);
                 break;
             case BATTERY_STYLE_TEXT:
+            case BATTERY_STYLE_HIDDEN:
                 addOrRemoveIcon(null);
                 break;
         }
