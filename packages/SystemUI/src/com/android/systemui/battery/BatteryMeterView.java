@@ -206,6 +206,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     }
 
     protected void updateBatteryStyle() {
+        updatePercentText();
         updateDrawable();
         scaleBatteryMeterViews();
         updatePercentView();
