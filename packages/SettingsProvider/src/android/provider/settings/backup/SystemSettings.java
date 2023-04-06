@@ -125,6 +125,8 @@ public class SystemSettings {
         Settings.System.HEADS_UP_NOTIFICATIONS_THRESHOLD,
         Settings.System.DATA_DISABLED_ICON,
         Settings.System.BLOCK_ALERT,
+        Settings.System.BLOCK_VOLUME,
+        Settings.System.BLOCK_MEDIA,
         Settings.System.ALERT_SLIDER_PULSE,
     };
 }
