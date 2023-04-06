@@ -64,8 +64,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import com.android.internal.util.zephyrus.PixelPropsUtils;
-import com.android.internal.util.zephyrus.AttestationHooks;
+import com.android.internal.util.zeph.PixelPropsUtils;
+import com.android.internal.util.zeph.AttestationHooks;
 
 /**
  * Base class for implementing application instrumentation code.  When running

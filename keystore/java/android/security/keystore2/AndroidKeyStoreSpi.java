@@ -42,7 +42,7 @@ import android.system.keystore2.ResponseCode;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.zephyrus.AttestationHooks;
+import com.android.internal.util.zeph.AttestationHooks;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
