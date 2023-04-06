@@ -5810,6 +5810,18 @@ public final class Settings {
          * @hide
          */
         public static final String BLOCK_ALERT = "block_alert";
+        
+        /**
+         * Whether to block volume keys in pocket or not
+         * @hide
+         */
+        public static final String BLOCK_VOLUME = "block_volume";
+        
+        /**
+         * Whether to block media keys in pocket or not
+         * @hide
+         */
+        public static final String BLOCK_MEDIA = "block_media";
 
         /**
          * Whether to pulse alert slider notifications

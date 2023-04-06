@@ -4052,19 +4052,23 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         final int scanCode = event.getScanCode();
         boolean blockAlert = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.BLOCK_ALERT, 0, UserHandle.USER_CURRENT) == 1;
+        boolean blockVolume = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.BLOCK_VOLUME, 0, UserHandle.USER_CURRENT) == 1;
+        boolean blockMedia = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.BLOCK_MEDIA, 0, UserHandle.USER_CURRENT) == 1;       
         // Pre-basic policy based on interactive and pocket lock state.
         if (mIsDeviceInPocket && (!interactive || mPocketLockShowing)) {
             if (keyCode != KeyEvent.KEYCODE_POWER &&
-                keyCode != KeyEvent.KEYCODE_VOLUME_UP &&
-                keyCode != KeyEvent.KEYCODE_VOLUME_DOWN &&
-                keyCode != KeyEvent.KEYCODE_MEDIA_PLAY &&
-                keyCode != KeyEvent.KEYCODE_MEDIA_PAUSE &&
-                keyCode != KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE &&
-                keyCode != KeyEvent.KEYCODE_HEADSETHOOK &&
-                keyCode != KeyEvent.KEYCODE_MEDIA_STOP &&
-                keyCode != KeyEvent.KEYCODE_MEDIA_NEXT &&
-                keyCode != KeyEvent.KEYCODE_MEDIA_PREVIOUS &&
-                keyCode != KeyEvent.KEYCODE_VOLUME_MUTE &&
+                keyCode != KeyEvent.KEYCODE_HEADSETHOOK && // check if the key doesn't match the power button or headset keycodes
+                ((keyCode != KeyEvent.KEYCODE_VOLUME_UP &&
+                    keyCode != KeyEvent.KEYCODE_VOLUME_DOWN &&
+                    keyCode != KeyEvent.KEYCODE_VOLUME_MUTE) || blockVolume) && //checks whether the keycode doesnt match the volume keys
+                ((keyCode != KeyEvent.KEYCODE_MEDIA_PLAY &&
+                    keyCode != KeyEvent.KEYCODE_MEDIA_PAUSE &&
+                    keyCode != KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE &&
+                    keyCode != KeyEvent.KEYCODE_MEDIA_STOP &&
+                    keyCode != KeyEvent.KEYCODE_MEDIA_NEXT &&
+                    keyCode != KeyEvent.KEYCODE_MEDIA_PREVIOUS) || blockMedia) && //checks whether the keycode doesnt match the media keys
                 (blockAlert || scanCode != 61)) {
                 return 0;
             }

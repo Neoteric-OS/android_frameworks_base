@@ -106,6 +106,8 @@ public class SystemSettings {
 	Settings.System.NAVIGATION_BAR_IME_SPACE,
         Settings.System.DATA_DISABLED_ICON,
         Settings.System.BLOCK_ALERT,
+        Settings.System.BLOCK_VOLUME,
+        Settings.System.BLOCK_MEDIA,
         Settings.System.ALERT_SLIDER_PULSE,
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL_NO_LANDSCAPE,
