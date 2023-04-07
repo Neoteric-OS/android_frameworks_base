@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d58be055_c685bf85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1967393
+      },
+      "writtenOn": "2023-04-07T03:08:55Z",
+      "side": 1,
+      "message": "@jreck@google.com @dupin@google.com\nPresubmit-Verified -1, and i rebase the code, please re-score, thanks",
+      "revId": "9cd6ac8f33180f6c9b54b6fed0b9430bc6007205",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
