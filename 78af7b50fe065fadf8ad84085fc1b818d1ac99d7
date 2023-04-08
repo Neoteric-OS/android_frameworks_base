@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c4eb043_bd5084ae",
+        "filename": "core/java/android/permission/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1967022
+      },
+      "writtenOn": "2023-04-08T02:03:45Z",
+      "side": 1,
+      "message": "augale@google.com",
+      "revId": "78af7b50fe065fadf8ad84085fc1b818d1ac99d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
