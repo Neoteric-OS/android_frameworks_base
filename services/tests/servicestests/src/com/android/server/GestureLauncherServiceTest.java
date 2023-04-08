@@ -1480,7 +1480,7 @@ public class GestureLauncherServiceTest {
     private void withCameraDoubleTapPowerDisableSettingValue(int disableSettingValue) {
         Settings.Secure.putIntForUser(
                 mContentResolver,
-                Settings.Secure.CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,
+                Settings.Secure.CAMERA_DOUBLE_TAP_POWER_GESTURE_ENABLED,
                 disableSettingValue,
                 UserHandle.USER_CURRENT);
     }

@@ -100,7 +100,7 @@ public class SecureSettings {
         Settings.Secure.DISPLAY_WHITE_BALANCE_ENABLED,
         Settings.Secure.SYNC_PARENT_SOUNDS,
         Settings.Secure.CAMERA_DOUBLE_TWIST_TO_FLIP_ENABLED,
-        Settings.Secure.CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,
+        Settings.Secure.CAMERA_DOUBLE_TAP_POWER_GESTURE_ENABLED,
         Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED,
         Settings.Secure.QS_TILES,
         Settings.Secure.QS_AUTO_ADDED_TILES,

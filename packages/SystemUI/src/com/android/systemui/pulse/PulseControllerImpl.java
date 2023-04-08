@@ -99,6 +99,7 @@ public class PulseControllerImpl implements
     private boolean mIsMediaPlaying;
     private boolean mAttached;
 
+    private boolean mPulseEnabled;
     private boolean mLsPulseEnabled;
     private boolean mAmbPulseEnabled;
     private boolean mKeyguardShowing;
@@ -169,6 +170,9 @@ public class PulseControllerImpl implements
 
         void register() {
             mContext.getContentResolver().registerContentObserver(
+                    Settings.Secure.getUriFor(Settings.Secure.PULSE_ENABLED), false, this,
+                    UserHandle.USER_ALL);            
+            mContext.getContentResolver().registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_PULSE_ENABLED), false, this,
                     UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(
@@ -181,7 +185,8 @@ public class PulseControllerImpl implements
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
-            if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_PULSE_ENABLED))
+            if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.PULSE_ENABLED))
+                    || uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_PULSE_ENABLED))
                     || uri.equals(Settings.Secure.getUriFor(Settings.Secure.AMBIENT_PULSE_ENABLED))) {
                 updateEnabled();
                 updatePulseVisibility();
@@ -197,6 +202,8 @@ public class PulseControllerImpl implements
         }
 
         void updateEnabled() {
+            mPulseEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.PULSE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;    
             mLsPulseEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                     Settings.Secure.LOCKSCREEN_PULSE_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
             mAmbPulseEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
@@ -210,7 +217,7 @@ public class PulseControllerImpl implements
     };
 
     public void notifyKeyguardGoingAway() {
-        if (mLsPulseEnabled) {
+        if (mPulseEnabled && mLsPulseEnabled) {
             mKeyguardGoingAway = true;
             updatePulseVisibility();
             mKeyguardGoingAway = false;
@@ -224,9 +231,9 @@ public class PulseControllerImpl implements
                 mStatusbar.getNavigationBarView().getNavbarFrame() : null;
         VisualizerView vv = mStatusbar.getLsVisualizer();
         boolean allowAmbPulse = vv != null && vv.isAttached()
-                && mAmbPulseEnabled && mKeyguardShowing && mDozing;
+                && (mPulseEnabled && mAmbPulseEnabled) && mKeyguardShowing && mDozing;
         boolean allowLsPulse = vv != null && vv.isAttached()
-                && mLsPulseEnabled && mKeyguardShowing && !mDozing;
+                && (mPulseEnabled && mLsPulseEnabled) && mKeyguardShowing && !mDozing;
 
 	if (mKeyguardGoingAway) {
             if (mLsPulseAttached) {
@@ -410,7 +417,7 @@ public class PulseControllerImpl implements
      * @return true if unlink is required, false if unlinking is not mandatory
      */
     private boolean isUnlinkRequired() {
-        return (!mScreenOn && !mAmbPulseEnabled)
+        return (!mScreenOn && (!mPulseEnabled && !mAmbPulseEnabled))
                 || mPowerSaveModeEnabled
                 || mMusicStreamMuted
                 || mScreenPinningEnabled
@@ -423,7 +430,7 @@ public class PulseControllerImpl implements
      * @return true if all conditions are met to allow link, false if and conditions are not met
      */
     private boolean isAbleToLink() {
-        return (mScreenOn || mAmbPulseEnabled)
+        return (mScreenOn || (mPulseEnabled && mAmbPulseEnabled))
                 && mIsMediaPlaying
                 && !mPowerSaveModeEnabled
                 && !mMusicStreamMuted

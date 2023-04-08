@@ -1980,7 +1980,7 @@ class SettingsProtoDumpUtil {
                 Settings.Secure.CAMERA_GESTURE_DISABLED,
                 SecureSettingsProto.Camera.GESTURE_DISABLED);
         dumpSetting(s, p,
-                Settings.Secure.CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED,
+                Settings.Secure.CAMERA_DOUBLE_TAP_POWER_GESTURE_ENABLED,
                 SecureSettingsProto.Camera.DOUBLE_TAP_POWER_GESTURE_DISABLED);
         dumpSetting(s, p,
                 Settings.Secure.CAMERA_DOUBLE_TWIST_TO_FLIP_ENABLED,

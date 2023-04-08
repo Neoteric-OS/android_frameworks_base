@@ -10181,8 +10181,8 @@ public final class Settings {
          * @hide
          */
         @Readable
-        public static final String CAMERA_DOUBLE_TAP_POWER_GESTURE_DISABLED =
-                "camera_double_tap_power_gesture_disabled";
+        public static final String CAMERA_DOUBLE_TAP_POWER_GESTURE_ENABLED =
+                "camera_double_tap_power_gesture_enabled";
 
         /**
          * Whether the camera double twist gesture to flip between front and back mode should be
@@ -11402,6 +11402,12 @@ public final class Settings {
          * @hide
          */
         public static final String BERRY_BLACK_THEME = "berry_black_theme";
+
+        /**
+         * Pulse ambient music visualizer main toggle
+         * @hide
+         */
+        public static final String PULSE_ENABLED = "pulse_enabled";
 
         /**
          * Pulse ambient music visualizer
