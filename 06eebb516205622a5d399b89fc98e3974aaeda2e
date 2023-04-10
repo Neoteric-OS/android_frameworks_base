@@ -16,6 +16,23 @@
       "message": "Please review and let me know your feedback about code refactoring in this file.",
       "revId": "06eebb516205622a5d399b89fc98e3974aaeda2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4448f23_650bef09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-04-10T11:33:27Z",
+      "side": 1,
+      "message": "Thanks for review!\nCould you please submit the patch, I don\u0027t have permissions?",
+      "revId": "06eebb516205622a5d399b89fc98e3974aaeda2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
