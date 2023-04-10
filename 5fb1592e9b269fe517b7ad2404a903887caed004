@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cc24f1a_9ad391a8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-10T05:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13920895_2c438c16",
+      "range": {
+        "startLine": 1024,
+        "startChar": 0,
+        "endLine": 1027,
+        "endChar": 35
+      },
+      "revId": "5fb1592e9b269fe517b7ad2404a903887caed004",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed840b55_d05def60",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-04-10T05:25:54Z",
       "side": 1,
       "message": "I think we should not test for this, and we should restart the agent whether the VPN allows bypass or not for simplicity and future-proofing.\n\nagentConnect says :\n```\n  .setBypassableVpn(mConfig.allowBypass \u0026\u0026 !mLockdown)\n```\nwhich indeed means that mLockdown won\u0027t make a difference today if !allowBypass, but I think it\u0027s a pretty bad idea to have the code here depend on that code over there like this, and it\u0027s not unreasonable to always restart the VPN when lockdown changes.",
+      "range": {
+        "startLine": 1028,
+        "startChar": 41,
+        "endLine": 1028,
+        "endChar": 60
+      },
+      "revId": "5fb1592e9b269fe517b7ad2404a903887caed004",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dbfd988_4a429245",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-10T05:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed840b55_d05def60",
       "range": {
         "startLine": 1028,
         "startChar": 41,
