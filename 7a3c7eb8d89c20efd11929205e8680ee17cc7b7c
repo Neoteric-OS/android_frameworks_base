@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67d371c5_a3aa6d72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-11T06:48:53Z",
+      "side": 1,
+      "message": "aosp/2528765 adds a test.",
+      "parentUuid": "d8f4c83b_2dcc8454",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "7a3c7eb8d89c20efd11929205e8680ee17cc7b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a2639b6_aa89515a",
