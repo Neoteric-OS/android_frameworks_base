@@ -321,6 +321,12 @@ public class BtHelper {
     // @GuardedBy("AudioDeviceBroker.mSetModeLock")
     @GuardedBy("AudioDeviceBroker.mDeviceStateLock")
     void onScoAudioStateChanged(int state) {
+        if (mDeviceBroker.hasScheduledReceiveBtEvent(state)) {
+            Log.d(TAG, "receiveBtEvent(): ignore bt event change, state=" + state
+                    +  ", mScoAudioState=" + mScoAudioState);
+            return;
+        }
+
         boolean broadcast = false;
         int scoAudioState = AudioManager.SCO_AUDIO_STATE_ERROR;
         switch (state) {

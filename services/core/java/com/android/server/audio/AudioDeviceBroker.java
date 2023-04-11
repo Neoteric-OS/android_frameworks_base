@@ -1143,6 +1143,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
         return mBrokerHandler.hasEqualMessages(MSG_L_SET_BT_ACTIVE_DEVICE, devInfoToCheck);
     }
 
+    // must be called synchronized on ReceiveBtEvent
+    /*package*/ boolean hasScheduledReceiveBtEvent(int state) {
+        return mBrokerHandler.hasEqualMessages(MSG_I_SCO_AUDIO_STATE_CHANGED, state);
+    }
+
     /*package*/ void setA2dpTimeout(String address, int a2dpCodec, int delayMs) {
         sendILMsg(MSG_IL_BTA2DP_TIMEOUT, SENDMSG_QUEUE, a2dpCodec, address, delayMs);
     }
