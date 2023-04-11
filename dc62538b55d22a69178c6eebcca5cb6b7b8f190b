@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f91db124_c4d3f9e6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1644,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-04-11T09:20:15Z",
+      "side": 1,
+      "message": "Should this also consider mLockdown state? E.g. A VpnService VPN is set as lockdown VPN but update the allowBypass in its VpnConfig. The bypassableVpn value in the NetworkAgentConfig will remain false.  In this case, the handover should be possible. But in current design, it will start a new NetworkAgent.\n\n\nThis may be still acceptable since the VpnConfig is updated(mLockdown change case should be covered by `setAlwaysOnPackageInternal()`). But the design for bypassbility is kind of different between here and other places.",
+      "range": {
+        "startLine": 1644,
+        "startChar": 12,
+        "endLine": 1644,
+        "endChar": 56
+      },
+      "revId": "dc62538b55d22a69178c6eebcca5cb6b7b8f190b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
