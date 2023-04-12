@@ -17,6 +17,7 @@ package android.media;
 
 import android.annotation.IntDef;
 import android.annotation.Nullable;
+import android.media.RoutingSessionInfo;
 import android.media.session.MediaSession;
 
 import java.lang.annotation.Retention;
@@ -89,7 +90,11 @@ public abstract class VolumeProvider {
      *            this provider.
      * @param maxVolume The maximum allowed volume.
      * @param currentVolume The current volume on the output.
-     * @param volumeControlId The volume control ID of this provider.
+     * @param volumeControlId The {@link RoutingSessionInfo#getId() routing session id} of the
+     *     {@link RoutingSessionInfo} associated with this controller, or null if not
+     *     applicable. This id allows mapping this controller to a routing session which, when
+     *     applicable, provides information about the remote device, and support for volume
+     *     adjustment.
      */
     public VolumeProvider(@ControlType int volumeControl, int maxVolume, int currentVolume,
             @Nullable String volumeControlId) {
