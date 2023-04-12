@@ -16,6 +16,24 @@
       "message": "Were there any tests that you ran to verify this?",
       "revId": "25eb6df7cc8e45a27a4e8cbf6894e36ab86715ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "755fb3ee_969c2a88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1895294
+      },
+      "writtenOn": "2023-04-12T02:45:22Z",
+      "side": 1,
+      "message": "I have verified this by adding config files to odm partition, to vendor partition, and to both odm and vendor partition. The function is normal in all cases.\nAnd this is OK in GSI.",
+      "parentUuid": "c380cacc_4d9bbcb0",
+      "revId": "25eb6df7cc8e45a27a4e8cbf6894e36ab86715ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
