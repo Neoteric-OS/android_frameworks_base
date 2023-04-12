@@ -22,6 +22,30 @@
       },
       "revId": "1e4ac1d6b056c077931a767555fdd5536f73f679",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acacfa33_1cc02e10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-04-12T16:07:01Z",
+      "side": 1,
+      "message": "Sorry for not being more descriptive. The hardcoded `java_defaults` existed and was removed [here](https://android-review.git.corp.google.com/c/platform/build/orchestrator/+/2367170/12..13). This exists not only for the public API surface, but for all other API surfaces in the CL stack. These are used to provide the list of full API surface `api_contributions` to `java_api_library`.",
+      "parentUuid": "e8209131_2b7f9161",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "1e4ac1d6b056c077931a767555fdd5536f73f679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
