@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8209131_2b7f9161",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-04-12T15:46:36Z",
+      "side": 1,
+      "message": "What are these `java_defaults` used for? This is the first mention in this commit message but it\u0027s not explained where they fit into the `api_contribution` modules.\n\nWhere as they hardcoded? I assumed that adding them here would remove them from elsewhere but I cannot find any change in the topic that would remove them.",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "1e4ac1d6b056c077931a767555fdd5536f73f679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
