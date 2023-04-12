@@ -70,6 +70,30 @@
       },
       "revId": "1e4ac1d6b056c077931a767555fdd5536f73f679",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50328035_e37bdd4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-04-12T17:27:58Z",
+      "side": 1,
+      "message": "Correct. Thank you for double checking that CL!",
+      "parentUuid": "397a105d_1db7de84",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "1e4ac1d6b056c077931a767555fdd5536f73f679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
