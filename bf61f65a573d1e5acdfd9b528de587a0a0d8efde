@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83f7ca1a_8fb2b74c",
+        "filename": "media/java/android/media/VolumeProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1949138
+      },
+      "writtenOn": "2023-04-12T13:53:00Z",
+      "side": 1,
+      "message": "Uber-nit: Is this comma necessary?",
+      "range": {
+        "startLine": 96,
+        "startChar": 67,
+        "endLine": 96,
+        "endChar": 68
+      },
+      "revId": "bf61f65a573d1e5acdfd9b528de587a0a0d8efde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
