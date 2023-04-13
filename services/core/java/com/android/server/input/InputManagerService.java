@@ -92,6 +92,7 @@ import android.provider.Settings.SettingNotFoundException;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -158,6 +159,7 @@ public class InputManagerService extends IInputManager.Stub
     static final boolean DEBUG = false;
 
     private static final String EXCLUDED_DEVICES_PATH = "etc/excluded-input-devices.xml";
+    private static final String EXCLUDED_DEVICES_VID_PID_PATH = "etc/excluded-input-devices-vid-pid.xml";
     private static final String PORT_ASSOCIATIONS_PATH = "etc/input-port-associations.xml";
 
     // Feature flag name for the deep press feature
@@ -3081,6 +3083,43 @@ public class InputManagerService extends IInputManager.Stub
             File confFile = new File(baseDir, EXCLUDED_DEVICES_PATH);
             try (InputStream stream = new FileInputStream(confFile)) {
                 names.addAll(ConfigurationProcessor.processExcludedDeviceNames(stream));
+            } catch (FileNotFoundException e) {
+                // It's ok if the file does not exist.
+            } catch (Exception e) {
+                Slog.e(TAG, "Could not parse '" + confFile.getAbsolutePath() + "'", e);
+            }
+        }
+        return names.toArray(new String[0]);
+    }
+
+    /**
+     * Flatten a list of pairs into a string list,
+     * with value positioned directly next to each other.
+     * @return Flattened list
+     */
+    private static <T> String[] flatten(@NonNull List<Pair<T, T>> pairs) {
+        final List<String> list = new ArrayList<>(pairs.size() * 2);
+        for (Pair<String, String> pair : pairs) {
+            list.add(pair.getKey().toString());
+            list.add(pair.getValue().toString());
+        }
+        return list.toArray(new String[0]);
+    }
+
+    // Native callback.
+    @SuppressWarnings("unused")
+    private static String[] getExcludedDevicesPidVid() {
+        List<String> names = new ArrayList<>();
+        // Read partner-provided list of excluded input devices
+        // Environment.getRootDirectory() is a fancy way of saying ANDROID_ROOT or "/system".
+        final File[] baseDirs = {
+            Environment.getRootDirectory(),
+            Environment.getVendorDirectory()
+        };
+        for (File baseDir: baseDirs) {
+            File confFile = new File(baseDir, EXCLUDED_DEVICS_VID_PID_PATH);
+            try (InputStream stream = new FileInputStream(confFile)) {
+                names.addAll(ConfigurationProcessor.processExcludedDevicesVidPid(stream));
             } catch (FileNotFoundException e) {
                 // It's ok if the file does not exist.
             } catch (Exception e) {
