@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "355dfbae_467a01a9",
+        "filename": "services/core/java/com/android/server/input/ConfigurationProcessor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1949170
+      },
+      "writtenOn": "2023-04-13T21:03:52Z",
+      "side": 0,
+      "message": "unrelated whitespace change?",
+      "revId": "52457cc775e4c32a85f0f7326d19d7d1156c6fd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
