@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66fa1190_bdb46560",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-04-14T07:51:12Z",
+      "side": 1,
+      "message": "OK with this but this commit should topic with aosp/2535861",
+      "revId": "f7d348d73f262984d5c3de92e6f20b9b27278dd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
