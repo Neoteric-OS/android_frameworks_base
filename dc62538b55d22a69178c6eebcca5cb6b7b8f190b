@@ -22,6 +22,30 @@
       },
       "revId": "dc62538b55d22a69178c6eebcca5cb6b7b8f190b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "286546a6_d3d39301",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1644,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-14T03:18:10Z",
+      "side": 1,
+      "message": "I understand what you mean but I don\u0027t think we should do it.\n• I\u0027m not 100% sure that everything behaves as non-bypassable when lockdown is on (hopefully it does today, but there might be blind spots), and that may not stay true in the future (in VpnManager, since we have the profile, it should be technically possible to lockdown only the UIDs to which the VPN applies to).\n• I think it\u0027s really hard to understand for VPN authors why sometimes handover is possible when changing bypassability. It\u0027s not obvious how to know whether you\u0027re lockdown. I think we should stick to the simple rule that if you change bypassability in the config then you can\u0027t perform handover.\n\nI added a comment to explain why it\u0027s different here from other places.",
+      "parentUuid": "f91db124_c4d3f9e6",
+      "range": {
+        "startLine": 1644,
+        "startChar": 12,
+        "endLine": 1644,
+        "endChar": 56
+      },
+      "revId": "dc62538b55d22a69178c6eebcca5cb6b7b8f190b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
