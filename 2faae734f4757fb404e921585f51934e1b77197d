@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "197af616_e562fcb2",
+        "filename": "core/api/test-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-04-15T23:39:08Z",
+      "side": 1,
+      "message": "we probably need to make this hidden.",
+      "revId": "2faae734f4757fb404e921585f51934e1b77197d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
