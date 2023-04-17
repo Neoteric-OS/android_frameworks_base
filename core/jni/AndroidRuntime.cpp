@@ -212,7 +212,6 @@ extern int register_com_android_internal_os_ZygoteCommandBuffer(JNIEnv *env);
 extern int register_com_android_internal_os_ZygoteInit(JNIEnv *env);
 extern int register_com_android_internal_security_VerityUtils(JNIEnv* env);
 extern int register_com_android_internal_util_VirtualRefBasePtr(JNIEnv *env);
-extern int register_com_android_modules_expresslog_Utils(JNIEnv* env);
 extern int register_android_window_WindowInfosListener(JNIEnv* env);
 
 // Namespace for Android Runtime flags applied during boot time.
@@ -1600,7 +1599,6 @@ static const RegJNIRec gRegJNI[] = {
         REG_JNI(register_com_android_internal_os_ZygoteInit),
         REG_JNI(register_com_android_internal_security_VerityUtils),
         REG_JNI(register_com_android_internal_util_VirtualRefBasePtr),
-        REG_JNI(register_com_android_modules_expresslog_Utils),
         REG_JNI(register_android_hardware_Camera),
         REG_JNI(register_android_hardware_camera2_CameraMetadata),
         REG_JNI(register_android_hardware_camera2_DngCreator),
