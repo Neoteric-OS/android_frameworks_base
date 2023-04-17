@@ -16,6 +16,23 @@
       "message": "Hi Brad, friendly ping on this. Thanks !",
       "revId": "e6a2a19861bb11d657e945b1aeab99a849e53e0c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01c6786a_7b8a8540",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121894
+      },
+      "writtenOn": "2023-04-17T17:56:45Z",
+      "side": 1,
+      "message": "Brad, friendly ping",
+      "revId": "e6a2a19861bb11d657e945b1aeab99a849e53e0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
