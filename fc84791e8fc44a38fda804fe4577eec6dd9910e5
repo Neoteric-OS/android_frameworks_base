@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "403018e5_db11b114",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-17T14:42:36Z",
+      "side": 1,
+      "message": "We\u0027ve been talking about collecting a CSR in EDI as part of GTS. We\u0027d been talking about adding the factory provisioning tool to the system image, but having the remote_provisioning service offering the interface feels more in keeping with existing patterns IMO. Ideally the implementation would be forwarded to the RKP module but we\u0027re too late to mess with stable AIDL so it\u0027s implemented directly in the system_server instead (that can change in future).\n\nI\u0027d expect that EDI execute something functionally similar to this command:\n\n    adb shell cmd remote_provisioning list --min-version 3 | xargs adb shell cmd remote_provisioning csr --challenge AQEBAQEBAQEBAQEBAQEBAQ\u003d\u003d\n\nIf we did instead want to go with the factory provisioning tools, we\u0027d need to git it a build target for system (it\u0027s currently only vendor) and add it to build/make/target/product/base_system.mk.",
+      "revId": "fc84791e8fc44a38fda804fe4577eec6dd9910e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
