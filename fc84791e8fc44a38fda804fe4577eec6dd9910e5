@@ -16,6 +16,24 @@
       "message": "We\u0027ve been talking about collecting a CSR in EDI as part of GTS. We\u0027d been talking about adding the factory provisioning tool to the system image, but having the remote_provisioning service offering the interface feels more in keeping with existing patterns IMO. Ideally the implementation would be forwarded to the RKP module but we\u0027re too late to mess with stable AIDL so it\u0027s implemented directly in the system_server instead (that can change in future).\n\nI\u0027d expect that EDI execute something functionally similar to this command:\n\n    adb shell cmd remote_provisioning list --min-version 3 | xargs adb shell cmd remote_provisioning csr --challenge AQEBAQEBAQEBAQEBAQEBAQ\u003d\u003d\n\nIf we did instead want to go with the factory provisioning tools, we\u0027d need to git it a build target for system (it\u0027s currently only vendor) and add it to build/make/target/product/base_system.mk.",
       "revId": "fc84791e8fc44a38fda804fe4577eec6dd9910e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09fa745b_2843439e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-17T22:20:51Z",
+      "side": 1,
+      "message": "This looks good to me, as is. I had no idea about the `dump` and `cmd` plumbing. This is nice.\n\nI also don\u0027t see much value in moving the code into rkpd. As you point out, that adds more API stability burden.\n\nThe only benefit of moving the impl into rkpd that I can see is that we could more easily extend the commands via mainline update. However, since this is primarily intended for use in the factory, it\u0027s stuck with whatever commands are available in the factory image anyway.\n\nIf we decide to go this route, I assume you\u0027ll be adding some tests.",
+      "parentUuid": "403018e5_db11b114",
+      "revId": "fc84791e8fc44a38fda804fe4577eec6dd9910e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

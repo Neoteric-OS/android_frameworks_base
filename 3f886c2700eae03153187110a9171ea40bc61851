@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33e8ae95_2dac8c0c",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-17T22:20:51Z",
+      "side": 1,
+      "message": "nit: How about a colon? `name + \":\"`",
+      "range": {
+        "startLine": 120,
+        "startChar": 28,
+        "endLine": 120,
+        "endChar": 32
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10855b24_90d75522",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-17T22:20:51Z",
+      "side": 1,
+      "message": "We should probably differentiate from AIDL version.\n\nWe could call this something like `hwVersion`. The we also dump `aidlVersion` by calling `binder.getInterfaceVersion()`.",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ce76b96_defb53b3",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-17T22:20:51Z",
+      "side": 1,
+      "message": "It would be helpful to print the exception message, too. (maybe even the stack)",
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc18e99d_0ce01a3b",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-17T22:20:51Z",
+      "side": 1,
+      "message": "This is complicated enough that I\u0027m thinking we should unit test it separately (seems doable with a mock Binder).\n\nThis might require breaking the class out so it\u0027s visible to a unit testing package, though.",
+      "range": {
+        "startLine": 156,
+        "startChar": 29,
+        "endLine": 156,
+        "endChar": 59
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b8ae18a_98bb79c2",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-17T22:20:51Z",
+      "side": 1,
+      "message": "Why do we need to filter by min version? I\u0027m not seeing a use case. (i.e. why `--min-version` and not `--max-version`?)\n\nAlso, it\u0027s not clear from the help text if this refers to the hardware info version and aidl version.",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ed09f5f_50cc9628",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-17T22:20:51Z",
+      "side": 1,
+      "message": "Feels like this should be a helper in `RemoteProvisioningService`:\n\n```\nstatic IRemotelyProvisionedComponent getBinder(String name) {\n    String irpc \u003d irpcInterface + \"/\" + name;\n    IRemotelyProvisionedComponent binder \u003d\n            IRemotelyProvisionedComponent.Stub.asInterface(\n                    ServiceManager.waitForDeclaredService(irpc));\n    if (binder \u003d\u003d null) {\n        throw new IllegalArgumentException(\"failed to find \" + irpc);\n    }\n    return binder;\n}\n```\n\nI think this could be reused at all three call sites where the binders are iterated.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 21
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "337aa413_e96fddbd",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-17T22:20:51Z",
+      "side": 1,
+      "message": "Check length?\n\nI think anything between [0, 64] bytes is allowed by the HAL, so maybe we don\u0027t even care if it\u0027s a \"weird\" size.",
+      "range": {
+        "startLine": 237,
+        "startChar": 28,
+        "endLine": 237,
+        "endChar": 37
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
