@@ -254,8 +254,6 @@ cc_library_shared {
                 "libscrypt_static",
                 "libstatssocket_lazy",
                 "libskia",
-                "libtextclassifier_hash_static",
-                "libexpresslog_jni",
             ],
 
             shared_libs: [
