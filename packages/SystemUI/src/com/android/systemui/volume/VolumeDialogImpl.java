@@ -301,6 +301,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private ViewStub mODICaptionsTooltipViewStub;
     private View mODICaptionsTooltipView = null;
     private boolean mHasAlertSlider;
+    private final boolean mVoiceCapable;
 
     private final boolean mUseBackgroundBlur;
     private Consumer<Boolean> mCrossWindowBlurEnabledListener;
@@ -367,6 +368,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             mContext.getResources().getInteger(R.integer.config_dialogHideAnimationDurationMs);
         mUseBackgroundBlur =
             mContext.getResources().getBoolean(R.bool.config_volumeDialogUseBackgroundBlur);
+        mVoiceCapable = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_voice_capable);
         mInteractionJankMonitor = interactionJankMonitor;
         mHasAlertSlider =
             mContext.getResources().getBoolean(com.android.internal.R.bool.config_hasAlertSlider);
@@ -787,12 +790,12 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             addRow(AudioManager.STREAM_MUSIC,
                     R.drawable.ic_volume_media, R.drawable.ic_volume_media_mute, true, true);
             if (!AudioSystem.isSingleVolume(mContext)) {
-                if (mSeparateNotification) {
-                    addRow(AudioManager.STREAM_RING, R.drawable.ic_ring_volume,
+                if (mVoiceCapable) {
+		    addRow(AudioManager.STREAM_RING, R.drawable.ic_ring_volume,
                             R.drawable.ic_ring_volume_off, true, false);
                 } else {
-                    addRow(AudioManager.STREAM_RING, R.drawable.ic_volume_ringer,
-                            R.drawable.ic_volume_ringer_mute, true, false);
+                    addRow(AudioManager.STREAM_RING, R.drawable.ic_volume_notification,
+                            R.drawable.ic_volume_notification_mute, true, false);
                 }
 
                 addRow(STREAM_ALARM,
@@ -1817,7 +1820,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private boolean isExpandableRowH(VolumeRow row) {
         return row != null && row != mDefaultRow && !row.defaultStream
                 && (row.stream == STREAM_RING
-                        || (row.stream == STREAM_NOTIFICATION && mSeparateNotification)
+                        || (row.stream == STREAM_NOTIFICATION && !mState.linkedNotification)
                         || row.stream == STREAM_ALARM
                         || row.stream == STREAM_MUSIC);
     }
@@ -2145,7 +2148,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             final VolumeRow row = mRows.get(i);
             if (row.ss == null || !row.ss.dynamic) continue;
             if (!mDynamic.get(row.stream)) {
-                mRows.remove(i);
+		mRows.remove(i);
                 mDialogRowsView.removeView(row.view);
                 mConfigurableTexts.remove(row.header);
             }
@@ -2174,7 +2177,9 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             }
         }
 
-        updateNotificationRowH();
+        if (mVoiceCapable) {
+            updateNotificationRowH();
+        }
 
         if (mActiveStream != state.activeStream) {
             mPrevActiveStream = mActiveStream;
@@ -2196,10 +2201,10 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 
     private void updateNotificationRowH() {
         VolumeRow notificationRow = findRow(AudioManager.STREAM_NOTIFICATION);
-        if (notificationRow != null && !mSeparateNotification) {
+        if (notificationRow != null && mState.linkedNotification) {
             mRows.remove(notificationRow);
             mDialogRowsView.removeView(notificationRow.view);
-        } else if (notificationRow == null && mSeparateNotification) {
+        } else if (notificationRow == null && !mState.linkedNotification) {
             addRow(AudioManager.STREAM_NOTIFICATION, R.drawable.ic_volume_ringer,
                     R.drawable.ic_volume_ringer_mute, true, false);
         }
