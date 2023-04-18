@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5679cc89_46288ec9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-04-18T02:58:48Z",
+      "side": 1,
+      "message": "LGTM, this is continuation of review at ag/22523436.\nBut someone else should have another look.\nI\u0027ll suggest jchalard@ or sudheersai@.",
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
