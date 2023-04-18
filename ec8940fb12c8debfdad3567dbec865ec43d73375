@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7571b5e7_ca63bda7",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1603,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2023-04-18T03:12:17Z",
+      "side": 0,
+      "message": "not sure why does it fail pre-commit check if the reference to this API is removed",
+      "revId": "ec8940fb12c8debfdad3567dbec865ec43d73375",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
