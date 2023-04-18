@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d53a6717_e8b62439",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-18T17:09:42Z",
+      "side": 1,
+      "message": "AIDL version tells us what the vendor built against, which might be handy? It\u0027s debatable.\n\nEither way, I\u0027d like to see \"version\" explicitly named `hwVersion` or similar just to avoid confusion. I know that I\u0027ve personally be confused a few times between the AIDL and RPC hw info versions.",
+      "parentUuid": "940dc443_d76c8a0c",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ce76b96_defb53b3",
         "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
         "patchSetId": 3
@@ -160,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "773b3b35_73145311",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-18T17:09:42Z",
+      "side": 1,
+      "message": "We will (soon!) be able to decrypt even the old style ones to extract the info we need. So I think it\u0027s useful to grab CSRs from all versions.",
+      "parentUuid": "734acccb_db6facf0",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ed09f5f_50cc9628",
         "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
         "patchSetId": 3
@@ -218,6 +266,30 @@
       "side": 1,
       "message": "I thought the min length was 16 but I see it\u0027s gone all the way down to 0, I\u0027ll make the default be an empty array.\n\nI wan\u0027t planning to add any checks here since [0, 64] is the required supported range and not a strict limit.",
       "parentUuid": "337aa413_e96fddbd",
+      "range": {
+        "startLine": 237,
+        "startChar": 28,
+        "endLine": 237,
+        "endChar": 37
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fafa38c9_49d39380",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-18T17:09:42Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "30e202e5_22c478d7",
       "range": {
         "startLine": 237,
         "startChar": 28,

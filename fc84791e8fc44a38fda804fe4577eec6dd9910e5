@@ -52,6 +52,24 @@
       "parentUuid": "09fa745b_2843439e",
       "revId": "fc84791e8fc44a38fda804fe4577eec6dd9910e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06b2ab77_8d1bec79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-18T17:09:42Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t think about future commands like triggering provisioning manually. That would indeed be neat to have.\n\nI did a little digging, and it\u0027s not clear to me there\u0027s a stable API we can rely on here to pass shell commands into RKPD. Seems like we\u0027d need to make it a new interface.\n\nThe best info on the topic I could find is the thread here: https://groups.google.com/a/google.com/g/android-binder/c/OVnWKJ6wXgk/m/qrgLayO-FAAJ\n\nMy current thinking is that we should ship this as-is, then add the shell command redirect in V.",
+      "parentUuid": "e4fff3df_142da067",
+      "revId": "fc84791e8fc44a38fda804fe4577eec6dd9910e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
