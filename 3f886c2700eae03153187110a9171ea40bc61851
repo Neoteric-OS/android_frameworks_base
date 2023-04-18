@@ -322,6 +322,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0228b6c3_6ba43ed5",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-18T23:27:56Z",
+      "side": 1,
+      "message": "We\u0027ll need a CBOR library for sure to generate correct output for pre-v3. It\u0027s too complicated to build a \"proper\" CSR otherwise.\n\nThere\u0027s a pretty good java library here: https://cs.android.com/android/platform/superproject/+/refs/heads/master:external/cbor-java/src/main/java/co/nstant/in/cbor/model/Array.java\n\nIf we want to make a compatible output to the factory extraction tool, then we need to port [`composeCertificateRequestV1`](https://cs.android.com/android/platform/superproject/+/master:system/security/provisioner/rkp_factory_extraction_lib.cpp;drc\u003d7fc83abf6e5fdfab0c895c9e33363a6d20b0c783;l\u003d109) to java.\n\nI think that\u0027s the right way to go, actually. Because just outputting the protected data as the code does now is insufficient. LMK if you want a hand in porting the code over.",
+      "parentUuid": "d9349b8d_6476a4f5",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ed09f5f_50cc9628",
         "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
         "patchSetId": 3
