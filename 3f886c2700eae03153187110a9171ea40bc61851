@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb63860_8852812b",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T22:13:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33e8ae95_2dac8c0c",
+      "range": {
+        "startLine": 120,
+        "startChar": 28,
+        "endLine": 120,
+        "endChar": 32
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10855b24_90d75522",
@@ -95,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c71fc8bf_27b07613",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T22:13:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d53a6717_e8b62439",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ce76b96_defb53b3",
@@ -112,6 +160,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ec76c73_bde9bc66",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T22:13:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ce76b96_defb53b3",
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc18e99d_0ce01a3b",
@@ -125,6 +191,30 @@
       "writtenOn": "2023-04-17T22:20:51Z",
       "side": 1,
       "message": "This is complicated enough that I\u0027m thinking we should unit test it separately (seems doable with a mock Binder).\n\nThis might require breaking the class out so it\u0027s visible to a unit testing package, though.",
+      "range": {
+        "startLine": 156,
+        "startChar": 29,
+        "endLine": 156,
+        "endChar": 59
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd605790_0a0310d3",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T22:13:09Z",
+      "side": 1,
+      "message": "I\u0027ve hooked something up. I\u0027m haven\u0027t done this sort of testing in a few years so it took a little bit to figure something out :/",
+      "parentUuid": "bc18e99d_0ce01a3b",
       "range": {
         "startLine": 156,
         "startChar": 29,
@@ -208,6 +298,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9349b8d_6476a4f5",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T22:13:09Z",
+      "side": 1,
+      "message": "I\u0027ve added some (untested) lines for pre-v3 HAL impls. At the moment it just returns the protected data but we might want it for package those together like the factory tool does?\n\nIt looks easiest to build the CBOR by hand than figure out a CBOR library to import?",
+      "parentUuid": "773b3b35_73145311",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ed09f5f_50cc9628",
         "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
         "patchSetId": 3
@@ -219,6 +333,30 @@
       "writtenOn": "2023-04-17T22:20:51Z",
       "side": 1,
       "message": "Feels like this should be a helper in `RemoteProvisioningService`:\n\n```\nstatic IRemotelyProvisionedComponent getBinder(String name) {\n    String irpc \u003d irpcInterface + \"/\" + name;\n    IRemotelyProvisionedComponent binder \u003d\n            IRemotelyProvisionedComponent.Stub.asInterface(\n                    ServiceManager.waitForDeclaredService(irpc));\n    if (binder \u003d\u003d null) {\n        throw new IllegalArgumentException(\"failed to find \" + irpc);\n    }\n    return binder;\n}\n```\n\nI think this could be reused at all three call sites where the binders are iterated.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 21
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4714777c_7148fcb6",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T22:13:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed09f5f_50cc9628",
       "range": {
         "startLine": 213,
         "startChar": 0,
