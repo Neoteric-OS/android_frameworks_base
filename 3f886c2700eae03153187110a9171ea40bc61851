@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "940dc443_d76c8a0c",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T13:50:00Z",
+      "side": 1,
+      "message": "Is the AIDL version useful? All the versions in here are `RpcHardwareInfo.versionNumber` because that\u0027s the one that dictates the behaviour of the HAL implementation IIUC.",
+      "parentUuid": "10855b24_90d75522",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ce76b96_defb53b3",
         "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
         "patchSetId": 3
@@ -112,6 +136,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "734acccb_db6facf0",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T13:50:00Z",
+      "side": 1,
+      "message": "The minimum seemed useful for finding the HALs that have plaintext CSRs to pull out in EDI (i.e. they implement `generateCertificateRequestV2()`). It\u0027s all hardware info versions.",
+      "parentUuid": "4b8ae18a_98bb79c2",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ed09f5f_50cc9628",
         "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
         "patchSetId": 3
@@ -146,6 +194,30 @@
       "writtenOn": "2023-04-17T22:20:51Z",
       "side": 1,
       "message": "Check length?\n\nI think anything between [0, 64] bytes is allowed by the HAL, so maybe we don\u0027t even care if it\u0027s a \"weird\" size.",
+      "range": {
+        "startLine": 237,
+        "startChar": 28,
+        "endLine": 237,
+        "endChar": 37
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30e202e5_22c478d7",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T13:50:00Z",
+      "side": 1,
+      "message": "I thought the min length was 16 but I see it\u0027s gone all the way down to 0, I\u0027ll make the default be an empty array.\n\nI wan\u0027t planning to add any checks here since [0, 64] is the required supported range and not a strict limit.",
+      "parentUuid": "337aa413_e96fddbd",
       "range": {
         "startLine": 237,
         "startChar": 28,

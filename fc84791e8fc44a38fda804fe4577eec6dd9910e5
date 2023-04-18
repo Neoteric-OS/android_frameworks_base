@@ -34,6 +34,24 @@
       "parentUuid": "403018e5_db11b114",
       "revId": "fc84791e8fc44a38fda804fe4577eec6dd9910e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4fff3df_142da067",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-18T13:50:00Z",
+      "side": 1,
+      "message": "In future, it could be nice to e.g. have rkpd report the provisioning state in dumpsys, or force trigger a re-provisioning. For now, we can get the basics directly from system_server with the one caveat of needing sepolicy to let system_server call the HALs.\n\nI did notice some mention of `handleShellCommand()` being a stable interface which got me wondering whether the module can include the whole service implementation in some cases but I haven\u0027t looked any further.",
+      "parentUuid": "09fa745b_2843439e",
+      "revId": "fc84791e8fc44a38fda804fe4577eec6dd9910e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
