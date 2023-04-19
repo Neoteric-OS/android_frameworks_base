@@ -438,7 +438,7 @@ final class UsageStatsProtoV2 {
      * @param in the input stream from which to read events.
      * @param stats the interval stats object which will be populated.
      */
-    public static void read(InputStream in, IntervalStats stats) throws IOException {
+    public static void read(InputStream in, IntervalStats stats, UsageStatsDatabase.Filter filter) throws IOException {
         final ProtoInputStream proto = new ProtoInputStream(in);
         while (true) {
             switch (proto.nextField()) {
@@ -469,6 +469,9 @@ final class UsageStatsProtoV2 {
                             stats.keyguardHiddenTracker);
                     break;
                 case (int) IntervalStatsObfuscatedProto.PACKAGES:
+                    if (filter != null && filter.filterUsageStats()) {
+                        break;
+                    }
                     try {
                         final long packagesToken = proto.start(
                                 IntervalStatsObfuscatedProto.PACKAGES);
@@ -482,6 +485,9 @@ final class UsageStatsProtoV2 {
                     }
                     break;
                 case (int) IntervalStatsObfuscatedProto.CONFIGURATIONS:
+                    if (filter != null && filter.filterConfigStats()) {
+                        break;
+                    }
                     try {
                         final long configsToken = proto.start(
                                 IntervalStatsObfuscatedProto.CONFIGURATIONS);
@@ -492,6 +498,9 @@ final class UsageStatsProtoV2 {
                     }
                     break;
                 case (int) IntervalStatsObfuscatedProto.EVENT_LOG:
+                    if (filter != null && filter.filterUsageEvent()) {
+                        break;
+                    }
                     try {
                         final long eventsToken = proto.start(
                                 IntervalStatsObfuscatedProto.EVENT_LOG);
