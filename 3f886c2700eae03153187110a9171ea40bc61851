@@ -346,6 +346,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df7365ad_cd19eed0",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-19T00:28:03Z",
+      "side": 1,
+      "message": "I\u0027ve now ported the composition method. I\u0027m not sure how to test that against a real device and check the CSR is correct though.\n\nI could probably add a few more mock-based tests but otherwise I think this CL is good to go.",
+      "parentUuid": "0228b6c3_6ba43ed5",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ed09f5f_50cc9628",
         "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
         "patchSetId": 3
