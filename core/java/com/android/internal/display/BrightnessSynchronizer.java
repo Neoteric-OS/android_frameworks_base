@@ -135,7 +135,7 @@ public class BrightnessSynchronizer {
      */
     public static float brightnessIntToFloat(int brightnessInt) {
         if (brightnessInt == PowerManager.BRIGHTNESS_OFF) {
-            return PowerManager.BRIGHTNESS_OFF_FLOAT;
+            return PowerManager.BRIGHTNESS_MIN;
         } else if (brightnessInt == PowerManager.BRIGHTNESS_INVALID) {
             return PowerManager.BRIGHTNESS_INVALID_FLOAT;
         } else {
