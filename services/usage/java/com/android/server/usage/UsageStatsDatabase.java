@@ -18,6 +18,7 @@ package com.android.server.usage;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.usage.ConfigurationStats;
 import android.app.usage.TimeSparseArray;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
@@ -53,6 +54,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -237,7 +240,7 @@ public class UsageStatsDatabase {
             try {
                 for (int i = start; i < fileCount - 1; i++) {
                     final IntervalStats stats = new IntervalStats();
-                    readLocked(files.valueAt(i), stats);
+                    readLocked(files.valueAt(i), stats, null);
                     if (!checkinAction.checkin(stats)) {
                         return false;
                     }
@@ -536,7 +539,7 @@ public class UsageStatsDatabase {
                     }
                     try {
                         IntervalStats stats = new IntervalStats();
-                        readLocked(new AtomicFile(files[j]), stats, version, mPackagesTokenData);
+                        readLocked(new AtomicFile(files[j]), stats, version, mPackagesTokenData, null);
                         // Upgrade to version 5+.
                         // Future version upgrades should add additional logic here to upgrade.
                         if (mCurrentVersion >= 5) {
@@ -596,7 +599,7 @@ public class UsageStatsDatabase {
                     try {
                         final IntervalStats stats = new IntervalStats();
                         final AtomicFile atomicFile = new AtomicFile(files[j]);
-                        if (!readLocked(atomicFile, stats, mCurrentVersion, mPackagesTokenData)) {
+                        if (!readLocked(atomicFile, stats, mCurrentVersion, mPackagesTokenData, null)) {
                             continue; // no data was omitted when read so no need to rewrite
                         }
                         // Any data related to packages that have been removed would have failed
@@ -642,7 +645,7 @@ public class UsageStatsDatabase {
                     try {
                         final IntervalStats stats = new IntervalStats();
                         final AtomicFile atomicFile = new AtomicFile(files[j]);
-                        readLocked(atomicFile, stats, mCurrentVersion, mPackagesTokenData);
+                        readLocked(atomicFile, stats, mCurrentVersion, mPackagesTokenData, null);
                         if (!pruneStats(installedPackages, stats)) {
                             continue; // no stats were pruned so no need to rewrite
                         }
@@ -749,7 +752,7 @@ public class UsageStatsDatabase {
             try {
                 final AtomicFile f = mSortedStatFiles[intervalType].valueAt(fileCount - 1);
                 IntervalStats stats = new IntervalStats();
-                readLocked(f, stats);
+                readLocked(f, stats, null);
                 return stats;
             } catch (Exception e) {
                 Slog.e(TAG, "Failed to read usage stats file", e);
@@ -810,6 +813,12 @@ public class UsageStatsDatabase {
         boolean combine(IntervalStats stats, boolean mutable, List<T> accumulatedResult);
     }
 
+    public interface Filter {
+        boolean filterUsageStats();
+        boolean filterConfigStats();
+        boolean filterUsageEvent();
+    }
+
     /**
      * Find all {@link IntervalStats} for the given range and interval type.
      */
@@ -859,6 +868,24 @@ public class UsageStatsDatabase {
                 startIndex = 0;
             }
 
+            final Type type = ((ParameterizedType) combiner.getClass().getGenericInterfaces()[0]).getActualTypeArguments()[0];
+            Filter filter = new Filter() {
+                @Override
+                public boolean filterUsageStats() {
+                    return type != UsageStats.class && type != IntervalStats.class;
+                }
+
+                @Override
+                public boolean filterConfigStats() {
+                    return type != ConfigurationStats.class && type != IntervalStats.class;
+                }
+
+                @Override
+                public boolean filterUsageEvent() {
+                    return type != UsageEvents.Event.class && type != IntervalStats.class;
+                }
+            };
+
             final ArrayList<T> results = new ArrayList<>();
             for (int i = startIndex; i <= endIndex; i++) {
                 final AtomicFile f = intervalStats.valueAt(i);
@@ -869,7 +896,7 @@ public class UsageStatsDatabase {
                 }
 
                 try {
-                    readLocked(f, stats);
+                    readLocked(f, stats, filter);
                     if (beginTime < stats.endTime
                             && !combiner.combine(stats, false, results)) {
                         break;
@@ -979,7 +1006,7 @@ public class UsageStatsDatabase {
                     try {
                         final AtomicFile af = new AtomicFile(f);
                         final IntervalStats stats = new IntervalStats();
-                        readLocked(af, stats);
+                        readLocked(af, stats, null);
                         final int pkgCount = stats.packageStats.size();
                         for (int i = 0; i < pkgCount; i++) {
                             UsageStats pkgStats = stats.packageStats.valueAt(i);
@@ -1081,13 +1108,13 @@ public class UsageStatsDatabase {
      * method. It is up to the caller to ensure that this is the desired behavior - if not, the
      * caller should ensure that the data in the reused object is being cleared.
      */
-    private void readLocked(AtomicFile file, IntervalStats statsOut)
+    private void readLocked(AtomicFile file, IntervalStats statsOut, Filter filter)
             throws IOException, RuntimeException {
         if (mCurrentVersion <= 3) {
             Slog.wtf(TAG, "Reading UsageStats as XML; current database version: "
                     + mCurrentVersion);
         }
-        readLocked(file, statsOut, mCurrentVersion, mPackagesTokenData);
+        readLocked(file, statsOut, mCurrentVersion, mPackagesTokenData, filter);
     }
 
     /**
@@ -1098,13 +1125,13 @@ public class UsageStatsDatabase {
      * caller should ensure that the data in the reused object is being cleared.
      */
     private static boolean readLocked(AtomicFile file, IntervalStats statsOut, int version,
-            PackagesTokenData packagesTokenData) throws IOException, RuntimeException {
+            PackagesTokenData packagesTokenData, Filter filter) throws IOException, RuntimeException {
         boolean dataOmitted = false;
         try {
             FileInputStream in = file.openRead();
             try {
                 statsOut.beginTime = parseBeginTime(file);
-                dataOmitted = readLocked(in, statsOut, version, packagesTokenData);
+                dataOmitted = readLocked(in, statsOut, version, packagesTokenData, filter);
                 statsOut.lastTimeSaved = file.getLastModifiedTime();
             } finally {
                 try {
@@ -1128,7 +1155,7 @@ public class UsageStatsDatabase {
      * caller should ensure that the data in the reused object is being cleared.
      */
     private static boolean readLocked(InputStream in, IntervalStats statsOut, int version,
-            PackagesTokenData packagesTokenData) throws RuntimeException {
+            PackagesTokenData packagesTokenData, Filter filter) throws RuntimeException {
         boolean dataOmitted = false;
         switch (version) {
             case 1:
@@ -1150,7 +1177,7 @@ public class UsageStatsDatabase {
                 break;
             case 5:
                 try {
-                    UsageStatsProtoV2.read(in, statsOut);
+                    UsageStatsProtoV2.read(in, statsOut, filter);
                 } catch (Exception e) {
                     Slog.e(TAG, "Unable to read interval stats from proto.", e);
                 }
@@ -1425,7 +1452,7 @@ public class UsageStatsDatabase {
             throws IOException {
         IntervalStats stats = new IntervalStats();
         try {
-            readLocked(statsFile, stats);
+            readLocked(statsFile, stats, null);
         } catch (IOException e) {
             Slog.e(TAG, "Failed to read usage stats file", e);
             out.writeInt(0);
@@ -1470,7 +1497,7 @@ public class UsageStatsDatabase {
         IntervalStats stats = new IntervalStats();
         try {
             stats.beginTime = in.readLong();
-            readLocked(in, stats, version, mPackagesTokenData);
+            readLocked(in, stats, version, mPackagesTokenData, null);
         } catch (Exception e) {
             Slog.d(TAG, "DeSerializing IntervalStats Failed", e);
             stats = null;
@@ -1561,7 +1588,7 @@ public class UsageStatsDatabase {
         synchronized (mLock) {
             final IntervalStats stats = new IntervalStats();
             try {
-                readLocked(mSortedStatFiles[interval].get(fileName, null), stats);
+                readLocked(mSortedStatFiles[interval].get(fileName, null), stats, null);
                 return stats;
             } catch (Exception e) {
                 return null;
