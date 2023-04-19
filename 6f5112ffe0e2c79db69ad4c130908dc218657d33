@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "813d6d51_2bce20a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2023-04-19T16:47:07Z",
+      "side": 1,
+      "message": "Trivial cherry-pick from master branch.",
+      "revId": "6f5112ffe0e2c79db69ad4c130908dc218657d33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
