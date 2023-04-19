@@ -370,6 +370,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a398fd37_f7d15950",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-19T18:18:29Z",
+      "side": 1,
+      "message": "Once we get a CSR from a real device, I can help test it. Unfortunately I\u0027m only able to (easily) validate on a new device that already supports v3 HALs.\n\nIf you get a CSR from a v2 device, I can help with validation.",
+      "parentUuid": "df7365ad_cd19eed0",
+      "range": {
+        "startLine": 162,
+        "startChar": 28,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "3f886c2700eae03153187110a9171ea40bc61851",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ed09f5f_50cc9628",
         "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
         "patchSetId": 3
