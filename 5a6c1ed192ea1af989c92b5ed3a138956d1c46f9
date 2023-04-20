@@ -39,6 +39,30 @@
       },
       "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d8e4057_43e01be1",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1935010
+      },
+      "writtenOn": "2023-04-20T19:25:05Z",
+      "side": 1,
+      "message": "There is one other place where makeBlink is called its called in onfocusChanged.  It would not be much work to consolidate the two methods.  I do think having only one place where blink is resumed is cleaner and easier to follow.",
+      "parentUuid": "6ef7e752_fe197b1e",
+      "range": {
+        "startLine": 712,
+        "startChar": 8,
+        "endLine": 715,
+        "endChar": 22
+      },
+      "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
