@@ -63,6 +63,30 @@
       },
       "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4305f303_a05bc762",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1935010
+      },
+      "writtenOn": "2023-04-20T22:05:01Z",
+      "side": 1,
+      "message": "Spoke with Carmen and decided to address any additional changes/clean up in a separate cl.  Unless, it is preferred to be handled in this change by code owners.",
+      "parentUuid": "0d8e4057_43e01be1",
+      "range": {
+        "startLine": 712,
+        "startChar": 8,
+        "endLine": 715,
+        "endChar": 22
+      },
+      "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
