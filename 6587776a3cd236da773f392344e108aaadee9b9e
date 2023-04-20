@@ -22,6 +22,30 @@
       },
       "revId": "6587776a3cd236da773f392344e108aaadee9b9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5e04a54_e2a90daf",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2023-04-20T16:31:38Z",
+      "side": 1,
+      "message": "lol, it does default to 4. What the heck is up with that?\n\nhttps://cs.android.com/android/platform/superproject/+/master:hardware/interfaces/security/rkp/aidl/android/hardware/security/keymint/RpcHardwareInfo.aidl;drc\u003d8d046265b87f5b40c341accc72246a24d36b5e99;l\u003d92\n\nSeems buggy.",
+      "parentUuid": "269775ee_8b3bd66b",
+      "range": {
+        "startLine": 137,
+        "startChar": 32,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "6587776a3cd236da773f392344e108aaadee9b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
