@@ -16,6 +16,29 @@
       "message": "PTAL Thanks!",
       "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ef7e752_fe197b1e",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1170070
+      },
+      "writtenOn": "2023-04-20T19:15:07Z",
+      "side": 1,
+      "message": "Thanks for the comments, this makes sense!\n\nConsidering this edge case, is there any case where we still call makeBlink outside of resumeBlink? (or might we want to?)\n\nIf not, maybe it\u0027s more future-proof to consolidate those two functions (moving the existing makeBlink into resumeBlink). What do you think?",
+      "range": {
+        "startLine": 712,
+        "startChar": 8,
+        "endLine": 715,
+        "endChar": 22
+      },
+      "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
