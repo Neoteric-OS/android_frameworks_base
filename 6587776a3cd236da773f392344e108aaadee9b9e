@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "269775ee_8b3bd66b",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningShellCommand.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-20T15:52:49Z",
+      "side": 1,
+      "message": "Looking at the generated code for RpcHardwareInfo, supportedNumKeysInCsr will default to 4 if the HAL wasn\u0027t aware of the field.",
+      "range": {
+        "startLine": 137,
+        "startChar": 32,
+        "endLine": 137,
+        "endChar": 35
+      },
+      "revId": "6587776a3cd236da773f392344e108aaadee9b9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
