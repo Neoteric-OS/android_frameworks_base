@@ -16,6 +16,41 @@
       "message": "Whoops, I left some comments on the UDC cherry-pick",
       "revId": "6751b14ccb81e2fdc5ffaf1c40e800880b4e1ffb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9d98b41_4cde4b70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-20T13:37:58Z",
+      "side": 1,
+      "message": "The UDC one is the first one that\u0027s going in. I\u0027ll address those comments in a follow up so as not to mess around with the Android.bp conflict further.\n\nNoting the comments here:\n - supportedNumKeysInCsr only exists from v3, so gate the dumping\n - print the unknown options",
+      "parentUuid": "c066c008_9ff31e45",
+      "revId": "6751b14ccb81e2fdc5ffaf1c40e800880b4e1ffb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eea00c71_c044b6a9",
+        "filename": "services/core/java/com/android/server/security/rkp/RemoteProvisioningService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2023-04-20T13:37:58Z",
+      "side": 1,
+      "message": "revert",
+      "revId": "6751b14ccb81e2fdc5ffaf1c40e800880b4e1ffb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
