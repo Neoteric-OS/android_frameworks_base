@@ -168,6 +168,30 @@
       },
       "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23d52155_552821a5",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2869,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2023-04-21T18:03:07Z",
+      "side": 1,
+      "message": "tldr: I would approach as defensive as possible. \n\nThe comment in the following code threw me off:\n\nhttps://source.corp.google.com/android-internal/frameworks/base/core/java/android/widget/TextView.java;l\u003d2467?q\u003dTextView.java\u0026ct\u003dos\u0026sq\u003dpackage:android\n\nBased on the code comment, and the code itself, it seems like makeBlink is actually `startOrSuspendBlink()` which can ideally be\n\n```\nfun makeBlink() {\n   if(shouldBlink()) resumeBlink else suspendBlink.  \n}\n```\n\nHaving said that, what I and the team learned is the more we try to optimize textview or solve bugs; we create more bugs. All the effort spent is spent on creating more bugs; and that becomes a bigger issue with the fact that we cannot update older versions therefore cannot iterate/converge on the quality. Therefore we choose to be defensive about the scale of changes if we don\u0027t have to.",
+      "parentUuid": "f4ba3faa_87117c02",
+      "range": {
+        "startLine": 2869,
+        "startChar": 16,
+        "endLine": 2869,
+        "endChar": 22
+      },
+      "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
