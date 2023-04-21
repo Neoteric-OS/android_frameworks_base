@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bb4f1a5_64fc5b6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1041813
+      },
+      "writtenOn": "2023-04-21T16:50:39Z",
+      "side": 1,
+      "message": "This is confirmed with the beagle_x15 build, after revert the build boot to homescreen again.",
+      "revId": "a9c63ca10812126b681f3d955b72078c31519081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
