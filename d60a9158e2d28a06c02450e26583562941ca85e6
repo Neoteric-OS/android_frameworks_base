@@ -70,6 +70,24 @@
       "parentUuid": "80f8dab0_d45820d1",
       "revId": "d60a9158e2d28a06c02450e26583562941ca85e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cabe1a5_b2c1c884",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-04-21T14:40:28Z",
+      "side": 1,
+      "message": "Updated code will be included in the next official release.",
+      "parentUuid": "7d68948f_b65c940b",
+      "revId": "d60a9158e2d28a06c02450e26583562941ca85e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
