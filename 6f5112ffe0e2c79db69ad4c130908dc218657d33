@@ -33,6 +33,24 @@
       "message": "Please merge aosp/2541630 first.",
       "revId": "6f5112ffe0e2c79db69ad4c130908dc218657d33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e2cd1d6_4e752680",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2023-04-21T16:17:03Z",
+      "side": 1,
+      "message": "Thanks Hung-ying, aosp/2541630 is now merged.",
+      "parentUuid": "9b5e3764_d99b0c1b",
+      "revId": "6f5112ffe0e2c79db69ad4c130908dc218657d33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
