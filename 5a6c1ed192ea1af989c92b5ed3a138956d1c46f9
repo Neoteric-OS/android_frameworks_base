@@ -144,6 +144,30 @@
       },
       "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4ba3faa_87117c02",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2869,
+      "author": {
+        "id": 1935010
+      },
+      "writtenOn": "2023-04-21T17:50:17Z",
+      "side": 1,
+      "message": "There could potentially be an issue as makeBlink is still called directly from onFocusChanged and we have the potential to run into the non null Blink case I was not able to trigger it while testing but does not mean its not there.  The only other place makeBlink is called is in resumeBlink which has the null check and mBlink.uncancel() call.\n\nI do think calling mBlink.uncancel() in makeBlink is a good idea, would be more defensive than what we have now.  \n\nThere is another option, Carmen and I spoke yesterday about consolidating the logic in makeBlink into resumeBlink and swapping out all makeBlink calls to resumeBlink. What do you think about going that way?",
+      "parentUuid": "f3989e3a_2e08dbfe",
+      "range": {
+        "startLine": 2869,
+        "startChar": 16,
+        "endLine": 2869,
+        "endChar": 22
+      },
+      "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
