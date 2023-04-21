@@ -104,6 +104,29 @@
       },
       "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3989e3a_2e08dbfe",
+        "filename": "core/java/android/widget/Editor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2869,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2023-04-21T17:01:32Z",
+      "side": 1,
+      "message": "Do you think there is something wrong here?\n\nmakeBlink in this if branch tries to \"resume\" the blink if it is suspended. \n\nIf blink object is null, it is created from scratch, and therefore the internal state of Blink is `mCancelled \u003d false`\n\nhowever if it was canceled before, and the object is there, it is never resumed.\n\nDo you think making makeBlink to mBlink.uncancel() is a good idea here ?",
+      "range": {
+        "startLine": 2869,
+        "startChar": 16,
+        "endLine": 2869,
+        "endChar": 22
+      },
+      "revId": "5a6c1ed192ea1af989c92b5ed3a138956d1c46f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
