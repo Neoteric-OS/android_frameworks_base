@@ -48,6 +48,7 @@ import android.net.INetdUnsolicitedEventListener;
 import android.net.INetworkManagementEventObserver;
 import android.net.ITetheringStatsProvider;
 import android.net.InetAddresses;
+import android.net.InterfaceActivityParcel;
 import android.net.InterfaceConfiguration;
 import android.net.InterfaceConfigurationParcel;
 import android.net.IpPrefix;
@@ -571,17 +572,19 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     }
 
     private class NetdUnsolicitedEventListener extends INetdUnsolicitedEventListener.Stub {
+        private long getActivityTimestampNs(final long timestampNs) {
+            if (timestampNs <= 0) {
+                return SystemClock.elapsedRealtimeNanos();
+            }
+            return timestampNs;
+        }
+
         @Override
         public void onInterfaceClassActivityChanged(boolean isActive,
                 int label, long timestamp, int uid) throws RemoteException {
-            final long timestampNanos;
-            if (timestamp <= 0) {
-                timestampNanos = SystemClock.elapsedRealtimeNanos();
-            } else {
-                timestampNanos = timestamp;
-            }
+            final long timestampNs = getActivityTimestampNs(timestamp);
             mDaemonHandler.post(() ->
-                    notifyInterfaceClassActivity(label, isActive, timestampNanos, uid));
+                    notifyInterfaceClassActivity(label, isActive, timestampNs, uid));
         }
 
         @Override
@@ -657,6 +660,14 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
         @Override
         public String getInterfaceHash() {
             return INetdUnsolicitedEventListener.HASH;
+        }
+
+        @Override
+        public void onInterfaceClassActivityChangedParcel(InterfaceActivityParcel activity)
+                throws RemoteException {
+            final long timestampNs = getActivityTimestampNs(activity.timestampNs);
+            mDaemonHandler.post(() -> notifyInterfaceClassActivity(activity.transportType,
+                    activity.isActive, timestampNs, activity.uid));
         }
     }
 
