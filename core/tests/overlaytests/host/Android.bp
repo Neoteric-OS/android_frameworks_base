@@ -28,7 +28,7 @@ java_test_host {
     test_suites: [
         "device-tests",
     ],
-    target_required: [
+    data: [
         "OverlayHostTests_NonPlatformSignatureOverlay",
         "OverlayHostTests_PlatformSignatureStaticOverlay",
         "OverlayHostTests_PlatformSignatureOverlay",
