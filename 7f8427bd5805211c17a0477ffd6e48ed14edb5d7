@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33771a70_a364fdd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-04-24T19:45:27Z",
+      "side": 1,
+      "message": "Adding patrick for owner\u0027s review.",
+      "revId": "7f8427bd5805211c17a0477ffd6e48ed14edb5d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d26be4a1_b24c79a8",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6027,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-04-24T19:45:27Z",
+      "side": 1,
+      "message": "nit: This can be one line. \n\n```\n    \u003cstring name\u003d\"config_systemNfcStack\" translatable\u003d\"false\"\u003ecom.android.nfc\u003c/string\u003e\n    \n```",
+      "range": {
+        "startLine": 6025,
+        "startChar": 0,
+        "endLine": 6027,
+        "endChar": 13
+      },
+      "revId": "7f8427bd5805211c17a0477ffd6e48ed14edb5d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
