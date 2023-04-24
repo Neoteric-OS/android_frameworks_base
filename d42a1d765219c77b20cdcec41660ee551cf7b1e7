@@ -16,6 +16,190 @@
       "message": "LGTM, this is continuation of review at ag/22523436.\nBut someone else should have another look.\nI\u0027ll suggest jchalard@ or sudheersai@.",
       "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1300ac55_fab3fd34",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-24T03:22:35Z",
+      "side": 1,
+      "message": "This does IPC to the phone process, so we should at least have a comment to not use this with locks held – if not actual enforcement.",
+      "range": {
+        "startLine": 807,
+        "startChar": 39,
+        "endLine": 807,
+        "endChar": 67
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3627c5a2_52c4611f",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-24T03:22:35Z",
+      "side": 1,
+      "message": "This will IPC to the phone process at this time – are we sure it\u0027s up yet ?",
+      "range": {
+        "startLine": 840,
+        "startChar": 39,
+        "endLine": 840,
+        "endChar": 62
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c0c1209_098cb118",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-24T03:22:35Z",
+      "side": 1,
+      "message": "Are we sure this is running on the handler thread ? I think sometimes it\u0027s not, and then this member is not necessarily up to date.",
+      "range": {
+        "startLine": 1488,
+        "startChar": 25,
+        "endLine": 1488,
+        "endChar": 67
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "accffde0_0a40fc71",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-24T03:22:35Z",
+      "side": 1,
+      "message": "What happens when the subId that\u0027s over quota becomes the active sub again ? Do we show the warnings then ? If I\u0027m following the tests correctly we do ; I think this warrants a comment here.\n\nOtherwise, it\u0027s possible that you go over quota on a sub while it\u0027s neither default or active, and then you never realize it\u0027s over quota even when you switch back.",
+      "range": {
+        "startLine": 1489,
+        "startChar": 75,
+        "endLine": 1489,
+        "endChar": 83
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64232150_e4f7259c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-24T03:22:35Z",
+      "side": 1,
+      "message": "Is this related to this patch or should it go to another patch ?",
+      "range": {
+        "startLine": 2123,
+        "startChar": 41,
+        "endLine": 2123,
+        "endChar": 67
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed31e66d_eda0c5bf",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-24T03:22:35Z",
+      "side": 1,
+      "message": "It looks unexpected that a method called `setupTelephonySubscriptionManagers` would have a side effect on an `mNotifManager` member.",
+      "range": {
+        "startLine": 2418,
+        "startChar": 25,
+        "endLine": 2418,
+        "endChar": 38
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc93778a_b7a13cba",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2427,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-24T03:22:35Z",
+      "side": 1,
+      "message": "DefaultAndActive ? Or reverse arguments ; in any case the order should match arguments",
+      "range": {
+        "startLine": 2427,
+        "startChar": 23,
+        "endLine": 2427,
+        "endChar": 39
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fdc979e_3695499a",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2429,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-24T03:22:35Z",
+      "side": 1,
+      "message": "Suggest making the member of this type and casting at assignment instead, to avoid having other casts like this elsewhere in the future",
+      "range": {
+        "startLine": 2429,
+        "startChar": 10,
+        "endLine": 2429,
+        "endChar": 61
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
