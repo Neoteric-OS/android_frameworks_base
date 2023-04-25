@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da64b25a_2be09af7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-04-25T21:06:31Z",
+      "side": 1,
+      "message": "lgtm, but any thought to symlink build/soong/scripts/system-clang-format instead?",
+      "revId": "343b651b8aada38951cb9e2ce653d08dda44d96b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
