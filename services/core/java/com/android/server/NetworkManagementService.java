@@ -327,10 +327,10 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     /**
      * Notify our observers of a change in the data activity state of the interface
      */
-    private void notifyInterfaceClassActivity(int type, boolean isActive, long tsNanos,
+    private void notifyInterfaceClassActivity(int netId, boolean isActive, long tsNanos,
             int uid) {
         invokeForAllObservers(o -> o.interfaceClassDataActivityChanged(
-                type, isActive, tsNanos, uid));
+                netId, isActive, tsNanos, uid));
     }
 
     // Sync the state of the given chain with the native daemon.

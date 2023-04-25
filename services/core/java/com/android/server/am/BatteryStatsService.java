@@ -92,6 +92,7 @@ import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.ParseUtils;
 import com.android.internal.util.function.pooled.PooledLambda;
+import com.android.net.Flags;
 import com.android.net.module.util.NetworkCapabilitiesUtils;
 import com.android.net.module.util.PermissionUtils;
 import com.android.server.LocalServices;
@@ -381,7 +382,9 @@ public final class BatteryStatsService extends IBatteryStats.Stub
         final ConnectivityManager cm = mContext.getSystemService(ConnectivityManager.class);
         try {
             nms.registerObserver(mActivityChangeObserver);
-            cm.registerDefaultNetworkCallback(mNetworkCallback);
+            if (!Flags.trackMultipleNetworkActivities) {
+                cm.registerDefaultNetworkCallback(mNetworkCallback);
+            }
         } catch (RemoteException e) {
             Slog.e(TAG, "Could not register INetworkManagement event observer " + e);
         }
