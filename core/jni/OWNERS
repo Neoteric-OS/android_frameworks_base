@@ -52,6 +52,8 @@ per-file android_hardware_SensorManager* = arthuri@google.com, bduddie@google.co
 per-file *Zygote* = file:/ZYGOTE_OWNERS
 per-file core_jni_helpers.* = file:/ZYGOTE_OWNERS
 per-file fd_utils.* = file:/ZYGOTE_OWNERS
+per-file .clang-format = zyy@google.com
+per-file Android.bp = zyy@google.com
 per-file Android.bp = file:platform/build/soong:/OWNERS #{LAST_RESORT_SUGGESTION}
 per-file android_animation_* = file:/core/java/android/animation/OWNERS
 per-file android_app_admin_* = file:/core/java/android/app/admin/OWNERS
@@ -102,3 +104,7 @@ per-file com_android_internal_os_*MultiStateCounter* = file:/BATTERY_STATS_OWNER
 
 # PM
 per-file com_android_internal_content_* = file:/PACKAGE_MANAGER_OWNERS
+
+# Incremental
+per-file android_service_DataLoaderService.cpp = alexbuy@google.com, zyy@google.com
+per-file android_os_incremental_* = alexbuy@google.com, zyy@google.com
