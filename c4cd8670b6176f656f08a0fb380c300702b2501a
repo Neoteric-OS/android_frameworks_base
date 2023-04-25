@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bae5cae6_42f236ec",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-04-25T13:57:43Z",
+      "side": 1,
+      "message": "We need to find a way to exclude this error code from the tes. This error code is handled by Keystore, it should never make it to the Java layer.",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 98
+      },
+      "revId": "c4cd8670b6176f656f08a0fb380c300702b2501a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41e12d74_b3303767",
+        "filename": "keystore/java/android/security/KeyStoreException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-04-25T13:57:43Z",
+      "side": 1,
+      "message": "To be dropped when we exclude the KM error code (as mentioned in the comment above).",
+      "range": {
+        "startLine": 604,
+        "startChar": 0,
+        "endLine": 605,
+        "endChar": 47
+      },
+      "revId": "c4cd8670b6176f656f08a0fb380c300702b2501a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
