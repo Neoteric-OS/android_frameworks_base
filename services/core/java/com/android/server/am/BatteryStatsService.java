@@ -17,7 +17,6 @@
 package com.android.server.am;
 
 import static android.Manifest.permission.BATTERY_STATS;
-import static android.Manifest.permission.BLUETOOTH_CONNECT;
 import static android.Manifest.permission.DEVICE_POWER;
 import static android.Manifest.permission.NETWORK_STACK;
 import static android.Manifest.permission.POWER_SAVER;
@@ -27,6 +26,8 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.BatteryStats.POWER_DATA_UNAVAILABLE;
+
+import static com.android.net.flags.Flags.trackMultipleNetworkActivities;
 
 import android.annotation.EnforcePermission;
 import android.annotation.NonNull;
@@ -426,7 +427,12 @@ public final class BatteryStatsService extends IBatteryStats.Stub
                 ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
         final ConnectivityManager cm = mContext.getSystemService(ConnectivityManager.class);
         try {
-            nms.registerObserver(mActivityChangeObserver);
+            if (!trackMultipleNetworkActivities()) {
+                // If trackMultipleNetworkActivities flag is enabled, ConnectivityService calls
+                // BatteryStats API to update RadioPowerState change. So BatteryStatsService
+                // registers the callback only when this flag is disabled.
+                nms.registerObserver(mActivityChangeObserver);
+            }
             cm.registerDefaultNetworkCallback(mNetworkCallback);
         } catch (RemoteException e) {
             Slog.e(TAG, "Could not register INetworkManagement event observer " + e);
