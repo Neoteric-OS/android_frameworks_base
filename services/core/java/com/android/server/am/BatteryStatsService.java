@@ -33,7 +33,6 @@ import android.hardware.power.stats.State;
 import android.hardware.power.stats.StateResidency;
 import android.hardware.power.stats.StateResidencyResult;
 import android.net.ConnectivityManager;
-import android.net.INetworkManagementEventObserver;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.BatteryConsumer;
@@ -96,7 +95,6 @@ import com.android.net.module.util.NetworkCapabilitiesUtils;
 import com.android.net.module.util.PermissionUtils;
 import com.android.server.LocalServices;
 import com.android.server.Watchdog;
-import com.android.server.net.BaseNetworkObserver;
 import com.android.server.pm.UserManagerInternal;
 
 import java.io.File;
@@ -167,35 +165,6 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     private int mLastPowerStateFromRadio = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
     @GuardedBy("mStats")
     private int mLastPowerStateFromWifi = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
-    private final INetworkManagementEventObserver mActivityChangeObserver =
-            new BaseNetworkObserver() {
-                @Override
-                public void interfaceClassDataActivityChanged(int transportType, boolean active,
-                        long tsNanos, int uid) {
-                    final int powerState = active
-                            ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
-                            : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
-                    final long timestampNanos;
-                    if (tsNanos <= 0) {
-                        timestampNanos = SystemClock.elapsedRealtimeNanos();
-                    } else {
-                        timestampNanos = tsNanos;
-                    }
-
-                    switch (transportType) {
-                        case NetworkCapabilities.TRANSPORT_CELLULAR:
-                            noteMobileRadioPowerState(powerState, timestampNanos, uid);
-                            break;
-                        case NetworkCapabilities.TRANSPORT_WIFI:
-                            noteWifiRadioPowerState(powerState, timestampNanos, uid);
-                            break;
-                        default:
-                            Slog.d(TAG, "Received unexpected transport in "
-                                    + "interfaceClassDataActivityChanged unexpected type: "
-                                    + transportType);
-                    }
-                }
-            };
 
     private BatteryManagerInternal mBatteryManagerInternal;
 
@@ -380,7 +349,6 @@ public final class BatteryStatsService extends IBatteryStats.Stub
                 ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
         final ConnectivityManager cm = mContext.getSystemService(ConnectivityManager.class);
         try {
-            nms.registerObserver(mActivityChangeObserver);
             cm.registerDefaultNetworkCallback(mNetworkCallback);
         } catch (RemoteException e) {
             Slog.e(TAG, "Could not register INetworkManagement event observer " + e);
