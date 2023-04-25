@@ -3245,29 +3245,28 @@ public class AudioService extends IAudioService.Stub
         // reset any pending volume command
         synchronized (mSafeMediaVolumeStateLock) {
             mPendingVolumeCommand = null;
-        }
 
-        flags &= ~AudioManager.FLAG_FIXED_VOLUME;
-        if (streamTypeAlias == AudioSystem.STREAM_MUSIC && isFixedVolumeDevice(device)) {
-            flags |= AudioManager.FLAG_FIXED_VOLUME;
+            flags &= ~AudioManager.FLAG_FIXED_VOLUME;
+            if (streamTypeAlias == AudioSystem.STREAM_MUSIC && isFixedVolumeDevice(device)) {
+                flags |= AudioManager.FLAG_FIXED_VOLUME;
 
-            // Always toggle between max safe volume and 0 for fixed volume devices where safe
-            // volume is enforced, and max and 0 for the others.
-            // This is simulated by stepping by the full allowed volume range
-            if (mSafeMediaVolumeState == SAFE_MEDIA_VOLUME_ACTIVE &&
-                    mSafeMediaVolumeDevices.contains(device)) {
-                step = safeMediaVolumeIndex(device);
+                // Always toggle between max safe volume and 0 for fixed volume devices where safe
+                // volume is enforced, and max and 0 for the others.
+                // This is simulated by stepping by the full allowed volume range
+                if (mSafeMediaVolumeState == SAFE_MEDIA_VOLUME_ACTIVE &&
+                        mSafeMediaVolumeDevices.contains(device)) {
+                    step = safeMediaVolumeIndex(device);
+                } else {
+                    step = streamState.getMaxIndex();
+                }
+                if (aliasIndex != 0) {
+                    aliasIndex = step;
+                }
             } else {
-                step = streamState.getMaxIndex();
+                // convert one UI step (+/-1) into a number of internal units on the stream alias
+                step = rescaleStep(10, streamType, streamTypeAlias);
             }
-            if (aliasIndex != 0) {
-                aliasIndex = step;
-            }
-        } else {
-            // convert one UI step (+/-1) into a number of internal units on the stream alias
-            step = rescaleStep(10, streamType, streamTypeAlias);
         }
-
         // If either the client forces allowing ringer modes for this adjustment,
         // or the stream type is one that is affected by ringer modes
         if (((flags & AudioManager.FLAG_ALLOW_RINGER_MODES) != 0) ||
