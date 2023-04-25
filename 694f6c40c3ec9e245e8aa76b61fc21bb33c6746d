@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ea62c58_5739306f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2023-04-25T17:50:28Z",
+      "side": 1,
+      "message": "Use `create()` below",
+      "range": {
+        "startLine": 3145,
+        "startChar": 12,
+        "endLine": 3148,
+        "endChar": 13
+      },
+      "revId": "694f6c40c3ec9e245e8aa76b61fc21bb33c6746d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b7bb524_a4edc2fe",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3156,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2023-04-25T17:50:28Z",
+      "side": 1,
+      "message": "```java\nprivate static LinearBlock create() { ... }\n```",
+      "revId": "694f6c40c3ec9e245e8aa76b61fc21bb33c6746d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a03fdecb_626b3779",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2023-04-25T17:50:28Z",
+      "side": 1,
+      "message": "line too long",
+      "revId": "694f6c40c3ec9e245e8aa76b61fc21bb33c6746d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
