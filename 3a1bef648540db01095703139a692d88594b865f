@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e163b23_9f350803",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2023-04-26T10:10:18Z",
+      "side": 1,
+      "message": "The standby behaviour for playback devices \u0026 TVs looks similar with the behaviour proposed in this CL.",
+      "revId": "3a1bef648540db01095703139a692d88594b865f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28300bae_dfeaed37",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2023-04-26T10:10:18Z",
+      "side": 1,
+      "message": "Could you please split this comment into two lines?",
+      "range": {
+        "startLine": 234,
+        "startChar": 8,
+        "endLine": 234,
+        "endChar": 103
+      },
+      "revId": "3a1bef648540db01095703139a692d88594b865f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
