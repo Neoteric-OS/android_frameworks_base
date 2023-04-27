@@ -39,13 +39,16 @@ import android.content.om.OverlayInfo;
 import android.content.pm.UserPackage;
 import android.content.pm.overlay.OverlayPaths;
 import android.content.pm.parsing.FrameworkParsingPackageUtils;
+import android.os.Binder;
 import android.os.FabricatedOverlayInfo;
 import android.os.FabricatedOverlayInternal;
+import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Pair;
 import android.util.Slog;
+
 
 import com.android.internal.content.om.OverlayConfig;
 import com.android.internal.util.CollectionUtils;
@@ -535,6 +538,11 @@ final class OverlayManagerServiceImpl {
         final Set<UserPackage> updatedTargets = new ArraySet<>();
         for (int userId : mSettings.getUsers()) {
             updatedTargets.addAll(registerFabricatedOverlay(info, userId));
+        }
+        if (updatedTargets.size() == 0) {
+            int currntUserId = UserHandle.getUserId(Binder.getCallingUid());
+            updatedTargets.addAll(registerFabricatedOverlay(info, currntUserId));
+            Slog.i(TAG, "registerFabricatedOverlay for current user : " + currntUserId);
         }
         return updatedTargets;
     }
