@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b95e3c56_ee9e106f",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2023-04-27T13:31:06Z",
+      "side": 1,
+      "message": "Is this required to be called on HdmiCecLocalDeviceTv?",
+      "range": {
+        "startLine": 1319,
+        "startChar": 8,
+        "endLine": 1319,
+        "endChar": 24
+      },
+      "revId": "0dc52bfe379541ff220e51b98d65a62066900bab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

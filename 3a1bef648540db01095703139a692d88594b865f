@@ -43,6 +43,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bc0e2f5b_be44f372",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2023-04-27T13:31:06Z",
+      "side": 1,
+      "message": "nit: actions.",
+      "range": {
+        "startLine": 1128,
+        "startChar": 18,
+        "endLine": 1128,
+        "endChar": 25
+      },
+      "revId": "3a1bef648540db01095703139a692d88594b865f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28300bae_dfeaed37",
         "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
         "patchSetId": 1
