@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a3c03c76_0be2deac",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-27T04:31:21Z",
+      "side": 1,
+      "message": "I don\u0027t think so, but I don\u0027t own this code – please see with sudheersai@ for this.",
+      "parentUuid": "2a7d15ae_bc5bac6d",
+      "range": {
+        "startLine": 807,
+        "startChar": 39,
+        "endLine": 807,
+        "endChar": 67
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3627c5a2_52c4611f",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 1
@@ -114,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9719a26a_d7e6dda2",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-27T04:31:21Z",
+      "side": 1,
+      "message": "Have you tested this ? I fear it may send RemoteException, which in this place would crash the system (and possibly cause a boot loop).\n\nAlso, if it uses INVALID_SUBSCRIPTION_ID, then in systemReady this will lead to the wrong result in updateNotificationsNL – is that fine ?",
+      "parentUuid": "4beaf78f_7a331939",
+      "range": {
+        "startLine": 840,
+        "startChar": 39,
+        "endLine": 840,
+        "endChar": 62
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c0c1209_098cb118",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 1
@@ -149,6 +197,30 @@
       "side": 1,
       "message": "Could you please elaborate? I think whenever `mActiveDataSubId` and `mDefaultDataSubId` change, `updateNotificationsNL` will be evoked, so it\u0027s ok if other evocation of `updateNotificationsNL` holds outdated `mActiveDataSubId`/`mDefaultDataSubId`.",
       "parentUuid": "4c0c1209_098cb118",
+      "range": {
+        "startLine": 1488,
+        "startChar": 25,
+        "endLine": 1488,
+        "endChar": 67
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "613107d8_41fbf855",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-27T04:31:21Z",
+      "side": 1,
+      "message": "I see ; because you\u0027re running `updateNotificationNL` on that same thread, you know that this thread has released the monitor before any other thread takes it, so any subsequent call will see it. I think it\u0027s fine.",
+      "parentUuid": "df5b27f5_39835b39",
       "range": {
         "startLine": 1488,
         "startChar": 25,
@@ -266,6 +338,30 @@
       "side": 1,
       "message": "true, but unless we use reflection to modify the private field of `mActiveDataSubIdListener`, I\u0027m not sure how to mock its behavior without evoking unrelated events.",
       "parentUuid": "ed31e66d_eda0c5bf",
+      "range": {
+        "startLine": 2418,
+        "startChar": 25,
+        "endLine": 2418,
+        "endChar": 38
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5826453f_d60cb90e",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-04-27T04:31:21Z",
+      "side": 1,
+      "message": "Oh I just meant in terms of code organization. Maybe you should just move this call out of this function and have the callers call this explicitly if they need to, or simply rename the method to clarify or something.",
+      "parentUuid": "7bba88e2_54c9d5ae",
       "range": {
         "startLine": 2418,
         "startChar": 25,
