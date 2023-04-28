@@ -184,25 +184,21 @@ public abstract class HostNfcFService extends Service {
                 byte[] packet = dataBundle.getByteArray(KEY_DATA);
                 if (packet != null) {
                     byte[] responsePacket = processNfcFPacket(packet, null);
-                    if (responsePacket != null) {
-                        if (mNfcService == null) {
-                            Log.e(TAG, "Response not sent; service was deactivated.");
-                            return;
-                        }
-                        Message responseMsg = Message.obtain(null, MSG_RESPONSE_PACKET);
-                        Bundle responseBundle = new Bundle();
-                        responseBundle.putByteArray(KEY_DATA, responsePacket);
-                        responseMsg.setData(responseBundle);
-                        responseMsg.replyTo = mMessenger;
-                        try {
-                            mNfcService.send(responseMsg);
-                        } catch (RemoteException e) {
-                            Log.e("TAG", "Response not sent; RemoteException calling into " +
-                                    "NfcService.");
-                        }
+                    if (mNfcService == null) {
+                        Log.e(TAG, "Response not sent; service was deactivated.");
+                        return;
                     }
-                } else {
-                    Log.e(TAG, "Received MSG_COMMAND_PACKET without data.");
+                    Message responseMsg = Message.obtain(null, MSG_RESPONSE_PACKET);
+                    Bundle responseBundle = new Bundle();
+                    responseBundle.putByteArray(KEY_DATA, responsePacket);
+                    responseMsg.setData(responseBundle);
+                    responseMsg.replyTo = mMessenger;
+                    try {
+                        mNfcService.send(responseMsg);
+                    } catch (RemoteException e) {
+                        Log.e("TAG", "Response not sent; RemoteException calling into " +
+                                "NfcService.");
+                    }
                 }
                 break;
             case MSG_RESPONSE_PACKET:
