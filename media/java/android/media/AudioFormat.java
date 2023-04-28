@@ -17,6 +17,7 @@
 package android.media;
 
 import static android.media.audio.Flags.FLAG_DOLBY_AC4_LEVEL4_ENCODING_API;
+import static android.media.audio.Flags.FLAG_SONY_360RA_MPEGH_3D_FORMAT;
 
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
@@ -596,8 +597,9 @@ public final class AudioFormat implements Parcelable {
      * Same as 9.1.4 with the addition of left and right top side channels */
     public static final int CHANNEL_OUT_9POINT1POINT6 = (CHANNEL_OUT_9POINT1POINT4
             | CHANNEL_OUT_TOP_SIDE_LEFT | CHANNEL_OUT_TOP_SIDE_RIGHT);
-    /** @hide */
-    public static final int CHANNEL_OUT_13POINT_360RA = (
+    /** Output channel mask for 13.0 */
+    @FlaggedApi(FLAG_SONY_360RA_MPEGH_3D_FORMAT)
+    public static final int CHANNEL_OUT_13POINT0 = (
             CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_CENTER | CHANNEL_OUT_FRONT_RIGHT |
             CHANNEL_OUT_SIDE_LEFT | CHANNEL_OUT_SIDE_RIGHT |
             CHANNEL_OUT_TOP_FRONT_LEFT | CHANNEL_OUT_TOP_FRONT_CENTER |
