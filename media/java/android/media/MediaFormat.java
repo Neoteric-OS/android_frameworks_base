@@ -1089,13 +1089,13 @@ public final class MediaFormat {
 
     /**
      * A key describing the type of limiter processing performed on the speaker output path.
-     * The limiter processing is performd to avoid any possible data overflow in the PCM samples. 
+     * The limiter processing is performd to avoid any possible data overflow in the PCM samples.
      */
     public static final String KEY_DTS_LIMITER_TYPE_MAIN = "dts-limiter-type-main";
 
     /**
      * A key describing the type of limiter processing performed on the digital output path.
-     * The limiter processing is performd to avoid any possible data overflow in the PCM samples. 
+     * The limiter processing is performd to avoid any possible data overflow in the PCM samples.
      */
     public static final String KEY_DTS_LIMITER_TYPE_TRANSCODE = "dts-limiter-type-transcode";
 
