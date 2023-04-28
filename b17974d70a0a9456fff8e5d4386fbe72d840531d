@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46966b51_5715be3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2023-04-28T08:34:16Z",
+      "side": 1,
+      "message": "nit: disableDevice",
+      "range": {
+        "startLine": 13,
+        "startChar": 32,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "b17974d70a0a9456fff8e5d4386fbe72d840531d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
