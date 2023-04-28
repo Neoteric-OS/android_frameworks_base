@@ -1033,6 +1033,194 @@ public final class MediaFormat {
             "mpegh-reference-channel-layout";
 
     /**
+     * A key describing the DRC attenuation gain to be applied on the multi-channel output to better
+     * adapt to the listening environment. This main path output will be the source for the speaker
+     * output of the device.
+     * <p>
+     * The {@link #KEY_DTS_DRC_ATTENUATION_FACTOR_MAIN} helps to adjust the amount of attenuation 
+     * gain to be applied on the loud audio segment without affecting boosting of quieter passages.
+     * So in a use case like - while playing content late at night, it is possible to control the
+     * amount of negative gain on the loud signal leaving the soft signal segment controlled by the
+     * selected {@link #KEY_DTS_DRC_EFFECT_TYPE_MAIN}.
+     * <p>
+     * The DRC attenuation factor needs to be an integer value between 0(not apply any attenuation)
+     * and 100(fully apply the attenuation gain). The default value is 100.
+     */
+    public static final String KEY_DTS_DRC_ATTENUATION_FACTOR_MAIN =
+            "dts-drc-attenuation-factor-main";
+
+    /**
+     * A key describing how much of the DRC attenuation gain to apply on the audio output for the
+     * transcoder(digital output).
+     * <p>See {@link #KEY_DTS_DRC_ATTENUATION_FACTOR_MAIN} for the description of the DRC
+     * attenuation factor. 
+     */
+    public static final String KEY_DTS_DRC_ATTENUATION_FACTOR_TRANSCODE =
+            "dts-drc-attenuation-factor-transcode";
+
+    /**
+     * A key describing the DRC boost factor to be applied on the multi-channel PCM output to better
+     * adapt to the listening environment. This main path output will be the source for the speaker
+     * output of the device.
+     * <p>
+     * The {@link #KEY_DTS_DRC_BOOST_FACTOR_MAIN} works in the same way as the
+     * {@link #KEY_DTS_DRC_ATTENUATION_FACTOR_MAIN} but it controls the amount of gain to be applied
+     * on the softer audio segment without affecting attenuation of loudest sound. This will help
+     * control the audio output in an environment with background noise.
+     * <p>
+     * The DRC boost factor needs to be an integer value between 0(not apply any boost) and
+     * 100(fully apply the boost). The default value is 100.
+     */
+    public static final String KEY_DTS_DRC_BOOST_FACTOR_MAIN = "dts-drc-boost-factor-main";
+
+    /**
+     * A key describing how much of the DRC boost gain to apply on the audio output for the
+     * transcoder(digital output).
+     * <p>See {@link #KEY_DTS_DRC_BOOST_FACTOR_MAIN} for the description of the DRC
+     * boost factor. 
+     */
+    public static final String KEY_DTS_DRC_BOOST_FACTOR_TRANSCODE =
+            "dts-drc-boost-factor-transcode";
+
+    /**
+     * A key describing the selection of the DRC curve type for the multi-channel PCM output
+     * (main path), which will be the source for the speaker output of the device.
+     * <p>
+     * The supported values are defined in ETSI TS 103 491 V1.2.1 (2019-05),
+     * Table 7-13: DRC Compression Curve, and the same are listed below.
+     * <table>
+     * <tr><th>Value</th><th>Effect</th></tr>
+     * <tr><th>0</th><th>No compression</th></tr>
+     * <tr><th>1</th><th>Legacy film standard</th></tr>
+     * <tr><th>2</th><th>Legacy film light</th></tr>
+     * <tr><th>3</th><th>Legacy music standard</th></tr>
+     * <tr><th>4</th><th>Legacy music light</th></tr>
+     * <tr><th>5</th><th>Legacy speech</th></tr>
+     * <tr><th>6</th><th>UHD Low DRC less attenuation</th></tr>
+     * <tr><th>7</th><th>UHD low DRC less boost</th></tr>
+     * <tr><th>8</th><th>UHD low DRC symmetrical</th></tr>
+     * <tr><th>9</th><th>UHD medium DRC less attenuation</th></tr>
+     * <tr><th>10</th><th>UHD medium DRC less boost</th></tr>
+     * <tr><th>11</th><th>UHD medium DRC symmetrical</th></tr>
+     * <tr><th>12</th><th>UHD high DRC less attenuation</th></tr>
+     * <tr><th>13</th><th>UHD high DRC less boost</th></tr>
+     * <tr><th>14</th><th>UHD high DRC symmetrical</th></tr>
+     * </table>
+     * <p>
+     * Each of the DRC pre-defined compression curve selections is associated
+     * with a specific DRC profile. Hence, it's necessary to select
+     * the DRC profile(See {@link #KEY_DTS_DRC_MODE_MAIN}) before a DRC pre-defined compression
+     * curve is selected.
+     */
+    public static final String KEY_DTS_DRC_EFFECT_TYPE_MAIN = "dts-drc-effect-type-main";
+
+    /**
+     * A key describing the selection of the DRC curve type for the transcoder output path
+     * (digital output).
+     * <p>See {@link #KEY_DTS_DRC_EFFECT_TYPE_MAIN} for further details.
+     */
+    public static final String KEY_DTS_DRC_EFFECT_TYPE_TRANSCODE = "dts-drc-effect-type-transcode";
+
+    /**
+     * A key describing the DRC profiles(compression type) for the multi-channel PCM output
+     * (main path), which will be the source for the speaker output of the device.
+     * <p>
+     * The supported values are defined in ETSI TS 103 491 V1.2.1 (2019-05),
+     * Table 7-12: DRC Compression Types, and the same are listed below.
+     * <table>
+     * <tr><th>Value</th><th>DRC Profile</th></tr>
+     * <tr><th>0</th><th>No DRC process</th></tr>
+     * <tr><th>1</th><th>Light</th></tr>
+     * <tr><th>2</th><th>Medium</th></tr>
+     * <tr><th>3</th><th>Heavy</th></tr>
+     * </table>
+     */
+    public static final String KEY_DTS_DRC_MODE_MAIN = "dts-drc-mode-main";
+
+    /**
+     * A key describing the DRC profiles for the transcoder output path(digital output).
+     * <p>See {@link #KEY_DTS_DRC_MODE_MAIN} for further details.
+     */
+    public static final String KEY_DTS_DRC_MODE_TRANSCODE = "dts-drc-mode-transcode";
+
+    /**
+     * A key describing the type of limiter processing performed on the multi-channel PCM output
+     * (main path).
+     * <p>
+     * The limiter processing is performed to avoid any possible data overflow in the PCM samples.
+     * <p>Possible values are listed below.
+     * <table>
+     * <tr><th>Value</th><th>Limiter Type</th><th>Description</th></tr>
+     * <tr><th>0</th><th>Hybrid limiter unlinked</th><th>Computationally intensive</th></tr>
+     * <tr><th>1</th><th>Hybrid limiter linked</th><th>Mid level computations</th></tr>
+     * <tr><th>2</th><th>Hard limiter except LFE channel</th><th>Less computations</th></tr>
+     * <tr><th>3</th><th>Hard limiter all channel</th><th>Less computations</th></tr>
+     * </table>
+     */
+    public static final String KEY_DTS_LIMITER_TYPE_MAIN = "dts-limiter-type-main";
+
+    /**
+     * A key describing the type of limiter processing performed on the transcoder output path
+     * (digital output).
+     * <p>See {@link #KEY_DTS_LIMITER_TYPE_MAIN} for further details.
+     */
+    public static final String KEY_DTS_LIMITER_TYPE_TRANSCODE = "dts-limiter-type-transcode";
+
+    /**
+     * A key describing the loudness management mode for the multi-channel PCM output
+     * (main path), which will be the source for the speaker output of the device.
+     * <p>
+     * The possible values are 0(loudness management off) and 1(loudness management on).
+     * <p>
+     * By using the loudness information embedded in DTS bit-streams, the decoder will automatically
+     * adjust the audio level of the content from program to program to provide a consistent
+     * presentation. For example, let's assume one incoming DTS bitstream has an input loudness 
+     * level of -19 LKFS, and another is -27 LKFS playing on a TV with a target output of -24 LKFS.
+     * The decoder will attenuate the first program by 5 LKFS and add 3 LKFS gain to the second 
+     * program.
+     */
+    public static final String KEY_DTS_LOUDNESS_NORM_ENABLE_MAIN = "dts-loudness-norm-enable-main";
+
+    /**
+     * A key describing the loudness management mode for the transcoder output path(digital output).
+     * <p>See {@link #KEY_DTS_LOUDNESS_NORM_ENABLE_MAIN} for further details.
+     */
+    public static final String KEY_DTS_LOUDNESS_NORM_ENABLE_TRANSCODE =
+            "dts-loudness-norm-enable-transcode";
+
+    /**
+     * A key describing the target loudness value for the multi-channel PCM output(main path), which
+     * will be the source for the speaker output of the device.
+     * <p>
+     * The DTS decoder will adjust the program loudness to this target level by applying boost or
+     * attenuation gain.
+     * <p>The target loudness value needs to be an integer value between -10 and -60.
+     * <p>
+     * The target loudness can be set by the system based on device capability. For example,
+     * a portable device with small, low-performing speakers and limited amplification 
+     * often used in noisy environments would be best served by a higher target loudness, such as 
+     * -16 LKFS, while a typical TV with mid-performance speakers and stronger analog amplification 
+     * might target -24 or -27 LKFS, and a system with high-performance audio capabilities might 
+     * target -31 LKFS to maintain the greatest headroom for dynamic range.
+     * <p>
+     * The choice of limiter selected by {@link #KEY_DTS_LIMITER_TYPE_MAIN} needs to be adjusted 
+     * based on the target loudness. See the table below.
+     * <table>
+     * <tr><th>Limiter Type</th><th>Supported Target Loudness Range</th></tr>
+     * <tr><th>Hybrid limiter unlinked</th><th>-10 to -60 LKFS</th></tr>
+     * <tr><th>Hybrid limiter linked</th><th>-27 to -60 LKFS</th></tr>
+     * <tr><th>Hard limiter</th><th>-31 to -60 LKFS</th></tr>
+     * </table>
+     */
+    public static final String KEY_DTS_TARGET_LOUDNESS_MAIN = "dts-target-loudness-main";
+
+    /**
+     * A key describing the target loudness value for the transcoder output path(digital output).
+     * <p>See {@link #KEY_DTS_TARGET_LOUDNESS_MAIN} for further details.
+     */
+    public static final String KEY_DTS_TARGET_LOUDNESS_TRANSCODE = "dts-target-loudness-transcode";
+
+    /**
      * A key describing the encoding complexity.
      * The associated value is an integer.  These values are device and codec specific,
      * but lower values generally result in faster and/or less power-hungry encoding.
