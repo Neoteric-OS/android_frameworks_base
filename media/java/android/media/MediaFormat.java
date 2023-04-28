@@ -1033,6 +1033,94 @@ public final class MediaFormat {
             "mpegh-reference-channel-layout";
 
     /**
+     * A key describing how much (in percentage) of the DRC attenuation factor to apply to audio
+     * output samples during the DRC processing for speaker output path.
+     */
+    public static final String KEY_DTS_DRC_ATTENUATION_FACTOR_MAIN =
+            "dts-drc-attenuation-factor-main";
+
+    /**
+     * A key describing how much (in percentage) of the DRC attenuation factor to apply to audio
+     * output samples during the DRC processing for digital output path.
+     */
+    public static final String KEY_DTS_DRC_ATTENUATION_FACTOR_TRANSCODE =
+            "dts-drc-attenuation-factor-transcode";
+
+    /**
+     * A key describing how much (in percentage) of the DRC boost factor to apply to audio
+     * output samples during the DRC processing for speaker output path.
+     */
+    public static final String KEY_DTS_DRC_BOOST_FACTOR_MAIN = "dts-drc-boost-factor-main";
+
+    /**
+     * A key describing how much (in percentage) of the DRC boost factor to apply to audio
+     * output samples during the DRC processing for digital output path.
+     */
+    public static final String KEY_DTS_DRC_BOOST_FACTOR_TRANSCODE =
+            "dts-drc-boost-factor-transcode";
+
+    /**
+     * A key describing the selection of the DRC curve type from one of the fifteen DRC pre-defined
+     * compression curves for speaker output path. Each of the DRC pre-defined compression curve
+     * selections is associated with a specific DRC type/profile. Hence, it's necessary to select
+     * the DRC type/profile before a DRC pre-defined compression curve is selected.
+     */
+    public static final String KEY_DTS_DRC_EFFECT_TYPE_MAIN = "dts-drc-effect-type-main";
+
+    /**
+     * A key describing the selection of the DRC curve type from one of the fifteen DRC pre-defined
+     * compression curves for digital output path. Each of the DRC pre-defined compression curve
+     * selections is associated with a specific DRC type/profile. Hence, it's necessary to select
+     * the DRC type/profile before a DRC pre-defined compression curve is selected.
+     */
+    public static final String KEY_DTS_DRC_EFFECT_TYPE_TRANSCODE = "dts-drc-effect-type-transcode";
+
+    /**
+     * A key describing the DRC types/profiles for speaker output path. There are three types -
+     * Low, Medium, and High.
+     */
+    public static final String KEY_DTS_DRC_MODE_MAIN = "dts-drc-mode-main";
+
+    /**
+     * A key describing the DRC types/profiles for digital output path. There are three types -
+     * Low, Medium, and High.
+     */
+    public static final String KEY_DTS_DRC_MODE_TRANSCODE = "dts-drc-mode-transcode";
+
+    /**
+     * A key describing the type of limiter processing performed on the speaker output path.
+     * The limiter processing is performd to avoid any possible data overflow in the PCM samples. 
+     */
+    public static final String KEY_DTS_LIMITER_TYPE_MAIN = "dts-limiter-type-main";
+
+    /**
+     * A key describing the type of limiter processing performed on the digital output path.
+     * The limiter processing is performd to avoid any possible data overflow in the PCM samples. 
+     */
+    public static final String KEY_DTS_LIMITER_TYPE_TRANSCODE = "dts-limiter-type-transcode";
+
+    /**
+     * A key describing the loudness normalization mode for speaker output path.
+     */
+    public static final String KEY_DTS_LOUDNESS_NORM_ENABLE_MAIN = "dts-loudness-norm-enable-main";
+
+    /**
+     * A key describing the loudness normalization mode for digital output path.
+     */
+    public static final String KEY_DTS_LOUDNESS_NORM_ENABLE_TRANSCODE =
+            "dts-loudness-norm-enable-transcode";
+
+    /**
+     * A key describing the target loudness normalization value for speaker output path.
+     */
+    public static final String KEY_DTS_TARGET_LOUDNESS_MAIN = "dts-target-loudness-main";
+
+    /**
+     * A key describing the target loudness normalization value for digital output path.
+     */
+    public static final String KEY_DTS_TARGET_LOUDNESS_TRANSCODE = "dts-target-loudness-transcode";
+
+    /**
      * A key describing the encoding complexity.
      * The associated value is an integer.  These values are device and codec specific,
      * but lower values generally result in faster and/or less power-hungry encoding.
