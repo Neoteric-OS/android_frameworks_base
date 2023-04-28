@@ -20,6 +20,7 @@ import static android.Manifest.permission.CAPTURE_AUDIO_HOTWORD;
 import static android.Manifest.permission.CAPTURE_AUDIO_OUTPUT;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.UPDATE_APP_OPS_STATS;
+import static android.Manifest.permission.BLUETOOTH_PRIVILEGED;
 import static android.app.AppOpsManager.ATTRIBUTION_CHAIN_ID_NONE;
 import static android.app.AppOpsManager.ATTRIBUTION_FLAGS_NONE;
 import static android.app.AppOpsManager.MODE_ALLOWED;
@@ -216,6 +217,18 @@ public class PermissionManagerService extends IPermissionManager.Stub {
             checkPermissionDelegate = mCheckPermissionDelegate;
         }
 
+        if (BLUETOOTH_PRIVILEGED.equals(permName)) {
+            Slog.i(LOG_TAG, "Checking BLUETOOTH_PRIVILEGED permission for " + pkgName + ", userId=" + userId);
+            if (checkPermissionDelegate == null) {
+                Slog.i(LOG_TAG, "checkPermissionDelegate is null");
+            } else {
+                Slog.i(LOG_TAG, "checkPermissionDelegate uid=" + checkPermissionDelegate.getDelegatedUid());
+                for (String permissionName : checkPermissionDelegate.getDelegatedPermissionNames()) {
+                    Slog.i(LOG_TAG, "==== " + permissionName + " ====");
+                }
+            }
+        }
+
         if (checkPermissionDelegate == null) {
             return mPermissionManagerServiceImpl.checkPermission(pkgName, permName, userId);
         }
@@ -328,6 +341,14 @@ public class PermissionManagerService extends IPermissionManager.Stub {
                 throw new SecurityException(
                         "Shell can delegate permissions only to one UID at a time");
             }
+            Slog.i(LOG_TAG, "startShellPermissionIdentityDelegationInternal: uid=" + uid + ", packageName=" + packageName);
+            if (permissionNames != null) {
+                for (String permissionName : permissionNames) {
+                    Slog.i(LOG_TAG, "======= " + permissionName + " ======");
+                }
+            } else {
+                Slog.i(LOG_TAG, "permissionNames are null");
+            }
             final ShellDelegate delegate = new ShellDelegate(uid, packageName, permissionNames);
             setCheckPermissionDelegateLocked(delegate);
         }
@@ -335,6 +356,7 @@ public class PermissionManagerService extends IPermissionManager.Stub {
 
     private void stopShellPermissionIdentityDelegationInternal() {
         synchronized (mLock) {
+            Slog.i(LOG_TAG, "stopShellPermissionIdenitityDelegationInternal");
             setCheckPermissionDelegateLocked(null);
         }
     }
@@ -1151,6 +1173,9 @@ public class PermissionManagerService extends IPermissionManager.Stub {
                 @NonNull String permission, @NonNull AttributionSource attributionSource,
                 @Nullable String message, boolean forDataDelivery, boolean startDataDelivery,
                 boolean fromDatasource, int attributedOp) {
+            boolean toLog = BLUETOOTH_PRIVILEGED.equals(permission);
+            if (toLog) Slog.i(LOG_TAG, "checkPermission for BLUETOOTH_PRIVILEGED");
+
             PermissionInfo permissionInfo = sPlatformPermissions.get(permission);
 
             if (permissionInfo == null) {
@@ -1162,15 +1187,20 @@ public class PermissionManagerService extends IPermissionManager.Stub {
                         sPlatformPermissions.put(permission, permissionInfo);
                     }
                 } catch (PackageManager.NameNotFoundException ignored) {
+                    if (toLog) {
+                        Slog.i(LOG_TAG, "no permission info");
+                    }
                     return PermissionChecker.PERMISSION_HARD_DENIED;
                 }
             }
 
             if (permissionInfo.isAppOp()) {
+                if (toLog) Slog.i(LOG_TAG, "isAppOp");
                 return checkAppOpPermission(context, permissionManagerServiceInt, permission,
                         attributionSource, message, forDataDelivery, fromDatasource);
             }
             if (permissionInfo.isRuntime()) {
+                if (toLog) Slog.i(LOG_TAG, "isRuntime");
                 return checkRuntimePermission(context, permissionManagerServiceInt, permission,
                         attributionSource, message, forDataDelivery, startDataDelivery,
                         fromDatasource, attributedOp);
@@ -1179,14 +1209,17 @@ public class PermissionManagerService extends IPermissionManager.Stub {
             if (!fromDatasource && !checkPermission(context, permissionManagerServiceInt,
                     permission, attributionSource.getUid(),
                     attributionSource.getRenouncedPermissions())) {
+                if (toLog) Slog.i(LOG_TAG, "denied for initial attribution source");
                 return PermissionChecker.PERMISSION_HARD_DENIED;
             }
 
             if (attributionSource.getNext() != null) {
+                if (toLog) Slog.i(LOG_TAG, "check next attribution source");
                 return checkPermission(context, permissionManagerServiceInt, permission,
                         attributionSource.getNext(), message, forDataDelivery, startDataDelivery,
                         /*fromDatasource*/ false, attributedOp);
             }
+            if (toLog) Slog.i(LOG_TAG, "denied");
 
             return PermissionChecker.PERMISSION_GRANTED;
         }
