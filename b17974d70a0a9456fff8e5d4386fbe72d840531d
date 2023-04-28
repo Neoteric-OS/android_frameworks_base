@@ -22,6 +22,30 @@
       },
       "revId": "b17974d70a0a9456fff8e5d4386fbe72d840531d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06624a7b_9ad76d89",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1501078
+      },
+      "writtenOn": "2023-04-28T09:08:49Z",
+      "side": 1,
+      "message": "Sorry for the new spelling error! Fixed.",
+      "parentUuid": "46966b51_5715be3d",
+      "range": {
+        "startLine": 13,
+        "startChar": 32,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "b17974d70a0a9456fff8e5d4386fbe72d840531d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
