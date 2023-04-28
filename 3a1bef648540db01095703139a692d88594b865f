@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "99abe046_81ee40ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1501078
+      },
+      "writtenOn": "2023-04-28T01:58:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "09547e80_6c5eb853",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "3a1bef648540db01095703139a692d88594b865f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7e163b23_9f350803",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fad4472f_c4e77b7e",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1501078
+      },
+      "writtenOn": "2023-04-28T01:58:34Z",
+      "side": 1,
+      "message": "resolved",
+      "parentUuid": "bc0e2f5b_be44f372",
+      "range": {
+        "startLine": 1128,
+        "startChar": 18,
+        "endLine": 1128,
+        "endChar": 25
+      },
+      "revId": "3a1bef648540db01095703139a692d88594b865f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28300bae_dfeaed37",
@@ -77,6 +125,30 @@
       "writtenOn": "2023-04-26T10:10:18Z",
       "side": 1,
       "message": "Could you please split this comment into two lines?",
+      "range": {
+        "startLine": 234,
+        "startChar": 8,
+        "endLine": 234,
+        "endChar": 103
+      },
+      "revId": "3a1bef648540db01095703139a692d88594b865f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b217659_68ecc913",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1501078
+      },
+      "writtenOn": "2023-04-28T01:58:34Z",
+      "side": 1,
+      "message": "resolved",
+      "parentUuid": "28300bae_dfeaed37",
       "range": {
         "startLine": 234,
         "startChar": 8,
