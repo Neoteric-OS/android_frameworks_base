@@ -94,8 +94,10 @@ public class TwoFingersDownOrSwipeTest {
         }
 
         verify(mListener, timeout(sTimeoutMillis)).onGestureCompleted(
-                MagnificationGestureMatcher.GESTURE_TWO_FINGERS_DOWN_OR_SWIPE, downEvents.get(1),
-                downEvents.get(1), 0);
+                eq(MagnificationGestureMatcher.GESTURE_TWO_FINGERS_DOWN_OR_SWIPE),
+                argThat(argument -> downEvents.get(1).getId() == argument.getId()),
+                argThat(argument -> downEvents.get(1).getId() == argument.getId()),
+                eq(0));
     }
 
     @Test
