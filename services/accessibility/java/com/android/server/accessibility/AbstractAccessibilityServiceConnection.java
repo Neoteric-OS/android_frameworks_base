@@ -1726,8 +1726,9 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
     }
 
     public void notifyGesture(AccessibilityGestureEvent gestureEvent) {
+        // We will async use this event, we should copy it, because it contains motionEvent.
         mInvocationHandler.obtainMessage(InvocationHandler.MSG_ON_GESTURE,
-                gestureEvent).sendToTarget();
+                gestureEvent.copyForAsync()).sendToTarget();
     }
 
     public void notifySystemActionsChangedLocked() {
@@ -2214,9 +2215,11 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
             final int type = message.what;
             switch (type) {
                 case MSG_ON_GESTURE: {
-                    notifyGestureInternal((AccessibilityGestureEvent) message.obj);
+                    if (message.obj instanceof AccessibilityGestureEvent gesture) {
+                        notifyGestureInternal(gesture);
+                        gesture.recycle();
+                    }
                 } break;
-
                 case MSG_CLEAR_ACCESSIBILITY_CACHE: {
                     notifyClearAccessibilityCacheInternal();
                 } break;

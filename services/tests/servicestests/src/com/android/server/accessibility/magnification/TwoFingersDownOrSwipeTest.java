@@ -20,6 +20,7 @@ import static com.android.server.accessibility.utils.TouchEventGenerator.movePoi
 import static com.android.server.accessibility.utils.TouchEventGenerator.twoPointersDownEvents;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.after;
 import static org.mockito.Mockito.timeout;
@@ -94,8 +95,10 @@ public class TwoFingersDownOrSwipeTest {
         }
 
         verify(mListener, timeout(sTimeoutMillis)).onGestureCompleted(
-                MagnificationGestureMatcher.GESTURE_TWO_FINGERS_DOWN_OR_SWIPE, downEvents.get(1),
-                downEvents.get(1), 0);
+                eq(MagnificationGestureMatcher.GESTURE_TWO_FINGERS_DOWN_OR_SWIPE),
+                argThat(argument -> downEvents.get(1).getId() == argument.getId()),
+                argThat(argument -> downEvents.get(1).getId() == argument.getId()),
+                eq(0));
     }
 
     @Test
