@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d4f0b1d_fd7ced3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2023-05-01T21:25:27Z",
+      "side": 1,
+      "message": "Cherry-picking OOM fix on AOSP",
+      "revId": "a3893027b781d588b2705a737f0eceaa15274278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
