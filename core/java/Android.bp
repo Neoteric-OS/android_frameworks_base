@@ -146,7 +146,7 @@ filegroup {
     ],
 }
 
-filegroup {
+aidl_library {
     name: "ILogcatManagerService_aidl",
     srcs: ["android/os/logcat/ILogcatManagerService.aidl"],
 }
