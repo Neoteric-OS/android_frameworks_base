@@ -4241,7 +4241,7 @@
          <p>Intended for use by ROLE_ASSISTANT only.
     -->
     <permission android:name="android.permission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE"
-                android:protectionLevel="internal|role"/>
+                android:protectionLevel="internal|module|role|signature"/>
 
     <!-- Must be required by a {@link android.service.autofill.AutofillService},
          to ensure that only the system can bind to it.
