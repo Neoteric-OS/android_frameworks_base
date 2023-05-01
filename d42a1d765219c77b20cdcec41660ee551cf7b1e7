@@ -89,6 +89,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7b2d373_bb7ab42c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2023-05-01T20:36:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c03c76_0be2deac",
+      "range": {
+        "startLine": 807,
+        "startChar": 39,
+        "endLine": 807,
+        "endChar": 67
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3627c5a2_52c4611f",
@@ -150,6 +174,30 @@
       "side": 1,
       "message": "Have you tested this ? I fear it may send RemoteException, which in this place would crash the system (and possibly cause a boot loop).\n\nAlso, if it uses INVALID_SUBSCRIPTION_ID, then in systemReady this will lead to the wrong result in updateNotificationsNL – is that fine ?",
       "parentUuid": "4beaf78f_7a331939",
+      "range": {
+        "startLine": 840,
+        "startChar": 39,
+        "endLine": 840,
+        "endChar": 62
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed49bdfc_4ac1a2b5",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2023-05-01T20:36:21Z",
+      "side": 1,
+      "message": "The method call will first try to access a static cache https://source.corp.google.com/android-internal/frameworks/base/telephony/java/android/telephony/SubscriptionManager.java;l\u003d260-264 then it will try to make IPC call, but IIUC if phone process is not up yet, the only effect is that iSub is null at https://source.corp.google.com/android/frameworks/base/telephony/java/android/telephony/SubscriptionManager.java;l\u003d196-197, in that case the default INVALID_SUBSCRIPTION_ID will be returned?\n\nIf INVALID_SUBSCRIPTION_ID is returned, I think it indicates that phone process(either up or not) couldn\u0027t determine a default nor active data subId, then I think data limit/warnings still shouldn\u0027t show, which is not considered wrong in terms of the knowledge of phone process?",
+      "parentUuid": "9719a26a_d7e6dda2",
       "range": {
         "startLine": 840,
         "startChar": 39,
@@ -362,6 +410,30 @@
       "side": 1,
       "message": "Oh I just meant in terms of code organization. Maybe you should just move this call out of this function and have the callers call this explicitly if they need to, or simply rename the method to clarify or something.",
       "parentUuid": "7bba88e2_54c9d5ae",
+      "range": {
+        "startLine": 2418,
+        "startChar": 25,
+        "endLine": 2418,
+        "endChar": 38
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0ad9496_5cbde299",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2418,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2023-05-01T20:36:21Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "5826453f_d60cb90e",
       "range": {
         "startLine": 2418,
         "startChar": 25,
