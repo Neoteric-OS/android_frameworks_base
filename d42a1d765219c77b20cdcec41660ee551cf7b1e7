@@ -208,6 +208,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47b9d07d_187fda73",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-05-03T02:56:12Z",
+      "side": 1,
+      "message": "If so I think that deserved some comments at l.1286 about the interaction with phone process when it\u0027s ready and not ready?",
+      "parentUuid": "ed49bdfc_4ac1a2b5",
+      "range": {
+        "startLine": 840,
+        "startChar": 39,
+        "endLine": 840,
+        "endChar": 62
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c0c1209_098cb118",
