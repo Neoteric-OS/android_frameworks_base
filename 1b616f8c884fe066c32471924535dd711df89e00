@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "244ea39d_d722696f",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2023-05-03T22:39:52Z",
+      "side": 1,
+      "message": "I don\u0027t understand the notion of \"speaker output path\" in this CL? Is that speaker only and not headphones? Why is speaker \u003d\u003d MAIN and digital \u003d\u003d TRANSCODE?",
+      "range": {
+        "startLine": 1051,
+        "startChar": 52,
+        "endLine": 1051,
+        "endChar": 71
+      },
+      "revId": "1b616f8c884fe066c32471924535dd711df89e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
