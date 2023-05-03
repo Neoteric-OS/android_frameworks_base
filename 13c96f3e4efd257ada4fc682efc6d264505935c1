@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e6b1fb7_1b067fff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-03T03:07:18Z",
+      "side": 1,
+      "message": "looks fine to me, but would like more specific documentation, thanks!",
+      "revId": "13c96f3e4efd257ada4fc682efc6d264505935c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dde049f_94b1e058",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-03T03:07:18Z",
+      "side": 1,
+      "message": "nit: can you please link to a standard that describes these values?  I see DTS mentioned in DVB here: https://www.etsi.org/deliver/etsi_ts/101100_101199/101154/01.05.01_60/ts_101154v010501p.pdf\n\nAre these integer, float, string?  A particular table or section number in a standard would make the keys easier to look up.",
+      "range": {
+        "startLine": 1037,
+        "startChar": 0,
+        "endLine": 1037,
+        "endChar": 72
+      },
+      "revId": "13c96f3e4efd257ada4fc682efc6d264505935c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2383839_82510eac",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-03T03:07:18Z",
+      "side": 1,
+      "message": "nit: is this a true/false or something else like the mode on line 1082?",
+      "range": {
+        "startLine": 1103,
+        "startChar": 51,
+        "endLine": 1103,
+        "endChar": 55
+      },
+      "revId": "13c96f3e4efd257ada4fc682efc6d264505935c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
