@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00701165_711ddd10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-05-03T11:21:36Z",
+      "side": 1,
+      "message": "is it possible to merge this internally?\nBR\nMattias",
+      "revId": "5fc99d55606c6f73619d1b7ecd14a8164ecba610",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
