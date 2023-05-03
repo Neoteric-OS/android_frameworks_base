@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08439a2d_3ecf4907",
+        "filename": "services/core/java/com/android/server/content/SyncOperation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-05-03T03:06:22Z",
+      "side": 1,
+      "message": "I don\u0027t own this file, nor am I familiar with it, so I\u0027m not really the one to ask. I don\u0027t know what this field is used for to say whether it is safe to change.\n\nBut I do note that, AFAICT, `toSafeString()` already includes both the `name` and the `type`. So the type will be printed twice in the current cl. And the format will look quite different from a name. Did you effectively instead want `toSafeName(target.account.name, \u0027x\u0027)`?",
+      "range": {
+        "startLine": 592,
+        "startChar": 39,
+        "endLine": 592,
+        "endChar": 51
+      },
+      "revId": "baa9607a7d75612e618fd742f50986550d9ed6ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
