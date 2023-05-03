@@ -232,6 +232,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a3bf137_012321a1",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2023-05-03T23:36:17Z",
+      "side": 1,
+      "message": "Added comment to clarify if phone process is not up yet.",
+      "parentUuid": "47b9d07d_187fda73",
+      "range": {
+        "startLine": 840,
+        "startChar": 39,
+        "endLine": 840,
+        "endChar": 62
+      },
+      "revId": "d42a1d765219c77b20cdcec41660ee551cf7b1e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c0c1209_098cb118",
