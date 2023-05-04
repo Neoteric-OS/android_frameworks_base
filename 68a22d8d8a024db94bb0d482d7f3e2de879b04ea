@@ -33,6 +33,23 @@
       "message": "LGTM, but this file has been moved to another directory recently. So I guess we\u0027d need to apply this CL internally first, and then merge this CL.",
       "revId": "68a22d8d8a024db94bb0d482d7f3e2de879b04ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70c0829e_021ba419",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2023-05-04T17:57:32Z",
+      "side": 1,
+      "message": "We also fixed this issue in the internal master.  Our fix was to catch and ignore RejectedExecutionException",
+      "revId": "68a22d8d8a024db94bb0d482d7f3e2de879b04ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
