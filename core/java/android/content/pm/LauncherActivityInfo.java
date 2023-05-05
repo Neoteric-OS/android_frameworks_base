@@ -34,7 +34,7 @@ import android.util.DisplayMetrics;
  */
 public class LauncherActivityInfo {
     private final PackageManager mPm;
-    private UserHandle mUser;
+    private final UserHandle mUser;
     private final LauncherActivityInfoInternal mInternal;
 
     /**

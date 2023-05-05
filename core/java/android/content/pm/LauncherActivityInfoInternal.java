@@ -27,9 +27,9 @@ import android.os.Parcelable;
  */
 public class LauncherActivityInfoInternal implements Parcelable {
     @UnsupportedAppUsage
-    @NonNull private ActivityInfo mActivityInfo;
-    @NonNull private ComponentName mComponentName;
-    @NonNull private IncrementalStatesInfo mIncrementalStatesInfo;
+    @NonNull private final ActivityInfo mActivityInfo;
+    @NonNull private final ComponentName mComponentName;
+    @NonNull private final IncrementalStatesInfo mIncrementalStatesInfo;
 
     /**
      * @param info ActivityInfo from which to create the LauncherActivityInfo.
