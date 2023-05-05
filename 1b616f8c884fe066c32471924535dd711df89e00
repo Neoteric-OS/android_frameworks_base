@@ -22,6 +22,30 @@
       },
       "revId": "1b616f8c884fe066c32471924535dd711df89e00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "067ba6f4_75e13674",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-05-05T05:22:40Z",
+      "side": 1,
+      "message": "@jmtrivi@google.com, thank you for reviewing the CL.\n\nThe DTS decoder offers simultaneous/concurrent output capability, allowing the OEM to decide on offering simultaneous outputs on their various models.\nThe supported output combinations are,\n1. Multi-channel PCM, which will be the source for the TV speaker output. Depending on the TV’s system logic, the decoder can be configured to output from 2.0 to 7.1.4 PCM.\n2. Bitstream transcoder path for digital output through HDMI ARC/eARC or S/PDIF.\n3. Stereo PCM path for analog lineout(line out/aux out/headphone out)\n\nWe could control the DRC and loudness processing on each of these output paths separately.\nCurrently, I have added the keys for controlling the multi-channel PCM(speaker output) and transcoder (digital output) paths.",
+      "parentUuid": "244ea39d_d722696f",
+      "range": {
+        "startLine": 1051,
+        "startChar": 52,
+        "endLine": 1051,
+        "endChar": 71
+      },
+      "revId": "1b616f8c884fe066c32471924535dd711df89e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
