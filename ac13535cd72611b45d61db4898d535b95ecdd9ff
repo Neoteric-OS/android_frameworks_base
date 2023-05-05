@@ -16,6 +16,24 @@
       "message": "Yikes, Treehugger doesn\u0027t look happy. Unfortunately, I\u0027m not able the see the details (it\u0027s an internal link) -- could someone share which tests I should run locally to debug the failures? Thanks!",
       "revId": "ac13535cd72611b45d61db4898d535b95ecdd9ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d07b15e_fff27ade",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2023-05-05T03:03:42Z",
+      "side": 1,
+      "message": "It\u0027s a merge conflict with the internal branch. I\u0027d probably need to cherry-pick your CL to internal branch manually.",
+      "parentUuid": "86e735f8_cb893429",
+      "revId": "ac13535cd72611b45d61db4898d535b95ecdd9ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
