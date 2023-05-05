@@ -50,6 +50,23 @@
       "message": "We also fixed this issue in the internal master.  Our fix was to catch and ignore RejectedExecutionException",
       "revId": "68a22d8d8a024db94bb0d482d7f3e2de879b04ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a413c352_1ef2a44e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2005120
+      },
+      "writtenOn": "2023-05-05T02:13:15Z",
+      "side": 1,
+      "message": "Autosubmit",
+      "revId": "68a22d8d8a024db94bb0d482d7f3e2de879b04ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
