@@ -16,6 +16,23 @@
       "message": "@santoscordon@google.com @akulian@google.com\nWould you do me a favor? Please review whether this CL is reasonable? \nif not, what is your suggestion?",
       "revId": "1ea763ea2e2190bb7194ba70655fccb4cbf52810",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bb74620_2c87a94c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2023-05-06T01:50:57Z",
+      "side": 1,
+      "message": "DeviceStateProviderImpl change LGTM",
+      "revId": "1ea763ea2e2190bb7194ba70655fccb4cbf52810",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
