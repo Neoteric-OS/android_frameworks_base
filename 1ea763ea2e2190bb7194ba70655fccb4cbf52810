@@ -33,6 +33,23 @@
       "message": "DeviceStateProviderImpl change LGTM",
       "revId": "1ea763ea2e2190bb7194ba70655fccb4cbf52810",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82ef217a_64e8f09c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2023-05-06T01:51:47Z",
+      "side": 1,
+      "message": "Please also get a review from @santoscordon@google.com",
+      "revId": "1ea763ea2e2190bb7194ba70655fccb4cbf52810",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
