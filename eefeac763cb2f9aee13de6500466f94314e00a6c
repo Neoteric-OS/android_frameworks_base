@@ -34,6 +34,24 @@
       "parentUuid": "a130b521_5ae35c4c",
       "revId": "eefeac763cb2f9aee13de6500466f94314e00a6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d1ff186_7ff47965",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2023-05-09T20:25:16Z",
+      "side": 1,
+      "message": "Error in android.accessibilityservice.cts.TouchExplorerTest#testDoubleTapNoFocus_doesNotPerformClick:\n\n```\njava.lang.AssertionError: \nExpected: (Matching to action ACTION_DOWN and Matching to point PointF(360.0, 696.0))\n     but: Matching to action ACTION_DOWN received ACTION_UP\n\tat org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:18)\n\tat org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:6)\n\tat android.accessibilityservice.cts.TouchExplorerTest.testDoubleTapNoFocus_doesNotPerformClick(TouchExplorerTest.java:348)\n```\n\nError in com.android.server.accessibility.magnification.TwoFingersDownOrSwipeTest#sendTwoFingerDownEvent_onGestureCompleted:\n\n```\nArgument(s) are different! Wanted:\nmListener.onGestureCompleted(\n    101,\n    MotionEvent { action\u003dACTION_POINTER_DOWN(1), actionButton\u003d0, id[0]\u003d0, x[0]\u003d100.0, y[0]\u003d100.0, toolType[0]\u003dTOOL_TYPE_FINGER, id[1]\u003d1, x[1]\u003d110.0, y[1]\u003d110.0, toolType[1]\u003dTOOL_TYPE_FINGER, buttonState\u003d0, classification\u003dNONE, metaState\u003d0, flags\u003d0x0, edgeFlags\u003d0x0, pointerCount\u003d2, historySize\u003d0, eventTime\u003d66365, downTime\u003d66365, deviceId\u003d0, source\u003d0x1002, displayId\u003d0, eventId\u003d-295961610 },\n    MotionEvent { action\u003dACTION_POINTER_DOWN(1), actionButton\u003d0, id[0]\u003d0, x[0]\u003d100.0, y[0]\u003d100.0, toolType[0]\u003dTOOL_TYPE_FINGER, id[1]\u003d1, x[1]\u003d110.0, y[1]\u003d110.0, toolType[1]\u003dTOOL_TYPE_FINGER, buttonState\u003d0, classification\u003dNONE, metaState\u003d0, flags\u003d0x0, edgeFlags\u003d0x0, pointerCount\u003d2, historySize\u003d0, eventTime\u003d66365, downTime\u003d66365, deviceId\u003d0, source\u003d0x1002, displayId\u003d0, eventId\u003d-295961610 },\n    0\n);\n-\u003e at com.android.server.accessibility.magnification.TwoFingersDownOrSwipeTest.sendTwoFingerDownEvent_onGestureCompleted(TwoFingersDownOrSwipeTest.java:96)\nActual invocation has different arguments:\nmListener.onGestureCompleted(\n    101,\n    MotionEvent { action\u003dACTION_POINTER_DOWN(1), actionButton\u003d0, id[0]\u003d0, x[0]\u003d100.0, y[0]\u003d100.0, toolType[0]\u003dTOOL_TYPE_FINGER, id[1]\u003d1, x[1]\u003d110.0, y[1]\u003d110.0, toolType[1]\u003dTOOL_TYPE_FINGER, buttonState\u003d0, classification\u003dNONE, metaState\u003d0, flags\u003d0x0, edgeFlags\u003d0x0, pointerCount\u003d2, historySize\u003d0, eventTime\u003d66365, downTime\u003d66365, deviceId\u003d0, source\u003d0x1002, displayId\u003d0, eventId\u003d-295961610 },\n    MotionEvent { action\u003dACTION_POINTER_DOWN(1), actionButton\u003d0, id[0]\u003d0, x[0]\u003d100.0, y[0]\u003d100.0, toolType[0]\u003dTOOL_TYPE_FINGER, id[1]\u003d1, x[1]\u003d110.0, y[1]\u003d110.0, toolType[1]\u003dTOOL_TYPE_FINGER, buttonState\u003d0, classification\u003dNONE, metaState\u003d0, flags\u003d0x0, edgeFlags\u003d0x0, pointerCount\u003d2, historySize\u003d0, eventTime\u003d66365, downTime\u003d66365, deviceId\u003d0, source\u003d0x1002, displayId\u003d0, eventId\u003d-295961610 },\n    0\n);\n-\u003e at com.android.server.accessibility.magnification.GesturesObserver.onStateChanged(GesturesObserver.java:129)\n\n\tat com.android.server.accessibility.magnification.TwoFingersDownOrSwipeTest.sendTwoFingerDownEvent_onGestureCompleted(TwoFingersDownOrSwipeTest.java:96)\n```\n\nI\u0027m not sure yet why `testDoubleTapNoFocus_doesNotPerformClick` would be failing like that.\n\nFor `sendTwoFingerDownEvent_onGestureCompleted` I think it is failing because MotionEvent does not provide a custom equals() implementation, so the test is failing because the copy creates a new java object. Perhaps that test can be updated to check for the `getId()` of the MotionEvent instead of the entire object?",
+      "parentUuid": "52058b0c_b82fd4dc",
+      "revId": "eefeac763cb2f9aee13de6500466f94314e00a6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
