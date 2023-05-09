@@ -16,6 +16,24 @@
       "message": "Hey, Daniel\nI see Treehugger Robot prompting Presubmit-Verified -1, but I don\u0027t have permission to see what the reason for this is, can you help with this?",
       "revId": "eefeac763cb2f9aee13de6500466f94314e00a6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52058b0c_b82fd4dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1472174
+      },
+      "writtenOn": "2023-05-09T14:17:00Z",
+      "side": 1,
+      "message": "CtsAccessibilityServiceTestCases and some tests under com.android.server.accessibility.magnification are failed. Could you run those tests and fix them ?",
+      "parentUuid": "a130b521_5ae35c4c",
+      "revId": "eefeac763cb2f9aee13de6500466f94314e00a6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
