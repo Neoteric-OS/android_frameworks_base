@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc3330e0_7bc5394b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1270426
+      },
+      "writtenOn": "2023-05-09T21:46:00Z",
+      "side": 1,
+      "message": "Reverted these files because of merge conflicts:\n- core/java/android/content/pm/LauncherActivityInfo.java\n- core/java/android/content/pm/LauncherActivityInfoInternal.java",
+      "revId": "4146217a3d7a41c4cf32b6871c82b90edfc473c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

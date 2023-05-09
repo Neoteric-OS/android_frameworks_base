@@ -16,6 +16,24 @@
       "message": "Have you run analysis on apps in the wild to ensure these fields aren\u0027t being re-assigned via reflection/hidden API exploits or for testing?\n\nThere are some usages I would deem more safe than others (anything not in a \"data\" class), so it would best to split them out into a separate CL for easy revert, but I don\u0027t think it\u0027s a big deal.\n\nMaybe we let this soak internally such that it doesn\u0027t go out into the next public release.",
       "revId": "62baac37febf9c2065567fa80404a700d5c09a24",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fa43aab_a40708d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1270426
+      },
+      "writtenOn": "2023-05-09T21:46:00Z",
+      "side": 1,
+      "message": "I patched onto udc-qpr-dev and flashed my device. Could not find any immediate issues on a variety of apps, though I guess it\u0027s impossible to confirm no app at all ever tries to set them through reflection. But I think there\u0027s an implicit assumption that if a field is final it is subject to change and should not be interfered with.",
+      "parentUuid": "f60da92a_b43a5ab9",
+      "revId": "62baac37febf9c2065567fa80404a700d5c09a24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
