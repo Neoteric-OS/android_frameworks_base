@@ -50,6 +50,24 @@
       "message": "Gentle ping on this.",
       "revId": "b4f24501f71a6eb005de4b1cc87d2876a6bbac04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a59ae06_2d913cb1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2023-05-10T12:44:27Z",
+      "side": 1,
+      "message": "+michaelwr, can you spare a moment to have a look at this? Or should I try another code owner?",
+      "parentUuid": "c182afdc_c8c836e2",
+      "revId": "b4f24501f71a6eb005de4b1cc87d2876a6bbac04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
