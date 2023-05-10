@@ -1621,6 +1621,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         boolean brightnessAdjusted = false;
         final boolean brightnessIsTemporary =
                 mAppliedTemporaryBrightness || mAppliedTemporaryAutoBrightnessAdjustment;
+        float animateValue = brightnessState;
         if (!mPendingScreenOff) {
             if (mSkipScreenOnBrightnessRamp) {
                 if (state == Display.STATE_ON) {
@@ -1661,7 +1662,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
             // user even when the display is all black. We also clamp here in case some
             // transformations to the brightness have pushed it outside of the currently
             // allowed range.
-            float animateValue = clampScreenBrightness(brightnessState);
+            animateValue = clampScreenBrightness(brightnessState);
 
             // If there are any HDR layers on the screen, we have a special brightness value that we
             // use instead. We still preserve the calculated brightness for Standard Dynamic Range
@@ -1733,13 +1734,13 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
 
         // Log any changes to what is currently driving the brightness setting.
         if (!mBrightnessReasonTemp.equals(mBrightnessReason) || brightnessAdjustmentFlags != 0) {
-            Slog.v(TAG, "Brightness [" + brightnessState + "] reason changing to: '"
+            Slog.v(TAG, "Brightness [" + animateValue + "] reason changing to: '"
                     + mBrightnessReasonTemp.toString(brightnessAdjustmentFlags)
                     + "', previous reason: '" + mBrightnessReason + "'.");
             mBrightnessReason.set(mBrightnessReasonTemp);
         } else if (mBrightnessReasonTemp.reason == BrightnessReason.REASON_MANUAL
                 && userSetBrightnessChanged) {
-            Slog.v(TAG, "Brightness [" + brightnessState + "] manual adjustment.");
+            Slog.v(TAG, "Brightness [" + animateValue + "] manual adjustment.");
         }
 
 
