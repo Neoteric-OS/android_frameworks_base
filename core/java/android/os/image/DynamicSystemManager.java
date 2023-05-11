@@ -285,4 +285,15 @@ public class DynamicSystemManager {
             throw new RuntimeException(e.toString());
         }
     }
+
+    /**
+     * Returns the active DSU slot
+     */
+    public String getActiveDsuSlot() {
+        try {
+            return mService.getActiveDsuSlot();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e.toString());
+        }
+    }
 }
