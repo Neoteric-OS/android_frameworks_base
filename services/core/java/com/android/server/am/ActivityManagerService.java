@@ -11093,6 +11093,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         boolean isCheckinRequest;
         boolean dumpSwapPss;
         boolean dumpProto;
+        boolean dumpAllocatorStats;
     }
 
     @NeverCompile // Avoid size overhead of debugging code.
@@ -11111,6 +11112,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         opts.isCheckinRequest = false;
         opts.dumpSwapPss = false;
         opts.dumpProto = asProto;
+        opts.dumpAllocatorStats = false;
 
         int opti = 0;
         while (opti < args.length) {
@@ -11145,7 +11147,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                 opts.isCheckinRequest = true;
             } else if ("--proto".equals(opt)) {
                 opts.dumpProto = true;
-
+            } else if ("--logstats".equals(opt)) {
+                opts.dumpAllocatorStats = true;
             } else if ("-h".equals(opt)) {
                 pw.println("meminfo dump options: [-a] [-d] [-c] [-s] [--oom] [process]");
                 pw.println("  -a: include all available information for each process.");
@@ -11351,7 +11354,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                             try {
                                 thread.dumpMemInfo(tp.getWriteFd(),
                                         mi, opts.isCheckinRequest, opts.dumpFullDetails,
-                                        opts.dumpDalvik, opts.dumpSummaryOnly, opts.dumpUnreachable, innerArgs);
+                                        opts.dumpDalvik, opts.dumpSummaryOnly, opts.dumpUnreachable, opts.dumpAllocatorStats, innerArgs);
                                 tp.go(fd, opts.dumpUnreachable ? 30000 : 5000);
                             } finally {
                                 tp.kill();
