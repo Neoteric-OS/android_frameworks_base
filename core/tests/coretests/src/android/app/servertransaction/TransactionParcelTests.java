@@ -545,7 +545,7 @@ public class TransactionParcelTests {
         @Override
         public void dumpMemInfo(ParcelFileDescriptor parcelFileDescriptor,
                 Debug.MemoryInfo memoryInfo, boolean b, boolean b1, boolean b2, boolean b3,
-                boolean b4, String[] strings) throws RemoteException {
+                boolean b4, boolean b5, String[] strings) throws RemoteException {
         }
 
         @Override
