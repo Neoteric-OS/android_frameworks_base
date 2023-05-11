@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5c2a2e5_59febd84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1536075
+      },
+      "writtenOn": "2023-05-11T23:46:48Z",
+      "side": 1,
+      "message": "This is okay thanks. I would note that all legacy property names have been migrated to the new properties will all the same values.\n\nThere should be no existing regression, but I agree this change may fix an issue with some outlier devices which have not yet updated.",
+      "revId": "da7eec947a3c4381d180edd72f52925ae6995ade",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
