@@ -308,7 +308,7 @@ void Stream::play_l(const std::shared_ptr<Sound>& sound, int32_t nextStreamID,
             mAudioTrack.clear(); // move should have cleared the sp<>, but we clear just in case.
         }
     }
-    if (mAudioTrack == nullptr) {
+    if (mAudioTrack.get() == nullptr) {
         // mToggle toggles each time a track is started on a given stream.
         // This enables the detection of callbacks received from the old
         // audio track while the new one is being started and avoids processing them with
@@ -430,7 +430,7 @@ void Stream::onBufferEnd(int toggle, int tries)
         std::unique_lock lock(mLock);
         ALOGV("%s track(%p) streamID %d", __func__, mAudioTrack.get(), (int)mStreamID);
 
-        if (mAudioTrack == nullptr) {
+        if (mAudioTrack.get() == nullptr) {
             // The AudioTrack is either with this stream or its pair.
             // if this swaps a few times, the toggle is bound to be wrong, so we fail then.
             //
