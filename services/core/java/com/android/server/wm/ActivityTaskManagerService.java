@@ -4003,6 +4003,18 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         }
     }
 
+    public void onConfigurationChangedForDisplay() {
+        if (mRootWindowContainer == null) {
+            Slog.e(TAG, "onConfigurationChangedForDisplay failed: mRootWindowContainer is null");
+            return;
+        }
+        if (mRootWindowContainer.getDefaultDisplay() == null) {
+            Slog.e(TAG, "onConfigurationChangedForDisplay failed: defaultDisplay is null");
+            return;
+        }
+        mRootWindowContainer.getDefaultDisplay().getDisplayPolicy().onConfigurationChanged();
+    }
+
     @Override
     public void detachNavigationBarFromApp(@NonNull IBinder transition) {
         mAmInternal.enforceCallingPermission(CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS,
