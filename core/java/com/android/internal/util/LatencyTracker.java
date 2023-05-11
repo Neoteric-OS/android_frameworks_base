@@ -303,7 +303,7 @@ public class LatencyTracker {
             for (int action : ACTIONS_ALL) {
                 String actionName = getNameOfAction(STATSD_ACTION[action]).toLowerCase(Locale.ROOT);
                 int legacyActionTraceThreshold = properties.getInt(
-                        actionName + LEGACY_TRACE_THRESHOLD_SUFFIX, -1);
+                        actionName.toUpperCase(Locale.ROOT) + LEGACY_TRACE_THRESHOLD_SUFFIX, -1);
                 mActionPropertiesMap.put(action, new ActionProperties(action,
                         properties.getBoolean(actionName + ENABLE_SUFFIX, mEnabled),
                         properties.getInt(actionName + SAMPLE_INTERVAL_SUFFIX, samplingInterval),
