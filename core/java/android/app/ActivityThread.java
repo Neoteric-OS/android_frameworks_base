@@ -1385,11 +1385,12 @@ public final class ActivityThread extends ClientTransactionHandler
         @Override
         public void dumpMemInfo(ParcelFileDescriptor pfd, Debug.MemoryInfo mem, boolean checkin,
                 boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly,
-                boolean dumpUnreachable, String[] args) {
+                boolean dumpUnreachable, boolean dumpAllocatorStats, String[] args) {
             FileOutputStream fout = new FileOutputStream(pfd.getFileDescriptor());
             PrintWriter pw = new FastPrintWriter(fout);
             try {
-                dumpMemInfo(pw, mem, checkin, dumpFullInfo, dumpDalvik, dumpSummaryOnly, dumpUnreachable);
+                dumpMemInfo(pw, mem, checkin, dumpFullInfo, dumpDalvik, dumpSummaryOnly,
+                            dumpUnreachable, dumpAllocatorStats);
             } finally {
                 pw.flush();
                 IoUtils.closeQuietly(pfd);
@@ -1397,7 +1398,8 @@ public final class ActivityThread extends ClientTransactionHandler
         }
 
         private void dumpMemInfo(PrintWriter pw, Debug.MemoryInfo memInfo, boolean checkin,
-                boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly, boolean dumpUnreachable) {
+                boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly,
+                boolean dumpUnreachable, boolean dumpAllocatorStats) {
             long nativeMax = Debug.getNativeHeapSize() / 1024;
             long nativeAllocated = Debug.getNativeHeapAllocatedSize() / 1024;
             long nativeFree = Debug.getNativeHeapFreeSize() / 1024;
@@ -1531,6 +1533,9 @@ public final class ActivityThread extends ClientTransactionHandler
                 pw.println(" ");
                 pw.println(" Unreachable memory");
                 pw.print(Debug.getUnreachableMemory(100, showContents));
+            }
+            if (dumpAllocatorStats) {
+                Debug.logAllocatorStats();
             }
         }
 
