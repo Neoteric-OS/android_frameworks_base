@@ -962,6 +962,12 @@ static jboolean android_os_Debug_isVmapStack(JNIEnv *env, jobject clazz)
     return cfg_state == CONFIG_SET;
 }
 
+static jboolean android_os_Debug_logAllocatorStats(JNIEnv*, jobject)
+{
+    mallopt(M_LOG_STATS, 0);
+    return true;
+}
+
 /*
  * JNI registration.
  */
@@ -1023,6 +1029,8 @@ static const JNINativeMethod gMethods[] = {
             (void*)android_os_Debug_getGpuTotalUsageKb },
     { "isVmapStack", "()Z",
             (void*)android_os_Debug_isVmapStack },
+    { "logAllocatorStats", "()Z",
+            (void*)android_os_Debug_logAllocatorStats },
 };
 
 int register_android_os_Debug(JNIEnv *env)
