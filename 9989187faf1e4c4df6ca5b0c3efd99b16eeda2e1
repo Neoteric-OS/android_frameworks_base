@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6189a66_c175b3a5",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3250,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2023-05-12T14:00:00Z",
+      "side": 1,
+      "message": "I think this might cause some unnecessary locking. We would only need the lock in 3256-3257",
+      "revId": "9989187faf1e4c4df6ca5b0c3efd99b16eeda2e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
