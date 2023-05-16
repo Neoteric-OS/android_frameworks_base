@@ -2158,7 +2158,7 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
 
             // This will change the pinned stack's windowing mode to its original mode, ensuring
             // we only have one stack that is in pinned mode.
-            if (pinnedStack != null) {
+            if (pinnedStack != null && !reason.equals("enterPictureInPictureMode")) {
                 pinnedStack.dismissPip();
             }
 
