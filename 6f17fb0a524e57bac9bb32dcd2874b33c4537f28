@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1685731d_07bf5db0",
+        "filename": "core/java/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1076723
+      },
+      "writtenOn": "2023-05-16T21:02:59Z",
+      "side": 1,
+      "message": "Nit: Why the newlines?",
+      "revId": "6f17fb0a524e57bac9bb32dcd2874b33c4537f28",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
