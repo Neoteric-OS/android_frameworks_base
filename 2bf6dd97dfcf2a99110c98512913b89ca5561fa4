@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b6399fc_ce7b85c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2023-05-16T21:38:53Z",
+      "side": 1,
+      "message": "@yaochen Can you please provide owners approval for this fuzzer? This is being added as part of  go/fuzzing-all-aidl-services",
+      "revId": "2bf6dd97dfcf2a99110c98512913b89ca5561fa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
