@@ -18,6 +18,7 @@
             android:exported="true">
         </service>
         <uses-library android:name="androidx.camera.extensions.impl" android:required="false" />
+        <profileable android:shell="true"/>
     </application>
 
 </manifest>

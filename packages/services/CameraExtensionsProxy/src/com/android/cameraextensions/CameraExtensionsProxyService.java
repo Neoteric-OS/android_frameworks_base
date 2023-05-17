@@ -1045,8 +1045,10 @@ public class CameraExtensionsProxyService extends Service {
         public void onNextImageAvailable(OutputConfigId outputConfigId, ParcelImage img,
                 String physicalCameraId) {
             if (mImageProcessor != null) {
-                mImageProcessor.onNextImageAvailable(outputConfigId.id, img.timestamp,
-                        new ImageReferenceImpl(img), physicalCameraId);
+                ImageReferenceImpl imgRef = new ImageReferenceImpl(img);
+                mImageProcessor.onNextImageAvailable(outputConfigId.id, img.timestamp, imgRef,
+                        physicalCameraId);
+                imgRef.decrement();
             }
         }
     }
@@ -1695,6 +1697,7 @@ public class CameraExtensionsProxyService extends Service {
         private ImageReferenceImpl(ParcelImage parcelImage) {
             super(parcelImage);
             mReferenceCount = 1;
+            Log.e(TAG, "New: " + this);
         }
 
         @Override
@@ -1704,6 +1707,7 @@ public class CameraExtensionsProxyService extends Service {
                     return false;
                 }
                 mReferenceCount++;
+                Log.e(TAG, "Increment: " + this + " count: " + mReferenceCount);
             }
 
             return true;
@@ -1716,8 +1720,10 @@ public class CameraExtensionsProxyService extends Service {
                     return false;
                 }
                 mReferenceCount--;
+                Log.e(TAG, "Decrement: " + this + " count:" + mReferenceCount);
 
                 if (mReferenceCount <= 0) {
+                    Log.e(TAG, "Closing: " + this);
                     close();
                 }
             }
