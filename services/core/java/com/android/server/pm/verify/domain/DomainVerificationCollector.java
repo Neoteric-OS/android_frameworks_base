@@ -83,9 +83,10 @@ public class DomainVerificationCollector {
      *           with no other schemes</li>
      * </ul>
      * <p>
-     * On prior versions of Android, Intent.CATEGORY_BROWSABLE was not a requirement, other
-     * schemes were allowed, and setting autoVerify to true in any intent filter would implicitly
-     * pretend that all intent filters were set to autoVerify="true".
+     * On prior versions of Android, neither Intent.CATEGORY_BROWSABLE nor
+     * Intent.CATEGORY_DEFAULT were a requirement, other schemes were allowed, and setting
+     * autoVerify to true in any intent filter would implicitly pretend that all intent
+     * filters were set to autoVerify="true".
      */
     @ChangeId
     @EnabledSince(targetSdkVersion = Build.VERSION_CODES.S)
