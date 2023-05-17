@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3af6b7b5_8313fe9b",
+        "filename": "api/StubLibraries.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-05-17T10:32:00Z",
+      "side": 1,
+      "message": "Done. Also replaced the boilerplaty entries with a default module.",
+      "parentUuid": "e5fca6b4_830136bf",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 6
+      },
+      "revId": "c3bb99e110392ad26231bae6d7ffbaacf9c06f52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26f06f3f_0aada492",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-17T08:30:22Z",
       "side": 1,
       "message": "Private is the default visibility for this directory (see Android.bp), so it can be removed from all the modules added here",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 6
+      },
+      "revId": "c3bb99e110392ad26231bae6d7ffbaacf9c06f52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fe53907_6ecadd71",
+        "filename": "api/StubLibraries.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-05-17T10:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26f06f3f_0aada492",
       "range": {
         "startLine": 295,
         "startChar": 0,
