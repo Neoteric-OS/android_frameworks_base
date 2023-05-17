@@ -16,6 +16,24 @@
       "message": "I\u0027ve just moved this file to the api subdirectory. I think you\u0027ll need to update these to use the filegroups that have been created for these txt files.",
       "revId": "4978eaa87b4fa44675b9ee38b6fdb53b67dc33e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37c15998_d308420c",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-05-17T00:34:24Z",
+      "side": 1,
+      "message": "Thanks for the heads up! I have replaced these files with the filegroups as suggested.",
+      "parentUuid": "81be01e4_a6bcbff4",
+      "revId": "4978eaa87b4fa44675b9ee38b6fdb53b67dc33e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
