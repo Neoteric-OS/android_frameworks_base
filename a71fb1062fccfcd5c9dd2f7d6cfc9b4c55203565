@@ -50,6 +50,23 @@
       "message": "Do not know what Treehugger found here, would be nice if you could help us 😊",
       "revId": "a71fb1062fccfcd5c9dd2f7d6cfc9b4c55203565",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "516a251e_cdc2a091",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-05-17T19:15:40Z",
+      "side": 1,
+      "message": "Hi, happy to help fixing the treehugger issue.\n\nFirst, I want to confirm the intended behaviour when `ACTION_DEVICE_CUSTOMIZATION_READY` is triggered (I don\u0027t have any context about this intent):\n\nIn the previous version: if no custom wallpaper has been set, set the wallpaper to be an ImageWallpaper with the default drawable.\n\nIn the new version: if the WallpaperService is an ImageWallpaper, restart the WallpaperService (without changing the bitmap it\u0027s using).\n\nCan you confirm that this is the expected behaviour? Also could you explain what is the `ACTION_DEVICE_CUSTOMIZATION_READY` intent, and why ImageWallpaper needs to be restarted (but not live wallpapers)?\n\nThanks!",
+      "revId": "a71fb1062fccfcd5c9dd2f7d6cfc9b4c55203565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
