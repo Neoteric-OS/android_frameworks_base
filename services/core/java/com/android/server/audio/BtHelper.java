@@ -605,9 +605,6 @@ public class BtHelper {
     }
 
     private boolean handleBtScoActiveDeviceChange(BluetoothDevice btDevice, boolean isActive) {
-        if (btDevice == null) {
-            return true;
-        }
         int inDevice = AudioSystem.DEVICE_IN_BLUETOOTH_SCO_HEADSET;
         AudioDeviceAttributes audioDevice =  btHeadsetDeviceToAudioDevice(btDevice);
         String btDeviceName =  getName(btDevice);
@@ -647,14 +644,20 @@ public class BtHelper {
         Log.i(TAG, "setBtScoActiveDevice: " + getAnonymizedAddress(mBluetoothHeadsetDevice)
                 + " -> " + getAnonymizedAddress(btDevice));
         final BluetoothDevice previousActiveDevice = mBluetoothHeadsetDevice;
-        if (Objects.equals(btDevice, previousActiveDevice)) {
+        if (btDevice != null && Objects.equals(btDevice, previousActiveDevice)) {
             return;
         }
-        if (!handleBtScoActiveDeviceChange(previousActiveDevice, false)) {
+	if (mBluetoothHeadsetDevice == null && btDevice == null) {
+            //if SCO device entry is in mConnectedDevices, remove it
+            if(!handleBtScoActiveDeviceChange(previousActiveDevice, false)){
+		Log.w(TAG, "setBtScoActiveDevice() failed to remove previous device null");
+	    }
+        }
+        if (previousActiveDevice != null && !handleBtScoActiveDeviceChange(previousActiveDevice, false)) {
             Log.w(TAG, "setBtScoActiveDevice() failed to remove previous device "
                     + getAnonymizedAddress(previousActiveDevice));
         }
-        if (!handleBtScoActiveDeviceChange(btDevice, true)) {
+        if (btDevice != null && !handleBtScoActiveDeviceChange(btDevice, true)) {
             Log.e(TAG, "setBtScoActiveDevice() failed to add new device "
                     + getAnonymizedAddress(btDevice));
             // set mBluetoothHeadsetDevice to null when failing to add new device
