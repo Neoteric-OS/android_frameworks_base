@@ -259,7 +259,6 @@ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/framework/*-service.jar)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/framework/service-statsd.jar)
 $(call add-clean-step, rm -rf $(SOONG_OUT_DIR)/.intermediates/frameworks/base/libincremental_aidl-cpp-source/)
 $(call add-clean-step, rm -rf $(SOONG_OUT_DIR)/.intermediates/frameworks/base/libincremental_manager_aidl-cpp-source/)
-$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/priv-app/InProcessTethering)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/app/OsuLogin)
 $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system_other/system/app/OsuLogin)
 # ******************************************************************
