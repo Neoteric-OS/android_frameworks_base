@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5fca6b4_830136bf",
+        "filename": "api/StubLibraries.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-05-17T08:30:22Z",
+      "side": 1,
+      "message": "Do you mind collapsing all single-entry lists to be one line instead of 3? It will condense the long/boilerplaty stuff added here quite a bit",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 6
+      },
+      "revId": "c3bb99e110392ad26231bae6d7ffbaacf9c06f52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26f06f3f_0aada492",
+        "filename": "api/StubLibraries.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-05-17T08:30:22Z",
+      "side": 1,
+      "message": "Private is the default visibility for this directory (see Android.bp), so it can be removed from all the modules added here",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 6
+      },
+      "revId": "c3bb99e110392ad26231bae6d7ffbaacf9c06f52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
