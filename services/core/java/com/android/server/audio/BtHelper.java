@@ -647,7 +647,7 @@ public class BtHelper {
         Log.i(TAG, "setBtScoActiveDevice: " + getAnonymizedAddress(mBluetoothHeadsetDevice)
                 + " -> " + getAnonymizedAddress(btDevice));
         final BluetoothDevice previousActiveDevice = mBluetoothHeadsetDevice;
-        if (Objects.equals(btDevice, previousActiveDevice)) {
+        if (btDevice != null && Objects.equals(btDevice, previousActiveDevice)) {
             return;
         }
         if (!handleBtScoActiveDeviceChange(previousActiveDevice, false)) {
