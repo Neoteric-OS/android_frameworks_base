@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "12ee2c8a_57310fca",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-05-18T20:39:16Z",
+      "side": 1,
+      "message": "@hunga@google.com, thank you for reviewing the CL. I have updated the comments for the DTS keys. Added details about the possible range and data type.",
+      "parentUuid": "6dde049f_94b1e058",
+      "range": {
+        "startLine": 1037,
+        "startChar": 0,
+        "endLine": 1037,
+        "endChar": 72
+      },
+      "revId": "13c96f3e4efd257ada4fc682efc6d264505935c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2383839_82510eac",
         "filename": "media/java/android/media/MediaFormat.java",
         "patchSetId": 4
@@ -54,6 +78,30 @@
       "writtenOn": "2023-05-03T03:07:18Z",
       "side": 1,
       "message": "nit: is this a true/false or something else like the mode on line 1082?",
+      "range": {
+        "startLine": 1103,
+        "startChar": 51,
+        "endLine": 1103,
+        "endChar": 55
+      },
+      "revId": "13c96f3e4efd257ada4fc682efc6d264505935c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6ac2c89_b473ed5d",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-05-18T20:39:16Z",
+      "side": 1,
+      "message": "I have updated it. Could you check the modified comments?",
+      "parentUuid": "a2383839_82510eac",
       "range": {
         "startLine": 1103,
         "startChar": 51,
