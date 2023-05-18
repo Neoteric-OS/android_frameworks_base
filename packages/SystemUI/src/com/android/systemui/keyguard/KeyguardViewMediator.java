@@ -1135,6 +1135,8 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
             synchronized (KeyguardViewMediator.this) {
                 if (mKeyguardStateController.isBouncerShowing()) {
                     mPendingPinLock = false;
+                    if (DEBUG) Log.d(TAG, "Bouncer is showing. Show Keyguard");
+                    mKeyguardDisplayManager.show();
                 }
                 adjustStatusBarLocked(mKeyguardStateController.isBouncerShowing(), false);
             }
@@ -2416,7 +2418,6 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
             mKeyguardViewControllerLazy.get().setKeyguardGoingAwayState(false);
             mShowKeyguardWakeLock.release();
         }
-        mKeyguardDisplayManager.show();
 
         // schedule 4hr idle timeout after which non-strong biometrics (i.e. weak or convenience
         // biometric) can't be used to unlock device until unlocking with strong biometric or
