@@ -81,7 +81,7 @@ import java.util.List;
  *
  * <div class="special reference">
  * <h3>Developer Guides</h3>
- * <p>For information about creating Toast notifications, read the
+ * <p>For information about creating Toast notifications, read theusu
  * <a href="{@docRoot}guide/topics/ui/notifiers/toasts.html">Toast Notifications</a> developer
  * guide.</p>
  * </div>
@@ -154,8 +154,7 @@ public class Toast {
      * Construct an empty Toast object.  You must call {@link #setView} before you
      * can call {@link #show}.
      *
-     * @param context  The context to use.  Usually your {@link android.app.Application}
-     *                 or {@link android.app.Activity} object.
+     * @param context  The context to use.  Usually your {@link android.app.Activity} object.
      */
     public Toast(Context context) {
         this(context, null);
@@ -479,8 +478,7 @@ public class Toast {
     /**
      * Make a standard toast that just contains text.
      *
-     * @param context  The context to use.  Usually your {@link android.app.Application}
-     *                 or {@link android.app.Activity} object.
+     * @param context  The context to use.  Usually your {@link android.app.Activity} object.
      * @param text     The text to show.  Can be formatted text.
      * @param duration How long to display the message.  Either {@link #LENGTH_SHORT} or
      *                 {@link #LENGTH_LONG}
@@ -536,8 +534,7 @@ public class Toast {
     /**
      * Make a standard toast that just contains text from a resource.
      *
-     * @param context  The context to use.  Usually your {@link android.app.Application}
-     *                 or {@link android.app.Activity} object.
+     * @param context  The context to use.  Usually your {@link android.app.Activity} object.
      * @param resId    The resource id of the string resource to use.  Can be formatted text.
      * @param duration How long to display the message.  Either {@link #LENGTH_SHORT} or
      *                 {@link #LENGTH_LONG}
