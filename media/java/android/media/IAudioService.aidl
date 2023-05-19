@@ -227,6 +227,9 @@ interface IAudioService {
     IRingtonePlayer getRingtonePlayer();
     int getUiSoundsStreamType();
 
+    @EnforcePermission("MODIFY_AUDIO_SETTINGS_PRIVILEGED")
+    void setTestNotifAliasRingStarted(boolean started);
+
     void setWiredDeviceConnectionState(in AudioDeviceAttributes aa, int state, String caller);
 
     @UnsupportedAppUsage

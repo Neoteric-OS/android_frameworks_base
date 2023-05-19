@@ -8565,6 +8565,23 @@ public class AudioManager {
         }
     }
 
+    /**
+     * @hide
+     * Test method to temporarily override whether test STREAM_NOTIFICATION alias STREAM_RING is started,
+     * avoid STREAM_NOTIFICATION alias wrong strem type after stream type alias change test.
+     * @param started if true, test STREAM_NOTIFICATION alias STREAM_RING is started
+     */
+    @TestApi
+    @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED)
+    public void setNotifAliasRingForTest(boolean started) {
+        final IAudioService service = getService();
+        try {
+            service.setTestNotifAliasRingStarted(started);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     private final Object mMuteAwaitConnectionListenerLock = new Object();
 
     @GuardedBy("mMuteAwaitConnectionListenerLock")
