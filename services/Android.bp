@@ -59,7 +59,10 @@ system_optimized_java_defaults {
                 optimize: false,
                 shrink: true,
                 ignore_warnings: false,
-                proguard_flags_files: ["proguard.flags"],
+                proguard_flags_files: [
+                    "proguard.flags",
+                    ":framework-res{.aapt.proguardOptionsFile}",
+                ],
             },
             // Note: Optimizations are disabled by default if unspecified in
             // the java_library rule.
