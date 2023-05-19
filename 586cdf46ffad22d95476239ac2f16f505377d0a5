@@ -87,6 +87,24 @@
       "parentUuid": "9931cd66_5004a56b",
       "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3995e9ec_bf4075fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1941946
+      },
+      "writtenOn": "2023-05-19T21:50:13Z",
+      "side": 1,
+      "message": "Yes, when the change submitted in internal master, concerns in this ticket  http://b/280450222 hasn\u0027t been brought up yet, so I am asking extra questions here to understand behavior change is addressing per-app switch concerns in http://b/280450222. Specifically there was a concern when ANGLE is set as system driver, there was no way to know what the native driver is, and setting per-app switch to native does not force the app to use whatever native driver is shipped with the device.\n\nWith this change, we preserve the native driver name in `ro.hardware.egl`. However, since the EGL loader will looks up `persist.graphics.egl` before `ro.hardware.egl`, EGL loader will still load ANGLE for \"native\" and \"default\". We solved the problem of \"no way to know what the native driver is\", but in terms of actual loading, we are still loading ANGLE (read from \"persist.graphics.egl\"). As long as this is the expected behavior, I am good with it :)",
+      "parentUuid": "e58cf7fb_66ca102a",
+      "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
