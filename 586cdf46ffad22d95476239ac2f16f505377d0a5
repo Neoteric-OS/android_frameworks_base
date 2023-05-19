@@ -33,6 +33,24 @@
       "message": "Regarding the comment http://b/280450222#comment3, is this how the per-app driver selection going to work:\n\n1. when `persist.graphics.egl` is `ANGLE`:\n\n\"default\": use ANGLE binary in /vendor.\n\"angle\": use ANGLE apk if there is one. what to do if there is no ANGLE apk? \n\"native\": use ANGLE binary in /vendor. (EGL Loader.cpp will load `persist.graphics.egl` first before `ro.hardware.egl`)\n\n2. when `persist.graphics.egl` is native GLES driver name:\n\n\"default\": use native GLES driver binary in /vendor.\n\"angle\": use ANGLE apk is there is one. what to do if there is no ANGLE apk?\n\"native\": use native GLES driver binary in /vendor.\n\nIf above is the intended new behavior. What is the plan if per-app switch is set to use \"angle\" but the ANGLE apk is not available?",
       "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12791325_47414829",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2023-05-19T20:35:20Z",
+      "side": 1,
+      "message": "This is a cherry-pick of previous patches.",
+      "parentUuid": "909640bc_ffe75c69",
+      "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
