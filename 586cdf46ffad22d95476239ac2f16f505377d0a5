@@ -51,6 +51,24 @@
       "parentUuid": "909640bc_ffe75c69",
       "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9931cd66_5004a56b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1941946
+      },
+      "writtenOn": "2023-05-19T21:08:17Z",
+      "side": 1,
+      "message": "Since this patch is checked in aosp, and more partners will be impacted, so I would like to understand the above behavior is the one we expect before we proceed. Apologize if you have explained it in other meetings / conversations before.\n\nThe above behavior is what I interpreted from CLs in topic `angle_selection_refactor_1`. Since the default ANGLE apk is not taken out yet, we can put aside the question of \"ANGLE apk not available\". Would you mind checking if `persist.graphics.egl` is ANGLE, below behaviors are correct?\n\n\"default\": use ANGLE binary in /vendor.\n\"angle\": use ANGLE apk.\n\"native\": use ANGLE binary in /vendor. (EGL Loader.cpp will read persist.graphics.egl first before ro.hardware.egl)",
+      "parentUuid": "12791325_47414829",
+      "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
