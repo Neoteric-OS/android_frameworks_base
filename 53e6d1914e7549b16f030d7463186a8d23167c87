@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49a60f88_e9c1a5ef",
+        "filename": "core/java/android/os/UserManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1513,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2023-05-19T16:37:26Z",
+      "side": 1,
+      "message": "In internal master, this paragraph now appears one paragraph higher (i.e., the 2nd and 3rd paragraphs switched places). Not sure if you want to replicate that in the AOSP cl too.",
+      "range": {
+        "startLine": 1513,
+        "startChar": 7,
+        "endLine": 1513,
+        "endChar": 10
+      },
+      "revId": "53e6d1914e7549b16f030d7463186a8d23167c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
