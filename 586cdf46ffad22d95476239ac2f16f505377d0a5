@@ -105,6 +105,24 @@
       "parentUuid": "e58cf7fb_66ca102a",
       "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d5ac409_d59513ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2023-05-19T21:59:29Z",
+      "side": 1,
+      "message": "The presubmit is telling me something weird about the HAL camera rule so I will probably just abandon the idea of cherry-pick.\n\nWe should do it in follow-up patches to make sure we do load the real native, that is still TBD.",
+      "parentUuid": "3995e9ec_bf4075fa",
+      "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
