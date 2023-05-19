@@ -286,19 +286,19 @@ public class AudioService extends IAudioService.Stub
     private final boolean mIsSingleVolume;
 
     /**
-     * indicates whether STREAM_NOTIFICATION is aliased to STREAM_RING
-     *     not final due to test method, see {@link #setNotifAliasRingForTest(boolean)}.
+     * indicates whether test STREAM_NOTIFICATION alias stream type.
+     *     not final due to test method, see {@link #setNotifAliasStreamTypeForTest(int)}.
      */
-    private boolean mNotifAliasRing;
+    private int mNotifAliasStreamType = -1;
 
     /**
-     * Test method to temporarily override whether STREAM_NOTIFICATION is aliased to STREAM_RING,
-     * volumes will be updated in case of a change.
-     * @param alias if true, STREAM_NOTIFICATION is aliased to STREAM_RING
+     * Test method,
+     * avoid STREAM_NOTIFICATION alias wrong strem type after stream type alias change test.
+     * @param stream the STREAM_NOTIFICATION alias stream type.
      */
-    /*package*/ void setNotifAliasRingForTest(boolean alias) {
-        boolean update = (mNotifAliasRing != alias);
-        mNotifAliasRing = alias;
+    /*package*/ void setNotifAliasStreamTypeForTest(int stream) {
+        boolean update = (mNotifAliasStreamType != stream);
+        mNotifAliasStreamType = stream;
         if (update) {
             updateStreamVolumeAlias(true, "AudioServiceTest");
         }
@@ -2184,9 +2184,8 @@ public class AudioService extends IAudioService.Stub
                     mStreamVolumeAlias = STREAM_VOLUME_ALIAS_DEFAULT;
                     dtmfStreamAlias = AudioSystem.STREAM_MUSIC;
             }
-            if (!mNotifAliasRing) {
-                mStreamVolumeAlias[AudioSystem.STREAM_NOTIFICATION] =
-                        AudioSystem.STREAM_NOTIFICATION;
+            if (mNotifAliasStreamType != -1) {
+                mStreamVolumeAlias[AudioSystem.STREAM_NOTIFICATION] = mNotifAliasStreamType;
             }
         }
 
@@ -10272,7 +10271,7 @@ public class AudioService extends IAudioService.Stub
         pw.print("  mBtScoOnByApp="); pw.println(mBtScoOnByApp);
         pw.print("  mIsSingleVolume="); pw.println(mIsSingleVolume);
         pw.print("  mUseFixedVolume="); pw.println(mUseFixedVolume);
-        pw.print("  mNotifAliasRing="); pw.println(mNotifAliasRing);
+        pw.print("  mNotifAliasStreamType="); pw.println(mNotifAliasStreamType);
         pw.print("  mFixedVolumeDevices="); pw.println(dumpDeviceTypes(mFixedVolumeDevices));
         pw.print("  mFullVolumeDevices="); pw.println(dumpDeviceTypes(mFullVolumeDevices));
         pw.print("  mAbsoluteVolumeDevices.keySet()="); pw.println(dumpDeviceTypes(
