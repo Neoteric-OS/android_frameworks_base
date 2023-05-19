@@ -133,7 +133,7 @@ public class AudioServiceTest {
         Thread.sleep(MAX_MESSAGE_HANDLING_DELAY_MS); // wait for full AudioService initialization
 
         // test with aliasing RING and NOTIFICATION
-        mAudioService.setNotifAliasRingForTest(true);
+        mAudioService.setNotifAliasStreamTypeForTest(AudioSystem.STREAM_RING);
         final int ringMaxVol = mAudioService.getStreamMaxVolume(AudioSystem.STREAM_RING);
         final int ringMinVol = mAudioService.getStreamMinVolume(AudioSystem.STREAM_RING);
         final int ringVol = ringMinVol + 1;
@@ -146,11 +146,14 @@ public class AudioServiceTest {
                 mAudioService.getStreamVolume(AudioSystem.STREAM_NOTIFICATION));
 
         // test with no aliasing between RING and NOTIFICATION
-        mAudioService.setNotifAliasRingForTest(false);
+        mAudioService.setNotifAliasStreamTypeForTest(AudioSystem.STREAM_NOTIFICATION);
         mAudioService.setStreamVolume(AudioSystem.STREAM_RING, ringVol, 0, "bla");
         mAudioService.setStreamVolume(AudioSystem.STREAM_NOTIFICATION, ringMaxVol, 0, "bla");
         Assert.assertEquals(ringVol, mAudioService.getStreamVolume(AudioSystem.STREAM_RING));
         Assert.assertEquals(ringMaxVol, mAudioService.getStreamVolume(
                 AudioSystem.STREAM_NOTIFICATION));
+
+        // restore original alias
+        mAudioService.setNotifAliasStreamTypeForTest(-1);
     }
 }
