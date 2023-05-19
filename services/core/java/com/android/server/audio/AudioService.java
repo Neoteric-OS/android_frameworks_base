@@ -2184,10 +2184,8 @@ public class AudioService extends IAudioService.Stub
                     mStreamVolumeAlias = STREAM_VOLUME_ALIAS_DEFAULT;
                     dtmfStreamAlias = AudioSystem.STREAM_MUSIC;
             }
-            if (!mNotifAliasRing) {
-                mStreamVolumeAlias[AudioSystem.STREAM_NOTIFICATION] =
-                        AudioSystem.STREAM_NOTIFICATION;
-            }
+            mStreamVolumeAlias[AudioSystem.STREAM_NOTIFICATION] =
+                mNotifAliasRing ? AudioSystem.STREAM_RING : AudioSystem.STREAM_NOTIFICATION;
         }
 
         if (mIsSingleVolume) {
