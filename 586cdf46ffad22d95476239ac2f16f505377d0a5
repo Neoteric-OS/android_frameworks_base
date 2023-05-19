@@ -69,6 +69,24 @@
       "parentUuid": "12791325_47414829",
       "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e58cf7fb_66ca102a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2023-05-19T21:15:37Z",
+      "side": 1,
+      "message": "That\u0027s the patches we submitted in internal master, right?\n\nIf \"default\" is used, nothing happens, EGL will load whatever it needs to load, meaning it looks up `persist.graphics.egl` first. If \"angle\" is used, it selects the ANGLE apk. If \"native\" is used, nothing happens, EGL will load whatever it needs to load.\n\nWithout this cherry-pick, our internal patches will be released to AOSP once U is released, this is just to make the code visible in advance so that I can talk with partners and point partners to meaningful code.",
+      "parentUuid": "9931cd66_5004a56b",
+      "revId": "586cdf46ffad22d95476239ac2f16f505377d0a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
