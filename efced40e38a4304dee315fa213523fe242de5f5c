@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e582e75_c4654adf",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-05-22T14:39:01Z",
+      "side": 1,
+      "message": "if LMK is not caused by the wallpaper (i.e. still \u003c10% memory after wallpaper is killed), we\u0027d get 10 seconds of black screen before rebinding the wallpaper.\n\nI am not against reducing this waiting time, but no strong opinion about that.\n\n@dupin@google.com what do you think?",
+      "range": {
+        "startLine": 195,
+        "startChar": 55,
+        "endLine": 195,
+        "endChar": 60
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b66a8704_1563d2a7",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-05-22T14:39:01Z",
+      "side": 1,
+      "message": "nit: typo \"MEMEORY\"",
+      "range": {
+        "startLine": 1466,
+        "startChar": 45,
+        "endLine": 1466,
+        "endChar": 63
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0cca53b_c45e32a6",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-05-22T14:39:01Z",
+      "side": 1,
+      "message": "here to get 3 retries, shouldn\u0027t we use the condition `\u003c\u003d 0`? Otherwise we\u0027d try to rebind 4 times with the counter values 3, 2, 1, 0.",
+      "range": {
+        "startLine": 1475,
+        "startChar": 59,
+        "endLine": 1475,
+        "endChar": 60
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "778534be_5558de67",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-05-22T14:39:01Z",
+      "side": 1,
+      "message": "after this clearWallpaperLocked, we should probably reset the counter `mLmkLimitRebindRetries \u003d LWK_RECONNECT_REBIND_RETRIES`.",
+      "range": {
+        "startLine": 1477,
+        "startChar": 36,
+        "endLine": 1477,
+        "endChar": 56
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88bf4072_4db50359",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-05-22T14:39:01Z",
+      "side": 1,
+      "message": "after this decrement instruction it looks like we want a call to `tryToRebind()` (maybe after some delay, but not sure it\u0027s necessary). We should not exit this function without either clearing or rebinding the wallpaper.",
+      "range": {
+        "startLine": 1481,
+        "startChar": 32,
+        "endLine": 1481,
+        "endChar": 54
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee3b7138_04ceaeef",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-05-22T14:39:01Z",
+      "side": 1,
+      "message": "nit: unused, remove this line",
+      "range": {
+        "startLine": 1512,
+        "startChar": 12,
+        "endLine": 1512,
+        "endChar": 66
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
