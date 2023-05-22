@@ -22,6 +22,30 @@
       },
       "revId": "0f3a1673c61905bac9d39bf67a5a9fce87a03570",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa6de655_7c94c2a4",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2023-05-22T12:30:54Z",
+      "side": 1,
+      "message": "If high priority process such as foreground service causes memory leak, we still observe live wallpaper process was repeatedly killed by LMK.\nSo patch set 2 checks low memory after live wallpaper process is killed by LMK.\nIf system is still low memory, memory leak is considered to be caused by other process. Reset the retry counter.\nIf system is recovered from low memory, memory leak might be caused by live wallpaper process. So decrement retry counter. And if same behavior is observed 3 times, clear the live wallpaper.",
+      "parentUuid": "545ac112_25c5c822",
+      "range": {
+        "startLine": 1455,
+        "startChar": 0,
+        "endLine": 1458,
+        "endChar": 0
+      },
+      "revId": "0f3a1673c61905bac9d39bf67a5a9fce87a03570",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
