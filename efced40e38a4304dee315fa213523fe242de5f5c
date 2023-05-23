@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ddf716c7_7b933680",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2023-05-23T09:27:17Z",
+      "side": 1,
+      "message": "We reduced the delay to 5 seconds on patchset3.",
+      "parentUuid": "5e582e75_c4654adf",
+      "range": {
+        "startLine": 195,
+        "startChar": 55,
+        "endLine": 195,
+        "endChar": 60
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b66a8704_1563d2a7",
         "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2023-05-22T14:39:01Z",
       "side": 1,
       "message": "nit: typo \"MEMEORY\"",
+      "range": {
+        "startLine": 1466,
+        "startChar": 45,
+        "endLine": 1466,
+        "endChar": 63
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e6c9702_ebc033ac",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2023-05-23T09:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b66a8704_1563d2a7",
       "range": {
         "startLine": 1466,
         "startChar": 45,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d63361f_cd7cfb38",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2023-05-23T09:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0cca53b_c45e32a6",
+      "range": {
+        "startLine": 1475,
+        "startChar": 59,
+        "endLine": 1475,
+        "endChar": 60
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "778534be_5558de67",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-05-22T14:39:01Z",
       "side": 1,
       "message": "after this clearWallpaperLocked, we should probably reset the counter `mLmkLimitRebindRetries \u003d LWK_RECONNECT_REBIND_RETRIES`.",
+      "range": {
+        "startLine": 1477,
+        "startChar": 36,
+        "endLine": 1477,
+        "endChar": 56
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aff4f9a5_8de968ec",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2023-05-23T09:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "778534be_5558de67",
       "range": {
         "startLine": 1477,
         "startChar": 36,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81c944b3_b270796e",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2023-05-23T09:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88bf4072_4db50359",
+      "range": {
+        "startLine": 1481,
+        "startChar": 32,
+        "endLine": 1481,
+        "endChar": 54
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee3b7138_04ceaeef",
@@ -129,6 +249,30 @@
       "writtenOn": "2023-05-22T14:39:01Z",
       "side": 1,
       "message": "nit: unused, remove this line",
+      "range": {
+        "startLine": 1512,
+        "startChar": 12,
+        "endLine": 1512,
+        "endChar": 66
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "197e4dd8_9b4a808a",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1167564
+      },
+      "writtenOn": "2023-05-23T09:27:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee3b7138_04ceaeef",
       "range": {
         "startLine": 1512,
         "startChar": 12,
