@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcdfa872_84d4a284",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2023-05-23T18:14:12Z",
+      "side": 1,
+      "message": "Jeff, I am not 100% sure if this is what you were suggesting but I thought it was worth creating a change for you to review.\n\nI followed what seems to be the practice of having the `INTENT_OWNERS` file in the root of the `frameworks/base` but it may be better for this to live in `core/java/android/content`.\n\nAlso, I only used the `INTENT_OWNERS` for `Intent.java`. I did consider using it for `IntentFilter.java` too but that has a slightly smaller set of owners and I didn\u0027t want to change anything.",
+      "revId": "0234d3a092aa742e411f0ba4ce45023b0fa03e24",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
