@@ -430,6 +430,15 @@ filegroup {
 }
 
 filegroup {
+    name: "framework-vcn-shared-srcs",
+    visibility: ["//packages/modules/Connectivity/framework-t"],
+    srcs: [
+        "core/java/com/android/internal/util/HexDump.java",
+        "core/java/com/android/internal/util/ArrayUtils.java",
+    ],
+}
+
+filegroup {
     name: "framework-networkstack-shared-srcs",
     srcs: [
         // TODO: remove these annotations as soon as we can use andoid.support.annotations.*

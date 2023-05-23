@@ -285,6 +285,10 @@ package android.net {
     method public static void setHttpProxyConfiguration(@Nullable android.net.ProxyInfo);
   }
 
+  public final class TelephonyNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
+    ctor public TelephonyNetworkSpecifier(int);
+  }
+
   public class VpnManager {
     field public static final int TYPE_VPN_LEGACY = 3; // 0x3
     field public static final int TYPE_VPN_NONE = -1; // 0xffffffff
@@ -357,6 +361,12 @@ package android.os {
 
   public static class Build.VERSION {
     field public static final int DEVICE_INITIAL_SDK_INT;
+  }
+
+  public class Handler {
+    method public final boolean hasMessagesOrCallbacks();
+    method public final void removeEqualMessages(int, @Nullable Object);
+    method public final boolean runWithScissors(@NonNull Runnable, long);
   }
 
   public class IpcDataCache<Query, Result> {
@@ -497,6 +507,8 @@ package android.telephony {
 
   public class TelephonyManager {
     method @NonNull public static int[] getAllNetworkTypes();
+    method @NonNull public static String getNetworkTypeName(int);
+    method @NonNull @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public java.util.List<java.lang.String> getPackagesWithCarrierPrivileges();
   }
 
 }

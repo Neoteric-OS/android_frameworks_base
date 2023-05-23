@@ -40,6 +40,8 @@ import java.util.function.IntFunction;
 
 /**
  * Static utility methods for arrays that aren't already included in {@link java.util.Arrays}.
+ *
+ * @hide
  */
 public class ArrayUtils {
     private static final int CACHE_SIZE = 73;

@@ -16,8 +16,12 @@
 
 package android.os;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.util.Log;
 import android.util.Printer;
@@ -551,44 +555,38 @@ public class Handler {
 
     /**
      * Runs the specified task synchronously.
-     * <p>
-     * If the current thread is the same as the handler thread, then the runnable
-     * runs immediately without being enqueued.  Otherwise, posts the runnable
-     * to the handler and waits for it to complete before returning.
-     * </p><p>
-     * This method is dangerous!  Improper use can result in deadlocks.
-     * Never call this method while any locks are held or use it in a
-     * possibly re-entrant manner.
-     * </p><p>
-     * This method is occasionally useful in situations where a background thread
-     * must synchronously await completion of a task that must run on the
-     * handler's thread.  However, this problem is often a symptom of bad design.
-     * Consider improving the design (if possible) before resorting to this method.
-     * </p><p>
-     * One example of where you might want to use this method is when you just
-     * set up a Handler thread and need to perform some initialization steps on
-     * it before continuing execution.
-     * </p><p>
-     * If timeout occurs then this method returns <code>false</code> but the runnable
-     * will remain posted on the handler and may already be in progress or
-     * complete at a later time.
-     * </p><p>
-     * When using this method, be sure to use {@link Looper#quitSafely} when
-     * quitting the looper.  Otherwise {@link #runWithScissors} may hang indefinitely.
-     * (TODO: We should fix this by making MessageQueue aware of blocking runnables.)
-     * </p>
+     *
+     * <p>If the current thread is the same as the handler thread, then the runnable runs
+     * immediately without being enqueued. Otherwise, posts the runnable to the handler and waits
+     * for it to complete before returning.
+     *
+     * <p>This method is dangerous! Improper use can result in deadlocks. Never call this method
+     * while any locks are held or use it in a possibly re-entrant manner.
+     *
+     * <p>This method is occasionally useful in situations where a background thread must
+     * synchronously await completion of a task that must run on the handler's thread. However, this
+     * problem is often a symptom of bad design. Consider improving the design (if possible) before
+     * resorting to this method.
+     *
+     * <p>One example of where you might want to use this method is when you just set up a Handler
+     * thread and need to perform some initialization steps on it before continuing execution.
+     *
+     * <p>If timeout occurs then this method returns <code>false</code> but the runnable will remain
+     * posted on the handler and may already be in progress or complete at a later time.
+     *
+     * <p>When using this method, be sure to use {@link Looper#quitSafely} when quitting the looper.
+     * Otherwise {@link #runWithScissors} may hang indefinitely. (TODO: We should fix this by making
+     * MessageQueue aware of blocking runnables.)
      *
      * @param r The Runnable that will be executed synchronously.
      * @param timeout The timeout in milliseconds, or 0 to wait indefinitely.
-     *
-     * @return Returns true if the Runnable was successfully executed.
-     *         Returns false on failure, usually because the
-     *         looper processing the message queue is exiting.
-     *
-     * @hide This method is prone to abuse and should probably not be in the API.
-     * If we ever do make it part of the API, we might want to rename it to something
-     * less funny like runUnsafe().
+     * @return Returns true if the Runnable was successfully executed. Returns false on failure,
+     *     usually because the looper processing the message queue is exiting.
+     * @hide This method is prone to abuse and should probably not be in the API. If we ever do make
+     *     it part of the API, we might want to rename it to something less funny like runUnsafe().
      */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @SuppressLint("SamShouldBeLast")
     public final boolean runWithScissors(@NonNull Runnable r, long timeout) {
         if (r == null) {
             throw new IllegalArgumentException("runnable must not be null");
@@ -796,16 +794,16 @@ public class Handler {
     }
 
     /**
-     * Remove any pending posts of messages with code 'what' and whose obj is
-     * 'object' that are in the message queue.  If <var>object</var> is null,
-     * all messages will be removed.
-     * <p>
-     * Similar to {@link #removeMessages(int, Object)} but uses object equality
-     * ({@link Object#equals(Object)}) instead of reference equality (==) in
-     * determining whether object is the message's obj'.
+     * Remove any pending posts of messages with code 'what' and whose obj is 'object' that are in
+     * the message queue. If <var>object</var> is null, all messages will be removed.
      *
-     *@hide
+     * <p>Similar to {@link #removeMessages(int, Object)} but uses object equality ({@link
+     * Object#equals(Object)}) instead of reference equality (==) in determining whether object is
+     * the message's obj'.
+     *
+     * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     public final void removeEqualMessages(int what, @Nullable Object object) {
         mQueue.removeEqualMessages(this, what, object);
     }
@@ -839,8 +837,10 @@ public class Handler {
 
     /**
      * Return whether there are any messages or callbacks currently scheduled on this handler.
+     *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     public final boolean hasMessagesOrCallbacks() {
         return mQueue.hasMessages(this);
     }

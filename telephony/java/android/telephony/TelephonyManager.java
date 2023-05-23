@@ -16,6 +16,7 @@
 
 package android.telephony;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 import static android.content.Context.TELECOM_SERVICE;
 import static android.provider.Telephony.Carriers.DPC_URI;
 import static android.provider.Telephony.Carriers.INVALID_APN_ID;
@@ -3161,14 +3162,16 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns a string representation of the radio technology (network type)
-     * currently in use on the device.
+     * Returns a string representation of the radio technology (network type) currently in use on
+     * the device.
+     *
      * @param subId for which network type is returned
      * @return the name of the radio technology
-     *
      */
     /** {@hide} */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
+    @NonNull
     public static String getNetworkTypeName(@NetworkType int type) {
         switch (type) {
             case NETWORK_TYPE_GPRS:
@@ -9867,6 +9870,8 @@ public class TelephonyManager {
 
     /** @hide */
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi(client = MODULE_LIBRARIES)
+    @NonNull
     public List<String> getPackagesWithCarrierPrivileges() {
         try {
             ITelephony telephony = getITelephony();

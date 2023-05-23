@@ -1286,11 +1286,11 @@ public class SubscriptionManager {
             = "android.telephony.action.SUBSCRIPTION_PLANS_CHANGED";
 
     /**
-     * Integer extra used with {@link #ACTION_DEFAULT_SUBSCRIPTION_CHANGED} and
-     * {@link #ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED} to indicate the subscription
-     * which has changed.
+     * Integer extra used with {@link #ACTION_DEFAULT_SUBSCRIPTION_CHANGED} and {@link
+     * #ACTION_DEFAULT_SMS_SUBSCRIPTION_CHANGED} to indicate the subscription which has changed.
      */
-    public static final String EXTRA_SUBSCRIPTION_INDEX = "android.telephony.extra.SUBSCRIPTION_INDEX";
+    public static final String EXTRA_SUBSCRIPTION_INDEX =
+            "android.telephony.extra.SUBSCRIPTION_INDEX";
 
     /**
      * Integer extra to specify SIM slot index.
