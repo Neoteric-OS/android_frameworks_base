@@ -2333,10 +2333,10 @@ public final class ProcessList {
                 if (res < 0) {
                     if (res == -OsConstants.ESRCH) {
                         Slog.e(ActivityManagerService.TAG, "Unable to create process group for "
-                            + app.processName + " (" + startResult.pid + ")");
+                            + app.processName + " (" + startResult.pid + "): " + res);
                     } else {
                         throw new AssertionError("Unable to create process group for "
-                            + app.processName + " (" + startResult.pid + ")");
+                            + app.processName + " (" + startResult.pid + "): " + res);
                     }
                 }
             }
