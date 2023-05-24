@@ -2214,12 +2214,18 @@ public final class Display {
          */
         public static final int HDR_TYPE_HDR10_PLUS = 4;
 
+        /**
+         * IMAX Enhanced display.
+         */
+        public static final int HDR_TYPE_IMAX_ENHANCED = 5;
+
         /** @hide */
         public static final int[] HDR_TYPES = {
                 HDR_TYPE_DOLBY_VISION,
                 HDR_TYPE_HDR10,
                 HDR_TYPE_HLG,
-                HDR_TYPE_HDR10_PLUS
+                HDR_TYPE_HDR10_PLUS,
+                HDR_TYPE_IMAX_ENHANCED
         };
 
         /** @hide */
@@ -2228,6 +2234,7 @@ public final class Display {
                 HDR_TYPE_HDR10,
                 HDR_TYPE_HLG,
                 HDR_TYPE_HDR10_PLUS,
+                HDR_TYPE_IMAX_ENHANCED
         })
         @Retention(RetentionPolicy.SOURCE)
         public @interface HdrType {}
