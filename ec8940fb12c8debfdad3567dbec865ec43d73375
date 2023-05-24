@@ -16,6 +16,24 @@
       "message": "not sure why does it fail pre-commit check if the reference to this API is removed",
       "revId": "ec8940fb12c8debfdad3567dbec865ec43d73375",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ad3adaf_a5a7f0fe",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1603,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2023-05-24T20:32:53Z",
+      "side": 0,
+      "message": "it fails due to changes in this file are not applied during cherry-pick - can reproduce locally\n\nbut now sure why does it happen",
+      "parentUuid": "7571b5e7_ca63bda7",
+      "revId": "ec8940fb12c8debfdad3567dbec865ec43d73375",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
