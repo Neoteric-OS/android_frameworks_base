@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c378c655_df69dd8b",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12182,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-05-25T13:23:39Z",
+      "side": 1,
+      "message": "What if CM.setProfileNetworkPreferences returns an error in the callback instead of throwing exception directly? Should you also catch those and not persist policy in those cases?",
+      "range": {
+        "startLine": 12182,
+        "startChar": 10,
+        "endLine": 12182,
+        "endChar": 28
+      },
+      "revId": "38b01ce5a13883651c498c6be8af406da936445e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "495f41ff_8cd2760b",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12183,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-05-25T13:23:39Z",
+      "side": 1,
+      "message": ",e",
+      "range": {
+        "startLine": 12183,
+        "startChar": 81,
+        "endLine": 12183,
+        "endChar": 82
+      },
+      "revId": "38b01ce5a13883651c498c6be8af406da936445e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
