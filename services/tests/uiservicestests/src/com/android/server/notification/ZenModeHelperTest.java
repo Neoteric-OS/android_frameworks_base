@@ -166,6 +166,7 @@ public class ZenModeHelperTest extends UiServiceTestCase {
         mContext = spy(getContext());
         mContentResolver = mContext.getContentResolver();
         mResources = spy(mContext.getResources());
+        when(mContext.getResources()).thenReturn(mResources);
         try {
             when(mResources.getXml(R.xml.default_zen_mode_config)).thenReturn(
                     getDefaultConfigParser());
@@ -216,7 +217,6 @@ public class ZenModeHelperTest extends UiServiceTestCase {
                 + "</zen>";
         TypedXmlPullParser parser = Xml.newFastPullParser();
         parser.setInput(new BufferedInputStream(new ByteArrayInputStream(xml.getBytes())), null);
-        parser.nextTag();
         return new XmlResourceParserImpl(parser);
     }
 
