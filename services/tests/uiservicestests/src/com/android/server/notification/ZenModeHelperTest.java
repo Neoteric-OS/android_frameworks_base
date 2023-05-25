@@ -146,6 +146,7 @@ public class ZenModeHelperTest extends UiServiceTestCase {
     private static final String CUSTOM_PKG_NAME = "not.android";
     private static final int CUSTOM_PKG_UID = 1;
     private static final String CUSTOM_RULE_ID = "custom_rule";
+    private static final int DEFAULT_CONFIG_VERSION = 8;
 
     ConditionProviders mConditionProviders;
     @Mock NotificationManager mNotificationManager;
@@ -166,6 +167,7 @@ public class ZenModeHelperTest extends UiServiceTestCase {
         mContext = spy(getContext());
         mContentResolver = mContext.getContentResolver();
         mResources = spy(mContext.getResources());
+        when(mContext.getResources()).thenReturn(mResources);
         try {
             when(mResources.getXml(R.xml.default_zen_mode_config)).thenReturn(
                     getDefaultConfigParser());
@@ -182,6 +184,7 @@ public class ZenModeHelperTest extends UiServiceTestCase {
         mConditionProviders.addSystemProvider(new CountdownConditionProvider());
         mZenModeHelperSpy = spy(new ZenModeHelper(mContext, mTestableLooper.getLooper(),
                 mConditionProviders, mStatsEventBuilderFactory));
+        assertEquals(mZenModeHelperSpy.mDefaultConfig.version, DEFAULT_CONFIG_VERSION);
 
         ResolveInfo ri = new ResolveInfo();
         ri.activityInfo = new ActivityInfo();
@@ -195,7 +198,7 @@ public class ZenModeHelperTest extends UiServiceTestCase {
     }
 
     private XmlResourceParser getDefaultConfigParser() throws IOException, XmlPullParserException {
-        String xml = "<zen version=\"8\" user=\"0\">\n"
+        String xml = "<zen version=\"" + DEFAULT_CONFIG_VERSION + "\" user=\"0\">\n"
                 + "<allow calls=\"false\" repeatCallers=\"false\" messages=\"true\" "
                 + "reminders=\"false\" events=\"false\" callsFrom=\"1\" messagesFrom=\"2\" "
                 + "visualScreenOff=\"true\" alarms=\"true\" "
@@ -216,7 +219,6 @@ public class ZenModeHelperTest extends UiServiceTestCase {
                 + "</zen>";
         TypedXmlPullParser parser = Xml.newFastPullParser();
         parser.setInput(new BufferedInputStream(new ByteArrayInputStream(xml.getBytes())), null);
-        parser.nextTag();
         return new XmlResourceParserImpl(parser);
     }
 
