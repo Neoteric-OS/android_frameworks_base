@@ -4579,6 +4579,17 @@ public class AudioService extends IAudioService.Stub
             flags &= ~AudioManager.FLAG_SHOW_UI;
         }
         mVolumeController.postVolumeChanged(streamType, flags);
+        if (mIsSingleVolume) {
+            if ((flags & AudioManager.FLAG_FIXED_VOLUME) == 0) {
+                oldIndex = (oldIndex + 5) / 10;
+                index = (index + 5) / 10;
+                Intent intent = new Intent(AudioManager.VOLUME_CHANGED_ACTION);
+                intent.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE, streamType);
+                intent.putExtra(AudioManager.EXTRA_VOLUME_STREAM_VALUE, index);
+                intent.putExtra(AudioManager.EXTRA_PREV_VOLUME_STREAM_VALUE, oldIndex);
+                sendBroadcastToAll(intent, null);
+            }
+        }
     }
 
     // Don't show volume UI when:
@@ -8294,7 +8305,7 @@ public class AudioService extends IAudioService.Stub
                     }
                 }
             }
-            if (changed) {
+            if (changed && !mIsSingleVolume) {
                 // If associated to volume group, update group cache
                 updateVolumeGroupIndex(device, /* forceMuteState= */ false);
 
