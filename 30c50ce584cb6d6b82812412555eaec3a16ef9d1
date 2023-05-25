@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db642808_ec3a4df3",
+        "filename": "core/java/android/widget/Toast.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2023-05-25T16:40:00Z",
+      "side": 0,
+      "message": "just checked the git log. seems like this was added in the first android source import (in 2009). \n\nConsidering that Toast is being used less and less and is not maintained, and the comments on the ticket, the current change looks good to me. However I do not have the full context.",
+      "range": {
+        "startLine": 482,
+        "startChar": 76,
+        "endLine": 482,
+        "endChar": 87
+      },
+      "revId": "30c50ce584cb6d6b82812412555eaec3a16ef9d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
