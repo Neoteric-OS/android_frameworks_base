@@ -84,6 +84,7 @@ import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.SystemServiceManager;
 
+import com.android.server.clipboard.ClipboardManagerInternal;
 import com.google.android.collect.Lists;
 import com.google.android.collect.Maps;
 
@@ -513,6 +514,14 @@ public class UriGrantsManagerService extends IUriGrantsManager.Stub implements
         if (persistChanged) {
             schedulePersistUriGrants();
         }
+
+        onPackageUriPermissionRemoved(packageName, userHandle);
+    }
+
+    public void onPackageUriPermissionRemoved(String packageName, int userId) {
+        ClipboardManagerInternal mClipboardInternal =
+                LocalServices.getService(ClipboardManagerInternal.class);
+        mClipboardInternal.onPackageUriPermissionRemoved(packageName, userId);
     }
 
     /** Returns if the ContentProvider has granted a uri to callingUid */
