@@ -23,6 +23,8 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.annotation.WorkerThread;
+import android.app.ActivityManager;
+import android.app.IActivityManager;
 import android.app.ActivityManagerInternal;
 import android.app.AppGlobals;
 import android.app.AppOpsManager;
@@ -194,6 +196,7 @@ public class ClipboardService extends SystemService {
     @Override
     public void onStart() {
         publishBinderService(Context.CLIPBOARD_SERVICE, new ClipboardImpl());
+        publishLocalService(ClipboardManagerInternal.class, new LocalService());
     }
 
     @Override
@@ -1263,5 +1266,48 @@ public class ClipboardService extends SystemService {
     private TextClassificationManager createTextClassificationManagerAsUser(@UserIdInt int userId) {
         Context context = getContext().createContextAsUser(UserHandle.of(userId), /* flags= */ 0);
         return context.getSystemService(TextClassificationManager.class);
+    }
+
+    private final class LocalService implements ClipboardManagerInternal {
+
+        public void onPackageUriPermissionRemoved(String pkg, int userId) {
+            if (userId == UserHandle.USER_NULL) {
+                Slog.wtf(TAG, "Attempt to remove active permission owner for invalid user: " + userId);
+                return;
+            }
+
+            final IActivityManager am = ActivityManager.getService();
+            if (userId == UserHandle.USER_ALL) {
+                try {
+                    int[] runningUserIds = am.getRunningUserIds();
+                    for (int id : runningUserIds) {
+                        removeActivePermissionOwnerForPackage(pkg, id);
+                    }
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+            }
+
+            if (userId == UserHandle.USER_CURRENT || userId == UserHandle.USER_CURRENT_OR_SELF) {
+                try {
+                    removeActivePermissionOwnerForPackage(pkg, am.getCurrentUserId());
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+            }
+
+            removeActivePermissionOwnerForPackage(pkg, userId);
+        }
+    }
+
+    private void removeActivePermissionOwnerForPackage(String pkg, int userId) {
+        PerUserClipboard clipboard = getClipboardLocked(userId);
+        if (pkg.equals(clipboard.mPrimaryClipPackage)) {
+            clipboard.activePermissionOwners.clear();
+        } else {
+            clipboard.activePermissionOwners.remove(pkg);
+        }
     }
 }
