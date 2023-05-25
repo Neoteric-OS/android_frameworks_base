@@ -3455,7 +3455,11 @@ public class AudioService extends IAudioService.Stub
             }
         } else {
             // convert one UI step (+/-1) into a number of internal units on the stream alias
-            step = rescaleStep(10, streamType, streamTypeAlias);
+            int volSteps = 1;
+            if ((flags & AudioManager.FLAG_FROM_REPEATED_KEY) != 0) {
+                volSteps = SystemProperties.getInt("sys.repeated_key_vol_steps", 1);
+            }
+            step = rescaleStep(volSteps * 10, streamType, streamTypeAlias);
         }
 
         // If either the client forces allowing ringer modes for this adjustment,
