@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ff060ad_7133e06e",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "Here and below:\n\nPlease fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.",
+      "range": {
+        "startLine": 1041,
+        "startChar": 97,
+        "endLine": 1041,
+        "endChar": 98
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b92efe9_790ba08f",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "Substantial repetition between this paragraph and the previous one, can this be combined more succinctly?\n\nHere and below.",
+      "range": {
+        "startLine": 1041,
+        "startChar": 0,
+        "endLine": 1041,
+        "endChar": 58
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a790db0f_021c3f2b",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "Move this to the first line, here and for the rest.  Nice to have parallel structure for all of these key descriptions.",
+      "range": {
+        "startLine": 1046,
+        "startChar": 10,
+        "endLine": 1047,
+        "endChar": 52
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "103ab1dc_16884b69",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "nit: put this as the first line of the comment.",
+      "range": {
+        "startLine": 1073,
+        "startChar": 0,
+        "endLine": 1073,
+        "endChar": 12
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b80e1a8e_9440bb8c",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "nit: please put this as the first line of the comment.",
+      "range": {
+        "startLine": 1115,
+        "startChar": 0,
+        "endLine": 1115,
+        "endChar": 16
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af47086e_695ae853",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "please put this as the first line of the comment.",
+      "range": {
+        "startLine": 1139,
+        "startChar": 0,
+        "endLine": 1139,
+        "endChar": 12
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e053427_bfbf5875",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "put a \u003cp\u003e here.",
+      "range": {
+        "startLine": 1152,
+        "startChar": 19,
+        "endLine": 1152,
+        "endChar": 21
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9835f07_d8c71f26",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "this should be the first line of the comment, similar to 1189.",
+      "range": {
+        "startLine": 1183,
+        "startChar": 0,
+        "endLine": 1183,
+        "endChar": 22
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "450579ea_cf9c96d5",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "please first describe in one line, similar to line 1219.",
+      "range": {
+        "startLine": 1196,
+        "startChar": 0,
+        "endLine": 1196,
+        "endChar": 10
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fb46b65_a550b8c3",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-05-25T18:11:34Z",
+      "side": 1,
+      "message": "nit \"for\"",
+      "range": {
+        "startLine": 1219,
+        "startChar": 49,
+        "endLine": 1219,
+        "endChar": 50
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
