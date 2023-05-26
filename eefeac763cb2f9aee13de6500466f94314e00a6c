@@ -52,6 +52,24 @@
       "parentUuid": "52058b0c_b82fd4dc",
       "revId": "eefeac763cb2f9aee13de6500466f94314e00a6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6651a3b9_e8686f41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-05-26T12:29:21Z",
+      "side": 1,
+      "message": "I have fixed \"com.android.server.accessibility.magnification.TwoFingersDownOrSwipeTest#sendTwoFingerDownEvent_onGestureCompleted\" and tested it locally.\nI\u0027m trying to fix \"android.accessibilityservice.cts.TouchExplorerTest#testDoubleTapNoFocus_doesNotPerformClick\"",
+      "parentUuid": "2d1ff186_7ff47965",
+      "revId": "eefeac763cb2f9aee13de6500466f94314e00a6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
