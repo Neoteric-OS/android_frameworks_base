@@ -67,6 +67,24 @@
       "message": "Hi, happy to help fixing the treehugger issue.\n\nFirst, I want to confirm the intended behaviour when `ACTION_DEVICE_CUSTOMIZATION_READY` is triggered (I don\u0027t have any context about this intent):\n\nIn the previous version: if no custom wallpaper has been set, set the wallpaper to be an ImageWallpaper with the default drawable.\n\nIn the new version: if the WallpaperService is an ImageWallpaper, restart the WallpaperService (without changing the bitmap it\u0027s using).\n\nCan you confirm that this is the expected behaviour? Also could you explain what is the `ACTION_DEVICE_CUSTOMIZATION_READY` intent, and why ImageWallpaper needs to be restarted (but not live wallpapers)?\n\nThanks!",
       "revId": "a71fb1062fccfcd5c9dd2f7d6cfc9b4c55203565",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9351ce4_52d57aab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-05-26T15:28:25Z",
+      "side": 1,
+      "message": "Hi pomini@,\n\nSorry for late answer here. The main intention for ACTION_DEVICE_CUSTOMIZATION_READY is for a customization client on device to notify system services like wallpaper or ringtones to refresh due to that a customization have been done. The intent is only supposed to be sent early at first boot of a newly flashed device. If a user has managed to set his own wallpaper or ringtone the device should not override that.\n\nAs you can imagine the intent basically happens once per device, the reload of the wallpaper resource is to make sure that the customization works and that a user choosen wallpaper is not affected. Live wallpapers are not customized so far.",
+      "parentUuid": "516a251e_cdc2a091",
+      "revId": "a71fb1062fccfcd5c9dd2f7d6cfc9b4c55203565",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
