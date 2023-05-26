@@ -672,8 +672,15 @@ public class Linkify {
             @Nullable Context context) {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         final Context ctx = (context != null) ? context : ActivityThread.currentApplication();
-        final String regionCode = (ctx != null) ? ctx.getSystemService(TelephonyManager.class).
-                getSimCountryIso().toUpperCase(Locale.US) : Locale.getDefault().getCountry();
+        final String regionCode = Locale.getDefault().getCountry();
+        if (ctx != null) {
+          String simCountryIso = ctx.getSystemService(TelephonyManager.class).getSimCountryIso();
+          if (!TextUtils.isEmpty(simCountryIso)) {
+            // Assign simCountryIso if it is available
+            regionCode = simCountryIso.toUpperCase(Locale.US);
+          }
+        }
+
         Iterable<PhoneNumberMatch> matches = phoneUtil.findNumbers(s.toString(),
                 regionCode, Leniency.POSSIBLE, Long.MAX_VALUE);
         for (PhoneNumberMatch match : matches) {
