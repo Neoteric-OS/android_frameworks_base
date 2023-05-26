@@ -51,6 +51,24 @@
       "message": "Pinging owners on how to get this CL merged. Anything I could do on my end? (I can set the Autosubmit flag, but don\u0027t think I can bypass presubmit checks). Thanks!",
       "revId": "ac13535cd72611b45d61db4898d535b95ecdd9ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81de5a3a_e83bbde0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2005646
+      },
+      "writtenOn": "2023-05-26T16:53:11Z",
+      "side": 1,
+      "message": "Marking as resolved. Jing merged this to internal branches and I\u0027ve added the tag, so should be good to go.",
+      "parentUuid": "79b9a898_34e3ffa8",
+      "revId": "ac13535cd72611b45d61db4898d535b95ecdd9ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
