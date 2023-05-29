@@ -20,6 +20,7 @@ import static android.app.ActivityTaskManager.INVALID_TASK_ID;
 import static android.app.KeyguardManager.ACTION_CONFIRM_DEVICE_CREDENTIAL_WITH_USER;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_STANDARD;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_UNDEFINED;
+import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.pm.ActivityInfo.LAUNCH_SINGLE_INSTANCE;
@@ -1049,7 +1050,10 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         final WindowManager.LayoutParams attrs = w.mAttrs;
         final int attrFlags = attrs.flags;
         final boolean onScreen = w.isOnScreen();
-        final boolean canBeSeen = w.isDisplayed();
+        final boolean canBeSeen = w.isDisplayed()
+                || (w.mActivityRecord != null && w.mActivityRecord.mVisibleRequested
+                && w.mActivityRecord.getWindowingMode() == WINDOWING_MODE_MULTI_WINDOW
+                && !w.mDestroying && w.isVisibleByPolicy() && w.mIsRedrawRequestedToResizing);
         final int privateflags = attrs.privateFlags;
         boolean displayHasContent = false;
 
