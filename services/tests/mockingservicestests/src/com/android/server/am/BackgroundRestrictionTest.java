@@ -234,6 +234,7 @@ public final class BackgroundRestrictionTest {
 
     @Mock private ActivityManagerInternal mActivityManagerInternal;
     @Mock private ActivityManagerService mActivityManagerService;
+    @Mock private ActivityManagerConstants mConstants;
     @Mock private AppOpsManager mAppOpsManager;
     @Mock private AppStandbyInternal mAppStandbyInternal;
     @Mock private AppHibernationManagerInternal mAppHibernationInternal;
@@ -294,6 +295,7 @@ public final class BackgroundRestrictionTest {
 
     private void initController() throws Exception {
         mInjector = spy(new TestBgRestrictionInjector(mContext));
+        mActivityManagerService.mConstants = mConstants;
         mBgRestrictionController = spy(new AppRestrictionController(mInjector,
                     mActivityManagerService));
 
