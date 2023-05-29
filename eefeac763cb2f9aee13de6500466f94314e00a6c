@@ -70,6 +70,24 @@
       "parentUuid": "2d1ff186_7ff47965",
       "revId": "eefeac763cb2f9aee13de6500466f94314e00a6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "296bea04_af7648b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-05-29T09:58:40Z",
+      "side": 1,
+      "message": "Hi Daniel,I rerun the cts.TouchExplorerTest locally,it\u0027s all passed,I don\u0027t know why it failed before，can you help me review the latest patch and restart the Treehugger Robot，and let\u0027s see if the test will pass. Thanks!\n\n\nandroid.accessibilityservice.cts (16 Tests)\n[1/16] android.accessibilityservice.cts.TouchExplorerTest#testDoubleTapAndHoldNoFocus_doesNotPerformLongClick: PASSED (5.293s)\n[2/16] android.accessibilityservice.cts.TouchExplorerTest#testTwoFingerDrag_dispatchesEventsBetweenFingers: PASSED (1.035s)\n[3/16] android.accessibilityservice.cts.TouchExplorerTest#testDoubleTapNoFocus_doesNotPerformClick: PASSED (5.019s)\n[4/16] android.accessibilityservice.cts.TouchExplorerTest#testFastSwipe_doesNotInitiateTouchExploration: PASSED (3.886s)\n[5/16] android.accessibilityservice.cts.TouchExplorerTest#testDoubleTapNoAccessibilityFocus_sendsTouchEvents: PASSED (2.446s)\n[6/16] android.accessibilityservice.cts.TouchExplorerTest#testThreeFingerMovement_shouldDelegate: PASSED (2.069s)\n[7/16] android.accessibilityservice.cts.TouchExplorerTest#testSecondFingerDoubleTapTouchExploring_performsClick: PASSED (3.507s)\n[8/16] android.accessibilityservice.cts.TouchExplorerTest#testDoubleTapAccessibilityFocus_performsClick: PASSED (4.035s)\n[9/16] android.accessibilityservice.cts.TouchExplorerTest#testSlowSwipe_initiatesTouchExploration: PASSED (3.355s)\n[10/16] android.accessibilityservice.cts.TouchExplorerTest#testSloppyDoubleTapAccessibilityFocus_performsClick: PASSED (4.036s)\n[11/16] android.accessibilityservice.cts.TouchExplorerTest#testDoubleTapAndHoldNoAccessibilityFocus_sendsTouchEvents: PASSED (3.510s)\n[12/16] android.accessibilityservice.cts.TouchExplorerTest#testTouchExplorationPassthrough_sendsTouchEvents: PASSED (4.138s)\n[13/16] android.accessibilityservice.cts.TouchExplorerTest#testGestureDetectionPassthrough_initiatesTouchExploration: PASSED (4.140s)\n[14/16] android.accessibilityservice.cts.TouchExplorerTest#testSingleTap_initiatesTouchExploration: PASSED (3.128s)\n[15/16] android.accessibilityservice.cts.TouchExplorerTest#testSecondFingerDoubleTapNotTouchExploring_performsClick: PASSED (4.337s)\n[16/16] android.accessibilityservice.cts.TouchExplorerTest#testTwoFingersMovingIndependently_shouldDelegate: PASSED (1.966s)",
+      "parentUuid": "6651a3b9_e8686f41",
+      "revId": "eefeac763cb2f9aee13de6500466f94314e00a6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
