@@ -33,6 +33,41 @@
       "message": "Thanks Nona.\n\nWhat is the way for a developer to use this? \n\nI forgot our decision for the fallback. \n\nCurrently developers cannot use roboto-flex as the default sans-serif font, but they have to specifically mention roboto-flex?\n\nI will appreciate if you can point me to the doc that describes how this will be used.",
       "revId": "2872d3fa5b6923dbcfea99c4e5e7fd6bb3526f5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdfae067_181fde7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2023-05-30T04:44:02Z",
+      "side": 1,
+      "message": "This is just adding new named family similar to \"serif\" or \"monospace\", so I don\u0027t think there is a doc that describes this. The named font families are not discoverable by developers and OEM can modify it.\n\n\nTo use the \"roboto-flex\", it can be done by simply \n\nIn Layout XML.\n```\n   \u003cTextView\n      android:fontFamily\u003d\"roboto-flex\" /\u003e\n```\n\nIn Theme XML.\n```\n   \u003citem name\u003d\"android:fontFamily\"\u003eroboto-flex\u003c/item\u003e\n```\n\nIn Java/Kotlin code\n```\n  val typeface \u003d Typeface.create(\"roboto-flex\", 400, false);\n```\n\n\nThis works same to other named families: try to draw it first, then go to Roboto, and others. For example, if \"monospace\" is specified, try \"DroidSansMono\" first, then if it cannot draw the text, try \"Roboto\", then others. In case of \"roboto-flex\", try \"RobotoFlex\" first, then if it cannot draw th text, try \"Roboto\", then others.",
+      "parentUuid": "95fa5d23_c5b5b18b",
+      "revId": "2872d3fa5b6923dbcfea99c4e5e7fd6bb3526f5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7afb5f17_c15b7b02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2023-05-30T04:44:02Z",
+      "side": 1,
+      "message": "Thank you for you review! I\u0027m going to submit this once the HarfBuzz update is verified by post-submit buildbots.",
+      "revId": "2872d3fa5b6923dbcfea99c4e5e7fd6bb3526f5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
