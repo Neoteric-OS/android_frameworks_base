@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fc2ded2_85198622",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2023-05-30T18:48:53Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be getting to the root cause here. Why are the users being returned by mSettings.getUsers() not valid (why is the current user id not included in it?)",
+      "range": {
+        "startLine": 513,
+        "startChar": 8,
+        "endLine": 517,
+        "endChar": 9
+      },
+      "revId": "250edbcbf44b31b99ae129917fc486b38b53a9aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
