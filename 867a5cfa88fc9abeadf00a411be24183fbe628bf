@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8db3e377_83cae07e",
+        "filename": "services/tests/servicestests/src/com/android/server/accessibility/magnification/TwoFingersDownOrSwipeTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2023-05-30T02:43:44Z",
+      "side": 1,
+      "message": "Needs `import static org.mockito.ArgumentMatchers.argThat` if we\u0027re going to use that in this class now",
+      "revId": "867a5cfa88fc9abeadf00a411be24183fbe628bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
