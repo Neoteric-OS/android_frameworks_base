@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab4f09e1_5ab504fe",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2023-05-30T06:23:40Z",
+      "side": 0,
+      "message": "Since you remove register/unregister function. mTetheringStatsProviders doesn\u0027t need to be a map anymore. We always have one provider here for netd. Change mTetheringStatsProviders to mNetdTetheringStatsProvider? Separate change is fine.",
+      "range": {
+        "startLine": 371,
+        "startChar": 16,
+        "endLine": 371,
+        "endChar": 46
+      },
+      "revId": "f315172a7e7225b3d2b7fe09fba0f8fbb453042b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64a22b3c_9e8cb7e5",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2023-05-30T06:23:40Z",
+      "side": 0,
+      "message": "Also remove this? It seems you try to remove unused @hide tethering related function, this one is also for tethering, @hide and unused.",
+      "range": {
+        "startLine": 902,
+        "startChar": 0,
+        "endLine": 910,
+        "endChar": 5
+      },
+      "revId": "f315172a7e7225b3d2b7fe09fba0f8fbb453042b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
