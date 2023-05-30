@@ -28,16 +28,16 @@
 
     <LinearLayout
         android:id="@+id/broadcast_qrcode_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal" >
         <ImageView
             android:id="@+id/qrcode_view"
             android:layout_width="@dimen/media_output_qrcode_size"
             android:layout_height="@dimen/media_output_qrcode_size"
             android:src="@android:color/transparent"
-            android:gravity="start|center_vertical"
-            android:layout_marginStart="82dp"/>
+            android:gravity="start|center_vertical"/>
         <ImageView
             android:id="@+id/broadcast_info"
             android:layout_width="@dimen/media_output_broadcast_info"
