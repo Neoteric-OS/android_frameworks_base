@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa0045c7_4240d551",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2023-05-30T17:50:34Z",
+      "side": 1,
+      "message": "This is already fixed in the latest release and should be available with the next AOSP drop.",
+      "revId": "0b8c33887f4db8f333fe4b470dd35df0b703f11a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
