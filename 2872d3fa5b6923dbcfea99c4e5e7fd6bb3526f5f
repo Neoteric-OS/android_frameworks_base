@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "2872d3fa5b6923dbcfea99c4e5e7fd6bb3526f5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95fa5d23_c5b5b18b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2023-05-30T04:24:57Z",
+      "side": 1,
+      "message": "Thanks Nona.\n\nWhat is the way for a developer to use this? \n\nI forgot our decision for the fallback. \n\nCurrently developers cannot use roboto-flex as the default sans-serif font, but they have to specifically mention roboto-flex?\n\nI will appreciate if you can point me to the doc that describes how this will be used.",
+      "revId": "2872d3fa5b6923dbcfea99c4e5e7fd6bb3526f5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
