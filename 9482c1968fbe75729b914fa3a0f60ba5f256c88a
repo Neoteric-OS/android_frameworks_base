@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5192c8bc_5156310c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-05-30T05:46:23Z",
+      "side": 1,
+      "message": "LGTM with one nit.",
+      "revId": "9482c1968fbe75729b914fa3a0f60ba5f256c88a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e549539_172a9e59",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-05-30T05:46:23Z",
+      "side": 1,
+      "message": "Can we remove this as well?\nIt only contains a no-op function.",
+      "range": {
+        "startLine": 1156,
+        "startChar": 18,
+        "endLine": 1156,
+        "endChar": 44
+      },
+      "revId": "9482c1968fbe75729b914fa3a0f60ba5f256c88a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
