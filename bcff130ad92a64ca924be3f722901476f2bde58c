@@ -52,6 +52,24 @@
       "parentUuid": "fa9ae5ce_6f861826",
       "revId": "bcff130ad92a64ca924be3f722901476f2bde58c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "577291c8_2d54bb20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2023-05-31T18:50:39Z",
+      "side": 1,
+      "message": "Result of logging the 4 MotionEvents in testDoubleTapNoFocus_doesNotPerformClick:\n\n```\n05-31 18:14:40.185  3306  3401 W TouchExplorerTest: MotionEvent { action\u003dACTION_DOWN, actionButton\u003d0, id[0]\u003d0, x[0]\u003d360.0, y[0]\u003d672.0, toolType[0]\u003dTOOL_TYPE_UNKNOWN, buttonState\u003d0, classification\u003dNONE, metaState\u003d0, flags\u003d0x0, edgeFlags\u003d0x0, pointerCount\u003d1, historySize\u003d0, eventTime\u003d77074, downTime\u003d77074, deviceId\u003d-1, source\u003d0x1002, displayId\u003d0, eventId\u003d-692038313 }\n05-31 18:14:40.185  3306  3401 W TouchExplorerTest: MotionEvent { action\u003dACTION_UP, actionButton\u003d0, id[0]\u003d0, x[0]\u003d360.0, y[0]\u003d672.0, toolType[0]\u003dTOOL_TYPE_UNKNOWN, buttonState\u003d0, classification\u003dNONE, metaState\u003d0, flags\u003d0x0, edgeFlags\u003d0x0, pointerCount\u003d1, historySize\u003d0, eventTime\u003d77314, downTime\u003d77214, deviceId\u003d-1, source\u003d0x1002, displayId\u003d0, eventId\u003d-488254679 }\n05-31 18:14:40.185  3306  3401 W TouchExplorerTest: MotionEvent { action\u003dACTION_UP, actionButton\u003d0, id[0]\u003d0, x[0]\u003d360.0, y[0]\u003d672.0, toolType[0]\u003dTOOL_TYPE_UNKNOWN, buttonState\u003d0, classification\u003dNONE, metaState\u003d0, flags\u003d0x0, edgeFlags\u003d0x0, pointerCount\u003d1, historySize\u003d0, eventTime\u003d77314, downTime\u003d77214, deviceId\u003d-1, source\u003d0x1002, displayId\u003d0, eventId\u003d-488254679 }\n05-31 18:14:40.185  3306  3401 W TouchExplorerTest: MotionEvent { action\u003dACTION_UP, actionButton\u003d0, id[0]\u003d0, x[0]\u003d360.0, y[0]\u003d672.0, toolType[0]\u003dTOOL_TYPE_UNKNOWN, buttonState\u003d0, classification\u003dNONE, metaState\u003d0, flags\u003d0x0, edgeFlags\u003d0x0, pointerCount\u003d1, historySize\u003d0, eventTime\u003d77314, downTime\u003d77214, deviceId\u003d-1, source\u003d0x1002, displayId\u003d0, eventId\u003d-488254679 }\n```\n\nLooks like the 0-index event in the `AccessibilityGestureEvent` is fine, but the 1-index event seems to be copied 3 times. I\u0027m not sure of the root cause yet.",
+      "parentUuid": "257f82e5_6bde2eaa",
+      "revId": "bcff130ad92a64ca924be3f722901476f2bde58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
