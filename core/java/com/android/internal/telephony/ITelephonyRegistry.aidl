@@ -58,9 +58,7 @@ interface ITelephonyRegistry {
     @UnsupportedAppUsage(maxTargetSdk = 28)
     void notifyCallForwardingChanged(boolean cfi);
     void notifyCallForwardingChangedForSubscriber(in int subId, boolean cfi);
-    @UnsupportedAppUsage(maxTargetSdk = 28)
-    void notifyDataActivity(int state);
-    void notifyDataActivityForSubscriber(in int subId, int state);
+    void notifyDataActivityForSubscriber(in int phoneId, in int subId, int state);
     void notifyDataConnectionForSubscriber(
             int phoneId, int subId, in PreciseDataConnectionState preciseState);
     // Uses CellIdentity which is Parcelable here; will convert to CellLocation in client.
