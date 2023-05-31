@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e77a62a6_83b73713",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-05-31T04:13:29Z",
+      "side": 1,
+      "message": "Hi,Daniel\nI observed that ci still keeps failing, I don\u0027t know if it\u0027s still the same problem as before, the system I built locally using the code from master branch can pass the previous test, can you help to see if it\u0027s failing? Is the failing code in the master branch?",
+      "revId": "bcff130ad92a64ca924be3f722901476f2bde58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
