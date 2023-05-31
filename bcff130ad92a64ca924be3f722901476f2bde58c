@@ -16,6 +16,24 @@
       "message": "Hi,Daniel\nI observed that ci still keeps failing, I don\u0027t know if it\u0027s still the same problem as before, the system I built locally using the code from master branch can pass the previous test, can you help to see if it\u0027s failing? Is the failing code in the master branch?",
       "revId": "bcff130ad92a64ca924be3f722901476f2bde58c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa9ae5ce_6f861826",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2023-05-31T17:45:07Z",
+      "side": 1,
+      "message": "Hi, the only remaining failure is in the Android U/14+ branches with:\n```\nandroid.accessibilityservice.cts.TouchExplorerTest#testDoubleTapNoFocus_doesNotPerformClick\n\njava.lang.AssertionError: \nExpected: (Matching to action ACTION_DOWN and Matching to point PointF(360.0, 672.0))\n     but: Matching to action ACTION_DOWN received ACTION_UP\n\tat org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:18)\n\tat org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:6)\n\tat android.accessibilityservice.cts.TouchExplorerTest.testDoubleTapNoFocus_doesNotPerformClick(TouchExplorerTest.java:348)\n```\n\nI\u0027m not sure yet why it\u0027s passing on your local build but not in Android U+. I\u0027ll try adding some extra logging and rerunning.",
+      "parentUuid": "e77a62a6_83b73713",
+      "revId": "bcff130ad92a64ca924be3f722901476f2bde58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
