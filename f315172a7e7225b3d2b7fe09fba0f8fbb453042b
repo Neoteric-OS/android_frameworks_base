@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87e57aa5_2ba9e265",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-06-01T09:24:48Z",
+      "side": 0,
+      "message": "Done in aosp/2606756 and ag/23491620 (which is a followup to the internal version of this : ag/23491619)\n(I need to move this to internal because the file was modified in udc-dev – this will have a merged-in).\n\n\nIn fact, as you point out, without the register/unregister function, we always only have one provider in the map. And as Junyu points out, that provider is an empty implementation that does nothing. So the member can be removed completely.",
+      "parentUuid": "ab4f09e1_5ab504fe",
+      "range": {
+        "startLine": 371,
+        "startChar": 16,
+        "endLine": 371,
+        "endChar": 46
+      },
+      "revId": "f315172a7e7225b3d2b7fe09fba0f8fbb453042b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64a22b3c_9e8cb7e5",
@@ -37,6 +61,54 @@
       "writtenOn": "2023-05-30T06:23:40Z",
       "side": 0,
       "message": "Also remove this? It seems you try to remove unused @hide tethering related function, this one is also for tethering, @hide and unused.",
+      "range": {
+        "startLine": 902,
+        "startChar": 0,
+        "endLine": 910,
+        "endChar": 5
+      },
+      "revId": "f315172a7e7225b3d2b7fe09fba0f8fbb453042b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d37f9584_1909ee74",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-06-01T09:24:48Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "64a22b3c_9e8cb7e5",
+      "range": {
+        "startLine": 902,
+        "startChar": 0,
+        "endLine": 910,
+        "endChar": 5
+      },
+      "revId": "f315172a7e7225b3d2b7fe09fba0f8fbb453042b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b00b33b_8710a14a",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-06-01T09:24:48Z",
+      "side": 0,
+      "message": "Done (in ag/23491619 and here)",
+      "parentUuid": "64a22b3c_9e8cb7e5",
       "range": {
         "startLine": 902,
         "startChar": 0,
