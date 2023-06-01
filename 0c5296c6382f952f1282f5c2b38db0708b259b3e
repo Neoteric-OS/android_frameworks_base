@@ -22,6 +22,30 @@
       },
       "revId": "0c5296c6382f952f1282f5c2b38db0708b259b3e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99ff7d2d_42c8b78b",
+        "filename": "native/webview/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2023-06-01T14:59:27Z",
+      "side": 1,
+      "message": "Yeah this makes sense as this is the gl/vk draw functor interface.",
+      "parentUuid": "bc7d2b8c_e6c27636",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "0c5296c6382f952f1282f5c2b38db0708b259b3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
