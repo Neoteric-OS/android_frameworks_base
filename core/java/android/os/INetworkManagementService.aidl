@@ -19,7 +19,6 @@ package android.os;
 
 import android.net.InterfaceConfiguration;
 import android.net.INetworkManagementEventObserver;
-import android.net.ITetheringStatsProvider;
 import android.net.Network;
 import android.net.NetworkStats;
 import android.net.RouteInfo;
@@ -141,14 +140,6 @@ interface INetworkManagementService
      */
     @UnsupportedAppUsage
     void startTethering(in String[] dhcpRanges);
-
-    /**
-     * Start tethering services with the specified dhcp server range and
-     * DNS proxy config.
-     * {@code boolean} is used to control legacy DNS proxy server.
-     * {@code String[]} is a set of start end pairs defining the ranges.
-     */
-    void startTetheringWithConfiguration(boolean usingLegacyDnsProxy, in String[] dhcpRanges);
 
     /**
      * Stop currently running tethering services
