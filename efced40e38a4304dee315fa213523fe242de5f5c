@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8fd8a97_0e529f07",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-06-01T19:10:54Z",
+      "side": 1,
+      "message": "no objection, marking as resolved",
+      "parentUuid": "ddf716c7_7b933680",
+      "range": {
+        "startLine": 195,
+        "startChar": 55,
+        "endLine": 195,
+        "endChar": 60
+      },
+      "revId": "efced40e38a4304dee315fa213523fe242de5f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b66a8704_1563d2a7",
