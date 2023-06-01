@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c76beacc_24e1dda3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2023-06-01T08:23:50Z",
+      "side": 1,
+      "message": "This CL is confusing as it somehow has the same change ID as ag/2610850 - maybe abandon it?",
+      "revId": "7630b6e6921175f511b539bf2a6f3e3d50f71695",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
