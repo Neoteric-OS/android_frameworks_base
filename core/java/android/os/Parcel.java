@@ -2670,19 +2670,34 @@ public final class Parcel {
             writeString(null);
             return;
         }
-        writeParcelableCreator(p);
+        int lengthPosition = writeParcelableCreator(p);
+        int preSubobjectPosition = dataPosition();
         p.writeToParcel(this, parcelableFlags);
+        int subobjectLength = dataPosition() - preSubobjectPosition();
+        fixupSubobjectLength(lengthPosition, subobjectLength);
+    }
+
+    public final void fixupSubobjectLength(int lengthPosition, long length) {
+        int curPosition = dataPosition();
+        setDataPosition(lengthPosition);
+        writeLong(length);
+        setDataPosition(curPosition);
     }
 
     /**
      * Flatten the name of the class of the Parcelable into this Parcel.
+     * Reserves space for the size of the parcelled data; every caller must
+     * later fill in the correct length with fixupLength().
      *
      * @param p The Parcelable object to be written.
      * @see #readParcelableCreator
      */
-    public final void writeParcelableCreator(@NonNull Parcelable p) {
+    public final int writeParcelableCreator(@NonNull Parcelable p) {
         String name = p.getClass().getName();
         writeString(name);
+        int lengthPosition = dataPosition();
+        writeLong(-1);
+        return lengthPosition;
     }
 
     /**
@@ -4961,15 +4976,22 @@ public final class Parcel {
     @Nullable
     private <T> T readParcelableInternal(@Nullable ClassLoader loader, @Nullable Class<T> clazz) {
         Parcelable.Creator<?> creator = readParcelableCreatorInternal(loader, clazz);
+        long expectedLength = readLong();
         if (creator == null) {
             return null;
         }
+        T result;
+        int preSubobjectPosition = dataPosition();
         if (creator instanceof Parcelable.ClassLoaderCreator<?>) {
             Parcelable.ClassLoaderCreator<?> classLoaderCreator =
                     (Parcelable.ClassLoaderCreator<?>) creator;
-            return (T) classLoaderCreator.createFromParcel(this, loader);
+            result = (T) classLoaderCreator.createFromParcel(this, loader);
+        } else {
+            result = (T) creator.createFromParcel(this);
         }
-        return (T) creator.createFromParcel(this);
+        if (dataPosition() != preSubobjectPosition + expectedLength)
+            throw new RuntimeException("bogus parcel or mismatching parcel/unparcel code");
+        return result;
     }
 
     /** @hide */
