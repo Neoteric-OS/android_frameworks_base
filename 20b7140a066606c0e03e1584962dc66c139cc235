@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65e4ec58_b6e829cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2023-06-02T03:07:08Z",
+      "side": 1,
+      "message": "Could you please provide additional details about the specific testing steps?",
+      "revId": "20b7140a066606c0e03e1584962dc66c139cc235",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
