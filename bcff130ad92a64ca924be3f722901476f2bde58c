@@ -70,6 +70,24 @@
       "parentUuid": "257f82e5_6bde2eaa",
       "revId": "bcff130ad92a64ca924be3f722901476f2bde58c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97024918_6ff4d265",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-06-02T11:38:17Z",
+      "side": 1,
+      "message": "Hi, Daniel\nI\u0027m using a local image built on the master branch and it passes the test, I don\u0027t have access to the Android U+ branch so I have no way to analyze why it doesn\u0027t pass the test, can you help me analyze it?",
+      "parentUuid": "577291c8_2d54bb20",
+      "revId": "bcff130ad92a64ca924be3f722901476f2bde58c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
