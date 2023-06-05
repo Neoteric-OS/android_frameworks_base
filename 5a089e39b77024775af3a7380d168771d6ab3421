@@ -47,6 +47,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7b698d6_d7a3ec40",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff060ad_7133e06e",
+      "range": {
+        "startLine": 1041,
+        "startChar": 97,
+        "endLine": 1041,
+        "endChar": 98
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9235ff7b_a1ae35d9",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b92efe9_790ba08f",
+      "range": {
+        "startLine": 1041,
+        "startChar": 0,
+        "endLine": 1041,
+        "endChar": 58
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a790db0f_021c3f2b",
@@ -60,6 +108,30 @@
       "writtenOn": "2023-05-25T18:11:34Z",
       "side": 1,
       "message": "Move this to the first line, here and for the rest.  Nice to have parallel structure for all of these key descriptions.",
+      "range": {
+        "startLine": 1046,
+        "startChar": 10,
+        "endLine": 1047,
+        "endChar": 52
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fca13f48_b83daf0e",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a790db0f_021c3f2b",
       "range": {
         "startLine": 1046,
         "startChar": 10,
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b73e2838_d5daa699",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "103ab1dc_16884b69",
+      "range": {
+        "startLine": 1073,
+        "startChar": 0,
+        "endLine": 1073,
+        "endChar": 12
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b80e1a8e_9440bb8c",
@@ -106,6 +202,30 @@
       "writtenOn": "2023-05-25T18:11:34Z",
       "side": 1,
       "message": "nit: please put this as the first line of the comment.",
+      "range": {
+        "startLine": 1115,
+        "startChar": 0,
+        "endLine": 1115,
+        "endChar": 16
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9c6afd1_41f030f6",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b80e1a8e_9440bb8c",
       "range": {
         "startLine": 1115,
         "startChar": 0,
@@ -139,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e36af92f_35360c76",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af47086e_695ae853",
+      "range": {
+        "startLine": 1139,
+        "startChar": 0,
+        "endLine": 1139,
+        "endChar": 12
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e053427_bfbf5875",
@@ -152,6 +296,30 @@
       "writtenOn": "2023-05-25T18:11:34Z",
       "side": 1,
       "message": "put a \u003cp\u003e here.",
+      "range": {
+        "startLine": 1152,
+        "startChar": 19,
+        "endLine": 1152,
+        "endChar": 21
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f203c904_847ab600",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e053427_bfbf5875",
       "range": {
         "startLine": 1152,
         "startChar": 19,
@@ -185,6 +353,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f1b6dd0_23db3570",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9835f07_d8c71f26",
+      "range": {
+        "startLine": 1183,
+        "startChar": 0,
+        "endLine": 1183,
+        "endChar": 22
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "450579ea_cf9c96d5",
@@ -208,6 +400,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "391765d9_07e03159",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "450579ea_cf9c96d5",
+      "range": {
+        "startLine": 1196,
+        "startChar": 0,
+        "endLine": 1196,
+        "endChar": 10
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2fb46b65_a550b8c3",
@@ -221,6 +437,30 @@
       "writtenOn": "2023-05-25T18:11:34Z",
       "side": 1,
       "message": "nit \"for\"",
+      "range": {
+        "startLine": 1219,
+        "startChar": 49,
+        "endLine": 1219,
+        "endChar": 50
+      },
+      "revId": "5a089e39b77024775af3a7380d168771d6ab3421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce7a3c3e_be6e36d0",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-05T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb46b65_a550b8c3",
       "range": {
         "startLine": 1219,
         "startChar": 49,
