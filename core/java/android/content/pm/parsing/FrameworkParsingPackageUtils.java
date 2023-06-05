@@ -368,6 +368,8 @@ public class FrameworkParsingPackageUtils {
             return input.success(targetVers);
         }
 
+        targetCode = targetCode.replace("android-", "");
+
         try {
             if (allowUnknownCodenames && UnboundedSdkLevel.isAtMost(targetCode)) {
                 return input.success(Build.VERSION_CODES.CUR_DEVELOPMENT);
