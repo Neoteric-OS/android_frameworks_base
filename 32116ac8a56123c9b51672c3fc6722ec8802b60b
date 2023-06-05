@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1701be5f_557edd3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1895294
+      },
+      "writtenOn": "2023-06-05T02:56:28Z",
+      "side": 1,
+      "message": "The old one (https://android-review.googlesource.com/c/platform/frameworks/base/+/2515055) has  merge merge conflicts, so I break this up into separate CLs. \n\n Please review whether these CLs are reasonable?",
+      "revId": "32116ac8a56123c9b51672c3fc6722ec8802b60b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
