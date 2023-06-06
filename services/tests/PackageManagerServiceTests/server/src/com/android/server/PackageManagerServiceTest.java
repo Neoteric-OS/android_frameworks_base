@@ -70,7 +70,7 @@ import java.util.regex.Pattern;
 @RunWith(AndroidJUnit4.class)
 public class PackageManagerServiceTest {
 
-    private static final String PACKAGE_NAME = "com.android.frameworks.servicestests";
+    private static final String PACKAGE_NAME = "com.android.server.pm.test.service.server";
 
     private static final String TEST_DATA_PATH = "/data/local/tmp/servicestests/";
     private static final String TEST_APP_APK = "StubTestApp.apk";
