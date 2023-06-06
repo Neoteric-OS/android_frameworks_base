@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f71b1b51_39191cff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2011360
+      },
+      "writtenOn": "2023-06-06T13:00:05Z",
+      "side": 1,
+      "message": "Updated docblocks for currently supported cookie attributes and a callout for Partitioned.",
+      "revId": "1f2ee5f8ae1827508644bf07cdf6ced0e70ec071",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
