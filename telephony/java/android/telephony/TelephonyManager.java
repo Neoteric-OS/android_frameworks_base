@@ -16995,6 +16995,7 @@ public class TelephonyManager {
      *
      * @hide
      */
+    @SystemApi
     @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_EUICC)
     public void setRemovableEsimAsDefaultEuicc(boolean isDefault) {
