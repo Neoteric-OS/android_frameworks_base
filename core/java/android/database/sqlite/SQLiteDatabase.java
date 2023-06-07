@@ -251,6 +251,13 @@ public final class SQLiteDatabase extends SQLiteClosable {
      */
     public static final int NO_LOCALIZED_COLLATORS = 0x00000010;  // update native code if changing
 
+    /** @hide */
+    public static final int ENABLE_TRACE = 0x00000100;
+    /** @hide */
+    public static final int ENABLE_PROFILE = 0x00000200;
+    /** @hide */
+    public static final int ENABLE_AUTHORIZER = 0x00000400;
+
     /**
      * Open flag: Flag for {@link #openDatabase} to create the database file if it does not
      * already exist.
@@ -752,7 +759,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
     public void endTransaction() {
         acquireReference();
         try {
-            getThreadSession().endTransaction(null);
+            getThreadSession().endTransaction(null, null);
         } finally {
             releaseReference();
         }
@@ -1385,9 +1392,18 @@ public final class SQLiteDatabase extends SQLiteClosable {
      * {@link SQLiteStatement}s are not synchronized, see the documentation for more details.
      */
     public SQLiteStatement compileStatement(String sql) throws SQLException {
+        return compileStatement(sql, null);
+    }
+
+    // TODO: javadoc
+    public @NonNull SQLiteStatement compileStatement(@NonNull String sql,
+            @Nullable SQLiteAuthorizer authorizer) throws SQLException {
+        if (authorizer != null) {
+            throwIfNotAuthorizerEnabled();
+        }
         acquireReference();
         try {
-            return new SQLiteStatement(this, sql, null);
+            return new SQLiteStatement(this, authorizer, sql, null);
         } finally {
             releaseReference();
         }
@@ -1705,10 +1721,22 @@ public final class SQLiteDatabase extends SQLiteClosable {
     public Cursor rawQueryWithFactory(
             CursorFactory cursorFactory, String sql, String[] selectionArgs,
             String editTable, CancellationSignal cancellationSignal) {
+        return rawQueryWithFactory(cursorFactory, sql, selectionArgs, editTable,
+                cancellationSignal, null);
+    }
+
+    // TODO: JAVADOC
+    public @NonNull Cursor rawQueryWithFactory(@Nullable CursorFactory cursorFactory,
+            @NonNull String sql, @SuppressLint("ArrayReturn") @Nullable String[] selectionArgs,
+            @Nullable String editTable, @Nullable CancellationSignal cancellationSignal,
+            @Nullable SQLiteAuthorizer authorizer) {
+        if (authorizer != null) {
+            throwIfNotAuthorizerEnabled();
+        }
         acquireReference();
         try {
-            SQLiteCursorDriver driver = new SQLiteDirectCursorDriver(this, sql, editTable,
-                    cancellationSignal);
+            SQLiteCursorDriver driver = new SQLiteDirectCursorDriver(this, authorizer, sql,
+                    editTable, cancellationSignal);
             return driver.query(cursorFactory != null ? cursorFactory : mCursorFactory,
                     selectionArgs);
         } finally {
@@ -1863,7 +1891,8 @@ public final class SQLiteDatabase extends SQLiteClosable {
             }
             sql.append(')');
 
-            SQLiteStatement statement = new SQLiteStatement(this, sql.toString(), bindArgs);
+            // Custom authorizers can be applied through SQLiteQueryBuilder
+            SQLiteStatement statement = new SQLiteStatement(this, null, sql.toString(), bindArgs);
             try {
                 return statement.executeInsert();
             } finally {
@@ -1890,7 +1919,8 @@ public final class SQLiteDatabase extends SQLiteClosable {
     public int delete(String table, String whereClause, String[] whereArgs) {
         acquireReference();
         try {
-            SQLiteStatement statement =  new SQLiteStatement(this, "DELETE FROM " + table +
+            // Custom authorizers can be applied through SQLiteQueryBuilder
+            SQLiteStatement statement = new SQLiteStatement(this, null, "DELETE FROM " + table +
                     (!TextUtils.isEmpty(whereClause) ? " WHERE " + whereClause : ""), whereArgs);
             try {
                 return statement.executeUpdateDelete();
@@ -1968,7 +1998,8 @@ public final class SQLiteDatabase extends SQLiteClosable {
                 sql.append(whereClause);
             }
 
-            SQLiteStatement statement = new SQLiteStatement(this, sql.toString(), bindArgs);
+            // Custom authorizers can be applied through SQLiteQueryBuilder
+            SQLiteStatement statement = new SQLiteStatement(this, null, sql.toString(), bindArgs);
             try {
                 return statement.executeUpdateDelete();
             } finally {
@@ -2005,7 +2036,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
      * @throws SQLException if the SQL string is invalid
      */
     public void execSQL(String sql) throws SQLException {
-        executeSql(sql, null);
+        executeSql(null, sql, null);
     }
 
     /**
@@ -2058,14 +2089,22 @@ public final class SQLiteDatabase extends SQLiteClosable {
      * @throws SQLException if the SQL string is invalid
      */
     public void execSQL(String sql, Object[] bindArgs) throws SQLException {
-        if (bindArgs == null) {
-            throw new IllegalArgumentException("Empty bindArgs");
+        executeSql(null, sql, bindArgs);
+    }
+
+    // TODO: JAVADOC
+    public void execSQL(@NonNull String sql,
+            @SuppressLint("ArrayReturn") @Nullable Object[] bindArgs,
+            @Nullable SQLiteAuthorizer authorizer) throws SQLException {
+        if (authorizer != null) {
+            throwIfNotAuthorizerEnabled();
         }
-        executeSql(sql, bindArgs);
+        executeSql(authorizer, sql, bindArgs);
     }
 
     /** {@hide} */
-    public int executeSql(String sql, Object[] bindArgs) throws SQLException {
+    public int executeSql(@Nullable SQLiteAuthorizer authorizer, @NonNull String sql,
+            @Nullable Object[] bindArgs) throws SQLException {
         acquireReference();
         try {
             final int statementType = DatabaseUtils.getSqlStatementType(sql);
@@ -2083,7 +2122,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
                 }
             }
 
-            try (SQLiteStatement statement = new SQLiteStatement(this, sql, bindArgs)) {
+            try (SQLiteStatement statement = new SQLiteStatement(this, authorizer, sql, bindArgs)) {
                 return statement.executeUpdateDelete();
             } finally {
                 // If schema was updated, close non-primary connections, otherwise they might
@@ -2108,7 +2147,16 @@ public final class SQLiteDatabase extends SQLiteClosable {
      * @throws SQLiteException if {@code sql} is invalid
      */
     public void validateSql(@NonNull String sql, @Nullable CancellationSignal cancellationSignal) {
-        getThreadSession().prepare(sql,
+        validateSql(sql, cancellationSignal, null);
+    }
+
+    // TODO: JAVADOC
+    public void validateSql(@NonNull String sql, @Nullable CancellationSignal cancellationSignal,
+            @Nullable SQLiteAuthorizer authorizer) {
+        if (authorizer != null) {
+            throwIfNotAuthorizerEnabled();
+        }
+        getThreadSession().prepare(authorizer, sql,
                 getThreadDefaultConnectionFlags(/* readOnly =*/ true), cancellationSignal, null);
     }
 
@@ -2686,6 +2734,13 @@ public final class SQLiteDatabase extends SQLiteClosable {
         return "SQLiteDatabase: " + getPath();
     }
 
+    private void throwIfNotAuthorizerEnabled() {
+        if ((mConfigurationLocked.openFlags & ENABLE_AUTHORIZER) == 0) {
+            throw new IllegalStateException("The database '" + mConfigurationLocked.label
+                    + "' does not have authorizer support enabled.");
+        }
+    }
+
     private void throwIfNotOpenLocked() {
         if (mConnectionPoolLocked == null) {
             throw new IllegalStateException("The database '" + mConfigurationLocked.label
@@ -2947,6 +3002,39 @@ public final class SQLiteDatabase extends SQLiteClosable {
                 } else {
                     removeOpenFlags(ENABLE_WRITE_AHEAD_LOGGING);
                 }
+            }
+
+            /**
+             * Returns if support for {@link SQLiteAuthorizer} is enabled.
+             *
+             * @see SQLiteDatabase#compileStatement(String, SQLiteAuthorizer)
+             * @see SQLiteDatabase#execSQL(String, Object[], SQLiteAuthorizer)
+             * @see SQLiteDatabase#validateSql(String, CancellationSignal,
+             *      SQLiteAuthorizer)
+             * @see SQLiteDatabase#rawQueryWithFactory(CursorFactory, String,
+             *      String[], String, CancellationSignal, SQLiteAuthorizer)
+             */
+            public boolean isAuthorizerSupportEnabled() {
+                return (mOpenFlags & ENABLE_AUTHORIZER) != 0;
+            }
+
+            /**
+             * Enables or disables support for {@link SQLiteAuthorizer}.
+             *
+             * @see SQLiteDatabase#compileStatement(String, SQLiteAuthorizer)
+             * @see SQLiteDatabase#execSQL(String, Object[], SQLiteAuthorizer)
+             * @see SQLiteDatabase#validateSql(String, CancellationSignal,
+             *      SQLiteAuthorizer)
+             * @see SQLiteDatabase#rawQueryWithFactory(CursorFactory, String,
+             *      String[], String, CancellationSignal, SQLiteAuthorizer)
+             */
+            public @NonNull Builder setAuthorizerSupportEnabled(boolean enabled) {
+                if (enabled) {
+                    addOpenFlags(ENABLE_AUTHORIZER);
+                } else {
+                    removeOpenFlags(ENABLE_AUTHORIZER);
+                }
+                return this;
             }
 
             /**
