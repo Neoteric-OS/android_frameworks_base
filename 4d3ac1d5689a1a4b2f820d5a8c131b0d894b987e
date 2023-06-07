@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ee20e72_3533243d",
+        "filename": "services/core/java/com/android/server/WallpaperUpdateReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2023-06-07T12:59:24Z",
+      "side": 0,
+      "message": "Hi, sorry for the delay; I needed to take a closer look.\n\nI\u0027d prefer not to add a new special method in WallpaperManagerService that directly calls `clearWallpaperLocked` and `bindWallpaperComponentLocked`, which are internal methods, when we can use the public API instead. I think using the existing `clearWallpaper()` public API should suffice to fix this issue.\n\nThe `isUserSetWallpaper` method looks correct. But if the device has a live wallpaper by default, and the user did not change it, it will return `false`. In that case, we should not call `setBitmap()` or `setResource()` since it will replace the default live wallpaper with an ImageWallpaper.\n\nCan you try (instead of all the changes of this CL) to just replace these lines 62-65 with `wallpaperManager.clearWallpaper();`? I think that should do the trick and also avoid the presubmit error. After the isUserSetWallpaper check, `clearWallpaper()` would be the right API to use to restart the default wallpaper, whether it is live or static.\n\nIf you don\u0027t want to restart the default live wallpaper service (no opinion about that), you can call `clearWallpaper()` only `if (wallpaperManager.getWallpaperInfo() \u003d\u003d null)`.\n\nSorry for the inconvenience, and let me know if that solution works on your side!",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 92
+      },
+      "revId": "4d3ac1d5689a1a4b2f820d5a8c131b0d894b987e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
