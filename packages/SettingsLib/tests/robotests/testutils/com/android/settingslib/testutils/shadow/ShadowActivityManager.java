@@ -30,9 +30,9 @@ public class ShadowActivityManager {
     private int mUserSwitchedTo = -1;
 
     @Resetter
-    public void reset() {
+    public static void reset() {
         sCurrentUserId = 0;
-        mUserSwitchedTo = 0;
+        //mUserSwitchedTo = 0;
     }
 
     @Implementation
