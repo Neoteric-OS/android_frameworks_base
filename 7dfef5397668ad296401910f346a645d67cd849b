@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55b254b6_2d7acc49",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1895294
+      },
+      "writtenOn": "2023-06-08T13:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "affce34f_bb4f4311",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "7dfef5397668ad296401910f346a645d67cd849b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd708391_f1af3b4e",
@@ -37,6 +61,24 @@
       "writtenOn": "2023-06-06T16:43:05Z",
       "side": 1,
       "message": "Approved with the fix to the commit message completed.",
+      "revId": "7dfef5397668ad296401910f346a645d67cd849b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e139ecd_0992f3d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1895294
+      },
+      "writtenOn": "2023-06-08T13:04:24Z",
+      "side": 1,
+      "message": "Hi, Kenneth\nI have fixed the commit message. Please review whether this CL is reasonable?",
+      "parentUuid": "cd708391_f1af3b4e",
       "revId": "7dfef5397668ad296401910f346a645d67cd849b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
