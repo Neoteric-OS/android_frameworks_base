@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77bc3c66_28cfe829",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-06-09T01:29:19Z",
+      "side": 1,
+      "message": "Can you please fix all of the trailing whitespaces?  Thanks!",
+      "revId": "c6468a14b75f34f16e9ca6e134f6e4d807a6fa05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e090edb7_96cb706f",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-06-09T01:29:19Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.  Here and below.",
+      "range": {
+        "startLine": 1040,
+        "startChar": 97,
+        "endLine": 1040,
+        "endChar": 98
+      },
+      "revId": "c6468a14b75f34f16e9ca6e134f6e4d807a6fa05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
