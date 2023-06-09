@@ -56,6 +56,30 @@
       },
       "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93fd84fd_64493a9b",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2023-06-09T12:31:07Z",
+      "side": 1,
+      "message": "I like the use of strings -- so many of these commands get used in debugging scripts and they\u0027re nearly unreadable with just raw integers . Typically I would allow for both, but just strings is also fine as long as they\u0027re maintained:\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/view/KeyEvent.java;l\u003d3110;drc\u003d95c1165bb895dd844e1793460710f7163dd330a3\nhttp://cs/android-internal/frameworks/base/services/core/java/com/android/server/input/InputShellCommand.java;l\u003d359;rcl\u003d240cfdef338d3a9f2626ca8bf84bdd92af923c91",
+      "parentUuid": "bb79fc4a_484f26ad",
+      "range": {
+        "startLine": 621,
+        "startChar": 16,
+        "endLine": 646,
+        "endChar": 17
+      },
+      "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
