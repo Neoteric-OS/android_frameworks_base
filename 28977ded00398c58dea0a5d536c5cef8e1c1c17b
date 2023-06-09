@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d23d2c2_43f70edc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2023-06-09T17:39:11Z",
+      "side": 1,
+      "message": "lgtm, leaving final +2 to jmtrivi@,",
+      "revId": "28977ded00398c58dea0a5d536c5cef8e1c1c17b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
