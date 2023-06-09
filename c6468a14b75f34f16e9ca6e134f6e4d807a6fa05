@@ -39,6 +39,30 @@
       },
       "revId": "c6468a14b75f34f16e9ca6e134f6e4d807a6fa05",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bc84724_8db1992c",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-09T15:38:35Z",
+      "side": 1,
+      "message": "I tried to remove the trailing whitespaces during my previous code update, but the browser-based source editor added/retained the white spaces.\n\nI have removed all the trailing whitespace characters now.",
+      "parentUuid": "e090edb7_96cb706f",
+      "range": {
+        "startLine": 1040,
+        "startChar": 97,
+        "endLine": 1040,
+        "endChar": 98
+      },
+      "revId": "c6468a14b75f34f16e9ca6e134f6e4d807a6fa05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
