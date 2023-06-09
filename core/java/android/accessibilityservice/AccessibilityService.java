@@ -2909,8 +2909,8 @@ public abstract class AccessibilityService extends Service {
                     Log.w(LOG_TAG, "Session is already finished: " + session);
                     return;
                 }
-                mCaller.sendMessage(mCaller.obtainMessageIO(
-                        DO_SET_IME_SESSION_ENABLED, enabled ? 1 : 0, ls));
+                mCaller.sendMessage(
+                        mCaller.obtainMessageIO(DO_SET_IME_SESSION_ENABLED, enabled ? 1 : 0, ls));
             } catch (ClassCastException e) {
                 Log.w(LOG_TAG, "Incoming session not of correct type: " + session, e);
             }
