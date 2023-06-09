@@ -16,6 +16,23 @@
       "message": "A upmerge from Meta. Thanks in advance for reviewing!",
       "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6772b61_064cb513",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2023-06-09T05:54:15Z",
+      "side": 1,
+      "message": "Thermal HAL, which OEM has full control, can do similar",
+      "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
