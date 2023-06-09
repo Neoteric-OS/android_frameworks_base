@@ -80,6 +80,30 @@
       },
       "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "702461f9_3ca15161",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 2005120
+      },
+      "writtenOn": "2023-06-09T15:04:29Z",
+      "side": 1,
+      "message": "Thank you wvw@google.com and michaelwr@google.com for reviewing so quickly! :-) I can not access the treehugger test results to see what are the failing tests. Could you please help me? Thank you again!",
+      "parentUuid": "93fd84fd_64493a9b",
+      "range": {
+        "startLine": 621,
+        "startChar": 16,
+        "endLine": 646,
+        "endChar": 17
+      },
+      "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
