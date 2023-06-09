@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01d7dd22_caf5cb30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2005120
+      },
+      "writtenOn": "2023-06-09T05:46:28Z",
+      "side": 1,
+      "message": "A upmerge from Meta. Thanks in advance for reviewing!",
+      "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
