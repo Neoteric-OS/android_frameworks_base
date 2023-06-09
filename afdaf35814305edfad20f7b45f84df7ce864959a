@@ -22,6 +22,30 @@
       },
       "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f1a0b39_b1e3d6b0",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-06-09T07:52:46Z",
+      "side": 1,
+      "message": "Previously, the mountUserId was modified before the volume was unmounted, so any consumers of volume state changes will get the wrong user handle for unmount (or in case of broadcast will be sent to wrong user handle).\nBy moving this, the above issue will be fixed.",
+      "parentUuid": "cb6c7362_95d825da",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
