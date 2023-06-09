@@ -33,6 +33,29 @@
       "message": "Thermal HAL, which OEM has full control, can do similar",
       "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb79fc4a_484f26ad",
+        "filename": "services/core/java/com/android/server/power/ThermalManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1105075
+      },
+      "writtenOn": "2023-06-09T05:57:27Z",
+      "side": 1,
+      "message": "I would leave this to Michael. But this is for testing/debugging, so IMHO using numeric like override-status may be acceptable.",
+      "range": {
+        "startLine": 621,
+        "startChar": 16,
+        "endLine": 646,
+        "endChar": 17
+      },
+      "revId": "fd769f998bba804c634cbcd32afd2ade53c2965c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
