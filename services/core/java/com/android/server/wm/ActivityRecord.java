@@ -1902,12 +1902,13 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
     }
 
     static @Nullable ActivityRecord forTokenLocked(IBinder token) {
-        if (token == null) return null;
         final Token activityToken;
-        try {
+        if (token instanceof Token) {
             activityToken = (Token) token;
-        } catch (ClassCastException e) {
-            Slog.w(TAG, "Bad activity token: " + token, e);
+        } else {
+            if (token != null) {
+                Slog.w(TAG, "Bad activity token: " + token);
+            }
             return null;
         }
         final ActivityRecord r = activityToken.mActivityRef.get();

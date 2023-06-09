@@ -2902,7 +2902,7 @@ public abstract class AccessibilityService extends Service {
          */
         public void setImeSessionEnabled(IAccessibilityInputMethodSession session,
                 boolean enabled) {
-            try {
+            if (session instanceof AccessibilityInputMethodSessionWrapper) {
                 AccessibilityInputMethodSession ls =
                         ((AccessibilityInputMethodSessionWrapper) session).getSession();
                 if (ls == null) {
@@ -2911,8 +2911,8 @@ public abstract class AccessibilityService extends Service {
                 }
                 mCaller.sendMessage(mCaller.obtainMessageIO(
                         DO_SET_IME_SESSION_ENABLED, enabled ? 1 : 0, ls));
-            } catch (ClassCastException e) {
-                Log.w(LOG_TAG, "Incoming session not of correct type: " + session, e);
+            } else {
+                Log.w(LOG_TAG, "Incoming session not of correct type: " + session);
             }
         }
 
