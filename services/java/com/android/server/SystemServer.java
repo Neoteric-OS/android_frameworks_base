@@ -312,6 +312,7 @@ import com.android.server.webkit.WebViewUpdateService;
 import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
+import com.android.server.lineage.health.HealthInterfaceService;
 import com.android.server.neoteric.CustomDeviceConfigService;
 import com.android.server.neoteric.PowerShareService;
 
@@ -2906,6 +2907,11 @@ public final class SystemServer implements Dumpable {
             // AttestationService
             t.traceBegin("AttestationService");
             mSystemServiceManager.startService(AttestationService.class);
+            t.traceEnd();
+
+	    // LineageHealth
+            t.traceBegin("StartHealthService");
+            mSystemServiceManager.startService(HealthInterfaceService.class);
             t.traceEnd();
         }
 
