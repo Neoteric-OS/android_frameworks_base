@@ -146,6 +146,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f8e3ef2_c5a2550e",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-06-13T12:20:39Z",
+      "side": 1,
+      "message": "I re-tested the above variations, but it still doesn\u0027t solve the problem. Unfortunately. we\u0027ll have to do that in the current form\nHere the logs for the above variations:\nStorageManagerService: Volume public:253,81 broadcasting ejecting to UserHandle{11}\nStorageManagerService: Volume public:253,81 broadcasting unmounted to UserHandle{0} \u003c- This should have been should have been UserHandle{11}\nStorageManagerService: Volume public:253,81 broadcasting checking to UserHandle{0}\nStorageManagerService: Volume public:253,81 broadcasting mounted to UserHandle{0}.\n\nThe reason why it works is that, all the calls on handler go in serial fashion. Please let me know if you have any other thoughts.",
+      "parentUuid": "b5d49f3b_43d49824",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
