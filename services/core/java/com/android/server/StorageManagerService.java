@@ -1471,7 +1471,7 @@ class StorageManagerService extends IStorageManager.Stub
         public void onVolumeStateChanged(String volId, final int newState) {
             synchronized (mLock) {
                 final VolumeInfo vol = mVolumes.get(volId);
-                if (vol != null) {
+                if (vol != null && !(vol.type == VolumeInfo.TYPE_PUBLIC && vol.fsUuid == null)) {
                     final int oldState = vol.state;
                     vol.state = newState;
                     final VolumeInfo vInfo = new VolumeInfo(vol);
