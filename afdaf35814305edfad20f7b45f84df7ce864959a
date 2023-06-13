@@ -122,6 +122,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5d49f3b_43d49824",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-06-13T10:17:59Z",
+      "side": 1,
+      "message": "The unmount one.\nShould we change the mountUserId here:\nhttps://cs.android.com/android/platform/superproject/+/refs/heads/master:frameworks/base/services/core/java/com/android/server/StorageManagerService.java;l\u003d2347;drc\u003d1cffd04f27538d58fb55ca30cbaf612f13a3a29e?\nSomething like:\nprivate void mount(VolumeInfo vol) {\n    updateVolumeMountIdIfRequired(vol);\n    try {\n        // TODO(b/135341433): Remove cautious logging when FUSE is stable\n        .\n        .\n        .\n    }\n}\nOR\nWrap around with updateVolumeMountIdIfRequired at Line#1356?\nSomething like:\nmHandler.obtainMessage(H_VOLUME_MOUNT, updateVolumeMountIdIfRequired(vol)).sendToTarget();",
+      "parentUuid": "1af91ade_98522ab7",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
