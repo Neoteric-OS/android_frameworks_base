@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f96c6632_04e438fb",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-06-13T09:44:33Z",
+      "side": 1,
+      "message": "maybeRemountVolumes is still called on onUserSwitching (Ref: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/StorageManagerService.java;l\u003d259;bpv\u003d0;bpt\u003d1). We will still want to send the broadcast to correct userhandle. Therefore, this line is still required.",
+      "parentUuid": "016040b7_2732b44a",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
@@ -85,6 +109,24 @@
       "writtenOn": "2023-06-13T08:29:13Z",
       "side": 1,
       "message": "needs to be synchronized with mLock (for mCurrentUserId access)",
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e90570f9_b3978bb1",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-06-13T09:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "befa67c4_d03f2b31",
       "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
