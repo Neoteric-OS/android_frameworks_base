@@ -187,6 +187,7 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
     private int[] mKeymasterEncryptionPaddings;
     private int[] mKeymasterSignaturePaddings;
     private int[] mKeymasterDigests;
+    private int[] mKeymasterMgfDigests;
 
     private Long mRSAPublicExponent;
 
@@ -321,6 +322,12 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                     mKeymasterDigests = KeyProperties.Digest.allToKeymaster(spec.getDigests());
                 } else {
                     mKeymasterDigests = EmptyArray.INT;
+                }
+                if (spec.isMgfDigestsSpecified()) {
+                    mKeymasterMgfDigests =
+                            KeyProperties.Digest.allToKeymaster(spec.getMgfDigests());
+                } else {
+                    mKeymasterMgfDigests = EmptyArray.INT;
                 }
 
                 // Check that user authentication related parameters are acceptable. This method
@@ -543,6 +550,7 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
         mKeymasterEncryptionPaddings = null;
         mKeymasterSignaturePaddings = null;
         mKeymasterDigests = null;
+        mKeymasterMgfDigests = null;
         mKeySizeBits = 0;
         mSpec = null;
         mRSAPublicExponent = null;
@@ -830,13 +838,15 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
             ));
             if (padding == KeymasterDefs.KM_PAD_RSA_OAEP) {
                 final boolean[] hasDefaultMgf1DigestBeenAdded = {false};
-                ArrayUtils.forEach(mKeymasterDigests, (digest) -> {
-                    params.add(KeyStore2ParameterUtils.makeEnum(
+                if (mKeymasterMgfDigests != null) {
+                    ArrayUtils.forEach(mKeymasterMgfDigests, (digest) -> {
+                        params.add(KeyStore2ParameterUtils.makeEnum(
                             KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST, digest
-                    ));
-                    hasDefaultMgf1DigestBeenAdded[0] |=
+                        ));
+                        hasDefaultMgf1DigestBeenAdded[0] |=
                             digest.equals(KeyProperties.Digest.toKeymaster(DEFAULT_MGF1_DIGEST));
-                });
+                    });
+                }
                 /* Because of default MGF1 digest is SHA-1. It has to be added in Key
                  * characteristics. Otherwise, crypto operations will fail with Incompatible
                  * MGF1 digest.

@@ -37932,6 +37932,7 @@ package android.security.keystore {
     method @Nullable public java.util.Date getKeyValidityStart();
     method @NonNull public String getKeystoreAlias();
     method public int getMaxUsageCount();
+    method @NonNull public String[] getMgfDigests();
     method public int getPurposes();
     method @NonNull public String[] getSignaturePaddings();
     method public int getUserAuthenticationType();
@@ -37939,6 +37940,7 @@ package android.security.keystore {
     method public boolean isDevicePropertiesAttestationIncluded();
     method @NonNull public boolean isDigestsSpecified();
     method public boolean isInvalidatedByBiometricEnrollment();
+    method public boolean isMgfDigestsSpecified();
     method public boolean isRandomizedEncryptionRequired();
     method public boolean isStrongBoxBacked();
     method public boolean isUnlockedDeviceRequired();
@@ -37970,6 +37972,7 @@ package android.security.keystore {
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setKeyValidityForOriginationEnd(java.util.Date);
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setKeyValidityStart(java.util.Date);
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setMaxUsageCount(int);
+    method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setMgfDigests(@NonNull java.lang.String...);
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setRandomizedEncryptionRequired(boolean);
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setSignaturePaddings(java.lang.String...);
     method @NonNull public android.security.keystore.KeyGenParameterSpec.Builder setUnlockedDeviceRequired(boolean);
@@ -38074,12 +38077,14 @@ package android.security.keystore {
     method @Nullable public java.util.Date getKeyValidityForOriginationEnd();
     method @Nullable public java.util.Date getKeyValidityStart();
     method public int getMaxUsageCount();
+    method @NonNull public String[] getMgfDigests();
     method public int getPurposes();
     method @NonNull public String[] getSignaturePaddings();
     method public int getUserAuthenticationType();
     method public int getUserAuthenticationValidityDurationSeconds();
     method public boolean isDigestsSpecified();
     method public boolean isInvalidatedByBiometricEnrollment();
+    method public boolean isMgfDigestsSpecified();
     method public boolean isRandomizedEncryptionRequired();
     method public boolean isUnlockedDeviceRequired();
     method public boolean isUserAuthenticationRequired();
@@ -38101,6 +38106,7 @@ package android.security.keystore {
     method @NonNull public android.security.keystore.KeyProtection.Builder setKeyValidityForOriginationEnd(java.util.Date);
     method @NonNull public android.security.keystore.KeyProtection.Builder setKeyValidityStart(java.util.Date);
     method @NonNull public android.security.keystore.KeyProtection.Builder setMaxUsageCount(int);
+    method @NonNull public android.security.keystore.KeyProtection.Builder setMgfDigests(@NonNull java.lang.String...);
     method @NonNull public android.security.keystore.KeyProtection.Builder setRandomizedEncryptionRequired(boolean);
     method @NonNull public android.security.keystore.KeyProtection.Builder setSignaturePaddings(java.lang.String...);
     method @NonNull public android.security.keystore.KeyProtection.Builder setUnlockedDeviceRequired(boolean);

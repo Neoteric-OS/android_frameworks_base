@@ -223,6 +223,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
     private final @KeyProperties.EncryptionPaddingEnum String[] mEncryptionPaddings;
     private final @KeyProperties.SignaturePaddingEnum String[] mSignaturePaddings;
     private final @KeyProperties.DigestEnum String[] mDigests;
+    private final @KeyProperties.DigestEnum String[] mMgfDigests;
     private final @KeyProperties.BlockModeEnum String[] mBlockModes;
     private final boolean mRandomizedEncryptionRequired;
     private final boolean mUserAuthenticationRequired;
@@ -246,6 +247,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
             @KeyProperties.EncryptionPaddingEnum String[] encryptionPaddings,
             @KeyProperties.SignaturePaddingEnum String[] signaturePaddings,
             @KeyProperties.DigestEnum String[] digests,
+            @KeyProperties.DigestEnum String[] mgfDigests,
             @KeyProperties.BlockModeEnum String[] blockModes,
             boolean randomizedEncryptionRequired,
             boolean userAuthenticationRequired,
@@ -269,6 +271,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         mSignaturePaddings =
                 ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(signaturePaddings));
         mDigests = ArrayUtils.cloneIfNotEmpty(digests);
+        mMgfDigests = ArrayUtils.cloneIfNotEmpty(mgfDigests);
         mBlockModes = ArrayUtils.cloneIfNotEmpty(ArrayUtils.nullToEmpty(blockModes));
         mRandomizedEncryptionRequired = randomizedEncryptionRequired;
         mUserAuthenticationRequired = userAuthenticationRequired;
@@ -368,6 +371,24 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
     }
 
     /**
+     * Gets the set of MGF digest algorithms (e.g., {@code SHA-256}, {@code SHA-384}) with which
+     * the key can be used.
+     *
+     * <p>See {@link KeyProperties}.{@code DIGEST} constants.
+     *
+     * @throws IllegalStateException if this set has not been specified.
+     *
+     * @see #isMgfDigestsSpecified()
+     */
+    @NonNull
+    public @KeyProperties.DigestEnum String[] getMgfDigests() {
+        if (mMgfDigests == null) {
+            throw new IllegalStateException("Mgf Digests not specified");
+        }
+        return ArrayUtils.cloneIfNotEmpty(mMgfDigests);
+    }
+
+    /**
      * Returns {@code true} if the set of digest algorithms with which the key can be used has been
      * specified.
      *
@@ -375,6 +396,16 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
      */
     public boolean isDigestsSpecified() {
         return mDigests != null;
+    }
+
+    /**
+     * Returns {@code true} if the set of MGF digest algorithms with which the key can be used has
+     * been specified.
+     *
+     * @see #getMgfDigests()
+     */
+    public boolean isMgfDigestsSpecified() {
+        return mMgfDigests != null;
     }
 
     /**
@@ -574,6 +605,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         private @KeyProperties.EncryptionPaddingEnum String[] mEncryptionPaddings;
         private @KeyProperties.SignaturePaddingEnum String[] mSignaturePaddings;
         private @KeyProperties.DigestEnum String[] mDigests;
+        private @KeyProperties.DigestEnum String[] mMgfDigests;
         private @KeyProperties.BlockModeEnum String[] mBlockModes;
         private boolean mRandomizedEncryptionRequired = true;
         private boolean mUserAuthenticationRequired;
@@ -720,6 +752,22 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
         @NonNull
         public Builder setDigests(@KeyProperties.DigestEnum String... digests) {
             mDigests = ArrayUtils.cloneIfNotEmpty(digests);
+            return this;
+        }
+
+        /**
+         * Sets the set of MGF digest algorithms (e.g., {@code SHA-256}, {@code SHA-384}) with
+         * which the RSA key can be used. Attempts to use the key with any other MGF digest
+         * algorithm will be rejected except default MGF digest SHA-1.
+         *
+         * <p>This must be specified for RSA encryption/decryption
+         * keys used with RSA OAEP padding scheme because these operations involve MGF digest.
+         *
+         * <p>See {@link KeyProperties}.{@code DIGEST} constants.
+         */
+        @NonNull
+        public Builder setMgfDigests(@NonNull @KeyProperties.DigestEnum String... digests) {
+            mMgfDigests = ArrayUtils.cloneIfNotEmpty(digests);
             return this;
         }
 
@@ -1111,6 +1159,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
                     mEncryptionPaddings,
                     mSignaturePaddings,
                     mDigests,
+                    mMgfDigests,
                     mBlockModes,
                     mRandomizedEncryptionRequired,
                     mUserAuthenticationRequired,
