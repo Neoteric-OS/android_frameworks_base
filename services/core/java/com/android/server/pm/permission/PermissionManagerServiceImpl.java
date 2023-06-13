@@ -1831,7 +1831,7 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
         if (!revokedPermissions.isEmpty()) {
             int numRevokedPermissions = revokedPermissions.size();
             for (int i = 0; i < numRevokedPermissions; i++) {
-                int revocationUID = IntPair.first(revokedPermissions.valueAt(i));
+                int revocationUID = IntPair.first(revokedPermissions.keyAt(i));
                 int revocationUserId = IntPair.second(revokedPermissions.valueAt(i));
 
                 mOnPermissionChangeListeners.onPermissionsChanged(revocationUID);
