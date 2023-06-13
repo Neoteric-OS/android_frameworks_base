@@ -136,6 +136,7 @@ import android.media.tv.tunerresourcemanager.TunerResourceManager;
 import android.nearby.NearbyFrameworkInitializer;
 import android.net.ConnectivityFrameworkInitializer;
 import android.net.ConnectivityFrameworkInitializerTiramisu;
+import android.net.DisabledVpnManager;
 import android.net.INetworkPolicyManager;
 import android.net.IPacProxyManager;
 import android.net.IVpnManager;
@@ -417,6 +418,9 @@ public final class SystemServiceRegistry {
                 new CachedServiceFetcher<VpnManager>() {
             @Override
             public VpnManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+                if (ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WATCH)) {
+                    return new DisabledVpnManager();
+                }
                 IBinder b = ServiceManager.getService(Context.VPN_MANAGEMENT_SERVICE);
                 IVpnManager service = IVpnManager.Stub.asInterface(b);
                 return new VpnManager(ctx, service);

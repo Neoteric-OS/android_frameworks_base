@@ -2022,14 +2022,16 @@ public final class SystemServer implements Dumpable {
             networkPolicy.bindConnectivityManager();
             t.traceEnd();
 
-            t.traceBegin("StartVpnManagerService");
-            try {
-                vpnManager = VpnManagerService.create(context);
-                ServiceManager.addService(Context.VPN_MANAGEMENT_SERVICE, vpnManager);
-            } catch (Throwable e) {
-                reportWtf("starting VPN Manager Service", e);
+            if (!isWatch) {
+                t.traceBegin("StartVpnManagerService");
+                try {
+                    vpnManager = VpnManagerService.create(context);
+                    ServiceManager.addService(Context.VPN_MANAGEMENT_SERVICE, vpnManager);
+                } catch (Throwable e) {
+                    reportWtf("starting VPN Manager Service", e);
+                }
+                t.traceEnd();
             }
-            t.traceEnd();
 
             t.traceBegin("StartVcnManagementService");
             try {
