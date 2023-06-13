@@ -46,6 +46,47 @@
       },
       "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "016040b7_2732b44a",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-06-13T08:29:13Z",
+      "side": 1,
+      "message": "I see; in that case, maybe we could just check the user-id that should be used in mount(), and leave this line out altogether? In fact it looks like your change already does that.",
+      "parentUuid": "2f1a0b39_b1e3d6b0",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "befa67c4_d03f2b31",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-06-13T08:29:13Z",
+      "side": 1,
+      "message": "needs to be synchronized with mLock (for mCurrentUserId access)",
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
