@@ -337,6 +337,12 @@ public class VpnManager {
         mService = checkNotNull(service, "missing IVpnManager");
     }
 
+    // No-op constructor called just by DisabledVpnManagerManager.
+    /*package*/ VpnManager() {
+        mContext = null;
+        mService = null;
+    }
+
     /**
      * Install a VpnProfile configuration keyed on the calling app's package name.
      *
