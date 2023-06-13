@@ -522,25 +522,25 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
                         padding
                 ));
                 if (padding == KeymasterDefs.KM_PAD_RSA_OAEP) {
-                    if (spec.isDigestsSpecified()) {
-                        boolean hasDefaultMgf1DigestBeenAdded = false;
-                        for (String digest : spec.getDigests()) {
+                    boolean hasDefaultMgf1DigestBeenAdded = false;
+                    if (spec.isMgfDigestsSpecified()) {
+                        for (String digest : spec.getMgfDigests()) {
                             importArgs.add(KeyStore2ParameterUtils.makeEnum(
                                     KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
                                     KeyProperties.Digest.toKeymaster(digest)
                             ));
                             hasDefaultMgf1DigestBeenAdded |= digest.equals(DEFAULT_MGF1_DIGEST);
                         }
-                        /* Because of default MGF1 digest is SHA-1. It has to be added in Key
-                         * characteristics. Otherwise, crypto operations will fail with Incompatible
-                         * MGF1 digest.
-                         */
-                        if (!hasDefaultMgf1DigestBeenAdded) {
-                            importArgs.add(KeyStore2ParameterUtils.makeEnum(
-                                    KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
-                                    KeyProperties.Digest.toKeymaster(DEFAULT_MGF1_DIGEST)
-                            ));
-                        }
+                    }
+                    /* Because of default MGF1 digest is SHA-1. It has to be added in Key
+                     * characteristics. Otherwise, crypto operations will fail with Incompatible
+                     * MGF1 digest.
+                     */
+                    if (!hasDefaultMgf1DigestBeenAdded) {
+                        importArgs.add(KeyStore2ParameterUtils.makeEnum(
+                                KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
+                                KeyProperties.Digest.toKeymaster(DEFAULT_MGF1_DIGEST)
+                        ));
                     }
                 }
             }
