@@ -127,7 +127,9 @@ public class SystemSettings {
         	Settings.System.HAPTIC_ON_SLIDER,
         	Settings.System.SMALL_LANDSCAPE_NOTIFICATION,
 		Settings.System.QS_SHOW_BRIGHTNESS,
-        	Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM
+        	Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
+                Settings.System.RINGTONE_VIBRATION_PATTERN,
+                Settings.System.NOTIFICATION_VIBRATION_PATTERN
         ));
         if (Flags.backUpSmoothDisplayAndForcePeakRefreshRate()) {
             settings.add(Settings.System.PEAK_REFRESH_RATE);

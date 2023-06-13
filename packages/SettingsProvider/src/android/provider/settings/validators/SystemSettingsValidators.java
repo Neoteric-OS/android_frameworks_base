@@ -268,5 +268,7 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.HAPTIC_ON_SLIDER, BOOLEAN_VALIDATOR);
 	VALIDATORS.put(System.QS_SHOW_BRIGHTNESS, new InclusiveIntegerRangeValidator(0, 2));
         VALIDATORS.put(System.QS_BRIGHTNESS_POSITION_BOTTOM, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.RINGTONE_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 4));
+        VALIDATORS.put(System.NOTIFICATION_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 4));
     }
 }
