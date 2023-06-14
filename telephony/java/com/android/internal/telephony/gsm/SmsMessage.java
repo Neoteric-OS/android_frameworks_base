@@ -56,7 +56,7 @@ import java.time.ZonedDateTime;
  */
 public class SmsMessage extends SmsMessageBase {
     static final String LOG_TAG = "SmsMessage";
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = true;
 
     private MessageClass messageClass;
 
@@ -1629,6 +1629,7 @@ public class SmsMessage extends SmsMessageBase {
             } // end of for
         } // end of if UDH
 
+        Rlog.d(LOG_TAG, "encodingType: " + encodingType);
         switch (encodingType) {
         case ENCODING_UNKNOWN:
             mMessageBody = null;
@@ -1684,6 +1685,7 @@ public class SmsMessage extends SmsMessageBase {
                 break;
             }
         }
+        if (VDBG) Rlog.v(LOG_TAG, "messageClass: " + messageClass);
     }
 
     /**

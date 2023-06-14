@@ -22,6 +22,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.android.internal.telephony.GsmAlphabet.TextEncodingDetails;
@@ -368,7 +369,12 @@ public abstract class SmsMessageBase {
     protected void parseMessageBody() {
         // originatingAddress could be null if this message is from a status
         // report.
+        Log.d("SmsMessageBase", "[parseMessageBody] "
+                + "mOriginatingAddress: " + mOriginatingAddress
+                + " couldBeEmailGateway:" + mOriginatingAddress.couldBeEmailGateway());
         if (mOriginatingAddress != null && mOriginatingAddress.couldBeEmailGateway()) {
+            Log.d("SmsMessageBase", "[parseMessageBody] mOriginatingAddress.getAddressString(): "
+                    + mOriginatingAddress.getAddressString());
             extractEmailAddressFromMessageBody();
         }
     }
@@ -422,6 +428,8 @@ public abstract class SmsMessageBase {
         if (parts.length < 2) return;
         mEmailFrom = parts[0];
         mEmailBody = parts[1];
+        Log.d("SmsMessageBase", "[extractEmailAddressFromMessageBody] "
+                + "mEmailFrom: " + mEmailFrom + " mEmailBody: " + mEmailBody);
         mIsEmail = isEmailAddress(mEmailFrom);
     }
 
