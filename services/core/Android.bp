@@ -223,3 +223,11 @@ prebuilt_etc {
     name: "protolog.conf.json.gz",
     src: ":services.core.json.gz",
 }
+
+filegroup {
+    name: "hint_manager_fuzzer_sources",
+    srcs: [
+        "java/com/android/server/power/hint/HintManagerService.java",
+        "java/com/android/server/SystemService.java",
+    ],
+}

@@ -28,7 +28,6 @@ java_fuzz {
     jni_libs: [
         "librandom_parcel_jni",
         "libc++",
-        "libandroid_runtime",
     ],
     libs: [
         "framework",

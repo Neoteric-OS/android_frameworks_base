@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 The Android Open Source Project
+ * Copyright (C) 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.android.server.power.hint;
 
 import com.code_intelligence.jazzer.api.FuzzedDataProvider;
 
 import randomparcel.FuzzBinder;
 
-public class ServiceFuzzer {
+public class HintManagerServiceFuzzer {
+
+    static {
+        // Initialize fuzzService and JNI dependencies
+        FuzzBinder.init();
+    }
 
     public static void fuzzerTestOneInput(FuzzedDataProvider data) {
-        TestService service = new TestService();
-        FuzzBinder.fuzzService(service, data.consumeRemainingAsBytes());
+        //TODO: Pass mock context here
+        HintManagerService hintManagerService = new HintManagerService(null);
+        FuzzBinder.fuzzService(hintManagerService.getBinderServiceInstance(),
+                data.consumeRemainingAsBytes());
     }
 }
+

@@ -22,13 +22,6 @@ public class FuzzBinder {
         System.loadLibrary("random_parcel_jni");
     }
 
-    // DO NOT REUSE: This API should be called from fuzzer to setup JNI dependencies from
-    // libandroid_runtime. THIS IS WORKAROUND. Please file a bug if you need to use this.
-    public static void init() {
-        System.loadLibrary("android_runtime");
-        registerNatives();
-    }
-
     // This API automatically fuzzes provided service
     public static void fuzzService(IBinder binder, byte[] data) {
         fuzzServiceInternal(binder, data);
@@ -41,5 +34,4 @@ public class FuzzBinder {
 
     private static native void fuzzServiceInternal(IBinder binder, byte[] data);
     private static native void fillParcelInternal(Parcel parcel, byte[] data);
-    private static native int registerNatives();
 }

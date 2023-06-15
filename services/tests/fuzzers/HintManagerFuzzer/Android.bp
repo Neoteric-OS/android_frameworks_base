@@ -3,29 +3,31 @@ package {
 }
 
 java_fuzz {
-    name: "java_binder_parcel_fuzzer",
+    name: "hint_manager_service_fuzzer",
     srcs: [
-        "ParcelFuzzer.java",
-        "ReadUtils.java",
-        "FuzzUtils.java",
-        "FuzzOperation.java",
-        "ReadOperation.java",
+        "src/**/*.java",
+        ":framework-core-sources-for-hint-fuzzers",
         ":framework-core-sources-for-fuzzers",
+        ":hint_manager_fuzzer_sources",
     ],
     static_libs: [
+    	"core-libart",
+        "services",
         "jazzer",
         "random_parcel_lib",
-        "binderReadParcelIface-java",
     ],
     jni_libs: [
         "librandom_parcel_jni",
         "libc++",
+        "libandroid_runtime",
+        "libandroid_servers",
     ],
     libs: [
+        "framework-internal-utils",
         "framework",
         "unsupportedappusage",
         "ext",
-        "framework-res",
+        "android.test.mock",
     ],
     native_bridge_supported: true,
     fuzz_config: {
@@ -33,8 +35,8 @@ java_fuzz {
             "smoreland@google.com",
             "waghpawan@google.com",
         ],
-        triage_assignee: "cobark@google.com", // TODO(b/280770893)
         // Adds bugs to hotlist "AIDL fuzzers bugs" on buganizer
         hotlists: ["4637097"],
     },
 }
+

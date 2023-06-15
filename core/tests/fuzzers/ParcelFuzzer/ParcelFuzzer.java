@@ -23,11 +23,6 @@ import randomparcel.FuzzBinder;
 
 public class ParcelFuzzer {
 
-    static {
-        // Initialize JNI dependencies
-        FuzzBinder.init();
-    }
-
     public static void fuzzerTestOneInput(FuzzedDataProvider provider) {
         // Default behavior for Java APIs is to throw RuntimeException.
         // We need to fuzz to detect other problems which are not handled explicitly.

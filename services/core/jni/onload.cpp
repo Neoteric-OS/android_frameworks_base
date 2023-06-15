@@ -68,17 +68,7 @@ int register_com_android_server_wm_TaskFpsCallbackController(JNIEnv* env);
 
 using namespace android;
 
-extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */)
-{
-    JNIEnv* env = NULL;
-    jint result = -1;
-
-    if (vm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
-        ALOGE("GetEnv failed!");
-        return result;
-    }
-    ALOG_ASSERT(env, "Could not retrieve the env!");
-
+extern "C" jint registerServerNatives(JavaVM* vm, JNIEnv* env) {
     register_android_server_broadcastradio_BroadcastRadioService(env);
     register_android_server_broadcastradio_Tuner(vm, env);
     register_android_server_PowerManagerService(env);
@@ -121,4 +111,17 @@ extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */)
     register_android_server_app_GameManagerService(env);
     register_com_android_server_wm_TaskFpsCallbackController(env);
     return JNI_VERSION_1_4;
+}
+
+extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */) {
+    JNIEnv* env = NULL;
+    jint result = -1;
+
+    if (vm->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK) {
+        ALOGE("GetEnv failed!");
+        return result;
+    }
+    ALOG_ASSERT(env, "Could not retrieve the env!");
+
+    return registerServerNatives(vm, env);
 }
