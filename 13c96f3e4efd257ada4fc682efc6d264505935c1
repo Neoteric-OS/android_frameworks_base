@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8beb13b_e8ebed43",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2023-06-15T13:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12ee2c8a_57310fca",
+      "range": {
+        "startLine": 1037,
+        "startChar": 0,
+        "endLine": 1037,
+        "endChar": 72
+      },
+      "revId": "13c96f3e4efd257ada4fc682efc6d264505935c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2383839_82510eac",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "I have updated it. Could you check the modified comments?",
       "parentUuid": "a2383839_82510eac",
+      "range": {
+        "startLine": 1103,
+        "startChar": 51,
+        "endLine": 1103,
+        "endChar": 55
+      },
+      "revId": "13c96f3e4efd257ada4fc682efc6d264505935c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7526993_d9254f73",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2023-06-15T13:25:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ac2c89_b473ed5d",
       "range": {
         "startLine": 1103,
         "startChar": 51,
