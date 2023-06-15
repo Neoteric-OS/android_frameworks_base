@@ -46,6 +46,30 @@
       },
       "revId": "1b616f8c884fe066c32471924535dd711df89e00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ecf816d_7473830d",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2023-06-15T15:49:46Z",
+      "side": 1,
+      "message": "And it\u0027s the same decoder instance that drives the two outputs? Is that possible with MediaCodec?  \nIf they\u0027re not on the same instance, then it would be simpler to have a single set of parameters (not duplicated for MAIN and TRANSCODE), and another that sets the behavior of the decoder (MAIN vs TRANSCODE).",
+      "parentUuid": "067ba6f4_75e13674",
+      "range": {
+        "startLine": 1051,
+        "startChar": 52,
+        "endLine": 1051,
+        "endChar": 71
+      },
+      "revId": "1b616f8c884fe066c32471924535dd711df89e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
