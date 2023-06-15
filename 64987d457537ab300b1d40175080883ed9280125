@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "807213bb_fb422dd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2023-06-15T20:22:49Z",
+      "side": 1,
+      "message": "OWNERS files should generally be updated in aosp directly",
+      "revId": "64987d457537ab300b1d40175080883ed9280125",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
