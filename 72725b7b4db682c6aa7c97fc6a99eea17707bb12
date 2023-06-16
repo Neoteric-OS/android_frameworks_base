@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a32f5f97_b73855d4",
+        "filename": "services/core/java/com/android/server/net/watchlist/WatchlistLoggingHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2023-06-16T09:24:52Z",
+      "side": 1,
+      "message": "The problem with this is that it leaks whether there were any matches in the database, which is information that should not be exposed. See the comment here: cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/net/watchlist/WatchlistLoggingHandler.java;drc\u003d584140c83a456b5de99880b440c2d5dfc3c70506;l\u003d294.",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 17
+      },
+      "revId": "72725b7b4db682c6aa7c97fc6a99eea17707bb12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
