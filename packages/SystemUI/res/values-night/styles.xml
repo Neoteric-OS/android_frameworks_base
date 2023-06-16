@@ -31,8 +31,8 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
         <item name="offStateColor">@color/material_dynamic_neutral20</item>
-        <item name="underSurfaceColor">#000000</item>
-        <item name="android:colorBackground">#000000</item>
+        <item name="underSurfaceColor">@*android:color/black</item>
+        <item name="android:colorBackground">@*android:color/black</item>
         <item name="android:itemTextAppearance">@style/Control.MenuItem</item>
     </style>
 
