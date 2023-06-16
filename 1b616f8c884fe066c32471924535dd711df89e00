@@ -94,6 +94,30 @@
       },
       "revId": "1b616f8c884fe066c32471924535dd711df89e00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "771f0bf1_89fddc15",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2023-06-16T11:56:48Z",
+      "side": 1,
+      "message": "Even if at the moment MediaCodec can do only one output path, we shouldn\u0027t limit the configuration capabilities for future expansions, so when we do multi-path output we can already support different configurations for it.",
+      "parentUuid": "5b5132e3_23f84ece",
+      "range": {
+        "startLine": 1051,
+        "startChar": 52,
+        "endLine": 1051,
+        "endChar": 71
+      },
+      "revId": "1b616f8c884fe066c32471924535dd711df89e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
