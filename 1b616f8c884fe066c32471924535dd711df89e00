@@ -70,6 +70,30 @@
       },
       "revId": "1b616f8c884fe066c32471924535dd711df89e00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b5132e3_23f84ece",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-16T10:46:04Z",
+      "side": 1,
+      "message": "The same decoder instance will be able to produce output for both output paths(for speaker and transcoding).\nI believe that the MediaCodec can support only one output path. We will be using the main path(speaker output) for normal use cases.\nBut the OEM\u0027s implementation(e.g. tunnel mode decoder) may choose for output for the transcoder path. The TRANSCODE parameters were added for supporting such use cases.",
+      "parentUuid": "8ecf816d_7473830d",
+      "range": {
+        "startLine": 1051,
+        "startChar": 52,
+        "endLine": 1051,
+        "endChar": 71
+      },
+      "revId": "1b616f8c884fe066c32471924535dd711df89e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
