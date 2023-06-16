@@ -67,7 +67,8 @@ class WatchlistLoggingHandler extends Handler {
     static final int FORCE_REPORT_RECORDS_NOW_FOR_TEST_MSG = 3;
 
     private static final long ONE_DAY_MS = TimeUnit.DAYS.toMillis(1);
-    private static final String DROPBOX_TAG = "network_watchlist_report";
+    @VisibleForTesting
+    static final String DROPBOX_TAG = "network_watchlist_report";
 
     private final Context mContext;
     private final @Nullable DropBoxManager mDropBoxManager;
@@ -252,7 +253,8 @@ class WatchlistLoggingHandler extends Handler {
         return lastRecordTime >= lastReportTime + ONE_DAY_MS;
     }
 
-    private void tryAggregateRecords(long lastRecordTime) {
+    @VisibleForTesting
+    void tryAggregateRecords(long lastRecordTime) {
         long startTime = System.currentTimeMillis();
         try {
             // Check if it's necessary to generate watchlist report now.
@@ -267,7 +269,7 @@ class WatchlistLoggingHandler extends Handler {
                         lastRecordTime);
                 final WatchlistReportDbHelper.AggregatedResult aggregatedResult =
                         mDbHelper.getAggregatedRecords(lastRecordTime);
-                if (aggregatedResult == null) {
+                if (aggregatedResult == null || aggregatedResult.appDigestList.isEmpty()) {
                     Slog.i(TAG, "Cannot get result from database");
                     return;
                 }
@@ -431,6 +433,7 @@ class WatchlistLoggingHandler extends Handler {
         return subDomainList.toArray(new String[0]);
     }
 
+    @VisibleForTesting
     static long getLastMidnightTime() {
         return getMidnightTimestamp(0);
     }
