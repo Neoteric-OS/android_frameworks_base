@@ -17,8 +17,10 @@
 package com.android.systemui.development.ui.compose
 
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
@@ -28,72 +30,77 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.onLongClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.android.systemui.communal.ui.compose.extensions.detectLongPressGesture
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.systemui.development.ui.viewmodel.BuildNumberViewModel
 import com.android.systemui.lifecycle.rememberViewModel
+import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsDataUsageViewModel
 import com.android.systemui.qs.ui.compose.borderOnFocus
-import com.android.systemui.res.R
 
 @Composable
 fun BuildNumber(
     viewModelFactory: BuildNumberViewModel.Factory,
     modifier: Modifier = Modifier,
     textColor: Color = MaterialTheme.colorScheme.onSurface,
+    dataUsageViewModel: FooterActionsDataUsageViewModel? = null,
 ) {
     val viewModel = rememberViewModel(traceName = "BuildNumber") { viewModelFactory.create() }
 
-    BuildNumber(viewModel, modifier, textColor)
+    BuildNumber(viewModel, modifier, textColor, dataUsageViewModel)
 }
 
 @Composable
 fun BuildNumber(
     viewModel: BuildNumberViewModel,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     textColor: Color = MaterialTheme.colorScheme.onSurface,
+    dataUsageViewModel: FooterActionsDataUsageViewModel? = null,
 ) {
-    val buildNumber = viewModel.buildNumber
+    // If data usage is enabled and available, show it instead of build number
+    if (dataUsageViewModel != null) {
+        val dataUsageText = dataUsageViewModel.dataUsageText.collectAsStateWithLifecycle().value
+        val isVisible = dataUsageViewModel.isVisible.collectAsStateWithLifecycle().value
 
-    if (buildNumber != null) {
-        val haptics = LocalHapticFeedback.current
-        val copyToClipboardActionLabel = stringResource(id = R.string.copy_to_clipboard_a11y_action)
+        if (isVisible && dataUsageText != null) {
+            val haptics = LocalHapticFeedback.current
 
-        Text(
-            text = buildNumber.value,
-            style = MaterialTheme.typography.bodySmall,
-            modifier =
-                modifier
-                    .borderOnFocus(
-                        color = MaterialTheme.colorScheme.secondary,
-                        cornerSize = CornerSize(1.dp),
-                    )
-                    .focusable()
-                    .wrapContentWidth()
-                    // Using this instead of combinedClickable because this node should not support
-                    // single click
-                    .pointerInput(Unit) {
-                        detectLongPressGesture {
-                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                            viewModel.onBuildNumberLongPress()
+            Text(
+                text = dataUsageText,
+                style = MaterialTheme.typography.bodySmall,
+                modifier =
+                    modifier
+                        .borderOnFocus(
+                            color = MaterialTheme.colorScheme.secondary,
+                            cornerSize = CornerSize(1.dp),
+                        )
+                        .focusable()
+                        .wrapContentWidth()
+                        .padding(start = 8.dp)
+                        .combinedClickable(
+                            onClick = { dataUsageViewModel.onDataUsageClick() },
+                            onLongClick = {
+                                haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                dataUsageViewModel.onDataUsageLongClick()
+                            },
+                        )
+                        .semantics {
+                            onLongClick("Open data usage settings") {
+                                dataUsageViewModel.onDataUsageLongClick()
+                                true
+                            }
                         }
-                    }
-                    .semantics {
-                        onLongClick(copyToClipboardActionLabel) {
-                            viewModel.onBuildNumberLongPress()
-                            true
-                        }
-                    }
-                    .basicMarquee(iterations = 1, initialDelayMillis = 2000)
-                    .minimumInteractiveComponentSize(),
-            color = textColor,
-            maxLines = 1,
-        )
-    } else {
-        Spacer(modifier)
+                        .basicMarquee(iterations = 1, initialDelayMillis = 2000)
+                        .minimumInteractiveComponentSize(),
+                color = textColor,
+                maxLines = 1,
+            )
+            return
+        }
     }
+
+    // Show nothing (build number is always null)
+    Spacer(modifier)
 }

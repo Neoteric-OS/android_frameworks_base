@@ -98,6 +98,7 @@ import com.android.systemui.qs.footer.ui.compose.FooterActionsDefaults.FOOTER_TE
 import com.android.systemui.qs.footer.ui.compose.FooterActionsDefaults.FOOTER_TEXT_MINIMUM_SCALE_Y
 import com.android.systemui.qs.footer.ui.compose.FooterActionsDefaults.FooterButtonHeight
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsButtonViewModel
+import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsDataUsageViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsForegroundServicesButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsSecurityButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsViewModel
@@ -156,6 +157,7 @@ fun FooterActions(viewModel: FooterActionsViewModel, modifier: Modifier = Modifi
     }
     var userSwitcher by remember { mutableStateOf<FooterActionsButtonViewModel?>(null) }
     var settings by remember { mutableStateOf<FooterActionsButtonViewModel?>(null) }
+    var dataUsage by remember { mutableStateOf<FooterActionsDataUsageViewModel?>(null) }
 
     var textFeedback by remember {
         mutableStateOf<TextFeedbackViewModel>(TextFeedbackViewModel.NoFeedback)
@@ -182,6 +184,7 @@ fun FooterActions(viewModel: FooterActionsViewModel, modifier: Modifier = Modifi
         launch { viewModel.userSwitcher.collect { userSwitcher = it } }
         launch { viewModel.textFeedback.collect { textFeedback = it } }
         launch { viewModel.settings.collect { settings = it } }
+        dataUsage = viewModel.dataUsage
     }
 
     val backgroundColor =
@@ -248,6 +251,7 @@ fun FooterActions(viewModel: FooterActionsViewModel, modifier: Modifier = Modifi
                 { foregroundServices.takeIf { it?.model?.displayText == false } },
                 useModifierBasedExpandable,
             )
+
 
             IconButton(
                 { userSwitcher },

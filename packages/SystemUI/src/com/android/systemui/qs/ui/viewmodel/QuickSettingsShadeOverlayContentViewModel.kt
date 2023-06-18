@@ -29,6 +29,7 @@ import com.android.systemui.desktop.domain.interactor.DesktopInteractor
 import com.android.systemui.development.ui.viewmodel.BuildNumberViewModel
 import com.android.systemui.keyguard.ui.transitions.BlurConfig
 import com.android.systemui.lifecycle.HydratedActivatable
+import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsDataUsageViewModel
 import com.android.systemui.qs.panels.domain.interactor.QSPanelAppearanceInteractor
 import com.android.systemui.qs.panels.ui.viewmodel.toolbar.ToolbarViewModel
 import com.android.systemui.qs.tiles.dialog.AudioDetailsViewModel
@@ -85,6 +86,7 @@ constructor(
     @ShadeDisplayAware systemBarUtilsState: SystemBarUtilsState,
     @Assisted private val volumeSliderCoroutineScope: CoroutineScope?,
     val toolbarViewModelFactory: ToolbarViewModel.Factory,
+    val dataUsageViewModel: FooterActionsDataUsageViewModel,
     private val blurConfig: BlurConfig,
     private val windowRootViewBlurInteractor: WindowRootViewBlurInteractor,
     private val qsPanelAppearanceInteractor: QSPanelAppearanceInteractor,

@@ -32,6 +32,7 @@ import com.android.systemui.statusbar.notification.stack.domain.interactor.notif
 import com.android.systemui.statusbar.ui.systemBarUtilsState
 import com.android.systemui.volume.dialog.domain.interactor.expandedAudioTileDetailsFeatureInteractor
 import com.android.systemui.volume.panel.component.volume.slider.ui.viewmodel.audioStreamSliderViewModelFactory
+import com.android.systemui.util.mockito.mock
 import com.android.systemui.window.domain.interactor.windowRootViewBlurInteractor
 import kotlinx.coroutines.CoroutineScope
 
@@ -56,6 +57,7 @@ val Kosmos.quickSettingsShadeOverlayContentViewModelFactory:
                     buildNumberViewModelFactory = buildNumberViewModelFactory,
                     volumeSliderCoroutineScope = volumeSliderCoroutineScope,
                     toolbarViewModelFactory = toolbarViewModelFactory,
+                    dataUsageViewModel = mock(),
                     blurConfig = blurConfig,
                     windowRootViewBlurInteractor = windowRootViewBlurInteractor,
                     qsPanelAppearanceInteractor = qsPanelAppearanceInteractor,

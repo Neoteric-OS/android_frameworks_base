@@ -87,6 +87,9 @@ class FooterActionsViewModel(
     /** The model for the text feedback. */
     val textFeedback: Flow<TextFeedbackViewModel>,
 
+    /** The model for the data usage display. */
+    val dataUsage: FooterActionsDataUsageViewModel?,
+
     /**
      * Observe the device monitoring dialog requests and show the dialog accordingly. This function
      * will suspend indefinitely and will need to be cancelled to stop observing.
@@ -133,6 +136,7 @@ class FooterActionsViewModel(
         private val textFeedbackInteractor: TextFeedbackInteractor,
         private val selectedUserInteractor: SelectedUserInteractor,
         @Named(PM_LITE_ENABLED) private val showPowerButton: Boolean,
+        private val dataUsageViewModel: FooterActionsDataUsageViewModel
     ) {
         /** Create a [FooterActionsViewModel] bound to the lifecycle of [lifecycleOwner]. */
         fun create(lifecycleOwner: LifecycleOwner): FooterActionsViewModel {
@@ -161,6 +165,7 @@ class FooterActionsViewModel(
                 activityStarter,
                 showPowerButton,
                 selectedUserInteractor,
+                dataUsageViewModel,
             )
         }
 
@@ -187,6 +192,7 @@ class FooterActionsViewModel(
                 activityStarter,
                 showPowerButton,
                 selectedUserInteractor,
+                dataUsageViewModel,
             )
         }
     }
@@ -201,6 +207,7 @@ fun createFooterActionsViewModel(
     activityStarter: ActivityStarter,
     showPowerButton: Boolean,
     selectedUserInteractor: SelectedUserInteractor,
+    dataUsageViewModel: FooterActionsDataUsageViewModel? = null,
 ): FooterActionsViewModel {
 
     val vibrator = appContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -325,6 +332,7 @@ fun createFooterActionsViewModel(
         userSwitcher = userSwitcher,
         settings = settings,
         power = power,
+        dataUsage = dataUsageViewModel,
         observeDeviceMonitoringDialogRequests = ::observeDeviceMonitoringDialogRequests,
         textFeedback = textFeedback,
     )

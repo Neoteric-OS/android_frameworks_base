@@ -112,6 +112,7 @@ val Kosmos.footerActionsViewModelFactory by Fixture {
         textFeedbackInteractor = textFeedbackInteractor,
         showPowerButton = true,
         selectedUserInteractor = selectedUserInteractor,
+        dataUsageViewModel = mock(),
     )
 }
 

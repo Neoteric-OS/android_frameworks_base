@@ -93,6 +93,7 @@ import com.android.systemui.media.remedia.ui.compose.MediaPresentationStyle
 import com.android.systemui.notifications.ui.composable.SnoozableHeadsUpNotificationPlaceholder
 import com.android.systemui.qs.composefragment.ui.GridAnchor
 import com.android.systemui.qs.flags.QsDetailedView
+import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsDataUsageViewModel
 import com.android.systemui.qs.panels.ui.compose.EditMode
 import com.android.systemui.qs.panels.ui.compose.TileDetails
 import com.android.systemui.qs.panels.ui.compose.TileGrid
@@ -333,6 +334,7 @@ private fun ContentScope.QuickSettingsContainer(
                     isTransparencyEnabled = contentViewModel.isTransparencyEnabled,
                     volumeSliderViewModel = contentViewModel.volumeSliderViewModel,
                     audioDetailsViewModelFactory = contentViewModel.audioDetailsViewModelFactory,
+                    dataUsageViewModel = contentViewModel.dataUsageViewModel,
                     modifier = modifier.sysuiResTag("quick_settings_panel"),
                 )
             }
@@ -349,6 +351,7 @@ private fun ContentScope.QuickSettingsLayout(
     isTransparencyEnabled: Boolean,
     volumeSliderViewModel: AudioStreamSliderViewModel?,
     audioDetailsViewModelFactory: AudioDetailsViewModel.Factory,
+    dataUsageViewModel: FooterActionsDataUsageViewModel? = null,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -507,13 +510,19 @@ private fun ContentScope.QuickSettingsLayout(
                     buildNumberViewModelFactory.create()
                 }
 
-            if (buildNumberViewModel.buildNumber != null) {
+            val isDataUsageVisible =
+                dataUsageViewModel?.isVisible?.collectAsStateWithLifecycle()?.value == true
+            val dataUsageText =
+                dataUsageViewModel?.dataUsageText?.collectAsStateWithLifecycle()?.value
+
+            if (isDataUsageVisible && dataUsageText != null) {
                 VerticalSeparator(QuickSettingsShade.Dimensions.ShortPadding)
                 BuildNumber(
                     viewModel = buildNumberViewModel,
                     modifier =
                         Modifier.align(Alignment.Start)
                             .padding(start = QuickSettingsShade.Dimensions.HorizontalPadding),
+                    dataUsageViewModel = dataUsageViewModel,
                 )
             }
 
