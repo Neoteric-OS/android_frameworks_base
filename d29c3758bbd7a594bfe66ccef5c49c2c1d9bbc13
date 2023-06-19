@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3deb4d9e_7d934136",
+        "filename": "core/java/com/android/internal/infra/ServiceConnector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1279898
+      },
+      "writtenOn": "2023-06-19T18:01:28Z",
+      "side": 1,
+      "message": "To give a concrete example of the issue, without this change, the timeout handler runs on Looper.getMainLooper() by default. As a result, this can happen:\n\n1) Caller attempts to post a task to ServiceConnector on main thread.\n2) Timeout task gets posted to main thread.\n3) Job task gets posted to job thread.\n4) Caller blocks on the returned future waiting for job to complete.\n5) Job task never resolves, timeout is reached.\n6) Timeout never fires, because it is handled on the main thread, which is blocked by the caller.\n\nSomething to consider - I\u0027m unsure whether it\u0027s appropriate to even assume the default thread that a timeout ought to be posted on. Perhaps in a follow up, there might be reason to expose an override method to provide the timeout handler, so that the caller has full control over where timeouts are handled.",
+      "revId": "d29c3758bbd7a594bfe66ccef5c49c2c1d9bbc13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
