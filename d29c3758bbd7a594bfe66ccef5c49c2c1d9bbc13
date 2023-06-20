@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "36df4b03_3581dbfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1279898
+      },
+      "writtenOn": "2023-06-20T17:37:56Z",
+      "side": 1,
+      "message": "Went back and forth a bit on the appropriate reviewer, apologies for pinging here Narayan, I know you\u0027re listed as last-resort in the OWNERS.\n\nIf there\u0027s a more appropriate OWNER for infra/ code, could you route me to them? The current OWNERS file lists a former engineer so I\u0027m not sure who the fallback is now for infra code.",
+      "parentUuid": "d7051d3a_68f8e995",
+      "revId": "d29c3758bbd7a594bfe66ccef5c49c2c1d9bbc13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3deb4d9e_7d934136",
         "filename": "core/java/com/android/internal/infra/ServiceConnector.java",
         "patchSetId": 2
