@@ -191,7 +191,8 @@ public class KeyguardClockSwitchController extends ViewController<KeyguardClockS
         mKeyguardSmallClockTopMargin =
                 mView.getResources().getDimensionPixelSize(R.dimen.keyguard_clock_top_margin);
         mKeyguardLargeClockTopMargin =
-                mView.getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin);
+                mView.getResources().getDimensionPixelSize(
+                        com.android.systemui.customization.R.dimen.keyguard_large_clock_top_margin);
 
         if (mOnlyClock) {
             View ksv = mView.findViewById(R.id.keyguard_slice_view);
@@ -322,7 +323,8 @@ public class KeyguardClockSwitchController extends ViewController<KeyguardClockS
         mKeyguardSmallClockTopMargin =
                 mView.getResources().getDimensionPixelSize(R.dimen.keyguard_clock_top_margin);
         mKeyguardLargeClockTopMargin =
-                mView.getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin);
+                mView.getResources().getDimensionPixelSize(
+                        com.android.systemui.customization.R.dimen.keyguard_large_clock_top_margin);
         mView.updateClockTargetRegions();
     }
 
