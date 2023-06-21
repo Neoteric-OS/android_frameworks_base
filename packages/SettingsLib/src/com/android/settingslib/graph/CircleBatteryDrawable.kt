@@ -27,8 +27,6 @@ import kotlin.math.max
 import kotlin.math.min
 
 class CircleBatteryDrawable(private val context: Context, frameColor: Int) : Drawable() {
-    private val criticalLevel: Int
-    private val warningString: String
     private val framePaint: Paint
     private val batteryPaint: Paint
     private val warningTextPaint: Paint
@@ -211,11 +209,7 @@ class CircleBatteryDrawable(private val context: Context, frameColor: Int) : Dra
             textPaint.color = getColorForLevel(batteryLevel)
             textPaint.textSize = height * 0.52f
             val textHeight = -textPaint.fontMetrics.ascent
-            val pctText =
-                if (batteryLevel > criticalLevel)
-                    batteryLevel.toString()
-                else
-                    warningString
+            val pctText = batteryLevel.toString()
             val pctX = width * 0.5f
             val pctY = (height + textHeight) * 0.47f
             c.drawText(pctText, pctX, pctY, textPaint)
@@ -280,10 +274,6 @@ class CircleBatteryDrawable(private val context: Context, frameColor: Int) : Dra
         }
         color_levels.recycle()
         color_values.recycle()
-        warningString = res.getString(R.string.battery_meter_very_low_overlay_symbol)
-        criticalLevel = res.getInteger(
-            com.android.internal.R.integer.config_criticalBatteryWarningLevel
-        )
         framePaint = Paint(Paint.ANTI_ALIAS_FLAG)
         framePaint.color = frameColor
         framePaint.isDither = true

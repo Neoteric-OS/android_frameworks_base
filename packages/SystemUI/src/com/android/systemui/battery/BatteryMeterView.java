@@ -89,6 +89,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     private String mEstimateText = null;
     private boolean mCharging;
     private boolean mIsOverheated;
+    private boolean mIsPowerSave;
     private boolean mDisplayShieldEnabled;
     // Error state where we know nothing about the current battery state
     private boolean mBatteryStateUnknown;
@@ -242,17 +243,20 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         mCircleDrawable.setCharging(pluggedIn);
         mAccessorizedDrawable.setBatteryLevel(level);
         mCircleDrawable.setBatteryLevel(level);
+        final boolean prevPlugged = mCharging;
         mCharging = pluggedIn;
         mLevel = level;
         updatePercentText();
-        if (pluggedIn) {
+        if (prevPlugged != pluggedIn) {
             updateShowPercent();
         }
     }
 
     void onPowerSaveChanged(boolean isPowerSave) {
+        mIsPowerSave = isPowerSave;
         mAccessorizedDrawable.setPowerSaveEnabled(isPowerSave);
         mCircleDrawable.setPowerSaveEnabled(isPowerSave);
+        updateShowPercent();
     }
 
     void onIsOverheatedChanged(boolean isOverheated) {
@@ -391,15 +395,18 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 
         final boolean showing = mBatteryPercentView != null;
         final boolean drawPercentInside = mShowPercentMode == MODE_DEFAULT &&
-                mBatteryShowPercent == 1;
-        final boolean drawPercentOnly = mShowPercentMode == MODE_ESTIMATE ||
-                mBatteryShowPercent == 2;
-        boolean shouldShow =
-                (drawPercentOnly && (!drawPercentInside || mCharging) ||
-                mBatteryStyle == BATTERY_STYLE_TEXT);
-        shouldShow = shouldShow && !mBatteryStateUnknown;
+                mBatteryShowPercent == 1 && !mCharging &&
+                (!mIsPowerSave || mBatteryStyle == BATTERY_STYLE_CIRCLE);
+        final boolean drawPercentOutside = mShowPercentMode == MODE_ESTIMATE ||
+                mBatteryShowPercent == 2 ||
+                mBatteryStyle == BATTERY_STYLE_TEXT ||
+                mCharging ||
+                (mIsPowerSave && mBatteryStyle == BATTERY_STYLE_PORTRAIT &&
+                mBatteryShowPercent != 0);
 
-        if (shouldShow) {
+        final boolean showOutside = drawPercentOutside && !mBatteryStateUnknown;
+
+        if (showOutside) {
             mAccessorizedDrawable.showPercent(false);
             mCircleDrawable.setShowPercent(false);
             if (!showing) {
