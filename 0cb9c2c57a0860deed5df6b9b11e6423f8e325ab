@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2d1a757_382eb97a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2009035
+      },
+      "writtenOn": "2023-06-21T22:34:49Z",
+      "side": 1,
+      "message": "If you\u0027re debugging PermissionControllerService on riscv64, I found it wasn\u0027t getting started at all. It gets put in mProcessesOnHold and that was never getting flushed (ActivityManagerService#finishBooting never got called).\n\nMy workaround was to set android:persistent\u003d\"true\" in PermissionController/AndroidManifest.xml, but I am sure this is not correct.",
+      "revId": "0cb9c2c57a0860deed5df6b9b11e6423f8e325ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
