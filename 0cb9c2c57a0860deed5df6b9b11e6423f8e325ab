@@ -16,6 +16,24 @@
       "message": "If you\u0027re debugging PermissionControllerService on riscv64, I found it wasn\u0027t getting started at all. It gets put in mProcessesOnHold and that was never getting flushed (ActivityManagerService#finishBooting never got called).\n\nMy workaround was to set android:persistent\u003d\"true\" in PermissionController/AndroidManifest.xml, but I am sure this is not correct.",
       "revId": "0cb9c2c57a0860deed5df6b9b11e6423f8e325ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9018a6d8_5a71a0a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1279898
+      },
+      "writtenOn": "2023-06-21T23:42:26Z",
+      "side": 1,
+      "message": "I am indeed! You may be interested in b/281589918 where I\u0027m dumping some more findings, I\u0027ve also found a hangup here in ServiceConnector where the timeout task isn\u0027t getting processed: aosp/2629381. The fix in Watchdog you\u0027ve found also seems relevant to the problem at hand.",
+      "parentUuid": "d2d1a757_382eb97a",
+      "revId": "0cb9c2c57a0860deed5df6b9b11e6423f8e325ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
