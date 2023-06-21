@@ -2486,6 +2486,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     void setBrightness(float brightnessValue) {
         // Update the setting, which will eventually call back into DPC to have us actually update
         // the display with the new value.
+        brightnessValue = MathUtils.min(brightnessValue, mHbmController.getCurrentBrightnessMax());
         mBrightnessSetting.setBrightness(brightnessValue);
     }
 
