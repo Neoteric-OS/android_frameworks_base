@@ -75,6 +75,10 @@ constructor(
     private val DIM_ALPHA = 0.3f
     private val TAG = "KeyguardQuickAffordanceViewBinder"
 
+    init {
+        KeyguardBottomAreaVibrations.vibratorHelper = vibratorHelper
+    }
+
     /**
      * Defines interface for an object that acts as the binding between the view and its view-model.
      */
