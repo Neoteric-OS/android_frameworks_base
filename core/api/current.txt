@@ -18557,6 +18557,7 @@ package android.hardware.fingerprint {
 package android.hardware.input {
 
   public final class InputManager {
+    method public boolean canDispatchToDisplay(int, int);
     method public android.view.InputDevice getInputDevice(int);
     method public int[] getInputDeviceIds();
     method @FloatRange(from=0, to=1) public float getMaximumObscuringOpacityForTouch();

@@ -165,4 +165,6 @@ interface IInputManager {
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(value = "
             + "android.Manifest.permission.MONITOR_INPUT)")
     void pilferPointers(IBinder inputChannelToken);
+
+    boolean canDispatchToDisplay(int deviceId, int displayId);
 }

@@ -1213,6 +1213,23 @@ public final class InputManager {
         }
     }
 
+   /**
+     * Gets if an input device could dispatch to the given display.
+     * @param deviceId The input device ID.
+     * @param displayId The specific display ID.
+     * @return True if the device could dispatch to the given display, false otherwise.
+     *
+     */
+    public boolean canDispatchToDisplay(int deviceId, int displayId) {
+        boolean result = false;
+        try {
+            result = mIm.canDispatchToDisplay(deviceId, displayId);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+        return result;
+    }
+
     /**
      * Changes the mouse pointer's icon shape into the specified id.
      *
