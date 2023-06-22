@@ -34,6 +34,24 @@
       "parentUuid": "d2d1a757_382eb97a",
       "revId": "0cb9c2c57a0860deed5df6b9b11e6423f8e325ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47222e79_930e458b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2009035
+      },
+      "writtenOn": "2023-06-22T00:46:30Z",
+      "side": 1,
+      "message": "Unfortunately, I don\u0027t have permission to access that bug report. I got far enough to note that PermissionPolicyService blocks system_server\u0027s main thread inside ActivityManagerService#systemReady, but the future cannot complete until ActivityManagerService#finishBooting is called. It seemed like a deadlock, not directly related to any timeout. Once I found a workaround, though, I did not dig further.\n\nI will see what effect aosp/2629381 has, and I\u0027m happy to test anything else that might remove the need for the workaround.",
+      "parentUuid": "9018a6d8_5a71a0a3",
+      "revId": "0cb9c2c57a0860deed5df6b9b11e6423f8e325ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
