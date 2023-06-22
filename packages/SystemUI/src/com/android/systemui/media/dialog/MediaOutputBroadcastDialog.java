@@ -25,6 +25,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -49,6 +52,8 @@ import com.android.systemui.res.R;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 
 import com.google.zxing.WriterException;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * Dialog for media output broadcast.
@@ -158,6 +163,19 @@ public class MediaOutputBroadcastDialog extends MediaOutputBaseDialog {
             Button positiveBtn = mAlertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
             if (positiveBtn != null) {
                 positiveBtn.setEnabled(breakRule ? false : true);
+            }
+        }
+    };
+
+    private InputFilter mInputFilter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end,
+                Spanned dest, int dstart, int dend) {
+            byte[] bytes = source.toString().getBytes(StandardCharsets.UTF_8);
+            if (bytes.length == source.length()) {
+                return source;
+            } else {
+                return "";
             }
         }
     };
@@ -434,8 +452,15 @@ public class MediaOutputBroadcastDialog extends MediaOutputBaseDialog {
                 R.layout.media_output_broadcast_update_dialog, null);
         final EditText editText = layout.requireViewById(R.id.broadcast_edit_text);
         editText.setText(editString);
-        editText.addTextChangedListener(
-                isBroadcastCode ? mBroadcastCodeTextWatcher : mBroadcastNameTextWatcher);
+        if (isBroadcastCode) {
+            final InputFilter[] filter = new InputFilter[] {mInputFilter};
+            editText.setFilters(filter);
+            editText.setInputType(InputType.TYPE_CLASS_TEXT
+                    | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            editText.addTextChangedListener(mBroadcastCodeTextWatcher);
+        } else {
+            editText.addTextChangedListener(mBroadcastNameTextWatcher);
+        }
         mBroadcastErrorMessage = layout.requireViewById(R.id.broadcast_error_message);
         mAlertDialog = new Builder(mContext)
                 .setTitle(isBroadcastCode ? R.string.media_output_broadcast_code
