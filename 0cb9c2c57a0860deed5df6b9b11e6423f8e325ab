@@ -52,6 +52,24 @@
       "parentUuid": "9018a6d8_5a71a0a3",
       "revId": "0cb9c2c57a0860deed5df6b9b11e6423f8e325ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "667aeb3e_22afeccf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1279898
+      },
+      "writtenOn": "2023-06-22T14:45:14Z",
+      "side": 1,
+      "message": "Ah, apologies - roughly what that bug finds is that there\u0027s other issues occurring in PermissionControllerManager:\n\n1) aosp/2629749, within PCM we\u0027re not honoring the hardware boot multiplier, so we\u0027re often not giving enough time for default grants to be applied.\n2) aosp/2629381, occasionally when it takes too long, the system should at least recover by restarting zygote, but it currently doesn\u0027t - this CL fixes an issue where we block the main thread and never run the timeout handler.",
+      "parentUuid": "47222e79_930e458b",
+      "revId": "0cb9c2c57a0860deed5df6b9b11e6423f8e325ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
