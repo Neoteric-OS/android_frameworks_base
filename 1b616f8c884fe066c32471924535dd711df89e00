@@ -142,6 +142,30 @@
       },
       "revId": "1b616f8c884fe066c32471924535dd711df89e00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43feadef_0c1bb33a",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2023-06-23T08:55:48Z",
+      "side": 1,
+      "message": "From the above comments, it looks like there can be 3 outputs (at the same time?):\n```\n1) Multi-channel PCM, which will be the source for the TV speaker output. Depending on the TV’s system logic, the decoder can be configured to output from 2.0 to 7.1.4 PCM.\n2) Bitstream transcoder path for digital output through HDMI ARC/eARC or S/PDIF.\n3) Stereo PCM path for analog lineout(line out/aux out/headphone out)\n```\nShall I understand that 1 and 3 share the same parameters (main) and 2 has the transcode ones? Can they all be active at the same time and with different configurations?",
+      "parentUuid": "5c85620f_1585c9ea",
+      "range": {
+        "startLine": 1051,
+        "startChar": 52,
+        "endLine": 1051,
+        "endChar": 71
+      },
+      "revId": "1b616f8c884fe066c32471924535dd711df89e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
