@@ -166,6 +166,30 @@
       },
       "revId": "1b616f8c884fe066c32471924535dd711df89e00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "362d91df_2dd6d3ee",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1938941
+      },
+      "writtenOn": "2023-06-23T11:23:15Z",
+      "side": 1,
+      "message": "The implementation of these config parameters inside the DTS decoder aligns with Jean-Miche\u0027s suggestion. Prior to setting each config param, we need to select the output bus(main, transcode, stereo).\n\ni.e.\nselectOutputBus(BUS_0)\nsetConfigParam(PARAM_1, value_1)\n...\nselectOutputBus(BUS_1)\nsetConfigParam(PRAMA_1, value_2)\n\nBut I haven\u0027t followed the same approach on the Android frameworks side as the application may need to take care of the output bus selection prior to setting each of the params.\nI could modify the current implementation if it becomes more user-friendly and easily maintainable. \n\nThe all three output buses could be active at the same time. Also, it is possible to disable the unused output bus. By default, transcode and stereo output buses are disabled.\n\nNone of the config parameters are shared between the output buses. At the moment, I have added config support for the \u0027main\u0027 and \u0027transcode\u0027.\nThe config support for the \u0027stereo\u0027 output needs to be added.",
+      "parentUuid": "43feadef_0c1bb33a",
+      "range": {
+        "startLine": 1051,
+        "startChar": 52,
+        "endLine": 1051,
+        "endChar": 71
+      },
+      "revId": "1b616f8c884fe066c32471924535dd711df89e00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
