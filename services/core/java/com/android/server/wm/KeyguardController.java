@@ -164,7 +164,8 @@ class KeyguardController {
      * Update the Keyguard showing state.
      */
     void setKeyguardShown(int displayId, boolean keyguardShowing, boolean aodShowing) {
-        if (mRootWindowContainer.getDisplayContent(displayId).isKeyguardAlwaysUnlocked()) {
+        final DisplayContent dc = mRootWindowContainer.getDisplayContent(displayId);
+        if (dc.isKeyguardAlwaysUnlocked()) {
             Slog.i(TAG, "setKeyguardShown ignoring always unlocked display " + displayId);
             return;
         }
@@ -199,7 +200,8 @@ class KeyguardController {
         //   handle the snapshot.
         // - The display state is ON. Because if AOD is not on or pulsing, the display state will
         //   be OFF or DOZE (the path of screen off may have handled it).
-        if (((aodShowing ^ keyguardShowing) || (aodShowing && aodChanged && keyguardChanged))
+        if (dc.isDefaultDisplay
+                && ((aodShowing ^ keyguardShowing) || (aodShowing && aodChanged && keyguardChanged))
                 && !state.mKeyguardGoingAway && Display.isOnState(
                         mRootWindowContainer.getDefaultDisplay().getDisplayInfo().state)) {
             mWindowManager.mTaskSnapshotController.snapshotForSleeping(DEFAULT_DISPLAY);
