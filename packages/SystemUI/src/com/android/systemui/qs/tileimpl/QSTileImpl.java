@@ -425,10 +425,14 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
      * @param view The view from which the opening window will be animated.
      */
     protected void handleLongClick(@Nullable View view) {
+        final Intent intent = getLongClickIntent();
+        if (intent == null) {
+            return;
+        }
         ActivityLaunchAnimator.Controller animationController =
                 view != null ? ActivityLaunchAnimator.Controller.fromView(view,
                         InteractionJankMonitor.CUJ_SHADE_APP_LAUNCH_FROM_QS_TILE) : null;
-        mActivityStarter.postStartActivityDismissingKeyguard(getLongClickIntent(), 0,
+        mActivityStarter.postStartActivityDismissingKeyguard(intent, 0,
                 animationController);
     }
 

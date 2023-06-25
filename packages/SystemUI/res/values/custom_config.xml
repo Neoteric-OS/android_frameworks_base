@@ -1,4 +1,8 @@
 <resources>
     <!-- If not zero, limits the internal screen recorder's framerate to the set value. -->
     <integer name="config_screenRecorderMaxFramerate">0</integer>
+
+    <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
+    <string name="quick_settings_tiles_extra" translatable="false">
+    </string>
 </resources>
