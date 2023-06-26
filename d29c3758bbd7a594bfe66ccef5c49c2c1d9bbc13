@@ -38,6 +38,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "333f3050_57738880",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2023-06-26T12:19:04Z",
+      "side": 1,
+      "message": "Can someone please update the OWNERS files ? This shouldn\u0027t have to come to me for approval",
+      "revId": "d29c3758bbd7a594bfe66ccef5c49c2c1d9bbc13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3deb4d9e_7d934136",
         "filename": "core/java/com/android/internal/infra/ServiceConnector.java",
         "patchSetId": 2
