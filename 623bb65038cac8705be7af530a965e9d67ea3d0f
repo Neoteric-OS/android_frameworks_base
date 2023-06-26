@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "827590e0_39e99428",
+        "filename": "services/core/java/com/android/server/wm/KeyguardController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 2016083
+      },
+      "writtenOn": "2023-06-26T08:57:31Z",
+      "side": 1,
+      "message": "Updated as per comment",
+      "parentUuid": "3a423124_569c41ca",
+      "revId": "623bb65038cac8705be7af530a965e9d67ea3d0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1baaa588_e933b24a",
@@ -73,6 +91,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "1baaa588_e933b24a",
+      "range": {
+        "startLine": 202,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 91
+      },
+      "revId": "623bb65038cac8705be7af530a965e9d67ea3d0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dec53ef_5deeda52",
+        "filename": "services/core/java/com/android/server/wm/KeyguardController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 2016083
+      },
+      "writtenOn": "2023-06-26T08:57:31Z",
+      "side": 1,
+      "message": "Updated as per comment",
+      "parentUuid": "b848af4d_a7eef9cb",
       "range": {
         "startLine": 202,
         "startChar": 8,
