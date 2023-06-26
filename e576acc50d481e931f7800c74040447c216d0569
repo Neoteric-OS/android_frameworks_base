@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b0e7065_2f6053cf",
+        "filename": "services/core/java/com/android/server/wm/KeyguardController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-06-26T10:18:36Z",
+      "side": 1,
+      "message": "Sorry it has conflict with internal branch, please change here to\n`displayId \u003d\u003d DEFAULT_DISPLAY` and restore 167,168 to avoid that.",
+      "range": {
+        "startLine": 203,
+        "startChar": 12,
+        "endLine": 203,
+        "endChar": 31
+      },
+      "revId": "e576acc50d481e931f7800c74040447c216d0569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
