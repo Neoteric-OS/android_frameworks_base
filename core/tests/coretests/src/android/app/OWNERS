@@ -7,3 +7,6 @@ per-file *StatusBar* = file:/packages/SystemUI/OWNERS
 
 # A11Y and related
 per-file *UiAutomation* = file:/services/accessibility/OWNERS
+
+# KeyguardManager
+per-file KeyguardManager*.java = file:/services/core/java/com/android/server/locksettings/OWNERS
