@@ -170,6 +170,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "660e9f15_852ca0f1",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-06-27T07:41:37Z",
+      "side": 1,
+      "message": "I think I am still confused why this happens. So the sequence is:\n1) We queue H_VOLUME_UNMOUNT and H_VOLUME_MOUNT to the handler\n2) The handler picks up H_VOLUME_UNMOUNT and calls mVold.unmount()\n3) vold unmounts, tells us the volume state has changed, and we queue H_VOLUME_BROADCAST\n4) Meanwhile, we handle H_VOLUME_MOUNT, update the userId, then call mVold.mount()\n5) vold mounts, tells us the volume state has changed, and we queue another H_VOLUME_BROADCAST (or 2, really)\n6) The H_VOLUME_BROADCAST for unmounted is handled, it is sent with wrong userId\n7) The H_VOLUME_BROADCAST for checking/mounted are handled, they are sent with the correct userId\n\nI think I agree 6) is wrong with the current code. But, I think I don\u0027t understand why serializing the mount user id update between _UNMOUNT and _MOUNT fixes this. We will still update the mountUserId before handling the unmount H_VOLUME_BROADCAST, right?\n\nSo I think you\u0027re probably talking about another sequence, or I am missing something else.",
+      "parentUuid": "8f8e3ef2_c5a2550e",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
