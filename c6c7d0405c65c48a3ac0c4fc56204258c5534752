@@ -51,6 +51,23 @@
       "parentUuid": "db34d5ed_7e0426b2",
       "revId": "c6c7d0405c65c48a3ac0c4fc56204258c5534752",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2873517_e99ccbb9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2023-06-28T02:20:32Z",
+      "side": 1,
+      "message": "@schfan@google.com, does the change can auto cherry pick to u-fs branch? if can not, I can cherry pick by myself when this change merged",
+      "revId": "c6c7d0405c65c48a3ac0c4fc56204258c5534752",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
