@@ -194,6 +194,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3839a1f3_0e005cf1",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-06-28T12:17:29Z",
+      "side": 1,
+      "message": "Yes, you are right. I am talking about the same sequence.\nThe problem is we use the same VolumeInfo reference which is stored in mVolumes, so in IVoldListener#onVolumeStateChanged (Ref: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/StorageManagerService.java;l\u003d1473?q\u003dStorageManagerService\u0026ss\u003dandroid%2Fplatform%2Fsuperproject), the VolumeInfos are fetched from the mVolumes. So we if update the reference for particular volId, then the member variable values (which includes mountUserId) also change.\nAnd if Line#1473 is executed before actually the values are supposed to change, then the broadcasts will be sent for wrong values for a Volume.\nWe have to find a better way of solving the issue",
+      "parentUuid": "660e9f15_852ca0f1",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
