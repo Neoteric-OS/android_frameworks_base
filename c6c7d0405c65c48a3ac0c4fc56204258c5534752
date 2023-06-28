@@ -33,6 +33,24 @@
       "message": "Fix LGTM, but could you please comment in the bug how to reproduce the bug? It\u0027s unclear to me how we have a null `pa` in the list.",
       "revId": "c6c7d0405c65c48a3ac0c4fc56204258c5534752",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abbd9fca_be346e26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2023-06-28T02:18:10Z",
+      "side": 1,
+      "message": "We can\u0027t reproduce this problem at present, so we cannot explain the reason, so we add NPE protection. This problem occurs in the internal MTBF test, and only 2 cases appear.\nCould you help me submit， it looks like something error via auto-submit.thanks.",
+      "parentUuid": "db34d5ed_7e0426b2",
+      "revId": "c6c7d0405c65c48a3ac0c4fc56204258c5534752",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
