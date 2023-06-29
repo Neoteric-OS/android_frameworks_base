@@ -218,6 +218,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8d2645a_d1291b5e",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-06-29T16:48:04Z",
+      "side": 1,
+      "message": "I have solution in mind, please let me know if that works.\nSo our main problem is to send the correct broadcast to the correct user, and trigger point of that is in IVoldListener#onVolumeChanged.\nAt Line#1477 we create a copy of VolumeInfo which is used for broadcast.\nWhat I have in my mind is if we can add userId as an extra parameter in IVoldListener#onVolumeChanged and update the copy, then we won\u0027t run into this problem (as the reference in mVolumes stays unchanged). Also, in this way we can keep maybeRemountVolumes unchanged and still resolve the issue.",
+      "parentUuid": "3839a1f3_0e005cf1",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
