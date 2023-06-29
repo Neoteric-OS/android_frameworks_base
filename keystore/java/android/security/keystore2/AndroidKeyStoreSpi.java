@@ -913,6 +913,15 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
                         padding
                 ));
             }
+            if (padding == KeymasterDefs.KM_PAD_RSA_OAEP) {
+                /* Add default MGF1 digest SHA-1*/
+                if (spec.isDigestsSpecified()) {
+                    args.add(KeyStore2ParameterUtils.makeEnum(
+                            KeymasterDefs.KM_TAG_RSA_OAEP_MGF_DIGEST,
+                            KeyProperties.Digest.toKeymaster(DEFAULT_MGF1_DIGEST)
+                    ));
+                }
+            }
         }
 
         KeyGenParameterSpec spec = (KeyGenParameterSpec) entry.getAlgorithmParameterSpec();
