@@ -16,6 +16,23 @@
       "message": "Please review this fix.",
       "revId": "50cf7b3722b8649d5e34ed090aaee4a9a00e3a2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "337f0ad8_e39d5e89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-06-29T10:44:54Z",
+      "side": 1,
+      "message": "Please review this small fix or invite somebody for code review. When I click \"Suggest owners\" only one person is displayed in the list and I have added him already.",
+      "revId": "50cf7b3722b8649d5e34ed090aaee4a9a00e3a2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
