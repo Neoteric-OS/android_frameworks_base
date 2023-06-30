@@ -1284,6 +1284,7 @@ public class Build {
      *
      * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static final int HW_TIMEOUT_MULTIPLIER =
         SystemProperties.getInt("ro.hw_timeout_multiplier", 1);
 

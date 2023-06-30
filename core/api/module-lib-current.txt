@@ -353,6 +353,7 @@ package android.os {
 
   public class Build {
     method public static boolean isDebuggable();
+    field public static final int HW_TIMEOUT_MULTIPLIER;
   }
 
   public static class Build.VERSION {
