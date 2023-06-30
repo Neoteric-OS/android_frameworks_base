@@ -33,6 +33,24 @@
       "message": "Now that this is gone, do we still need the test?\n\nhttps://source.corp.google.com/h/googleplex-android/platform/superproject/+/master:frameworks/base/core/tests/coretests/src/android/content/BrickDeniedTest.java;l\u003d30",
       "revId": "ba3209d6d58f6f460641b0b97fe52a68df8b96dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37ff3c74_b6ada53e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-06-30T22:14:19Z",
+      "side": 1,
+      "message": "Good catch, removed. I tried to track down the history but it\u0027s been a *very* long time since this was wired up into the manifest.",
+      "parentUuid": "13b2ca45_c7840fe3",
+      "revId": "ba3209d6d58f6f460641b0b97fe52a68df8b96dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
