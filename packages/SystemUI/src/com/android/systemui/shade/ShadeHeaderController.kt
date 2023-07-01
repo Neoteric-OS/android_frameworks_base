@@ -30,8 +30,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Trace
 import android.os.Trace.TRACE_TAG_APP
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.util.Pair
@@ -104,7 +102,7 @@ constructor(
     private val demoModeController: DemoModeController,
     private val qsBatteryModeController: QsBatteryModeController,
     private val activityStarter: ActivityStarter,
-) : ViewController<View>(header), Dumpable, View.OnClickListener, View.OnLongClickListener {
+) : ViewController<View>(header), Dumpable, View.OnClickListener {
 
     companion object {
         /** IDs for transitions and constraints for the [MotionLayout]. */
@@ -134,7 +132,6 @@ constructor(
     private val date: TextView = header.findViewById(R.id.date)
     private val iconContainer: StatusIconContainer = header.findViewById(R.id.statusIcons)
     private val qsCarrierGroup: QSCarrierGroup = header.findViewById(R.id.carrier_group)
-    private val vibrator: Vibrator = header.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
     private var sbPaddingLeft = 0
     private var sbPaddingRight = 0
@@ -315,18 +312,6 @@ constructor(
             activityStarter.postStartActivityDismissingKeyguard(Intent(
                     Intent.ACTION_POWER_USAGE_SUMMARY), 0)
         }
-    }
-
-    override fun onLongClick(v: View): Boolean {
-        if (v == clock || v == date) {
-            val nIntent: Intent = Intent(Intent.ACTION_MAIN)
-            nIntent.setClassName("com.android.settings",
-                    "com.android.settings.Settings\$DateTimeSettingsActivity")
-            activityStarter.startActivity(nIntent, true /* dismissShade */)
-            vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
-            return true
-        }
-        return false
     }
 
     override fun onViewAttached() {
