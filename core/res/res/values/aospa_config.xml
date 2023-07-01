@@ -114,7 +114,4 @@
     <!-- Whether usage of the proximity sensor during doze is supported -->
     <bool name="config_doze_proximity_sensor_supported">true</bool>
 
-    <!-- Whether to use Richtap vibration -->
-    <bool name="config_usesRichtapVibration">false</bool>
-
 </resources>
