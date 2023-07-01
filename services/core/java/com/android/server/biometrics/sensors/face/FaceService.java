@@ -26,7 +26,6 @@ import android.annotation.Nullable;
 import android.content.Context;
 import android.hardware.biometrics.BiometricManager;
 import android.hardware.biometrics.BiometricsProtoEnums;
-import android.hardware.biometrics.SensorProperties;
 import android.hardware.biometrics.IBiometricSensorReceiver;
 import android.hardware.biometrics.IBiometricService;
 import android.hardware.biometrics.IBiometricServiceLockoutResetCallback;
@@ -36,7 +35,6 @@ import android.hardware.biometrics.ITestSessionCallback;
 import android.hardware.biometrics.face.IFace;
 import android.hardware.biometrics.face.SensorProps;
 import android.hardware.face.Face;
-import android.hardware.face.FaceSensorProperties;
 import android.hardware.face.FaceSensorPropertiesInternal;
 import android.hardware.face.FaceServiceReceiver;
 import android.hardware.face.IFaceService;
@@ -65,8 +63,6 @@ import com.android.server.biometrics.sensors.LockoutResetDispatcher;
 import com.android.server.biometrics.sensors.LockoutTracker;
 import com.android.server.biometrics.sensors.face.aidl.FaceProvider;
 import com.android.server.biometrics.sensors.face.hidl.Face10;
-import com.android.server.biometrics.sensors.face.sense.SenseProvider;
-import com.android.server.biometrics.sensors.face.sense.SenseUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -651,22 +647,6 @@ public class FaceService extends SystemService {
             }
         }
 
-        private void addSenseProvider() {
-            if (SenseUtils.canUseProvider()) {
-                FaceSensorPropertiesInternal props = new FaceSensorPropertiesInternal(
-                        SenseProvider.DEVICE_ID,
-                        SensorProperties.STRENGTH_WEAK,
-                        1, /** maxEnrollmentsPerUser **/
-                        new ArrayList(),
-                        FaceSensorProperties.TYPE_RGB,
-                        false, /** supportsFaceDetection **/
-                        false, /** supportsSelfIllumination **/
-                        false); /** resetLockoutRequiresChallenge **/
-                SenseProvider provider = new SenseProvider(getContext(), props, mLockoutResetDispatcher);
-                mServiceProviders.add(provider);
-            }
-        }
-
         @Override // Binder call
         public void registerAuthenticators(
                 @NonNull List<FaceSensorPropertiesInternal> hidlSensors) {
@@ -684,7 +664,6 @@ public class FaceService extends SystemService {
             handler.post(() -> {
                 addHidlProviders(hidlSensors);
                 addAidlProviders();
-                addSenseProvider();
 
                 final IBiometricService biometricService = IBiometricService.Stub.asInterface(
                         ServiceManager.getService(Context.BIOMETRIC_SERVICE));
