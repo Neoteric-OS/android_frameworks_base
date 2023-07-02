@@ -315,6 +315,13 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     // Number of animating rows
     private int mAnimatingRows = 0;
 
+    private boolean mSeparateNotification;
+
+    @VisibleForTesting
+    int mVolumeRingerIconDrawableId;
+    @VisibleForTesting
+    int mVolumeRingerMuteIconDrawableId;
+
     public VolumeDialogImpl(
             Context context,
             VolumeDialogController volumeDialogController,
