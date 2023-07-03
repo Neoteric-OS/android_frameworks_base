@@ -116,7 +116,7 @@ public class MediaOutputBroadcastDialog extends MediaOutputBaseDialog {
                 mBroadcastErrorMessage.setText(
                         mContext.getResources().getString(
                                 R.string.media_output_broadcast_edit_hint_no_more_than_max,
-                                BROADCAST_CODE_MAX_LENGTH));
+                                BROADCAST_CODE_MAX_LENGTH + 1));
             }
 
             mBroadcastErrorMessage.setVisibility(breakRule ? View.VISIBLE : View.INVISIBLE);
@@ -151,7 +151,7 @@ public class MediaOutputBroadcastDialog extends MediaOutputBaseDialog {
                 mBroadcastErrorMessage.setText(
                         mContext.getResources().getString(
                                 R.string.media_output_broadcast_edit_hint_no_more_than_max,
-                                BROADCAST_NAME_MAX_LENGTH));
+                                BROADCAST_NAME_MAX_LENGTH + 1));
             }
             mBroadcastErrorMessage.setVisibility(
                     breakBroadcastNameRuleTextLengthMoreThanMax ? View.VISIBLE : View.INVISIBLE);
