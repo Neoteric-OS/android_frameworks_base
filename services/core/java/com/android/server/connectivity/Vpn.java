@@ -2840,6 +2840,7 @@ public class Vpn {
 
         mVpnRunner.exit();
         mVpnRunner = null;
+        mConfig = null;
 
         // LegacyVpn uses daemons that must be shut down before new ones are brought up.
         // The same limitation does not apply to Platform VPNs.
@@ -4220,7 +4221,7 @@ public class Vpn {
          * consistency of the Ikev2VpnRunner fields.
          */
         private void disconnectVpnRunner() {
-            mEventChanges.log("[VPNRunner] Disconnect runner, underlying network" + mActiveNetwork);
+            mEventChanges.log("[VPNRunner] Disconnect runner, underlying net " + mActiveNetwork);
             mActiveNetwork = null;
             mUnderlyingNetworkCapabilities = null;
             mUnderlyingLinkProperties = null;
@@ -4805,6 +4806,7 @@ public class Vpn {
                     mVpnRunner.start();
                     break;
                 default:
+                    mConfig = null;
                     updateState(DetailedState.FAILED, "Invalid platform VPN type");
                     Log.d(TAG, "Unknown VPN profile type: " + profile.type);
                     break;
