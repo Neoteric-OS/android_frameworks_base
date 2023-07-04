@@ -75,6 +75,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 import javax.crypto.Mac;
 
 /**
@@ -290,6 +291,15 @@ public class FingerprintManager implements BiometricAuthenticator, BiometricFing
          */
         public PresentationSession getPresentationSession() {
             return super.getPresentationSession();
+        }
+
+        /**
+         * Get {@link KeyAgreement} object.
+         * @return {@link KeyAgreement} object or null if this doesn't contain one.
+         * @hide
+         */
+        public KeyAgreement getKeyAgreement() {
+            return super.getKeyAgreement();
         }
     }
 
