@@ -53,6 +53,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 import javax.crypto.Mac;
 
 /**
@@ -680,7 +681,7 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
      * A wrapper class for the cryptographic operations supported by BiometricPrompt.
      *
      * <p>Currently the framework supports {@link Signature}, {@link Cipher}, {@link Mac},
-     * {@link IdentityCredential}, and {@link PresentationSession}.
+     * {@link IdentityCredential}, {@link PresentationSession} and {@link KeyAgreement}.
      *
      * <p>Cryptographic operations in Android can be split into two categories: auth-per-use and
      * time-based. This is specified during key creation via the timeout parameter of the
@@ -725,6 +726,10 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
             super(session);
         }
 
+        public CryptoObject(@NonNull KeyAgreement keyAgreement) {
+            super(keyAgreement);
+        }
+
         /**
          * Get {@link Signature} object.
          * @return {@link Signature} object or null if this doesn't contain one.
@@ -765,6 +770,14 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
          */
         public @Nullable PresentationSession getPresentationSession() {
             return super.getPresentationSession();
+        }
+
+        /**
+         * Get {@link KeyAgreement} object.
+         * @return {@link KeyAgreement} object or null if this doesn't contain one.
+         */
+        public @Nullable KeyAgreement getKeyAgreement() {
+            return super.getKeyAgreement();
         }
     }
 

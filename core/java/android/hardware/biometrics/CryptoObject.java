@@ -24,6 +24,7 @@ import android.security.keystore2.AndroidKeyStoreProvider;
 import java.security.Signature;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 import javax.crypto.Mac;
 
 /**
@@ -60,6 +61,10 @@ public class CryptoObject {
 
     public CryptoObject(@NonNull PresentationSession session) {
         mCrypto = session;
+    }
+
+    public CryptoObject(@NonNull KeyAgreement keyAgreement) {
+        mCrypto = keyAgreement;
     }
 
     /**
@@ -102,6 +107,14 @@ public class CryptoObject {
      */
     public PresentationSession getPresentationSession() {
         return mCrypto instanceof PresentationSession ? (PresentationSession) mCrypto : null;
+    }
+
+    /**
+     * Get {@link PresentationSession} object.
+     * @return {@link PresentationSession} object or null if this doesn't contain one.
+     */
+    public KeyAgreement getKeyAgreement() {
+        return mCrypto instanceof KeyAgreement ? (KeyAgreement) mCrypto : null;
     }
 
     /**
