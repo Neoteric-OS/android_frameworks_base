@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9452d64_82a3dfb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2023-07-05T17:49:34Z",
+      "side": 1,
+      "message": "Mobile data toggle seems to be a toggle controlled from multiple ui entries (ex: Settings is another place) within Android.\n\nFrom my understanding, this change seems focusing on the changes made by the end user from system ui part and remove (or maybe redesign) the monitoring of the changes from other parties.\n\nThis looks to me a good idea since it simplify the design and easier to maintain. However, is it possible to share some other changes or information which in related or companion to this one as a reference? Thanks.",
+      "revId": "7ac7f88b94882811026c156e3b60eba3c0af8c40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
