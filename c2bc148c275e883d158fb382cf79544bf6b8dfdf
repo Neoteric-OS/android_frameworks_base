@@ -16,6 +16,24 @@
       "message": "Gerrit says I don\u0027t have permission to submit this change, so I don\u0027t know what to do with this.  Can someone else try submitting it?",
       "revId": "c2bc148c275e883d158fb382cf79544bf6b8dfdf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64788f39_192b38da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-07-06T22:08:32Z",
+      "side": 1,
+      "message": "The problem mysteriously went away.",
+      "parentUuid": "10e76db8_f73c177c",
+      "revId": "c2bc148c275e883d158fb382cf79544bf6b8dfdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
