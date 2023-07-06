@@ -18,6 +18,8 @@ package com.android.keyguard;
 
 import static android.hardware.biometrics.BiometricSourceType.FINGERPRINT;
 
+import static android.os.CustomVibrationAttributes.VIBRATION_ATTRIBUTES_FINGERPRINT;
+
 import static com.android.keyguard.LockIconView.ICON_FINGERPRINT;
 import static com.android.keyguard.LockIconView.ICON_LOCK;
 import static com.android.keyguard.LockIconView.ICON_UNLOCK;
@@ -33,7 +35,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.AnimatedStateListDrawable;
 import android.hardware.biometrics.BiometricSourceType;
 import android.os.Process;
-import android.os.VibrationAttributes;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.MathUtils;
@@ -88,8 +89,6 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
     private static final float sDefaultDensity =
             (float) DisplayMetrics.DENSITY_DEVICE_STABLE / (float) DisplayMetrics.DENSITY_DEFAULT;
     private static final int sLockIconRadiusPx = (int) (sDefaultDensity * 36);
-    private static final VibrationAttributes TOUCH_VIBRATION_ATTRIBUTES =
-            VibrationAttributes.createForUsage(VibrationAttributes.USAGE_TOUCH);
 
     private final long mLongPressTimeout;
     @NonNull private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
@@ -619,15 +618,6 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
         switch(event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_HOVER_ENTER:
-                if (!mDownDetected && mAccessibilityManager.isTouchExplorationEnabled()) {
-                    mVibrator.vibrate(
-                            Process.myUid(),
-                            getContext().getOpPackageName(),
-                            UdfpsController.EFFECT_CLICK,
-                            "lock-icon-down",
-                            TOUCH_VIBRATION_ATTRIBUTES);
-                }
-
                 // The pointer that causes ACTION_DOWN is always at index 0.
                 // We need to persist its ID to track it during ACTION_MOVE that could include
                 // data for many other pointers because of multi-touch support.
@@ -712,7 +702,7 @@ public class LockIconViewController extends ViewController<LockIconView> impleme
                 getContext().getOpPackageName(),
                 UdfpsController.EFFECT_CLICK,
                 "lock-screen-lock-icon-longpress",
-                TOUCH_VIBRATION_ATTRIBUTES);
+                VIBRATION_ATTRIBUTES_FINGERPRINT);
 
         mKeyguardViewController.showPrimaryBouncer(/* scrim */ true);
     }

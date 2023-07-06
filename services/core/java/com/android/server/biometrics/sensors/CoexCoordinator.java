@@ -68,6 +68,7 @@ public class CoexCoordinator {
          * Requests the owner to initiate a vibration for this event.
          */
         void sendHapticFeedback();
+        void sendHapticFeedback(boolean isFace);
 
         /**
          * Requests the owner to handle the AuthenticationClient's lifecycle (e.g. finish and remove
@@ -217,7 +218,7 @@ public class CoexCoordinator {
             if (!isUsingSingleModality && hasMultipleSuccessfulAuthentications()) {
                 // only send feedback on the first one
             } else {
-                callback.sendHapticFeedback();
+                callback.sendHapticFeedback(!isCurrentUdfps(client));
             }
             // For BP, BiometricService will add the authToken to Keystore.
             callback.sendAuthenticationResult(false /* addAuthTokenIfStrong */);
@@ -232,7 +233,7 @@ public class CoexCoordinator {
         } else if (mAdvancedLogicEnabled && client.isKeyguard()) {
             if (isUsingSingleModality) {
                 // Single sensor authentication
-                callback.sendHapticFeedback();
+                callback.sendHapticFeedback(!isCurrentUdfps(client));
                 callback.sendAuthenticationResult(true /* addAuthTokenIfStrong */);
                 callback.handleLifecycleAfterAuth();
             } else {
@@ -251,7 +252,7 @@ public class CoexCoordinator {
                         if (mFaceHapticDisabledWhenNonBypass && !face.isKeyguardBypassEnabled()) {
                             Slog.w(TAG, "Skipping face success haptic");
                         } else {
-                            callback.sendHapticFeedback();
+                            callback.sendHapticFeedback(true);
                         }
                         callback.sendAuthenticationResult(true /* addAuthTokenIfStrong */);
                         callback.handleLifecycleAfterAuth();
@@ -270,7 +271,7 @@ public class CoexCoordinator {
                     callback.handleLifecycleAfterAuth();
                 } else {
                     // Capacitive fingerprint sensor (or other)
-                    callback.sendHapticFeedback();
+                    callback.sendHapticFeedback(true);
                     callback.sendAuthenticationResult(true /* addAuthTokenIfStrong */);
                     callback.handleLifecycleAfterAuth();
                 }
@@ -278,7 +279,7 @@ public class CoexCoordinator {
         } else {
             // Non-keyguard authentication. For example, Fingerprint Settings use of
             // FingerprintManager for highlighting fingers
-            callback.sendHapticFeedback();
+            callback.sendHapticFeedback(!isCurrentUdfps(client));
             callback.sendAuthenticationResult(true /* addAuthTokenIfStrong */);
             callback.handleLifecycleAfterAuth();
         }
@@ -295,35 +296,14 @@ public class CoexCoordinator {
 
         if (mAdvancedLogicEnabled && client.isKeyguard()) {
             if (isUsingSingleModality) {
-                callback.sendHapticFeedback();
+                callback.sendHapticFeedback(!isCurrentUdfps(client));
                 callback.handleLifecycleAfterAuth();
             } else {
                 // Multi sensor authentication
                 AuthenticationClient<?> udfps = mClientMap.getOrDefault(SENSOR_TYPE_UDFPS, null);
                 AuthenticationClient<?> face = mClientMap.getOrDefault(SENSOR_TYPE_FACE, null);
                 if (isCurrentFaceAuth(client)) {
-                    if (isUdfpsActivelyAuthing(udfps)) {
-                        // UDFPS should still be running in this case, do not vibrate. However, we
-                        // should notify the callback and finish the client, so that Keyguard and
-                        // BiometricScheduler do not get stuck.
-                        Slog.d(TAG, "Face rejected in multi-sensor auth, udfps: " + udfps);
-                        callback.handleLifecycleAfterAuth();
-                    } else if (isUdfpsAuthAttempted(udfps)) {
-                        // If UDFPS is STATE_STARTED_PAUSED (e.g. finger rejected but can still
-                        // auth after pointer goes down, it means UDFPS encountered a rejection. In
-                        // this case, we need to play the final reject haptic since face auth is
-                        // also done now.
-                        callback.sendHapticFeedback();
-                        callback.handleLifecycleAfterAuth();
-                    } else {
-                        // UDFPS auth has never been attempted.
-                        if (mFaceHapticDisabledWhenNonBypass && !face.isKeyguardBypassEnabled()) {
-                            Slog.w(TAG, "Skipping face reject haptic");
-                        } else {
-                            callback.sendHapticFeedback();
-                        }
-                        callback.handleLifecycleAfterAuth();
-                    }
+                    callback.handleLifecycleAfterAuth();
                 } else if (isCurrentUdfps(client)) {
                     // Face should either be running, or have already finished
                     SuccessfulAuth auth = popSuccessfulFaceAuthIfExists(currentTimeMillis);
@@ -341,17 +321,11 @@ public class CoexCoordinator {
                     }
                 } else {
                     Slog.d(TAG, "Unknown client rejected: " + client);
-                    callback.sendHapticFeedback();
                     callback.handleLifecycleAfterAuth();
                 }
             }
-        } else if (client.isBiometricPrompt() && !isUsingSingleModality) {
-            if (!isCurrentFaceAuth(client)) {
-                callback.sendHapticFeedback();
-            }
-            callback.handleLifecycleAfterAuth();
         } else {
-            callback.sendHapticFeedback();
+            callback.sendHapticFeedback(!isCurrentUdfps(client));
             callback.handleLifecycleAfterAuth();
         }
 
@@ -370,50 +344,6 @@ public class CoexCoordinator {
      */
     public void onAuthenticationError(@NonNull AuthenticationClient<?> client,
             @BiometricConstants.Errors int error, @NonNull ErrorCallback callback) {
-        final boolean isUsingSingleModality = isSingleAuthOnly(client);
-
-        // Figure out non-coex state
-        final boolean shouldUsuallyVibrate;
-        if (isCurrentFaceAuth(client)) {
-            final boolean notDetectedOnKeyguard = client.isKeyguard() && !client.wasUserDetected();
-            final boolean authAttempted = client.wasAuthAttempted();
-
-            switch (error) {
-                case BiometricConstants.BIOMETRIC_ERROR_TIMEOUT:
-                case BiometricConstants.BIOMETRIC_ERROR_LOCKOUT:
-                case BiometricConstants.BIOMETRIC_ERROR_LOCKOUT_PERMANENT:
-                    shouldUsuallyVibrate = authAttempted && !notDetectedOnKeyguard;
-                    break;
-                default:
-                    shouldUsuallyVibrate = false;
-                    break;
-            }
-        } else {
-            shouldUsuallyVibrate = false;
-        }
-
-        // Figure out coex state
-        final boolean hapticSuppressedByCoex;
-        if (mAdvancedLogicEnabled && client.isKeyguard()) {
-            if (isUsingSingleModality) {
-                hapticSuppressedByCoex = false;
-            } else {
-                hapticSuppressedByCoex = isCurrentFaceAuth(client)
-                        && !client.isKeyguardBypassEnabled();
-            }
-        } else if (client.isBiometricPrompt() && !isUsingSingleModality) {
-            hapticSuppressedByCoex = isCurrentFaceAuth(client);
-        } else {
-            hapticSuppressedByCoex = false;
-        }
-
-        // Combine and send feedback if appropriate
-        if (shouldUsuallyVibrate && !hapticSuppressedByCoex) {
-            callback.sendHapticFeedback();
-        } else {
-            Slog.v(TAG, "no haptic shouldUsuallyVibrate: " + shouldUsuallyVibrate
-                    + ", hapticSuppressedByCoex: " + hapticSuppressedByCoex);
-        }
     }
 
     @Nullable

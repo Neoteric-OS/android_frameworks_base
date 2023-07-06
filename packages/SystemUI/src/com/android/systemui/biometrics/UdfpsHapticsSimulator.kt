@@ -18,6 +18,10 @@ package com.android.systemui.biometrics
 
 import android.media.AudioAttributes
 import android.os.VibrationEffect
+
+import android.os.CustomVibrationAttributes.VIBRATION_ATTRIBUTES_FINGERPRINT
+import android.os.CustomVibrationAttributes.VIBRATION_ATTRIBUTES_FINGERPRINT_ERROR
+
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.statusbar.VibratorHelper
@@ -35,11 +39,6 @@ class UdfpsHapticsSimulator @Inject constructor(
     val vibrator: VibratorHelper,
     val keyguardUpdateMonitor: KeyguardUpdateMonitor
 ) : Command {
-    val sonificationEffects =
-        AudioAttributes.Builder()
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-            .build()
     var udfpsController: UdfpsController? = null
 
     init {
@@ -51,20 +50,17 @@ class UdfpsHapticsSimulator @Inject constructor(
             invalidCommand(pw)
         } else {
             when (args[0]) {
-                "start" -> {
-                    udfpsController?.playStartHaptic()
-                }
                 "success" -> {
                     // needs to be kept up to date with AcquisitionClient#SUCCESS_VIBRATION_EFFECT
                     vibrator.vibrate(
                         VibrationEffect.get(VibrationEffect.EFFECT_CLICK),
-                        sonificationEffects)
+                        VIBRATION_ATTRIBUTES_FINGERPRINT)
                 }
                 "error" -> {
                     // needs to be kept up to date with AcquisitionClient#ERROR_VIBRATION_EFFECT
                     vibrator.vibrate(
                         VibrationEffect.get(VibrationEffect.EFFECT_DOUBLE_CLICK),
-                        sonificationEffects)
+                        VIBRATION_ATTRIBUTES_FINGERPRINT_ERROR)
                 }
                 else -> invalidCommand(pw)
             }

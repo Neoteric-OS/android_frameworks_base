@@ -55,7 +55,10 @@ public final class VibrationAttributes implements Parcelable {
             USAGE_PHYSICAL_EMULATION,
             USAGE_RINGTONE,
             USAGE_TOUCH,
-            USAGE_CUSTOM_QS_TILE
+            USAGE_CUSTOM_QS_TILE,
+	    USAGE_CUSTOM_FINGERPRINT_ERROR,
+            USAGE_CUSTOM_FACE,
+            USAGE_CUSTOM_FINGERPRINT
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface Usage {}
@@ -150,6 +153,9 @@ public final class VibrationAttributes implements Parcelable {
     /**
      * Custom vibration usage values
      */
+    public static final int USAGE_CUSTOM_FACE = 0x10 | USAGE_CLASS_CUSTOM;
+    public static final int USAGE_CUSTOM_FINGERPRINT = 0x20 | USAGE_CLASS_CUSTOM;
+    public static final int USAGE_CUSTOM_FINGERPRINT_ERROR = 0x30 | USAGE_CLASS_CUSTOM;
     public static final int USAGE_CUSTOM_QS_TILE = 0x60 | USAGE_CLASS_CUSTOM;
 
     /**

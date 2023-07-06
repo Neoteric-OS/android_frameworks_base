@@ -751,6 +751,9 @@ public class BiometricUnlockController extends KeyguardUpdateMonitorCallback imp
             mLogger.d("Skip auth success haptic. Power button was recently pressed.");
             return;
         }
+	if (type == BiometricSourceType.FACE) {
+            return;
+        }
         mVibratorHelper.vibrateAuthSuccess(
                 getClass().getSimpleName() + ", type =" + type + "device-entry::success");
     }
@@ -765,7 +768,10 @@ public class BiometricUnlockController extends KeyguardUpdateMonitorCallback imp
     }
 
     private void vibrateError(BiometricSourceType type) {
-        mVibratorHelper.vibrateAuthError(
+        if (type == BiometricSourceType.FACE) {
+            return;
+        }
+	mVibratorHelper.vibrateAuthError(
                 getClass().getSimpleName() + ", type =" + type + "device-entry::error");
     }
 

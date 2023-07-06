@@ -32322,6 +32322,9 @@ package android.os {
     field public static final int USAGE_CLASS_UNKNOWN = 0; // 0x0
     field public static final int USAGE_COMMUNICATION_REQUEST = 65; // 0x41
     field public static final int USAGE_CUSTOM_QS_TILE = 100; // 0x64
+    field public static final int USAGE_CUSTOM_FACE = 20; // 0x14
+    field public static final int USAGE_CUSTOM_FINGERPRINT = 36; // 0x24
+    field public static final int USAGE_CUSTOM_FINGERPRINT_ERROR = 52; // 0x34
     field public static final int USAGE_HARDWARE_FEEDBACK = 50; // 0x32
     field public static final int USAGE_MEDIA = 19; // 0x13
     field public static final int USAGE_NOTIFICATION = 49; // 0x31

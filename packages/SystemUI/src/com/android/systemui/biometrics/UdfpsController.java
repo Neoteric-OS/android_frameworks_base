@@ -19,6 +19,8 @@ package com.android.systemui.biometrics;
 import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ACQUIRED_GOOD;
 import static android.hardware.biometrics.BiometricOverlayConstants.REASON_AUTH_KEYGUARD;
 
+import static android.os.CustomVibrationAttributes.VIBRATION_ATTRIBUTES_FINGERPRINT;
+
 import static com.android.internal.util.Preconditions.checkNotNull;
 import static com.android.systemui.classifier.Classifier.LOCK_ICON;
 import static com.android.systemui.classifier.Classifier.UDFPS_AUTHENTICATION;
@@ -40,7 +42,6 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.Trace;
-import android.os.VibrationAttributes;
 import android.os.VibrationEffect;
 import android.util.BoostFramework;
 import android.util.Log;
@@ -197,18 +198,6 @@ public class UdfpsController implements DozeReceiver, Dumpable {
     private static final int BOOST_DURATION_TIMEOUT = 2000;
 
     private boolean mTriggerOnFingerDownForActionDown;
-
-    @VisibleForTesting
-    public static final VibrationAttributes UDFPS_VIBRATION_ATTRIBUTES =
-            new VibrationAttributes.Builder()
-                    // vibration will bypass battery saver mode:
-                    .setUsage(VibrationAttributes.USAGE_COMMUNICATION_REQUEST)
-                    .build();
-    @VisibleForTesting
-    public static final VibrationAttributes LOCK_ICON_VIBRATION_ATTRIBUTES =
-            new VibrationAttributes.Builder()
-                    .setUsage(VibrationAttributes.USAGE_TOUCH)
-                    .build();
 
     // haptic to use for successful device entry
     public static final VibrationEffect EFFECT_CLICK =
@@ -455,9 +444,6 @@ public class UdfpsController implements DozeReceiver, Dumpable {
     }
 
     private void tryDismissingKeyguard() {
-        if (!mOnFingerDown) {
-            playStartHaptic();
-        }
         mKeyguardViewManager.notifyKeyguardAuthenticated(false /* strongAuth */);
         mAttemptedToDismissKeyguard = true;
     }
@@ -817,21 +803,6 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                 R.bool.config_udfpsTriggerOnFingerDownForActionDown);
     }
 
-    /**
-     * If a11y touchExplorationEnabled, play haptic to signal UDFPS scanning started.
-     */
-    @VisibleForTesting
-    public void playStartHaptic() {
-        if (mAccessibilityManager.isTouchExplorationEnabled()) {
-            mVibrator.vibrate(
-                    Process.myUid(),
-                    mContext.getOpPackageName(),
-                    EFFECT_CLICK,
-                    "udfps-onStart-click",
-                    UDFPS_VIBRATION_ATTRIBUTES);
-        }
-    }
-
     @Override
     public void dozeTimeTick() {
         if (mOverlay != null) {
@@ -929,7 +900,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                     mContext.getOpPackageName(),
                     UdfpsController.EFFECT_CLICK,
                     "aod-lock-icon-longpress",
-                    LOCK_ICON_VIBRATION_ATTRIBUTES);
+                    VIBRATION_ATTRIBUTES_FINGERPRINT);
             return;
         }
 
@@ -1056,8 +1027,6 @@ public class UdfpsController implements DozeReceiver, Dumpable {
                 PowerManager.USER_ACTIVITY_EVENT_TOUCH, 0);
 
         if (!mOnFingerDown) {
-            playStartHaptic();
-
             if (!mKeyguardUpdateMonitor.isFaceDetectionRunning()) {
                 mKeyguardUpdateMonitor.requestFaceAuth(FaceAuthApiRequestReason.UDFPS_POINTER_DOWN);
             }

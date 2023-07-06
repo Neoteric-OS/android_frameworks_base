@@ -16,6 +16,9 @@
 
 package com.android.systemui.statusbar;
 
+import static android.os.CustomVibrationAttributes.VIBRATION_ATTRIBUTES_FINGERPRINT;
+import static android.os.CustomVibrationAttributes.VIBRATION_ATTRIBUTES_FINGERPRINT_ERROR;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.media.AudioAttributes;
@@ -51,8 +54,6 @@ public class VibratorHelper {
             VibrationEffect.get(VibrationEffect.EFFECT_CLICK);
     private static final VibrationEffect BIOMETRIC_ERROR_VIBRATION_EFFECT =
             VibrationEffect.get(VibrationEffect.EFFECT_DOUBLE_CLICK);
-    private static final VibrationAttributes HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES =
-            VibrationAttributes.createForUsage(VibrationAttributes.USAGE_HARDWARE_FEEDBACK);
 
     private final Executor mExecutor;
 
@@ -171,7 +172,7 @@ public class VibratorHelper {
         vibrate(Process.myUid(),
                 "com.android.systemui",
                 BIOMETRIC_SUCCESS_VIBRATION_EFFECT, reason,
-                HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES);
+                VIBRATION_ATTRIBUTES_FINGERPRINT);
     }
 
     /**
@@ -180,6 +181,6 @@ public class VibratorHelper {
     public void vibrateAuthError(String reason) {
         vibrate(Process.myUid(), "com.android.systemui",
                 BIOMETRIC_ERROR_VIBRATION_EFFECT, reason,
-                HARDWARE_FEEDBACK_VIBRATION_ATTRIBUTES);
+                VIBRATION_ATTRIBUTES_FINGERPRINT_ERROR);
     }
 }

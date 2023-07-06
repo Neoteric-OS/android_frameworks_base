@@ -168,12 +168,18 @@ public class AuthController implements CoreStartable,  CommandQueue.Callbacks,
     private final VibratorHelper mVibratorHelper;
 
     private void vibrateSuccess(int modality) {
+	if (modality == TYPE_FACE) {
+            return;
+        }
         mVibratorHelper.vibrateAuthSuccess(
                 getClass().getSimpleName() + ", modality = " + modality + "BP::success");
     }
 
     private void vibrateError(int modality) {
-        mVibratorHelper.vibrateAuthError(
+        if (modality == TYPE_FACE) {
+            return;
+        }
+	mVibratorHelper.vibrateAuthError(
                 getClass().getSimpleName() + ", modality = " + modality + "BP::error");
     }
 

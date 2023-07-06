@@ -197,6 +197,10 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
     }
 
     protected final void vibrateSuccess() {
+        vibrateSuccess(false);
+    }
+
+    protected final void vibrateSuccess(boolean isFace) {
         Vibrator vibrator = getContext().getSystemService(Vibrator.class);
         if (vibrator != null && mShouldVibrate) {
             vibrator.vibrate(Process.myUid(),
@@ -208,6 +212,11 @@ public abstract class AcquisitionClient<T> extends HalClientMonitor<T> implement
     }
 
     protected final void vibrateError() {
+        vibrateError(false);
+    }
+
+    protected final void vibrateError(boolean isFace) {
+        if (isFace) return;
         Vibrator vibrator = getContext().getSystemService(Vibrator.class);
         if (vibrator != null && mShouldVibrate) {
             vibrator.vibrate(Process.myUid(),

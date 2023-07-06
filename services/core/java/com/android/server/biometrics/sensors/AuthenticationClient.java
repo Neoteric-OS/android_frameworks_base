@@ -278,8 +278,13 @@ public abstract class AuthenticationClient<T> extends AcquisitionClient<T>
 
                 @Override
                 public void sendHapticFeedback() {
+                    sendHapticFeedback(false);
+                }
+
+                @Override
+                public void sendHapticFeedback(boolean isFace) {
                     if (listener != null && mShouldVibrate) {
-                        vibrateSuccess();
+                        vibrateSuccess(isFace);
                     }
                 }
 
@@ -321,8 +326,13 @@ public abstract class AuthenticationClient<T> extends AcquisitionClient<T>
 
                             @Override
                             public void sendHapticFeedback() {
+                                sendHapticFeedback(false);
+                            }
+
+                            @Override
+                            public void sendHapticFeedback(boolean isFace) {
                                 if (listener != null && mShouldVibrate) {
-                                    vibrateError();
+                                    vibrateError(isFace);
                                 }
                             }
 
