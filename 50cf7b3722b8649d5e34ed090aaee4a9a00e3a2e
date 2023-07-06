@@ -50,6 +50,23 @@
       "message": "Thanks for review!\nCould you please submit the patch, I don\u0027t have permissions?",
       "revId": "50cf7b3722b8649d5e34ed090aaee4a9a00e3a2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bceed491_562251a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1983010
+      },
+      "writtenOn": "2023-07-06T14:05:39Z",
+      "side": 1,
+      "message": "Thanks for review!\nCould you please submit the patch, I don\u0027t have permissions?",
+      "revId": "50cf7b3722b8649d5e34ed090aaee4a9a00e3a2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
