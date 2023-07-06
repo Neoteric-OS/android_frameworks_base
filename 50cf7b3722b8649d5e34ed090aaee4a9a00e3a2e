@@ -67,6 +67,24 @@
       "message": "Thanks for review!\nCould you please submit the patch, I don\u0027t have permissions?",
       "revId": "50cf7b3722b8649d5e34ed090aaee4a9a00e3a2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07d5faec_303d92eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-07-06T15:54:37Z",
+      "side": 1,
+      "message": "I will set it for auto-submit, once it passes presubmit. Current errors do not seem to be caused by the patch, will retry presubmit. Thanks for your patience!",
+      "parentUuid": "bceed491_562251a3",
+      "revId": "50cf7b3722b8649d5e34ed090aaee4a9a00e3a2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
