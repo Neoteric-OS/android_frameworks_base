@@ -172,6 +172,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "314fbeac_0b0af67d",
+        "filename": "core/jni/android_database_SQLiteConnection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2023-07-07T22:25:34Z",
+      "side": 1,
+      "message": "The performance penalty turns out to be substantial.  There was a 25% regression in the database performance tests.",
+      "parentUuid": "5ea6651f_c3a0b892",
+      "revId": "b07ac0ff0ee7f739646357f062ff16553c48caf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "23ed49b3_f891f247",
         "filename": "core/jni/android_database_SQLiteConnection.cpp",
         "patchSetId": 2
