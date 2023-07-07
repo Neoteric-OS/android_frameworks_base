@@ -56,7 +56,7 @@ import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.plugins.NavigationEdgeBackPlugin;
 import com.android.systemui.settings.DisplayTracker;
 import com.android.systemui.shared.navigationbar.RegionSamplingHelper;
-//import com.android.systemui.statusbar.VibratorHelper;
+import com.android.systemui.statusbar.VibratorHelper;
 import com.android.wm.shell.back.BackAnimation;
 
 import java.io.PrintWriter;

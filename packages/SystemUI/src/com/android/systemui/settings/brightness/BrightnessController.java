@@ -89,10 +89,11 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
     private final Handler mBackgroundHandler;
     private final BrightnessObserver mBrightnessObserver;
 
-    private final DisplayTracker.Callback mBrightnessListener = new DisplayTracker.Callback() {
     private Vibrator mVibrator;
 
     private float last_val = -1;
+
+    private final DisplayTracker.Callback mBrightnessListener = new DisplayTracker.Callback() {
 
         @Override
         public void onDisplayChanged(int displayId) {
@@ -326,24 +327,6 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
                 Context.VR_SERVICE));
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
 
-        if (mIcon != null) {
-            if (mAutomaticAvailable) {
-                mIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int newMode = mAutomatic ? Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL : Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
-                        setMode(newMode);
-                    }
-                });
-            }
-        }
-    }
-
-    private void setMode(int mode) {
-        Settings.System.putIntForUser(mContext.getContentResolver(),
-                Settings.System.SCREEN_BRIGHTNESS_MODE, mode,
-                mUserTracker.getCurrentUserId());
->>>>>>> 1edd6702ec0b (base: Add haptic feedback to sliders [1/2])
     }
 
     public void registerCallbacks() {

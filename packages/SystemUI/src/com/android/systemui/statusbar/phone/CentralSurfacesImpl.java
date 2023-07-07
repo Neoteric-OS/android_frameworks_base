@@ -61,12 +61,14 @@ import android.app.WallpaperManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Point;
 import android.hardware.devicestate.DeviceStateManager;
 import android.hardware.fingerprint.FingerprintManager;
@@ -767,7 +769,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             LockscreenShadeTransitionController lockscreenShadeTransitionController,
             FeatureFlags featureFlags,
             KeyguardUnlockAnimationController keyguardUnlockAnimationController,
-            @Main DelayableExecutor delayableExecutor,
+            @Main Handler mainHandler,
+	    @Main DelayableExecutor delayableExecutor,
             @Main MessageRouter messageRouter,
             WallpaperManager wallpaperManager,
             Optional<StartingSurface> startingSurfaceOptional,
@@ -3992,7 +3995,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         public void update() {
             setLockScreenMediaBlurLevel();
             setLockScreenMediaArt();
-	    setDoubleTapToSleepGesture()
+	    setDoubleTapToSleepGesture();
         }
     }
 
