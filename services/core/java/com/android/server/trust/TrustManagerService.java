@@ -46,6 +46,10 @@ import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.hardware.biometrics.BiometricManager;
 import android.hardware.biometrics.BiometricSourceType;
+import android.hardware.biometrics.SensorProperties;
+import android.hardware.face.FaceManager;
+import android.hardware.face.FaceSensorProperties;
+import android.hardware.fingerprint.FingerprintManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -229,6 +233,9 @@ public class TrustManagerService extends SystemService {
 
     private final StrongAuthTracker mStrongAuthTracker;
 
+    private final FaceManager mFaceManager;
+    private final FingerprintManager mFingerprintManager;
+
     private boolean mTrustAgentsCanRun = false;
     private int mCurrentUser = UserHandle.USER_SYSTEM;
 
@@ -241,6 +248,9 @@ public class TrustManagerService extends SystemService {
         mStrongAuthTracker = new StrongAuthTracker(context);
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         mSettingsObserver = new SettingsObserver(mHandler);
+        mFingerprintManager = (FingerprintManager)
+            mContext.getSystemService(Context.FINGERPRINT_SERVICE);
+        mFaceManager = (FaceManager) mContext.getSystemService(Context.FACE_SERVICE);
     }
 
     @Override
@@ -940,6 +950,29 @@ public class TrustManagerService extends SystemService {
         }
     }
 
+    private boolean isWeakBiometricUnlockPossible(@UserIdInt int userId) {
+        // TODO: mFaceManager and mFingerprintManager are both null.  So this is broken.
+        if (mFingerprintManager != null) {
+            List<SensorProperties> sensorProps = mFingerprintManager.getSensorProperties();
+            if (!sensorProps.isEmpty() && sensorProps.get(0).getSensorStrength()
+                    != SensorProperties.STRENGTH_STRONG
+                    && mFingerprintManager.hasEnrolledTemplates(userId)) {
+                // The fingerprint sensor is weak and the user has fingerprints enrolled.
+                return true;
+            }
+        }
+        if (mFaceManager != null) {
+            List<FaceSensorProperties> sensorProps = mFaceManager.getSensorProperties();
+            if (!sensorProps.isEmpty() && sensorProps.get(0).getSensorStrength()
+                    != SensorProperties.STRENGTH_STRONG
+                    && mFaceManager.hasEnrolledTemplates(userId)) {
+                // The face sensor is weak and the user has their face enrolled.
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void setDeviceLockedForUser(@UserIdInt int userId, boolean locked) {
         final boolean changed;
         synchronized (mDeviceLockedForUser) {
@@ -948,14 +981,15 @@ public class TrustManagerService extends SystemService {
         }
         if (changed) {
             dispatchDeviceLocked(userId, locked);
+            boolean hasWeakBiometric = isWeakBiometricUnlockPossible(userId);
             Authorization.onLockScreenEvent(locked, userId, null,
-                    getBiometricSids(userId));
+                    getBiometricSids(userId), hasWeakBiometric);
             // Also update the user's profiles who have unified challenge, since they
             // share the same unlocked state (see {@link #isDeviceLocked(int)})
             for (int profileHandle : mUserManager.getEnabledProfileIds(userId)) {
                 if (mLockPatternUtils.isManagedProfileWithUnifiedChallenge(profileHandle)) {
                     Authorization.onLockScreenEvent(locked, profileHandle, null,
-                            getBiometricSids(profileHandle));
+                            getBiometricSids(profileHandle), hasWeakBiometric);
                 }
             }
         }
@@ -1737,7 +1771,7 @@ public class TrustManagerService extends SystemService {
                     }
 
                     Authorization.onLockScreenEvent(locked, userId, null,
-                            getBiometricSids(userId));
+                            getBiometricSids(userId), isWeakBiometricUnlockPossible(userId));
 
                     if (locked) {
                         try {

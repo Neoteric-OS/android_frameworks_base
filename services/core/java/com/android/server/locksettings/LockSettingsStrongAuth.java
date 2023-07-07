@@ -32,6 +32,7 @@ import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.security.Authorization;
 import android.util.ArrayMap;
 import android.util.Slog;
 import android.util.SparseBooleanArray;
@@ -374,6 +375,9 @@ public class LockSettingsStrongAuth {
                         + " oldValue=" + oldValue + ", allowed=" + allowed);
             }
             mIsNonStrongBiometricAllowedForUser.put(userId, allowed);
+            if (!allowed) {
+                Authorization.onWeakBiometricsTimeout(userId);
+            }
             notifyStrongAuthTrackersForIsNonStrongBiometricAllowed(allowed, userId);
         }
     }

@@ -69,6 +69,23 @@ public class Authorization {
     }
 
     /**
+     * Inform keystore2 that weak biometrics can no longer unlock a user.
+     * @param userId
+     * @return 0 if successful or a {@code ResponseCode}.
+     */
+    public static int onWeakBiometricsTimeout(@NonNull int userId) {
+        try {
+            getService().onWeakBiometricsTimeout(userId);
+            return 0;
+        } catch (RemoteException | NullPointerException e) {
+            Log.w(TAG, "Can not connect to keystore", e);
+            return SYSTEM_ERROR;
+        } catch (ServiceSpecificException e) {
+            return e.errorCode;
+        }
+    }
+
+    /**
      * Informs keystore2 about lock screen event.
      *
      * @param locked            - whether it is a lock (true) or unlock (false) event
@@ -80,13 +97,15 @@ public class Authorization {
      * @return 0 if successful or a {@code ResponseCode}.
      */
     public static int onLockScreenEvent(@NonNull boolean locked, @NonNull int userId,
-            @Nullable byte[] syntheticPassword, @Nullable long[] unlockingSids) {
+            @Nullable byte[] syntheticPassword, @Nullable long[] unlockingSids,
+            @NonNull boolean hasWeakBiometric) {
         try {
             if (locked) {
-                getService().onLockScreenEvent(LockScreenEvent.LOCK, userId, null, unlockingSids);
+                getService().onLockScreenEvent(LockScreenEvent.LOCK, userId, null, unlockingSids,
+                        hasWeakBiometric);
             } else {
-                getService().onLockScreenEvent(
-                        LockScreenEvent.UNLOCK, userId, syntheticPassword, unlockingSids);
+                getService().onLockScreenEvent(LockScreenEvent.UNLOCK, userId, syntheticPassword,
+                        unlockingSids, hasWeakBiometric);
             }
             return 0;
         } catch (RemoteException | NullPointerException e) {

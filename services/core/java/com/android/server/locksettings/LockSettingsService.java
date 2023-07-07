@@ -1383,7 +1383,9 @@ public class LockSettingsService extends ILockSettings.Stub {
 
     private void unlockKeystore(byte[] password, int userHandle) {
         if (DEBUG) Slog.v(TAG, "Unlock keystore for user: " + userHandle);
-        Authorization.onLockScreenEvent(false, userHandle, password, null);
+        // The value of hasWeakBiometric does not matter for unlock events.  Set it as false.
+        Authorization.onLockScreenEvent(false, userHandle, password, null, /*hasWeakBiometric*/
+                false);
     }
 
     @VisibleForTesting /** Note: this method is overridden in unit tests */
