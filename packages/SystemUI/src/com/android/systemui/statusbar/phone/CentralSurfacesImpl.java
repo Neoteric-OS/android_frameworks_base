@@ -532,10 +532,6 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
     private final PulseControllerImpl mPulseController;
 
-    // expanded notifications
-    // the sliding/resizing panel within the notification window
-    protected NotificationPanelViewController mNotificationPanelViewController;
-
    // Zephyrus Idle
     private boolean isIdleManagerIstantiated = false;
 
