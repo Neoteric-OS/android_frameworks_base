@@ -5644,9 +5644,6 @@ public final class Settings {
          */
         public static final String SHOW_LOCKSCREEN_MEDIA_ART = "show_lockscreen_media_art";
 
-        /** @hide */
-        public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
-
         /**
          * Whether to enable small size landcape notifications or not
          * @hide
@@ -6004,7 +6001,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DESKTOP_MODE);
             PRIVATE_SETTINGS.add(CALL_CONNECTED_TONE_ENABLED);
             PRIVATE_SETTINGS.add(FORCE_FULLSCREEN_CUTOUT_APPS);
-            PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
             PRIVATE_SETTINGS.add(POCKET_JUDGE);
