@@ -16,6 +16,7 @@
 
 package android.webkit;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 
 public class WebChromeClient {
 
@@ -92,8 +94,37 @@ public class WebChromeClient {
      * @param view is the View object to be shown.
      * @param callback invoke this callback to request the page to exit
      * full screen mode.
+     * @deprecated this method does not support the screen id and will not be invoked.
      */
+    @Deprecated
     public void onShowCustomView(View view, CustomViewCallback callback) {};
+
+    /**
+     * Notify the host application that the current page has entered full screen mode. After this
+     * call, web content will no longer be rendered in the WebView, but will instead be rendered
+     * in {@code view}. The host application should add this View to a Window which is configured
+     * with {@link android.view.WindowManager.LayoutParams#FLAG_FULLSCREEN} flag in order to
+     * actually display this web content full screen.
+     *
+     * <p>The application may explicitly exit fullscreen mode by invoking {@code callback} (ex. when
+     * the user presses the back button). However, this is generally not necessary as the web page
+     * will often show its own UI to close out of fullscreen. Regardless of how the WebView exits
+     * fullscreen mode, WebView will invoke {@link #onHideCustomView()}, signaling for the
+     * application to remove the custom View.
+     *
+     * <p>If this method is not overridden, WebView will report to the web page it does not support
+     * fullscreen mode and will not honor the web page's request to run in fullscreen mode.
+     *
+     * <p class="note"><b>Note:</b> if overriding this method, the application must also override
+     * {@link #onHideCustomView()}.
+     *
+     * @param screenId display id of the target screen
+     * @param view is the View object to be shown.
+     * @param callback invoke this callback to request the page to exit
+     * full screen mode.
+     */
+    public void onShowCustomView(int screenId, @NonNull View view,
+            @NonNull CustomViewCallback callback) {};
 
     /**
      * Notify the host application that the current page would
@@ -160,9 +191,59 @@ public class WebChromeClient {
      *         its target. Otherwise, this method should return {@code false}. Returning
      *         {@code false} from this method but also sending resultMsg will result in
      *         undefined behavior.
+     * @deprecated will be not called in the future.
      */
+    @Deprecated
     public boolean onCreateWindow(WebView view, boolean isDialog,
             boolean isUserGesture, Message resultMsg) {
+        return false;
+    }
+
+    /**
+     * Request the host application to create a new window. If the host
+     * application chooses to honor this request, it should return {@code true} from
+     * this method, create a new WebView to host the window, insert it into the
+     * View system and send the supplied resultMsg message to its target with
+     * the new WebView as an argument. If the host application chooses not to
+     * honor the request, it should return {@code false} from this method. The default
+     * implementation of this method does nothing and hence returns {@code false}.
+     * <p>
+     * Applications should typically not allow windows to be created when the
+     * {@code isUserGesture} flag is false, as this may be an unwanted popup.
+     * <p>
+     * Applications should be careful how they display the new window: don't simply
+     * overlay it over the existing WebView as this may mislead the user about which
+     * site they are viewing. If your application displays the URL of the main page,
+     * make sure to also display the URL of the new window in a similar fashion. If
+     * your application does not display URLs, consider disallowing the creation of
+     * new windows entirely.
+     * <p class="note"><b>Note:</b> There is no trustworthy way to tell which page
+     * requested the new window: the request might originate from a third-party iframe
+     * inside the WebView.
+     *
+     * @param view The WebView from which the request for a new window
+     *             originated.
+     * @param isDialog {@code true} if the new window should be a dialog, rather than
+     *                 a full-size window.
+     * @param isUserGesture {@code true} if the request was initiated by a user gesture,
+     *                      such as the user clicking a link.
+     * @param resultMsg The message to send when once a new WebView has been
+     *                  created. resultMsg.obj is a
+     *                  {@link WebView.WebViewTransport} object. This should be
+     *                  used to transport the new WebView, by calling
+     *                  {@link WebView.WebViewTransport#setWebView(WebView)
+     *                  WebView.WebViewTransport.setWebView(WebView)}.
+     * @param layoutParams desired layout parameters of the new window.
+     * @param screenId target screen display id.
+     * @return This method should return {@code true} if the host application will
+     *         create a new window, in which case resultMsg should be sent to
+     *         its target. Otherwise, this method should return {@code false}. Returning
+     *         {@code false} from this method but also sending resultMsg will result in
+     *         undefined behavior.
+     */
+    public boolean onCreateWindow(@NonNull WebView view, boolean isDialog,
+            boolean isUserGesture, @NonNull Message resultMsg,
+            @NonNull WindowManager.LayoutParams layoutParams, int screenId) {
         return false;
     }
 

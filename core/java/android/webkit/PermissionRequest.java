@@ -47,6 +47,11 @@ public abstract class PermissionRequest {
      */
     public final static String RESOURCE_AUDIO_CAPTURE = "android.webkit.resource.AUDIO_CAPTURE";
     /**
+     * Window placement resource
+     */
+    public static final String RESOURCE_WINDOW_MANAGEMENT =
+            "android.webkit.resource.WINDOW_MANAGEMENT";
+    /**
      * Resource belongs to protected media identifier.
      * After the user grants this resource, the origin can use EME APIs to generate the license
      * requests.

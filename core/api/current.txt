@@ -54425,6 +54425,7 @@ package android.webkit {
     field public static final String RESOURCE_MIDI_SYSEX = "android.webkit.resource.MIDI_SYSEX";
     field public static final String RESOURCE_PROTECTED_MEDIA_ID = "android.webkit.resource.PROTECTED_MEDIA_ID";
     field public static final String RESOURCE_VIDEO_CAPTURE = "android.webkit.resource.VIDEO_CAPTURE";
+    field public static final String RESOURCE_WINDOW_MANAGEMENT = "android.webkit.resource.WINDOW_MANAGEMENT";
   }
 
   public interface PluginStub {
@@ -54548,7 +54549,8 @@ package android.webkit {
     method public void onCloseWindow(android.webkit.WebView);
     method @Deprecated public void onConsoleMessage(String, int, String);
     method public boolean onConsoleMessage(android.webkit.ConsoleMessage);
-    method public boolean onCreateWindow(android.webkit.WebView, boolean, boolean, android.os.Message);
+    method @Deprecated public boolean onCreateWindow(android.webkit.WebView, boolean, boolean, android.os.Message);
+    method public boolean onCreateWindow(@NonNull android.webkit.WebView, boolean, boolean, @NonNull android.os.Message, @NonNull android.view.WindowManager.LayoutParams, int);
     method @Deprecated public void onExceededDatabaseQuota(String, String, long, long, long, android.webkit.WebStorage.QuotaUpdater);
     method public void onGeolocationPermissionsHidePrompt();
     method public void onGeolocationPermissionsShowPrompt(String, android.webkit.GeolocationPermissions.Callback);
@@ -54565,7 +54567,8 @@ package android.webkit {
     method public void onReceivedTitle(android.webkit.WebView, String);
     method public void onReceivedTouchIconUrl(android.webkit.WebView, String, boolean);
     method public void onRequestFocus(android.webkit.WebView);
-    method public void onShowCustomView(android.view.View, android.webkit.WebChromeClient.CustomViewCallback);
+    method @Deprecated public void onShowCustomView(android.view.View, android.webkit.WebChromeClient.CustomViewCallback);
+    method public void onShowCustomView(int, @NonNull android.view.View, @NonNull android.webkit.WebChromeClient.CustomViewCallback);
     method @Deprecated public void onShowCustomView(android.view.View, int, android.webkit.WebChromeClient.CustomViewCallback);
     method public boolean onShowFileChooser(android.webkit.WebView, android.webkit.ValueCallback<android.net.Uri[]>, android.webkit.WebChromeClient.FileChooserParams);
   }
