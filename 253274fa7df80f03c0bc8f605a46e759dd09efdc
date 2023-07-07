@@ -16,6 +16,23 @@
       "message": "I think the strategy should be changed so that sqlite_set_authorizer() is called to set the authorizer before a statement is prepared and then again to clear the authorizer (set it to null) immediately afterwards.  The performance penalty of keeping a generic authorizer always set turns out to be significant.",
       "revId": "253274fa7df80f03c0bc8f605a46e759dd09efdc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6293e9a1_08b4bf13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2023-07-07T22:41:52Z",
+      "side": 1,
+      "message": "I think the strategy should be changed so that sqlite_set_authorizer() is called to set the authorizer before a statement is prepared and then again to clear the authorizer (set it to null) immediately afterwards. The performance penalty of keeping a generic authorizer always set turns out to be significant.",
+      "revId": "253274fa7df80f03c0bc8f605a46e759dd09efdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
