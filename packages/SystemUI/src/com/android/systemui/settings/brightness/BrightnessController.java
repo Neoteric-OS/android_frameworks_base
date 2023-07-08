@@ -390,6 +390,7 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
         Settings.System.putIntForUser(mContext.getContentResolver(),
                 Settings.System.SCREEN_BRIGHTNESS_MODE, mode,
                 mUserTracker.getUserId());
+        mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_CLICK));
     }
 
     public void checkRestrictionAndSetEnabled() {
