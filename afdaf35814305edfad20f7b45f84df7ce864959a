@@ -266,6 +266,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "328e588f_ed7c3718",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-07-10T09:12:11Z",
+      "side": 1,
+      "message": "If we don\u0027t change the userId on maybeRemountVolumes(), the mount call to vold will have a wrong mountUserId which will cause the volume to be mounted for the wrong user (as we pass values based on VolumeInfo:\nhttps://cs.android.com/android/platform/superproject/+/refs/heads/master:frameworks/base/services/core/java/com/android/server/StorageManagerService.java;l\u003d2351;drc\u003d88f0990b45a7b992fadd6bc58f6d63c3b44054a2;bpv\u003d0;bpt\u003d1). Although this problem can be solved by sending a copy of VolumeInfo with the updated mountUserId and passing to handler. In this case we have to take care of updating the copy in mVolumes, either in IVoldListener#onVolumeStateChanged or IVoldMountCallback#onVolumeChecking. (this can still cause BAD_REMOVAL being sent to wrong user or CHECKING to wrong user as IVoldListener#onVolumeStateChanged is called before IVoldMountCallback#onVolumeChecking in vold).\n\nSolving the problem higher in the stack can solve the problem for broadcast, but we still have to worry about frequent user switches.\nIn that case from StorageManagerService still needs to perform unmount/mount one-by-one, and if the mount process is slow then again the vold state and StorageManagerService state will be out of sync (the problem that exists today)\nAlso, the VolumeInfo is still used for one more operation StorageSessionController#notifyVolumeStateChanged (https://cs.android.com/android/platform/superproject/+/refs/heads/master:frameworks/base/services/core/java/com/android/server/StorageManagerService.java;l\u003d1758;drc\u003d88f0990b45a7b992fadd6bc58f6d63c3b44054a2;bpv\u003d0;bpt\u003d1) which depends on mountUserId.\n\nBased on these observations, I still think adding an extra parameter in IVoldListener#onVolumeStateChanged is the best path forward as\nevery state between vold and StorageManagerService will be in sync. Please let me know if you have any other thoughts.",
+      "parentUuid": "c85b8d4d_1d9e1675",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
