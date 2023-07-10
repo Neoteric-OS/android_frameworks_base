@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "929bae68_5c593b64",
+        "filename": "services/core/java/com/android/server/am/ProcessList.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2023-07-10T22:25:31Z",
+      "side": 1,
+      "message": "This should be done only if `ro.lmk.delay_psi_monitors_until_boot\u003d\u003dtrue`, otherwise you are sending this and waking LMKD for nothing.",
+      "range": {
+        "startLine": 1491,
+        "startChar": 8,
+        "endLine": 1493,
+        "endChar": 29
+      },
+      "revId": "048ec5fc5dc0b0025817aa292a68cffb2533295d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
