@@ -290,6 +290,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98081b1a_380f799b",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-07-10T11:10:15Z",
+      "side": 1,
+      "message": "I think what I\u0027d like to see is that mountUserId of the volume in mVolumes at all times reflects the userId for which the volume is/was mounted, and the user to which broadcasts for the volume should be sent. The only point at which this value should change is right before the mount is done. This also means that all broadcasts that are enqueued up until that point, should make sure to contain a copy of that user, since they can be handled much later.\n\nThe code as-is clearly does not achieve that.\n\nWhat I thought we could do is change the mount user id as a part of the mount() operation, so to update it right before we call into vold to mount it. Since for public volumes, the user id that they should be mounted under is just always the currently active user. As you pointed out, this leaves 2 problems:\n1. H_VOLUME_BROADCAST should be handled with the correct userId\n2. H_VOLUME_STATE_CHANGED should be handled with the correct userId\n\nI think 1. could be handled by just adding the \u0027current\u0027 userId as an argument to H_VOLUME_BROADCAST.\n\nFor 2, I think I understand your concern. I had assumed that the onVolumeStateChanged() callback from IVoldListener was synchronous and would be called as part of the unmount()/mount(), so it could not go out of sync. But, it is a oneway interface, so it is theoretically possible for us to receive another mount() before we have received the state change for the unmount. I think really the proper fix there should have been to reject `mount` calls if the current state is already mounted.\n\nTo me changing IVoldListener to send the userId information seems a bit counter-intuitive, since really StorageManagerService is the one that should keep track of the user state, and vold is just following \u0027orders\u0027.\n\nAt this point I\u0027m not quite sure how to proceed. I think really the proper fix is to serialize mount()/unmount() completely, including events, but that is presumably an even larger change. Would you agree with that?\n\nThanks for your patience on this.",
+      "parentUuid": "328e588f_ed7c3718",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
