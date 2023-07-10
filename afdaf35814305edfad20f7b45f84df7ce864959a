@@ -314,6 +314,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1d60bf8_6636662d",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-07-10T12:34:02Z",
+      "side": 1,
+      "message": "Yes, I completely agree to your point.\n\nWhat do you suggest for the current code change (as next steps)?",
+      "parentUuid": "98081b1a_380f799b",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
