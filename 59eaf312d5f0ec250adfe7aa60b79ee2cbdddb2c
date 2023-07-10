@@ -33,6 +33,23 @@
       "message": "Hi all, Could you please help to review and let me know your opinion",
       "revId": "59eaf312d5f0ec250adfe7aa60b79ee2cbdddb2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "504643ea_07c77b36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2016083
+      },
+      "writtenOn": "2023-07-10T05:30:58Z",
+      "side": 1,
+      "message": "Could you please help to submit the change",
+      "revId": "59eaf312d5f0ec250adfe7aa60b79ee2cbdddb2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
