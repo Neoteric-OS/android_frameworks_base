@@ -22,6 +22,30 @@
       },
       "revId": "cd8f5d8b18fdd66ebb992b2a6ee3a587b6fd5e42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57e5e8c0_7a4f0b79",
+        "filename": "services/core/java/com/android/server/am/ProcessServiceRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 2005646
+      },
+      "writtenOn": "2023-07-10T22:47:01Z",
+      "side": 1,
+      "message": "Oof, good find. I incorrectly assumed `app` would be valid whenever this method is called, but on second thought, this might be possible:\n\n- processes A and B both attempt to bind to some not-yet-running service S, causing AM to start the new process to host S\n- before that process is started, B removes its connection which triggers `updateHasAboveClientLocked`\n\nIs something like this what you see happening?\n\nWould you like me to submit a CL with the fix or do you have one already?",
+      "parentUuid": "705ab44d_2aa68c33",
+      "range": {
+        "startLine": 261,
+        "startChar": 35,
+        "endLine": 261,
+        "endChar": 49
+      },
+      "revId": "cd8f5d8b18fdd66ebb992b2a6ee3a587b6fd5e42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
