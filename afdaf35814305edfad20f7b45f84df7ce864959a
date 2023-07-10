@@ -338,6 +338,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b2415f23_cb382cbd",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-07-10T12:45:33Z",
+      "side": 1,
+      "message": "I think the current state of things is definitely wrong, and serializing is a lot of work, too. I think I\u0027m not sure of is whether this CL would fix the problem by itself, or if it still has edge cases that are not fixed?\n\nIf this CL does not fix the problem completely either, I\u0027d be ok with changing the IVoldListenter interface as you suggested. And we can spend some time internally to see whether we want to serialize or come up with some other plan.",
+      "parentUuid": "d1d60bf8_6636662d",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
