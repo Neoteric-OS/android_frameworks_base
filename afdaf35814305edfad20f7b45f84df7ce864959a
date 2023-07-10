@@ -242,6 +242,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c85b8d4d_1d9e1675",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-07-10T07:44:07Z",
+      "side": 1,
+      "message": "Ah thanks, now I understand - we capture the state of the volume in a StorageVolume object right before we queue the volume state change. So now I understand why the code was broken, and why your proposed fix fixes it. But what I\u0027m stilling missing: why can\u0027t we just delete the line changing the userId here? You mentioned earlier \u0027onUserSwitching\u0027 also calls remount; so, if we don\u0027t change the userId in maybeRemountVolumes(), what broadcast will be wrong? The unmount one probably still goes to the old userId, which seems correct. And by the time we queue the volume state change for the mount, the userId should already have been updated to the new one, so the mount one should also be correct?\n\nRe: your solution, I was thinking of something similar, but higher up in the stack: can we add an argument to H_VOLUME_BROADCAST that specifies to which user the broadcast should go? Because at the time we queue the broadcast, we will know the correct user, right?",
+      "parentUuid": "3839a1f3_0e005cf1",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
