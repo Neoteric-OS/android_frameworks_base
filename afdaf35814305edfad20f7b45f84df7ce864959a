@@ -362,6 +362,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6cd6ef4c_fff146e2",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-07-10T13:25:43Z",
+      "side": 1,
+      "message": "For the first point, yes, the current CR will have edge cases (specially with race conditions).\n\nI\u0027ll work towards changing the IVoldListener interface (as temporary fix) and wait for the permanent fix.",
+      "parentUuid": "b2415f23_cb382cbd",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 66
+      },
+      "revId": "afdaf35814305edfad20f7b45f84df7ce864959a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "befa67c4_d03f2b31",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
