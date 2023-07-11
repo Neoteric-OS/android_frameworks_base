@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e5320fc1_1e1d7cd2",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreRSACipherSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2023-07-11T11:44:03Z",
+      "side": 1,
+      "message": "Support for `RSA_OAEP_MGF_DIGEST` was added in aosp/1533662, and the tag is [present](https://cs.android.com/android/platform/superproject/+/main:hardware/interfaces/security/keymint/aidl/aidl_api/android.hardware.security.keymint/1/android/hardware/security/keymint/Tag.aidl?q\u003dMGF_DIGEST) in v1 of the KeyMint HAL.",
+      "parentUuid": "3dc42a7b_ed6286b1",
+      "revId": "dde5ebaa583af372926e75a4ac495e7c78691cc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a2a421a_e62d6af4",
         "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreRSACipherSpi.java",
         "patchSetId": 1
