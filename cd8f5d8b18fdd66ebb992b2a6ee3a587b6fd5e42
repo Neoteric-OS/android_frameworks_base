@@ -70,6 +70,30 @@
       },
       "revId": "cd8f5d8b18fdd66ebb992b2a6ee3a587b6fd5e42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "345ed7fa_95fe99f9",
+        "filename": "services/core/java/com/android/server/am/ProcessServiceRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 2005646
+      },
+      "writtenOn": "2023-07-11T01:18:05Z",
+      "side": 1,
+      "message": "@jji@google.com: aosp/2650877. Thanks for the heads-up about this bug and apologies for the mess.",
+      "parentUuid": "81609504_82d0e476",
+      "range": {
+        "startLine": 261,
+        "startChar": 35,
+        "endLine": 261,
+        "endChar": 49
+      },
+      "revId": "cd8f5d8b18fdd66ebb992b2a6ee3a587b6fd5e42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
