@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad19aa9_b17182aa",
+        "filename": "tests/Input/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2023-07-11T17:51:30Z",
+      "side": 1,
+      "message": "It seems like the component doesn\u0027t get picked up through the chain of import statements, since we [already have it](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/INPUT_OWNERS;l\u003d1;drc\u003d0c0dd15907c90c1f45461dcabad0617cd4843d31) in the base OWNERS file.\n\nDoes that mean we should include it in all of our OWNERS files, including those that eventually redirect to /INPUT_OWNERS?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "ec21103b2d4efae76f028aead884667ec3240c17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
