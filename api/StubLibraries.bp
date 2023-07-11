@@ -412,6 +412,7 @@ java_api_library {
     api_files: [
         ":non-updatable-current.txt",
         ":non-updatable-system-current.txt",
+        ":non-updatable-test-current.txt",
         ":non-updatable-module-lib-current.txt",
     ],
     defaults: ["android-non-updatable_from_text_defaults"],
