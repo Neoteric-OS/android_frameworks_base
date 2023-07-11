@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3dc42a7b_ed6286b1",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreRSACipherSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2023-07-11T10:50:03Z",
+      "side": 1,
+      "message": "This issue is with Keymint V2 only as RSA_OAEP_MGF_DIGEST other than SHA1 are supported from Keymint V2. And V3 is expected to add this TAG in key characteristics.\nPlease correct me if my assumption is wrong.",
+      "parentUuid": "ab680232_4c5506e5",
+      "revId": "dde5ebaa583af372926e75a4ac495e7c78691cc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a2a421a_e62d6af4",
         "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreRSACipherSpi.java",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2023-07-11T08:31:14Z",
       "side": 1,
       "message": "What happens if this operation is for a StrongBox device, and the StrongBox device is a different version than the TEE version?  Should this be checking `FEATURE_STRONGBOX_KEYSTORE` instead?",
+      "revId": "dde5ebaa583af372926e75a4ac495e7c78691cc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2581bf3d_5005bbb4",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreRSACipherSpi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2023-07-11T10:50:03Z",
+      "side": 1,
+      "message": "I have tested RSA_OAEP_MGF_DIGEST SHA1 and SHA256 on android T + GSI setup but it did not fail on Pixel 6 Pro.\nBut still we can put the StrongBox feature check, could you please confirm for StrongBox also keymint V2 is allowed for this change or not?",
+      "parentUuid": "4a2a421a_e62d6af4",
       "revId": "dde5ebaa583af372926e75a4ac495e7c78691cc1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
