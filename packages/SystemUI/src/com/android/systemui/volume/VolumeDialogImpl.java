@@ -405,8 +405,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
      */
     private void updateRingerModeIconSet() {
         if (mSeparateNotification) {
-            mVolumeRingerIconDrawableId = R.drawable.ic_speaker_on;
-            mVolumeRingerMuteIconDrawableId = R.drawable.ic_speaker_mute;
+            mVolumeRingerIconDrawableId = R.drawable.ic_speaker_on_reversed;
+            mVolumeRingerMuteIconDrawableId = R.drawable.ic_speaker_mute_reversed;
         } else {
             mVolumeRingerIconDrawableId = R.drawable.ic_volume_ringer;
             mVolumeRingerMuteIconDrawableId = R.drawable.ic_volume_ringer_mute;
