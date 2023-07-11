@@ -22,6 +22,30 @@
       },
       "revId": "ec21103b2d4efae76f028aead884667ec3240c17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8edb443_930ad431",
+        "filename": "tests/Input/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2023-07-11T18:25:36Z",
+      "side": 1,
+      "message": "Looks like this will be resolved in b/191646497; I don\u0027t think we should proactively modify the OWNERS files, this is to ensure we are properly notified of issues for the time being.",
+      "parentUuid": "5ad19aa9_b17182aa",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "ec21103b2d4efae76f028aead884667ec3240c17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
