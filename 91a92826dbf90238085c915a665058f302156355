@@ -69,6 +69,24 @@
       "parentUuid": "0a3a8195_d49301c2",
       "revId": "91a92826dbf90238085c915a665058f302156355",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b1101f4_da648a1a",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5180,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2023-07-12T05:46:24Z",
+      "side": 1,
+      "message": "yes let\u0027s start another CL for that.\n\nOne more question, if the system_server restarts, my understanding is that, the lmkd won\u0027t be restarted. Is there a way to notify the lmkd stopping listening on PSI until the restart completes?",
+      "parentUuid": "a2eb083f_9e0aadea",
+      "revId": "91a92826dbf90238085c915a665058f302156355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
