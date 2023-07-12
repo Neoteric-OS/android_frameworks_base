@@ -123,6 +123,24 @@
       "parentUuid": "4d36c7bc_d5592165",
       "revId": "91a92826dbf90238085c915a665058f302156355",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5bda878_5d3451fe",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5180,
+      "author": {
+        "id": 1882967
+      },
+      "writtenOn": "2023-07-12T23:00:47Z",
+      "side": 1,
+      "message": "Thanks Suren!\n\n@jji@google.com, does Suren\u0027s response make sense to you?",
+      "parentUuid": "9fe45aba_b66a9e49",
+      "revId": "91a92826dbf90238085c915a665058f302156355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
