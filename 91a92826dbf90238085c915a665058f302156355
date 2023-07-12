@@ -105,6 +105,24 @@
       "parentUuid": "4b1101f4_da648a1a",
       "revId": "91a92826dbf90238085c915a665058f302156355",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fe45aba_b66a9e49",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5180,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2023-07-12T18:20:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure why lmkd should stop monitoring PSI events while system_server is out. It still has records about apps, so should be able to do its job. Also, IIUC system_server crashes should be rare enough that optimizing lmkd not to wake up when that happens will not make much difference. I don\u0027t think it\u0027s worth any additional complexity.",
+      "parentUuid": "4d36c7bc_d5592165",
+      "revId": "91a92826dbf90238085c915a665058f302156355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
