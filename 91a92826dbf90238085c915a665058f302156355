@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e75580e_4cc339fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1882967
+      },
+      "writtenOn": "2023-07-12T01:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ddad068_f6b68c17",
+      "revId": "91a92826dbf90238085c915a665058f302156355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a3a8195_d49301c2",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-07-12T00:46:10Z",
       "side": 1,
       "message": "LowMemDetector.java is also listening on the PSI events, do you want to remove that too?",
+      "revId": "91a92826dbf90238085c915a665058f302156355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2eb083f_9e0aadea",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5180,
+      "author": {
+        "id": 1882967
+      },
+      "writtenOn": "2023-07-12T01:02:38Z",
+      "side": 1,
+      "message": "Hi Jing,\n\nThe goal of this CL was to make a configuration available for low resource devices to delay lmkd registering for PSI events. I think it is a good suggestion to do something similar for LowMemoryDetector as well. I can follow up that with another change. For this change, do you think just handling it for lmkd would be good enough?",
+      "parentUuid": "0a3a8195_d49301c2",
       "revId": "91a92826dbf90238085c915a665058f302156355",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
