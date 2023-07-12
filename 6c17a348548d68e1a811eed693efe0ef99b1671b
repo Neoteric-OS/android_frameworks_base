@@ -33,6 +33,23 @@
       "message": "This is probably applicable only to legacy resizing so soon enough this will not be the way task resizes, but it still does fix an issue in the current release.",
       "revId": "6c17a348548d68e1a811eed693efe0ef99b1671b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d034f90_428b80e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2023-07-12T16:55:17Z",
+      "side": 1,
+      "message": "It took a fairly long time. This change now needs to go into main branch instead.",
+      "revId": "6c17a348548d68e1a811eed693efe0ef99b1671b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
