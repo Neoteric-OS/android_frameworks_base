@@ -87,6 +87,24 @@
       "parentUuid": "a2eb083f_9e0aadea",
       "revId": "91a92826dbf90238085c915a665058f302156355",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d36c7bc_d5592165",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5180,
+      "author": {
+        "id": 1882967
+      },
+      "writtenOn": "2023-07-12T16:30:25Z",
+      "side": 1,
+      "message": "Thanks Jing!.\n\nAs per my understanding, there is no support for doing that in lmkd now. However, I think we should be able to refactor the current changes a bit to enable that. I think @surenb@google.com may have opinions about it. On a separate note, are you looking at performance gains itself as a benefit of doing this?",
+      "parentUuid": "4b1101f4_da648a1a",
+      "revId": "91a92826dbf90238085c915a665058f302156355",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
