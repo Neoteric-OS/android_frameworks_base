@@ -50,6 +50,40 @@
       "message": "I don\u0027t have any knowledge on this. So removing myself from the reviewers list",
       "revId": "5abc5e123494fd97bf7327dd3b0bb733cded60f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e99989e_1bee1389",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3651,
+      "author": {
+        "id": 1967295
+      },
+      "writtenOn": "2023-07-12T17:33:19Z",
+      "side": 1,
+      "message": "this seems redundant if the sim data is keyed by slotId, would we expect these values to be equal?",
+      "revId": "5abc5e123494fd97bf7327dd3b0bb733cded60f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65c418da_275a7947",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3652,
+      "author": {
+        "id": 1967295
+      },
+      "writtenOn": "2023-07-12T17:33:19Z",
+      "side": 1,
+      "message": "if we check whether we contain the key here, then does the line above make sense?",
+      "revId": "5abc5e123494fd97bf7327dd3b0bb733cded60f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
