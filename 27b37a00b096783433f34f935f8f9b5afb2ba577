@@ -67,6 +67,23 @@
       "message": "Let\u0027s merge this first and after that, I\u0027ll cherry-pick this to udc-tv-dev.",
       "revId": "27b37a00b096783433f34f935f8f9b5afb2ba577",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80ba9621_80a9e671",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2023-07-13T12:40:59Z",
+      "side": 1,
+      "message": "Please check the test failure in presubmit.",
+      "revId": "27b37a00b096783433f34f935f8f9b5afb2ba577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
