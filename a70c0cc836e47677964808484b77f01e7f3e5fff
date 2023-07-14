@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebe20c3c_40305060",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2023-07-14T05:19:39Z",
+      "side": 1,
+      "message": "This looks like an expected behavior - place a window in letterboxed environment in split screen if its bounds doesn\u0027t fit the request orientation. +erosky@ to double check that.",
+      "revId": "a70c0cc836e47677964808484b77f01e7f3e5fff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
