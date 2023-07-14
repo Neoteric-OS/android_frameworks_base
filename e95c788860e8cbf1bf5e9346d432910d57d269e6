@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "595a1433_62113aef",
+        "filename": "packages/Keyguard/proguard.flags",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2023-07-14T19:00:09Z",
+      "side": 0,
+      "message": "Oof.",
+      "revId": "e95c788860e8cbf1bf5e9346d432910d57d269e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f0e9a80_6fb31402",
+        "filename": "startop/apps/ColorChanging/app/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2023-07-14T19:00:09Z",
+      "side": 0,
+      "message": "Btw we ought to review this.\nParticularly these parts:\n\n```\n-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*\n\n-keepclassmembers public class * extends android.view.View {\n   void set*(***);\n   *** get*();\n}\n\n-keepclassmembers class * extends android.app.Activity {\n   public void *(android.view.View);\n}\n```\n\nI get the part about no class merging, but the other disabled optimizations look questionable to me.",
+      "range": {
+        "startLine": 17,
+        "startChar": 50,
+        "endLine": 17,
+        "endChar": 79
+      },
+      "revId": "e95c788860e8cbf1bf5e9346d432910d57d269e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
