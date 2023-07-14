@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9af10770_dd4228e4",
+        "filename": "packages/Keyguard/proguard.flags",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-07-14T20:13:09Z",
+      "side": 0,
+      "message": "Heh, turns out this file isn\u0027t even referenced anywhere any longer, at least not that I could find...",
+      "parentUuid": "595a1433_62113aef",
+      "revId": "e95c788860e8cbf1bf5e9346d432910d57d269e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f0e9a80_6fb31402",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-07-14T19:00:09Z",
       "side": 0,
       "message": "Btw we ought to review this.\nParticularly these parts:\n\n```\n-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*\n\n-keepclassmembers public class * extends android.view.View {\n   void set*(***);\n   *** get*();\n}\n\n-keepclassmembers class * extends android.app.Activity {\n   public void *(android.view.View);\n}\n```\n\nI get the part about no class merging, but the other disabled optimizations look questionable to me.",
+      "range": {
+        "startLine": 17,
+        "startChar": 50,
+        "endLine": 17,
+        "endChar": 79
+      },
+      "revId": "e95c788860e8cbf1bf5e9346d432910d57d269e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61c89e61_d0f1bb90",
+        "filename": "startop/apps/ColorChanging/app/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-07-14T20:13:09Z",
+      "side": 0,
+      "message": "Fully agreed. I think the View-specific rules were aimed to handling some of the common animator reflection uses (see https://developer.android.com/reference/android/animation/ObjectAnimator), but even that is suspect these days and is worth some warning/linting. We can discuss more as part of b/290626360.",
+      "parentUuid": "8f0e9a80_6fb31402",
       "range": {
         "startLine": 17,
         "startChar": 50,
