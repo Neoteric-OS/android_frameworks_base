@@ -102,6 +102,24 @@
       "parentUuid": "80ba9621_80a9e671",
       "revId": "27b37a00b096783433f34f935f8f9b5afb2ba577",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "479850e1_56f22503",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2023-07-14T07:46:51Z",
+      "side": 1,
+      "message": "2 unit tests are failing consistently. This is probably reproducible if your run the tests locally.\n\n```\njava.lang.AssertionError\n\tat org.junit.Assert.fail(Assert.java:87)\n\tat org.junit.Assert.assertTrue(Assert.java:42)\n\tat org.junit.Assert.assertTrue(Assert.java:53)\n\tat com.android.server.hdmi.HdmiCecLocalDeviceTvTest.handleReportAudioStatus_SamOnArcOff_setStreamVolumeNotCalled(HdmiCecLocalDeviceTvTest.java:616)\n```\n\n```\nexpected to be true\n\tat com.android.server.hdmi.SystemAudioAutoInitiationActionTest.testReceiveSystemAudioMode_systemAudioOn(SystemAudioAutoInitiationActionTest.java:159)\n```",
+      "parentUuid": "86cc7dfe_6a7d85a1",
+      "revId": "27b37a00b096783433f34f935f8f9b5afb2ba577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
