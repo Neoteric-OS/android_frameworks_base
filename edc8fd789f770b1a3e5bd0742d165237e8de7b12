@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "579ab10a_fdbf1096",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2023-07-14T09:27:15Z",
+      "side": 1,
+      "message": "also, you can remove (1/2) here and (2/2) from the vold change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "edc8fd789f770b1a3e5bd0742d165237e8de7b12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "29e93595_f897f6c7",
