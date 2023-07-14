@@ -8540,6 +8540,12 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             return;
         }
 
+        final boolean isResizeable = task != null
+                ? task.isResizeable(false) || isResizeable(false) : isResizeable(false);
+        if (WindowConfiguration.inMultiWindowMode(getWindowingMode()) && isResizeable) {
+            return;
+        }
+
         final Rect resolvedBounds =
                 getResolvedOverrideConfiguration().windowConfiguration.getBounds();
         final int parentOrientation = newParentConfig.orientation;
