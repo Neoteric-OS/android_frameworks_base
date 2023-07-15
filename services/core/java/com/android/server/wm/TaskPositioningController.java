@@ -137,11 +137,26 @@ class TaskPositioningController {
             Task task;
             CompletableFuture<Boolean> startPositioningLockedFuture;
             synchronized (mService.mGlobalLock) {
+<<<<<<< PATCH SET (d7ad45 Remove the duplicated word in the comment for TaskPositionin)
+                final Task task = displayContent.findTaskForResizePoint(x, y);
+                if (task != null) {
+                    if (!task.isResizeable()) {
+                        // The task is not resizable, so don't do anything when the user drags the
+                        // resize handles.
+                        return;
+                    }
+                    if (!startPositioningLocked(task.getTopVisibleAppMainWindow(), true /*resize*/,
+                            task.preserveOrientationOnResize(), x, y)) {
+                        return;
+                    }
+                    mService.mAtmService.setFocusedTask(task.mTaskId);
+=======
                 task = displayContent.findTaskForResizePoint(x, y);
                 if (task == null || !task.isResizeable()) {
                     // The task is not resizable, so don't do anything when the user drags the
                     // the resize handles.
                     return;
+>>>>>>> BASE      (fbba8e Merge "Convert frameworks-base-overlays to Android.bp" into )
                 }
                 startPositioningLockedFuture =
                     startPositioningLocked(task.getTopVisibleAppMainWindow(), true /*resize*/,
