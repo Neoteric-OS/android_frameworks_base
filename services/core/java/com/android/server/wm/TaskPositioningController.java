@@ -120,7 +120,7 @@ class TaskPositioningController {
                 if (task != null) {
                     if (!task.isResizeable()) {
                         // The task is not resizable, so don't do anything when the user drags the
-                        // the resize handles.
+                        // resize handles.
                         return;
                     }
                     if (!startPositioningLocked(task.getTopVisibleAppMainWindow(), true /*resize*/,
