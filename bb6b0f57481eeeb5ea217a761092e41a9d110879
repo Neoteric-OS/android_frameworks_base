@@ -16,6 +16,23 @@
       "message": "Test failure looks unrelated, trying again.",
       "revId": "bb6b0f57481eeeb5ea217a761092e41a9d110879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "959da827_127909f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-07-17T08:03:44Z",
+      "side": 1,
+      "message": "@maco, could you please merge the changes, if there are no issues",
+      "revId": "bb6b0f57481eeeb5ea217a761092e41a9d110879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
