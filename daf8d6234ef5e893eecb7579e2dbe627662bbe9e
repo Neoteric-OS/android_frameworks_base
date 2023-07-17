@@ -46,6 +46,30 @@
       },
       "revId": "daf8d6234ef5e893eecb7579e2dbe627662bbe9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1317bef_63974882",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6305,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2023-07-17T09:44:00Z",
+      "side": 0,
+      "message": "Thanks! Looks like the rest changes should not be needed and can be removed. Could the rest of the changes be removed?",
+      "parentUuid": "d760a03c_ed44d9d3",
+      "range": {
+        "startLine": 6305,
+        "startChar": 8,
+        "endLine": 6305,
+        "endChar": 42
+      },
+      "revId": "daf8d6234ef5e893eecb7579e2dbe627662bbe9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
