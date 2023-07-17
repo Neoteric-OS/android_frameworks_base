@@ -86,7 +86,6 @@ import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.os.ShellCommand;
 import android.os.SystemClock;
-import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -3197,6 +3196,7 @@ class PackageManagerShellCommand extends ShellCommand {
         }
         if (forceNonStaged) {
             sessionParams.isStaged = false;
+            sessionParams.installFlags |= PackageManager.INSTALL_FORCE_NON_STAGED_APEX_UPDATE;
         }
         return params;
     }
