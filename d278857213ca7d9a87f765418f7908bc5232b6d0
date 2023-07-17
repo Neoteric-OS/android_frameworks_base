@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9e947d64_57ae632f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-07-17T22:14:48Z",
+      "side": 1,
+      "message": "Yep, byte-wise identical.\n\nThat said, I decided to pull out the *Transport changes into a separate CL as I want to put in a safeguard in case those targets enable obfuscation in the future. They were identical with the earlier patchset, but looks like there\u0027s a dangling class name lookup in system_server (https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/backup/java/com/android/server/backup/keyvalue/KeyValueBackupTask.java;drc\u003dc1e318361832688d735c01dfab5118633428e20e;l\u003d618).",
+      "parentUuid": "30e32e3a_fb07db31",
+      "range": {
+        "startLine": 10,
+        "startChar": 41,
+        "endLine": 11,
+        "endChar": 6
+      },
+      "revId": "d278857213ca7d9a87f765418f7908bc5232b6d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "dedbcdab_c8f9761a",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
