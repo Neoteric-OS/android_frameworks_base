@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92e34909_0a4d7e96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1967185
+      },
+      "writtenOn": "2023-07-18T16:44:13Z",
+      "side": 1,
+      "message": "This would lead to the carrier text being inaccessible in situations where there are 2+ carriers with long names, or the display or font size is increased. Carriers require that string to be always accessible, and the marquee allows an arbitrary length string to be used.",
+      "revId": "45b84b5d963a77d73f97458e5e8370a3af511a7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
