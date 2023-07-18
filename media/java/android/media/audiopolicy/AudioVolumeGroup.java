@@ -50,6 +50,7 @@ public final class AudioVolumeGroup implements Parcelable {
      * Unique identifier of a volume group.
      */
     private int mId;
+
     /**
      * human-readable name of this volume group.
      */
@@ -202,12 +203,10 @@ public final class AudioVolumeGroup implements Parcelable {
     @Override
     public @NonNull String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("\n Name: ");
-        s.append(mName);
-        s.append(" Id: ");
-        s.append(Integer.toString(mId));
-
-        s.append("\n     Supported Audio Attributes:");
+        s.append("\n").append(indent);
+        s.append("Name: ").append(mName);
+        s.append(" Id: ").append(Integer.toString(mId));
+        s.append("\n").append(indent).append(indent).append("Supported Audio Attributes:");
         for (AudioAttributes attribute : mAudioAttributes) {
             s.append("\n       -");
             s.append(attribute.toString());
