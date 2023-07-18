@@ -52,6 +52,24 @@
       "parentUuid": "760bf2e9_e018c646",
       "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1068d252_6ce868be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-07-18T17:32:15Z",
+      "side": 1,
+      "message": "When you trigger these operations, Settings app explicitly prompts for authenticating for non-current CE locked users which unlocks the CE Storage for those users. The entry point for unlocking are given as follows:\n\nMove Content: https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Settings/src/com/android/settings/deviceinfo/StorageWizardMigrateConfirm.java;l\u003d100-116\n\nMove App: https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Settings/src/com/android/settings/deviceinfo/StorageWizardMoveConfirm.java;l\u003d82-97\n\nCurrently, this operation from Settings only unlocks the internal storage (adopted storage is being fixed with this change)\n\nFor Move Content the actual work is done by vold (Via StorageManagerService):\nRef:\nSM: https://cs.android.com/android/platform/superproject/main/+/refs/heads/main:frameworks/base/services/core/java/com/android/server/StorageManagerService.java;drc\u003d84c211366fe898b3d08337521c7cdb5e93691122;bpv\u003d1;bpt\u003d1;l\u003d2974?q\u003d%20movePrimaryStorage\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain\u0026start\u003d1\nvold: https://cs.android.com/android/platform/superproject/main/+/main:system/vold/MoveStorage.cpp;l\u003d192;bpv\u003d1;bpt\u003d0\n\n\nFor Move Content the actual work is done by installd (Via PackageManagerService):\nRefs:\nPM: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/MovePackageHelper.java;l\u003d78;drc\u003d84c211366fe898b3d08337521c7cdb5e93691122;bpv\u003d0;bpt\u003d1\n\ninstalld: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/native/cmds/installd/InstalldNativeService.cpp;l\u003d995;bpv\u003d0;bpt\u003d1",
+      "parentUuid": "36049afc_135111cf",
+      "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
