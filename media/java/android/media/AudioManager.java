@@ -1546,6 +1546,28 @@ public class AudioManager {
     }
 
     /**
+     * Returns the volume group id associated to the given {@link AudioAttributes} and zoneId.
+     *
+     * @param attributes The {@link AudioAttributes} to consider.
+     * @param zoneId to consider.
+     * @return audio volume group id supporting the given {@link AudioAttributes} if found,
+     * {@code android.media.audiopolicy.AudioVolumeGroup.DEFAULT_VOLUME_GROUP} otherwise.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MODIFY_AUDIO_ROUTING,
+            Manifest.permission.QUERY_AUDIO_STATE,
+            Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int getVolumeGroupIdForAttributes(@NonNull AudioAttributes attributes, int zoneId) {
+        Preconditions.checkNotNull(attributes, "Audio Attributes must not be null");
+        return AudioProductStrategy.getVolumeGroupIdForAudioAttributes(attributes, zoneId,
+                /* fallbackOnDefault= */ true);
+    }
+
+    /**
      * Sets the volume index for a particular group associated to given id.
      * <p> Call first in prior {@link #getVolumeGroupIdForAttributes(AudioAttributes)}
      * to retrieve the volume group id supporting the given {@link AudioAttributes}.
