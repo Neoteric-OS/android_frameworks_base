@@ -34,6 +34,24 @@
       "parentUuid": "ea3c5cf1_c758204e",
       "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36049afc_135111cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-07-18T17:03:44Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with \"move content\" and \"move app\", sorry.  Are you saying they attempt to move CE data files that belong to non-current users?  That doesn\u0027t seem correct, as there is no guarantee that CE data files that belong to non-current users are unlocked, regardless of whether they\u0027re on internal or adoptable storage.  Have you looked into the root cause of why/how these operations are attempting to move CE data files of non-current users?",
+      "parentUuid": "760bf2e9_e018c646",
+      "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
