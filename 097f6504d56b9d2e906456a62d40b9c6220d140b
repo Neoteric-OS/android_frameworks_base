@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eca08e36_1ff394c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-07-18T05:50:57Z",
+      "side": 1,
+      "message": "+2 display/TV as team have confirmed",
+      "revId": "097f6504d56b9d2e906456a62d40b9c6220d140b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
