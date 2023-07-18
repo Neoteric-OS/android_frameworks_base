@@ -70,6 +70,24 @@
       "parentUuid": "36049afc_135111cf",
       "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caf63238_2f13085d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-07-18T18:12:56Z",
+      "side": 1,
+      "message": "\u003e When you trigger these operations, Settings app explicitly prompts for authenticating for non-current CE locked users which unlocks the CE Storage for those users.\n\nHuh, that\u0027s very interesting!  I guess your change to \"unlock\" is needed then.  Can you make sure to call out explicitly in your code comments and commit message that \"move content\" and \"move app\" involve unlocking the CE keys (via lockscreen credential prompts) of users who aren\u0027t currently running?  That\u0027s essential for understanding why this is needed.",
+      "parentUuid": "1068d252_6ce868be",
+      "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
