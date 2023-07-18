@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea3c5cf1_c758204e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-07-18T16:16:53Z",
+      "side": 1,
+      "message": "Thanks for pointing out that the lock is missing for adoptable storage.  That\u0027s probably something that should be added.  (Note: adoptable storage in general is not considered a high priority or recommended to use feature, which I assume is why this has been left out until now.)\n\nIt\u0027s less clear to me why your commit is changing how the unlocking of adoptable storage happens.  Normally the unlocking happens in fscrypt_prepare_user_storage(), which runs when the user is being started.  In your commit message, you mention \"when storage is unlocked outside of user-switch scenarios\".  When and how does that happen, exactly?",
+      "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
