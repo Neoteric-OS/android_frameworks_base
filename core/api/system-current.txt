@@ -6954,7 +6954,10 @@ package android.media.audiopolicy {
     method @NonNull public android.media.AudioAttributes getAudioAttributes();
     method public int getId();
     method @NonNull public String getName();
+    method @FlaggedApi("android.media.audiopolicy.multi_zone_audio") public int getVolumeGroupIdForAudioAttributes(@NonNull android.media.AudioAttributes, int);
+    method @FlaggedApi("android.media.audiopolicy.multi_zone_audio") public int getZoneId();
     method public boolean supportsAudioAttributes(@NonNull android.media.AudioAttributes);
+    method @FlaggedApi("android.media.audiopolicy.multi_zone_audio") public boolean supportsAudioAttributes(@NonNull android.media.AudioAttributes, int);
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.media.audiopolicy.AudioProductStrategy> CREATOR;
   }
