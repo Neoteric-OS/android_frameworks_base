@@ -16,6 +16,7 @@
 
 package android.media.audiopolicy;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -50,6 +51,9 @@ public final class AudioVolumeGroup implements Parcelable {
      * Unique identifier of a volume group.
      */
     private int mId;
+
+    private int mZoneId = AudioProductStrategy.DEFAULT_ZONE_ID;
+
     /**
      * human-readable name of this volume group.
      */
@@ -122,7 +126,7 @@ public final class AudioVolumeGroup implements Parcelable {
 
         AudioVolumeGroup thatAvg = (AudioVolumeGroup) o;
 
-        return mName.equals(thatAvg.mName) && mId == thatAvg.mId
+        return mName.equals(thatAvg.mName) && mId == thatAvg.mId && mZoneId == thatAvg.mZoneId
                 && Arrays.equals(mAudioAttributes, thatAvg.mAudioAttributes);
     }
 
@@ -202,12 +206,10 @@ public final class AudioVolumeGroup implements Parcelable {
     @Override
     public @NonNull String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("\n Name: ");
-        s.append(mName);
-        s.append(" Id: ");
-        s.append(Integer.toString(mId));
-
-        s.append("\n     Supported Audio Attributes:");
+        s.append("\n").append(indent);
+        s.append("Name: ").append(mName);
+        s.append(" Id: ").append(Integer.toString(mId));
+        s.append("\n").append(indent).append(indent).append("Supported Audio Attributes:");
         for (AudioAttributes attribute : mAudioAttributes) {
             s.append("\n       -");
             s.append(attribute.toString());
