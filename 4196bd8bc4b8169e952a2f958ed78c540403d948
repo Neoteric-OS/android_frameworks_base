@@ -16,6 +16,24 @@
       "message": "Thanks for pointing out that the lock is missing for adoptable storage.  That\u0027s probably something that should be added.  (Note: adoptable storage in general is not considered a high priority or recommended to use feature, which I assume is why this has been left out until now.)\n\nIt\u0027s less clear to me why your commit is changing how the unlocking of adoptable storage happens.  Normally the unlocking happens in fscrypt_prepare_user_storage(), which runs when the user is being started.  In your commit message, you mention \"when storage is unlocked outside of user-switch scenarios\".  When and how does that happen, exactly?",
       "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "760bf2e9_e018c646",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-07-18T16:48:48Z",
+      "side": 1,
+      "message": "There are two cases where we will run into the problem:\n1. When \"Move Content\" is triggered, i.e., migration of media to from internal storage and Adopted storage (and vice versa) from Settings.\n2. When move app is triggered (for supported apps) which moves the app-data files from internal storage to adopted storage (and vice versa) from Settings.\n\nIn these two cases when the system tries to copy over the files, the adopted storage stays locked so those operations fail. This is specific to a situation where multi-user has been enabled in a device (as for the current running user the storage stays unlocked as long the user has authenticated)",
+      "parentUuid": "ea3c5cf1_c758204e",
+      "revId": "4196bd8bc4b8169e952a2f958ed78c540403d948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
