@@ -16,6 +16,9 @@
 
 package android.media;
 
+import static com.android.media.codec.flags.Flags.FLAG_CODEC_IMPORTANCE;
+
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -1634,6 +1637,34 @@ public final class MediaFormat {
      * {@link MediaCodec} describes the semantics.
      */
     public static final String KEY_ALLOW_FRAME_DROP = "allow-frame-drop";
+
+    /**
+     * A key describing the desired codec importance.
+     * <p>
+     * The associated value is a positive integer including integer.
+     * Higher value means lesser importance.
+     * <p>
+     * The codec importance may be used during the codec reclaim based on the
+     * reclaim policy.
+     * If the reclaim policy allows the Android media resource manager to reclaim codecs based on
+     * the codec importance, then Applications must expect codecs with lesser important to be
+     * reclaimed by the framework for a higher important codec and the system cannot support all
+     * of the instances concurrently.
+     * <p>
+     * The codec importance can be set:
+     * <ul>
+     * <li>through {@link MediaCodec#configure}. </li>
+     * <li>through {@link MediaCodec#setParameters} if the codec has been configured already,
+     * which allows the users to change the codec importance multiple times.
+     * </ul>
+     * Any change/update in codec importance is guaranteed upon the complition of the function call
+     * that sets the codec importance. So, in case of concurrent codec operations,
+     * make sure to wait for the change in codec importance, before using another codec.
+     * Note that unless specified, by default the codecs will have highest importance (of value 0).
+     *
+     */
+    @FlaggedApi(FLAG_CODEC_IMPORTANCE)
+    public static final String KEY_CODEC_IMPORTANCE = "codec-importance";
 
     /* package private */ MediaFormat(@NonNull Map<String, Object> map) {
         mMap = map;

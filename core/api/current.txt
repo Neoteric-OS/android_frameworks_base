@@ -23608,6 +23608,7 @@ package android.media {
     field public static final String KEY_CHANNEL_COUNT = "channel-count";
     field public static final String KEY_CHANNEL_MASK = "channel-mask";
     field public static final String KEY_CODECS_STRING = "codecs-string";
+    field @FlaggedApi("com.android.media.codec.flags.codec_importance") public static final String KEY_CODEC_IMPORTANCE = "codec-importance";
     field public static final String KEY_COLOR_FORMAT = "color-format";
     field public static final String KEY_COLOR_RANGE = "color-range";
     field public static final String KEY_COLOR_STANDARD = "color-standard";
