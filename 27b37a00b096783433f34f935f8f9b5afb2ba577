@@ -137,6 +137,24 @@
       "message": "Hi Mediatek,\n\nIt looks some tests are still failing. Did you run the unit tests locally?\n\nHdmiCecLocalDeviceTvTest:\n- disablearc_SamRemainsOn \n- fromArcToEarc_SamRemainsOn \n- handleReportAudioStatus_SamOnArcOff_setStreamVolumeNotCalled \n\nSystemAudioAutoInitiationActionTest: testReceiveSystemAudioMode_systemAudioOn",
       "revId": "27b37a00b096783433f34f935f8f9b5afb2ba577",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2ba0a36_63a096fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2023-07-19T14:12:35Z",
+      "side": 1,
+      "message": "@daren.liao@mediatek.com",
+      "parentUuid": "7eae70d9_5ac2f990",
+      "revId": "27b37a00b096783433f34f935f8f9b5afb2ba577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
