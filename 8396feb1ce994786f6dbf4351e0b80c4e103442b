@@ -16,6 +16,24 @@
       "message": "Isn\u0027t this a cherry-pick of https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2626139 ?",
       "revId": "8396feb1ce994786f6dbf4351e0b80c4e103442b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c90bd7e_0ae086e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2004935
+      },
+      "writtenOn": "2023-07-19T01:52:41Z",
+      "side": 1,
+      "message": "we cannot access your change(2626139).\nIf this issue has already been fixed by this change (https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2626139), we will abandon our change.",
+      "parentUuid": "3fadf916_1fac210e",
+      "revId": "8396feb1ce994786f6dbf4351e0b80c4e103442b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
