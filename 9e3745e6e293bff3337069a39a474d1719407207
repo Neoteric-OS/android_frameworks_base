@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e83ca64_e0c3bbbc",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3322,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-07-19T23:49:31Z",
+      "side": 1,
+      "message": "I\u0027m wondering if the adoptable storage unlocking should just be built into `IVold#unlockUserKey()`, and likewise locking into `IVold#lockUserKey()`.  It doesn\u0027t look like `system_server` needs the flexibility to do anything else.  As you\u0027ve noticed, at a high level a user\u0027s CE storage is meant to be either locked or unlocked.  We never want to have different states on different volumes.  So, just making `IVold#unlockUserKey()` and `IVold#lockUserKey()` do the right thing seems desirable, and then this `StorageManagerService` change would be unnecessary.\n\nNote that `vold` already has access to volume information via its `VolumeManager`; it\u0027s actually where `StorageManagerService` gets it from in the first place!  So, it would be possible for `VoldNativeService::unlockUserKey()` and `VoldNativeService::lockUserKey()` to iterate through the volumes.  (A caveat is that `vold` wants `ACQUIRE_LOCK` to access the `VolumeManager`, but `ACQUIRE_CRYPT_LOCK` to do anything related to crypto.  We\u0027d probably need to collect the list of relevant volume uuids under `ACQUIRE_LOCK`, then process it under `ACQUIRE_CRYPT_LOCK`.)",
+      "range": {
+        "startLine": 3317,
+        "startChar": 0,
+        "endLine": 3322,
+        "endChar": 13
+      },
+      "revId": "9e3745e6e293bff3337069a39a474d1719407207",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
