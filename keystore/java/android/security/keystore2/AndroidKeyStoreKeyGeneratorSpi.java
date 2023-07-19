@@ -131,6 +131,7 @@ public abstract class AndroidKeyStoreKeyGeneratorSpi extends KeyGeneratorSpi {
             int keymasterAlgorithm,
             int defaultKeySizeBits) {
         this(keymasterAlgorithm, -1, defaultKeySizeBits);
+        mKeyStore.useCtsTestKeymintForSecurityLevel();
     }
 
     protected AndroidKeyStoreKeyGeneratorSpi(

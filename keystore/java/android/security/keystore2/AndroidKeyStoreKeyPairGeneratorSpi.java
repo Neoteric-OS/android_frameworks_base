@@ -334,6 +334,7 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
             mJcaKeyAlgorithm = jcaKeyAlgorithm;
             mRng = random;
             mKeyStore = KeyStore2.getInstance();
+            mKeyStore.useCtsTestKeymintForSecurityLevel();
 
             mAttestKeyDescriptor = buildAndCheckAttestKeyDescriptor(spec);
             checkAttestKeyPurpose(spec);
