@@ -45,6 +45,7 @@ import static android.os.storage.StorageManager.FLAG_STORAGE_CE;
 import static android.os.storage.StorageManager.FLAG_STORAGE_DE;
 import static android.os.storage.StorageManager.FLAG_STORAGE_EXTERNAL;
 
+import static com.android.internal.os.RoSystemProperties.FACTORYMODE;
 import static com.android.server.pm.InstructionSets.getAppDexInstructionSets;
 import static com.android.server.pm.InstructionSets.getDexCodeInstructionSet;
 import static com.android.server.pm.InstructionSets.getPreferredInstructionSet;
@@ -173,8 +174,10 @@ import com.android.server.utils.WatchedLongSparseArray;
 
 import dalvik.system.VMRuntime;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.security.DigestException;
 import java.security.DigestInputStream;
@@ -205,6 +208,7 @@ final class InstallPackageHelper {
     private final ViewCompiler mViewCompiler;
     private final SharedLibrariesImpl mSharedLibraries;
     private final PackageManagerServiceInjector mInjector;
+    private ArrayList<String> mDisableOnFactoryModePaths;
 
     // TODO(b/198166813): remove PMS dependency
     InstallPackageHelper(PackageManagerService pm, AppDataHelper appDataHelper) {
@@ -3467,6 +3471,10 @@ final class InstallPackageHelper {
                 // Ignore entries which are not packages
                 continue;
             }
+            if (FACTORYMODE && mDisableOnFactoryModePaths.contains(file.getPath())) {
+                Log.d(TAG, "Skip file : " + file.getPath());
+                continue;
+            }
             if ((scanFlags & SCAN_DROP_CACHE) != 0) {
                 final PackageCacher cacher = new PackageCacher(mPm.getCacheDir());
                 Log.w(TAG, "Dropping cache of " + file.getAbsolutePath());
@@ -3519,6 +3527,22 @@ final class InstallPackageHelper {
                         "Deleting invalid package at " + parseResult.scanFile);
                 mRemovePackageHelper.removeCodePathLI(parseResult.scanFile);
             }
+        }
+    }
+
+    void readDisableOnFactoryModePaths(File listFile) {
+        mDisableOnFactoryModePaths = new ArrayList<String>();
+        try (BufferedReader br = new BufferedReader(new FileReader(listFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.isEmpty() || line.startsWith("#")) {
+                    continue;
+                }
+                String p = line.trim();
+                mDisableOnFactoryModePaths.add(p);
+            }
+        } catch (IOException e) {
+            Slog.w(TAG, "Failed to read disable on factory mode paths config file " + listFile, e);
         }
     }
 
