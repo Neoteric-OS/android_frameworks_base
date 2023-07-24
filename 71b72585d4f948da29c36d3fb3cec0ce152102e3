@@ -16,6 +16,23 @@
       "message": "Hello,\n\nWe are developers of the Xiaomi team. We recently found that some system applications have lost storage permissions after releasing upgrade packages through Google Play, and the permission setting page cannot be re-granted. Therefore, we want to exempt the cases where the system has authorized storage permissions by default and cannot be modified.",
       "revId": "71b72585d4f948da29c36d3fb3cec0ce152102e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e952f7ca_bb91d674",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1572720
+      },
+      "writtenOn": "2023-07-24T16:30:52Z",
+      "side": 1,
+      "message": "Have you filed a bug regarding this issue? If so, could you please add a \"Bug: $BUG_NUMBER\" line to the description?",
+      "revId": "71b72585d4f948da29c36d3fb3cec0ce152102e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
