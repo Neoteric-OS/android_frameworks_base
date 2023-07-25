@@ -33,6 +33,24 @@
       "message": "Have you filed a bug regarding this issue? If so, could you please add a \"Bug: $BUG_NUMBER\" line to the description?",
       "revId": "71b72585d4f948da29c36d3fb3cec0ce152102e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f14fd880_c919f720",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-07-25T01:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e03e8179_fcdf6663",
+      "revId": "71b72585d4f948da29c36d3fb3cec0ce152102e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
