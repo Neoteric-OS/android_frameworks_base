@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d9541af_8704f82e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-07-26T12:57:52Z",
+      "side": 1,
+      "message": "Unable to submit automatically, please help to submit manually.",
+      "revId": "e7b8f467c071662e80d51e6531869711993529ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
