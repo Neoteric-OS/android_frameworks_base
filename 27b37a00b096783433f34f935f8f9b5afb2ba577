@@ -155,6 +155,24 @@
       "parentUuid": "7eae70d9_5ac2f990",
       "revId": "27b37a00b096783433f34f935f8f9b5afb2ba577",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "347985c7_18a5942f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1538561
+      },
+      "writtenOn": "2023-07-26T08:05:14Z",
+      "side": 1,
+      "message": "Hi Paul,\nSorry for late reply, we did run the unit tests locally before, but not in Android U.\nCurrently, we are checking why these testcases are failed.\nWe will update and fix this.",
+      "parentUuid": "d2ba0a36_63a096fd",
+      "revId": "27b37a00b096783433f34f935f8f9b5afb2ba577",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
