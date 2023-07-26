@@ -69,6 +69,24 @@
       "parentUuid": "2f3c4234_fbc38400",
       "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "520f3ea4_86ae10cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-07-26T20:55:59Z",
+      "side": 1,
+      "message": "\u003e Normally one should register the callback and cache the last observed state, which can be used to implement isResumed locally.\n\nYeah, that is what the class `NfcActivityManager.java` tries to do. But, how do we get the current state before we get some state transition callback? should we just assume that it is resumed?",
+      "parentUuid": "67b5c58e_1d652907",
+      "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
