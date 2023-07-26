@@ -33,6 +33,24 @@
       "message": "Normally functionality that needs to know the lifecycle state should be implemented by subscribing to Application.ActivityLifecycleCallbacks. This would also ensure that the developers implement the necessary state change handling.\n\nWhat is the reason why it can\u0027t be used?",
       "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f3c4234_fbc38400",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-07-26T20:39:42Z",
+      "side": 1,
+      "message": "NFC stack has a bunch of these usages which were added maybe before ActivityLifeCycleCallbacks.\n\nBut, even with ActivityLifeCycleCallbacks, we do use isResumed() to get the current state when the app registers an activity for NFC operation (See [here](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/core/java/android/nfc/NfcActivityManager.java;l\u003d121?q\u003dNfcActivityManage\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20b:main))",
+      "parentUuid": "021a9509_6e05be73",
+      "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
