@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a3ed1b7_490085d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2009035
+      },
+      "writtenOn": "2023-07-26T21:06:16Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t realize that uploading independent changes as one branch would prevent them from being merged separately. Rebasing to fix that...",
+      "revId": "cea4b1480517600c5e47482dcc39f9376e404597",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
