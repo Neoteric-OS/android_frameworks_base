@@ -16,6 +16,23 @@
       "message": "Hi, I need an owner\u0027s review for this CL.",
       "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "021a9509_6e05be73",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2023-07-26T20:37:06Z",
+      "side": 1,
+      "message": "Normally functionality that needs to know the lifecycle state should be implemented by subscribing to Application.ActivityLifecycleCallbacks. This would also ensure that the developers implement the necessary state change handling.\n\nWhat is the reason why it can\u0027t be used?",
+      "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
