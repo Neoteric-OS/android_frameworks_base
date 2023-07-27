@@ -53,6 +53,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 import javax.crypto.Mac;
 
 /**
@@ -725,6 +726,10 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
             super(session);
         }
 
+        public CryptoObject(@NonNull KeyAgreement keyAgreement) {
+            super(keyAgreement);
+        }
+
         /**
          * Get {@link Signature} object.
          * @return {@link Signature} object or null if this doesn't contain one.
@@ -765,6 +770,14 @@ public class BiometricPrompt implements BiometricAuthenticator, BiometricConstan
          */
         public @Nullable PresentationSession getPresentationSession() {
             return super.getPresentationSession();
+        }
+
+        /**
+         * Get {@link KeyAgreement} object.
+         * @return {@link KeyAgreement} object or null if this doesn't contain one.
+         */
+        public @Nullable PresentationSession getKeyAgreement() {
+            return super.getKeyAgreement();
         }
     }
 
