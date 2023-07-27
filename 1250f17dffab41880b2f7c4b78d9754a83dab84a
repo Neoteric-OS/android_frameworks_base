@@ -123,6 +123,24 @@
       "parentUuid": "a25a4012_fe32c4b1",
       "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3baea496_48a64f07",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2023-07-27T20:49:42Z",
+      "side": 1,
+      "message": "@ilake@google.com @diegovela@google.com @louischang@google.com I imagine that `Application.ActivityLifecycleCallbacks` not returning the current state upon registration might be a common inconvenience for libraries that need to know the current state (assuming the app doesn\u0027t use any AndroidX wrappers or initializers). \n\nDo you have any recommendations? Should we consider a version of the lifecycle callback API in the platform that would immediately report the current state upon registration? Or a direct way to synchronously get the current Activity state similar to `LifecycleOwner` / `Lifecycle`?",
+      "parentUuid": "0d45ae55_2fafba3a",
+      "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
