@@ -17333,6 +17333,7 @@ package android.hardware.biometrics {
     ctor public BiometricPrompt.CryptoObject(@NonNull java.security.Signature);
     ctor public BiometricPrompt.CryptoObject(@NonNull javax.crypto.Cipher);
     ctor public BiometricPrompt.CryptoObject(@NonNull javax.crypto.Mac);
+    ctor public BiometricPrompt.CryptoObject(@NonNull javax.crypto.KeyAgreement);
     ctor @Deprecated public BiometricPrompt.CryptoObject(@NonNull android.security.identity.IdentityCredential);
     ctor public BiometricPrompt.CryptoObject(@NonNull android.security.identity.PresentationSession);
     method public javax.crypto.Cipher getCipher();
@@ -17340,6 +17341,7 @@ package android.hardware.biometrics {
     method public javax.crypto.Mac getMac();
     method @Nullable public android.security.identity.PresentationSession getPresentationSession();
     method public java.security.Signature getSignature();
+    method @Nullable public javax.crypto.KeyAgreement getKeyAgreement();
   }
 
 }

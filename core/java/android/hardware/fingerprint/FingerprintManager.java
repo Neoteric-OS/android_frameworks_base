@@ -75,6 +75,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 import javax.crypto.Mac;
 
 /**
@@ -231,7 +232,8 @@ public class FingerprintManager implements BiometricAuthenticator, BiometricFing
 
     /**
      * A wrapper class for the crypto objects supported by FingerprintManager. Currently the
-     * framework supports {@link Signature}, {@link Cipher} and {@link Mac} objects.
+     * framework supports {@link Signature}, {@link Cipher}, {@link Mac} and
+     * {@link KeyAgreement} objects.
      * @deprecated See {@link android.hardware.biometrics.BiometricPrompt.CryptoObject}
      */
     @Deprecated
@@ -246,6 +248,10 @@ public class FingerprintManager implements BiometricAuthenticator, BiometricFing
 
         public CryptoObject(@NonNull Mac mac) {
             super(mac);
+        }
+
+        public CryptoObject(@NonNull KeyAgreement keyAgreement) {
+            super(keyAgreement);
         }
 
         /**
@@ -270,6 +276,15 @@ public class FingerprintManager implements BiometricAuthenticator, BiometricFing
          */
         public Mac getMac() {
             return super.getMac();
+        }
+
+        /**
+         * Get {@link KeyAgreement} object.
+         * @return {@link KeyAgreement} object or null if this doesn't contain one.
+         */
+        @Nullable
+        public KeyAgreement getKeyAgreement() {
+            return super.getKeyAgreement();
         }
 
         /**

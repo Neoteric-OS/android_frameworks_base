@@ -24,12 +24,14 @@ import android.security.keystore2.AndroidKeyStoreProvider;
 import java.security.Signature;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyAgreement;
 import javax.crypto.Mac;
 
 /**
  * A wrapper class for the crypto objects supported by BiometricPrompt and FingerprintManager.
  * Currently the framework supports {@link Signature}, {@link Cipher}, {@link Mac},
- * {@link IdentityCredential}, and {@link PresentationSession} objects.
+ * {@link KeyAgreement}, {@link IdentityCredential}, and {@link PresentationSession}
+ * objects.
  * @hide
  */
 public class CryptoObject {
@@ -60,6 +62,10 @@ public class CryptoObject {
 
     public CryptoObject(@NonNull PresentationSession session) {
         mCrypto = session;
+    }
+
+    public CryptoObject(@NonNull KeyAgreement keyAgreement) {
+        mCrypto = keyAgreement;
     }
 
     /**
@@ -102,6 +108,14 @@ public class CryptoObject {
      */
     public PresentationSession getPresentationSession() {
         return mCrypto instanceof PresentationSession ? (PresentationSession) mCrypto : null;
+    }
+
+    /**
+     * Get {@link KeyAgreement} object.
+     * @return {@link KeyAgreement} object or null if this doesn't contain one.
+     */
+    public PresentationSession getKeyAgreement() {
+        return mCrypto instanceof KeyAgreement ? (KeyAgreement) mCrypto : null;
     }
 
     /**
