@@ -105,6 +105,24 @@
       "parentUuid": "520f3ea4_86ae10cd",
       "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d45ae55_2fafba3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-07-27T17:07:59Z",
+      "side": 1,
+      "message": "Usage is [here](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/core/java/android/nfc/NfcAdapter.java;l\u003d1542?q\u003dNfcActivityManager\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20b:main). The NFC API accepts an activity from the app and we change NFC state based on the request. when the activity goes to paused state (i.e !isResumed()), we restore state back to what it was before the app request.\n\n\u003e can\u0027t find it in code. Can the lifecycle callback be registered in Application#onCreate, before any activities are live?\n\nSince the activity is provided by the app to the NFC stack, there is no guarantee that the activity is not created at that point of time.",
+      "parentUuid": "a25a4012_fe32c4b1",
+      "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
