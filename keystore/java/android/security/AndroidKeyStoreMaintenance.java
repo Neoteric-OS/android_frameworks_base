@@ -154,6 +154,19 @@ public class AndroidKeyStoreMaintenance {
     }
 
     /**
+     * Informs Keystore 2.0 that we are running CTS test.
+     */
+    public static void useTestKeymint() {
+        try {
+            getService().useCtsTestKeymintForSecurityLevel(true);
+        } catch (Exception e) {
+            // TODO This fails open. This is not a regression with respect to keystore1 but it
+            //      should get fixed.
+            Log.e(TAG, "Error while reporting device off body event.", e);
+        }
+    }
+
+    /**
      * Migrates a key given by the source descriptor to the location designated by the destination
      * descriptor.
      *

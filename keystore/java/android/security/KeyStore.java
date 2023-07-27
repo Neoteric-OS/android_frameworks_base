@@ -137,6 +137,13 @@ public class KeyStore {
     }
 
     /**
+     * Notify keystore that this is a CTS test.
+     */
+    public void useTestKeymint() {
+        AndroidKeyStoreMaintenance.useTestKeymint();
+    }
+
+    /**
      * Returns a {@link KeyStoreException} corresponding to the provided keystore/keymaster error
      * code.
      */

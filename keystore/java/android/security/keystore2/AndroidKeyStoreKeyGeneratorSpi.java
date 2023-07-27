@@ -19,6 +19,7 @@ package android.security.keystore2;
 import android.hardware.security.keymint.KeyParameter;
 import android.hardware.security.keymint.SecurityLevel;
 import android.security.KeyStore2;
+import android.security.KeyStoreException;
 import android.security.KeyStoreSecurityLevel;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keystore.ArrayUtils;
@@ -129,7 +130,7 @@ public abstract class AndroidKeyStoreKeyGeneratorSpi extends KeyGeneratorSpi {
 
     protected AndroidKeyStoreKeyGeneratorSpi(
             int keymasterAlgorithm,
-            int defaultKeySizeBits) {
+            int defaultKeySizeBits) throws KeyStoreException {
         this(keymasterAlgorithm, -1, defaultKeySizeBits);
     }
 

@@ -1177,6 +1177,7 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
     public void initForTesting(KeyStore2 keystore) {
         mKeyStore = keystore;
         mNamespace = KeyProperties.NAMESPACE_APPLICATION;
+        mKeyStore.useCtsTestKeymintForSecurityLevel();
     }
 
     @Override

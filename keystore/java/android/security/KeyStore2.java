@@ -170,6 +170,17 @@ public class KeyStore2 {
     }
 
     /**
+     * Get Keystore to use KeyMint shim for testing keymint/keystore interactions.
+     */
+    public void useCtsTestKeymintForSecurityLevel() throws KeyStoreException {
+        return handleRemoteExceptionWithRetry(
+                (service) -> {
+                    service.useCtsTestKeymintForSecurityLevel();
+                    return 0;
+                });
+    }
+
+    /**
      * Grant string prefix as used by the keystore boringssl engine. Must be kept in sync
      * with system/security/keystore-engine. Note: The prefix here includes the 0x which
      * std::stringstream used in keystore-engine needs to identify the number as hex represented.
@@ -272,9 +283,9 @@ public class KeyStore2 {
     public KeyStoreSecurityLevel getSecurityLevel(int securityLevel)
             throws KeyStoreException {
         return handleRemoteExceptionWithRetry((service) ->
-            new KeyStoreSecurityLevel(
-                    service.getSecurityLevel(securityLevel)
-            )
+                new KeyStoreSecurityLevel(
+                        service.getSecurityLevel(securityLevel)
+                )
         );
     }
 
