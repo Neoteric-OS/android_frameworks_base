@@ -340,6 +340,17 @@ public class KeyStore2 {
     }
 
     /**
+     * Get Keystore to use KeyMint shim for testing keymint/keystore interactions.
+     */
+    public void useCtsTestKeymintForSecurityLevel(boolean useKeymintTest) throws KeyStoreException {
+        handleRemoteExceptionWithRetry(
+            (service) -> {
+                service.useCtsTestKeymintForSecurityLevel(useKeymintTest);
+                return 0;
+        });
+    }
+
+    /**
      * Returns the number of Keystore entries for a given domain and namespace.
      */
     public int getNumberOfEntries(int domain, long namespace) throws KeyStoreException {

@@ -195,6 +195,7 @@ import com.android.server.security.AttestationVerificationManagerService;
 import com.android.server.security.FileIntegrityService;
 import com.android.server.security.KeyAttestationApplicationIdProviderService;
 import com.android.server.security.KeyChainSystemService;
+import com.android.server.security.KeyMintTestDeviceSystemService;
 import com.android.server.security.rkp.RemoteProvisioningService;
 import com.android.server.sensorprivacy.SensorPrivacyService;
 import com.android.server.sensors.SensorService;
@@ -3170,6 +3171,10 @@ public final class SystemServer implements Dumpable {
         } catch (Throwable e) {
             reportWtf("starting System UI", e);
         }
+        t.traceEnd();
+
+        t.traceBegin("KeyMintTestDevice");
+        mSystemServiceManager.startService(KeyMintTestDeviceSystemService.class);
         t.traceEnd();
 
         t.traceEnd(); // startOtherServices

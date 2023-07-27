@@ -19,13 +19,21 @@ package {
 aidl_interface {
     name: "android.security.aaid_aidl",
     srcs: ["android/security/keystore/*.aidl"],
+    imports: [ "android.hardware.security.keymint-V3", ],
     unstable: true,
     backend: {
+        java: {
+            platform_apis: true,
+        },
         rust: {
             enabled: true,
         },
         cpp: {
             enabled: true,
         },
+        ndk: {
+                    enabled: true,
+                    apps_enabled: false,
+                },
     },
 }
