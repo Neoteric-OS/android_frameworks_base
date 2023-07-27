@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bfcd24e_362dab27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-07-27T15:33:00Z",
+      "side": 1,
+      "message": "See the build failures  - you need to run `m api-stubs-docs-non-updatable-update-current-api` and re-upload to update the public API.",
+      "revId": "4bede3fdf2c71f9ba23cead4dd0f6428eb99d43c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
