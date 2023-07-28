@@ -6059,6 +6059,18 @@ public abstract class Context {
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.remote_auth.RemoteAuthManager} to discover,
+     * register and authenticate via remote authenticator  devices.
+     *
+     * @see #getSystemService(String)
+     * @see android.remote_auth.RemoteAuthManager
+     * @hide
+     */
+    @SystemApi
+    public static final String REMOTEAUTH_SERVICE = "remote_auth";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
      * {@link android.app.ambientcontext.AmbientContextManager}.
      *
      * @see #getSystemService(String)
