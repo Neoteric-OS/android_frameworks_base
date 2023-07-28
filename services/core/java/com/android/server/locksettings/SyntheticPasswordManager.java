@@ -541,15 +541,8 @@ public class SyntheticPasswordManager {
                             Slog.e(TAG, "weaver read failed (THROTTLE), slot: " + slot);
                             break;
                         case WeaverReadStatus.INCORRECT_KEY:
-                            if (readResponse.timeout == 0) {
-                                response[0] = VerifyCredentialResponse.ERROR;
-                                Slog.e(TAG, "weaver read failed (INCORRECT_KEY), slot: " + slot);
-                            } else {
-                                response[0] = VerifyCredentialResponse
-                                        .fromTimeout(readResponse.timeout);
-                                Slog.e(TAG, "weaver read failed (INCORRECT_KEY/THROTTLE), slot: "
-                                        + slot);
-                            }
+                            response[0] = VerifyCredentialResponse.ERROR;
+                            Slog.e(TAG, "weaver read failed (INCORRECT_KEY), slot: " + slot);
                             break;
                         case WeaverReadStatus.FAILED:
                             response[0] = VerifyCredentialResponse.ERROR;
