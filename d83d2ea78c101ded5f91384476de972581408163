@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f13c9d7_75972701",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-07-28T08:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c31691e_02db6671",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "d83d2ea78c101ded5f91384476de972581408163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3af61ba0_b277f31e",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-07-28T06:13:36Z",
       "side": 1,
       "message": "because",
+      "range": {
+        "startLine": 12,
+        "startChar": 21,
+        "endLine": 12,
+        "endChar": 23
+      },
+      "revId": "d83d2ea78c101ded5f91384476de972581408163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "838d819d_ce3149ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-07-28T08:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3af61ba0_b277f31e",
       "range": {
         "startLine": 12,
         "startChar": 21,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "646f9457_c5ad3b8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-07-28T08:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e683456_90bdaa15",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "d83d2ea78c101ded5f91384476de972581408163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c779620b_2da1295c",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-07-28T06:13:36Z",
       "side": 1,
       "message": "Pair\u003cLong, String\u003e\n\nthen you don\u0027t have to cast",
+      "range": {
+        "startLine": 320,
+        "startChar": 13,
+        "endLine": 320,
+        "endChar": 17
+      },
+      "revId": "d83d2ea78c101ded5f91384476de972581408163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ff964a6_04f42974",
+        "filename": "core/java/com/android/internal/util/FileRotator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-07-28T08:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c779620b_2da1295c",
       "range": {
         "startLine": 320,
         "startChar": 13,
