@@ -60,6 +60,8 @@ import android.app.NotificationManager;
 import android.app.admin.DevicePolicyEventLogger;
 import android.app.admin.DevicePolicyManager;
 import android.app.admin.DevicePolicyManagerInternal;
+import android.compat.annotation.ChangeId;
+import android.compat.annotation.Disabled;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -270,6 +272,19 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     private static final int INCREMENTAL_STORAGE_BLOCKED_TIMEOUT_MS = 2000;
     private static final int INCREMENTAL_STORAGE_UNHEALTHY_TIMEOUT_MS = 7000;
     private static final int INCREMENTAL_STORAGE_UNHEALTHY_MONITORING_MS = 60000;
+
+    /**
+     * The system supports pre-approval and update ownership features from
+     * {@link Build.VERSION_CODES#UPSIDE_DOWN_CAKE API 34}. The change id is used to make sure
+     * the system includes the fix of pre-approval with update ownership case. When checking the
+     * change id, if it is disabled, it means the build includes the fix. The more detail is on
+     * b/293644536.
+     * See {@link PackageInstaller.SessionParams#setRequestUpdateOwnership(boolean)} and
+     * {@link #requestUserPreapproval(PreapprovalDetails, IntentSender)} for more details.
+     */
+    @Disabled
+    @ChangeId
+    private static final long PRE_APPROVAL_WITH_UPDATE_OWNERSHIP_FIX = 293644536L;
 
     /**
      * The default value of {@link #mValidatedTargetSdk} is {@link Integer#MAX_VALUE}. If {@link
@@ -801,10 +816,15 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     private static final int USER_ACTION_NOT_NEEDED = 0;
     private static final int USER_ACTION_REQUIRED = 1;
     private static final int USER_ACTION_PENDING_APK_PARSING = 2;
+    private static final int USER_ACTION_REQUIRED_UPDATE_OWNER_REMINDER = 3;
 
-    @IntDef({USER_ACTION_NOT_NEEDED, USER_ACTION_REQUIRED, USER_ACTION_PENDING_APK_PARSING})
-    @interface
-    UserActionRequirement {}
+    @IntDef({
+            USER_ACTION_NOT_NEEDED,
+            USER_ACTION_REQUIRED,
+            USER_ACTION_PENDING_APK_PARSING,
+            USER_ACTION_REQUIRED_UPDATE_OWNER_REMINDER,
+    })
+    @interface UserActionRequirement {}
 
     /**
      * Checks if the permissions still need to be confirmed.
@@ -822,16 +842,27 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             if (mPermissionsManuallyAccepted) {
                 return USER_ACTION_NOT_NEEDED;
             }
-            packageName = mPackageName;
+            // For pre-pappvoal case, the mPackageName would be null.
+            if (mPackageName != null) {
+                packageName = mPackageName;
+            } else if (mPreapprovalRequested.get() && mPreapprovalDetails != null) {
+                packageName = mPreapprovalDetails.getPackageName();
+            } else {
+                packageName = null;
+            }
             hasDeviceAdminReceiver = mHasDeviceAdminReceiver;
         }
 
-        final boolean forcePermissionPrompt =
+        // For the below cases, force user action prompt
+        // 1. installFlags includes INSTALL_FORCE_PERMISSION_PROMPT
+        // 2. params.requireUserAction is USER_ACTION_REQUIRED
+        final boolean forceUserActionPrompt =
                 (params.installFlags & PackageManager.INSTALL_FORCE_PERMISSION_PROMPT) != 0
                         || params.requireUserAction == SessionParams.USER_ACTION_REQUIRED;
-        if (forcePermissionPrompt) {
-            return USER_ACTION_REQUIRED;
-        }
+        final int userActionNotTypicallyNeededResponse = forceUserActionPrompt
+                ? USER_ACTION_REQUIRED
+                : USER_ACTION_NOT_NEEDED;
+
         // It is safe to access mInstallerUid and mInstallSource without lock
         // because they are immutable after sealing.
         final Computer snapshot = mPm.snapshotComputer();
@@ -867,19 +898,39 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                 || (isInstallDpcPackagesPermissionGranted && hasDeviceAdminReceiver);
         final boolean isInstallerRoot = (mInstallerUid == Process.ROOT_UID);
         final boolean isInstallerSystem = (mInstallerUid == Process.SYSTEM_UID);
+        final boolean isInstallerShell = (mInstallerUid == Process.SHELL_UID);
+        final boolean isFromManagedUserOrProfile =
+                (params.installFlags & PackageManager.INSTALL_FROM_MANAGED_USER_OR_PROFILE) != 0;
+        final boolean isUpdateOwnershipEnforcementEnabled =
+                mPm.isUpdateOwnershipEnforcementAvailable()
+                        && existingUpdateOwnerPackageName != null;
 
-        // Device owners and affiliated profile owners  are allowed to silently install packages, so
+        // Device owners and affiliated profile owners are allowed to silently install packages, so
         // the permission check is waived if the installer is the device owner.
-        final boolean noUserActionNecessary = isPermissionGranted || isInstallerRoot
-                || isInstallerSystem || isInstallerDeviceOwnerOrAffiliatedProfileOwner();
+        final boolean noUserActionNecessary = isInstallerRoot || isInstallerSystem
+                || isInstallerDeviceOwnerOrAffiliatedProfileOwner();
+
 
         if (noUserActionNecessary) {
-            return USER_ACTION_NOT_NEEDED;
+            return userActionNotTypicallyNeededResponse;
+        }
+
+        if (isUpdateOwnershipEnforcementEnabled
+                && !isApexSession()
+                && !isUpdateOwner
+                && !isInstallerShell
+                // We don't enforce the update ownership for the managed user and profile.
+                && !isFromManagedUserOrProfile) {
+            return USER_ACTION_REQUIRED_UPDATE_OWNER_REMINDER;
+        }
+
+        if (isPermissionGranted) {
+            return userActionNotTypicallyNeededResponse;
         }
 
         if (snapshot.isInstallDisabledForPackage(getInstallerPackageName(), mInstallerUid,
                 userId)) {
-            // show the installer to account for device poslicy or unknown sources use cases
+            // show the installer to account for device policy or unknown sources use cases
             return USER_ACTION_REQUIRED;
         }
 
