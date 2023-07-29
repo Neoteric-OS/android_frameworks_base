@@ -293,6 +293,7 @@ class BackPanel(
         arrowPath.lineTo(0f, 0f)
         arrowPath.lineTo(dx, dy)
         arrowPath.moveTo(dx, -dy)
+
         return arrowPath
     }
 
@@ -503,9 +504,8 @@ class BackPanel(
             }
         }
 
-        val arrowPath = calculateArrowPath(dx = dx, dy = dy)
-        val arrowPaint = arrowPaint
-                .apply { alpha = (255 * min(arrowAlpha.pos, backgroundAlpha.pos)).toInt() }
+        calculateArrowPath(dx = dx, dy = dy)
+        arrowPaint.apply { alpha = (255 * min(arrowAlpha.pos, backgroundAlpha.pos)).toInt() }
         canvas.drawPath(arrowPath, arrowPaint)
         canvas.restore()
 
