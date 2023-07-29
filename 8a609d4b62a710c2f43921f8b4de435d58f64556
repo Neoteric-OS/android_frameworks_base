@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2e421bd_bbbde900",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2023-07-29T01:31:49Z",
+      "side": 1,
+      "message": "Why are you adding the USERDEBUG check?",
+      "range": {
+        "startLine": 1046,
+        "startChar": 35,
+        "endLine": 1046,
+        "endChar": 47
+      },
+      "revId": "8a609d4b62a710c2f43921f8b4de435d58f64556",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
