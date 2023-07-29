@@ -289,10 +289,16 @@ class BackPanel(
 
     private fun calculateArrowPath(dx: Float, dy: Float): Path {
         arrowPath.reset()
-        arrowPath.moveTo(dx, -dy)
-        arrowPath.lineTo(0f, 0f)
-        arrowPath.lineTo(dx, dy)
-        arrowPath.moveTo(dx, -dy)
+
+        if (isLeftPanel) {
+            arrowPath.moveTo(0f, -dy)
+            arrowPath.lineTo(dx, 0f)
+            arrowPath.lineTo(0f, dy)
+        } else {
+            arrowPath.moveTo(dx, -dy)
+            arrowPath.lineTo(0f, 0f)
+            arrowPath.lineTo(dx, dy)
+        }
 
         return arrowPath
     }
