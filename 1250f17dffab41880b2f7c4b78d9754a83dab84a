@@ -159,6 +159,24 @@
       "parentUuid": "3baea496_48a64f07",
       "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d1dd2e_e86bfe9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2023-07-31T08:09:02Z",
+      "side": 1,
+      "message": "I\u0027m okay to go with this CL. Building something similar to `LifecycleOwner` seems to replicate wheels. And the change here is reasonable IMO, `#isResumed` is just like other isXXX method (e.g. `#isTopOfTask`, `#isFinishing`, or `#isDestroyed`) that can return the current activity state.",
+      "parentUuid": "bb6dd1a0_ae55db2d",
+      "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
