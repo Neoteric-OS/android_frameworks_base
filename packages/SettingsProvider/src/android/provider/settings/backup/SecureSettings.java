@@ -227,6 +227,8 @@ public class SecureSettings {
         Settings.Secure.ACCESSIBILITY_FONT_SCALING_HAS_BEEN_CHANGED,
         Settings.Secure.DOZE_PICK_UP_GESTURE_AMBIENT,
         Settings.Secure.DOZE_TAP_GESTURE_AMBIENT,
+        Settings.Secure.DOZE_TAP_GESTURE_VIBRATE,
+        Settings.Secure.DOZE_PICK_UP_GESTURE_VIBRATE,
         Settings.Secure.BERRY_BLACK_THEME,
         Settings.Secure.DISABLE_SECURE_TILES_ON_LOCKSCREEN,
     };

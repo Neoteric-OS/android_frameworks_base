@@ -11798,6 +11798,18 @@ public final class Settings {
          */
         public static final String DOZE_PICK_UP_GESTURE_AMBIENT = "doze_pick_up_gesture_ambient";
 
+        /**
+         * Whether to vibrate for the tap gesture
+         * @hide
+         */
+        public static final String DOZE_TAP_GESTURE_VIBRATE = "doze_tap_gesture_vibrate";
+
+        /**
+         * Whether to vibrate for the pickup gesture
+         * @hide
+         */
+        public static final String DOZE_PICK_UP_GESTURE_VIBRATE = "doze_pick_up_gesture_vibrate";
+
 	/**
          * Control whether FLAG_SECURE is ignored for all windows.
          * @hide
