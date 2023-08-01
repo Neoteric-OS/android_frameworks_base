@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e9e3241_32b68e0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1294047
+      },
+      "writtenOn": "2023-08-01T06:51:20Z",
+      "side": 1,
+      "message": "Hi Robert, do you have any suggestion for lint -1?",
+      "revId": "871c6cb390fdfd8772903143392c33a7d1e06db8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
