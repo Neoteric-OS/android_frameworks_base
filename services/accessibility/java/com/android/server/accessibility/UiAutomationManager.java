@@ -236,8 +236,8 @@ class UiAutomationManager {
                 }
             }
             mUiAutomationFlags = 0;
-            mSystemSupport.onClientChangeLocked(false);
         }
+        mSystemSupport.onClientChangeLocked(false);
     }
 
     private class UiAutomationService extends AbstractAccessibilityServiceConnection {
