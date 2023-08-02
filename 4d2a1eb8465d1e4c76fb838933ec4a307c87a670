@@ -16,6 +16,24 @@
       "message": "The method ends with \"Locked\" because whoever calling it has to hold the lock first, so it\u0027s possible moving it outside the lock could create other concurrency problems.\n\nIs there another way you could solve this? Perhaps by deferring the call to destroyUiAutomationService() by posting it to a Handler or something? What code is calling this that causes the deadlock?",
       "revId": "4d2a1eb8465d1e4c76fb838933ec4a307c87a670",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c31ab20c_d6cbd384",
+        "filename": "services/accessibility/java/com/android/server/accessibility/UiAutomationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1472174
+      },
+      "writtenOn": "2023-08-02T11:47:08Z",
+      "side": 1,
+      "message": "It is due to That AccessibilityManagerService invoke DevicepolicyManager\u0027s API while holding the its own lock, and `DevicepolicyManager#getPermittedAccessibilityServicesForUser` needs the lock hold by another thread and the thread is waiting for a11ymanager\u0027s lock.\n\nA11yManageServicer code stack in thread#256\n```\n  at android.app.admin.DevicePolicyManager.getPermittedAccessibilityServices(DevicePolicyManager.java:10836)\n  at com.android.server.accessibility.AccessibilityManagerService.isAccessibilityTargetAllowed(AccessibilityManagerService.java:4102)\n  at com.android.server.accessibility.AccessibilityManagerService.updateServicesLocked(AccessibilityManagerService.java:2422)\n```\n\nDevipcePolicyManager code stack in thread#255\n```\n  at android.view.accessibility.AccessibilityManager.\u003cinit\u003e(AccessibilityManager.java:554)\n  - locked \u003c0x0ab77b53\u003e (a java.lang.Object)\n  at com.android.server.devicepolicy.PersonalAppsSuspensionHelper.getAccessibilityServices(PersonalAppsSuspensionHelper.java:151)\n  at com.android.server.devicepolicy.PersonalAppsSuspensionHelper.dump(PersonalAppsSuspensionHelper.java:213)\n  at com.android.server.devicepolicy.DevicePolicyManagerService.dumpPerUserData(DevicePolicyManagerService.java:11311)\n  at com.android.server.devicepolicy.DevicePolicyManagerService.dump(DevicePolicyManagerService.java:11337)\n  - locked \u003c0x0808248c\u003e (a java.lang.Object)\n```",
+      "parentUuid": "e82b73bb_cb86cf7d",
+      "revId": "4d2a1eb8465d1e4c76fb838933ec4a307c87a670",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
