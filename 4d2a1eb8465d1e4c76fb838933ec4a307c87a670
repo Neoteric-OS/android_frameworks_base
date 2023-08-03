@@ -34,6 +34,24 @@
       "parentUuid": "e82b73bb_cb86cf7d",
       "revId": "4d2a1eb8465d1e4c76fb838933ec4a307c87a670",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37611cc8_262cc328",
+        "filename": "services/accessibility/java/com/android/server/accessibility/UiAutomationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1947030
+      },
+      "writtenOn": "2023-08-03T10:43:57Z",
+      "side": 1,
+      "message": "It is indeed unreasonable to move method out of Locked, can you give me some suggestion about this issue? I notice the thread which cuase deadlock is doing some dump like DevicePolicyManagerService.dump, is there any possible when system run with heavy load for a long time which cause this issue?",
+      "parentUuid": "c31ab20c_d6cbd384",
+      "revId": "4d2a1eb8465d1e4c76fb838933ec4a307c87a670",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
