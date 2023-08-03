@@ -2412,6 +2412,24 @@
     <permission android:name="android.permission.UWB_PRIVILEGED"
                 android:protectionLevel="signature|privileged" />
 
+    <!-- @SystemApi Allows access to Thread network states.
+     <p>Not for use by third-party applications.
+     @hide -->
+    <permission android:name="android.permission.ACCESS_THREAD_NETWORK_STATE"
+                android:protectionLevel="signature|privileged" />
+
+    <!-- @SystemApi Allows change Thread network state.
+     <p>Not for use by third-party applications.
+     @hide -->
+    <permission android:name="android.permission.CHANGE_THREAD_NETWORK_STATE"
+                android:protectionLevel="signature|privileged" />
+
+    <!-- @SystemApi Allows access to Thread network credentials such as Network Key and PSKc.
+    <p>Not for use by third-party applications.
+    @hide -->
+    <permission android:name="android.permission.ACCESS_THREAD_NETWORK_CREDENTIALS"
+                android:protectionLevel="signature|privileged" />
+
     <!-- ================================== -->
     <!-- Permissions for accessing accounts -->
     <!-- ================================== -->
