@@ -559,6 +559,11 @@
     <!-- Permission needed for CTS test - ConcurrencyTest#testP2pSetWfdInfo -->
     <uses-permission android:name="android.permission.CONFIGURE_WIFI_DISPLAY" />
 
+    <!-- Permission required for CTS test - CtsThreadNetworkTestCases -->
+    <uses-permission name="android.permission.ACCESS_THREAD_NETWORK_CREDENTIALS"/>
+    <uses-permission name="android.permission.ACCESS_THREAD_NETWORK_STATE"/>
+    <uses-permission name="android.permission.CHANGE_THREAD_NETWORK_STATE"/>
+
     <!-- Permission required for CTS tests to enable/disable rate limiting toasts. -->
     <uses-permission android:name="android.permission.MANAGE_TOAST_RATE_LIMITING" />
 
