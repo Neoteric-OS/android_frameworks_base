@@ -64,6 +64,7 @@ import static android.view.WindowManager.LayoutParams.FLAG_SECURE;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 import static android.view.WindowManager.LayoutParams.FLAG_SLIPPERY;
+import static android.view.WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
 import static android.view.WindowManager.LayoutParams.INPUT_FEATURE_NO_INPUT_CHANNEL;
 import static android.view.WindowManager.LayoutParams.INPUT_FEATURE_SPY;
 import static android.view.WindowManager.LayoutParams.INVALID_WINDOW_TYPE;
@@ -8766,7 +8767,7 @@ public class WindowManagerService extends IWindowManager.Stub
         flags = sanitizeFlagSlippery(flags, name, callingUid, callingPid);
 
         final int sanitizedLpFlags =
-                (flags & (FLAG_NOT_TOUCHABLE | FLAG_SLIPPERY | LayoutParams.FLAG_NOT_FOCUSABLE))
+                (flags & (FLAG_NOT_TOUCHABLE | FLAG_SLIPPERY | FLAG_NOT_FOCUSABLE | FLAG_WATCH_OUTSIDE_TOUCH))
                 | LayoutParams.FLAG_NOT_TOUCH_MODAL;
         h.layoutParamsType = type;
         h.layoutParamsFlags = sanitizedLpFlags;
