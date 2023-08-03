@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8968d999_d4f969bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-08-03T21:23:32Z",
+      "side": 1,
+      "message": "291625922",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "3c7f11751b91d99608a495b426df7cbfbbb5be56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf0c258c_e657b1a2",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/JobServiceContext.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-08-03T21:23:32Z",
+      "side": 1,
+      "message": "Just \"this\" should be fine.",
+      "range": {
+        "startLine": 334,
+        "startChar": 39,
+        "endLine": 334,
+        "endChar": 61
+      },
+      "revId": "3c7f11751b91d99608a495b426df7cbfbbb5be56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
