@@ -1500,6 +1500,7 @@ public class WindowProcessController extends ConfigurationContainer<Configuratio
             Configuration overrideConfig = new Configuration(r.getRequestedOverrideConfiguration());
             overrideConfig.assetsSeq = assetSeq;
             r.onRequestedOverrideConfigurationChanged(overrideConfig);
+            r.updateApplicationInfo(mInfo);
             if (r.isVisibleRequested()) {
                 r.ensureActivityConfiguration(0, true);
             }
