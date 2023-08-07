@@ -195,6 +195,24 @@
       "parentUuid": "06d1dd2e_e86bfe9c",
       "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05799b04_79da9c91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-08-07T21:12:09Z",
+      "side": 1,
+      "message": "aosp/2454982 only addresses a different API surface. I agree if we were to design this API again, we would not accept an activity and instead check if the app is in foreground alone. But, we need to be backward compatible with legacy NFC API that accepts a specific activity and turns off the API change when that specific activity goes to background.",
+      "parentUuid": "c915e0aa_5ca06123",
+      "revId": "1250f17dffab41880b2f7c4b78d9754a83dab84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
