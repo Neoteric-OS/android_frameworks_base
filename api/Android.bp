@@ -77,6 +77,7 @@ combined_apis {
         "android.net.ipsec.ike",
         "art.module.public.api",
         "conscrypt.module.public.api",
+        "framework-location",
         "framework-adservices",
         "framework-appsearch",
         "framework-bluetooth",
