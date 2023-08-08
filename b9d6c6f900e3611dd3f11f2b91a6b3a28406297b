@@ -16,6 +16,144 @@
       "message": "Any updates?",
       "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "518c2a0f_7bde8f60",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1381,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:40:30Z",
+      "side": 1,
+      "message": "Present tense, please.  \"will inform\" \u003d\u003e \"informs\".",
+      "range": {
+        "startLine": 1381,
+        "startChar": 19,
+        "endLine": 1381,
+        "endChar": 30
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28ee4bdf_8707455a",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:40:30Z",
+      "side": 1,
+      "message": "I\u0027m concerned about overloading the user stopped/started notifications like this.  The users are never actually stopped from an Android system perspective.  Things quickly get very confusing when user stop/start can mean two different things, a real stop/start or a fake one.\n\nWhat are the exact actions that vold and storaged take in \"onUserStarted\" and \"onUserStopped\"?  I wonder if these methods need to be renamed to something more focused on storage that isn\u0027t borrowed from the user lifecycle.",
+      "range": {
+        "startLine": 1385,
+        "startChar": 81,
+        "endLine": 1386,
+        "endChar": 83
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "388b2f0c_0d26564c",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:40:30Z",
+      "side": 1,
+      "message": "Call this `unlockedUsers`",
+      "range": {
+        "startLine": 1391,
+        "startChar": 28,
+        "endLine": 1391,
+        "endChar": 44
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d558a98_eb336dd0",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:40:30Z",
+      "side": 1,
+      "message": "`for (int userId : mSystemUnlockedUsers) {`",
+      "range": {
+        "startLine": 1393,
+        "startChar": 12,
+        "endLine": 1393,
+        "endChar": 79
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "451c4416_f3eb44ad",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1398,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:40:30Z",
+      "side": 1,
+      "message": "`for (Integer userId : unlockedUsers) {`",
+      "range": {
+        "startLine": 1398,
+        "startChar": 8,
+        "endLine": 1398,
+        "endChar": 71
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9789459d_291fa96d",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-08T04:40:30Z",
+      "side": 1,
+      "message": "`for (Integer userId : unlockedUsers) {`",
+      "range": {
+        "startLine": 1407,
+        "startChar": 0,
+        "endLine": 1407,
+        "endChar": 71
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
