@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "388bfba6_439863a5",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-09T04:22:43Z",
+      "side": 1,
+      "message": "Then perhaps the problem is that `resetIfRebootedAndConnected()` needs to be called in some case when currently it isn\u0027t?  I\u0027m not an expert on this part of the code, so please take my opinion with a grain of salt, but I get the impression that that would solve the problem in a simpler way.  How is your solution better?",
+      "parentUuid": "c7f993c2_83c7999e",
+      "range": {
+        "startLine": 1385,
+        "startChar": 81,
+        "endLine": 1386,
+        "endChar": 83
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "388b2f0c_0d26564c",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
