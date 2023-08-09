@@ -40,11 +40,8 @@ public class PixelPropsUtils {
     private static final Map<String, Object> propsToChangePixel7Pro;
     private static final Set<String> packagesToChangePixel7Pro = Set.of(
         "com.google.android.apps.wallpaper",
-        "com.google.android.apps.privacy.wildlife"
-    );
-
-    private static final Map<String, Object> propsToChangePixel6Pro;
-    private static final Set<String> packagesToChangePixel6Pro = Set.of(
+        "com.google.android.apps.subscriptions.red",
+        "com.google.pixel.livewallpaper",
         "com.google.android.wallpaper.effects",
         "com.google.android.apps.emojiwallpaper"
     );
@@ -53,8 +50,7 @@ public class PixelPropsUtils {
 
     private static final Map<String, Object> propsToChangePixelXL;
     private static final Set<String> packagesToChangePixelXL = Set.of(
-        "com.google.android.apps.photos",
-        "com.google.android.inputmethod.latin"
+        "com.google.android.apps.photos"
     );
 
     private static final Set<String> extraPackagesToChange = Set.of(
@@ -82,7 +78,10 @@ public class PixelPropsUtils {
         "com.google.android.apps.wearables.maestro.companion",
         "com.google.android.apps.subscriptions.red",
         "com.google.android.apps.tachyon",
-        "com.google.android.apps.tycho"
+        "com.google.android.apps.tycho",
+        "com.google.android.as",
+        "com.google.android.gms",
+        "com.google.android.apps.restore"
     );
 
     private static final Map<String, Object> propsToChangeROG1;
@@ -153,13 +152,6 @@ public class PixelPropsUtils {
         propsToChangePixel7Pro.put("PRODUCT", "cheetah");
         propsToChangePixel7Pro.put("MODEL", "Pixel 7 Pro");
         propsToChangePixel7Pro.put("FINGERPRINT", "google/cheetah/cheetah:13/TQ3A.230805.001/10316531:user/release-keys");
-        propsToChangePixel6Pro = new HashMap<>();
-        propsToChangePixel6Pro.put("BRAND", "google");
-        propsToChangePixel6Pro.put("MANUFACTURER", "Google");
-        propsToChangePixel6Pro.put("DEVICE", "raven");
-        propsToChangePixel6Pro.put("PRODUCT", "raven");
-        propsToChangePixel6Pro.put("MODEL", "Pixel 6 Pro");
-        propsToChangePixel6Pro.put("FINGERPRINT", "google/raven/raven:13/TQ3A.230805.001/10316531:user/release-keys");
         propsToChangePixel5 = new HashMap<>();
         propsToChangePixel5.put("BRAND", "google");
         propsToChangePixel5.put("MANUFACTURER", "Google");
@@ -200,38 +192,47 @@ public class PixelPropsUtils {
         propsToChangeK30U.put("MANUFACTURER", "Xiaomi");
     }
 
-    public static void setProps(Context context) {
-        final String packageName = context.getPackageName();
-        final String processName = Application.getProcessName();
+    private static boolean setPropsForGms(String packageName) {
+        if (packageName.equals("com.android.vending")) {
+            sIsFinsky = true;
+        }
+        if (packageName.equals("com.google.android.gms")
+                || packageName.toLowerCase().contains("androidx.test")
+                || packageName.equalsIgnoreCase("com.google.android.apps.restore")) {
+            final String processName = Application.getProcessName().toLowerCase();
+            if (processName.contains("unstable")
+                    || processName.contains("pixelmigrate")
+                    || processName.contains("instrumentation")) {
+                sIsGms = true;
+                setPropValue("DEVICE", "walleye");
+                setPropValue("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
+                setPropValue("MODEL", "Pixel 2");
+                setPropValue("PRODUCT", "walleye");
+                setVersionValue("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.O);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void setProps(Application app) {
+	propsToChangeGeneric.forEach((k, v) -> setPropValue(k, v));
+
+	final String packageName = app.getPackageName();
 
         if (packageName == null) {
+            return;
+        }
+        if (setPropsForGms(packageName)) {
             return;
         }
         if (packagesToKeep.contains(packageName)) {
             return;
         }
-        if (packageName.startsWith("com.google.android.GoogleCamera")
+	if (packageName.startsWith("com.google.android.GoogleCamera")
                 || customGoogleCameraPackages.contains(packageName)) {
             return;
-        }
-
-        propsToChangeGeneric.forEach((k, v) -> setPropValue(k, v));
-
-        if (packageName.equals("com.google.android.gms")) {
-            if (processName != null && processName.equals("com.google.android.gms.unstable")) {
-                sIsGms = true;
-                setPropValue("FINGERPRINT", "google/marlin/marlin:7.1.2/NJH47F/4146041:user/release-keys");
-                setPropValue("PRODUCT", "marlin");
-                setPropValue("DEVICE", "marlin");
-                setPropValue("MODEL", "Pixel XL");
-                setVersionValue("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.N_MR1);
-            }
-            return;
-        }
-        if (packageName.equals("com.android.vending")) {
-            sIsFinsky = true;
-            return;
-        }
+	}
 
         final boolean isSamsung = packageName.startsWith(SAMSUNG);
         final boolean isExtraPackage = extraPackagesToChange.contains(packageName);
@@ -240,8 +241,6 @@ public class PixelPropsUtils {
         if (packageName.startsWith("com.google.") || isSamsung || isExtraPackage) {
             if ((packagesToChangePixel7Pro.contains(packageName))) {
                 propsToChange.putAll(propsToChangePixel7Pro);
-            } else if (packagesToChangePixel6Pro.contains(packageName)) {
-                propsToChange.putAll(propsToChangePixel6Pro);
             } else if (packagesToChangePixelXL.contains(packageName)) {
                 propsToChange.putAll(propsToChangePixelXL);
             } else {
