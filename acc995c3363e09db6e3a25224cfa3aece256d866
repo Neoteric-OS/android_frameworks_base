@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "023823da_7c2cf034",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2023-08-09T00:25:02Z",
+      "side": 1,
+      "message": "Could you print Log.e if it hits this kind of strange case?\n\nIf it happens, we need to check NfcServie impl. \n\nif (serviceState \u0026\u0026 !(isTagReadingEnabled() || isCardEmulationEnabled())) {\n    Log.e(TAG, \"Failed to get TagReading/CardEmu services\");\n}",
+      "range": {
+        "startLine": 921,
+        "startChar": 15,
+        "endLine": 921,
+        "endChar": 82
+      },
+      "revId": "acc995c3363e09db6e3a25224cfa3aece256d866",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
