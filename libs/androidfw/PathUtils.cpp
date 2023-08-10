@@ -86,7 +86,7 @@ String8 getBasePath(const String8& str8) {
 
 static void setPathName(String8& s, const char* name) {
     size_t len = strlen(name);
-    char* buf = s.lockBuffer(len);
+    char* buf = lockBuffer(s, len);
 
     memcpy(buf, name, len);
 
@@ -94,7 +94,7 @@ static void setPathName(String8& s, const char* name) {
     if (len > 0 && buf[len - 1] == OS_PATH_SEPARATOR) len--;
     buf[len] = '\0';
 
-    s.unlockBuffer(len);
+    unlockBuffer(s, buf, len);
 }
 
 String8& appendPath(String8& str, const char* name) {
@@ -115,7 +115,7 @@ String8& appendPath(String8& str, const char* name) {
         // make room for oldPath + '/' + newPath
         int newlen = strlen(name);
 
-        char* buf = str.lockBuffer(len+1+newlen);
+        char* buf = lockBuffer(str, len+1+newlen);
 
         // insert a '/' if needed
         if (buf[len-1] != OS_PATH_SEPARATOR)
@@ -124,7 +124,7 @@ String8& appendPath(String8& str, const char* name) {
         memcpy(buf+len, name, newlen+1);
         len += newlen;
 
-        str.unlockBuffer(len);
+        unlockBuffer(str, buf, len);
         return str;
     } else {
         setPathName(str, name);

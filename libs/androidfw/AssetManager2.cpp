@@ -210,7 +210,7 @@ void AssetManager2::BuildDynamicRefTable() {
 
       // Add the package name -> build time ID mappings.
       for (const DynamicPackageEntry& entry : package->GetDynamicPackageMap()) {
-        String16 package_name(entry.package_name.c_str(), entry.package_name.size());
+        auto package_name = String16(entry.package_name.c_str(), entry.package_name.size());
         package_group->dynamic_ref_table->mEntries.replaceValueFor(
             package_name, static_cast<uint8_t>(entry.package_id));
       }
