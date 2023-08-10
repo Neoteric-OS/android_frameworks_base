@@ -2830,6 +2830,7 @@ public class Vpn {
         startLegacyVpnRunner();
     }
 
+    // TODO: Rename this to startVpnRunner
     @VisibleForTesting
     protected void startLegacyVpnRunner() {
         mVpnRunner.start();
@@ -4796,7 +4797,7 @@ public class Vpn {
                             new IkeV2VpnRunner(
                                     Ikev2VpnProfile.fromVpnProfile(profile),
                                     mDeps.newScheduledThreadPoolExecutor());
-                    mVpnRunner.start();
+                    startLegacyVpnRunner();
                     break;
                 default:
                     mConfig = null;
