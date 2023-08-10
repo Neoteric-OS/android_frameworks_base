@@ -2827,11 +2827,11 @@ public class Vpn {
 
         // Start a new LegacyVpnRunner and we are done!
         mVpnRunner = new LegacyVpnRunner(config, racoon, mtpd, profile);
-        startLegacyVpnRunner();
+        startVpnRunner();
     }
 
     @VisibleForTesting
-    protected void startLegacyVpnRunner() {
+    protected void startVpnRunner() {
         mVpnRunner.start();
     }
 
@@ -4796,7 +4796,7 @@ public class Vpn {
                             new IkeV2VpnRunner(
                                     Ikev2VpnProfile.fromVpnProfile(profile),
                                     mDeps.newScheduledThreadPoolExecutor());
-                    mVpnRunner.start();
+                    startVpnRunner();
                     break;
                 default:
                     mConfig = null;
