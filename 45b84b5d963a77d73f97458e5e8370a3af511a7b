@@ -34,6 +34,24 @@
       "parentUuid": "92e34909_0a4d7e96",
       "revId": "45b84b5d963a77d73f97458e5e8370a3af511a7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7260c3e_e9c96a2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1711961
+      },
+      "writtenOn": "2023-08-10T18:48:28Z",
+      "side": 1,
+      "message": "What about if we slightly increased the minimum width, but kept the automarquee?\n\nThis is probably one of the longest strings of carrier text out there (T-Mobile Wi-Fi Calling), and it just *barely* doesn\u0027t fit (see: https://imgur.com/a/ruMNxDg)\n\nI\u0027d love to see it just fit, the carriers would probably prefer if it fit better, too?",
+      "parentUuid": "5ee990af_6221efcb",
+      "revId": "45b84b5d963a77d73f97458e5e8370a3af511a7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
