@@ -16,6 +16,24 @@
       "message": "It\u0027s about `am start`, so I\u0027m sending it to Riddle.\n\nThe change seems fine, but it could potentially impact existing tests that didn\u0027t expect expect error status code.\n\n@riddle WDYT?",
       "revId": "95b105671e5eb57434303088a0291b81e8de1372",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46353226_bb16d622",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2023-08-10T18:19:49Z",
+      "side": 1,
+      "message": "Note that the lack of an error code in this situation is already hiding at least one broken test (which expects to see an error, but doesn\u0027t): b/294427830",
+      "parentUuid": "e95cf538_3e3fbf19",
+      "revId": "95b105671e5eb57434303088a0291b81e8de1372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
