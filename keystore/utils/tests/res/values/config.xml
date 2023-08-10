@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="batch_key_size">1000</integer>
+  <integer name="iterations">100</integer>
+  <integer name="thread_count">8</integer>
+  <integer name="operation_count">100</integer>
+  <bool name="delete_key">false</bool>
+  <bool name="delete_batch_keys">true</bool>
+</resources>
