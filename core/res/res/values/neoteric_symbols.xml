@@ -118,4 +118,8 @@
     <java-symbol type="string" name="battery_share_disabled_low_battery" />
 
     <java-symbol type="drawable" name="ic_qs_powershare" />
+
+    <!-- Define device configs on boot -->
+    <java-symbol type="array" name="global_device_configs_override" />
+    <java-symbol type="array" name="device_configs_override" />
 </resources>
