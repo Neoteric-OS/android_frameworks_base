@@ -106,8 +106,8 @@ BackupDataWriter::WriteEntityHeader(const String8& key, size_t dataSize)
         k = key;
     }
     if (kIsDebug) {
-        ALOGD("Writing header: prefix='%s' key='%s' dataSize=%zu", m_keyPrefix.string(),
-                key.string(), dataSize);
+        ALOGD("Writing header: prefix='%s' key='%s' dataSize=%zu", m_keyPrefix.c_str(),
+                key.c_str(), dataSize);
     }
 
     entity_header_v1 header;
@@ -128,7 +128,7 @@ BackupDataWriter::WriteEntityHeader(const String8& key, size_t dataSize)
     m_pos += amt;
 
     if (kIsDebug) ALOGI("writing entity header key, %zd bytes", keyLen+1);
-    amt = write(m_fd, k.string(), keyLen+1);
+    amt = write(m_fd, k.c_str(), keyLen+1);
     if (amt != keyLen+1) {
         m_status = errno;
         return m_status;
@@ -265,14 +265,14 @@ BackupDataReader::ReadNextHeader(bool* done, int* type)
 
             // read the rest of the header (filename)
             size_t size = m_header.entity.keyLen;
-            char* buf = m_key.lockBuffer(size);
+            char* buf = lockBuffer(m_key, size);
             if (buf == NULL) {
                 m_status = ENOMEM;
                 return m_status;
             }
             int amt = read(m_fd, buf, size+1);
             CHECK_SIZE(amt, (int)size+1);
-            m_key.unlockBuffer(size);
+            unlockBuffer(m_key, buf, size);
             m_pos += size+1;
             SKIP_PADDING();
             m_dataEndPos = m_pos + m_header.entity.dataSize;
