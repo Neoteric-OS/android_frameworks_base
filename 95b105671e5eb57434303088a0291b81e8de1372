@@ -179,6 +179,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dd83aba_e3f7f696",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-08-11T16:02:35Z",
+      "side": 1,
+      "message": "(resolving it)",
+      "parentUuid": "e74144f7_0b3e1c41",
+      "revId": "95b105671e5eb57434303088a0291b81e8de1372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a325c3de_9ec050b6",
