@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab2bb19b_6754f705",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2023-08-11T15:50:29Z",
+      "side": 1,
+      "message": "Oh this is a `PrintWriter`. It can be configured to auto-flush or not, so we can\u0027t assume it would flush. But the errors at the start of the function (`getErrPrintWriter().println`) also have this problem and they *definitely* don\u0027t flush. Let me fix all of them in a follow-on patch?",
+      "parentUuid": "7aa79b41_25ddc7cd",
+      "revId": "95b105671e5eb57434303088a0291b81e8de1372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a325c3de_9ec050b6",
         "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
         "patchSetId": 1
