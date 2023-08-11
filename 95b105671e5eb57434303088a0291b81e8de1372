@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "21524a1e_74fae709",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-08-11T15:52:22Z",
+      "side": 1,
+      "message": "Can it be simply fixed by removing the early return and then:\n```\nif (!launched) {\n    out.flush();\n    return 1;\n}\n```",
+      "parentUuid": "ab2bb19b_6754f705",
+      "revId": "95b105671e5eb57434303088a0291b81e8de1372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a325c3de_9ec050b6",
         "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
         "patchSetId": 1
