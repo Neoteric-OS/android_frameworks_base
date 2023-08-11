@@ -51,6 +51,24 @@
       "message": "Not sure if some test scripts may still depend on this output even if the activity is not started.",
       "revId": "95b105671e5eb57434303088a0291b81e8de1372",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a34b0ec_623c5af8",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-08-11T06:57:18Z",
+      "side": 1,
+      "message": "NVM, launched will be false.",
+      "parentUuid": "a325c3de_9ec050b6",
+      "revId": "95b105671e5eb57434303088a0291b81e8de1372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
