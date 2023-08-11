@@ -163,6 +163,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e74144f7_0b3e1c41",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-08-11T16:02:01Z",
+      "side": 1,
+      "message": "Neither PrintWriter nor the underlying FileOutputStream has a buffer, and FileOutputStream just uses write(2) (as opposed to stdio), there shouldn\u0027t be any buffer involved, so not calling flush() should be fine...",
+      "parentUuid": "21524a1e_74fae709",
+      "revId": "95b105671e5eb57434303088a0291b81e8de1372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a325c3de_9ec050b6",
         "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
         "patchSetId": 1
