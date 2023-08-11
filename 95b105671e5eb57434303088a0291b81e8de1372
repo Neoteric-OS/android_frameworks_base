@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7aa79b41_25ddc7cd",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2023-08-11T15:42:20Z",
+      "side": 1,
+      "message": "Yes, `System.out` flushes on newlines (`from println`) by default.",
+      "parentUuid": "1394bf50_564a8597",
+      "revId": "95b105671e5eb57434303088a0291b81e8de1372",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a325c3de_9ec050b6",
