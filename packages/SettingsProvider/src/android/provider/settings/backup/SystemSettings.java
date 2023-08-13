@@ -111,5 +111,7 @@ public class SystemSettings {
         Settings.System.ALERT_SLIDER_PULSE,
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL,
         Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL_NO_LANDSCAPE,
+	Settings.System.QS_SHOW_BRIGHTNESS,
+        Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
     };
 }

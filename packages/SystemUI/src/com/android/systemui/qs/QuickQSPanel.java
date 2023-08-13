@@ -59,6 +59,23 @@ public class QuickQSPanel extends QSPanel {
         return layout;
     }
 
+    @Override
+    protected void setBrightnessViewMargin() {
+        if (mBrightnessView == null) return;
+        final MarginLayoutParams lp = (MarginLayoutParams) mBrightnessView.getLayoutParams();
+        if (mSliderAtTop) {
+            lp.topMargin = mContext.getResources()
+                    .getDimensionPixelSize(R.dimen.quick_qs_top_brightness_margin_top);
+            lp.bottomMargin = mContext.getResources()
+                    .getDimensionPixelSize(R.dimen.qs_brightness_margin_bottom);
+        } else {
+            lp.topMargin = mContext.getResources()
+                    .getDimensionPixelSize(R.dimen.qs_bottom_brightness_margin_top);
+            lp.bottomMargin = mContext.getResources()
+                    .getDimensionPixelSize(R.dimen.quick_qs_bottom_brightness_margin_bottom);
+        }
+        mBrightnessView.setLayoutParams(lp);
+    }
 
     @Override
     protected boolean displayMediaMarginsOnMedia() {
@@ -105,14 +122,6 @@ public class QuickQSPanel extends QSPanel {
 
     public void setMaxTiles(int maxTiles) {
         mMaxTiles = maxTiles;
-    }
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        if (QS_SHOW_BRIGHTNESS.equals(key)) {
-            // No Brightness or Tooltip for you!
-            super.onTuningChanged(key, "0");
-        }
     }
 
     public int getNumQuickTiles() {

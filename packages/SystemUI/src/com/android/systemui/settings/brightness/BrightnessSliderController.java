@@ -277,22 +277,16 @@ public class BrightnessSliderController extends ViewController<BrightnessSliderV
          *                 hierarchy will not be attached
          */
         public BrightnessSliderController create(Context context, @Nullable ViewGroup viewRoot) {
-            int layout = getLayout();
             boolean hasAutoBrightness = context.getResources().getBoolean(
                     com.android.internal.R.bool.config_automatic_brightness_available);
             LayoutInflater inflater = LayoutInflater.from(context);
-
-            BrightnessSliderView root = (BrightnessSliderView) inflater
-                    .inflate(layout, viewRoot, false);
+	    final BrightnessSliderView root = (BrightnessSliderView) LayoutInflater.from(context)
+                    .inflate(R.layout.quick_settings_brightness_dialog, viewRoot, false);
             if (hasAutoBrightness) {
                 inflater.inflate(R.layout.quick_settings_auto_brightness, root, true);
             }
             return new BrightnessSliderController(root, mFalsingManager);
         }
 
-        /** Get the layout to inflate based on what slider to use */
-        private int getLayout() {
-            return R.layout.quick_settings_brightness_dialog;
-        }
     }
 }
