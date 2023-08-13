@@ -45,7 +45,7 @@ class BrightnessMirrorHandler(brightnessController: MirroredBrightnessController
         updateBrightnessMirror()
     }
 
-    private fun updateBrightnessMirror() {
+    fun updateBrightnessMirror() {
         brightnessController.setMirror(mirrorController)
     }
 }

@@ -22,9 +22,15 @@ import static com.android.systemui.Flags.quickSettingsVisualHapticsLongpress;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.res.Configuration;
 import android.content.res.Configuration.Orientation;
 import android.metrics.LogMaker;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
@@ -32,6 +38,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.Dumpable;
+import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.haptics.qs.QSLongPressEffect;
 import com.android.systemui.media.controls.ui.view.MediaHost;
@@ -158,6 +165,9 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
     @Nullable
     private Runnable mUsingHorizontalLayoutChangedListener;
 
+    private final ContentObserver mSettingsObserver;
+    private final ContentResolver mContentResolver;
+
     protected QSPanelControllerBase(
             T view,
             QSHost host,
@@ -169,7 +179,8 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
             QSLogger qsLogger,
             DumpManager dumpManager,
             SplitShadeStateController splitShadeStateController,
-            Provider<QSLongPressEffect> longPressEffectProvider
+            Provider<QSLongPressEffect> longPressEffectProvider,
+            @Main Handler mainHandler
     ) {
         super(view);
         mHost = host;
@@ -184,6 +195,31 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         mShouldUseSplitNotificationShade =
                 mSplitShadeStateController.shouldUseSplitNotificationShade(getResources());
         mLongPressEffectProvider = longPressEffectProvider;
+	mContentResolver = getContext().getContentResolver();
+        mSettingsObserver = new ContentObserver(mainHandler) {
+            @Override
+            public void onChange(boolean selfChange, @Nullable Uri uri) {
+                if (uri == null) return;
+                final String key = uri.getLastPathSegment();
+                if (key == null) return;
+                handleSettingsChange(key);
+            }
+        };
+    }
+
+    protected void handleSettingsChange(@NonNull String key) {
+        if (Settings.System.QS_SHOW_BRIGHTNESS.equals(key)) {
+            mView.updateShowBrightness();
+        } else if (Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
+            mView.updateBrightnessView(isSliderAtTop());
+        }
+    }
+
+    private boolean isSliderAtTop() {
+        return Settings.System.getIntForUser(
+	    getContext().getContentResolver(),
+            Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
+            0, UserHandle.USER_CURRENT) == 0;
     }
 
     @Override
@@ -223,7 +259,10 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
 
     @Override
     protected void onViewAttached() {
-        mQsTileRevealController = createTileRevealController();
+        mView.updateBrightnessView(isSliderAtTop());
+        registerObserver(Settings.System.QS_SHOW_BRIGHTNESS);
+        registerObserver(Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM);
+	mQsTileRevealController = createTileRevealController();
         if (mQsTileRevealController != null) {
             mQsTileRevealController.setExpansion(mRevealExpansion);
         }
@@ -254,6 +293,12 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
 
     abstract StateFlow<Boolean> getMediaVisibleFlow();
 
+    protected void registerObserver(String key) {
+        mContentResolver.registerContentObserver(
+	    Settings.System.getUriFor(key),
+	    false, mSettingsObserver);
+    }
+
     @Override
     protected void onViewDetached() {
         mQSLogger.logOnViewDetached(mLastOrientation, mView.getDumpableTag());
@@ -264,6 +309,7 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         mMediaHost.removeVisibilityChangeListener(mMediaHostVisibilityListener);
 
         mDumpManager.unregisterDumpable(mView.getDumpableTag());
+	mContentResolver.unregisterContentObserver(mSettingsObserver);
     }
 
     @Nullable
@@ -461,7 +507,8 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
                     mView.getDumpableTag());
             mUsingHorizontalLayout = horizontal;
             mView.setUsingHorizontalLayout(mUsingHorizontalLayout, mMediaHost.getHostView(), force);
-            updateMediaDisappearParameters();
+            updateBrightnessMirror();
+	    updateMediaDisappearParameters();
             if (mUsingHorizontalLayoutChangedListener != null) {
                 mUsingHorizontalLayoutChangedListener.run();
             }
@@ -474,6 +521,8 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         boolean withMedia = shouldUseHorizontalInScene();
         mView.setColumnRowLayout(withMedia);
     }
+
+    protected abstract void updateBrightnessMirror();
 
     /**
      * Update the way the media disappears based on if we're using the horizontal layout

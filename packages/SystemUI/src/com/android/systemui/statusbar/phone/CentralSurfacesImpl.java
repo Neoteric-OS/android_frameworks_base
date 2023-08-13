@@ -1321,11 +1321,10 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
                     mBrightnessSliderFactory,
                     this::setBrightnessMirrorShowing);
             fragmentHostManager.addTagListener(QS.TAG, (tag, f) -> {
-                QS qs = (QS) f;
-                if (qs instanceof QSFragmentLegacy) {
-                    QSFragmentLegacy qsFragment = (QSFragmentLegacy) qs;
-                    mQSPanelController = qsFragment.getQSPanelController();
-                    qsFragment.setBrightnessMirrorController(mBrightnessMirrorController);
+		if (f instanceof QSFragmentLegacy) {
+                    final QSFragmentLegacy qsf = (QSFragmentLegacy) f;
+                    mQSPanelController = qsf.getQSPanelController();
+                    qsf.setBrightnessMirrorController(mBrightnessMirrorController);
                 }
             });
         }

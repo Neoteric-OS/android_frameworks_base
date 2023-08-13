@@ -125,7 +125,9 @@ public class SystemSettings {
 		Settings.System.CLICK_PARTIAL_SCREENSHOT,
 		Settings.System.SWIPE_TYPE,
         	Settings.System.HAPTIC_ON_SLIDER,
-        	Settings.System.SMALL_LANDSCAPE_NOTIFICATION
+        	Settings.System.SMALL_LANDSCAPE_NOTIFICATION,
+		Settings.System.QS_SHOW_BRIGHTNESS,
+        	Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM
         ));
         if (Flags.backUpSmoothDisplayAndForcePeakRefreshRate()) {
             settings.add(Settings.System.PEAK_REFRESH_RATE);
