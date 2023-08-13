@@ -17,6 +17,8 @@
 package com.android.settingslib;
 
 import android.content.Context;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.Switch;
@@ -34,6 +36,10 @@ import com.android.settingslib.core.instrumentation.SettingsJankMonitor;
  */
 public class PrimarySwitchPreference extends RestrictedPreference {
 
+    private static final VibrationEffect EFFECT_CLICK =
+            VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+    private final Vibrator mVibrator;
+
     private Switch mSwitch;
     private boolean mChecked;
     private boolean mCheckedSet;
@@ -42,18 +48,22 @@ public class PrimarySwitchPreference extends RestrictedPreference {
     public PrimarySwitchPreference(Context context, AttributeSet attrs,
             int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+	mVibrator = context.getSystemService(Vibrator.class);
     }
 
     public PrimarySwitchPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+	mVibrator = context.getSystemService(Vibrator.class);
     }
 
     public PrimarySwitchPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+	mVibrator = context.getSystemService(Vibrator.class);
     }
 
     public PrimarySwitchPreference(Context context) {
         super(context);
+	mVibrator = context.getSystemService(Vibrator.class);
     }
 
     @Override
@@ -76,6 +86,7 @@ public class PrimarySwitchPreference extends RestrictedPreference {
                     setChecked(newChecked);
                     persistBoolean(newChecked);
                 }
+		mVibrator.vibrate(EFFECT_CLICK);
             });
 
             // Consumes move events to ignore drag actions.

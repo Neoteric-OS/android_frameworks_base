@@ -17,6 +17,8 @@
 package com.android.settingslib.widget;
 
 import android.content.Context;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -28,25 +30,34 @@ import androidx.preference.SwitchPreference;
  */
 public class AppSwitchPreference extends SwitchPreference {
 
+    private static final VibrationEffect EFFECT_CLICK =
+            VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+
+    private final Vibrator mVibrator;
+
     public AppSwitchPreference(Context context, AttributeSet attrs, int defStyleAttr,
             int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         setLayoutResource(R.layout.preference_app);
+	mVibrator = context.getSystemService(Vibrator.class);
     }
 
     public AppSwitchPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setLayoutResource(R.layout.preference_app);
+	mVibrator = context.getSystemService(Vibrator.class);
     }
 
     public AppSwitchPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutResource(R.layout.preference_app);
+	mVibrator = context.getSystemService(Vibrator.class);
     }
 
     public AppSwitchPreference(Context context) {
         super(context);
         setLayoutResource(R.layout.preference_app);
+	mVibrator = context.getSystemService(Vibrator.class);
     }
 
     @Override
@@ -57,5 +68,11 @@ public class AppSwitchPreference extends SwitchPreference {
             final View rootView = switchView.getRootView();
             rootView.setFilterTouchesWhenObscured(true);
         }
+    }
+
+    @Override
+    protected void performClick(View view) {
+        super.performClick(view);
+        mVibrator.vibrate(EFFECT_CLICK);
     }
 }

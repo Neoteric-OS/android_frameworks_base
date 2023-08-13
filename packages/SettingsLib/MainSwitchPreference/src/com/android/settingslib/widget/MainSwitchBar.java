@@ -21,6 +21,8 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +44,11 @@ import java.util.List;
  * to enable or disable the prefereces on the page.
  */
 public class MainSwitchBar extends LinearLayout implements CompoundButton.OnCheckedChangeListener {
+
+    private static final VibrationEffect EFFECT_CLICK =
+            VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+
+    private final Vibrator mVibrator;
 
     private final List<OnMainSwitchChangeListener> mSwitchChangeListeners = new ArrayList<>();
 
@@ -114,6 +121,8 @@ public class MainSwitchBar extends LinearLayout implements CompoundButton.OnChec
         }
 
         setBackground(mSwitch.isChecked());
+
+        mVibrator = context.getSystemService(Vibrator.class);
     }
 
     @Override
@@ -124,6 +133,7 @@ public class MainSwitchBar extends LinearLayout implements CompoundButton.OnChec
     @Override
     public boolean performClick() {
         mSwitch.performClick();
+	mVibrator.vibrate(EFFECT_CLICK);
         return super.performClick();
     }
 

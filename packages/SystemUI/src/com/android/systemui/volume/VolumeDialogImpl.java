@@ -72,7 +72,6 @@ import android.media.AudioSystem;
 import android.media.session.MediaController;
 import android.media.session.MediaSessionManager;
 import android.media.session.PlaybackState;
-import android.os.AsyncTask;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
@@ -175,6 +174,9 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
 
     private static final int DRAWER_ANIMATION_DURATION_SHORT = 175;
     private static final int DRAWER_ANIMATION_DURATION = 250;
+
+    private static final int HAPTIC_MIN_INTERVAL = 50;
+    private static final int HAPTIC_LONG_PRESS_INTERVAL = 100;
 
     /** Shows volume dialog show animation. */
     private static final String TYPE_SHOW = "show";
@@ -308,6 +310,9 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     int mVolumeRingerIconDrawableId;
     @VisibleForTesting
     int mVolumeRingerMuteIconDrawableId;
+
+    private long mLastHapticTimestamp;
+    private long mLastStreamVolumeChangeTimestamp;
 
     // Variable to track the default row with which the panel is initially shown
     private VolumeRow mDefaultRow = null;
@@ -2387,6 +2392,20 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 row.anim.addListener(
                         getJankListener(row.view, TYPE_UPDATE, UPDATE_ANIMATION_DURATION));
                 row.anim.start();
+
+		if (row.stream == mActiveStream) {
+                    final long now = SystemClock.uptimeMillis();
+                    if (now - mLastStreamVolumeChangeTimestamp < HAPTIC_LONG_PRESS_INTERVAL) {
+                        if (newProgress == row.slider.getMin() || newProgress == row.slider.getMax()) {
+                            mController.vibrate(VibrationEffect.get(
+                                    VibrationEffect.EFFECT_HEAVY_CLICK));
+                        } else {
+                            mController.vibrate(VibrationEffect.get(
+                                    VibrationEffect.EFFECT_TICK));
+                        }
+                    }
+                    mLastStreamVolumeChangeTimestamp = now;
+                }
             } else {
                 // update slider directly to clamped value
                 if (row.anim != null) {
@@ -2767,12 +2786,15 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 }
             }
 
-            if (Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 &&
-                Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.HAPTIC_ON_SLIDER, 1) != 0) {
-                AsyncTask.execute(() ->
-                        mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_TICK)));
+	    final long now = SystemClock.uptimeMillis();
+            if (progress == mRow.slider.getMin() || progress == mRow.slider.getMax()) {
+                mLastHapticTimestamp = now;
+                mController.vibrate(VibrationEffect.get(
+                        VibrationEffect.EFFECT_HEAVY_CLICK));
+            } else if (now - mLastHapticTimestamp > HAPTIC_MIN_INTERVAL) {
+                mLastHapticTimestamp = now;
+                mController.vibrate(VibrationEffect.get(
+                        VibrationEffect.EFFECT_TICK));
             }
         }
 
