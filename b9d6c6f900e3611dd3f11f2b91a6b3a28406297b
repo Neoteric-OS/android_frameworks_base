@@ -234,6 +234,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "afc28bc2_967387ca",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-14T20:05:04Z",
+      "side": 1,
+      "message": "Changing primary storage is potentially a very heavyweight operation.  It\u0027s possible that a full reset won\u0027t add any significant time to it.  What numbers are you seeing?",
+      "parentUuid": "de1ab4f1_00664a50",
+      "range": {
+        "startLine": 1385,
+        "startChar": 81,
+        "endLine": 1386,
+        "endChar": 83
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "388b2f0c_0d26564c",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
