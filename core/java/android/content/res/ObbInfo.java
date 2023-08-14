@@ -52,7 +52,7 @@ public class ObbInfo implements Parcelable {
 
     /**
      * The salt for the encryption algorithm.
-     * 
+     *
      * @hide
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)

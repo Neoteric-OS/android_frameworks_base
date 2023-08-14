@@ -33,18 +33,18 @@ import com.android.frameworks.coretests.R;
 public class ListContextMenu extends ListActivity implements View.OnCreateContextMenuListener
 {
     static final String TAG = "ListContextMenu";
-    
-    ThrashListAdapter mAdapter; 
-    
+
+    ThrashListAdapter mAdapter;
+
     private class ThrashListAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
-        
+
         private String[] mTitles = new String[100];
 
         public ThrashListAdapter(Context context) {
             mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mTitles = new String[100];
-            
+
             int i;
             for (i=0; i<100; i++) {
                 mTitles[i] = "[" + i + "]";
@@ -76,23 +76,23 @@ public class ListContextMenu extends ListActivity implements View.OnCreateContex
         }
 
     }
-    
+
     @Override
-    public void onCreate(Bundle icicle) 
+    public void onCreate(Bundle icicle)
     {
         super.onCreate(icicle);
-        
+
         mAdapter = new ThrashListAdapter(this);
         getListView().setOnCreateContextMenuListener(this);
         setListAdapter(mAdapter);
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item = menu.add(0, 0, 0, "Really long menu item name");
         item.setTitleCondensed("Long name");
         item.setIcon(R.drawable.black_square);
-        
+
         SubMenu sm = menu.addSubMenu(0, 0, 0, "The 2nd item, a sub menu").setIcon(R.drawable.black_square_stretchable);
         item = sm.getItem();
         item.setTitleCondensed("Sub menu");
@@ -116,14 +116,14 @@ public class ListContextMenu extends ListActivity implements View.OnCreateContex
         sm.add(0, 0, 0, "Subitem 6");
         sm.add(0, 0, 0, "Subitem 7");
         sm.add(0, 0, 0, "Subitem 8");
-        
+
         return true;
     }
 
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-        
+
         String text = ((TextView) info.targetView).getText().toString();
         if (text.contains("[0]")) {
             menu.setHeaderTitle("This is a test of the title and the icon").setHeaderIcon(
@@ -135,7 +135,7 @@ public class ListContextMenu extends ListActivity implements View.OnCreateContex
             textView.setText("This is a test of a custom View");
             menu.setHeaderView(textView);
         }
-        
+
         menu.add(0, 0, 0, "Test 1");
         SubMenu sm = menu.addSubMenu(0, 0, 0, "Test 1.5 SM");
         sm.add(0, 0, 0, "CM Subitem 1");
@@ -169,7 +169,7 @@ public class ListContextMenu extends ListActivity implements View.OnCreateContex
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i(TAG, "Options item " + item.toString() + " selected.");
-        
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -181,7 +181,7 @@ public class ListContextMenu extends ListActivity implements View.OnCreateContex
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         Log.i(TAG, "Context item " + item.toString() + " selected.");
-        
+
         return super.onContextItemSelected(item);
     }
 
@@ -189,6 +189,6 @@ public class ListContextMenu extends ListActivity implements View.OnCreateContex
     public void onContextMenuClosed(Menu menu) {
         Log.i(TAG, "Context menu closed");
     }
-    
-    
+
+
 }

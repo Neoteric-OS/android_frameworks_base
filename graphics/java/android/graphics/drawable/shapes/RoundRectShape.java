@@ -38,16 +38,16 @@ public class RoundRectShape extends RectShape {
     private float[] mOuterRadii;
     private RectF mInset;
     private float[] mInnerRadii;
-    
+
     private RectF mInnerRect;
     private Path mPath; // this is what we actually draw
-    
+
     /**
      * RoundRectShape constructor.
      * <p>
      * Specifies an outer (round)rect and an optional inner (round)rect.
      *
-     * @param outerRadii An array of 8 radius values, for the outer roundrect. 
+     * @param outerRadii An array of 8 radius values, for the outer roundrect.
      *                   The first two floats are for the top-left corner
      *                   (remaining pairs correspond clockwise). For no rounded
      *                   corners on the outer rectangle, pass {@code null}.
@@ -72,13 +72,13 @@ public class RoundRectShape extends RectShape {
         mOuterRadii = outerRadii;
         mInset = inset;
         mInnerRadii = innerRadii;
-        
+
         if (inset != null) {
             mInnerRect = new RectF();
         }
         mPath = new Path();
     }
-    
+
     @Override
     public void draw(Canvas canvas, Paint paint) {
         canvas.drawPath(mPath, paint);

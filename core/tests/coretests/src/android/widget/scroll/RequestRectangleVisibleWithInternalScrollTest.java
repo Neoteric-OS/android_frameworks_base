@@ -45,7 +45,7 @@ public class RequestRectangleVisibleWithInternalScrollTest
                 RequestRectangleVisibleWithInternalScroll.class);
     }
 
-    
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();

@@ -33,7 +33,7 @@ public class TraceTest extends AndroidTestCase
     private int eMethodCalls = 0;
     private int fMethodCalls = 0;
     private int gMethodCalls = 0;
-    
+
     @SmallTest
     public void testNativeTracingFromJava()
     {
@@ -52,7 +52,7 @@ public class TraceTest extends AndroidTestCase
                 + " fMethod calls: " + fMethodCalls
                 + " gMethod calls: " + gMethodCalls);
     }
-    
+
     // This should not run in the automated suite.
     @Suppress
     public void disableTestNativeTracingFromC()
@@ -66,7 +66,7 @@ public class TraceTest extends AndroidTestCase
 
     native void nativeMethod();
     native void nativeMethodAndStartTracing();
-    
+
     @LargeTest
     @Suppress  // Failing.
     public void testMethodTracing()
@@ -79,13 +79,13 @@ public class TraceTest extends AndroidTestCase
         long elapsed = end - start;
         Log.i(TAG, "elapsed millis: " + elapsed);
     }
-    
+
     private void topMethod() {
         aMethod();
         bMethod();
         cMethod();
         dMethod(5);
-        
+
         Thread t1 = new aThread();
         t1.start();
         Thread t2 = new aThread();
@@ -99,7 +99,7 @@ public class TraceTest extends AndroidTestCase
         } catch (InterruptedException e) {
         }
     }
-    
+
     private class aThread extends Thread {
         @Override
         public void run() {
@@ -108,9 +108,9 @@ public class TraceTest extends AndroidTestCase
             cMethod();
         }
     }
-    
+
     /** Calls other methods to make some interesting trace data.
-     * 
+     *
      * @return a meaningless value
      */
     private int aMethod() {
@@ -126,9 +126,9 @@ public class TraceTest extends AndroidTestCase
         }
         return count;
     }
-    
+
     /** Calls another method to make some interesting trace data.
-     * 
+     *
      * @return a meaningless value
      */
     private int bMethod() {
@@ -138,9 +138,9 @@ public class TraceTest extends AndroidTestCase
         }
         return count;
     }
-    
+
     /** Executes a simple loop to make some interesting trace data.
-     * 
+     *
      * @return a meaningless value
      */
     private int cMethod() {
@@ -150,9 +150,9 @@ public class TraceTest extends AndroidTestCase
         }
         return count;
     }
-    
+
     /** Calls itself recursively to make some interesting trace data.
-     * 
+     *
      * @return a meaningless value
      */
     private int dMethod(int level) {
@@ -168,14 +168,14 @@ public class TraceTest extends AndroidTestCase
         }
         return dMethod(level - 1);
     }
-    
+
     public int eMethod() {
         eMethodCalls += 1;
         int count = fMethod();
         count += gMethod(3);
         return count;
     }
-    
+
     public int fMethod() {
         fMethodCalls += 1;
         int count = 0;
@@ -184,7 +184,7 @@ public class TraceTest extends AndroidTestCase
         }
         return count;
     }
-    
+
     public int gMethod(int level) {
         gMethodCalls += 1;
         int count = level;

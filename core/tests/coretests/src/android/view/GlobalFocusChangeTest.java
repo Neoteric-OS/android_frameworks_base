@@ -59,7 +59,7 @@ public class GlobalFocusChangeTest extends ActivityInstrumentationTestCase<Globa
         assertTrue(mRight.isFocused());
 
         assertSame(mLeft, mActivity.mOldFocus);
-        assertSame(mRight, mActivity.mNewFocus);        
+        assertSame(mRight, mActivity.mNewFocus);
     }
 
     @FlakyTest
@@ -70,7 +70,7 @@ public class GlobalFocusChangeTest extends ActivityInstrumentationTestCase<Globa
         TouchUtils.tapView(this, mLeft);
 
         assertSame(mLeft, mActivity.mOldFocus);
-        assertSame(null, mActivity.mNewFocus);        
+        assertSame(null, mActivity.mNewFocus);
     }
 
     @FlakyTest

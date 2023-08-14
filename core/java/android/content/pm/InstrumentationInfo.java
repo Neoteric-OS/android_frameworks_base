@@ -117,7 +117,7 @@ public class InstrumentationInfo extends PackageItemInfo implements Parcelable {
      * Specifies whether or not this instrumentation will handle profiling.
      */
     public boolean handleProfiling;
-    
+
     /** Specifies whether or not to run this instrumentation as a functional test */
     public boolean functionalTest;
 

@@ -40,11 +40,11 @@ public class ActivityGroup extends Activity {
      */
     @UnsupportedAppUsage
     protected LocalActivityManager mLocalActivityManager;
-    
+
     public ActivityGroup() {
         this(true);
     }
-    
+
     public ActivityGroup(boolean singleActivityMode) {
         mLocalActivityManager = new LocalActivityManager(this, singleActivityMode);
     }

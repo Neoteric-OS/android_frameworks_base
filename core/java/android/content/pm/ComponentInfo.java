@@ -43,7 +43,7 @@ public class ComponentInfo extends PackageItemInfo {
      * part of.
      */
     public ApplicationInfo applicationInfo;
-    
+
     /**
      * The name of the process this component should run in.
      * From the "android:process" attribute or, if not set, the same
@@ -82,7 +82,7 @@ public class ComponentInfo extends PackageItemInfo {
      * attribute or, if not set, 0.
      */
     public int descriptionRes;
-    
+
     /**
      * Indicates whether or not this component may be instantiated.  Note that this value can be
      * overridden by the one in its parent {@link ApplicationInfo}.
@@ -150,12 +150,12 @@ public class ComponentInfo extends PackageItemInfo {
     public boolean isEnabled() {
         return enabled && applicationInfo.enabled;
     }
-    
+
     /**
      * Return the icon resource identifier to use for this component.  If
      * the component defines an icon, that is used; else, the application
      * icon is used.
-     * 
+     *
      * @return The icon associated with this component.
      */
     public final int getIconResource() {
@@ -172,7 +172,7 @@ public class ComponentInfo extends PackageItemInfo {
     public final int getLogoResource() {
         return logo != 0 ? logo : applicationInfo.logo;
     }
-    
+
     /**
      * Return the banner resource identifier to use for this component. If the
      * component defines a banner, that is used; else, the application banner is
@@ -241,7 +241,7 @@ public class ComponentInfo extends PackageItemInfo {
         dest.writeInt(exported ? 1 : 0);
         dest.writeInt(directBootAware ? 1 : 0);
     }
-    
+
     protected ComponentInfo(Parcel source) {
         super(source);
         applicationInfo = ApplicationInfo.CREATOR.createFromParcel(source);
@@ -261,7 +261,7 @@ public class ComponentInfo extends PackageItemInfo {
     public Drawable loadDefaultIcon(PackageManager pm) {
         return applicationInfo.loadIcon(pm);
     }
-    
+
     /**
      * @hide
      */
@@ -276,7 +276,7 @@ public class ComponentInfo extends PackageItemInfo {
     protected Drawable loadDefaultLogo(PackageManager pm) {
         return applicationInfo.loadLogo(pm);
     }
-    
+
     /**
      * @hide
      */

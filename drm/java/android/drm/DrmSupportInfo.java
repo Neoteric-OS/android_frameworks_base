@@ -67,7 +67,7 @@ public class DrmSupportInfo {
     }
 
     /**
-     * Retrieves an iterator object that you can use to iterate over the MIME types that 
+     * Retrieves an iterator object that you can use to iterate over the MIME types that
      * this DRM plug-in supports.
      *
      * @return The iterator object

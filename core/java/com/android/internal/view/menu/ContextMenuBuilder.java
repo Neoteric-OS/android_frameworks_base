@@ -39,7 +39,7 @@ import android.view.View;
  * with a view's context menu items and show the context menu.
  */
 public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
-    
+
     @UnsupportedAppUsage
     public ContextMenuBuilder(Context context) {
         super(context);
@@ -68,7 +68,7 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
     /**
      * Shows this context menu, allowing the optional original view (and its
      * ancestors) to add items.
-     * 
+     *
      * @param originalView Optional, the original view that triggered the
      *        context menu.
      * @param token Optional, the window token that should be set on the context
@@ -85,16 +85,16 @@ public class ContextMenuBuilder extends MenuBuilder implements ContextMenu {
 
         if (getVisibleItems().size() > 0) {
             EventLog.writeEvent(50001, 1);
-            
-            MenuDialogHelper helper = new MenuDialogHelper(this); 
+
+            MenuDialogHelper helper = new MenuDialogHelper(this);
             helper.show(token);
-            
+
             return helper;
         }
-        
+
         return null;
     }
-    
+
     public MenuPopupHelper showPopup(Context context, View originalView, float x, float y) {
         if (originalView != null) {
             // Let relevant views and their populate context listeners populate

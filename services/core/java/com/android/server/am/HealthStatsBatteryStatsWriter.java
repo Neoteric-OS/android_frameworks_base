@@ -94,16 +94,16 @@ public class HealthStatsBatteryStatsWriter {
             // TIMERS_WAKELOCKS_PARTIAL
             timer = wakelock.getWakeTime(BatteryStats.WAKE_TYPE_PARTIAL);
             addTimers(uidWriter, UidHealthStats.TIMERS_WAKELOCKS_PARTIAL, key, timer);
-            
+
             // TIMERS_WAKELOCKS_WINDOW
             timer = wakelock.getWakeTime(BatteryStats.WAKE_TYPE_WINDOW);
             addTimers(uidWriter, UidHealthStats.TIMERS_WAKELOCKS_WINDOW, key, timer);
-            
+
             // TIMERS_WAKELOCKS_DRAW
             timer = wakelock.getWakeTime(BatteryStats.WAKE_TYPE_DRAW);
             addTimers(uidWriter, UidHealthStats.TIMERS_WAKELOCKS_DRAW, key, timer);
         }
-        
+
         // TIMERS_SYNCS
         for (final Map.Entry<String,? extends BatteryStats.Timer> entry:
                 uid.getSyncStats().entrySet()) {

@@ -553,7 +553,7 @@ public class ResolveInfo implements Parcelable {
             if (sa == null) sa = a.activityInfo.name;
             CharSequence  sb = b.loadLabel(mPM);
             if (sb == null) sb = b.activityInfo.name;
-            
+
             return mCollator.compare(sa.toString(), sb.toString());
         }
 

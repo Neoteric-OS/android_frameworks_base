@@ -244,7 +244,7 @@ public class NotificationTests extends AndroidTestCase {
                 n.icon,
                 String.valueOf(n.contentView));
     }
-    
+
     public void testCreate() throws Exception {
         ArrayList<Notification> mNotifications = new ArrayList<Notification>();
         NotificationManager noMa =

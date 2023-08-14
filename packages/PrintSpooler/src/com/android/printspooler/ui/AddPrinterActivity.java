@@ -410,7 +410,7 @@ public class AddPrinterActivity extends ListActivity implements AdapterView.OnIt
             realPosition.first.performAction(realPosition.second);
         }
     }
-    
+
     /**
      * Superclass for all adapters that just display a list of {@link PrintServiceInfo}.
      */

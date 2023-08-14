@@ -44,7 +44,7 @@ class CsvParser {
     interface LineProcessor {
         /**
          * A line of CSV was parsed.
-         * 
+         *
          * @param lineNumber the line number in the file, starting at 1
          * @param fields the comma separated fields for the line
          */
@@ -159,7 +159,7 @@ class CsvParser {
             } else {
                 readPos = 0;
             }
-        
+
             // Process whatever's left over
             if (finalBuffer) {
                 fields.add(new String(buf, 0, readPos));

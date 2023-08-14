@@ -21,7 +21,7 @@ abstract class TestHandlerThread {
     private boolean mSuccess = false;
     private RuntimeException mFailure = null;
     private Looper mLooper;
-    
+
     public abstract void go();
 
     public TestHandlerThread() {

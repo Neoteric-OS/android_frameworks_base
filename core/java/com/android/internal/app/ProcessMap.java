@@ -28,7 +28,7 @@ public class ProcessMap<E> {
         if (uids == null) return null;
         return uids.get(uid);
     }
-    
+
     public E put(String name, int uid, E value) {
         SparseArray<E> uids = mMap.get(name);
         if (uids == null) {
@@ -38,7 +38,7 @@ public class ProcessMap<E> {
         uids.put(uid, value);
         return value;
     }
-    
+
     public E remove(String name, int uid) {
         SparseArray<E> uids = mMap.get(name);
         if (uids != null) {
@@ -50,7 +50,7 @@ public class ProcessMap<E> {
         }
         return null;
     }
-    
+
     public ArrayMap<String, SparseArray<E>> getMap() {
         return mMap;
     }

@@ -293,7 +293,7 @@ public class RankingHelperTest extends UiServiceTestCase {
         ArrayList<NotificationRecord> notificationList = new ArrayList<NotificationRecord>();
         mHelper.sort(notificationList);
     }
-    
+
     @Test
     public void testGroupNotifications_highestIsProxy() {
         ArrayList<NotificationRecord> notificationList = new ArrayList<>();

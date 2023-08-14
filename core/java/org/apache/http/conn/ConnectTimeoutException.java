@@ -36,9 +36,9 @@ import java.io.InterruptedIOException;
 /**
  * A timeout while connecting to an HTTP server or waiting for an
  * available connection from an HttpConnectionManager.
- * 
+ *
  * @author <a href="mailto:laura@lwerner.org">Laura Werner</a>
- * 
+ *
  * @since 4.0
  *
  * @deprecated Please use {@link java.net.URL#openConnection} instead.
@@ -59,8 +59,8 @@ public class ConnectTimeoutException extends InterruptedIOException {
 
     /**
      * Creates a ConnectTimeoutException with the specified detail message.
-     * 
-     * @param message The exception detail message 
+     *
+     * @param message The exception detail message
      */
     public ConnectTimeoutException(final String message) {
         super(message);

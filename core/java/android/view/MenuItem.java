@@ -132,7 +132,7 @@ public interface MenuItem {
     /**
      * Return the group identifier that this menu item is part of. The group
      * identifier can not be changed after the menu is created.
-     * 
+     *
      * @return The menu item's group identifier.
      */
     public int getGroupId();
@@ -148,11 +148,11 @@ public interface MenuItem {
      * lower bits). Example categories are {@link Menu#CATEGORY_SYSTEM},
      * {@link Menu#CATEGORY_SECONDARY}, {@link Menu#CATEGORY_ALTERNATIVE},
      * {@link Menu#CATEGORY_CONTAINER}. See {@link Menu} for a full list.
-     * 
+     *
      * @return The order of this item.
      */
     public int getOrder();
-    
+
     /**
      * Change the title associated with this item.
      *
@@ -167,12 +167,12 @@ public interface MenuItem {
      * Some menu types do not sufficient space to show the full title, and
      * instead a condensed title is preferred. See {@link Menu} for more
      * information.
-     * 
+     *
      * @param title The resource id of the new text to be displayed.
      * @return This Item so additional setters can be called.
      * @see #setTitleCondensed(CharSequence)
      */
-    
+
     public @NonNull MenuItem setTitle(@StringRes int title);
 
     /**
@@ -186,7 +186,7 @@ public interface MenuItem {
      * Change the condensed title associated with this item. The condensed
      * title is used in situations where the normal title may be too long to
      * be displayed.
-     * 
+     *
      * @param title The new text to be displayed as the condensed title.
      * @return This Item so additional setters can be called.
      */
@@ -195,7 +195,7 @@ public interface MenuItem {
     /**
      * Retrieve the current condensed title of the item. If a condensed
      * title was never set, it will return the normal title.
-     * 
+     *
      * @return The condensed title, if it exists.
      *         Otherwise the normal title.
      */
@@ -205,7 +205,7 @@ public interface MenuItem {
      * Change the icon associated with this item. This icon will not always be
      * shown, so the title should be sufficient in describing this item. See
      * {@link Menu} for the menu types that support icons.
-     * 
+     *
      * @param icon The new icon (as a Drawable) to be displayed.
      * @return This Item so additional setters can be called.
      */
@@ -218,19 +218,19 @@ public interface MenuItem {
      * <p>
      * This method will set the resource ID of the icon which will be used to
      * lazily get the Drawable when this item is being shown.
-     * 
+     *
      * @param iconRes The new icon (as a resource ID) to be displayed.
      * @return This Item so additional setters can be called.
      */
     public @NonNull MenuItem setIcon(@DrawableRes int iconRes);
-    
+
     /**
      * Returns the icon for this item as a Drawable (getting it from resources if it hasn't been
      * loaded before). Note that if you call {@link #setIconTintList(ColorStateList)} or
      * {@link #setIconTintMode(PorterDuff.Mode)} on this item, and you use a custom menu presenter
      * in your application, you have to apply the tinting explicitly on the {@link Drawable}
      * returned by this method.
-     * 
+     *
      * @return The icon as a Drawable.
      */
     public @Nullable Drawable getIcon();
@@ -321,7 +321,7 @@ public interface MenuItem {
             return null;
         }
     }
-    
+
     /**
      * Change the Intent associated with this item.  By default there is no
      * Intent associated with a menu item.  If you set one, and nothing
@@ -578,7 +578,7 @@ public interface MenuItem {
      * Sets the visibility of the menu item. Even if a menu item is not visible,
      * it may still be invoked via its shortcut (to completely disable an item,
      * set it to invisible and {@link #setEnabled(boolean) disabled}).
-     * 
+     *
      * @param visible If true then the item will be visible; if false it is
      *        hidden.
      * @return This Item so additional setters can be called.
@@ -596,7 +596,7 @@ public interface MenuItem {
      * Sets whether the menu item is enabled. Disabling a menu item will not
      * allow it to be invoked via its shortcut. The menu item will still be
      * visible.
-     * 
+     *
      * @param enabled If true then the item will be invokable; if false it is
      *        won't be invokable.
      * @return This Item so additional setters can be called.
@@ -632,7 +632,7 @@ public interface MenuItem {
      * situations, it is more efficient and easier to use
      * {@link Activity#onOptionsItemSelected(MenuItem)} or
      * {@link Activity#onContextItemSelected(MenuItem)}.
-     * 
+     *
      * @param menuItemClickListener The object to receive invokations.
      * @return This Item so additional setters can be called.
      * @see Activity#onOptionsItemSelected(MenuItem)
@@ -645,13 +645,13 @@ public interface MenuItem {
      * Gets the extra information linked to this menu item.  This extra
      * information is set by the View that added this menu item to the
      * menu.
-     * 
+     *
      * @see OnCreateContextMenuListener
      * @return The extra information linked to the View that added this
      *         menu item to the menu. This can be null.
      */
     public @Nullable ContextMenuInfo getMenuInfo();
-    
+
     /**
      * Sets how this item should display in the presence of an Action Bar.
      * The parameter actionEnum is a flag set. One of {@link #SHOW_AS_ACTION_ALWAYS},
@@ -663,7 +663,7 @@ public interface MenuItem {
      * @param actionEnum How the item should display. One of
      * {@link #SHOW_AS_ACTION_ALWAYS}, {@link #SHOW_AS_ACTION_IF_ROOM}, or
      * {@link #SHOW_AS_ACTION_NEVER}. SHOW_AS_ACTION_NEVER is the default.
-     * 
+     *
      * @see android.app.ActionBar
      * @see #setActionView(View)
      */

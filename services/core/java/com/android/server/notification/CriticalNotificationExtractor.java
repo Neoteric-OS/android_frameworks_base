@@ -36,15 +36,15 @@ public class CriticalNotificationExtractor implements NotificationSignalExtracto
     private static final String TAG = "CriticalNotificationExt";
     private static final boolean DBG = false;
     private boolean mSupportsCriticalNotifications = false;
-    /** 
+    /**
      * Intended to bypass all other ranking, notification should be placed above all others.
      * In the automotive case, the notification would be used to tell a driver to pull over
-     * immediately 
+     * immediately
      */
     static final int CRITICAL = 0;
     /**
      * Indicates a notification should be place above all notifications except those marked as
-     * critical. In the automotive case this is a check engine light. 
+     * critical. In the automotive case this is a check engine light.
      */
     static final int CRITICAL_LOW = 1;
     /** Normal notification. */

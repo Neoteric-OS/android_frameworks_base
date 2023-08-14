@@ -63,11 +63,11 @@ import javax.net.ssl.TrustManagerFactory;
  * Layered socket factory for TLS/SSL connections, based on JSSE.
  *.
  * <p>
- * SSLSocketFactory can be used to validate the identity of the HTTPS 
+ * SSLSocketFactory can be used to validate the identity of the HTTPS
  * server against a list of trusted certificates and to authenticate to
- * the HTTPS server using a private key. 
+ * the HTTPS server using a private key.
  * </p>
- * 
+ *
  * <p>
  * SSLSocketFactory will enable server authentication when supplied with
  * a {@link KeyStore truststore} file containg one or several trusted
@@ -75,14 +75,14 @@ import javax.net.ssl.TrustManagerFactory;
  * the SSL session handshake if the target HTTPS server attempts to
  * authenticate itself with a non-trusted certificate.
  * </p>
- * 
+ *
  * <p>
- * Use JDK keytool utility to import a trusted certificate and generate a truststore file:    
+ * Use JDK keytool utility to import a trusted certificate and generate a truststore file:
  *    <pre>
  *     keytool -import -alias "my server cert" -file server.crt -keystore my.truststore
  *    </pre>
  * </p>
- * 
+ *
  * <p>
  * SSLSocketFactory will enable client authentication when supplied with
  * a {@link KeyStore keystore} file containg a private key/public certificate
@@ -92,7 +92,7 @@ import javax.net.ssl.TrustManagerFactory;
  * The target HTTPS server will in its turn verify the certificate presented
  * by the client in order to establish client's authenticity
  * </p>
- * 
+ *
  * <p>
  * Use the following sequence of actions to generate a keystore file
  * </p>
@@ -112,7 +112,7 @@ import javax.net.ssl.TrustManagerFactory;
  *     </li>
  *     <li>
  *      <p>
- *      Send the certificate request to the trusted Certificate Authority for signature. 
+ *      Send the certificate request to the trusted Certificate Authority for signature.
  *      One may choose to act as their own CA and sign the certificate request using a PKI
  *      tool, such as OpenSSL.
  *      </p>
@@ -120,19 +120,19 @@ import javax.net.ssl.TrustManagerFactory;
  *     <li>
  *      <p>
  *       Import the trusted CA root certificate
- *       <pre>keytool -import -alias "my trusted ca" -file caroot.crt -keystore my.keystore</pre> 
+ *       <pre>keytool -import -alias "my trusted ca" -file caroot.crt -keystore my.keystore</pre>
  *      </p>
  *     </li>
  *     <li>
  *      <p>
  *       Import the PKCS#7 file containg the complete certificate chain
- *       <pre>keytool -import -alias "my client key" -file mycert.p7 -keystore my.keystore</pre> 
+ *       <pre>keytool -import -alias "my client key" -file mycert.p7 -keystore my.keystore</pre>
  *      </p>
  *     </li>
  *     <li>
  *      <p>
  *       Verify the content the resultant keystore file
- *       <pre>keytool -list -v -keystore my.keystore</pre> 
+ *       <pre>keytool -list -v -keystore my.keystore</pre>
  *      </p>
  *     </li>
  *   </ul>
@@ -149,14 +149,14 @@ public class SSLSocketFactory implements LayeredSocketFactory {
     public static final String TLS   = "TLS";
     public static final String SSL   = "SSL";
     public static final String SSLV2 = "SSLv2";
-    
-    public static final X509HostnameVerifier ALLOW_ALL_HOSTNAME_VERIFIER 
+
+    public static final X509HostnameVerifier ALLOW_ALL_HOSTNAME_VERIFIER
         = new AllowAllHostnameVerifier();
-    
-    public static final X509HostnameVerifier BROWSER_COMPATIBLE_HOSTNAME_VERIFIER 
+
+    public static final X509HostnameVerifier BROWSER_COMPATIBLE_HOSTNAME_VERIFIER
         = new BrowserCompatHostnameVerifier();
-    
-    public static final X509HostnameVerifier STRICT_HOSTNAME_VERIFIER 
+
+    public static final X509HostnameVerifier STRICT_HOSTNAME_VERIFIER
         = new StrictHostnameVerifier();
 
     /*
@@ -188,12 +188,12 @@ public class SSLSocketFactory implements LayeredSocketFactory {
     private X509HostnameVerifier hostnameVerifier = BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
 
     public SSLSocketFactory(
-        String algorithm, 
-        final KeyStore keystore, 
-        final String keystorePassword, 
+        String algorithm,
+        final KeyStore keystore,
+        final String keystorePassword,
         final KeyStore truststore,
         final SecureRandom random,
-        final HostNameResolver nameResolver) 
+        final HostNameResolver nameResolver)
         throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException
     {
         super();
@@ -215,21 +215,21 @@ public class SSLSocketFactory implements LayeredSocketFactory {
     }
 
     public SSLSocketFactory(
-            final KeyStore keystore, 
-            final String keystorePassword, 
-            final KeyStore truststore) 
+            final KeyStore keystore,
+            final String keystorePassword,
+            final KeyStore truststore)
             throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException
     {
         this(TLS, keystore, keystorePassword, truststore, null, null);
     }
 
-    public SSLSocketFactory(final KeyStore keystore, final String keystorePassword) 
+    public SSLSocketFactory(final KeyStore keystore, final String keystorePassword)
             throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException
     {
         this(TLS, keystore, keystorePassword, null, null, null);
     }
 
-    public SSLSocketFactory(final KeyStore truststore) 
+    public SSLSocketFactory(final KeyStore truststore)
             throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException, UnrecoverableKeyException
     {
         this(TLS, null, null, truststore, null, null);
@@ -271,12 +271,12 @@ public class SSLSocketFactory implements LayeredSocketFactory {
         KeyManagerFactory kmfactory = KeyManagerFactory.getInstance(
             KeyManagerFactory.getDefaultAlgorithm());
         kmfactory.init(keystore, password != null ? password.toCharArray(): null);
-        return kmfactory.getKeyManagers(); 
+        return kmfactory.getKeyManagers();
     }
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     private static TrustManager[] createTrustManagers(final KeyStore keystore)
-        throws KeyStoreException, NoSuchAlgorithmException { 
+        throws KeyStoreException, NoSuchAlgorithmException {
         if (keystore == null) {
             throw new IllegalArgumentException("Keystore may not be null");
         }
@@ -332,11 +332,11 @@ public class SSLSocketFactory implements LayeredSocketFactory {
 
         InetSocketAddress remoteAddress;
         if (this.nameResolver != null) {
-            remoteAddress = new InetSocketAddress(this.nameResolver.resolve(host), port); 
+            remoteAddress = new InetSocketAddress(this.nameResolver.resolve(host), port);
         } else {
-            remoteAddress = new InetSocketAddress(host, port);            
+            remoteAddress = new InetSocketAddress(host, port);
         }
-        
+
         sslsock.connect(remoteAddress, connTimeout);
 
         sslsock.setSoTimeout(soTimeout);

@@ -212,8 +212,8 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
         assertEquals("+" + PHONE_NUMBER, number);
         c.close();
     }
-    
-    private void phoneNumberCompare(String phone1, String phone2, boolean equal, 
+
+    private void phoneNumberCompare(String phone1, String phone2, boolean equal,
             boolean useStrictComparation) {
         String[] temporalPhoneNumbers = new String[2];
         temporalPhoneNumbers[0] = phone1;
@@ -246,7 +246,7 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
         assertPhoneNumberEqual(phone1, phone2, true);
         assertPhoneNumberEqual(phone1, phone2, false);
     }
-    
+
     private void assertPhoneNumberEqual(String phone1, String phone2, boolean useStrict)
             throws Exception {
         phoneNumberCompare(phone1, phone2, true, useStrict);
@@ -256,7 +256,7 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
         assertPhoneNumberNotEqual(phone1, phone2, true);
         assertPhoneNumberNotEqual(phone1, phone2, false);
     }
-    
+
     private void assertPhoneNumberNotEqual(String phone1, String phone2, boolean useStrict)
             throws Exception {
         phoneNumberCompare(phone1, phone2, false, useStrict);
@@ -264,7 +264,7 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
 
     /**
      * Tests international matching issues for the PHONE_NUMBERS_EQUAL function.
-     * 
+     *
      * @throws Exception
      */
     @SmallTest
@@ -360,44 +360,44 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
         Cursor c;
 
         c = mDatabase.rawQuery("SELECT * FROM guess", null);
-        
+
         c.moveToFirst();
-        
+
         CharArrayBuffer buf = new CharArrayBuffer(14);
-        
+
         String compareTo = c.getString(c.getColumnIndexOrThrow("numi"));
         int numiIdx = c.getColumnIndexOrThrow("numi");
         int numfIdx = c.getColumnIndexOrThrow("numf");
         int strIdx = c.getColumnIndexOrThrow("str");
-        
+
         c.copyStringToBuffer(numiIdx, buf);
         assertEquals(1, buf.sizeCopied);
         assertEquals(compareTo, new String(buf.data, 0, buf.sizeCopied));
-        
+
         c.copyStringToBuffer(strIdx, buf);
         assertEquals("ZoomZoomZoomZoom", new String(buf.data, 0, buf.sizeCopied));
-        
+
         c.moveToNext();
         compareTo = c.getString(numfIdx);
-        
+
         c.copyStringToBuffer(numfIdx, buf);
         assertEquals(compareTo, new String(buf.data, 0, buf.sizeCopied));
         c.copyStringToBuffer(strIdx, buf);
         assertEquals(0, buf.sizeCopied);
-        
+
         c.moveToNext();
         c.copyStringToBuffer(numfIdx, buf);
         assertEquals(-1.0, Double.valueOf(
                 new String(buf.data, 0, buf.sizeCopied)).doubleValue());
-        
+
         c.copyStringToBuffer(strIdx, buf);
         compareTo = c.getString(strIdx);
         assertEquals(chinese, compareTo);
-       
+
         assertEquals(chinese, new String(buf.data, 0, buf.sizeCopied));
         c.close();
     }
-    
+
     @MediumTest
     public void testSchemaChange1() throws Exception {
         SQLiteDatabase db1 = mDatabase;
@@ -801,7 +801,7 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
 
     /**
      * This test is available only when the platform has a locale with the language "ja".
-     * It finishes without failure when it is not available.  
+     * It finishes without failure when it is not available.
      */
     @MediumTest
     public void testCollateLocalizedForJapanese() throws Exception {
@@ -822,7 +822,7 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
                     englishLocale = locale;
                 }
             }
-            
+
             if (japaneseLocale != null && englishLocale != null) {
                 break;
             }
@@ -861,7 +861,7 @@ public class DatabaseGeneralTest extends AndroidTestCase implements PerformanceT
 
             cv = new ContentValues();  //
             cv.put("s", "\u30A2\u30E1\u30EA\u30AB");  // A-me-ri-ca in hull-width Katakana
-            ih.insert(cv);            
+            ih.insert(cv);
 
             // Assume setLocale() does REINDEX and an English locale does not consider
             // Japanese-specific LOCALIZED order.

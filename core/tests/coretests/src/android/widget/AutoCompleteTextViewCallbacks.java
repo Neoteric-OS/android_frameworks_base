@@ -95,7 +95,7 @@ public class AutoCompleteTextViewCallbacks
         });
 
         sendKeys("DPAD_DOWN");
-        instrumentation.waitForIdleSync();        
+        instrumentation.waitForIdleSync();
         // give UI time to settle
         Thread.sleep(WAIT_TIME);
 

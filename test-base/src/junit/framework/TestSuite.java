@@ -21,7 +21,7 @@ import java.util.Vector;
  * suite.addTest(new MathTest("testDivideByZero"));
  * </pre>
  * </p>
- * 
+ *
  * <p>Alternatively, a TestSuite can extract the tests to be run automatically.
  * To do so you pass the class of your TestCase class to the
  * TestSuite constructor.
@@ -29,10 +29,10 @@ import java.util.Vector;
  * TestSuite suite= new TestSuite(MathTest.class);
  * </pre>
  * </p>
- * 
+ *
  * <p>This constructor creates a suite with all the methods
  * starting with "test" that take no arguments.</p>
- * 
+ *
  * <p>A final option is to do the same for a large array of test classes.
  * <pre>
  * Class[] testClasses = { MathTest.class, AnotherTest.class }
@@ -171,7 +171,7 @@ public class TestSuite implements Test {
 	}
 	
 	/**
-	 * Constructs a TestSuite from the given array of classes.  
+	 * Constructs a TestSuite from the given array of classes.
 	 * @param classes {@link TestCase}s
 	 */
 	public TestSuite (Class<?>... classes) {
@@ -227,7 +227,7 @@ public class TestSuite implements Test {
 	public String getName() {
 		return fName;
 	}
-	 
+	
 	/**
 	 * Runs the tests and collects their result in a TestResult.
 	 */
@@ -242,7 +242,7 @@ public class TestSuite implements Test {
 	public void runTest(Test test, TestResult result) {
 		test.run(result);
 	}
-	 
+	
 	/**
 	 * Sets the name of the suite.
 	 * @param name the name to set
@@ -297,11 +297,11 @@ public class TestSuite implements Test {
 	private boolean isPublicTestMethod(Method m) {
 		return isTestMethod(m) && Modifier.isPublic(m.getModifiers());
 	 }
-	 
+	
 	private boolean isTestMethod(Method m) {
-		return 
-			m.getParameterTypes().length == 0 && 
-			m.getName().startsWith("test") && 
+		return
+			m.getParameterTypes().length == 0 &&
+			m.getName().startsWith("test") &&
 			m.getReturnType().equals(Void.TYPE);
 	 }
 }

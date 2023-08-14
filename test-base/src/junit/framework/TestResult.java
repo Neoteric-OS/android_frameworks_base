@@ -131,7 +131,7 @@ public class TestResult extends Object {
 	public void runProtected(final Test test, Protectable p) {
 		try {
 			p.protect();
-		} 
+		}
 		catch (AssertionFailedError e) {
 			addFailure(test, e);
 		}

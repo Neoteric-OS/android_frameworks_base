@@ -480,7 +480,7 @@ public class NotificationLockscreenUserManagerImpl implements
         }
         NotificationEntry entry = mCommonNotifCollectionLazy.get().getEntry(key);
         return entry != null
-                && entry.getRanking().getLockscreenVisibilityOverride() 
+                && entry.getRanking().getLockscreenVisibilityOverride()
                 == Notification.VISIBILITY_PRIVATE;
     }
 

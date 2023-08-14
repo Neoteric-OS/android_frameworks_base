@@ -36,13 +36,13 @@ public class RemoteSubActivityScreen extends SubActivityScreen {
         // sending the result back in the original process.
         Intent intent = getIntent();
         intent.setClass(this, SubActivityScreen.class);
-        
+
         super.onCreate(icicle);
-        
+
         boolean kill = intent.getBooleanExtra("kill", false);
         //Log.i("foo", "RemoteSubActivityScreen pid=" + Process.myPid()
         //        + " kill=" + kill);
-        
+
         if (kill) {
             // After finishing initialization, kill the process!  But only if
             // this is the first time...

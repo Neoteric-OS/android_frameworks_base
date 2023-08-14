@@ -267,7 +267,7 @@ public class HeaderViewListAdapter implements WrapperListAdapter, Filterable {
         }
         return null;
     }
-    
+
     public ListAdapter getWrappedAdapter() {
         return mAdapter;
     }

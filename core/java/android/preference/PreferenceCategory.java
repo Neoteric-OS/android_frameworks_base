@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 /**
  * Used to group {@link Preference} objects
  * and provide a disabled title above the group.
- * 
+ *
  * <div class="special reference">
  * <h3>Developer Guides</h3>
  * <p>For information about building a settings UI with Preferences,
@@ -56,14 +56,14 @@ public class PreferenceCategory extends PreferenceGroup {
     public PreferenceCategory(Context context) {
         this(context, null);
     }
-    
+
     @Override
     protected boolean onPrepareAddPreference(Preference preference) {
         if (preference instanceof PreferenceCategory) {
             throw new IllegalArgumentException(
                     "Cannot add a " + TAG + " directly to a " + TAG);
         }
-        
+
         return super.onPrepareAddPreference(preference);
     }
 
@@ -71,7 +71,7 @@ public class PreferenceCategory extends PreferenceGroup {
     public boolean isEnabled() {
         return false;
     }
-    
+
     @Override
     public boolean shouldDisableDependents() {
         return !super.isEnabled();

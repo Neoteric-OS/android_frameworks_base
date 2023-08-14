@@ -26,7 +26,7 @@ import android.widget.Button;
 import com.android.frameworks.coretests.R;
 
 /**
- * Tests hiding and showing the list filter by hiding and showing an ancestor of the 
+ * Tests hiding and showing the list filter by hiding and showing an ancestor of the
  * ListView
  */
 public class ListFilter extends ListActivity implements OnClickListener {
@@ -34,7 +34,7 @@ public class ListFilter extends ListActivity implements OnClickListener {
     private View mFrame;
     private Button mHide;
     private Button mShow;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +44,14 @@ public class ListFilter extends ListActivity implements OnClickListener {
                 android.R.layout.simple_list_item_1, mStrings));
         getListView().setTextFilterEnabled(true);
         mFrame = findViewById(R.id.frame);
-        
+
         mHide = findViewById(R.id.hide);
         mHide.setOnClickListener(this);
-        
+
         mShow = findViewById(R.id.show);
         mShow.setOnClickListener(this);
     }
-    
+
 
     public void onClick(View v) {
         mFrame.setVisibility(v == mHide ? View.INVISIBLE : View.VISIBLE);

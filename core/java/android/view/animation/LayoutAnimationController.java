@@ -92,7 +92,7 @@ public class LayoutAnimationController {
     private int mOrder;
 
     private long mDuration;
-    private long mMaxDelay;    
+    private long mMaxDelay;
 
     /**
      * Creates a new layout animation controller from external resources.
@@ -178,7 +178,7 @@ public class LayoutAnimationController {
      * @param resourceID the resource identifier of the animation
      *
      * @see #setAnimation(Animation)
-     * @see #getAnimation() 
+     * @see #getAnimation()
      *
      * @attr ref android.R.styleable#LayoutAnimation_animation
      */
@@ -395,7 +395,7 @@ public class LayoutAnimationController {
      * by the order returned by {@link #getOrder()}. Subclasses should override
      * this method to provide additional support for other types of ordering.
      * This method should be invoked by
-     * {@link #getDelayForView(android.view.View)} prior to any computation. 
+     * {@link #getDelayForView(android.view.View)} prior to any computation.
      *
      * @param params the animation parameters containing the index
      * @return a transformed index

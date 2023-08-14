@@ -32,7 +32,7 @@ import java.util.function.Supplier;
  * @param <T> HAL template
  */
 public abstract class HalClientMonitor<T> extends BaseClientMonitor {
-    
+
     @NonNull
     protected final Supplier<T> mLazyDaemon;
 

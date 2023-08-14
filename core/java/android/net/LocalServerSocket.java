@@ -35,7 +35,7 @@ public class LocalServerSocket implements Closeable {
      * Creates a new server socket listening at specified name.
      * On the Android platform, the name is created in the Linux
      * abstract namespace (instead of on the filesystem).
-     * 
+     *
      * @param name address for socket
      * @throws IOException
      */
@@ -106,7 +106,7 @@ public class LocalServerSocket implements Closeable {
 
     /**
      * Closes server socket.
-     * 
+     *
      * @throws IOException
      */
     @Override public void close() throws IOException

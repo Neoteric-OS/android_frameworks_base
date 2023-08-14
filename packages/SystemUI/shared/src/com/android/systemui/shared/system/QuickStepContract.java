@@ -295,7 +295,7 @@ public class QuickStepContract {
         if ((sysuiStateFlags & SYSUI_STATE_ALLOW_GESTURE_IGNORING_BAR_VISIBILITY) != 0) {
             sysuiStateFlags &= ~SYSUI_STATE_NAV_BAR_HIDDEN;
         }
-        // Disable when in quick settings, screen pinning, immersive, the bouncer is showing, 
+        // Disable when in quick settings, screen pinning, immersive, the bouncer is showing,
         // or search is disabled
         int disableFlags = SYSUI_STATE_SCREEN_PINNING
                 | SYSUI_STATE_NAV_BAR_HIDDEN

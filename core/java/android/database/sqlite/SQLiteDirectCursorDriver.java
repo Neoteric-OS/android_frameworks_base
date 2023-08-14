@@ -23,13 +23,13 @@ import android.os.CancellationSignal;
 
 /**
  * A cursor driver that uses the given query directly.
- * 
+ *
  * @hide
  */
 @TestApi
 public final class SQLiteDirectCursorDriver implements SQLiteCursorDriver {
     private final SQLiteDatabase mDatabase;
-    private final String mEditTable; 
+    private final String mEditTable;
     private final String mSql;
     private final CancellationSignal mCancellationSignal;
     private SQLiteQuery mQuery;

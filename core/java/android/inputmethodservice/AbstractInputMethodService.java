@@ -1,12 +1,12 @@
 /*
  * Copyright (C) 2007-2008 The Android Open Source Project
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -42,7 +42,7 @@ import java.io.PrintWriter;
  * instead building on top of {@link InputMethodService} or another more
  * complete base class.  Be sure to read {@link InputMethod} for more
  * information on the basics of writing input methods.
- * 
+ *
  * <p>This class combines a Service (representing the input method component
  * to the system with the InputMethod interface that input methods must
  * implement.  This base class takes care of reporting your InputMethod from
@@ -105,7 +105,7 @@ public abstract class AbstractInputMethodService extends WindowProviderService
         public void createSession(SessionCallback callback) {
             callback.sessionCreated(onCreateInputMethodSessionInterface());
         }
-        
+
         /**
          * Take care of enabling or disabling an existing session by calling its
          * {@link AbstractInputMethodSessionImpl#revokeSelf()
@@ -115,7 +115,7 @@ public abstract class AbstractInputMethodService extends WindowProviderService
         public void setSessionEnabled(InputMethodSession session, boolean enabled) {
             ((AbstractInputMethodSessionImpl)session).setEnabled(enabled);
         }
-        
+
         /**
          * Take care of killing an existing session by calling its
          * {@link AbstractInputMethodSessionImpl#revokeSelf()
@@ -126,7 +126,7 @@ public abstract class AbstractInputMethodService extends WindowProviderService
             ((AbstractInputMethodSessionImpl)session).revokeSelf();
         }
     }
-    
+
     /**
      * Base class for derived classes to implement their {@link InputMethodSession}
      * interface.  This takes care of basic maintenance of the session,
@@ -135,7 +135,7 @@ public abstract class AbstractInputMethodService extends WindowProviderService
     public abstract class AbstractInputMethodSessionImpl implements InputMethodSession {
         boolean mEnabled = true;
         boolean mRevoked;
-        
+
         /**
          * Check whether this session has been enabled by the system.  If not
          * enabled, you should not execute any calls on to it.
@@ -143,7 +143,7 @@ public abstract class AbstractInputMethodService extends WindowProviderService
         public boolean isEnabled() {
             return mEnabled;
         }
-        
+
         /**
          * Check whether this session has been revoked by the system.  Revoked
          * session is also always disabled, so there is generally no need to
@@ -152,7 +152,7 @@ public abstract class AbstractInputMethodService extends WindowProviderService
         public boolean isRevoked() {
             return mRevoked;
         }
-        
+
         /**
          * Change the enabled state of the session.  This only works if the
          * session has not been revoked.
@@ -162,7 +162,7 @@ public abstract class AbstractInputMethodService extends WindowProviderService
                 mEnabled = enabled;
             }
         }
-        
+
         /**
          * Revoke the session from the client.  This disabled the session, and
          * prevents it from ever being enabled again.
@@ -209,7 +209,7 @@ public abstract class AbstractInputMethodService extends WindowProviderService
             }
         }
     }
-    
+
     /**
      * Return the global {@link KeyEvent.DispatcherState KeyEvent.DispatcherState}
      * for used for processing events from the target application.
@@ -219,13 +219,13 @@ public abstract class AbstractInputMethodService extends WindowProviderService
     public KeyEvent.DispatcherState getKeyDispatcherState() {
         return mDispatcherState;
     }
-    
+
     /**
      * Called by the framework during initialization, when the InputMethod
      * interface for this service needs to be created.
      */
     public abstract AbstractInputMethodImpl onCreateInputMethodInterface();
-    
+
     /**
      * Called by the framework when a new InputMethodSession interface is
      * needed for a new client of the input method.

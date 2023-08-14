@@ -139,7 +139,7 @@ public class ActionMenuItem implements MenuItem {
     }
 
     public boolean isCheckable() {
-        return (mFlags & CHECKABLE) != 0; 
+        return (mFlags & CHECKABLE) != 0;
     }
 
     public boolean isChecked() {
@@ -169,7 +169,7 @@ public class ActionMenuItem implements MenuItem {
         mFlags = (mFlags & ~CHECKABLE) | (checkable ? CHECKABLE : 0);
         return this;
     }
-    
+
     public ActionMenuItem setExclusiveCheckable(boolean exclusive) {
         mFlags = (mFlags & ~EXCLUSIVE) | (exclusive ? EXCLUSIVE : 0);
         return this;
@@ -307,15 +307,15 @@ public class ActionMenuItem implements MenuItem {
         if (mClickListener != null && mClickListener.onMenuItemClick(this)) {
             return true;
         }
-        
+
         if (mIntent != null) {
             mContext.startActivity(mIntent);
             return true;
         }
-        
+
         return false;
     }
-    
+
     public void setShowAsAction(int show) {
         // Do nothing. ActionMenuItems always show as action buttons.
     }

@@ -96,7 +96,7 @@ public class CsvParserTest {
                 }, collector.results);
     }
 
-    
+
     @Test public void testEscapedEmpty() throws Exception {
         final String text = "\"\",\"\",\"\"\n";
         System.out.println("Test: [" + text + "]");

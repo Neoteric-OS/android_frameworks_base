@@ -85,7 +85,7 @@ public class DdmHandleNativeHeap extends DdmHandle {
             return createFailChunk(1, "Something went wrong");
         }
     }
-    
+
     private native byte[] getLeakInfo();
 }
 

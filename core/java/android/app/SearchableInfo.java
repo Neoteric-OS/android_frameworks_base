@@ -57,7 +57,7 @@ public final class SearchableInfo implements Parcelable {
     private static final String LOG_TAG = "SearchableInfo";
 
     // static strings used for XML lookups.
-    // TODO how should these be documented for the developer, in a more structured way than 
+    // TODO how should these be documented for the developer, in a more structured way than
     // the current long wordy javadoc in SearchManager.java ?
     private static final String MD_LABEL_SEARCHABLE = "android.app.searchable";
     private static final String MD_XML_ELEMENT_SEARCHABLE = "searchable";
@@ -184,7 +184,7 @@ public final class SearchableInfo implements Parcelable {
 
     /**
      * Gets the content provider path for obtaining search suggestions.
-     * 
+     *
      * @return The suggestion path, or {@code null} if not set.
      * @see android.R.styleable#Searchable_searchSuggestPath
      */
@@ -222,10 +222,10 @@ public final class SearchableInfo implements Parcelable {
      * but you'll likely need to provide a specific ID as well via the column
      * {@link SearchManager#SUGGEST_COLUMN_INTENT_DATA_ID}, which will be appended to the
      * intent data URI.
-     * 
+     *
      * This can be overriden in any given suggestion using the column
      * {@link SearchManager#SUGGEST_COLUMN_INTENT_DATA}.
-     * 
+     *
      * @return The default intent data, or {@code null} if not set.
      * @see android.R.styleable#Searchable_searchSuggestIntentData
      */
@@ -235,7 +235,7 @@ public final class SearchableInfo implements Parcelable {
 
     /**
      * Gets the suggestion threshold.
-     * 
+     *
      * @return The suggestion threshold, or {@code 0} if not set.
      * @see android.R.styleable#Searchable_searchSuggestThreshold
      */
@@ -267,7 +267,7 @@ public final class SearchableInfo implements Parcelable {
         } catch (java.lang.SecurityException e) {
             Log.e(LOG_TAG, "Can't make context for " + activity.getPackageName(), e);
         }
-        
+
         return theirContext;
     }
 
@@ -300,10 +300,10 @@ public final class SearchableInfo implements Parcelable {
 
     /**
      * Constructor
-     * 
+     *
      * Given a ComponentName, get the searchability info
      * and build a local copy of it.  Use the factory, not this.
-     * 
+     *
      * @param activityContext runtime context for the activity that the searchable info is about.
      * @param attr The attribute set we found in the XML file, contains the values that are used to
      * construct the object.
@@ -313,7 +313,7 @@ public final class SearchableInfo implements Parcelable {
     @UnsupportedAppUsage
     private SearchableInfo(Context activityContext, AttributeSet attr, final ComponentName cName) {
         mSearchActivity = cName;
-        
+
         TypedArray a = activityContext.obtainStyledAttributes(attr,
                 com.android.internal.R.styleable.Searchable);
         mSearchMode = a.getInt(com.android.internal.R.styleable.Searchable_searchMode, 0);
@@ -322,10 +322,10 @@ public final class SearchableInfo implements Parcelable {
         mIconId = a.getResourceId(com.android.internal.R.styleable.Searchable_icon, 0);
         mSearchButtonText = a.getResourceId(
                 com.android.internal.R.styleable.Searchable_searchButtonText, 0);
-        mSearchInputType = a.getInt(com.android.internal.R.styleable.Searchable_inputType, 
+        mSearchInputType = a.getInt(com.android.internal.R.styleable.Searchable_inputType,
                 InputType.TYPE_CLASS_TEXT |
                 InputType.TYPE_TEXT_VARIATION_NORMAL);
-        mSearchImeOptions = a.getInt(com.android.internal.R.styleable.Searchable_imeOptions, 
+        mSearchImeOptions = a.getInt(com.android.internal.R.styleable.Searchable_imeOptions,
                 EditorInfo.IME_ACTION_GO);
         mIncludeInGlobalSearch = a.getBoolean(
                 com.android.internal.R.styleable.Searchable_includeInGlobalSearch, false);
@@ -349,16 +349,16 @@ public final class SearchableInfo implements Parcelable {
         mSuggestThreshold = a.getInt(
                 com.android.internal.R.styleable.Searchable_searchSuggestThreshold, 0);
 
-        mVoiceSearchMode = 
+        mVoiceSearchMode =
             a.getInt(com.android.internal.R.styleable.Searchable_voiceSearchMode, 0);
         // TODO this didn't work - came back zero from YouTube
-        mVoiceLanguageModeId = 
+        mVoiceLanguageModeId =
             a.getResourceId(com.android.internal.R.styleable.Searchable_voiceLanguageModel, 0);
-        mVoicePromptTextId = 
+        mVoicePromptTextId =
             a.getResourceId(com.android.internal.R.styleable.Searchable_voicePromptText, 0);
-        mVoiceLanguageId = 
+        mVoiceLanguageId =
             a.getResourceId(com.android.internal.R.styleable.Searchable_voiceLanguage, 0);
-        mVoiceMaxResults = 
+        mVoiceMaxResults =
             a.getInt(com.android.internal.R.styleable.Searchable_voiceMaxResults, 0);
 
         a.recycle();
@@ -432,8 +432,8 @@ public final class SearchableInfo implements Parcelable {
             // validity check.
             if (mKeyCode == 0) {
                 throw new IllegalArgumentException("No keycode.");
-            } else if ((mQueryActionMsg == null) && 
-                    (mSuggestActionMsg == null) && 
+            } else if ((mQueryActionMsg == null) &&
+                    (mSuggestActionMsg == null) &&
                     (mSuggestActionMsgColumn == null)) {
                 throw new IllegalArgumentException("No message information.");
             }
@@ -502,7 +502,7 @@ public final class SearchableInfo implements Parcelable {
 
     /**
      * If any action keys were defined for this searchable activity, look up and return.
-     * 
+     *
      * @param keyCode The key that was pressed
      * @return Returns the action key info, or {@code null} if none defined.
      *
@@ -544,16 +544,16 @@ public final class SearchableInfo implements Parcelable {
             return null;
         }
         // for each component, try to find metadata
-        XmlResourceParser xml = 
+        XmlResourceParser xml =
                 activityInfo.loadXmlMetaData(userContext.getPackageManager(), MD_LABEL_SEARCHABLE);
         if (xml == null) {
             return null;
         }
         ComponentName cName = new ComponentName(activityInfo.packageName, activityInfo.name);
-        
+
         SearchableInfo searchable = getActivityMetaData(userContext, xml, cName);
         xml.close();
-        
+
         if (DBG) {
             if (searchable != null) {
                 Log.d(LOG_TAG, "Checked " + activityInfo.name
@@ -573,11 +573,11 @@ public final class SearchableInfo implements Parcelable {
 
     /**
      * Get the metadata for a given activity
-     * 
+     *
      * @param context runtime context
      * @param xml XML parser for reading attributes
      * @param cName The component name of the searchable activity
-     * 
+     *
      * @result A completely constructed SearchableInfo, or null if insufficient XML data for it
      */
     private static SearchableInfo getActivityMetaData(Context context, XmlPullParser xml,
@@ -629,14 +629,14 @@ public final class SearchableInfo implements Parcelable {
             Log.w(LOG_TAG, "Reading searchable metadata for " + cName.flattenToShortString(), e);
             return null;
         }
-        
+
         return result;
     }
 
     /**
      * Gets the "label" (user-visible name) of this searchable context. This must be
      * read using the searchable Activity's resources.
-     * 
+     *
      * @return A resource id, or {@code 0} if no label was specified.
      * @see android.R.styleable#Searchable_label
      *
@@ -650,7 +650,7 @@ public final class SearchableInfo implements Parcelable {
     /**
      * Gets the resource id of the hint text. This must be
      * read using the searchable Activity's resources.
-     * 
+     *
      * @return A resource id, or {@code 0} if no hint was specified.
      * @see android.R.styleable#Searchable_hint
      */
@@ -661,7 +661,7 @@ public final class SearchableInfo implements Parcelable {
     /**
      * Gets the icon id specified by the Searchable_icon meta-data entry. This must be
      * read using the searchable Activity's resources.
-     * 
+     *
      * @return A resource id, or {@code 0} if no icon was specified.
      * @see android.R.styleable#Searchable_icon
      *
@@ -758,7 +758,7 @@ public final class SearchableInfo implements Parcelable {
      * Gets the input type as specified in the searchable attributes. This will default to
      * {@link InputType#TYPE_CLASS_TEXT} if not specified (which is appropriate
      * for free text input).
-     * 
+     *
      * @return the input type
      * @see android.R.styleable#Searchable_inputType
      */
@@ -770,7 +770,7 @@ public final class SearchableInfo implements Parcelable {
      * Gets the input method options specified in the searchable attributes.
      * This will default to {@link EditorInfo#IME_ACTION_GO} if not specified (which is
      * appropriate for a search box).
-     * 
+     *
      * @return the input type
      * @see android.R.styleable#Searchable_imeOptions
      */
@@ -841,7 +841,7 @@ public final class SearchableInfo implements Parcelable {
         mIncludeInGlobalSearch = in.readInt() != 0;
         mQueryAfterZeroResults = in.readInt() != 0;
         mAutoUrlDetect = in.readInt() != 0;
-        
+
         mSettingsDescriptionId = in.readInt();
         mSuggestAuthority = in.readString();
         mSuggestPath = in.readString();
@@ -855,7 +855,7 @@ public final class SearchableInfo implements Parcelable {
         }
 
         mSuggestProviderPackage = in.readString();
-        
+
         mVoiceSearchMode = in.readInt();
         mVoiceLanguageModeId = in.readInt();
         mVoicePromptTextId = in.readInt();
@@ -879,7 +879,7 @@ public final class SearchableInfo implements Parcelable {
         dest.writeInt(mIncludeInGlobalSearch ? 1 : 0);
         dest.writeInt(mQueryAfterZeroResults ? 1 : 0);
         dest.writeInt(mAutoUrlDetect ? 1 : 0);
-        
+
         dest.writeInt(mSettingsDescriptionId);
         dest.writeString(mSuggestAuthority);
         dest.writeString(mSuggestPath);

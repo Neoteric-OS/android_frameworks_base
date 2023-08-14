@@ -29,16 +29,16 @@ public class TableMaskFilter extends MaskFilter {
         }
         native_instance = nativeNewTable(table);
     }
-    
+
     private TableMaskFilter(long ni) {
         native_instance = ni;
     }
-    
+
     @UnsupportedAppUsage
     public static TableMaskFilter CreateClipTable(int min, int max) {
         return new TableMaskFilter(nativeNewClip(min, max));
     }
-    
+
     public static TableMaskFilter CreateGammaTable(float gamma) {
         return new TableMaskFilter(nativeNewGamma(gamma));
     }

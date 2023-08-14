@@ -83,7 +83,7 @@ public final class ServiceState {
     public String getPackage() {
         return mPackage;
     }
-    
+
     public String getProcessName() {
         return mProcessName;
     }

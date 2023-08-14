@@ -34,7 +34,7 @@ package org.apache.http.conn.ssl;
 /**
  * The ALLOW_ALL HostnameVerifier essentially turns hostname verification
  * off. This implementation is a no-op, and never throws the SSLException.
- * 
+ *
  * @author Julius Davies
  *
  * @deprecated Please use {@link java.net.URL#openConnection} instead.
@@ -45,15 +45,15 @@ package org.apache.http.conn.ssl;
 public class AllowAllHostnameVerifier extends AbstractVerifier {
 
     public final void verify(
-            final String host, 
+            final String host,
             final String[] cns,
             final String[] subjectAlts) {
         // Allow everything - so never blowup.
     }
 
     @Override
-    public final String toString() { 
-        return "ALLOW_ALL"; 
+    public final String toString() {
+        return "ALLOW_ALL";
     }
-    
+
 }

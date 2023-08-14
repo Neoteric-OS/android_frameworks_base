@@ -292,7 +292,7 @@ public class AnyMotionDetector {
             return RESULT_STATIONARY;
         } else if (Float.isNaN(angle)) {
           /**
-           * Floating point rounding errors have caused the angle calcuation's dot product to 
+           * Floating point rounding errors have caused the angle calcuation's dot product to
            * exceed 1.0. In such case, we report RESULT_MOVED to prevent devices from rapidly
            * retrying this measurement.
            */

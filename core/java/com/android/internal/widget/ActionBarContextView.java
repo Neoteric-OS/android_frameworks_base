@@ -58,12 +58,12 @@ public class ActionBarContextView extends AbsActionBarView {
     public ActionBarContextView(Context context) {
         this(context, null);
     }
-    
+
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public ActionBarContextView(Context context, AttributeSet attrs) {
         this(context, attrs, com.android.internal.R.attr.actionModeStyle);
     }
-    
+
     public ActionBarContextView(Context context, AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
@@ -400,7 +400,7 @@ public class ActionBarContextView extends AbsActionBarView {
         if (mTitleLayout != null && mCustomView == null && mTitleLayout.getVisibility() != GONE) {
             x += positionChild(mTitleLayout, x, y, contentHeight, isLayoutRtl);
         }
-        
+
         if (mCustomView != null) {
             x += positionChild(mCustomView, x, y, contentHeight, isLayoutRtl);
         }

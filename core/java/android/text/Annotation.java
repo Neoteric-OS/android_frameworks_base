@@ -36,7 +36,7 @@ public class Annotation implements ParcelableSpan {
         mKey = src.readString();
         mValue = src.readString();
     }
-    
+
     public int getSpanTypeId() {
         return getSpanTypeIdInternal();
     }
@@ -45,7 +45,7 @@ public class Annotation implements ParcelableSpan {
     public int getSpanTypeIdInternal() {
         return TextUtils.ANNOTATION;
     }
-    
+
     public int describeContents() {
         return 0;
     }

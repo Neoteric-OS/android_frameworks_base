@@ -52,9 +52,9 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 
 /**
- * Abstract base class for all standard {@link X509HostnameVerifier} 
+ * Abstract base class for all standard {@link X509HostnameVerifier}
  * implementations.
- * 
+ *
  * @author Julius Davies
  *
  * @deprecated Please use {@link java.net.URL#openConnection} instead.
