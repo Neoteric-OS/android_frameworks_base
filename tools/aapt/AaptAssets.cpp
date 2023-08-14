@@ -1325,12 +1325,12 @@ status_t AaptAssets::filter(Bundle* bundle)
         preferredDensity = preferredConfig.density;
     }
 
-    if (reqFilter->isEmpty() && preferredDensity == 0) {
+    if (reqFilter->empty() && preferredDensity == 0) {
         return NO_ERROR;
     }
 
     if (bundle->getVerbose()) {
-        if (!reqFilter->isEmpty()) {
+        if (!reqFilter->empty()) {
             printf("Applying required filter: %s\n",
                     bundle->getConfigurations().c_str());
         }
@@ -1540,7 +1540,7 @@ status_t AaptAssets::buildIncludedResources(Bundle* bundle)
     }
 
     const String8& featureOfBase = bundle->getFeatureOfPackage();
-    if (!featureOfBase.isEmpty()) {
+    if (!featureOfBase.empty()) {
         if (bundle->getVerbose()) {
             printf("Including base feature resources from package: %s\n",
                     featureOfBase.c_str());
