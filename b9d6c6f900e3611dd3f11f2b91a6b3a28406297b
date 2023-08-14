@@ -186,6 +186,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "691f753b_b96bf786",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-14T18:48:21Z",
+      "side": 1,
+      "message": "I understand that the full reset does more work.  What I am looking for is an explanation for why the full reset is not appropriate to use in this context.  Moving apps between internal and adoptable storage is a rare operation, so I would assume that it doesn\u0027t need to be super well optimized.  It might be the case that doing some unnecessary work is justified by simplicity of implementation.",
+      "parentUuid": "ab0aa2de_fe103a1a",
+      "range": {
+        "startLine": 1385,
+        "startChar": 81,
+        "endLine": 1386,
+        "endChar": 83
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "388b2f0c_0d26564c",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
