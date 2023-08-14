@@ -16,6 +16,24 @@
       "message": "Am I missing something, or are there no files in this change?",
       "revId": "fa253d3ad0c13c44e570e8851eb94ece27f7ff32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2190118d_66fb5034",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2023-08-14T09:40:26Z",
+      "side": 1,
+      "message": "Gerrit\u0027s web interface seems to be having some difficulties. I pretended to be a Real Coder™ now and locally edited it instead.",
+      "parentUuid": "34bb3367_284cc704",
+      "revId": "fa253d3ad0c13c44e570e8851eb94ece27f7ff32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
