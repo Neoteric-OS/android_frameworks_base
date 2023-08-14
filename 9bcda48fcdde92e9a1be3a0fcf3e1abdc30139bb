@@ -16,6 +16,24 @@
       "message": "I didn\u0027t see any substantial changes to this CL? If NPE happened in this line, there could be something else should be resolved.",
       "revId": "9bcda48fcdde92e9a1be3a0fcf3e1abdc30139bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2ef52aa_e6b06485",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2023-08-14T10:26:18Z",
+      "side": 1,
+      "message": "\u003e I didn\u0027t see any substantial changes to this CL? If NPE happened in this line, there could be something else should be resolved.\n\nIn addition to above, I think now I can see the difference, but still think it\u0027s not the root cause of this bug. I mean if such a  method call can lead to NPE, many places would also then. We should find the root cause.\n\nThis defers Google to review.",
+      "parentUuid": "03bd3e9b_50b6e59b",
+      "revId": "9bcda48fcdde92e9a1be3a0fcf3e1abdc30139bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
