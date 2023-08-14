@@ -210,6 +210,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de1ab4f1_00664a50",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-14T18:55:41Z",
+      "side": 1,
+      "message": "The use-case we are trying to solve here is not for moving apps, it is for changing the primary storage, which moves the content to adoptable storage from internal or vice versa.\n\nI agree full reset will solve the problem, but we have to decide if we want to all the work or just do the required part.\n\nPlease let me know your thoughts.",
+      "parentUuid": "691f753b_b96bf786",
+      "range": {
+        "startLine": 1385,
+        "startChar": 81,
+        "endLine": 1386,
+        "endChar": 83
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "388b2f0c_0d26564c",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
