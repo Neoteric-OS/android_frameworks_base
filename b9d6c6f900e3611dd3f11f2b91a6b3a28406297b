@@ -162,6 +162,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab0aa2de_fe103a1a",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-14T18:35:59Z",
+      "side": 1,
+      "message": "After the move operation, the current user\u0027s emulated volume gets mounted again from vold (https://cs.android.com/android/platform/superproject/main/+/main:system/vold/MoveStorage.cpp;l\u003d226-230) as emulated volume\u0027s UUID is being used to execute the move.\n\nThe reset operation will (as stated earlier) will remove everything by calling `IVold#reset` (https://cs.android.com/android/platform/superproject/main/+/refs/heads/main:system/vold/VolumeManager.cpp;l\u003d904) which includes all the emulated volumes and destroys and re-creates the disk.\n\nThen after that, it will add back the users and starts the already started users known by StorageManagerService. This starting of user also mounts the emulated volumes for the user (https://cs.android.com/android/platform/superproject/main/+/main:system/vold/VolumeManager.cpp;l\u003d459)\n\nThis CL remounts the emulated volumes for background users for which are currently running (or have emulated volumes mounted for them) by stopping the user (which unmounts the emulated volumes) and starting the user back again (which mounts the correct emulated volumes).\n\nThis difference between this CL and calling `resetIfRebootedAndConnected()` is that this solution only does the operations that are required to remount the emulated volumes while `resetIfRebootedAndConnected()` does the *full* reset\n\nPlease let me know your thoughts on this.",
+      "parentUuid": "e554f936_d4d75372",
+      "range": {
+        "startLine": 1385,
+        "startChar": 81,
+        "endLine": 1386,
+        "endChar": 83
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "388b2f0c_0d26564c",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
