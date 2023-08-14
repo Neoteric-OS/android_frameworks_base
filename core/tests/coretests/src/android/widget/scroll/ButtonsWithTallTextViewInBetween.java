@@ -41,7 +41,7 @@ public class ButtonsWithTallTextViewInBetween extends ScrollViewScenario {
     }
 
     protected void init(Params params) {
-        
+
         params.addButton("top button", 0.2f)
                 .addTextView("middle filler", 1.51f)
                 .addVerticalLLOfButtons("bottom", 1, 0.2f);

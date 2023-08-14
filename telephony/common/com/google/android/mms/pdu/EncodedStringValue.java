@@ -281,7 +281,7 @@ public class EncodedStringValue implements Cloneable {
 
         return new EncodedStringValue(value.mCharacterSet, value.mData);
     }
-    
+
     @UnsupportedAppUsage
     public static EncodedStringValue[] encodeStrings(String[] array) {
         int count = array.length;

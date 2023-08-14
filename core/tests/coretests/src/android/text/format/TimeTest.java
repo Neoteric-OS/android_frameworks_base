@@ -548,7 +548,7 @@ public class TimeTest {
                 if (zoneIndex == 0) {
                     Log.i("TimeTest", time.format("%B %d, %Y"));
                 }
-                
+
                 // This is the Julian day for 12am for this day of the year
                 int julianDay = Time.getJulianDay(millis, time.gmtoff);
 
@@ -590,9 +590,9 @@ public class TimeTest {
                     Log.i("TimeTest", time.format("%B %d, %Y"));
                 }
                 int julianDay = Time.getJulianDay(millis, time.gmtoff);
-                
+
                 time.setJulianDay(julianDay);
-                
+
                 // Some places change daylight saving time at 12am and so there
                 // is no 12am on some days in some timezones.  In those cases,
                 // the time is set to 1am.

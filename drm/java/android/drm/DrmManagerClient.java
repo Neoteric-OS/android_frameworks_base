@@ -85,7 +85,7 @@ public class DrmManagerClient implements AutoCloseable {
          * and rights acquisition.
          *
          * @param client The <code>DrmManagerClient</code> instance.
-         * @param event The {@link DrmInfoEvent} instance that wraps the status information or 
+         * @param event The {@link DrmInfoEvent} instance that wraps the status information or
          * warnings.
          */
         public void onInfo(DrmManagerClient client, DrmInfoEvent event);
@@ -318,7 +318,7 @@ public class DrmManagerClient implements AutoCloseable {
     }
 
     /**
-     * Registers an {@link DrmManagerClient.OnInfoListener} callback, which is invoked when the 
+     * Registers an {@link DrmManagerClient.OnInfoListener} callback, which is invoked when the
      * DRM framework sends status or warning information during registration or rights acquisition.
      *
      * @param infoListener Interface definition for the callback.
@@ -331,7 +331,7 @@ public class DrmManagerClient implements AutoCloseable {
     }
 
     /**
-     * Registers an {@link DrmManagerClient.OnEventListener} callback, which is invoked when the 
+     * Registers an {@link DrmManagerClient.OnEventListener} callback, which is invoked when the
      * DRM framework sends information about DRM processing.
      *
      * @param eventListener Interface definition for the callback.
@@ -344,7 +344,7 @@ public class DrmManagerClient implements AutoCloseable {
     }
 
     /**
-     * Registers an {@link DrmManagerClient.OnErrorListener} callback, which is invoked when 
+     * Registers an {@link DrmManagerClient.OnErrorListener} callback, which is invoked when
      * the DRM framework sends error information.
      *
      * @param errorListener Interface definition for the callback.
@@ -450,7 +450,7 @@ public class DrmManagerClient implements AutoCloseable {
 
     /**
      * Saves rights to a specified path and associates that path with the content path.
-     * 
+     *
      * <p class="note"><strong>Note:</strong> For OMA or WM-DRM, <code>rightsPath</code> and
      * <code>contentPath</code> can be null.</p>
      *
@@ -557,7 +557,7 @@ public class DrmManagerClient implements AutoCloseable {
      *<p>
      * This is a utility method that consists of an
      * {@link #acquireDrmInfo(DrmInfoRequest) acquireDrmInfo()} and a
-     * {@link #processDrmInfo(DrmInfo) processDrmInfo()} method call. This utility method can be 
+     * {@link #processDrmInfo(DrmInfo) processDrmInfo()} method call. This utility method can be
      * used only if the selected DRM plug-in (agent) supports this sequence of calls. Some DRM
      * agents, such as OMA, do not support this utility method, in which case an application must
      * invoke {@link #acquireDrmInfo(DrmInfoRequest) acquireDrmInfo()} and
@@ -581,7 +581,7 @@ public class DrmManagerClient implements AutoCloseable {
      *
      * @param path Path to the content or null.
      * @param mimeType MIME type of the content or null.
-     * 
+     *
      * @return An <code>int</code> that corresponds to a {@link DrmStore.DrmObjectType}.
      */
     public int getDrmObjectType(String path, String mimeType) {
@@ -598,7 +598,7 @@ public class DrmManagerClient implements AutoCloseable {
      *
      * @param uri URI for the content or null.
      * @param mimeType MIME type of the content or null.
-     * 
+     *
      * @return An <code>int</code> that corresponds to a {@link DrmStore.DrmObjectType}.
      */
     public int getDrmObjectType(Uri uri, String mimeType) {
@@ -790,7 +790,7 @@ public class DrmManagerClient implements AutoCloseable {
      * @param inputData Input data that needs to be converted.
      *
      * @return A {@link DrmConvertedStatus} object that contains the status of the data conversion,
-     * the converted data, and offset for the header and body signature. An application can 
+     * the converted data, and offset for the header and body signature. An application can
      * ignore the offset because it is only relevant to the
      * {@link #closeConvertSession closeConvertSession()} method.
      */
@@ -802,9 +802,9 @@ public class DrmManagerClient implements AutoCloseable {
     }
 
     /**
-     * Informs the DRM plug-in (agent) that there is no more data to convert or that an error 
+     * Informs the DRM plug-in (agent) that there is no more data to convert or that an error
      * has occurred. Upon successful conversion of the data, the DRM agent will provide an offset
-     * value indicating where the header and body signature should be added. Appending the 
+     * value indicating where the header and body signature should be added. Appending the
      * signature is necessary to protect the integrity of the converted file.
      *
      * @param convertId Handle for the conversion session.

@@ -34,9 +34,9 @@ package org.apache.http.params;
 
 /**
  * Defines parameter names for connections in HttpCore.
- * 
+ *
  * @version $Revision: 576077 $
- * 
+ *
  * @since 4.0
  *
  * @deprecated Please use {@link java.net.URL#openConnection} instead.
@@ -47,29 +47,29 @@ package org.apache.http.params;
 public interface CoreConnectionPNames {
 
     /**
-     * Defines the default socket timeout (<tt>SO_TIMEOUT</tt>) in milliseconds which is the 
-     * timeout for waiting for data. A timeout value of zero is interpreted as an infinite 
-     * timeout. This value is used when no socket timeout is set in the 
-     * method parameters. 
+     * Defines the default socket timeout (<tt>SO_TIMEOUT</tt>) in milliseconds which is the
+     * timeout for waiting for data. A timeout value of zero is interpreted as an infinite
+     * timeout. This value is used when no socket timeout is set in the
+     * method parameters.
      * <p>
      * This parameter expects a value of type {@link Integer}.
      * </p>
      * @see java.net.SocketOptions#SO_TIMEOUT
      */
-    public static final String SO_TIMEOUT = "http.socket.timeout"; 
+    public static final String SO_TIMEOUT = "http.socket.timeout";
 
     /**
-     * Determines whether Nagle's algorithm is to be used. The Nagle's algorithm 
-     * tries to conserve bandwidth by minimizing the number of segments that are 
-     * sent. When applications wish to decrease network latency and increase 
-     * performance, they can disable Nagle's algorithm (that is enable TCP_NODELAY). 
-     * Data will be sent earlier, at the cost of an increase in bandwidth consumption. 
+     * Determines whether Nagle's algorithm is to be used. The Nagle's algorithm
+     * tries to conserve bandwidth by minimizing the number of segments that are
+     * sent. When applications wish to decrease network latency and increase
+     * performance, they can disable Nagle's algorithm (that is enable TCP_NODELAY).
+     * Data will be sent earlier, at the cost of an increase in bandwidth consumption.
      * <p>
      * This parameter expects a value of type {@link Boolean}.
      * </p>
      * @see java.net.SocketOptions#TCP_NODELAY
      */
-    public static final String TCP_NODELAY = "http.tcp.nodelay"; 
+    public static final String TCP_NODELAY = "http.tcp.nodelay";
 
     /**
      * Determines the size of the internal socket buffer used to buffer data
@@ -78,42 +78,42 @@ public interface CoreConnectionPNames {
      * This parameter expects a value of type {@link Integer}.
      * </p>
      */
-    public static final String SOCKET_BUFFER_SIZE = "http.socket.buffer-size"; 
+    public static final String SOCKET_BUFFER_SIZE = "http.socket.buffer-size";
 
     /**
-     * Sets SO_LINGER with the specified linger time in seconds. The maximum timeout 
+     * Sets SO_LINGER with the specified linger time in seconds. The maximum timeout
      * value is platform specific. Value <tt>0</tt> implies that the option is disabled.
-     * Value <tt>-1</tt> implies that the JRE default is used. The setting only affects 
-     * socket close.  
+     * Value <tt>-1</tt> implies that the JRE default is used. The setting only affects
+     * socket close.
      * <p>
      * This parameter expects a value of type {@link Integer}.
      * </p>
      * @see java.net.SocketOptions#SO_LINGER
      */
-    public static final String SO_LINGER = "http.socket.linger"; 
+    public static final String SO_LINGER = "http.socket.linger";
 
     /**
-     * Determines the timeout until a connection is etablished. A value of zero 
+     * Determines the timeout until a connection is etablished. A value of zero
      * means the timeout is not used. The default value is zero.
      * <p>
      * This parameter expects a value of type {@link Integer}.
      * </p>
      */
-    public static final String CONNECTION_TIMEOUT = "http.connection.timeout"; 
+    public static final String CONNECTION_TIMEOUT = "http.connection.timeout";
 
     /**
-     * Determines whether stale connection check is to be used. Disabling 
-     * stale connection check may result in slight performance improvement 
+     * Determines whether stale connection check is to be used. Disabling
+     * stale connection check may result in slight performance improvement
      * at the risk of getting an I/O error when executing a request over a
-     * connection that has been closed at the server side. 
+     * connection that has been closed at the server side.
      * <p>
      * This parameter expects a value of type {@link Boolean}.
      * </p>
      */
-    public static final String STALE_CONNECTION_CHECK = "http.connection.stalecheck"; 
+    public static final String STALE_CONNECTION_CHECK = "http.connection.stalecheck";
 
     /**
-     * Determines the maximum line length limit. If set to a positive value, any HTTP 
+     * Determines the maximum line length limit. If set to a positive value, any HTTP
      * line exceeding this limit will cause an IOException. A negative or zero value
      * will effectively disable the check.
      * <p>
@@ -121,12 +121,12 @@ public interface CoreConnectionPNames {
      * </p>
      */
     public static final String MAX_LINE_LENGTH = "http.connection.max-line-length";
-    
+
     /**
-     * Determines the maximum HTTP header count allowed. If set to a positive value, 
-     * the number of HTTP headers received from the data stream exceeding this limit 
-     * will cause an IOException. A negative or zero value will effectively disable 
-     * the check. 
+     * Determines the maximum HTTP header count allowed. If set to a positive value,
+     * the number of HTTP headers received from the data stream exceeding this limit
+     * will cause an IOException. A negative or zero value will effectively disable
+     * the check.
      * <p>
      * This parameter expects a value of type {@link Integer}.
      * </p>

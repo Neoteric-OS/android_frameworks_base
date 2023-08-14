@@ -2376,7 +2376,7 @@ public class AssistStructure implements Parcelable {
             ensureData();
         }
         Log.i(TAG, "Task id: " + mTaskId);
-        Log.i(TAG, "Activity: " + (mActivityComponent != null 
+        Log.i(TAG, "Activity: " + (mActivityComponent != null
                 ? mActivityComponent.flattenToShortString()
                 : null));
         Log.i(TAG, "Sanitize on write: " + mSanitizeOnWrite);

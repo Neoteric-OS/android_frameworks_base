@@ -25,7 +25,7 @@ import junit.framework.TestCase;
  */
 
 public class StateSetTest extends TestCase {
-    
+
     @SmallTest
     public void testStateSetPositiveMatches() throws Exception {
          int[] stateSpec = new int[2];

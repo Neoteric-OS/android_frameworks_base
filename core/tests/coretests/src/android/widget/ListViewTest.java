@@ -111,7 +111,7 @@ public class ListViewTest extends InstrumentationTestCase {
             return super.getSystemService(name);
         }
     }
-    
+
     private class MockView extends View {
 
         public boolean onMeasureCalled = false;

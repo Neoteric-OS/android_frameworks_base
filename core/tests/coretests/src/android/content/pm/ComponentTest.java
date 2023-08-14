@@ -615,7 +615,7 @@ public class ComponentTest extends AndroidTestCase {
                                                    PackageManager.DONT_KILL_APP);
 
         PackageInfo pi = mPackageManager.getPackageInfo(ENABLED_PACKAGENAME, 0);
-        
+
         String disabledProviderProcessName = getComponentProcessName(DISABLED_PROVIDER_NAME);
         List<ProviderInfo> providerInfoList =
                 mPackageManager.queryContentProviders(disabledProviderProcessName,

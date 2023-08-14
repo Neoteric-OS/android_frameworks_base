@@ -42,7 +42,7 @@ public class BaselineAlignmentZeroWidthAndWeightTest extends ActivityInstrumenta
 
     @MediumTest
     public void testSetUpConditions() throws Exception {
-        assertNotNull(mShowButton);        
+        assertNotNull(mShowButton);
     }
 
     @MediumTest

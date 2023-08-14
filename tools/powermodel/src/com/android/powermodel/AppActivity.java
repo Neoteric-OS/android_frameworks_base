@@ -62,7 +62,7 @@ public class AppActivity extends AppInfo {
     public static class Builder extends AppInfo.Builder<AppActivity> {
         private HashMap<Component, ComponentActivity> mComponents = new HashMap();
         // TODO power rails.
-        
+
         public Builder() {
         }
 

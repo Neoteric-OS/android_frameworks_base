@@ -464,7 +464,7 @@ public class SyncRequest implements Parcelable {
          * {@link #build()}.
          * <p>Throws <code>IllegalArgumentException</code> if called and
          * {@link #setDisallowMetered(boolean)} has been set.
-         * 
+         *
          *
          * @param ignoreSettings true to ignore the sync automatically settings. Default false.
          */

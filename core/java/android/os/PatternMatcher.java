@@ -32,13 +32,13 @@ public class PatternMatcher implements Parcelable {
      * tested against.
      */
     public static final int PATTERN_LITERAL = 0;
-    
+
     /**
      * Pattern type: the given pattern must match the
      * beginning of the string it is tested against.
      */
     public static final int PATTERN_PREFIX = 1;
-    
+
     /**
      * Pattern type: the given pattern is interpreted with a
      * simple glob syntax for matching against the string it is tested against.
@@ -46,7 +46,7 @@ public class PatternMatcher implements Parcelable {
      * more occurrences of the character immediately before.  If the
      * character before it is '.' it will match any character.  The character
      * '\' can be used as an escape.  This essentially provides only the '*'
-     * wildcard part of a normal regexp. 
+     * wildcard part of a normal regexp.
      */
     public static final int PATTERN_SIMPLE_GLOB = 2;
 
@@ -111,11 +111,11 @@ public class PatternMatcher implements Parcelable {
     public final String getPath() {
         return mPattern;
     }
-    
+
     public final int getType() {
         return mType;
     }
-    
+
     public boolean match(String str) {
         return matchPattern(str, mPattern, mParsedPattern, mType);
     }
@@ -184,7 +184,7 @@ public class PatternMatcher implements Parcelable {
         mType = src.readInt();
         mParsedPattern = src.createIntArray();
     }
-    
+
     public static final @android.annotation.NonNull Parcelable.Creator<PatternMatcher> CREATOR
             = new Parcelable.Creator<PatternMatcher>() {
         public PatternMatcher createFromParcel(Parcel source) {
@@ -195,7 +195,7 @@ public class PatternMatcher implements Parcelable {
             return new PatternMatcher[size];
         }
     };
-    
+
     static boolean matchPattern(String match, String pattern, int[] parsedPattern, int type) {
         if (match == null) return false;
         if (type == PATTERN_LITERAL) {
@@ -275,12 +275,12 @@ public class PatternMatcher implements Parcelable {
                 im++;
             }
         }
-        
+
         if (ip >= NP && im >= NM) {
             // Reached the end of both strings, all is good!
             return true;
         }
-        
+
         // One last check: we may have finished the match string, but still
         // have a '.*' at the end of the pattern, which should still count
         // as a match.
@@ -288,7 +288,7 @@ public class PatternMatcher implements Parcelable {
             && pattern.charAt(ip+1) == '*') {
             return true;
         }
-        
+
         return false;
     }
 

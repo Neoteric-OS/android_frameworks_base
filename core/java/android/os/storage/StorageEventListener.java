@@ -21,7 +21,7 @@ import android.os.Build;
 
 /**
  * Used for receiving notifications from the StorageManager
- * 
+ *
  * @hide
  */
 public class StorageEventListener {

@@ -43,7 +43,7 @@ public class TestCaseUtilTest extends TestCase {
 
         assertEquals(0, testCaseNames.size());
     }
-    
+
     public void testGetTests_ForTestCaseWithSuiteMethod() throws Exception {
         TestCase testCase = new OneTestTestCaseWithSuite();
 

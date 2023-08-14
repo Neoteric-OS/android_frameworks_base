@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * TokenCaches manage time limited authentication tokens in memory. 
+ * TokenCaches manage time limited authentication tokens in memory.
  */
 /* default */ class TokenCache {
 
@@ -158,7 +158,7 @@ import java.util.Objects;
             if (evictor != null) {
                 evictor.evict();
             }
-            
+
         }
 
         public void evict(Account account) {
@@ -171,7 +171,7 @@ import java.util.Objects;
 
     /**
      * Map associating basic token lookup information with with actual tokens (and optionally their
-     * expiration times). 
+     * expiration times).
      */
     private TokenLruCache mCachedTokens = new TokenLruCache();
 

@@ -154,7 +154,7 @@ public class ReverseLinearLayout extends LinearLayout {
             if (getGravity() != gravityToApply) setGravity(gravityToApply);
         }
     }
-    
+
     private static void reverseGroup(ViewGroup group, boolean isLayoutReverse) {
         for (int i = 0; i < group.getChildCount(); i++) {
             final View child = group.getChildAt(i);

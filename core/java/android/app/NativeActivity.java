@@ -57,7 +57,7 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
      * "main" is used.
      */
     public static final String META_DATA_LIB_NAME = "android.app.lib_name";
-    
+
     /**
      * Optional meta-that can be in the manifest for this component, specifying
      * the name of the main entry point for this native activity in the
@@ -65,7 +65,7 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
      * "ANativeActivity_onCreate" is used.
      */
     public static final String META_DATA_FUNC_NAME = "android.app.func_name";
-    
+
     private static final String KEY_NATIVE_SAVED_STATE = "android:native_state";
 
     private NativeContentView mNativeContentView;
@@ -73,10 +73,10 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     private long mNativeHandle;
-    
+
     private InputQueue mCurInputQueue;
     private SurfaceHolder mCurSurfaceHolder;
-    
+
     final int[] mLocation = new int[2];
     int mLastContentX;
     int mLastContentY;
@@ -86,7 +86,7 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
     private boolean mDispatchingUnhandledKey;
 
     private boolean mDestroyed;
-    
+
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     private native long loadNativeCode(String path, String funcname, MessageQueue queue,
             String internalDataPath, String obbPath, String externalDataPath, int sdkVersion,
@@ -142,7 +142,7 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
         setContentView(mNativeContentView);
         mNativeContentView.requestFocus();
         mNativeContentView.getViewTreeObserver().addOnGlobalLayoutListener(this);
-        
+
         try {
             ai = getPackageManager().getActivityInfo(
                     getIntent().getComponent(), PackageManager.GET_META_DATA);
@@ -163,7 +163,7 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
             throw new IllegalArgumentException("Unable to find native library " + libname +
                                                " using classloader: " + classLoader.toString());
         }
-        
+
         byte[] nativeSavedState = savedInstanceState != null
                 ? savedInstanceState.getByteArray(KEY_NATIVE_SAVED_STATE) : null;
 
@@ -255,21 +255,21 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
             onWindowFocusChangedNative(mNativeHandle, hasFocus);
         }
     }
-    
+
     public void surfaceCreated(SurfaceHolder holder) {
         if (!mDestroyed) {
             mCurSurfaceHolder = holder;
             onSurfaceCreatedNative(mNativeHandle, holder.getSurface());
         }
     }
-    
+
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         if (!mDestroyed) {
             mCurSurfaceHolder = holder;
             onSurfaceChangedNative(mNativeHandle, holder.getSurface(), format, width, height);
         }
     }
-    
+
     public void surfaceRedrawNeeded(SurfaceHolder holder) {
         if (!mDestroyed) {
             mCurSurfaceHolder = holder;
@@ -283,21 +283,21 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
             onSurfaceDestroyedNative(mNativeHandle);
         }
     }
-    
+
     public void onInputQueueCreated(InputQueue queue) {
         if (!mDestroyed) {
             mCurInputQueue = queue;
             onInputQueueCreatedNative(mNativeHandle, queue.getNativePtr());
         }
     }
-    
+
     public void onInputQueueDestroyed(InputQueue queue) {
         if (!mDestroyed) {
             onInputQueueDestroyedNative(mNativeHandle, queue.getNativePtr());
             mCurInputQueue = null;
         }
     }
-    
+
     public void onGlobalLayout() {
         mNativeContentView.getLocationInWindow(mLocation);
         int w = mNativeContentView.getWidth();
@@ -319,7 +319,7 @@ public class NativeActivity extends Activity implements SurfaceHolder.Callback2,
     void setWindowFlags(int flags, int mask) {
         getWindow().setFlags(flags, mask);
     }
-    
+
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     void setWindowFormat(int format) {
         getWindow().setFormat(format);

@@ -53,30 +53,30 @@ import java.text.NumberFormat;
  */
 @Deprecated
 public class ProgressDialog extends AlertDialog {
-    
+
     /**
      * Creates a ProgressDialog with a circular, spinning progress
      * bar. This is the default.
      */
     public static final int STYLE_SPINNER = 0;
-    
+
     /**
      * Creates a ProgressDialog with a horizontal progress bar.
      */
     public static final int STYLE_HORIZONTAL = 1;
-    
+
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private ProgressBar mProgress;
     @UnsupportedAppUsage
     private TextView mMessageView;
-    
+
     private int mProgressStyle = STYLE_SPINNER;
     @UnsupportedAppUsage
     private TextView mProgressNumber;
     private String mProgressNumberFormat;
     private TextView mProgressPercent;
     private NumberFormat mProgressPercentFormat;
-    
+
     private int mMax;
     private int mProgressVal;
     private int mSecondaryProgressVal;
@@ -86,7 +86,7 @@ public class ProgressDialog extends AlertDialog {
     private Drawable mIndeterminateDrawable;
     private CharSequence mMessage;
     private boolean mIndeterminate;
-    
+
     private boolean mHasStarted;
     private Handler mViewUpdateHandler;
 
@@ -198,7 +198,7 @@ public class ProgressDialog extends AlertDialog {
                 com.android.internal.R.styleable.AlertDialog,
                 com.android.internal.R.attr.alertDialogStyle, 0);
         if (mProgressStyle == STYLE_HORIZONTAL) {
-            
+
             /* Use a separate handler to update the text views as they
              * must be updated on the same thread that created them.
              */
@@ -206,7 +206,7 @@ public class ProgressDialog extends AlertDialog {
                 @Override
                 public void handleMessage(Message msg) {
                     super.handleMessage(msg);
-                    
+
                     /* Update the number and percent */
                     int progress = mProgress.getProgress();
                     int max = mProgress.getMax();
@@ -271,13 +271,13 @@ public class ProgressDialog extends AlertDialog {
         onProgressChanged();
         super.onCreate(savedInstanceState);
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
         mHasStarted = true;
     }
-    
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -457,7 +457,7 @@ public class ProgressDialog extends AlertDialog {
         }
         return mIndeterminate;
     }
-    
+
     @Override
     public void setMessage(CharSequence message) {
         if (mProgress != null) {
@@ -511,7 +511,7 @@ public class ProgressDialog extends AlertDialog {
         mProgressPercentFormat = format;
         onProgressChanged();
     }
-    
+
     private void onProgressChanged() {
         if (mProgressStyle == STYLE_HORIZONTAL) {
             if (mViewUpdateHandler != null && !mViewUpdateHandler.hasMessages(0)) {

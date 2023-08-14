@@ -43,7 +43,7 @@ public class GestureStroke {
 
     /**
      * A constructor that constructs a gesture stroke from a list of gesture points.
-     * 
+     *
      * @param points
      */
     public GestureStroke(ArrayList<GesturePoint> points) {
@@ -74,7 +74,7 @@ public class GestureStroke {
             }
             index++;
         }
-        
+
         timestamps = times;
         this.points = tmpPoints;
         boundingBox = bx;
@@ -90,15 +90,15 @@ public class GestureStroke {
         points = pts.clone();
         timestamps = times.clone();
     }
-    
+
     @Override
     public Object clone() {
         return new GestureStroke(boundingBox, length, points, timestamps);
     }
-    
+
     /**
      * Draws the stroke with a given canvas and paint.
-     * 
+     *
      * @param canvas
      */
     void draw(Canvas canvas, Paint paint) {
@@ -150,11 +150,11 @@ public class GestureStroke {
 
     /**
      * Converts the stroke to a Path of a given number of points.
-     * 
+     *
      * @param width the width of the bounding box of the target path
      * @param height the height of the bounding box of the target path
      * @param numSample the number of points needed
-     * 
+     *
      * @return the path
      */
     public Path toPath(float width, float height, int numSample) {
@@ -162,7 +162,7 @@ public class GestureStroke {
         final RectF rect = boundingBox;
 
         GestureUtils.translate(pts, -rect.left, -rect.top);
-        
+
         float sx = width / rect.width();
         float sy = height / rect.height();
         float scale = sx > sy ? sy : sx;
@@ -225,7 +225,7 @@ public class GestureStroke {
         }
 
         return new GestureStroke(points);
-    }    
+    }
 
     /**
      * Invalidates the cached path that is used to render the stroke.
@@ -233,10 +233,10 @@ public class GestureStroke {
     public void clearPath() {
         if (mCachedPath != null) mCachedPath.rewind();
     }
-    
+
     /**
      * Computes an oriented bounding box of the stroke.
-     * 
+     *
      * @return OrientedBoundingBox
      */
     public OrientedBoundingBox computeOrientedBoundingBox() {

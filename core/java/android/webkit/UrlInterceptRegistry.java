@@ -47,7 +47,7 @@ public final class UrlInterceptRegistry {
 
     /**
      * set the flag to control whether url intercept is enabled or disabled
-     * 
+     *
      * @param disabled {@code true} to disable the cache
      *
      * @hide
@@ -62,7 +62,7 @@ public final class UrlInterceptRegistry {
 
     /**
      * get the state of the url intercept, enabled or disabled
-     * 
+     *
      * @return return if it is disabled
      *
      * @hide

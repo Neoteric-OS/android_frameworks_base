@@ -37,7 +37,7 @@ public class BackupHelperDispatcher {
     }
 
     TreeMap<String,BackupHelper> mHelpers = new TreeMap<String,BackupHelper>();
-    
+
     public BackupHelperDispatcher() {
     }
 
@@ -80,7 +80,7 @@ public class BackupHelperDispatcher {
     }
 
     private void doOneBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
-            ParcelFileDescriptor newState, Header header, BackupHelper helper) 
+            ParcelFileDescriptor newState, Header header, BackupHelper helper)
             throws IOException {
         int err;
         FileDescriptor newStateFD = newState.getFileDescriptor();

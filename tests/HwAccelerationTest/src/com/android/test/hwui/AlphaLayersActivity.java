@@ -107,15 +107,15 @@ public class AlphaLayersActivity extends Activity {
             canvas.restore();
 
             canvas.save();
-            canvas.scale(2.0f, 2.0f);            
+            canvas.scale(2.0f, 2.0f);
             canvas.clipRect(20.0f, 0.0f, 40.0f, 20.0f);
 
             mPaint.setColor(0xff00ff00);
             canvas.drawRect(0.0f, 0.0f, 20.0f, 20.0f, mPaint);
-            
+
             mPaint.setColor(0xff0000ff);
             canvas.drawRect(20.0f, 0.0f, 40.0f, 20.0f, mPaint);
-            
+
             canvas.restore();
 
             final int restoreTo = canvas.save();

@@ -422,7 +422,7 @@ public class Preference implements Comparable<Preference> {
     /**
      * Return the {@link Intent} associated with this Preference.
      *
-     * @return The {@link Intent} last set via {@link #setIntent(Intent)} or XML. 
+     * @return The {@link Intent} last set via {@link #setIntent(Intent)} or XML.
      */
     public Intent getIntent() {
         return mIntent;

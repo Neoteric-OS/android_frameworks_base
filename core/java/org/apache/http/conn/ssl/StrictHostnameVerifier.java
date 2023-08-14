@@ -49,7 +49,7 @@ import javax.net.ssl.SSLException;
  * A wildcard such as "*.foo.com" matches only subdomains in the same
  * level, for example "a.foo.com".  It does not match deeper subdomains
  * such as "a.b.foo.com".
- * 
+ *
  * @author Julius Davies
  *
  * @deprecated Please use {@link java.net.URL#openConnection} instead.
@@ -60,15 +60,15 @@ import javax.net.ssl.SSLException;
 public class StrictHostnameVerifier extends AbstractVerifier {
 
     public final void verify(
-            final String host, 
+            final String host,
             final String[] cns,
             final String[] subjectAlts) throws SSLException {
         verify(host, cns, subjectAlts, true);
     }
 
     @Override
-    public final String toString() { 
-        return "STRICT"; 
+    public final String toString() {
+        return "STRICT";
     }
-    
+
 }

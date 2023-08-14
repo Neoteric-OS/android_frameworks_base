@@ -187,7 +187,7 @@ public class RankingCoordinatorTest extends SysuiTestCase {
 
         // WHEN it's not dozing (showing the notification list)
         when(mStatusBarStateController.isDozing()).thenReturn(false);
-        
+
         // THEN filter out the notification
         assertTrue(mCapturedDozingFilter.shouldFilterOut(mEntry, 0));
     }

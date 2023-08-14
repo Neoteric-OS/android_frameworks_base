@@ -1144,7 +1144,7 @@ public final class GnssMeasurement implements Parcelable {
 
     /**
      * Returns {@code true} if {@link #getCarrierCycles()} is available, {@code false} otherwise.
-     * 
+     *
      * @deprecated use {@link #getAccumulatedDeltaRangeState()} instead.
      */
     @Deprecated
@@ -1171,7 +1171,7 @@ public final class GnssMeasurement implements Parcelable {
      *
      * @deprecated use {@link #setAccumulatedDeltaRangeMeters(double)}
      * and {@link #setAccumulatedDeltaRangeState(int)} instead.
-     * 
+     *
      * @hide
      */
     @TestApi
@@ -1183,7 +1183,7 @@ public final class GnssMeasurement implements Parcelable {
 
     /**
      * Resets the number of full carrier cycles between the satellite and the receiver.
-     * 
+     *
      * @deprecated use {@link #setAccumulatedDeltaRangeMeters(double)}
      * and {@link #setAccumulatedDeltaRangeState(int)} instead.
      * @hide
@@ -1197,7 +1197,7 @@ public final class GnssMeasurement implements Parcelable {
 
     /**
      * Returns {@code true} if {@link #getCarrierPhase()} is available, {@code false} otherwise.
-     * 
+     *
      * @deprecated use {@link #getAccumulatedDeltaRangeState()} instead.
      */
     @Deprecated
@@ -1227,10 +1227,10 @@ public final class GnssMeasurement implements Parcelable {
 
     /**
      * Sets the RF phase detected by the receiver.
-     * 
+     *
      * @deprecated use {@link #setAccumulatedDeltaRangeMeters(double)}
      * and {@link #setAccumulatedDeltaRangeState(int)} instead.
-     * 
+     *
      * @hide
      */
     @TestApi
@@ -1242,10 +1242,10 @@ public final class GnssMeasurement implements Parcelable {
 
     /**
      * Resets the RF phase detected by the receiver.
-     * 
+     *
      * @deprecated use {@link #setAccumulatedDeltaRangeMeters(double)}
      * and {@link #setAccumulatedDeltaRangeState(int)} instead.
-     * 
+     *
      * @hide
      */
     @TestApi
@@ -1257,7 +1257,7 @@ public final class GnssMeasurement implements Parcelable {
     /**
      * Returns {@code true} if {@link #getCarrierPhaseUncertainty()} is available, {@code false}
      * otherwise.
-     * 
+     *
      * @deprecated use {@link #getAccumulatedDeltaRangeState()} instead.
      */
     @Deprecated
@@ -1281,10 +1281,10 @@ public final class GnssMeasurement implements Parcelable {
 
     /**
      * Sets the Carrier-phase's uncertainty (1-Sigma) in cycles.
-     * 
+     *
      * @deprecated use {@link #setAccumulatedDeltaRangeUncertaintyMeters(double)}
      * and {@link #setAccumulatedDeltaRangeState(int)} instead.
-     * 
+     *
      * @hide
      */
     @TestApi
@@ -1296,10 +1296,10 @@ public final class GnssMeasurement implements Parcelable {
 
     /**
      * Resets the Carrier-phase's uncertainty (1-Sigma) in cycles.
-     * 
+     *
      * @deprecated use {@link #setAccumulatedDeltaRangeUncertaintyMeters(double)}
      * and {@link #setAccumulatedDeltaRangeState(int)} instead.
-     * 
+     *
      * @hide
      */
     @TestApi

@@ -26,7 +26,7 @@ import androidx.test.filters.MediumTest;
 
 public class MessengerTest extends AndroidTestCase {
     private Messenger mServiceMessenger;
-    
+
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName name, IBinder service) {
             synchronized (MessengerTest.this) {
@@ -38,11 +38,11 @@ public class MessengerTest extends AndroidTestCase {
             mServiceMessenger = null;
         }
     };
-    
+
     private class TestThread extends TestHandlerThread {
         private Handler mTestHandler;
         private Messenger mTestMessenger;
-        
+
         public void go() {
             synchronized (MessengerTest.this) {
                 mTestHandler = new Handler() {
@@ -65,7 +65,7 @@ public class MessengerTest extends AndroidTestCase {
             } catch (RemoteException e) {
             }
         }
-        
+
         public void handleMessage(Message msg) {
             if (msg.arg1 != 100) {
                 failure(new RuntimeException(
@@ -85,7 +85,7 @@ public class MessengerTest extends AndroidTestCase {
             success();
         }
     };
-    
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -110,6 +110,6 @@ public class MessengerTest extends AndroidTestCase {
     @MediumTest
     public void testSend() {
         (new TestThread()).doTest(1000);
-        
+
     }
 }

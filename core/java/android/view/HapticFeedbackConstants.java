@@ -18,7 +18,7 @@ package android.view;
 
 /**
  * Constants to be used to perform haptic feedback effects via
- * {@link View#performHapticFeedback(int)} 
+ * {@link View#performHapticFeedback(int)}
  */
 public class HapticFeedbackConstants {
 

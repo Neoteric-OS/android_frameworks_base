@@ -347,7 +347,7 @@ public final class StrictMode {
     public static final int NETWORK_POLICY_LOG = 1;
     /** {@hide} */
     public static final int NETWORK_POLICY_REJECT = 2;
-  
+
     /**
      * Detect explicit calls to {@link Runtime#gc()}.
      */

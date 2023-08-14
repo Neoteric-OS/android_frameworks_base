@@ -74,7 +74,7 @@ public class Assert {
 	    assertEquals(null, expected, actual);
 	}
 	/**
-	 * Asserts that two Strings are equal. 
+	 * Asserts that two Strings are equal.
 	 */
 	static public void assertEquals(String message, String expected, String actual) {
 		if (expected == null && actual == null)
@@ -85,7 +85,7 @@ public class Assert {
 		throw new ComparisonFailure(cleanMessage, expected, actual);
 	}
 	/**
-	 * Asserts that two Strings are equal. 
+	 * Asserts that two Strings are equal.
 	 */
 	static public void assertEquals(String expected, String actual) {
 	    assertEquals(null, expected, actual);
@@ -221,7 +221,7 @@ public class Assert {
 	 * Asserts that an object is null. If it isn't an {@link AssertionError} is
 	 * thrown.
 	 * Message contains: Expected: <null> but was: object
-	 * 
+	 *
 	 * @param object
 	 *            Object to check or <code>null</code>
 	 */

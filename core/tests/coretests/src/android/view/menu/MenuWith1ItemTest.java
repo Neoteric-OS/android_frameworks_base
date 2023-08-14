@@ -25,11 +25,11 @@ import androidx.test.filters.MediumTest;
 
 public class MenuWith1ItemTest extends ActivityInstrumentationTestCase<MenuWith1Item> {
     private MenuWith1Item mActivity;
-    
+
     public MenuWith1ItemTest() {
         super("com.android.frameworks.coretests", MenuWith1Item.class);
     }
-    
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();

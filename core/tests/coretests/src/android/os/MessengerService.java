@@ -31,9 +31,9 @@ public class MessengerService extends Service {
             }
         }
     };
-    
+
     private final Messenger mMessenger = new Messenger(mHandler);
-    
+
     public MessengerService() {
     }
 

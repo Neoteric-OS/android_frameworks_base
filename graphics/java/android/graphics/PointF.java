@@ -26,14 +26,14 @@ import android.os.Parcelable;
 public class PointF implements Parcelable {
     public float x;
     public float y;
-    
+
     public PointF() {}
 
     public PointF(float x, float y) {
         this.x = x;
-        this.y = y; 
+        this.y = y;
     }
-    
+
     public PointF(@NonNull Point p) {
         this.x = p.x;
         this.y = p.y;
@@ -50,7 +50,7 @@ public class PointF implements Parcelable {
         this.x = p.x;
         this.y = p.y;
     }
-    
+
     /**
      * Set the point's x and y coordinates
      */
@@ -58,7 +58,7 @@ public class PointF implements Parcelable {
         this.x = x;
         this.y = y;
     }
-    
+
     /**
      * Set the point's x and y coordinates to the coordinates of p
      */
@@ -66,22 +66,22 @@ public class PointF implements Parcelable {
         this.x = p.x;
         this.y = p.y;
     }
-    
-    public final void negate() { 
+
+    public final void negate() {
         x = -x;
-        y = -y; 
+        y = -y;
     }
-    
+
     public final void offset(float dx, float dy) {
         x += dx;
         y += dy;
     }
-    
+
     /**
      * Returns true if the point's coordinates equal (x,y)
      */
-    public final boolean equals(float x, float y) { 
-        return this.x == x && this.y == y; 
+    public final boolean equals(float x, float y) {
+        return this.x == x && this.y == y;
     }
 
     @Override
@@ -112,10 +112,10 @@ public class PointF implements Parcelable {
     /**
      * Return the euclidian distance from (0,0) to the point
      */
-    public final float length() { 
-        return length(x, y); 
+    public final float length() {
+        return length(x, y);
     }
-    
+
     /**
      * Returns the euclidian distance from (0,0) to (x,y)
      */

@@ -27,7 +27,7 @@ import androidx.test.filters.MediumTest;
 
 /**
  * To launch this test from the command line:
- * 
+ *
  * adb shell am instrument -w \
  *   -e class com.android.unit_tests.SearchManagerTest \
  *   com.android.unit_tests/android.test.InstrumentationTestRunner
@@ -40,20 +40,20 @@ public class SearchManagerTest extends ActivityInstrumentationTestCase2<LocalAct
 
     /*
      * Bug list of test ideas.
-     * 
+     *
      * testSearchManagerInterfaceAvailable()
      *  Exercise the interface obtained
-     *  
+     *
      * testSearchManagerAvailable()
      *  Exercise the interface obtained
-     *  
+     *
      * testSearchManagerInvocations()
      *  FIX - make it work again
      *  stress test with a very long string
-     * 
+     *
      * SearchManager tests
      *  confirm proper identification of "default" activity based on policy, not hardcoded contacts
-     *  
+     *
      * SearchBar tests
      *  Maybe have to do with framework / unittest runner - need instrumented activity?
      *  How can we unit test the suggestions content providers?
@@ -65,7 +65,7 @@ public class SearchManagerTest extends ActivityInstrumentationTestCase2<LocalAct
      *    type-action
      *    type-navigate-action (suggestion)
      */
-    
+
     /**
      * Local copy of activity context
      */
@@ -81,7 +81,7 @@ public class SearchManagerTest extends ActivityInstrumentationTestCase2<LocalAct
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        
+
         Activity testActivity = getActivity();
         mContext = testActivity;
     }
@@ -99,7 +99,7 @@ public class SearchManagerTest extends ActivityInstrumentationTestCase2<LocalAct
     public void testSearchManagerInterfaceAvailable() {
         assertNotNull(getSearchManagerService());
     }
-    
+
     /**
      * The goal of this test is to confirm that we can obtain
      * a search manager at any time, and that for any given context,

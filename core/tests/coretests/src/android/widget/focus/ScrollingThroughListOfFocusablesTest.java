@@ -79,7 +79,7 @@ public class ScrollingThroughListOfFocusablesTest extends InstrumentationTestCas
 
         for (int i = 0; i < mNumRowsPerItem; i++) {
             assertEquals(0, mListView.getSelectedItemPosition());
-            
+
             InternalSelectionView view = mActivity.getSelectedView();
 
             assertInternallySelectedRowOnScreen(view, i);

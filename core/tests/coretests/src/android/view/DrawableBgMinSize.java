@@ -34,32 +34,32 @@ import com.android.frameworks.coretests.R;
  * requirements ({@link Drawable#getMinimumHeight()} and
  * {@link Drawable#getMinimumWidth()}) when possible.
  * <p>
- * This Activity exercises a few Views with background {@link Drawable}s. 
+ * This Activity exercises a few Views with background {@link Drawable}s.
  */
 public class DrawableBgMinSize extends Activity implements OnClickListener {
     private boolean mUsingBigBg = false;
     private Drawable mBackgroundDrawable;
     private Drawable mBigBackgroundDrawable;
     private Button mChangeBackgroundsButton;
-    
+
     private TextView mTextView;
     private LinearLayout mLinearLayout;
     private RelativeLayout mRelativeLayout;
     private FrameLayout mFrameLayout;
     private AbsoluteLayout mAbsoluteLayout;
-    
+
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        
+
         setContentView(R.layout.drawable_background_minimum_size);
-        
+
         mBackgroundDrawable = getResources().getDrawable(R.drawable.drawable_background);
         mBigBackgroundDrawable = getResources().getDrawable(R.drawable.big_drawable_background);
- 
+
         mChangeBackgroundsButton = findViewById(R.id.change_backgrounds);
         mChangeBackgroundsButton.setOnClickListener(this);
-        
+
         mTextView = findViewById(R.id.text_view);
         mLinearLayout = findViewById(R.id.linear_layout);
         mRelativeLayout = findViewById(R.id.relative_layout);
@@ -76,15 +76,15 @@ public class DrawableBgMinSize extends Activity implements OnClickListener {
         mFrameLayout.setBackgroundDrawable(newBg);
         mAbsoluteLayout.setBackgroundDrawable(newBg);
     }
-    
+
     public void onClick(View v) {
         if (mUsingBigBg) {
             changeBackgrounds(mBackgroundDrawable);
         } else {
             changeBackgrounds(mBigBackgroundDrawable);
         }
-        
+
         mUsingBigBg = !mUsingBigBg;
     }
-    
+
 }

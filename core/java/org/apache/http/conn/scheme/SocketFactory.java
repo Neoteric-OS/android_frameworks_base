@@ -46,7 +46,7 @@ import org.apache.http.params.HttpParams;
  * Both {@link java.lang.Object#equals(java.lang.Object) Object.equals()}
  * and {@link java.lang.Object#hashCode() Object.hashCode()}
  * must be overridden for the correct operation of some connection managers.
- * 
+ *
  * @author <a href="mailto:rolandw at apache.org">Roland Weber</a>
  * @author Michael Becke
  * @author <a href="mailto:mbowler@GargoyleSoftware.com">Mike Bowler</a>
@@ -64,7 +64,7 @@ public interface SocketFactory {
      * {@link #connectSocket connectSocket}.
      *
      * @return  a new socket
-     * 
+     *
      * @throws IOException if an I/O error occurs while creating the socket
      */
     Socket createSocket()
@@ -74,7 +74,7 @@ public interface SocketFactory {
 
     /**
      * Connects a socket to the given host.
-     * 
+     *
      * @param sock      the socket to connect, as obtained from
      *                  {@link #createSocket createSocket}.
      *                  <code>null</code> indicates that a new socket
@@ -86,11 +86,11 @@ public interface SocketFactory {
      * @param localPort the port on the local machine,
      *                  0 or a negative number for any
      * @param params    additional {@link HttpParams parameters} for connecting
-     * 
+     *
      * @return  the connected socket. The returned object may be different
      *          from the <code>sock</code> argument if this factory supports
      *          a layered protocol.
-     * 
+     *
      * @throws IOException if an I/O error occurs
      * @throws UnknownHostException if the IP address of the target host
      *          can not be determined
@@ -99,9 +99,9 @@ public interface SocketFactory {
      */
     Socket connectSocket(
         Socket sock,
-        String host, 
-        int port, 
-        InetAddress localAddress, 
+        String host,
+        int port,
+        InetAddress localAddress,
         int localPort,
         HttpParams params
     ) throws IOException, UnknownHostException, ConnectTimeoutException;

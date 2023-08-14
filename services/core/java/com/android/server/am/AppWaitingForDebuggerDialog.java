@@ -26,7 +26,7 @@ final class AppWaitingForDebuggerDialog extends BaseErrorDialog {
     final ActivityManagerService mService;
     final ProcessRecord mProc;
     private CharSequence mAppName;
-    
+
     public AppWaitingForDebuggerDialog(ActivityManagerService service,
             Context context, ProcessRecord app) {
         super(context);

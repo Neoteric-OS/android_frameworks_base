@@ -39,17 +39,17 @@ public class GridDelete extends GridScenario {
                 .setItemScreenSizeFactor(0.20)
                 .setVerticalSpacing(20);
     }
-    
-    
-    
+
+
+
     @Override
     protected ListAdapter createAdapter() {
         return new DeleteAdapter(getInitialNumItems());
     }
 
-    
-    
-    
+
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_DEL) {
@@ -65,18 +65,18 @@ public class GridDelete extends GridScenario {
 
 
     private class DeleteAdapter extends BaseAdapter {
-        
+
         private ArrayList<Integer> mData;
-        
+
         public DeleteAdapter(int initialNumItems) {
             super();
             mData = new ArrayList<Integer>(initialNumItems);
-            
+
             int i;
             for (i=0; i<initialNumItems; ++i) {
                 mData.add(new Integer(10000 + i));
             }
-            
+
         }
 
         public void deletePosition(int selectedItemPosition) {
@@ -84,7 +84,7 @@ public class GridDelete extends GridScenario {
                 mData.remove(selectedItemPosition);
                 notifyDataSetChanged();
             }
-            
+
         }
 
         public int getCount() {

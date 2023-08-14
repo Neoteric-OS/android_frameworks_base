@@ -15,15 +15,15 @@ import junit.runner.Version;
  * <pre>
  * java junit.textui.TestRunner [-wait] TestCaseClass
  * </pre>
- * 
+ *
  * <p>TestRunner expects the name of a TestCase class as argument.
- * If this class defines a static <code>suite</code> method it 
- * will be invoked and the returned test is run. Otherwise all 
+ * If this class defines a static <code>suite</code> method it
+ * will be invoked and the returned test is run. Otherwise all
  * the methods starting with "test" having no arguments are run.</p>
- * 
+ *
  * <p> When the wait command line argument is given TestRunner
  * waits until the users types RETURN.</p>
- * 
+ *
  * <p>TestRunner prints a trace as the tests are executed followed by a
  * summary at the end.</p>
  */
@@ -136,7 +136,7 @@ public class TestRunner extends BaseTestRunner {
 		TestRunner aTestRunner= new TestRunner();
 		try {
 			TestResult r= aTestRunner.start(args);
-			if (!r.wasSuccessful()) 
+			if (!r.wasSuccessful())
 				System.exit(FAILURE_EXIT);
 			System.exit(SUCCESS_EXIT);
 		} catch(Exception e) {
@@ -174,7 +174,7 @@ public class TestRunner extends BaseTestRunner {
 			throw new Exception("Usage: TestRunner [-wait] testCaseName, where name is the name of the TestCase class");
 
 		try {
-			if (!method.equals("")) 
+			if (!method.equals(""))
 				return runSingleMethod(testCase, method, wait);
 			Test suite= getTest(testCase);
 			return doRun(suite, wait);

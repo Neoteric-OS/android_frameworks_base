@@ -297,7 +297,7 @@ public final class PrintDocumentInfo implements Parcelable {
 
         /**
          * Constructor.
-         * 
+         *
          * <p>
          * The values of the relevant properties are initialized with defaults.
          * Please refer to the documentation of the individual setters for
@@ -306,7 +306,7 @@ public final class PrintDocumentInfo implements Parcelable {
          *
          * @param name The document name which may be shown to the user and
          * is the file name if the content it describes is saved as a PDF.
-         * Cannot be empty. 
+         * Cannot be empty.
          */
         public Builder(@NonNull String name) {
             if (TextUtils.isEmpty(name)) {

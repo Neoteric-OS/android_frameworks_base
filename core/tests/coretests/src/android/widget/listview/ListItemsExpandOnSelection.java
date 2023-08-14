@@ -49,7 +49,7 @@ public class ListItemsExpandOnSelection extends ListScenario {
         return result;
     }
 
-    
+
     @Override
     public View convertView(int position, View convertView, ViewGroup parent) {
         ((ExpandWhenSelectedView)convertView).setText(getValueAtPosition(position));

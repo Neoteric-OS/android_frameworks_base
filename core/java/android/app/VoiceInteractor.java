@@ -410,7 +410,7 @@ public final class VoiceInteractor {
         final Bundle mExtras;
 
         /**
-         * Represents a single option that the user may select using their voice. The 
+         * Represents a single option that the user may select using their voice. The
          * {@link #getIndex()} method should be used as a unique ID to identify the option
          * when it is returned from the voice interactor.
          */

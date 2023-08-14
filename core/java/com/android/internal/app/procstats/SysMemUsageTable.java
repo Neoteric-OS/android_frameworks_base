@@ -80,7 +80,7 @@ public class SysMemUsageTable extends SparseMappingTable.Table {
      */
     public void mergeStats(int state, long[] addData, int addOff) {
         final int key = getOrAddKey((byte)state, SYS_MEM_USAGE_COUNT);
-        
+
         final long[] dstData = getArrayForKey(key);
         final int dstOff = SparseMappingTable.getIndexFromKey(key);
 
@@ -183,7 +183,7 @@ public class SysMemUsageTable extends SparseMappingTable.Table {
         DebugUtils.printSizeValue(pw, getValueForId((byte)bucket, index+2) * 1024);
         pw.println(" max");
     }
-    
+
 }
 
 

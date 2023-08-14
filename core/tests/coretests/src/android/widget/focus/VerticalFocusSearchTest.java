@@ -32,7 +32,7 @@ import androidx.test.filters.Suppress;
  */
 // Suppress until bug http://b/issue?id=1416545 is fixed
 @LargeTest
-@Suppress 
+@Suppress
 public class VerticalFocusSearchTest extends ActivityInstrumentationTestCase<VerticalFocusSearch> {
 
     private LinearLayout mLayout;
@@ -129,7 +129,7 @@ public class VerticalFocusSearchTest extends ActivityInstrumentationTestCase<Ver
         assertEquals("going up from mMidSkinny2Right should go to mMidSkinny1Left",
                 mMidSkinny1Left,
                 mFocusFinder.findNextFocus(mLayout, mMidSkinny2Right, View.FOCUS_UP));
-        
+
         assertEquals("going down from mMidSkinny2Right should go to mBottomWide",
                 mBottomWide,
                 mFocusFinder.findNextFocus(mLayout, mMidSkinny2Right, View.FOCUS_DOWN));

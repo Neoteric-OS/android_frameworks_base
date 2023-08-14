@@ -34,7 +34,7 @@ public class ViewGroupAttributesTest extends AndroidTestCase {
         @Override
         protected void onLayout(boolean changed, int l, int t, int r, int b) {
         }
-        
+
         @Override
         public boolean isChildrenDrawnWithCacheEnabled() {
             return super.isChildrenDrawnWithCacheEnabled();

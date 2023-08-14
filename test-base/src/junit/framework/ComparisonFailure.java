@@ -2,7 +2,7 @@ package junit.framework;
 
 /**
  * Thrown when an assert equals for Strings failed.
- * 
+ *
  * Inspired by a patch from Alex Chaffee mailto:alex@purpletech.com
  */
 public class ComparisonFailure extends AssertionFailedError {
@@ -27,7 +27,7 @@ public class ComparisonFailure extends AssertionFailedError {
 	/**
 	 * Returns "..." in place of common prefix and "..." in
 	 * place of common suffix between expected and actual.
-	 * 
+	 *
 	 * @see Throwable#getMessage()
 	 */
 	@Override

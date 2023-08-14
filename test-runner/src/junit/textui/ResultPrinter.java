@@ -37,7 +37,7 @@ public class ResultPrinter implements TestListener {
 		getWriter().println("<RETURN> to continue");
 	}
 	
-	/* Internal methods 
+	/* Internal methods
 	 */
 
 	protected void printHeader(long runTime) {
@@ -88,7 +88,7 @@ public class ResultPrinter implements TestListener {
 		} else {
 			getWriter().println();
 			getWriter().println("FAILURES!!!");
-			getWriter().println("Tests run: "+result.runCount()+ 
+			getWriter().println("Tests run: "+result.runCount()+
 				         ",  Failures: "+result.failureCount()+
 				         ",  Errors: "+result.errorCount());
 		}

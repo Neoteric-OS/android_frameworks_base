@@ -64,7 +64,7 @@ public class KeystoreResponse implements Parcelable {
         return error_msg_;
     }
 
-    
+
     @Override
     public int describeContents() {
         return 0;

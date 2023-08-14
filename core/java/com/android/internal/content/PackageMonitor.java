@@ -58,9 +58,9 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
         sExternalFilt.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE);
         sExternalFilt.addAction(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE);
     }
-    
+
     final HashSet<String> mUpdatingPackages = new HashSet<String>();
-    
+
     Context mRegisteredContext;
     Handler mRegisteredHandler;
     String[] mDisappearingPackages;
@@ -124,14 +124,14 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
         mRegisteredContext.unregisterReceiver(this);
         mRegisteredContext = null;
     }
-    
+
     //not yet implemented
     boolean isPackageUpdating(String packageName) {
         synchronized (mUpdatingPackages) {
             return mUpdatingPackages.contains(packageName);
         }
     }
-    
+
     public void onBeginPackageChanges() {
     }
 
@@ -189,20 +189,20 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
         }
         return false;
     }
-    
+
     public boolean onHandleForceStop(Intent intent, String[] packages, int uid, boolean doit) {
         return false;
     }
 
     public void onHandleUserStop(Intent intent, int userHandle) {
     }
-    
+
     public void onUidRemoved(int uid) {
     }
-    
+
     public void onPackagesAvailable(String[] packages) {
     }
-    
+
     public void onPackagesUnavailable(String[] packages) {
     }
 
@@ -234,11 +234,11 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
      */
     public void onPackageModified(@NonNull String packageName) {
     }
-    
+
     public boolean didSomePackagesChange() {
         return mSomePackagesChanged;
     }
-    
+
     public int isPackageAppearing(String packageName) {
         if (mAppearingPackages != null) {
             for (int i=mAppearingPackages.length-1; i>=0; i--) {
@@ -249,11 +249,11 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
         }
         return PACKAGE_UNCHANGED;
     }
-    
+
     public boolean anyPackagesAppearing() {
         return mAppearingPackages != null;
     }
-    
+
     @UnsupportedAppUsage
     public int isPackageDisappearing(String packageName) {
         if (mDisappearingPackages != null) {
@@ -265,7 +265,7 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
         }
         return PACKAGE_UNCHANGED;
     }
-    
+
     public boolean anyPackagesDisappearing() {
         return mDisappearingPackages != null;
     }
@@ -297,10 +297,10 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
         }
         return false;
     }
-    
+
     public void onSomePackagesChanged() {
     }
-    
+
     public void onFinishPackageChanges() {
     }
 
@@ -323,7 +323,7 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
         String pkg = uri != null ? uri.getSchemeSpecificPart() : null;
         return pkg;
     }
-    
+
     @Override
     public void onReceive(Context context, Intent intent) {
         mChangeUserId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE,
@@ -333,11 +333,11 @@ public abstract class PackageMonitor extends android.content.BroadcastReceiver {
             return;
         }
         onBeginPackageChanges();
-        
+
         mDisappearingPackages = mAppearingPackages = null;
         mSomePackagesChanged = false;
         mModifiedComponents = null;
-        
+
         String action = intent.getAction();
         if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
             String pkg = getPackageName(intent);

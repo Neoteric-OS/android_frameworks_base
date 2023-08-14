@@ -121,7 +121,7 @@ public class TranslateAnimation extends Animation {
 
     /**
      * Constructor to use when building a TranslateAnimation from code
-     * 
+     *
      * @param fromXType Specifies how fromXValue should be interpreted. One of
      *        Animation.ABSOLUTE, Animation.RELATIVE_TO_SELF, or
      *        Animation.RELATIVE_TO_PARENT.

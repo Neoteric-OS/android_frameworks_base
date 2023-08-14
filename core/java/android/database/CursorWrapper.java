@@ -51,9 +51,9 @@ public class CursorWrapper implements Cursor {
 
     @Override
     public void close() {
-        mCursor.close(); 
+        mCursor.close();
     }
- 
+
     @Override
     public boolean isClosed() {
         return mCursor.isClosed();
@@ -140,7 +140,7 @@ public class CursorWrapper implements Cursor {
     public String getString(int columnIndex) {
         return mCursor.getString(columnIndex);
     }
-    
+
     @Override
     public void copyStringToBuffer(int columnIndex, CharArrayBuffer buffer) {
         mCursor.copyStringToBuffer(columnIndex, buffer);
@@ -150,7 +150,7 @@ public class CursorWrapper implements Cursor {
     public byte[] getBlob(int columnIndex) {
         return mCursor.getBlob(columnIndex);
     }
-    
+
     @Override
     public boolean getWantsAllOnMoveCalls() {
         return mCursor.getWantsAllOnMoveCalls();

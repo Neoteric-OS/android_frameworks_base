@@ -36,7 +36,7 @@ import java.lang.reflect.Modifier;
  *       assertTrue(result == 5.0);
  *    }
  * </pre>
- * 
+ *
  * Once the methods are defined you can run them. The framework supports
  * both a static type safe and more dynamic way to run a test.
  * In the static way you override the runTest method and define the method to
@@ -49,7 +49,7 @@ import java.lang.reflect.Modifier;
  * };
  * test.run();
  * </pre>
- * 
+ *
  * The dynamic way uses reflection to implement {@link #runTest()}. It dynamically finds
  * and invokes a method.
  * In this case the name of the test case has to correspond to the test method
@@ -58,7 +58,7 @@ import java.lang.reflect.Modifier;
  * TestCase test= new MathTest("testAdd");
  * test.run();
  * </pre>
- * 
+ *
  * The tests to be run can be collected into a TestSuite. JUnit provides
  * different <i>test runners</i> which can run a test suite and collect the results.
  * A test runner either expects a static method <code>suite</code> as the entry

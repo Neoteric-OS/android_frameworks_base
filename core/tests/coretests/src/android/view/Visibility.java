@@ -24,7 +24,7 @@ import com.android.frameworks.coretests.R;
 
 /**
  * Exercise View's ability to change their visibility: GONE, INVISIBLE and
- * VISIBLE. 
+ * VISIBLE.
  */
 public class Visibility extends Activity {
     @Override

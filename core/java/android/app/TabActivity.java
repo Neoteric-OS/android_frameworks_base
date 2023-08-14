@@ -44,7 +44,7 @@ public class TabActivity extends ActivityGroup {
 
     /**
      * Sets the default tab that is the first tab highlighted.
-     * 
+     *
      * @param tag the name of the default tab
      */
     public void setDefaultTab(String tag) {
@@ -54,7 +54,7 @@ public class TabActivity extends ActivityGroup {
 
     /**
      * Sets the default tab that is the first tab highlighted.
-     * 
+     *
      * @param index the index of the default tab
      */
     public void setDefaultTab(int index) {
@@ -80,7 +80,7 @@ public class TabActivity extends ActivityGroup {
     }
 
     @Override
-    protected void onPostCreate(Bundle icicle) {        
+    protected void onPostCreate(Bundle icicle) {
         super.onPostCreate(icicle);
 
         ensureTabHost();
@@ -102,7 +102,7 @@ public class TabActivity extends ActivityGroup {
     /**
      * Updates the screen state (current list and other views) when the
      * content changes.
-     * 
+     *
      *@see Activity#onContentChanged()
      */
     @Override

@@ -374,7 +374,7 @@ public class PackageManagerBackupAgent extends BackupAgent {
                                 + " version=" + info.getLongVersionCode()
                                 + " entityLen=" + outputBuffer.size());
                     }
-                    
+
                     // Now we can write the backup entity for this package
                     writeEntity(data, packName, outputBuffer.toByteArray());
                 }
@@ -492,9 +492,9 @@ public class PackageManagerBackupAgent extends BackupAgent {
                 Slog.w(TAG, "Read empty signature block");
                 return null;
             }
-            
+
             if (DEBUG) Slog.v(TAG, " ... unflatten read " + num);
-            
+
             // Sensical?
             if (num > 20) {
                 Slog.e(TAG, "Suspiciously large sig count in restore data; aborting");

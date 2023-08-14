@@ -48,7 +48,7 @@ public class ListHeterogeneous extends ListScenario {
             return ListItemFactory.doubleText(
                     position, parent.getContext(), getValueAtPosition(position), desiredHeight);
         }
-        
+
         return null;
     }
 
@@ -67,7 +67,7 @@ public class ListHeterogeneous extends ListScenario {
 
         return null;
     }
-    
+
     @Override
     public int getItemViewType(int position) {
         return position % 3;
@@ -77,6 +77,6 @@ public class ListHeterogeneous extends ListScenario {
     public int getViewTypeCount() {
         return 3;
     }
-    
-    
+
+
 }

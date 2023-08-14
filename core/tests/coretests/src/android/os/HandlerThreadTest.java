@@ -27,7 +27,7 @@ public class HandlerThreadTest extends TestCase {
     private int mGotMessageWhat = -1;
     private volatile boolean mDidSetup = false;
     private volatile int mLooperTid = -1;
-    
+
     @MediumTest
     public void testHandlerThread() throws Exception {
         HandlerThread th1 =  new HandlerThread("HandlerThreadTest") {
@@ -39,15 +39,15 @@ public class HandlerThreadTest extends TestCase {
                 }
             }
         };
-        
+
         assertFalse(th1.isAlive());
         assertNull(th1.getLooper());
-        
+
         th1.start();
-        
+
         assertTrue(th1.isAlive());
         assertNotNull(th1.getLooper());
-       
+
         // The call to getLooper() internally blocks until the looper is
         // available, but will call onLooperPrepared() after that.  So we
         // need to block here to wait for our onLooperPrepared() to complete
@@ -60,18 +60,18 @@ public class HandlerThreadTest extends TestCase {
                 }
             }
         }
-        
+
         // Make sure that the process was set.
         assertNotSame(-1, mLooperTid);
         // Make sure that the onLooperPrepared() was called on a different thread.
         assertNotSame(Process.myTid(), mLooperTid);
-        
+
         final Handler h1 = new Handler(th1.getLooper()) {
             public void handleMessage(Message msg) {
                 assertEquals(TEST_WHAT, msg.what);
                 // Ensure that we are running on the same thread in which the looper was setup on.
                 assertEquals(mLooperTid, Process.myTid());
-                
+
                 mGotMessageWhat = msg.what;
                 mGotMessage = true;
                 synchronized(this) {
@@ -79,9 +79,9 @@ public class HandlerThreadTest extends TestCase {
                 }
             }
         };
-        
+
         Message msg = h1.obtainMessage(TEST_WHAT);
-        
+
         synchronized (h1) {
             // wait until we have the lock before sending the message.
             h1.sendMessage(msg);
@@ -91,7 +91,7 @@ public class HandlerThreadTest extends TestCase {
             } catch (InterruptedException e) {
             }
         }
-        
+
         assertTrue(mGotMessage);
         assertEquals(TEST_WHAT, mGotMessageWhat);
     }

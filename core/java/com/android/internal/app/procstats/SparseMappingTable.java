@@ -368,7 +368,7 @@ public class SparseMappingTable {
             //   New bug: b/27960286
             if (false) {
                 // Assert that our sequence number matches mParent's.  If it isn't that means
-                // we have been reset and our.  If our sequence is UNITIALIZED_SEQUENCE, then 
+                // we have been reset and our.  If our sequence is UNITIALIZED_SEQUENCE, then
                 // it's possible that everything is working fine and we just haven't been
                 // written to since the last resetTable().
                 if (mSequence != mParent.mSequence) {

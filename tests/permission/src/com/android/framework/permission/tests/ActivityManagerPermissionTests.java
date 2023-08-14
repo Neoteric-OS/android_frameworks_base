@@ -30,7 +30,7 @@ import junit.framework.TestCase;
  */
 public class ActivityManagerPermissionTests extends TestCase {
     IActivityManager mAm;
-    
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
@@ -165,7 +165,7 @@ public class ActivityManagerPermissionTests extends TestCase {
         } catch (RemoteException e) {
             fail("Unexpected remote exception");
         }
-        
+
         try {
             mAm.resumeAppSwitches();
             fail("IActivityManager.resumeAppSwitches did not throw SecurityException as"

@@ -39,10 +39,10 @@ import javax.net.ssl.SSLException;
  * The hostname must match either the first CN, or any of the subject-alts.
  * A wildcard can occur in the CN, and in any of the subject-alts.
  * <p/>
- * The only difference between BROWSER_COMPATIBLE and STRICT is that a wildcard 
- * (such as "*.foo.com") with BROWSER_COMPATIBLE matches all subdomains, 
+ * The only difference between BROWSER_COMPATIBLE and STRICT is that a wildcard
+ * (such as "*.foo.com") with BROWSER_COMPATIBLE matches all subdomains,
  * including "a.b.foo.com".
- * 
+ *
  * @author Julius Davies
  *
  * @deprecated Please use {@link java.net.URL#openConnection} instead.
@@ -53,15 +53,15 @@ import javax.net.ssl.SSLException;
 public class BrowserCompatHostnameVerifier extends AbstractVerifier {
 
     public final void verify(
-            final String host, 
+            final String host,
             final String[] cns,
             final String[] subjectAlts) throws SSLException {
         verify(host, cns, subjectAlts, false);
     }
 
     @Override
-    public final String toString() { 
-        return "BROWSER_COMPATIBLE"; 
+    public final String toString() {
+        return "BROWSER_COMPATIBLE";
     }
-    
+
 }

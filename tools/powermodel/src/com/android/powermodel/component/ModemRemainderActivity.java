@@ -24,7 +24,7 @@ import com.android.powermodel.PowerProfile;
 import com.android.powermodel.util.Conversion;
 
 /**
- * Encapsulates the work done by the remaining 
+ * Encapsulates the work done by the remaining
  */
 public class ModemRemainderActivity extends ComponentActivity {
     /**

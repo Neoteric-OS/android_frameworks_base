@@ -66,7 +66,7 @@ public enum SpecialApp {
 
         /**
          * Constant to indicate that this special app is not actually an app with a UID.
-         * 
+         *
          * @see SpecialApp#REMAINDER
          * @see SpecialApp#GLOBAL
          */

@@ -416,7 +416,7 @@ public class Loader<D> {
         mAbandoned = true;
         onAbandon();
     }
-    
+
     /**
      * Subclasses implement this to take care of being abandoned.  This is
      * an optional intermediate state prior to {@link #onReset()} -- it means that
@@ -428,7 +428,7 @@ public class Loader<D> {
      */
     protected void onAbandon() {
     }
-    
+
     /**
      * This function will normally be called for you automatically by
      * {@link android.app.LoaderManager} when destroying a Loader.  When using
