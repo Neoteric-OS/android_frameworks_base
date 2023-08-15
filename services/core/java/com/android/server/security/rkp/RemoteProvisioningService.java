@@ -24,6 +24,7 @@ import android.os.RemoteException;
 import android.security.rkp.IGetRegistrationCallback;
 import android.security.rkp.IRemoteProvisioning;
 import android.security.rkp.service.RegistrationProxy;
+import android.security.rkp.service.RemoteProvisioningShellCommand;
 import android.util.Log;
 
 import com.android.internal.util.DumpUtils;
@@ -111,8 +112,7 @@ public class RemoteProvisioningService extends SystemService {
         @Override
         public int handleShellCommand(ParcelFileDescriptor in, ParcelFileDescriptor out,
                 ParcelFileDescriptor err, String[] args) {
-            return new RemoteProvisioningShellCommand().exec(this, in.getFileDescriptor(),
-                    out.getFileDescriptor(), err.getFileDescriptor(), args);
+            return new RemoteProvisioningShellCommand().exec(this, in, out, err, args);
         }
     }
 }
