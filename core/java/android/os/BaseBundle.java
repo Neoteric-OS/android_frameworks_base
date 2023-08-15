@@ -1787,26 +1787,26 @@ public class BaseBundle {
                 return;
             }
             map = mMap;
+
+            // Special case for empty bundles.
+            if (map == null || map.size() <= 0) {
+                parcel.writeInt(0);
+                return;
+            }
+            int lengthPos = parcel.dataPosition();
+            parcel.writeInt(-1); // placeholder, will hold length
+            parcel.writeInt(BUNDLE_MAGIC);
+
+            int startPos = parcel.dataPosition();
+            parcel.writeArrayMapInternal(map);
+            int endPos = parcel.dataPosition();
+
+            // Backpatch length
+            parcel.setDataPosition(lengthPos);
+            int length = endPos - startPos;
+            parcel.writeInt(length);
+            parcel.setDataPosition(endPos);
         }
-
-        // Special case for empty bundles.
-        if (map == null || map.size() <= 0) {
-            parcel.writeInt(0);
-            return;
-        }
-        int lengthPos = parcel.dataPosition();
-        parcel.writeInt(-1); // placeholder, will hold length
-        parcel.writeInt(BUNDLE_MAGIC);
-
-        int startPos = parcel.dataPosition();
-        parcel.writeArrayMapInternal(map);
-        int endPos = parcel.dataPosition();
-
-        // Backpatch length
-        parcel.setDataPosition(lengthPos);
-        int length = endPos - startPos;
-        parcel.writeInt(length);
-        parcel.setDataPosition(endPos);
     }
 
     /**
