@@ -34,6 +34,24 @@
       "parentUuid": "03bd3e9b_50b6e59b",
       "revId": "9bcda48fcdde92e9a1be3a0fcf3e1abdc30139bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f16a388_261ed1bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949180
+      },
+      "writtenOn": "2023-08-15T12:25:29Z",
+      "side": 1,
+      "message": "I think if a method\u0027s return value depends on the bluetooth state, it should always be used like this. The root cause of the problem is that this method is called in the process of bluetooth turning off.",
+      "parentUuid": "d2ef52aa_e6b06485",
+      "revId": "9bcda48fcdde92e9a1be3a0fcf3e1abdc30139bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
