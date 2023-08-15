@@ -258,6 +258,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c129fcb6_b09b78f1",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-15T06:40:14Z",
+      "side": 1,
+      "message": "It takes about ~3 seconds for each reset.",
+      "parentUuid": "afc28bc2_967387ca",
+      "range": {
+        "startLine": 1385,
+        "startChar": 81,
+        "endLine": 1386,
+        "endChar": 83
+      },
+      "revId": "b9d6c6f900e3611dd3f11f2b91a6b3a28406297b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "388b2f0c_0d26564c",
         "filename": "services/core/java/com/android/server/StorageManagerService.java",
         "patchSetId": 2
