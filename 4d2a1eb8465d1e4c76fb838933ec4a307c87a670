@@ -52,6 +52,24 @@
       "parentUuid": "c31ab20c_d6cbd384",
       "revId": "4d2a1eb8465d1e4c76fb838933ec4a307c87a670",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c24da97_a460231a",
+        "filename": "services/accessibility/java/com/android/server/accessibility/UiAutomationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1135528
+      },
+      "writtenOn": "2023-08-15T12:36:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure. I know the dump() function is usually caused when taking a bugreport, but that\u0027s weird if it happened *before* you took the bug report.\n\nI wonder if there\u0027s a way to fix dump() so that it checks the lock first and just doesn\u0027t try to call getAccessibilityServices() if the lock is already held?",
+      "parentUuid": "37611cc8_262cc328",
+      "revId": "4d2a1eb8465d1e4c76fb838933ec4a307c87a670",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
