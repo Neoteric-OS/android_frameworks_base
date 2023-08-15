@@ -20,12 +20,15 @@ import static android.Manifest.permission.REQUEST_COMPANION_PROFILE_APP_STREAMIN
 import static android.Manifest.permission.REQUEST_COMPANION_PROFILE_AUTOMOTIVE_PROJECTION;
 import static android.Manifest.permission.REQUEST_COMPANION_PROFILE_COMPUTER;
 import static android.Manifest.permission.REQUEST_COMPANION_PROFILE_WATCH;
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 
+import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
+import android.annotation.TestApi;
 import android.annotation.UserHandleAware;
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -148,6 +151,34 @@ public final class CompanionDeviceManager {
      * {@link AssociationRequest} was successfully processed and an association was created.
      */
     public static final String EXTRA_ASSOCIATION = "android.companion.extra.ASSOCIATION";
+
+    /**
+     * Test message type without a designated callback.
+     *
+     * @hide
+     */
+    @TestApi public static final int MESSAGE_REQUEST_PING = 0x63807378; // ?PIN
+    /**
+     * Message header assigned to the remote authentication handshakes.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int MESSAGE_REQUEST_REMOTE_AUTHENTICATION = 0x63827765; // ?RMA
+    /**
+     * Message header assigned to the telecom context sync metadata.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int MESSAGE_REQUEST_CONTEXT_SYNC = 0x63678883; // ?CXS
+    /**
+     * Message header assigned to the permission restore request.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int MESSAGE_REQUEST_PERMISSION_RESTORE = 0x63826983; // ?RES
 
     /**
      * The package name of the companion device discovery component.
@@ -663,6 +694,108 @@ public final class CompanionDeviceManager {
                 }
             }
         }
+    }
+
+    /**
+     * Listener for any changes to the list of attached transports.
+     *
+     * @see com.android.server.companion.transport.Transport
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public interface OnTransportsChangedListener {
+        /**
+         * Invoked when a transport is attached or detached.
+         *
+         * @param associations all the associations which have connected transports.
+         */
+        void onTransportsChanged(@NonNull List<AssociationInfo> associations);
+    }
+
+    /**
+     * Adds a listener for any changes to the list of attached transports.
+     * {@link OnTransportsChangedListener#onTransportsChanged(List)} will be triggered with a list
+     * of existing transports when a transport is detached or a new transport is attached.
+     *
+     * @see com.android.server.companion.transport.Transport
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(android.Manifest.permission.USE_COMPANION_TRANSPORTS)
+    public void addOnTransportsChangedListener(
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull OnTransportsChangedListener listener) {
+        throw new RuntimeException("This API is not implemented before Android V.");
+    }
+
+    /**
+     * Removes the registered listener for any changes to the list of attached transports.
+     *
+     * @see com.android.server.companion.transport.Transport
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(android.Manifest.permission.USE_COMPANION_TRANSPORTS)
+    public void removeOnTransportsChangedListener(
+            @NonNull OnTransportsChangedListener listener) {
+        throw new RuntimeException("This API is not implemented before Android V.");
+    }
+
+    /**
+     * Sends a message to associated remote devices. The target associations must already have a
+     * connected transport.
+     *
+     * @see #attachSystemDataTransport(int, InputStream, OutputStream)
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(android.Manifest.permission.USE_COMPANION_TRANSPORTS)
+    public void sendMessage(int messageType, @NonNull byte[] data, @NonNull int[] associationIds) {
+        throw new RuntimeException("This API is not implemented before Android V.");
+    }
+
+    /**
+     * Listener that triggers a callback when a message is received through a connected transport.
+     *
+     * @see #addOnMessageReceivedListener(Executor, int, OnMessageReceivedListener)
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public interface OnMessageReceivedListener {
+        /**
+         * Called when a message is received.
+         */
+        void onMessageReceived(int associationId, @NonNull byte[] data);
+    }
+
+    /**
+     * Adds a listener to trigger callbacks when messages of given type are received.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(android.Manifest.permission.USE_COMPANION_TRANSPORTS)
+    public void addOnMessageReceivedListener(
+            @NonNull @CallbackExecutor Executor executor, int messageType,
+            @NonNull OnMessageReceivedListener listener) {
+        throw new RuntimeException("This API is not implemented before Android V.");
+    }
+
+    /**
+     * Removes the registered listener for received messages of given type.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    @RequiresPermission(android.Manifest.permission.USE_COMPANION_TRANSPORTS)
+    public void removeOnMessageReceivedListener(int messageType,
+                                                @NonNull OnMessageReceivedListener listener) {
+        throw new RuntimeException("This API is not implemented before Android V.");
     }
 
     /**
