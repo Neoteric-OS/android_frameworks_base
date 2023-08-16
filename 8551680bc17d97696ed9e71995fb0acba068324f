@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc2ccfb3_059b634b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-08-16T19:57:41Z",
+      "side": 1,
+      "message": "Suggest adding a bit more context on why this is necessary:\n\n\"Even though the associated method is marked @NonNull, when the Phone process crashes...\"",
+      "revId": "8551680bc17d97696ed9e71995fb0acba068324f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db9192d4_75acaadd",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-08-16T19:57:41Z",
+      "side": 1,
+      "message": "Any other calls that need to likewise be guarded? Looks like this one is, but any others?\n\nOr perhaps in any other files?",
+      "range": {
+        "startLine": 870,
+        "startChar": 64,
+        "endLine": 870,
+        "endChar": 87
+      },
+      "revId": "8551680bc17d97696ed9e71995fb0acba068324f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
