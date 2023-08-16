@@ -70,6 +70,24 @@
       "parentUuid": "37611cc8_262cc328",
       "revId": "4d2a1eb8465d1e4c76fb838933ec4a307c87a670",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d39b4f8c_681347a4",
+        "filename": "services/accessibility/java/com/android/server/accessibility/UiAutomationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1135528
+      },
+      "writtenOn": "2023-08-16T12:42:20Z",
+      "side": 1,
+      "message": "In fact yes that\u0027s what I\u0027m going to do. I will update the bug when it\u0027s fixed",
+      "parentUuid": "6c24da97_a460231a",
+      "revId": "4d2a1eb8465d1e4c76fb838933ec4a307c87a670",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
