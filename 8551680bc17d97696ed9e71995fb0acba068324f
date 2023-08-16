@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c9cb892_455e6f39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-08-16T21:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc2ccfb3_059b634b",
+      "revId": "8551680bc17d97696ed9e71995fb0acba068324f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db9192d4_75acaadd",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-08-16T19:57:41Z",
       "side": 1,
       "message": "Any other calls that need to likewise be guarded? Looks like this one is, but any others?\n\nOr perhaps in any other files?",
+      "range": {
+        "startLine": 870,
+        "startChar": 64,
+        "endLine": 870,
+        "endChar": 87
+      },
+      "revId": "8551680bc17d97696ed9e71995fb0acba068324f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90e46185_b1e33554",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2023-08-16T21:02:01Z",
+      "side": 1,
+      "message": "We already have a \"subscriptions \u003d\u003d null \" check for this one. I have checked all other places in VCN that make a call to `SubscriptionManager` and they are safe",
+      "parentUuid": "db9192d4_75acaadd",
       "range": {
         "startLine": 870,
         "startChar": 64,
