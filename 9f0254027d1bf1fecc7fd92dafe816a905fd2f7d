@@ -16,6 +16,29 @@
       "message": "Upmerge from Meta",
       "revId": "9f0254027d1bf1fecc7fd92dafe816a905fd2f7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27231d5a_6b594e38",
+        "filename": "services/core/java/com/android/server/WiredAccessoryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2023-08-16T13:32:08Z",
+      "side": 1,
+      "message": "I am afraid it is risky to call into audio manager APIs before onSystemReady because the audio service is not fully initialized yet and the behavior might be undefined.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 44
+      },
+      "revId": "9f0254027d1bf1fecc7fd92dafe816a905fd2f7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
