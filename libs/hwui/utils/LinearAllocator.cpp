@@ -31,10 +31,6 @@
 #include <utils/Log.h>
 #include <utils/Macros.h>
 
-// The ideal size of a page allocation (these need to be multiples of 8)
-#define INITIAL_PAGE_SIZE ((size_t)512)  // 512b
-#define MAX_PAGE_SIZE ((size_t)131072)   // 128kb
-
 // The maximum amount of wasted space we can have per page
 // Allocations exceeding this will have their own dedicated page
 // If this is too low, we will malloc too much
@@ -74,6 +70,10 @@ static void _addAllocation(int count) {
 
 namespace android {
 namespace uirenderer {
+
+// The ideal size of a page allocation (these need to be multiples of 8)
+static constexpr size_t INITIAL_PAGE_SIZE = 512;  // 512b
+static constexpr size_t MAX_PAGE_SIZE = 131072;   // 128kb
 
 class LinearAllocator::Page {
 public:
