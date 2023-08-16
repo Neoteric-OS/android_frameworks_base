@@ -1086,7 +1086,7 @@ final class SettingsState {
             TypedXmlPullParser parser = Xml.resolvePullParser(in);
             parseStateLocked(parser);
             return true;
-        } catch (XmlPullParserException | IOException e) {
+        } catch (ArrayIndexOutOfBoundsException | XmlPullParserException | IOException e) {
             return false;
         } finally {
             IoUtils.closeQuietly(in);
