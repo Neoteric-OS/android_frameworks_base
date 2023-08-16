@@ -16,6 +16,23 @@
       "message": "Friendly ping, @Anton or @Ruslan can you take a look?",
       "revId": "131686a7f788edaec9038b53672c663675ac31ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6a9f578_75ea11e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2023-08-16T16:43:33Z",
+      "side": 1,
+      "message": "Beautiful!",
+      "revId": "131686a7f788edaec9038b53672c663675ac31ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
