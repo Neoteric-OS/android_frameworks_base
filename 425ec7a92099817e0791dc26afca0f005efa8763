@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5157c4cc_660f54c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-08-17T06:07:35Z",
+      "side": 1,
+      "message": "Actually, thinking back to the time when we wrote the importer, I seem to recall that the importer always processed files in order. While File#list explicitly says that it provides no guarantees, this makes me think that something was already sorting the files before they reached this code, and thus sorting the list again here is not useful. \n\nDo we have evidence that these files are sometimes read in the wrong order?\n\nIt looks like pixel at least uses f2fs, could that be guaranteeing the order? If not, it might be something in Android itself.",
+      "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
