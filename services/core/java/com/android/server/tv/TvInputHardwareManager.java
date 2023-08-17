@@ -464,7 +464,7 @@ class TvInputHardwareManager implements TvInputHal.Callback {
 
     private int findDeviceIdForInputIdLocked(String inputId) {
         for (int i = 0; i < mConnections.size(); ++i) {
-            Connection connection = mConnections.get(i);
+            Connection connection = mConnections.valueAt(i);
             if (connection.getInfoLocked().getId().equals(inputId)) {
                 return i;
             }
