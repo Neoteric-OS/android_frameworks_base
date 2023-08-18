@@ -4478,7 +4478,7 @@ public final class ActiveServices {
                         + r + " " + r.intent + " args=" + si.intent);
             }
             if (si.intent == null && N > 1) {
-                // If somehow we got a dummy null intent in the middle,
+                // If somehow we got a placeholder null intent in the middle,
                 // then skip it.  DO NOT skip a null intent when it is
                 // the only one in the list -- this is to support the
                 // onStartCommand(null) case.
