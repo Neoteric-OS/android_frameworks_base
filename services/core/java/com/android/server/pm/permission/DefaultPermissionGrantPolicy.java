@@ -127,7 +127,7 @@ final class DefaultPermissionGrantPolicy {
     private static final String ATTR_PACKAGE = "package";
     private static final String ATTR_NAME = "name";
     private static final String ATTR_FIXED = "fixed";
-    private static final String ATTR_WHITELISTED = "whitelisted";
+    private static final String ATTR_ALLOWLISTED = "whitelisted";
     private static final String ATTR_CERT = "cert";
 
     private static final Set<String> PHONE_PERMISSIONS = new ArraySet<>();
@@ -1101,7 +1101,7 @@ final class DefaultPermissionGrantPolicy {
         Log.i(TAG, "Grant permissions to Carrier Service app " + packageName + " for user:"
                 + userId);
         grantPermissionsToPackage(NO_PM_CACHE, packageName, userId, /* ignoreSystemPackage */ false,
-               /* whitelistRestricted */ true, NOTIFICATION_PERMISSIONS);
+               /* allowlistRestricted */ true, NOTIFICATION_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackage(PackageManagerWrapper pm,
@@ -1609,7 +1609,7 @@ final class DefaultPermissionGrantPolicy {
                 final boolean fixed =
                         parser.getAttributeBoolean(null, ATTR_FIXED, false);
                 final boolean whitelisted =
-                        parser.getAttributeBoolean(null, ATTR_WHITELISTED, false);
+                        parser.getAttributeBoolean(null, ATTR_ALLOWLISTED, false);
 
                 DefaultPermissionGrant exception = new DefaultPermissionGrant(
                         name, fixed, whitelisted);

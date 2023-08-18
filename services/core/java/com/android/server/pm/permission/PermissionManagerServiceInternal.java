@@ -392,7 +392,7 @@ public interface PermissionManagerServiceInternal extends PermissionManagerInter
              *
              * @param allowlistedRestrictedPermissions the restricted permissions to be allowlisted
              *
-             * @see android.content.pm.PackageInstaller.SessionParams#setWhitelistedRestrictedPermissions(Set)
+             * @see android.content.pm.PackageInstaller.SessionParams#setAllowlistedRestrictedPermissions(Set)
              */
             public void setAllowlistedRestrictedPermissions(
                     @NonNull List<String> allowlistedRestrictedPermissions) {

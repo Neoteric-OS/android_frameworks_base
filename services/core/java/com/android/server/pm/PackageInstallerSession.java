@@ -202,7 +202,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     static final String TAG_SESSION_CHECKSUM = "sessionChecksum";
     static final String TAG_SESSION_CHECKSUM_SIGNATURE = "sessionChecksumSignature";
     private static final String TAG_GRANTED_RUNTIME_PERMISSION = "granted-runtime-permission";
-    private static final String TAG_WHITELISTED_RESTRICTED_PERMISSION =
+    private static final String TAG_ALLOWLISTED_RESTRICTED_PERMISSION =
             "whitelisted-restricted-permission";
     private static final String TAG_AUTO_REVOKE_PERMISSIONS_MODE =
             "auto-revoke-permissions-mode";
@@ -4375,14 +4375,14 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         }
     }
 
-    private static void writeWhitelistedRestrictedPermissionsLocked(@NonNull TypedXmlSerializer out,
+    private static void writeAllowlistedRestrictedPermissionsLocked(@NonNull TypedXmlSerializer out,
             @Nullable List<String> whitelistedRestrictedPermissions) throws IOException {
         if (whitelistedRestrictedPermissions != null) {
             final int permissionCount = whitelistedRestrictedPermissions.size();
             for (int i = 0; i < permissionCount; i++) {
-                out.startTag(null, TAG_WHITELISTED_RESTRICTED_PERMISSION);
+                out.startTag(null, TAG_ALLOWLISTED_RESTRICTED_PERMISSION);
                 writeStringAttribute(out, ATTR_NAME, whitelistedRestrictedPermissions.get(i));
-                out.endTag(null, TAG_WHITELISTED_RESTRICTED_PERMISSION);
+                out.endTag(null, TAG_ALLOWLISTED_RESTRICTED_PERMISSION);
             }
         }
     }
@@ -4476,7 +4476,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             }
 
             writeGrantedRuntimePermissionsLocked(out, params.grantedRuntimePermissions);
-            writeWhitelistedRestrictedPermissionsLocked(out,
+            writeAllowlistedRestrictedPermissionsLocked(out,
                     params.whitelistedRestrictedPermissions);
             writeAutoRevokePermissionsMode(out, params.autoRevokePermissionsMode);
 
@@ -4670,7 +4670,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             if (TAG_GRANTED_RUNTIME_PERMISSION.equals(in.getName())) {
                 grantedRuntimePermissions.add(readStringAttribute(in, ATTR_NAME));
             }
-            if (TAG_WHITELISTED_RESTRICTED_PERMISSION.equals(in.getName())) {
+            if (TAG_ALLOWLISTED_RESTRICTED_PERMISSION.equals(in.getName())) {
                 whitelistedRestrictedPermissions.add(readStringAttribute(in, ATTR_NAME));
 
             }

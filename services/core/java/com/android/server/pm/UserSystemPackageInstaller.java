@@ -72,9 +72,9 @@ import java.util.Set;
  * any user types) in the SystemConfig 'install-in-user-type' lists
  * then:
  * <ul>
- *     <li>If {@link #isImplicitWhitelistMode()}, the package is implicitly treated as allowlisted
+ *     <li>If {@link #isImplicitAllowlistMode()}, the package is implicitly treated as allowlisted
  *          for <b>all</b> users</li>
- *     <li>Otherwise, if {@link #isImplicitWhitelistSystemMode()}, the package is implicitly treated
+ *     <li>Otherwise, if {@link #isImplicitAllowlistSystemMode()}, the package is implicitly treated
  *          as allowlisted for the <b>{@link UserHandle#USER_SYSTEM}</b> user (not other users),
  *          which is useful for local development purposes</li>
  *     <li>Otherwise, the package is implicitly treated as denylisted for all users</li>
@@ -111,7 +111,7 @@ class UserSystemPackageInstaller {
      * <li> 16 - ignore OTAs (don't install system packages during OTAs)</li>
      * <li>-1  - use device default (as defined in res/res/values/config.xml)</li>
      * </ul>
-     * Note: This list must be kept current with config_userTypePackageWhitelistMode in
+     * Note: This list must be kept current with config_userTypePackageAllowlistMode in
      * frameworks/base/core/res/res/values/config.xml
      */
     static final String PACKAGE_WHITELIST_MODE_PROP = "persist.debug.user.package_whitelist_mode";
@@ -145,7 +145,7 @@ class UserSystemPackageInstaller {
      * <p>
      * E.g. if package "pkg1" should be installed on "usertype_d", which is the user type for which
      * {@link #getUserTypeMask}("usertype_d") returns (1 << 3)
-     * then mWhitelistedPackagesForUserTypes.get("pkg1") will be a Long whose
+     * then mAllowlistedPackagesForUserTypes.get("pkg1") will be a Long whose
      * bit in position 3 will equal 1.
      * <p>
      * Packages that are allowlisted, but then denylisted so that they aren't to be installed on
@@ -200,7 +200,7 @@ class UserSystemPackageInstaller {
     boolean installWhitelistedSystemPackages(boolean isFirstBoot, boolean isUpgrade,
             @Nullable ArraySet<String> preExistingPackages) {
         final int mode = getWhitelistMode();
-        checkWhitelistedSystemPackages(mode);
+        checkAllowlistedSystemPackages(mode);
         final boolean isConsideredUpgrade = isUpgrade && !isIgnoreOtaMode(mode);
         if (!isConsideredUpgrade && !isFirstBoot) {
             return false;
@@ -288,23 +288,23 @@ class UserSystemPackageInstaller {
     }
 
     /**
-     * Checks whether the system packages and the mWhitelistedPackagesForUserTypes allowlist are
+     * Checks whether the system packages and the mAllowlistedPackagesForUserTypes allowlist are
      * in 1-to-1 correspondence.
      */
-    private void checkWhitelistedSystemPackages(@PackageWhitelistMode int mode) {
+    private void checkAllowlistedSystemPackages(@PackageWhitelistMode int mode) {
         if (!isLogMode(mode) && !isEnforceMode(mode)) {
             return;
         }
         Slog.v(TAG,  "Checking that all system packages are whitelisted.");
 
         // Check whether all allowlisted packages are indeed on the system.
-        final List<String> warnings = getPackagesWhitelistWarnings();
+        final List<String> warnings = getPackagesAllowlistWarnings();
         final int numberWarnings = warnings.size();
         if (numberWarnings == 0) {
-            Slog.v(TAG, "checkWhitelistedSystemPackages(mode=" + modeToString(mode)
+            Slog.v(TAG, "checkAllowlistedSystemPackages(mode=" + modeToString(mode)
                     + ") has no warnings");
         } else {
-            Slog.w(TAG, "checkWhitelistedSystemPackages(mode=" + modeToString(mode)
+            Slog.w(TAG, "checkAllowlistedSystemPackages(mode=" + modeToString(mode)
                     + ") has " + numberWarnings + " warnings:");
             for (int i = 0; i < numberWarnings; i++) {
                 Slog.w(TAG, warnings.get(i));
@@ -312,22 +312,22 @@ class UserSystemPackageInstaller {
         }
 
         // Check whether all system packages are indeed allowlisted.
-        if (isImplicitWhitelistMode(mode) && !isLogMode(mode)) {
+        if (isImplicitAllowlistMode(mode) && !isLogMode(mode)) {
             return;
         }
 
-        final List<String> errors = getPackagesWhitelistErrors(mode);
+        final List<String> errors = getPackagesAllowlistErrors(mode);
         final int numberErrors = errors.size();
 
         if (numberErrors == 0) {
-            Slog.v(TAG, "checkWhitelistedSystemPackages(mode=" + modeToString(mode)
+            Slog.v(TAG, "checkAllowlistedSystemPackages(mode=" + modeToString(mode)
                     + ") has no errors");
             return;
         }
-        Slog.e(TAG, "checkWhitelistedSystemPackages(mode=" + modeToString(mode) + ") has "
+        Slog.e(TAG, "checkAllowlistedSystemPackages(mode=" + modeToString(mode) + ") has "
                 + numberErrors + " errors:");
 
-        boolean doWtf = !isImplicitWhitelistMode(mode);
+        boolean doWtf = !isImplicitAllowlistMode(mode);
         for (int i = 0; i < numberErrors; i++) {
             final String msg = errors.get(i);
             if (doWtf) {
@@ -342,8 +342,8 @@ class UserSystemPackageInstaller {
      * Gets packages that are listed in the allowlist XML but are not present on the system image.
      */
     @NonNull
-    private List<String> getPackagesWhitelistWarnings() {
-        final Set<String> allWhitelistedPackages = getWhitelistedSystemPackages();
+    private List<String> getPackagesAllowlistWarnings() {
+        final Set<String> allWhitelistedPackages = getAllowlistedSystemPackages();
         final List<String> warnings = new ArrayList<>();
         final PackageManagerInternal pmInt = LocalServices.getService(PackageManagerInternal.class);
 
@@ -368,13 +368,13 @@ class UserSystemPackageInstaller {
      * Gets packages that are not listed in the allowlist XMLs when they should be.
      */
     @NonNull
-    private List<String> getPackagesWhitelistErrors(@PackageWhitelistMode int mode) {
-        if ((!isEnforceMode(mode) || isImplicitWhitelistMode(mode)) && !isLogMode(mode)) {
+    private List<String> getPackagesAllowlistErrors(@PackageWhitelistMode int mode) {
+        if ((!isEnforceMode(mode) || isImplicitAllowlistMode(mode)) && !isLogMode(mode)) {
             return Collections.emptyList();
         }
 
         final List<String> errors = new ArrayList<>();
-        final Set<String> allWhitelistedPackages = getWhitelistedSystemPackages();
+        final Set<String> allWhitelistedPackages = getAllowlistedSystemPackages();
         final PackageManagerInternal pmInt = LocalServices.getService(PackageManagerInternal.class);
 
         // Check whether all system packages are indeed allowlisted.
@@ -421,16 +421,16 @@ class UserSystemPackageInstaller {
      * Whether to treat all packages that are not mentioned at all in the allowlist to be implicitly
      * allowlisted for all users.
      */
-    boolean isImplicitWhitelistMode() {
-        return isImplicitWhitelistMode(getWhitelistMode());
+    boolean isImplicitAllowlistMode() {
+        return isImplicitAllowlistMode(getWhitelistMode());
     }
 
     /**
      * Whether to treat all packages that are not mentioned at all in the allowlist to be implicitly
      * allowlisted for the SYSTEM user.
      */
-    boolean isImplicitWhitelistSystemMode() {
-        return isImplicitWhitelistSystemMode(getWhitelistMode());
+    boolean isImplicitAllowlistSystemMode() {
+        return isImplicitAllowlistSystemMode(getWhitelistMode());
     }
 
     /**
@@ -444,31 +444,31 @@ class UserSystemPackageInstaller {
     }
 
     /** See {@link #isEnforceMode()}. */
-    private static boolean isEnforceMode(int whitelistMode) {
-        return (whitelistMode & USER_TYPE_PACKAGE_WHITELIST_MODE_ENFORCE) != 0;
+    private static boolean isEnforceMode(int allowlistMode) {
+        return (allowlistMode & USER_TYPE_PACKAGE_WHITELIST_MODE_ENFORCE) != 0;
     }
 
     /** See {@link #isIgnoreOtaMode()}. */
-    private static boolean isIgnoreOtaMode(int whitelistMode) {
-        return (whitelistMode & USER_TYPE_PACKAGE_WHITELIST_MODE_IGNORE_OTA) != 0;
+    private static boolean isIgnoreOtaMode(int allowlistMode) {
+        return (allowlistMode & USER_TYPE_PACKAGE_WHITELIST_MODE_IGNORE_OTA) != 0;
     }
 
     /** See {@link #isLogMode()}. */
-    private static boolean isLogMode(int whitelistMode) {
-        return (whitelistMode & USER_TYPE_PACKAGE_WHITELIST_MODE_LOG) != 0;
+    private static boolean isLogMode(int allowlistMode) {
+        return (allowlistMode & USER_TYPE_PACKAGE_WHITELIST_MODE_LOG) != 0;
     }
 
-    /** See {@link #isImplicitWhitelistMode()}. */
-    private static boolean isImplicitWhitelistMode(int whitelistMode) {
+    /** See {@link #isImplicitAllowlistMode()}. */
+    private static boolean isImplicitAllowlistMode(int whitelistMode) {
         return (whitelistMode & USER_TYPE_PACKAGE_WHITELIST_MODE_IMPLICIT_WHITELIST) != 0;
     }
 
-    /** See {@link #isImplicitWhitelistSystemMode()}. */
-    private static boolean isImplicitWhitelistSystemMode(int whitelistMode) {
+    /** See {@link #isImplicitAllowlistSystemMode()}. */
+    private static boolean isImplicitAllowlistSystemMode(int whitelistMode) {
         return (whitelistMode & USER_TYPE_PACKAGE_WHITELIST_MODE_IMPLICIT_WHITELIST_SYSTEM) != 0;
     }
 
-    /** Gets the PackageWhitelistMode for use of {@link #mWhitelistedPackagesForUserTypes}. */
+    /** Gets the PackageAllowlistMode for use of {@link #mWhitelistedPackagesForUserTypes}. */
     private @PackageWhitelistMode int getWhitelistMode() {
         final int runtimeMode = SystemProperties.getInt(
                 PACKAGE_WHITELIST_MODE_PROP, USER_TYPE_PACKAGE_WHITELIST_MODE_DEVICE_DEFAULT);
@@ -517,8 +517,8 @@ class UserSystemPackageInstaller {
         if (!isEnforceMode(mode)) {
             return null;
         }
-        final boolean implicitlyWhitelist = isImplicitWhitelistMode(mode)
-                || (isImplicitWhitelistSystemMode(mode) && mUm.isUserTypeSubtypeOfSystem(userType));
+        final boolean implicitlyWhitelist = isImplicitAllowlistMode(mode)
+                || (isImplicitAllowlistSystemMode(mode) && mUm.isUserTypeSubtypeOfSystem(userType));
         final Set<String> whitelistedPackages = getWhitelistedPackagesForUserType(userType);
 
         final Set<String> installPackages = new ArraySet<>();
@@ -541,14 +541,14 @@ class UserSystemPackageInstaller {
      * the given allowlist of system packages.
      *
      * @param sysPkg the system package. Must be a system package; no verification for this is done.
-     * @param userTypeWhitelist map of package manifest names to user types on which they should be
-     *                          installed. This is only used for overriding the userWhitelist in
+     * @param userTypeAllowlist map of package manifest names to user types on which they should be
+     *                          installed. This is only used for overriding the userAllowlist in
      *                          certain situations (based on its keyset).
-     * @param userWhitelist set of package manifest names that should be installed on this
-     *                      <b>particular</b> user. This must be consistent with userTypeWhitelist,
+     * @param userAllowlist set of package manifest names that should be installed on this
+     *                      <b>particular</b> user. This must be consistent with userTypeAllowlist,
      *                      but is passed in separately to avoid repeatedly calculating it from
-     *                      userTypeWhitelist.
-     * @param implicitlyWhitelist whether non-mentioned packages are implicitly allowlisted.
+     *                      userTypeAllowlist.
+     * @param implicitlyAllowlist whether non-mentioned packages are implicitly allowlisted.
      */
     @VisibleForTesting
     static boolean shouldInstallPackage(AndroidPackage sysPkg,
@@ -584,9 +584,9 @@ class UserSystemPackageInstaller {
      *
      * Packages that are allowlisted, but then denylisted so that they aren't to be installed on
      * any user, are still present in this list, since that is a valid scenario (e.g. if an OEM
-     * completely blacklists an AOSP app).
+     * completely denylists an AOSP app).
      */
-    private Set<String> getWhitelistedSystemPackages() {
+    private Set<String> getAllowlistedSystemPackages() {
         return mWhitelistedPackagesForUserTypes.keySet();
     }
 
@@ -603,11 +603,11 @@ class UserSystemPackageInstaller {
      *  <li>Packages that never allowlisted at all (even if they are explicitly denylisted) are
      *          ignored.</li>
      *  <li>Packages that are denylisted whenever they are allowlisted will be stored with the
-     *          value 0 (since this is a valid scenario, e.g. if an OEM completely blacklists an
+     *          value 0 (since this is a valid scenario, e.g. if an OEM completely denylists an
      *          AOSP app).</li>
      * </ul>
      *
-     * @see #mWhitelistedPackagesForUserTypes
+     * @see #mAllowlistedPackagesForUserTypes
      */
     @VisibleForTesting
     ArrayMap<String, Long> determineWhitelistedPackagesForUserTypes(SystemConfig sysConfig) {
@@ -640,7 +640,7 @@ class UserSystemPackageInstaller {
                 result.put(pkgName, 0L);
             }
         }
-        // Regardless of the whitelists/blacklists, ensure mandatory packages.
+        // Regardless of the allowlists/blacklists, ensure mandatory packages.
         result.put("android", ~0L);
         return result;
     }
@@ -735,7 +735,7 @@ class UserSystemPackageInstaller {
         pw.print(mode);
         pw.print(isEnforceMode(mode) ? " (enforced)" : "");
         pw.print(isLogMode(mode) ? " (logged)" : "");
-        pw.print(isImplicitWhitelistMode(mode) ? " (implicit)" : "");
+        pw.print(isImplicitAllowlistMode(mode) ? " (implicit)" : "");
         pw.print(isIgnoreOtaMode(mode) ? " (ignore OTAs)" : "");
         pw.println();
         pw.decreaseIndent();
@@ -789,12 +789,12 @@ class UserSystemPackageInstaller {
         }
         Slog.v(TAG, "dumpPackageWhitelistProblems(): using mode " + modeToString(mode));
 
-        final List<String> errors = getPackagesWhitelistErrors(mode);
+        final List<String> errors = getPackagesAllowlistErrors(mode);
         showIssues(pw, verbose, errors, "errors");
 
         if (criticalOnly) return;
 
-        final List<String> warnings = getPackagesWhitelistWarnings();
+        final List<String> warnings = getPackagesAllowlistWarnings();
         showIssues(pw, verbose, warnings, "warnings");
     }
 
