@@ -692,7 +692,7 @@ public class AppStandbyController
             // Offload to handler thread after boot completed to avoid boot time impact. This means
             // that app standby buckets may be slightly out of date and headless system apps may be
             // put in a lower bucket until boot has completed.
-            mHandler.post(AppStandbyController.this::updatePowerWhitelistCache);
+            mHandler.post(AppStandbyController.this::updatePowerAllowlistCache);
             mHandler.post(this::loadHeadlessSystemAppCache);
         }
     }
@@ -1134,7 +1134,7 @@ public class AppStandbyController
     @GuardedBy("mAppIdleLock")
     private void reportEventLocked(String pkg, int eventType, long elapsedRealtime, int userId) {
         // TODO: Ideally this should call isAppIdleFiltered() to avoid calling back
-        // about apps that are on some kind of whitelist anyway.
+        // about apps that are on some kind of allowlist anyway.
         final boolean previouslyIdle = mAppIdleHistory.isIdle(
                 pkg, userId, elapsedRealtime);
 
@@ -1420,7 +1420,7 @@ public class AppStandbyController
             return STANDBY_BUCKET_EXEMPTED;
         }
         if (mSystemServicesReady) {
-            // We allow all whitelisted apps, including those that don't want to be whitelisted
+            // We allow all allowlisted apps, including those that don't want to be allowlisted
             // for idle mode, because app idle (aka app standby) is really not as big an issue
             // for controlling who participates vs. doze mode.
             if (mInjector.isNonIdleWhitelisted(packageName)) {
@@ -2152,11 +2152,11 @@ public class AppStandbyController
         }
     }
 
-    private void updatePowerWhitelistCache() {
+    private void updatePowerAllowlistCache() {
         if (mInjector.getBootPhase() < PHASE_SYSTEM_SERVICES_READY) {
             return;
         }
-        mInjector.updatePowerWhitelistCache();
+        mInjector.updatePowerAllowlistCache();
         postCheckIdleStates(UserHandle.USER_ALL);
     }
 
@@ -2507,7 +2507,7 @@ public class AppStandbyController
         long mAutoRestrictedBucketDelayMs =
                 ConstantsObserver.DEFAULT_AUTO_RESTRICTED_BUCKET_DELAY_MS;
         /**
-         * Cached set of apps that are power whitelisted, including those not whitelisted from idle.
+         * Cached set of apps that are power allowlisted, including those not allowlisted from idle.
          */
         @GuardedBy("mPowerWhitelistedApps")
         private final ArraySet<String> mPowerWhitelistedApps = new ArraySet<>();
@@ -2607,7 +2607,7 @@ public class AppStandbyController
             return mAlarmManagerInternal.hasExactAlarmPermission(packageName, uid);
         }
 
-        void updatePowerWhitelistCache() {
+        void updatePowerAllowlistCache() {
             try {
                 // Don't call out to DeviceIdleController with the lock held.
                 final String[] whitelistedPkgs =
@@ -2841,7 +2841,7 @@ public class AppStandbyController
                     break;
                 case PowerManager.ACTION_POWER_SAVE_WHITELIST_CHANGED:
                     if (mSystemServicesReady) {
-                        mHandler.post(AppStandbyController.this::updatePowerWhitelistCache);
+                        mHandler.post(AppStandbyController.this::updatePowerAllowlistCache);
                     }
                     break;
             }

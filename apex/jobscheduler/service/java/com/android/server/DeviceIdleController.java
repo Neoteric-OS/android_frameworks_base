@@ -608,13 +608,13 @@ public class DeviceIdleController extends SystemService
     private NetworkPolicyManagerInternal mNetworkPolicyManagerInternal;
 
     /**
-     * Current app IDs of temporarily whitelist apps for high-priority messages.
+     * Current app IDs of temporarily allowlist apps for high-priority messages.
      */
     private int[] mTempWhitelistAppIdArray = new int[0];
 
     /**
-     * Apps in the system whitelist that have been taken out (probably because the user wanted to).
-     * They can be restored back by calling restoreAppToSystemWhitelist(String).
+     * Apps in the system allowlist that have been taken out (probably because the user wanted to).
+     * They can be restored back by calling restoreAppToSystemAllowlist(String).
      */
     private ArrayMap<String, Integer> mRemovedFromSystemWhitelistApps = new ArrayMap<>();
 
@@ -1240,7 +1240,7 @@ public class DeviceIdleController extends SystemService
         public long MIN_TIME_TO_ALARM = mDefaultMinTimeToAlarm;
 
         /**
-         * Max amount of time to temporarily whitelist an app when it receives a high priority
+         * Max amount of time to temporarily allowlist an app when it receives a high priority
          * tickle.
          *
          * @see #KEY_MAX_TEMP_APP_ALLOWLIST_DURATION_MS
@@ -1248,19 +1248,19 @@ public class DeviceIdleController extends SystemService
         public long MAX_TEMP_APP_ALLOWLIST_DURATION_MS = mDefaultMaxTempAppAllowlistDurationMs;
 
         /**
-         * Amount of time we would like to whitelist an app that is receiving an MMS.
+         * Amount of time we would like to allowlist an app that is receiving an MMS.
          * @see #KEY_MMS_TEMP_APP_ALLOWLIST_DURATION_MS
          */
         public long MMS_TEMP_APP_ALLOWLIST_DURATION_MS = mDefaultMmsTempAppAllowlistDurationMs;
 
         /**
-         * Amount of time we would like to whitelist an app that is receiving an SMS.
+         * Amount of time we would like to allowlist an app that is receiving an SMS.
          * @see #KEY_SMS_TEMP_APP_ALLOWLIST_DURATION_MS
          */
         public long SMS_TEMP_APP_ALLOWLIST_DURATION_MS = mDefaultSmsTempAppAllowlistDurationMs;
 
         /**
-         * Amount of time we would like to whitelist an app that is handling a
+         * Amount of time we would like to allowlist an app that is handling a
          * {@link android.app.PendingIntent} triggered by a {@link android.app.Notification}.
          * @see #KEY_NOTIFICATION_ALLOWLIST_DURATION_MS
          */
@@ -1749,7 +1749,7 @@ public class DeviceIdleController extends SystemService
     private static final int MSG_REPORT_IDLE_ON_LIGHT = 3;
     private static final int MSG_REPORT_IDLE_OFF = 4;
     private static final int MSG_REPORT_ACTIVE = 5;
-    private static final int MSG_TEMP_APP_WHITELIST_TIMEOUT = 6;
+    private static final int MSG_TEMP_APP_ALLOWLIST_TIMEOUT = 6;
     @VisibleForTesting
     static final int MSG_REPORT_STATIONARY_STATUS = 7;
     private static final int MSG_FINISH_IDLE_OP = 8;
@@ -1758,9 +1758,9 @@ public class DeviceIdleController extends SystemService
     static final int MSG_UPDATE_PRE_IDLE_TIMEOUT_FACTOR = 11;
     @VisibleForTesting
     static final int MSG_RESET_PRE_IDLE_TIMEOUT_FACTOR = 12;
-    private static final int MSG_REPORT_TEMP_APP_WHITELIST_CHANGED = 13;
-    private static final int MSG_REPORT_TEMP_APP_WHITELIST_ADDED_TO_NPMS = 14;
-    private static final int MSG_REPORT_TEMP_APP_WHITELIST_REMOVED_TO_NPMS = 15;
+    private static final int MSG_REPORT_TEMP_APP_ALLOWLIST_CHANGED = 13;
+    private static final int MSG_REPORT_TEMP_APP_ALLOWLIST_ADDED_TO_NPMS = 14;
+    private static final int MSG_REPORT_TEMP_APP_ALLOWLIST_REMOVED_TO_NPMS = 15;
 
     final class MyHandler extends Handler {
         MyHandler(Looper looper) {
@@ -1851,7 +1851,7 @@ public class DeviceIdleController extends SystemService
                     }
                     EventLogTags.writeDeviceIdleOffComplete();
                 } break;
-                case MSG_TEMP_APP_WHITELIST_TIMEOUT: {
+                case MSG_TEMP_APP_ALLOWLIST_TIMEOUT: {
                     // TODO: What is keeping the device awake at this point? Does it need to be?
                     int uid = msg.arg1;
                     checkTempAppWhitelistTimeout(uid);
@@ -1860,7 +1860,7 @@ public class DeviceIdleController extends SystemService
                     // mActiveIdleWakeLock is held at this point
                     decActiveIdleOps();
                 } break;
-                case MSG_REPORT_TEMP_APP_WHITELIST_CHANGED: {
+                case MSG_REPORT_TEMP_APP_ALLOWLIST_CHANGED: {
                     final int uid = msg.arg1;
                     final boolean added = (msg.arg2 == 1);
                     PowerAllowlistInternal.TempAllowlistChangeListener[] listeners;
@@ -1877,14 +1877,14 @@ public class DeviceIdleController extends SystemService
                         }
                     }
                 } break;
-                case MSG_REPORT_TEMP_APP_WHITELIST_ADDED_TO_NPMS: {
+                case MSG_REPORT_TEMP_APP_ALLOWLIST_ADDED_TO_NPMS: {
                     final int appId = msg.arg1;
                     final int reasonCode = msg.arg2;
                     final String reason = (String) msg.obj;
                     mNetworkPolicyManagerInternal.onTempPowerSaveWhitelistChange(appId, true,
                             reasonCode, reason);
                 } break;
-                case MSG_REPORT_TEMP_APP_WHITELIST_REMOVED_TO_NPMS: {
+                case MSG_REPORT_TEMP_APP_ALLOWLIST_REMOVED_TO_NPMS: {
                     final int appId = msg.arg1;
                     mNetworkPolicyManagerInternal.onTempPowerSaveWhitelistChange(appId, false,
                             REASON_UNKNOWN, /* reason= */ null);
@@ -1957,7 +1957,7 @@ public class DeviceIdleController extends SystemService
                     null);
             final long ident = Binder.clearCallingIdentity();
             try {
-                return addPowerSaveWhitelistAppsInternal(packageNames);
+                return addPowerSaveAllowlistAppsInternal(packageNames);
             } finally {
                 Binder.restoreCallingIdentity(ident);
             }
@@ -2211,14 +2211,14 @@ public class DeviceIdleController extends SystemService
             DeviceIdleController.this.setAlarmsActive(active);
         }
 
-        /** Is the app on any of the power save whitelists, whether system or user? */
+        /** Is the app on any of the power save allowlists, whether system or user? */
         @Override
         public boolean isAppOnWhitelist(int appid) {
             return DeviceIdleController.this.isAppOnWhitelistInternal(appid);
         }
 
         /**
-         * Returns the array of app ids whitelisted by user. Take care not to
+         * Returns the array of app ids allowlisted by user. Take care not to
          * modify this, as it is a reference to the original copy. But the reference
          * can change when the list changes, so it needs to be re-acquired when
          * {@link PowerManager#ACTION_POWER_SAVE_WHITELIST_CHANGED} is sent.
@@ -2436,8 +2436,8 @@ public class DeviceIdleController extends SystemService
                     ApplicationInfo ai = pm.getApplicationInfo(pkg,
                             PackageManager.MATCH_SYSTEM_ONLY);
                     int appid = UserHandle.getAppId(ai.uid);
-                    // These apps are on both the whitelist-except-idle as well
-                    // as the full whitelist, so they apply in all cases.
+                    // These apps are on both the allowlist-except-idle as well
+                    // as the full allowlist, so they apply in all cases.
                     mPowerSaveWhitelistAppsExceptIdle.put(ai.packageName, appid);
                     mPowerSaveWhitelistSystemAppIdsExceptIdle.put(appid, true);
                     mPowerSaveWhitelistApps.put(ai.packageName, appid);
@@ -2449,7 +2449,7 @@ public class DeviceIdleController extends SystemService
             mConstants = mInjector.getConstants(this);
 
             readConfigFileLocked();
-            updateWhitelistAppIdsLocked();
+            updateAllowlistAppIdsLocked();
 
             mNetworkConnected = true;
             mScreenOn = true;
@@ -2561,7 +2561,7 @@ public class DeviceIdleController extends SystemService
 
                 mLocalActivityTaskManager.registerScreenObserver(mScreenObserver);
 
-                passWhiteListsToForceAppStandbyTrackerLocked();
+                passAllowListsToForceAppStandbyTrackerLocked();
                 updateInteractivityLocked();
             }
             updateConnectivityState(null);
@@ -2661,7 +2661,7 @@ public class DeviceIdleController extends SystemService
         }
     }
 
-    private int addPowerSaveWhitelistAppsInternal(List<String> pkgNames) {
+    private int addPowerSaveAllowlistAppsInternal(List<String> pkgNames) {
         int numAdded = 0;
         int numErrors = 0;
         synchronized (this) {
@@ -2684,8 +2684,8 @@ public class DeviceIdleController extends SystemService
                 }
             }
             if (numAdded > 0) {
-                reportPowerSaveWhitelistChangedLocked();
-                updateWhitelistAppIdsLocked();
+                reportPowerSaveAllowlistChangedLocked();
+                updateAllowlistAppIdsLocked();
                 writeConfigFileLocked();
             }
         }
@@ -2695,8 +2695,8 @@ public class DeviceIdleController extends SystemService
     public boolean removePowerSaveWhitelistAppInternal(String name) {
         synchronized (this) {
             if (mPowerSaveWhitelistUserApps.remove(name) != null) {
-                reportPowerSaveWhitelistChangedLocked();
-                updateWhitelistAppIdsLocked();
+                reportPowerSaveAllowlistChangedLocked();
+                updateAllowlistAppIdsLocked();
                 writeConfigFileLocked();
                 return true;
             }
@@ -2714,8 +2714,8 @@ public class DeviceIdleController extends SystemService
         synchronized (this) {
             mPowerSaveWhitelistApps.putAll(mRemovedFromSystemWhitelistApps);
             mRemovedFromSystemWhitelistApps.clear();
-            reportPowerSaveWhitelistChangedLocked();
-            updateWhitelistAppIdsLocked();
+            reportPowerSaveAllowlistChangedLocked();
+            updateAllowlistAppIdsLocked();
             writeConfigFileLocked();
         }
     }
@@ -2726,8 +2726,8 @@ public class DeviceIdleController extends SystemService
                 return false;
             }
             mPowerSaveWhitelistApps.put(name, mRemovedFromSystemWhitelistApps.remove(name));
-            reportPowerSaveWhitelistChangedLocked();
-            updateWhitelistAppIdsLocked();
+            reportPowerSaveAllowlistChangedLocked();
+            updateAllowlistAppIdsLocked();
             writeConfigFileLocked();
             return true;
         }
@@ -2739,8 +2739,8 @@ public class DeviceIdleController extends SystemService
                 return false;
             }
             mRemovedFromSystemWhitelistApps.put(name, mPowerSaveWhitelistApps.remove(name));
-            reportPowerSaveWhitelistChangedLocked();
-            updateWhitelistAppIdsLocked();
+            reportPowerSaveAllowlistChangedLocked();
+            updateAllowlistAppIdsLocked();
             writeConfigFileLocked();
             return true;
         }
@@ -2754,12 +2754,12 @@ public class DeviceIdleController extends SystemService
                 if (mPowerSaveWhitelistAppsExceptIdle.put(name, UserHandle.getAppId(ai.uid))
                         == null) {
                     mPowerSaveWhitelistUserAppsExceptIdle.add(name);
-                    reportPowerSaveWhitelistChangedLocked();
+                    reportPowerSaveAllowlistChangedLocked();
                     mPowerSaveWhitelistExceptIdleAppIdArray = buildAppIdArray(
                             mPowerSaveWhitelistAppsExceptIdle, mPowerSaveWhitelistUserApps,
                             mPowerSaveWhitelistExceptIdleAppIds);
 
-                    passWhiteListsToForceAppStandbyTrackerLocked();
+                    passAllowListsToForceAppStandbyTrackerLocked();
                 }
                 return true;
             } catch (PackageManager.NameNotFoundException e) {
@@ -2772,13 +2772,13 @@ public class DeviceIdleController extends SystemService
         synchronized (this) {
             if (mPowerSaveWhitelistAppsExceptIdle.removeAll(
                     mPowerSaveWhitelistUserAppsExceptIdle)) {
-                reportPowerSaveWhitelistChangedLocked();
+                reportPowerSaveAllowlistChangedLocked();
                 mPowerSaveWhitelistExceptIdleAppIdArray = buildAppIdArray(
                         mPowerSaveWhitelistAppsExceptIdle, mPowerSaveWhitelistUserApps,
                         mPowerSaveWhitelistExceptIdleAppIds);
                 mPowerSaveWhitelistUserAppsExceptIdle.clear();
 
-                passWhiteListsToForceAppStandbyTrackerLocked();
+                passAllowListsToForceAppStandbyTrackerLocked();
             }
         }
     }
@@ -2983,7 +2983,7 @@ public class DeviceIdleController extends SystemService
     }
 
     /**
-     * Adds an app to the temporary whitelist and resets the endTime for granting the
+     * Adds an app to the temporary allowlist and resets the endTime for granting the
      * app an exemption to access network and acquire wakelocks.
      */
     void addPowerSaveTempAllowlistAppInternal(int callingUid, String packageName,
@@ -2998,7 +2998,7 @@ public class DeviceIdleController extends SystemService
     }
 
     /**
-     * Adds an app to the temporary whitelist and resets the endTime for granting the
+     * Adds an app to the temporary allowlist and resets the endTime for granting the
      * app an exemption to access network and acquire wakelocks.
      */
     void addPowerSaveTempWhitelistAppDirectInternal(int callingUid, int uid,
@@ -3028,7 +3028,7 @@ public class DeviceIdleController extends SystemService
                 } catch (RemoteException e) {
                 }
                 postTempActiveTimeoutMessage(uid, duration);
-                updateTempWhitelistAppIdsLocked(uid, true, duration, tempAllowListType,
+                updateTempAllowlistAppIdsLocked(uid, true, duration, tempAllowListType,
                         reasonCode, reason, callingUid);
                 if (sync) {
                     informWhitelistChanged = true;
@@ -3036,10 +3036,10 @@ public class DeviceIdleController extends SystemService
                     // NPMS needs to update its state synchronously in certain situations so we
                     // can't have it use the TempAllowlistChangeListener path right now.
                     // TODO: see if there's a way to simplify/consolidate
-                    mHandler.obtainMessage(MSG_REPORT_TEMP_APP_WHITELIST_ADDED_TO_NPMS, appId,
+                    mHandler.obtainMessage(MSG_REPORT_TEMP_APP_ALLOWLIST_ADDED_TO_NPMS, appId,
                             reasonCode, reason).sendToTarget();
                 }
-                reportTempWhitelistChangedLocked(uid, true);
+                reportTempAllowlistChangedLocked(uid, true);
             } else {
                 // The uid is already temp allowlisted, only need to update AMS for temp allowlist
                 // duration.
@@ -3056,18 +3056,18 @@ public class DeviceIdleController extends SystemService
     }
 
     /**
-     * Removes an app from the temporary whitelist and notifies the observers.
+     * Removes an app from the temporary allowlist and notifies the observers.
      */
     private void removePowerSaveTempAllowlistAppInternal(String packageName, int userId) {
         try {
             final int uid = getContext().getPackageManager().getPackageUidAsUser(
                     packageName, userId);
-            removePowerSaveTempWhitelistAppDirectInternal(uid);
+            removePowerSaveTempAllowlistAppDirectInternal(uid);
         } catch (NameNotFoundException e) {
         }
     }
 
-    private void removePowerSaveTempWhitelistAppDirectInternal(int uid) {
+    private void removePowerSaveTempAllowlistAppDirectInternal(int uid) {
         final int appId = UserHandle.getAppId(uid);
         synchronized (this) {
             final int idx = mTempWhitelistAppIdEndTimes.indexOfKey(appId);
@@ -3077,7 +3077,7 @@ public class DeviceIdleController extends SystemService
             }
             final String reason = mTempWhitelistAppIdEndTimes.valueAt(idx).second;
             mTempWhitelistAppIdEndTimes.removeAt(idx);
-            onAppRemovedFromTempWhitelistLocked(uid, reason);
+            onAppRemovedFromTempAllowlistLocked(uid, reason);
         }
     }
 
@@ -3086,7 +3086,7 @@ public class DeviceIdleController extends SystemService
             Slog.d(TAG, "postTempActiveTimeoutMessage: uid=" + uid + ", delay=" + delay);
         }
         mHandler.sendMessageDelayed(
-                mHandler.obtainMessage(MSG_TEMP_APP_WHITELIST_TIMEOUT, uid, 0), delay);
+                mHandler.obtainMessage(MSG_TEMP_APP_ALLOWLIST_TIMEOUT, uid, 0), delay);
     }
 
     void checkTempAppWhitelistTimeout(int uid) {
@@ -3104,7 +3104,7 @@ public class DeviceIdleController extends SystemService
             }
             if (timeNow >= entry.first.value) {
                 mTempWhitelistAppIdEndTimes.delete(appId);
-                onAppRemovedFromTempWhitelistLocked(uid, entry.second);
+                onAppRemovedFromTempAllowlistLocked(uid, entry.second);
             } else {
                 // Need more time
                 if (DEBUG) {
@@ -3116,16 +3116,16 @@ public class DeviceIdleController extends SystemService
     }
 
     @GuardedBy("this")
-    private void onAppRemovedFromTempWhitelistLocked(int uid, @Nullable String reason) {
+    private void onAppRemovedFromTempAllowlistLocked(int uid, @Nullable String reason) {
         if (DEBUG) {
             Slog.d(TAG, "Removing uid " + uid + " from temp whitelist");
         }
         final int appId = UserHandle.getAppId(uid);
-        updateTempWhitelistAppIdsLocked(uid, false, 0, 0, REASON_UNKNOWN,
+        updateTempAllowlistAppIdsLocked(uid, false, 0, 0, REASON_UNKNOWN,
                 reason, INVALID_UID);
-        mHandler.obtainMessage(MSG_REPORT_TEMP_APP_WHITELIST_REMOVED_TO_NPMS, appId,
+        mHandler.obtainMessage(MSG_REPORT_TEMP_APP_ALLOWLIST_REMOVED_TO_NPMS, appId,
                 /* unused= */ 0).sendToTarget();
-        reportTempWhitelistChangedLocked(uid, false);
+        reportTempAllowlistChangedLocked(uid, false);
         try {
             mBatteryStats.noteEvent(BatteryStats.HistoryItem.EVENT_TEMP_WHITELIST_FINISH,
                     reason, appId);
@@ -3337,7 +3337,7 @@ public class DeviceIdleController extends SystemService
         }
     }
 
-    /** Sanity check to make sure DeviceIdleController and AlarmManager are on the same page. */
+    /** Initial check to make sure DeviceIdleController and AlarmManager are on the same page. */
     @GuardedBy("this")
     private void verifyAlarmStateLocked() {
         if (mState == STATE_ACTIVE && mNextAlarmTime != 0) {
@@ -4272,7 +4272,7 @@ public class DeviceIdleController extends SystemService
         return appids;
     }
 
-    private void updateWhitelistAppIdsLocked() {
+    private void updateAllowlistAppIdsLocked() {
         mPowerSaveWhitelistExceptIdleAppIdArray = buildAppIdArray(mPowerSaveWhitelistAppsExceptIdle,
                 mPowerSaveWhitelistUserApps, mPowerSaveWhitelistExceptIdleAppIds);
         mPowerSaveWhitelistAllAppIdArray = buildAppIdArray(mPowerSaveWhitelistApps,
@@ -4290,7 +4290,7 @@ public class DeviceIdleController extends SystemService
             }
             mLocalPowerManager.setDeviceIdleWhitelist(mPowerSaveWhitelistAllAppIdArray);
         }
-        passWhiteListsToForceAppStandbyTrackerLocked();
+        passAllowListsToForceAppStandbyTrackerLocked();
     }
 
     /**
@@ -4306,7 +4306,7 @@ public class DeviceIdleController extends SystemService
      *                   is true.
      */
     @GuardedBy("this")
-    private void updateTempWhitelistAppIdsLocked(int uid, boolean adding, long durationMs,
+    private void updateTempAllowlistAppIdsLocked(int uid, boolean adding, long durationMs,
             @TempAllowListType int type, @ReasonCode int reasonCode, @Nullable String reason,
             int callingUid) {
         final int size = mTempWhitelistAppIdEndTimes.size();
@@ -4331,24 +4331,24 @@ public class DeviceIdleController extends SystemService
             }
             mLocalPowerManager.setDeviceIdleTempWhitelist(mTempWhitelistAppIdArray);
         }
-        passWhiteListsToForceAppStandbyTrackerLocked();
+        passAllowListsToForceAppStandbyTrackerLocked();
     }
 
-    private void reportPowerSaveWhitelistChangedLocked() {
+    private void reportPowerSaveAllowlistChangedLocked() {
         Intent intent = new Intent(PowerManager.ACTION_POWER_SAVE_WHITELIST_CHANGED);
         intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
         getContext().sendBroadcastAsUser(intent, UserHandle.SYSTEM);
     }
 
-    private void reportTempWhitelistChangedLocked(final int uid, final boolean added) {
-        mHandler.obtainMessage(MSG_REPORT_TEMP_APP_WHITELIST_CHANGED, uid, added ? 1 : 0)
+    private void reportTempAllowlistChangedLocked(final int uid, final boolean added) {
+        mHandler.obtainMessage(MSG_REPORT_TEMP_APP_ALLOWLIST_CHANGED, uid, added ? 1 : 0)
                 .sendToTarget();
         Intent intent = new Intent(PowerManager.ACTION_POWER_SAVE_TEMP_WHITELIST_CHANGED);
         intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
         getContext().sendBroadcastAsUser(intent, UserHandle.SYSTEM);
     }
 
-    private void passWhiteListsToForceAppStandbyTrackerLocked() {
+    private void passAllowListsToForceAppStandbyTrackerLocked() {
         mAppStateTracker.setPowerSaveExemptionListAppIds(
                 mPowerSaveWhitelistExceptIdleAppIdArray,
                 mPowerSaveWhitelistUserAppIdArray,
@@ -4788,7 +4788,7 @@ public class DeviceIdleController extends SystemService
                         char op = arg.charAt(0);
                         String pkg = arg.substring(1);
                         if (op == '+') {
-                            if (addPowerSaveWhitelistAppsInternal(Collections.singletonList(pkg))
+                            if (addPowerSaveAllowlistAppsInternal(Collections.singletonList(pkg))
                                     == 1) {
                                 pw.println("Added: " + pkg);
                             } else {
