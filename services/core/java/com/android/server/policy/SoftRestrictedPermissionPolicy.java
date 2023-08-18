@@ -184,7 +184,7 @@ public abstract class SoftRestrictedPermissionPolicy {
                             return false;
                         }
 
-                        // 2. The app shouldn't be in sForcedScopedStorageAppWhitelist
+                        // 2. The app shouldn't be in sForcedScopedStorageAppAllowlist
                         if (isForcedScopedStorage) {
                             return false;
                         }
@@ -215,7 +215,7 @@ public abstract class SoftRestrictedPermissionPolicy {
                             return true;
                         }
 
-                        // The package is now a part of the forced scoped storage whitelist
+                        // The package is now a part of the forced scoped storage allowlist
                         if (isForcedScopedStorage) {
                             return true;
                         }

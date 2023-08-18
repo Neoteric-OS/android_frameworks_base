@@ -1838,7 +1838,7 @@ public class WindowManagerService extends IWindowManager.Stub
             if (!win.mTransitionController.isShellTransitionsEnabled()
                     && activity != null && activity.isVisible()
                     && !prepareWindowReplacementTransition(activity)) {
-                // If not, check if need to set up a dummy transition during display freeze
+                // If not, check if need to set up a placeholder transition during display freeze
                 // so that the unfreeze wait for the apps to draw. This might be needed if
                 // the app is relaunching.
                 prepareNoneTransitionForRelaunching(activity);
@@ -6606,7 +6606,7 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
 
-    private void dumpHighRefreshRateBlacklist(PrintWriter pw) {
+    private void dumpHighRefreshRateDenylist(PrintWriter pw) {
         pw.println("WINDOW MANAGER HIGH REFRESH RATE BLACKLIST (dumpsys window refresh)");
         mHighRefreshRateDenylist.dump(pw);
     }
@@ -7024,7 +7024,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 dumpLogStatus(pw);
                 return;
             } else if ("refresh".equals(cmd)) {
-                dumpHighRefreshRateBlacklist(pw);
+                dumpHighRefreshRateDenylist(pw);
                 return;
             } else if ("constants".equals(cmd)) {
                 mConstants.dump(pw);
@@ -7094,7 +7094,7 @@ public class WindowManagerService extends IWindowManager.Stub
             if (dumpAll) {
                 pw.println(separator);
             }
-            dumpHighRefreshRateBlacklist(pw);
+            dumpHighRefreshRateDenylist(pw);
             if (dumpAll) {
                 pw.println(separator);
             }

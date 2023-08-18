@@ -1006,7 +1006,7 @@ public class DisplayModeDirector {
         // These translates into votes for the base mode refresh rate and resolution to be
         // used by SurfaceFlinger as the policy of choosing the display mode. The system also
         // forces some apps like denylisted app to run at a lower refresh rate.
-        // @see android.R.array#config_highRefreshRateBlacklist
+        // @see android.R.array#config_highRefreshRateDenylist
         // The preferred refresh rate is set on the main surface of the app outside of
         // DisplayModeDirector.
         // @see com.android.server.wm.WindowState#updateFrameRateSelectionPriorityIfNeeded
