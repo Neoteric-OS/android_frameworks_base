@@ -119,6 +119,7 @@ public class PixelPropsUtils {
     private static final Map<String, Object> propsToChangeOP8P;
     private static final Set<String> packagesToChangeOP8P = Set.of(
         "com.tencent.ig",
+        "com.pubg.imobile",
         "com.pubg.krmobile",
         "com.pubg.newstate",
         "com.vng.pubgmobile",
@@ -141,11 +142,6 @@ public class PixelPropsUtils {
     private static final Set<String> packagesToChangeMI11 = Set.of(
         "com.ea.gp.apexlegendsmobilefps",
         "com.mobile.legends"
-    );
-
-    private static final Map<String, Object> propsToChangeK30U;
-    private static final Set<String> packagesToChangeK30U = Set.of(
-        "com.pubg.imobile"
     );
 
     private static volatile boolean sIsGms = false;
@@ -199,9 +195,6 @@ public class PixelPropsUtils {
         propsToChangeMI11.put("DEVICE", "star");
         propsToChangeMI11.put("PRODUCT", "star");
         propsToChangeMI11.put("MODEL", "M2102K1G");
-        propsToChangeK30U = new HashMap<>();
-        propsToChangeK30U.put("MODEL", "M2006J10C");
-        propsToChangeK30U.put("MANUFACTURER", "Xiaomi");
     }
 
     public static boolean setPropsForGms(String packageName) {
@@ -291,8 +284,6 @@ public class PixelPropsUtils {
                 propsToChange.putAll(propsToChangeIqoo10P);
             } else if (packagesToChangeMI11.contains(packageName)) {
                 propsToChange.putAll(propsToChangeMI11);
-            } else if (packagesToChangeK30U.contains(packageName)) {
-                propsToChange.putAll(propsToChangeK30U);
             }
         }
         if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
