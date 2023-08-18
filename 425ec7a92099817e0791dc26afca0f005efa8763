@@ -34,6 +34,24 @@
       "parentUuid": "5157c4cc_660f54c1",
       "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31d18d9d_ef12c289",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1176763
+      },
+      "writtenOn": "2023-08-18T17:50:55Z",
+      "side": 1,
+      "message": "Well, in general, f2fs does not guarantee in-order store/load, since it stores directory entries into multi-layer hash tables give hash(filename). However, we do store small # of directory entries in order, depending on # of files and it\u0027s length. So, how many files along with name lengths do you expect to store?",
+      "parentUuid": "4eac75ea_e0df75e1",
+      "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
