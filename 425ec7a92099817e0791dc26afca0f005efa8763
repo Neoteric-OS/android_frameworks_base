@@ -16,6 +16,24 @@
       "message": "Actually, thinking back to the time when we wrote the importer, I seem to recall that the importer always processed files in order. While File#list explicitly says that it provides no guarantees, this makes me think that something was already sorting the files before they reached this code, and thus sorting the list again here is not useful. \n\nDo we have evidence that these files are sometimes read in the wrong order?\n\nIt looks like pixel at least uses f2fs, could that be guaranteeing the order? If not, it might be something in Android itself.",
       "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eac75ea_e0df75e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-08-18T02:48:21Z",
+      "side": 1,
+      "message": "1. Not in the field.\nWhen we adb push test files into the device.\nWe did observe the files are read in wrong order that causes NetworkStatsHistory#insertBuckets() take some time to move records.\n\n2. By looking into File#list(), it eventually calls readdir(), from man page the order depends on the filesystem. Which should be in common/fs/f2fs/dir.c\nhttps://osscs.corp.google.com/android/kernel/superproject/+/common-android-mainline:common/fs/f2fs/dir.c;l\u003d965;drc\u003d024aebcbf3e73cc03d86686719b43da1b7a83890;bpv\u003d1;bpt\u003d1\n\n+jaegeuk@ to input what is the order that f2fs list contents of a directory.",
+      "parentUuid": "5157c4cc_660f54c1",
+      "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
