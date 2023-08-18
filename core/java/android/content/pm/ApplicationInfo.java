@@ -2215,7 +2215,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         }
     }
 
-    private boolean isPackageWhitelistedForHiddenApis() {
+    private boolean isPackageAllowlistedForHiddenApis() {
         return SystemConfig.getInstance().getHiddenApiWhitelistedApps().contains(packageName);
     }
 
@@ -2324,7 +2324,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         if (isSignedWithPlatformKey()) {
             return true;
         } else if (isSystemApp() || isUpdatedSystemApp()) {
-            return usesNonSdkApi() || isPackageWhitelistedForHiddenApis();
+            return usesNonSdkApi() || isPackageAllowlistedForHiddenApis();
         } else {
             return false;
         }
@@ -2364,7 +2364,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      * @hide
      */
     public void maybeUpdateHiddenApiEnforcementPolicy(@HiddenApiEnforcementPolicy int policy) {
-        if (isPackageWhitelistedForHiddenApis()) {
+        if (isPackageAllowlistedForHiddenApis()) {
             return;
         }
         setHiddenApiEnforcementPolicy(policy);

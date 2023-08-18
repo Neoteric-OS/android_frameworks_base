@@ -1437,14 +1437,14 @@ public abstract class PackageManager {
 
     /**
      * Flag parameter for {@link #installPackage} to indicate that all restricted
-     * permissions should be whitelisted. If {@link #INSTALL_ALL_USERS}
-     * is set the restricted permissions will be whitelisted for all users, otherwise
+     * permissions should be allowlisted. If {@link #INSTALL_ALL_USERS}
+     * is set the restricted permissions will be allowlisted for all users, otherwise
      * only to the owner.
      *
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      *
      * @hide
@@ -4746,42 +4746,42 @@ public abstract class PackageManager {
     public static final String APP_DETAILS_ACTIVITY_CLASS_NAME = AppDetailsActivity.class.getName();
 
     /**
-     * Permission whitelist flag: permissions whitelisted by the system.
-     * Permissions can also be whitelisted by the installer, on upgrade, or on
+     * Permission allowlist flag: permissions allowlisted by the system.
+     * Permissions can also be allowlisted by the installer, on upgrade, or on
      * role grant.
      *
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      */
     public static final int FLAG_PERMISSION_WHITELIST_SYSTEM = 1 << 0;
 
     /**
-     * Permission whitelist flag: permissions whitelisted by the installer.
-     * Permissions can also be whitelisted by the system, on upgrade, or on role
+     * Permission allowlist flag: permissions allowlisted by the installer.
+     * Permissions can also be allowlisted by the system, on upgrade, or on role
      * grant.
      *
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      */
     public static final int FLAG_PERMISSION_WHITELIST_INSTALLER = 1 << 1;
 
     /**
-     * Permission whitelist flag: permissions whitelisted by the system
+     * Permission allowlist flag: permissions allowlisted by the system
      * when upgrading from an OS version where the permission was not
      * restricted to an OS version where the permission is restricted.
-     * Permissions can also be whitelisted by the installer, the system, or on
+     * Permissions can also be allowlisted by the installer, the system, or on
      * role grant.
      *
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      */
     public static final int FLAG_PERMISSION_WHITELIST_UPGRADE = 1 << 2;
@@ -6110,30 +6110,30 @@ public abstract class PackageManager {
             @PermissionFlags int flagValues, @NonNull UserHandle user);
 
     /**
-     * Gets the restricted permissions that have been whitelisted and the app
+     * Gets the restricted permissions that have been allowlisted and the app
      * is allowed to have them granted in their full form.
      *
      * <p> Permissions can be hard restricted which means that the app cannot hold
      * them or soft restricted where the app can hold the permission but in a weaker
      * form. Whether a permission is {@link PermissionInfo#FLAG_HARD_RESTRICTED hard
      * restricted} or {@link PermissionInfo#FLAG_SOFT_RESTRICTED soft restricted}
-     * depends on the permission declaration. Whitelisting a hard restricted permission
-     * allows for the to hold that permission and whitelisting a soft restricted
+     * depends on the permission declaration. Allowlisting a hard restricted permission
+     * allows for the to hold that permission and allowlisting a soft restricted
      * permission allows the app to hold the permission in its full, unrestricted form.
      *
      * <p><ol>There are four allowlists:
      *
-     * <li>one for cases where the system permission policy whitelists a permission
+     * <li>one for cases where the system permission policy allowlists a permission
      * This list corresponds to the{@link #FLAG_PERMISSION_WHITELIST_SYSTEM} flag.
      * Can only be accessed by pre-installed holders of a dedicated permission.
      *
-     * <li>one for cases where the system whitelists the permission when upgrading
+     * <li>one for cases where the system allowlists the permission when upgrading
      * from an OS version in which the permission was not restricted to an OS version
      * in which the permission is restricted. This list corresponds to the {@link
      * #FLAG_PERMISSION_WHITELIST_UPGRADE} flag. Can be accessed by pre-installed
      * holders of a dedicated permission or the installer on record.
      *
-     * <li>one for cases where the installer of the package whitelists a permission.
+     * <li>one for cases where the installer of the package allowlists a permission.
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_INSTALLER} flag.
      * Can be accessed by pre-installed holders of a dedicated permission or the
      * installer on record.
@@ -6142,21 +6142,21 @@ public abstract class PackageManager {
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      *
-     * @param packageName The app for which to get whitelisted permissions.
-     * @param whitelistFlag The flag to determine which whitelist to query. Only one flag
+     * @param packageName The app for which to get allowlisted permissions.
+     * @param allowlistFlag The flag to determine which whitelist to query. Only one flag
      * can be passed.s
-     * @return The whitelisted permissions that are on any of the whitelists you query for.
+     * @return The allowlisted permissions that are on any of the whitelists you query for.
      *
-     * @see #addWhitelistedRestrictedPermission(String, String, int)
-     * @see #removeWhitelistedRestrictedPermission(String, String, int)
+     * @see #addAllowlistedRestrictedPermission(String, String, int)
+     * @see #removeAllowlistedRestrictedPermission(String, String, int)
      * @see #FLAG_PERMISSION_WHITELIST_SYSTEM
      * @see #FLAG_PERMISSION_WHITELIST_UPGRADE
      * @see #FLAG_PERMISSION_WHITELIST_INSTALLER
      *
-     * @throws SecurityException if you try to access a whitelist that you have no access to.
+     * @throws SecurityException if you try to access a allowlist that you have no access to.
      */
     //@Deprecated
     @RequiresPermission(value = Manifest.permission.WHITELIST_RESTRICTED_PERMISSIONS,
@@ -6167,58 +6167,58 @@ public abstract class PackageManager {
     }
 
     /**
-     * Adds a whitelisted restricted permission for an app.
+     * Adds a allowlisted restricted permission for an app.
      *
      * <p> Permissions can be hard restricted which means that the app cannot hold
      * them or soft restricted where the app can hold the permission but in a weaker
      * form. Whether a permission is {@link PermissionInfo#FLAG_HARD_RESTRICTED hard
      * restricted} or {@link PermissionInfo#FLAG_SOFT_RESTRICTED soft restricted}
-     * depends on the permission declaration. Whitelisting a hard restricted permission
-     * allows for the to hold that permission and whitelisting a soft restricted
+     * depends on the permission declaration. Allowlisting a hard restricted permission
+     * allows for the to hold that permission and allowlisting a soft restricted
      * permission allows the app to hold the permission in its full, unrestricted form.
      *
-     * <p><ol>There are four whitelists:
+     * <p><ol>There are four allowlists:
      *
-     * <li>one for cases where the system permission policy whitelists a permission
+     * <li>one for cases where the system permission policy allowlists a permission
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_SYSTEM} flag.
      * Can only be modified by pre-installed holders of a dedicated permission.
      *
-     * <li>one for cases where the system whitelists the permission when upgrading
+     * <li>one for cases where the system allowlists the permission when upgrading
      * from an OS version in which the permission was not restricted to an OS version
      * in which the permission is restricted. This list corresponds to the {@link
      * #FLAG_PERMISSION_WHITELIST_UPGRADE} flag. Can be modified by pre-installed
      * holders of a dedicated permission. The installer on record can only remove
-     * permissions from this whitelist.
+     * permissions from this allowlist.
      *
-     * <li>one for cases where the installer of the package whitelists a permission.
+     * <li>one for cases where the installer of the package allowlists a permission.
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_INSTALLER} flag.
      * Can be modified by pre-installed holders of a dedicated permission or the installer
      * on record.
      * </ol>
      *
-     * <p>You need to specify the whitelists for which to set the whitelisted permissions
-     * which will clear the previous whitelisted permissions and replace them with the
+     * <p>You need to specify the allowlists for which to set the whitelisted permissions
+     * which will clear the previous allowlisted permissions and replace them with the
      * provided ones.
      *
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      *
-     * @param packageName The app for which to get whitelisted permissions.
-     * @param permName The whitelisted permission to add.
-     * @param whitelistFlags The whitelists to which to add. Passing multiple flags
-     * updates all specified whitelists.
-     * @return Whether the permission was added to the whitelist.
+     * @param packageName The app for which to get allowlisted permissions.
+     * @param permName The allowlisted permission to add.
+     * @param allowlistFlags The whitelists to which to add. Passing multiple flags
+     * updates all specified allowlists.
+     * @return Whether the permission was added to the allowlist.
      *
-     * @see #getWhitelistedRestrictedPermissions(String, int)
-     * @see #removeWhitelistedRestrictedPermission(String, String, int)
+     * @see #getAllowlistedRestrictedPermissions(String, int)
+     * @see #removeAllowlistedRestrictedPermission(String, String, int)
      * @see #FLAG_PERMISSION_WHITELIST_SYSTEM
      * @see #FLAG_PERMISSION_WHITELIST_UPGRADE
      * @see #FLAG_PERMISSION_WHITELIST_INSTALLER
      *
-     * @throws SecurityException if you try to modify a whitelist that you have no access to.
+     * @throws SecurityException if you try to modify a allowlist that you have no access to.
      */
     //@Deprecated
     @RequiresPermission(value = Manifest.permission.WHITELIST_RESTRICTED_PERMISSIONS,
@@ -6229,30 +6229,30 @@ public abstract class PackageManager {
     }
 
     /**
-     * Removes a whitelisted restricted permission for an app.
+     * Removes a allowlisted restricted permission for an app.
      *
      * <p> Permissions can be hard restricted which means that the app cannot hold
      * them or soft restricted where the app can hold the permission but in a weaker
      * form. Whether a permission is {@link PermissionInfo#FLAG_HARD_RESTRICTED hard
      * restricted} or {@link PermissionInfo#FLAG_SOFT_RESTRICTED soft restricted}
-     * depends on the permission declaration. Whitelisting a hard restricted permission
-     * allows for the to hold that permission and whitelisting a soft restricted
+     * depends on the permission declaration. Allowlisting a hard restricted permission
+     * allows for the to hold that permission and allowlisting a soft restricted
      * permission allows the app to hold the permission in its full, unrestricted form.
      *
-     * <p><ol>There are four whitelists:
+     * <p><ol>There are four allowlists:
      *
-     * <li>one for cases where the system permission policy whitelists a permission
+     * <li>one for cases where the system permission policy allowlists a permission
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_SYSTEM} flag.
      * Can only be modified by pre-installed holders of a dedicated permission.
      *
-     * <li>one for cases where the system whitelists the permission when upgrading
+     * <li>one for cases where the system allowlists the permission when upgrading
      * from an OS version in which the permission was not restricted to an OS version
      * in which the permission is restricted. This list corresponds to the {@link
      * #FLAG_PERMISSION_WHITELIST_UPGRADE} flag. Can be modified by pre-installed
      * holders of a dedicated permission. The installer on record can only remove
-     * permissions from this whitelist.
+     * permissions from this allowlist.
      *
-     * <li>one for cases where the installer of the package whitelists a permission.
+     * <li>one for cases where the installer of the package allowlists a permission.
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_INSTALLER} flag.
      * Can be modified by pre-installed holders of a dedicated permission or the installer
      * on record.
@@ -6265,29 +6265,29 @@ public abstract class PackageManager {
      * permissions from this allowlist.
      * </ol>
      *
-     * <p>You need to specify the whitelists for which to set the whitelisted permissions
-     * which will clear the previous whitelisted permissions and replace them with the
+     * <p>You need to specify the allowlists for which to set the whitelisted permissions
+     * which will clear the previous allowlisted permissions and replace them with the
      * provided ones.
      *
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      *
-     * @param packageName The app for which to get whitelisted permissions.
-     * @param permName The whitelisted permission to remove.
-     * @param whitelistFlags The whitelists from which to remove. Passing multiple flags
-     * updates all specified whitelists.
-     * @return Whether the permission was removed from the whitelist.
+     * @param packageName The app for which to get allowlisted permissions.
+     * @param permName The allowlisted permission to remove.
+     * @param allowlistFlags The whitelists from which to remove. Passing multiple flags
+     * updates all specified allowlists.
+     * @return Whether the permission was removed from the allowlist.
      *
-     * @see #getWhitelistedRestrictedPermissions(String, int)
-     * @see #addWhitelistedRestrictedPermission(String, String, int)
+     * @see #getAllowlistedRestrictedPermissions(String, int)
+     * @see #addAllowlistedRestrictedPermission(String, String, int)
      * @see #FLAG_PERMISSION_WHITELIST_SYSTEM
      * @see #FLAG_PERMISSION_WHITELIST_UPGRADE
      * @see #FLAG_PERMISSION_WHITELIST_INSTALLER
      *
-     * @throws SecurityException if you try to modify a whitelist that you have no access to.
+     * @throws SecurityException if you try to modify a allowlist that you have no access to.
      */
     //@Deprecated
     @RequiresPermission(value = Manifest.permission.WHITELIST_RESTRICTED_PERMISSIONS,
@@ -6303,22 +6303,22 @@ public abstract class PackageManager {
      *
      * Only the installer on record that installed the given package is allowed to call this.
      *
-     * Packages start in whitelisted state, and it is the installer's responsibility to
-     * un-whitelist the packages it installs, unless auto-revoking permissions from that package
+     * Packages start in allowlisted state, and it is the installer's responsibility to
+     * un-allowlist the packages it installs, unless auto-revoking permissions from that package
      * would cause breakages beyond having to re-request the permission(s).
      *
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      *
      * @param packageName The app for which to set exemption.
-     * @param whitelisted Whether the app should be whitelisted.
+     * @param allowlisted Whether the app should be allowlisted.
      *
      * @return whether any change took effect.
      *
-     * @see #isAutoRevokeWhitelisted
+     * @see #isAutoRevokeAllowlisted
      *
      * @throws SecurityException if you you have no access to modify this.
      */
@@ -6339,14 +6339,14 @@ public abstract class PackageManager {
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      *
      * @param packageName The app for which to set exemption.
      *
-     * @return Whether the app is whitelisted.
+     * @return Whether the app is allowlisted.
      *
-     * @see #setAutoRevokeWhitelisted
+     * @see #setAutoRevokeAllowlisted
      *
      * @throws SecurityException if you you have no access to this.
      */
@@ -10203,10 +10203,10 @@ public abstract class PackageManager {
      * <p>
      * <strong>Note: </strong>In retrospect it would have been preferred to use
      * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
+     * refrain from using the term "allowlist".
      * </p>
      *
-     * @return whether this package is whitelisted from having its runtime permission be
+     * @return whether this package is allowlisted from having its runtime permission be
      *         auto-revoked if unused for an extended period of time.
      */
     public boolean isAutoRevokeWhitelisted() {

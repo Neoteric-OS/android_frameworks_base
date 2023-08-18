@@ -2019,8 +2019,8 @@ public class PackageInstaller {
          * on the {@link PackageManager}. Only soft or hard restricted permissions on the current
          * Android version are supported and any invalid entries will be removed.
          *
-         * @see PackageManager#addWhitelistedRestrictedPermission(String, String, int)
-         * @see PackageManager#removeWhitelistedRestrictedPermission(String, String, int)
+         * @see PackageManager#addAllowlistedRestrictedPermission(String, String, int)
+         * @see PackageManager#removeAllowlistedRestrictedPermission(String, String, int)
          */
         public void setWhitelistedRestrictedPermissions(@Nullable Set<String> permissions) {
             if (permissions == RESTRICTED_PERMISSIONS_ALL) {

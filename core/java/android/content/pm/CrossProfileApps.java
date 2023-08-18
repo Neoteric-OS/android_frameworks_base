@@ -485,7 +485,7 @@ public class CrossProfileApps {
      *
      * <p>If other changes could have affected the app's ability to interact across profiles, as
      * defined by the return value of {@link #canInteractAcrossProfiles()}, such as changes to the
-     * admin or OEM consent whitelists, then {@link #resetInteractAcrossProfilesAppOps(Collection,
+     * admin or OEM consent allowlists, then {@link #resetInteractAcrossProfilesAppOps(Collection,
      * Set)} should be used.
      *
      * <p>If the caller does not have the {@link android.Manifest.permission
@@ -555,7 +555,7 @@ public class CrossProfileApps {
      *
      * <p>This method should be used whenever an app's ability to interact across profiles could
      * have changed as a result of non-user actions, such as changes to admin or OEM consent
-     * whitelists.
+     * allowlists.
      *
      * <p>If the caller does not have the {@link android.Manifest.permission
      * #CONFIGURE_INTERACT_ACROSS_PROFILES} permission, then they must have the permissions that
