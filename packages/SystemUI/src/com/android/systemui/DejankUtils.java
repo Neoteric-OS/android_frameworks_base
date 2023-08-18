@@ -195,7 +195,7 @@ public class DejankUtils {
     }
 
     /**
-     * @see #whitelistIpcs(Runnable)
+     * @see #allowlistIpcs(Runnable)
      */
     @MainThread
     public static <T> T whitelistIpcs(Supplier<T> supplier) {
