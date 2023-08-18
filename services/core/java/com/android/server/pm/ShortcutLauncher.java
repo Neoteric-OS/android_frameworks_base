@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 /**
  * Launcher information used by {@link ShortcutService}.
@@ -240,8 +241,10 @@ class ShortcutLauncher extends ShortcutPackageItem {
         ShortcutService.writeAttr(out, ATTR_LAUNCHER_USER_ID, getPackageUserId());
         getPackageInfo().saveToXml(mShortcutUser.mService, out, forBackup);
 
-        for (int i = 0; i < size; i++) {
-            final PackageWithUser pu = mPinnedShortcuts.keyAt(i);
+        final Iterator<ArrayMap.Entry<PackageWithUser, ArraySet<String>>> itr = mPinnedShortcuts.entrySet().iterator();
+        while(itr.hasNext()) {
+            ArrayMap.Entry<PackageWithUser, ArraySet<String>> entry = itr.next();
+            final PackageWithUser pu = entry.getKey();
 
             if (forBackup && (pu.userId != getOwnerUserId())) {
                 continue; // Target package on a different user, skip. (i.e. work profile)
@@ -251,7 +254,7 @@ class ShortcutLauncher extends ShortcutPackageItem {
             ShortcutService.writeAttr(out, ATTR_PACKAGE_NAME, pu.packageName);
             ShortcutService.writeAttr(out, ATTR_PACKAGE_USER_ID, pu.userId);
 
-            final ArraySet<String> ids = mPinnedShortcuts.valueAt(i);
+            final ArraySet<String> ids = entry.getValue();
             final int idSize = ids.size();
             for (int j = 0; j < idSize; j++) {
                 ShortcutService.writeTagValue(out, TAG_PIN, ids.valueAt(j));
