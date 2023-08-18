@@ -180,10 +180,10 @@ public final class BugReportHandlerUtil {
     }
 
     private static boolean isValidBugReportHandlerApp(String app) {
-        return !TextUtils.isEmpty(app) && isBugreportWhitelistedApp(app);
+        return !TextUtils.isEmpty(app) && isBugreportAllowlistedApp(app);
     }
 
-    private static boolean isBugreportWhitelistedApp(String app) {
+    private static boolean isBugreportAllowlistedApp(String app) {
         // Verify the app is bugreport-allowlisted
         final ArraySet<String> whitelistedApps = SystemConfig.getInstance()
                 .getBugreportWhitelistedPackages();
