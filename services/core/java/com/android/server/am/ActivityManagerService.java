@@ -1532,7 +1532,7 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     ActivityManagerConstants mConstants;
 
-    // Encapsulates the global setting "hidden_api_blacklist_exemptions"
+    // Encapsulates the global setting "hidden_api_denylist_exemptions"
     final HiddenApiSettings mHiddenApiBlacklist;
 
     final SdkSandboxSettings mSdkSandboxSettings;
@@ -6043,7 +6043,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             return ActivityManager.APP_START_MODE_NORMAL;
         }
 
-        // Non-persistent but background whitelisted?
+        // Non-persistent but background allowlisted?
         if (uidOnBackgroundAllowlistLOSP(uid)) {
             if (DEBUG_BACKGROUND_CHECK) {
                 Slog.i(TAG, "App " + uid + "/" + packageName
@@ -6052,7 +6052,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             return ActivityManager.APP_START_MODE_NORMAL;
         }
 
-        // Is this app on the battery whitelist?
+        // Is this app on the battery allowlist?
         if (isOnDeviceIdleAllowlistLOSP(uid, /*allowExceptIdleToo=*/ false)) {
             if (DEBUG_BACKGROUND_CHECK) {
                 Slog.i(TAG, "App " + uid + "/" + packageName
@@ -7247,14 +7247,14 @@ public class ActivityManagerService extends IActivityManager.Stub
     }
 
     /**
-     * Launches a bugreport-whitelisted app to handle a bugreport.
+     * Launches a bugreport-allowlisted app to handle a bugreport.
      *
      * <p>Allows a bug report handler app to take bugreports on the user's behalf. The handler can
      * be predefined in the config, meant to be launched with the primary user. The user can
      * override this with a different (or same) handler app on possibly a different user. This is
      * useful for capturing bug reports from work profile, for instance.
      *
-     * @return true if there is a bugreport-whitelisted app to handle a bugreport, or false
+     * @return true if there is a bugreport-allowlisted app to handle a bugreport, or false
      * otherwise.
      */
     @Override
@@ -7272,9 +7272,9 @@ public class ActivityManagerService extends IActivityManager.Stub
     }
 
     /**
-     * Get packages of bugreport-whitelisted apps to handle a bug report.
+     * Get packages of bugreport-allowlisted apps to handle a bug report.
      *
-     * @return packages of bugreport-whitelisted apps to handle a bug report.
+     * @return packages of bugreport-allowlisted apps to handle a bug report.
      */
     @Override
     public List<String> getBugreportWhitelistedPackages() {
@@ -14225,7 +14225,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (DEBUG_BROADCAST) Slog.v(TAG_BROADCAST, "Enqueueing broadcast: " + intent.getAction()
                 + " replacePending=" + replacePending);
         if (registeredReceivers != null && broadcastAllowList != null) {
-            // if a uid whitelist was provided, remove anything in the application space that wasn't
+            // if a uid allowlist was provided, remove anything in the application space that wasn't
             // in it.
             for (int i = registeredReceivers.size() - 1; i >= 0; i--) {
                 final int owningAppId = UserHandle.getAppId(registeredReceivers.get(i).owningUid);
