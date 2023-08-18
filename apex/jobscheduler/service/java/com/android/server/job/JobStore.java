@@ -157,8 +157,8 @@ public final class JobStore {
         //
         // Note that if the persisted jobs file does not exist, we proceed with the
         // assumption that the RTC is good.  This is less work and is safe: if the
-        // clock updates to sanity then we'll be saving the persisted jobs file in that
-        // correct state, which is normal; or we'll wind up writing the jobs file with
+        // clock updates to a valid value then we'll be saving the persisted jobs file in
+        // that correct state, which is normal; or we'll wind up writing the jobs file with
         // an incorrect historical timestamp.  That's fine; at worst we'll reboot with
         // a *correct* timestamp, see a bunch of overdue jobs, and run them; then
         // settle into normal operation.
@@ -930,7 +930,7 @@ public final class JobStore {
                     val = parser.getAttributeValue(null, "flex");
                     final long flexMillis = (val != null) ? Long.valueOf(val) : periodMillis;
                     jobBuilder.setPeriodic(periodMillis, flexMillis);
-                    // As a sanity check, cap the recreated run time to be no later than flex+period
+                    // As a validation check, cap the recreated run time to be no later than flex+period
                     // from now. This is the latest the periodic could be pushed out. This could
                     // happen if the periodic ran early (at flex time before period), and then the
                     // device rebooted.

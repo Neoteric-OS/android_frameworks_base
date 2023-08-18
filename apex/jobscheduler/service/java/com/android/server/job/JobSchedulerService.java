@@ -1605,7 +1605,7 @@ public class JobSchedulerService extends com.android.server.SystemService
         @Override
         public void onReceive(Context context, Intent intent) {
             if (Intent.ACTION_TIME_CHANGED.equals(intent.getAction())) {
-                // When we reach clock sanity, recalculate the temporal windows
+                // When we reach a valid clock state, recalculate the temporal windows
                 // of all affected jobs.
                 if (mJobs.clockNowValidToInflate(sSystemClock.millis())) {
                     Slog.i(TAG, "RTC now valid; recalculating persisted job windows");

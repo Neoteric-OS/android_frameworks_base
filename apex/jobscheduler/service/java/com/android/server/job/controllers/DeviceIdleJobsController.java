@@ -47,7 +47,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
- * When device is dozing, set constraint for all jobs, except whitelisted apps, as not satisfied.
+ * When device is dozing, set constraint for all jobs, except allowlisted apps, as not satisfied.
  * When device is not dozing, set constraint for all jobs as satisfied.
  */
 public final class DeviceIdleJobsController extends StateController {
@@ -61,7 +61,7 @@ public final class DeviceIdleJobsController extends StateController {
 
     /**
      * These are jobs added with a special flag to indicate that they should be exempted from doze
-     * when the app is temp whitelisted or in the foreground.
+     * when the app is temp allowlisted or in the foreground.
      */
     private final ArraySet<JobStatus> mAllowInIdleJobs;
     private final SparseBooleanArray mForegroundUids = new SparseBooleanArray();
@@ -193,7 +193,7 @@ public final class DeviceIdleJobsController extends StateController {
     }
 
     /**
-     * Checks if the given job's scheduling app id exists in the device idle user whitelist.
+     * Checks if the given job's scheduling app id exists in the device idle user allowlist.
      */
     boolean isWhitelistedLocked(JobStatus job) {
         return Arrays.binarySearch(mDeviceIdleWhitelistAppIds,
@@ -201,7 +201,7 @@ public final class DeviceIdleJobsController extends StateController {
     }
 
     /**
-     * Checks if the given job's scheduling app id exists in the device idle temp whitelist.
+     * Checks if the given job's scheduling app id exists in the device idle temp allowlist.
      */
     boolean isTempWhitelistedLocked(JobStatus job) {
         return ArrayUtils.contains(mPowerSaveTempWhitelistAppIds,

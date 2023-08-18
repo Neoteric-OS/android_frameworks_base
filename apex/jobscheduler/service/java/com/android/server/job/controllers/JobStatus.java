@@ -266,7 +266,7 @@ public final class JobStatus {
     private boolean mHasMediaBackupExemption;
     private final boolean mHasExemptedMediaUrisOnly;
 
-    // Set to true if doze constraint was satisfied due to app being whitelisted.
+    // Set to true if doze constraint was satisfied due to app being allowlisted.
     boolean appHasDozeExemption;
 
     // Set to true when the app is "active" per AppStateTracker
