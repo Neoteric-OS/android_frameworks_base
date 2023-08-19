@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d38cd81b_d884c25b",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3340,
+      "author": {
+        "id": 2025641
+      },
+      "writtenOn": "2023-08-19T06:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c63ecf3f_40391367",
+      "range": {
+        "startLine": 3340,
+        "startChar": 8,
+        "endLine": 3340,
+        "endChar": 15
+      },
+      "revId": "2eb1c1b0cee9da1534a95ffe9051742b97b805b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d81f82c_bf71c489",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-08-18T22:37:45Z",
       "side": 1,
       "message": "Validate",
+      "range": {
+        "startLine": 2238,
+        "startChar": 11,
+        "endLine": 2238,
+        "endChar": 24
+      },
+      "revId": "2eb1c1b0cee9da1534a95ffe9051742b97b805b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae621e96_d73e2cd4",
+        "filename": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2238,
+      "author": {
+        "id": 2025641
+      },
+      "writtenOn": "2023-08-19T06:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d81f82c_bf71c489",
       "range": {
         "startLine": 2238,
         "startChar": 11,
