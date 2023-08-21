@@ -144,7 +144,7 @@ final class ContentCapturePerUserService
             if (mMaster.debug) Slog.d(TAG, "updateRemoteService(): destroying old remote service");
             mRemoteService.destroy();
             mRemoteService = null;
-            resetContentCaptureWhitelistLocked();
+            resetContentCaptureAllowlistLocked();
         }
 
         // Updates the component name
@@ -611,7 +611,7 @@ final class ContentCapturePerUserService
      * Resets the content capture allowlist.
      */
     @GuardedBy("mLock")
-    private void resetContentCaptureWhitelistLocked() {
+    private void resetContentCaptureAllowlistLocked() {
         if (mMaster.verbose) {
             Slog.v(TAG, "resetting content capture whitelist");
         }
