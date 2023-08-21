@@ -27,6 +27,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
 import android.hardware.security.keymint.DeviceInfo;
 import android.hardware.security.keymint.IRemotelyProvisionedComponent;
 import android.hardware.security.keymint.MacedPublicKey;
@@ -35,8 +36,10 @@ import android.hardware.security.keymint.RpcHardwareInfo;
 import android.os.Binder;
 import android.os.FileUtils;
 
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -48,6 +51,8 @@ import java.util.Map;
 
 @RunWith(AndroidJUnit4.class)
 public class RemoteProvisioningShellCommandTest {
+
+    private Context mContext;
 
     private static class Injector extends RemoteProvisioningShellCommand.Injector {
 
@@ -111,9 +116,14 @@ public class RemoteProvisioningShellCommandTest {
                 code, FileUtils.readTextFile(out, 0, null), FileUtils.readTextFile(err, 0, null));
     }
 
+    @Before
+    public void setUp() {
+        mContext = ApplicationProvider.getApplicationContext();
+    }
+
     @Test
     public void list_zeroInstances() throws Exception {
-        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(
+        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(mContext,
                 new Injector(Map.of()));
         CommandResult res = exec(cmd, new String[] {"list"});
         assertThat(res.getErr()).isEmpty();
@@ -124,7 +134,7 @@ public class RemoteProvisioningShellCommandTest {
 
     @Test
     public void list_oneInstances() throws Exception {
-        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(
+        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(mContext,
                 new Injector(Map.of("default", mock(IRemotelyProvisionedComponent.class))));
         CommandResult res = exec(cmd, new String[] {"list"});
         assertThat(res.getErr()).isEmpty();
@@ -134,10 +144,10 @@ public class RemoteProvisioningShellCommandTest {
 
     @Test
     public void list_twoInstances() throws Exception {
-        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(
+        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(mContext,
                 new Injector(Map.of(
-                       "default", mock(IRemotelyProvisionedComponent.class),
-                       "strongbox", mock(IRemotelyProvisionedComponent.class))));
+                        "default", mock(IRemotelyProvisionedComponent.class),
+                        "strongbox", mock(IRemotelyProvisionedComponent.class))));
         CommandResult res = exec(cmd, new String[] {"list"});
         assertThat(res.getErr()).isEmpty();
         assertThat(res.getCode()).isEqualTo(0);
@@ -158,7 +168,7 @@ public class RemoteProvisioningShellCommandTest {
         }).when(defaultMock).generateCertificateRequest(
                 anyBoolean(), any(), any(), any(), any(), any());
 
-        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(
+        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(mContext,
                 new Injector(Map.of("default", defaultMock)));
         CommandResult res = exec(cmd, new String[] {
                 "csr", "--challenge", "dGVzdHRlc3R0ZXN0dGVzdA==", "default"});
@@ -189,7 +199,7 @@ public class RemoteProvisioningShellCommandTest {
         }).when(defaultMock).generateCertificateRequest(
                 anyBoolean(), any(), any(), any(), any(), any());
 
-        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(
+        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(mContext,
                 new Injector(Map.of("default", defaultMock)));
         CommandResult res = exec(cmd, new String[] {
                 "csr", "--challenge", "dGVzdHRlc3R0ZXN0dGVzdA==", "default"});
@@ -215,7 +225,7 @@ public class RemoteProvisioningShellCommandTest {
         when(defaultMock.generateCertificateRequestV2(any(), any()))
             .thenReturn(new byte[] {0x68, 0x65, 0x6c, 0x6c, 0x6f});
 
-        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(
+        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(mContext,
                 new Injector(Map.of("default", defaultMock)));
         CommandResult res = exec(cmd, new String[] {"csr", "default"});
         verify(defaultMock).generateCertificateRequestV2(new MacedPublicKey[0], new byte[0]);
@@ -233,7 +243,7 @@ public class RemoteProvisioningShellCommandTest {
         when(defaultMock.generateCertificateRequestV2(any(), any()))
             .thenReturn(new byte[] {0x68, 0x69});
 
-        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(
+        RemoteProvisioningShellCommand cmd = new RemoteProvisioningShellCommand(mContext,
                 new Injector(Map.of("default", defaultMock)));
         CommandResult res = exec(cmd, new String[] {"csr", "--challenge", "dHJpYWw=", "default"});
         verify(defaultMock).generateCertificateRequestV2(

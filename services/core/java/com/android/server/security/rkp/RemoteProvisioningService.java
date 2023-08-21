@@ -105,14 +105,14 @@ public class RemoteProvisioningService extends SystemService {
         @Override
         protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
             if (!DumpUtils.checkDumpPermission(getContext(), TAG, pw)) return;
-            new RemoteProvisioningShellCommand().dump(pw);
+            new RemoteProvisioningShellCommand(getContext()).dump(pw);
         }
 
         @Override
         public int handleShellCommand(ParcelFileDescriptor in, ParcelFileDescriptor out,
                 ParcelFileDescriptor err, String[] args) {
-            return new RemoteProvisioningShellCommand().exec(this, in.getFileDescriptor(),
-                    out.getFileDescriptor(), err.getFileDescriptor(), args);
+            return new RemoteProvisioningShellCommand(getContext()).exec(this,
+                    in.getFileDescriptor(), out.getFileDescriptor(), err.getFileDescriptor(), args);
         }
     }
 }
