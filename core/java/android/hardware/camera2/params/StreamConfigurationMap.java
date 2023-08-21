@@ -465,8 +465,6 @@ public final class StreamConfigurationMap {
      * Recommended for recording video (simple to use)
      * <li>{@link android.media.MediaCodec} -
      * Recommended for recording video (more complicated to use, with more flexibility)
-     * <li>{@link android.renderscript.Allocation} -
-     * Recommended for image processing with {@link android.renderscript RenderScript}
      * <li>{@link android.view.SurfaceHolder} -
      * Recommended for low-power camera preview with {@link android.view.SurfaceView}
      * <li>{@link android.graphics.SurfaceTexture} -
@@ -498,8 +496,6 @@ public final class StreamConfigurationMap {
         } else if (klass == android.media.MediaRecorder.class) {
             return true;
         } else if (klass == android.media.MediaCodec.class) {
-            return true;
-        } else if (klass == android.renderscript.Allocation.class) {
             return true;
         } else if (klass == android.view.SurfaceHolder.class) {
             return true;
