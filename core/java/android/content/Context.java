@@ -3934,6 +3934,7 @@ public abstract class Context {
             //@hide: SAFETY_CENTER_SERVICE,
             DISPLAY_HASH_SERVICE,
             VIRTUALIZATION_SERVICE,
+            THREAD_NETWORK_SERVICE,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ServiceName {}
@@ -6093,6 +6094,20 @@ public abstract class Context {
      */
     @SystemApi
     public static final String VIRTUALIZATION_SERVICE = "virtualization";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.net.thread.ThreadNetworkManager}.
+     *
+     * <p>On devices without {@link PackageManager#FEATURE_THREAD_NETWORK} system feature
+     * the {@link #getSystemService(String)} will return {@code null}.
+     *
+     * @see #getSystemService(String)
+     * @see android.net.thread.ThreadNetworkManager
+     * @hide
+     */
+    @SystemApi
+    public static final String THREAD_NETWORK_SERVICE = "thread_network";
 
     /**
      * Determine whether the given permission is allowed for a particular
