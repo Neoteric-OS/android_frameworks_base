@@ -22,6 +22,30 @@
       },
       "revId": "0abeb9765523524e75c5c531e6aec1a59758b888",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d63e015f_f0463db4",
+        "filename": "services/core/java/com/android/server/CertBlacklister.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 2025641
+      },
+      "writtenOn": "2023-08-21T16:37:20Z",
+      "side": 1,
+      "message": "Done -- also fixed errenously edited class name.",
+      "parentUuid": "c211e950_0e685b3f",
+      "range": {
+        "startLine": 34,
+        "startChar": 75,
+        "endLine": 34,
+        "endChar": 85
+      },
+      "revId": "0abeb9765523524e75c5c531e6aec1a59758b888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
