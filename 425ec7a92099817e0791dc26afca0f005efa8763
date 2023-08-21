@@ -70,6 +70,24 @@
       "parentUuid": "31d18d9d_ef12c289",
       "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c18e439f_48602f68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1176763
+      },
+      "writtenOn": "2023-08-21T19:11:00Z",
+      "side": 1,
+      "message": "In that case, I believe all the directory entries will be embedded in a single directory metadata. IOWs, they\u0027re sequentially stored and loaded.",
+      "parentUuid": "18a94ccd_c441649f",
+      "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
