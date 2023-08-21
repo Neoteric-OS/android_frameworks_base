@@ -3296,13 +3296,6 @@ public class Vpn {
                         }
                         agentConnect(this::onValidationStatus);
                         return; // Link properties are already sent.
-                    } else {
-                        // Underlying networks also set in agentConnect()
-                        doSetUnderlyingNetworks(networkAgent, Collections.singletonList(network));
-                        mNetworkCapabilities =
-                                new NetworkCapabilities.Builder(mNetworkCapabilities)
-                                        .setUnderlyingNetworks(Collections.singletonList(network))
-                                        .build();
                     }
 
                     lp = makeLinkProperties(); // Accesses VPN instance fields; must be locked
@@ -3384,8 +3377,6 @@ public class Vpn {
 
                     final LinkProperties oldLp = makeLinkProperties();
 
-                    final boolean underlyingNetworkHasChanged =
-                            !Arrays.equals(mConfig.underlyingNetworks, new Network[]{network});
                     mConfig.underlyingNetworks = new Network[] {network};
                     mConfig.mtu = calculateVpnMtu();
 
@@ -3417,18 +3408,9 @@ public class Vpn {
                                     removed.getAddress(), removed.getPrefixLength());
                         }
                     } else {
-                        // Put below 3 updates into else block is because agentConnect() will do
-                        // those things, so there is no need to do the redundant work.
+                        // Put below update into else block is because agentConnect() will do
+                        // the same things, so there is no need to do the redundant work.
                         if (!newLp.equals(oldLp)) doSendLinkProperties(mNetworkAgent, newLp);
-                        if (underlyingNetworkHasChanged) {
-                            mNetworkCapabilities =
-                                    new NetworkCapabilities.Builder(mNetworkCapabilities)
-                                            .setUnderlyingNetworks(
-                                                    Collections.singletonList(network))
-                                            .build();
-                            doSetUnderlyingNetworks(mNetworkAgent,
-                                    Collections.singletonList(network));
-                        }
                     }
                 }
 
@@ -3556,6 +3538,20 @@ public class Vpn {
             if (underlyingNetwork == null) {
                 Log.d(TAG, "There is no active network for starting an IKE session");
                 return;
+            }
+
+            final List<Network> networks = Collections.singletonList(underlyingNetwork);
+            // Update network capabilities if underlying network is changed.
+            if (!networks.equals(mNetworkCapabilities.getUnderlyingNetworks())) {
+                mNetworkCapabilities =
+                        new NetworkCapabilities.Builder(mNetworkCapabilities)
+                                .setUnderlyingNetworks(networks)
+                                .build();
+                // Update the underlying network change because the networkCapabilities will be
+                // updated when a new networkAgent is connected if mNetworkAgent is null here.
+                if (mNetworkAgent != null) {
+                    doSetUnderlyingNetworks(mNetworkAgent, networks);
+                }
             }
 
             if (maybeMigrateIkeSessionAndUpdateVpnTransportInfo(underlyingNetwork)) return;
