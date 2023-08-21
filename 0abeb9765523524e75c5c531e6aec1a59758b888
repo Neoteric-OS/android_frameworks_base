@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c211e950_0e685b3f",
+        "filename": "services/core/java/com/android/server/CertBlacklister.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2023-08-21T08:33:03Z",
+      "side": 1,
+      "message": "Looks like this should be changed too",
+      "range": {
+        "startLine": 34,
+        "startChar": 75,
+        "endLine": 34,
+        "endChar": 85
+      },
+      "revId": "0abeb9765523524e75c5c531e6aec1a59758b888",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
