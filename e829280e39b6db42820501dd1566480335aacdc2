@@ -16,6 +16,29 @@
       "message": "Have updated the code comments, please take a look if its okay",
       "revId": "e829280e39b6db42820501dd1566480335aacdc2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "123dd4a9_36c2d34a",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1960,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-21T20:39:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be done on success (`MOVE_STATUS_COPY_FINISHED`) only?",
+      "range": {
+        "startLine": 1960,
+        "startChar": 0,
+        "endLine": 1960,
+        "endChar": 77
+      },
+      "revId": "e829280e39b6db42820501dd1566480335aacdc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
