@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Changes from Qualcomm Innovation Center are provided under the following license:
- * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause-Clear
- */
-
 package com.android.systemui.qs.tiles;
 
 import android.annotation.NonNull;
@@ -69,9 +63,7 @@ import com.android.systemui.statusbar.connectivity.NetworkController;
 import com.android.systemui.statusbar.connectivity.SignalCallback;
 import com.android.systemui.statusbar.connectivity.WifiIcons;
 import com.android.systemui.statusbar.connectivity.WifiIndicators;
-import com.android.systemui.util.CarrierNameCustomization;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
-
 
 import java.io.PrintWriter;
 
@@ -99,7 +91,6 @@ public class InternetTile extends SecureLongQSTile<SignalState> {
     protected final InternetSignalCallback mSignalCallback = new InternetSignalCallback();
     private final InternetDialogFactory mInternetDialogFactory;
     final Handler mHandler;
-    private CarrierNameCustomization mCarrierNameCustomization;
     private WifiManager mWifiManager;
     protected final ActivityStarter mActivityStarter;
 
@@ -116,7 +107,6 @@ public class InternetTile extends SecureLongQSTile<SignalState> {
             NetworkController networkController,
             AccessPointController accessPointController,
             InternetDialogFactory internetDialogFactory,
-            CarrierNameCustomization carrierNameCustomization,
             KeyguardStateController keyguardStateController
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
@@ -127,7 +117,6 @@ public class InternetTile extends SecureLongQSTile<SignalState> {
         mAccessPointController = accessPointController;
         mDataController = mController.getMobileDataController();
         mController.observe(getLifecycle(), mSignalCallback);
-        mCarrierNameCustomization = carrierNameCustomization;
         mWifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
         mActivityStarter = activityStarter;
     }
@@ -427,7 +416,7 @@ public class InternetTile extends SecureLongQSTile<SignalState> {
                     mWifiInfo.mWifiSignalContentDescription = null;
                 }
             }
-            if (indicators.qsIcon != null || !indicators.isDefault) {
+            if (indicators.qsIcon != null) {
                 refreshState(mWifiInfo);
             }
         }
@@ -437,19 +426,13 @@ public class InternetTile extends SecureLongQSTile<SignalState> {
             if (DEBUG) {
                 Log.d(TAG, "setMobileDataIndicators: " + indicators);
             }
-            if (indicators.qsIcon == null || !indicators.isDefault) {
+            if (indicators.qsIcon == null) {
                 // Not data sim, don't display.
                 return;
             }
-            if (mCarrierNameCustomization.isRoamingCustomizationEnabled()
-                    && mCarrierNameCustomization.isRoaming(indicators.subId)) {
-                mCellularInfo.mDataSubscriptionName =
-                        mCarrierNameCustomization.getRoamingCarrierName(indicators.subId);
-            } else {
-                synchronized (mCellularInfo) {
-                    mCellularInfo.mDataSubscriptionName = indicators.qsDescription == null
-                        ? mController.getMobileDataNetworkName() : indicators.qsDescription;
-            }
+            synchronized (mCellularInfo) {
+                mCellularInfo.mDataSubscriptionName = indicators.qsDescription == null
+                    ? mController.getMobileDataNetworkName() : indicators.qsDescription;
                 mCellularInfo.mDataContentDescription = indicators.qsDescription != null
                     ? indicators.typeContentDescriptionHtml : null;
                 mCellularInfo.mMobileSignalIconId = indicators.qsIcon.icon;

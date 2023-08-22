@@ -71,9 +71,6 @@ import com.android.settingslib.mobile.MobileStatusTracker.SubscriptionDefaults;
 import com.android.settingslib.mobile.TelephonyIcons;
 import com.android.settingslib.net.SignalStrengthUtil;
 import com.android.systemui.R;
-import com.android.systemui.statusbar.policy.FiveGServiceClient;
-import com.android.systemui.statusbar.policy.FiveGServiceClient.FiveGServiceState;
-import com.android.systemui.statusbar.policy.FiveGServiceClient.IFiveGStateListener;
 import com.android.systemui.statusbar.pipeline.mobile.util.MobileMappingsProxy;
 import com.android.systemui.util.CarrierConfigTracker;
 
@@ -127,14 +124,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     private int mMobileStatusHistoryIndex;
 
     private int mCallState = TelephonyManager.CALL_STATE_IDLE;
-
-    /****************************SideCar****************************/
-    @VisibleForTesting
-    FiveGStateListener mFiveGStateListener;
-    @VisibleForTesting
-    FiveGServiceState mFiveGState;
-    private FiveGServiceClient mClient;
-    /**********************************************************/
 
     private final MobileStatusTracker.Callback mMobileCallback =
             new MobileStatusTracker.Callback() {
@@ -207,8 +196,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mPhone = phone;
         mDefaults = defaults;
         mSubscriptionInfo = info;
-        mFiveGStateListener = new FiveGStateListener();
-        mFiveGState = new FiveGServiceState();
         mMobileMappingsProxy = mobileMappingsProxy;
         mNetworkNameSeparator = getTextIfExists(
                 R.string.status_bar_network_name_separator).toString();
@@ -486,12 +473,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 (showDataIconInStatusBar || mConfig.alwaysShowDataRatIcon) ? dataTypeIcon : 0;
         boolean showTriangle = mCurrentState.enabled && !mCurrentState.airplaneMode;
 
-        if ( mConfig.enableRatIconEnhancement ) {
-            typeIcon = getEnhancementDataRatIcon();
-        }else if ( mConfig.enableDdsRatIconEnhancement ) {
-            typeIcon = getEnhancementDdsRatIcon();
-        }
-
         MobileIconGroup vowifiIconGroup = getVowifiIconGroup();
         if (mConfig.showVowifiIcon && vowifiIconGroup != null) {
             typeIcon = vowifiIconGroup.dataType;
@@ -651,36 +632,11 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mCurrentState.connected = mCurrentState.isInService();
         if (mCurrentState.connected) {
             mCurrentState.level = getSignalLevel(mCurrentState.signalStrength);
-            if (mConfig.showRsrpSignalLevelforLTE) {
-                 if (DEBUG) {
-                     Log.d(mTag, "updateTelephony CS:" + mCurrentState.getVoiceNetworkType()
-                             + "/" + TelephonyManager.getNetworkTypeName(
-                             mCurrentState.getVoiceNetworkType())
-                             + ", PS:" + mCurrentState.getDataNetworkType()
-                             + "/"+ TelephonyManager.getNetworkTypeName(
-                             mCurrentState.getDataNetworkType()));
-                 }
-                 int dataType = mCurrentState.getDataNetworkType();
-                 if (dataType == TelephonyManager.NETWORK_TYPE_LTE ||
-                         dataType == TelephonyManager.NETWORK_TYPE_LTE_CA) {
-                     mCurrentState.level = getAlternateLteLevel(mCurrentState.signalStrength);
-                 } else if (dataType == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
-                     int voiceType = mCurrentState.getVoiceNetworkType();
-                     if (voiceType == TelephonyManager.NETWORK_TYPE_LTE ||
-                             voiceType == TelephonyManager.NETWORK_TYPE_LTE_CA) {
-                         mCurrentState.level = getAlternateLteLevel(mCurrentState.signalStrength);
-                     }
-                 }
-            }
         }
 
         mCurrentState.setCarrierId(mPhone.getSimCarrierId());
         String iconKey = mMobileMappingsProxy.getIconKey(mCurrentState.telephonyDisplayInfo);
-        //Modem has centralized logic to display 5G icon based on carrier requirements
-        //For 5G icon display, only query NrIconType reported by modem
-        if (mFiveGState.isNrIconTypeValid()) {
-            mCurrentState.iconGroup = mFiveGState.getIconGroup();
-        } else if (mNetworkToIconLookup.get(iconKey) != null) {
+        if (mNetworkToIconLookup.get(iconKey) != null) {
             mCurrentState.iconGroup = mNetworkToIconLookup.get(iconKey);
         } else {
             mCurrentState.iconGroup = mDefaultIcons;
@@ -713,19 +669,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                 && !TextUtils.isEmpty(mCurrentState.getOperatorAlphaShort())) {
             mCurrentState.networkNameData = mCurrentState.getOperatorAlphaShort();
         }
-
-        if (mConfig.alwaysShowNetworkTypeIcon) {
-            if (!mCurrentState.connected) {
-                mCurrentState.iconGroup = TelephonyIcons.UNKNOWN;
-            } else if (mFiveGState.isNrIconTypeValid()) {
-                mCurrentState.iconGroup = mFiveGState.getIconGroup();
-            } else if (mNetworkToIconLookup.get(iconKey) != null) {
-                mCurrentState.iconGroup = mNetworkToIconLookup.get(iconKey);
-            }
-        }
-
-        mCurrentState.mobileDataEnabled = mPhone.isDataEnabled();
-        mCurrentState.roamingDataEnabled = mPhone.isDataRoamingEnabled();
 
         notifyListenersIfNecessary();
     }
@@ -835,46 +778,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mMobileStatusHistoryIndex = (mMobileStatusHistoryIndex + 1) % STATUS_HISTORY_SIZE;
     }
 
-    public void registerFiveGStateListener(FiveGServiceClient client) {
-        int phoneId = mSubscriptionInfo.getSimSlotIndex();
-        client.registerListener(phoneId, mFiveGStateListener);
-        mClient = client;
-    }
-
-    public void unregisterFiveGStateListener(FiveGServiceClient client) {
-        int phoneId = mSubscriptionInfo.getSimSlotIndex();
-        client.unregisterListener(phoneId);
-    }
-
-    private boolean showDataRatIcon() {
-        boolean result = false;
-        if ( mCurrentState.mobileDataEnabled ) {
-            if(mCurrentState.roamingDataEnabled || !mCurrentState.roaming) {
-                result = true;
-            }
-        }
-        return result;
-    }
-
-    private int getEnhancementDataRatIcon() {
-        return showDataRatIcon() && mCurrentState.connected ? getRatIconGroup().dataType : 0;
-    }
-
-    private int getEnhancementDdsRatIcon() {
-        return mCurrentState.dataSim && mCurrentState.connected ? getRatIconGroup().dataType : 0;
-    }
-
-    private MobileIconGroup getRatIconGroup() {
-        MobileIconGroup iconGroup = mDefaultIcons;
-	String iconKey = mMobileMappingsProxy.getIconKey(mCurrentState.telephonyDisplayInfo);
-        if (mFiveGState.isNrIconTypeValid()) {
-            iconGroup = mFiveGState.getIconGroup();
-        } else if (mNetworkToIconLookup.get(iconKey) != null) {
-            mCurrentState.iconGroup = mNetworkToIconLookup.get(iconKey);
-        }
-        return iconGroup;
-    }
-
     private boolean isVowifiAvailable() {
         return mCurrentState.voiceCapable
                 && mCurrentState.imsRegistrationTech == REGISTRATION_TECH_IWLAN;
@@ -896,9 +799,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         pw.println("  mSubscription=" + mSubscriptionInfo + ",");
         pw.println("  mInflateSignalStrengths=" + mInflateSignalStrengths + ",");
         pw.println("  isDataDisabled=" + isDataDisabled() + ",");
-        pw.println("  mConfig.enableRatIconEnhancement=" + mConfig.enableRatIconEnhancement + ",");
-        pw.println("  mConfig.enableDdsRatIconEnhancement="
-                + mConfig.enableDdsRatIconEnhancement + ",");
         pw.println("  mConfig.alwaysShowNetworkTypeIcon="
                 + mConfig.alwaysShowNetworkTypeIcon + ",");
         pw.println("  mConfig.showVowifiIcon=" +  mConfig.showVowifiIcon + ",");
@@ -919,21 +819,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                     + (mMobileStatusHistoryIndex + STATUS_HISTORY_SIZE - i) + "): "
                     + mMobileStatusHistory[i & (STATUS_HISTORY_SIZE - 1)]);
         }
-        pw.println("  mFiveGState=" + mFiveGState + ",");
-
         dumpTableData(pw);
-    }
-
-    class FiveGStateListener implements IFiveGStateListener{
-
-        public void onStateChanged(FiveGServiceState state) {
-            if (DEBUG) {
-                Log.d(mTag, "onStateChanged: state=" + state);
-            }
-            mFiveGState = state;
-            updateTelephony();
-            notifyListeners();
-        }
     }
 
     private ImsMmTelManager.CapabilityCallback mCapabilityCallback
