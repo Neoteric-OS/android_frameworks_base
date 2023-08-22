@@ -16,6 +16,29 @@
       "message": "Could you please review",
       "revId": "d9e682117d82ca5c1683eba86fdc9b642da20824",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb528ce8_83e84d1d",
+        "filename": "services/core/java/com/android/server/pm/ShortcutLauncher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-08-22T16:56:34Z",
+      "side": 1,
+      "message": "I think the correct fix should be to lock `mPinnedShortcuts` so that it\u0027s not modified by another thread during `saveToXml`",
+      "range": {
+        "startLine": 234,
+        "startChar": 25,
+        "endLine": 234,
+        "endChar": 41
+      },
+      "revId": "d9e682117d82ca5c1683eba86fdc9b642da20824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
