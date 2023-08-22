@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "87fe323f_55d6861d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2023-08-22T10:08:58Z",
+      "side": 1,
+      "message": "I don\u0027t think we are required to add flag in AOSP, having this one in AOSP because it is updating AconfigFlags.bp (aosp/2718853), and adding new folder for the setup.\n\nOtherwise, if other team updates in AOSP, there will be conflict.",
+      "parentUuid": "5ba1de5b_948f01f0",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "547ae2c378364796f3c8b2a1b78e8d60f8cb6b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8a810d14_5b6c7250",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d97e3c40_e09e0581",
+        "filename": "core/java/android/window/flags/windowing_sdk.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2023-08-22T10:08:58Z",
+      "side": 1,
+      "message": "Yes, it it the team name. See the namespace in go/android-flags-howto-onboarding",
+      "parentUuid": "c0bbd477_4f92362c",
+      "range": {
+        "startLine": 6,
+        "startChar": 16,
+        "endLine": 6,
+        "endChar": 29
+      },
+      "revId": "547ae2c378364796f3c8b2a1b78e8d60f8cb6b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35ce5324_622eea09",
@@ -77,6 +125,30 @@
       "writtenOn": "2023-08-22T09:50:39Z",
       "side": 1,
       "message": "nit: since it will be used for checking if a feature is enabled. Maybe call it `isSyncWindowConfigUpdateEnabled`?",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "547ae2c378364796f3c8b2a1b78e8d60f8cb6b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df7f8b09_9dc0bb7e",
+        "filename": "core/tests/coretests/src/android/window/flags/WindowFlagsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2023-08-22T10:08:58Z",
+      "side": 1,
+      "message": "I don\u0027t think there is a defined naming convention here, but I am following the codelab example, and how other teams name it.\nhttps://g3doc.corp.google.com/company/teams/android-core-experiments/trunk-stable/java-codegen-codelab",
+      "parentUuid": "35ce5324_622eea09",
       "range": {
         "startLine": 43,
         "startChar": 8,
