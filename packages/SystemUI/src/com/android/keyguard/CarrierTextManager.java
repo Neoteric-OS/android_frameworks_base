@@ -24,11 +24,14 @@ import android.content.res.Resources;
 import android.net.wifi.WifiManager;
 import android.telephony.ServiceState;
 import android.telephony.SubscriptionInfo;
+import android.telephony.TelephonyCallback;
 import android.telephony.TelephonyCallback.ActiveDataSubscriptionIdListener;
+import android.telephony.TelephonyDisplayInfo;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
@@ -88,7 +91,8 @@ public class CarrierTextManager {
                     if (callback != null) callback.startedGoingToSleep();
                 }
             };
-
+    private boolean mShowCustomizeName;
+    private TelephonyDisplayInfo mTelephonyDisplayInfo;
     @VisibleForTesting
     protected final KeyguardUpdateMonitorCallback mCallback = new KeyguardUpdateMonitorCallback() {
         @Override
@@ -138,6 +142,17 @@ public class CarrierTextManager {
         }
     };
 
+    private class CarrierTextManagerTelephonyCallback extends TelephonyCallback implements
+            TelephonyCallback.DisplayInfoListener {
+        @Override
+        public void onDisplayInfoChanged(@NonNull TelephonyDisplayInfo displayInfo) {
+            mTelephonyDisplayInfo = displayInfo;
+            updateCarrierText();
+        }
+    }
+
+    private final CarrierTextManagerTelephonyCallback mTelephonyCallback = new CarrierTextManagerTelephonyCallback();
+
     /**
      * The status of this lock screen. Primarily used for widgets on LockScreen.
      */
@@ -171,7 +186,8 @@ public class CarrierTextManager {
             WakefulnessLifecycle wakefulnessLifecycle,
             @Main Executor mainExecutor,
             @Background Executor bgExecutor,
-            KeyguardUpdateMonitor keyguardUpdateMonitor) {
+            KeyguardUpdateMonitor keyguardUpdateMonitor,
+	    boolean showCustomizeName) {
         mContext = context;
         mIsEmergencyCallCapable = telephonyManager.isVoiceCapable();
 
@@ -197,6 +213,7 @@ public class CarrierTextManager {
                 handleSetListening(mCarrierTextCallback);
             }
         });
+        mShowCustomizeName = showCustomizeName;
     }
 
     private TelephonyManager getTelephonyManager() {
@@ -266,6 +283,7 @@ public class CarrierTextManager {
                     mWakefulnessLifecycle.addObserver(mWakefulnessObserver);
                 });
                 mTelephonyListenerManager.addActiveDataSubscriptionIdListener(mPhoneStateListener);
+		mTelephonyManager.registerTelephonyCallback(mMainExecutor, mTelephonyCallback);
             } else {
                 // Don't listen and clear out the text when the device isn't a phone.
                 mMainExecutor.execute(() -> callback.updateCarrierInfo(
@@ -279,6 +297,7 @@ public class CarrierTextManager {
                 mWakefulnessLifecycle.removeObserver(mWakefulnessObserver);
             });
             mTelephonyListenerManager.removeActiveDataSubscriptionIdListener(mPhoneStateListener);
+	    mTelephonyManager.unregisterTelephonyCallback(mTelephonyCallback);
         }
     }
 
@@ -299,6 +318,8 @@ public class CarrierTextManager {
     protected void updateCarrierText() {
         boolean allSimsMissing = true;
         boolean anySimReadyAndInService = false;
+        boolean showCustomizeName = mShowCustomizeName || getContext().getResources().getBoolean(
+                com.android.systemui.R.bool.config_show_customize_carrier_name);
         CharSequence displayText = null;
         List<SubscriptionInfo> subs = getSubscriptionInfo();
 
@@ -320,6 +341,9 @@ public class CarrierTextManager {
             subOrderBySlot[subs.get(i).getSimSlotIndex()] = i;
             int simState = mKeyguardUpdateMonitor.getSimState(subId);
             CharSequence carrierName = subs.get(i).getCarrierName();
+	    if (showCustomizeName) {
+                carrierName = getCustomizeCarrierName(carrierName, subs.get(i));
+            }
             CharSequence carrierTextForSimState = getCarrierTextForSimState(simState, carrierName);
             if (DEBUG) {
                 Log.d(TAG, "Handling (subId=" + subId + "): " + simState + " " + carrierName);
@@ -642,6 +666,7 @@ public class CarrierTextManager {
         private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
         private boolean mShowAirplaneMode;
         private boolean mShowMissingSim;
+        private boolean mShowCustomizeName;
 
         @Inject
         public Builder(
@@ -678,12 +703,17 @@ public class CarrierTextManager {
             return this;
         }
 
+        public Builder setShowCustomizeName(boolean showCustomizeName) {
+            mShowCustomizeName = showCustomizeName;
+            return this;
+        }
+
         /** Create a CarrierTextManager. */
         public CarrierTextManager build() {
             return new CarrierTextManager(
                     mContext, mSeparator, mShowAirplaneMode, mShowMissingSim, mWifiManager,
                     mTelephonyManager, mTelephonyListenerManager, mWakefulnessLifecycle,
-                    mMainExecutor, mBgExecutor, mKeyguardUpdateMonitor);
+                    mMainExecutor, mBgExecutor, mKeyguardUpdateMonitor, mShowCustomizeName);
         }
     }
     /**
@@ -731,5 +761,92 @@ public class CarrierTextManager {
          * Notifies the View that the device finished waking up
          */
         default void finishedWakingUp() {};
+    }
+
+    private String getCustomizeCarrierName(CharSequence originCarrierName,
+                                           SubscriptionInfo sub) {
+        StringBuilder newCarrierName = new StringBuilder();
+        int networkType = getNetworkType(sub.getSubscriptionId());
+        String networkClass = networkTypeToString(networkType);
+
+        if (!TextUtils.isEmpty(originCarrierName)) {
+            String[] names = originCarrierName.toString().split(mSeparator.toString(), 2);
+            for (int j = 0; j < names.length; j++) {
+                if (!TextUtils.isEmpty(names[j])) {
+                    if (j == 0) {
+                        newCarrierName.append(names[j]);
+                        if (!TextUtils.isEmpty(networkClass) &&
+                                !names[j].endsWith(networkClass)) {
+                            newCarrierName.append(" ").append(networkClass);
+                        }
+                    } else { /* j == 1 */
+                        if (names[j].equalsIgnoreCase(names[j - 1])) {
+                            continue;
+                        }
+                        newCarrierName.append(mSeparator).append(names[j]);
+                    }
+                }
+            }
+        }
+        return newCarrierName.toString();
+    }
+
+    /**
+     * parse the string to current language.
+     *
+     * @param originalString original string
+     * @param originNamesId the id of the original string array.
+     * @param localNamesId the id of the local string keys.
+     * @return local language string
+     */
+    private String getLocalString(String originalString,
+            int originNamesId, int localNamesId) {
+        String[] origNames = getContext().getResources().getStringArray(originNamesId);
+        String[] localNames = getContext().getResources().getStringArray(localNamesId);
+        for (int i = 0; i < origNames.length; i++) {
+            if (origNames[i].equalsIgnoreCase(originalString)) {
+                return localNames[i];
+            }
+        }
+        return originalString;
+    }
+
+    private int getNetworkType(int subId) {
+        int networkType = TelephonyManager.NETWORK_TYPE_UNKNOWN;
+        ServiceState ss = mKeyguardUpdateMonitor.mServiceStates.get(subId);
+        if (ss != null && (ss.getDataRegState() == ServiceState.STATE_IN_SERVICE
+                || ss.getVoiceRegState() == ServiceState.STATE_IN_SERVICE)) {
+            networkType = ss.getDataNetworkType();
+            if (networkType == TelephonyManager.NETWORK_TYPE_IWLAN || networkType == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
+                networkType = ss.getVoiceNetworkType();
+            }
+        }
+        return networkType;
+    }
+
+    private String networkTypeToString(int networkType) {
+        boolean is5GNsa = false;
+        String data_connection_2g = "2G";
+        String rat_unknown = "";
+        if (mTelephonyDisplayInfo != null) { 
+            is5GNsa = (networkType == TelephonyManager.NETWORK_TYPE_LTE
+                    || networkType == TelephonyManager.NETWORK_TYPE_LTE_CA)
+                    && (mTelephonyDisplayInfo.getOverrideNetworkType() == TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_NR_NSA
+                    || mTelephonyDisplayInfo.getOverrideNetworkType() == TelephonyDisplayInfo.OVERRIDE_NETWORK_TYPE_NR_ADVANCED);
+        }
+        long mask = TelephonyManager.getBitMaskForNetworkType(networkType);
+        if ((mask & TelephonyManager.NETWORK_CLASS_BITMASK_2G) != 0) {
+          return data_connection_2g;
+        } else if ((mask & TelephonyManager.NETWORK_CLASS_BITMASK_3G) != 0) {
+          return mContext.getResources().getString(R.string.data_connection_3g);
+        } else if (is5GNsa) {
+          return mContext.getResources().getString(R.string.data_connection_5g);
+        } else if (networkType == TelephonyManager.NETWORK_TYPE_LTE 
+                        || networkType == TelephonyManager.NETWORK_TYPE_LTE_CA) {
+          return mContext.getResources().getString(R.string.data_connection_4g);
+        } else if (networkType == TelephonyManager.NETWORK_TYPE_NR) {
+          return mContext.getResources().getString(R.string.data_connection_5g);
+        }
+        return rat_unknown;
     }
 }
