@@ -129,6 +129,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "034871b2_19502417",
+        "filename": "core/tests/coretests/src/android/window/flags/WindowFlagsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2023-08-22T10:29:33Z",
+      "side": 1,
+      "message": "There is one:\nhttps://source.corp.google.com/h/android/platform/superproject/main/+/main:frameworks/base/core/java/android/window/OWNERS",
+      "parentUuid": "924d9350_d7080e62",
+      "revId": "547ae2c378364796f3c8b2a1b78e8d60f8cb6b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35ce5324_622eea09",
