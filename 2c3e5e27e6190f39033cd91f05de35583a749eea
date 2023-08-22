@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "178b21bd_ac0b7518",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-08-22T14:49:11Z",
+      "side": 1,
+      "message": "Change fixed up in https://r.android.com/2721353 (AOSP main branch)",
+      "revId": "2c3e5e27e6190f39033cd91f05de35583a749eea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59bb7771_050f9c1d",
