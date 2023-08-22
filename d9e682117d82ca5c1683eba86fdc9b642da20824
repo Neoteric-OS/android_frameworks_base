@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61600dbb_adb47f4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1536014
+      },
+      "writtenOn": "2023-08-22T17:46:20Z",
+      "side": 1,
+      "message": "Thanks for submission, but like Song said the right fix should be protecting mPinnedShortcuts with a synchronization lock, we will sent out a fix.",
+      "revId": "d9e682117d82ca5c1683eba86fdc9b642da20824",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb528ce8_83e84d1d",
