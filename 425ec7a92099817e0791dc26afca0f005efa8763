@@ -88,6 +88,24 @@
       "parentUuid": "18a94ccd_c441649f",
       "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "981aef71_8240c0ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-08-22T02:31:29Z",
+      "side": 1,
+      "message": "I see. Thanks for the feedback.\nHowever, IIRC I did see files were read in reverse order when local testing.\nIs there any case where the file are not listed in lexicographic order?\ne.g. store files in reverse order?\n\nHi Lorenzo,\n  For other possible future callers, as an improvement for FileRotator,\n  do we think it is good to merge this CL?",
+      "parentUuid": "c18e439f_48602f68",
+      "revId": "425ec7a92099817e0791dc26afca0f005efa8763",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
