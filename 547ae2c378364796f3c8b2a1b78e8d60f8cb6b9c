@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ba1de5b_948f01f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-08-22T09:50:39Z",
+      "side": 1,
+      "message": "For education, is there any guideline to enforce that we should add a flag in AOSP? Could it lead to leak potentially?",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "547ae2c378364796f3c8b2a1b78e8d60f8cb6b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a810d14_5b6c7250",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-08-22T09:50:39Z",
+      "side": 1,
+      "message": "Appreciate to be the pioneer of trunk stable flag! 🔥❤️💯",
+      "revId": "547ae2c378364796f3c8b2a1b78e8d60f8cb6b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0bbd477_4f92362c",
+        "filename": "core/java/android/window/flags/windowing_sdk.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-08-22T09:50:39Z",
+      "side": 1,
+      "message": "I am curious about the naming. Is `windowing_sdk` a team name? Or I think this feature is more like a wm core feature than windowing sdk.",
+      "range": {
+        "startLine": 6,
+        "startChar": 16,
+        "endLine": 6,
+        "endChar": 29
+      },
+      "revId": "547ae2c378364796f3c8b2a1b78e8d60f8cb6b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35ce5324_622eea09",
+        "filename": "core/tests/coretests/src/android/window/flags/WindowFlagsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2023-08-22T09:50:39Z",
+      "side": 1,
+      "message": "nit: since it will be used for checking if a feature is enabled. Maybe call it `isSyncWindowConfigUpdateEnabled`?",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "547ae2c378364796f3c8b2a1b78e8d60f8cb6b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
