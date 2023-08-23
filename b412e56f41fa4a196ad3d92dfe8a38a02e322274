@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ade7e6ea_1fd5bb0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2023-08-23T15:56:25Z",
+      "side": 1,
+      "message": "Remove go-link since it\u0027s not visible externally",
+      "revId": "b412e56f41fa4a196ad3d92dfe8a38a02e322274",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
