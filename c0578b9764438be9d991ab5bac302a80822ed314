@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcc94e9c_c3c91c83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1963880
+      },
+      "writtenOn": "2023-08-23T14:19:46Z",
+      "side": 1,
+      "message": "if audio server died\n行 611112: 08-23 10:04:09.530  1000  2244  5839 V AS.AudioDeviceBroker: onSetForceUse(useCase\u003c1\u003e, config\u003c10\u003e, fromA2dp\u003cfalse\u003e, eventSource\u003conAudioServerDied()\u003e)\n\npublic static final int FOR_MEDIA \u003d 1;\n\npublic static final int FORCE_NO_BT_A2DP \u003d 10;\n\n\n//this to onSetForceUse\n    /*package*/ synchronized void onAudioServerDiedRestoreA2dp() {\n        final int forMed \u003d mDeviceBroker.getBluetoothA2dpEnabled()\n                ? AudioSystem.FORCE_NONE : AudioSystem.FORCE_NO_BT_A2DP;\n        mDeviceBroker.setForceUse_Async(AudioSystem.FOR_MEDIA, forMed, \"onAudioServerDied()\");\n    }\n\n    /*package*/ boolean getBluetoothA2dpEnabled() {\n        synchronized (mDeviceStateLock) {\n            return mBluetoothA2dpEnabled;\n        }\n    }\n//where is mBluetoothA2dpEnabled change\n    /*package*/ void setBluetoothA2dpOnInt(boolean on, boolean fromA2dp, String source) {\n        // for logging only\n        final String eventSource \u003d new StringBuilder(\"setBluetoothA2dpOn(\").append(on)\n                .append(\") from u/pid:\").append(Binder.getCallingUid()).append(\"/\")\n                .append(Binder.getCallingPid()).append(\" src:\").append(source).toString();\n\n        synchronized (mDeviceStateLock) {\n            mBluetoothA2dpEnabled \u003d on;\n            mBrokerHandler.removeMessages(MSG_IIL_SET_FORCE_BT_A2DP_USE);\n            onSetForceUse(\n                    AudioSystem.FOR_MEDIA,\n                    mBluetoothA2dpEnabled ? AudioSystem.FORCE_NONE : AudioSystem.FORCE_NO_BT_A2DP,\n                    fromA2dp,\n                    eventSource);\n        }\n    }\n\nonly if makeA2dpDeviceAvailable and makeLeAudioDeviceAvailable will setBluetoothA2dpOnInt\n\nengine.cpp\n//it will select else\n            if ((getForceUse(AUDIO_POLICY_FORCE_FOR_MEDIA) !\u003d AUDIO_POLICY_FORCE_NO_BT_A2DP)) {\n                //MIUI MOD: Audio_MIUIAudioFrame\n                // Get the last connected device of wired and bluetooth a2dp\n                devices2 \u003d AudioPolicyManagerStub::getDevicesForLastConnect(this, availableOutputDevices);\n                //END Audio_MIUIAudioFrame\n            } else {\n                // Get the last connected device of wired except bluetooth a2dp\n                devices2 \u003d availableOutputDevices.getFirstDevicesFromTypes(\n                        getLastRemovableMediaDevices(GROUP_WIRED));\n            }\n\ndevice_out_group_t LastRemovableMediaDevices::getDeviceOutGroup(audio_devices_t device) const\n{\n    switch (device) {\n    case AUDIO_DEVICE_OUT_WIRED_HEADPHONE:\n    case AUDIO_DEVICE_OUT_LINE:\n    case AUDIO_DEVICE_OUT_WIRED_HEADSET:\n    case AUDIO_DEVICE_OUT_USB_HEADSET:\n    case AUDIO_DEVICE_OUT_USB_ACCESSORY:\n    case AUDIO_DEVICE_OUT_USB_DEVICE:\n    case AUDIO_DEVICE_OUT_DGTL_DOCK_HEADSET:\n        return GROUP_WIRED;\n    case AUDIO_DEVICE_OUT_BLUETOOTH_A2DP:\n    case AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES:\n    case AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_SPEAKER:\n    // TODO (b/122931261): remove when preferred device for strategy media will be used instead of\n    //  AUDIO_POLICY_FORCE_NO_BT_A2DP.\n\t//AUDIO_DEVICE_OUT_HEARING_AID属于group A2dp\n    case AUDIO_DEVICE_OUT_HEARING_AID:\n    case AUDIO_DEVICE_OUT_BLE_HEADSET:\n    case AUDIO_DEVICE_OUT_BLE_SPEAKER:\n    case AUDIO_DEVICE_OUT_BLE_BROADCAST:\n        return GROUP_BT_A2DP;\n    default:\n        return GROUP_NONE;\n    }\n}",
+      "revId": "c0578b9764438be9d991ab5bac302a80822ed314",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
