@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fed13d4c_092b513e",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 12335,
+      "author": {
+        "id": 1527754
+      },
+      "writtenOn": "2023-08-23T02:50:32Z",
+      "side": 1,
+      "message": "What kind of exceptions are we trying to catch here?\n\nThe function \"getServiceDebugInfo\" does not throw any exception.\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/ServiceManager.java;l\u003d338?q\u003dgetServiceDebugInfo%20filepath:java\u0026sq\u003d",
+      "revId": "f8eb5364e8d9d1514cff271cb5aede6157770d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
