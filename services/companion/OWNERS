@@ -1,1 +1,3 @@
 include /core/java/android/companion/OWNERS
+
+per-file Android.bp = file:/services/companion/java/com/android/server/companion/virtual/OWNERS
