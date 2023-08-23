@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33855b84_4c7fc06c",
+        "filename": "packages/WAPPushManager/tests/src/com/android/smspush/unitTests/WapPushTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2023-08-23T17:21:13Z",
+      "side": 1,
+      "message": "these are commented code. Please remove these",
+      "range": {
+        "startLine": 2240,
+        "startChar": 8,
+        "endLine": 2243,
+        "endChar": 77
+      },
+      "revId": "c85a80d44233e2c14b097d6c73d0ccf161c8b5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
