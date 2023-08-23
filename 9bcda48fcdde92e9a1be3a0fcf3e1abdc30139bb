@@ -52,6 +52,23 @@
       "parentUuid": "d2ef52aa_e6b06485",
       "revId": "9bcda48fcdde92e9a1be3a0fcf3e1abdc30139bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2b05f89_b39f36c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2023-08-23T19:00:27Z",
+      "side": 1,
+      "message": "Change looks good.\n\nCan you help giving owner vote ?",
+      "revId": "9bcda48fcdde92e9a1be3a0fcf3e1abdc30139bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
