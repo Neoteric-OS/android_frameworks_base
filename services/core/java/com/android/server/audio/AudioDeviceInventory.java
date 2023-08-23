@@ -1126,6 +1126,10 @@ public class AudioDeviceInventory {
     @GuardedBy("mDevicesLock")
     private void makeHearingAidDeviceAvailable(
             String address, String name, int streamType, String eventSource) {
+        /* Audio Policy sees Hearing Aid similar to A2DP. Let's make sure
+         * AUDIO_POLICY_FORCE_NO_BT_A2DP is not set
+         */
+        mDeviceBroker.setBluetoothA2dpOnInt(true, false /*fromA2dp*/, eventSource);
         final int hearingAidVolIndex = mDeviceBroker.getVssVolumeForDevice(streamType,
                 AudioSystem.DEVICE_OUT_HEARING_AID);
         mDeviceBroker.postSetHearingAidVolumeIndex(hearingAidVolIndex, streamType);
