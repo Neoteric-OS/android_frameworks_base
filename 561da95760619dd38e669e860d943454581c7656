@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ee332c4_350e395f",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 6562,
+      "author": {
+        "id": 1014288
+      },
+      "writtenOn": "2023-08-23T16:22:14Z",
+      "side": 1,
+      "message": "these should be the same visibility as the rest of the APIs, which is probably\n\n`@hide @TestApi @SystemApi(client\u003dandroid.annotation.SystemApi.Client.MODULE_LIBRARIES)`",
+      "range": {
+        "startLine": 6562,
+        "startChar": 10,
+        "endLine": 6562,
+        "endChar": 14
+      },
+      "revId": "561da95760619dd38e669e860d943454581c7656",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
