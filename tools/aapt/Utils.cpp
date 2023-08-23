@@ -22,7 +22,9 @@
 // to OS_PATH_SEPARATOR.
 #define RES_PATH_SEPARATOR '/'
 
-void convertToResPath(android::String8& s __attribute__((__unused__))) {
+using android::String8;
+
+void convertToResPath(String8& s __attribute__((__unused__))) {
 #if OS_PATH_SEPARATOR != RES_PATH_SEPARATOR
     size_t len = s.length();
     if (len > 0) {
@@ -33,4 +35,27 @@ void convertToResPath(android::String8& s __attribute__((__unused__))) {
         s.unlockBuffer(len);
     }
 #endif
+}
+
+String8 walkPath(const String8& path, String8* outRemains) {
+    const char* cp;
+    const char* const str = path.c_str();
+    const char* buf = str;
+
+    cp = strchr(buf, OS_PATH_SEPARATOR);
+    if (cp == buf) {
+        // don't include a leading '/'.
+        buf = buf + 1;
+        cp = strchr(buf, OS_PATH_SEPARATOR);
+    }
+
+    if (cp == nullptr) {
+        String8 res = buf != str ? String8(buf) : path;
+        if (outRemains) *outRemains = String8();
+        return res;
+    }
+
+    String8 res(buf, cp - buf);
+    if (outRemains) *outRemains = String8(cp + 1);
+    return res;
 }
