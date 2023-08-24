@@ -34,6 +34,24 @@
       "parentUuid": "fed13d4c_092b513e",
       "revId": "f8eb5364e8d9d1514cff271cb5aede6157770d52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f0bf208_90abb351",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 12335,
+      "author": {
+        "id": 1630064
+      },
+      "writtenOn": "2023-08-24T02:58:03Z",
+      "side": 1,
+      "message": "I was exploring other places, where this method to fetch pids is used.\nIn Watchdog (which also runs in the system server), they use the similar way to get the pids of required processes.\n\nFor Hidl based part only -\u003e RemoteException is checked -\u003e https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/Watchdog.java;l\u003d679 \n\nFor Aidl -\u003e they don\u0027t check any exception, so that\u0027s why I kept the code exception free.\n\nBut, yeah, I get your point, its better to use RuntimeExceptions for debugging related codes.",
+      "parentUuid": "97458652_cd1933a9",
+      "revId": "f8eb5364e8d9d1514cff271cb5aede6157770d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
