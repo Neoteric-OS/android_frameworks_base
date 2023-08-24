@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc729f10_0d67335b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-08-24T16:53:45Z",
+      "side": 1,
+      "message": "Banajit, Eric, please review.",
+      "revId": "f8eb5364e8d9d1514cff271cb5aede6157770d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fed13d4c_092b513e",
