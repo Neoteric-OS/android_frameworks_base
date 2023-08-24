@@ -33,6 +33,24 @@
       "message": "See https://g3doc.corp.google.com/company/teams/android/teampages/platform-build/code-reviews.md#exceptions",
       "revId": "655003ca4e70933fbafce2a17125ca98d6fcaf7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "551c75eb_d1b674e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2023-08-24T16:33:43Z",
+      "side": 1,
+      "message": "Looks like `per-file **.bp,**.mk \u003d hansson@google.com, joeo@google.com` are the only explicit OWNERS for this according to the OWNERS files.\n\nWith the build folks being last resort: `per-file Android.bp \u003d file:platform/build/soong:/OWNERS #{LAST_RESORT_SUGGESTION}`.\n\nAdding @joeo@google.com",
+      "parentUuid": "53d09ef2_9a262db2",
+      "revId": "655003ca4e70933fbafce2a17125ca98d6fcaf7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
