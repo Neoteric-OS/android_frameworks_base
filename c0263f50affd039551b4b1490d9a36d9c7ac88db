@@ -16,6 +16,24 @@
       "message": "I don\u0027t think I\u0027m the right reviewer here, it looks like Layer types is a rendering property so you\u0027d probably want to check with the Graphics/Rendering team.",
       "revId": "c0263f50affd039551b4b1490d9a36d9c7ac88db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36deba3f_ef38c7c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1272573
+      },
+      "writtenOn": "2023-08-24T01:02:33Z",
+      "side": 1,
+      "message": "Thanks. Could you suggest a contact? I\u0027m outside android org and the structure is a bit opaque to me; I just went with a suggested reviewer.",
+      "parentUuid": "b4a38ecc_027f4114",
+      "revId": "c0263f50affd039551b4b1490d9a36d9c7ac88db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
