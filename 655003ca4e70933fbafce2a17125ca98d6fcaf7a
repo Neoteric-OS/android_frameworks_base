@@ -16,6 +16,23 @@
       "message": "@dwillemsen@google.com for OWNERS",
       "revId": "655003ca4e70933fbafce2a17125ca98d6fcaf7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53d09ef2_9a262db2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2023-08-24T16:08:35Z",
+      "side": 1,
+      "message": "See https://g3doc.corp.google.com/company/teams/android/teampages/platform-build/code-reviews.md#exceptions",
+      "revId": "655003ca4e70933fbafce2a17125ca98d6fcaf7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
