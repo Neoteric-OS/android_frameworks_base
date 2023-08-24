@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4a38ecc_027f4114",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2023-08-24T00:51:38Z",
+      "side": 1,
+      "message": "I don\u0027t think I\u0027m the right reviewer here, it looks like Layer types is a rendering property so you\u0027d probably want to check with the Graphics/Rendering team.",
+      "revId": "c0263f50affd039551b4b1490d9a36d9c7ac88db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
