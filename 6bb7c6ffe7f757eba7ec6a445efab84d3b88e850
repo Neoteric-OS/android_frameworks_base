@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac0dd46b_f2554dc6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965558
+      },
+      "writtenOn": "2023-08-24T06:17:21Z",
+      "side": 1,
+      "message": "Hi,Zimuzo Ezeozue\n     The link below is a description of the problem\n     https://partnerissuetracker.corp.google.com/issues/294190887\nThanks",
+      "revId": "6bb7c6ffe7f757eba7ec6a445efab84d3b88e850",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
