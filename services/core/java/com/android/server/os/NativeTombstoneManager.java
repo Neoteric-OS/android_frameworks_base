@@ -41,14 +41,13 @@ import android.system.Os;
 import android.system.StructStat;
 import android.util.Slog;
 import android.util.SparseArray;
-import android.util.proto.ProtoInputStream;
-import android.util.proto.ProtoParseException;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.server.BootReceiver;
 import com.android.server.ServiceThread;
 import com.android.server.os.TombstoneProtos.Cause;
 import com.android.server.os.TombstoneProtos.Tombstone;
+import com.android.server.os.protobuf.CodedInputStream;
 
 import libcore.io.IoUtils;
 
@@ -128,18 +127,21 @@ public final class NativeTombstoneManager {
             return;
         }
 
-        String processName = "UNKNOWN";
         final boolean isProtoFile = filename.endsWith(".pb");
-        File protoPath = isProtoFile ? path : new File(path.getAbsolutePath() + ".pb");
-
-        Optional<TombstoneFile> parsedTombstone = handleProtoTombstone(protoPath, isProtoFile);
-        if (parsedTombstone.isPresent()) {
-            processName = parsedTombstone.get().getProcessName();
+        if (!isProtoFile) {
+            return;
         }
-        BootReceiver.addTombstoneToDropBox(mContext, path, isProtoFile, processName, mTmpFileLock);
+
+        Optional<ParsedTombstone> parsedTombstone = handleProtoTombstone(path, true);
+        if (parsedTombstone.isPresent()) {
+            BootReceiver.addTombstoneToDropBox(
+                    mContext, path, parsedTombstone.get().getTombstone(),
+                    parsedTombstone.get().getProcessName(), mTmpFileLock);
+        }
     }
 
-    private Optional<TombstoneFile> handleProtoTombstone(File path, boolean addToList) {
+    private Optional<ParsedTombstone> handleProtoTombstone(
+            File path, boolean addToList) {
         final String filename = path.getName();
         if (!filename.endsWith(".pb")) {
             Slog.w(TAG, "unexpected tombstone name: " + path);
@@ -169,7 +171,7 @@ public final class NativeTombstoneManager {
             return Optional.empty();
         }
 
-        final Optional<TombstoneFile> parsedTombstone = TombstoneFile.parse(pfd);
+        final Optional<ParsedTombstone> parsedTombstone = TombstoneFile.parse(pfd);
         if (!parsedTombstone.isPresent()) {
             IoUtils.closeQuietly(pfd);
             return Optional.empty();
@@ -182,7 +184,7 @@ public final class NativeTombstoneManager {
                     previous.dispose();
                 }
 
-                mTombstones.put(number, parsedTombstone.get());
+                mTombstones.put(number, parsedTombstone.get().getTombstoneFile());
             }
         }
 
@@ -330,6 +332,27 @@ public final class NativeTombstoneManager {
         }
     }
 
+    static class ParsedTombstone {
+        TombstoneFile mTombstoneFile;
+        Tombstone mTombstone;
+        ParsedTombstone(TombstoneFile tombstoneFile, Tombstone tombstone) {
+            mTombstoneFile = tombstoneFile;
+            mTombstone = tombstone;
+        }
+
+        public String getProcessName() {
+            return mTombstoneFile.getProcessName();
+        }
+
+        public TombstoneFile getTombstoneFile() {
+            return mTombstoneFile;
+        }
+
+        public Tombstone getTombstone() {
+            return mTombstone;
+        }
+    }
+
     static class TombstoneFile {
         final ParcelFileDescriptor mPfd;
 
@@ -412,63 +435,41 @@ public final class NativeTombstoneManager {
             }
         }
 
-        static Optional<TombstoneFile> parse(ParcelFileDescriptor pfd) {
-            final FileInputStream is = new FileInputStream(pfd.getFileDescriptor());
-            final ProtoInputStream stream = new ProtoInputStream(is);
-
+        static Optional<ParsedTombstone> parse(ParcelFileDescriptor pfd) {
             int pid = 0;
             int uid = 0;
             String processName = null;
             String crashReason = "";
             String selinuxLabel = "";
 
-            try {
-                while (stream.nextField() != ProtoInputStream.NO_MORE_FIELDS) {
-                    switch (stream.getFieldNumber()) {
-                        case (int) Tombstone.PID:
-                            pid = stream.readInt(Tombstone.PID);
-                            break;
+            Tombstone tombstoneProto;
 
-                        case (int) Tombstone.UID:
-                            uid = stream.readInt(Tombstone.UID);
-                            break;
+            try (FileInputStream is = new FileInputStream(pfd.getFileDescriptor())) {
+                final byte[] tombstoneBytes = is.readAllBytes();
 
-                        case (int) Tombstone.COMMAND_LINE:
-                            if (processName == null) {
-                                processName = stream.readString(Tombstone.COMMAND_LINE);
-                            }
-                            break;
+                tombstoneProto = Tombstone.parseFrom(
+                        CodedInputStream.newInstance(tombstoneBytes));
 
-                        case (int) Tombstone.CAUSES:
-                            if (!crashReason.equals("")) {
-                                // Causes appear in decreasing order of likelihood. For now we only
-                                // want the most likely crash reason here, so ignore all others.
-                                break;
-                            }
-                            long token = stream.start(Tombstone.CAUSES);
-                        cause:
-                            while (stream.nextField() != ProtoInputStream.NO_MORE_FIELDS) {
-                                switch (stream.getFieldNumber()) {
-                                    case (int) Cause.HUMAN_READABLE:
-                                        crashReason = stream.readString(Cause.HUMAN_READABLE);
-                                        break cause;
+                pid = tombstoneProto.getPid();
+                uid = tombstoneProto.getUid();
+                selinuxLabel = tombstoneProto.getSelinuxLabel();
 
-                                    default:
-                                        break;
-                                }
-                            }
-                            stream.end(token);
-                            break;
-
-                        case (int) Tombstone.SELINUX_LABEL:
-                            selinuxLabel = stream.readString(Tombstone.SELINUX_LABEL);
-                            break;
-
-                        default:
-                            break;
+                for (String cmdline : tombstoneProto.getCommandLineList()) {
+                    if (processName == null && cmdline != null) {
+                        processName = cmdline;
+                        break;
                     }
                 }
-            } catch (IOException | ProtoParseException ex) {
+
+                for (Cause cause : tombstoneProto.getCausesList()) {
+                    if (crashReason.equals("")
+                            && cause.getHumanReadable() != null
+                            && !cause.getHumanReadable().equals("")) {
+                        crashReason = cause.getHumanReadable();
+                        break;
+                    }
+                }
+            } catch (IOException ex) {
                 Slog.e(TAG, "Failed to parse tombstone", ex);
                 return Optional.empty();
             }
@@ -504,7 +505,7 @@ public final class NativeTombstoneManager {
             result.mTimestampMs = timestampMs;
             result.mCrashReason = crashReason;
 
-            return Optional.of(result);
+            return Optional.of(new ParsedTombstone(result, tombstoneProto));
         }
 
         public IParcelFileDescriptorRetriever getPfdRetriever() {
