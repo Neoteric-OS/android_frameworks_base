@@ -16,6 +16,24 @@
       "message": "So right now this will return null ? I\u0027m not supposed to let you check in API without an implementation ; in this case, you don\u0027t need a full implementation of the entire Thread subsystem, but having a service with one method should probably be considered a minimum as an implementation for this constant.",
       "revId": "421aca3f6d6c5263b8824bcb1639fd8a026921c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e08899e4_e5bef828",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1693933
+      },
+      "writtenOn": "2023-08-25T04:21:05Z",
+      "side": 1,
+      "message": "Okay, let me polish the service code and upload it within the same topic",
+      "parentUuid": "6dcf8b8e_ed420205",
+      "revId": "421aca3f6d6c5263b8824bcb1639fd8a026921c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
