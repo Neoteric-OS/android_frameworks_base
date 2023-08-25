@@ -122,6 +122,23 @@
       "parentUuid": "9fd84bc0_7fee761e",
       "revId": "04110a391188e767551a51934ce6c4a6ce616f0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90687ab0_768673c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007917
+      },
+      "writtenOn": "2023-08-25T13:39:52Z",
+      "side": 1,
+      "message": "Thanks @alukin@google.com for reviewing.\n\n@ebiggers@google.com, @alukin@google.com could you please add the Presubmit-Ready+1 vote as well?",
+      "revId": "04110a391188e767551a51934ce6c4a6ce616f0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
