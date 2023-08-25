@@ -3897,6 +3897,18 @@ public class Vpn {
                 // Skip other invalid status if the scheduled recovery exists.
                 if (mScheduledHandleDataStallFuture != null) return;
 
+                // Trigger network validation on the underlying network to possibly cause system
+                // switch default network if current default network is broken.
+                //
+                // For the same underlying network, first validation result should clarify if it's
+                // caused by broken underlying network. So only perform underlying network
+                // re-evaluation after first validation failure to prevent extra network resource
+                // costs on sending probes.
+                if (mValidationFailRetryCount == 0) {
+                    mConnectivityManager.reportNetworkConnectivity(
+                            mActiveNetwork, false /* hasConnectivity */);
+                }
+
                 if (mValidationFailRetryCount < MAX_MOBIKE_RECOVERY_ATTEMPT) {
                     Log.d(TAG, "Validation failed");
 
