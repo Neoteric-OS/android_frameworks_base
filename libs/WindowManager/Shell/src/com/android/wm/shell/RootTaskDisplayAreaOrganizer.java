@@ -160,13 +160,6 @@ public class RootTaskDisplayAreaOrganizer extends DisplayAreaOrganizer {
     @Override
     public void onDisplayAreaInfoChanged(@NonNull DisplayAreaInfo displayAreaInfo) {
         final int displayId = displayAreaInfo.displayId;
-        if (mDisplayAreasInfo.get(displayId) == null) {
-            throw new IllegalArgumentException(
-                    "onDisplayAreaInfoChanged() Unknown DA displayId: " + displayId
-                            + " displayAreaInfo:" + displayAreaInfo
-                            + " mDisplayAreasInfo.get():" + mDisplayAreasInfo.get(displayId));
-        }
-
         mDisplayAreasInfo.put(displayId, displayAreaInfo);
 
         ArrayList<RootTaskDisplayAreaListener> listeners = mListeners.get(displayId);
