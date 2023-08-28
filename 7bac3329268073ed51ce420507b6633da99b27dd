@@ -46,6 +46,30 @@
       },
       "revId": "7bac3329268073ed51ce420507b6633da99b27dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "406e0368_24679b95",
+        "filename": "core/java/android/app/servertransaction/LaunchActivityItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2023-08-28T13:18:47Z",
+      "side": 1,
+      "message": "\u003e Perhaps it is due to concurrency exceptions, such as being deleted and just being read, resulting in a null pointer\n\nBut this is a local variable, how can there be any concurrent access?\n\nCan you please double check if there is any customization on your side? Like comparing the difference between your checkout and AOSP version:\n1. LaunchActivityItem#execute\n2. ActivityThread#handleLaunchActivity",
+      "parentUuid": "57efabd7_064a979a",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 57
+      },
+      "revId": "7bac3329268073ed51ce420507b6633da99b27dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
