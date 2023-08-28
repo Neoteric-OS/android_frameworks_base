@@ -4355,6 +4355,7 @@ public class Intent implements Parcelable, Cloneable {
      * @hide
      */
     @SystemApi
+    @RequiresPermission(android.Manifest.permission.MASTER_CLEAR)
     @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_MASTER_CLEAR_NOTIFICATION
             = "android.intent.action.MASTER_CLEAR_NOTIFICATION";
