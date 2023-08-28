@@ -22,6 +22,30 @@
       },
       "revId": "78f9bc4d3b7a622a1cc6e4c6cc54a90cdba77350",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97b0e553_03991ef4",
+        "filename": "services/core/java/com/android/server/TEST_MAPPING",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2023-08-28T08:49:28Z",
+      "side": 1,
+      "message": "The sub-folder tests cannot be assigned here. I resolve this by adding an extra TEST_MAPPING inside connectivity in aosp/2727897.",
+      "parentUuid": "f97cb387_19a439bb",
+      "range": {
+        "startLine": 72,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 48
+      },
+      "revId": "78f9bc4d3b7a622a1cc6e4c6cc54a90cdba77350",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
