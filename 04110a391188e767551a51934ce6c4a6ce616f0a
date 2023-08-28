@@ -156,6 +156,24 @@
       "message": "@ebiggers@google.com, thanks for your support on this 😊",
       "revId": "04110a391188e767551a51934ce6c4a6ce616f0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7becee9_e43b8a00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-28T17:39:54Z",
+      "side": 1,
+      "message": "Thanks for the contribution!",
+      "parentUuid": "6c7dcf7e_bf30be7b",
+      "revId": "04110a391188e767551a51934ce6c4a6ce616f0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
