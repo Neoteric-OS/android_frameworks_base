@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be616932_81230bd0",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/wifi/ui/viewmodel/WifiViewModel.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-08-29T12:58:29Z",
+      "side": 0,
+      "message": "Can we keep the `stateIn` on this flow? That ensures that we only create the flow once, and then share the same flow with all the downstream flows. (Apologies for not noticing this in the previous iteration)",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 95
+      },
+      "revId": "6c8fb01159bf760c751e9fc3937512e4027d9699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
