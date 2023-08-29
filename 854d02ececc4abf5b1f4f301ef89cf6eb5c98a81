@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4334fe70_29e58b56",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-08-29T23:50:59Z",
+      "side": 1,
+      "message": "This part preserves the existing behavior, but I can\u0027t understand the logic here because the TRUSTABLE state appears to be used even on automotive.  Is that a bug?",
+      "revId": "854d02ececc4abf5b1f4f301ef89cf6eb5c98a81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
