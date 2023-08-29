@@ -228,7 +228,7 @@ class WifiViewModelTest : SysuiTestCase() {
             // THEN we still output false because our network's SSID is null
             assertThat(activityIn).isFalse()
             assertThat(activityOut).isFalse()
-            assertThat(activityContainer).isFalse()
+            assertThat(activityContainer).isTrue()
 
             activityInJob.cancel()
             activityOutJob.cancel()
@@ -405,7 +405,7 @@ class WifiViewModelTest : SysuiTestCase() {
         }
 
     @Test
-    fun activityContainer_inAndOutFalse_outputsFalse() =
+    fun activityContainer_inAndOutFalse_outputsTrue() =
         runBlocking(IMMEDIATE) {
             whenever(connectivityConstants.shouldShowActivityConfig).thenReturn(true)
             createAndSetViewModel()
@@ -419,7 +419,9 @@ class WifiViewModelTest : SysuiTestCase() {
             wifiRepository.setWifiActivity(activity)
             yield()
 
-            assertThat(latest).isFalse()
+            // The activity container should always be visible, since activity is
+            // shown in UI by changing opacity of the indicators.
+            assertThat(latest).isTrue()
 
             job.cancel()
         }

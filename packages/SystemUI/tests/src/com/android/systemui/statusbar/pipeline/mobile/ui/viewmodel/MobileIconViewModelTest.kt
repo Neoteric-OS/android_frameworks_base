@@ -529,7 +529,7 @@ class MobileIconViewModelTest : SysuiTestCase() {
 
             assertThat(inVisible).isFalse()
             assertThat(outVisible).isFalse()
-            assertThat(containerVisible).isFalse()
+            assertThat(containerVisible).isTrue()
 
             inJob.cancel()
             outJob.cancel()

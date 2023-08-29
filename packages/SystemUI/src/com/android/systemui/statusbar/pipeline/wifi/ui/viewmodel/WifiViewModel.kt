@@ -141,42 +141,30 @@ constructor(
             )
 
     /** The wifi activity status. Null if we shouldn't display the activity status. */
-    private val activity: Flow<DataActivityModel> = run {
-        val default = DataActivityModel(hasActivityIn = false, hasActivityOut = false)
+    private val activity: Flow<DataActivityModel?> =
         if (!connectivityConstants.shouldShowActivityConfig) {
-                flowOf(default)
-            } else {
-                combine(interactor.activity, interactor.ssid) { activity, ssid ->
-                    when (ssid) {
-                        null -> default
-                        else -> activity
-                    }
+            flowOf(null)
+        } else {
+            combine(interactor.activity, interactor.ssid) { activity, ssid ->
+                when (ssid) {
+                    null -> null
+                    else -> activity
                 }
             }
-            .distinctUntilChanged()
-            .logDiffsForTable(
-                wifiTableLogBuffer,
-                columnPrefix = "VM.activity",
-                initialValue = default,
-            )
-            .stateIn(scope, started = SharingStarted.WhileSubscribed(), initialValue = default)
-    }
+        }
 
     private val isActivityInViewVisible: Flow<Boolean> =
         activity
-            .map { it.hasActivityIn }
-            .stateIn(scope, started = SharingStarted.WhileSubscribed(), initialValue = false)
-
+            .map { it?.hasActivityIn ?: false }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
     private val isActivityOutViewVisible: Flow<Boolean> =
         activity
-            .map { it.hasActivityOut }
-            .stateIn(scope, started = SharingStarted.WhileSubscribed(), initialValue = false)
-
+            .map { it?.hasActivityOut ?: false }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
     private val isActivityContainerVisible: Flow<Boolean> =
-        combine(isActivityInViewVisible, isActivityOutViewVisible) { activityIn, activityOut ->
-                activityIn || activityOut
-            }
-            .stateIn(scope, started = SharingStarted.WhileSubscribed(), initialValue = false)
+        activity
+            .map { it != null }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     // TODO(b/238425913): It isn't ideal for the wifi icon to need to know about whether the
     //  airplane icon is visible. Instead, we should have a parent StatusBarSystemIconsViewModel

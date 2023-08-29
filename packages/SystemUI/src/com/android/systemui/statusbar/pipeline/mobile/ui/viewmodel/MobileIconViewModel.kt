@@ -222,7 +222,7 @@ constructor(
 
     override val activityContainerVisible: Flow<Boolean> =
         activity
-            .map { it != null && (it.hasActivityIn || it.hasActivityOut) }
+            .map { it != null }
             .distinctUntilChanged()
             .logDiffsForTable(
                 iconInteractor.tableLogBuffer,
