@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6202e1b_6c443a50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2023-08-29T07:41:13Z",
+      "side": 1,
+      "message": "does not compile well as of now:\n\nframeworks/base/packages/SystemUI/src/com/android/systemui/statusbar/pipeline/wifi/ui/viewmodel/WifiViewModel.kt:156:5: error: \u0027isActivityInViewVisible\u0027 overrides nothing\n    override val isActivityInViewVisible: Flow\u003cBoolean\u003e \u003d\n    ^\nframeworks/base/packages/SystemUI/src/com/android/systemui/statusbar/pipeline/wifi/ui/viewmodel/WifiViewModel.kt:160:5: error: \u0027isActivityOutViewVisible\u0027 overrides nothing\n    override val isActivityOutViewVisible: Flow\u003cBoolean\u003e \u003d\n    ^\nframeworks/base/packages/SystemUI/src/com/android/systemui/statusbar/pipeline/wifi/ui/viewmodel/WifiViewModel.kt:164:5: error: \u0027isActivityContainerVisible\u0027 overrides nothing\n    override val isActivityContainerVisible: Flow\u003cBoolean\u003e \u003d",
+      "revId": "b6af59ec1c47419399b95f682f99a5e966d2451d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
