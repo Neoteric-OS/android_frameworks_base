@@ -46,6 +46,30 @@
       },
       "revId": "6c8fb01159bf760c751e9fc3937512e4027d9699",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2410aa9_d7204bb3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/wifi/ui/viewmodel/WifiViewModel.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-08-29T15:07:55Z",
+      "side": 0,
+      "message": "Yep `null` as a default is great!",
+      "parentUuid": "e8257f6b_58c3c980",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 95
+      },
+      "revId": "6c8fb01159bf760c751e9fc3937512e4027d9699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
