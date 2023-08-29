@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b364e76_8c412374",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2023-08-29T06:37:58Z",
+      "side": 1,
+      "message": "Hi,\nuploaded commit as requested, however this commit does not really make sense, I had to re adapt to the older base, all cleanup you did was not present, so this will probably apply anywhere but on AOSP base.\n\nTo use this you would have to manually fix it if cherry picking it anywhere.\n\nbrgds /H",
+      "revId": "61899582062b53de8e2fb681314ff2df0e89e51a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
