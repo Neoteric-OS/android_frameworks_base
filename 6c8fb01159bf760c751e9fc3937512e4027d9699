@@ -22,6 +22,30 @@
       },
       "revId": "6c8fb01159bf760c751e9fc3937512e4027d9699",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8257f6b_58c3c980",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/wifi/ui/viewmodel/WifiViewModel.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1004424
+      },
+      "writtenOn": "2023-08-29T14:51:44Z",
+      "side": 0,
+      "message": "Done, null before we have ssid and any real value?",
+      "parentUuid": "be616932_81230bd0",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 95
+      },
+      "revId": "6c8fb01159bf760c751e9fc3937512e4027d9699",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
