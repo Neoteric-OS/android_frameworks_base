@@ -32,9 +32,17 @@
 #include <android_runtime/android_view_Surface.h>
 #include <android_runtime/android_graphics_GraphicBuffer.h>
 #include <android_runtime/android_hardware_HardwareBuffer.h>
+#ifdef __ANDROID__ // Layoutlib does not support Gr
 #include <grallocusage/GrallocUsageConversion.h>
+#else
+#define GRALLOC_USAGE_PROTECTED 0
+#define GRALLOC_USAGE_SW_READ_OFTEN 0
+#define GRALLOC_USAGE_SW_WRITE_OFTEN 0
+#endif
 
+#ifdef __ANDROID__ // Layoutlib does not support hardware
 #include <private/android/AHardwareBufferHelpers.h>
+#endif
 
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
@@ -243,12 +251,14 @@ static JNIImageReaderContext* ImageReader_getContext(JNIEnv* env, jobject thiz)
     JNIImageReaderContext *ctx;
     ctx = reinterpret_cast<JNIImageReaderContext *>
               (env->GetLongField(thiz, gImageReaderClassInfo.mNativeContext));
+    fprintf(stderr, "@@ RM DEBUG %s class %p --> ctx %p\n", __FUNCTION__, thiz, ctx); // RM DO NOT SUBMIT
     return ctx;
 }
 
 static IGraphicBufferProducer* ImageReader_getProducer(JNIEnv* env, jobject thiz)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     JNIImageReaderContext* const ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowRuntimeException(env, "ImageReaderContext is not initialized");
@@ -262,7 +272,9 @@ static void ImageReader_setNativeContext(JNIEnv* env,
         jobject thiz, sp<JNIImageReaderContext> ctx)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p, ctx %p\n", __FUNCTION__, thiz, ctx.get()); // RM DO NOT SUBMIT
     JNIImageReaderContext* const p = ImageReader_getContext(env, thiz);
+    fprintf(stderr, "@@ RM DEBUG %s // ctx is %p\n", __FUNCTION__, p); // RM DO NOT SUBMIT
     if (ctx != 0) {
         ctx->incStrong((void*)ImageReader_setNativeContext);
     }
@@ -276,6 +288,7 @@ static void ImageReader_setNativeContext(JNIEnv* env,
 static BufferItemConsumer* ImageReader_getBufferConsumer(JNIEnv* env, jobject thiz)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     JNIImageReaderContext* const ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowRuntimeException(env, "ImageReaderContext is not initialized");
@@ -288,6 +301,7 @@ static BufferItemConsumer* ImageReader_getBufferConsumer(JNIEnv* env, jobject th
 static void Image_setBufferItem(JNIEnv* env, jobject thiz,
         const BufferItem* buffer)
 {
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     env->SetLongField(thiz, gSurfaceImageClassInfo.mNativeBuffer, reinterpret_cast<jlong>(buffer));
 }
 
@@ -303,6 +317,7 @@ static BufferItem* Image_getBufferItem(JNIEnv* env, jobject image)
 static void ImageReader_classInit(JNIEnv* env, jclass clazz)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, clazz); // RM DO NOT SUBMIT
 
     jclass imageClazz = env->FindClass("android/media/ImageReader$SurfaceImage");
     LOG_ALWAYS_FATAL_IF(imageClazz == NULL,
@@ -336,6 +351,7 @@ static void ImageReader_classInit(JNIEnv* env, jclass clazz)
     LOG_ALWAYS_FATAL_IF(gSurfaceImageClassInfo.mPlanes == NULL,
             "can't find android/media/ImageReader$ReaderSurfaceImage.mPlanes");
 
+    fprintf(stderr, "@@ RM DEBUG class init mNativeContext\n"); // RM DO NOT SUBMIT
     gImageReaderClassInfo.mNativeContext = env->GetFieldID(
             clazz, ANDROID_MEDIA_IMAGEREADER_CTX_JNI_ID, "J");
     LOG_ALWAYS_FATAL_IF(gImageReaderClassInfo.mNativeContext == NULL,
@@ -375,6 +391,7 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
 
     ALOGV("%s: width:%d, height: %d, format: 0x%x, maxImages:%d",
           __FUNCTION__, width, height, format, maxImages);
+    fprintf(stderr, "@@ RM DEBUG %s, thiz %p, weakThiz %p\n", __FUNCTION__, thiz, weakThiz); // RM DO NOT SUBMIT
 
     PublicFormat publicFormat = static_cast<PublicFormat>(format);
     nativeFormat = mapPublicFormatToHalFormat(publicFormat);
@@ -386,6 +403,8 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
         return;
     }
     sp<JNIImageReaderContext> ctx(new JNIImageReaderContext(env, weakThiz, clazz, maxImages));
+    fprintf(stderr, "@@ RM DEBUG %s class %p, weakThiz %p, new Context: %p\n",
+     __FUNCTION__, thiz, weakThiz, ctx.get()); // RM DO NOT SUBMIT
 
     sp<IGraphicBufferProducer> gbProducer;
     sp<IGraphicBufferConsumer> gbConsumer;
@@ -395,7 +414,11 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
             width, height, format, maxImages, getpid(),
             createProcessUniqueId());
     uint64_t consumerUsage =
+#ifdef __ANDROID__ // Layoutlib does not support hardware
             android_hardware_HardwareBuffer_convertToGrallocUsageBits(ndkUsage);
+#else
+            0;
+#endif
 
     bufferConsumer = new BufferItemConsumer(gbConsumer, consumerUsage, maxImages,
             /*controlledByApp*/true);
@@ -414,6 +437,8 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
     bufferConsumer->setName(consumerName);
 
     ctx->setProducer(gbProducer);
+    fprintf(stderr, "@@ RM DEBUG %s setProducer: %p\n", __FUNCTION__, ctx->getProducer()); // RM DO NOT SUBMIT
+
     bufferConsumer->setFrameAvailableListener(ctx);
     ImageReader_setNativeContext(env, thiz, ctx);
     ctx->setBufferFormat(nativeFormat);
@@ -446,6 +471,7 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
 static void ImageReader_close(JNIEnv* env, jobject thiz)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
 
     JNIImageReaderContext* const ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
@@ -499,6 +525,7 @@ static sp<Fence> Image_unlockIfLocked(JNIEnv* env, jobject image) {
 static void ImageReader_imageRelease(JNIEnv* env, jobject thiz, jobject image)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, image); // RM DO NOT SUBMIT
     JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         ALOGW("ImageReader#close called before Image#close, consider calling Image#close first");
@@ -521,6 +548,7 @@ static void ImageReader_imageRelease(JNIEnv* env, jobject thiz, jobject image)
 
 static jint ImageReader_imageSetup(JNIEnv* env, jobject thiz, jobject image) {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, image); // RM DO NOT SUBMIT
     JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException",
@@ -633,6 +661,7 @@ static jint ImageReader_imageSetup(JNIEnv* env, jobject thiz, jobject image) {
 
 static jint ImageReader_detachImage(JNIEnv* env, jobject thiz, jobject image) {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, image); // RM DO NOT SUBMIT
     JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException", "ImageReader was already closed");
@@ -663,6 +692,7 @@ static jint ImageReader_detachImage(JNIEnv* env, jobject thiz, jobject image) {
 
 static void ImageReader_discardFreeBuffers(JNIEnv* env, jobject thiz) {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException", "ImageReader was already closed");
@@ -681,6 +711,7 @@ static void ImageReader_discardFreeBuffers(JNIEnv* env, jobject thiz) {
 static jobject ImageReader_getSurface(JNIEnv* env, jobject thiz)
 {
     ALOGV("%s: ", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
 
     IGraphicBufferProducer* gbp = ImageReader_getProducer(env, thiz);
     if (gbp == NULL) {
@@ -695,6 +726,7 @@ static jobject ImageReader_getSurface(JNIEnv* env, jobject thiz)
 static void Image_getLockedImage(JNIEnv* env, jobject thiz, LockedImage *image,
         uint64_t ndkReaderUsage) {
     ALOGV("%s", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     BufferItem* buffer = Image_getBufferItem(env, thiz);
     if (buffer == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException",
@@ -746,6 +778,7 @@ static bool Image_getLockedImageInfo(JNIEnv* env, LockedImage* buffer, int idx,
     return true;
 }
 
+#ifdef __ANDROID__
 static void ImageReader_unlockGraphicBuffer(JNIEnv* env, jobject /*thiz*/,
         jobject buffer) {
     sp<GraphicBuffer> graphicBuffer =
@@ -828,11 +861,13 @@ static jobjectArray ImageReader_createImagePlanes(JNIEnv* env, jobject /*thiz*/,
 
     return imagePlanes;
 }
+#endif
 
 static jobjectArray Image_createSurfacePlanes(JNIEnv* env, jobject thiz,
         int numPlanes, int readerFormat, uint64_t ndkReaderUsage)
 {
     ALOGV("%s: create SurfacePlane array with size %d", __FUNCTION__, numPlanes);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     int rowStride = 0;
     int pixelStride = 0;
     uint8_t *pData = NULL;
@@ -891,16 +926,19 @@ static jobjectArray Image_createSurfacePlanes(JNIEnv* env, jobject thiz,
 
 static jint Image_getWidth(JNIEnv* env, jobject thiz)
 {
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     BufferItem* buffer = Image_getBufferItem(env, thiz);
     return getBufferWidth(buffer);
 }
 
 static jint Image_getHeight(JNIEnv* env, jobject thiz)
 {
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     BufferItem* buffer = Image_getBufferItem(env, thiz);
     return getBufferHeight(buffer);
 }
 
+#ifdef __ANDROID__
 static jint Image_getFenceFd(JNIEnv* env, jobject thiz)
 {
     BufferItem* buffer = Image_getBufferItem(env, thiz);
@@ -910,9 +948,11 @@ static jint Image_getFenceFd(JNIEnv* env, jobject thiz)
 
     return -1;
 }
+#endif
 
 static jint Image_getFormat(JNIEnv* env, jobject thiz, jint readerFormat)
 {
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     if (isFormatOpaque(readerFormat)) {
         // Assuming opaque reader produce opaque images.
         return static_cast<jint>(PublicFormat::PRIVATE);
@@ -934,6 +974,7 @@ static jint Image_getFormat(JNIEnv* env, jobject thiz, jint readerFormat)
     }
 }
 
+#ifdef __ANDROID__ // Layoutlib does not support hardware
 static jobject Image_getHardwareBuffer(JNIEnv* env, jobject thiz) {
     BufferItem* buffer = Image_getBufferItem(env, thiz);
     AHardwareBuffer* b = AHardwareBuffer_from_GraphicBuffer(buffer->mGraphicBuffer.get());
@@ -941,6 +982,7 @@ static jobject Image_getHardwareBuffer(JNIEnv* env, jobject thiz) {
     // to link against libandroid.so
     return android_hardware_HardwareBuffer_createFromAHardwareBuffer(env, b);
 }
+#endif
 
 } // extern "C"
 
@@ -954,23 +996,32 @@ static const JNINativeMethod gImageReaderMethods[] = {
     {"nativeImageSetup",       "(Landroid/media/Image;)I",   (void*)ImageReader_imageSetup },
     {"nativeGetSurface",       "()Landroid/view/Surface;",   (void*)ImageReader_getSurface },
     {"nativeDetachImage",      "(Landroid/media/Image;)I",   (void*)ImageReader_detachImage },
+#ifdef __ANDROID__
     {"nativeCreateImagePlanes",
         "(ILandroid/graphics/GraphicBuffer;IIIIII)[Landroid/media/ImageReader$ImagePlane;",
                                                              (void*)ImageReader_createImagePlanes },
     {"nativeUnlockGraphicBuffer",
         "(Landroid/graphics/GraphicBuffer;)V",             (void*)ImageReader_unlockGraphicBuffer },
+#endif
     {"nativeDiscardFreeBuffers", "()V",                      (void*)ImageReader_discardFreeBuffers }
 };
 
 static const JNINativeMethod gImageMethods[] = {
-    {"nativeCreatePlanes",      "(IIJ)[Landroid/media/ImageReader$SurfaceImage$SurfacePlane;",
+#ifdef __ANDROID__  
+   {"nativeCreatePlanes",      "(IIJ)[Landroid/media/ImageReader$SurfaceImage$SurfacePlane;",
                                                              (void*)Image_createSurfacePlanes },
+#else  // No access to ImageReader$SurfaceImage$SurfacePlane in RNG.
+    {"nativeCreatePlanes",      "(IIJ)Ljava/lang/Object;",
+                                                             (void*)Image_createSurfacePlanes },
+#endif
     {"nativeGetWidth",          "()I",                       (void*)Image_getWidth },
     {"nativeGetHeight",         "()I",                       (void*)Image_getHeight },
     {"nativeGetFormat",         "(I)I",                      (void*)Image_getFormat },
+#ifdef __ANDROID__ // Layoutlib does not support hardware
     {"nativeGetFenceFd",        "()I",                       (void*)Image_getFenceFd },
     {"nativeGetHardwareBuffer", "()Landroid/hardware/HardwareBuffer;",
                                                              (void*)Image_getHardwareBuffer },
+#endif
 };
 
 int register_android_media_ImageReader(JNIEnv *env) {
