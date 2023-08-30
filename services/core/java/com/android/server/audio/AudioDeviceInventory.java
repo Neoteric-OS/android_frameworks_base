@@ -768,7 +768,9 @@ public class AudioDeviceInventory {
                 }
                 mConnectedDevices.put(deviceKey, new DeviceInfo(
                         device, deviceName, address, AudioSystem.AUDIO_FORMAT_DEFAULT));
-                mDeviceBroker.postAccessoryPlugMediaUnmute(device);
+                if (device != AudioSystem.DEVICE_OUT_HDMI) {
+                    mDeviceBroker.postAccessoryPlugMediaUnmute(device);
+                }
                 mmi.set(MediaMetrics.Property.STATE, MediaMetrics.Value.CONNECTED).record();
                 return true;
             } else if (!connect && isConnected) {
