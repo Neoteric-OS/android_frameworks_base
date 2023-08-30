@@ -60,6 +60,8 @@ public class RootTaskDisplayAreaOrganizer extends DisplayAreaOrganizer {
 
     private final Context mContext;
 
+    private boolean initDone = false;
+
     public RootTaskDisplayAreaOrganizer(Executor executor, Context context) {
         super(executor);
         mContext = context;
@@ -67,6 +69,7 @@ public class RootTaskDisplayAreaOrganizer extends DisplayAreaOrganizer {
         for (int i = infos.size() - 1; i >= 0; --i) {
             onDisplayAreaAppeared(infos.get(i).getDisplayAreaInfo(), infos.get(i).getLeash());
         }
+        initDone = true;
     }
 
     public void registerListener(int displayId, RootTaskDisplayAreaListener listener) {
@@ -160,6 +163,9 @@ public class RootTaskDisplayAreaOrganizer extends DisplayAreaOrganizer {
     @Override
     public void onDisplayAreaInfoChanged(@NonNull DisplayAreaInfo displayAreaInfo) {
         final int displayId = displayAreaInfo.displayId;
+        if (mDisplayAreasInfo.get(displayId) == null) {
+            while(!initDone) {};
+        }
         if (mDisplayAreasInfo.get(displayId) == null) {
             throw new IllegalArgumentException(
                     "onDisplayAreaInfoChanged() Unknown DA displayId: " + displayId
