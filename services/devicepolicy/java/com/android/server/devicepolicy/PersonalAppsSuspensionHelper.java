@@ -206,6 +206,7 @@ public final class PersonalAppsSuspensionHelper {
     void dump(IndentingPrintWriter pw) {
         pw.println("PersonalAppsSuspensionHelper");
         pw.increaseIndent();
+        pw.println("user ID: " + mContext.getUserId());
 
         DevicePolicyManagerService.dumpApps(pw, "critical packages", getCriticalPackages());
         DevicePolicyManagerService.dumpApps(pw, "launcher packages", getSystemLauncherPackages());

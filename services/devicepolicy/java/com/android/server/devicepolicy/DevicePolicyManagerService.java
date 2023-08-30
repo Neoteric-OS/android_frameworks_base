@@ -9787,6 +9787,17 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         }
     }
 
+    /**
+     * This dump requires other services' locks and doesn't need DPMS lock. So we should dump
+     * it without holding DPMS lock.
+     * @param pw a IndentingPrintWriter.
+     * @param userId user ID to dump
+     */
+    private void dumpPersonalAppsSuspension(IndentingPrintWriter pw, int userId) {
+        PersonalAppsSuspensionHelper.forUser(mContext, userId).dump(pw);
+        pw.println();
+    }
+
     private void dumpPerUserData(IndentingPrintWriter pw) {
         int userCount = mUserData.size();
         for (int i = 0; i < userCount; i++) {
@@ -9794,18 +9805,6 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             DevicePolicyData policy = getUserData(userId);
             policy.dump(pw);
             pw.println();
-
-            if (userId == UserHandle.USER_SYSTEM) {
-                pw.increaseIndent();
-                PersonalAppsSuspensionHelper.forUser(mContext, userId).dump(pw);
-                pw.decreaseIndent();
-                pw.println();
-            } else {
-                // pm.getUnsuspendablePackages() will fail if it's called for a different user;
-                // as this dump is mostly useful for system user anyways, we can just ignore the
-                // others (rather than changing the permission check in the PM method)
-                Slogf.d(LOG_TAG, "skipping PersonalAppsSuspensionHelper.dump() for user " + userId);
-            }
         }
     }
 
@@ -9847,6 +9846,11 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 mStateCache.dump(pw);
                 pw.println();
             }
+
+            if (mUserData.contains(UserHandle.USER_SYSTEM)) {
+                dumpPersonalAppsSuspension(pw, UserHandle.USER_SYSTEM);
+            }
+
             mHandler.post(() -> handleDump(pw));
             dumpResources(pw);
         }
