@@ -10,6 +10,7 @@
 static JavaVM* javaVM;
 
 extern int register_libcore_util_NativeAllocationRegistry(JNIEnv* env);
+extern int register_android_media_ImageReader(JNIEnv* env);
 
 namespace android {
 
@@ -32,6 +33,7 @@ static const RegJNIRec sqliteJNI[] = {
 
 static const RegJNIRec graphicsJNI[] = {
         REG_JNI(register_android_animation_PropertyValuesHolder),
+        REG_JNI(register_android_media_ImageReader),
         REG_JNI(register_android_view_Surface),
         REG_JNI(register_com_android_internal_util_VirtualRefBasePtr),
         REG_JNI(register_libcore_util_NativeAllocationRegistry),
@@ -51,10 +53,18 @@ int AndroidRuntime::registerNativeMethods(JNIEnv* env, const char* className,
                                           const JNINativeMethod* gMethods, int numMethods) {
     std::string fullClassName = std::string(className);
     std::string classNameString = fullClassName.substr(fullClassName.find_last_of("/"));
+    
+    // strip out inner class notation '$'
+    classNameString.erase(std::remove(classNameString.begin(), classNameString.end(), '$'),
+    classNameString.end());
     std::string roboNativeBindingClass =
             "org/robolectric/nativeruntime" + classNameString + "Natives";
+
+    fprintf(stderr, "@@ RM DEBUG register %s as %s\n", className, roboNativeBindingClass.c_str()); // RM DO NOT SUBMIT
+
     jclass clazz = FindClassOrDie(env, roboNativeBindingClass.c_str());
     int res = env->RegisterNatives(clazz, gMethods, numMethods);
+    fprintf(stderr, "@@ RM DEBUG register result %d\n", res); // RM DO NOT SUBMIT
     LOG_ALWAYS_FATAL_IF(res < 0, "Unable to register native methods.");
     return res;
 }
@@ -89,6 +99,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
     jint apiLevel = (jint)env->CallStaticIntMethod(runtimeEnvironment, getApiLevelMethod);
 
     // Native graphics currently supports SDK 26 and above
+    fprintf(stderr, "@@ RM DEBUG Register JNI Graphis for API %d\n", apiLevel);  // DO NOT SUBMIT
     if (apiLevel >= 26) {
         init_android_graphics();
         if (register_android_graphics_classes(env) < 0) {
