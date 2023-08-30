@@ -16,6 +16,24 @@
       "message": "This part preserves the existing behavior, but I can\u0027t understand the logic here because the TRUSTABLE state appears to be used even on automotive.  Is that a bug?",
       "revId": "854d02ececc4abf5b1f4f301ef89cf6eb5c98a81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "001525af_0a8c11ce",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1897666
+      },
+      "writtenOn": "2023-08-30T18:02:50Z",
+      "side": 1,
+      "message": "TRUSTABLE not used on Automotive. I did forget about automotive, which doesn\u0027t need trustable since it can be directly unlocked by a trustagent from locked.",
+      "parentUuid": "4334fe70_29e58b56",
+      "revId": "854d02ececc4abf5b1f4f301ef89cf6eb5c98a81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
