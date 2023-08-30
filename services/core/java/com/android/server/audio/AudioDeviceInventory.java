@@ -1337,7 +1337,9 @@ public class AudioDeviceInventory {
                     return false;
                 }
                 mConnectedDevices.put(deviceKey, new DeviceInfo(device, deviceName, address));
-                mDeviceBroker.postAccessoryPlugMediaUnmute(device);
+                if (device != AudioSystem.DEVICE_OUT_HDMI) {
+                    mDeviceBroker.postAccessoryPlugMediaUnmute(device);
+                }
                 status = true;
             } else if (!connect && isConnected) {
                 mAudioSystem.setDeviceConnectionState(attributes,
