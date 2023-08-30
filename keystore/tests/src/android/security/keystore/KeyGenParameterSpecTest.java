@@ -17,8 +17,10 @@
 package android.security.keystore;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import android.security.ParcelableKeyGenParameterSpecTest;
 
@@ -60,5 +62,55 @@ public final class KeyGenParameterSpecTest {
                 .build();
 
         assertEquals(copiedSpec.getAttestationChallenge(), null);
+    }
+
+    @Test
+    public void testMgf1DigestsNotSpecifiedByDefault() {
+        KeyGenParameterSpec spec = ParcelableKeyGenParameterSpecTest.configureDefaultSpec();
+        assertThat(spec.isMgf1DigestsSpecified(), is(false));
+        assertThrows(IllegalStateException.class, () -> {
+            spec.getMgf1Digests();
+        });
+    }
+
+    @Test
+    public void testMgf1DigestsCanBeSpecified() {
+        String[] mgf1Digests =
+                new String[] {KeyProperties.DIGEST_SHA1, KeyProperties.DIGEST_SHA256};
+        KeyGenParameterSpec spec =  new KeyGenParameterSpec.Builder(ALIAS, KEY_PURPOSES)
+                .setMgf1Digests(mgf1Digests)
+                .build();
+        assertThat(spec.isMgf1DigestsSpecified(), is(true));
+        assertArrayEquals(mgf1Digests, spec.getMgf1Digests().toArray());
+
+        KeyGenParameterSpec copiedSpec = new KeyGenParameterSpec.Builder(spec).build();
+        assertThat(copiedSpec.isMgf1DigestsSpecified(), is(true));
+        assertArrayEquals(mgf1Digests, copiedSpec.getMgf1Digests().toArray());
+    }
+
+    @Test
+    public void testMgf1DigestsAreNotModified() {
+        String[] mgf1Digests =
+                new String[] {KeyProperties.DIGEST_SHA1, KeyProperties.DIGEST_SHA256};
+        KeyGenParameterSpec.Builder builder = new KeyGenParameterSpec.Builder(ALIAS, KEY_PURPOSES)
+                .setMgf1Digests(mgf1Digests);
+
+        KeyGenParameterSpec firstSpec =  builder.build();
+        assertArrayEquals(mgf1Digests, firstSpec.getMgf1Digests().toArray());
+
+        String[] otherDigests = new String[] {KeyProperties.DIGEST_SHA224};
+        KeyGenParameterSpec secondSpec =  builder.setMgf1Digests(otherDigests).build();
+        assertArrayEquals(otherDigests, secondSpec.getMgf1Digests().toArray());
+
+        // Now check that the first spec created hasn't changed.
+        assertArrayEquals(mgf1Digests, firstSpec.getMgf1Digests().toArray());
+    }
+
+    @Test
+    public void testEmptyMgf1DigestsCanBeSet() {
+        KeyGenParameterSpec spec = new KeyGenParameterSpec.Builder(ALIAS, KEY_PURPOSES)
+                .setMgf1Digests(new String[] {}).build();
+
+        assertThat(spec.isMgf1DigestsSpecified(), is(false));
     }
 }
