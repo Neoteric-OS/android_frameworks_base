@@ -31,6 +31,7 @@ import android.hardware.hdmi.IHdmiControlService;
 import android.hardware.hdmi.IHdmiDeviceEventListener;
 import android.hardware.hdmi.IHdmiHotplugEventListener;
 import android.hardware.hdmi.IHdmiSystemAudioModeChangeListener;
+import android.media.AudioDeviceAttributes;
 import android.media.AudioDevicePort;
 import android.media.AudioFormat;
 import android.media.AudioGain;
@@ -1052,13 +1053,23 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                 }
                 // NOTE: we only change the source gain in MODE_JOINT here.
                 if (sourceGain != null) {
-                    int steps = (sourceGain.maxValue() - sourceGain.minValue())
-                            / sourceGain.stepValue();
-                    int gainValue = sourceGain.minValue();
-                    if (volume < 1.0f) {
-                        gainValue += sourceGain.stepValue() * (int) (volume * steps + 0.5);
-                    } else {
-                        gainValue = sourceGain.maxValue();
+                    boolean absoluteDevice = false;
+                    if (AudioSystem.isBluetoothA2dpOutDevice(mAudioSink.get(0).type())) {
+                        int a2dpSinkDevice = mAudioSink.get(0).type();
+                        AudioDeviceAttributes a2dpAttr =
+                            new AudioDeviceAttributes(a2dpSinkDevice, "");
+                        if (mAudioManager.getDeviceVolumeBehavior(a2dpAttr) ==
+                                AudioManager.DEVICE_VOLUME_BEHAVIOR_ABSOLUTE) {
+                            absoluteDevice = true;
+                        }
+                    }
+                    int gainValue = 0;
+                    final float EPSILON = 1e-6f;
+                    if (!absoluteDevice || Math.abs(volume) < EPSILON) {
+                        gainValue = (int)(100 * AudioSystem.getStreamVolumeDB(
+                                    AudioManager.STREAM_MUSIC,
+                                    (int)(volume * mCurrentMaxIndex),
+                                    mAudioSink.get(0).type()));
                     }
                     // size of gain values is 1 in MODE_JOINT
                     int[] gainValues = new int[] { gainValue };
