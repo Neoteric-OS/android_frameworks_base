@@ -23,7 +23,9 @@ import java.math.BigInteger;
 import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.ECGenParameterSpec;
 import java.security.spec.RSAKeyGenParameterSpec;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.security.auth.x500.X500Principal;
 
@@ -91,6 +93,11 @@ public final class ParcelableKeyGenParameterSpec implements Parcelable {
         } else {
             out.writeStringArray(null);
         }
+        if (mSpec.isMgf1DigestsSpecified()) {
+            out.writeStringList(List.copyOf(mSpec.getMgf1Digests()));
+        } else {
+            out.writeStringList(null);
+        }
         out.writeStringArray(mSpec.getEncryptionPaddings());
         out.writeStringArray(mSpec.getSignaturePaddings());
         out.writeStringArray(mSpec.getBlockModes());
@@ -152,6 +159,7 @@ public final class ParcelableKeyGenParameterSpec implements Parcelable {
         final Date keyValidityForOriginationEnd = readDateOrNull(in);
         final Date keyValidityForConsumptionEnd = readDateOrNull(in);
         final String[] digests = in.createStringArray();
+        final ArrayList<String> mgf1Digests = in.createStringArrayList();
         final String[] encryptionPaddings = in.createStringArray();
         final String[] signaturePaddings = in.createStringArray();
         final String[] blockModes = in.createStringArray();
@@ -189,6 +197,7 @@ public final class ParcelableKeyGenParameterSpec implements Parcelable {
                 keyValidityForConsumptionEnd,
                 purposes,
                 digests,
+                mgf1Digests,
                 encryptionPaddings,
                 signaturePaddings,
                 blockModes,
