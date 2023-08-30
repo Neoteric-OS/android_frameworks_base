@@ -33,6 +33,7 @@ static const RegJNIRec sqliteJNI[] = {
 static const RegJNIRec graphicsJNI[] = {
         REG_JNI(register_android_animation_PropertyValuesHolder),
         REG_JNI(register_android_view_Surface),
+        REG_JNI(register_android_media_ImageReader),
         REG_JNI(register_com_android_internal_util_VirtualRefBasePtr),
         REG_JNI(register_libcore_util_NativeAllocationRegistry),
 };
