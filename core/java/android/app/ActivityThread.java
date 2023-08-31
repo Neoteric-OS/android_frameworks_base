@@ -109,6 +109,7 @@ import android.hardware.display.DisplayManagerGlobal;
 import android.media.MediaFrameworkInitializer;
 import android.media.MediaFrameworkPlatformInitializer;
 import android.media.MediaServiceManager;
+import android.net.ConnectivityFrameworkInitializerTiramisu;
 import android.net.ConnectivityManager;
 import android.net.Proxy;
 import android.net.TrafficStats;
@@ -8187,6 +8188,12 @@ public final class ActivityThread extends ClientTransactionHandler
         NfcFrameworkInitializer.setNfcServiceManager(new NfcServiceManager());
 
         DeviceConfigInitializer.setDeviceConfigServiceManager(new DeviceConfigServiceManager());
+
+        // This is different from the pattern of other initializers in this method because we need
+        // to avoid API dependencies from the mainline module to the platform. Do not follow this
+        // one if there isn't a same requirement.
+        ConnectivityFrameworkInitializerTiramisu.setThreadDaemonServiceSupplier(
+                () -> ServiceManager.waitForService("ot_daemon"));
     }
 
     private void purgePendingResources() {
