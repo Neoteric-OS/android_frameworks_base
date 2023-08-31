@@ -1717,7 +1717,9 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                     && (animateValue != currentBrightness
                     || sdrAnimateValue != currentSdrBrightness)) {
                 if (initialRampSkip || hasBrightnessBuckets
-                        || wasOrWillBeInVr || !isDisplayContentVisible || brightnessIsTemporary) {
+                        || wasOrWillBeInVr || !isDisplayContentVisible
+                        || (brightnessIsTemporary && mPowerRequest.policy
+                        != DisplayPowerRequest.POLICY_DIM)) {
                     animateScreenBrightness(animateValue, sdrAnimateValue,
                             SCREEN_ANIMATION_RATE_MINIMUM);
                 } else {
