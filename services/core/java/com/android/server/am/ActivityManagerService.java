@@ -8408,9 +8408,14 @@ public class ActivityManagerService extends IActivityManager.Stub
      */
     public void handleApplicationCrash(IBinder app,
             ApplicationErrorReport.ParcelableCrashInfo crashInfo) {
+        final String processName;
+        int callingUid = Binder.getCallingUid();
         ProcessRecord r = findAppProcess(app, "Crash");
-        final String processName = app == null ? "system_server"
-                : (r == null ? "unknown" : r.processName);
+        if (app == null && callingUid == Process.SYSTEM_UID) {
+            processName = "system_server";
+        } else {
+            processName = r == null ? "unknown" : r.processName;
+        }
 
         handleApplicationCrashInner("crash", r, processName, crashInfo);
     }
@@ -8838,7 +8843,9 @@ public class ActivityManagerService extends IActivityManager.Stub
     }
 
     private static String processClass(ProcessRecord process) {
-        if (process == null || process.getPid() == MY_PID) {
+        if (process == null) {
+            return Binder.getCallingPid() == MY_PID ? "system_server" : "data_app";
+        } else if (process.getPid() == MY_PID) {
             return "system_server";
         } else if ((process.info.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
             return "system_app";
