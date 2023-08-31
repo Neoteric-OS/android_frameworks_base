@@ -109,7 +109,9 @@ import android.hardware.display.DisplayManagerGlobal;
 import android.media.MediaFrameworkInitializer;
 import android.media.MediaFrameworkPlatformInitializer;
 import android.media.MediaServiceManager;
+import android.net.ConnectivityFrameworkInitializerTiramisu;
 import android.net.ConnectivityManager;
+import android.net.ConnectivityServiceManager;
 import android.net.Proxy;
 import android.net.TrafficStats;
 import android.net.Uri;
@@ -8187,6 +8189,8 @@ public final class ActivityThread extends ClientTransactionHandler
         NfcFrameworkInitializer.setNfcServiceManager(new NfcServiceManager());
 
         DeviceConfigInitializer.setDeviceConfigServiceManager(new DeviceConfigServiceManager());
+        ConnectivityFrameworkInitializerTiramisu.setThreadDaemonServiceSupplier(
+                ConnectivityServiceManager.getThreadDaemonServiceSupplier());
     }
 
     private void purgePendingResources() {
