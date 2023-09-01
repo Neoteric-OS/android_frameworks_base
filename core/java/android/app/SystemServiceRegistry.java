@@ -1098,6 +1098,9 @@ public final class SystemServiceRegistry {
                 new CachedServiceFetcher<ContextHubManager>() {
             @Override
             public ContextHubManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+                if (ServiceManager.checkService(Context.CONTEXTHUB_SERVICE) == null) {
+                    return null;
+                }
                 return new ContextHubManager(ctx.getOuterContext(),
                   ctx.mMainThread.getHandler().getLooper());
             }});
