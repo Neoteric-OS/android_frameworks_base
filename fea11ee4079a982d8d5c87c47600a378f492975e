@@ -93,6 +93,30 @@
       },
       "revId": "fea11ee4079a982d8d5c87c47600a378f492975e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e73006ab_dc294238",
+        "filename": "libs/androidfw/include_pathutils/androidfw/PathUtils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-09-01T17:18:44Z",
+      "side": 1,
+      "message": "Synced offline: given this little static library will go away after libc++ gets upgraded, it\u0027s fine as-is.",
+      "parentUuid": "b42e408b_1d0bb904",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "fea11ee4079a982d8d5c87c47600a378f492975e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
