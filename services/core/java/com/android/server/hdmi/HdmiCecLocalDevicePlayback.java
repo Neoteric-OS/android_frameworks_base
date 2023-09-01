@@ -217,9 +217,12 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
             getWakeLock().release();
             mService.getHdmiCecNetwork().removeDevicesConnectedToPort(portId);
 
-            mDelayedStandbyHandler.removeCallbacksAndMessages(null);
-            mDelayedStandbyHandler.postDelayed(new DelayedStandbyRunnable(),
-                    STANDBY_AFTER_HOTPLUG_OUT_DELAY_MS);
+            if (mService.readBooleanSystemProperty(Constants.PROPERTY_HOTPLUG_SLEEP, true)) {
+                HdmiLogger.debug("Start delayed standby runnable in 30s.");
+                mDelayedStandbyHandler.removeCallbacksAndMessages(null);
+                mDelayedStandbyHandler.postDelayed(new DelayedStandbyRunnable(),
+                        STANDBY_AFTER_HOTPLUG_OUT_DELAY_MS);
+            }
         }
     }
 

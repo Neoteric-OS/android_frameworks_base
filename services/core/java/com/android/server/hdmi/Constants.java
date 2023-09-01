@@ -459,6 +459,9 @@ final class Constants {
     // when it's an active source. True by default.
     static final String PROPERTY_KEEP_AWAKE = "persist.sys.hdmi.keep_awake";
 
+    // Set to false to disable the function that suspending playback when hotpluggout out timeout.
+    static final String PROPERTY_HOTPLUG_SLEEP = "persist.sys.hdmi.hotplug_sleep";
+
     // TODO(UI): Set this from UI to decide if turn on System Audio Mode when power on the device
     /**
      * Property to decide if turn on the system audio control when power on the device.
