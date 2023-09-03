@@ -33,6 +33,24 @@
       "message": "This code has been changed internally (it\u0027s in a different file now), and the fix is already applied there. Please wait until the next sync from the internal repository to AOSP and you\u0027ll get it applied then",
       "revId": "e69bc91161a5a0ce0bc523cd41a19574e596425b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62f09624_f2f1ad7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2023-09-03T05:38:11Z",
+      "side": 1,
+      "message": "Thanks. I will abandon this one.",
+      "parentUuid": "001ad4b0_b1ad37c8",
+      "revId": "e69bc91161a5a0ce0bc523cd41a19574e596425b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
