@@ -28,6 +28,7 @@ import static android.content.res.Configuration.EMPTY;
 import static android.os.Trace.TRACE_TAG_WINDOW_MANAGER;
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.Display.INVALID_DISPLAY;
+import static android.view.Display.TYPE_INTERNAL;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_SUSTAINED_PERFORMANCE_MODE;
 import static android.view.WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG;
 import static android.view.WindowManager.LayoutParams.TYPE_NOTIFICATION_SHADE;
@@ -1216,6 +1217,20 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
     void forAllDisplays(Consumer<DisplayContent> callback) {
         for (int i = mChildren.size() - 1; i >= 0; --i) {
             callback.accept(mChildren.get(i));
+        }
+    }
+
+    /**
+     * For all internal displays call the callback.
+     *
+     * @param callback Callback to be called for every internal display.
+     */
+    void forAllInternalDisplays(Consumer<DisplayContent> callback) {
+        for (int i = mChildren.size() - 1; i >= 0; --i) {
+            final DisplayContent dc = mChildren.get(i);
+            if (dc.getDisplay().getType() == TYPE_INTERNAL) {
+                callback.accept(mChildren.get(i));
+            }
         }
     }
 

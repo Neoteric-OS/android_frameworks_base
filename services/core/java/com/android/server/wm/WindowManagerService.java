@@ -5206,7 +5206,8 @@ public class WindowManagerService extends IWindowManager.Stub
     public void displayReady() {
         synchronized (mGlobalLock) {
             if (mMaxUiWidth > 0) {
-                mRoot.forAllDisplays(displayContent -> displayContent.setMaxUiWidth(mMaxUiWidth));
+                mRoot.forAllInternalDisplays(displayContent ->
+                        displayContent.setMaxUiWidth(mMaxUiWidth));
             }
             applyForcedPropertiesForDefaultDisplay();
             mAnimator.ready();
