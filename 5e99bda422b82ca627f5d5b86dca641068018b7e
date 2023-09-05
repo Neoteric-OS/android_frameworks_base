@@ -16,6 +16,23 @@
       "message": "Hello,\n\nWe are developers of the Xiaomi team. We recently discovered in the monitoring system that some applications crashed due to this null pointer issue. Please help us review this change.",
       "revId": "5e99bda422b82ca627f5d5b86dca641068018b7e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18aaa9dd_083cb83f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1345596
+      },
+      "writtenOn": "2023-09-05T18:28:13Z",
+      "side": 1,
+      "message": "Adding Nona and Justin to take a look at text related changes.",
+      "revId": "5e99bda422b82ca627f5d5b86dca641068018b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
