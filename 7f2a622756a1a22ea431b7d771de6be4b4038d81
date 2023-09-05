@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "578c43a9_48a2abde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1272573
+      },
+      "writtenOn": "2023-09-05T00:03:03Z",
+      "side": 1,
+      "message": "Friendly ping @John, I\u0027m not very familiar with Android code review expectations, is there something more I need to do to get this reviewed? Would you prefer it in smaller chunks or for someone else to review?",
+      "revId": "7f2a622756a1a22ea431b7d771de6be4b4038d81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
