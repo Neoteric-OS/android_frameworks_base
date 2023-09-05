@@ -560,6 +560,7 @@ public final class NativeTombstoneManager {
 
         @Override
         public void onEvent(int event, @Nullable String path) {
+            if (path == null) return;
             mHandler.post(() -> {
                 handleTombstone(new File(TOMBSTONE_DIR, path));
             });
