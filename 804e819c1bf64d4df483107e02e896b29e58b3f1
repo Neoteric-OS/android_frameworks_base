@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "878a98a0_ea910536",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-09-05T06:22:08Z",
+      "side": 1,
+      "message": "Consistently failing presubmit looks like http://b/298724810 (unrelated change). I have added this change to a revert of the potential culprit to prove it out.",
+      "revId": "804e819c1bf64d4df483107e02e896b29e58b3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
