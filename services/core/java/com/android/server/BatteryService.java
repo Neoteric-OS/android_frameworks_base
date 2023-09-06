@@ -1281,7 +1281,6 @@ public final class BatteryService extends SystemService {
                 case BatteryManager.BATTERY_PROPERTY_MANUFACTURING_DATE:
                 case BatteryManager.BATTERY_PROPERTY_FIRST_USAGE_DATE:
                 case BatteryManager.BATTERY_PROPERTY_CHARGING_POLICY:
-                case BatteryManager.BATTERY_PROPERTY_STATE_OF_HEALTH:
                     mContext.enforceCallingPermission(
                             android.Manifest.permission.BATTERY_STATS, null);
                     break;
