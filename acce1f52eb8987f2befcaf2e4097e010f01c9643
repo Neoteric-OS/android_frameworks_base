@@ -16,6 +16,23 @@
       "message": "The patch is completely commented out code. Are you looking for feedback in b/299232908 before proceeding or do you mean to remove the comments before uploading?\n\nCan you also replace `Test: InputMethod test` in the commit message with the shell command you run to test InputMethod?",
       "revId": "acce1f52eb8987f2befcaf2e4097e010f01c9643",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "009eae1b_17ffa8f1",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9199,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-09-06T09:34:00Z",
+      "side": 1,
+      "message": "This may cause the test (in the early access branch in case it has not published yet) to fail:\n```\nframeworks/base/tests/InputMethodStressTest/src/com/android/inputmethod/stresstest/AutoShowTest.java\n\n    /**\n     * Test auto-show IME behavior when the activity is navigated back from another activity with\n     * keyboard on.\n     */\n    @Test\n    public void autoShow_backwardWithKeyboardOn() {\n```\n\nAnd suppose this should have the same behavior as T:\nCapture task snapshot:\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/wm/ActivityRecord.java;l\u003d3507;drc\u003db6ea08ea6497a5dd063bd54f572dbcac440c7486\nRestore IME because snapshot contains IME:\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/wm/WindowManagerService.java;l\u003d9203;drc\u003ddb46ba61fcf7a6d0b57e06e774dee6e484829249\n\nNow it just uses a more explicit flag for the same condition.\nCould you check what is the actual difference?\nAnd is it reproducible on pixel or emulator device?",
+      "revId": "acce1f52eb8987f2befcaf2e4097e010f01c9643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
