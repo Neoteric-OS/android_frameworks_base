@@ -33,6 +33,24 @@
       "message": "I\u0027m having a lot of presubmit trouble. What\u0027s the culture when this happens. Keep mashing Presubmit-Ready or hit Bypass-Presubmit? I\u0027m guessing the latter. Please tell me if that\u0027s wrong, and I won\u0027t do it again.",
       "revId": "7f2a622756a1a22ea431b7d771de6be4b4038d81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75b131be_0cdf3192",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1272573
+      },
+      "writtenOn": "2023-09-06T00:49:39Z",
+      "side": 1,
+      "message": "Presubmit bug: b/299194448",
+      "parentUuid": "55b3f51e_46ed5f87",
+      "revId": "7f2a622756a1a22ea431b7d771de6be4b4038d81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
