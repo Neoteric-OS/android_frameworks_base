@@ -16,6 +16,23 @@
       "message": "Consistently failing presubmit looks like http://b/298724810 (unrelated change). I have added this change to a revert of the potential culprit to prove it out.",
       "revId": "804e819c1bf64d4df483107e02e896b29e58b3f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5b406e9_88218374",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2023-09-06T15:58:30Z",
+      "side": 1,
+      "message": "Bypassing presubmit due to http://b/299149513",
+      "revId": "804e819c1bf64d4df483107e02e896b29e58b3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
