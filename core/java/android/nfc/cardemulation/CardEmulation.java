@@ -594,6 +594,9 @@ public final class CardEmulation {
         if (activity == null || service == null) {
             throw new NullPointerException("activity or service or category is null");
         }
+        if (!activity.isResumed()) {
+            throw new IllegalArgumentException("Activity must be resumed.");
+        }
         try {
             return sService.setPreferredService(service);
         } catch (RemoteException e) {
@@ -625,6 +628,9 @@ public final class CardEmulation {
     public boolean unsetPreferredService(Activity activity) {
         if (activity == null) {
             throw new NullPointerException("activity is null");
+        }
+        if (!activity.isResumed()) {
+            throw new IllegalArgumentException("Activity must be resumed.");
         }
         try {
             return sService.unsetPreferredService();
