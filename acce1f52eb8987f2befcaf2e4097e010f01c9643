@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "996c2d5b_5fb32a4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-09-06T09:14:14Z",
+      "side": 1,
+      "message": "The patch is completely commented out code. Are you looking for feedback in b/299232908 before proceeding or do you mean to remove the comments before uploading?\n\nCan you also replace `Test: InputMethod test` in the commit message with the shell command you run to test InputMethod?",
+      "revId": "acce1f52eb8987f2befcaf2e4097e010f01c9643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
