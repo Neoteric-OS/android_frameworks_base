@@ -9196,6 +9196,10 @@ public class WindowManagerService extends IWindowManager.Stub
             if (imeTargetWindowTask == null) {
                 return false;
             }
+//            if (imeTargetWindow.mActivityRecord != null
+//                    && imeTargetWindow.mActivityRecord.mLastImeShown) {
+//                return true;
+//            }
         }
         final TaskSnapshot snapshot = getTaskSnapshot(imeTargetWindowTask.mTaskId,
                 imeTargetWindowTask.mUserId, false /* isLowResolution */,
