@@ -17,6 +17,7 @@
 package android.os;
 
 import android.Manifest.permission;
+import android.annotation.FlaggedApi;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
@@ -354,17 +355,11 @@ public class BatteryManager {
     public static final int BATTERY_PROPERTY_CHARGING_POLICY = 9;
 
     /**
-     *
-     * Percentage representing the measured battery state of health (remaining
-     * estimated full charge capacity relative to the rated capacity in %).
-     *
-     * <p class="note">
-     * The sender must hold the {@link android.Manifest.permission#BATTERY_STATS} permission.
-     *
-     * @hide
+     * Percentage representing the measured battery state of health.
+     * This means that remaining estimated full charge capacity
+     * relative to the rated capacity in %.
      */
-    @RequiresPermission(permission.BATTERY_STATS)
-    @SystemApi
+    @FlaggedApi(Flags.FLAG_STATE_OF_HEALTH_PUBLIC)
     public static final int BATTERY_PROPERTY_STATE_OF_HEALTH = 10;
 
     private final Context mContext;
