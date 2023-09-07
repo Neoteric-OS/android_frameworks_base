@@ -68,6 +68,23 @@
       "message": "Hello,\n\nPresubmit-Verified is failed, please help restart.",
       "revId": "5e99bda422b82ca627f5d5b86dca641068018b7e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "995d1848_3f539f32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-09-07T04:33:21Z",
+      "side": 1,
+      "message": "Hello,\n\nPresubmit-Verified is failed, please help restart",
+      "revId": "5e99bda422b82ca627f5d5b86dca641068018b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
