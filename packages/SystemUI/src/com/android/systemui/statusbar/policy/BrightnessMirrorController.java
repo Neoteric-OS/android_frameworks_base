@@ -52,6 +52,7 @@ public class BrightnessMirrorController
     private FrameLayout mBrightnessMirror;
     private int mBrightnessMirrorBackgroundPadding;
     private int mLastBrightnessSliderWidth = -1;
+    private int mLastOrientation = -1;
 
     public BrightnessMirrorController(NotificationShadeWindowView statusBarWindow,
             ShadeViewController shadeViewController,
@@ -102,6 +103,12 @@ public class BrightnessMirrorController
         int mirrorY = mInt2Cache[1];
         mBrightnessMirror.setTranslationX(originalX - mirrorX);
         mBrightnessMirror.setTranslationY(originalY - mirrorY);
+
+        int orientation = original.getResources().getConfiguration().orientation;
+        if (mLastOrientation != orientation) {
+            newWidth = original.getRootView().getHeight();
+            mLastOrientation = orientation;
+        }
 
         // Set the brightness mirror container to be the width of the mirror + 2 times the padding
         int newWidth = original.getMeasuredWidth() + 2 * mBrightnessMirrorBackgroundPadding;

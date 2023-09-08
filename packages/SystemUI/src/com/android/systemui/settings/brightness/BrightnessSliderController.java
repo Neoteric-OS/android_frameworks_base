@@ -126,6 +126,10 @@ public class BrightnessSliderController extends ViewController<BrightnessSliderV
             mMirror.setMax(mView.getMax());
             mMirror.setValue(mView.getValue());
             mView.setOnDispatchTouchEventListener(this::mirrorTouchEvent);
+
+            if (mMirrorController != null) {
+                mMirrorController.setLocationAndSize(mView);
+            }
         } else {
             // If there's no mirror, we may be the ones dispatching, events but we should not mirror
             // them
