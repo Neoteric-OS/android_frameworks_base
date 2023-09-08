@@ -421,6 +421,9 @@ cc_library_shared {
                 "-Wno-unused-function",
                 // Declarations used in native_window.h
                 "-D__INTRODUCED_IN(n)=",
+                // RM for debugging only
+                "-g",
+                "-O0",
             ],
             srcs: [
                 "android_animation_PropertyValuesHolder.cpp",
