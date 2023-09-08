@@ -34,6 +34,8 @@ using namespace std;
 
 static JavaVM* javaVM;
 
+extern int register_android_media_ImageReader(JNIEnv* env);
+
 namespace android {
 
 extern int register_android_animation_PropertyValuesHolder(JNIEnv *env);
@@ -78,6 +80,7 @@ static const std::unordered_map<std::string, RegJNIRec> gRegJNIMap = {
 #endif
         {"android.content.res.StringBlock", REG_JNI(register_android_content_StringBlock)},
         {"android.content.res.XmlBlock", REG_JNI(register_android_content_XmlBlock)},
+        {"android.media.ImageReader", REG_JNI(register_android_media_ImageReader)},
 #ifdef __linux__
         {"android.os.FileObserver", REG_JNI(register_android_os_FileObserver)},
         {"android.os.MessageQueue", REG_JNI(register_android_os_MessageQueue)},
