@@ -2039,6 +2039,8 @@ class ContextImpl extends Context {
             if (res < 0) {
                 throw new SecurityException(
                         "Not allowed to bind to service " + service);
+            } else if (res == 0) {
+                mPackageInfo.forgetServiceDispatcher(getOuterContext(), conn);
             }
             return res != 0;
         } catch (RemoteException e) {
