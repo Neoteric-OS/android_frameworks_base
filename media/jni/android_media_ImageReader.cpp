@@ -251,12 +251,14 @@ static JNIImageReaderContext* ImageReader_getContext(JNIEnv* env, jobject thiz)
     JNIImageReaderContext *ctx;
     ctx = reinterpret_cast<JNIImageReaderContext *>
               (env->GetLongField(thiz, gImageReaderClassInfo.mNativeContext));
+    fprintf(stderr, "@@ RM DEBUG %s class %p --> ctx %p\n", __FUNCTION__, thiz, ctx); // RM DO NOT SUBMIT
     return ctx;
 }
 
 static IGraphicBufferProducer* ImageReader_getProducer(JNIEnv* env, jobject thiz)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     JNIImageReaderContext* const ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowRuntimeException(env, "ImageReaderContext is not initialized");
@@ -270,7 +272,9 @@ static void ImageReader_setNativeContext(JNIEnv* env,
         jobject thiz, sp<JNIImageReaderContext> ctx)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p, ctx %p\n", __FUNCTION__, thiz, ctx.get()); // RM DO NOT SUBMIT
     JNIImageReaderContext* const p = ImageReader_getContext(env, thiz);
+    fprintf(stderr, "@@ RM DEBUG %s // ctx is %p\n", __FUNCTION__, p); // RM DO NOT SUBMIT
     if (ctx != 0) {
         ctx->incStrong((void*)ImageReader_setNativeContext);
     }
@@ -284,6 +288,7 @@ static void ImageReader_setNativeContext(JNIEnv* env,
 static BufferItemConsumer* ImageReader_getBufferConsumer(JNIEnv* env, jobject thiz)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     JNIImageReaderContext* const ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowRuntimeException(env, "ImageReaderContext is not initialized");
@@ -296,6 +301,7 @@ static BufferItemConsumer* ImageReader_getBufferConsumer(JNIEnv* env, jobject th
 static void Image_setBufferItem(JNIEnv* env, jobject thiz,
         const BufferItem* buffer)
 {
+    fprintf(stderr, "@@ RM DEBUG %s class %p to buffer %p\n", __FUNCTION__, thiz, buffer); // RM DO NOT SUBMIT
     env->SetLongField(thiz, gSurfaceImageClassInfo.mNativeBuffer, reinterpret_cast<jlong>(buffer));
 }
 
@@ -311,6 +317,7 @@ static BufferItem* Image_getBufferItem(JNIEnv* env, jobject image)
 static void ImageReader_classInit(JNIEnv* env, jclass clazz)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, clazz); // RM DO NOT SUBMIT
 
     jclass imageClazz = env->FindClass("android/media/ImageReader$SurfaceImage");
     LOG_ALWAYS_FATAL_IF(imageClazz == NULL,
@@ -344,6 +351,7 @@ static void ImageReader_classInit(JNIEnv* env, jclass clazz)
     LOG_ALWAYS_FATAL_IF(gSurfaceImageClassInfo.mPlanes == NULL,
             "can't find android/media/ImageReader$ReaderSurfaceImage.mPlanes");
 
+    fprintf(stderr, "@@ RM DEBUG class init mNativeContext\n"); // RM DO NOT SUBMIT
     gImageReaderClassInfo.mNativeContext = env->GetFieldID(
             clazz, ANDROID_MEDIA_IMAGEREADER_CTX_JNI_ID, "J");
     LOG_ALWAYS_FATAL_IF(gImageReaderClassInfo.mNativeContext == NULL,
@@ -383,6 +391,7 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
 
     ALOGV("%s: width:%d, height: %d, format: 0x%x, maxImages:%d",
           __FUNCTION__, width, height, format, maxImages);
+    fprintf(stderr, "@@ RM DEBUG %s, thiz %p, weakThiz %p\n", __FUNCTION__, thiz, weakThiz); // RM DO NOT SUBMIT
 
     PublicFormat publicFormat = static_cast<PublicFormat>(format);
     nativeFormat = mapPublicFormatToHalFormat(publicFormat);
@@ -394,6 +403,8 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
         return;
     }
     sp<JNIImageReaderContext> ctx(new JNIImageReaderContext(env, weakThiz, clazz, maxImages));
+    fprintf(stderr, "@@ RM DEBUG %s class %p, weakThiz %p, new Context: %p\n",
+     __FUNCTION__, thiz, weakThiz, ctx.get()); // RM DO NOT SUBMIT
 
     sp<IGraphicBufferProducer> gbProducer;
     sp<IGraphicBufferConsumer> gbConsumer;
@@ -426,6 +437,8 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
     bufferConsumer->setName(consumerName);
 
     ctx->setProducer(gbProducer);
+    fprintf(stderr, "@@ RM DEBUG %s setProducer: %p\n", __FUNCTION__, ctx->getProducer()); // RM DO NOT SUBMIT
+
     bufferConsumer->setFrameAvailableListener(ctx);
     ImageReader_setNativeContext(env, thiz, ctx);
     ctx->setBufferFormat(nativeFormat);
@@ -458,6 +471,7 @@ static void ImageReader_init(JNIEnv* env, jobject thiz, jobject weakThiz, jint w
 static void ImageReader_close(JNIEnv* env, jobject thiz)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
 
     JNIImageReaderContext* const ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
@@ -511,6 +525,7 @@ static sp<Fence> Image_unlockIfLocked(JNIEnv* env, jobject image) {
 static void ImageReader_imageRelease(JNIEnv* env, jobject thiz, jobject image)
 {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, image); // RM DO NOT SUBMIT
     JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         ALOGW("ImageReader#close called before Image#close, consider calling Image#close first");
@@ -533,6 +548,7 @@ static void ImageReader_imageRelease(JNIEnv* env, jobject thiz, jobject image)
 
 static jint ImageReader_imageSetup(JNIEnv* env, jobject thiz, jobject image) {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, image); // RM DO NOT SUBMIT
     JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException",
@@ -541,7 +557,9 @@ static jint ImageReader_imageSetup(JNIEnv* env, jobject thiz, jobject image) {
     }
 
     BufferItemConsumer* bufferConsumer = ctx->getBufferConsumer();
+    fprintf(stderr, "@@ RM DEBUG %s bufferConsumer %p\n", __FUNCTION__, bufferConsumer); // RM DO NOT SUBMIT
     BufferItem* buffer = ctx->getBufferItem();
+    fprintf(stderr, "@@ RM DEBUG %s buffer %p\n", __FUNCTION__, buffer); // RM DO NOT SUBMIT
     if (buffer == NULL) {
         ALOGW("Unable to acquire a buffer item, very likely client tried to acquire more than"
             " maxImages buffers");
@@ -549,6 +567,7 @@ static jint ImageReader_imageSetup(JNIEnv* env, jobject thiz, jobject image) {
     }
 
     status_t res = bufferConsumer->acquireBuffer(buffer, 0);
+    fprintf(stderr, "@@ RM DEBUG %s acquireBuffer %d\n", __FUNCTION__, res); // RM DO NOT SUBMIT
     if (res != OK) {
         ctx->returnBufferItem(buffer);
         if (res != BufferQueue::NO_BUFFER_AVAILABLE) {
@@ -640,11 +659,13 @@ static jint ImageReader_imageSetup(JNIEnv* env, jobject thiz, jobject image) {
     env->SetIntField(image, gSurfaceImageClassInfo.mScalingMode,
             static_cast<jint>(buffer->mScalingMode));
 
+    fprintf(stderr, "@@ RM DEBUG %s ACQUIRE_SUCCESS\n", __FUNCTION__); // RM DO NOT SUBMIT
     return ACQUIRE_SUCCESS;
 }
 
 static jint ImageReader_detachImage(JNIEnv* env, jobject thiz, jobject image) {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, image); // RM DO NOT SUBMIT
     JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException", "ImageReader was already closed");
@@ -675,6 +696,7 @@ static jint ImageReader_detachImage(JNIEnv* env, jobject thiz, jobject image) {
 
 static void ImageReader_discardFreeBuffers(JNIEnv* env, jobject thiz) {
     ALOGV("%s:", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     JNIImageReaderContext* ctx = ImageReader_getContext(env, thiz);
     if (ctx == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException", "ImageReader was already closed");
@@ -693,6 +715,7 @@ static void ImageReader_discardFreeBuffers(JNIEnv* env, jobject thiz) {
 static jobject ImageReader_getSurface(JNIEnv* env, jobject thiz)
 {
     ALOGV("%s: ", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
 
     IGraphicBufferProducer* gbp = ImageReader_getProducer(env, thiz);
     if (gbp == NULL) {
@@ -707,6 +730,7 @@ static jobject ImageReader_getSurface(JNIEnv* env, jobject thiz)
 static void Image_getLockedImage(JNIEnv* env, jobject thiz, LockedImage *image,
         uint64_t ndkReaderUsage) {
     ALOGV("%s", __FUNCTION__);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     BufferItem* buffer = Image_getBufferItem(env, thiz);
     if (buffer == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException",
@@ -847,6 +871,7 @@ static jobjectArray Image_createSurfacePlanes(JNIEnv* env, jobject thiz,
         int numPlanes, int readerFormat, uint64_t ndkReaderUsage)
 {
     ALOGV("%s: create SurfacePlane array with size %d", __FUNCTION__, numPlanes);
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     int rowStride = 0;
     int pixelStride = 0;
     uint8_t *pData = NULL;
@@ -905,12 +930,14 @@ static jobjectArray Image_createSurfacePlanes(JNIEnv* env, jobject thiz,
 
 static jint Image_getWidth(JNIEnv* env, jobject thiz)
 {
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     BufferItem* buffer = Image_getBufferItem(env, thiz);
     return getBufferWidth(buffer);
 }
 
 static jint Image_getHeight(JNIEnv* env, jobject thiz)
 {
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     BufferItem* buffer = Image_getBufferItem(env, thiz);
     return getBufferHeight(buffer);
 }
@@ -929,14 +956,20 @@ static jint Image_getFenceFd(JNIEnv* env, jobject thiz)
 
 static jint Image_getFormat(JNIEnv* env, jobject thiz, jint readerFormat)
 {
+    fprintf(stderr, "@@ RM DEBUG %s class %p\n", __FUNCTION__, thiz); // RM DO NOT SUBMIT
     if (isFormatOpaque(readerFormat)) {
+        fprintf(stderr, "@@ RM DEBUG %s format is opaque\n", __FUNCTION__); // RM DO NOT SUBMIT
         // Assuming opaque reader produce opaque images.
         return static_cast<jint>(PublicFormat::PRIVATE);
     } else {
+        fprintf(stderr, "@@ RM DEBUG %s format is NOT opaque\n", __FUNCTION__); // RM DO NOT SUBMIT
         BufferItem* buffer = Image_getBufferItem(env, thiz);
+        fprintf(stderr, "@@ RM DEBUG %s buffer %p\n", __FUNCTION__, buffer); // RM DO NOT SUBMIT
         int readerHalFormat = mapPublicFormatToHalFormat(static_cast<PublicFormat>(readerFormat));
+        fprintf(stderr, "@@ RM DEBUG %s readerHalFormat %d\n", __FUNCTION__, readerHalFormat); // RM DO NOT SUBMIT
         int32_t fmt = applyFormatOverrides(
                 buffer->mGraphicBuffer->getPixelFormat(), readerHalFormat);
+        fprintf(stderr, "@@ RM DEBUG %s fmt %d\n", __FUNCTION__, fmt); // RM DO NOT SUBMIT
         // Override the image format to HAL_PIXEL_FORMAT_YCbCr_420_888 if the actual format is
         // NV21 or YV12. This could only happen when the Gralloc HAL version is v0.1 thus doesn't
         // support lockycbcr(), the CpuConsumer need to use the lock() method in the
@@ -944,8 +977,10 @@ static jint Image_getFormat(JNIEnv* env, jobject thiz, jint readerFormat)
         // overridden to HAL_PIXEL_FORMAT_YCbCr_420_888 for the flexible YUV compatible formats.
         if (isPossiblyYUV(fmt)) {
             fmt = HAL_PIXEL_FORMAT_YCbCr_420_888;
+            fprintf(stderr, "@@ RM DEBUG %s YUV fmt %d\n", __FUNCTION__, fmt); // RM DO NOT SUBMIT
         }
         PublicFormat publicFmt = mapHalFormatDataspaceToPublicFormat(fmt, buffer->mDataSpace);
+        fprintf(stderr, "@@ RM DEBUG %s publicFmt %d\n", __FUNCTION__, publicFmt); // RM DO NOT SUBMIT
         return static_cast<jint>(publicFmt);
     }
 }
