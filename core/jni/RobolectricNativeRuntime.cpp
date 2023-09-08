@@ -10,6 +10,7 @@
 static JavaVM* javaVM;
 
 extern int register_libcore_util_NativeAllocationRegistry(JNIEnv* env);
+extern int register_android_media_ImageReader(JNIEnv* env);
 
 namespace android {
 
@@ -32,6 +33,7 @@ static const RegJNIRec sqliteJNI[] = {
 
 static const RegJNIRec graphicsJNI[] = {
         REG_JNI(register_android_animation_PropertyValuesHolder),
+        REG_JNI(register_android_media_ImageReader),
         REG_JNI(register_android_view_Surface),
         REG_JNI(register_com_android_internal_util_VirtualRefBasePtr),
         REG_JNI(register_libcore_util_NativeAllocationRegistry),
@@ -51,6 +53,9 @@ int AndroidRuntime::registerNativeMethods(JNIEnv* env, const char* className,
                                           const JNINativeMethod* gMethods, int numMethods) {
     std::string fullClassName = std::string(className);
     std::string classNameString = fullClassName.substr(fullClassName.find_last_of("/"));
+    // strip out inner class notation '$'
+    classNameString.erase(std::remove(classNameString.begin(), classNameString.end(), '$'),
+    classNameString.end());
     std::string roboNativeBindingClass =
             "org/robolectric/nativeruntime" + classNameString + "Natives";
     jclass clazz = FindClassOrDie(env, roboNativeBindingClass.c_str());
