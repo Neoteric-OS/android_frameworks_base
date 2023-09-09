@@ -2839,15 +2839,20 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             }
 
 	    final long now = SystemClock.uptimeMillis();
-            if (progress == mRow.slider.getMin() || progress == mRow.slider.getMax()) {
-                mLastHapticTimestamp = now;
-                mController.vibrate(VibrationEffect.get(
-                        VibrationEffect.EFFECT_HEAVY_CLICK));
-            } else if (now - mLastHapticTimestamp > HAPTIC_MIN_INTERVAL) {
-                mLastHapticTimestamp = now;
-                mController.vibrate(VibrationEffect.get(
-                        VibrationEffect.EFFECT_TICK));
-            }
+	    if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0 &&
+                Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HAPTIC_ON_SLIDER, 1) != 0) {
+                if (progress == mRow.slider.getMin() || progress == mRow.slider.getMax()) {
+                    mLastHapticTimestamp = now;
+                    mController.vibrate(VibrationEffect.get(
+                            VibrationEffect.EFFECT_HEAVY_CLICK));
+                } else if (now - mLastHapticTimestamp > HAPTIC_MIN_INTERVAL) {
+                    mLastHapticTimestamp = now;
+                    mController.vibrate(VibrationEffect.get(
+                            VibrationEffect.EFFECT_TICK));
+                }
+	    }
         }
 
         @Override
