@@ -791,7 +791,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                     R.drawable.ic_volume_media, R.drawable.ic_volume_media_mute, true, true);
             if (!AudioSystem.isSingleVolume(mContext)) {
                 if (mVoiceCapable) {
-		    addRow(AudioManager.STREAM_RING, R.drawable.ic_ring_volume,
+                    addRow(AudioManager.STREAM_RING, R.drawable.ic_ring_volume,
                             R.drawable.ic_ring_volume_off, true, false);
                 } else {
                     addRow(AudioManager.STREAM_RING, R.drawable.ic_volume_notification,
@@ -1041,6 +1041,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         Events.writeEvent(Events.EVENT_RINGER_TOGGLE, newRingerMode);
         incrementManualToggleCount();
         updateRingerH();
+        updateNotificationRowH();
         provideTouchFeedbackH(newRingerMode);
         mController.setRingerMode(newRingerMode, false);
         maybeShowToastH(newRingerMode);
@@ -2200,13 +2201,39 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     }
 
     private void updateNotificationRowH() {
-        VolumeRow notificationRow = findRow(AudioManager.STREAM_NOTIFICATION);
-        if (notificationRow != null && mState.linkedNotification) {
-            mRows.remove(notificationRow);
-            mDialogRowsView.removeView(notificationRow.view);
-        } else if (notificationRow == null && !mState.linkedNotification) {
-            addRow(AudioManager.STREAM_NOTIFICATION, R.drawable.ic_volume_ringer,
-                    R.drawable.ic_volume_ringer_mute, true, false);
+        if (mState != null) {
+            VolumeRow notificationRow = findRow(AudioManager.STREAM_NOTIFICATION);
+            
+            if (notificationRow != null && mState.linkedNotification) {
+                mRows.remove(notificationRow);
+                mDialogRowsView.removeView(notificationRow.view);
+            }
+            
+            if (!mState.linkedNotification) {
+                switch (mState.ringerModeInternal) {
+                    case AudioManager.RINGER_MODE_VIBRATE:
+                        if (notificationRow != null) {
+                            mRows.remove(notificationRow);
+                            mDialogRowsView.removeView(notificationRow.view);
+                        }
+                        break;
+                    case AudioManager.RINGER_MODE_SILENT:
+                        if (notificationRow != null) {
+                            mRows.remove(notificationRow);
+                            mDialogRowsView.removeView(notificationRow.view);
+                        }
+                        break;
+                    case AudioManager.RINGER_MODE_NORMAL:
+                        if (notificationRow == null && mExpanded) {
+                            addRow(AudioManager.STREAM_NOTIFICATION, R.drawable.ic_volume_ringer,
+                                R.drawable.ic_volume_ringer_mute, true, false);
+                        } else if (notificationRow == null && !mShowing && !mIsAnimatingDismiss) {
+                            addRow(AudioManager.STREAM_NOTIFICATION, R.drawable.ic_volume_ringer,
+                                R.drawable.ic_volume_ringer_mute, true, false);
+                        }
+                        break;
+                }
+            }
         }
     }
 
