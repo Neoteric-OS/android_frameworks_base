@@ -45,6 +45,7 @@ public final class BLASTBufferQueue {
             long frameNumber);
     private static native void nativeSetTransactionHangCallback(long ptr,
             TransactionHangCallback callback);
+    private static native void nativeSetDequeueTimeout(long ptr,long timeout);
 
     public interface TransactionHangCallback {
         void onTransactionHang(boolean isGpuHang);
@@ -95,6 +96,10 @@ public final class BLASTBufferQueue {
     public void syncNextTransaction(boolean acquireSingleBuffer,
             Consumer<SurfaceControl.Transaction> callback) {
         nativeSyncNextTransaction(mNativeObject, callback, acquireSingleBuffer);
+    }
+
+    public void setDequeueTimeout(long timeout) {
+        nativeSetDequeueTimeout(mNativeObject,timeout);
     }
 
     /**
