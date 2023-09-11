@@ -2108,14 +2108,16 @@ public final class Configuration implements Parcelable, Comparable<Configuration
             for (int i = 0; i < minSize; ++i) {
                 final Locale thisLocale = this.mLocaleList.get(i);
                 final Locale thatLocale = that.mLocaleList.get(i);
-                n = thisLocale.getLanguage().compareTo(thatLocale.getLanguage());
-                if (n != 0) return n;
-                n = thisLocale.getCountry().compareTo(thatLocale.getCountry());
-                if (n != 0) return n;
-                n = thisLocale.getVariant().compareTo(thatLocale.getVariant());
-                if (n != 0) return n;
-                n = thisLocale.toLanguageTag().compareTo(thatLocale.toLanguageTag());
-                if (n != 0) return n;
+                if (thisLocale != null && thatLocale != null) {
+                    n = thisLocale.getLanguage().compareTo(thatLocale.getLanguage());
+                    if (n != 0) return n;
+                    n = thisLocale.getCountry().compareTo(thatLocale.getCountry());
+                    if (n != 0) return n;
+                    n = thisLocale.getVariant().compareTo(thatLocale.getVariant());
+                    if (n != 0) return n;
+                    n = thisLocale.toLanguageTag().compareTo(thatLocale.toLanguageTag());
+                    if (n != 0) return n;
+                }
             }
             n = this.mLocaleList.size() - that.mLocaleList.size();
             if (n != 0) return n;
