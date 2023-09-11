@@ -33,6 +33,23 @@
       "message": "@piee@google.com Could you please help to merge the changes",
       "revId": "729d29db565a49d9e6c2a3f89c3068947480dbdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44190eee_124ab10f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1963450
+      },
+      "writtenOn": "2023-09-11T13:01:50Z",
+      "side": 1,
+      "message": "Thanks for the patch. Can you take this change outside of the relation chain? Then we can merge it.",
+      "revId": "729d29db565a49d9e6c2a3f89c3068947480dbdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
