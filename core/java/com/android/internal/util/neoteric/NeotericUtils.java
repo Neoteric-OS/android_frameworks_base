@@ -58,10 +58,11 @@ import android.view.DisplayCutout;
 import android.view.DisplayInfo;
 import com.android.internal.R;
 
-import java.util.List;
-
 import com.android.internal.statusbar.IStatusBarService;
+import com.android.internal.util.ArrayUtils;
 import android.content.pm.PackageManager.NameNotFoundException;
+
+import java.util.List;
 
 /**
  * Some custom utilities
@@ -73,6 +74,12 @@ public class NeotericUtils {
     private static final boolean DEBUG = false;
 
     private static final int NO_CUTOUT = -1;
+
+    public static boolean isUdfps(Context context) {
+        final int[] udfpsProps = context.getResources().getIntArray(
+                com.android.internal.R.array.config_udfps_sensor_props);
+        return !ArrayUtils.isEmpty(udfpsProps);
+    }
 
     public static void switchScreenOff(Context ctx) {
         PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
