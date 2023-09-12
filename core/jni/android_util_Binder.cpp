@@ -562,9 +562,7 @@ class JavaDeathRecipient : public IBinder::DeathRecipient
 {
 public:
     JavaDeathRecipient(JNIEnv* env, jobject object, const sp<DeathRecipientList>& list)
-        : mVM(jnienv_to_javavm(env)), mObject(env->NewGlobalRef(object)),
-          mObjectWeak(NULL), mList(list)
-    {
+          : mVM(jnienv_to_javavm(env)), mObjectWeak(env->NewWeakGlobalRef(object)), mList(list) {
         // These objects manage their own lifetimes so are responsible for final bookkeeping.
         // The list holds a strong reference to this object.
         LOGDEATH("Adding JDR %p to DRL %p", this, list.get());
@@ -577,29 +575,17 @@ public:
     void binderDied(const wp<IBinder>& who)
     {
         LOGDEATH("Receiving binderDied() on JavaDeathRecipient %p\n", this);
-        if (mObject != NULL) {
-            JNIEnv* env = javavm_to_jnienv(mVM);
+        JNIEnv* env = javavm_to_jnienv(mVM);
+        ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak));
+        if (object != nullptr) {
             ScopedLocalRef<jobject> jBinderProxy(env, javaObjectForIBinder(env, who.promote()));
             env->CallStaticVoidMethod(gBinderProxyOffsets.mClass,
-                                      gBinderProxyOffsets.mSendDeathNotice, mObject,
+                                      gBinderProxyOffsets.mSendDeathNotice, object.get(),
                                       jBinderProxy.get());
             if (env->ExceptionCheck()) {
                 jthrowable excep = env->ExceptionOccurred();
                 binder_report_exception(env, excep,
                                         "*** Uncaught exception returned from death notification!");
-            }
-
-            // Serialize with our containing DeathRecipientList so that we can't
-            // delete the global ref on mObject while the list is being iterated.
-            sp<DeathRecipientList> list = mList.promote();
-            if (list != NULL) {
-                AutoMutex _l(list->lock());
-
-                // Demote from strong ref to weak after binderDied() has been delivered,
-                // to allow the DeathRecipient and BinderProxy to be GC'd if no longer needed.
-                mObjectWeak = env->NewWeakGlobalRef(mObject);
-                env->DeleteGlobalRef(mObject);
-                mObject = NULL;
             }
         }
     }
@@ -616,24 +602,18 @@ public:
     }
 
     bool matches(jobject obj) {
-        bool result;
         JNIEnv* env = javavm_to_jnienv(mVM);
-
-        if (mObject != NULL) {
-            result = env->IsSameObject(obj, mObject);
-        } else {
-            ScopedLocalRef<jobject> me(env, env->NewLocalRef(mObjectWeak));
-            result = env->IsSameObject(obj, me.get());
-        }
-        return result;
+        ScopedLocalRef<jobject> me(env, env->NewLocalRef(mObjectWeak));
+        return env->IsSameObject(obj, me.get());
     }
 
     void warnIfStillLive() {
-        if (mObject != NULL) {
+        JNIEnv* env = javavm_to_jnienv(mVM);
+        ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak));
+        if (object != NULL) {
             // Okay, something is wrong -- we have a hard reference to a live death
             // recipient on the VM side, but the list is being torn down.
-            JNIEnv* env = javavm_to_jnienv(mVM);
-            ScopedLocalRef<jclass> objClassRef(env, env->GetObjectClass(mObject));
+            ScopedLocalRef<jclass> objClassRef(env, env->GetObjectClass(object.get()));
             ScopedLocalRef<jstring> nameRef(env,
                     (jstring) env->CallObjectMethod(objClassRef.get(), gClassOffsets.mGetName));
             ScopedUtfChars nameUtf(env, nameRef.get());
@@ -654,16 +634,11 @@ protected:
         //ALOGI("Removing death ref: recipient=%p\n", mObject);
         gNumDeathRefsDeleted.fetch_add(1, std::memory_order_relaxed);
         JNIEnv* env = javavm_to_jnienv(mVM);
-        if (mObject != NULL) {
-            env->DeleteGlobalRef(mObject);
-        } else {
-            env->DeleteWeakGlobalRef(mObjectWeak);
-        }
+        env->DeleteWeakGlobalRef(mObjectWeak);
     }
 
 private:
     JavaVM* const mVM;
-    jobject mObject;  // Initial strong ref to Java-side DeathRecipient. Cleared on binderDied().
     jweak mObjectWeak; // Weak ref to the same Java-side DeathRecipient after binderDied().
     wp<DeathRecipientList> mList;
 };
