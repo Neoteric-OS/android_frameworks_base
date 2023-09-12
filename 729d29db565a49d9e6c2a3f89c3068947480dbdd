@@ -50,6 +50,24 @@
       "message": "Thanks for the patch. Can you take this change outside of the relation chain? Then we can merge it.",
       "revId": "729d29db565a49d9e6c2a3f89c3068947480dbdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74e7d2cf_00fd29d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2034440
+      },
+      "writtenOn": "2023-09-12T07:01:44Z",
+      "side": 1,
+      "message": "Thank you for the reply. I have rebased it and removed the relation chain. Please help to merge.",
+      "parentUuid": "44190eee_124ab10f",
+      "revId": "729d29db565a49d9e6c2a3f89c3068947480dbdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

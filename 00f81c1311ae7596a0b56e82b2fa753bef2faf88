@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21272a04_7b1eebc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2034440
+      },
+      "writtenOn": "2023-09-12T07:01:44Z",
+      "side": 1,
+      "message": "@sarpm@google.com Thank you for the reply. I have rebased it and removed the relation chain. Please help to merge",
+      "revId": "00f81c1311ae7596a0b56e82b2fa753bef2faf88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
