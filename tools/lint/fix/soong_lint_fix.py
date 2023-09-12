@@ -88,10 +88,13 @@ class SoongLintFix:
         self._kwargs = None
         self._modules = []
 
-    def run(self):
+    def run(self, args=[]):
         """
         Run the script
         """
+        if len(args) == 0:
+            args = sys.argv
+        self._args = self._parser.parse_args(args)
         self._setup()
         self._find_modules()
         self._lint()
@@ -103,7 +106,6 @@ class SoongLintFix:
             self._print()
 
     def _setup(self):
-        self._args = self._parser.parse_args()
         env = os.environ.copy()
         if self._args.check:
             env["ANDROID_LINT_CHECK"] = self._args.check
