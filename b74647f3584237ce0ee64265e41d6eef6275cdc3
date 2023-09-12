@@ -16,6 +16,24 @@
       "message": "There is still 1 failed in Presubmit-Verified, please help try again.",
       "revId": "b74647f3584237ce0ee64265e41d6eef6275cdc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f820081b_165033fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-09-12T05:51:11Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "8ea01eb3_6b41e231",
+      "revId": "b74647f3584237ce0ee64265e41d6eef6275cdc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
