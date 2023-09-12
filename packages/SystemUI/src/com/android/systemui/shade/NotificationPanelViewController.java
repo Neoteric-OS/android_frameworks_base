@@ -238,7 +238,7 @@ import com.android.systemui.util.Utils;
 import com.android.systemui.util.time.SystemClock;
 import com.android.wm.shell.animation.FlingAnimationUtils;
 
-import com.android.internal.util.zeph.ZephyrusUtils;
+import com.android.internal.util.neoteric.NeotericUtils;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -956,7 +956,7 @@ public final class NotificationPanelViewController implements Dumpable {
                 new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-                ZephyrusUtils.switchScreenOff(mView.getContext());
+                NeotericUtils.switchScreenOff(mView.getContext());
                 return true;
             }
         });

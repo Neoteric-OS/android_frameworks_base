@@ -58,7 +58,7 @@ import com.android.systemui.statusbar.phone.SystemUIDialog;
 import java.util.Arrays;
 import java.util.List;
 
-import org.zeph.support.preference.Switch;
+import org.neoteric.support.preference.Switch;
 
 /**
  * Dialog to select screen recording options

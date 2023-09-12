@@ -104,7 +104,7 @@ import javax.inject.Inject;
 public class ThemeOverlayController implements CoreStartable, Dumpable {
     protected static final String TAG = "ThemeOverlayController";
     protected static final String OVERLAY_BERRY_BLACK_THEME =
-            "com.zeph.overlay.customization.blacktheme";
+            "com.neoteric.overlay.customization.blacktheme";
     private static final boolean DEBUG = true;
 
     protected static final int NEUTRAL = 0;

@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.provider.Settings;
 import android.util.AttributeSet;
 
-import org.zeph.support.preference.SwitchPreference;
+import org.neoteric.support.preference.SwitchPreference;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.Dependency;

@@ -30,7 +30,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
-import com.android.internal.util.zeph.ZephyrusUtils;
+import com.android.internal.util.neoteric.NeotericUtils;
 
 import com.android.systemui.R;
 import com.android.systemui.dagger.qualifiers.Background;
@@ -57,7 +57,7 @@ public class LensScreenshotReceiver extends BroadcastReceiver {
     }
 
     private boolean doesGoogleEnabled(Context context) {
-        return ZephyrusUtils.isPackageInstalled(context, GSA_PACKAGE, false /* ignoreState */);
+        return NeotericUtils.isPackageInstalled(context, GSA_PACKAGE, false /* ignoreState */);
     }
 
     @Override

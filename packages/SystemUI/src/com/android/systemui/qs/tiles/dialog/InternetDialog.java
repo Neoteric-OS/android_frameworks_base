@@ -89,7 +89,7 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-import org.zeph.support.preference.Switch;
+import org.neoteric.support.preference.Switch;
 
 /**
  * Dialog for showing mobile network, connected Wi-Fi network and Wi-Fi networks.

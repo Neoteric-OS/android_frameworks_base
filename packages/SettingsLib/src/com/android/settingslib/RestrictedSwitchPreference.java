@@ -39,7 +39,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.content.res.TypedArrayUtils;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceViewHolder;
-import org.zeph.support.preference.SwitchPreference;
+import org.neoteric.support.preference.SwitchPreference;
 
 import com.android.settingslib.utils.BuildCompatUtils;
 

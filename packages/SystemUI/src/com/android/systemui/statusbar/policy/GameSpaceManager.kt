@@ -140,10 +140,10 @@ class GameSpaceManager @Inject constructor(
     }
 
     companion object {
-        private const val ACTION_GAME_START = "com.zeph.gamespace.action.GAME_START"
-        private const val ACTION_GAME_STOP = "com.zeph.gamespace.action.GAME_STOP"
-        private const val GAMESPACE_PACKAGE = "com.zeph.gamespace"
-        private const val RECEIVER_CLASS = "com.zeph.gamespace/.gamebar.GameBroadcastReceiver"
+        private const val ACTION_GAME_START = "com.neoteric.gamespace.action.GAME_START"
+        private const val ACTION_GAME_STOP = "com.neoteric.gamespace.action.GAME_STOP"
+        private const val GAMESPACE_PACKAGE = "com.neoteric.gamespace"
+        private const val RECEIVER_CLASS = "com.neoteric.gamespace/.gamebar.GameBroadcastReceiver"
         private const val EXTRA_CALLER_NAME = "source"
         private const val EXTRA_ACTIVE_GAME = "package_name"
         private const val MSG_UPDATE_FOREGROUND_APP = 0

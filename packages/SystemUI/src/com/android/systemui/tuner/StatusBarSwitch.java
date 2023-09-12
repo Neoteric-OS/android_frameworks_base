@@ -22,7 +22,7 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import org.zeph.support.preference.SwitchPreference;
+import org.neoteric.support.preference.SwitchPreference;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;

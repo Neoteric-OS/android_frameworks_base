@@ -59,7 +59,7 @@ import com.android.systemui.statusbar.policy.BluetoothController;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.zeph.support.preference.Switch;
+import org.neoteric.support.preference.Switch;
 
 /**
  * Dialog for bluetooth

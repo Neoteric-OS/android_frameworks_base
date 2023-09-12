@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.zeph.hardware;
+package com.android.internal.neoteric.hardware;
 
 import android.os.Parcel;
 import android.os.Parcelable;

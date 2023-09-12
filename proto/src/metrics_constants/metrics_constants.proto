@@ -7441,8 +7441,8 @@ message MetricsEvent {
     //Extensions
     EXTENSIONS = 1150;
 
-    //Zephyrus
-    ZEPH = 1999;
+    //Neoteric
+    NEOTERIC = 1999;
 
     // CustomSettings 
     CUSTOM_SETTINGS = 9999;

@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragment;
-import org.zeph.support.preference.SwitchPreference;
+import org.neoteric.support.preference.SwitchPreference;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;

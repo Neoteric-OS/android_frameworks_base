@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.zeph;
+package com.android.internal.util.neoteric;
 
 import static android.view.DisplayCutout.BOUNDS_POSITION_LEFT;
 import static android.view.DisplayCutout.BOUNDS_POSITION_RIGHT;
@@ -66,9 +66,9 @@ import android.content.pm.PackageManager.NameNotFoundException;
 /**
  * Some custom utilities
  */
-public class ZephyrusUtils {
+public class NeotericUtils {
 
-    private static final String TAG = "ZephyrusUtils";
+    private static final String TAG = "NeotericUtils";
 
     private static final boolean DEBUG = false;
 

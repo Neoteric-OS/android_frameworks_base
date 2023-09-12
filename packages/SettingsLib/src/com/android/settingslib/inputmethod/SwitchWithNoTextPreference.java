@@ -18,7 +18,7 @@ package com.android.settingslib.inputmethod;
 
 import android.content.Context;
 
-import org.zeph.support.preference.SwitchPreference;
+import org.neoteric.support.preference.SwitchPreference;
 
 public class SwitchWithNoTextPreference extends SwitchPreference {
     private static final String EMPTY_TEXT = "";

@@ -532,7 +532,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
     private final PulseControllerImpl mPulseController;
 
-   // Zephyrus Idle
+   // Neoteric Idle
     private boolean isIdleManagerIstantiated = false;
 
     // settings

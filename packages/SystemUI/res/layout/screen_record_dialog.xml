@@ -83,7 +83,7 @@
                         android:popupBackground="@drawable/screenrecord_spinner_background"
                         android:dropDownWidth="274dp"
                         android:prompt="@string/screenrecord_audio_label"/>
-                    <org.zeph.support.preference.Switch
+                    <org.neoteric.support.preference.Switch
                         android:layout_width="wrap_content"
                         android:minWidth="48dp"
                         android:layout_height="48dp"
@@ -119,7 +119,7 @@
                         android:fontFamily="@*android:string/config_headlineFontFamily"
                         android:textColor="?android:attr/textColorPrimary"
                         android:importantForAccessibility="no"/>
-                    <org.zeph.support.preference.Switch
+                    <org.neoteric.support.preference.Switch
                         android:layout_width="wrap_content"
                         android:minWidth="48dp"
                         android:layout_height="48dp"
@@ -141,7 +141,7 @@
                         android:tint="?android:attr/textColorSecondary"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/screenrecord_option_padding"/>
-                    <org.zeph.support.preference.Switch
+                    <org.neoteric.support.preference.Switch
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:minWidth="48dp"
@@ -165,7 +165,7 @@
                         android:tint="?android:attr/textColorSecondary"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/screenrecord_option_padding"/>
-                    <org.zeph.support.preference.Switch
+                    <org.neoteric.support.preference.Switch
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:minWidth="48dp"
@@ -188,7 +188,7 @@
                         android:tint="?android:attr/textColorSecondary"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/screenrecord_option_padding"/>
-                    <org.zeph.support.preference.Switch
+                    <org.neoteric.support.preference.Switch
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:minWidth="48dp"
@@ -212,7 +212,7 @@
                         android:tint="?android:attr/textColorSecondary"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/screenrecord_option_padding"/>
-                    <org.zeph.support.preference.Switch
+                    <org.neoteric.support.preference.Switch
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:minWidth="48dp"

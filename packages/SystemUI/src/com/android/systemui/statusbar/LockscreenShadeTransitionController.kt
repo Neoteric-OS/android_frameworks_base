@@ -14,7 +14,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import androidx.annotation.FloatRange
 import androidx.annotation.VisibleForTesting
-import com.android.internal.util.zeph.ZephyrusUtils
+import com.android.internal.util.neoteric.NeotericUtils
 import com.android.systemui.Dumpable
 import com.android.systemui.ExpandHelper
 import com.android.systemui.Gefingerpoken
@@ -803,7 +803,7 @@ class DragDownHelper(
         statusBarHeaderHeight = context
                 .resources.getDimensionPixelSize(R.dimen.status_bar_header_height_keyguard)
         goToSleep = Runnable {
-            ZephyrusUtils.switchScreenOff(context)
+            NeotericUtils.switchScreenOff(context)
         }
     }
 

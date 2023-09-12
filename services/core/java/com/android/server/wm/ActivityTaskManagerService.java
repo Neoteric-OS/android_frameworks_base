@@ -270,7 +270,7 @@ import com.android.server.uri.NeededUriGrants;
 import com.android.server.uri.UriGrantsManagerInternal;
 
 import com.android.internal.util.custom.cutout.CutoutFullscreenController;
-import com.android.internal.util.zeph.PixelPropsUtils;
+import com.android.internal.util.neoteric.PixelPropsUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
