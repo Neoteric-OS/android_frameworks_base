@@ -1,0 +1,10 @@
+package: "com.android.window.flags"
+
+# Project link: https://gantry.corp.google.com/projects/android_platform_windowing_sdk/changes
+
+flag {
+  name: "nav_bar_transparent_by_default"
+  namespace: "windowing_frontend"
+  description: "Make nav bar color transparent by default when targeting SDK 35 or greater"
+  bug: "232195501"
+}
