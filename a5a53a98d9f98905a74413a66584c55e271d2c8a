@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "677860f5_3cce368f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387516
+      },
+      "writtenOn": "2023-09-14T20:18:08Z",
+      "side": 1,
+      "message": "Oops, I forgot about this CL. Can you +2 again?",
+      "revId": "a5a53a98d9f98905a74413a66584c55e271d2c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
