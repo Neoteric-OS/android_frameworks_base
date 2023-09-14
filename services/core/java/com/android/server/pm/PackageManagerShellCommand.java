@@ -2804,17 +2804,17 @@ class PackageManagerShellCommand extends ShellCommand {
         final PermissionAllowlist permissionAllowlist =
                 SystemConfig.getInstance().getPermissionAllowlist();
         final ArrayMap<String, ArrayMap<String, Boolean>> privAppPermissions;
-        if (isVendorApp(packageName)) {
+        if (isApexApp(packageName)) {
+            final String moduleName = ApexManager.getInstance().getApexModuleNameForPackageName(
+                    getApexPackageNameContainingPackage(packageName));
+            privAppPermissions = permissionAllowlist.getApexPrivilegedAppAllowlists()
+                    .get(moduleName);
+        } else if (isVendorApp(packageName)) {
             privAppPermissions = permissionAllowlist.getVendorPrivilegedAppAllowlist();
         } else if (isProductApp(packageName)) {
             privAppPermissions = permissionAllowlist.getProductPrivilegedAppAllowlist();
         } else if (isSystemExtApp(packageName)) {
             privAppPermissions = permissionAllowlist.getSystemExtPrivilegedAppAllowlist();
-        } else if (isApexApp(packageName)) {
-            final String moduleName = ApexManager.getInstance().getApexModuleNameForPackageName(
-                    getApexPackageNameContainingPackage(packageName));
-            privAppPermissions = permissionAllowlist.getApexPrivilegedAppAllowlists()
-                    .get(moduleName);
         } else {
             privAppPermissions = permissionAllowlist.getPrivilegedAppAllowlist();
         }

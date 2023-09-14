@@ -3379,16 +3379,7 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
         final PermissionAllowlist permissionAllowlist =
                 SystemConfig.getInstance().getPermissionAllowlist();
         final String packageName = packageState.getPackageName();
-        if (packageState.isVendor()) {
-            return permissionAllowlist.getVendorPrivilegedAppAllowlistState(packageName,
-                    permissionName);
-        } else if (packageState.isProduct()) {
-            return permissionAllowlist.getProductPrivilegedAppAllowlistState(packageName,
-                    permissionName);
-        } else if (packageState.isSystemExt()) {
-            return permissionAllowlist.getSystemExtPrivilegedAppAllowlistState(packageName,
-                    permissionName);
-        } else if (containingApexPackageName != null) {
+        if (containingApexPackageName != null) {
             final Boolean nonApexAllowlistState =
                     permissionAllowlist.getPrivilegedAppAllowlistState(packageName, permissionName);
             if (nonApexAllowlistState != null) {
@@ -3407,6 +3398,15 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
                 return apexAllowlistState;
             }
             return nonApexAllowlistState;
+        } else if (packageState.isVendor()) {
+            return permissionAllowlist.getVendorPrivilegedAppAllowlistState(packageName,
+                    permissionName);
+        } else if (packageState.isProduct()) {
+            return permissionAllowlist.getProductPrivilegedAppAllowlistState(packageName,
+                    permissionName);
+        } else if (packageState.isSystemExt()) {
+            return permissionAllowlist.getSystemExtPrivilegedAppAllowlistState(packageName,
+                    permissionName);
         } else {
             return permissionAllowlist.getPrivilegedAppAllowlistState(packageName, permissionName);
         }
