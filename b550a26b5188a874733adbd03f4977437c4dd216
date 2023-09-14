@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8beb09fb_6709228a",
+        "filename": "core/java/android/os/flags.aconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2023-09-14T15:30:25Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a Gantry namespace with this name. You should use a namespace controlled by your team, from my understanding.",
+      "revId": "b550a26b5188a874733adbd03f4977437c4dd216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
