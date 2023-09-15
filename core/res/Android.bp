@@ -81,10 +81,9 @@ genrule {
     srcs: [":remote-color-resources-apk"],
     out: ["res/raw/remote_views_color_resources.arsc"],
     cmd: "mkdir -p $(genDir)/remote-color-resources-arsc && " +
-        "unzip -x $(in) resources.arsc -d $(genDir)/remote-color-resources-arsc && " +
+        "unzip -q -x $(in) resources.arsc -d $(genDir)/remote-color-resources-arsc && " +
         "mkdir -p $$(dirname $(out)) && " +
-        "mv $(genDir)/remote-color-resources-arsc/resources.arsc $(out) && " +
-        "echo 'Created $(out)'",
+        "mv $(genDir)/remote-color-resources-arsc/resources.arsc $(out)",
 }
 
 genrule {
