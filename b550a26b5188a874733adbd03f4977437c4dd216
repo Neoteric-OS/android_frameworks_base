@@ -16,6 +16,24 @@
       "message": "I don\u0027t think there\u0027s a Gantry namespace with this name. You should use a namespace controlled by your team, from my understanding.",
       "revId": "b550a26b5188a874733adbd03f4977437c4dd216",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40fa693d_579fa909",
+        "filename": "core/java/android/os/flags.aconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-09-15T09:02:19Z",
+      "side": 1,
+      "message": "@wjack@google.com you can discuss with Ken to create your own team namespace, e.g. \"battery_charging_manager\"",
+      "parentUuid": "8beb09fb_6709228a",
+      "revId": "b550a26b5188a874733adbd03f4977437c4dd216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
