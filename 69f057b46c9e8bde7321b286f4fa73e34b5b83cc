@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4079c300_579cd12f",
+        "filename": "tools/lint/fix/soong_lint_fix.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2023-09-18T18:21:32Z",
+      "side": 1,
+      "message": "Regardless if if you\u0027re using an empty list or none, the if statement should be `if not args:`.\n\nI think this is bad style though. The run function should accept the information it actually needs. The main() function should do the argument parsing, and then enforce_permission_counter would pass raw data instead of command-line-style arguments.",
+      "parentUuid": "1a2fc828_0684e5ba",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e1b9387a_62d3dc45",
         "filename": "tools/lint/utils/enforce_permission_counter.py",
         "patchSetId": 2
@@ -31,6 +49,41 @@
       "writtenOn": "2023-09-18T14:26:17Z",
       "side": 1,
       "message": "This CL as a whole looks great to me.  I am curious if colefaust@google.com has any ideas about how to keep the list of targets in sync, or a way to do this more natively within soong.\n\nWe\u0027ve long wanted a way to build an \"uber target\" for the sake of lint\u0027s call graph analysis. Today we\u0027re limited by lint\u0027s inability to scan all these sources together, since it really sees ~35 separate sets of source files that make up the ~35 modules of system server.  \n\nIf we had a single target that saw all the sources together, we could migrate much more aggressively.",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "251f4bc2_6416ff3b",
+        "filename": "tools/lint/utils/enforce_permission_counter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2023-09-18T18:21:32Z",
+      "side": 1,
+      "message": "I assume you know of `m lint-check`, which will check everything in the whole tree.\n\nIf you don\u0027t want _that_ much, at least in this case I see there is a `services-non-updatable-sources` filegroup that has all the sources for the modules you\u0027re using here, (except services.people. Maybe that\u0027s a mistake?) so you could make a library module that compiles all those sources in one. \n\nFor a more generic solution, you could try building `out/target/product/\u003cdevice\u003e/module-info.json`. Reading that file could give you enough information about dependencies to say \"lint this module and all of its dependencies\".",
+      "parentUuid": "e1b9387a_62d3dc45",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73c6217b_edbd38bd",
+        "filename": "tools/lint/utils/enforce_permission_counter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2023-09-18T18:21:32Z",
+      "side": 1,
+      "message": "I consider writing classes just to contain ordinary code to be bad style, but I can\u0027t find any style docs to back that up.",
       "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
