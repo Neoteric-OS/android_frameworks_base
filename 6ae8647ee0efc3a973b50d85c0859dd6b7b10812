@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08b39def_80706700",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2023-09-18T14:29:11Z",
+      "side": 1,
+      "message": "Over to Patrick for the approval. This is okay from the perspective of Treble.",
+      "revId": "6ae8647ee0efc3a973b50d85c0859dd6b7b10812",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
