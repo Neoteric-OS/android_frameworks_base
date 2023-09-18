@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a2fc828_0684e5ba",
+        "filename": "tools/lint/fix/soong_lint_fix.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-09-18T14:26:17Z",
+      "side": 1,
+      "message": "Nit: `None` instead of empty list?",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1b9387a_62d3dc45",
+        "filename": "tools/lint/utils/enforce_permission_counter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-09-18T14:26:17Z",
+      "side": 1,
+      "message": "This CL as a whole looks great to me.  I am curious if colefaust@google.com has any ideas about how to keep the list of targets in sync, or a way to do this more natively within soong.\n\nWe\u0027ve long wanted a way to build an \"uber target\" for the sake of lint\u0027s call graph analysis. Today we\u0027re limited by lint\u0027s inability to scan all these sources together, since it really sees ~35 separate sets of source files that make up the ~35 modules of system server.  \n\nIf we had a single target that saw all the sources together, we could migrate much more aggressively.",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
