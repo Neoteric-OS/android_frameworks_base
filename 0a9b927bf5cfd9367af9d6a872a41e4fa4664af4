@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d23c766_c0c040b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1976388
+      },
+      "writtenOn": "2023-09-18T07:36:27Z",
+      "side": 1,
+      "message": "summary：(Magnifier.getPosition)java.lang.NullPointerException--Attempt to read from field \u0027int android.graphics.Rect.left\u0027 on a null object reference in method \u0027android.graphics.Point android.widget.Magnifier.getPosition()\u0027\n\ndet：java.lang.NullPointerException: Attempt to read from field \u0027int android.graphics.Rect.left\u0027 on a null object reference in method \u0027android.graphics.Point android.widget.Magnifier.getPosition()\u0027\nat android.widget.Magnifier.getPosition(Magnifier.java:594)\nat android.widget.Editor$HandleView.updateHandlesVisibility(Editor.java:5578)\nat android.widget.Editor$HandleView.updateMagnifier(Editor.java:5643)\nat android.widget.Editor$InsertionPointCursorController.startCursorDrag(Editor.java:6716)\nat android.widget.Editor$InsertionPointCursorController.onTouchEvent(Editor.java:6626)\nat android.widget.Editor.onTouchEvent(Editor.java:1798)\nat android.widget.TextView.onTouchEvent(TextView.java:12770)\nat android.view.View.dispatchTouchEvent(View.java:15769)\nat android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3141)\nat android.view.ViewGroup.dispatchTouchEvent(ViewGroup.java:2822)\nat android.view.ViewGroup.dispatchTransformedTouchEvent(ViewGroup.java:3",
+      "revId": "0a9b927bf5cfd9367af9d6a872a41e4fa4664af4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
