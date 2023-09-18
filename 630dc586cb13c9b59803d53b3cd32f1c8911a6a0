@@ -1,0 +1,435 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e08902c_166a0237",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Overall, I think you did a good job adjusting to the new architecture that we\u0027ve defined in Android U. I know the new architecture is a big change from how we wrote code in the past, so I deeply appreciate you being able to learn the new architecture and build upon it! I have suggestions about how to utilize the new architecture even more, but overall this CL is a testament to how the new structure can hopefully help us build new features more easily.",
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c68e2736_8dc1e2f6",
+        "filename": "packages/SettingsLib/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "I think this should actually live in `frameworks/base/packages/SystemUI/res/values/config.xml`, which is where we have other connectivity build-time configurations like `config_showActivity`. Then, we can fetch this configuration in `ConnectivityConstants.kt` instead of in `MobileMappings.java`.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d1039d2_357c6035",
+        "filename": "packages/SystemUI/res/drawable/ic_volte.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "My understanding is that drawables inside `frameworks/base` should not have this redistribution text, and should instead have the default copyright header (see `frameworks/base/packages/SystemUI/res/drawable/ic_cast.xml` as an example).\n\n\nWarning text copied below:\n\nPlease fix this ERROR reported by Open-source Licensing: Third-party license (BSD) disallowed in repository platform/frameworks/base:\n\nAnalyzer Description: Identifies changes requiring human review for potential licensing issues.\nOwner: opensource-licensing@google.com\n\nThird-party license (BSD) disallowed in repository platform/frameworks/base:\nRedistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:...Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and or other materials provided with the distribution.",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2d0c2a1_5b3f4522",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/model/MobileConnectivityModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "For the new pipeline, we\u0027ve preferred defining internal models of state instead of reusing the external integers. This lets us harness type checking to verify we handle all the states in every location, lets us be more semantic about what values mean, and ensures that we don\u0027t need to update any downstream classes (interactors, view models) if the external API changes. See `enum class DataConnectionState` as an example.",
+      "range": {
+        "startLine": 31,
+        "startChar": 26,
+        "endLine": 31,
+        "endChar": 69
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1c7fa32_377dbf9c",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/model/MobileConnectivityModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Can you add KDoc above each of these values to explain what they mean (similar to what `isConnected` and `isValidated` has)?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14e43436_44c33197",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/MobileConnectionRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Nit: Prefer defining booleans with the `is` prefix, so `isVoiceCapable` here. Similar for other booleans.",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8518e87b_4501d541",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/FullMobileConnectionRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Sueprnit: Here and below, prefer using trailing commas.",
+      "range": {
+        "startLine": 298,
+        "startChar": 54,
+        "endLine": 298,
+        "endChar": 55
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14612401_2c82c58f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Nit/optional: No need to include the type if it\u0027s obvious (for here and `imsMmTelManager`). If you prefer keeping the type always, that\u0027s totally fine and we can leave it.",
+      "range": {
+        "startLine": 108,
+        "startChar": 21,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe54ada0_a8c4566d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Could we instead pass in a created `ImsMmTelManager` to the constructor so that we can appropriately mock it in tests?",
+      "range": {
+        "startLine": 109,
+        "startChar": 51,
+        "endLine": 109,
+        "endChar": 97
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "735fffee_27e17bde",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "It\u0027s recommended to catch specific exception classes, not all exceptions. (same comment for other callbacks)",
+      "range": {
+        "startLine": 193,
+        "startChar": 40,
+        "endLine": 193,
+        "endChar": 49
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d854980d_649710f3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Instead of grouping two different callback registrations in one `conflatedCallbackFlow`, we should separate them into two separate flows. (A `conflatedCallbackFlow` is intended to be used for exactly one callback.)\n\nI\u0027m guessing that the reason it\u0027s registered here is because the `imsStateCallback` doesn\u0027t emit any state that can be `collect`ed on, it just registers other callbacks? I wonder if we can use some `flatMapLatest` magic to help us here. `flatMapLatest` lets us switch between different flows based on a value. Here\u0027s some pseudocode of what I\u0027m picturing:\n\n```\n// Translates the `ImsStateCallback` into a `Flow\u003cImsState\u003e`\nval imsRegistrationState: Flow\u003cImsState\u003e \u003d conflatedCallbackFlow {\n       val callback \u003d  object : ImsStateCallback() {\n           override fun onAvailable() { trySend(ImsState.AVAILABLE) }\n           override fun onUnavailable() { trySend(ImsState.UNAVAILABLE) }\n           override fun onError() { trySend(ImsState.ERROR) }\n        }\n        // register \u0026 unregister callback\n    }\n     \n// Translates the `ImsMmTelManager.CapabilityCallback` into a `Flow\u003cImsCapabilities\u003e`        \nval imsCapabilities \u003d conflatedCallbackFlow {\n  val capabilityCallback \u003d\n        object : ImsMmTelManager.CapabilityCallback() {\n            override fun onCapabilitiesStatusChanged(config: MmTelCapabilities) {\n                trySend(ImsCapabilities(voiceCapable \u003d config.isCapable(MmTelCapabilities.CAPABILITY_TYPE_VOICE),\n                videoCapable \u003d config.isCapable(MmTelCapabilities.CAPABILITY_TYPE_VIDEO),\n                )\n            }\n        }\n        // register \u0026 unregister callback\n}    \n\n// What this flow does: When IMS becomes available, use the `imsCapabilites` flow\n// defined above to fetch the `voiceCapable` status. When IMS is unavailable or has\n// an error, stop using the `imsCapabilites` flow, and instead just define\n// `isVoiceCapable` as `false`.\noverride val isVoiceCapable \u003d\n  imsRegistrationState.flatMapLatest { state -\u003e\n    if (state \u003d\u003d State.AVAILABLE) {\n      imsCapabilites.map { it.voiceCapable }\n    } else {\n      flowOf(false)\n    }\n  }\n  \n// Similar for isVideoCapable  \n```\n\nNote that `ImsState` and `ImsCapabilities` would be data classes that are defined internally to SysUI.\n\nLet me know if that works for this use case.",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 17
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a93d5bc3_4659e37b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Instead of logging errors to logcat which usually get lost, I wonder if we can log them to the provided `logger`? Then all the mobile logs will be in the same location.",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 94
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f2bf26c_e31b2eb2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "It\u0027s best not to expose `MutableStateFlow` as the type because then other classes could mutate the value, which we don\u0027t want. Could we instead just expose a `StateFlow`?\n\nInternally, it could be defined as:\n```\nprivate val _voiceCapable \u003d MutableStateFlow\u003cBoolean\u003e(false)\noverride val voiceCapable \u003d _voiceCapable.asStateFlow()\n```",
+      "range": {
+        "startLine": 386,
+        "startChar": 31,
+        "endLine": 386,
+        "endChar": 47
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e31707c_111e1fb1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "I would recommend writing this as a `conflatedCallbackFlow` instead, similar to `MobileConnectionsRepositoryImpl.activeMobileDataSubscriptionId`.",
+      "range": {
+        "startLine": 395,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 9
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f02b435f_a3852b6b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/MobileIconInteractor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Can you add some KDoc for what this flow means?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1bce68b_d49abbf1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/MobileIconInteractor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "It looks like all these values are getting combined into one object just to unpack them again into 5 separate values in the view model. Can we instead add the 5 new flows to the `MobileIconInteractor` interface and define them to be equal to the repository flows? I know it\u0027s a bit of a pain to expose 5 new flows, but that will make the flows easier to work with in production code and in tests.",
+      "range": {
+        "startLine": 226,
+        "startChar": 3,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03743336_1e7dad00",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/ui/viewmodel/MobileIconViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "For the `networkTypeIcon`, we chose to use `Icon.Resource?` as the type and send `null` if the icon shouldn\u0027t be displayed. Can we use a similar pattern here?",
+      "range": {
+        "startLine": 201,
+        "startChar": 31,
+        "endLine": 201,
+        "endChar": 32
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b56a1e3_84ff2513",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/ui/viewmodel/MobileIconViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Nit: `networkType` instead?",
+      "range": {
+        "startLine": 204,
+        "startChar": 19,
+        "endLine": 204,
+        "endChar": 20
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3ce1581_c91e57c6",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/FakeMobileIconsInteractor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2023-09-18T20:09:07Z",
+      "side": 1,
+      "message": "Comment about tests as a whole: Could you add unit tests for each of the new APIs that have been defined? That would greatly help us ensure that this logic doesn\u0027t break in the future. The existing test classes should provide good examples for how to write the tests, but don\u0027t hesitate to reach out with questions!",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
