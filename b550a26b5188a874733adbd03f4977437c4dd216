@@ -52,6 +52,24 @@
       "parentUuid": "40fa693d_579fa909",
       "revId": "b550a26b5188a874733adbd03f4977437c4dd216",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99332f1b_dabaaf7a",
+        "filename": "core/java/android/os/flags.aconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1653796
+      },
+      "writtenOn": "2023-09-18T07:51:42Z",
+      "side": 1,
+      "message": "We are asking if \"system_sw_battery\" is valid for namespace naming rule in b/300611445",
+      "parentUuid": "8b1f2ffa_5046d8b4",
+      "revId": "b550a26b5188a874733adbd03f4977437c4dd216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
