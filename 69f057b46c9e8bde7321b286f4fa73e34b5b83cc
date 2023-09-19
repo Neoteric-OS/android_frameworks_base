@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8ffa19a_4fdd7fc9",
+        "filename": "tools/lint/fix/soong_lint_fix.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2023-09-19T05:32:35Z",
+      "side": 1,
+      "message": "My intent was to avoid large changes to this file. I\u0027ve added a new class to capture the options. Matt, let me know if that works for you. Thanks.",
+      "parentUuid": "4079c300_579cd12f",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e1b9387a_62d3dc45",
         "filename": "tools/lint/utils/enforce_permission_counter.py",
         "patchSetId": 2
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "I assume you know of `m lint-check`, which will check everything in the whole tree.\n\nIf you don\u0027t want _that_ much, at least in this case I see there is a `services-non-updatable-sources` filegroup that has all the sources for the modules you\u0027re using here, (except services.people. Maybe that\u0027s a mistake?) so you could make a library module that compiles all those sources in one. \n\nFor a more generic solution, you could try building `out/target/product/\u003cdevice\u003e/module-info.json`. Reading that file could give you enough information about dependencies to say \"lint this module and all of its dependencies\".",
       "parentUuid": "e1b9387a_62d3dc45",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b41fdd4_6607710b",
+        "filename": "tools/lint/utils/enforce_permission_counter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2023-09-19T05:32:35Z",
+      "side": 1,
+      "message": "Ack. If that works for you, I\u0027ll follow up with another change. \n\nI had a look at the `module-info.json` option. Interestingly, the dependencies are not populated for the `services` target (that\u0027s using aosp_cf_x86_64_phone), so I\u0027m not sure if this is viable.\n\nOtherwise, adding a target using `services-non-updatable-sources` seems suitable.",
+      "parentUuid": "251f4bc2_6416ff3b",
       "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
