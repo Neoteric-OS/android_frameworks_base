@@ -33,6 +33,7 @@
               android:visibility="gone"
               android:textColor="?attr/wallpaperTextColor"
               android:theme="@style/TextAppearance.Keyguard"
+              android:textDirection="locale"
     />
     <view class="com.android.keyguard.KeyguardSliceView$Row"
               android:id="@+id/row"
