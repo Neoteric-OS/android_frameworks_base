@@ -72,6 +72,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a595476_787123ce",
+        "filename": "tools/lint/fix/soong_lint_fix.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-09-20T19:41:32Z",
+      "side": 1,
+      "message": "Forgot to resolve",
+      "parentUuid": "db234ceb_777d4b36",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1b9387a_62d3dc45",
