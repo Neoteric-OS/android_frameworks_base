@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47bf73a3_ee8ed758",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1857230
+      },
+      "writtenOn": "2023-09-20T18:27:25Z",
+      "side": 1,
+      "message": "Upstream added to fix merge conflict",
+      "revId": "1dfb9ff5500dd7bddce9448e1fcea0ca9d6b30d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
