@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db234ceb_777d4b36",
+        "filename": "tools/lint/fix/soong_lint_fix.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-09-20T19:41:03Z",
+      "side": 1,
+      "message": "LGTM!",
+      "parentUuid": "c8ffa19a_4fdd7fc9",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e1b9387a_62d3dc45",
         "filename": "tools/lint/utils/enforce_permission_counter.py",
         "patchSetId": 2
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "Ack. If that works for you, I\u0027ll follow up with another change. \n\nI had a look at the `module-info.json` option. Interestingly, the dependencies are not populated for the `services` target (that\u0027s using aosp_cf_x86_64_phone), so I\u0027m not sure if this is viable.\n\nOtherwise, adding a target using `services-non-updatable-sources` seems suitable.",
       "parentUuid": "251f4bc2_6416ff3b",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09e853e1_f9758d95",
+        "filename": "tools/lint/utils/enforce_permission_counter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-09-20T19:41:03Z",
+      "side": 1,
+      "message": "Thanks Thiebaud - I\u0027m excited to see what adding this target might unlock :)",
+      "parentUuid": "6b41fdd4_6607710b",
       "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
