@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbc95d07_ba920868",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1605027
+      },
+      "writtenOn": "2023-09-20T17:51:38Z",
+      "side": 1,
+      "message": "I apparently need a codeowners approval -- any chance I get rubberstamp approval on this 1 line change of a larger refactoring?",
+      "revId": "52f9ad09af65c1bb3c35ff83a98e4a6c09fa471c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
