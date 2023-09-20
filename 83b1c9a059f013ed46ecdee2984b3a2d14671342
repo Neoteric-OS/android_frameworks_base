@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36cc9d50_9d52a2c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319951
+      },
+      "writtenOn": "2023-09-20T22:37:24Z",
+      "side": 1,
+      "message": "let\u0027s put his on hold until we have LOS on the schedule",
+      "revId": "83b1c9a059f013ed46ecdee2984b3a2d14671342",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
