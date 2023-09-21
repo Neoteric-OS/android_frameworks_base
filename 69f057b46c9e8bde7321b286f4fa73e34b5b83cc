@@ -163,6 +163,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b25b94aa_973600c7",
+        "filename": "tools/lint/utils/enforce_permission_counter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2023-09-21T03:27:12Z",
+      "side": 1,
+      "message": "To circle back: I did a bit more digging and the java dependencies are in a separate JSON file: `module_bp_java_deps.json`. This seems to be the easiest approach to find the dependencies for the problem here.",
+      "parentUuid": "09e853e1_f9758d95",
+      "revId": "69f057b46c9e8bde7321b286f4fa73e34b5b83cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "73c6217b_edbd38bd",
         "filename": "tools/lint/utils/enforce_permission_counter.py",
         "patchSetId": 2
