@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0547ad6_4d03da0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-09-21T09:50:39Z",
+      "side": 1,
+      "message": "Thanks for the CL. We already fixed the deadlock in U-QPR1 internally.",
+      "revId": "25a237af81f7bcbd202864e8df7e831ec375b5e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
