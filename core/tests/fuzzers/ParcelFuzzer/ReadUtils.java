@@ -364,6 +364,13 @@ public class ReadUtils {
                         TestClassLoader loader = new TestClassLoader();
                         parcel.readParcelableArray(loader);
                     },
+                    (parcel, provider) -> {
+                        parcel.readParcelable(null);
+                    },
+                    (parcel, provider) -> {
+                        TestClassLoader loader = new TestClassLoader();
+                        parcel.readParcelableArray(loader, SomeParcelable.class);
+                    },
 
                     // read lists
                     (parcel, provider) -> {
