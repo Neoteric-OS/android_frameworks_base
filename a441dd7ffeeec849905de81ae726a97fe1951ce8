@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0dbae86_4e91c054",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-09-22T14:12:03Z",
+      "side": 1,
+      "message": "Because that change hasn\u0027t been merged yet, could you try removed the `Merged-In` stanza and re-run presubmits?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "a441dd7ffeeec849905de81ae726a97fe1951ce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
