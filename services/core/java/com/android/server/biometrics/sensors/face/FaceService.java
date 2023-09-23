@@ -687,7 +687,7 @@ public class FaceService extends SystemService {
                         final FaceAuthenticator authenticator = new FaceAuthenticator(
                                 mServiceWrapper, sensorId);
                         try {
-                            biometricService.registerAuthenticator(sensorId, TYPE_FACE, strength,
+                            biometricService.registerAuthenticator(sensorId, TYPE_FACE, 15,
                                     authenticator);
                         } catch (RemoteException e) {
                             Slog.e(TAG, "Remote exception when registering sensorId: " + sensorId);

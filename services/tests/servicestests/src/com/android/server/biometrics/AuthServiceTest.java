@@ -150,7 +150,7 @@ public class AuthServiceTest {
         final int fingerprintStrength = 15;
 
         final int faceId = 1;
-        final int faceStrength = 4095;
+        final int faceStrength = 15;
 
         final String[] config = {
                 // ID0:Fingerprint:Strong

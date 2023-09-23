@@ -261,7 +261,7 @@ public class BiometricService extends SystemService {
         public void updateContentObserver() {
             mContentResolver.unregisterContentObserver(this);
 
-            if (FaceUnlockUtils.isFaceUnlockSupported()) {
+            if ((FaceUnlockUtils.isFaceUnlockSupported() || FaceUnlockUtils.isFaceUnlockPixelSupported())) {
                 mContentResolver.registerContentObserver(FACE_UNLOCK_KEYGUARD_ENABLED,
                         false /* notifyForDescendants */,
                         this /* observer */,
@@ -331,7 +331,7 @@ public class BiometricService extends SystemService {
 
         public boolean getEnabledOnKeyguard(int userId) {
             if (!mBiometricEnabledOnKeyguard.containsKey(userId)) {
-                if (FaceUnlockUtils.isFaceUnlockSupported()) {
+                if ((FaceUnlockUtils.isFaceUnlockSupported() || FaceUnlockUtils.isFaceUnlockPixelSupported())) {
                     onChange(true /* selfChange */, FACE_UNLOCK_KEYGUARD_ENABLED, userId);
                 } else {
                     onChange(true /* selfChange */, BIOMETRIC_KEYGUARD_ENABLED, userId);
@@ -342,7 +342,7 @@ public class BiometricService extends SystemService {
 
         public boolean getEnabledForApps(int userId) {
             if (!mBiometricEnabledForApps.containsKey(userId)) {
-                if (FaceUnlockUtils.isFaceUnlockSupported()) {
+                if ((FaceUnlockUtils.isFaceUnlockSupported() || FaceUnlockUtils.isFaceUnlockPixelSupported())) {
                     onChange(true /* selfChange */, FACE_UNLOCK_APP_ENABLED, userId);
                 } else {
                     onChange(true /* selfChange */, BIOMETRIC_APP_ENABLED, userId);

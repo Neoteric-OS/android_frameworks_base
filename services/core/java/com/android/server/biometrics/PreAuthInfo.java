@@ -229,7 +229,7 @@ class PreAuthInfo {
 
     private static boolean isEnabledForApp(BiometricService.SettingObserver settingObserver,
             @BiometricAuthenticator.Modality int modality, int userId) {
-        if (modality == TYPE_FINGERPRINT && FaceUnlockUtils.isFaceUnlockSupported()){
+        if (modality == TYPE_FINGERPRINT && (FaceUnlockUtils.isFaceUnlockSupported() || FaceUnlockUtils.isFaceUnlockPixelSupported())){
             return true;
         }
         return settingObserver.getEnabledForApps(userId);
