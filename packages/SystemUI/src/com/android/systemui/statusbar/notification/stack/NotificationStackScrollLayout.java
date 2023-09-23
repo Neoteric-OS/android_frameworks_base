@@ -5537,6 +5537,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements Dumpable
             mCentralSurfaces.getDismissAllButton().setOnClickListener(v -> {
                 if (mShowDimissButton) {
                     clearNotifications(ROWS_ALL, true /* closeShade */);
+                    mVibratorHelper.vibrate(EFFECT_CLICK);
                 }
             });
         }
