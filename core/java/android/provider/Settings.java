@@ -5821,12 +5821,6 @@ public final class Settings {
         public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
 
         /**
-         * Whether to pulse ambient on new music tracks
-         * @hide
-         */
-        public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
-
-        /**
          * Timeout on ambient display
          * @hide
          */
@@ -11430,7 +11424,7 @@ public final class Settings {
          */
         public static final String SKIP_FACE_AUTH_CONFIRMATION = "skip_face_auth_confirmation";
 
-	/**
+        /**
          * Whether to use black theme for dark mode
          * @hide
          */
@@ -11576,6 +11570,12 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
+
+        /**
+         * Whether to pulse ambient on new music tracks
+         * @hide
+         */
+        public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to

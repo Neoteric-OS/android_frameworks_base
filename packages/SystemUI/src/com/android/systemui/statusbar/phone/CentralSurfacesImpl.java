@@ -4168,8 +4168,8 @@ mSettingsObserver.initialize();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.PULSE_ON_NEW_TRACKS),
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.PULSE_ON_NEW_TRACKS),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -4187,8 +4187,8 @@ mSettingsObserver.initialize();
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE))) {
                 setDoubleTapToSleepGesture();
-            }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.PULSE_ON_NEW_TRACKS))) {
+            }  else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.PULSE_ON_NEW_TRACKS))) {
                 setPulseOnNewTracks();
             }
         }
@@ -4220,8 +4220,8 @@ mSettingsObserver.initialize();
     }
 
     private void setPulseOnNewTracks() {
-        boolean showPulseOnNewTracks = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.PULSE_ON_NEW_TRACKS, 1,
+        boolean showPulseOnNewTracks = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.PULSE_ON_NEW_TRACKS, 1,
                 UserHandle.USER_CURRENT) == 1;
         KeyguardSliceProvider sliceProvider = KeyguardSliceProvider.getAttachedInstance();
         if (sliceProvider != null) {
