@@ -6,3 +6,11 @@ flag {
   description: "Feature flag for adding KeyAgreement api to CryptoObject."
   bug: "282058146"
 }
+
+flag {
+    name: "last_authentication_time"
+    namespace: "wallet_integration"
+    description: "Feature flag for adding getLastAuthenticationTime API to BiometricManager"
+    bug: "301979982"
+}
+
