@@ -78,16 +78,28 @@ public final class MovePackageHelper {
     }
 
     public void movePackageInternal(final String packageName, final String volumeUuid,
-            final int moveId, final int callingUid, UserHandle user)
-            throws PackageManagerException {
+            final int moveId, final int callingUid) throws PackageManagerException {
         final StorageManager storage = mPm.mInjector.getSystemService(StorageManager.class);
         final PackageManager pm = mPm.mContext.getPackageManager();
 
         Computer snapshot = mPm.snapshotComputer();
-        final PackageStateInternal packageState = snapshot.getPackageStateForInstalledAndFiltered(
-                packageName, callingUid, user.getIdentifier());
+        final PackageStateInternal packageState = snapshot.getPackageStateInternal(packageName);
         if (packageState == null || packageState.getPkg() == null) {
             throw new PackageManagerException(MOVE_FAILED_DOESNT_EXIST, "Missing package");
+        }
+        final int[] installedUserIds = PackageStateUtils.queryInstalledUsers(packageState,
+                mPm.mUserManager.getUserIds(), true);
+        final UserHandle user;
+        if (installedUserIds.length > 0) {
+            user = UserHandle.of(installedUserIds[0]);
+        } else {
+            user = UserHandle.CURRENT;
+        }
+        for (int userId : installedUserIds) {
+            if (snapshot.shouldFilterApplicationIncludingUninstalled(packageState, callingUid,
+                    userId)) {
+                throw new PackageManagerException(MOVE_FAILED_DOESNT_EXIST, "Missing package");
+            }
         }
         final AndroidPackage pkg = packageState.getPkg();
         if (packageState.isSystem()) {
@@ -137,8 +149,6 @@ public final class MovePackageHelper {
         final String label = String.valueOf(pm.getApplicationLabel(
                 AndroidPackageUtils.generateAppInfoWithoutState(pkg)));
         final int targetSdkVersion = pkg.getTargetSdkVersion();
-        final int[] installedUserIds = PackageStateUtils.queryInstalledUsers(packageState,
-                mPm.mUserManager.getUserIds(), true);
         final String fromCodePath;
         if (codeFile.getParentFile().getName().startsWith(
                 PackageManagerService.RANDOM_DIR_PREFIX)) {

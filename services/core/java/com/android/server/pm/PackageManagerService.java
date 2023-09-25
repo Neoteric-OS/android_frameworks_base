@@ -5423,14 +5423,13 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
             mContext.enforceCallingOrSelfPermission(Manifest.permission.MOVE_PACKAGE, null);
 
             final int callingUid = Binder.getCallingUid();
-            final UserHandle user = new UserHandle(UserHandle.getUserId(callingUid));
             final int moveId = mNextMoveId.getAndIncrement();
             mHandler.post(() -> {
                 try {
                     MovePackageHelper movePackageHelper =
                             new MovePackageHelper(PackageManagerService.this);
                     movePackageHelper.movePackageInternal(
-                            packageName, volumeUuid, moveId, callingUid, user);
+                            packageName, volumeUuid, moveId, callingUid);
                 } catch (PackageManagerException e) {
                     Slog.w(PackageManagerService.TAG, "Failed to move " + packageName, e);
                     mMoveCallbacks.notifyStatusChanged(moveId, e.error);
