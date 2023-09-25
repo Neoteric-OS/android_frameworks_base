@@ -16,6 +16,9 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
+import android.content.Context
+import android.provider.Settings
+
 import androidx.annotation.VisibleForTesting
 import com.android.systemui.doze.util.BurnInHelperWrapper
 import com.android.systemui.keyguard.domain.interactor.KeyguardBottomAreaInteractor
@@ -40,6 +43,7 @@ import kotlinx.coroutines.flow.map
 class KeyguardBottomAreaViewModel
 @Inject
 constructor(
+    private var context: Context,
     private val keyguardInteractor: KeyguardInteractor,
     private val quickAffordanceInteractor: KeyguardQuickAffordanceInteractor,
     private val bottomAreaInteractor: KeyguardBottomAreaInteractor,
@@ -187,7 +191,8 @@ constructor(
                             previewMode.isInPreviewMode &&
                                 previewMode.shouldHighlightSelectedAffordance &&
                                 !isSelected,
-                        forceInactive = previewMode.isInPreviewMode
+                        forceInactive = previewMode.isInPreviewMode,
+                        singleTap = useSingleTap()
                     )
                 }
                 .distinctUntilChanged()
@@ -200,6 +205,7 @@ constructor(
         isSelected: Boolean,
         isDimmed: Boolean,
         forceInactive: Boolean,
+        singleTap: Boolean,
     ): KeyguardQuickAffordanceViewModel {
         return when (this) {
             is KeyguardQuickAffordanceModel.Visible ->
@@ -219,8 +225,18 @@ constructor(
                     isSelected = isSelected,
                     useLongPress = quickAffordanceInteractor.useLongPress,
                     isDimmed = isDimmed,
+                    singleTap = useSingleTap(),
                 )
             is KeyguardQuickAffordanceModel.Hidden -> KeyguardQuickAffordanceViewModel()
+        }
+    }
+
+    fun useSingleTap(): Boolean {
+        if (Settings.Secure.getString(
+                context.contentResolver, Settings.Secure.KEYGUARD_AFFORDANCE_SINGLE_TAP) == "1") {
+            return true
+        } else {
+            return false                
         }
     }
 

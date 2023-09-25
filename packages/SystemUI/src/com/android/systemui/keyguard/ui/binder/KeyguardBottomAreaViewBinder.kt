@@ -394,7 +394,7 @@ object KeyguardBottomAreaViewBinder {
             return when (event?.actionMasked) {
                 MotionEvent.ACTION_DOWN ->
                     if (viewModel.configKey != null) {
-                        if (isUsingAccurateTool(event)) {
+                        if (isUsingAccurateTool(event) || viewModel.singleTap) {
                             // For accurate tool types (stylus, mouse, etc.), we don't require a
                             // long-press.
                         } else {
@@ -435,7 +435,7 @@ object KeyguardBottomAreaViewBinder {
                     true
                 }
                 MotionEvent.ACTION_UP -> {
-                    if (isUsingAccurateTool(event)) {
+                    if (isUsingAccurateTool(event) || viewModel.singleTap) {
                         // When using an accurate tool type (stylus, mouse, etc.), we don't require
                         // a long-press gesture to activate the quick affordance. Therefore, lifting
                         // the pointer performs a click.
