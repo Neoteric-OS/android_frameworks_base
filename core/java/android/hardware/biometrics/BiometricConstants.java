@@ -18,6 +18,7 @@ package android.hardware.biometrics;
 
 import static android.hardware.biometrics.BiometricManager.Authenticators;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
@@ -167,6 +168,13 @@ public interface BiometricConstants {
      * @hide
      */
     int BIOMETRIC_PAUSED_REJECTED = 100;
+
+    /**
+     * Returned from {@link BiometricManager#getLastAuthenticationTime(int)} when there has
+     * been no successful authentication for the given authenticator since boot.
+     */
+    @FlaggedApi(Flags.FLAG_LAST_AUTHENTICATION_TIME)
+    long BIOMETRIC_NO_AUTHENTICATION = 0;
 
     /**
      * @hide

@@ -18,6 +18,7 @@ package com.android.server.biometrics;
 
 import static android.Manifest.permission.USE_BIOMETRIC_INTERNAL;
 import static android.hardware.biometrics.BiometricManager.Authenticators;
+import static android.hardware.biometrics.BiometricManager.BIOMETRIC_NO_AUTHENTICATION;
 
 import static com.android.server.biometrics.BiometricServiceStateProto.STATE_AUTH_IDLE;
 
@@ -36,6 +37,7 @@ import android.database.ContentObserver;
 import android.hardware.biometrics.BiometricAuthenticator;
 import android.hardware.biometrics.BiometricConstants;
 import android.hardware.biometrics.BiometricPrompt;
+import android.hardware.biometrics.Flags;
 import android.hardware.biometrics.IBiometricAuthenticator;
 import android.hardware.biometrics.IBiometricEnabledOnKeyguardCallback;
 import android.hardware.biometrics.IBiometricSensorReceiver;
@@ -49,6 +51,7 @@ import android.hardware.biometrics.PromptInfo;
 import android.hardware.biometrics.SensorPropertiesInternal;
 import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
+import android.hardware.security.keymint.HardwareAuthenticatorType;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -58,10 +61,15 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.ServiceSpecificException;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
+import android.security.Authorization;
+import android.security.GateKeeper;
 import android.security.KeyStore;
+import android.security.authorization.IKeystoreAuthorization;
+import android.security.authorization.ResponseCode;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Pair;
@@ -112,6 +120,8 @@ public class BiometricService extends SystemService {
     KeyStore mKeyStore;
     @VisibleForTesting
     ITrustManager mTrustManager;
+    @VisibleForTesting
+    IKeystoreAuthorization mKeystoreAuthorization;
 
     // Get and cache the available biometric authenticators and their associated info.
     final ArrayList<BiometricSensor> mSensors = new ArrayList<>();
@@ -626,6 +636,54 @@ public class BiometricService extends SystemService {
         }
 
         @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
+        @Override // Binder call
+        public long getLastAuthenticationTime(
+                int userId, @Authenticators.Types int authenticators) {
+            if (!Flags.lastAuthenticationTime()) {
+                throw new UnsupportedOperationException();
+            }
+
+            Slog.d(TAG, "getLastAuthenticationTime: User=" + userId
+                    + ", Authenticators=" + authenticators);
+
+            long secureUserId = GateKeeper.getSecureUserId(userId);
+            if (secureUserId == GateKeeper.INVALID_SECURE_USER_ID) {
+                return BIOMETRIC_NO_AUTHENTICATION;
+            }
+
+            ArrayList<Integer> hardwareAuthenticators = new ArrayList<>(2);
+
+            if ((authenticators & Authenticators.DEVICE_CREDENTIAL) != 0) {
+                hardwareAuthenticators.add(HardwareAuthenticatorType.PASSWORD);
+            }
+
+            if ((authenticators & Authenticators.BIOMETRIC_STRONG) != 0) {
+                hardwareAuthenticators.add(HardwareAuthenticatorType.FINGERPRINT);
+            }
+
+            if (hardwareAuthenticators.isEmpty()) {
+                return BIOMETRIC_NO_AUTHENTICATION;
+            }
+
+            int[] authTypesArray = hardwareAuthenticators.stream()
+                    .mapToInt(Integer::intValue)
+                    .toArray();
+            try {
+                return mKeystoreAuthorization.getLastAuthTime(secureUserId, authTypesArray);
+            } catch (RemoteException e) {
+                Slog.w(TAG, "Error getting last auth time: " + e);
+                return BiometricConstants.BIOMETRIC_NO_AUTHENTICATION;
+            } catch (ServiceSpecificException e) {
+                // This is returned when the feature flag test fails in keystore2
+                if (e.errorCode == ResponseCode.PERMISSION_DENIED) {
+                    throw new UnsupportedOperationException();
+                }
+
+                return BiometricConstants.BIOMETRIC_NO_AUTHENTICATION;
+            }
+        }
+
+        @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
         @Override
         public boolean hasEnrolledBiometrics(int userId, String opPackageName) {
 
@@ -947,6 +1005,10 @@ public class BiometricService extends SystemService {
             return ActivityManager.getService();
         }
 
+        public IKeystoreAuthorization getKeystoreAuthorizationService() {
+            return Authorization.getService();
+        }
+
         public ITrustManager getTrustManager() {
             return ITrustManager.Stub.asInterface(ServiceManager.getService(Context.TRUST_SERVICE));
         }
@@ -1054,6 +1116,7 @@ public class BiometricService extends SystemService {
         mRequestCounter = mInjector.getRequestGenerator();
         mBiometricContext = injector.getBiometricContext(context);
         mUserManager = injector.getUserManager(context);
+        mKeystoreAuthorization = injector.getKeystoreAuthorizationService();
 
         try {
             injector.getActivityManagerService().registerUserSwitchObserver(

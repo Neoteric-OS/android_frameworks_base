@@ -23,6 +23,8 @@ import static android.Manifest.permission.WRITE_DEVICE_CONFIG;
 
 import static com.android.internal.util.FrameworkStatsLog.AUTH_DEPRECATED_APIUSED__DEPRECATED_API__API_BIOMETRIC_MANAGER_CAN_AUTHENTICATE;
 
+import android.annotation.ElapsedRealtimeLong;
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -84,6 +86,17 @@ public class BiometricManager {
      */
     public static final int BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED =
             BiometricConstants.BIOMETRIC_ERROR_SECURITY_UPDATE_REQUIRED;
+
+    /**
+     * Returned from {@link BiometricManager#getLastAuthenticationTime(int)} when no matching
+     * successful authentication has been performed since boot.
+     */
+    @FlaggedApi(Flags.FLAG_LAST_AUTHENTICATION_TIME)
+    public static final long BIOMETRIC_NO_AUTHENTICATION =
+            BiometricConstants.BIOMETRIC_NO_AUTHENTICATION;
+
+    private static final int GET_LAST_AUTH_TIME_ALLOWED_AUTHENTICATORS =
+            Authenticators.DEVICE_CREDENTIAL | Authenticators.BIOMETRIC_STRONG;
 
     /**
      * @hide
@@ -636,6 +649,46 @@ public class BiometricManager {
             }
         }
 
+    }
+
+    /**
+     * Gets the last time the user successfully authenticated using one of the given authenticators.
+     * The returned value is time in
+     * {@link android.os.SystemClock#elapsedRealtime SystemClock.elapsedRealtime()} (time since
+     * boot, including sleep).
+     * <p>
+     * {@link BiometricManager#BIOMETRIC_NO_AUTHENTICATION} is returned in the case where there
+     * has been no successful authentication using any of the given authenticators since boot.
+     * <p>
+     * Currently, only {@link Authenticators#DEVICE_CREDENTIAL} and
+     * {@link Authenticators#BIOMETRIC_STRONG} are accepted. {@link IllegalArgumentException} will
+     * be thrown if {@code authenticators} contains other authenticator types.
+     *
+     * @param authenticators bit field consisting of constants defined in {@link Authenticators}.
+     * @return the time of last authentication or
+     * {@link BiometricManager#BIOMETRIC_NO_AUTHENTICATION}
+     * @throws IllegalArgumentException if {@code authenticators} contains values other than
+     * {@link Authenticators#BIOMETRIC_STRONG} and {@link Authenticators#BIOMETRIC_STRONG}.
+     */
+    @RequiresPermission(USE_BIOMETRIC)
+    @ElapsedRealtimeLong
+    @FlaggedApi(Flags.FLAG_LAST_AUTHENTICATION_TIME)
+    public long getLastAuthenticationTime(
+            @BiometricManager.Authenticators.Types int authenticators) {
+        if ((GET_LAST_AUTH_TIME_ALLOWED_AUTHENTICATORS & authenticators) != authenticators) {
+            throw new IllegalArgumentException(
+                    "Only BIOMETRIC_STRONG and DEVICE_CREDENTIAL authenticators may be used.");
+        }
+
+        if (mService != null) {
+            try {
+                return mService.getLastAuthenticationTime(UserHandle.myUserId(), authenticators);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        } else {
+            return BIOMETRIC_NO_AUTHENTICATION;
+        }
     }
 }
 
