@@ -180,6 +180,12 @@ java_aconfig_library {
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 
+rust_aconfig_library {
+    name: "libaconfig_android_hardware_biometrics_rust",
+    crate_name: "aconfig_android_hardware_biometrics_rust",
+    aconfig_declarations: "android.hardware.biometrics.flags-aconfig",
+}
+
 // CoreNetworking
 java_aconfig_library {
     name: "com.android.net.flags-aconfig-java",
