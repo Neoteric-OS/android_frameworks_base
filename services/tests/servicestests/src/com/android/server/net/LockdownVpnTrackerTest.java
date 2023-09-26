@@ -20,6 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import android.app.NotificationManager;
@@ -27,6 +28,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -55,6 +57,7 @@ import org.mockito.MockitoAnnotations;
 @SmallTest
 public class LockdownVpnTrackerTest {
     private static final Network TEST_NETWORK = new Network(123);
+    private static final Network TEST_NETWORK_2 = new Network(124);
 
     // Use a context wrapper instead of a mock since LockdownVpnTracker builds notifications which
     // is tedious and currently unnecessary to mock.
@@ -175,6 +178,47 @@ public class LockdownVpnTrackerTest {
 
         // Vpn is started
         verify(mVpn).startLegacyVpnPrivileged(mProfile, TEST_NETWORK, lp);
+        verify(mNotificationManager).notify(any(), eq(SystemMessage.NOTE_VPN_STATUS), any());
+    }
+
+    @Test
+    public void testDefaultLPChanged_sameNetworkAndIface() {
+        initAndVerifyLockdownVpnTracker();
+        final NetworkCallback defaultCallback = getDefaultNetworkCallback();
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName("rmnet0");
+        defaultCallback.onLinkPropertiesChanged(TEST_NETWORK, lp);
+        clearInvocations(mVpn, mCm, mNotificationManager);
+
+        // handleStateChangedLocked is not called on the same network even if the LinkProperties
+        // change.
+        lp.addLinkAddress(new LinkAddress("192.0.2.2/25"));
+        defaultCallback.onLinkPropertiesChanged(TEST_NETWORK, lp);
+
+        // Vpn still running.
+        verify(mVpn, never()).stopVpnRunnerPrivileged();
+        verify(mVpn, never()).startLegacyVpnPrivileged(mProfile, TEST_NETWORK, lp);
+        verify(mNotificationManager, never()).cancel(any(), eq(SystemMessage.NOTE_VPN_STATUS));
+    }
+
+    @Test
+    public void testDefaultLPChanged_newNetworkAndIface() {
+        initAndVerifyLockdownVpnTracker();
+        final NetworkCallback defaultCallback = getDefaultNetworkCallback();
+        final LinkProperties cellLp = new LinkProperties();
+        cellLp.setInterfaceName("rmnet0");
+        defaultCallback.onLinkPropertiesChanged(TEST_NETWORK, cellLp);
+        clearInvocations(mVpn, mCm, mNotificationManager);
+
+        // New network and LinkProperties received
+        final LinkProperties wifiLp = new LinkProperties();
+        wifiLp.setInterfaceName("wlan0");
+        defaultCallback.onLinkPropertiesChanged(TEST_NETWORK_2, wifiLp);
+
+        // Vpn is restarted.
+        verify(mVpn).stopVpnRunnerPrivileged();
+        verify(mVpn).startLegacyVpnPrivileged(mProfile, TEST_NETWORK_2, wifiLp);
+        verify(mNotificationManager, never()).cancel(any(), eq(SystemMessage.NOTE_VPN_STATUS));
         verify(mNotificationManager).notify(any(), eq(SystemMessage.NOTE_VPN_STATUS), any());
     }
 
