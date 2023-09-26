@@ -271,7 +271,7 @@ class StorageManagerService extends IStorageManager.Stub
 
         @Override
         public void onUserStopped(@NonNull TargetUser user) {
-            mStorageManagerService.onCleanupUser(user.getUserIdentifier());
+            mStorageManagerService.onUserStopped(user.getUserIdentifier());
         }
 
         @Override
@@ -1311,8 +1311,8 @@ class StorageManagerService extends IStorageManager.Stub
         }
     }
 
-    private void onCleanupUser(int userId) {
-        Slog.d(TAG, "onCleanupUser " + userId);
+    private void onUserStopped(int userId) {
+        Slog.d(TAG, "onUserStopped " + userId);
 
         try {
             mVold.onUserStopped(userId);
