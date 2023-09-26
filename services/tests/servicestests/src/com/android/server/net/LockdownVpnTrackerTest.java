@@ -17,11 +17,13 @@
 package com.android.server.net;
 
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import android.app.NotificationManager;
@@ -29,6 +31,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -73,6 +76,7 @@ public class LockdownVpnTrackerTest {
     @Mock private NetworkInfo mVpnNetworkInfo;
     @Mock private VpnConfig mVpnConfig;
     @Mock private Network mNetwork;
+    @Mock private Network mNetwork2;
 
     private HandlerThread mHandlerThread;
     private Handler mHandler;
@@ -188,6 +192,49 @@ public class LockdownVpnTrackerTest {
 
         // Vpn is started
         verify(mVpn).startLegacyVpnPrivileged(mProfile, mNetwork, lp);
+        verify(mNotificationManager).notify(any(), eq(SystemMessage.NOTE_VPN_STATUS), any());
+    }
+
+    @Test
+    public void testDefaultLPChanged_AddLinkAddress() {
+        initAndVerifyLockdownVpnTracker();
+        final NetworkCallback defaultCallback = getDefaultNetworkCallback();
+        callCallbacksForNetworkConnect(defaultCallback, mNetwork);
+        clearInvocations(mVpn, mCm, mNotificationManager);
+
+        // LockdownVpnTracker#handleStateChangedLocked() is not called on the same network even if
+        // the LinkProperties change.
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName("rmnet0");
+        lp.addLinkAddress(new LinkAddress("192.0.2.2/25"));
+        defaultCallback.onLinkPropertiesChanged(mNetwork, lp);
+
+        // Ideally the VPN should start if it hasn't already, but it doesn't because nothing calls
+        // LockdownVpnTracker#handleStateChangedLocked. This is a bug.
+        // TODO: consider fixing this.
+        verify(mVpn, never()).stopVpnRunnerPrivileged();
+        verify(mVpn, never()).startLegacyVpnPrivileged(mProfile, mNetwork, lp);
+        verify(mNotificationManager, never()).cancel(any(), eq(SystemMessage.NOTE_VPN_STATUS));
+    }
+
+    @Test
+    public void testDefaultNetworkChanged() {
+        initAndVerifyLockdownVpnTracker();
+        final NetworkCallback defaultCallback = getDefaultNetworkCallback();
+        callCallbacksForNetworkConnect(defaultCallback, mNetwork);
+        clearInvocations(mVpn, mCm, mNotificationManager);
+
+        // New network and LinkProperties received
+        final NetworkCapabilities wifiNc = new NetworkCapabilities.Builder()
+                .addTransportType(TRANSPORT_WIFI).build();
+        final LinkProperties wifiLp = new LinkProperties();
+        wifiLp.setInterfaceName("wlan0");
+        callCallbacksForNetworkConnect(defaultCallback, mNetwork2, wifiNc, wifiLp);
+
+        // Vpn is restarted.
+        verify(mVpn).stopVpnRunnerPrivileged();
+        verify(mVpn).startLegacyVpnPrivileged(mProfile, mNetwork2, wifiLp);
+        verify(mNotificationManager, never()).cancel(any(), eq(SystemMessage.NOTE_VPN_STATUS));
         verify(mNotificationManager).notify(any(), eq(SystemMessage.NOTE_VPN_STATUS), any());
     }
 
