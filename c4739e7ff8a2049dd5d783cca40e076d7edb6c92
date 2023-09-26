@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ca50e54_6a33dc45",
+        "filename": "core/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2023-09-26T00:39:34Z",
+      "side": 1,
+      "message": "FYI. We\u0027re going to do something to make this automatic for all of the RELEASE_* build flags.  This is way too much boilerplate.",
+      "revId": "c4739e7ff8a2049dd5d783cca40e076d7edb6c92",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
