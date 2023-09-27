@@ -39,6 +39,30 @@
       },
       "revId": "663fd9b89edb1460da27476698947399ccf20fc7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee18be04_1fa50c4b",
+        "filename": "core/java/android/net/metrics/WakeupEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2023-09-27T22:25:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8818f73_81d76755",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "663fd9b89edb1460da27476698947399ccf20fc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
