@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8fda4c6_fabfe170",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2023-09-27T22:12:08Z",
+      "side": 1,
+      "message": "oh wow",
+      "revId": "663fd9b89edb1460da27476698947399ccf20fc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8818f73_81d76755",
+        "filename": "core/java/android/net/metrics/WakeupEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2023-09-27T22:12:08Z",
+      "side": 1,
+      "message": "can you comment this field too?",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "663fd9b89edb1460da27476698947399ccf20fc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
