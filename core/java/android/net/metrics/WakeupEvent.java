@@ -44,7 +44,7 @@ public class WakeupEvent {
         j.add(iface);
         j.add("uid: " + Integer.toString(uid));
         j.add("eth=0x" + Integer.toHexString(ethertype));
-        j.add("dstHw=" + dstHwAddr);
+        j.add("srcMac=" + dstHwAddr);  // really!! http://b/292404319#comment11
         if (ipNextHeader > 0) {
             j.add("ipNxtHdr=" + ipNextHeader);
             j.add("srcIp=" + srcIp);
