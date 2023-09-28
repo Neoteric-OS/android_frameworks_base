@@ -193,6 +193,9 @@
     <!-- Reference width used when validating notification layouts -->
     <dimen name="notification_validation_reference_width">320dp</dimen>
 
+    <!-- Reference width used when validating notification layouts -->
+    <dimen name="notification_small_call_width">190dp</dimen>
+
     <!-- Increased height of a small notification in the status bar -->
     <dimen name="notification_min_height_increased">146dp</dimen>
 

@@ -350,6 +350,13 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+<<<<<<< HEAD
+=======
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
+>>>>>>> 7e636518fa38 ([Don`t Need Merge]Small call Notification)
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -9356,5 +9363,16 @@ public class WindowManagerService extends IWindowManager.Stub
     BackNaviAnimationController getBackNaviAnimationController() {
         return mAtmService.mBackNavigationController != null
                 ? mAtmService.mBackNavigationController.mBackNaviAnimationController : null;
+    }
+
+    @Override
+    public boolean isImmersiveMode() {
+        AtomicBoolean isImmersiveMode = new AtomicBoolean(false);
+        mRoot.forAllDisplayPolicies(p -> {
+            if (p.isImmersiveMode()) {
+                isImmersiveMode.set(true);
+            }
+        });
+        return isImmersiveMode.get();
     }
 }

@@ -77,6 +77,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.RemoteException;
 import android.provider.Settings;
 import android.text.BidiFormatter;
 import android.text.SpannableStringBuilder;
@@ -95,7 +96,9 @@ import android.util.TypedValue;
 import android.util.proto.ProtoOutputStream;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.IWindowManager;
 import android.view.View;
+import android.view.WindowManagerGlobal;
 import android.view.contentcapture.ContentCaptureContext;
 import android.widget.ProgressBar;
 import android.widget.RemoteViews;
@@ -5255,8 +5258,13 @@ public class Notification implements Parcelable
                 contentView.setViewVisibility(p.mTitleViewId, View.GONE);
                 contentView.setTextViewText(p.mTitleViewId, null);
             }
+<<<<<<< HEAD
             if (p.text != null && p.text.length() != 0
                     && (!showProgress || p.mAllowTextWithProgress)) {
+=======
+            if (p.mText != null && p.mText.length() != 0
+                    && (!showProgress || p.mAllowTextWithProgress) && !p.smallCallAction) {
+>>>>>>> 7e636518fa38 ([Don`t Need Merge]Small call Notification)
                 contentView.setViewVisibility(p.mTextViewId, View.VISIBLE);
                 contentView.setTextViewText(p.mTextViewId, processTextSpans(p.text));
                 setTextViewColorSecondary(contentView, p.mTextViewId, p);
@@ -5778,9 +5786,19 @@ public class Notification implements Parcelable
 
                     boolean actionHasValidInput = hasValidRemoteInput(action);
                     validRemoteInput |= actionHasValidInput;
+                    final RemoteViews button;
+                    if (p.smallCallAction){
+                        button = generateMinimizedActionButton(action, emphasizedMode, p);
+                    }else {
+                        button = generateActionButton(action, emphasizedMode, p);
+                    }
 
+<<<<<<< HEAD
                     final RemoteViews button = generateActionButton(action, emphazisedMode, p);
                     if (actionHasValidInput && !emphazisedMode) {
+=======
+                    if (actionHasValidInput && !emphasizedMode) {
+>>>>>>> 7e636518fa38 ([Don`t Need Merge]Small call Notification)
                         // Clear the drawable
                         button.setInt(R.id.action0, "setBackgroundResource", 0);
                     }
@@ -6203,6 +6221,71 @@ public class Notification implements Parcelable
                 summary.append(bidi.unicodeWrap(contentText));
             }
             return summary;
+        }
+
+        private RemoteViews generateMinimizedActionButton(Action action, boolean emphasizedMode,
+                                                          StandardTemplateParams p) {
+            final boolean tombstone = (action.actionIntent == null);
+            final RemoteViews button = new BuilderRemoteViews(mContext.getApplicationInfo(),
+                    getActionButtonLayoutResource(emphasizedMode, tombstone));
+            if (!tombstone) {
+                button.setOnClickPendingIntent(R.id.action0, action.actionIntent);
+            }
+            button.setContentDescription(R.id.action0, action.title);
+            if (action.mRemoteInputs != null) {
+                button.setRemoteInputs(R.id.action0, action.mRemoteInputs);
+            }
+            if (emphasizedMode) {
+                // change the background bgColor
+                CharSequence title = action.title;
+                int buttonFillColor = getColors(p).getSecondaryAccentColor();
+                if (tombstone) {
+                    buttonFillColor = setAlphaComponentByFloatDimen(mContext,
+                            ContrastColorUtil.resolveSecondaryColor(
+                                    mContext, getColors(p).getBackgroundColor(), mInNightMode),
+                            R.dimen.notification_action_disabled_container_alpha);
+                }
+                if (isLegacy()) {
+                    title = ContrastColorUtil.clearColorSpans(title);
+                } else {
+                    // Check for a full-length span color to use as the button fill color.
+                    Integer fullLengthColor = getFullLengthSpanColor(title);
+                    if (fullLengthColor != null) {
+                        // Ensure the custom button fill has 1.3:1 contrast w/ notification bg.
+                        int notifBackgroundColor = getColors(p).getBackgroundColor();
+                        buttonFillColor = ensureButtonFillContrast(
+                                fullLengthColor, notifBackgroundColor);
+                    }
+                    // Remove full-length color spans and ensure text contrast with the button fill.
+                    title = ContrastColorUtil.ensureColorSpanContrast(title, buttonFillColor);
+                }
+                int textColor = ContrastColorUtil.resolvePrimaryColor(mContext,
+                        buttonFillColor, mInNightMode);
+                if (tombstone) {
+                    textColor = setAlphaComponentByFloatDimen(mContext,
+                            ContrastColorUtil.resolveSecondaryColor(
+                                    mContext, getColors(p).getBackgroundColor(), mInNightMode),
+                            R.dimen.notification_action_disabled_content_alpha);
+                }
+                // We only want about 20% alpha for the ripple
+                final int rippleColor = (textColor & 0x00ffffff) | 0x33000000;
+                button.setColorStateList(R.id.action0, "setRippleColor",
+                        ColorStateList.valueOf(rippleColor));
+                button.setColorStateList(R.id.action0, "setButtonBackground",
+                        ColorStateList.valueOf(buttonFillColor));
+                if (p.mCallStyleActions) {
+                    button.setImageViewIcon(R.id.action0, action.getIcon());
+                    boolean priority = action.getExtras().getBoolean(CallStyle.KEY_ACTION_PRIORITY);
+                    button.setBoolean(R.id.action0, "setIsPriority", priority);
+                }
+            }
+            // CallStyle notifications add action buttons which don't actually exist in mActions,
+            //  so we have to omit the index in that case.
+            int actionIndex = mActions.indexOf(action);
+            if (actionIndex != -1) {
+                button.setIntTag(R.id.action0, R.id.notification_action_index_tag, actionIndex);
+            }
+            return button;
         }
 
         private RemoteViews generateActionButton(Action action, boolean emphasizedMode,
@@ -9688,6 +9771,16 @@ public class Notification implements Parcelable
 
         private RemoteViews makeCallLayout(int viewType) {
             final boolean isCollapsed = viewType == StandardTemplateParams.VIEW_TYPE_NORMAL;
+            boolean isImmersiveMode  = false;
+            try {
+                IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
+                if (windowManager.isImmersiveMode()){
+                    isImmersiveMode = true;
+                }
+                Log.d(TAG, "isImmersiveMode"+isImmersiveMode);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
             Bundle extras = mBuilder.mN.extras;
             CharSequence title = mPerson != null ? mPerson.getName() : null;
             CharSequence text = mBuilder.processLegacyText(extras.getCharSequence(EXTRA_TEXT));
@@ -9712,7 +9805,11 @@ public class Notification implements Parcelable
             if (isCollapsed) {
                 contentView = mBuilder.applyStandardTemplate(
                         R.layout.notification_template_material_call, p, null /* result */);
-            } else {
+            } else if (isImmersiveMode && viewType == StandardTemplateParams.VIEW_TYPE_HEADS_UP){
+                p.smallCallAction(true);
+                contentView = mBuilder.applyStandardTemplateWithActions(
+                        R.layout.notification_template_material_small_call, p, null /* result */);
+            }else {
                 contentView = mBuilder.applyStandardTemplateWithActions(
                         R.layout.notification_template_material_big_call, p, null /* result */);
             }
@@ -12418,6 +12515,9 @@ public class Notification implements Parcelable
         boolean allowColorization  = true;
         boolean mHighlightExpander = false;
 
+        boolean smallCallAction = false;
+
+
         final StandardTemplateParams reset() {
             mViewType = VIEW_TYPE_UNSPECIFIED;
             mHeaderless = false;
@@ -12442,6 +12542,12 @@ public class Notification implements Parcelable
             maxRemoteInputHistory = Style.MAX_REMOTE_INPUT_HISTORY_LINES;
             allowColorization = true;
             mHighlightExpander = false;
+            smallCallAction = false;
+            return this;
+        }
+
+        public StandardTemplateParams smallCallAction(boolean smallCallAction){
+            this.smallCallAction = smallCallAction;
             return this;
         }
 
