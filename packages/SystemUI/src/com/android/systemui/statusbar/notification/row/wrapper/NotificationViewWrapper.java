@@ -72,6 +72,8 @@ public abstract class NotificationViewWrapper implements TransformableView {
                 return new NotificationConversationTemplateViewWrapper(ctx, v, row);
             } else if ("call".equals(v.getTag())) {
                 return new NotificationCallTemplateViewWrapper(ctx, v, row);
+            } else if ("callSmall".equals(v.getTag())) {
+                return new NotificationSmallCallTemplateViewWrapper(ctx, v, row);
             }
             if (row.getEntry().getSbn().getNotification().isStyle(
                     Notification.DecoratedCustomViewStyle.class)) {
