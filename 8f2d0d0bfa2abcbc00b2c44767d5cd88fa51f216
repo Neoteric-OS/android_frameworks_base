@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebba44e4_bef03ab6",
+        "filename": "tools/lint/global/integration_tests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2023-09-29T01:50:24Z",
+      "side": 1,
+      "message": "If I add another java_library to test, I get a duplicate error (as both libraries will output the `lint/lint-report.txt` file). I am not sure if there is a way to solve that (beyond writing one python test per java library, which I would prefer to avoid).\n\nhttps://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:build/soong/python/python.go;l\u003d756;drc\u003d1e218403e080c824ef231bb45ecc14c4f82d22f1",
+      "revId": "8f2d0d0bfa2abcbc00b2c44767d5cd88fa51f216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
