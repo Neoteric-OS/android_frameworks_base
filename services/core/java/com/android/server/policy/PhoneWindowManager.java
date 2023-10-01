@@ -2352,14 +2352,31 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             public void onSwipeThreeFinger() {
                 int swipeType = Settings.System.getIntForUser(mContext.getContentResolver(),
                                     Settings.System.SWIPE_TYPE, 0, UserHandle.USER_CURRENT);
+                boolean ambientScreen = Settings.System.getIntForUser(mContext.getContentResolver(),
+                                    Settings.System.AMBIENT_SCREEN_SCREENSHOT_SWIPE, 0, UserHandle.USER_CURRENT) == 1;
+                IDreamManager dreamManager = getDreamManager();
+                try {
+                    if (dreamManager != null && dreamManager.isDreaming() && !ambientScreen) {
+                        return;
+                    }
+                } catch (RemoteException ignored) {
+                }
                 switch (swipeType) {
                     case 0:
                         interceptScreenshotChord(
                                 TAKE_SCREENSHOT_FULLSCREEN, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
                         break;
                     case 1:
-                        interceptScreenshotChord(
-                                TAKE_SCREENSHOT_SELECTED_REGION, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
+                        try {
+                            if (dreamManager != null && dreamManager.isDreaming() && ambientScreen) {
+                                interceptScreenshotChord(
+                                        TAKE_SCREENSHOT_FULLSCREEN, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
+                            } else {
+                                interceptScreenshotChord(
+                                        TAKE_SCREENSHOT_SELECTED_REGION, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
+                            }
+                        } catch (RemoteException ignored) {
+                        }
                         break;
                 }
             }
