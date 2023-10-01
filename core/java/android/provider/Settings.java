@@ -5967,6 +5967,12 @@ public final class Settings {
         public static final String SWIPE_TYPE = "swipe_type";
 
         /**
+         * Whether to take a screenshot in ambient display
+         * @hide
+         */
+        public static final String AMBIENT_SCREEN_SCREENSHOT_SWIPE = "ambient_screen_screenshot_swipe";
+
+        /**
          * Whether to show material Dismiss All Button for notifications
          * @hide
          */
