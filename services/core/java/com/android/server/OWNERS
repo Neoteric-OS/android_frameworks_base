@@ -19,6 +19,9 @@ per-file ServiceWatcher.java = sooniln@google.com
 # Health
 per-file BatteryService.java = file:platform/hardware/interfaces:/health/aidl/OWNERS
 
+# PersistentDataBlock / FactoryResetProtection
+per-file PersistentDataBlock* = victorhsieh@google.com, swillden@google.com
+
 per-file *Accessibility* = file:/services/accessibility/OWNERS
 per-file *Alarm* = file:/apex/jobscheduler/OWNERS
 per-file *AppOp* = file:/core/java/android/permission/OWNERS
