@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25f5bf11_c862a75e",
+        "filename": "tools/lint/global/integration_tests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2023-10-02T01:31:07Z",
+      "side": 1,
+      "message": "Great, that works. I\u0027ve implemented this in a following change (which adds a test). Thanks.",
+      "parentUuid": "4bd26d61_d4fda04f",
+      "revId": "8f2d0d0bfa2abcbc00b2c44767d5cd88fa51f216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "570622de_8ee33814",
@@ -49,6 +67,24 @@
       "writtenOn": "2023-09-29T17:34:39Z",
       "side": 1,
       "message": "Please use the xml lint report instead of the text one, so your tests can be more thorough than just string checks.",
+      "revId": "8f2d0d0bfa2abcbc00b2c44767d5cd88fa51f216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d6a440a_67f965c9",
+        "filename": "tools/lint/global/integration_tests/tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2023-10-02T01:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "570622de_8ee33814",
       "revId": "8f2d0d0bfa2abcbc00b2c44767d5cd88fa51f216",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
