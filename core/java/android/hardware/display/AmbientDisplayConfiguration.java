@@ -179,7 +179,7 @@ public class AmbientDisplayConfiguration {
 
     /** @hide */
     public boolean quickPickupSensorEnabled(int user) {
-        return boolSettingDefaultOn(Settings.Secure.DOZE_QUICK_PICKUP_GESTURE, user)
+        return boolSettingDefaultOff(Settings.Secure.DOZE_QUICK_PICKUP_GESTURE, user)
                 && !TextUtils.isEmpty(quickPickupSensorType())
                 && pickupGestureEnabled(user)
                 && !alwaysOnEnabled(user);

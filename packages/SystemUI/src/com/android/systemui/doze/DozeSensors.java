@@ -275,7 +275,7 @@ public class DozeSensors {
                 new TriggerSensor(
                         findSensor(config.quickPickupSensorType()),
                         Settings.Secure.DOZE_QUICK_PICKUP_GESTURE,
-                        true /* setting default */,
+                        false /* setting default */,
                         quickPickUpConfigured(),
                         DozeLog.REASON_SENSOR_QUICK_PICKUP,
                         false /* requiresTouchCoordinates */,
