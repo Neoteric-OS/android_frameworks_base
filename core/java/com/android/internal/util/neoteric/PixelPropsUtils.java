@@ -93,7 +93,9 @@ public class PixelPropsUtils {
         "com.google.android.apps.tycho",
         "com.google.android.as",
         "com.google.android.gms",
-        "com.google.android.apps.restore"
+        "com.google.android.apps.restore",
+        "com.google.android.apps.gcs",
+        "com.google.android.googlequicksearchbox"
     );
 
     private static final Map<String, Object> propsToChangeROG1;
