@@ -25,14 +25,14 @@ android_robolectric_test {
     name: "BackupEncryptionRoboTests",
     srcs: [
         "src/**/*.java",
-//        ":FrameworksServicesRoboShadows",
+        //        ":FrameworksServicesRoboShadows",
     ],
     java_resource_dirs: ["config"],
     libs: [
         "backup-encryption-protos",
         "platform-test-annotations",
         "testng",
-        "truth-prebuilt",
+        "truth",
     ],
     static_libs: [
         "androidx.test.core",

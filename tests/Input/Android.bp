@@ -20,7 +20,7 @@ android_test {
         "androidx.test.rules",
         "services.core.unboosted",
         "testables",
-        "truth-prebuilt",
+        "truth",
         "androidx.test.uiautomator_uiautomator",
     ],
     test_suites: ["device-tests"],

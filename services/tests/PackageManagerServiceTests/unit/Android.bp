@@ -35,7 +35,7 @@ android_test {
         "kotlin-reflect",
         "services.core",
         "servicestests-utils",
-        "truth-prebuilt",
+        "truth",
     ],
     platform_apis: true,
     test_suites: ["device-tests"],

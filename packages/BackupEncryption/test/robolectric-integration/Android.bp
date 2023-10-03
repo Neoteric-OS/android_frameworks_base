@@ -31,7 +31,7 @@ android_robolectric_test {
         "backup-encryption-protos",
         "platform-test-annotations",
         "testng",
-        "truth-prebuilt",
+        "truth",
         "BackupEncryptionRoboTests",
     ],
     static_libs: [

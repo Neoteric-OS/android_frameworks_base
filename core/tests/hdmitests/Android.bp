@@ -29,7 +29,7 @@ android_test {
         "androidx.test.rules",
         "frameworks-base-testutils",
         "guava-android-testlib",
-        "truth-prebuilt",
+        "truth",
     ],
     libs: ["android.test.runner"],
     platform_apis: true,

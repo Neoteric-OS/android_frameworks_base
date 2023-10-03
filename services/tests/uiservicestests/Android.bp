@@ -27,7 +27,8 @@ android_test {
         "services.net",
         "services.usage",
         "guava",
-        "androidx.test.rules", "hamcrest-library",
+        "androidx.test.rules",
+        "hamcrest-library",
         "mockito-target-inline-minus-junit4",
         "platform-test-annotations",
         "platformprotosnano",
@@ -35,7 +36,7 @@ android_test {
         "hamcrest-library",
         "servicestests-utils",
         "testables",
-        "truth-prebuilt",
+        "truth",
         // TODO: remove once Android migrates to JUnit 4.12,
         // which provides assertThrows
         "testng",
