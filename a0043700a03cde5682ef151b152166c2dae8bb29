@@ -34,6 +34,24 @@
       "parentUuid": "7a243ea0_379f0047",
       "revId": "a0043700a03cde5682ef151b152166c2dae8bb29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cae20ef1_27681c2f",
+        "filename": "core/java/android/webkit/WebSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1935685
+      },
+      "writtenOn": "2023-10-03T20:43:07Z",
+      "side": 1,
+      "message": "Yeah, there are a few other references to androidx in this class, for example:\n\n```\n     * @param flag whether JavaScript running in the context of a file scheme URL should be allowed\n     *             to access content from any origin\n     * @deprecated This setting is not secure, please use\n     *             \u003ca href\u003d\"{@docRoot}reference/androidx/webkit/WebViewAssetLoader.html\"\u003e\n     *             androidx.webkit.WebViewAssetLoader\u003c/a\u003e to load file content securely.\n     */\n    @Deprecated\n    public abstract void setAllowUniversalAccessFromFileURLs(boolean flag);\n```\n\nI would recommend using that same method of linking to `{@docRoot}reference/androidx/webkit/...`",
+      "parentUuid": "a49e33e6_6018a9c6",
+      "revId": "a0043700a03cde5682ef151b152166c2dae8bb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
