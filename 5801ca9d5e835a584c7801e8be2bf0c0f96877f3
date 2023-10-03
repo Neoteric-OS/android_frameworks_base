@@ -22,6 +22,30 @@
       },
       "revId": "5801ca9d5e835a584c7801e8be2bf0c0f96877f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e2c2a77_bd51d955",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12234,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2023-10-03T19:50:53Z",
+      "side": 1,
+      "message": "This key is being used to store the settings switch state in settings database. since the data partition is going to be different, this is going to be useless. Do we have any other kernel property which can say this is 16k build? I have filed a b/303280163 for this.",
+      "parentUuid": "71018a95_9a61b8d2",
+      "range": {
+        "startLine": 12227,
+        "startChar": 0,
+        "endLine": 12234,
+        "endChar": 72
+      },
+      "revId": "5801ca9d5e835a584c7801e8be2bf0c0f96877f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
