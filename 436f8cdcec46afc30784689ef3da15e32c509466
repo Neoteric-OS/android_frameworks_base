@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33907358_bd75a412",
+        "filename": "services/tests/servicestests/src/com/android/server/net/LockdownVpnTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-10-03T09:30:06Z",
+      "side": 1,
+      "message": "As with the previous patch we should be able to do better than this",
+      "range": {
+        "startLine": 238,
+        "startChar": 86,
+        "endLine": 238,
+        "endChar": 89
+      },
+      "revId": "436f8cdcec46afc30784689ef3da15e32c509466",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
