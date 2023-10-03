@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a243ea0_379f0047",
+        "filename": "core/java/android/webkit/WebSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2023-10-03T20:06:33Z",
+      "side": 1,
+      "message": "I don\u0027t think this link will work; WebSettingsCompat is in AndroidX which isn\u0027t in this package. Peter, do you know if we have other cases where we link to AndroidX docs directly from our API docs?",
+      "revId": "a0043700a03cde5682ef151b152166c2dae8bb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
