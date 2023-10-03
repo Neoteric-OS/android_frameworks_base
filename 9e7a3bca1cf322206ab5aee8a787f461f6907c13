@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bf45e17_8827ac6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2023-10-03T15:45:51Z",
+      "side": 1,
+      "message": "Hi there! we noticed that when a device is turned off but has virtual displays, it does not go to suspend mode as the `PowerManagerService` is told that not all the displays are off via the `allOff` variable. This patch ignores the non physical displays when checking whether all the displays are off.",
+      "revId": "9e7a3bca1cf322206ab5aee8a787f461f6907c13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
