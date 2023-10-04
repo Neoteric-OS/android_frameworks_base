@@ -520,7 +520,7 @@ public final class BatteryStatsManager {
      * @param uid calling package uid
      * @param reason why Bluetooth has been turned on
      * @param packageName package responsible for this change
-     * @Deprecated Bluetooth self report its state and no longer call this
+     * @deprecated Bluetooth self report its state and no longer call this
      */
     @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
     public void reportBluetoothOn(int uid, int reason, @NonNull String packageName) {
@@ -532,7 +532,7 @@ public final class BatteryStatsManager {
      * @param uid calling package uid
      * @param reason why Bluetooth has been turned on
      * @param packageName package responsible for this change
-     * @Deprecated Bluetooth self report its state and no longer call this
+     * @deprecated Bluetooth self report its state and no longer call this
      */
     @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
     public void reportBluetoothOff(int uid, int reason, @NonNull String packageName) {
