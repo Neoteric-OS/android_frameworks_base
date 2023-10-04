@@ -38,6 +38,8 @@
 #include <mediadrm/IDrmMetricsConsumer.h>
 #include <mediadrm/IDrm.h>
 #include <utils/Vector.h>
+#include <map>
+#include <string>
 
 using ::android::os::PersistableBundle;
 namespace drm = ::android::hardware::drm;
@@ -193,6 +195,11 @@ struct LogMessageFields {
     jclass classId;
 };
 
+struct DrmExceptionFields {
+    jmethodID init;
+    jclass classId;
+};
+
 struct fields_t {
     jfieldID context;
     jmethodID post_event;
@@ -215,6 +222,7 @@ struct fields_t {
     jclass parcelCreatorClassId;
     KeyStatusFields keyStatus;
     LogMessageFields logMessage;
+    std::map<std::string, DrmExceptionFields> exceptionMethods;
 };
 
 static fields_t gFields;
@@ -245,18 +253,18 @@ jobject hidlLogMessagesToJavaList(JNIEnv *env, const Vector<drm::V1_4::LogMessag
     return arrayList;
 }
 
-int drmThrowException(JNIEnv* env, const char *className, const DrmStatus &err, const char *msg) {
+void drmThrowException(JNIEnv* env, const char *className, const DrmStatus &err, const char *msg) {
     using namespace android::jnihelp;
     jstring _detailMessage = CreateExceptionMsg(env, msg);
-    int _status = ThrowException(env, className, "(Ljava/lang/String;III)V",
-                                 _detailMessage,
-                                 err.getCdmErr(),
-                                 err.getOemErr(),
-                                 err.getContext());
+
+    jobject exception = env->NewObject(gFields.exceptionMethods[std::string(className)].classId,
+            gFields.exceptionMethods[std::string(className)].init, _detailMessage,
+            err.getCdmErr(), err.getOemErr(), err.getContext());
+    env->Throw(static_cast<jthrowable>(exception));
+
     if (_detailMessage != NULL) {
         env->DeleteLocalRef(_detailMessage);
     }
-    return _status;
 }
 }  // namespace anonymous
 
@@ -952,6 +960,22 @@ static void android_media_MediaDrm_native_init(JNIEnv *env) {
     FIND_CLASS(clazz, "android/media/MediaDrm$LogMessage");
     gFields.logMessage.classId = static_cast<jclass>(env->NewGlobalRef(clazz));
     GET_METHOD_ID(gFields.logMessage.init, clazz, "<init>", "(JILjava/lang/String;)V");
+
+    jmethodID init;
+    std::string className = "android/media/NotProvisionedException";
+    FIND_CLASS(clazz, className.c_str());
+    GET_METHOD_ID(init, clazz, "<init>", "(Ljava/lang/String;III)V");
+    gFields.exceptionMethods[className] = {.init = init, .classId = clazz};
+
+    className = "android/media/ResourceBusyException";
+    FIND_CLASS(clazz, className.c_str());
+    GET_METHOD_ID(init, clazz, "<init>", "(Ljava/lang/String;III)V");
+    gFields.exceptionMethods[className] = {.init = init, .classId = clazz};
+
+    className ="android/media/DeniedByServerException";
+    FIND_CLASS(clazz, className.c_str());
+    GET_METHOD_ID(init, clazz, "<init>", "(Ljava/lang/String;III)V");
+    gFields.exceptionMethods[className] = {.init = init, .classId = clazz};
 }
 
 static void android_media_MediaDrm_native_setup(
