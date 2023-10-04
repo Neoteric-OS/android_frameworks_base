@@ -396,7 +396,7 @@ java_api_library {
         "api-stubs-docs-non-updatable.api.contribution",
     ],
     defaults: ["android-non-updatable_from_text_defaults"],
-    full_api_surface_stub: "android_stubs_current.from-text",
+    full_api_surface_stub: "android_stubs_current_full.from-text",
 }
 
 java_api_library {
@@ -631,9 +631,34 @@ java_defaults {
     ],
 }
 
+java_library {
+    name: "android_stubs_current.from-text",
+    static_libs: [
+        "android_stubs_updatable.from-text",
+        "android-non-updatable.stubs.from-text",
+        "private-stub-annotations-jar",
+    ],
+    defaults: ["android.jar_defaults"],
+}
+
+java_api_library {
+    name: "android_stubs_updatable.from-text",
+    defaults: [
+        // This module is dynamically created at frameworks/base/api/api.go
+        // instead of being written out, in order to minimize edits in the codebase
+        // when there is a change in the list of modules.
+        // that contributes to an api surface.
+        "android_stubs_current_contributions",
+        "stub-annotation-defaults",
+    ],
+    full_api_surface: "android_stubs_current_full.from-text",
+    api_surface: "public",
+    visibility: ["//visibility:public"],
+}
+
 // Java API library definitions per API surface
 java_api_library {
-    name: "android_stubs_current.from-text",
+    name: "android_stubs_current_full.from-text",
     api_surface: "public",
     defaults: [
         // This module is dynamically created at frameworks/base/api/api.go
