@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d56e7062_5537c056",
+        "filename": "services/tests/servicestests/src/com/android/server/net/LockdownVpnTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-10-05T07:17:44Z",
+      "side": 1,
+      "message": "As discussed offline and on aosp/2727558, let\u0027s also have a test for a network with v6 only and one with dual stack.",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 62
+      },
+      "revId": "26e52307aae3a3d341e608b8eeb58af14668223f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a291ce35_b3ba9c47",
         "filename": "services/tests/servicestests/src/com/android/server/net/LockdownVpnTrackerTest.java",
         "patchSetId": 5
