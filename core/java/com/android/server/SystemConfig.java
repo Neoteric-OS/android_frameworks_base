@@ -330,6 +330,8 @@ public class SystemConfig {
     private final ArraySet<String> mBugreportWhitelistedPackages = new ArraySet<>();
     private final ArraySet<String> mAppDataIsolationWhitelistedApps = new ArraySet<>();
 
+    private final ArrayList<String> mForcedEnabledPackages = new ArrayList<>();
+
     // Map of packagesNames to userTypes. Stored temporarily until cleared by UserManagerService().
     private ArrayMap<String, Set<String>> mPackageToUserTypeWhitelist = new ArrayMap<>();
     private ArrayMap<String, Set<String>> mPackageToUserTypeBlacklist = new ArrayMap<>();
@@ -547,6 +549,10 @@ public class SystemConfig {
 
     public ArraySet<String> getAppDataIsolationWhitelistedApps() {
         return mAppDataIsolationWhitelistedApps;
+    }
+
+    public ArrayList<String> getForcedEnabledPackages() {
+        return mForcedEnabledPackages;
     }
 
     /**
@@ -1340,6 +1346,16 @@ public class SystemConfig {
                                     + " at " + parser.getPositionDescription());
                         } else {
                             mBugreportWhitelistedPackages.add(pkgname);
+                        }
+                        XmlUtils.skipCurrentTag(parser);
+                    } break;
+                    case "forced-enabled": {
+                        String pkgname = parser.getAttributeValue(null, "package");
+                        if (pkgname == null) {
+                            Slog.w(TAG, "<" + name + "> without package in " + permFile
+                                    + " at " + parser.getPositionDescription());
+                        } else {
+                            mForcedEnabledPackages.add(pkgname);
                         }
                         XmlUtils.skipCurrentTag(parser);
                     } break;
