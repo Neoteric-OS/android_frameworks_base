@@ -161,4 +161,18 @@ public class SystemConfigManager {
         }
         return Collections.emptyList();
     }
+
+    /**
+     * Return the packages that are force enabled, where if disabled it would
+     * result in a non-functioning system or similar.
+     * @hide
+     */
+    @NonNull
+    public List<String> getForcedEnabledPackages() {
+        try {
+            return mInterface.getForcedEnabledPackages();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }

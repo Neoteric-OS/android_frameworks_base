@@ -52,4 +52,9 @@ interface ISystemConfig {
      * @see SystemConfigManager#getDefaultVrComponents
      */
     List<ComponentName> getDefaultVrComponents();
+
+    /**
+     * @see SystemConfigManager#getForcedEnabledPackages
+     */
+    List<String> getForcedEnabledPackages();
 }
