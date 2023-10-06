@@ -16,6 +16,23 @@
       "message": "Cherry-picked from internal main",
       "revId": "21ed0100480a206835c1d0224cf8c5da944ee2de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7613fde2_bfad54df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-06T21:58:13Z",
+      "side": 1,
+      "message": "Need to submit ag/24974241 first, then can submit this",
+      "revId": "21ed0100480a206835c1d0224cf8c5da944ee2de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
