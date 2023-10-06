@@ -227,6 +227,8 @@ SamShouldBeLast: android.webkit.WebChromeClient#onShowFileChooser(android.webkit
     SAM-compatible parameters (such as parameter 2, "filePathCallback", in android.webkit.WebChromeClient.onShowFileChooser) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
 
 
+UnflaggedApi: android.Manifest.permission#MODIFY_SYSTEM_UPDATE:
+    New API must be flagged with @FlaggedApi: field android.Manifest.permission.MODIFY_SYSTEM_UPDATE
 UnflaggedApi: android.Manifest.permission#REGISTER_NSD_OFFLOAD_ENGINE:
     New API must be flagged with @FlaggedApi: field android.Manifest.permission.REGISTER_NSD_OFFLOAD_ENGINE
 UnflaggedApi: android.content.Context#THREAD_NETWORK_SERVICE:
