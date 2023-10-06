@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb33eee7_ffefd380",
+        "filename": "services/tests/servicestests/src/com/android/server/net/LockdownVpnTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-10-06T08:52:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d56e7062_5537c056",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 62
+      },
+      "revId": "26e52307aae3a3d341e608b8eeb58af14668223f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a291ce35_b3ba9c47",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-10-05T07:12:18Z",
       "side": 1,
       "message": "Do you want to wait for the VPN to connect and make sure that the notification is cancelled then ?",
+      "range": {
+        "startLine": 269,
+        "startChar": 0,
+        "endLine": 269,
+        "endChar": 89
+      },
+      "revId": "26e52307aae3a3d341e608b8eeb58af14668223f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "558fd95b_abd1d484",
+        "filename": "services/tests/servicestests/src/com/android/server/net/LockdownVpnTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-10-06T08:52:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a291ce35_b3ba9c47",
       "range": {
         "startLine": 269,
         "startChar": 0,
