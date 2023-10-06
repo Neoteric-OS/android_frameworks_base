@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6810de51_a7222010",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-10-06T16:16:52Z",
+      "side": 1,
+      "message": "I thought we shouldn\u0027t put internal links to commit messages but this is just a cherry-pick..",
+      "revId": "78830ecc6daebfd36c6160dca70f110ea88712d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
