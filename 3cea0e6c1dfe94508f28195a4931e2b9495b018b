@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aedcde5e_39e7a1cd",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5352,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2023-10-06T05:56:35Z",
+      "side": 1,
+      "message": "tabs",
+      "revId": "3cea0e6c1dfe94508f28195a4931e2b9495b018b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
