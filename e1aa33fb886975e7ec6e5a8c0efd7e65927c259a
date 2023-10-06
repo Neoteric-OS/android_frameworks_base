@@ -16,6 +16,24 @@
       "message": "If you want to cherry-pick this patch to your U release code base. Please cherry-pick this patch https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2773964 instead.\n\nThe main branch doesn\u0027t seem to include the latest patches. We will udpate it when it is ready.",
       "revId": "e1aa33fb886975e7ec6e5a8c0efd7e65927c259a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "642f01d9_c71a3b6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355266
+      },
+      "writtenOn": "2023-10-06T07:40:38Z",
+      "side": 1,
+      "message": "The patch is up to date. Please cherry-pick this patch directly. Thanks.",
+      "parentUuid": "8b8215f3_00d8d11c",
+      "revId": "e1aa33fb886975e7ec6e5a8c0efd7e65927c259a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
