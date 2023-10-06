@@ -6163,6 +6163,11 @@
          @hide -->
     <permission android:name="android.permission.MODIFY_SETTINGS_OVERRIDEABLE_BY_RESTORE"
                 android:protectionLevel="signature|setup" />
+    <!-- @SystemApi Allows an application to cancel OTA system update.
+    <p>Not for use by third-party applications.
+         @hide -->
+    <permission android:name="android.permission.MODIFY_SYSTEM_UPDATE"
+		android:protectionLevel="signature|privileged" />
 
     <!-- @SystemApi Allows application to manage
          {@link android.security.keystore.recovery.RecoveryController}.
