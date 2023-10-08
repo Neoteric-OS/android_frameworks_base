@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b344a80a_56a238c7",
+        "filename": "services/tests/servicestests/src/com/android/server/net/LockdownVpnTrackerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-10-08T08:08:31Z",
+      "side": 1,
+      "message": "Nit : I think a short comment would help to explain why this is necessary, e.g.\n\n    // mVpnConfig is a mock but the production code will try to add addresses\n    // in this array assuming it\u0027s non-null, so it needs to be initialized.",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 143,
+        "endChar": 18
+      },
+      "revId": "e9cb4aa6153db21cc9ddc7481ad7f49fdc52f29b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9d600ce_20c12852",
+        "filename": "services/tests/servicestests/src/com/android/server/net/LockdownVpnTrackerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-10-08T08:08:31Z",
+      "side": 1,
+      "message": "Also v4 → add v6. It\u0027s less common because SLACC is faster than DHCP but it does happen.",
+      "range": {
+        "startLine": 256,
+        "startChar": 37,
+        "endLine": 256,
+        "endChar": 55
+      },
+      "revId": "e9cb4aa6153db21cc9ddc7481ad7f49fdc52f29b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
