@@ -37,9 +37,6 @@ public class SensorUtils {
             return null;
         }
 
-        if ("".equals(sensorName) && "".equals(sensorType)) {
-            return null;
-        }
         final boolean isNameSpecified = !TextUtils.isEmpty(sensorName);
         final boolean isTypeSpecified = !TextUtils.isEmpty(sensorType);
         if (isNameSpecified || isTypeSpecified) {
