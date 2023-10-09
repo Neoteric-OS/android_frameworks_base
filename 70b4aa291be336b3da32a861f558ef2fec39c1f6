@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbc6c982_295f087e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2023-10-09T14:11:37Z",
+      "side": 1,
+      "message": "Noted some caveats in inline comments -- the important part here is that it _solves_ our immediate problem, and that it clearly demonstrates the mechanism of the problem.\n\nIf there ends up being another solution, please give Rickard credit for his thorough investigation with a \"Based-on-patch-by:\" or \"Root-caused-by:\" tag as appropriate. Thanks.",
+      "revId": "70b4aa291be336b3da32a861f558ef2fec39c1f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1c75c47_075f32c1",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2023-10-09T14:11:37Z",
+      "side": 1,
+      "message": "The fact that we\u0027re doing this suggests that the architecture is wrong. Perhaps MtpReceiver should just be removed, and MtpService controlled completely from here instead?",
+      "revId": "70b4aa291be336b3da32a861f558ef2fec39c1f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17dd2003_355c168f",
+        "filename": "services/usb/java/com/android/server/usb/UsbDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2023-10-09T14:11:37Z",
+      "side": 1,
+      "message": "This introduces a dependency from system server to com.android.mtp, which is not very nice.\n\n(perhaps even problematic -- are there devices without com.android.mtp?)",
+      "revId": "70b4aa291be336b3da32a861f558ef2fec39c1f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
