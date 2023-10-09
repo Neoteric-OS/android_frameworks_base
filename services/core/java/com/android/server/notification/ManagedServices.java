@@ -100,6 +100,7 @@ abstract public class ManagedServices {
     protected final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     private static final int ON_BINDING_DIED_REBIND_DELAY_MS = 10000;
+    private static final int ON_BINDING_DIED_REBIND_NUMBER = 5;
     protected static final String ENABLED_SERVICES_SEPARATOR = ":";
     private static final String DB_VERSION_1 = "1";
     private static final String DB_VERSION_2 = "2";
@@ -180,6 +181,7 @@ abstract public class ManagedServices {
 
     // Whether managed services are approved individually or package wide
     protected int mApprovalLevel;
+    private int mBindingDiedCountDown = ON_BINDING_DIED_REBIND_NUMBER;
 
     public ManagedServices(Context context, Object mutex, UserProfiles userProfiles,
             IPackageManager pm) {
@@ -1567,6 +1569,7 @@ abstract public class ManagedServices {
                     ManagedServiceInfo info = null;
                     synchronized (mMutex) {
                         mServicesRebinding.remove(servicesBindingTag);
+                        mBindingDiedCountDown = ON_BINDING_DIED_REBIND_NUMBER;
                         try {
                             mService = asInterface(binder);
                             info = newServiceInfo(mService, name,
@@ -1592,8 +1595,12 @@ abstract public class ManagedServices {
                     Slog.w(TAG,  userid + " " + getCaption() + " binding died: " + name);
                     synchronized (mMutex) {
                         unbindService(this, name, userid);
+                        Slog.w(TAG,  "onBindingDied mBindingDiedCountDown=" + mBindingDiedCountDown);
+                        mBindingDiedCountDown--;
                         if (!mServicesRebinding.contains(servicesBindingTag)) {
-                            mServicesRebinding.add(servicesBindingTag);
+                            if (mBindingDiedCountDown == 0) {
+		                mServicesRebinding.add(servicesBindingTag);
+                            }
                             mHandler.postDelayed(() ->
                                     reregisterService(name, userid),
                                     ON_BINDING_DIED_REBIND_DELAY_MS);
