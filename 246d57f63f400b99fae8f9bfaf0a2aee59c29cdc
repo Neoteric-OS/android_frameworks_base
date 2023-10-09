@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e4561c6_7b65ddaf",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-09T23:09:48Z",
+      "side": 1,
+      "message": "Maybe this should throw instead? It feels wrong to use `BIOMETRIC_NO_AUTHENTICATION` as an error result because it can also be a valid result. I also don\u0027t think it makes sense to surface all service-level exceptions to the top, though.",
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
