@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ee28d22_b5cbfdd7",
+        "filename": "core/java/android/hardware/biometrics/BiometricConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24208c30_66af1fa7",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 29
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e07cdbc_bf9937bb",
@@ -41,6 +65,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e434b494_350c7202",
+        "filename": "core/java/android/hardware/biometrics/BiometricConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "`BiometricPrompt` extends `BiometricConstants`, which surprised me as well.",
+      "parentUuid": "9e07cdbc_bf9937bb",
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "987db209_29f34a33",
@@ -54,6 +96,30 @@
       "writtenOn": "2023-10-09T23:53:37Z",
       "side": 1,
       "message": "successfully authenticated",
+      "range": {
+        "startLine": 655,
+        "startChar": 35,
+        "endLine": 655,
+        "endChar": 48
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "991e2089_1d322e3e",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "987db209_29f34a33",
       "range": {
         "startLine": 655,
         "startChar": 35,
@@ -112,6 +178,54 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7a99f9c1_4875f44d",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "I believe you will get a nonzero value. There are no methods in `IKeystoreAuthorization` that remove or invalidate prior hardware auth tokens.",
+      "parentUuid": "50aade30_d89d5bad",
+      "range": {
+        "startLine": 660,
+        "startChar": 75,
+        "endLine": 660,
+        "endChar": 85
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "331e4763_c493aec0",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fc0afdf_e376d158",
+      "range": {
+        "startLine": 660,
+        "startChar": 51,
+        "endLine": 660,
+        "endChar": 74
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2ff09dc_65596bb9",
         "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
         "patchSetId": 1
@@ -123,6 +237,30 @@
       "writtenOn": "2023-10-09T23:53:37Z",
       "side": 1,
       "message": "Also add a `@throws` section that mentions this",
+      "range": {
+        "startLine": 663,
+        "startChar": 60,
+        "endLine": 664,
+        "endChar": 78
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a79f2d_98828fb8",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ff09dc_65596bb9",
       "range": {
         "startLine": 663,
         "startChar": 60,
@@ -156,6 +294,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73b494af_db81b232",
+        "filename": "keystore/java/android/security/GateKeeper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0df3cb89_8c761e81",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 93
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed7ee85f_560c54bb",
@@ -169,6 +331,30 @@
       "writtenOn": "2023-10-09T23:53:37Z",
       "side": 1,
       "message": "The try-finally that restores the calling identity must always begin on the line after `clearCallingIdentity()`.",
+      "range": {
+        "startLine": 349,
+        "startChar": 12,
+        "endLine": 349,
+        "endChar": 64
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "607b9aca_a357abc9",
+        "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed7ee85f_560c54bb",
       "range": {
         "startLine": 349,
         "startChar": 12,
@@ -209,6 +395,30 @@
       "writtenOn": "2023-10-09T23:53:37Z",
       "side": 1,
       "message": "Just using an `int[2]` might be simpler.",
+      "range": {
+        "startLine": 654,
+        "startChar": 12,
+        "endLine": 654,
+        "endChar": 75
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8f8f685_457d485d",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-10T17:38:13Z",
+      "side": 1,
+      "message": "I thought about that too, but if we put only one value into the array we then need to either send a length separately or copy into a new array.",
+      "parentUuid": "8bca31ad_319b5afa",
       "range": {
         "startLine": 654,
         "startChar": 12,
