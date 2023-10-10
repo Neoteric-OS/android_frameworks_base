@@ -16,6 +16,23 @@
       "message": "This looks like an expected behavior - place a window in letterboxed environment in split screen if its bounds doesn\u0027t fit the request orientation. +erosky@ to double check that.",
       "revId": "a70c0cc836e47677964808484b77f01e7f3e5fff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bef94d7_51ea2345",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1456881
+      },
+      "writtenOn": "2023-10-10T21:54:38Z",
+      "side": 1,
+      "message": "Could you please file a bug where we can discuss your proposal in more details? In short, this can lead to serious app compat issues in the split screen mode. Thanks!",
+      "revId": "a70c0cc836e47677964808484b77f01e7f3e5fff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
