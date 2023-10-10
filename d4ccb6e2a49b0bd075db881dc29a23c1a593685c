@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eeaa1b3_cd486508",
+        "filename": "core/java/android/os/flags.aconfig",
+        "patchSetId": 12
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1854976
+      },
+      "writtenOn": "2023-10-10T15:48:33Z",
+      "side": 1,
+      "message": "nit: should we add the \"public\" term in the flag?",
+      "range": {
+        "startLine": 4,
+        "startChar": 26,
+        "endLine": 4,
+        "endChar": 33
+      },
+      "revId": "d4ccb6e2a49b0bd075db881dc29a23c1a593685c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
