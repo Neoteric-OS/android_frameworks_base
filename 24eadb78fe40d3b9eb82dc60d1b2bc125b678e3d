@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d33bcbb4_bbae5997",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 8193,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-10-10T16:41:48Z",
+      "side": 1,
+      "message": "At this point, `ConnectivityServiceManager` isn\u0027t really needed. You can just do `() -\u003e ServiceManager.waitForService(\"ot_daemon\")` here, and remove `ConnectivityServiceManager`.\n\nBut please leave a comment here why this is different from others, to prevent other people from accidentally copying it.",
+      "revId": "24eadb78fe40d3b9eb82dc60d1b2bc125b678e3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
