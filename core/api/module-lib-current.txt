@@ -249,6 +249,14 @@ package android.media.session {
 
 package android.net {
 
+  public class ConnectivityServiceManager {
+    method @NonNull public android.net.ConnectivityServiceManager.ServiceRegisterer getThreadDaemonServiceRegisterer();
+  }
+
+  public static final class ConnectivityServiceManager.ServiceRegisterer {
+    method @NonNull public android.os.IBinder waitForService();
+  }
+
   public class LocalSocket implements java.io.Closeable {
     ctor public LocalSocket(@NonNull java.io.FileDescriptor);
   }
