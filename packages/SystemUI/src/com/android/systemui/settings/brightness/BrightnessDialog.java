@@ -48,6 +48,7 @@ import javax.inject.Inject;
 public class BrightnessDialog extends Activity {
 
     private BrightnessController mBrightnessController;
+    private final BrightnessController.OnMaxBrightnessCallback mOnMaxBrightnessCallback;
     private final BrightnessSliderController.Factory mToggleSliderFactory;
     private final UserTracker mUserTracker;
     private final DisplayTracker mDisplayTracker;
@@ -60,12 +61,14 @@ public class BrightnessDialog extends Activity {
             DisplayTracker displayTracker,
             BrightnessSliderController.Factory factory,
             @Main Executor mainExecutor,
-            @Background Handler bgHandler) {
+            @Background Handler bgHandler,
+            BrightnessController.OnMaxBrightnessCallback onMaxBrightnessCallback) {
         mUserTracker = userTracker;
         mDisplayTracker = displayTracker;
         mToggleSliderFactory = factory;
         mMainExecutor = mainExecutor;
         mBackgroundHandler = bgHandler;
+        mOnMaxBrightnessCallback = onMaxBrightnessCallback;
     }
 
 
@@ -110,7 +113,13 @@ public class BrightnessDialog extends Activity {
         frame.addView(controller.getRootView(), MATCH_PARENT, WRAP_CONTENT);
 
         mBrightnessController = new BrightnessController(
-                this, controller, mUserTracker, mDisplayTracker, mMainExecutor, mBackgroundHandler);
+                this,
+                controller,
+                mUserTracker,
+                mDisplayTracker,
+                mMainExecutor,
+                mBackgroundHandler,
+                mOnMaxBrightnessCallback);
     }
 
     @Override

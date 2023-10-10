@@ -31,6 +31,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.settings.FakeDisplayTracker
 import com.android.systemui.settings.UserTracker
 import com.android.systemui.util.mockito.any
+import com.android.systemui.util.mockito.mock
 import com.google.common.truth.Truth.assertThat
 import java.util.concurrent.Executor
 import org.junit.After
@@ -66,7 +67,8 @@ class BrightnessDialogTest : SysuiTestCase() {
                         displayTracker,
                         brightnessSliderControllerFactory,
                         mainExecutor,
-                        backgroundHandler
+                        backgroundHandler,
+                        mock()
                     )
                 }
             },
