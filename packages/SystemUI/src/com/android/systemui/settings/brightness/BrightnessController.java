@@ -80,6 +80,7 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
     private final Executor mMainExecutor;
     private final Handler mBackgroundHandler;
     private final BrightnessObserver mBrightnessObserver;
+    private final OnMaxBrightnessCallback mOnMaxBrightnessCallback;
 
     private final DisplayTracker.Callback mBrightnessListener = new DisplayTracker.Callback() {
         @Override
@@ -280,7 +281,8 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
             UserTracker userTracker,
             DisplayTracker displayTracker,
             @Main Executor mainExecutor,
-            @Background Handler bgHandler) {
+            @Background Handler bgHandler,
+            OnMaxBrightnessCallback onMaxBrightnessCallback) {
         mContext = context;
         mControl = control;
         mControl.setMax(GAMMA_SPACE_MAX);
@@ -289,6 +291,7 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
         mUserTracker = userTracker;
         mDisplayTracker = displayTracker;
         mBrightnessObserver = new BrightnessObserver(mHandler);
+        mOnMaxBrightnessCallback = onMaxBrightnessCallback;
 
         mDisplayId = mContext.getDisplayId();
         PowerManager pm = context.getSystemService(PowerManager.class);
@@ -333,7 +336,9 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
             // TODO(brightnessfloat): change to use float value instead.
             MetricsLogger.action(mContext, metric,
                     BrightnessSynchronizer.brightnessFloatToInt(valFloat));
-
+            if (value == mControl.getMax()) {
+                mOnMaxBrightnessCallback.onMaxBrightness();
+            }
         }
         setBrightness(valFloat);
         if (!tracking) {
@@ -425,6 +430,7 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
         private final DisplayTracker mDisplayTracker;
         private final Executor mMainExecutor;
         private final Handler mBackgroundHandler;
+        private final OnMaxBrightnessCallback mOnMaxBrightnessCallback;
 
         @Inject
         public Factory(
@@ -432,12 +438,14 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
                 UserTracker userTracker,
                 DisplayTracker displayTracker,
                 @Main Executor mainExecutor,
-                @Background Handler bgHandler) {
+                @Background Handler bgHandler,
+                OnMaxBrightnessCallback onMaxBrightnessCallback) {
             mContext = context;
             mUserTracker = userTracker;
             mDisplayTracker = displayTracker;
             mMainExecutor = mainExecutor;
             mBackgroundHandler = bgHandler;
+            mOnMaxBrightnessCallback = onMaxBrightnessCallback;
         }
 
         /** Create a {@link BrightnessController} */
@@ -448,8 +456,16 @@ public class BrightnessController implements ToggleSlider.Listener, MirroredBrig
                     mUserTracker,
                     mDisplayTracker,
                     mMainExecutor,
-                    mBackgroundHandler);
+                    mBackgroundHandler,
+                    mOnMaxBrightnessCallback);
         }
     }
 
+    /**
+     * Callback Interface that notifies when the brightness slider reaches its maximum brightness.
+     */
+    public interface OnMaxBrightnessCallback {
+        /** Callback that notifies when max brightness has happened **/
+        void onMaxBrightness();
+    }
 }

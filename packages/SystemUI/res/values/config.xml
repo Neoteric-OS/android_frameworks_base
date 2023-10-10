@@ -914,4 +914,7 @@
     "$packageName" part that will be replaced by the code with the package name of the target app.
     -->
     <string name="config_appStoreAppLinkTemplate" translatable="false"></string>
+
+    <!-- Whether or not show max brightness dialog -->
+    <bool name="config_enableMaxBrightnessDialog">false</bool>
 </resources>
