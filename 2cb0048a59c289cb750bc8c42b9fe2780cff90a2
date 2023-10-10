@@ -16,6 +16,92 @@
       "message": "Looks like you\u0027ll need to cherry-pick http://ag/23518514 and http://ag/23925903 to AOSP first to address the auto-merge conflict.",
       "revId": "2cb0048a59c289cb750bc8c42b9fe2780cff90a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f33dd7bb_c18feece",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-10T22:40:50Z",
+      "side": 1,
+      "message": "DEVICE_CREDENTIAL",
+      "range": {
+        "startLine": 671,
+        "startChar": 29,
+        "endLine": 671,
+        "endChar": 45
+      },
+      "revId": "2cb0048a59c289cb750bc8c42b9fe2780cff90a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c147be88_11c1eed7",
+        "filename": "keystore/java/android/security/GateKeeper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-10T22:40:50Z",
+      "side": 1,
+      "message": "or INVALID_SECURE_USER_ID if the user doesn\u0027t have a secure user id, right?",
+      "range": {
+        "startLine": 54,
+        "startChar": 31,
+        "endLine": 54,
+        "endChar": 33
+      },
+      "revId": "2cb0048a59c289cb750bc8c42b9fe2780cff90a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bd4d663_c655c1ff",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-10T22:40:50Z",
+      "side": 1,
+      "message": "Need `super_getLastAuthenticationTime_enforcePermission();`?",
+      "revId": "2cb0048a59c289cb750bc8c42b9fe2780cff90a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d5a04f1_f30feefa",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-10T22:40:50Z",
+      "side": 1,
+      "message": "```\n          Slogf.d(TAG, \"getLastAuthenticationTime(userId\u003d%d, authenticators\u003d0x%x)\",\n                  userId, authenticators);\n```",
+      "range": {
+        "startLine": 646,
+        "startChar": 0,
+        "endLine": 647,
+        "endChar": 60
+      },
+      "revId": "2cb0048a59c289cb750bc8c42b9fe2780cff90a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

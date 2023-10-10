@@ -427,6 +427,30 @@
       },
       "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b09becc9_42fe4344",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-10T22:40:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c8f8f685_457d485d",
+      "range": {
+        "startLine": 654,
+        "startChar": 12,
+        "endLine": 654,
+        "endChar": 75
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
