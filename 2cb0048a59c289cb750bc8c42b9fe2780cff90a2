@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa5e76a3_f7367b17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-10T22:07:51Z",
+      "side": 1,
+      "message": "Looks like you\u0027ll need to cherry-pick http://ag/23518514 and http://ag/23925903 to AOSP first to address the auto-merge conflict.",
+      "revId": "2cb0048a59c289cb750bc8c42b9fe2780cff90a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
