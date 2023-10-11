@@ -16,6 +16,24 @@
       "message": "Is there a reason to define it in this Android.bp rather than \"your own\" ? presumably in `system/security`.",
       "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5a5da00_16caa249",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-11T14:36:14Z",
+      "side": 1,
+      "message": "The convention seems to be to define the libraries next to the `aconfig_declaration`. I can find no instances where folks have separated them as you suggest.\n\nI am only planning on using the rust library in `system/security` today, but that may not be true in the future, so putting it next to the `aconfig_declaration` makes sense to me.",
+      "parentUuid": "f97d82ef_53a71eaa",
+      "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
