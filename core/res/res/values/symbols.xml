@@ -661,10 +661,7 @@
   <java-symbol type="array" name="config_companionDevicePackages" />
   <java-symbol type="array" name="config_companionDeviceCerts" />
   <java-symbol type="string" name="config_default_dns_server" />
-  <java-symbol type="string" name="config_ethernet_iface_regex" />
   <java-symbol type="string" name="not_checked" />
-  <java-symbol type="array" name="config_ethernet_interfaces" />
-  <java-symbol type="bool" name="config_vehicleInternalNetworkAlwaysRequested" />
   <java-symbol type="string" name="config_forceVoiceInteractionServicePackage" />
   <java-symbol type="string" name="config_mms_user_agent" />
   <java-symbol type="string" name="config_mms_user_agent_profile_url" />
@@ -1203,7 +1200,6 @@
   <java-symbol type="string" name="factory_reset_message" />
   <java-symbol type="string" name="lockscreen_transport_play_description" />
   <java-symbol type="string" name="lockscreen_transport_pause_description" />
-  <java-symbol type="string" name="config_ethernet_tcp_buffers" />
   <java-symbol type="string" name="demo_starting_message" />
   <java-symbol type="string" name="demo_restarting_message" />
   <java-symbol type="string" name="conference_call" />
@@ -1901,7 +1897,6 @@
   <java-symbol type="array" name="config_screenDarkeningThresholds" />
   <java-symbol type="array" name="config_minimumBrightnessCurveLux" />
   <java-symbol type="array" name="config_minimumBrightnessCurveNits" />
-  <java-symbol type="array" name="config_protectedNetworks" />
   <java-symbol type="array" name="config_statusBarIcons" />
   <java-symbol type="array" name="config_tether_bluetooth_regexs" />
   <java-symbol type="array" name="config_tether_dhcp_range" />
@@ -2009,16 +2004,8 @@
   <java-symbol type="integer" name="config_lowBatteryCloseWarningBump" />
   <java-symbol type="integer" name="config_lowBatteryWarningLevel" />
   <java-symbol type="integer" name="config_networkPolicyDefaultWarning" />
-  <java-symbol type="integer" name="config_networkNotifySwitchType" />
-  <java-symbol type="array" name="config_networkNotifySwitches" />
   <java-symbol type="integer" name="config_networkAvoidBadWifi" />
-  <java-symbol type="integer" name="config_networkWakeupPacketMark" />
-  <java-symbol type="integer" name="config_networkWakeupPacketMask" />
   <java-symbol type="integer" name="config_networkDefaultDailyMultipathQuotaBytes" />
-  <java-symbol type="integer" name="config_networkMeteredMultipathPreference" />
-  <java-symbol type="array" name="config_networkSupportedKeepaliveCount" />
-  <java-symbol type="integer" name="config_reservedPrivilegedKeepaliveSlots" />
-  <java-symbol type="integer" name="config_allowedUnprivilegedKeepalivePerUid" />
   <java-symbol type="integer" name="config_notificationsBatteryFullARGB" />
   <java-symbol type="integer" name="config_notificationsBatteryLedOff" />
   <java-symbol type="integer" name="config_notificationsBatteryLedOn" />
