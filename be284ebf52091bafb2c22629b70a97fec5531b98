@@ -52,6 +52,24 @@
       "parentUuid": "aacb43a1_f5ec9c7e",
       "revId": "be284ebf52091bafb2c22629b70a97fec5531b98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "684ca610_5a352d2f",
+        "filename": "media/java/android/media/AudioFormat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2023-10-11T22:15:19Z",
+      "side": 1,
+      "message": "I suggest something like \"Output channel masks that do not contain matched left/right pairs are invalid\"",
+      "parentUuid": "9f6e562b_4b025556",
+      "revId": "be284ebf52091bafb2c22629b70a97fec5531b98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
