@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f342538f_169ccb21",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5209,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2023-10-11T07:07:52Z",
+      "side": 0,
+      "message": "So far no other internal-only cases, could you inline as\n```\nmRoot.forAllDisplays(dc -\u003e {\n    if (dc.mDisplay.getType() \u003d\u003d Display.TYPE_INTERNAL) {\n        dc.setMaxUiWidth(mMaxUiWidth);\n    }\n});\n```",
+      "revId": "7039b4f75837c949102caf9f54b9ca6dd1888458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
