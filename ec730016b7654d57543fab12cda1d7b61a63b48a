@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f97d82ef_53a71eaa",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-10-11T14:15:24Z",
+      "side": 1,
+      "message": "Is there a reason to define it in this Android.bp rather than \"your own\" ? presumably in `system/security`.",
+      "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
