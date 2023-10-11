@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f13a51db_89ac1bf5",
+        "filename": "media/java/android/media/AudioFormat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-10-11T15:26:37Z",
+      "side": 1,
+      "message": "This constant that you\u0027re @linking isn\u0027t public API, but is being referenced from the javadoc of a public API, so the docs are failing to build properly. I\u0027ll create a revert of this CL as it\u0027s producing broken docs, but could you please update it to something better?",
+      "revId": "be284ebf52091bafb2c22629b70a97fec5531b98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
