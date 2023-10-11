@@ -34,6 +34,24 @@
       "parentUuid": "f13a51db_89ac1bf5",
       "revId": "be284ebf52091bafb2c22629b70a97fec5531b98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f6e562b_4b025556",
+        "filename": "media/java/android/media/AudioFormat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-10-11T16:10:28Z",
+      "side": 1,
+      "message": "Happy to abandon the revert if you can prep another change sometime soon!",
+      "parentUuid": "aacb43a1_f5ec9c7e",
+      "revId": "be284ebf52091bafb2c22629b70a97fec5531b98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
