@@ -18,6 +18,7 @@ package com.android.wm.shell.transition;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.os.DeadObjectException;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
@@ -131,6 +132,7 @@ public class RemoteTransitionHandler implements Transitions.TransitionHandler {
             }
         };
         Transitions.setRunningRemoteTransitionDelegate(remote.getAppThread());
+	SurfaceControl.Transaction remoteT = null;
         try {
             // If the remote is actually in the same process, then make a copy of parameters since
             // remote impls assume that they have to clean-up native references.
@@ -138,12 +140,18 @@ public class RemoteTransitionHandler implements Transitions.TransitionHandler {
                     copyIfLocal(startTransaction, remote.getRemoteTransition());
             final TransitionInfo remoteInfo =
                     remoteStartT == startTransaction ? info : info.localRemoteCopy();
+	    remoteT = remoteStartT;
             handleDeath(remote.asBinder(), finishCallback);
             remote.getRemoteTransition().startAnimation(transition, remoteInfo, remoteStartT, cb);
             // assume that remote will apply the start transaction.
             startTransaction.clear();
         } catch (RemoteException e) {
             Log.e(Transitions.TAG, "Error running remote transition.", e);
+	     if ((e instanceof DeadObjectException) && remoteT != null
+                    && remoteT.mNativeObject != 0) {
+		      Log.e(Transitions.TAG, "reslove DeadObjectException for leak.", e);
+		      remoteT.close();
+            }
             unhandleDeath(remote.asBinder(), finishCallback);
             mRequestedRemotes.remove(transition);
             mMainExecutor.execute(
