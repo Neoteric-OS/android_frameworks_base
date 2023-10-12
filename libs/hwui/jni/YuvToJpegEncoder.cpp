@@ -298,7 +298,7 @@ void Yuv422IToJpegEncoder::configSamplingFactors(jpeg_compress_struct* cinfo) {
 }
 ///////////////////////////////////////////////////////////////////////////////
 
-using namespace android::ultrahdr;
+using namespace ultrahdr;
 
 ultrahdr_color_gamut P010Yuv420ToJpegREncoder::findColorGamut(JNIEnv* env, int aDataSpace) {
     switch (aDataSpace & ADataSpace::STANDARD_MASK) {
@@ -374,9 +374,9 @@ bool P010Yuv420ToJpegREncoder::encode(JNIEnv* env,
     std::unique_ptr<uint8_t[]> jpegr_data = std::make_unique<uint8_t[]>(jpegR.maxLength);
     jpegR.data = jpegr_data.get();
 
-    if (int success = jpegREncoder.encodeJPEGR(&p010, &yuv420,
-            hdrTransferFunction,
-            &jpegR, jpegQuality, nullptr); success != android::OK) {
+    if (int success = jpegREncoder.encodeJPEGR(&p010, &yuv420, hdrTransferFunction, &jpegR,
+                                               jpegQuality, nullptr);
+        success != JPEGR_NO_ERROR) {
         ALOGW("Encode JPEG/R failed, error code: %d.", success);
         return false;
     }
