@@ -39,6 +39,7 @@ class AndroidFrameworkIssueRegistry : IssueRegistry() {
         // PackageVisibilityDetector.ISSUE_PACKAGE_NAME_NO_PACKAGE_VISIBILITY_FILTERS,
         PermissionMethodDetector.ISSUE_PERMISSION_METHOD_USAGE,
         PermissionMethodDetector.ISSUE_CAN_BE_PERMISSION_METHOD,
+        FlagsDetector.ISSUE,
     )
 
     override val api: Int
