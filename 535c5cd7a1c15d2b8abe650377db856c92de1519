@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27b31b36_649092c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2023-10-12T07:40:40Z",
+      "side": 1,
+      "message": "Right, changes now need +2 from two googlers... Nothing I can do about that. Maybe someone on the WM Reviewers list?",
+      "revId": "535c5cd7a1c15d2b8abe650377db856c92de1519",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
