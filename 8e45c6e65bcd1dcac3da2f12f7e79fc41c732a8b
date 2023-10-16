@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fab6f9f_5ac3352f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1941946
+      },
+      "writtenOn": "2023-10-16T22:55:25Z",
+      "side": 1,
+      "message": "Do we want to add \"Cherry-pick\" or \"Merge\" keywords in the CL description, to indicate this is a change cherry-picked from other branches?",
+      "revId": "8e45c6e65bcd1dcac3da2f12f7e79fc41c732a8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "709f1c98_833fca13",
