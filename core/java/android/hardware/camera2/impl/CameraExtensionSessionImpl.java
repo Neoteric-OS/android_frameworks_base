@@ -2091,7 +2091,7 @@ public final class CameraExtensionSessionImpl extends CameraExtensionSession {
         return parcelImage;
     }
 
-    private static List<CaptureBundle> initializeParcelable(
+    private List<CaptureBundle> initializeParcelable(
             HashMap<Integer, Pair<Image, TotalCaptureResult>> captureMap, Integer jpegOrientation,
             Byte jpegQuality) {
         ArrayList<CaptureBundle> ret = new ArrayList<>();
@@ -2101,7 +2101,7 @@ public final class CameraExtensionSessionImpl extends CameraExtensionSession {
             bundle.stage = stageId;
             bundle.captureImage = initializeParcelImage(entry.first);
             bundle.sequenceId = entry.second.getSequenceId();
-            bundle.captureResult = entry.second.getNativeMetadata();
+            bundle.captureResult = initializeFilteredResults(entry.second);
             if (jpegOrientation != null) {
                 bundle.captureResult.set(CaptureResult.JPEG_ORIENTATION, jpegOrientation);
             }

@@ -48,7 +48,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -1054,7 +1053,7 @@ public final class CameraExtensionCharacteristics {
                 Class<CaptureRequest.Key<?>> crKeyTyped = (Class<CaptureRequest.Key<?>>) crKey;
 
                 ret.addAll(requestChars.getAvailableKeyList(CaptureRequest.class, crKeyTyped,
-                        requestKeys, /*includeSynthetic*/ true));
+                        requestKeys, /*includeSynthetic*/ false));
             }
 
             // Jpeg quality and orientation must always be supported
@@ -1129,7 +1128,7 @@ public final class CameraExtensionCharacteristics {
                 Class<CaptureResult.Key<?>> crKeyTyped = (Class<CaptureResult.Key<?>>)crKey;
 
                 ret.addAll(resultChars.getAvailableKeyList(CaptureResult.class, crKeyTyped,
-                        resultKeys, /*includeSynthetic*/ true));
+                        resultKeys, /*includeSynthetic*/ false));
 
                 // Jpeg quality, orientation and sensor timestamp must always be supported
                 if (!ret.contains(CaptureResult.JPEG_QUALITY)) {
