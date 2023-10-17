@@ -1,0 +1,7 @@
+filegroup {
+    name: "framework-crashrecovery-sources",
+    srcs: [
+        "java/**/*.java",
+        "java/**/*.aidl",
+    ],
+}
