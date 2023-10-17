@@ -52,6 +52,40 @@
       "parentUuid": "a5a5da00_16caa249",
       "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "235c963d_a3992ab4",
+        "filename": "core/java/android/hardware/biometrics/BiometricConstants.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-10-17T19:32:52Z",
+      "side": 1,
+      "message": "It\u0027s not an \"API\" (it\u0027s hidden). I don\u0027t believe you need it?",
+      "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c78c9910_ddd85a92",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-10-17T19:32:52Z",
+      "side": 1,
+      "message": "Using an elapsed time means it will only return the last successful auth since boot. Let\u0027s clarify that in the javadoc?\n\nAlso, would it remember the value from the previous user unlock? Please clarifythat too. e.g.\n1. User unlocks user-10 with biometric. \n2. User-10 stops.\n3. Later, user-10 starts again, but is still locked.\n4. App on user-10 calls this API.\n  -\u003e Would the API return the time at step 1?",
+      "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
