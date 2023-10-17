@@ -1313,6 +1313,17 @@ public class VolumeDialogImpl implements VolumeDialog,
                 .alpha(0)
                 .setDuration(mDialogHideAnimationDurationMs)
                 .setInterpolator(new SystemUIInterpolators.LogAccelerateInterpolator())
+                .setListener( new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        mDialog.dismiss();
+                        tryToRemoveCaptionsTooltip();
+                        mIsAnimatingDismiss = false;
+
+                        hideRingerDrawer();
+                        mDialogView.animate().setListener(null);
+                    }
+                })
                 .withEndAction(() -> mHandler.postDelayed(() -> {
                     mDialog.dismiss();
                     tryToRemoveCaptionsTooltip();
