@@ -16,6 +16,24 @@
       "message": "This bug has zero context, which is bad for future maintainer, why don\u0027t you add a link to the future bug (b/301979982) to b/303839446?",
       "revId": "9a5cbb9cb54bc157e02edb8210274f484ec56631",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ada4521_66803838",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-17T23:10:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c11d47db_eb88d38b",
+      "revId": "9a5cbb9cb54bc157e02edb8210274f484ec56631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

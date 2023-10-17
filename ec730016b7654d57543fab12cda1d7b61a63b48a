@@ -89,6 +89,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f708184a_7ff3a3a1",
+        "filename": "core/java/android/hardware/biometrics/BiometricConstants.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-17T23:10:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "417c16a9_37a21351",
+      "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c78c9910_ddd85a92",

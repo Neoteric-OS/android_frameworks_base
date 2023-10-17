@@ -248,6 +248,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fda3b43_3aef0a08",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-17T23:10:34Z",
+      "side": 1,
+      "message": "Yup, reasonable. Updated.",
+      "parentUuid": "d0e88071_92073f17",
+      "range": {
+        "startLine": 660,
+        "startChar": 75,
+        "endLine": 660,
+        "endChar": 85
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2ff09dc_65596bb9",
