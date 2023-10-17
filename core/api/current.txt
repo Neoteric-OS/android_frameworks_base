@@ -11982,6 +11982,7 @@ package android.content.pm {
     field public static final String FEATURE_MIDI = "android.software.midi";
     field public static final String FEATURE_NFC = "android.hardware.nfc";
     field public static final String FEATURE_NFC_BEAM = "android.sofware.nfc.beam";
+    field @FlaggedApi("android.nfc.enable_nfc_charging") public static final String FEATURE_NFC_CHARGING = "android.hardware.nfc.charging";
     field public static final String FEATURE_NFC_HOST_CARD_EMULATION = "android.hardware.nfc.hce";
     field public static final String FEATURE_NFC_HOST_CARD_EMULATION_NFCF = "android.hardware.nfc.hcef";
     field public static final String FEATURE_NFC_OFF_HOST_CARD_EMULATION_ESE = "android.hardware.nfc.ese";
@@ -27510,10 +27511,12 @@ package android.nfc {
     method public void enableReaderMode(android.app.Activity, android.nfc.NfcAdapter.ReaderCallback, int, android.os.Bundle);
     method public static android.nfc.NfcAdapter getDefaultAdapter(android.content.Context);
     method @Nullable public android.nfc.NfcAntennaInfo getNfcAntennaInfo();
+    method @FlaggedApi("android.nfc.enable_nfc_charging") @NonNull public android.nfc.WlcLDeviceInfo getWlcLDeviceInfo();
     method public boolean ignore(android.nfc.Tag, int, android.nfc.NfcAdapter.OnTagRemovedListener, android.os.Handler);
     method public boolean isEnabled();
     method public boolean isSecureNfcEnabled();
     method public boolean isSecureNfcSupported();
+    method @FlaggedApi("android.nfc.enable_nfc_charging") public boolean isWlcEnabled();
     field public static final String ACTION_ADAPTER_STATE_CHANGED = "android.nfc.action.ADAPTER_STATE_CHANGED";
     field public static final String ACTION_NDEF_DISCOVERED = "android.nfc.action.NDEF_DISCOVERED";
     field @RequiresPermission(android.Manifest.permission.NFC_PREFERRED_PAYMENT_INFO) public static final String ACTION_PREFERRED_PAYMENT_CHANGED = "android.nfc.action.PREFERRED_PAYMENT_CHANGED";
@@ -27597,6 +27600,19 @@ package android.nfc {
   public class TagLostException extends java.io.IOException {
     ctor public TagLostException();
     ctor public TagLostException(String);
+  }
+
+  @FlaggedApi("android.nfc.enable_nfc_charging") public final class WlcLDeviceInfo implements android.os.Parcelable {
+    method public int describeContents();
+    method public double getBatteryLevel();
+    method public int getState();
+    method public double getTemperature();
+    method @NonNull public String getUid();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONNECTED_CHARGING = 2; // 0x2
+    field public static final int CONNECTED_DISCHARGING = 3; // 0x3
+    field @NonNull public static final android.os.Parcelable.Creator<android.nfc.WlcLDeviceInfo> CREATOR;
+    field public static final int DISCONNECTED = 1; // 0x1
   }
 
 }

@@ -30,8 +30,10 @@ import android.nfc.INfcFCardEmulation;
 import android.nfc.INfcUnlockHandler;
 import android.nfc.ITagRemovedCallback;
 import android.nfc.INfcDta;
+import android.nfc.INfcWlcStateListener;
 import android.nfc.NfcAntennaInfo;
 import android.os.Bundle;
+import android.nfc.WlcLDeviceInfo;
 
 /**
  * @hide
@@ -79,4 +81,11 @@ interface INfcAdapter
     Map getTagIntentAppPreferenceForUser(int userId);
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)")
     int setTagIntentAppPreferenceForUser(int userId, String pkg, boolean allow);
+
+    @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)")
+    boolean enableWlc(boolean enable);
+    boolean isWlcEnabled();
+    void registerWlcStateListener(in INfcWlcStateListener listener);
+    void unregisterWlcStateListener(in INfcWlcStateListener listener);
+    WlcLDeviceInfo getWlcLDeviceInfo();
 }
