@@ -34,6 +34,24 @@
       "parentUuid": "f97d82ef_53a71eaa",
       "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc602e49_e8246c59",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-10-17T12:24:54Z",
+      "side": 1,
+      "message": "\u003e I can find no instances where folks have separated them as you suggest.\n\nThis file is new, so I wouldn\u0027t say current examples necessarily indicative of an established best practice. I think the way this file is shaping up, it\u0027s clear to me it\u0027s been designed quite badly as it ends up collecting changes from different teams into one file.\n\nSo unless there\u0027s a good reason to define this library in this file (as is the case for the java libraries, which need to go into the shared soong variable at the top of the file), it seems better to define it elsewhere, so that I don\u0027t need to review changes to your library.\n\n+joeo as well if you have any thoughts on where these definitions should go",
+      "parentUuid": "a5a5da00_16caa249",
+      "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
