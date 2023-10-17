@@ -122,6 +122,24 @@
       "parentUuid": "c78c9910_ddd85a92",
       "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e2dab0d_679ff8eb",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-10-17T22:36:20Z",
+      "side": 1,
+      "message": "Ah okay I only saw the first one, and that\u0027s just the definition of the elapsed time, so it wasn\u0027t clear if it\u0027d return the value from prior boots (and that wouldn\u0027t make a lot of sense). But the second one is what I was looking for.\n\nThe \"user restarted\" part is not super important, so no need to mention it.",
+      "parentUuid": "b38a1216_76f99e5a",
+      "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

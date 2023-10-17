@@ -226,6 +226,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0e88071_92073f17",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-10-17T22:36:20Z",
+      "side": 1,
+      "message": "I think this is worth mentioning in the javadoc -- that just because the API returns non-zero that doesn\u0027t mean the auth type is currently usable. (right?)",
+      "parentUuid": "7a99f9c1_4875f44d",
+      "range": {
+        "startLine": 660,
+        "startChar": 75,
+        "endLine": 660,
+        "endChar": 85
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2ff09dc_65596bb9",
         "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
         "patchSetId": 1
