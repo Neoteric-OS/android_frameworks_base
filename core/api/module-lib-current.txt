@@ -381,6 +381,8 @@ package android.nfc {
 package android.os {
 
   public class ArtModuleServiceManager {
+    method @FlaggedApi("android.content.pm.use_art_service_v2") @NonNull public android.os.ArtModuleServiceManager.ServiceRegisterer getArtdChrootServiceRegisterer();
+    method @FlaggedApi("android.content.pm.use_art_service_v2") @NonNull public android.os.ArtModuleServiceManager.ServiceRegisterer getArtdPreRebootServiceRegisterer();
     method @NonNull public android.os.ArtModuleServiceManager.ServiceRegisterer getArtdServiceRegisterer();
   }
 
