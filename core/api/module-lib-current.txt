@@ -357,6 +357,7 @@ package android.nfc {
 package android.os {
 
   public class ArtModuleServiceManager {
+    method @NonNull public android.os.ArtModuleServiceManager.ServiceRegisterer getArtdChrootServiceRegisterer();
     method @NonNull public android.os.ArtModuleServiceManager.ServiceRegisterer getArtdServiceRegisterer();
   }
 

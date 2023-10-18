@@ -60,4 +60,10 @@ public class ArtModuleServiceManager {
     public ServiceRegisterer getArtdServiceRegisterer() {
         return new ServiceRegisterer("artd");
     }
+
+    /** Returns {@link ServiceRegisterer} for the "artd_chroot" service. */
+    @NonNull
+    public ServiceRegisterer getArtdChrootServiceRegisterer() {
+        return new ServiceRegisterer("artd_chroot");
+    }
 }
