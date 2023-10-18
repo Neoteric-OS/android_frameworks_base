@@ -430,6 +430,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "616f5f93_87cfa102",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T14:58:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e4561c6_7b65ddaf",
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8bca31ad_319b5afa",
