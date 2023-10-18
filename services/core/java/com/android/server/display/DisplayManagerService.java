@@ -485,8 +485,6 @@ public final class DisplayManagerService extends SystemService {
     private final BroadcastReceiver mIdleModeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            final DisplayManagerInternal dmi =
-                    LocalServices.getService(DisplayManagerInternal.class);
             if (Intent.ACTION_DOCK_EVENT.equals(intent.getAction())) {
                 int dockState = intent.getIntExtra(Intent.EXTRA_DOCK_STATE,
                         Intent.EXTRA_DOCK_STATE_UNDOCKED);
@@ -4244,14 +4242,6 @@ public final class DisplayManagerService extends SystemService {
                 && (brightness <= PowerManager.BRIGHTNESS_MAX);
     }
 
-    private static boolean isValidResolution(Point resolution) {
-        return (resolution != null) && (resolution.x > 0) && (resolution.y > 0);
-    }
-
-    private static boolean isValidRefreshRate(float refreshRate) {
-        return !Float.isNaN(refreshRate) && (refreshRate > 0.0f);
-    }
-
     @VisibleForTesting
     final class LocalService extends DisplayManagerInternal {
 
@@ -4702,7 +4692,7 @@ public final class DisplayManagerService extends SystemService {
         public void onBaseStateChanged(int state) {
             mBaseState = state;
         }
-    };
+    }
 
     private class BrightnessPair {
         public float brightness;
