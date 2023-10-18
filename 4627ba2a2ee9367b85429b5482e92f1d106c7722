@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da9ac141_e7fd2aaf",
+        "filename": "core/java/android/hardware/biometrics/BiometricConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-18T18:16:41Z",
+      "side": 1,
+      "message": "This file is divided into \"sections\" by comments, and this new constant is being inserted into the following section that begins on line 38.  But, it\u0027s unrelated to it:\n\n```\n    //\n    // Error messages from biometric hardware during initilization, enrollment, authentication or\n    // removal.\n    //\n```\n\nMaybe put this new constant at the end of the file, in a new \"section\"?",
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c6ed82a_99cc8806",
+        "filename": "core/java/android/hardware/biometrics/BiometricConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-18T18:16:41Z",
+      "side": 1,
+      "message": "Perhaps -1 would be a better choice?  0 milliseconds since boot could be a valid time, whereas -1 clearly isn\u0027t.",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5fb9794_e3de6917",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-18T18:16:41Z",
+      "side": 1,
+      "message": "`\u003cp\u003e`",
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "605ed0d5_d9717d26",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-18T18:16:41Z",
+      "side": 1,
+      "message": "The code also throws if `authenticators` is 0.  Is that WAI?",
+      "range": {
+        "startLine": 679,
+        "startChar": 0,
+        "endLine": 680,
+        "endChar": 92
+      },
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c2c31bf_49716c1c",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-18T18:16:41Z",
+      "side": 1,
+      "message": "Is this necessary?  I would think that keystore2 would not need to check the flag, as it can rely on the fact that `getLastAuthTime()` is only called when the flag is enabled.",
+      "range": {
+        "startLine": 680,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 17
+      },
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -274,6 +274,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9c43e1b_8b0b9532",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-10-18T18:16:41Z",
+      "side": 1,
+      "message": "The code has the following, though:\n\n```\n            long secureUserId \u003d GateKeeper.getSecureUserId(userId);\n            if (secureUserId \u003d\u003d GateKeeper.INVALID_SECURE_USER_ID) {\n                return BIOMETRIC_NO_AUTHENTICATION;\n            }\n```\n\nUsers have a SID if and only if they have a secure lock screen.  So, if the user\u0027s lock screen is changed to swipe or none, then the API actually starts returning `BIOMETRIC_NO_AUTHENTICATION`.  Is that WAI and clearly documented?",
+      "parentUuid": "5fda3b43_3aef0a08",
+      "range": {
+        "startLine": 660,
+        "startChar": 75,
+        "endLine": 660,
+        "endChar": 85
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2ff09dc_65596bb9",
         "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
         "patchSetId": 1
