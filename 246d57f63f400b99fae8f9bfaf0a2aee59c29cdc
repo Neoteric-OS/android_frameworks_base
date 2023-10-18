@@ -298,6 +298,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62c580b8_45f2ec0b",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T21:59:27Z",
+      "side": 1,
+      "message": "Ugh, good catch. For the expected usage this isn\u0027t a concern, but I would prefer this API to continue returning values here. Unfortunately, I think it\u0027s probably too much work to fix this edge case right now.\n\nWe could document that if the user removes their secure lock screen that this will always return NO_AUTHENTICATION, even if successful authentications have occurred prior to the removal (and after boot). If we later fix this, we can amend the doc to say that it will return those times after SDK 45 or whatever. Does that sound reasonable?",
+      "parentUuid": "d9c43e1b_8b0b9532",
+      "range": {
+        "startLine": 660,
+        "startChar": 75,
+        "endLine": 660,
+        "endChar": 85
+      },
+      "revId": "246d57f63f400b99fae8f9bfaf0a2aee59c29cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2ff09dc_65596bb9",
         "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
         "patchSetId": 1

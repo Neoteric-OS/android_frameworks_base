@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3636f7d_e827b12f",
+        "filename": "core/java/android/hardware/biometrics/BiometricConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T21:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da9ac141_e7fd2aaf",
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c6ed82a_99cc8806",
@@ -58,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "584b0b1e_01e9f237",
+        "filename": "core/java/android/hardware/biometrics/BiometricConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T21:59:27Z",
+      "side": 1,
+      "message": "Yeah, I had -1 initially as well, and now can\u0027t remember why I changed it. Put it back.",
+      "parentUuid": "5c6ed82a_99cc8806",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5fb9794_e3de6917",
@@ -71,6 +113,24 @@
       "writtenOn": "2023-10-18T18:16:41Z",
       "side": 1,
       "message": "`\u003cp\u003e`",
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "731eab27_05f6cfe4",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T21:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5fb9794_e3de6917",
       "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -100,6 +160,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "458d5af8_294e2577",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T21:59:27Z",
+      "side": 1,
+      "message": "Yes. It doesn\u0027t make any sense to call this with no authenticators. Updated the doc.",
+      "parentUuid": "605ed0d5_d9717d26",
+      "range": {
+        "startLine": 679,
+        "startChar": 0,
+        "endLine": 680,
+        "endChar": 92
+      },
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c2c31bf_49716c1c",
         "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
         "patchSetId": 6
@@ -111,6 +195,30 @@
       "writtenOn": "2023-10-18T18:16:41Z",
       "side": 1,
       "message": "Is this necessary?  I would think that keystore2 would not need to check the flag, as it can rely on the fact that `getLastAuthTime()` is only called when the flag is enabled.",
+      "range": {
+        "startLine": 680,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 17
+      },
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2db1031_bf5262c1",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T21:59:27Z",
+      "side": 1,
+      "message": "Unfortunately, even though `BiometricService` is currently the only caller today, someone else (any code in `system_server`) could decide that they want to call it too and the access would be unflagged.",
+      "parentUuid": "4c2c31bf_49716c1c",
       "range": {
         "startLine": 680,
         "startChar": 0,
