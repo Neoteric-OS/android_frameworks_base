@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b00ff709_5b8750ad",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1945920
+      },
+      "writtenOn": "2023-10-18T01:46:25Z",
+      "side": 1,
+      "message": "I had changed",
+      "parentUuid": "467e382f_f3524245",
+      "range": {
+        "startLine": 137,
+        "startChar": 12,
+        "endLine": 144,
+        "endChar": 59
+      },
+      "revId": "4ccb6fab42da05d6f5c8c3325a9ca4f7ac4055be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "caacfe9e_49465da5",
         "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2023-10-12T17:57:38Z",
       "side": 1,
       "message": "This check isn\u0027t necessary. I think the surfacecontrol will never be null and if we failed to `startAnimation` we should probably always close the copied transaction.",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 83
+      },
+      "revId": "4ccb6fab42da05d6f5c8c3325a9ca4f7ac4055be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52f34f42_4fa41f62",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1945920
+      },
+      "writtenOn": "2023-10-18T01:46:25Z",
+      "side": 1,
+      "message": "I had changed this",
+      "parentUuid": "caacfe9e_49465da5",
       "range": {
         "startLine": 150,
         "startChar": 12,
