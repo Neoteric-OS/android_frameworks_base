@@ -15,6 +15,7 @@
  */
 package android.os;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -59,5 +60,19 @@ public class ArtModuleServiceManager {
     @NonNull
     public ServiceRegisterer getArtdServiceRegisterer() {
         return new ServiceRegisterer("artd");
+    }
+
+    /** Returns {@link ServiceRegisterer} for the "artd_pre_reboot" service. */
+    @NonNull
+    @FlaggedApi("xxx")
+    public ServiceRegisterer getArtdPreRebootServiceRegisterer() {
+        return new ServiceRegisterer("artd_pre_reboot");
+    }
+
+    /** Returns {@link ServiceRegisterer} for the "artd_chroot" service. */
+    @NonNull
+    @FlaggedApi("xxx")
+    public ServiceRegisterer getArtdChrootServiceRegisterer() {
+        return new ServiceRegisterer("artd_chroot");
     }
 }
