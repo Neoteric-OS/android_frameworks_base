@@ -182,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "757456b6_91f63aeb",
+        "filename": "core/java/android/hardware/biometrics/BiometricManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T21:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "458d5af8_294e2577",
+      "range": {
+        "startLine": 679,
+        "startChar": 0,
+        "endLine": 680,
+        "endChar": 92
+      },
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c2c31bf_49716c1c",
@@ -219,6 +243,30 @@
       "side": 1,
       "message": "Unfortunately, even though `BiometricService` is currently the only caller today, someone else (any code in `system_server`) could decide that they want to call it too and the access would be unflagged.",
       "parentUuid": "4c2c31bf_49716c1c",
+      "range": {
+        "startLine": 680,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 17
+      },
+      "revId": "4627ba2a2ee9367b85429b5482e92f1d106c7722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "826efe38_1a995164",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-18T21:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2db1031_bf5262c1",
       "range": {
         "startLine": 680,
         "startChar": 0,
