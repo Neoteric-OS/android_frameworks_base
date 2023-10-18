@@ -485,8 +485,6 @@ public final class DisplayManagerService extends SystemService {
     private final BroadcastReceiver mIdleModeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            final DisplayManagerInternal dmi =
-                    LocalServices.getService(DisplayManagerInternal.class);
             if (Intent.ACTION_DOCK_EVENT.equals(intent.getAction())) {
                 int dockState = intent.getIntExtra(Intent.EXTRA_DOCK_STATE,
                         Intent.EXTRA_DOCK_STATE_UNDOCKED);
