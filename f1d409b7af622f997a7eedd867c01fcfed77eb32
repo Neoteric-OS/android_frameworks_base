@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0d4693c_e1f1cffa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2023-10-18T02:06:18Z",
+      "side": 1,
+      "message": "l",
+      "revId": "f1d409b7af622f997a7eedd867c01fcfed77eb32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df72f3f8_d54358fd",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2023-10-18T02:06:18Z",
+      "side": 1,
+      "message": "Move these outside of try too. Should look like:\n```\n// If the remote ...\nfinal SurfaceControl.Transaction remoteStartT \u003d ...\nfinal TransitionInfo remoteInfo \u003d ...\ntry {\n    handleDeath(..);\n    ...\n} catch\n```",
+      "range": {
+        "startLine": 138,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 85
+      },
+      "revId": "f1d409b7af622f997a7eedd867c01fcfed77eb32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cc8bafb_2d11f242",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2023-10-18T02:06:18Z",
+      "side": 1,
+      "message": "I think we need to apply the local transaction only and then just close the copy. We should probably also always apply, not just when `DeadObject`. So something like:\n```\n} catch (...) {\n    Log.e(...);\n    if (remoteStartT !\u003d startTransaction) {\n        remoteStartT.close();\n    }\n    startTransaction.apply();\n    unhandleDeath(...);\n    ...\n}\n```",
+      "range": {
+        "startLine": 148,
+        "startChar": 12,
+        "endLine": 149,
+        "endChar": 83
+      },
+      "revId": "f1d409b7af622f997a7eedd867c01fcfed77eb32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
