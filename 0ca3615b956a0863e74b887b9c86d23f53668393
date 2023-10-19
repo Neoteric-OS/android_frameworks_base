@@ -34,6 +34,24 @@
       "parentUuid": "fa5ca00d_ed489081",
       "revId": "0ca3615b956a0863e74b887b9c86d23f53668393",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2a3a4b2_0d6df4d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2023-10-19T23:14:48Z",
+      "side": 1,
+      "message": "I think you can just keep this CL (2793964) and move the null pointer check here.",
+      "parentUuid": "20210999_267f829b",
+      "revId": "0ca3615b956a0863e74b887b9c86d23f53668393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
