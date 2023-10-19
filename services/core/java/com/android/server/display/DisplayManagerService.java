@@ -2019,9 +2019,7 @@ public final class DisplayManagerService extends SystemService {
             return;
         }
         Display.Mode.Builder modeBuilder = new Display.Mode.Builder();
-        if (userPreferredResolution != null) {
-            modeBuilder.setResolution(userPreferredResolution.x, userPreferredResolution.y);
-        }
+        modeBuilder.setResolution(userPreferredResolution.x, userPreferredResolution.y);
         if (!Float.isNaN(refreshRate)) {
             modeBuilder.setRefreshRate(refreshRate);
         }
@@ -4242,14 +4240,6 @@ public final class DisplayManagerService extends SystemService {
                 && (brightness <= PowerManager.BRIGHTNESS_MAX);
     }
 
-    private static boolean isValidResolution(Point resolution) {
-        return (resolution != null) && (resolution.x > 0) && (resolution.y > 0);
-    }
-
-    private static boolean isValidRefreshRate(float refreshRate) {
-        return !Float.isNaN(refreshRate) && (refreshRate > 0.0f);
-    }
-
     @VisibleForTesting
     final class LocalService extends DisplayManagerInternal {
 
@@ -4700,7 +4690,7 @@ public final class DisplayManagerService extends SystemService {
         public void onBaseStateChanged(int state) {
             mBaseState = state;
         }
-    };
+    }
 
     private class BrightnessPair {
         public float brightness;
