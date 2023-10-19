@@ -1180,10 +1180,9 @@ public final class InputMethodManager {
                             // device was interactive.
                             final ViewRootImpl currentViewRootImpl = mCurRootView;
                             rootView.post(() -> {
-                                synchronized (mH) {
-                                    if (mCurRootView != currentViewRootImpl) {
-                                        return;
-                                    }
+                                if (currentViewRootImpl == null ||
+                                        currentViewRootImpl.getView() == null) {
+                                    return;
                                 }
                                 final View focusedView = currentViewRootImpl.getView().findFocus();
                                 onViewFocusChangedInternal(focusedView, focusedView != null);
