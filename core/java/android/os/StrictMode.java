@@ -2023,9 +2023,14 @@ public final class StrictMode {
             return;
         }
 
+        boolean wasExplicitGcEnabled = ((mThreadPolicyMask & 
+            DETECT_THREAD_EXPLICIT_GC) != 0);
+        permitExplicitGc();
         System.gc();
         System.runFinalization();
         System.gc();
+        if (!wasExplicitGcEnabled)
+          detectExplicitGc();
 
         // Note: classInstanceLimit is immutable, so this is lock-free
         // Create the classes array.
