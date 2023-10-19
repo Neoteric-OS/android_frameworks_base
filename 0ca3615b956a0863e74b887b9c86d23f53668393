@@ -52,6 +52,24 @@
       "parentUuid": "20210999_267f829b",
       "revId": "0ca3615b956a0863e74b887b9c86d23f53668393",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3214b8c_4d8a4970",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2005646
+      },
+      "writtenOn": "2023-10-19T23:41:31Z",
+      "side": 1,
+      "message": "(y) Yup, done in the latest update to this CL.",
+      "parentUuid": "c2a3a4b2_0d6df4d5",
+      "revId": "0ca3615b956a0863e74b887b9c86d23f53668393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
