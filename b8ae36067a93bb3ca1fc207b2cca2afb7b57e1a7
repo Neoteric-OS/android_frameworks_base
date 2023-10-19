@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a86bd41d_814feede",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1945920
+      },
+      "writtenOn": "2023-10-19T00:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "772fe366_b9f17db1",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 80
+      },
+      "revId": "b8ae36067a93bb3ca1fc207b2cca2afb7b57e1a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6aa55e2a_8a31f508",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-10-18T16:43:38Z",
       "side": 1,
       "message": "Remove this log since we already have log above indicating that we hit the error case.",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 71
+      },
+      "revId": "b8ae36067a93bb3ca1fc207b2cca2afb7b57e1a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bd763dd_635eabc8",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/RemoteTransitionHandler.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1945920
+      },
+      "writtenOn": "2023-10-19T00:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aa55e2a_8a31f508",
       "range": {
         "startLine": 148,
         "startChar": 16,
