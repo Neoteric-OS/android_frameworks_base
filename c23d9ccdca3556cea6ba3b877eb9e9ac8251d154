@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb21125f_e5c6bfaf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2023-10-19T11:44:59Z",
+      "side": 1,
+      "message": "LGTM; fallback OWNERS+2 to bring the test directory in alignment with the main source directory.",
+      "revId": "c23d9ccdca3556cea6ba3b877eb9e9ac8251d154",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
