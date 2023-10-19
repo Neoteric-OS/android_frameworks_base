@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2353898f_42dc3c0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2023-10-19T22:38:36Z",
+      "side": 1,
+      "message": "The change was already reviewed in [`git_main`](https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/25097580). Submitting this in AOSP first in order to prevent unnecessary cherry picks.",
+      "revId": "beeb35a8d65c14c592d3ba19114372ae3cd1e50f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
