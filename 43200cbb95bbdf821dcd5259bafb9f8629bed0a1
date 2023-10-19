@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbcf57e3_5c2796db",
+        "filename": "core/tests/coretests/src/android/view/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2023-10-19T11:27:18Z",
+      "side": 1,
+      "message": "nit: no need for the per-file here, just add `file:/core/java/android/view/OWNERS` at the top",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "43200cbb95bbdf821dcd5259bafb9f8629bed0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
