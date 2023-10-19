@@ -9109,9 +9109,9 @@ public class CarrierConfigManager {
             defaults.putIntArray(
                     KEY_DIFFIE_HELLMAN_GROUPS_INT_ARRAY,
                     new int[] {
-                        SaProposal.DH_GROUP_1024_BIT_MODP,
+                        SaProposal.DH_GROUP_2048_BIT_MODP,
                         SaProposal.DH_GROUP_1536_BIT_MODP,
-                        SaProposal.DH_GROUP_2048_BIT_MODP
+                        SaProposal.DH_GROUP_1024_BIT_MODP
                     });
             defaults.putIntArray(
                     KEY_SUPPORTED_IKE_SESSION_ENCRYPTION_ALGORITHMS_INT_ARRAY,
@@ -9122,20 +9122,20 @@ public class CarrierConfigManager {
             defaults.putIntArray(
                     KEY_SUPPORTED_INTEGRITY_ALGORITHMS_INT_ARRAY,
                     new int[] {
-                        SaProposal.INTEGRITY_ALGORITHM_AES_XCBC_96,
-                        SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA1_96,
-                        SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_256_128,
-                        SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_384_192,
                         SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_512_256,
+                        SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_384_192,
+                        SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA2_256_128,
+                        SaProposal.INTEGRITY_ALGORITHM_HMAC_SHA1_96,
+                        SaProposal.INTEGRITY_ALGORITHM_AES_XCBC_96,
                     });
             defaults.putIntArray(
                     KEY_SUPPORTED_PRF_ALGORITHMS_INT_ARRAY,
                     new int[] {
-                        SaProposal.PSEUDORANDOM_FUNCTION_HMAC_SHA1,
-                        SaProposal.PSEUDORANDOM_FUNCTION_AES128_XCBC,
-                        SaProposal.PSEUDORANDOM_FUNCTION_SHA2_256,
+                        SaProposal.PSEUDORANDOM_FUNCTION_SHA2_512,
                         SaProposal.PSEUDORANDOM_FUNCTION_SHA2_384,
-                        SaProposal.PSEUDORANDOM_FUNCTION_SHA2_512
+                        SaProposal.PSEUDORANDOM_FUNCTION_SHA2_256,
+                        SaProposal.PSEUDORANDOM_FUNCTION_HMAC_SHA1,
+                        SaProposal.PSEUDORANDOM_FUNCTION_AES128_XCBC
                     });
 
             defaults.putInt(KEY_EPDG_AUTHENTICATION_METHOD_INT, AUTHENTICATION_METHOD_EAP_ONLY);
@@ -9146,27 +9146,27 @@ public class CarrierConfigManager {
             defaults.putIntArray(
                     KEY_IKE_SESSION_AES_CBC_KEY_SIZE_INT_ARRAY,
                     new int[] {
-                      SaProposal.KEY_LEN_AES_128,
-                      SaProposal.KEY_LEN_AES_192,
-                      SaProposal.KEY_LEN_AES_256});
+                        SaProposal.KEY_LEN_AES_256,
+                        SaProposal.KEY_LEN_AES_192,
+                        SaProposal.KEY_LEN_AES_128});
             defaults.putIntArray(
                     KEY_CHILD_SESSION_AES_CBC_KEY_SIZE_INT_ARRAY,
                     new int[] {
-                      SaProposal.KEY_LEN_AES_128,
-                      SaProposal.KEY_LEN_AES_192,
-                      SaProposal.KEY_LEN_AES_256});
+                        SaProposal.KEY_LEN_AES_256,
+                        SaProposal.KEY_LEN_AES_192,
+                        SaProposal.KEY_LEN_AES_128});
             defaults.putIntArray(
                     KEY_IKE_SESSION_AES_CTR_KEY_SIZE_INT_ARRAY,
                     new int[] {
-                      SaProposal.KEY_LEN_AES_128,
-                      SaProposal.KEY_LEN_AES_192,
-                      SaProposal.KEY_LEN_AES_256});
+                        SaProposal.KEY_LEN_AES_256,
+                        SaProposal.KEY_LEN_AES_192,
+                        SaProposal.KEY_LEN_AES_128});
             defaults.putIntArray(
                     KEY_CHILD_SESSION_AES_CTR_KEY_SIZE_INT_ARRAY,
                     new int[] {
-                      SaProposal.KEY_LEN_AES_128,
-                      SaProposal.KEY_LEN_AES_192,
-                      SaProposal.KEY_LEN_AES_256});
+                        SaProposal.KEY_LEN_AES_256,
+                        SaProposal.KEY_LEN_AES_192,
+                        SaProposal.KEY_LEN_AES_128});
             defaults.putIntArray(
                     KEY_EPDG_ADDRESS_PRIORITY_INT_ARRAY,
                     new int[] {EPDG_ADDRESS_PLMN, EPDG_ADDRESS_STATIC});
