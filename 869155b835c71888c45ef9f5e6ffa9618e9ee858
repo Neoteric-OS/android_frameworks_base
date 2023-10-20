@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1436bc98_df310c55",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2023-10-20T02:02:18Z",
+      "side": 1,
+      "message": "FYI: aconfig flags shared between the platform and modules aren\u0027t supported now -- they will have version skew if we end up using prebuilts. Can you file a bug to make sure this gets fixed before nfc ships as a standalone module.",
+      "revId": "869155b835c71888c45ef9f5e6ffa9618e9ee858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57e5b04d_854fe98c",
+        "filename": "ProtoLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2023-10-20T02:02:18Z",
+      "side": 1,
+      "message": "How come you need a gensrcs instead of just adding the proto files to the where this is used?",
+      "revId": "869155b835c71888c45ef9f5e6ffa9618e9ee858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
