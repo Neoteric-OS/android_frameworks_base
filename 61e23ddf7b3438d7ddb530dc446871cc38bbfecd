@@ -16,6 +16,24 @@
       "message": "What is the plan for testing this new API in CTS and/or CTS Verifier?\n\nHost-side CTS tests can do LSKF authentication.  CTS Verifier tests can do both LSKF and biometric authentication.  Could you add least add a host-side CTS test, covering the LSKF part?  Or perhaps there\u0027s an existing host-side CTS test that already does LSKF authentication where a quick check of this API would be appropriate to add?  E.g., get current time just before entering LSKF, then enter correct LSKF, then get current time again, and assert that the last authentication time is in between those times.  Also could test that incorrect LSKF does not update the last authentication time.",
       "revId": "61e23ddf7b3438d7ddb530dc446871cc38bbfecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df0343f4_1f2b28c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-20T15:43:03Z",
+      "side": 1,
+      "message": "Yup, agree. Added some more tests in the CTS CL.",
+      "parentUuid": "35eb1471_a677b394",
+      "revId": "61e23ddf7b3438d7ddb530dc446871cc38bbfecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
