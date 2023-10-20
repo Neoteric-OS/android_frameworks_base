@@ -1,0 +1,23 @@
+// Temporary file.
+// TODO(b/237461653): Move this and below to packages/modules/Nfc
+//
+filegroup {
+    name: "framework-core-nfc-non-updatable-sources",
+    srcs: [
+        "android/nfc/NfcServiceManager.java",
+        "android/nfc/cardemulation/ApduServiceInfo.java",
+        "android/nfc/cardemulation/NfcFServiceInfo.java",
+        "android/nfc/cardemulation/AidGroup.java",
+    ],
+}
+
+filegroup {
+    name: "framework-core-nfc-updatable-sources",
+    srcs: [
+        "android/nfc/**/*.java",
+        "android/nfc/**/*.aidl",
+    ],
+    exclude_srcs: [
+        ":framework-core-nfc-non-updatable-sources",
+    ],
+}
