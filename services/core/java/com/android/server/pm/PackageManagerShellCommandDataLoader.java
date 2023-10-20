@@ -141,7 +141,8 @@ public class PackageManagerShellCommandDataLoader extends DataLoaderService {
         private final String mData;
         private final String mSalt;
 
-        private static AtomicLong sGlobalSalt = new AtomicLong((new SecureRandom()).nextLong());
+        private static final AtomicLong sGlobalSalt =
+                new AtomicLong((new SecureRandom()).nextLong());
         private static Long nextGlobalSalt() {
             return sGlobalSalt.incrementAndGet();
         }

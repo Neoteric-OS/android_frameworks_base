@@ -54,7 +54,7 @@ abstract class ShortcutPackageItem {
     protected ShortcutUser mShortcutUser;
 
     @GuardedBy("mLock")
-    protected ShortcutBitmapSaver mShortcutBitmapSaver;
+    protected final ShortcutBitmapSaver mShortcutBitmapSaver;
 
     protected final Object mLock = new Object();
 

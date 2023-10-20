@@ -135,7 +135,7 @@ final class InstallRequest {
     private int mDexoptStatus;
 
     @NonNull
-    private ArrayList<String> mWarnings = new ArrayList<>();
+    private final ArrayList<String> mWarnings = new ArrayList<>();
 
     // New install
     InstallRequest(InstallingSession params) {

@@ -22,7 +22,7 @@ import android.os.UserHandle;
 
 public final class CrossProfileDomainInfo {
     /* ResolveInfo for IntentForwarderActivity to send the intent to the other profile */
-    ResolveInfo mResolveInfo;
+    final ResolveInfo mResolveInfo;
     int mHighestApprovalLevel;
     @UserIdInt
     int mTargetUserId = UserHandle.USER_CURRENT; // default as current user

@@ -461,7 +461,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     @GuardedBy("mLock")
     private SigningDetails mSigningDetails;
     @GuardedBy("mLock")
-    private SparseArray<PackageInstallerSession> mChildSessions = new SparseArray<>();
+    private final SparseArray<PackageInstallerSession> mChildSessions = new SparseArray<>();
     @GuardedBy("mLock")
     private int mParentSessionId;
 
@@ -505,7 +505,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     }
 
     @GuardedBy("mLock")
-    private ArraySet<FileEntry> mFiles = new ArraySet<>();
+    private final ArraySet<FileEntry> mFiles = new ArraySet<>();
 
     static class PerFileChecksum {
         private final Checksum[] mChecksums;
@@ -526,7 +526,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     }
 
     @GuardedBy("mLock")
-    private ArrayMap<String, PerFileChecksum> mChecksums = new ArrayMap<>();
+    private final ArrayMap<String, PerFileChecksum> mChecksums = new ArrayMap<>();
 
     @GuardedBy("mLock")
     private boolean mSessionApplied;
