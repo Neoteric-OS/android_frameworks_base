@@ -4142,6 +4142,8 @@ public final class MediaCodecInfo {
         public static final int DolbyVisionLevel8k30    = 0x400;
         @SuppressLint("AllUpper")
         public static final int DolbyVisionLevel8k60    = 0x800;
+        @SuppressLint("AllUpper")
+        public static final int DolbyVisionLevel8k120   = 0x1000;
 
         // Profiles and levels for AV1 Codec, corresponding to the definitions in
         // "AV1 Bitstream & Decoding Process Specification", Annex A
