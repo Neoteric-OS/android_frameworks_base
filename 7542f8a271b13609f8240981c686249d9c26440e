@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "944096ea_a96f1a0b",
+        "filename": "packages/PackageInstaller/src/com/android/packageinstaller/PackageUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-10-20T18:35:58Z",
+      "side": 1,
+      "message": "Thanks, I took a look at the bug, but still not clear when the sourceFile was deleted. It seems that it was on the /sdcard the whole time?",
+      "parentUuid": "0681c2b1_ce60d093",
+      "range": {
+        "startLine": 146,
+        "startChar": 33,
+        "endLine": 146,
+        "endChar": 58
+      },
+      "revId": "7542f8a271b13609f8240981c686249d9c26440e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "46576973_496160ab",
         "filename": "packages/PackageInstaller/src/com/android/packageinstaller/PackageUtil.java",
         "patchSetId": 2
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "In that will go to the exception without writing passed-in appinfo, this method was already annotated with [@Nonull](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/content/pm/PackageManager.java;l\u003d5727).",
       "parentUuid": "46576973_496160ab",
+      "range": {
+        "startLine": 148,
+        "startChar": 16,
+        "endLine": 148,
+        "endChar": 23
+      },
+      "revId": "7542f8a271b13609f8240981c686249d9c26440e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5108486_c608c4d9",
+        "filename": "packages/PackageInstaller/src/com/android/packageinstaller/PackageUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-10-20T18:35:58Z",
+      "side": 1,
+      "message": "Ah, okay, so in that case the exception is ignored and the label will just be the packageName.",
+      "parentUuid": "738e664b_79681e65",
       "range": {
         "startLine": 148,
         "startChar": 16,
