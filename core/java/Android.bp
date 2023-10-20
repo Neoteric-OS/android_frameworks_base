@@ -23,11 +23,16 @@ filegroup {
     visibility: ["//frameworks/base/services/core"],
 }
 
+
 filegroup {
     name: "framework-core-sources",
     srcs: [
         "**/*.java",
         "**/*.aidl",
+        // TODO(b/237461653): Remove when nfc module code is moved to
+        // packages/modules/Nfc
+        ":framework-core-nfc-non-updatable-sources",
+        ":framework-core-nfc-updatable-sources",
     ],
     visibility: ["//frameworks/base"],
 }
@@ -542,4 +547,8 @@ java_library {
     ],
 }
 
+// TODO(b/237461653): Move this and below to packages/modules/Nfc
+build = [
+    "FrameworkNfc.bp",
+]
 // protolog end
