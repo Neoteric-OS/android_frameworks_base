@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "777fa952_9eb36dbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-10-20T02:10:51Z",
+      "side": 1,
+      "message": "Addressed the comments. Thanks!",
+      "revId": "869155b835c71888c45ef9f5e6ffa9618e9ee858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1436bc98_df310c55",
@@ -18,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "463ff7e7_0027a7c4",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-10-20T02:10:51Z",
+      "side": 1,
+      "message": "Done. b/306517975",
+      "parentUuid": "1436bc98_df310c55",
+      "revId": "869155b835c71888c45ef9f5e6ffa9618e9ee858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57e5b04d_854fe98c",
@@ -31,6 +66,24 @@
       "writtenOn": "2023-10-20T02:02:18Z",
       "side": 1,
       "message": "How come you need a gensrcs instead of just adding the proto files to the where this is used?",
+      "revId": "869155b835c71888c45ef9f5e6ffa9618e9ee858",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "026afe2a_3d4510b6",
+        "filename": "ProtoLibraries.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-10-20T02:10:51Z",
+      "side": 1,
+      "message": "This are common proto files used by other parts of the platform \u0026 other mainline modules. So, I think this is expected to remain shared (since proto files are any backwards compatible, there is no major concern with skew)",
+      "parentUuid": "57e5b04d_854fe98c",
       "revId": "869155b835c71888c45ef9f5e6ffa9618e9ee858",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
