@@ -77,6 +77,7 @@ import java.util.stream.Collectors;
  *         to a surface only</b>, optional</td></tr>
  * <tr><td>{@link #KEY_TEMPORAL_LAYERING}</td><td>String</td><td><b>encoder only</b>, optional,
  *         temporal-layering schema</td></tr>
+ * <tr><td>{@link #KEY_DV_CCID}</td><td>Integer</td><td>optional, if content is Dolby Vision video, specifies the cross-compatibility ID</td></tr>
  * </table>
  * Specify both {@link #KEY_MAX_WIDTH} and {@link #KEY_MAX_HEIGHT} to enable
  * adaptive playback (seamless resolution change) for a video decoder that
@@ -720,6 +721,14 @@ public final class MediaFormat {
      * The associated value is a string.
      */
     public static final String KEY_TEMPORAL_LAYERING = "ts-schema";
+
+    /**
+     * A key describing Dolby Vision cross-compatibility ID (CCID). This is an optional parameter
+     * that applies only to Dolby Vision codecs. CCID is an identification number that can be used
+     * as a shorthand for a particular form of a base-layer substream that can be decoded to a
+     * signal compliant with a particular set of standards, if any.
+     */
+    public static final String KEY_DV_CCID = "dv-ccid";
 
     /**
      * A key describing the stride of the video bytebuffer layout.
