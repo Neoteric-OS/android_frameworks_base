@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c64b519_e892fc4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604644
+      },
+      "writtenOn": "2023-10-23T09:54:18Z",
+      "side": 1,
+      "message": "The current Dolby Vision profile doesn\u0027t include CCID info. That means we can\u0027t send CCID info to Dolby Vision codec via MediaFormat::KEY_PROFILE key/value pair.\n\nThe current Dolby Vision codec string doesn\u0027t include CCID info either.\n\nBut Dolby Vision codec needs this info to do initialization.\n\nSo we propose to add a new key to do this. (Similar as KEY_AAC_xxx)",
+      "revId": "3282d2ba5e4091da76e3959fdd1e1da14af2afe9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
