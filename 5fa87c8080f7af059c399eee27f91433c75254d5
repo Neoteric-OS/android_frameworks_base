@@ -22,6 +22,53 @@
       },
       "revId": "5fa87c8080f7af059c399eee27f91433c75254d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c9cd151_c29eb298",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 8195,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-10-24T12:57:22Z",
+      "side": 1,
+      "message": "For example, could you do something like DnsResolverServiceManager?",
+      "parentUuid": "962fcc65_49bfd9af",
+      "range": {
+        "startLine": 8195,
+        "startChar": 8,
+        "endLine": 8195,
+        "endChar": 48
+      },
+      "revId": "5fa87c8080f7af059c399eee27f91433c75254d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31143760_b2ed5679",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 8196,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-10-24T12:57:22Z",
+      "side": 1,
+      "message": "Also, why waitForService? ActivityThread runs in all apps, doesn\u0027t it? We don\u0027t want app startup to block on checking for the ot_daemon service, do we? In fact, unprivileged apps shouldn\u0027t even be able to look up that service, since only the system server should be able to talk to it at all.",
+      "range": {
+        "startLine": 8196,
+        "startChar": 37,
+        "endLine": 8196,
+        "endChar": 51
+      },
+      "revId": "5fa87c8080f7af059c399eee27f91433c75254d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
