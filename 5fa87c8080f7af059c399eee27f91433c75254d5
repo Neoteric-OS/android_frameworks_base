@@ -69,6 +69,30 @@
       },
       "revId": "5fa87c8080f7af059c399eee27f91433c75254d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44f7fd95_6f56e35f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 8196,
+      "author": {
+        "id": 1693933
+      },
+      "writtenOn": "2023-10-24T13:03:44Z",
+      "side": 1,
+      "message": "Apps won\u0027t be blocked because this is a Supplier / lambda. The lambda is invoked in only the ThreadNetworkControllerService",
+      "parentUuid": "31143760_b2ed5679",
+      "range": {
+        "startLine": 8196,
+        "startChar": 37,
+        "endLine": 8196,
+        "endChar": 51
+      },
+      "revId": "5fa87c8080f7af059c399eee27f91433c75254d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
