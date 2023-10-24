@@ -35,10 +35,14 @@ import android.net.ipsec.ike.IkeTunnelConnectionParams;
 import android.net.vcn.persistablebundleutils.IkeSessionParamsUtilsTest;
 import android.net.vcn.persistablebundleutils.TunnelConnectionParamsUtilsTest;
 import android.os.PersistableBundle;
+import android.platform.test.annotations.RequiresFlagsEnabled;
+import android.platform.test.flag.junit.CheckFlagsRule;
+import android.platform.test.flag.junit.DeviceFlagsValueProvider;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,6 +56,9 @@ import java.util.concurrent.TimeUnit;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class VcnGatewayConnectionConfigTest {
+    @Rule
+    public final CheckFlagsRule mCheckFlagsRule = DeviceFlagsValueProvider.createCheckFlagsRule();
+
     // Public for use in VcnGatewayConnectionTest
     public static final int[] EXPOSED_CAPS =
             new int[] {
@@ -123,6 +130,17 @@ public class VcnGatewayConnectionConfigTest {
         return new VcnGatewayConnectionConfig.Builder(
                 GATEWAY_CONNECTION_NAME_PREFIX + sGatewayConnectionConfigCount++,
                 TUNNEL_CONNECTION_PARAMS);
+    }
+
+    private static VcnGatewayConnectionConfig.Builder newBuilderMinimal() {
+        final VcnGatewayConnectionConfig.Builder builder =
+                new VcnGatewayConnectionConfig.Builder(
+                        "newBuilderMinimal", TUNNEL_CONNECTION_PARAMS);
+        for (int caps : EXPOSED_CAPS) {
+            builder.addExposedCapability(caps);
+        }
+
+        return builder;
     }
 
     private static VcnGatewayConnectionConfig buildTestConfigWithExposedCapsAndOptions(
@@ -274,6 +292,10 @@ public class VcnGatewayConnectionConfigTest {
         assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryIntervalsMillis());
         assertEquals(MAX_MTU, config.getMaxMtu());
 
+        if (Flags.safeModeConfig()) {
+            assertTrue(config.isSafeModeEnabled());
+        }
+
         assertFalse(
                 config.hasGatewayOption(
                         VCN_GATEWAY_OPTION_ENABLE_DATA_STALL_RECOVERY_WITH_MOBILITY));
@@ -290,6 +312,14 @@ public class VcnGatewayConnectionConfigTest {
     }
 
     @Test
+    @RequiresFlagsEnabled(Flags.FLAG_SAFE_MODE_CONFIG)
+    public void testBuilderAndGettersSafeModeDisabled() {
+        final VcnGatewayConnectionConfig config = newBuilderMinimal().enableSafeMode(false).build();
+
+        assertFalse(config.isSafeModeEnabled());
+    }
+
+    @Test
     public void testPersistableBundle() {
         final VcnGatewayConnectionConfig config = buildTestConfig();
 
@@ -300,6 +330,14 @@ public class VcnGatewayConnectionConfigTest {
     public void testPersistableBundleWithOptions() {
         final VcnGatewayConnectionConfig config =
                 buildTestConfigWithGatewayOptions(GATEWAY_OPTIONS);
+
+        assertEquals(config, new VcnGatewayConnectionConfig(config.toPersistableBundle()));
+    }
+
+    @Test
+    @RequiresFlagsEnabled(Flags.FLAG_SAFE_MODE_CONFIG)
+    public void testPersistableBundleSafeModeDisabled() {
+        final VcnGatewayConnectionConfig config = newBuilderMinimal().enableSafeMode(false).build();
 
         assertEquals(config, new VcnGatewayConnectionConfig(config.toPersistableBundle()));
     }
@@ -407,6 +445,22 @@ public class VcnGatewayConnectionConfigTest {
 
         final VcnGatewayConnectionConfig configNotEqual =
                 buildConfigWithGatewayOptionsForEqualityTest(Collections.emptySet());
+
+        assertEquals(config, configEqual);
+        assertNotEquals(config, configNotEqual);
+    }
+
+    @Test
+    @RequiresFlagsEnabled(Flags.FLAG_SAFE_MODE_CONFIG)
+    public void testSafeModeEnableDisableEquality() throws Exception {
+        final VcnGatewayConnectionConfig config = newBuilderMinimal().build();
+
+        final VcnGatewayConnectionConfig configEqual = newBuilderMinimal().build();
+
+        assertEquals(config.isSafeModeEnabled(), configEqual.isSafeModeEnabled());
+
+        final VcnGatewayConnectionConfig configNotEqual =
+                newBuilderMinimal().enableSafeMode(false).build();
 
         assertEquals(config, configEqual);
         assertNotEquals(config, configNotEqual);
