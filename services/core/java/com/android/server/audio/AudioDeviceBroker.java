@@ -937,6 +937,8 @@ public class AudioDeviceBroker {
 
     @GuardedBy("mBluetoothAudioStateLock")
     private void updateAudioHalBluetoothState() {
+        boolean btScoOn = mBtHelper.isBluetoothScoOn();
+        mBluetoothScoOn = btScoOn && mBluetoothScoOn;
         if (mBluetoothScoOn != mBluetoothScoOnApplied) {
             if (AudioService.DEBUG_COMM_RTE) {
                 Log.v(TAG, "updateAudioHalBluetoothState() mBluetoothScoOn: "
