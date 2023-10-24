@@ -23,6 +23,7 @@ android_test {
     certificate: "platform",
     static_libs: [
         "androidx.test.rules",
+        "flag-junit",
         "frameworks-base-testutils",
         "framework-protos",
         "mockito-target-minus-junit4",
