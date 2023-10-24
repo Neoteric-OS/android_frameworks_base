@@ -942,7 +942,7 @@ public class AudioDeviceBroker {
                 Log.v(TAG, "updateAudioHalBluetoothState() mBluetoothScoOn: "
                         + mBluetoothScoOn + ", mBluetoothScoOnApplied: " + mBluetoothScoOnApplied);
             }
-            if (mBluetoothScoOn) {
+            if (mBluetoothScoOn && mBtHelper.isBluetoothScoOn()) {
                 if (!mBluetoothA2dpSuspendedApplied) {
                     AudioSystem.setParameters("A2dpSuspended=true");
                     mBluetoothA2dpSuspendedApplied = true;
