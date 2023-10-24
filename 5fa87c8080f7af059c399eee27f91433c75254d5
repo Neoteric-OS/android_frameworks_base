@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "962fcc65_49bfd9af",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 8195,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-10-24T12:55:21Z",
+      "side": 1,
+      "message": "Why is this code in platform instead of in the mainline module code? Generally I think all our service registrations are in mainline code. We shouldn\u0027t take a dependency on platform code unless there\u0027s no way around it.",
+      "range": {
+        "startLine": 8195,
+        "startChar": 8,
+        "endLine": 8195,
+        "endChar": 48
+      },
+      "revId": "5fa87c8080f7af059c399eee27f91433c75254d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
