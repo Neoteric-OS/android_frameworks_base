@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84898f43_6adfe78a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947461
+      },
+      "writtenOn": "2023-10-25T10:47:05Z",
+      "side": 1,
+      "message": "Please try building \"next\" locally before submit this CL to make sure the prebuilt for next contains new API.",
+      "revId": "2f1dca0355cd0a98ab762f5b60667b3cd022f32a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
