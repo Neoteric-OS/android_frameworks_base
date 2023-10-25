@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ffa27f4_eae41282",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2023-10-25T01:29:02Z",
+      "side": 1,
+      "message": "I wonder if we should make this more explicitly about hardware and call it FEATURE_THREAD_RADIO? No strong opinion.",
+      "range": {
+        "startLine": 3657,
+        "startChar": 31,
+        "endLine": 3657,
+        "endChar": 53
+      },
+      "revId": "8348b90b438e278b700d7d0f7167c8af95300581",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
