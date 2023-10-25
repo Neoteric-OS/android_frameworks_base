@@ -22,6 +22,30 @@
       },
       "revId": "8348b90b438e278b700d7d0f7167c8af95300581",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "464f168d_54e35c7d",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1693933
+      },
+      "writtenOn": "2023-10-25T03:48:20Z",
+      "side": 1,
+      "message": "The software is always there so maybe no need to call it out this is for only the hardware radio (like it\u0027s FEATURE_ETHERNET for Ethernet)\n\nIf the motivation is to distinguish a pluggable and built-in radio, this doesn\u0027t seem doesn\u0027t help neither. To support pluggable radio, we probably need to define new error code and loose condition for enabling the Thread system service",
+      "parentUuid": "3ffa27f4_eae41282",
+      "range": {
+        "startLine": 3657,
+        "startChar": 31,
+        "endLine": 3657,
+        "endChar": 53
+      },
+      "revId": "8348b90b438e278b700d7d0f7167c8af95300581",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
