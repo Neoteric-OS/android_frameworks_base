@@ -16,6 +16,23 @@
       "message": "something to discuss around",
       "revId": "e1bb69da89c06fce4d88be35893ddb87f0b249bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0550d6de_fbade11e",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6514,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2023-10-25T22:26:26Z",
+      "side": 1,
+      "message": "Could we reuse the `DisplayContent#alwaysCreateRootTask` to perform the check? \n\nMaybe like:\n```\nif (!DisplayContent.alwaysCreateRootTask(tda.getWindowingMode(), mActivityType))\n```",
+      "revId": "e1bb69da89c06fce4d88be35893ddb87f0b249bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
