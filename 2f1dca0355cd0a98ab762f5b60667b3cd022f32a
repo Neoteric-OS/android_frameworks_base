@@ -16,6 +16,41 @@
       "message": "Please try building \"next\" locally before submit this CL to make sure the prebuilt for next contains new API.",
       "revId": "2f1dca0355cd0a98ab762f5b60667b3cd022f32a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c09b22c_2d5b95d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-10-25T10:49:04Z",
+      "side": 1,
+      "message": "Will do, this is only preparation.\nKeep this open for tracking.",
+      "parentUuid": "84898f43_6adfe78a",
+      "revId": "2f1dca0355cd0a98ab762f5b60667b3cd022f32a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "648b4887_411078a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-10-25T10:49:04Z",
+      "side": 1,
+      "message": "-2 to prevent from accidental submission before prebuilt update.",
+      "revId": "2f1dca0355cd0a98ab762f5b60667b3cd022f32a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
