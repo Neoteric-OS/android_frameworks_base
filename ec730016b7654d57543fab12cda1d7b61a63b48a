@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94f60f37_6aca3628",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-10-25T15:35:49Z",
+      "side": 1,
+      "message": "This file has a ton of conflicts causing problems anyway, so moved the `rust_aconfig_library` stuff into `keystore2`.",
+      "parentUuid": "dc602e49_e8246c59",
+      "revId": "ec730016b7654d57543fab12cda1d7b61a63b48a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "235c963d_a3992ab4",
