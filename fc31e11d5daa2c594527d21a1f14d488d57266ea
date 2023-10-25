@@ -16,6 +16,29 @@
       "message": "please have a look",
       "revId": "fc31e11d5daa2c594527d21a1f14d488d57266ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ab8daf_94bdcd23",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4641,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2023-10-25T11:56:23Z",
+      "side": 1,
+      "message": "could you clarify how the control target factors into relativeLayer assignment and why the prev control target being null implies that we were missing an layer assignment?\n\n(if this fixes things, I suspect we\u0027re also missing layer assignment in other cases where the prevControlTarget wasn\u0027t null but otherwise needed updating)",
+      "range": {
+        "startLine": 4639,
+        "startChar": 0,
+        "endLine": 4641,
+        "endChar": 0
+      },
+      "revId": "fc31e11d5daa2c594527d21a1f14d488d57266ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
