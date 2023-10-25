@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed6cc8be_bcbe6865",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2023-10-25T11:09:05Z",
+      "side": 1,
+      "message": "In the bug referenced, Keystore crashes so re-trying wouldn\u0027t help. Let\u0027s continue discussion on the bug.",
+      "revId": "4ec22df3fccf602ee8d00200f69fc81be070e697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
