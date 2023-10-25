@@ -102,14 +102,15 @@ public class KeyStore2 {
 
     private <R> R handleRemoteExceptionWithRetry(@NonNull CheckedRemoteRequest<R> request)
             throws KeyStoreException {
-        IKeystoreService service = getService(false /* retryLookup */);
+        IKeystoreService service;
         boolean firstTry = true;
         while (true) {
             try {
+                service = getService(false /* retryLookup */);
                 return request.execute(service);
             } catch (ServiceSpecificException e) {
                 throw getKeyStoreException(e.errorCode, e.getMessage());
-            } catch (RemoteException e) {
+            } catch (RemoteException | NullPointerException e) {
                 if (firstTry) {
                     Log.w(TAG, "Looks like we may have lost connection to the Keystore "
                             + "daemon.");
