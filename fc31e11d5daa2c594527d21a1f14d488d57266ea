@@ -63,6 +63,30 @@
       },
       "revId": "fc31e11d5daa2c594527d21a1f14d488d57266ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07a24262_412702cb",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4641,
+      "author": {
+        "id": 2061406
+      },
+      "writtenOn": "2023-10-25T13:36:32Z",
+      "side": 1,
+      "message": "Well by adding logs I could see that when mImeControlTarget is set to null, assignRelativeLayerForIme is not done since mImeControlTarget is set to null.\nWhen new mImeControlTarget is computed for a new window after that, assignRelativeLayerForIme was not done, so I added that check if previous IME target was null, then assignRelativeLayerForIme is done and that solved the problem.\n\nI am not an expert in this area as you are, when I tested the change done by Riddle Hsu it also solved the problem.\n\nI have not looked too deep into his solution but I guess it is more correct than mine, so lets use that one if it works as it should.",
+      "parentUuid": "328094a4_2789c0a5",
+      "range": {
+        "startLine": 4639,
+        "startChar": 0,
+        "endLine": 4641,
+        "endChar": 0
+      },
+      "revId": "fc31e11d5daa2c594527d21a1f14d488d57266ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
