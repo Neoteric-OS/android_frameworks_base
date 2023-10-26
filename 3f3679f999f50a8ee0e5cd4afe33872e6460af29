@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "690c1a9d_b7c470a8",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-10-26T18:04:30Z",
+      "side": 1,
+      "message": "allowing",
+      "range": {
+        "startLine": 819,
+        "startChar": 27,
+        "endLine": 819,
+        "endChar": 32
+      },
+      "revId": "3f3679f999f50a8ee0e5cd4afe33872e6460af29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5f7e4c4_be014ff9",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2023-10-26T18:04:30Z",
+      "side": 1,
+      "message": "retry\n\nIt\u0027s not just retrying to connect, but also to restore connection",
+      "range": {
+        "startLine": 820,
+        "startChar": 38,
+        "endLine": 820,
+        "endChar": 52
+      },
+      "revId": "3f3679f999f50a8ee0e5cd4afe33872e6460af29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
