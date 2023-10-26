@@ -66,6 +66,30 @@ public class AndroidKeyStoreMaintenance {
     }
 
     /**
+     * Tells Keystore to create a user's super keys and store them encrypted by the given secret.
+     *
+     * @param userId - Android user id of the user
+     * @param password - a secret derived from the user's synthetic password
+     * @param allowExisting - true if the keys already existing should not be considered an error
+     * @return 0 if successful or a {@code ResponseCode}
+     * @hide
+     */
+    public static int initUserSuperKeys(@NonNull int userId, byte[] password,
+            boolean allowExisting) {
+        StrictMode.noteDiskWrite();
+        try {
+            getService().initUserSuperKeys(userId, password, allowExisting);
+            return 0;
+        } catch (ServiceSpecificException e) {
+            Log.e(TAG, "initUserSuperKeys failed", e);
+            return e.errorCode;
+        } catch (Exception e) {
+            Log.e(TAG, "Can not connect to keystore", e);
+            return SYSTEM_ERROR;
+        }
+    }
+
+    /**
      * Informs Keystore 2.0 about removing a user
      *
      * @param userId - Android user id of the user being removed
@@ -102,6 +126,28 @@ public class AndroidKeyStoreMaintenance {
             return 0;
         } catch (ServiceSpecificException e) {
             Log.e(TAG, "onUserPasswordChanged failed", e);
+            return e.errorCode;
+        } catch (Exception e) {
+            Log.e(TAG, "Can not connect to keystore", e);
+            return SYSTEM_ERROR;
+        }
+    }
+
+    /**
+     * Tells Keystore that a user's LSKF is being removed, ie the user's lock screen is changing to
+     * Swipe or None.  Keystore uses this notification to delete the user's auth-bound keys.
+     *
+     * @param userId - Android user id of the user
+     * @return 0 if successful or a {@code ResponseCode}
+     * @hide
+     */
+    public static int onUserLskfRemoved(int userId) {
+        StrictMode.noteDiskWrite();
+        try {
+            getService().onUserLskfRemoved(userId);
+            return 0;
+        } catch (ServiceSpecificException e) {
+            Log.e(TAG, "onUserLskfRemoved failed", e);
             return e.errorCode;
         } catch (Exception e) {
             Log.e(TAG, "Can not connect to keystore", e);
