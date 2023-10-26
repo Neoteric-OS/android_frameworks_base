@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c6ea27f_b0b92e2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-10-26T06:55:10Z",
+      "side": 1,
+      "message": "system/core change got approved, will you please take a look?",
+      "revId": "8969fc781bf55a5cc76c69b3a2cc9dbf57dde123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
