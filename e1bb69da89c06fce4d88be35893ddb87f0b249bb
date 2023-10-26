@@ -33,6 +33,24 @@
       "message": "Could we reuse the `DisplayContent#alwaysCreateRootTask` to perform the check? \n\nMaybe like:\n```\nif (!DisplayContent.alwaysCreateRootTask(tda.getWindowingMode(), mActivityType))\n```",
       "revId": "e1bb69da89c06fce4d88be35893ddb87f0b249bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "631e569c_037aeca0",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6514,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-10-26T14:10:24Z",
+      "side": 1,
+      "message": "Thanks for swift action here Louis. If we change to DisplayContent#alwaysCreateRootTask we will miss the case when mActivityType \u003d\u003d ACTIVITY_TYPE_UNDEFINED and mCreatedByOrganizer is set. Can this cause any bugs?",
+      "parentUuid": "0550d6de_fbade11e",
+      "revId": "e1bb69da89c06fce4d88be35893ddb87f0b249bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
