@@ -87,6 +87,30 @@
       },
       "revId": "fc31e11d5daa2c594527d21a1f14d488d57266ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c13a39e9_ef7679d3",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4641,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-10-26T10:45:10Z",
+      "side": 1,
+      "message": "Thanks a lot Riddle, we will wait for your solution and pick that when it is ready.",
+      "parentUuid": "07a24262_412702cb",
+      "range": {
+        "startLine": 4639,
+        "startChar": 0,
+        "endLine": 4641,
+        "endChar": 0
+      },
+      "revId": "fc31e11d5daa2c594527d21a1f14d488d57266ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
