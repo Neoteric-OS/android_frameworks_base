@@ -18,6 +18,8 @@ package com.android.server.vcn;
 
 import android.annotation.NonNull;
 import android.content.Context;
+import android.net.vcn.FeatureFlags;
+import android.net.vcn.FeatureFlagsImpl;
 import android.os.Looper;
 
 import java.util.Objects;
@@ -61,6 +63,11 @@ public class VcnContext {
 
     public boolean isInTestMode() {
         return mIsInTestMode;
+    }
+
+    public FeatureFlags getFeatureFlags() {
+        // Auto-generated class
+        return new FeatureFlagsImpl();
     }
 
     /**
