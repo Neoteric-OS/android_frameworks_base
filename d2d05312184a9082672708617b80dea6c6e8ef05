@@ -16,6 +16,29 @@
       "message": "something like this?",
       "revId": "d2d05312184a9082672708617b80dea6c6e8ef05",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb08fe27_c7a0e880",
+        "filename": "services/core/java/com/android/server/wm/Task.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6517,
+      "author": {
+        "id": 1897566
+      },
+      "writtenOn": "2023-10-27T04:02:42Z",
+      "side": 1,
+      "message": "Thanks for sending this cl.\nCan you please modify this comment as well as this no longer reflects the correct state of code path?",
+      "range": {
+        "startLine": 6515,
+        "startChar": 4,
+        "endLine": 6517,
+        "endChar": 32
+      },
+      "revId": "d2d05312184a9082672708617b80dea6c6e8ef05",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
