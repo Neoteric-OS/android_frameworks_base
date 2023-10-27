@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "197ed762_aaf74f43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-10-27T00:51:04Z",
+      "side": 1,
+      "message": "Please check what happens when a VPN of these types is configured on the device.\n\nWe should have a clear message in Settings saying this is no longer supported.",
+      "revId": "ac5bf509dc91a5fda3a99764627acfc9caff09e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85bce5f6_450025d8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-10-27T00:51:04Z",
+      "side": 1,
+      "message": "What happens to a device that has one of these configured ? I think this will crash settings and possibly the whole system server.",
+      "range": {
+        "startLine": 2720,
+        "startChar": 18,
+        "endLine": 2720,
+        "endChar": 47
+      },
+      "revId": "ac5bf509dc91a5fda3a99764627acfc9caff09e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
