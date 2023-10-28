@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c9ab3cd_870be07b",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-10-28T04:00:18Z",
+      "side": 1,
+      "message": "or wifi ?",
+      "range": {
+        "startLine": 818,
+        "startChar": 47,
+        "endLine": 818,
+        "endChar": 55
+      },
+      "revId": "c5e079a7a5e1a3377f40c268bdfad3c0997ddd57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
