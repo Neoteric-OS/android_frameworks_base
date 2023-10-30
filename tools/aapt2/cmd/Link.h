@@ -17,7 +17,10 @@
 #ifndef AAPT2_LINK_H
 #define AAPT2_LINK_H
 
+#include <optional>
 #include <regex>
+#include <unordered_map>
+#include <vector>
 
 #include "Command.h"
 #include "Resource.h"
@@ -72,6 +75,7 @@ struct LinkOptions {
   bool use_sparse_encoding = false;
   std::unordered_set<std::string> extensions_to_not_compress;
   std::optional<std::regex> regex_to_not_compress;
+  std::unordered_map<std::string, std::optional<bool>> feature_flag_values;
 
   // Static lib options.
   bool no_static_lib_packages = false;

@@ -17,8 +17,10 @@
 #ifndef AAPT_SPLIT_UTIL_H
 #define AAPT_SPLIT_UTIL_H
 
+#include <optional>
 #include <regex>
 #include <set>
+#include <unordered_map>
 #include <unordered_set>
 
 #include "AppInfo.h"
@@ -47,6 +49,14 @@ bool ParseSplitParameter(android::StringPiece arg, android::IDiagnostics* diag,
 // Returns nullptr and logs a human friendly error message if the string was not legal.
 std::unique_ptr<IConfigFilter> ParseConfigFilterParameters(const std::vector<std::string>& args,
                                                            android::IDiagnostics* diag);
+
+// Parses a feature flags parameter, which can contain one or more pairs of flag names and optional
+// values, and fills in `out_feature_flag_values` with the parsed values. The pairs in the argument
+// are separated by ',' and the name is separated from the value by '=' if there is a value given.
+// Example arg: "flag1=true,flag2=false,flag3=,flag4" where flag3 and flag4 have no given value.
+bool ParseFeatureFlagsParameter(
+    android::StringPiece arg, android::IDiagnostics* diag,
+    std::unordered_map<std::string, std::optional<bool>>* out_feature_flag_values);
 
 // Adjust the SplitConstraints so that their SDK version is stripped if it
 // is less than or equal to the min_sdk. Otherwise the resources that have had
