@@ -113,6 +113,8 @@ class Element : public Node {
                                         android::StringPiece attr_name,
                                         android::StringPiece attr_value) const;
 
+  std::vector<const Element*> GetChildElements() const;
+
   std::vector<Element*> GetChildElements();
 
   // Due to overriding of subtypes not working with unique_ptr, define a convenience Clone method

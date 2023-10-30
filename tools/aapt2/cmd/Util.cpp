@@ -467,6 +467,16 @@ std::optional<AppInfo> ExtractAppInfoFromBinaryManifest(const xml::XmlResource& 
       app_info.min_sdk_version = maybe_sdk.value();
     }
   }
+
+  for (const xml::Element* child_el : manifest_el->GetChildElements()) {
+    if (child_el->namespace_uri.empty() && child_el->name == "uses-split") {
+      if (const xml::Attribute* split_name = child_el->FindAttribute(xml::kSchemaAndroid, "name")) {
+        if (!split_name->value.empty()) {
+          app_info.split_name_dependencies.insert(split_name->value);
+        }
+      }
+    }
+  }
   return app_info;
 }
 

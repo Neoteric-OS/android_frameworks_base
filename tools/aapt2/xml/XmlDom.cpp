@@ -482,10 +482,20 @@ const Element* Element::FindChildWithAttribute(StringPiece ns, StringPiece name,
   return nullptr;
 }
 
+std::vector<const Element*> Element::GetChildElements() const {
+  std::vector<const Element*> elements;
+  for (auto& child_node : children) {
+    if (auto child = NodeCast<Element>(child_node.get())) {
+      elements.push_back(child);
+    }
+  }
+  return elements;
+}
+
 std::vector<Element*> Element::GetChildElements() {
   std::vector<Element*> elements;
   for (auto& child_node : children) {
-    if (Element* child = NodeCast<Element>(child_node.get())) {
+    if (auto child = NodeCast<Element>(child_node.get())) {
       elements.push_back(child);
     }
   }
