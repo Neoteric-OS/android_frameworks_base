@@ -125,6 +125,8 @@ public class AudioDeviceBroker {
     @GuardedBy("mDeviceStateLock")
     private boolean mBluetoothA2dpEnabled;
 
+    private boolean isBleBroadcastChanging = false;
+
     // lock always taken when accessing AudioService.mSetModeDeathHandlers
     // TODO do not "share" the lock between AudioService and BtHelpr, see b/123769055
     /*package*/ final Object mSetModeLock = new Object();
@@ -1301,6 +1303,9 @@ public class AudioDeviceBroker {
 
     @GuardedBy("mDeviceStateLock")
     /*package*/ void postBluetoothActiveDevice(BtDeviceInfo info, int delay) {
+        if (info.mProfile == BluetoothProfile.LE_AUDIO_BROADCAST) {
+            isBleBroadcastChanging = true;
+        }
         sendLMsg(MSG_L_SET_BT_ACTIVE_DEVICE, SENDMSG_QUEUE, info, delay);
     }
 
@@ -1665,6 +1670,9 @@ public class AudioDeviceBroker {
                             if (btInfo.mProfile == BluetoothProfile.LE_AUDIO
                                     || btInfo.mProfile == BluetoothProfile.HEARING_AID) {
                                 onUpdateCommunicationRouteClient("setBluetoothActiveDevice");
+                            }
+                            if (btInfo.mProfile == BluetoothProfile.LE_AUDIO_BROADCAST) {
+                                isBleBroadcastChanging = false;
                             }
                         }
                     }
@@ -2072,13 +2080,15 @@ public class AudioDeviceBroker {
         if (message == 0) {
             return false;
         }
-        // Do not mute on bluetooth event if music is playing on a wired headset.
+        // Do not mute on bluetooth event if music is playing on a wired headset/BLE braodcast.
         if ((message == MSG_L_SET_BT_ACTIVE_DEVICE
                 || message == MSG_L_A2DP_DEVICE_CONNECTION_CHANGE_EXT
                 || message == MSG_L_BLUETOOTH_DEVICE_CONFIG_CHANGE)
                 && AudioSystem.isStreamActive(AudioSystem.STREAM_MUSIC, 0)
-                && hasIntersection(mDeviceInventory.DEVICE_OVERRIDE_A2DP_ROUTE_ON_PLUG_SET,
-                        mAudioService.getDeviceSetForStream(AudioSystem.STREAM_MUSIC))) {
+                && (hasIntersection(mDeviceInventory.DEVICE_OVERRIDE_A2DP_ROUTE_ON_PLUG_SET,
+                        mAudioService.getDeviceSetForStream(AudioSystem.STREAM_MUSIC))
+                || (mAudioService.getDeviceSetForStream(AudioSystem.STREAM_MUSIC).contains(
+                        AudioSystem.DEVICE_OUT_BLE_BROADCAST) && !isBleBroadcastChanging))) {
             return false;
         }
         return true;
