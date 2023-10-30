@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f306cb8_0790aa39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1963880
+      },
+      "writtenOn": "2023-10-30T06:50:15Z",
+      "side": 1,
+      "message": "Can you help me review this modification? Thank you.\n\n\t//device BLE BROADCAST connected\n\t行 303344: 10-26 20:14:06.281  1000  2689  7935 I AS.AudioService: In handleBluetoothActiveDeviceChanged(), previousDevice: null, newDevice: FA:CE:FA:CE:FA:CE, BluetoothProfileConnectionInfo { Profile: 26, SupprNoisy: true, Volume: 55, IsLeOutput: true }\n\t行 303560: 10-26 20:14:06.301  1041  2226  7877 D APM_AudioPolicyManager: checkAndSetVolume: set volumeSource 4 volume index 0 for device 0x20000000, volumeDb \u003d -758.000000\n\t行 303648: 10-26 20:14:06.311  1000  2689  7875 D AS.AudioDeviceInventory: onSetBtActiveDevice btDevice\u003dFA:CE:FA:CE:FA:CE profile\u003dLE_AUDIO_BROADCAST state\u003dSTATE_CONNECTED device\u003d0x20000002 vol\u003d55 streamType\u003d3\n\t行 303775: 10-26 20:14:06.323  1000  2689  7875 V AS.AudioDeviceBroker: onSetForceUse(useCase\u003c1\u003e, config\u003c0\u003e, fromA2dp\u003cfalse\u003e, eventSource\u003csetBluetoothA2dpOn(true) from u/pid:1000/2689 src:onSetBtActiveDevice\u003e)\n\t行 303819: 10-26 20:14:06.330  1041  2226  7877 D MiAudioPolicyManager: setDeviceConnectionStateInt() device: 0x20000002, state 1, address FA:CE:FA:CE:FA:CE name Broadcast_Source format 0x0\n\t\n\t//receive ble device change\n\t行 385605: 10-26 20:14:39.463  1000  2689 10989 I AS.AudioService: In handleBluetoothActiveDeviceChanged(), previousDevice: 9E:8B:00:00:00:00, newDevice: 9E:8B:00:00:00:01, BluetoothProfileConnectionInfo { Profile: 22, SupprNoisy: true, Volume: 75, IsLeOutput: true }\n\t行 385608: 10-26 20:14:39.463  1000  2689  2783 I AS.AudioService: In handleBluetoothActiveDeviceChanged(), previousDevice: 9E:8B:00:00:00:00, newDevice: 9E:8B:00:00:00:01, BluetoothProfileConnectionInfo { Profile: 22, SupprNoisy: true, Volume: -1, IsLeOutput: false }\n\t行 386088: 10-26 20:14:39.489  1000  2689  2783 I AS.AudioService: In handleBluetoothActiveDeviceChanged(), previousDevice: 9E:8B:00:00:00:00, newDevice: 9E:8B:00:00:00:01, BluetoothProfileConnectionInfo { Profile: 22, SupprNoisy: true, Volume: 75, IsLeOutput: true }\n\t行 386137: 10-26 20:14:39.491  1000  2689 14073 I AS.AudioService: In handleBluetoothActiveDeviceChanged(), previousDevice: 9E:8B:00:00:00:00, newDevice: 9E:8B:00:00:00:01, BluetoothProfileConnectionInfo { Profile: 22, SupprNoisy: true, Volume: -1, IsLeOutput: false }\n\t\n\t//this mute is not need, because the active device is always BLE BROADCAST, which means that the reconfig operation does not affect device selection.\n\t//device BLE BROADCAST mute\n\t行 386288: 10-26 20:14:39.501  1041  2226 13425 D APM_AudioPolicyManager: checkAndSetVolume: set volumeSource 4 volume index 0 for device 0x20000002, volumeDb \u003d -758.000000\n\t行 386440: 10-26 20:14:39.520  1000  2689  7875 D AS.AudioDeviceInventory: onSetBtActiveDevice btDevice\u003d9E:8B:00:00:00:00 profile\u003dLE_AUDIO state\u003dSTATE_DISCONNECTED device\u003d0x20000000 vol\u003d75 streamType\u003d3\n\t\n\t//device BLE BROADCAST unmute\n\t行 390906: 10-26 20:14:39.908  1000  2689  7875 D AS.AudioDeviceInventory: onSetBtActiveDevice btDevice\u003d9E:8B:00:00:00:01 profile\u003dLE_AUDIO state\u003dSTATE_CONNECTED device\u003d0xa0000000 vol\u003d-1 streamType\u003d-1\n\t行 391600: 10-26 20:14:40.010  1041  2226 14823 D APM_AudioPolicyManager: checkAndSetVolume: set volumeSource 4 volume index 150 for device 0x20000002, volumeDb \u003d -4.500000",
+      "revId": "820da720072f11353bb99aa30537347afe24213d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
