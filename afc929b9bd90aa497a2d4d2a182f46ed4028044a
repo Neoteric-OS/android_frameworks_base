@@ -22,6 +22,30 @@
       },
       "revId": "afc929b9bd90aa497a2d4d2a182f46ed4028044a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18ea3cf1_8643be3f",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-10-30T16:57:47Z",
+      "side": 1,
+      "message": "Ack. Will do in a follow up CL.",
+      "parentUuid": "f3dfb4d1_9bc1c1ce",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 50
+      },
+      "revId": "afc929b9bd90aa497a2d4d2a182f46ed4028044a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
