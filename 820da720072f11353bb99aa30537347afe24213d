@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3783cc2_d20cd078",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2023-10-30T10:57:37Z",
+      "side": 1,
+      "message": "but what if the active LE unicast and LE broadcast devices are the same and is disconnected?",
+      "range": {
+        "startLine": 16,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "820da720072f11353bb99aa30537347afe24213d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9f306cb8_0790aa39",
