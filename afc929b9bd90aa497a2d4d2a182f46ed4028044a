@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3dfb4d1_9bc1c1ce",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2023-10-30T01:35:17Z",
+      "side": 1,
+      "message": "Not related with this CL: Please add javadoc",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 50
+      },
+      "revId": "afc929b9bd90aa497a2d4d2a182f46ed4028044a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
