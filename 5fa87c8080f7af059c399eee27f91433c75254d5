@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0794a850_89c15a0d",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 8195,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2023-10-30T16:25:44Z",
+      "side": 1,
+      "message": "If you can implement your thing like a regular XxxManager, then yes, please go ahead with that.\n\nThe modules using this pattern don\u0027t fit in that pattern -- e.g. TelephonyManager needs to be able to call waitForService() anytime because the service process may restart anytime.\n\nBasically if your service process won\u0027t die, you can probably use the XxxManager pattern.",
+      "parentUuid": "0c9cd151_c29eb298",
+      "range": {
+        "startLine": 8195,
+        "startChar": 8,
+        "endLine": 8195,
+        "endChar": 48
+      },
+      "revId": "5fa87c8080f7af059c399eee27f91433c75254d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31143760_b2ed5679",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 23
