@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63fbd738_68dd9da8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1963880
+      },
+      "writtenOn": "2023-10-30T12:43:21Z",
+      "side": 1,
+      "message": "I have made modifications and added ble broadcast device detection. Can you help me review it? grateful.",
+      "revId": "8a1cd7328c96f64f40c0f5096e7054efeb843547",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

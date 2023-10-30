@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1178400_43e73d5d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1963880
+      },
+      "writtenOn": "2023-10-30T12:43:21Z",
+      "side": 1,
+      "message": "Regarding the scenario where the LE broadcast device is disconnected, I did a simple test and found no abnormalities. Currently, it seems that the location of this function cannot pass the device type, and more changes may be needed.",
+      "parentUuid": "d3783cc2_d20cd078",
+      "range": {
+        "startLine": 16,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "820da720072f11353bb99aa30537347afe24213d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9f306cb8_0790aa39",
