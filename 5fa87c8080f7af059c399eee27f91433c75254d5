@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7848d95e_4a0eff28",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 8195,
+      "author": {
+        "id": 1693933
+      },
+      "writtenOn": "2023-10-31T01:48:28Z",
+      "side": 1,
+      "message": "Our use case also needs to call `waitForService()` similar to the Telephony service.\n\nWe then come with aosp/2803440 which uses the NDK version of the ServiceManager to avoid depending on platform changes",
+      "parentUuid": "0794a850_89c15a0d",
+      "range": {
+        "startLine": 8195,
+        "startChar": 8,
+        "endLine": 8195,
+        "endChar": 48
+      },
+      "revId": "5fa87c8080f7af059c399eee27f91433c75254d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31143760_b2ed5679",
         "filename": "core/java/android/app/ActivityThread.java",
         "patchSetId": 23
