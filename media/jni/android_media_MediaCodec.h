@@ -35,6 +35,7 @@ class C2Buffer;
 namespace android {
 
 struct ABuffer;
+struct AccessUnitInfo;
 struct ALooper;
 struct AMessage;
 struct AString;
@@ -91,6 +92,11 @@ struct JMediaCodec : public AHandler {
     status_t queueInputBuffer(
             size_t index,
             size_t offset, size_t size, int64_t timeUs, uint32_t flags,
+            AString *errorDetailMsg);
+
+    status_t queueInputBuffers(
+            size_t index,
+            const std::vector<AccessUnitInfo> &largeFrameInfo,
             AString *errorDetailMsg);
 
     status_t queueSecureInputBuffer(
