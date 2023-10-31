@@ -163,6 +163,14 @@ static struct {
 static struct {
     jclass clazz;
     jmethodID ctorId;
+    jmethodID sizeId;
+    jmethodID addId;
+} gArrayDequeInfo;
+
+
+static struct {
+    jclass clazz;
+    jmethodID ctorId;
     jmethodID setInternalStateId;
     jfieldID contextId;
     jfieldID validId;
@@ -202,6 +210,11 @@ struct fields_t {
     jfieldID outputFrameHardwareBufferID;
     jfieldID outputFrameChangedKeysID;
     jfieldID outputFrameFormatID;
+    jfieldID bufferInfoFlags;
+    jfieldID bufferInfoOffset;
+    jfieldID bufferInfoSize;
+    jfieldID bufferInfoPresentationTimeUs;
+
 };
 
 static fields_t gFields;
@@ -410,6 +423,13 @@ status_t JMediaCodec::queueInputBuffer(
         AString *errorDetailMsg) {
     return mCodec->queueInputBuffer(
             index, offset, size, timeUs, flags, errorDetailMsg);
+}
+
+status_t JMediaCodec::queueInputBuffer(
+        size_t index,
+        std::shared_ptr<std::vector<BufferParams>> largeFrameInfo) {
+    return mCodec->queueInputBuffer(
+            index, largeFrameInfo);
 }
 
 status_t JMediaCodec::queueSecureInputBuffer(
@@ -1287,6 +1307,29 @@ void JMediaCodec::handleCallback(const sp<AMessage> &msg) {
             break;
         }
 
+        case MediaCodec::CB_LARGE_FRAME_OUTPUT_AVAILABLE:
+        {
+            std::vector<BufferParams> *bufferInfoParams = nullptr;
+            CHECK(msg->findInt32("index", &arg2));
+            CHECK(msg->findPointer("largeFrameInfo", (void**)&bufferInfoParams));
+
+            if (bufferInfoParams != nullptr) {
+                obj = env->NewObject(gArrayDequeInfo.clazz, gArrayDequeInfo.ctorId);
+                for (int i = 0 ; i < bufferInfoParams->size(); i++) {
+                    jobject bufferInfo = env->NewObject(gBufferInfo.clazz, gBufferInfo.ctorId);
+                    if (bufferInfo != NULL) {
+                        env->CallVoidMethod(bufferInfo, gBufferInfo.setId,
+                                            (jint)(*bufferInfoParams)[i].mOffset,
+                                            (jint)(*bufferInfoParams)[i].mSize,
+                                            (*bufferInfoParams)[i].mPresentationTimeUs,
+                                            (*bufferInfoParams)[i].mFlags);
+                        (void)env->CallBooleanMethod(obj, gArrayDequeInfo.addId, bufferInfo);
+                    }
+                }
+            }
+            break;
+        }
+
         case MediaCodec::CB_CRYPTO_ERROR:
         {
             int32_t err, actionCode;
@@ -1912,6 +1955,45 @@ static void android_media_MediaCodec_queueInputBuffer(
             env, err, ACTION_CODE_FATAL,
             codec->getExceptionMessage(errorDetailMsg.c_str()).c_str());
 }
+
+static void android_media_MediaCodec_queueInputBufferWithLargeBufferInfo(
+        JNIEnv *env,
+        jobject thiz,
+        jint index,
+        jobjectArray bufferParamsArray) {
+    ALOGV("android_media_MediaCodec_queueInputBufferWithLargeBufferInfo");
+
+    sp<JMediaCodec> codec = getMediaCodec(env, thiz);
+
+    if (codec == NULL || codec->initCheck() != OK || bufferParamsArray == NULL) {
+        throwExceptionAsNecessary(env, INVALID_OPERATION, codec);
+        return;
+    }
+
+    AString errorDetailMsg;
+
+    std::shared_ptr<std::vector<BufferParams>> largeFrameInfo =
+            std::make_shared<std::vector<BufferParams>>();
+
+    jsize numEntries = env->GetArrayLength(bufferParamsArray);
+
+    for (jsize i = 0; i < numEntries; i++) {
+        jobject param = env->GetObjectArrayElement(bufferParamsArray, i);
+        largeFrameInfo->push_back({
+                static_cast<uint32_t>(env->GetIntField(param, gFields.bufferInfoFlags)),
+                static_cast<size_t>(env->GetIntField(param, gFields.bufferInfoSize)),
+                static_cast<size_t>(env->GetIntField(param, gFields.bufferInfoOffset)),
+                env->GetLongField(param, gFields.bufferInfoPresentationTimeUs)
+        });
+    }
+    status_t err = codec->queueInputBuffer(
+            index, largeFrameInfo);
+
+    throwExceptionAsNecessary(
+            env, err, ACTION_CODE_FATAL,
+            codec->getExceptionMessage(errorDetailMsg.c_str()).c_str());
+}
+
 
 struct NativeCryptoInfo {
     NativeCryptoInfo(JNIEnv *env, jobject cryptoInfoObj)
@@ -3401,6 +3483,19 @@ static void android_media_MediaCodec_native_init(JNIEnv *env, jclass) {
     gArrayListInfo.addId = env->GetMethodID(clazz.get(), "add", "(Ljava/lang/Object;)Z");
     CHECK(gArrayListInfo.addId != NULL);
 
+    clazz.reset(env->FindClass("java/util/ArrayDeque"));
+    CHECK(clazz.get() != NULL);
+    gArrayDequeInfo.clazz = (jclass)env->NewGlobalRef(clazz.get());
+
+    gArrayDequeInfo.ctorId = env->GetMethodID(clazz.get(), "<init>", "()V");
+    CHECK(gArrayDequeInfo.ctorId != NULL);
+
+    gArrayDequeInfo.sizeId = env->GetMethodID(clazz.get(), "size", "()I");
+    CHECK(gArrayDequeInfo.sizeId != NULL);
+
+    gArrayDequeInfo.addId = env->GetMethodID(clazz.get(), "add", "(Ljava/lang/Object;)Z");
+    CHECK(gArrayDequeInfo.addId != NULL);
+
     clazz.reset(env->FindClass("android/media/MediaCodec$LinearBlock"));
     CHECK(clazz.get() != NULL);
 
@@ -3444,6 +3539,12 @@ static void android_media_MediaCodec_native_init(JNIEnv *env, jclass) {
 
     gBufferInfo.setId = env->GetMethodID(clazz.get(), "set", "(IIJI)V");
     CHECK(gBufferInfo.setId != NULL);
+
+    gFields.bufferInfoSize = env->GetFieldID(clazz.get(), "size", "I");
+    gFields.bufferInfoFlags = env->GetFieldID(clazz.get(), "flags", "I");
+    gFields.bufferInfoOffset = env->GetFieldID(clazz.get(), "offset", "I");
+    gFields.bufferInfoPresentationTimeUs =
+            env->GetFieldID(clazz.get(), "presentationTimeUs", "J");
 }
 
 static void android_media_MediaCodec_native_setup(
@@ -3700,6 +3801,9 @@ static const JNINativeMethod gMethods[] = {
 
     { "native_queueInputBuffer", "(IIIJI)V",
       (void *)android_media_MediaCodec_queueInputBuffer },
+
+    { "native_queueInputBuffer", "(I;[Landroid/media/MediaCodec$BufferInfo)V",
+      (void *)android_media_MediaCodec_queueInputBufferWithLargeBufferInfo },
 
     { "native_queueSecureInputBuffer", "(IILandroid/media/MediaCodec$CryptoInfo;JI)V",
       (void *)android_media_MediaCodec_queueSecureInputBuffer },

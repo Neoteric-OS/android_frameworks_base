@@ -43,6 +43,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.ReadOnlyBufferException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -1824,6 +1825,7 @@ final public class MediaCodec {
     private static final String EOS_AND_DECODE_ONLY_ERROR_MESSAGE = "An input buffer cannot have "
             + "both BUFFER_FLAG_END_OF_STREAM and BUFFER_FLAG_DECODE_ONLY flags";
     private static final int CB_CRYPTO_ERROR = 6;
+    private static final int CB_LARGE_FRAME_OUTPUT_AVAILABLE = 7;
 
     private class EventHandler extends Handler {
         private MediaCodec mCodec;
@@ -1943,6 +1945,18 @@ final public class MediaCodec {
                     mCallback.onOutputBufferAvailable(
                             mCodec, index, info);
                     break;
+                }
+
+                case CB_LARGE_FRAME_OUTPUT_AVAILABLE:
+                {
+                    ArrayDeque<BufferInfo> infos = (ArrayDeque<BufferInfo>)msg.obj;
+                    int index = 0;
+
+                    mCallback.onOutputBufferAvailable(
+                            mCodec, index, infos);
+
+                    break;
+
                 }
 
                 case CB_ERROR:
@@ -2836,9 +2850,36 @@ final public class MediaCodec {
         }
     }
 
+    public final void queueInputBuffer(
+            int index,
+            @Nullable ArrayDeque<BufferInfo> bufferParams)
+        throws CryptoException {
+        synchronized(mBufferLock) {
+            if (mBufferMode == BUFFER_MODE_BLOCK) {
+                throw new IncompatibleWithBlockModelException("queueInputBuffer() "
+                        + "is not compatible with CONFIGURE_FLAG_USE_BLOCK_MODEL. "
+                        + "Please use getQueueRequest() to queue buffers");
+            }
+            invalidateByteBufferLocked(mCachedInputBuffers, index, true /* input */);
+            mDequeuedInputBuffers.remove(index);
+        }
+        try {
+            native_queueInputBuffer(
+                    index, (BufferInfo [])bufferParams.toArray());
+        } catch (CryptoException | IllegalStateException e) {
+            revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
+            throw e;
+        }
+    }
+
     private native final void native_queueInputBuffer(
             int index,
             int offset, int size, long presentationTimeUs, int flags)
+        throws CryptoException;
+
+    private native final void native_queueInputBuffer(
+            int index,
+            BufferInfo[] infos)
         throws CryptoException;
 
     public static final int CRYPTO_MODE_UNENCRYPTED = 0;
@@ -5168,6 +5209,26 @@ final public class MediaCodec {
          */
         public abstract void onOutputBufferAvailable(
                 @NonNull MediaCodec codec, int index, @NonNull BufferInfo info);
+
+        /**
+         * Called when a large audio frame output buffer becomes available.
+         *
+         * @param codec The MediaCodec object.
+         * @param index The index of the available output buffer.
+         * @param infos BufferInfos regarding the available output buffer {@link MediaCodec.BufferInfo}.
+         */
+        public void onOutputBufferAvailable(
+                @NonNull MediaCodec codec, int index, @NonNull ArrayDeque<BufferInfo> infos) {
+            /*
+             * A default implementaiton for backward compatibility.
+             * This callback returns BufferInfo when codecs are configured to return
+             * large audio frame. Hence this callback is requried to be implemernted or esle
+             * an exception is thrown.
+             */
+            throw new IllegalStateException(
+                    "Client mush override onFrameAvailable when codec is " +
+                    "configured for large audio frame output");
+        }
 
         /**
          * Called when the MediaCodec encountered an error
