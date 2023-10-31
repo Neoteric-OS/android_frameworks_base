@@ -163,6 +163,14 @@ static struct {
 static struct {
     jclass clazz;
     jmethodID ctorId;
+    jmethodID sizeId;
+    jmethodID addId;
+} gArrayDequeInfo;
+
+
+static struct {
+    jclass clazz;
+    jmethodID ctorId;
     jmethodID setInternalStateId;
     jfieldID contextId;
     jfieldID validId;
@@ -202,6 +210,11 @@ struct fields_t {
     jfieldID outputFrameHardwareBufferID;
     jfieldID outputFrameChangedKeysID;
     jfieldID outputFrameFormatID;
+    jfieldID bufferInfoFlags;
+    jfieldID bufferInfoOffset;
+    jfieldID bufferInfoSize;
+    jfieldID bufferInfoPresentationTimeUs;
+
 };
 
 static fields_t gFields;
@@ -410,6 +423,13 @@ status_t JMediaCodec::queueInputBuffer(
         AString *errorDetailMsg) {
     return mCodec->queueInputBuffer(
             index, offset, size, timeUs, flags, errorDetailMsg);
+}
+
+status_t JMediaCodec::queueInputBuffers(
+        size_t index,
+        const std::shared_ptr<std::vector<BufferParams>>& largeFrameInfo) {
+    return mCodec->queueInputBuffers(
+            index, largeFrameInfo);
 }
 
 status_t JMediaCodec::queueSecureInputBuffer(
@@ -1287,6 +1307,32 @@ void JMediaCodec::handleCallback(const sp<AMessage> &msg) {
             break;
         }
 
+        case MediaCodec::CB_LARGE_FRAME_OUTPUT_AVAILABLE:
+        {
+            sp<RefBase> spobj = nullptr;
+            CHECK(msg->findInt32("index", &arg2));
+            CHECK(msg->findObject("largeFrameInfo", &spobj));
+
+            sp<MediaCodec::WrapperObject<std::vector<BufferParams>>> bufferInfoParamsWrapper {
+                (decltype(bufferInfoParamsWrapper.get()))spobj.get()};
+            std::vector<BufferParams> &bufferInfoParams = bufferInfoParamsWrapper.get()->value;
+            if (spobj != nullptr) {
+                obj = env->NewObject(gArrayDequeInfo.clazz, gArrayDequeInfo.ctorId);
+                for (int i = 0 ; i < bufferInfoParams.size(); i++) {
+                    jobject bufferInfo = env->NewObject(gBufferInfo.clazz, gBufferInfo.ctorId);
+                    if (bufferInfo != NULL) {
+                        env->CallVoidMethod(bufferInfo, gBufferInfo.setId,
+                                            (jint)(bufferInfoParams)[i].mOffset,
+                                            (jint)(bufferInfoParams)[i].mSize,
+                                            (bufferInfoParams)[i].mPresentationTimeUs,
+                                            (bufferInfoParams)[i].mFlags);
+                        (void)env->CallBooleanMethod(obj, gArrayDequeInfo.addId, bufferInfo);
+                    }
+                }
+            }
+            break;
+        }
+
         case MediaCodec::CB_CRYPTO_ERROR:
         {
             int32_t err, actionCode;
@@ -1907,6 +1953,44 @@ static void android_media_MediaCodec_queueInputBuffer(
 
     status_t err = codec->queueInputBuffer(
             index, offset, size, timestampUs, flags, &errorDetailMsg);
+
+    throwExceptionAsNecessary(
+            env, err, ACTION_CODE_FATAL,
+            codec->getExceptionMessage(errorDetailMsg.c_str()).c_str());
+}
+
+static void android_media_MediaCodec_queueInputBuffers(
+        JNIEnv *env,
+        jobject thiz,
+        jint index,
+        jobjectArray bufferInfoArray) {
+    ALOGV("android_media_MediaCodec_queueInputBuffers");
+
+    sp<JMediaCodec> codec = getMediaCodec(env, thiz);
+    if (codec == NULL || codec->initCheck() != OK || bufferInfoArray == NULL) {
+        throwExceptionAsNecessary(env, INVALID_OPERATION, codec);
+        return;
+    }
+    AString errorDetailMsg;
+    std::shared_ptr<std::vector<BufferParams>> largeFrameInfo =
+            std::make_shared<std::vector<BufferParams>>();
+
+    const jsize numEntries = env->GetArrayLength(bufferInfoArray);
+    if (numEntries <= 0) {
+        errorDetailMsg = "No entries for BufferInfo found in large frame input";
+        throwCodecException(env, INVALID_OPERATION, ACTION_CODE_FATAL,
+                errorDetailMsg.c_str());
+        return;
+    }
+    for (jsize i = 0; i < numEntries; i++) {
+        jobject param = env->GetObjectArrayElement(bufferInfoArray, i);
+        largeFrameInfo->emplace_back(
+                static_cast<uint32_t>(env->GetIntField(param, gFields.bufferInfoFlags)),
+                static_cast<size_t>(env->GetIntField(param, gFields.bufferInfoSize)),
+                static_cast<size_t>(env->GetIntField(param, gFields.bufferInfoOffset)),
+                env->GetLongField(param, gFields.bufferInfoPresentationTimeUs));
+    }
+    status_t err = codec->queueInputBuffers(index, largeFrameInfo);
 
     throwExceptionAsNecessary(
             env, err, ACTION_CODE_FATAL,
@@ -3401,6 +3485,19 @@ static void android_media_MediaCodec_native_init(JNIEnv *env, jclass) {
     gArrayListInfo.addId = env->GetMethodID(clazz.get(), "add", "(Ljava/lang/Object;)Z");
     CHECK(gArrayListInfo.addId != NULL);
 
+    clazz.reset(env->FindClass("java/util/ArrayDeque"));
+    CHECK(clazz.get() != NULL);
+    gArrayDequeInfo.clazz = (jclass)env->NewGlobalRef(clazz.get());
+
+    gArrayDequeInfo.ctorId = env->GetMethodID(clazz.get(), "<init>", "()V");
+    CHECK(gArrayDequeInfo.ctorId != NULL);
+
+    gArrayDequeInfo.sizeId = env->GetMethodID(clazz.get(), "size", "()I");
+    CHECK(gArrayDequeInfo.sizeId != NULL);
+
+    gArrayDequeInfo.addId = env->GetMethodID(clazz.get(), "add", "(Ljava/lang/Object;)Z");
+    CHECK(gArrayDequeInfo.addId != NULL);
+
     clazz.reset(env->FindClass("android/media/MediaCodec$LinearBlock"));
     CHECK(clazz.get() != NULL);
 
@@ -3444,6 +3541,12 @@ static void android_media_MediaCodec_native_init(JNIEnv *env, jclass) {
 
     gBufferInfo.setId = env->GetMethodID(clazz.get(), "set", "(IIJI)V");
     CHECK(gBufferInfo.setId != NULL);
+
+    gFields.bufferInfoSize = env->GetFieldID(clazz.get(), "size", "I");
+    gFields.bufferInfoFlags = env->GetFieldID(clazz.get(), "flags", "I");
+    gFields.bufferInfoOffset = env->GetFieldID(clazz.get(), "offset", "I");
+    gFields.bufferInfoPresentationTimeUs =
+            env->GetFieldID(clazz.get(), "presentationTimeUs", "J");
 }
 
 static void android_media_MediaCodec_native_setup(
@@ -3700,6 +3803,9 @@ static const JNINativeMethod gMethods[] = {
 
     { "native_queueInputBuffer", "(IIIJI)V",
       (void *)android_media_MediaCodec_queueInputBuffer },
+
+    { "native_queueInputBuffers", "(I[Landroid/media/MediaCodec$BufferInfo;)V",
+      (void *)android_media_MediaCodec_queueInputBuffers },
 
     { "native_queueSecureInputBuffer", "(IILandroid/media/MediaCodec$CryptoInfo;JI)V",
       (void *)android_media_MediaCodec_queueSecureInputBuffer },

@@ -38,6 +38,7 @@ struct ABuffer;
 struct ALooper;
 struct AMessage;
 struct AString;
+struct BufferParams;
 struct ICrypto;
 class IGraphicBufferProducer;
 struct MediaCodec;
@@ -92,6 +93,10 @@ struct JMediaCodec : public AHandler {
             size_t index,
             size_t offset, size_t size, int64_t timeUs, uint32_t flags,
             AString *errorDetailMsg);
+
+    status_t queueInputBuffers(
+            size_t index,
+            const std::shared_ptr<std::vector<BufferParams>>& largeFrameInfo);
 
     status_t queueSecureInputBuffer(
             size_t index,
