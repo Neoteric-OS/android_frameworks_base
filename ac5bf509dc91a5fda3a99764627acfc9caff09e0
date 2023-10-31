@@ -63,6 +63,30 @@
       },
       "revId": "ac5bf509dc91a5fda3a99764627acfc9caff09e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae5286a1_b662fe9e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-10-31T09:10:31Z",
+      "side": 1,
+      "message": "It\u0027s fine if you say that Settings is responsible for catching but then you need to implement that in Settings.",
+      "parentUuid": "64098163_e34654d5",
+      "range": {
+        "startLine": 2720,
+        "startChar": 18,
+        "endLine": 2720,
+        "endChar": 47
+      },
+      "revId": "ac5bf509dc91a5fda3a99764627acfc9caff09e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
