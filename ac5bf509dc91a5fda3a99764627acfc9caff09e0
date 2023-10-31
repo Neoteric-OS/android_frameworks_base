@@ -39,6 +39,30 @@
       },
       "revId": "ac5bf509dc91a5fda3a99764627acfc9caff09e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64098163_e34654d5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-10-31T07:39:01Z",
+      "side": 1,
+      "message": "The documentation of VpnManager#startLegacyVpn() states that it throws this exception:\n```\n     * Starts a legacy VPN.\n     *\n     * Legacy VPN is deprecated starting from Android S. So this API shouldn\u0027t be called if the\n     * initial SDK version of device is Android S+. Otherwise, UnsupportedOperationException will be\n     * thrown.\n```\n\nAlthough this is not the case now, maybe Settings should be the one responsible for catching it? Or should this doc be updated?",
+      "parentUuid": "85bce5f6_450025d8",
+      "range": {
+        "startLine": 2720,
+        "startChar": 18,
+        "endLine": 2720,
+        "endChar": 47
+      },
+      "revId": "ac5bf509dc91a5fda3a99764627acfc9caff09e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
