@@ -37,7 +37,7 @@
     <shortcode country="ae" pattern="\\d{1,5}" free="1017|1355|3214" />
 
     <!-- Albania: 5 digits, known short codes listed -->
-    <shortcode country="al" pattern="\\d{5}" premium="15191|55[56]00" />
+    <shortcode country="al" pattern="\\d{5}" premium="15191|55[56]00|123" />
 
     <!-- Argentina: 5 digits, known short codes listed -->
     <shortcode country="ar" pattern="\\d{5}" free="11711|28291|44077|78887" />
@@ -155,7 +155,7 @@
     <shortcode country="ie" pattern="\\d{5}" premium="5[3-9]\\d{3}" free="50\\d{3}|116\\d{3}" standard="5[12]\\d{3}" />
 
     <!-- Israel: 4 digits, known premium codes listed -->
-    <shortcode country="il" pattern="\\d{4}" premium="4422|4545" />
+    <shortcode country="il" pattern="\\d{1,5}" premium="4422|4545" free="37477" />
 
     <!-- Italy: 5 digits (premium=41xxx,42xxx), plus EU:
          https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200006B0001PDFE.pdf -->
