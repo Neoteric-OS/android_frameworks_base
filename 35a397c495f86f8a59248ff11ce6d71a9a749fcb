@@ -16,6 +16,23 @@
       "message": "We encountered (rare) crashes caused by this issue in prod.\n\nI was able to reproduce it reliably by injecting a short delay in `onVmPolicyViolation()` (right after the null check on line 2496) and setting up a stress test that triggers strict mode violations from multiple threads in a loop. \n\n(Given the nature of this test, it didn\u0027t seem like something that we\u0027d want to include in CtsOsTestCases.)",
       "revId": "35a397c495f86f8a59248ff11ce6d71a9a749fcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7973ae9_fc26c2b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2005646
+      },
+      "writtenOn": "2023-11-01T22:11:14Z",
+      "side": 1,
+      "message": "Adding Christophe who last modified `StrictMode.java`. Also, ping -- thanks! 😊",
+      "revId": "35a397c495f86f8a59248ff11ce6d71a9a749fcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
