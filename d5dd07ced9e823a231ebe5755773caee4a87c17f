@@ -34,6 +34,24 @@
       "parentUuid": "54de7e66_1523a4c1",
       "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "768cec9c_8d0ae5d0",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1010247
+      },
+      "writtenOn": "2023-11-01T23:03:07Z",
+      "side": 1,
+      "message": "agree, that\u0027s why reporting those. it\u0027s best to add annotation and use the generic rules instead of listing classes.",
+      "parentUuid": "70f3814c_989e0961",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
