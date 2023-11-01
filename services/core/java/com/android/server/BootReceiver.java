@@ -379,6 +379,9 @@ public class BootReceiver extends BroadcastReceiver {
                         throw ex;
                     } catch (IOException ex) {
                         Slog.e(TAG, "IO exception during write: " + tombstoneProtoWithHeaders, ex);
+                    } catch (RuntimeException ex) {
+                        Slog.e(TAG, "Runtime exception during write: "
+                                + tombstoneProtoWithHeaders, ex);
                     } finally {
                         // Remove the temporary file.
                         if (tombstoneProtoWithHeaders != null) {
