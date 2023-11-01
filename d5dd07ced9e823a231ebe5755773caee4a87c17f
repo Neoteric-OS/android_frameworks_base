@@ -16,6 +16,24 @@
       "message": "while testing, we found several classes are missing.\n\n-keep,allowoptimization,allowaccessmodification class com.android.server.wm.WindowManagerGlobalLock { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.pm.PackageManagerTracedLock { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.am.ActivityManagerProcLock { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.pm.PackageDexOptimizer** { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.pm.dex.ArtStatsLogUtils** { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.criticalevents.CriticalEventLog** { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.am.DropboxRateLimiter** { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.wm.LockTaskController** { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.display.LocalDisplayAdapter** { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.am.CacheOomRanker** { \u003cinit\u003e(); }\n-keep,allowoptimization,allowaccessmodification class com.android.server.display.DisplayManagerService** { \u003cinit\u003e(); }",
       "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70f3814c_989e0961",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-11-01T23:01:19Z",
+      "side": 1,
+      "message": "Thanks for flagging!\n\nIt would be great to understand why these are being optimized away. We\u0027re generally trying to move toward annotation-based keep rules rather than global declarative ones, might be interesting to dive into a couple of these and see why they\u0027re removed (and why that breaks behavior) when optimizations are enabled.",
+      "parentUuid": "54de7e66_1523a4c1",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
