@@ -33,6 +33,23 @@
       "message": "is there anything left to get this submitted now?\nBRs\nMattias",
       "revId": "de4bebe549e865fb355bcba75de27892d9c6d204",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c408788_757f7590",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-11-01T09:24:42Z",
+      "side": 1,
+      "message": "seems we need help to submit this, auto submit is not allowed",
+      "revId": "de4bebe549e865fb355bcba75de27892d9c6d204",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
