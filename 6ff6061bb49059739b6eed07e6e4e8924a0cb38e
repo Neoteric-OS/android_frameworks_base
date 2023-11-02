@@ -33,6 +33,24 @@
       "message": "you need to remove this usage too: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/window/SplashScreenView.java;l\u003d363;drc\u003d73b931f4b49d748a20e83aff6f58c66bd1ac3b84",
       "revId": "6ff6061bb49059739b6eed07e6e4e8924a0cb38e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aec55c00_a9df47d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2023-11-02T01:54:32Z",
+      "side": 1,
+      "message": "unresolving",
+      "parentUuid": "775a9887_46ff4943",
+      "revId": "6ff6061bb49059739b6eed07e6e4e8924a0cb38e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
