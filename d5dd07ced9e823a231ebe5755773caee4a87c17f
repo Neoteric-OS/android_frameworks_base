@@ -88,6 +88,24 @@
       "parentUuid": "996869a8_be16a301",
       "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "306789b5_31fb7034",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-11-02T21:16:15Z",
+      "side": 1,
+      "message": "ART is never supposed to be strict about missing classes/methods in the profile. You probably hit a bug. I filed b/309002293. Thanks for bringing this to our attention!",
+      "parentUuid": "b00739db_fbec27f7",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
