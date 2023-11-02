@@ -33,6 +33,24 @@
       "message": "What is meant to be fixed by this change?  BrightnessSynchronizer is very sensitive to the updates it needs to process and can have multiple brightness changes in process at the same time, so I\u0027m concerned about deleting all RUN_UPDATE messages, in particular in those instances with multiple updates.",
       "revId": "8c45887592cfcfc68bb2ac17440403d3752b2761",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71b9913a_9f31884e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2023-11-02T02:27:39Z",
+      "side": 1,
+      "message": "We found that when the update of mCurrentUpdate was completed, the previous message seemed to be useless. Because the messages in message queue are sent by mCurrentUpdate, which also includes multiple messages sent by \"previous mCurrentUpdates\", they continue to execute even if the mPendingUpdate is already for update. As for mPendingUpdate, the previous messages are no longer useful, because they will go into the \"if(mCurrentUpdate.isRunning())\" logic. However, I also agree with your concerns, BrightnessSynchronizer is sensitive and it is appropriate to maintain current state. Thank you for your reply.",
+      "parentUuid": "7db4d6f8_4abda77e",
+      "revId": "8c45887592cfcfc68bb2ac17440403d3752b2761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
