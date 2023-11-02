@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ff084e2_7f2e1e92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2053319
+      },
+      "writtenOn": "2023-11-02T17:48:16Z",
+      "side": 1,
+      "message": "Hi Yao, this CL is related to the Yaqs question(https://yaqs.corp.google.com/eng/q/5739443000409325568#a2n3) and code aosp/2769863.\n\nWhen I tried to run presubmit for the aosp/2769863 I got an error about StatsPullAtomService, so I modified it here with the same topic of aosp/2769863.\n\nPlease take a look at it when you have time.\n\nThanks!",
+      "revId": "3572b82e64aeb031c9b04abd6a3aa914ab2dec5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
