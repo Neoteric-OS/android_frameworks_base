@@ -359,8 +359,6 @@ public final class SplashScreenView extends FrameLayout {
                 }
             }
 
-            // We ensure that we can blend the alpha of the surface view with the SplashScreenView
-            surfaceView.setUseAlpha();
             surfaceView.setZOrderOnTop(true);
             surfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
