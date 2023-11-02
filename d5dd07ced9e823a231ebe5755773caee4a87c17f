@@ -70,6 +70,24 @@
       "parentUuid": "768cec9c_8d0ae5d0",
       "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b00739db_fbec27f7",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-11-02T18:52:50Z",
+      "side": 1,
+      "message": "That\u0027s super helpful, thanks!\n\n@tyiu@google.com I guess this highlights that we don\u0027t really have anything in presubmit with this config enabled, so it could be pretty fragile. Unless there\u0027s a setting that makes ART a bit less strict about missing dex classes/methods that ae present in the dexpreopt profile. @jiakaiz@google.com may know.\n\nAll that said, I think this probably highlights a broader issues, which is that the system server profiles are generated with the default mode (SYSTEM_OPTIMIZE_JAVA \u003d shrinking), and it\u0027s not clear how much the corresponding profile could/should look like with FULL_SYSTEM_OPTIMIZE_JAVA (shrinking + optimization). Inlining and class merging can definitely change the nature of the generated profiles.",
+      "parentUuid": "996869a8_be16a301",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
