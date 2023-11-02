@@ -16,6 +16,23 @@
       "message": "Owners+1 to the services/tests/servicestests/Android.bp change.",
       "revId": "8f0b73b7bcd384af3bf46f153cf70715529a9c2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c38e74b2_bea6307f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2023-11-02T20:34:18Z",
+      "side": 1,
+      "message": "@omakoto@google.com I accidentally removed you, you may need to mark the API review again",
+      "revId": "8f0b73b7bcd384af3bf46f153cf70715529a9c2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
