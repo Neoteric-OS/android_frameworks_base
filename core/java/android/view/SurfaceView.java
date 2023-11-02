@@ -392,20 +392,6 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
         updateSurface();
     }
 
-    /**
-     * Make alpha value of this view reflect onto the surface. This can only be called from at most
-     * one SurfaceView within a view tree.
-     *
-     * <p class="note"><strong>Note:</strong> Alpha value of the view is ignored and the underlying
-     * surface is rendered opaque by default.</p>
-     *
-     * @hide
-     */
-    public void setUseAlpha() {
-        // TODO(b/241474646): Remove me
-        return;
-    }
-
     @Override
     public void setAlpha(float alpha) {
         if (DEBUG) {
