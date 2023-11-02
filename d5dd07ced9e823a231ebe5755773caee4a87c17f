@@ -52,6 +52,24 @@
       "parentUuid": "70f3814c_989e0961",
       "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "996869a8_be16a301",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1797945
+      },
+      "writtenOn": "2023-11-02T05:11:19Z",
+      "side": 1,
+      "message": "We said that the above 11 classes should be kept additionally when enabling optimization for system server.\nThese are not problem during operating system server at runtime (because they were probably inlined or deleted).\nBut instead, compile error occurs during build.\n\n[ 99% 163515/163738] //frameworks/base/services:services dexpreopt [common]\nFAILED: out/soong/.intermediates/frameworks/base/services/services/android_common/dexpreopt/oat/\n...\nprofman F 10-30 10:51:27 35024 35024 dex_file.cc:262] Check failed: accessor.HasClassData() \nprofman E 10-30 10:51:27 35024 35024 profman.cc:224] Check failed: accessor.HasClassData() \n\ndexpreopt will resolve methods from the output services.jar and services.odex after parsing the pre-profiled art-profile file (frameworks/base/services/art-profile). \nAt this time, those 11 classes are failed during the resolve method because they exist in the art-profile but not in the services.jar.\n\nProcessLine -\u003e ResolveMethod -\u003e GetCodeItemOffset -\u003e CHECK(accessor.HasClassData());\n\nMoreover, the current profman is not printing a log message of which method did not have the class data and made an error while resolving it, \nso we modified the profman and manually found which classes should be kept.\n\nprofman W 10-31 19:37:12 50085 50085 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/wm/WindowManagerGlobalLock;-\u003e\u003cinit\u003e()V\nprofman W 10-31 21:00:46 45475 45475 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/pm/PackageManagerTracedLock;-\u003e\u003cinit\u003e()V\nprofman W 10-31 22:08:58 34783 34783 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/am/ActivityManagerProcLock;-\u003e\u003cinit\u003e()V\nprofman W 10-31 23:07:21 42553 42553 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/pm/PackageDexOptimizer$1;-\u003e\u003cinit\u003e()V\nprofman W 11-01 00:18:04 32704 32704 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/pm/dex/ArtStatsLogUtils$BackgroundDexoptJobStatsLogger;-\u003e\u003cinit\u003e()V\nprofman W 11-01 03:09:17 13273 13273 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/criticalevents/CriticalEventLog$LogLoader;-\u003e\u003cinit\u003e()V\nprofman W 11-01 10:37:25 26072 26072 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/am/DropboxRateLimiter$DefaultClock;-\u003e\u003cinit\u003e()V\nprofman W 11-01 11:27:17 37186 37186 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/wm/LockTaskController$LockTaskToken;-\u003e\u003cinit\u003e()V\nprofman W 11-01 12:20:54 45518 45518 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/display/LocalDisplayAdapter$Injector;-\u003e\u003cinit\u003e()V\nprofman W 11-01 13:14:43 33005 33005 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/am/CacheOomRanker$ProcessDependenciesImpl;-\u003e\u003cinit\u003e()V\nprofman W 11-01 14:34:08 29860 29860 profman.cc:1508] [debug] ResolveMethod. : Lcom/android/server/display/DisplayManagerService$SyncRoot;-\u003e\u003cinit\u003e()V\n\nSo we suggest that if google wants to officially enable optimize,\n1) profman will be changed to return nullptr in the GetCodeItemOffset when class_data is empty instead of error,\n2) or keep the above 11 classes additionally, \n3) or create and update the art-profile file again after optimize\ngoogle have to do one of three things.\n\nThanks and regards.",
+      "parentUuid": "768cec9c_8d0ae5d0",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
