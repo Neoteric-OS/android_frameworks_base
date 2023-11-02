@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91bf4933_ee85a23b",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-02T18:29:26Z",
+      "side": 1,
+      "message": "Keystore still refers to and uses this as a \"password\", so this is intentional for now.  Eventually I\u0027d like to remove the redundant PBKDF step in Keystore.",
+      "parentUuid": "b28acd6c_a3e85359",
+      "range": {
+        "startLine": 77,
+        "startChar": 68,
+        "endLine": 77,
+        "endChar": 76
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b6761207_5d70914b",
@@ -60,6 +84,30 @@
       "writtenOn": "2023-11-02T11:34:12Z",
       "side": 1,
       "message": "There is already onUserPasswordChanged(), which is a bit confusing alongside onUserLskfRemoved(). Is it possible to merge them together? (onUserPasswordChanged() is probably a bad name nowadays)",
+      "range": {
+        "startLine": 144,
+        "startChar": 22,
+        "endLine": 144,
+        "endChar": 39
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e535c466_3522efe4",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-02T18:29:26Z",
+      "side": 1,
+      "message": "I\u0027m doing it this way because this change is flagged, due to trunk-stable.  `onUserPasswordChanged()` is superseded by this fix and will be removed when we remove the flag and make the fix unconditional (hopefully within a few months).  Yes, it\u0027s annoying that we can\u0027t just remove the obsolete code now.  The state where both methods exist is temporary, so I think we shouldn\u0027t refactor the code to optimize for that state -- our goal should be the cleanest final state.",
+      "parentUuid": "b6761207_5d70914b",
       "range": {
         "startLine": 144,
         "startChar": 22,
@@ -118,6 +166,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d4639036_bd539e59",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-02T18:29:26Z",
+      "side": 1,
+      "message": "Similarly to `onUserPasswordChanged()`: I\u0027m doing it this way because the change is temporarily flagged due to trunk-stable, and I\u0027d like end up with a clean state in the end once we remove the flag.  In the final state, the code will be simpler with the migrations combined.",
+      "parentUuid": "eda3ed68_29167aa8",
+      "range": {
+        "startLine": 1056,
+        "startChar": 31,
+        "endLine": 1056,
+        "endChar": 47
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a35d2239_9ba52eab",
         "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
         "patchSetId": 3
@@ -129,6 +201,30 @@
       "writtenOn": "2023-11-02T11:34:12Z",
       "side": 1,
       "message": "nit: at the moment we do a bunch of post credential verification calls but they are scattered all over the places (onCredentialVerified() and some individual calls inside doVerifyCredentials and setLockCredentialWithSpLocked). I think long term it would be good to put them in one place.",
+      "range": {
+        "startLine": 2152,
+        "startChar": 0,
+        "endLine": 2157,
+        "endChar": 0
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4461d4e8_c4f9ad2a",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2157,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-02T18:29:26Z",
+      "side": 1,
+      "message": "This case is a bit different from credential verification, since there\u0027s no credential being verified here.  But yes, some of the tasks like unlocking keystore and CE storage could be done in a helper function that\u0027s shared with credential verification.",
+      "parentUuid": "a35d2239_9ba52eab",
       "range": {
         "startLine": 2152,
         "startChar": 0,
@@ -152,6 +248,30 @@
       "writtenOn": "2023-11-02T11:34:12Z",
       "side": 1,
       "message": "Can these two calls race against each other? Maybe it\u0027s safer to pass the userSerialNumber as well so we are sure we are deleting the old user, not the new one that\u0027s just created?",
+      "range": {
+        "startLine": 2439,
+        "startChar": 11,
+        "endLine": 2439,
+        "endChar": 40
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "220075b9_a681c1e8",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-02T18:29:26Z",
+      "side": 1,
+      "message": "`createNewUser()` is only called when a new user is being created, and it gets called early in the process.  And it\u0027s the thing that kicks off the call to `initKeystoreSuperKeys()`, either by doing it immediately or by delaying it until later.  So it shouldn\u0027t be possible for the call to `AndroidKeyStoreMaintenance.onUserAdded(userId)` here to delete anything that it shouldn\u0027t.  Also note that it was previously being called when `LockSettingsService` receives the `ACTION_USER_ADDED` intent, which happens later.  I just moved it to earlier.  So I don\u0027t see any issue.\n\nNote that Keystore doesn\u0027t keep track of user serial numbers at all, as it doesn\u0027t seem to be necessary.",
+      "parentUuid": "e8a75a86_60d7ade9",
       "range": {
         "startLine": 2439,
         "startChar": 11,
