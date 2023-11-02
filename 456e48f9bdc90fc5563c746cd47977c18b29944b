@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b28acd6c_a3e85359",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-11-02T11:34:12Z",
+      "side": 1,
+      "message": "nit: secret?",
+      "range": {
+        "startLine": 77,
+        "startChar": 68,
+        "endLine": 77,
+        "endChar": 76
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9792fcc1_a78f4b71",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-11-02T11:34:12Z",
+      "side": 1,
+      "message": "This NonNull seems to be in the wrong place?",
+      "range": {
+        "startLine": 77,
+        "startChar": 40,
+        "endLine": 77,
+        "endChar": 48
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6761207_5d70914b",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-11-02T11:34:12Z",
+      "side": 1,
+      "message": "There is already onUserPasswordChanged(), which is a bit confusing alongside onUserLskfRemoved(). Is it possible to merge them together? (onUserPasswordChanged() is probably a bad name nowadays)",
+      "range": {
+        "startLine": 144,
+        "startChar": 22,
+        "endLine": 144,
+        "endChar": 39
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c0b3807_8d44376b",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-11-02T11:34:12Z",
+      "side": 1,
+      "message": "nit: IMHO it reads slightly clearer if this flag is inside the if block: the receiver handles a few different actions and for ACTION_USER_ADDED, we no longer calls AndroidKeyStoreMaintenance.onUserAdded() if the flag is enabled.",
+      "range": {
+        "startLine": 860,
+        "startChar": 22,
+        "endLine": 860,
+        "endChar": 57
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eda3ed68_29167aa8",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-11-02T11:34:12Z",
+      "side": 1,
+      "message": "Instead of making MIGRATED_SP_FULL a subset of MIGRATED_SP_CE_ONLY and initializing keystore, what if we separate out the keystore initialization into a separate migration step? Seems a little easier to flag off, and no need to redo the full migration again if the new flag is flipped off and back on.\n\nTBH I don\u0027t mind either way (only nag for me is that migrateUserToSpWithBoundKeysLocked duplicates most code from migrateUserToSpWithBoundCeKeyLocked), but just thinking out aloud here.",
+      "range": {
+        "startLine": 1056,
+        "startChar": 31,
+        "endLine": 1056,
+        "endChar": 47
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a35d2239_9ba52eab",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2157,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-11-02T11:34:12Z",
+      "side": 1,
+      "message": "nit: at the moment we do a bunch of post credential verification calls but they are scattered all over the places (onCredentialVerified() and some individual calls inside doVerifyCredentials and setLockCredentialWithSpLocked). I think long term it would be good to put them in one place.",
+      "range": {
+        "startLine": 2152,
+        "startChar": 0,
+        "endLine": 2157,
+        "endChar": 0
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8a75a86_60d7ade9",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-11-02T11:34:12Z",
+      "side": 1,
+      "message": "Can these two calls race against each other? Maybe it\u0027s safer to pass the userSerialNumber as well so we are sure we are deleting the old user, not the new one that\u0027s just created?",
+      "range": {
+        "startLine": 2439,
+        "startChar": 11,
+        "endLine": 2439,
+        "endChar": 40
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
