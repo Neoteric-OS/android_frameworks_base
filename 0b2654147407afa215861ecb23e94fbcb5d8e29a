@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d380548c_59fbf7c8",
+        "filename": "tools/lint/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-11-02T14:13:20Z",
+      "side": 1,
+      "message": ", and then run lint again:",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 15
+      },
+      "revId": "0b2654147407afa215861ecb23e94fbcb5d8e29a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
