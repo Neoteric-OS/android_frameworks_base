@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "622fff93_09dd0242",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1797945
+      },
+      "writtenOn": "2023-11-03T01:13:42Z",
+      "side": 1,
+      "message": "And we observed another error. \nWhen enabling optimize, all google apps such as Chrome, Vending, Youtube and so on do not work with exception.\n\n10-31 14:03:15.359  2116  8314 E JavaBinder: *** Uncaught remote exception! Exceptions are not yet supported across processes. Client PID 747 UID 10254.\n10-31 14:03:15.359  2116  8314 E JavaBinder: java.lang.ClassCastException: com.android.server.appsearch.AppSearchManagerService$AppSearchStorageStatsAugmenter cannot be cast to com.android.server.blob.BlobStoreManagerService$BlobStorageStatsAugmenter\n10-31 14:03:15.359  2116  8314 E JavaBinder:     at com.android.server.usage.StorageStatsService$$ExternalSyntheticLambda2.accept(qb/73170530 3061e1cc2fc0a13aacc53dbb8bda78e90849eaa88b934d344907f4e052439d0b:9)\n10-31 14:03:15.359  2116  8314 E JavaBinder:     at com.android.server.usage.StorageStatsService.forEachStorageStatsAugmenter(qb/73170530 3061e1cc2fc0a13aacc53dbb8bda78e90849eaa88b934d344907f4e052439d0b:52)\n10-31 14:03:15.359  2116  8314 E JavaBinder:     at com.android.server.usage.StorageStatsService.queryStatsForUid(qb/73170530 3061e1cc2fc0a13aacc53dbb8bda78e90849eaa88b934d344907f4e052439d0b:235)\n10-31 14:03:15.359  2116  8314 E JavaBinder:     at com.android.server.usage.StorageStatsService.queryStatsForPackage(qb/73170530 3061e1cc2fc0a13aacc53dbb8bda78e90849eaa88b934d344907f4e052439d0b:83)\n10-31 14:03:15.359  2116  8314 E JavaBinder:     at android.app.usage.IStorageStatsManager$Stub.onTransact(IStorageStatsManager.java:264)\n10-31 14:03:15.359  2116  8314 E JavaBinder:     at android.os.Binder.execTransactInternal(Binder.java:1375)\n10-31 14:03:15.359  2116  8314 E JavaBinder:     at android.os.Binder.execTransact(Binder.java:1311)\n\nEven though PackageStateInternal has been already kept, innter class StorageStatsAugmenter would be removed. \n\n\u003d\u003e from unused json\n  \"com.android.server.usage.StorageStatsManagerLocal$StorageStatsAugmenter\": [\n    \"public abstract void augmentStatsForPackageForUser()\",\n    \"public abstract void augmentStatsForUser()\",\n    \"public abstract void augmentStatsForUid()\"\n  ],\n  \nSo, it should be changed to\n-keep,allowoptimization,allowaccessmodification class com.android.server.usage.StorageStatsManagerLocal** { *; }\n\nPlease check it once more.\n\nThanks and regards.",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "54de7e66_1523a4c1",
         "filename": "services/proguard.flags",
         "patchSetId": 9
