@@ -16,6 +16,7 @@
 
 package android.media;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -32,6 +33,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
 /**
  * Encapsulates the information describing the format of media data, be it audio or video, as
  * well as optional feature metadata.
@@ -118,6 +120,10 @@ import java.util.stream.Collectors;
  * <tr><td>{@link #KEY_MPEGH_REFERENCE_CHANNEL_LAYOUT}</td>
  *     <td>Integer</td><td><b>decoder-only</b>, optional, if content is MPEG-H audio,
  *         specifies the preferred reference channel layout of the stream.</td></tr>
+ * <tr><td>{@link #KEY_MAX_BUFFER_BATCH_OUTPUT_SIZE}</td><td>Integer</td><td>optional, used with
+ *         large audio frame support, specifies max size of output buffer in bytes.</td></tr>
+ * <tr><td>{@link #KEY_BUFFER_BATCH_THRESHOLD_OUTPUT_SIZE}</td><td>Integer</td><td>optional,
+ *         used with large audio frame support, specifies threshold output size in bytes.</td></tr>
  * </table>
  *
  * Subtitle formats have the following keys:
@@ -454,6 +460,31 @@ public final class MediaFormat {
      * The associated value is an integer
      */
     public static final String KEY_MAX_INPUT_SIZE = "max-input-size";
+
+    /**
+     * A key describing the maximum size in bytes of a buffer of data
+     * at the output as described by this MediaFormat.
+     * When not-set - codec functions with one access-unit per frame.
+     * When set too less than the actual size of an output frame, an exception is thrown.
+     * When set to a value too big, the component overrides the value
+     * to a reasonable size
+     * The associated value is an integer
+     */
+    @FlaggedApi(FLAG_LARGE_AUDIO_FRAME)
+    public static final String KEY_MAX_BUFFER_BATCH_OUTPUT_SIZE = "max-buffer-batch-size";
+
+    /**
+     * A key describing the threshold size in bytes of a buffer of data
+     * at the output as described by this MediaFormat. The component takes the best effort
+     * to return a buffer size larger than this setting.
+     * This is an optional parameter. If not set, component can set a reasonable value.
+     * Threshold size should be always less or equal to KEY_MAX_BUFFER_BATCH_OUTPUT_SIZE.
+     * Component can override this setting to a resonable value.
+     * The associated value is an integer
+     */
+    @FlaggedApi(FLAG_LARGE_AUDIO_FRAME)
+    public static final String KEY_THRESHOLD_BUFFER_BATCH_OUTPUT_SIZE =
+            "threshold-buffer-batch-size";
 
     /**
      * A key describing the pixel aspect ratio width.
