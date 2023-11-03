@@ -516,6 +516,17 @@ filegroup {
     ],
 }
 
+// utility classes statically linked into NFC APK
+filegroup {
+    name: "nfc-framework-shared-srcs",
+    srcs: [
+        "com/android/internal/util/FastXmlSerializer.java",
+    ],
+    visibility: [
+        "//packages/apps/Nfc",
+    ],
+}
+
 // protolog start
 filegroup {
     name: "protolog-common-src",
