@@ -23641,6 +23641,7 @@ package android.media {
     field public static final String KEY_LATENCY = "latency";
     field public static final String KEY_LEVEL = "level";
     field public static final String KEY_LOW_LATENCY = "low-latency";
+    field @FlaggedApi("com.android.media.codec.flags.large_audio_frame") public static final String KEY_MAX_BUFFER_BATCH_OUTPUT_SIZE = "max-buffer-batch-output-size";
     field public static final String KEY_MAX_B_FRAMES = "max-bframes";
     field public static final String KEY_MAX_FPS_TO_ENCODER = "max-fps-to-encoder";
     field public static final String KEY_MAX_HEIGHT = "max-height";
@@ -23670,6 +23671,7 @@ package android.media {
     field public static final String KEY_SLOW_MOTION_MARKERS = "slow-motion-markers";
     field public static final String KEY_STRIDE = "stride";
     field public static final String KEY_TEMPORAL_LAYERING = "ts-schema";
+    field @FlaggedApi("com.android.media.codec.flags.large_audio_frame") public static final String KEY_THRESHOLD_BUFFER_BATCH_OUTPUT_SIZE = "threshold-buffer-batch-output-size";
     field public static final String KEY_TILE_HEIGHT = "tile-height";
     field public static final String KEY_TILE_WIDTH = "tile-width";
     field public static final String KEY_TRACK_ID = "track-id";
