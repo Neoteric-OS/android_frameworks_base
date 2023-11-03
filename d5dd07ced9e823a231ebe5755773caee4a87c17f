@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "784508b2_b0a4fd8d",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-11-03T01:29:29Z",
+      "side": 1,
+      "message": "Interesting, for that I wonder if we should instead tweak the `SystemApi` annotation keep rules to automatically keep nested classes? https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/usage/java/com/android/server/usage/StorageStatsManagerLocal.java;drc\u003d610afe52c4bc8e3cd7dae8289601ec2eb2c9463e;l\u003d29\n\nI\u0027m actually not sure what the correct semantics are for @SystemApi annotations on the enclosing class, but better to err on the side of caution.",
+      "parentUuid": "622fff93_09dd0242",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "54de7e66_1523a4c1",
         "filename": "services/proguard.flags",
         "patchSetId": 9
