@@ -4219,6 +4219,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         final WindowContainer trigger = remove && task != null && task.getChildCount() == 1
                 ? task : this;
         mTransitionController.requestCloseTransitionIfNeeded(trigger);
+        mTaskSupervisor.killTaskProcessesOnDestroyedIfNeeded(task);
         cleanUp(true /* cleanServices */, true /* setState */);
         if (remove) {
             if (mStartingData != null && mVisible && task != null) {
