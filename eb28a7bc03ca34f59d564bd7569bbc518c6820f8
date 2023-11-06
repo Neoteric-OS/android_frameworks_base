@@ -16,6 +16,24 @@
       "message": "We shouldn\u0027t expose new filegroup like this. Please migrate the file to a java_library in frameworks/libs/modules-utils",
       "revId": "eb28a7bc03ca34f59d564bd7569bbc518c6820f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20cf186b_6cabadaf",
+        "filename": "core/java/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-11-06T09:38:10Z",
+      "side": 1,
+      "message": "(you\u0027d make framework + WiFi depend on this new lib as well)",
+      "parentUuid": "be90acc5_c17ed3dd",
+      "revId": "eb28a7bc03ca34f59d564bd7569bbc518c6820f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
