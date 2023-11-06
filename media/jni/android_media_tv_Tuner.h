@@ -162,6 +162,8 @@ private:
     jmethodID mIpCidChangeEventInitID;
     jmethodID mRestartEventInitID;
     jfieldID mMediaEventFieldContextID;
+
+    android::Mutex mFilterLock;
     bool mSharedFilter;
     void getSectionEvent(const jobjectArray& arr, const int size, const DemuxFilterEvent& event);
     void getMediaEvent(const jobjectArray& arr, const int size, const DemuxFilterEvent& event);

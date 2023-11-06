@@ -940,6 +940,11 @@ void FilterClientCallbackImpl::onFilterEvent(const vector<DemuxFilterEvent> &eve
             }
         }
     }
+    android::Mutex::Autolock autoLock(mFilterLock);
+    if (mFilterObj == nullptr) {
+        ALOGE("FilterClientCallbackImpl::onFilterEvent filter obj null");
+        return;
+    }
     ScopedLocalRef filter(env, env->NewLocalRef(mFilterObj));
     if (!env->IsSameObject(filter.get(), nullptr)) {
         jmethodID methodID = gFields.onFilterEventID;
@@ -955,7 +960,13 @@ void FilterClientCallbackImpl::onFilterEvent(const vector<DemuxFilterEvent> &eve
 
 void FilterClientCallbackImpl::onFilterStatus(const DemuxFilterStatus status) {
     ALOGV("FilterClientCallbackImpl::onFilterStatus");
+    android::Mutex::Autolock autoLock(mFilterLock);
+
     JNIEnv *env = AndroidRuntime::getJNIEnv();
+    if (mFilterObj == nullptr) {
+        ALOGE("FilterClientCallbackImpl::onFilterStatus: filter obj null");
+        return;
+    }
     ScopedLocalRef filter(env, env->NewLocalRef(mFilterObj));
     if (!env->IsSameObject(filter.get(), nullptr)) {
         jmethodID methodID = gFields.onFilterStatusID;
@@ -971,6 +982,8 @@ void FilterClientCallbackImpl::onFilterStatus(const DemuxFilterStatus status) {
 
 void FilterClientCallbackImpl::setFilter(jweak filterObj, sp<FilterClient> filterClient) {
     ALOGV("FilterClientCallbackImpl::setFilter");
+    android::Mutex::Autolock autoLock(mFilterLock);
+
     // Java Object
     mFilterObj = filterObj;
     mFilterClient = filterClient;
@@ -979,6 +992,8 @@ void FilterClientCallbackImpl::setFilter(jweak filterObj, sp<FilterClient> filte
 
 void FilterClientCallbackImpl::setSharedFilter(jweak filterObj, sp<FilterClient> filterClient) {
     ALOGV("FilterClientCallbackImpl::setFilter");
+    android::Mutex::Autolock autoLock(mFilterLock);
+
     // Java Object
     mFilterObj = filterObj;
     mFilterClient = filterClient;
@@ -986,6 +1001,9 @@ void FilterClientCallbackImpl::setSharedFilter(jweak filterObj, sp<FilterClient>
 }
 
 FilterClientCallbackImpl::FilterClientCallbackImpl() {
+    // It must be initilized or it will cause invalid pointer usage crash.
+    mFilterObj = nullptr;
+
     JNIEnv *env = AndroidRuntime::getJNIEnv();
     ScopedLocalRef eventClass =
         ScopedLocalRef(env, env->FindClass("android/media/tv/tuner/filter/FilterEvent"));
@@ -1047,6 +1065,9 @@ FilterClientCallbackImpl::FilterClientCallbackImpl() {
 }
 
 FilterClientCallbackImpl::~FilterClientCallbackImpl() {
+    ALOGV("~FilterClientCallbackImpl");
+    android::Mutex::Autolock autoLock(mFilterLock);
+
     JNIEnv *env = AndroidRuntime::getJNIEnv();
     if (mFilterObj != nullptr) {
         env->DeleteWeakGlobalRef(mFilterObj);
