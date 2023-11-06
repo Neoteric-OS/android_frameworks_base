@@ -34,6 +34,24 @@
       "parentUuid": "be90acc5_c17ed3dd",
       "revId": "eb28a7bc03ca34f59d564bd7569bbc518c6820f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5137b786_c5567869",
+        "filename": "core/java/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-11-06T22:14:14Z",
+      "side": 1,
+      "message": "Moved to https://android-review.git.corp.google.com/q/topic:%22fast_xml_serializer_utils%22",
+      "parentUuid": "20cf186b_6cabadaf",
+      "revId": "eb28a7bc03ca34f59d564bd7569bbc518c6820f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
