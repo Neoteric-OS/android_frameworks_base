@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11bc64b9_42baa28b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2023-11-06T11:55:00Z",
+      "side": 1,
+      "message": "Adding Vaibhav and Prabir as they made a similar internal change ag/25115103 using a different looper.",
+      "revId": "7a6b400b7992d448a0a5921bb14012e1b879ff42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
