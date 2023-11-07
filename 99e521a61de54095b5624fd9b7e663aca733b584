@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f853528b_9637c806",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2023-11-07T08:21:07Z",
+      "side": 1,
+      "message": "What does the \"other service\" actually mean?\nCan an apdu service be a other service?\nIf apdu service is an other service, it has state of selected or not selected?\n\nI want to know what\u0027s the difference among 1) an APDU service which is not an other service, 2) that is an other service with selected state, 3) and that with unselected state.",
+      "range": {
+        "startLine": 830,
+        "startChar": 6,
+        "endLine": 830,
+        "endChar": 48
+      },
+      "revId": "99e521a61de54095b5624fd9b7e663aca733b584",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
