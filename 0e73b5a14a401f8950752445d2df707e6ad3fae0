@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac66ac96_22d700e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1634819
+      },
+      "writtenOn": "2023-11-07T10:58:08Z",
+      "side": 1,
+      "message": "Since the resource volume_dialog_gravity was introduced it is possible to configure the volume dialog on the left side (by changing the value to 19, for (LEFT|CENTER_VERTICAL).\nEspecially on devices with the volume buttons on the left site that might be a reasonable choice.\n\nHowever, much of the code here did not respect the value except for the outer dialog while the inner dialogs had a gravity to right hard-coded.\nWhile the device is in portrait mode this was sufficient since everything moves and animates to the top and not to the sides.\nBut in landscape mode the ringer animates to the side of the dialog, which is different if the dialog is on the left side.\nCurrently, in landscape mode with the dialog on the left side, the whole dialog is shifted to the right of the container (which is on the left side) and everything animates to the left side (as it does when the dialog is on the right side).\n\nScreenshots with layout bounds: https://imgur.com/a/g0IaZKV\n(landscape, ringer collapsed and expanded)\n\nThis whole chain fixes the volume dialog on the left side in landscape mode.\nScreenshots after this chain: https://imgur.com/a/T6OnNV8\n\n\nJosh: Since you have reviewed a similar change of mine in past (Icda80b7a98d5510747bc92ef12a3c7647131b18d) i thought you could be interested in this.\n\nJulia: I\u0027m adding you as reviewer since you seemed to be able to help me assign reviewers possibly interested in this in the past which was very helpful - if you can not help me here i apologize to interrupt you.\n\n\nThanks in advance for any review or opinions/suggestions on this review submission!",
+      "revId": "0e73b5a14a401f8950752445d2df707e6ad3fae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
