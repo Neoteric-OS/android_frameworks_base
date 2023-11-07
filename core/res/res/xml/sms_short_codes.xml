@@ -34,7 +34,7 @@
          http://smscoin.net/software/engine/WordPress/Paid+SMS-registration/ -->
 
     <!-- Arab Emirates -->
-    <shortcode country="ae" pattern="\\d{1,5}" free="1017|1355|3214" />
+    <shortcode country="ae" pattern="\\d{1,5}" free="1017|1355|3214|6253" />
 
     <!-- Albania: 5 digits, known short codes listed -->
     <shortcode country="al" pattern="\\d{5}" premium="15191|55[56]00" />
@@ -197,6 +197,9 @@
 
     <!-- Malaysia: 5 digits: http://www.skmm.gov.my/attachment/Consumer_Regulation/Mobile_Content_Services_FAQs.pdf -->
     <shortcode country="my" pattern="\\d{5}" premium="32298|33776" free="22099|28288|66668" />
+
+    <!-- Namibia: 5 digits -->
+    <shortcode country="na" pattern="\\d{1,5}" free="40005" />
 
     <!-- The Netherlands, 4 digits, known premium codes listed, plus EU -->
     <shortcode country="nl" pattern="\\d{4}" premium="4466|5040" free="116\\d{3}|2223|6225|2223|1662" />
