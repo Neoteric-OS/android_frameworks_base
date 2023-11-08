@@ -69,6 +69,30 @@
       },
       "revId": "99e521a61de54095b5624fd9b7e663aca733b584",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a720bca0_0b6ba39f",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-11-08T22:04:29Z",
+      "side": 1,
+      "message": "Maybe we can make this generic and no need to add this specifically for other. Currently, we only have an API for other. But, there is no need to limit this for future use.",
+      "parentUuid": "b09acf8b_8e642c47",
+      "range": {
+        "startLine": 835,
+        "startChar": 16,
+        "endLine": 835,
+        "endChar": 44
+      },
+      "revId": "99e521a61de54095b5624fd9b7e663aca733b584",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
