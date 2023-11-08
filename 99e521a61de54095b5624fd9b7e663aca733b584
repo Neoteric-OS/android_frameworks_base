@@ -46,6 +46,29 @@
       },
       "revId": "99e521a61de54095b5624fd9b7e663aca733b584",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b09acf8b_8e642c47",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2023-11-08T21:40:43Z",
+      "side": 1,
+      "message": "What about setServiceEnabled if the service cannot be both PAYMENT and OTHER and throw IllegalStateException when called for PAYMENT service, or setOtherServiceEnabled?",
+      "range": {
+        "startLine": 835,
+        "startChar": 16,
+        "endLine": 835,
+        "endChar": 44
+      },
+      "revId": "99e521a61de54095b5624fd9b7e663aca733b584",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
