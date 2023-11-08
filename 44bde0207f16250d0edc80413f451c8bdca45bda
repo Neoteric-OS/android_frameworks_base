@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b02f91b_7bedcf66",
+        "filename": "core/java/android/app/WallpaperManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1958248
+      },
+      "writtenOn": "2023-11-08T14:40:19Z",
+      "side": 1,
+      "message": "Moving this here will stop it from being executed if `getCurrentWallpaperLocked` throws an exception. What\u0027s the deadlock issue? Maybe this code should go in a `finally` block so that it executes even in the case that a SecurityException is caught and re-thrown?",
+      "range": {
+        "startLine": 632,
+        "startChar": 0,
+        "endLine": 636,
+        "endChar": 0
+      },
+      "revId": "44bde0207f16250d0edc80413f451c8bdca45bda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
