@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "083b34ab_f7ae1d17",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-11-09T00:35:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "38f7a168_b4f8aca8",
+      "range": {
+        "startLine": 830,
+        "startChar": 6,
+        "endLine": 830,
+        "endChar": 48
+      },
+      "revId": "99e521a61de54095b5624fd9b7e663aca733b584",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b09acf8b_8e642c47",
@@ -108,6 +132,30 @@
       "writtenOn": "2023-11-08T23:21:17Z",
       "side": 1,
       "message": "Then what do you think about setOtherServiceEnabled?\n\nI believe it has better readability if all names in doc, method and variables are consistent. In this CL, I saw \"state\" and \"enabled\" in doc, \"state\" and \"selected\" in method, \"state\" for the class field variable.",
+      "parentUuid": "a720bca0_0b6ba39f",
+      "range": {
+        "startLine": 835,
+        "startChar": 16,
+        "endLine": 835,
+        "endChar": 44
+      },
+      "revId": "99e521a61de54095b5624fd9b7e663aca733b584",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d7a520e_93d4492f",
+        "filename": "core/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-11-09T00:35:00Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "a720bca0_0b6ba39f",
       "range": {
         "startLine": 835,
