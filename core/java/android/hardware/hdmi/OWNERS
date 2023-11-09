@@ -2,4 +2,6 @@
 
 include /services/core/java/com/android/server/display/OWNERS
 
-quxiangfang@google.com
+marvinramin@google.com
+nchalko@google.com
+lcnathalie@google.com
