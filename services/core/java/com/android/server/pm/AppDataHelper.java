@@ -663,7 +663,7 @@ public class AppDataHelper {
                         getPackageManagerLocal().withFilteredSnapshot()) {
             try {
                 DexOptHelper.getArtManagerLocal().clearAppProfiles(snapshot, pkg.getPackageName());
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | IllegalStateException e) {
                 // Package isn't found, but that should only happen due to race.
                 Slog.w(TAG, e);
             }
