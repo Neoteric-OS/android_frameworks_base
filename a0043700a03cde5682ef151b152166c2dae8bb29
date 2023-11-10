@@ -52,6 +52,24 @@
       "parentUuid": "a49e33e6_6018a9c6",
       "revId": "a0043700a03cde5682ef151b152166c2dae8bb29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6b44059_eb50e518",
+        "filename": "core/java/android/webkit/WebSettings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 2037313
+      },
+      "writtenOn": "2023-11-10T21:29:28Z",
+      "side": 1,
+      "message": "oh, forget this cl is still pending, can you take a look again as I updated the link. thanks",
+      "parentUuid": "cae20ef1_27681c2f",
+      "revId": "a0043700a03cde5682ef151b152166c2dae8bb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
