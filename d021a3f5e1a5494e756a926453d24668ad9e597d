@@ -103,6 +103,24 @@
       "message": "I am not familiar enough with this code to review it. In cases like this, it\u0027s best to look at the history of the file (e.g. the `git blame` for the lines you\u0027re changing) to find reviewers, rather than picking owners at random. ntmyren@ last changed these lines, so adding him.",
       "revId": "d021a3f5e1a5494e756a926453d24668ad9e597d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7607dec2_8466d969",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-11-10T17:40:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "768c802e_0c0f903c",
+      "revId": "d021a3f5e1a5494e756a926453d24668ad9e597d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
