@@ -87,6 +87,30 @@
       },
       "revId": "ac5bf509dc91a5fda3a99764627acfc9caff09e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76c5cb12_d7e4ae0b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2720,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2023-11-10T02:23:02Z",
+      "side": 1,
+      "message": "Addressed comprehensively by aosp/2822270",
+      "parentUuid": "ae5286a1_b662fe9e",
+      "range": {
+        "startLine": 2720,
+        "startChar": 18,
+        "endLine": 2720,
+        "endChar": 47
+      },
+      "revId": "ac5bf509dc91a5fda3a99764627acfc9caff09e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
