@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54b3cd49_e70862cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2023-11-12T22:38:15Z",
+      "side": 1,
+      "message": "LGTM, great catch and cleaner to read, thanks!",
+      "revId": "eb133bf3891f5db28a0f9d30e4848494feb13c7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
