@@ -159,6 +159,24 @@
       "parentUuid": "b00739db_fbec27f7",
       "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "365f83de_8b11ad13",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2023-11-13T14:43:45Z",
+      "side": 1,
+      "message": "From b/309002293, it seemed like the issue is not reproducible with the newest AOSP.\n\nMarking this comment as resolved.",
+      "parentUuid": "306789b5_31fb7034",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
