@@ -18,6 +18,7 @@ package android.nfc.cardemulation;
 
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -166,5 +167,6 @@ public abstract class OffHostApduService extends Service {
      * the off-host execution environment. Such implementations
      * would need to override this method.
      */
-    public abstract IBinder onBind(Intent intent);
+    @SuppressLint("MissingNullability")
+    public abstract IBinder onBind(@SuppressLint("MissingNullability") Intent intent);
 }

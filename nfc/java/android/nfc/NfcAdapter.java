@@ -1572,6 +1572,7 @@ public final class NfcAdapter {
      * @param extras Additional extras for configuring reader mode.
      * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
      */
+    @SuppressLint("SamShouldBeLast")
     public void enableReaderMode(Activity activity, ReaderCallback callback, int flags,
             Bundle extras) {
         synchronized (NfcAdapter.class) {
@@ -2055,6 +2056,7 @@ public final class NfcAdapter {
      *                the callback is unspecified.
      * @return false if the tag couldn't be found (or has already gone out of range), true otherwise
      */
+    @SuppressLint("SamShouldBeLast")
     public boolean ignore(final Tag tag, int debounceMs,
                           final OnTagRemovedListener tagRemovedListener, final Handler handler) {
         ITagRemovedCallback.Stub iListener = null;
