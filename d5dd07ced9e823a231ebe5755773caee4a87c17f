@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8da10e1_94d3d3d8",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2023-11-13T18:38:46Z",
+      "side": 1,
+      "message": "Mark as resolved as https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2817021 is submitted.",
+      "parentUuid": "2da7506d_2661a34c",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54de7e66_1523a4c1",
