@@ -459,7 +459,10 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
                 if (mTopFocusedAppByProcess.get(pidOfNewFocus) == null) {
                     mTopFocusedAppByProcess.put(pidOfNewFocus, newFocus.mActivityRecord);
                 }
-                if (topFocusedDisplayId == INVALID_DISPLAY) {
+                if (topFocusedDisplayId == INVALID_DISPLAY
+                    || topFocusedDisplayId == 0
+                    || topFocusedDisplayId == 2
+                    && (dc.getState() == 2 && (dc.getDisplayId() == 0 || dc.getDisplayId() == 2))) {
                     topFocusedDisplayId = dc.getDisplayId();
                 }
             } else if (topFocusedDisplayId == INVALID_DISPLAY && dc.mFocusedApp != null) {

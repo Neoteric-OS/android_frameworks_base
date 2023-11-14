@@ -3788,8 +3788,15 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
      * @return The focused window or null if there isn't any or no need to seek.
      */
     WindowState findFocusedWindowIfNeeded(int topFocusedDisplayId) {
-        return (hasOwnFocus() || topFocusedDisplayId == INVALID_DISPLAY)
+        return (hasOwnFocus() || topFocusedDisplayId == INVALID_DISPLAY
+               || topFocusedDisplayId == 0
+               || topFocusedDisplayId == 2
+               && (mDisplay.getState() == 2 && (mDisplay.getDisplayId() == 0 || mDisplay.getDisplayId() == 2)))
                     ? findFocusedWindow() : null;
+    }
+
+    public int getState() {
+        return mDisplay.getState();
     }
 
     /**
