@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6833a87a_8ec3dba5",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2023-11-14T20:46:54Z",
+      "side": 1,
+      "message": "FYI I\u0027ve uploaded https://r.android.com/2829578 which removes the superseded code.  It will be several months before it will be submittable, but it makes it possible to view the overall diff.",
+      "parentUuid": "e535c466_3522efe4",
+      "range": {
+        "startLine": 144,
+        "startChar": 22,
+        "endLine": 144,
+        "endChar": 39
+      },
+      "revId": "456e48f9bdc90fc5563c746cd47977c18b29944b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c0b3807_8d44376b",
