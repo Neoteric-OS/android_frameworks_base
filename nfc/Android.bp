@@ -42,7 +42,7 @@ java_sdk_library {
         ":framework-nfc-updatable-sources",
         ":framework-nfc-javastream-protos",
     ],
-    defaults: ["framework-non-updatable-unbundled-defaults"],
+    defaults: ["framework-module-defaults"],
     permitted_packages: [
         "android.nfc",
         "com.android.nfc",
@@ -57,6 +57,10 @@ java_sdk_library {
         ],
     },
     jarjar_rules: ":nfc-jarjar-rules",
+    installable: true,
+    impl_library_visibility: [
+        "//packages/apps/Nfc"
+    ],
 }
 
 filegroup {
