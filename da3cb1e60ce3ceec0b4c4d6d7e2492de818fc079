@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65b9d76f_9a25b4fa",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecNetwork.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2023-11-15T10:44:14Z",
+      "side": 1,
+      "message": "This works on panel TVs, but it would return the wrong physical address on an an AVR, or any device with its own ports that isn\u0027t the TV. Could we use getPhysicalAddress() here instead, to keep this method general?",
+      "range": {
+        "startLine": 903,
+        "startChar": 19,
+        "endLine": 903,
+        "endChar": 42
+      },
+      "revId": "da3cb1e60ce3ceec0b4c4d6d7e2492de818fc079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
