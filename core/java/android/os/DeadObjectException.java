@@ -19,8 +19,22 @@ import android.os.RemoteException;
 
 /**
  * The object you are calling has died, because its hosting process
- * no longer exists. This is also thrown for low-level binder
- * errors.
+ * no longer exists, or there has been a low-level binder error.
+ *
+ * These errors are typically nonrecoverable or recommended to
+ * recover by resetting the connection. For instance, you should
+ * drop the binder, clean up associated state, and reset your
+ * connection to this service. In order to simplify your error
+ * recovery paths, you may also want to "simply" restart your
+ * service. However, this may not be an option if the service
+ * you are talking to is unreliable or crashes frequently.
+ *
+ * If this isn't from a service death, it wil be from the binder
+ * oneway call queue filling up (too many oneway calls) or from
+ * the binder buffer being filled up, so that the transaction
+ * is rejected. In these cases, more information about the error
+ * should be logged. However, there isn't a good way to
+ * differentiate this information at runtime.
  */
 public class DeadObjectException extends RemoteException {
     public DeadObjectException() {
