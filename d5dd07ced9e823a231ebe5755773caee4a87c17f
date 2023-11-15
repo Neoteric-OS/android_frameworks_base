@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd848b1f_54341500",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-11-15T18:46:41Z",
+      "side": 1,
+      "message": "It\u0027d be nice to have at least one continuous target using this config, even if it\u0027s test only, but we can handle in a follow-up.",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3af33e75_2a258693",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-11-15T18:46:41Z",
+      "side": 1,
+      "message": "Just confirming that all of these additions are specific to ethernet-service and how it references services.jar code (per the preceding comment on line #45)? Can you point to where that\u0027s happening, would love to follow this up with a more maintainable fix.",
+      "range": {
+        "startLine": 53,
+        "startChar": 66,
+        "endLine": 53,
+        "endChar": 72
+      },
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "622fff93_09dd0242",
