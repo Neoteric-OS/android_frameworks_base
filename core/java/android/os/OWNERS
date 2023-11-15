@@ -4,8 +4,8 @@ per-file *Vibrator* = file:/services/core/java/com/android/server/vibrator/OWNER
 
 # PowerManager
 per-file IPowerManager.aidl = michaelwr@google.com, santoscordon@google.com
-per-file PowerManager.java = michaelwr@google.com, santoscordon@google.com
-per-file PowerManagerInternal.java = michaelwr@google.com, santoscordon@google.com
+per-file PowerManager.java = michaelwr@google.com, santoscordon@google.com, wvw@google.com, lpy@google.com
+per-file PowerManagerInternal.java = michaelwr@google.com, santoscordon@google.com, wvw@google.com, lpy@google.com
 
 # BatteryStats
 per-file *BatteryConsumer* = file:/BATTERY_STATS_OWNERS
@@ -83,3 +83,7 @@ per-file ArtModuleServiceManager.java = file:platform/art:/OWNERS
 
 # PerformanceHintManager
 per-file PerformanceHintManager.java = file:/ADPF_OWNERS
+
+# IThermal interfaces
+per-file IThermal* = wvw@google.com, lpy@google.com, xwxw@google.com
+
