@@ -39,6 +39,30 @@
       },
       "revId": "b979a3086cc9ea9eab071df13ef20859f8b39616",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aca84be_5cc91930",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2023-11-16T19:03:01Z",
+      "side": 1,
+      "message": "I thought about it and do not like how the code looks with it:\n```\n        try (final android.app.usage.NetworkStats queryNonTaggedStats \u003d\n                mNetworkStatsManager.querySummary(\n                        template, currentTimeInMillis - elapsedMillisSinceBoot - bucketDuration,\n                        currentTimeInMillis)) {\n\n            final NetworkStats nonTaggedStats \u003d\n                    NetworkStatsUtils.fromPublicNetworkStats(queryNonTaggedStats);\n            if (!includeTags) return nonTaggedStats;\n\n            try (final android.app.usage.NetworkStats queryTaggedStats \u003d\n                    mNetworkStatsManager.queryTaggedSummary(template,\n                            currentTimeInMillis - elapsedMillisSinceBoot - bucketDuration,\n                            currentTimeInMillis)) {\n                final NetworkStats taggedStats \u003d\n                        NetworkStatsUtils.fromPublicNetworkStats(queryTaggedStats);\n                return nonTaggedStats.add(taggedStats);\n            }\n        }\n```\n\nDo you prefer this version?",
+      "parentUuid": "252f2254_0be719c5",
+      "range": {
+        "startLine": 1417,
+        "startChar": 45,
+        "endLine": 1417,
+        "endChar": 64
+      },
+      "revId": "b979a3086cc9ea9eab071df13ef20859f8b39616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
