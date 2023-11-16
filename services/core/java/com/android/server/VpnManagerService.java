@@ -446,7 +446,7 @@ public class VpnManagerService extends IVpnManager.Stub {
         }
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            mVpns.get(user).startLegacyVpn(profile, null /* underlying */, egress);
+            mVpns.get(user).startLegacyVpn(profile);
         }
     }
 
