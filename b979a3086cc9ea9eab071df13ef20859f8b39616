@@ -16,6 +16,29 @@
       "message": "Would be good to get someone from netstats to review this",
       "revId": "b979a3086cc9ea9eab071df13ef20859f8b39616",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "252f2254_0be719c5",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-11-16T02:49:27Z",
+      "side": 1,
+      "message": "It would be better to use try-with-resources pattern.",
+      "range": {
+        "startLine": 1417,
+        "startChar": 45,
+        "endLine": 1417,
+        "endChar": 64
+      },
+      "revId": "b979a3086cc9ea9eab071df13ef20859f8b39616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
