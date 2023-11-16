@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a897354_7d19af4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-11-16T17:45:12Z",
+      "side": 1,
+      "message": "The current design is basically working as intended. It is unlikely that a user will continue to install/uninstall for 10000 times. Could you file a bug if this is blocking a legitimate use case of yours?",
+      "revId": "fe6b3cdedbd0d5e6d5671bdc5addb6b8cb056907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c97b320b_31d8bb9d",
+        "filename": "services/core/java/com/android/server/pm/AppIdSettingMap.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-11-16T17:45:12Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Common Typos: Common typo found: \"Avaliable\" -- should it be \"Available\"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \"Avaliable\" -- should it be \"Available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 148,
+        "startChar": 19,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "fe6b3cdedbd0d5e6d5671bdc5addb6b8cb056907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2ff68fb_9c43bf43",
+        "filename": "services/core/java/com/android/server/pm/AppIdSettingMap.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2023-11-16T17:45:12Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right. Just because there are available app IDs between FIRST_APPLICATION_ID and LAST_APPLICATION_UID, it doesn\u0027t mean that the mFirstAvailableAppId should be set to FIRST_APPLICATION_ID.",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 69
+      },
+      "revId": "fe6b3cdedbd0d5e6d5671bdc5addb6b8cb056907",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
