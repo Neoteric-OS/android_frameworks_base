@@ -33,6 +33,24 @@
       "message": "jareichert@google.com",
       "revId": "5f4d1b3f0bdbab9ac0ad12d4c187c74e62286ee0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89180a10_82919753",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1845383
+      },
+      "writtenOn": "2023-11-16T11:50:38Z",
+      "side": 1,
+      "message": "Steps to reproduce:\n1) Disable wakeup due to ELAPSED_WAKEUP alarm. Otherwise android framework alarm hides this issue.\n2) Powercycle ATV. ATV will be up but time will be reset to build time as there is no battery to retain time.\n3) Set RTC_WAKEUP alarm from any alarm app from PlayStore.\n4) Connect to internet and wait for NTP time sync.\n5) AlarmManager thread in system_server will reach 100% CPU in 5-10 minutes after NTP time sync.\n\nwhenElapsed will be in negative and maxWhenElapsed will have a huge positive value which is the pre-cursor for this issue to happen\n\n      tag\u003dwalarm:\u003credacted\u003e\n      type\u003dRTC_WAKEUP origWhen\u003d2023-09-12 03:03:58.741 window\u003d0 exactAllowReason\u003dpermission repeatInterval\u003d0 count\u003d0 flags\u003d0x5\n      policyWhenElapsed: requester\u003d24d4h30m23s209ms app_standby\u003d-2s936ms device_idle\u003d- battery_saver\u003d-52s518ms\n      whenElapsed\u003d-2s936ms maxWhenElapsed\u003d+24855d3h14m7s634ms\n      operation\u003dPendingIntent{20c8056: PendingIntentRecord{de27997 \u003credacted\u003e broadcastIntent}}",
+      "parentUuid": "7e68d490_116b4d88",
+      "revId": "5f4d1b3f0bdbab9ac0ad12d4c187c74e62286ee0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
