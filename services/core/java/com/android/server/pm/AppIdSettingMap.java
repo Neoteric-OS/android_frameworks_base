@@ -145,12 +145,25 @@ final class AppIdSettingMap {
 
         // None left?
         if (size > (Process.LAST_APPLICATION_UID - Process.FIRST_APPLICATION_UID)) {
+            if (hasAvaliableAppId()) {
+                mFirstAvailableAppId = Process.FIRST_APPLICATION_UID;
+                return acquireAndRegisterNewAppId(obj);
+            }
             return -1;
         }
 
         mNonSystemSettings.add(obj);
         return Process.FIRST_APPLICATION_UID + size;
     }
+
+    private boolean hasAvaliableAppId() {
+        for (int i = 0; i < mNonSystemSettings.size(); i++) {
+            if (mNonSystemSettings.get(i) == null) {
+                return true;
+            }
+        }
+        return false;
+   }
 
     public AppIdSettingMap snapshot() {
         return new AppIdSettingMap(this);
