@@ -52,6 +52,24 @@
       "parentUuid": "9927d576_677d01c6",
       "revId": "5fb8488db3a5fffb2a5190d1a7411e880444e7c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6119eb59_bd05031d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-11-17T21:20:54Z",
+      "side": 1,
+      "message": "Please do LIBBINDER_NO_LIBBASE. This will also cause breakage for partner codebases, and it will cause breakage if people add \u0027host_supported\u0027 to existing code.",
+      "parentUuid": "128fb6df_37a7e057",
+      "revId": "5fb8488db3a5fffb2a5190d1a7411e880444e7c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
