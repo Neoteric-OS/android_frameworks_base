@@ -16,6 +16,23 @@
       "message": "Hi Daniel,\n\nAfter I debugged it, I finally until why the test wouldn\u0027t run, and I fixed it again.\n\nBecause we recycled all of the MotionEvent after the gesture recognition was complete(https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/accessibility/java/com/android/server/accessibility/gestures/GestureManifold.java;l\u003d375?q\u003dGestureManifold\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain), but when we transferred it to the AccessibitilyService via the Binder, we did the asynchronous processing once again, so the MotionEvent here is actually an object that has already been recycled, which makes for some strange problems.\n\n\nCan you help me review the new patch and restart the ci ?",
       "revId": "77d8e7141f1261a62fd8b6fe065749e45ccb1b1d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "922c14d3_fe3acdc4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2023-11-17T06:42:42Z",
+      "side": 1,
+      "message": "Hi Daniel,\n\nI observed that ci failed again and it looks like there is only one failing item, can you help me to check which test item it is?",
+      "revId": "77d8e7141f1261a62fd8b6fe065749e45ccb1b1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
