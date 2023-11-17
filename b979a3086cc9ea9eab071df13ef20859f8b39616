@@ -63,6 +63,30 @@
       },
       "revId": "b979a3086cc9ea9eab071df13ef20859f8b39616",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fc8877b_92de52c3",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2023-11-17T03:42:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3aca84be_5cc91930",
+      "range": {
+        "startLine": 1417,
+        "startChar": 45,
+        "endLine": 1417,
+        "endChar": 64
+      },
+      "revId": "b979a3086cc9ea9eab071df13ef20859f8b39616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
