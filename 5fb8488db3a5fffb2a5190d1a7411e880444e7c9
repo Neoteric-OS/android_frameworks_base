@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6a25212_b92decd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-11-17T20:24:04Z",
+      "side": 1,
+      "message": "This is going to be a lot of places to clean up. Did you try asking enh@\u0026co if there is a way to check \"is Android host\" with #def?\n\nOr, alternatively, you could add a flag \"LIBBINDER_NO_LIBBASE\" which you set in downstream configs, to avoid this type of complexity.\n\nNote - it\u0027s not a one time cost. Anyone trying to make their device-specific code compile on host might run into this if we submit this topic as-is",
+      "revId": "5fb8488db3a5fffb2a5190d1a7411e880444e7c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
