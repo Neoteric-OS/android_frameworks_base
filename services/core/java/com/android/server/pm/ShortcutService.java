@@ -3594,8 +3594,8 @@ public class ShortcutService extends IShortcutService.Stub {
 
         private String getShortcutIconUriInternal(int launcherUserId,
                 @NonNull String launcherPackage, @NonNull String packageName,
-                @NonNull ShortcutInfo shortcutInfo, int userId) {
-            if (!shortcutInfo.hasIconUri()) {
+                ShortcutInfo shortcutInfo, int userId) {
+            if (shortcutInfo == null || !shortcutInfo.hasIconUri()) {
                 return null;
             }
             String uri = shortcutInfo.getIconUri();
