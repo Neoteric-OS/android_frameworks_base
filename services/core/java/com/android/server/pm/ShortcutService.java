@@ -3501,13 +3501,13 @@ public class ShortcutService extends IShortcutService.Stub {
 
             // Otherwise check persisted shortcuts
             getShortcutInfoAsync(launcherUserId, packageName, shortcutId, userId, si ->
-                    cb.complete(getShortcutIconParcelFileDescriptor(p, si)));
+                    cb.complete(si == null ? null : getShortcutIconParcelFileDescriptor(p, si)));
         }
 
         @Nullable
         private ParcelFileDescriptor getShortcutIconParcelFileDescriptor(
-                @Nullable final ShortcutPackage p, @Nullable final ShortcutInfo shortcutInfo) {
-            if (p == null || shortcutInfo == null || !shortcutInfo.hasIconFile()) {
+                @Nullable final ShortcutPackage p, @NonNull final ShortcutInfo shortcutInfo) {
+            if (p == null || !shortcutInfo.hasIconFile()) {
                 return null;
             }
             final String path = p.getBitmapPathMayWait(shortcutInfo);
@@ -3587,8 +3587,8 @@ public class ShortcutService extends IShortcutService.Stub {
 
             // Otherwise check persisted shortcuts
             getShortcutInfoAsync(launcherUserId, packageName, shortcutId, userId, si -> {
-                cb.complete(getShortcutIconUriInternal(launcherUserId, launcherPackage,
-                        packageName, si, userId));
+                cb.complete(si == null ? null : getShortcutIconUriInternal(launcherUserId,
+                        launcherPackage, packageName, si, userId));
             });
         }
 
