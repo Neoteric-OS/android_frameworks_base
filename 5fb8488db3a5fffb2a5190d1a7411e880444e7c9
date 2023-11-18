@@ -88,6 +88,24 @@
       "parentUuid": "6119eb59_bd05031d",
       "revId": "5fb8488db3a5fffb2a5190d1a7411e880444e7c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77da514d_08e95621",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-11-18T00:21:39Z",
+      "side": 1,
+      "message": "some of them reference \u0027binder::unique_fd\u0027 though which we probably don\u0027t want to use",
+      "parentUuid": "0050fa1f_745eed34",
+      "revId": "5fb8488db3a5fffb2a5190d1a7411e880444e7c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
