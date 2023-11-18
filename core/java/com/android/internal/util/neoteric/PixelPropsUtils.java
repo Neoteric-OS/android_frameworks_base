@@ -47,8 +47,8 @@ public class PixelPropsUtils {
 
     private static final Map<String, Object> propsToChangeGeneric;
 
-    private static final Map<String, Object> propsToChangePixel7Pro;
-    private static final Set<String> packagesToChangePixel7Pro = Set.of(
+    private static final Map<String, Object> propsToChangePixel8Pro;
+    private static final Set<String> packagesToChangePixel8Pro = Set.of(
         "com.google.android.apps.privacy.wildlife",
         "com.google.android.apps.wallpaper.pixel",
         "com.google.android.apps.wallpaper",
@@ -155,20 +155,20 @@ public class PixelPropsUtils {
         propsToChangeGeneric = new HashMap<>();
         propsToChangeGeneric.put("TYPE", "user");
         propsToChangeGeneric.put("TAGS", "release-keys");
-        propsToChangePixel7Pro = new HashMap<>();
-        propsToChangePixel7Pro.put("BRAND", "google");
-        propsToChangePixel7Pro.put("MANUFACTURER", "Google");
-        propsToChangePixel7Pro.put("DEVICE", "cheetah");
-        propsToChangePixel7Pro.put("PRODUCT", "cheetah");
-        propsToChangePixel7Pro.put("MODEL", "Pixel 7 Pro");
-        propsToChangePixel7Pro.put("FINGERPRINT", "google/cheetah/cheetah:13/TQ3A.230805.001/10316531:user/release-keys");
+        propsToChangePixel8Pro = new HashMap<>();
+        propsToChangePixel8Pro.put("BRAND", "google");
+        propsToChangePixel8Pro.put("MANUFACTURER", "Google");
+        propsToChangePixel8Pro.put("DEVICE", "husky");
+        propsToChangePixel8Pro.put("PRODUCT", "husky");
+        propsToChangePixel8Pro.put("MODEL", "Pixel 8 Pro");
+        propsToChangePixel8Pro.put("FINGERPRINT", "google/husky/husky:14/UD1A.231105.004/11010374:user/release-keys");  
         propsToChangePixel5 = new HashMap<>();
         propsToChangePixel5.put("BRAND", "google");
         propsToChangePixel5.put("MANUFACTURER", "Google");
         propsToChangePixel5.put("DEVICE", "redfin");
         propsToChangePixel5.put("PRODUCT", "redfin");
         propsToChangePixel5.put("MODEL", "Pixel 5");
-        propsToChangePixel5.put("FINGERPRINT", "google/redfin/redfin:13/TQ3A.230805.001/10316531:user/release-keys");
+        propsToChangePixel5.put("FINGERPRINT", "google/redfin/redfin:14/UP1A.231105.001/10817346:user/release-keys");
         propsToChangePixelXL = new HashMap<>();
         propsToChangePixelXL.put("BRAND", "google");
         propsToChangePixelXL.put("MANUFACTURER", "Google");
@@ -206,6 +206,7 @@ public class PixelPropsUtils {
         if (packageName.equals(PACKAGE_GMS)
                 || packageName.toLowerCase().contains("androidx.test")
                 || packageName.equalsIgnoreCase("com.google.android.apps.restore")) {
+            setPropValue("TIME", System.currentTimeMillis());
             final String processName = Application.getProcessName();
             if (processName.toLowerCase().contains("unstable")
                     || processName.toLowerCase().contains("pixelmigrate")
@@ -232,12 +233,12 @@ public class PixelPropsUtils {
                 if (was) return true;
 
                 dlog("Spoofing build for GMS");
-                // Alter build parameters to pixel 2 for avoiding hardware attestation enforcement
-                setBuildField("DEVICE", "walleye");
-                setBuildField("FINGERPRINT", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
-                setBuildField("MODEL", "Pixel 2");
-                setBuildField("PRODUCT", "walleye");
-                setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.O);
+                // Alter build parameters to Nexus 5X for avoiding hardware attestation enforcement
+                setBuildField("DEVICE", "bullhead");
+                setBuildField("FINGERPRINT", "google/bullhead/bullhead:8.0.0/OPR6.170623.013/4283548:user/release-keys");
+                setBuildField("MODEL", "Nexus 5X");
+                setBuildField("PRODUCT", "bullhead");
+                setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.N);
                 return true;
             }
         }
@@ -266,8 +267,8 @@ public class PixelPropsUtils {
         if (packageName.startsWith("com.google.")
                 || packageName.startsWith(SAMSUNG)
                 || extraPackagesToChange.contains(packageName)) {
-            if ((packagesToChangePixel7Pro.contains(packageName))) {
-                propsToChange.putAll(propsToChangePixel7Pro);
+            if ((packagesToChangePixel8Pro.contains(packageName))) {
+                propsToChange.putAll(propsToChangePixel8Pro);
             } else if (packagesToChangePixelXL.contains(packageName)) {
                 propsToChange.putAll(propsToChangePixelXL);
             } else {
