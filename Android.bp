@@ -623,3 +623,160 @@ build = [
     "ProtoLibraries.bp",
     "TestProtoLibraries.bp",
 ]
+
+test_spec {
+    name: "frameworks-base-test-spec-6402468225089536",
+    teamId: 6402468225089536,
+    tests: [
+        "SystemUIComposeFeaturesTests",
+        "SystemUILintCheckerTest",
+        "SystemUITests",
+        "SystemUiRoboTests",
+        "AccessibilityMenuServiceTests"
+    ],
+}
+
+test_spec {
+    name: "frameworks-base-test-spec-5474751170019328",
+    teamId: 5474751170019328,
+    tests: [
+        "CorePerfTests"
+    ],
+}
+
+test_spec {
+    name: "frameworks-base-test-spec-5962312512864256",
+    teamId: 5962312512864256,
+    tests: [
+        "NfcExtrasTests"
+    ],
+}
+
+test_spec {
+    name: "frameworks-base-test-spec-4999436357238784",
+    teamId: 4999436357238784,
+    tests: [
+        "InputTests"
+    ],
+}
+
+test_spec {
+    name: "frameworks-base-test-spec-5243033213599744",
+    teamId: 5243033213599744,
+    tests: [
+        "block_device_writer"
+    ],
+}
+
+test_spec {
+    name: "frameworks-base-test-spec-5989762407104512",
+    teamId: 5989762407104512,
+    tests: [
+        "AppEnumerationInternalTests",
+        "PackageManagerComponentOverrideTests",
+        "PackageManagerServiceServerTests",
+        "PackageManagerServiceUnitTests",
+        "PackageManagerServiceHostTests",
+        "StagedInstallInternalTest"
+    ],
+}
+
+test_spec {
+    name: "frameworks-base-test-spec-6394201770459136",
+    teamId: 6394201770459136,
+    tests: [
+        "FrameworksInputMethodSystemServerTests",
+        "FrameworksImeTests",
+        "ImePerfTests",
+        "InputMethodStressTest",
+        "HandwritingIme"
+    ],
+}
+
+test_spec {
+    name: "frameworks-base-test-spec-5630061306576896",
+    teamId: 5630061306576896,
+    tests: [
+        "ManagedProfileLifecycleStressTest",
+        "DummyDPC",
+        "DemoModeController",
+        "intdef-annotation-processor-test",
+        "AccessibilityEventsLogger",
+        "native-processes-memory-test",
+        "FrameworksInProcessTests",
+        "FrameworksCoreSystemPropertiesTests",
+        "FrameworksCoreDeviceStateManagerTests",
+        "FrameworksMockingCoreTests",
+        "ProtoInputStreamTests",
+        "RemoteDisplayProviderTest",
+        "log_rescueparty_reset_event_reported",
+        "BandwidthTests",
+        "AppResourcesLoaders",
+        "HierarchyViewerTest",
+        "SurfaceComposition",
+        "ShowWhenLocked",
+        "CameraPrewarmTest",
+        "MirrorSurfaceTest",
+        "FrameworksPrivacyLibraryTests",
+        "AccessoryDisplaySource",
+        "AccessoryDisplaySink",
+        "ServiceCrashTest",
+        "RenderThreadTest",
+        "BrowserPowerTests",
+        "LocalizationTest",
+        "system-memory-test",
+        "UsesFeature2Test",
+        "TestablesTests",
+        "LegacyAssistant",
+        "BugreportManagerTestCases",
+        "BandwidthEnforcementTest",
+        "GridLayoutTest",
+        "FrameworksUtilTests",
+        "TraceInjectionTests",
+        "BinderLeakTest_legacy",
+        "BinderLeakTest",
+        "SmokeTestTriggerApps",
+        "SharedLibraryClient",
+        "ActivityTest",
+        "TransformTest",
+        "FrameworkPerf",
+        "FrameworksServicesRoboTests",
+        "DataIdleTest",
+        "protologtool-tests",
+        "FeatureSplit2",
+        "FeatureSplit1",
+        "NullHomeTest",
+        "MemoryUsage",
+        "SerialChat",
+        "powermodel-test",
+        "InternalBenchTests",
+        "JankBench",
+        "LegacyCoreTests",
+        "SmokeTestApp",
+        "SmokeTest",
+        "MultiUserTests",
+        "BiDiTests",
+        "AppLaunch",
+        "InternalTests",
+        "TtsTests",
+        "libprotoutil_test",
+        "TestOdmApp",
+        "OdmAppsTest",
+        "TestOdmPrivApp",
+        "UiBench",
+        "loadclass",
+        "DensityTest",
+        "Assist",
+        "FrameworkTestRunnerTests",
+        "Split",
+        "FrameworksSaxTests"
+    ],
+}
+
+test_spec {
+    name: "frameworks-base-test-spec-5651962854178816",
+    teamId: 5651962854178816,
+    tests: [
+        "EnforcePermissionTests"
+    ],
+}
