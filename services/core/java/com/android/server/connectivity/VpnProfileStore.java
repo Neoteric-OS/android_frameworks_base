@@ -16,10 +16,12 @@
 
 package com.android.server.connectivity;
 
+import static com.android.server.connectivity.Flags.replaceVpnProfileStore;
+
 import android.annotation.NonNull;
 import android.security.LegacyVpnProfileStore;
 
-import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.net.VpnBlobStore;
 
 /**
  * Mockable indirection to the actual profile store.
@@ -34,8 +36,10 @@ public class VpnProfileStore {
      * @return true if the profile was successfully added. False otherwise.
      * @hide
      */
-    @VisibleForTesting
     public boolean put(@NonNull String alias, @NonNull byte[] profile) {
+        if (replaceVpnProfileStore()) {
+            return VpnBlobStore.getInstance().put(alias, profile);
+        }
         return LegacyVpnProfileStore.put(alias, profile);
     }
 
@@ -48,8 +52,10 @@ public class VpnProfileStore {
      *         Returns null if no profile was found.
      * @hide
      */
-    @VisibleForTesting
     public byte[] get(@NonNull String alias) {
+        if (replaceVpnProfileStore()) {
+            return VpnBlobStore.getInstance().get(alias);
+        }
         return LegacyVpnProfileStore.get(alias);
     }
 
@@ -59,8 +65,10 @@ public class VpnProfileStore {
      * @return True if a profile was removed. False if no such profile was found.
      * @hide
      */
-    @VisibleForTesting
     public boolean remove(@NonNull String alias) {
+        if (replaceVpnProfileStore()) {
+            return VpnBlobStore.getInstance().remove(alias);
+        }
         return LegacyVpnProfileStore.remove(alias);
     }
 
@@ -70,8 +78,10 @@ public class VpnProfileStore {
      *         The return value may be empty but never null.
      * @hide
      */
-    @VisibleForTesting
     public @NonNull String[] list(@NonNull String prefix) {
+        if (replaceVpnProfileStore()) {
+            return VpnBlobStore.getInstance().list(prefix);
+        }
         return LegacyVpnProfileStore.list(prefix);
     }
 }
