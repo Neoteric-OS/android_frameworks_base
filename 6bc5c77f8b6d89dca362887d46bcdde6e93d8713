@@ -16,6 +16,24 @@
       "message": "ShortcutInfo is annotated as @NonNull. It\u0027s appropriate to throw an NPE here.",
       "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a64f2db_afc2d146",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2024183
+      },
+      "writtenOn": "2023-11-20T11:44:57Z",
+      "side": 1,
+      "message": "Okay, thank you for your reply. I made some changes to the code again. Please allow me to explain my analysis. The background of this issue is that we found during MTBF testing that the shortcutInfo here may be passed as null, causing an NPE issue and crashing the android.ui process. Although the ShortcutInfo here has been annotated with @NonNull, I believe that passing null will still throw an NPE and cause the UI process to crash, which should not happen. Therefore, my suggestion is to change the modifier of the ShortcutInfo parameter in the getShortcutIconUriInternal method to @Nullable, and then avoid the scenario where ShortcutInfo is passed as null.Could you please take a look and let me know if it\u0027s appropriate to make these changes? Thank you very much.",
+      "parentUuid": "f522cd5e_229d9de3",
+      "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
