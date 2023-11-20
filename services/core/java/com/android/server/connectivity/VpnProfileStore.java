@@ -17,9 +17,9 @@
 package com.android.server.connectivity;
 
 import android.annotation.NonNull;
-import android.security.LegacyVpnProfileStore;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.net.VpnBlobStore;
 
 /**
  * Mockable indirection to the actual profile store.
@@ -36,7 +36,7 @@ public class VpnProfileStore {
      */
     @VisibleForTesting
     public boolean put(@NonNull String alias, @NonNull byte[] profile) {
-        return LegacyVpnProfileStore.put(alias, profile);
+        return VpnBlobStore.getInstance().put(alias, profile);
     }
 
     /**
@@ -50,7 +50,7 @@ public class VpnProfileStore {
      */
     @VisibleForTesting
     public byte[] get(@NonNull String alias) {
-        return LegacyVpnProfileStore.get(alias);
+        return VpnBlobStore.getInstance().get(alias);
     }
 
     /**
@@ -61,7 +61,7 @@ public class VpnProfileStore {
      */
     @VisibleForTesting
     public boolean remove(@NonNull String alias) {
-        return LegacyVpnProfileStore.remove(alias);
+        return VpnBlobStore.getInstance().remove(alias);
     }
 
     /**
@@ -72,6 +72,6 @@ public class VpnProfileStore {
      */
     @VisibleForTesting
     public @NonNull String[] list(@NonNull String prefix) {
-        return LegacyVpnProfileStore.list(prefix);
+        return VpnBlobStore.getInstance().list(prefix);
     }
 }
