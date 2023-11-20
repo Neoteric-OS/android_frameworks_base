@@ -34,6 +34,24 @@
       "parentUuid": "f522cd5e_229d9de3",
       "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7016aadd_5540cfe2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2024183
+      },
+      "writtenOn": "2023-11-20T12:00:24Z",
+      "side": 1,
+      "message": "My modification is inspired by the ShortcutService.getShortcutIconParcelFileDescriptor (...)method.",
+      "parentUuid": "2a64f2db_afc2d146",
+      "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
