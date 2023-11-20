@@ -386,6 +386,11 @@ public class CarrierTextManager {
                     mLogger.logUpdateFromStickyBroadcast(plmn, spn);
                     if (Objects.equals(plmn, spn)) {
                         text = plmn;
+                    } else if (!TextUtils.isEmpty(plmn) && !TextUtils.isEmpty(spn)
+                            && i.getBooleanExtra(
+                                    TelephonyManager
+                                            .EXTRA_SWAP_PLMN_AND_SPN_DISPLAY_ORDER, false)) {
+                        text = concatenate(spn, plmn, mSeparator);
                     } else {
                         text = concatenate(plmn, spn, mSeparator);
                     }
@@ -571,16 +576,16 @@ public class CarrierTextManager {
         return CarrierTextManager.StatusMode.SimUnknown;
     }
 
-    private static CharSequence concatenate(CharSequence plmn, CharSequence spn,
+    private static CharSequence concatenate(CharSequence first, CharSequence second,
             CharSequence separator) {
-        final boolean plmnValid = !TextUtils.isEmpty(plmn);
-        final boolean spnValid = !TextUtils.isEmpty(spn);
-        if (plmnValid && spnValid) {
-            return new StringBuilder().append(plmn).append(separator).append(spn).toString();
-        } else if (plmnValid) {
-            return plmn;
-        } else if (spnValid) {
-            return spn;
+        final boolean firstValid = !TextUtils.isEmpty(first);
+        final boolean secondValid = !TextUtils.isEmpty(second);
+        if (firstValid && secondValid) {
+            return new StringBuilder().append(first).append(separator).append(second).toString();
+        } else if (firstValid) {
+            return first;
+        } else if (secondValid) {
+            return second;
         } else {
             return "";
         }

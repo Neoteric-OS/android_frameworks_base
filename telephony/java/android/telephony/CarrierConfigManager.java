@@ -1726,6 +1726,17 @@ public class CarrierConfigManager {
     public static final String KEY_CROSS_SIM_SPN_FORMAT_INT = "cross_sim_spn_format_int";
 
     /**
+     * When displaying both PLMN and SPN as a carrier name are required, swap the display order.
+     *
+     * If {@code false}, default value, carrier name display order to PLMN before / above SPN.
+     * If {@code true}, swap display order to SPN before / above PLMN.
+     *
+     * @hide
+     */
+    public static final String KEY_SWAP_PLMN_AND_SPN_DISPLAY_ORDER =
+            "swap_plmn_and_spn_display_order";
+
+    /**
      * Override the SPN Display Condition 2 integer bits (lsb). B2, B1 is the last two bits of the
      * spn display condition coding.
      *
@@ -10019,6 +10030,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_CARRIER_NAME_STRING, "");
         sDefaults.putBoolean(KEY_WFC_CARRIER_NAME_OVERRIDE_BY_PNN_BOOL, false);
         sDefaults.putInt(KEY_CROSS_SIM_SPN_FORMAT_INT, 1);
+        sDefaults.putBoolean(KEY_SWAP_PLMN_AND_SPN_DISPLAY_ORDER, false);
         sDefaults.putInt(KEY_SPN_DISPLAY_CONDITION_OVERRIDE_INT, -1);
         sDefaults.putStringArray(KEY_SPDI_OVERRIDE_STRING_ARRAY, null);
         sDefaults.putStringArray(KEY_PNN_OVERRIDE_STRING_ARRAY, null);

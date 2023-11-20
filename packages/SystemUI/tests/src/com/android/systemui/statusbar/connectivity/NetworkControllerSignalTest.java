@@ -509,7 +509,8 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         Intent intent = createStringsUpdatedIntent(true /* showSpn */,
                 expectedMNetworkName /* spn */,
                 false /* showPlmn */,
-                "NotTest" /* plmn */);
+                "NotTest" /* plmn */,
+                false /* swapPlmnAndSpnDisplayOrder */);
 
         mNetworkController.onReceive(mContext, intent);
 
@@ -523,7 +524,8 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         Intent intent = createStringsUpdatedIntent(false /* showSpn */,
                 "NotTest" /* spn */,
                 true /* showPlmn */,
-                expectedMNetworkName /* plmn */);
+                expectedMNetworkName /* plmn */,
+                false /* swapPlmnAndSpnDisplayOrder */);
 
         mNetworkController.onReceive(mContext, intent);
 
@@ -535,7 +537,8 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         Intent intent = createStringsUpdatedIntent(false /* showSpn */,
                 "Irrelevant" /* spn */,
                 false /* showPlmn */,
-                "Irrelevant" /* plmn */);
+                "Irrelevant" /* plmn */,
+                false /* swapPlmnAndSpnDisplayOrder */);
 
         mNetworkController.onReceive(mContext, intent);
 
@@ -550,7 +553,8 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         Intent intent = createStringsUpdatedIntent(true /* showSpn */,
                 null /* spn */,
                 true /* showPlmn */,
-                null /* plmn */);
+                null /* plmn */,
+                false /* swapPlmnAndSpnDisplayOrder */);
 
         mNetworkController.onReceive(mContext, intent);
 
@@ -564,10 +568,12 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
         String spn = "Test1";
         String plmn = "Test2";
 
+        // Test for default display order [PLMN before / above SPN]
         Intent intent = createStringsUpdatedIntent(true /* showSpn */,
                 spn /* spn */,
                 true /* showPlmn */,
-                plmn /* plmn */);
+                plmn /* plmn */,
+                false /* swapPlmnAndSpnDisplayOrder */);
 
         mNetworkController.onReceive(mContext, intent);
 
@@ -575,10 +581,24 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
                 + mMobileSignalController.getTextIfExists(
                 R.string.status_bar_network_name_separator).toString()
                 + spn);
+
+        // Test for swapped display [SPN before / above PLMN]
+        intent = createStringsUpdatedIntent(true /* showSpn */,
+                spn /* spn */,
+                true /* showPlmn */,
+                plmn /* plmn */,
+                true /* swapPlmnAndSpnDisplayOrder */);
+
+        mNetworkController.onReceive(mContext, intent);
+
+        assertNetworkNameEquals(spn
+                + mMobileSignalController.getTextIfExists(
+                R.string.status_bar_network_name_separator).toString()
+                + plmn);
     }
 
     private Intent createStringsUpdatedIntent(boolean showSpn, String spn,
-            boolean showPlmn, String plmn) {
+            boolean showPlmn, String plmn, boolean swapPlmnAndSpnDisplayOrder) {
 
         Intent intent = new Intent();
         intent.setAction(TelephonyManager.ACTION_SERVICE_PROVIDERS_UPDATED);
@@ -588,6 +608,10 @@ public class NetworkControllerSignalTest extends NetworkControllerBaseTest {
 
         intent.putExtra(TelephonyManager.EXTRA_SHOW_PLMN, showPlmn);
         intent.putExtra(TelephonyManager.EXTRA_PLMN, plmn);
+
+        intent.putExtra(TelephonyManager.EXTRA_SWAP_PLMN_AND_SPN_DISPLAY_ORDER,
+                swapPlmnAndSpnDisplayOrder);
+
         SubscriptionManager.putSubscriptionIdExtra(intent, mSubId);
 
         return intent;

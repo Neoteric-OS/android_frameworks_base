@@ -1492,15 +1492,15 @@ public class TelephonyManager {
      *   <dd>The service provider name, as a string.</dd>
      *   <dt>{@link #EXTRA_DATA_SPN}</dt>
      *   <dd>The service provider name for data service, as a string.</dd>
+     *   <dt>{@link #EXTRA_SWAP_PLMN_AND_SPN_DISPLAY_ORDER}</dt>
+     *   <dd>Boolean that indicates whether the display order should be changed when both PLMN and
+     *   SPN are required.</dd>
      * </dl>
      *
      * Note that {@link #EXTRA_SHOW_PLMN} may indicate that {@link #EXTRA_PLMN} should be displayed,
      * even though the value for {@link #EXTRA_PLMN} is null. This can happen, for example, if the
      * phone has not registered to a network yet. In this case the receiver may substitute an
      * appropriate placeholder string (eg, "No service").
-     *
-     * It is recommended to display {@link #EXTRA_PLMN} before / above {@link #EXTRA_SPN} if
-     * both are displayed.
      *
      * <p>Note: this is a protected intent that can only be sent by the system.
      * @hide
@@ -1543,6 +1543,16 @@ public class TelephonyManager {
      * @hide
      */
     public static final String EXTRA_DATA_SPN = "android.telephony.extra.DATA_SPN";
+
+    /**
+     * String intent extra to be used with {@link ACTION_SERVICE_PROVIDERS_UPDATED} to indicate
+     * when both {@link #EXTRA_SHOW_PLMN} and {@link #EXTRA_SHOW_SPN} are required, whether
+     * the display order should be changed from default {@link #EXTRA_PLMN} before / above
+     * {@link #EXTRA_SPN} to {@link #EXTRA_SPN} before / above {@link #EXTRA_PLMN}.
+     * @hide
+     */
+    public static final String EXTRA_SWAP_PLMN_AND_SPN_DISPLAY_ORDER =
+            "android.telephony.extra.SWAP_PLMN_AND_SPN_DISPLAY_ORDER";
 
     /**
      * Broadcast intent action indicating that when data stall recovery is attempted by Telephony,

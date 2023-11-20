@@ -371,7 +371,9 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                     intent.getStringExtra(TelephonyManager.EXTRA_SPN),
                     intent.getStringExtra(TelephonyManager.EXTRA_DATA_SPN),
                     intent.getBooleanExtra(TelephonyManager.EXTRA_SHOW_PLMN, false),
-                    intent.getStringExtra(TelephonyManager.EXTRA_PLMN));
+                    intent.getStringExtra(TelephonyManager.EXTRA_PLMN),
+                    intent.getBooleanExtra(TelephonyManager.EXTRA_SWAP_PLMN_AND_SPN_DISPLAY_ORDER,
+                            false));
             notifyListenersIfNecessary();
         } else if (action.equals(TelephonyManager.ACTION_DEFAULT_DATA_SUBSCRIPTION_CHANGED)) {
             updateDataSim();
@@ -403,39 +405,52 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
      * Updates the network's name based on incoming spn and plmn.
      */
     void updateNetworkName(boolean showSpn, String spn, String dataSpn,
-            boolean showPlmn, String plmn) {
+            boolean showPlmn, String plmn, boolean swapPlmnAndSpnDisplayOrder) {
         if (CHATTY) {
             Log.d("CarrierLabel", "updateNetworkName showSpn=" + showSpn
                     + " spn=" + spn + " dataSpn=" + dataSpn
-                    + " showPlmn=" + showPlmn + " plmn=" + plmn);
+                    + " showPlmn=" + showPlmn + " plmn=" + plmn + " swapPlmnAndSpnDisplayOrder="
+                    + swapPlmnAndSpnDisplayOrder);
         }
-        StringBuilder str = new StringBuilder();
-        StringBuilder strData = new StringBuilder();
-        if (showPlmn && plmn != null) {
-            str.append(plmn);
-            strData.append(plmn);
+
+        String srcSpn = (showSpn && !TextUtils.isEmpty(spn) ? spn : "");
+        String srcDataSpn = (showSpn && !TextUtils.isEmpty(dataSpn) ? dataSpn : "");
+        String srcPlmn = (showPlmn && !TextUtils.isEmpty(plmn) ? plmn : "");
+
+        CharSequence str;
+        CharSequence strData;
+        if (!swapPlmnAndSpnDisplayOrder) {
+            str = concatenate(srcPlmn, srcSpn, mNetworkNameSeparator);
+            strData = concatenate(srcPlmn, srcDataSpn, mNetworkNameSeparator);
+        } else {
+            str = concatenate(srcSpn, srcPlmn, mNetworkNameSeparator);
+            strData = concatenate(srcDataSpn, srcPlmn, mNetworkNameSeparator);
         }
-        if (showSpn && spn != null) {
-            if (str.length() != 0) {
-                str.append(mNetworkNameSeparator);
-            }
-            str.append(spn);
-        }
+
         if (str.length() != 0) {
             mCurrentState.networkName = str.toString();
         } else {
             mCurrentState.networkName = mNetworkNameDefault;
         }
-        if (showSpn && dataSpn != null) {
-            if (strData.length() != 0) {
-                strData.append(mNetworkNameSeparator);
-            }
-            strData.append(dataSpn);
-        }
         if (strData.length() != 0) {
             mCurrentState.networkNameData = strData.toString();
         } else {
             mCurrentState.networkNameData = mNetworkNameDefault;
+        }
+    }
+
+    private static CharSequence concatenate(CharSequence first, CharSequence second,
+            CharSequence separator) {
+        final boolean firstValid = !TextUtils.isEmpty(first);
+        final boolean secondValid = !TextUtils.isEmpty(second);
+        if (firstValid && secondValid && !TextUtils.equals(first, second)) {
+            return new StringBuilder().append(first).append(separator).append(second).toString();
+        } else if (firstValid) {
+            return first;
+        } else if (secondValid) {
+            return second;
+        } else {
+            return "";
         }
     }
 
