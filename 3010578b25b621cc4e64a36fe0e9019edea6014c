@@ -34,6 +34,23 @@
       "parentUuid": "f7b31fb0_890d21d0",
       "revId": "3010578b25b621cc4e64a36fe0e9019edea6014c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69b70457_51bc04c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003403
+      },
+      "writtenOn": "2023-11-20T15:28:25Z",
+      "side": 1,
+      "message": "Hey Ed. I talked to the team and this sounds like something that might be useful to other OEMs too (in addition to keeping your rebase burden down) so we\u0027d like to move forward with it. Here are some things I\u0027d like to see:\n\n1. Tests of some sort\n2. Some way to control the duration, or turn this feature off completely. This could be a config resource, or a global setting with a config resource default.",
+      "revId": "3010578b25b621cc4e64a36fe0e9019edea6014c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
