@@ -26952,6 +26952,7 @@ package android.media.tv {
     field public static final String COLUMN_SERVICE_TYPE = "service_type";
     field public static final String COLUMN_TRANSIENT = "transient";
     field public static final String COLUMN_TRANSPORT_STREAM_ID = "transport_stream_id";
+    field public static final String COLUMN_TUNING_FREQUENCY = "tuning_frequency";
     field public static final String COLUMN_TYPE = "type";
     field public static final String COLUMN_VERSION_NUMBER = "version_number";
     field public static final String COLUMN_VIDEO_FORMAT = "video_format";

@@ -2534,6 +2534,16 @@ public final class TvContract {
          */
         public static final String COLUMN_BROADCAST_GENRE = Programs.COLUMN_BROADCAST_GENRE;
 
+        /**
+         * The frequency of this TV channel.
+         *
+         * <p>The frequency of this TV channel that was obtained from scan results.
+         * The frequency unit is kHz.
+         *
+         * <p>Type: INTEGER
+         */
+        public static final String COLUMN_TUNING_FREQUENCY = "tuning_frequency";
+
         private Channels() {}
 
         /**
