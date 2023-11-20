@@ -145,6 +145,7 @@ import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
+import com.android.internal.net.ConnectivityBlobStore;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnProfile;
@@ -391,12 +392,7 @@ public class Vpn {
     private final Ikev2SessionCreator mIkev2SessionCreator;
     private final UserManager mUserManager;
 
-    private final VpnProfileStore mVpnProfileStore;
-
-    @VisibleForTesting
-    VpnProfileStore getVpnProfileStore() {
-        return mVpnProfileStore;
-    }
+    private final ConnectivityBlobStore mConnectivityBlobStore;
 
     private static final int MAX_EVENTS_LOGS = 100;
     private final LocalLog mEventChanges = new LocalLog(MAX_EVENTS_LOGS);
@@ -728,25 +724,25 @@ public class Vpn {
     }
 
     public Vpn(Looper looper, Context context, INetworkManagementService netService, INetd netd,
-            @UserIdInt int userId, VpnProfileStore vpnProfileStore) {
-        this(looper, context, new Dependencies(), netService, netd, userId, vpnProfileStore,
+            @UserIdInt int userId, ConnectivityBlobStore connectivityBlobStore) {
+        this(looper, context, new Dependencies(), netService, netd, userId, connectivityBlobStore,
                 new SystemServices(context), new Ikev2SessionCreator());
     }
 
     @VisibleForTesting
     public Vpn(Looper looper, Context context, Dependencies deps,
             INetworkManagementService netService, INetd netd, @UserIdInt int userId,
-            VpnProfileStore vpnProfileStore) {
-        this(looper, context, deps, netService, netd, userId, vpnProfileStore,
+            ConnectivityBlobStore connectivityBlobStore) {
+        this(looper, context, deps, netService, netd, userId, connectivityBlobStore,
                 new SystemServices(context), new Ikev2SessionCreator());
     }
 
     @VisibleForTesting
     protected Vpn(Looper looper, Context context, Dependencies deps,
             INetworkManagementService netService, INetd netd,
-            int userId, VpnProfileStore vpnProfileStore, SystemServices systemServices,
+            int userId, ConnectivityBlobStore connectivityBlobStore, SystemServices systemServices,
             Ikev2SessionCreator ikev2SessionCreator) {
-        mVpnProfileStore = vpnProfileStore;
+        mConnectivityBlobStore = connectivityBlobStore;
         mContext = context;
         mConnectivityManager = mContext.getSystemService(ConnectivityManager.class);
         mAppOpsManager = mContext.getSystemService(AppOpsManager.class);
@@ -4176,7 +4172,7 @@ public class Vpn {
         // Permissions checked during startVpnProfile()
         final long token = Binder.clearCallingIdentity();
         try {
-            getVpnProfileStore().put(getProfileNameForPackage(packageName), encodedProfile);
+            mConnectivityBlobStore.put(getProfileNameForPackage(packageName), encodedProfile);
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -4217,7 +4213,7 @@ public class Vpn {
                 }
             }
 
-            getVpnProfileStore().remove(getProfileNameForPackage(packageName));
+            mConnectivityBlobStore.remove(getProfileNameForPackage(packageName));
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -4237,7 +4233,7 @@ public class Vpn {
             return null;
         }
 
-        final byte[] encoded = getVpnProfileStore().get(getProfileNameForPackage(packageName));
+        final byte[] encoded = mConnectivityBlobStore.get(getProfileNameForPackage(packageName));
         if (encoded == null) return null;
 
         return VpnProfile.decode("" /* Key unused */, encoded);
@@ -4427,7 +4423,7 @@ public class Vpn {
 
         final long oldId = Binder.clearCallingIdentity();
         try {
-            getVpnProfileStore().put(getVpnAppExcludedForPackage(packageName), data);
+            mConnectivityBlobStore.put(getVpnAppExcludedForPackage(packageName), data);
         } finally {
             Binder.restoreCallingIdentity(oldId);
         }
@@ -4493,7 +4489,8 @@ public class Vpn {
     public synchronized List<String> getAppExclusionList(@NonNull String packageName) {
         final long oldId = Binder.clearCallingIdentity();
         try {
-            final byte[] bytes = getVpnProfileStore().get(getVpnAppExcludedForPackage(packageName));
+            final byte[] bytes =
+                    mConnectivityBlobStore.get(getVpnAppExcludedForPackage(packageName));
 
             if (bytes == null || bytes.length == 0) return new ArrayList<>();
 

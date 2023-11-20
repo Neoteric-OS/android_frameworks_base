@@ -59,13 +59,13 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.net.ConnectivityBlobStore;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnProfile;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.connectivity.Vpn;
-import com.android.server.connectivity.VpnProfileStore;
 import com.android.server.net.LockdownVpnTracker;
 import com.android.server.pm.UserManagerInternal;
 
@@ -91,7 +91,7 @@ public class VpnManagerService extends IVpnManager.Stub {
     private final Dependencies mDeps;
 
     private final ConnectivityManager mCm;
-    private final VpnProfileStore mVpnProfileStore;
+    private final ConnectivityBlobStore mConnectivityBlobStore;
     private final INetworkManagementService mNMS;
     private final INetd mNetd;
     private final UserManager mUserManager;
@@ -123,9 +123,9 @@ public class VpnManagerService extends IVpnManager.Stub {
             return new HandlerThread("VpnManagerService");
         }
 
-        /** Return the VpnProfileStore to be used by this class */
-        public VpnProfileStore getVpnProfileStore() {
-            return new VpnProfileStore();
+        /** Return the ConnectivityBlobStore to be used by this class */
+        public ConnectivityBlobStore getConnectivityBlobStore(Context context) {
+            return new ConnectivityBlobStore(context);
         }
 
         public INetd getNetd() {
@@ -140,7 +140,7 @@ public class VpnManagerService extends IVpnManager.Stub {
         /** Create a VPN. */
         public Vpn createVpn(Looper looper, Context context, INetworkManagementService nms,
                 INetd netd, int userId) {
-            return new Vpn(looper, context, nms, netd, userId, new VpnProfileStore());
+            return new Vpn(looper, context, nms, netd, userId, new ConnectivityBlobStore(context));
         }
 
         /** Create a LockDownVpnTracker. */
@@ -162,7 +162,7 @@ public class VpnManagerService extends IVpnManager.Stub {
         mHandlerThread = mDeps.makeHandlerThread();
         mHandlerThread.start();
         mHandler = mHandlerThread.getThreadHandler();
-        mVpnProfileStore = mDeps.getVpnProfileStore();
+        mConnectivityBlobStore = mDeps.getConnectivityBlobStore(context);
         mUserAllContext = mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */);
         mCm = mContext.getSystemService(ConnectivityManager.class);
         mNMS = mDeps.getINetworkManagementService();
@@ -476,7 +476,7 @@ public class VpnManagerService extends IVpnManager.Stub {
     }
 
     private boolean isLockdownVpnEnabled() {
-        return mVpnProfileStore.get(Credentials.LOCKDOWN_VPN) != null;
+        return mConnectivityBlobStore.get(Credentials.LOCKDOWN_VPN) != null;
     }
 
     @Override
@@ -498,14 +498,14 @@ public class VpnManagerService extends IVpnManager.Stub {
                 return true;
             }
 
-            byte[] profileTag = mVpnProfileStore.get(Credentials.LOCKDOWN_VPN);
+            byte[] profileTag = mConnectivityBlobStore.get(Credentials.LOCKDOWN_VPN);
             if (profileTag == null) {
                 loge("Lockdown VPN configured but cannot be read from keystore");
                 return false;
             }
             String profileName = new String(profileTag);
             final VpnProfile profile = VpnProfile.decode(
-                    profileName, mVpnProfileStore.get(Credentials.VPN + profileName));
+                    profileName, mConnectivityBlobStore.get(Credentials.VPN + profileName));
             if (profile == null) {
                 loge("Lockdown VPN configured invalid profile " + profileName);
                 setLockdownTracker(null);
@@ -986,7 +986,7 @@ public class VpnManagerService extends IVpnManager.Stub {
             if (mLockdownEnabled && userId == mMainUserId) {
                 final long ident = Binder.clearCallingIdentity();
                 try {
-                    mVpnProfileStore.remove(Credentials.LOCKDOWN_VPN);
+                    mConnectivityBlobStore.remove(Credentials.LOCKDOWN_VPN);
                     mLockdownEnabled = false;
                     setLockdownTracker(null);
                 } finally {
