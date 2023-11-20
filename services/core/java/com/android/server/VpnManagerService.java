@@ -19,6 +19,8 @@ package com.android.server;
 import static android.Manifest.permission.NETWORK_STACK;
 
 import static com.android.net.module.util.PermissionUtils.enforceAnyPermissionOf;
+import static com.android.server.connectivity.Flags.FLAG_REPLACE_VPN_PROFILE_STORE;
+import static com.android.server.connectivity.Flags.replaceVpnProfileStore;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -52,6 +54,7 @@ import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.security.Credentials;
+import android.security.LegacyVpnProfileStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -166,7 +169,31 @@ public class VpnManagerService extends IVpnManager.Stub {
         mUserManager = mContext.getSystemService(UserManager.class);
         mMainUserId = mDeps.getMainUserId();
         registerReceivers();
+
+        if (replaceVpnProfileStore()) {
+            // Only migrate the vpn profiles once, use the feature flag as the flag to indicate if
+            // the profiles have been imported.
+            if (mVpnProfileStore.get(FLAG_REPLACE_VPN_PROFILE_STORE) == null) {
+                migrateLegacyStore();
+                mVpnProfileStore.put(FLAG_REPLACE_VPN_PROFILE_STORE, new byte[0]);
+            }
+        }
+
         log("VpnManagerService starting up");
+    }
+
+    // Import profiles from legacy keystore
+    private void migrateLegacyStore() {
+        final List<String> prefixes = List.of(Credentials.VPN, Credentials.PLATFORM_VPN,
+                Credentials.LOCKDOWN_VPN, Vpn.VPN_APP_EXCLUDED);
+        for (String prefix : prefixes) {
+            for (String key : LegacyVpnProfileStore.list(prefix)) {
+                final String name = prefix + key;
+                if (!mVpnProfileStore.put(name, LegacyVpnProfileStore.get(name))) {
+                    Log.e(LOG_TAG, "Failed to import vpn profile " + name);
+                }
+            }
+        }
     }
 
     /** Creates a new VpnManagerService */
