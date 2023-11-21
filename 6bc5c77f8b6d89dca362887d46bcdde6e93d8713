@@ -52,6 +52,24 @@
       "parentUuid": "2a64f2db_afc2d146",
       "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01c4fb85_ff9627df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2023-11-21T16:42:35Z",
+      "side": 1,
+      "message": "No, this is still not reasonable. If the argument is expected to and is annotated to be non-null, then receiving null is an error case and should throw. The bug is in the calling code and needs to be fixed there.",
+      "parentUuid": "7016aadd_5540cfe2",
+      "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
