@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb3af531_259fe003",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-11-21T13:23:20Z",
+      "side": 1,
+      "message": "Android.bp LGTM",
+      "revId": "65fab0d787680c17c18ebc4550d37f0d54c897e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0d8eb54_7198c56d",
+        "filename": "packages/CrashRecovery/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-11-21T13:23:20Z",
+      "side": 1,
+      "message": "Do you also want to add an OWNERS file here?",
+      "revId": "65fab0d787680c17c18ebc4550d37f0d54c897e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
