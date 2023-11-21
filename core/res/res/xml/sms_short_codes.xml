@@ -35,7 +35,7 @@
 
     <!-- Arab Emirates -->
     <shortcode country="ae" pattern="\\d{1,5}" free="1017|1355|3214" />
-
+    <!-- TEST -->
     <!-- Albania: 5 digits, known short codes listed -->
     <shortcode country="al" pattern="\\d{5}" premium="15191|55[56]00" />
 
