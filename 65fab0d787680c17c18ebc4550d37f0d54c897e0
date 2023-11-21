@@ -33,6 +33,24 @@
       "message": "Do you also want to add an OWNERS file here?",
       "revId": "65fab0d787680c17c18ebc4550d37f0d54c897e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf0f2dcd_bbca416d",
+        "filename": "packages/CrashRecovery/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2023-11-21T14:42:44Z",
+      "side": 1,
+      "message": "I didn\u0027t explicitly added it before, but I think it would be better to add it.",
+      "parentUuid": "a0d8eb54_7198c56d",
+      "revId": "65fab0d787680c17c18ebc4550d37f0d54c897e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
