@@ -70,6 +70,24 @@
       "parentUuid": "7016aadd_5540cfe2",
       "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3566bb16_bf52b503",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092759
+      },
+      "writtenOn": "2023-11-22T09:18:51Z",
+      "side": 1,
+      "message": "https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/ShortcutService.java;l\u003d3589\n```\n            // Otherwise check persisted shortcuts\n            getShortcutInfoAsync(launcherUserId, packageName, shortcutId, userId, si -\u003e {\n                cb.complete(getShortcutIconUriInternal(launcherUserId, launcherPackage,\n                        packageName, si, userId));\n            });\n```\n\nThe main reason is the calling code in getShortcutInfoAsync() is unreasonable as below.\n\n```\n      private void getShortcutInfoAsync(\n                int launcherUserId, @NonNull String packageName, @NonNull String shortcutId,\n                int userId, @NonNull Consumer\u003cShortcutInfo\u003e cb) {\n            Preconditions.checkStringNotEmpty(packageName, \"packageName\");\n            Preconditions.checkStringNotEmpty(shortcutId, \"shortcutId\");\n\n            throwIfUserLockedL(userId);\n            throwIfUserLockedL(launcherUserId);\n\n            final ShortcutPackage p;\n            synchronized (mLock) {\n                p \u003d getUserShortcutsLocked(userId).getPackageShortcutsIfExists(packageName);\n            }\n            if (p \u003d\u003d null) {\n                cb.accept(null);  // \u003c\u003c\u003c\u003c\u003c\u003c hit bug!!!\n                return;\n            }\n            p.getShortcutByIdsAsync(Collections.singleton(shortcutId), shortcuts -\u003e\n                    cb.accept(shortcuts \u003d\u003d null || shortcuts.isEmpty() ? null : shortcuts.get(0)));  \n                    // \u003c\u003c\u003c\u003c\u003c\u003c hit bug!!!\n        }\n\n```",
+      "parentUuid": "01c4fb85_ff9627df",
+      "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
