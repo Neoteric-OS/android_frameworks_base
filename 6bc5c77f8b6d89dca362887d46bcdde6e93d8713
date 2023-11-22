@@ -88,6 +88,24 @@
       "parentUuid": "01c4fb85_ff9627df",
       "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d90276e_5a2a1b4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2024183
+      },
+      "writtenOn": "2023-11-22T11:47:15Z",
+      "side": 1,
+      "message": "Thank you for your reply! I have optimized the code again and added null checks where the code is called. Additionally, I found that the method \"getShortcutIconParcelFileDescriptor\" on line 3508 has the same issue and I suggest that it should be modified in the same way. Could you please review it again? Thank you.",
+      "parentUuid": "3566bb16_bf52b503",
+      "revId": "6bc5c77f8b6d89dca362887d46bcdde6e93d8713",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
