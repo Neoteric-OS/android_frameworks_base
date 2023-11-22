@@ -5064,6 +5064,7 @@
   <java-symbol name="materialColorPrimary" type="attr"/>
   <java-symbol name="materialColorSecondary" type="attr"/>
   <java-symbol name="materialColorTertiary" type="attr"/>
+  <java-symbol name="materialColorError" type="attr"/>
 
   <java-symbol type="attr" name="actionModeUndoDrawable" />
   <java-symbol type="attr" name="actionModeRedoDrawable" />
