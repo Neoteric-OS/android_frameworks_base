@@ -16,6 +16,24 @@
       "message": "Hello,\n\nWe are developers of the Xiaomi team. We found some problems caused by the failure of broadcasts to be dispatched in time on some devices. The common feature is that when the system is busy and the device temperature is high, the MainHandler of ActivityManagerService accumulates a large number of PooledLambdaImpl messages, causing broadcasts to fail to be dispatched on time.",
       "revId": "8e32203fc2439dee22cf91e343ec9f892f95b997",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9815fbb8_80718edc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-11-24T02:13:15Z",
+      "side": 1,
+      "message": "Please help review.",
+      "parentUuid": "fb4e8cae_6bd41164",
+      "revId": "8e32203fc2439dee22cf91e343ec9f892f95b997",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
