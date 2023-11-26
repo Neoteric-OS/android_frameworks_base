@@ -110,9 +110,9 @@ public interface AppOpsCheckingServiceInterface {
      * @param op app-op for which we need to set the mode.
      * @param mode the mode of the app-op.
      * @param userId user id associated with the package.
-     *
+     * @return true if op mode is changed.
      */
-    void setPackageMode(@NonNull String packageName, int op, @Mode int mode, @UserIdInt int userId);
+    boolean setPackageMode(@NonNull String packageName, int op, @Mode int mode, @UserIdInt int userId);
 
     /**
      * Stop tracking any app-op modes for a package.
