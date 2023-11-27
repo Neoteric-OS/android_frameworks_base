@@ -25,6 +25,8 @@ import android.content.pm.ComponentInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
+import android.content.pm.UserInfo;
+import android.content.pm.UserProperties;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -265,7 +267,10 @@ public class TileUtils {
         final ArrayList<Tile> tiles = new ArrayList<>();
         final UserManager userManager = (UserManager) context.getSystemService(
                 Context.USER_SERVICE);
-        for (UserHandle user : userManager.getUserProfiles()) {
+        List<UserHandle> profiles = userManager.getUserProfiles();
+        profiles.removeIf(userHandle -> userManager.getUserProperties(userHandle)
+                .getShowInSettings() == UserProperties.SHOW_IN_SETTINGS_NO);
+        for (UserHandle user : profiles) {
             // TODO: Needs much optimization, too many PM queries going on here.
             if (user.getIdentifier() == ActivityManager.getCurrentUser()) {
                 // Only add Settings for this user.

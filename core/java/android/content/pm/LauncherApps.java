@@ -692,13 +692,19 @@ public class LauncherApps {
      * Otherwise it'll return the same list as {@link UserManager#getUserProfiles()} would.
      */
     public List<UserHandle> getProfiles() {
-        if (mUserManager.isManagedProfile()) {
+        if (mUserManager.isManagedProfile() || mUserManager.getUserProperties(
+                android.os.Process.myUserHandle()).getShowInLauncher()
+                == UserProperties.SHOW_IN_LAUNCHER_NO) {
             // If it's a managed profile, only return the current profile.
             final List result =  new ArrayList(1);
             result.add(android.os.Process.myUserHandle());
             return result;
         } else {
-            return mUserManager.getUserProfiles();
+            final List<UserHandle> profiles = mUserManager.getUserProfiles();
+            profiles.removeIf(
+                    userHandle -> mUserManager.getUserProperties(userHandle).getShowInLauncher()
+                            == UserProperties.SHOW_IN_LAUNCHER_NO);
+            return profiles;
         }
     }
 

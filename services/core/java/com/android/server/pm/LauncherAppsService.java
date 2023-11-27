@@ -76,6 +76,7 @@ import android.content.pm.ShortcutQueryWrapper;
 import android.content.pm.ShortcutServiceInternal;
 import android.content.pm.ShortcutServiceInternal.ShortcutChangeListener;
 import android.content.pm.UserInfo;
+import android.content.pm.UserProperties;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Binder;
@@ -442,6 +443,11 @@ public class LauncherAppsService extends SystemService {
                 }
             } finally {
                 injectRestoreCallingIdentity(ident);
+            }
+
+            if (mUserManagerInternal.getUserProperties(targetUserId).getShowInLauncher()
+                    == UserProperties.SHOW_IN_LAUNCHER_NO) {
+                return false;
             }
 
             return mUserManagerInternal.isProfileAccessible(callingUserId, targetUserId,

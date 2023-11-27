@@ -285,7 +285,10 @@ public class ApplicationsState {
 
         final List<ApplicationInfo> prevApplications = mApplications;
         mApplications = new ArrayList<>();
-        for (UserInfo user : mUm.getProfiles(UserHandle.myUserId())) {
+        List<UserInfo> profiles = mUm.getProfiles(UserHandle.myUserId());
+        profiles.removeIf(userInfo -> mUm.getUserProperties(userInfo.getUserHandle())
+                .getShowInSettings() == UserProperties.SHOW_IN_SETTINGS_NO);
+        for (UserInfo user : profiles) {
             try {
                 // If this user is new, it needs a map created.
                 if (mEntriesMap.indexOfKey(user.id) < 0) {
