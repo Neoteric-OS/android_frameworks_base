@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b250d42_1f86613f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2023-11-28T05:41:09Z",
+      "side": 1,
+      "message": "I will file a bug for enabling a target. Do you have a device target in mind that would be a good testing ground for the config? If not, we can probably try in on Wear as I assume wear would be quite interested about this optimization.",
+      "parentUuid": "fd848b1f_54341500",
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3af33e75_2a258693",
