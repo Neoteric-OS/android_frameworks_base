@@ -105,6 +105,23 @@
       "parentUuid": "2fde27c3_3da122c1",
       "revId": "7f9d9636f00992c53ae5c1e95f96fd5fbc4f112d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5e37974_4bc3e96a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2023-11-28T02:10:19Z",
+      "side": 1,
+      "message": "Thanks for code review, could you please merge the patch manually?",
+      "revId": "7f9d9636f00992c53ae5c1e95f96fd5fbc4f112d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
