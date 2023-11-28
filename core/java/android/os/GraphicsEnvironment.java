@@ -117,6 +117,19 @@ public class GraphicsEnvironment {
     private static final String ANGLE_GL_DRIVER_CHOICE_NATIVE = "native";
     private static final String SYSTEM_ANGLE_STRING = "system";
 
+    // ANGLE debug lists. The value of each debug property is a list of package names separated
+    // by comma, no spaces. The value of both liststs will not be preserved upon reboot.
+    // All packages in `debug.angle.allowlist` will be forced to use ANGLE and all packages in
+    // `debug.angle.denylist` will be forced to use native OpenGL ES driver. The denylist has the
+    // higher priority and hence if a package is in both lists, it will be forced to use native
+    // OpenGL ES driver. Note that the native OpenGL ES could be an ANGLE driver if the device
+    // ships ANGLE as the native OpenGL ES driver.
+    // All ANGLE for Android developers should use the below debug property instead of global
+    // settings via adb shell setprop command.
+    // e.g. `adb shell setprop debug.angle.allowlist com.example.a,com.example.b,com.example.c`
+    private static final String DEBUG_PROPERTY_ANGLE_ALLOW_LIST = "debug.angle.allowlist";
+    private static final String DEBUG_PROPERTY_ANGLE_DENY_LIST = "debug.angle.denylist";
+
     private ClassLoader mClassLoader;
     private String mLibrarySearchPaths;
     private String mLibraryPermittedPaths;
@@ -173,19 +186,6 @@ public class GraphicsEnvironment {
      */
     public void toggleAngleAsSystemDriver(boolean enabled) {
         nativeToggleAngleAsSystemDriver(enabled);
-    }
-
-    /**
-     * Query to determine the ANGLE driver choice.
-     */
-    private String queryAngleChoice(Context context, Bundle coreSettings,
-                                               String packageName) {
-        if (TextUtils.isEmpty(packageName)) {
-            Log.v(TAG, "No package name specified; use the system driver");
-            return ANGLE_GL_DRIVER_CHOICE_DEFAULT;
-        }
-
-        return queryAngleChoiceInternal(context, coreSettings, packageName);
     }
 
     private int getVulkanVersion(PackageManager pm) {
@@ -369,6 +369,14 @@ public class GraphicsEnvironment {
         return valueList;
     }
 
+    private static List<String> getPackageNamesFromDebugProperty(String debugProperty) {
+        String packageNames = SystemProperties.get(debugProperty);
+        if (TextUtils.isEmpty(packageNames)) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(Arrays.asList(packageNames.split(",")));
+    }
+
     private static int getPackageIndex(String packageName, List<String> packages) {
         for (int idx = 0; idx < packages.size(); idx++) {
             if (packages.get(idx).equals(packageName)) {
@@ -393,23 +401,43 @@ public class GraphicsEnvironment {
         return ai;
     }
 
-    /*
+    private boolean isPackageInAngleDebugList(String debugProperty, String packageName) {
+        final List<String> packageNames = getPackageNamesFromDebugProperty(debugProperty);
+        return getPackageIndex(packageName, packageNames) != -1;
+    }
+
+    /**
      * Determine which GLES "driver" should be used for the package, taking into account the
      * following factors (in priority order):
      *
-     * 1) The semi-global switch (i.e. Settings.Global.ANGLE_GL_DRIVER_ALL_ANGLE; which is set by
+     * 1) debug list. Debug lists in the debug properties have the top priority. The deny list is
+     *    checked first and then the allow list. If the package is in the deny list, then it must
+     *    use the native driver. If the package is in the allow list, then it must use angle.
+     * 2) The semi-global switch (i.e. Settings.Global.ANGLE_GL_DRIVER_ALL_ANGLE; which is set by
      *    the "angle_gl_driver_all_angle" setting; which forces a driver for all processes that
-     *    start after the Java run time is up), if it forces a choice;
-     * 2) The per-application switch (i.e. Settings.Global.ANGLE_GL_DRIVER_SELECTION_PKGS and
+     *    start after the Java run time is up), if it forces a choice.
+     * 3) The per-application switch (i.e. Settings.Global.ANGLE_GL_DRIVER_SELECTION_PKGS and
      *    Settings.Global.ANGLE_GL_DRIVER_SELECTION_VALUES; which corresponds to the
      *    “angle_gl_driver_selection_pkgs” and “angle_gl_driver_selection_values” settings); if it
      *    forces a choice.
      */
-    private String queryAngleChoiceInternal(Context context, Bundle bundle,
-                                                       String packageName) {
+    private String queryAngleChoice(Context context, Bundle bundle,
+                                    String packageName) {
         // Make sure we have a good package name
         if (TextUtils.isEmpty(packageName)) {
+            Log.v(TAG, "No package name specified, use the default driver");
             return ANGLE_GL_DRIVER_CHOICE_DEFAULT;
+        }
+
+        // Check whether the package is in one of the ANGLE debug list.
+        // if the package is in ANGLE debug deny list, then the package must use native.
+        if (isPackageInAngleDebugList(DEBUG_PROPERTY_ANGLE_DENY_LIST, packageName)) {
+            return ANGLE_GL_DRIVER_CHOICE_NATIVE;
+        }
+
+        // If the package is in ANGLE debug allow list, then the package must use angle.
+        if (isPackageInAngleDebugList(DEBUG_PROPERTY_ANGLE_ALLOW_LIST, packageName)) {
+            return ANGLE_GL_DRIVER_CHOICE_ANGLE;
         }
 
         // Check the semi-global switch (i.e. once system has booted enough) for whether ANGLE
@@ -427,6 +455,7 @@ public class GraphicsEnvironment {
             return ANGLE_GL_DRIVER_CHOICE_ANGLE;
         }
 
+        // Otherwise, continue to look at settings lists.
         // Get the per-application settings lists
         final ContentResolver contentResolver = context.getContentResolver();
         final List<String> optInPackages = getGlobalSettingsString(
