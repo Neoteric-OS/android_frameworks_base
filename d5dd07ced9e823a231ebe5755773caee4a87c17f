@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23400c33_69deab21",
+        "filename": "services/proguard.flags",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2023-11-28T05:39:11Z",
+      "side": 1,
+      "message": "Unsure if I understand this comment correctly:\n\ncom.android.server.display.feature.DisplayManagerFlags:\nlog: \"No virtual method isDisplayOffloadEnabled()Z in class Lcom/android/server/display/feature/DisplayManagerFlags\" this method is called via HwBinder\n\nandroid.app.admin.flags.FeatureFlagsImpl:\nlog: \"No pending exception expected: java.lang.NoSuchFieldError: no \"J\" field \"mPtr\" in class \"Lcom/android/server/input/NativeInputManagerService$NativeImpl;\" this is caused by some obfuscation for native implementation in jni (com_android_server_input_InputManagerService)\n\nFor com.android.server.ThreadPriorityBooster, it\u0027s methods are referenced in services.jar \"java.lang.NoSuchMethodError: No direct method \u003cinit\u003e(II)V in class Lcom/android/server/ThreadPriorityBooster; or its super classes (declaration of \u0027com.android.server.ThreadPriorityBooster\u0027 appears in /system/framework/services.jar)\"\n\nI added these rules to cover exceptions during boottime, and I agree that there are rooms for a generic solutions and optimizations done to these rules. Let\u0027s file a bug to keep track of the work.",
+      "parentUuid": "3af33e75_2a258693",
+      "range": {
+        "startLine": 53,
+        "startChar": 66,
+        "endLine": 53,
+        "endChar": 72
+      },
+      "revId": "d5dd07ced9e823a231ebe5755773caee4a87c17f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "622fff93_09dd0242",
