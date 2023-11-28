@@ -1069,7 +1069,7 @@ public final class Display {
             if (displayShape != null && rotation != mDisplayInfo.rotation) {
                 return displayShape.setRotation(rotation);
             }
-            return displayShape;
+            return displayShape == null ? DisplayShape.NONE : displayShape;
         }
     }
 
