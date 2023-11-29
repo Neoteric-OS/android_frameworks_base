@@ -60,6 +60,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.power.Boost;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -2064,6 +2065,10 @@ public class DisplayRotation {
                 mRotationChoiceShownToUserForConfirmation = ROTATION_UNDEFINED;
                 mService.updateRotation(false /* alwaysSendConfiguration */,
                         false /* forceRelayout */);
+                if (!mDisplayPolicy.isAwake() && mDisplayContent.inTransition()) {
+                    mService.mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                            "RotationChangeWhileDozing").acquire(1000);
+                }
             }
         }
 
