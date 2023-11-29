@@ -60,6 +60,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.power.Boost;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -2064,6 +2065,18 @@ public class DisplayRotation {
                 mRotationChoiceShownToUserForConfirmation = ROTATION_UNDEFINED;
                 mService.updateRotation(false /* alwaysSendConfiguration */,
                         false /* forceRelayout */);
+                if (!mDisplayPolicy.isAwake()) {
+                    // The case of WindowOrientationListener#shouldStayEnabledWhileDreaming.
+                    // Acquire Wakelock for a while to allow the animation to play.
+                    final boolean hasDisplayTransition;
+                    synchronized (mLock) {
+                        hasDisplayTransition = mDisplayContent.inTransition();
+                    }
+                    if (hasDisplayTransition) {
+                        mService.mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                                "RotationChangeWhileDozing").acquire(1000);
+                    }
+                }
             }
         }
 
