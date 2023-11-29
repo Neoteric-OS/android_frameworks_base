@@ -70,6 +70,30 @@
       },
       "revId": "03bf86430d85cc61a0a5a8ce531c8a2956b7ec47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aec96cdd_13a9e69c",
+        "filename": "libs/hwui/jni/YuvToJpegEncoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2023-11-29T20:58:35Z",
+      "side": 0,
+      "message": "John,\nThank you for the above review comments.\nWe will reorganize the include files in external/libultrahdr as suggested above.\n\nI will abandon this CL.",
+      "parentUuid": "8bd0a806_d5bdbf78",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "03bf86430d85cc61a0a5a8ce531c8a2956b7ec47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
