@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ade404a0_e5ff24a0",
+        "filename": "libs/hwui/jni/YuvToJpegEncoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-11-29T18:39:24Z",
+      "side": 0,
+      "message": "wouldn\u0027t you still want the library include path prefixed with an `ultrahdr` path?",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "03bf86430d85cc61a0a5a8ce531c8a2956b7ec47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
