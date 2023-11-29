@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfa35e7c_84001d59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-11-29T10:27:44Z",
+      "side": 1,
+      "message": "Please help check the failed in Presubmit-Verified and rerun.",
+      "revId": "05afba0850d565aec52f220bab7faafe2d01cf2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca42c046_e52279b0",
@@ -14,6 +31,30 @@
       "writtenOn": "2023-11-29T05:51:09Z",
       "side": 1,
       "message": "```suggestion\n                if (mode \u003d\u003d defaultMode) {\n                    return false;\n                }\n                opModes \u003d new SparseIntArray();\n                mUidModes.put(uid, opModes);\n                opModes.put(op, mode);\n                scheduleWriteLocked();\n```",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "05afba0850d565aec52f220bab7faafe2d01cf2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1684853a_b6ab7e30",
+        "filename": "services/core/java/com/android/server/appop/AppOpsCheckingServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-11-29T10:27:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ca42c046_e52279b0",
       "range": {
         "startLine": 224,
         "startChar": 0,
