@@ -22,6 +22,30 @@
       },
       "revId": "03bf86430d85cc61a0a5a8ce531c8a2956b7ec47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a251109_e2b432bb",
+        "filename": "libs/hwui/jni/YuvToJpegEncoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2023-11-29T18:42:34Z",
+      "side": 0,
+      "message": "John,\nexternal/libultrahdr exports the folder where jpegr.h is present in the export_include_dirs.",
+      "parentUuid": "ade404a0_e5ff24a0",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "03bf86430d85cc61a0a5a8ce531c8a2956b7ec47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
