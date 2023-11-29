@@ -16,6 +16,24 @@
       "message": "why remove this line?",
       "revId": "55c8a818ecd3987bd1ccef1a8bc6066ae58a7a13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56c8740c_1319a23a",
+        "filename": "services/core/java/com/android/server/appop/AppOpsCheckingServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-11-29T02:13:36Z",
+      "side": 0,
+      "message": "The local variable opModes is never used next, so assigning to \"null\" maybe unnecessary. Android Studio also prompted that this line can be deleted.",
+      "parentUuid": "199400a5_3059934e",
+      "revId": "55c8a818ecd3987bd1ccef1a8bc6066ae58a7a13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
