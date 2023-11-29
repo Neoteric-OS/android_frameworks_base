@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03af1492_666005a1",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1941946
+      },
+      "writtenOn": "2023-11-29T20:47:49Z",
+      "side": 1,
+      "message": "Can I ask how is 1) different from 3)?",
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
