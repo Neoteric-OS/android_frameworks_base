@@ -34,6 +34,24 @@
       "parentUuid": "199400a5_3059934e",
       "revId": "55c8a818ecd3987bd1ccef1a8bc6066ae58a7a13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30128970_c5eced8f",
+        "filename": "services/core/java/com/android/server/appop/AppOpsCheckingServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2023-11-29T05:51:09Z",
+      "side": 0,
+      "message": "Oh, nvm, you are right, I mistook it for something else.",
+      "parentUuid": "56c8740c_1319a23a",
+      "revId": "55c8a818ecd3987bd1ccef1a8bc6066ae58a7a13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
