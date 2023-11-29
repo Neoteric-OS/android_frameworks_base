@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66bd8210_cbb7a527",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-11-29T15:06:53Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "dfa35e7c_84001d59",
+      "revId": "05afba0850d565aec52f220bab7faafe2d01cf2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca42c046_e52279b0",
         "filename": "services/core/java/com/android/server/appop/AppOpsCheckingServiceImpl.java",
         "patchSetId": 3
