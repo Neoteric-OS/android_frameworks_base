@@ -46,6 +46,30 @@
       },
       "revId": "03bf86430d85cc61a0a5a8ce531c8a2956b7ec47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bd0a806_d5bdbf78",
+        "filename": "libs/hwui/jni/YuvToJpegEncoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2023-11-29T18:46:30Z",
+      "side": 0,
+      "message": "yeah but why isn\u0027t it exporting as a subdirectory? There\u0027s a higher risk of name collisions if libraries are tossing everything into the top-level path.\n\ntossing all of this: https://cs.android.com/android/platform/superproject/main/+/main:external/libultrahdr/lib/ into the top-level export_include doesn\u0027t look like a good design. It should be `include/ultrahdr/*.h` and export_include_dirs the `include` folder. That\u0027s the typical setup for exported headers from libraries.",
+      "parentUuid": "8a251109_e2b432bb",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "03bf86430d85cc61a0a5a8ce531c8a2956b7ec47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
