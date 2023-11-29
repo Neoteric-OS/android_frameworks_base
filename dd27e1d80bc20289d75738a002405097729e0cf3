@@ -16,6 +16,24 @@
       "message": "Thanks for taking the time to submit a patch, but the issue was already fixed and will be public available in the 2023 November MPR.",
       "revId": "dd27e1d80bc20289d75738a002405097729e0cf3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bb492a7_0d0c6d20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2024183
+      },
+      "writtenOn": "2023-11-29T02:18:07Z",
+      "side": 1,
+      "message": "Okay，thank you.",
+      "parentUuid": "aac80e73_e193a240",
+      "revId": "dd27e1d80bc20289d75738a002405097729e0cf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
