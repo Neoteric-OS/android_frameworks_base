@@ -118,13 +118,7 @@ public class VcnGatewayConnectionTestBase {
             NetworkCapabilities networkCapabilities,
             LinkProperties linkProperties,
             boolean isBlocked) {
-        return new UnderlyingNetworkRecord(
-                network,
-                networkCapabilities,
-                linkProperties,
-                isBlocked,
-                false /* isSelected */,
-                0 /* priorityClass */);
+        return new UnderlyingNetworkRecord(network, networkCapabilities, linkProperties, isBlocked);
     }
 
     protected static final String TEST_TCP_BUFFER_SIZES_1 = "1,2,3,4";
