@@ -26,17 +26,28 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Set;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @hide
@@ -44,7 +55,8 @@ import java.util.Map;
 public class PropImitationHooks {
 
     private static final String TAG = "PropImitationHooks";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
+    private static final String DATA_FILE = "gms_certified_props.json";
 
     private static final String PACKAGE_ARCORE = "com.google.ar.core";
     private static final String PACKAGE_FINSKY = "com.android.vending";
@@ -216,7 +228,7 @@ public class PropImitationHooks {
             "PIXEL_2024_MIDYEAR_EXPERIENCE"
     );
 
-    private static volatile String[] sCertifiedProps;
+    private static volatile List<String> sCertifiedProps = new ArrayList<>();
     private static volatile String sStockFp, sNetflixModel;
 
     private static volatile String sProcessName;
@@ -237,7 +249,6 @@ public class PropImitationHooks {
             return;
         }
 
-        sCertifiedProps = res.getStringArray(R.array.config_certifiedBuildProperties);
         sStockFp = res.getString(R.string.config_stockFingerprint);
         sNetflixModel = res.getString(R.string.config_netflixSpoofModel);
 
@@ -252,7 +263,7 @@ public class PropImitationHooks {
          * Set custom model for Netflix
          */
         if (sIsGms) {
-            setCertifiedPropsForGms();
+            setCertifiedPropsForGms(context);
         } else if (!sStockFp.isEmpty() && packageName.equals(PACKAGE_ARCORE)) {
             dlog("Setting stock fingerprint for: " + packageName);
             setPropValue("FINGERPRINT", sStockFp);
@@ -316,11 +327,35 @@ public class PropImitationHooks {
         }
     }
 
-    private static void setCertifiedPropsForGms() {
-        if (sCertifiedProps.length == 0) {
+    private static void setCertifiedPropsForGms(Context context) {
+        File dataFile = new File(Environment.getDataSystemDirectory(), DATA_FILE);
+        String savedProps = readFromFile(dataFile);
+
+        if (TextUtils.isEmpty(savedProps)) {
+            Log.d(TAG, "Parsing props locally - data file unavailable");
+            sCertifiedProps = Arrays.asList(context.getResources().getStringArray(R.array.config_certifiedBuildProperties));
+        } else {
+            Log.d(TAG, "Parsing props fetched by attestation service");
+            try {
+                JSONObject parsedProps = new JSONObject(savedProps);
+                Iterator<String> keys = parsedProps.keys();
+                while (keys.hasNext()) {
+                    String key = keys.next();
+                    String value = parsedProps.getString(key);
+                    sCertifiedProps.add(key + ":" + value);
+                }
+            } catch (JSONException e) {
+                Log.e(TAG, "Error parsing JSON data", e);
+                Log.d(TAG, "Parsing props locally as fallback");
+                sCertifiedProps = Arrays.asList(context.getResources().getStringArray(R.array.config_certifiedBuildProperties));
+            }
+        }
+
+        if (sCertifiedProps.isEmpty()) {
             dlog("Certified props are not set");
             return;
         }
+
         final boolean was = isGmsAddAccountActivityOnTop();
         final TaskStackListener taskStackListener = new TaskStackListener() {
             @Override
@@ -333,12 +368,14 @@ public class PropImitationHooks {
                 }
             }
         };
+
         if (!was) {
             dlog("Spoofing build for GMS");
             setCertifiedProps();
         } else {
             dlog("Skip spoofing build for GMS, because GmsAddAccountActivityOnTop");
         }
+
         try {
             ActivityTaskManager.getService().registerTaskStackListener(taskStackListener);
         } catch (Exception e) {
@@ -362,11 +399,13 @@ public class PropImitationHooks {
         try {
             final ActivityTaskManager.RootTaskInfo focusedTask =
                     ActivityTaskManager.getService().getFocusedRootTaskInfo();
+
             return focusedTask != null && focusedTask.topActivity != null
                     && focusedTask.topActivity.equals(GMS_ADD_ACCOUNT_ACTIVITY);
         } catch (Exception e) {
             Log.e(TAG, "Unable to get top activity!", e);
         }
+
         return false;
     }
 
@@ -374,6 +413,7 @@ public class PropImitationHooks {
         // GMS doesn't have MANAGE_ACTIVITY_TASKS permission
         final int callingUid = Binder.getCallingUid();
         final int gmsUid;
+
         try {
             gmsUid = context.getPackageManager().getApplicationInfo(PACKAGE_GMS, 0).uid;
             dlog("shouldBypassTaskPermission: gmsUid:" + gmsUid + " callingUid:" + callingUid);
@@ -381,7 +421,24 @@ public class PropImitationHooks {
             Log.e(TAG, "shouldBypassTaskPermission: unable to get gms uid", e);
             return false;
         }
+
         return gmsUid == callingUid;
+    }
+
+    private static String readFromFile(File file) {
+        StringBuilder content = new StringBuilder();
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    content.append(line);
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Error reading from file", e);
+            }
+        }
+
+        return content.toString();
     }
 
     private static boolean isCallerSafetyNet() {
@@ -414,6 +471,7 @@ public class PropImitationHooks {
                 has = true;
             }
         }
+
         return has;
     }
 
