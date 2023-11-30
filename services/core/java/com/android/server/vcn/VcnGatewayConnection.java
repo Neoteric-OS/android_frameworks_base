@@ -1896,6 +1896,9 @@ public class VcnGatewayConnection extends StateMachine {
                         && exposedCaps.contains(NET_CAPABILITY_DUN)) {
                     mIpSecManager.applyTunnelModeTransform(
                             tunnelIface, IpSecManager.DIRECTION_FWD, transform);
+
+                    // TODO: Check flag
+                    mUnderlyingNetworkController.updateIpSecTransform(mUnderlying, transform);
                 }
             } catch (IOException | IllegalArgumentException e) {
                 logInfo("Transform application failed for network " + token, e);
