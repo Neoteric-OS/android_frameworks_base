@@ -123,6 +123,30 @@
       },
       "revId": "05afba0850d565aec52f220bab7faafe2d01cf2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80811fbc_095d9072",
+        "filename": "services/core/java/com/android/server/appop/AppOpsCheckingServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2023-11-30T15:38:50Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "45f6aa9d_ef952d31",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "05afba0850d565aec52f220bab7faafe2d01cf2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
