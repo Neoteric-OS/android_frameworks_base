@@ -1879,6 +1879,7 @@ public class VcnGatewayConnection extends StateMachine {
                 @NonNull Network underlyingNetwork,
                 @NonNull IpSecTransform transform,
                 int direction) {
+            android.util.Log.i(TAG, "applyTransform");
             if (direction != IpSecManager.DIRECTION_IN && direction != IpSecManager.DIRECTION_OUT) {
                 logWtf("Applying transform for unexpected direction: " + direction);
             }
@@ -1888,6 +1889,11 @@ public class VcnGatewayConnection extends StateMachine {
 
                 // Transforms do not need to be persisted; the IkeSession will keep them alive
                 mIpSecManager.applyTunnelModeTransform(tunnelIface, direction, transform);
+
+                if (direction == IpSecManager.DIRECTION_IN) {
+                    // TODO: Check flag
+                    mUnderlyingNetworkController.updateIpSecTransform(mUnderlying, transform);
+                }
 
                 // For inbound transforms, additionally allow forwarded traffic to bridge to DUN (as
                 // needed)
