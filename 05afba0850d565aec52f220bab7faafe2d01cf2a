@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee3692f9_a288849d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2023-11-30T04:58:54Z",
+      "side": 1,
+      "message": "The errors are due to merge conflict with internal branches.",
+      "parentUuid": "66bd8210_cbb7a527",
+      "revId": "05afba0850d565aec52f220bab7faafe2d01cf2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca42c046_e52279b0",
         "filename": "services/core/java/com/android/server/appop/AppOpsCheckingServiceImpl.java",
         "patchSetId": 3
@@ -73,6 +91,30 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "ca42c046_e52279b0",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "05afba0850d565aec52f220bab7faafe2d01cf2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45f6aa9d_ef952d31",
+        "filename": "services/core/java/com/android/server/appop/AppOpsCheckingServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2023-11-30T04:58:54Z",
+      "side": 1,
+      "message": "Please apply my suggested edit.",
+      "parentUuid": "1684853a_b6ab7e30",
       "range": {
         "startLine": 224,
         "startChar": 0,
