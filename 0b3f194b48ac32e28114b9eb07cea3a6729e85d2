@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6e1cf6c_bfa85028",
+        "filename": "libs/hwui/jni/YuvToJpegEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2023-11-30T19:24:43Z",
+      "side": 1,
+      "message": "Dichen,\nThese lines have changed in internal branches and hence any change here results in a merge conflict.\nFor now, I am retaining this as is (by adding #include \u003cutils/Errors.h\u003e) and once this CL merges in aosp/main, this change from android::OK to JPEGR_NO_ERROR can be done in internal branches.\nHope this is fine.",
+      "range": {
+        "startLine": 379,
+        "startChar": 19,
+        "endLine": 379,
+        "endChar": 33
+      },
+      "revId": "0b3f194b48ac32e28114b9eb07cea3a6729e85d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
