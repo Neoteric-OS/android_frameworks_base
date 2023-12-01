@@ -1541,13 +1541,17 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
         // transferred. If transition is transient, IME won't be moved during the transition and
         // the tasks are still live, so we take the snapshot at the end of the transition instead.
         if (mTransientLaunches == null) {
+            final ArraySet<Task> recordSnapshotSet = new ArraySet<>();
             for (int i = mParticipants.size() - 1; i >= 0; --i) {
                 final ActivityRecord ar = mParticipants.valueAt(i).asActivityRecord();
-                if (ar == null || ar.getTask() == null
+                if (ar == null || ar.getTask() == null || recordSnapshotSet.contains(ar.getTask())
                         || ar.getTask().isVisibleRequested()) continue;
+                recordSnapshotSet.add(ar.getTask());
                 final ChangeInfo change = mChanges.get(ar);
                 // Intentionally skip record snapshot for changes originated from PiP.
                 if (change != null && change.mWindowingMode == WINDOWING_MODE_PINNED) continue;
+                // skip record snapshot for un-changed changes.
+                if (change != null && !change.hasChanged()) continue;
                 mController.mSnapshotController.mTaskSnapshotController.recordSnapshot(
                         ar.getTask(), false /* allowSnapshotHome */);
             }
