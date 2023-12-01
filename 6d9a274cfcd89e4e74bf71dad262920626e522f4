@@ -22,6 +22,30 @@
       },
       "revId": "6d9a274cfcd89e4e74bf71dad262920626e522f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "019bee1e_a5a07efb",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 2016894
+      },
+      "writtenOn": "2023-12-01T12:46:41Z",
+      "side": 1,
+      "message": "@wilsonshih@google.com\nThis is a good note. I have revised it, please check it, and retained the condition of (!change.hasChanged ).",
+      "parentUuid": "341e7d89_2d504183",
+      "range": {
+        "startLine": 1552,
+        "startChar": 46,
+        "endLine": 1552,
+        "endChar": 56
+      },
+      "revId": "6d9a274cfcd89e4e74bf71dad262920626e522f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
