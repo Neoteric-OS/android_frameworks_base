@@ -4264,6 +4264,19 @@ public class AudioService extends IAudioService.Stub
         if (mMediaPlaybackActive.getAndSet(mediaActive) != mediaActive && mediaActive) {
             mSoundDoseHelper.scheduleMusicActiveCheck();
         }
+
+        if (voiceActive || mediaActive) {
+            if (mMonitorRotation && !RotationHelper.isEnabled()) {
+                RotationHelper.enable();
+            }
+        }
+        if (!voiceActive && !mediaActive) {
+            if (mMonitorRotation && RotationHelper.isEnabled()) {
+                // reduce wakeups (save current) by only listening when voice/media playback active
+                RotationHelper.disable();
+            }
+        }
+
         // Update playback active state for all apps in audio mode stack.
         // When the audio mode owner becomes active, replace any delayed MSG_UPDATE_AUDIO_MODE
         // and request an audio mode update immediately. Upon any other change, queue the message
@@ -9553,15 +9566,8 @@ public class AudioService extends IAudioService.Stub
                     || action.equals(BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED)) {
                 mDeviceBroker.receiveBtEvent(intent);
             } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
-                if (mMonitorRotation) {
-                    RotationHelper.enable();
-                }
                 AudioSystem.setParameters("screen_state=on");
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
-                if (mMonitorRotation) {
-                    //reduce wakeups (save current) by only listening when display is on
-                    RotationHelper.disable();
-                }
                 AudioSystem.setParameters("screen_state=off");
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 sendMsg(mAudioHandler,

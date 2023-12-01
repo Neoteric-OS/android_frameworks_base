@@ -66,6 +66,7 @@ class RotationHelper {
 
     private static Context sContext;
     private static Handler sHandler;
+    private static boolean sEnabled = false;
 
     /**
      * post conditions:
@@ -93,6 +94,7 @@ class RotationHelper {
         sFoldStateListener = new FoldStateListener(sContext, folded -> updateFoldState(folded));
         sContext.getSystemService(DeviceStateManager.class)
                 .registerCallback(new HandlerExecutor(sHandler), sFoldStateListener);
+        sEnabled = true;
     }
 
     static void disable() {
@@ -100,6 +102,11 @@ class RotationHelper {
                 .unregisterDisplayListener(sDisplayListener);
         sContext.getSystemService(DeviceStateManager.class)
                 .unregisterCallback(sFoldStateListener);
+        sEnabled = false;
+    }
+
+    static boolean isEnabled() {
+        return sEnabled;
     }
 
     /**
