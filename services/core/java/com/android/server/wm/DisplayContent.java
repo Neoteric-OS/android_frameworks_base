@@ -6872,7 +6872,11 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
                 final Task task = r.getTask();
                 if (task == null || task != mFixedRotationLaunchingApp.getTask()) {
                     // Different tasks won't be in one activity transition animation.
-                    return;
+                    if (task.isActivityTypeHome()) {
+                        Slog.d(TAG, "Device can rotate after finishing the transition of launcher.");
+                    } else {
+                        return;
+                    }
                 }
                 if (task.getActivity(ActivityRecord::isInTransition) != null) {
                     return;
