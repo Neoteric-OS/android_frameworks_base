@@ -10,3 +10,4 @@ per-file Watcher.java = file:/services/core/java/com/android/server/pm/OWNERS
 per-file Watcher.java = shombert@google.com
 per-file EventLogger.java = file:/platform/frameworks/av:/media/janitors/media_solutions_OWNERS
 per-file EventLogger.java = jmtrivi@google.com
+per-file AnrTimer*.java = file:/owners/ANRTIMER_OWNERS
