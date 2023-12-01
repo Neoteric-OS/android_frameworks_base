@@ -16,6 +16,24 @@
       "message": "John,\nI had to update the CL and defer the enum change from this CL to avoid merge conflict with internal branches. That part of changing the enum from android::OK to JPEGR_NO_ERROR (both values are zero) will be taken up in a follow up in the internal branches.\n\nCan you please provide owner approval again? Your earlier approval was lost after the CL was updated.\nThanks.",
       "revId": "6b09b8235cabef6a929dfa6b129d082194f78a90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "672da1c9_277c2787",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2023-12-01T19:53:41Z",
+      "side": 1,
+      "message": "John,\nThanks for the +2.",
+      "parentUuid": "ab3c67cc_ad3bb8b0",
+      "revId": "6b09b8235cabef6a929dfa6b129d082194f78a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
