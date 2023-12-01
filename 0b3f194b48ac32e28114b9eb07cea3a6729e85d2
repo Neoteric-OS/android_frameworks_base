@@ -22,6 +22,30 @@
       },
       "revId": "0b3f194b48ac32e28114b9eb07cea3a6729e85d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51aa4ed3_738df1fb",
+        "filename": "libs/hwui/jni/YuvToJpegEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2023-12-01T04:53:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d6e1cf6c_bfa85028",
+      "range": {
+        "startLine": 379,
+        "startChar": 19,
+        "endLine": 379,
+        "endChar": 33
+      },
+      "revId": "0b3f194b48ac32e28114b9eb07cea3a6729e85d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
