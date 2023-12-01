@@ -16,6 +16,24 @@
       "message": "I removed this line and still getting build error on udc\n```\nerror: frameworks/base/core/jni/Android.bp:18:1: \"libandroid_runtime\" depends on undefined module \"libexpresslog_jni\".\n```",
       "revId": "a090fdd7ec7b37e8df152f97682f69d81e2dddff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b81517aa_8b661e92",
+        "filename": "core/jni/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2023-12-01T09:20:28Z",
+      "side": 0,
+      "message": "it\u0027s because the modules-utils repository is auto-merging into udc-mainline-prod but the other repos do not, so that branch is effectively seeing just the udc-mainline-prod change.",
+      "parentUuid": "eaf25ec7_16a0b3ee",
+      "revId": "a090fdd7ec7b37e8df152f97682f69d81e2dddff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
