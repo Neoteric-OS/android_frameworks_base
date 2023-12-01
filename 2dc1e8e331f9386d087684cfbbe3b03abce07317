@@ -16,6 +16,23 @@
       "message": "Upstream from Meta",
       "revId": "2dc1e8e331f9386d087684cfbbe3b03abce07317",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fad33e34_f28487d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2065856
+      },
+      "writtenOn": "2023-12-01T18:37:48Z",
+      "side": 1,
+      "message": "Thank you Kalesh for the review! Friendly reminder to @jji@google.com for review as the Code-Owner approval is needed. Thanks!",
+      "revId": "2dc1e8e331f9386d087684cfbbe3b03abce07317",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
