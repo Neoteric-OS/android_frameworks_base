@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1518fa29_8b90a137",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2023-12-01T02:49:45Z",
+      "side": 1,
+      "message": "Hi,\n\nThere is a merge conflict on our internal branch. This logic to return is actually included in a different way, here\u0027s a snippet\n```\nsynchronized (mLock) {\n    SparseIntArray opModes \u003d mUidModes.get(uid, null);\n\n    int previousMode \u003d defaultMode;\n    if (opModes !\u003d null) {\n        previousMode \u003d opModes.get(op, defaultMode);\n    }\n    if (mode \u003d\u003d previousMode) {\n        return false;\n    }\n```\nyou can check for correctness if you want; it puts the check for \"no change\" early and in a single place so I prefer it. I\u0027ve added the `Merged-In` clause to your commit description so our tooling doesn\u0027t try to merge into the branch this time. I appreciate the good contribution so we can still get this submitted into the AOSP branch so you get credit.",
+      "revId": "534981498b04adb613686d113d72010fba7dd87e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
