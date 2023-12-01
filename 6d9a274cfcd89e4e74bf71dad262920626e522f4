@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "341e7d89_2d504183",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1366584
+      },
+      "writtenOn": "2023-12-01T09:18:15Z",
+      "side": 1,
+      "message": "```changed``` isn\u0027t quite reliable.\n\nhow about we put the task to a Set before call recordSnapshot?\n```\n            final ArraySet\u003cTask\u003e recordSnapshotSet \u003d new ArraySet\u003c\u003e();\n            for (int i \u003d mParticipants.size() - 1; i \u003e\u003d 0; --i) {\n                final ActivityRecord ar \u003d mParticipants.valueAt(i).asActivityRecord();\n                if (ar \u003d\u003d null || ar.getTask() \u003d\u003d null\n                        || ar.getTask().isVisibleRequested()) continue;\n                final ChangeInfo change \u003d mChanges.get(ar);\n                // Intentionally skip record snapshot for changes originated from PiP.\n                if (change !\u003d null \u0026\u0026 change.mWindowingMode \u003d\u003d WINDOWING_MODE_PINNED) continue;\n                recordSnapshotSet.add(ar.getTask());\n            }\n            for (Task task : recordSnapshotSet) {\n                mController.mSnapshotController.mTaskSnapshotController.recordSnapshot(\n                        task, false /* allowSnapshotHome */);\n            }\n```",
+      "range": {
+        "startLine": 1552,
+        "startChar": 46,
+        "endLine": 1552,
+        "endChar": 56
+      },
+      "revId": "6d9a274cfcd89e4e74bf71dad262920626e522f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
