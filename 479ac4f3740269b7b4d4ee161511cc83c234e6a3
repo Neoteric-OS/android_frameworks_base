@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d2d20f5_882451e5",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2543,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-12-02T00:40:15Z",
+      "side": 1,
+      "message": "```suggestion\n                    // On some devices (eg. HSUM), some apps may\n                    // be not be pre-installed on user 0, but may be\n                    // pre-installed on FULL users. Look for pre-installed system\n                    // apps across all users to make sure they\u0027re properly\n                    // allowlisted.\n                    ApplicationInfo ai \u003d pm.getApplicationInfo(pkg,\n                            PackageManager.MATCH_ANY_USER);\n```",
+      "range": {
+        "startLine": 2542,
+        "startChar": 20,
+        "endLine": 2543,
+        "endChar": 59
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab0430f0_f845ebf9",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2544,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-12-02T00:40:15Z",
+      "side": 1,
+      "message": "You have the ApplicationInfo object. Just call isSystemApp().",
+      "range": {
+        "startLine": 2544,
+        "startChar": 24,
+        "endLine": 2544,
+        "endChar": 69
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c77ef6d8_d2360463",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-12-02T00:40:15Z",
+      "side": 1,
+      "message": "```suggestion\n                    // On some devices (eg. HSUM), some apps may\n                    // be not be pre-installed on user 0, but may be\n                    // pre-installed on FULL users. Look for pre-installed system\n                    // apps across all users to make sure they\u0027re properly\n                    // allowlisted.\n                    ApplicationInfo ai \u003d pm.getApplicationInfo(pkg,\n```",
+      "range": {
+        "startLine": 2556,
+        "startChar": 20,
+        "endLine": 2556,
+        "endChar": 67
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e4c0219_86214bff",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2558,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-12-02T00:40:15Z",
+      "side": 1,
+      "message": "Use `isSystemApp()`",
+      "range": {
+        "startLine": 2558,
+        "startChar": 24,
+        "endLine": 2558,
+        "endChar": 69
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
