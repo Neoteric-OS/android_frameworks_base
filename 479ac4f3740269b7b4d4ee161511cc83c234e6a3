@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "69b26064_9b2c36dc",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2543,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2023-12-02T00:40:45Z",
+      "side": 1,
+      "message": "Please include the comment in the code.",
+      "parentUuid": "0d2d20f5_882451e5",
+      "range": {
+        "startLine": 2542,
+        "startChar": 20,
+        "endLine": 2543,
+        "endChar": 59
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab0430f0_f845ebf9",
         "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
         "patchSetId": 1
