@@ -190,6 +190,30 @@
       },
       "revId": "6d9a274cfcd89e4e74bf71dad262920626e522f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a69fc4aa_c881a88d",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1366584
+      },
+      "writtenOn": "2023-12-04T07:43:20Z",
+      "side": 1,
+      "message": "This issue is already fixed in android 14-qpr, so I assume you can only patch to your device, and removed this CL once you upgrade to qpr release.",
+      "parentUuid": "ed7ad20a_b8764627",
+      "range": {
+        "startLine": 1552,
+        "startChar": 46,
+        "endLine": 1552,
+        "endChar": 56
+      },
+      "revId": "6d9a274cfcd89e4e74bf71dad262920626e522f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
