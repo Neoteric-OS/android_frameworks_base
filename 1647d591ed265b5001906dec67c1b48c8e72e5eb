@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dcb0685_1aa3121f",
+        "filename": "services/core/java/com/android/server/utils/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2023-12-04T23:50:13Z",
+      "side": 1,
+      "message": "Can we just reuse `frameworks/base/PERFORMANCE_OWNERS`, adding new owner entries there and pointing to it for related `AnrTimer` files? Glancing at other dedicated `*_OWNERS `files, a dedicated `ANRTIMER` file feels a bit too granular.",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 54
+      },
+      "revId": "1647d591ed265b5001906dec67c1b48c8e72e5eb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
