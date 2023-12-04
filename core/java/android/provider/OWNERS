@@ -12,6 +12,7 @@ per-file *Downloads* = file:platform/packages/providers/DownloadProvider:/OWNERS
 
 per-file *DeviceConfig* = file:/packages/SettingsProvider/OWNERS
 per-file *Settings* = file:/packages/SettingsProvider/OWNERS
+per-file flags.aconfig = file:/packages/SettingsProvider/OWNERS
 
 per-file *Documents* = file:/core/java/android/os/storage/OWNERS
 per-file *Documents* = file:platform/packages/apps/DocumentsUI:/OWNERS
