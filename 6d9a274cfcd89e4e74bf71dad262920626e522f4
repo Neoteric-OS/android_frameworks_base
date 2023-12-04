@@ -118,6 +118,30 @@
       },
       "revId": "6d9a274cfcd89e4e74bf71dad262920626e522f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "923dfe3d_23a458a7",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1366584
+      },
+      "writtenOn": "2023-12-04T05:43:37Z",
+      "side": 1,
+      "message": "LGTM for this patchset(#4)",
+      "parentUuid": "b8e66345_0aa17362",
+      "range": {
+        "startLine": 1552,
+        "startChar": 46,
+        "endLine": 1552,
+        "endChar": 56
+      },
+      "revId": "6d9a274cfcd89e4e74bf71dad262920626e522f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
