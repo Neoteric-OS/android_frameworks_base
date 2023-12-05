@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6abbc5ef_ae5c3245",
+        "filename": "core/java/com/android/internal/net/TEST_MAPPING",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-05T10:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea7ebdd_c54dcacf",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 12
+      },
+      "revId": "3aeadcfc4cd1ee7654b2a00ad5c1a79937fc2916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d77968d4_145c8afc",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-12-04T13:36:21Z",
       "side": 1,
       "message": "If we have this TEST_MAPPING in our own folder, I think we do not need file patterns. We could simply run this TEST_MAPPING for all files.",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "3aeadcfc4cd1ee7654b2a00ad5c1a79937fc2916",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0eab2f5_6ce59a09",
+        "filename": "core/java/com/android/internal/net/TEST_MAPPING",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1966927
+      },
+      "writtenOn": "2023-12-05T10:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d77968d4_145c8afc",
       "range": {
         "startLine": 10,
         "startChar": 6,
