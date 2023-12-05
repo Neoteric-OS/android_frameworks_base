@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de0909e8_39e2918e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007131
+      },
+      "writtenOn": "2023-12-05T00:34:00Z",
+      "side": 1,
+      "message": "Approved revert as part of DroidMonitor.",
+      "revId": "fef58f8c007fdfaec6347ed1986d71b43d6be91a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
