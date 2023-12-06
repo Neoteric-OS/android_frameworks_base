@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023, The Android Open Source Project
+ * Copyright (c) 2024, The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,12 @@
 
 package android.security.keystore;
 
-import android.security.keystore.KeyAttestationApplicationId;
-
-/** @hide */
-interface IKeyAttestationApplicationIdProvider {
-    /**
-     * Provides information describing the possible applications identified by a UID.
-     * If we fail to get the package ids we will throw a ServiceSpecificException with
-     * the KeyAttestationApplicationResult#GET_ATTESTATION_APPLICATION_ID_FAILED error
-     * code.
-     * @hide
-     */
-    KeyAttestationApplicationId getKeyAttestationApplicationId(int uid);
+/**
+ * @hide
+ * The result of #getKeyAttestationApplicationId and if we
+ * want to retry the action or not.
+*/
+@Backing(type="int")
+enum KeyAttestationApplicationResult {
+    GET_ATTESTATION_APPLICATION_ID_FAILED = 0,
 }

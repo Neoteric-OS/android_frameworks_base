@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.android.server.security;
 
 import android.content.Context;
@@ -23,18 +22,19 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Binder;
 import android.os.RemoteException;
+import android.os.ServiceSpecificException;
 import android.os.UserHandle;
 import android.security.keystore.IKeyAttestationApplicationIdProvider;
 import android.security.keystore.KeyAttestationApplicationId;
+import android.security.keystore.KeyAttestationApplicationResult;
 import android.security.keystore.KeyAttestationPackageInfo;
 import android.security.keystore.Signature;
 
 /**
- * @hide
- * The KeyAttestationApplicationIdProviderService provides information describing the possible
- * applications identified by a UID. Due to UID sharing, this KeyAttestationApplicationId can
- * comprise information about multiple packages. The Information is used by keystore and credstore
- * to describe the initiating application of a key attestation procedure.
+ * @hide The KeyAttestationApplicationIdProviderService provides information describing the possible
+ *     applications identified by a UID. Due to UID sharing, this KeyAttestationApplicationId can
+ *     comprise information about multiple packages. The Information is used by keystore and
+ *     credstore to describe the initiating application of a key attestation procedure.
  */
 public class KeyAttestationApplicationIdProviderService
         extends IKeyAttestationApplicationIdProvider.Stub {
@@ -57,7 +57,9 @@ public class KeyAttestationApplicationIdProviderService
         try {
             String[] packageNames = mPackageManager.getPackagesForUid(uid);
             if (packageNames == null) {
-                throw new RemoteException("No packages for uid");
+                throw new ServiceSpecificException(
+                        KeyAttestationApplicationResult.GET_ATTESTATION_APPLICATION_ID_FAILED,
+                        "Attestation App Id retrieval failed with retryable error.");
             }
             int userId = UserHandle.getUserId(uid);
             keyAttestationPackageInfos = new KeyAttestationPackageInfo[packageNames.length];
