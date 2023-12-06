@@ -320,6 +320,40 @@ public class TelephonyManager {
     public @interface KeyType {}
 
     /**
+     * Reasons for 5G N1 Mode Disable.
+     *
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = {"5G_N1_MODE_DISABLE_REASON_"}, value = {
+           5G_N1_MODE_DISABLE_REASON_DISALLOW_EPDG_TO_5GS_HANDOVER,
+           5G_N1_MODE_DISABLE_REASON_POWER_CONSUMPTION,
+           5G_N1_MODE_DISABLE_REASON_CARRIER})
+    public @interface 5gN1ModeDisableReason {}
+    /**
+     * This reason is used to disable 5gN1Mode to only allow handover to EPS during the
+     * WiFi call over ePDG when VoNR is not supported.
+     *
+     * @hide
+     */
+    public static final int 5G_N1_MODE_DISABLE_REASON_DISALLOW_EPDG_TO_5GS_HANDOVER = 0;
+
+    /**
+     * This reason is used if UE tries to save power by disabling 5G N1 mode.
+     *
+     * @hide
+     */
+    public static final int 5G_N1_MODE_DISABLE_REASON_POWER_CONSUMPTION = 1;
+
+    /**
+     * This reason is used when carriers want to disable 5gN1Mode. A privileged app can
+     * request to disable 5gN1Mode via the system service.
+     *
+     * @hide
+     */
+    public static final int 5G_N1_MODE_DISABLE_REASON_CARRIER = 2;
+
+    /**
      * No Single Radio Voice Call Continuity (SRVCC) handover is active.
      * See TS 23.216 for more information.
      * @hide
@@ -13375,6 +13409,95 @@ public class TelephonyManager {
         } else {
             requestRadioPowerOffForReason(RADIO_POWER_REASON_CARRIER);
         }
+    }
+
+    /**
+     * Vote on disabling 5gN1 mode(access to 5G core network) in accordance with
+     * 3GPP TS 24.501 4.9. Multiple apps can vote for the same reason and the last
+     * vote will take effect. Each app is responsible for its vote.
+     * A disabling-5gN1Mode vote of a reason will be maintained until it is
+     * cleared by calling {@link clear5gN1ModeOffForReason} for that reason.
+     * When an app comes backup from a crash, it needs to make sure if its vote
+     * is as expected. An app can use the API {@link get5gN1ModeDisableReasons}
+     * to check its vote.
+     *
+     * Reference: 3GPP TS 24.501 sec 4.9 Disabling and re-enabling UE's N1 mode capability.
+     *
+     * @param reason The reason for disabling 5gN1 mode.
+     * @throws SecurityException if the caller does not have MODIFY_PHONE_STATE permission.
+     * @throws IllegalStateException if the Telephony service is not currently available.
+     *
+     * @hide
+     */
+     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+     public void request5gN1ModeDisableForReason(@5gN1ModeDisableReason int reason) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                if (!telephony.request5gN1ModeDisableForReason(getSubId(), reason)) {
+                    throw new IllegalStateException("Telephony service is not available.");
+                }
+            } else {
+                throw new IllegalStateException("Telephony service is null.");
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#request5gN1ModeDisableForReason", e);
+            e.rethrowAsRuntimeException();
+        }
+     }
+
+    /**
+     * Remove the vote on disabling 5gN1 mode for a reason, as requested by
+     * {@link request5gN1ModeDisableForReason}.
+     *
+     * @param reason The reason for disabling 5gN1 mode.
+     * @throws SecurityException if the caller does not have MODIFY_PHONE_STATE permission.
+     * @throws IllegalStateException if the Telephony service is not currently available.
+     *
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    public void clear5gN1ModeDisableForReason(@5gN1ModeDisableReason int reason) {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                if (!telephony.clear5gN1ModeDisableForReason(getSubId(), reason)) {
+                    throw new IllegalStateException("Telephony service is not available.");
+                }
+            } else {
+                throw new IllegalStateException("Telephony service is null.");
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#clear5gN1ModeDisableForReason", e);
+            e.rethrowAsRuntimeException();
+        }
+    }
+
+    /**
+     * Get reasons for disabling 5gN1 mode, as requested by {@link request5gN1ModeDisableForReason}.
+     *
+     * @return Set of reasons for disabling 5gN1 mode.
+     * @throws SecurityException if the caller does not have READ_PRIVILEGED_PHONE_STATE permission.
+     * @throws IllegalStateException if the Telephony service is not currently available.
+     *
+     * @hide
+     */
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @NonNull
+    public Set<Integer> get5gN1ModeDisableReasons() {
+        Set<Integer> result = new HashSet<>();
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony != null) {
+                result.addAll(telephony.get5gN1ModeDisableReasons(getSubId()));
+            } else {
+                throw new IllegalStateException("Telephony service is null.");
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#get5gN1ModeDisableReasons", e);
+            e.rethrowAsRuntimeException();
+        }
+        return result;
     }
 
     /**

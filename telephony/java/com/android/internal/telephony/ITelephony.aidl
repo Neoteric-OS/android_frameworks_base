@@ -291,6 +291,43 @@ interface ITelephony {
     List getRadioPowerOffReasons(int subId, String callingPackage, String callingFeatureId);
 
     /**
+     * Vote on disabling 5gN1 mode(access to 5G core network) in accordance with 3GPP TS 24.501 4.9.
+     * Multiple apps can vote for the same reason and the last vote will take effect. Each app is
+     * responsible for its vote. A disabling-5gN1Mode vote of a reason will be maintained until it is
+     * cleared by calling {@link clear5gN1ModeOffForReason} for that reason. When an app comes
+     * backup from a crash, it needs to make sure if its vote is as expected. An app can use the
+     * API {@link get5gN1ModeDisableReasons} to check its vote.
+     *
+     * Reference: 3GPP TS 24.501 sec 4.9 Disabling and re-enabling UE's N1 mode capability.
+     *
+     * @param subId The subscription ID.
+     * @param reason The reason for disabling 5gN1 mode.
+     * @return true on success and false on failure.
+     * @hide
+     */
+    boolean request5gN1ModeDisableForReason(int subId, int reason);
+
+    /**
+     * Remove the vote on disabling 5gN1 mode for a reason, as requested by
+     * {@link request5gN1ModeDisableForReason}.
+     *
+     * @param subId The subscription ID.
+     * @param reason The reason for disabling 5gN1 mode.
+     * @return true on success and false on failure.
+     * @hide
+     */
+    boolean clear5gN1ModeDisableForReason(int subId, int reason);
+
+    /**
+     * Get reasons for disabling 5gN1 mode, as requested by {@link request5gN1ModeDisableForReason}.
+     *
+     * @param subId The subscription ID.
+     * @return List of reasons for disabling 5gN1 mode.
+     * @hide
+     */
+    List get5gN1ModeDisableReasons(int subId);
+
+    /**
      * This method has been removed due to security and stability issues.
      */
     @UnsupportedAppUsage
