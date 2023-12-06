@@ -24,10 +24,12 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Binder;
 import android.os.RemoteException;
 import android.os.UserHandle;
+import android.security.KeyStoreException;
 import android.security.keystore.IKeyAttestationApplicationIdProvider;
 import android.security.keystore.KeyAttestationApplicationId;
 import android.security.keystore.KeyAttestationPackageInfo;
 import android.security.keystore.Signature;
+import android.system.keystore2.ResponseCode;
 
 /**
  * @hide
@@ -46,7 +48,7 @@ public class KeyAttestationApplicationIdProviderService
     private PackageManager mPackageManager;
 
     public KeyAttestationApplicationId getKeyAttestationApplicationId(int uid)
-            throws RemoteException {
+            throws RemoteException, KeyStoreException {
         int callingUid = Binder.getCallingUid();
         if (callingUid != android.os.Process.KEYSTORE_UID
                 && callingUid != android.os.Process.CREDSTORE_UID) {
@@ -57,7 +59,7 @@ public class KeyAttestationApplicationIdProviderService
         try {
             String[] packageNames = mPackageManager.getPackagesForUid(uid);
             if (packageNames == null) {
-                throw new RemoteException("No packages for uid");
+                throw new KeyStoreException(ResponseCode.SYSTEM_ERROR_RETRYABLE, "");
             }
             int userId = UserHandle.getUserId(uid);
             keyAttestationPackageInfos = new KeyAttestationPackageInfo[packageNames.length];
