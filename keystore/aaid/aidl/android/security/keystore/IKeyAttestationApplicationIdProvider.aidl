@@ -22,6 +22,8 @@ import android.security.keystore.KeyAttestationApplicationId;
 interface IKeyAttestationApplicationIdProvider {
     /**
      * Provides information describing the possible applications identified by a UID.
+     * @throws KeystoreException on failure when the AttestationApplicationID is not
+     *          returned.
      * @hide
      */
     KeyAttestationApplicationId getKeyAttestationApplicationId(int uid);

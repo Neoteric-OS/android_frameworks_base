@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.android.server.security;
 
 import android.content.Context;
@@ -24,17 +23,18 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Binder;
 import android.os.RemoteException;
 import android.os.UserHandle;
+import android.security.KeyStoreException;
 import android.security.keystore.IKeyAttestationApplicationIdProvider;
 import android.security.keystore.KeyAttestationApplicationId;
 import android.security.keystore.KeyAttestationPackageInfo;
 import android.security.keystore.Signature;
+import android.system.keystore2.ResponseCode;
 
 /**
- * @hide
- * The KeyAttestationApplicationIdProviderService provides information describing the possible
- * applications identified by a UID. Due to UID sharing, this KeyAttestationApplicationId can
- * comprise information about multiple packages. The Information is used by keystore and credstore
- * to describe the initiating application of a key attestation procedure.
+ * @hide The KeyAttestationApplicationIdProviderService provides information describing the possible
+ *     applications identified by a UID. Due to UID sharing, this KeyAttestationApplicationId can
+ *     comprise information about multiple packages. The Information is used by keystore and
+ *     credstore to describe the initiating application of a key attestation procedure.
  */
 public class KeyAttestationApplicationIdProviderService
         extends IKeyAttestationApplicationIdProvider.Stub {
@@ -57,14 +57,16 @@ public class KeyAttestationApplicationIdProviderService
         try {
             String[] packageNames = mPackageManager.getPackagesForUid(uid);
             if (packageNames == null) {
-                throw new RemoteException("No packages for uid");
+                throw new KeyStoreException(ResponseCode.GET_ATTESTATION_APPLICATION_ID_FAILED,
+                "");
             }
             int userId = UserHandle.getUserId(uid);
             keyAttestationPackageInfos = new KeyAttestationPackageInfo[packageNames.length];
 
             for (int i = 0; i < packageNames.length; ++i) {
-                PackageInfo packageInfo = mPackageManager.getPackageInfoAsUser(packageNames[i],
-                        PackageManager.GET_SIGNATURES, userId);
+                PackageInfo packageInfo =
+                        mPackageManager.getPackageInfoAsUser(
+                                packageNames[i], PackageManager.GET_SIGNATURES, userId);
                 KeyAttestationPackageInfo pInfo = new KeyAttestationPackageInfo();
                 pInfo.packageName = new String(packageNames[i]);
                 pInfo.versionCode = packageInfo.getLongVersionCode();
@@ -79,6 +81,9 @@ public class KeyAttestationApplicationIdProviderService
             }
         } catch (NameNotFoundException nnfe) {
             throw new RemoteException(nnfe.getMessage());
+        } catch (KeyStoreException ke) {
+            throw new RemoteException(
+                    "Did not return Attestation App ID. Try again: " + ke.toString());
         } finally {
             Binder.restoreCallingIdentity(token);
         }
