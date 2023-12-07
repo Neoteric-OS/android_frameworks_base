@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "033f350a_26c6ea81",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2023-12-07T16:58:28Z",
+      "side": 1,
+      "message": "it is better to remove HDMI from DEVICE_MEDIA_UNMUTED_ON_PLUG_SET if this is really the wanted UX.",
+      "range": {
+        "startLine": 1340,
+        "startChar": 0,
+        "endLine": 1340,
+        "endChar": 60
+      },
+      "revId": "34dcbe9974a71a4d54efd27e29a63555cd60a54a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
