@@ -59,6 +59,8 @@ public class AndroidProtectedConfirmation {
 
     /**
      * Requests keystore call into the confirmationui HAL to display a prompt.
+     * @deprecated No longer used and won't be replaced. We plan to fully remove
+     * the APC in Android W
      *
      * @param listener the binder to use for callbacks.
      * @param promptText the prompt to display.
@@ -68,6 +70,7 @@ public class AndroidProtectedConfirmation {
      * @return one of the {@code CONFIRMATIONUI_*} constants, for
      * example {@code KeyStore.CONFIRMATIONUI_OK}.
      */
+    @Deprecated
     public int presentConfirmationPrompt(IConfirmationCallback listener, String promptText,
                                          byte[] extraData, String locale, int uiOptionsAsFlags) {
         try {
@@ -84,11 +87,14 @@ public class AndroidProtectedConfirmation {
 
     /**
      * Requests keystore call into the confirmationui HAL to cancel displaying a prompt.
+     * @deprecated No longer used and won't be replaced. We plan to fully remove
+     * the APC in Android W
      *
      * @param listener the binder passed to the {@link #presentConfirmationPrompt} method.
      * @return one of the {@code CONFIRMATIONUI_*} constants, for
      * example {@code KeyStore.CONFIRMATIONUI_OK}.
      */
+    @Deprecated
     public int cancelConfirmationPrompt(IConfirmationCallback listener) {
         try {
             getService().cancelPrompt(listener);
@@ -103,9 +109,12 @@ public class AndroidProtectedConfirmation {
 
     /**
      * Requests keystore to check if the confirmationui HAL is available.
+     * @deprecated No longer used and won't be replaced. We plan to fully remove
+     * the APC in Android W
      *
      * @return whether the confirmationUI HAL is available.
      */
+    @Deprecated
     public boolean isConfirmationPromptSupported() {
         try {
             return getService().isSupported();
