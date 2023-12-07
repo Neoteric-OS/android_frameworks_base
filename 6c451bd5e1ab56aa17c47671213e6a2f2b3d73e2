@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad22fe0f_ee3d8bc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2023-12-07T23:51:17Z",
+      "side": 1,
+      "message": "Same as https://r.android.com/2390957, re-applying.",
+      "revId": "6c451bd5e1ab56aa17c47671213e6a2f2b3d73e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
