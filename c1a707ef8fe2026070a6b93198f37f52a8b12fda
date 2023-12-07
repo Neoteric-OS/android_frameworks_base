@@ -50,6 +50,23 @@
       "message": "Amith is a better reviewer than me",
       "revId": "c1a707ef8fe2026070a6b93198f37f52a8b12fda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0034f0f_6ec2bff4",
+        "filename": "services/tests/servicestests/src/com/android/server/utils/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2023-12-07T17:57:30Z",
+      "side": 1,
+      "message": "Can you add another line for bug component, if you have a performance team bug component? That way any failures in a particular test file can be automatically assigned to the right bug component.\n\nSomething like (ignore the double quotes, had to prevent gerrit from treating hash as markup)\n\"# Bug component: 123456 \u003d per-file AnrTimer*.java\"",
+      "revId": "c1a707ef8fe2026070a6b93198f37f52a8b12fda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
