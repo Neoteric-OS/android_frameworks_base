@@ -158,7 +158,7 @@ public final class Looper {
     @SuppressWarnings({"UnusedTokenOfOriginalCallingIdentity",
             "ClearIdentityCallNotFollowedByTryFinally"})
     private static boolean loopOnce(final Looper me,
-            final long ident, final int thresholdOverride) {
+            final long ident, final int thresholdOverride, final boolean verboseLogging) {
         Message msg = me.mQueue.next(); // might block
         if (msg == null) {
             // No message indicates that the message queue is quitting.
@@ -219,15 +219,21 @@ public final class Looper {
             }
         }
         if (logSlowDelivery) {
+            boolean slow = false;
+
+            if (!me.mSlowDeliveryDetected || verboseLogging) {
+                slow = showSlowLog(slowDeliveryThresholdMs, msg.when, dispatchStart,
+                        "delivery", msg);
+            }
             if (me.mSlowDeliveryDetected) {
-                if ((dispatchStart - msg.when) <= 10) {
+                if (!slow && (dispatchStart - msg.when) <= 10) {
                     Slog.w(TAG, "Drained");
                     me.mSlowDeliveryDetected = false;
                 }
             } else {
-                if (showSlowLog(slowDeliveryThresholdMs, msg.when, dispatchStart, "delivery",
-                        msg)) {
-                    // Once we write a slow delivery log, suppress until the queue drains.
+                if (slow) {
+                    // A slow delivery is detected, suppressing further logs unless verbose logging
+                    // is enabled.
                     me.mSlowDeliveryDetected = true;
                 }
             }
@@ -280,6 +286,11 @@ public final class Looper {
         Binder.clearCallingIdentity();
         final long ident = Binder.clearCallingIdentity();
 
+        // Enable/Disable verbose logging with a system prop. e.g.
+        // adb shell 'setprop log.looper.slow.verbose false && stop && start'
+        final boolean verboseLogging =
+                SystemProperties.getBoolean("log.looper.slow.verbose", false);
+
         // Allow overriding a threshold for all processes with a system prop. e.g.
         // adb shell 'setprop log.looper.slow.all_processes 1 && stop && start'
         final int globalOverride = SystemProperties.getInt("log.looper.slow.all_processes", -1);
@@ -296,7 +307,7 @@ public final class Looper {
         me.mSlowDeliveryDetected = false;
 
         for (;;) {
-            if (!loopOnce(me, ident, thresholdOverride)) {
+            if (!loopOnce(me, ident, thresholdOverride, verboseLogging)) {
                 return;
             }
         }
