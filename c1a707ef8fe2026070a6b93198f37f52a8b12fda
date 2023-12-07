@@ -85,6 +85,24 @@
       "parentUuid": "f0034f0f_6ec2bff4",
       "revId": "c1a707ef8fe2026070a6b93198f37f52a8b12fda",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6039534_53f20731",
+        "filename": "services/tests/servicestests/src/com/android/server/utils/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2023-12-07T18:22:56Z",
+      "side": 1,
+      "message": "Looks right. Now I just hope it works as expected for this suite of tests.",
+      "parentUuid": "c7dc5a80_9601ef20",
+      "revId": "c1a707ef8fe2026070a6b93198f37f52a8b12fda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
