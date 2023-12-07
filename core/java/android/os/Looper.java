@@ -280,14 +280,19 @@ public final class Looper {
         Binder.clearCallingIdentity();
         final long ident = Binder.clearCallingIdentity();
 
+        // Allow overriding a threshold for all processes with a system prop. e.g.
+        // adb shell 'setprop log.looper.slow.all_processes 1 && stop && start'
+        final int globalOverride = SystemProperties.getInt("log.looper.slow.all_processes", -1);
+
         // Allow overriding a threshold with a system prop. e.g.
         // adb shell 'setprop log.looper.1000.main.slow 1 && stop && start'
-        final int thresholdOverride =
+        final int localOverride =
                 SystemProperties.getInt("log.looper."
                         + Process.myUid() + "."
                         + Thread.currentThread().getName()
                         + ".slow", -1);
 
+        final int thresholdOverride = globalOverride >= 0 ? globalOverride : localOverride;
         me.mSlowDeliveryDetected = false;
 
         for (;;) {
