@@ -76,6 +76,7 @@ public final class Looper {
     @UnsupportedAppUsage
     private static Looper sMainLooper;  // guarded by Looper.class
     private static Observer sObserver;
+    private static boolean sVerboseLogging;
 
     @UnsupportedAppUsage
     final MessageQueue mQueue;
@@ -246,17 +247,21 @@ public final class Looper {
             }
         }
         if (logSlowDelivery) {
+            boolean slow = false;
+
+            if (!me.mSlowDeliveryDetected || sVerboseLogging) {
+                slow = showSlowLog(slowDeliveryThresholdMs, msg.when, dispatchStart,
+                        "delivery", msg);
+            }
             if (me.mSlowDeliveryDetected) {
-                if ((dispatchStart - msg.when) <= 10) {
+                if (!slow && (dispatchStart - msg.when) <= 10) {
                     Slog.w(TAG, "Drained");
                     me.mSlowDeliveryDetected = false;
                 }
-            } else {
-                if (showSlowLog(slowDeliveryThresholdMs, msg.when, dispatchStart, "delivery",
-                        msg)) {
-                    // Once we write a slow delivery log, suppress until the queue drains.
-                    me.mSlowDeliveryDetected = true;
-                }
+            } else if (slow) {
+                // A slow delivery is detected, suppressing further logs unless verbose logging
+                // is enabled.
+                me.mSlowDeliveryDetected = true;
             }
         }
         if (logSlowDispatch) {
@@ -310,6 +315,13 @@ public final class Looper {
         // Allow overriding a threshold with a system prop. e.g.
         // adb shell 'setprop log.looper.1000.main.slow 1 && stop && start'
         final int thresholdOverride = getThresholdOverride();
+
+        // Enable/Disable verbose logging with a system prop. e.g.
+        // adb shell 'setprop log.looper.slow.verbose false && stop && start'
+        if (thresholdOverride > 0) {
+            sVerboseLogging = SystemProperties.getBoolean("log.looper.slow.verbose",
+                    sVerboseLogging);
+        }
 
         me.mSlowDeliveryDetected = false;
 
@@ -456,6 +468,7 @@ public final class Looper {
     public void setSlowLogThresholdMs(long slowDispatchThresholdMs, long slowDeliveryThresholdMs) {
         mSlowDispatchThresholdMs = slowDispatchThresholdMs;
         mSlowDeliveryThresholdMs = slowDeliveryThresholdMs;
+        sVerboseLogging = SystemProperties.getBoolean("log.looper.slow.verbose", sVerboseLogging);
     }
 
     /**
