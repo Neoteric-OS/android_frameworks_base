@@ -22,6 +22,30 @@
       },
       "revId": "5384d7e3ec2acbcb8343aaf4e34bf1f2612a54f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "069c4315_28bbd89c",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2023-12-08T16:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29fd9b5c_9d6d375f",
+      "range": {
+        "startLine": 687,
+        "startChar": 0,
+        "endLine": 687,
+        "endChar": 101
+      },
+      "revId": "5384d7e3ec2acbcb8343aaf4e34bf1f2612a54f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
