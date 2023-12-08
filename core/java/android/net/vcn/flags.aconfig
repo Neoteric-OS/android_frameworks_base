@@ -6,3 +6,10 @@ flag {
     description: "Feature flag for safe mode configurability"
     bug: "276358140"
 }
+
+flag {
+    name: "network_metric_monitor"
+    namespace: "vcn"
+    description: "Feature flag for enabling network metric monitor"
+    bug: "282996138"
+}
