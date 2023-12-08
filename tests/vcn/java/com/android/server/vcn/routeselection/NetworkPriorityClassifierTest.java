@@ -147,29 +147,12 @@ public class NetworkPriorityClassifierTest {
         when(mTelephonyManager.getNetworkOperator()).thenReturn(PLMN_ID);
         when(mTelephonyManager.getSimSpecificCarrierId()).thenReturn(CARRIER_ID);
 
-        mWifiNetworkRecord =
-                getTestNetworkRecord(
-                        WIFI_NETWORK_CAPABILITIES,
-                        VcnGatewayConnectionConfig.DEFAULT_UNDERLYING_NETWORK_TEMPLATES);
-        mCellNetworkRecord =
-                getTestNetworkRecord(
-                        CELL_NETWORK_CAPABILITIES,
-                        VcnGatewayConnectionConfig.DEFAULT_UNDERLYING_NETWORK_TEMPLATES);
+        mWifiNetworkRecord = getTestNetworkRecord(WIFI_NETWORK_CAPABILITIES);
+        mCellNetworkRecord = getTestNetworkRecord(CELL_NETWORK_CAPABILITIES);
     }
 
-    private UnderlyingNetworkRecord getTestNetworkRecord(
-            NetworkCapabilities nc, List<VcnUnderlyingNetworkTemplate> underlyingNetworkTemplates) {
-        return new UnderlyingNetworkRecord(
-                mNetwork,
-                nc,
-                LINK_PROPERTIES,
-                false /* isBlocked */,
-                mVcnContext,
-                underlyingNetworkTemplates,
-                SUB_GROUP,
-                mSubscriptionSnapshot,
-                null /* currentlySelected */,
-                null /* carrierConfig */);
+    private UnderlyingNetworkRecord getTestNetworkRecord(NetworkCapabilities nc) {
+        return new UnderlyingNetworkRecord(mNetwork, nc, LINK_PROPERTIES, false /* isBlocked */);
     }
 
     @Test
@@ -543,7 +526,16 @@ public class NetworkPriorityClassifierTest {
 
     @Test
     public void testCalculatePriorityClass() throws Exception {
-        assertEquals(2, mCellNetworkRecord.priorityClass);
+        final int priorityClass =
+                NetworkPriorityClassifier.calculatePriorityClass(
+                        mVcnContext,
+                        mCellNetworkRecord,
+                        VcnGatewayConnectionConfig.DEFAULT_UNDERLYING_NETWORK_TEMPLATES,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        null /* currentlySelected */,
+                        null /* carrierConfig */);
+        assertEquals(2, priorityClass);
     }
 
     private void checkCalculatePriorityClassFailToMatchAny(
@@ -561,10 +553,19 @@ public class NetworkPriorityClassifierTest {
             ncBuilder.addCapability(NET_CAPABILITY_INTERNET);
         }
 
-        final UnderlyingNetworkRecord nonDunNetworkRecord =
-                getTestNetworkRecord(ncBuilder.build(), templatesRequireDun);
+        final UnderlyingNetworkRecord nonDunNetworkRecord = getTestNetworkRecord(ncBuilder.build());
 
-        assertEquals(expectedPriorityClass, nonDunNetworkRecord.priorityClass);
+        final int priorityClass =
+                NetworkPriorityClassifier.calculatePriorityClass(
+                        mVcnContext,
+                        nonDunNetworkRecord,
+                        templatesRequireDun,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        null /* currentlySelected */,
+                        null /* carrierConfig */);
+
+        assertEquals(expectedPriorityClass, priorityClass);
     }
 
     @Test
