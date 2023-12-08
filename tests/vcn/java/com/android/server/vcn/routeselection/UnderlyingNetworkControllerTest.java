@@ -29,13 +29,12 @@ import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.WI
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.WIFI_EXIT_RSSI_THRESHOLD_DEFAULT;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -67,6 +66,7 @@ import android.util.ArraySet;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.VcnContext;
 import com.android.server.vcn.VcnNetworkProvider;
+import com.android.server.vcn.routeselection.UnderlyingNetworkController.Dependencies;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.NetworkBringupCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkListener;
@@ -77,6 +77,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,10 +155,13 @@ public class UnderlyingNetworkControllerTest {
     @Mock private UnderlyingNetworkControllerCallback mNetworkControllerCb;
     @Mock private Network mNetwork;
 
+    @Spy private Dependencies mDependencies = new Dependencies();
+
     @Captor private ArgumentCaptor<UnderlyingNetworkListener> mUnderlyingNetworkListenerCaptor;
 
     private TestLooper mTestLooper;
     private VcnContext mVcnContext;
+    private UnderlyingNetworkEvaluator mNetworkEvaluator;
     private UnderlyingNetworkController mUnderlyingNetworkController;
 
     @Before
@@ -189,13 +193,28 @@ public class UnderlyingNetworkControllerTest {
 
         when(mSubscriptionSnapshot.getAllSubIdsInGroup(eq(SUB_GROUP))).thenReturn(INITIAL_SUB_IDS);
 
+        mNetworkEvaluator =
+                spy(
+                        new UnderlyingNetworkEvaluator(
+                                mVcnContext,
+                                mNetwork,
+                                VcnGatewayConnectionConfigTest.buildTestConfig()
+                                        .getVcnUnderlyingNetworkPriorities(),
+                                SUB_GROUP,
+                                mSubscriptionSnapshot,
+                                null));
+        doReturn(mNetworkEvaluator)
+                .when(mDependencies)
+                .newUnderlyingNetworkEvaluator(any(), any(), any(), any(), any(), any());
+
         mUnderlyingNetworkController =
                 new UnderlyingNetworkController(
                         mVcnContext,
                         VcnGatewayConnectionConfigTest.buildTestConfig(),
                         SUB_GROUP,
                         mSubscriptionSnapshot,
-                        mNetworkControllerCb);
+                        mNetworkControllerCb,
+                        mDependencies);
     }
 
     private void resetVcnContext() {
@@ -489,13 +508,7 @@ public class UnderlyingNetworkControllerTest {
             NetworkCapabilities networkCapabilities,
             LinkProperties linkProperties,
             boolean isBlocked) {
-        return new UnderlyingNetworkRecord(
-                network,
-                networkCapabilities,
-                linkProperties,
-                isBlocked,
-                false /* isSelected */,
-                0 /* priorityClass */);
+        return new UnderlyingNetworkRecord(network, networkCapabilities, linkProperties, isBlocked);
     }
 
     @Test
@@ -515,24 +528,12 @@ public class UnderlyingNetworkControllerTest {
         UnderlyingNetworkRecord recordC =
                 new UnderlyingNetworkRecord(
                         mNetwork,
-                        INITIAL_NETWORK_CAPABILITIES,
-                        INITIAL_LINK_PROPERTIES,
-                        false /* isBlocked */,
-                        true /* isSelected */,
-                        -1 /* priorityClass */);
-        UnderlyingNetworkRecord recordD =
-                getTestNetworkRecord(
-                        mNetwork,
                         UPDATED_NETWORK_CAPABILITIES,
                         UPDATED_LINK_PROPERTIES,
                         false /* isBlocked */);
 
         assertEquals(recordA, recordB);
-        assertEquals(recordA, recordC);
-        assertNotEquals(recordA, recordD);
-
-        assertTrue(UnderlyingNetworkRecord.isEqualIncludingPriorities(recordA, recordB));
-        assertFalse(UnderlyingNetworkRecord.isEqualIncludingPriorities(recordA, recordC));
+        assertNotEquals(recordA, recordC);
     }
 
     @Test
@@ -583,6 +584,7 @@ public class UnderlyingNetworkControllerTest {
                         INITIAL_LINK_PROPERTIES,
                         false /* isBlocked */);
         verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
+        verify(mNetworkEvaluator).setIsSelected(true);
         return cb;
     }
 
@@ -738,16 +740,7 @@ public class UnderlyingNetworkControllerTest {
         cb.onLinkPropertiesChanged(network, INITIAL_LINK_PROPERTIES);
         cb.onBlockedStatusChanged(network, false /* isFalse */);
         return new UnderlyingNetworkRecord(
-                network,
-                responseNetworkCaps,
-                INITIAL_LINK_PROPERTIES,
-                false /* isBlocked */,
-                mVcnContext,
-                underlyingNetworkTemplates,
-                SUB_GROUP,
-                mSubscriptionSnapshot,
-                currentlySelected,
-                null /* carrierConfig */);
+                network, responseNetworkCaps, INITIAL_LINK_PROPERTIES, false /* isBlocked */);
     }
 
     @Test
