@@ -16,6 +16,23 @@
       "message": "please have a look",
       "revId": "1938b7e7441663ed2c5fa74e9981ba9dc05c6ba2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "063274e5_d176cff9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2023-12-08T00:18:09Z",
+      "side": 1,
+      "message": "Thanks William, I guess we need one more approval right?",
+      "revId": "1938b7e7441663ed2c5fa74e9981ba9dc05c6ba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
