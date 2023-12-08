@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "378caaba_2d18f4c3",
+        "filename": "services/core/java/com/android/server/biometrics/sensors/AuthenticationClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1432799
+      },
+      "writtenOn": "2023-12-08T20:59:00Z",
+      "side": 1,
+      "message": "We have this code checked in upstream, it should flow to AOSP soon (for V)",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 43
+      },
+      "revId": "b5efc27ed26f198f97d5265c1583d702f76c7d72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
