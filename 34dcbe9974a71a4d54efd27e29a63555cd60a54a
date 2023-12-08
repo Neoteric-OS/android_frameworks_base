@@ -22,6 +22,30 @@
       },
       "revId": "34dcbe9974a71a4d54efd27e29a63555cd60a54a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60b045db_bfb4457c",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2023-12-08T14:50:49Z",
+      "side": 1,
+      "message": "Done, thanks for the input. Since it\u0027s a product decision if we want to change this already long standing behaviour, I\u0027ll first involve a few more stakeholders before submitting.",
+      "parentUuid": "033f350a_26c6ea81",
+      "range": {
+        "startLine": 1340,
+        "startChar": 0,
+        "endLine": 1340,
+        "endChar": 60
+      },
+      "revId": "34dcbe9974a71a4d54efd27e29a63555cd60a54a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
