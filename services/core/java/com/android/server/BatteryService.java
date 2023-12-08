@@ -17,6 +17,7 @@
 package com.android.server;
 
 import static android.os.Flags.stateOfHealthPublic;
+
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import static com.android.server.health.Utils.copyV1Battery;
 
@@ -1324,6 +1325,8 @@ public final class BatteryService extends SystemService {
                 case BatteryManager.BATTERY_PROPERTY_MANUFACTURING_DATE:
                 case BatteryManager.BATTERY_PROPERTY_FIRST_USAGE_DATE:
                 case BatteryManager.BATTERY_PROPERTY_CHARGING_POLICY:
+                case BatteryManager.BATTERY_PROPERTY_SERIAL_NUMBER:
+                case BatteryManager.BATTERY_PROPERTY_PART_STATUS:
                     mContext.enforceCallingPermission(
                             android.Manifest.permission.BATTERY_STATS, null);
                     break;

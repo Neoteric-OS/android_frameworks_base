@@ -20,3 +20,10 @@ flag {
     description: "Guards a new UserManager user restriction that admins can use to require cellular encryption on their managed devices."
     bug: "276752881"
 }
+
+flag {
+    name: "battery_part_status_api"
+    namespace: "system_sw_battery"
+    description: "Feature flag for adding Health HAL v3 APIs."
+    bug: "309792384"
+}

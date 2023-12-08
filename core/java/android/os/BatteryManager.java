@@ -17,6 +17,7 @@
 package android.os;
 
 import static android.os.Flags.FLAG_STATE_OF_HEALTH_PUBLIC;
+import static android.os.Flags.FLAG_BATTERY_PART_STATUS_API;
 
 import android.Manifest.permission;
 import android.annotation.FlaggedApi;
@@ -236,6 +237,34 @@ public class BatteryManager {
     public static final int CHARGING_POLICY_ADAPTIVE_LONGLIFE =
                                             OsProtoEnums.CHARGING_POLICY_ADAPTIVE_LONGLIFE; // = 4
 
+    // values for "battery part status" property
+    /**
+     * Battery part status is not supported.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int PART_STATUS_UNSUPPORTED =
+                                            OsProtoEnums.BATTERY_PART_STATUS_UNSUPPORTED; // = 0
+
+    /**
+     * Battery is the original device battery.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int PART_STATUS_ORIGINAL =
+                                            OsProtoEnums.BATTERY_PART_STATUS_ORIGINAL; // = 1
+
+    /**
+     * Battery has been replaced.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int PART_STATUS_REPLACED =
+                                            OsProtoEnums.BATTERY_PART_STATUS_REPLACED; // = 2
+
     /** @hide */
     @SuppressLint("UnflaggedApi") // TestApi without associated feature.
     @TestApi
@@ -365,6 +394,32 @@ public class BatteryManager {
      */
     @FlaggedApi(FLAG_STATE_OF_HEALTH_PUBLIC)
     public static final int BATTERY_PROPERTY_STATE_OF_HEALTH = 10;
+
+    /**
+     * Battery part serial number.
+     *
+     * <p class="note">
+     * The sender must hold the {@link android.Manifest.permission#BATTERY_STATS} permission.
+     *
+     * @hide
+     */
+    @RequiresPermission(permission.BATTERY_STATS)
+    @SystemApi
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_PROPERTY_SERIAL_NUMBER = 11;
+
+    /**
+     * Battery part status from a BATTERY_PART_STATUS_* value.
+     *
+     * <p class="note">
+     * The sender must hold the {@link android.Manifest.permission#BATTERY_STATS} permission.
+     *
+     * @hide
+     */
+    @RequiresPermission(permission.BATTERY_STATS)
+    @SystemApi
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_PROPERTY_PART_STATUS = 12;
 
     private final Context mContext;
     private final IBatteryStats mBatteryStats;
