@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12e32548_747226b7",
+        "filename": "core/java/android/os/HwNoService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-09T01:42:45Z",
+      "side": 1,
+      "message": "hmm - you may want to make this android.hidl.manager.V1_2.IServiceManager.Stub so that you can implement all the ServiceManager methods (e.g. return such and such in such and such case and so on).\n\nFor instance, that way you could actually implement service notifications. Right now, transact will just succeed (blah), but we wouldn\u0027t keep a strong reference to the notification object.\n\nWhat you have will work or perhaps will work temporarily, but it limits how much you can customize, so if this works, could also keep it until you need to give more specific errors/results.",
+      "range": {
+        "startLine": 24,
+        "startChar": 35,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "ab4e9b68f4dd0dcf0abf984a8b13d5cdc4940c47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
