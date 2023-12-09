@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ed44eb5_802eb404",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2023-12-09T04:41:30Z",
+      "side": 1,
+      "message": "Please help retrigger presubmit, we don\u0027t have permission to do so, thanks.",
+      "revId": "38d757b09be4a3f0330705d8c23f7dccb0010040",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
