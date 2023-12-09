@@ -229,7 +229,7 @@ fun Telemetry(universe: VisibleUniverse) {
                                 if (thrust != Vec2.Zero) "THR: %.0f%%".format(thrust.mag() * 100f)
                                 else null,
                                 "POS: %s".format(pos.str("%+7.0f")),
-                                "VEL: %.0f".format(velocity.mag())
+                                "VEL: %.1f%% speed of light".format(velocity.mag() / CRAFT_SPEED_LIMIT * 100f)
                             )
                             .joinToString("\n")
                     }

@@ -22,6 +22,7 @@ import androidx.compose.ui.util.lerp
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 import kotlin.math.sqrt
+import kotlin.random.Random
 
 const val UNIVERSE_RANGE = 200_000f
 
@@ -203,7 +204,8 @@ open class Universe(val namer: Namer, randomSeed: Long) : Simulator(randomSeed) 
 
             // Kepler's third law
             val period = sqrt(orbitRadius.pow(3f) / star.mass) * KEPLER_CONSTANT
-            val speed = 2f * PIf * orbitRadius / period
+            val direction = if (rng.nextBoolean()) 1f else -1f
+            val speed = 2f * PIf * orbitRadius / period * direction
 
             val p =
                 Planet(
