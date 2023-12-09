@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "091470596b4d6adc6cdeaf91955ed9b4696480a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "315575d2_c076af32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-09T01:49:24Z",
+      "side": 1,
+      "message": "adding git history person on persistentdata to ack, a few others don\u0027t appear to have AOSP accounts",
+      "revId": "091470596b4d6adc6cdeaf91955ed9b4696480a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
