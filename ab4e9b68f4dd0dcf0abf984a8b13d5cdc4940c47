@@ -22,6 +22,30 @@
       },
       "revId": "ab4e9b68f4dd0dcf0abf984a8b13d5cdc4940c47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "201ad985_f5895b0e",
+        "filename": "core/java/android/os/HwNoService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2023-12-11T23:30:50Z",
+      "side": 1,
+      "message": "discussed in chat. Tried ag/25561623 and we found IServiceManager.asInterface creatinga  proxy to wrap the binder and calls `transact` on it. Because it\u0027s a local HwBinder it hits this `CHECK`; https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/jni/android_os_HwBinder.cpp;drc\u003d8f4319d5a7e471f68ffdc921343da33f9ed803da;l\u003d268\n\nStack: https://paste.googleplex.com/6547610622492672\n\nSince this CL seems to work well enough (even though it doesn\u0027t have implementations for ServiceManager\u0027s APIs), we can use this and fix the callers when we find the issues.",
+      "parentUuid": "12e32548_747226b7",
+      "range": {
+        "startLine": 24,
+        "startChar": 35,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "ab4e9b68f4dd0dcf0abf984a8b13d5cdc4940c47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
