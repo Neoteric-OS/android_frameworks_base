@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "865ffcc8_100c5768",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1933945
+      },
+      "writtenOn": "2023-12-11T21:47:03Z",
+      "side": 1,
+      "message": "The presubmit is broken for a week and this trivial change has been verified internally.",
+      "revId": "bcb1cffda497394735ad72740dd5c42ad96c3c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
