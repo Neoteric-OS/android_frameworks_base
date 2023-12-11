@@ -16,6 +16,23 @@
       "message": "Please help retry presubmit, thank you.",
       "revId": "2dc403f67b0ee296ff2a4973923467397e3d8778",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa960702_5fa873c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2023-12-11T15:23:21Z",
+      "side": 1,
+      "message": "Please help with one more retry of presubmit, because only googler hands on that trigger.😞",
+      "revId": "2dc403f67b0ee296ff2a4973923467397e3d8778",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
