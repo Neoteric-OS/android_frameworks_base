@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "231938bf_881a9d8f",
+        "filename": "core/java/android/nfc/INfcVendorNciCallback.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-12-11T21:24:52Z",
+      "side": 1,
+      "message": "We cannot accept non-AOSP licenses.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 2
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a886b503_b633d140",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-12-11T21:24:52Z",
+      "side": 1,
+      "message": "No need for a new permission, all of the current privileged APIs in NFC are guarded by `WRITE_SECURE_SETTINGS`, let\u0027s continue using that.",
+      "range": {
+        "startLine": 2628,
+        "startChar": 52,
+        "endLine": 2628,
+        "endChar": 66
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4903f32_4a3cbb17",
+        "filename": "core/java/android/nfc/NfcVendorNciCallbackListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-12-11T21:24:52Z",
+      "side": 1,
+      "message": "We cannot accept non-AOSP licenses.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
