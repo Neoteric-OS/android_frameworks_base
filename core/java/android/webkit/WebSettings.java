@@ -1203,7 +1203,11 @@ public abstract class WebSettings {
      * changes to this setting after that point.
      *
      * @param flag {@code true} if the WebView should use the database storage API
+     * @deprecated WebSQL is deprecated and this method will become a no-op on all
+     * Android versions once support is removed in Chromium. See
+     * https://developer.chrome.com/blog/deprecating-web-sql for more information.
      */
+     @Deprecated
     public abstract void setDatabaseEnabled(boolean flag);
 
     /**
