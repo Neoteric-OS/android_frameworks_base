@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c9d060a_2e5a2068",
+        "filename": "core/java/android/nfc/INfcVendorNciCallback.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2023-12-12T04:47:27Z",
+      "side": 1,
+      "message": "This file is licensed with Apache License V2.0 inline with link below\nhttps://source.android.com/docs/setup/about/licenses#android-open-source-project-license\n\nOnly the copyright/Author is set as NXP",
+      "parentUuid": "231938bf_881a9d8f",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 2
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a886b503_b633d140",
         "filename": "core/java/android/nfc/NfcAdapter.java",
         "patchSetId": 1
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ef270ae_a7833aac",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2023-12-12T04:47:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a886b503_b633d140",
+      "range": {
+        "startLine": 2628,
+        "startChar": 52,
+        "endLine": 2628,
+        "endChar": 66
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d4903f32_4a3cbb17",
         "filename": "core/java/android/nfc/NfcVendorNciCallbackListener.java",
         "patchSetId": 1
@@ -60,6 +108,30 @@
       "writtenOn": "2023-12-11T21:24:52Z",
       "side": 1,
       "message": "We cannot accept non-AOSP licenses.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b0d34af_9695b7a0",
+        "filename": "core/java/android/nfc/NfcVendorNciCallbackListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2023-12-12T04:47:27Z",
+      "side": 1,
+      "message": "This file is licensed with Apache License V2.0 inline with link below\nhttps://source.android.com/docs/setup/about/licenses#android-open-source-project-license\n\nOnly the copyright/Author is set as NXP",
+      "parentUuid": "d4903f32_4a3cbb17",
       "range": {
         "startLine": 3,
         "startChar": 0,
