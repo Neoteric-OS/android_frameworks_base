@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f39c249c_654f2551",
+        "filename": "core/java/android/nfc/INfcVendorNciCallback.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2023-12-12T19:29:37Z",
+      "side": 1,
+      "message": "This will need us to go check with our legal team. We cannot accept non-standard AOSP copyright headers.",
+      "parentUuid": "7c9d060a_2e5a2068",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 2
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a886b503_b633d140",
         "filename": "core/java/android/nfc/NfcAdapter.java",
         "patchSetId": 1
