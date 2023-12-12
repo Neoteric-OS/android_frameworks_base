@@ -26,6 +26,7 @@ import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
 import android.os.StrictMode;
 import android.security.authorization.IKeystoreAuthorization;
+import android.security.authorization.LockScreenEvent;
 import android.system.keystore2.ResponseCode;
 import android.util.Log;
 
@@ -75,37 +76,26 @@ public class Authorization {
     }
 
     /**
-     * Tells Keystore that the device is now unlocked for a user.
+     * Informs keystore2 about lock screen event.
      *
-     * @param userId - the user's Android user ID
-     * @param password - a secret derived from the user's synthetic password, if the unlock method
-     *                   is LSKF (or equivalent) and thus has made the synthetic password available
+     * @param locked            - whether it is a lock (true) or unlock (false) event
+     * @param syntheticPassword - if it is an unlock event with the password, pass the synthetic
+     *                            password provided by the LockSettingService
+     * @param unlockingSids     - KeyMint secure user IDs that should be permitted to unlock
+     *                            UNLOCKED_DEVICE_REQUIRED keys.
+     *
      * @return 0 if successful or a {@code ResponseCode}.
      */
-    public static int onDeviceUnlocked(int userId, @Nullable byte[] password) {
+    public static int onLockScreenEvent(@NonNull boolean locked, @NonNull int userId,
+            @Nullable byte[] syntheticPassword, @Nullable long[] unlockingSids) {
         StrictMode.noteDiskWrite();
         try {
-            getService().onDeviceUnlocked(userId, password);
-            return 0;
-        } catch (RemoteException | NullPointerException e) {
-            Log.w(TAG, "Can not connect to keystore", e);
-            return SYSTEM_ERROR;
-        } catch (ServiceSpecificException e) {
-            return e.errorCode;
-        }
-    }
-
-    /**
-     * Tells Keystore that the device is now locked for a user.
-     *
-     * @param userId - the user's Android user ID
-     * @param unlockingSids - list of biometric SIDs with which the device may be unlocked again
-     * @return 0 if successful or a {@code ResponseCode}.
-     */
-    public static int onDeviceLocked(int userId, @NonNull long[] unlockingSids) {
-        StrictMode.noteDiskWrite();
-        try {
-            getService().onDeviceLocked(userId, unlockingSids);
+            if (locked) {
+                getService().onLockScreenEvent(LockScreenEvent.LOCK, userId, null, unlockingSids);
+            } else {
+                getService().onLockScreenEvent(
+                        LockScreenEvent.UNLOCK, userId, syntheticPassword, unlockingSids);
+            }
             return 0;
         } catch (RemoteException | NullPointerException e) {
             Log.w(TAG, "Can not connect to keystore", e);
