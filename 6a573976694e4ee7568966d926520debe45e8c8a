@@ -86,6 +86,42 @@
       "parentUuid": "ba1bbf5c_f96733ff",
       "revId": "6a573976694e4ee7568966d926520debe45e8c8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b720e13_2f14a146",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060493
+      },
+      "writtenOn": "2023-12-12T23:00:47Z",
+      "side": 1,
+      "message": "`master` is the old branch prior to our change to `main`.\n\nYou may be able to do this by selecting \"cherry-pick\" from the \"...\" menu.\n\nI think all the steps should be the same for `main` as for `master`, so you _could_ just copy/paste the changes. I think cherry-pick is easier, though.",
+      "parentUuid": "f8a9c279_48077d82",
+      "revId": "6a573976694e4ee7568966d926520debe45e8c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc156d16_86704339",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060493
+      },
+      "writtenOn": "2023-12-12T23:00:47Z",
+      "side": 1,
+      "message": "Yes, it will run in presubmit. I check out the full branch, build, install on a device or emulator, and run my tests locally. I don\u0027t think I\u0027ve ever heard of a framework developer not doing that.\n\nHow do you know that you haven\u0027t broken all of Android animations? Wouldn\u0027t it suck to have this CL cause a boot loop because you didn\u0027t test it locally?",
+      "parentUuid": "e9f9001a_cf2a0618",
+      "revId": "6a573976694e4ee7568966d926520debe45e8c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
