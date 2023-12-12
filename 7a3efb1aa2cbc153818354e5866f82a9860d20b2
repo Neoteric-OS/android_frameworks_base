@@ -16,6 +16,24 @@
       "message": "This is pulling in some formatting changes, should I try and import the original formatting changes before this?",
       "revId": "7a3efb1aa2cbc153818354e5866f82a9860d20b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c74448ec_f0be454b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-12T20:49:47Z",
+      "side": 1,
+      "message": "I\u0027d personally put a separate CL or // clang-format off/on this stuff\n\nbtw, can you add ActivityManager team reviewers here? I am here as last resort owners only for frameworks/base",
+      "parentUuid": "a2886336_8834bfe3",
+      "revId": "7a3efb1aa2cbc153818354e5866f82a9860d20b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
