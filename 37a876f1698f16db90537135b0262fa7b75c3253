@@ -16,6 +16,24 @@
       "message": "Hi Nate, this deprecates the `setDatabaseEnabled` method as suggested. I\u0027ve never made a change in android though, so please let me know if anything is wrong/missing, or if the branch is incorrect. Thanks!",
       "revId": "37a876f1698f16db90537135b0262fa7b75c3253",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad04c75d_30d5033c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3210561
+      },
+      "writtenOn": "2023-12-12T04:56:58Z",
+      "side": 1,
+      "message": "Oops, forgot to actually add you...",
+      "parentUuid": "7d9e3950_f82c3918",
+      "revId": "37a876f1698f16db90537135b0262fa7b75c3253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
