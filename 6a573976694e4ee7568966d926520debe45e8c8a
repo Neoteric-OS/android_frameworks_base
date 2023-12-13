@@ -140,6 +140,24 @@
       "parentUuid": "6b720e13_2f14a146",
       "revId": "6a573976694e4ee7568966d926520debe45e8c8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "042b6880_849b27e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1475028
+      },
+      "writtenOn": "2023-12-13T00:06:08Z",
+      "side": 1,
+      "message": "Ok thanks for the help, this is now https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2871506, I\u0027ll add you as a reviewer on that changeset and abandon this one.",
+      "parentUuid": "4d509f73_44e86ea1",
+      "revId": "6a573976694e4ee7568966d926520debe45e8c8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
