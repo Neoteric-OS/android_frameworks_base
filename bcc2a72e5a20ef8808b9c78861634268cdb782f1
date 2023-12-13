@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07e195a5_8a1125cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2023-12-13T01:40:42Z",
+      "side": 1,
+      "message": "Greetings Colleagues\n\nCould you please review this cherry-pick\n\nThank you in advance",
+      "revId": "bcc2a72e5a20ef8808b9c78861634268cdb782f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
