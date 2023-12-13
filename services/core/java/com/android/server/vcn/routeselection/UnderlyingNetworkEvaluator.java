@@ -21,6 +21,7 @@ import static com.android.server.vcn.util.PersistableBundleUtils.PersistableBund
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -43,18 +44,18 @@ import java.util.Objects;
  * @hide
  */
 class UnderlyingNetworkEvaluator {
-    private static final String TAG = UnderlyingNetworkEvaluator.class.getSimpleName();
+    protected static final String TAG = UnderlyingNetworkEvaluator.class.getSimpleName();
 
-    @NonNull private final VcnContext mVcnContext;
-    @NonNull private final UnderlyingNetworkRecord.Builder mNetworkRecordBuilder;
+    @NonNull protected final VcnContext mVcnContext;
+    @NonNull protected final UnderlyingNetworkRecord.Builder mNetworkRecordBuilder;
     @NonNull private final List<VcnUnderlyingNetworkTemplate> mUnderlyingNetworkTemplates;
     @NonNull private final ParcelUuid mSubscriptionGroup;
     @NonNull private final TelephonySubscriptionSnapshot mLastSnapshot;
-    @Nullable private final PersistableBundleWrapper mCarrierConfig;
+    @Nullable protected final PersistableBundleWrapper mCarrierConfig;
 
     @Nullable private UnderlyingNetworkRecord mCurrentRecord;
 
-    private boolean mIsSelected;
+    protected boolean mIsSelected;
     private int mPriorityClass = NetworkPriorityClassifier.PRIORITY_INVALID;
 
     UnderlyingNetworkEvaluator(
@@ -142,6 +143,14 @@ class UnderlyingNetworkEvaluator {
         updatePriorityClass();
     }
 
+    void setIpSecTransform(@NonNull IpSecTransform inTransform) {
+        // Do nothing
+    }
+
+    void close() {
+        // Do nothing
+    }
+
     boolean isValid() {
         return mNetworkRecordBuilder.isValid();
     }
@@ -171,14 +180,20 @@ class UnderlyingNetworkEvaluator {
         pw.println("mIsSelected: " + mIsSelected);
         pw.println("mPriorityClass: " + mPriorityClass);
 
+        dumpInternal(pw);
+
         pw.decreaseIndent();
     }
 
-    private String getLogPrefix() {
+    void dumpInternal(IndentingPrintWriter pw) {
+        // Do nothing
+    }
+
+    protected String getLogPrefix() {
         return "[Network " + mNetworkRecordBuilder.getNetwork() + "] ";
     }
 
-    private void logInfo(String msg) {
+    protected void logInfo(String msg) {
         Slog.i(TAG, getLogPrefix() + msg);
         LOCAL_LOG.log("[INFO ] " + TAG + getLogPrefix() + msg);
     }

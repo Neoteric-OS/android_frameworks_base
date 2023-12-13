@@ -30,6 +30,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -51,6 +52,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.VcnContext;
+import com.android.server.vcn.routeselection.UnderlyingNetworkEvaluatorNextNwMonitor.NetworkEvaluatorCallback;
 import com.android.server.vcn.util.LogUtils;
 
 import java.util.ArrayList;
@@ -190,7 +192,7 @@ public class UnderlyingNetworkController {
     }
 
     private void registerOrUpdateNetworkRequests() {
-        NetworkCallback oldRouteSelectionCallback = mRouteSelectionCallback;
+        UnderlyingNetworkListener oldRouteSelectionCallback = mRouteSelectionCallback;
         NetworkCallback oldWifiCallback = mWifiBringupCallback;
         NetworkCallback oldWifiEntryRssiThresholdCallback = mWifiEntryRssiThresholdCallback;
         NetworkCallback oldWifiExitRssiThresholdCallback = mWifiExitRssiThresholdCallback;
@@ -241,6 +243,10 @@ public class UnderlyingNetworkController {
         // Unregister old callbacks (as necessary)
         if (oldRouteSelectionCallback != null) {
             mConnectivityManager.unregisterNetworkCallback(oldRouteSelectionCallback);
+
+            if (mVcnContext.isIpSecPacketDetectorEnabled()) {
+                oldRouteSelectionCallback.close();
+            }
         }
         if (oldWifiCallback != null) {
             mConnectivityManager.unregisterNetworkCallback(oldWifiCallback);
@@ -404,6 +410,30 @@ public class UnderlyingNetworkController {
         registerOrUpdateNetworkRequests();
     }
 
+    /**
+     * Pass the IpSecTransform of the VCN to UnderlyingNetworkController for metric monitoring
+     *
+     * <p>Caller MUST call it when IpSecTransforms have been created for VCN creation or migration
+     */
+    public void updateIpSecTransform(
+            @NonNull UnderlyingNetworkRecord currentNetwork, @NonNull IpSecTransform inTransform) {
+        Objects.requireNonNull(currentNetwork, "currentNetwork is null");
+        Objects.requireNonNull(inTransform, "inTransform is null");
+
+        // Safety check
+        if (mCurrentRecord == null
+                || mRouteSelectionCallback == null
+                || !Objects.equals(currentNetwork.network, mCurrentRecord.network)) {
+            logWtf(
+                    String.format(
+                            "Programming error: UnderlyingNetworkController is in an invalid state"
+                                + " mCurrentRecord %s currentNetwork %s mRouteSelectionCallback %s",
+                            mCurrentRecord, currentNetwork, mRouteSelectionCallback));
+        }
+
+        mRouteSelectionCallback.setIpSecTransform(inTransform);
+    }
+
     /** Tears down this Tracker, and releases all underlying network requests. */
     public void teardown() {
         mVcnContext.ensureRunningOnLooperThread();
@@ -465,7 +495,7 @@ public class UnderlyingNetworkController {
      * truth.
      */
     @VisibleForTesting
-    class UnderlyingNetworkListener extends NetworkCallback {
+    class UnderlyingNetworkListener extends NetworkCallback implements NetworkEvaluatorCallback {
         private final Map<Network, UnderlyingNetworkEvaluator> mUnderlyingNetworkRecords =
                 new ArrayMap<>();
 
@@ -477,6 +507,13 @@ public class UnderlyingNetworkController {
             TreeSet<UnderlyingNetworkEvaluator> sorted =
                     new TreeSet<>(UnderlyingNetworkEvaluator.getComparator());
 
+            if (mVcnContext.getFeatureFlags().networkMetricMonitor()) {
+                sorted =
+                        new TreeSet<>(
+                                UnderlyingNetworkEvaluatorNextNwMonitor
+                                        .getComparatorNextNwMonitor());
+            }
+
             for (UnderlyingNetworkEvaluator evaluator : mUnderlyingNetworkRecords.values()) {
                 if (evaluator.getPriorityClass() != NetworkPriorityClassifier.PRIORITY_INVALID) {
                     sorted.add(evaluator);
@@ -487,7 +524,25 @@ public class UnderlyingNetworkController {
         }
 
         @Override
+        public void onEvaluationResultChanged() {
+            logD("UnderlyingNetworkListener#onEvaluationResultChanged");
+            reevaluateNetworks();
+        }
+
+        @Override
         public void onAvailable(@NonNull Network network) {
+            if (mVcnContext.getFeatureFlags().networkMetricMonitor()) {
+                mUnderlyingNetworkRecords.put(
+                        network,
+                        new UnderlyingNetworkEvaluatorNextNwMonitor(
+                                mVcnContext,
+                                network,
+                                mConnectionConfig.getVcnUnderlyingNetworkPriorities(),
+                                mSubscriptionGroup,
+                                mLastSnapshot,
+                                mCarrierConfig,
+                                UnderlyingNetworkListener.this));
+            } else {
             mUnderlyingNetworkRecords.put(
                     network,
                     new UnderlyingNetworkEvaluator(
@@ -497,10 +552,15 @@ public class UnderlyingNetworkController {
                             mSubscriptionGroup,
                             mLastSnapshot,
                             mCarrierConfig));
+            }
         }
 
         @Override
         public void onLost(@NonNull Network network) {
+            if (mVcnContext.isIpSecPacketDetectorEnabled()) {
+                mUnderlyingNetworkRecords.get(network).close();
+            }
+
             mUnderlyingNetworkRecords.remove(network);
 
             reevaluateNetworks();
@@ -557,6 +617,23 @@ public class UnderlyingNetworkController {
 
             // No need to reevaluate
         }
+
+        void setIpSecTransform(@NonNull IpSecTransform inTransform) {
+            logD("UnderlyingNetworkListener#setIpSecTransform");
+            for (UnderlyingNetworkEvaluator evaluator : mUnderlyingNetworkRecords.values()) {
+                evaluator.setIpSecTransform(inTransform);
+            }
+
+            // No need to reevaluate
+        }
+
+        void close() {
+            logD("UnderlyingNetworkListener#close");
+            for (UnderlyingNetworkEvaluator evaluator : mUnderlyingNetworkRecords.values()) {
+                evaluator.close();
+            }
+            mUnderlyingNetworkRecords.clear();
+        }
     }
 
     private String getLogPrefix() {
@@ -571,6 +648,11 @@ public class UnderlyingNetworkController {
 
     private String getTagLogPrefix() {
         return "[ " + TAG + " " + getLogPrefix() + "]";
+    }
+
+    private void logD(String msg) {
+        Slog.i(TAG, getLogPrefix() + msg);
+        LOCAL_LOG.log("[DEBUG] " + getTagLogPrefix() + msg);
     }
 
     private void logInfo(String msg) {

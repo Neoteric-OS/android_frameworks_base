@@ -81,6 +81,10 @@ public class VcnContext {
         return mCoreNetFeatureFlags;
     }
 
+    public boolean isIpSecPacketDetectorEnabled() {
+        return mFeatureFlags.networkMetricMonitor() && mCoreNetFeatureFlags.ipsecTransformState();
+    }
+
     /**
      * Verifies that the caller is running on the VcnContext Thread.
      *
