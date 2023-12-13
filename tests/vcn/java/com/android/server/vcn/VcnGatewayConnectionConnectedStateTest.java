@@ -269,6 +269,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
     @Test
     public void testCreatedTransformsAreApplied() throws Exception {
         verifyVcnTransformsApplied(mGatewayConnection, false /* expectForwardTransform */);
+        verify(mUnderlyingNetworkController).updateIpSecTransform(any(), any());
     }
 
     @Test
@@ -326,6 +327,8 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
                     .applyTunnelModeTransform(
                             eq(TEST_IPSEC_TUNNEL_RESOURCE_ID), eq(direction), anyInt(), any());
         }
+
+        verify(mUnderlyingNetworkController).updateIpSecTransform(any(), any());
 
         assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
 

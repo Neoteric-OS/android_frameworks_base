@@ -30,6 +30,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -43,6 +44,7 @@ import android.os.HandlerExecutor;
 import android.os.ParcelUuid;
 import android.telephony.TelephonyCallback;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Slog;
@@ -52,6 +54,7 @@ import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.VcnContext;
+import com.android.server.vcn.routeselection.UnderlyingNetworkEvaluator.NetworkEvaluatorCallback;
 import com.android.server.vcn.util.LogUtils;
 
 import java.util.ArrayList;
@@ -201,6 +204,10 @@ public class UnderlyingNetworkController {
         NetworkCallback oldWifiExitRssiThresholdCallback = mWifiExitRssiThresholdCallback;
         List<NetworkCallback> oldCellCallbacks = new ArrayList<>(mCellBringupCallbacks);
         mCellBringupCallbacks.clear();
+
+        for (UnderlyingNetworkEvaluator evaluator : mUnderlyingNetworkRecords.values()) {
+            evaluator.close();
+        }
         mUnderlyingNetworkRecords.clear();
 
         // Register new callbacks. Make-before-break; always register new callbacks before removal
@@ -410,6 +417,36 @@ public class UnderlyingNetworkController {
         registerOrUpdateNetworkRequests();
     }
 
+    /**
+     * Pass the IpSecTransform of the VCN to UnderlyingNetworkController for metric monitoring
+     *
+     * <p>Caller MUST call it when IpSecTransforms have been created for VCN creation or migration
+     */
+    public void updateIpSecTransform(
+            @NonNull UnderlyingNetworkRecord currentNetwork, @NonNull IpSecTransform inTransform) {
+        if (!mVcnContext.isFlagNetworkMetricMonitorEnabled()
+                || !mVcnContext.isFlagIpSecTransformStateEnabled()) {
+            throw new IllegalStateException(
+                    "#updateIpSecTransform: unexpected call; flags missing");
+        }
+
+        Objects.requireNonNull(currentNetwork, "currentNetwork is null");
+        Objects.requireNonNull(inTransform, "inTransform is null");
+
+        // Safety check
+        if (mCurrentRecord == null
+                || mRouteSelectionCallback == null
+                || !Objects.equals(currentNetwork.network, mCurrentRecord.network)) {
+            throw new IllegalStateException(
+                    TextUtils.formatSimple(
+                            "Programming error: UnderlyingNetworkController is in an invalid state"
+                                + " mCurrentRecord %s currentNetwork %s mRouteSelectionCallback %s",
+                            mCurrentRecord, currentNetwork, mRouteSelectionCallback));
+        }
+
+        mUnderlyingNetworkRecords.get(mCurrentRecord.network).setIpSecTransform(inTransform);
+    }
+
     /** Tears down this Tracker, and releases all underlying network requests. */
     public void teardown() {
         mVcnContext.ensureRunningOnLooperThread();
@@ -426,7 +463,7 @@ public class UnderlyingNetworkController {
 
     private TreeSet<UnderlyingNetworkEvaluator> getSortedUnderlyingNetworks() {
         TreeSet<UnderlyingNetworkEvaluator> sorted =
-                new TreeSet<>(UnderlyingNetworkEvaluator.getComparator());
+                new TreeSet<>(UnderlyingNetworkEvaluator.getComparator(mVcnContext));
 
         for (UnderlyingNetworkEvaluator evaluator : mUnderlyingNetworkRecords.values()) {
             if (evaluator.getPriorityClass() != NetworkPriorityClassifier.PRIORITY_INVALID) {
@@ -512,11 +549,17 @@ public class UnderlyingNetworkController {
                             mConnectionConfig.getVcnUnderlyingNetworkPriorities(),
                             mSubscriptionGroup,
                             mLastSnapshot,
-                            mCarrierConfig));
+                            mCarrierConfig,
+                            new NetworkEvaluatorCallbackImpl()));
         }
 
         @Override
         public void onLost(@NonNull Network network) {
+            if (mVcnContext.isFlagNetworkMetricMonitorEnabled()
+                    && mVcnContext.isFlagIpSecTransformStateEnabled()) {
+                mUnderlyingNetworkRecords.get(network).close();
+            }
+
             mUnderlyingNetworkRecords.remove(network);
 
             reevaluateNetworks();
@@ -564,6 +607,21 @@ public class UnderlyingNetworkController {
             if (evaluator.isValid()) {
                 reevaluateNetworks();
             }
+        }
+    }
+
+    @VisibleForTesting
+    class NetworkEvaluatorCallbackImpl implements NetworkEvaluatorCallback {
+        @Override
+        public void onEvaluationResultChanged() {
+            if (!mVcnContext.isFlagNetworkMetricMonitorEnabled()
+                    || !mVcnContext.isFlagIpSecTransformStateEnabled()) {
+                logWtf("#onEvaluationResultChanged: unexpected call; flags missing");
+                return;
+            }
+
+            mVcnContext.ensureRunningOnLooperThread();
+            reevaluateNetworks();
         }
     }
 
@@ -659,21 +717,22 @@ public class UnderlyingNetworkController {
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public static class Dependencies {
-        /** Construct a new UnderlyingNetworkEvaluator */
         public UnderlyingNetworkEvaluator newUnderlyingNetworkEvaluator(
                 @NonNull VcnContext vcnContext,
                 @NonNull Network network,
                 @NonNull List<VcnUnderlyingNetworkTemplate> underlyingNetworkTemplates,
                 @NonNull ParcelUuid subscriptionGroup,
                 @NonNull TelephonySubscriptionSnapshot lastSnapshot,
-                @Nullable PersistableBundleWrapper carrierConfig) {
+                @Nullable PersistableBundleWrapper carrierConfig,
+                @NonNull NetworkEvaluatorCallback evaluatorCallback) {
             return new UnderlyingNetworkEvaluator(
                     vcnContext,
                     network,
                     underlyingNetworkTemplates,
                     subscriptionGroup,
                     lastSnapshot,
-                    carrierConfig);
+                    carrierConfig,
+                    evaluatorCallback);
         }
     }
 }
