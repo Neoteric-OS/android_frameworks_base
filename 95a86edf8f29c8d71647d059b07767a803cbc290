@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f12172a_af868b39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2023-12-13T11:48:28Z",
+      "side": 1,
+      "message": "That is to say:\n\n* Fixed obvious conflicts with picking Jurijs\u0027 original T-based commit\n* Added the extra change in shouldGrantPermissionByProtectionFlags()\n* Adapted the commit message a little, e.g. variables that changed names from T to U.\n* Not tested, other than \"it builds\"",
+      "revId": "95a86edf8f29c8d71647d059b07767a803cbc290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e9fdcc9_59985278",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2023-12-13T11:48:28Z",
+      "side": 1,
+      "message": "As requested in the buganizer comments. Since the buganizer is 18 months old and we haven\u0027t actually been using this patch, it was not up to date, nor have we tested it to confirm it still solves the problem.",
+      "revId": "95a86edf8f29c8d71647d059b07767a803cbc290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
