@@ -16,6 +16,24 @@
       "message": "there is no test for artd being in ANR data.. \n\nboot a device, wait a bit, make sure artd is running\n\nthen call `adb shell am hang`. After 30s-1min or so, you should see a file appear in /data/anr, and you should verify this file contains information from artd",
       "revId": "f6f1e1b032b7595a1ad9ac1ff3322395f923d452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "104f9e5c_151e0308",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2023-12-13T15:29:47Z",
+      "side": 1,
+      "message": "Thanks for providing the instructions. I tested it and put the results in the CL description. PTAL.",
+      "parentUuid": "e9fa828a_d1bd837e",
+      "revId": "f6f1e1b032b7595a1ad9ac1ff3322395f923d452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
