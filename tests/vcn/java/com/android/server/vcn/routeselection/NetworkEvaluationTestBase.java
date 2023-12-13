@@ -26,6 +26,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.net.IpSecConfig;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -92,6 +94,7 @@ public abstract class NetworkEvaluationTestBase {
 
     protected static final LinkProperties LINK_PROPERTIES = getLinkPropertiesWithName("test_iface");
 
+    @Mock protected Context mContext;
     @Mock protected Network mNetwork;
     @Mock protected FeatureFlags mFeatureFlags;
     @Mock protected com.android.net.flags.FeatureFlags mCoreNetFeatureFlags;
@@ -107,12 +110,11 @@ public abstract class NetworkEvaluationTestBase {
 
         when(mNetwork.getNetId()).thenReturn(-1);
 
-        final Context mockContext = mock(Context.class);
         mTestLooper = new TestLooper();
         mVcnContext =
                 spy(
                         new VcnContext(
-                                mockContext,
+                                mContext,
                                 mTestLooper.getLooper(),
                                 mock(VcnNetworkProvider.class),
                                 false /* isInTestMode */));
@@ -122,9 +124,13 @@ public abstract class NetworkEvaluationTestBase {
         doReturn(true).when(mVcnContext).isFlagIpSecTransformStateEnabled();
 
         setupSystemService(
-                mockContext, mTelephonyManager, Context.TELEPHONY_SERVICE, TelephonyManager.class);
+                mContext, mTelephonyManager, Context.TELEPHONY_SERVICE, TelephonyManager.class);
         when(mTelephonyManager.createForSubscriptionId(SUB_ID)).thenReturn(mTelephonyManager);
         when(mTelephonyManager.getNetworkOperator()).thenReturn(PLMN_ID);
         when(mTelephonyManager.getSimSpecificCarrierId()).thenReturn(CARRIER_ID);
+    }
+
+    protected IpSecTransform makeDummyIpSecTransform() throws Exception {
+        return new IpSecTransform(mContext, new IpSecConfig());
     }
 }
