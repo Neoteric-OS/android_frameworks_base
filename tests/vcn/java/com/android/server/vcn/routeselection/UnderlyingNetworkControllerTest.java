@@ -47,6 +47,8 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.IpSecConfig;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -70,6 +72,7 @@ import com.android.server.vcn.routeselection.UnderlyingNetworkController.Depende
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.NetworkBringupCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkListener;
+import com.android.server.vcn.routeselection.UnderlyingNetworkEvaluator.NetworkEvaluatorCallback;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -153,11 +156,13 @@ public class UnderlyingNetworkControllerTest {
     @Mock private CarrierConfigManager mCarrierConfigManager;
     @Mock private TelephonySubscriptionSnapshot mSubscriptionSnapshot;
     @Mock private UnderlyingNetworkControllerCallback mNetworkControllerCb;
+    @Mock private NetworkEvaluatorCallback mEvaluatorCallback;
     @Mock private Network mNetwork;
 
     @Spy private Dependencies mDependencies = new Dependencies();
 
     @Captor private ArgumentCaptor<UnderlyingNetworkListener> mUnderlyingNetworkListenerCaptor;
+    @Captor private ArgumentCaptor<NetworkEvaluatorCallback> mEvaluatorCallbackCaptor;
 
     private TestLooper mTestLooper;
     private VcnContext mVcnContext;
@@ -202,10 +207,11 @@ public class UnderlyingNetworkControllerTest {
                                         .getVcnUnderlyingNetworkPriorities(),
                                 SUB_GROUP,
                                 mSubscriptionSnapshot,
-                                null));
+                                null,
+                                mEvaluatorCallback));
         doReturn(mNetworkEvaluator)
                 .when(mDependencies)
-                .newUnderlyingNetworkEvaluator(any(), any(), any(), any(), any(), any());
+                .newUnderlyingNetworkEvaluator(any(), any(), any(), any(), any(), any(), any());
 
         mUnderlyingNetworkController =
                 new UnderlyingNetworkController(
@@ -220,6 +226,8 @@ public class UnderlyingNetworkControllerTest {
     private void resetVcnContext() {
         reset(mVcnContext);
         doNothing().when(mVcnContext).ensureRunningOnLooperThread();
+        doReturn(true).when(mVcnContext).isFlagNetworkMetricMonitorEnabled();
+        doReturn(true).when(mVcnContext).isFlagIpSecTransformStateEnabled();
     }
 
     // Package private for use in NetworkPriorityClassifierTest
@@ -555,6 +563,45 @@ public class UnderlyingNetworkControllerTest {
                 .setSubscriptionSnapshotAndCarrierConfig(any(), any(), any(), any());
     }
 
+    @Test
+    public void testUpdateIpSecTransform() {
+        verifyRegistrationOnAvailableAndGetCallback();
+
+        final UnderlyingNetworkRecord expectedRecord =
+                getTestNetworkRecord(
+                        mNetwork,
+                        INITIAL_NETWORK_CAPABILITIES,
+                        INITIAL_LINK_PROPERTIES,
+                        false /* isBlocked */);
+        final IpSecTransform expectedTransform = new IpSecTransform(mContext, new IpSecConfig());
+
+        mUnderlyingNetworkController.updateInboundTransform(expectedRecord, expectedTransform);
+        verify(mNetworkEvaluator).setInboundTransform(expectedTransform);
+    }
+
+    @Test
+    public void testOnEvaluationResultChanged() {
+        verifyRegistrationOnAvailableAndGetCallback();
+
+        // Verify #reevaluateNetworks is called by checking #getNetworkRecord
+        verify(mNetworkEvaluator).getNetworkRecord();
+
+        // Trigger the callback
+        verify(mDependencies)
+                .newUnderlyingNetworkEvaluator(
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        mEvaluatorCallbackCaptor.capture());
+        mEvaluatorCallbackCaptor.getValue().onEvaluationResultChanged();
+
+        // Verify #reevaluateNetworks is called again
+        verify(mNetworkEvaluator, times(2)).getNetworkRecord();
+    }
+
     private UnderlyingNetworkListener verifyRegistrationOnAvailableAndGetCallback() {
         return verifyRegistrationOnAvailableAndGetCallback(INITIAL_NETWORK_CAPABILITIES);
     }
@@ -572,6 +619,12 @@ public class UnderlyingNetworkControllerTest {
 
     private void verifyOnSelectedUnderlyingNetworkChanged(UnderlyingNetworkRecord expectedRecord) {
         verify(mNetworkControllerCb).onSelectedUnderlyingNetworkChanged(eq(expectedRecord));
+    }
+
+    private void verifyOnSelectedUnderlyingNetworkChanged(
+            UnderlyingNetworkEvaluator expectedEvaluator) {
+        verifyOnSelectedUnderlyingNetworkChanged(expectedEvaluator.getNetworkRecord());
+        verify(expectedEvaluator).setIsSelected(true, any(), any(), any(), any());
     }
 
     private UnderlyingNetworkListener verifyRegistrationOnAvailableAndGetCallback(
@@ -683,7 +736,7 @@ public class UnderlyingNetworkControllerTest {
 
         cb.onBlockedStatusChanged(mNetwork, true /* isBlocked */);
 
-        verifyOnSelectedUnderlyingNetworkChanged(null);
+        verify(mNetworkControllerCb).onSelectedUnderlyingNetworkChanged(null);
     }
 
     @Test
@@ -691,6 +744,7 @@ public class UnderlyingNetworkControllerTest {
         UnderlyingNetworkListener cb = verifyRegistrationOnAvailableAndGetCallback();
 
         cb.onLost(mNetwork);
+        verify(mNetworkEvaluator).close();
 
         verify(mNetworkControllerCb).onSelectedUnderlyingNetworkChanged(null);
     }
@@ -756,10 +810,11 @@ public class UnderlyingNetworkControllerTest {
                                 underlyingNetworkTemplates,
                                 SUB_GROUP,
                                 mSubscriptionSnapshot,
-                                null));
+                                null,
+                                mEvaluatorCallback));
         doReturn(evaluator)
                 .when(mDependencies)
-                .newUnderlyingNetworkEvaluator(any(), any(), any(), any(), any(), any());
+                .newUnderlyingNetworkEvaluator(any(), any(), any(), any(), any(), any(), any());
 
         cb.onAvailable(network);
         cb.onCapabilitiesChanged(network, responseNetworkCaps);

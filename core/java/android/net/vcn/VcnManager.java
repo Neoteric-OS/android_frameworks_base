@@ -124,6 +124,17 @@ public class VcnManager {
     public static final String VCN_NETWORK_SELECTION_IPSEC_PACKET_LOSS_PERCENT_THRESHOLD_KEY =
             "vcn_network_selection_ipsec_packet_loss_percent_threshold";
 
+    /**
+     * Key for the list of timeouts in minute to stop penalizing an underlying network candidate
+     *
+     * <p>WARNING: The VCN does not listen for changes to this key made after VCN startup.
+     *
+     * @hide
+     */
+    @NonNull
+    public static final String VCN_NETWORK_SELECTION_PENALTY_TIMEOUT_MINUTE_LIST_KEY =
+            "vcn_network_selection_penalty_timeout_minute_list";
+
     // TODO: Add separate signal strength thresholds for 2.4 GHz and 5GHz
 
     /**
@@ -158,6 +169,7 @@ public class VcnManager {
                 VCN_NETWORK_SELECTION_WIFI_EXIT_RSSI_THRESHOLD_KEY,
                 VCN_NETWORK_SELECTION_POLL_IPSEC_STATE_INTERVAL_SECONDS_KEY,
                 VCN_NETWORK_SELECTION_IPSEC_PACKET_LOSS_PERCENT_THRESHOLD_KEY,
+                VCN_NETWORK_SELECTION_PENALTY_TIMEOUT_MINUTE_LIST_KEY,
                 VCN_RESTRICTED_TRANSPORTS_INT_ARRAY_KEY,
                 VCN_TUNNEL_AGGREGATION_SA_COUNT_MAX_KEY,
             };
