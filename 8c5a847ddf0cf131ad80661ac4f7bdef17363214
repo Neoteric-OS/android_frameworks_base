@@ -16,6 +16,23 @@
       "message": "gentle ping",
       "revId": "8c5a847ddf0cf131ad80661ac4f7bdef17363214",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaf1dcbf_144eb276",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2023-12-13T11:08:42Z",
+      "side": 1,
+      "message": "Actually why do you need to make this public API? And I don\u0027t see a use case where admin wants to set this via DevicePolicyManage?",
+      "revId": "8c5a847ddf0cf131ad80661ac4f7bdef17363214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
