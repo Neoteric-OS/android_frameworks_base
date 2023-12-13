@@ -25,18 +25,17 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import android.net.vcn.VcnGatewayConnectionConfig;
-import android.os.PersistableBundle;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 public class UnderlyingNetworkEvaluatorTest extends NetworkSelectionTestBase {
-    private PersistableBundleWrapper mCarrierConfig;
+    @Mock protected PersistableBundleWrapper mCarrierConfig;
 
     @Before
     public void setUp() {
         super.setUp();
-        mCarrierConfig = new PersistableBundleWrapper(new PersistableBundle());
     }
 
     private UnderlyingNetworkEvaluator newUnderlyingNetworkEvaluator() {

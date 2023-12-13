@@ -27,6 +27,7 @@ import static android.net.vcn.VcnCellUnderlyingNetworkTemplate.MATCH_REQUIRED;
 import static com.android.server.vcn.VcnTestUtils.setupSystemService;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.WIFI_ENTRY_RSSI_THRESHOLD_DEFAULT;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.WIFI_EXIT_RSSI_THRESHOLD_DEFAULT;
+import static com.android.server.vcn.routeselection.UnderlyingNetworkControllerTest.getLinkPropertiesWithName;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -34,6 +35,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -46,11 +48,14 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.IpSecConfig;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.vcn.FeatureFlags;
 import android.net.vcn.VcnCellUnderlyingNetworkTemplate;
 import android.net.vcn.VcnCellUnderlyingNetworkTemplateTest;
 import android.net.vcn.VcnGatewayConnectionConfigTest;
@@ -65,9 +70,11 @@ import android.util.ArraySet;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.VcnContext;
 import com.android.server.vcn.VcnNetworkProvider;
+import com.android.server.vcn.routeselection.UnderlyingNetworkController.Dependencies;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.NetworkBringupCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkListener;
+import com.android.server.vcn.routeselection.UnderlyingNetworkEvaluatorNextNwMonitor.NetworkEvaluatorCallback;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,6 +82,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,12 +158,19 @@ public class UnderlyingNetworkControllerTest {
     @Mock private CarrierConfigManager mCarrierConfigManager;
     @Mock private TelephonySubscriptionSnapshot mSubscriptionSnapshot;
     @Mock private UnderlyingNetworkControllerCallback mNetworkControllerCb;
+    @Mock private NetworkEvaluatorCallback mEvaluatorCallback;
     @Mock private Network mNetwork;
+    @Mock private FeatureFlags mFeatureFlags;
+    @Mock private com.android.net.flags.FeatureFlags mCoreNetFeatureFlags;
+
+    @Spy private Dependencies mDependencies = new Dependencies();
 
     @Captor private ArgumentCaptor<UnderlyingNetworkListener> mUnderlyingNetworkListenerCaptor;
+    @Captor private ArgumentCaptor<NetworkEvaluatorCallback> mEvaluatorCallbackCaptor;
 
     private TestLooper mTestLooper;
     private VcnContext mVcnContext;
+    private UnderlyingNetworkEvaluatorNextNwMonitor mEvaluatorNextNwMonitor;
     private UnderlyingNetworkController mUnderlyingNetworkController;
 
     @Before
@@ -187,18 +202,42 @@ public class UnderlyingNetworkControllerTest {
 
         when(mSubscriptionSnapshot.getAllSubIdsInGroup(eq(SUB_GROUP))).thenReturn(INITIAL_SUB_IDS);
 
+        doReturn(true).when(mFeatureFlags).networkMetricMonitor();
+        doReturn(true).when(mCoreNetFeatureFlags).ipsecTransformState();
+
+        mEvaluatorNextNwMonitor =
+                spy(
+                        new UnderlyingNetworkEvaluatorNextNwMonitor(
+                                mVcnContext,
+                                mNetwork,
+                                VcnGatewayConnectionConfigTest.buildTestConfig()
+                                        .getVcnUnderlyingNetworkPriorities(),
+                                SUB_GROUP,
+                                mSubscriptionSnapshot,
+                                null,
+                                mEvaluatorCallback));
+        doReturn(mEvaluatorNextNwMonitor)
+                .when(mDependencies)
+                .newUnderlyingNetworkEvaluatorNextNwMonitor(
+                        any(), any(), any(), any(), any(), any(), any());
+
         mUnderlyingNetworkController =
                 new UnderlyingNetworkController(
                         mVcnContext,
                         VcnGatewayConnectionConfigTest.buildTestConfig(),
                         SUB_GROUP,
                         mSubscriptionSnapshot,
-                        mNetworkControllerCb);
+                        mNetworkControllerCb,
+                        mDependencies);
     }
 
-    private void resetVcnContext() {
+    protected void resetVcnContext() {
         reset(mVcnContext);
         doNothing().when(mVcnContext).ensureRunningOnLooperThread();
+
+        doReturn(mFeatureFlags).when(mVcnContext).getFeatureFlags();
+        doReturn(mCoreNetFeatureFlags).when(mVcnContext).getCoreNetFeatureFlags();
+        doReturn(true).when(mVcnContext).isIpSecPacketDetectorEnabled();
     }
 
     // Package private for use in NetworkPriorityClassifierTest
@@ -379,7 +418,6 @@ public class UnderlyingNetworkControllerTest {
                         any(NetworkBringupCallback.class),
                         any());
     }
-
     @Test
     public void testUpdateSubscriptionSnapshot() {
         // Verify initial cell background requests filed
@@ -518,6 +556,46 @@ public class UnderlyingNetworkControllerTest {
     @Test
     public void testRecordTrackerCallbackNotifiedForNetworkChange() {
         verifyRegistrationOnAvailableAndGetCallback();
+        verify(mDependencies, never())
+                .newUnderlyingNetworkEvaluator(any(), any(), any(), any(), any(), any());
+        verify(mDependencies)
+                .newUnderlyingNetworkEvaluatorNextNwMonitor(
+                        any(), any(), any(), any(), any(), any(), any());
+    }
+
+    @Test
+    public void testUpdateIpSecTransform() {
+        verifyRegistrationOnAvailableAndGetCallback();
+
+        final UnderlyingNetworkRecord expectedRecord =
+                getTestNetworkRecord(
+                        mNetwork,
+                        INITIAL_NETWORK_CAPABILITIES,
+                        INITIAL_LINK_PROPERTIES,
+                        false /* isBlocked */);
+        final IpSecTransform expectedTransform = new IpSecTransform(mContext, new IpSecConfig());
+
+        mUnderlyingNetworkController.updateIpSecTransform(expectedRecord, expectedTransform);
+        verify(mEvaluatorNextNwMonitor).setIpSecTransform(expectedTransform);
+    }
+
+    @Test
+    public void testOnEvaluationResultChanged() {
+        verifyRegistrationOnAvailableAndGetCallback();
+        verify(mEvaluatorNextNwMonitor).getNetworkRecord();
+
+        verify(mDependencies)
+                .newUnderlyingNetworkEvaluatorNextNwMonitor(
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        mEvaluatorCallbackCaptor.capture());
+
+        mEvaluatorCallbackCaptor.getValue().onEvaluationResultChanged();
+        verify(mEvaluatorNextNwMonitor, times(2)).getNetworkRecord();
     }
 
     private UnderlyingNetworkListener verifyRegistrationOnAvailableAndGetCallback() {
@@ -563,6 +641,7 @@ public class UnderlyingNetworkControllerTest {
                         INITIAL_LINK_PROPERTIES,
                         false /* isBlocked */);
         verifyOnSelectedUnderlyingNetworkChanged(expectedRecord);
+        verify(mEvaluatorNextNwMonitor).setSelectedNetwork(expectedRecord);
         return cb;
     }
 
@@ -657,6 +736,7 @@ public class UnderlyingNetworkControllerTest {
         cb.onLost(mNetwork);
 
         verify(mNetworkControllerCb).onSelectedUnderlyingNetworkChanged(null);
+        verify(mEvaluatorNextNwMonitor).close();
     }
 
     @Test

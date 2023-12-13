@@ -269,6 +269,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
     @Test
     public void testCreatedTransformsAreApplied() throws Exception {
         verifyVcnTransformsApplied(mGatewayConnection, false /* expectForwardTransform */);
+        verify(mUnderlyingNetworkController).updateIpSecTransform(any(), any());
     }
 
     @Test
@@ -295,8 +296,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         verifyVcnTransformsApplied(gatewayConnection, true /* expectForwardTransform */);
     }
 
-    @Test
-    public void testMigration() throws Exception {
+    private void verifyMigration() throws Exception {
         triggerChildOpened();
         mTestLooper.dispatchAll();
         assertEquals(mIkeConnectionInfo, mGatewayConnection.getIkeConnectionInfo());
@@ -347,6 +347,12 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
 
         // Verify revalidation is triggered on VCN network
         verify(mConnMgr).reportNetworkConnectivity(eq(mNetworkAgent.getNetwork()), eq(false));
+    }
+
+    @Test
+    public void testMigration() throws Exception {
+        verifyMigration();
+        verify(mUnderlyingNetworkController).updateIpSecTransform(any(), any());
     }
 
     @Test

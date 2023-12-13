@@ -21,6 +21,7 @@ import static com.android.server.vcn.util.PersistableBundleUtils.PersistableBund
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -42,19 +43,19 @@ import java.util.Objects;
  *
  * @hide
  */
-class UnderlyingNetworkEvaluator {
-    private static final String TAG = UnderlyingNetworkEvaluator.class.getSimpleName();
+public class UnderlyingNetworkEvaluator {
+    static final String TAG = UnderlyingNetworkEvaluator.class.getSimpleName();
 
-    @NonNull private final VcnContext mVcnContext;
-    @NonNull private final UnderlyingNetworkRecord.Builder mNetworkRecordBuilder;
+    @NonNull final VcnContext mVcnContext;
+    @NonNull final UnderlyingNetworkRecord.Builder mNetworkRecordBuilder;
     @NonNull private final List<VcnUnderlyingNetworkTemplate> mUnderlyingNetworkTemplates;
     @NonNull private final ParcelUuid mSubscriptionGroup;
     @NonNull private final TelephonySubscriptionSnapshot mLastSnapshot;
-    @Nullable private final PersistableBundleWrapper mCarrierConfig;
+    @Nullable final PersistableBundleWrapper mCarrierConfig;
 
     @Nullable private UnderlyingNetworkRecord mCurrentRecord;
 
-    private boolean mIsSelected;
+    boolean mIsSelected;
     private int mPriorityClass = NetworkPriorityClassifier.PRIORITY_INVALID;
 
     UnderlyingNetworkEvaluator(
@@ -116,22 +117,22 @@ class UnderlyingNetworkEvaluator {
         };
     }
 
-    void setNetworkCapabilities(@NonNull NetworkCapabilities nc) {
+    public void setNetworkCapabilities(@NonNull NetworkCapabilities nc) {
         mNetworkRecordBuilder.setNetworkCapabilities(nc);
         updatePriorityClass();
     }
 
-    void setLinkProperties(@NonNull LinkProperties lp) {
+    public void setLinkProperties(@NonNull LinkProperties lp) {
         mNetworkRecordBuilder.setLinkProperties(lp);
         updatePriorityClass();
     }
 
-    void setIsBlocked(boolean isBlocked) {
+    public void setIsBlocked(boolean isBlocked) {
         mNetworkRecordBuilder.setIsBlocked(isBlocked);
         updatePriorityClass();
     }
 
-    void setSelectedNetwork(@Nullable UnderlyingNetworkRecord currentlySelected) {
+    public void setSelectedNetwork(@Nullable UnderlyingNetworkRecord currentlySelected) {
         if (currentlySelected == null) {
             mIsSelected = false;
         } else {
@@ -142,23 +143,31 @@ class UnderlyingNetworkEvaluator {
         updatePriorityClass();
     }
 
-    boolean isValid() {
+    public void setIpSecTransform(@NonNull IpSecTransform inTransform) {
+        // Do nothing
+    }
+
+    public void close() {
+        // Do nothing
+    }
+
+    public boolean isValid() {
         return mNetworkRecordBuilder.isValid();
     }
 
-    Network getNetwork() {
+    public Network getNetwork() {
         return mNetworkRecordBuilder.getNetwork();
     }
 
-    UnderlyingNetworkRecord getNetworkRecord() {
+    public UnderlyingNetworkRecord getNetworkRecord() {
         return mNetworkRecordBuilder.build();
     }
 
-    int getPriorityClass() {
+    public int getPriorityClass() {
         return mPriorityClass;
     }
 
-    void dump(IndentingPrintWriter pw) {
+    public void dump(IndentingPrintWriter pw) {
         pw.println("UnderlyingNetworkEvaluator:");
         pw.increaseIndent();
 
@@ -171,14 +180,20 @@ class UnderlyingNetworkEvaluator {
         pw.println("mIsSelected: " + mIsSelected);
         pw.println("mPriorityClass: " + mPriorityClass);
 
+        dumpInternal(pw);
+
         pw.decreaseIndent();
     }
 
-    private String getLogPrefix() {
-        return "[Network " + mNetworkRecordBuilder.getNetwork() + "] ";
+    void dumpInternal(IndentingPrintWriter pw) {
+        // Do nothing
     }
 
-    private void logInfo(String msg) {
+    String getLogPrefix() {
+        return "[Network " + mNetworkRecordBuilder.getNetwork().getNetId() + "] ";
+    }
+
+    void logInfo(String msg) {
         Slog.i(TAG, getLogPrefix() + msg);
         LOCAL_LOG.log("[INFO ] " + TAG + getLogPrefix() + msg);
     }
