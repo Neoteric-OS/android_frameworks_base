@@ -51,6 +51,23 @@
       "message": "Hey Ed. I talked to the team and this sounds like something that might be useful to other OEMs too (in addition to keeping your rebase burden down) so we\u0027d like to move forward with it. Here are some things I\u0027d like to see:\n\n1. Tests of some sort\n2. Some way to control the duration, or turn this feature off completely. This could be a config resource, or a global setting with a config resource default.",
       "revId": "3010578b25b621cc4e64a36fe0e9019edea6014c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ec73435_d6e3fced",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2023-12-13T23:56:33Z",
+      "side": 1,
+      "message": "Hey Dan, thank you for looking into this.\n\nThis is just an ACK on your comment - adding a config resource was relatively straightforward, but adding an automated test took more time, then other things took prio and I haven\u0027t gotten back to this yet.  I aim to upload something this side of New Year.\n\nThanks!",
+      "revId": "3010578b25b621cc4e64a36fe0e9019edea6014c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
