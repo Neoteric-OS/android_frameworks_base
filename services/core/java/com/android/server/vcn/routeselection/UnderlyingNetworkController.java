@@ -30,6 +30,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -51,6 +52,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.VcnContext;
+import com.android.server.vcn.routeselection.UnderlyingNetworkEvaluator.NetworkEvaluatorCallback;
 import com.android.server.vcn.util.LogUtils;
 
 import java.util.ArrayList;
@@ -190,7 +192,7 @@ public class UnderlyingNetworkController {
     }
 
     private void registerOrUpdateNetworkRequests() {
-        NetworkCallback oldRouteSelectionCallback = mRouteSelectionCallback;
+        UnderlyingNetworkListener oldRouteSelectionCallback = mRouteSelectionCallback;
         NetworkCallback oldWifiCallback = mWifiBringupCallback;
         NetworkCallback oldWifiEntryRssiThresholdCallback = mWifiEntryRssiThresholdCallback;
         NetworkCallback oldWifiExitRssiThresholdCallback = mWifiExitRssiThresholdCallback;
@@ -241,6 +243,7 @@ public class UnderlyingNetworkController {
         // Unregister old callbacks (as necessary)
         if (oldRouteSelectionCallback != null) {
             mConnectivityManager.unregisterNetworkCallback(oldRouteSelectionCallback);
+            oldRouteSelectionCallback.close();
         }
         if (oldWifiCallback != null) {
             mConnectivityManager.unregisterNetworkCallback(oldWifiCallback);
@@ -404,6 +407,31 @@ public class UnderlyingNetworkController {
         registerOrUpdateNetworkRequests();
     }
 
+    /**
+     * Pass the IpSecTransform of the VCN to UnderlyingNetworkController for metric monitoring
+     *
+     * <p>Caller MUST call it when IpSecTransforms have been created for VCN creation or migration
+     */
+    public void updateIpSecTransform(
+            @NonNull UnderlyingNetworkRecord currentNetwork, @NonNull IpSecTransform inTransform) {
+        logInfo("updateIpSecTransform");
+
+        Objects.requireNonNull(currentNetwork, "currentNetwork is null");
+        Objects.requireNonNull(inTransform, "inTransform is null");
+
+        if (mCurrentRecord == null
+                || mRouteSelectionCallback == null
+                || !Objects.equals(currentNetwork.network, mCurrentRecord.network)) {
+            logWtf(
+                    String.format(
+                            "Programming error: UnderlyingNetworkController is in an invalid state"
+                                + " mCurrentRecord %s currentNetwork %s mRouteSelectionCallback %s",
+                            mCurrentRecord, currentNetwork, mRouteSelectionCallback));
+        }
+
+        mRouteSelectionCallback.setIpSecTransform(inTransform);
+    }
+
     /** Tears down this Tracker, and releases all underlying network requests. */
     public void teardown() {
         mVcnContext.ensureRunningOnLooperThread();
@@ -465,7 +493,7 @@ public class UnderlyingNetworkController {
      * truth.
      */
     @VisibleForTesting
-    class UnderlyingNetworkListener extends NetworkCallback {
+    class UnderlyingNetworkListener extends NetworkCallback implements NetworkEvaluatorCallback {
         private final Map<Network, UnderlyingNetworkEvaluator> mUnderlyingNetworkRecords =
                 new ArrayMap<>();
 
@@ -487,6 +515,12 @@ public class UnderlyingNetworkController {
         }
 
         @Override
+        public void onEvaluationResultChanged() {
+            logD("UnderlyingNetworkListener#onEvaluationResultChanged");
+            reevaluateNetworks();
+        }
+
+        @Override
         public void onAvailable(@NonNull Network network) {
             mUnderlyingNetworkRecords.put(
                     network,
@@ -496,11 +530,13 @@ public class UnderlyingNetworkController {
                             mConnectionConfig.getVcnUnderlyingNetworkPriorities(),
                             mSubscriptionGroup,
                             mLastSnapshot,
-                            mCarrierConfig));
+                            mCarrierConfig,
+                            UnderlyingNetworkListener.this));
         }
 
         @Override
         public void onLost(@NonNull Network network) {
+            mUnderlyingNetworkRecords.get(network).close();
             mUnderlyingNetworkRecords.remove(network);
 
             reevaluateNetworks();
@@ -557,6 +593,22 @@ public class UnderlyingNetworkController {
 
             // No need to reevaluate
         }
+
+        void setIpSecTransform(@NonNull IpSecTransform inTransform) {
+            logD("UnderlyingNetworkListener#setIpSecTransform");
+            for (UnderlyingNetworkEvaluator evaluator : mUnderlyingNetworkRecords.values()) {
+                evaluator.setIpSecTransform(inTransform);
+            }
+
+            // No need to reevaluate
+        }
+
+        void close() {
+            logD("UnderlyingNetworkListener#close");
+            for (UnderlyingNetworkEvaluator evaluator : mUnderlyingNetworkRecords.values()) {
+                evaluator.close();
+            }
+        }
     }
 
     private String getLogPrefix() {
@@ -571,6 +623,11 @@ public class UnderlyingNetworkController {
 
     private String getTagLogPrefix() {
         return "[ " + TAG + " " + getLogPrefix() + "]";
+    }
+
+    private void logD(String msg) {
+        Slog.i(TAG, getLogPrefix() + msg);
+        LOCAL_LOG.log("[DEBUG] " + getTagLogPrefix() + msg);
     }
 
     private void logInfo(String msg) {

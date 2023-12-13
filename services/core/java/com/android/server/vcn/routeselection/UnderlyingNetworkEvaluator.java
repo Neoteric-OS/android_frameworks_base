@@ -21,10 +21,13 @@ import static com.android.server.vcn.util.PersistableBundleUtils.PersistableBund
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.net.IpSecTransform;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.vcn.VcnManager;
 import android.net.vcn.VcnUnderlyingNetworkTemplate;
+import android.os.Handler;
 import android.os.ParcelUuid;
 import android.util.Slog;
 
@@ -35,6 +38,7 @@ import com.android.server.vcn.VcnContext;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * UnderlyingNetworkEvaluator evaluates the quality and priority class of a network candidate for
@@ -45,16 +49,30 @@ import java.util.Objects;
 class UnderlyingNetworkEvaluator {
     private static final String TAG = UnderlyingNetworkEvaluator.class.getSimpleName();
 
+    private static final boolean VDBG = true; // STOPSHIP: if true
+
+    private static final int[] PENALTY_TIMEOUT_MIN_DEFAULT = new int[] {5};
+
     @NonNull private final VcnContext mVcnContext;
+    @NonNull private final Handler mHandler;
+    @NonNull private final Object mExitPenaltyBoxToken;
     @NonNull private final UnderlyingNetworkRecord.Builder mNetworkRecordBuilder;
+
     @NonNull private final List<VcnUnderlyingNetworkTemplate> mUnderlyingNetworkTemplates;
     @NonNull private final ParcelUuid mSubscriptionGroup;
     @NonNull private final TelephonySubscriptionSnapshot mLastSnapshot;
     @Nullable private final PersistableBundleWrapper mCarrierConfig;
 
+    @NonNull private final NetworkEvaluatorCallback mEvaluatorCallback;
+    @Nullable private final NetworkMetricMonitor mIpSecPacketLossDetector;
+
     @Nullable private UnderlyingNetworkRecord mCurrentRecord;
 
+    // TODO: Support back-off timeouts
+    private final long mPenaltyTimeoutMs;
+
     private boolean mIsSelected;
+    private boolean mIsPenalized;
     private int mPriorityClass = NetworkPriorityClassifier.PRIORITY_INVALID;
 
     UnderlyingNetworkEvaluator(
@@ -63,20 +81,71 @@ class UnderlyingNetworkEvaluator {
             @NonNull List<VcnUnderlyingNetworkTemplate> underlyingNetworkTemplates,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull TelephonySubscriptionSnapshot lastSnapshot,
-            @Nullable PersistableBundleWrapper carrierConfig) {
+            @Nullable PersistableBundleWrapper carrierConfig,
+            @NonNull NetworkEvaluatorCallback evaluatorCallback) {
         mVcnContext = vcnContext;
+        mHandler = new Handler(mVcnContext.getLooper());
+        mExitPenaltyBoxToken = new Object();
+        mNetworkRecordBuilder = new UnderlyingNetworkRecord.Builder(network);
+
         mUnderlyingNetworkTemplates = underlyingNetworkTemplates;
         mSubscriptionGroup = subscriptionGroup;
         mLastSnapshot = lastSnapshot;
         mCarrierConfig = carrierConfig;
+        mEvaluatorCallback = evaluatorCallback;
 
-        mNetworkRecordBuilder = new UnderlyingNetworkRecord.Builder(network);
+        mPenaltyTimeoutMs = getPenaltyTimeoutMs(carrierConfig);
+
         mCurrentRecord = null;
         mIsSelected = false;
 
         updatePriorityClass();
 
+        if (mVcnContext.getFeatureFlags().networkMetricMonitor()
+                && mVcnContext.getCoreNetFeatureFlags().ipsecTransformState()) {
+            logD("Enable IpSecPacketLossDetector");
+            mIpSecPacketLossDetector =
+                    new IpSecPacketLossDetector(
+                            mVcnContext, network, mCarrierConfig, new MyMetricMonitorCallback());
+        } else {
+            mIpSecPacketLossDetector = null;
+        }
+
         logInfo("Constructed");
+    }
+
+    /** Callback to notify caller to reevaluate network selection */
+    interface NetworkEvaluatorCallback {
+        /**
+         * Called when either of mIsPenalized or mPriorityClass has changed
+         *
+         * <p>When receiving this call, UnderlyingNetworkController should reevaluate all network
+         * candidates for VCN underlying network selection
+         */
+        void onEvaluationResultChanged();
+    }
+
+    private class MyMetricMonitorCallback
+            implements NetworkMetricMonitor.NetworkMetricMonitorCallback {
+        public void onValidationResultChanged() {
+            mVcnContext.ensureRunningOnLooperThread();
+
+            logD("#onValidationResultChanged");
+            handleValidationResultChanged();
+        }
+    }
+
+    private static long getPenaltyTimeoutMs(@Nullable PersistableBundleWrapper carrierConfig) {
+        final int[] timeoutMinuteList;
+        if (carrierConfig != null) {
+            timeoutMinuteList =
+                    carrierConfig.getIntArray(
+                            VcnManager.VCN_NETWORK_SELECTION_PENALTY_TIMEOUT_MIN_LIST_KEY,
+                            PENALTY_TIMEOUT_MIN_DEFAULT);
+        } else {
+            timeoutMinuteList = PENALTY_TIMEOUT_MIN_DEFAULT;
+        }
+        return TimeUnit.MINUTES.toMillis(timeoutMinuteList[0]);
     }
 
     private void updatePriorityClass() {
@@ -116,6 +185,41 @@ class UnderlyingNetworkEvaluator {
         };
     }
 
+    private void handleValidationResultChanged() {
+        final boolean wasPenalized = mIsPenalized;
+        mIsPenalized = mIpSecPacketLossDetector.isValidationFailed();
+
+        logV(
+                String.format(
+                        "#handleValidationResultChanged: wasPenalized %b mIsPenalized %b",
+                        wasPenalized, mIsPenalized));
+
+        if (wasPenalized == mIsPenalized) {
+            return;
+        }
+
+        if (mIsPenalized) {
+            mHandler.postDelayed(
+                    new ExitPenaltyBoxRunnable(), mExitPenaltyBoxToken, mPenaltyTimeoutMs);
+        } else {
+            // exit the penalty box
+            mHandler.removeCallbacksAndEqualMessages(mExitPenaltyBoxToken);
+        }
+        mEvaluatorCallback.onEvaluationResultChanged();
+    }
+
+    private class ExitPenaltyBoxRunnable implements Runnable {
+        @Override
+        public void run() {
+            if (!mIsPenalized) {
+                logWtf("Evaluator not being penalized but ExitPenaltyBoxRunnable was scheduled");
+                return;
+            }
+            mIsPenalized = false;
+            mEvaluatorCallback.onEvaluationResultChanged();
+        }
+    }
+
     void setNetworkCapabilities(@NonNull NetworkCapabilities nc) {
         mNetworkRecordBuilder.setNetworkCapabilities(nc);
         updatePriorityClass();
@@ -140,6 +244,27 @@ class UnderlyingNetworkEvaluator {
         }
 
         updatePriorityClass();
+
+        if (mIpSecPacketLossDetector != null) {
+            mIpSecPacketLossDetector.setIsSelected(mIsSelected);
+        }
+    }
+
+    void setIpSecTransform(@NonNull IpSecTransform inTransform) {
+        if (!mIsSelected) {
+            return;
+        }
+
+        if (mIpSecPacketLossDetector != null) {
+            mIpSecPacketLossDetector.setIpSecTransform(inTransform);
+        }
+    }
+
+    void close() {
+        logD("close");
+        if (mIpSecPacketLossDetector != null) {
+            mIpSecPacketLossDetector.close();
+        }
     }
 
     boolean isValid() {
@@ -178,8 +303,25 @@ class UnderlyingNetworkEvaluator {
         return "[Network " + mNetworkRecordBuilder.getNetwork() + "] ";
     }
 
+    private void logV(String msg) {
+        if (VDBG) {
+            Slog.i(TAG, getLogPrefix() + msg);
+            LOCAL_LOG.log("[VERBOSE ] " + TAG + getLogPrefix() + msg);
+        }
+    }
+
+    private void logD(String msg) {
+        Slog.i(TAG, getLogPrefix() + msg);
+        LOCAL_LOG.log("[DEBUG ] " + TAG + getLogPrefix() + msg);
+    }
+
     private void logInfo(String msg) {
         Slog.i(TAG, getLogPrefix() + msg);
         LOCAL_LOG.log("[INFO ] " + TAG + getLogPrefix() + msg);
+    }
+
+    private void logWtf(String msg) {
+        Slog.i(TAG, getLogPrefix() + msg);
+        LOCAL_LOG.log("[WTF ] " + TAG + getLogPrefix() + msg);
     }
 }

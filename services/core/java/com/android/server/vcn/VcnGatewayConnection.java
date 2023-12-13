@@ -1889,6 +1889,12 @@ public class VcnGatewayConnection extends StateMachine {
                 // Transforms do not need to be persisted; the IkeSession will keep them alive
                 mIpSecManager.applyTunnelModeTransform(tunnelIface, direction, transform);
 
+                if (direction == IpSecManager.DIRECTION_IN) {
+                    if (mVcnContext.getFeatureFlags().networkMetricMonitor()) {
+                        mUnderlyingNetworkController.updateIpSecTransform(mUnderlying, transform);
+                    }
+                }
+
                 // For inbound transforms, additionally allow forwarded traffic to bridge to DUN (as
                 // needed)
                 final Set<Integer> exposedCaps = mConnectionConfig.getAllExposedCapabilities();
