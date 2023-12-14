@@ -43,6 +43,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "514b1da9_5fe725d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3210561
+      },
+      "writtenOn": "2023-12-14T18:15:41Z",
+      "side": 1,
+      "message": "Thanks for the guidance! Abandoning this, in favor of http://ag/25659896.",
+      "parentUuid": "6c95a94a_39703248",
+      "revId": "63cbb93bf38688b488b82aa6cd9158ac79a74918",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd118a73_83483b60",
         "filename": "core/java/android/webkit/WebSettings.java",
         "patchSetId": 4
