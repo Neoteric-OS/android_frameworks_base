@@ -86,6 +86,24 @@
       "parentUuid": "04d197b5_a5ef554c",
       "revId": "0e73b5a14a401f8950752445d2df707e6ad3fae0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b3914ec_bc8790d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1634819
+      },
+      "writtenOn": "2023-12-14T11:33:56Z",
+      "side": 1,
+      "message": "Oh, thank you!\nThis commit is now stand-alone and mentions the bug it fixes.",
+      "parentUuid": "3f4ab65e_d96e00e6",
+      "revId": "0e73b5a14a401f8950752445d2df707e6ad3fae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
