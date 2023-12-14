@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b52a514_23b5761d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2023-12-14T01:54:02Z",
+      "side": 1,
+      "message": "Android API changes need a buganizer ticket. Can you file one in http://shortn/_mMBT9tahEO and link that here with `Bug: \u003cnumber\u003e`?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "63cbb93bf38688b488b82aa6cd9158ac79a74918",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c95a94a_39703248",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2023-12-14T01:54:02Z",
+      "side": 1,
+      "message": "I think we should probably move this change into the internal Android codebase. It will eventually be picked up in open source, but I think landing in internal first means this can make it out sooner. I\u0027ll message you offline.\n\nI\u0027m leaving other code review comments since this would all apply to the internal CL too. Feel free to ignore for now until we get the internal CL started though.",
+      "revId": "63cbb93bf38688b488b82aa6cd9158ac79a74918",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd118a73_83483b60",
+        "filename": "core/java/android/webkit/WebSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2023-12-14T01:54:02Z",
+      "side": 1,
+      "message": "nit: delete 1 space character from the indent. The \"@\" symbol should have the same indent as \"public\" in the line below.",
+      "range": {
+        "startLine": 1210,
+        "startChar": 5,
+        "endLine": 1210,
+        "endChar": 16
+      },
+      "revId": "63cbb93bf38688b488b82aa6cd9158ac79a74918",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83c39e3e_6ada6815",
+        "filename": "core/java/android/webkit/WebSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2023-12-14T01:54:02Z",
+      "side": 1,
+      "message": "Please deprecate the getter API with the same deprecation message.",
+      "range": {
+        "startLine": 1244,
+        "startChar": 28,
+        "endLine": 1244,
+        "endChar": 46
+      },
+      "revId": "63cbb93bf38688b488b82aa6cd9158ac79a74918",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
