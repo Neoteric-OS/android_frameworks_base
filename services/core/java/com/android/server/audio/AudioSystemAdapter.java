@@ -558,6 +558,13 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         return AudioSystem.setVolumeIndexForAttributes(attributes, index, muted, device);
     }
 
+    /** Same as {@link AudioSystem#setVolumeGroupVolumeIndex(int, int, boolean, int)} */
+    @FlaggedApi(FLAG_VOLUME_GROUP_MANAGEMENT_UPDATE)
+    public int setVolumeGroupVolumeIndex(int groupId, int index, boolean muted,
+            int device) {
+        return AudioSystem.setVolumeGroupVolumeIndex(groupId, index, muted, device);
+    }
+
     /**
      * Same as {@link AudioSystem#setPhoneState(int, int)}
      * @param state
