@@ -16,15 +16,34 @@
 
 package com.android.internal.net;
 
+import android.security.Credentials;
+import android.security.LegacyVpnProfileStore;
+
+import java.util.List;
+
 /**
  * Database blob store for VPN.
  * @hide
  */
 public class VpnBlobStore extends ConnectivityBlobStore {
     private static final String DB_NAME = "VpnBlobStore.db";
+    // Prefix of vpn app excluded list, taken from Vpn.java
+    private static final String VPN_APP_EXCLUDED = "VPNAPPEXCLUDED_";
+
     private static VpnBlobStore sInstance;
     private VpnBlobStore() {
         super(DB_NAME);
+
+        // Import profiles from legacy keystore
+        final List<String> prefixes = List.of(Credentials.VPN, Credentials.PLATFORM_VPN,
+                Credentials.LOCKDOWN_VPN, VPN_APP_EXCLUDED);
+        for (String prefix : prefixes) {
+            for (String key : LegacyVpnProfileStore.list(prefix)) {
+                final String name = prefix + key;
+                boolean res = put(name, LegacyVpnProfileStore.get(name));
+                LegacyVpnProfileStore.remove(name);
+            }
+        }
     }
 
     /** Returns an instance of VpnBlobStore. */
