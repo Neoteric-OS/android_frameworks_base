@@ -68,6 +68,24 @@
       "parentUuid": "5e8ca495_2a55a214",
       "revId": "0e73b5a14a401f8950752445d2df707e6ad3fae0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f4ab65e_d96e00e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2023-12-14T11:17:55Z",
+      "side": 1,
+      "message": "We\u0027ve got a policy of requiring a bug for all commits",
+      "parentUuid": "04d197b5_a5ef554c",
+      "revId": "0e73b5a14a401f8950752445d2df707e6ad3fae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
