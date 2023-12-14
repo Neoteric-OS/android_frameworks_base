@@ -16,6 +16,9 @@
 
 package com.android.server.audio;
 
+import static android.media.audiopolicy.Flags.FLAG_VOLUME_GROUP_MANAGEMENT_UPDATE;
+
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.media.AudioAttributes;
@@ -556,6 +559,13 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
     public int setVolumeIndexForAttributes(AudioAttributes attributes, int index, boolean muted,
             int device) {
         return AudioSystem.setVolumeIndexForAttributes(attributes, index, muted, device);
+    }
+
+    /** Same as {@link AudioSystem#setVolumeGroupVolumeIndex(int, int, boolean, int)} */
+    @FlaggedApi(FLAG_VOLUME_GROUP_MANAGEMENT_UPDATE)
+    public int setVolumeGroupVolumeIndex(int groupId, int index, boolean muted,
+            int device) {
+        return AudioSystem.setVolumeGroupVolumeIndex(groupId, index, muted, device);
     }
 
     /**
