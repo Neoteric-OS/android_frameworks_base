@@ -50,6 +50,24 @@
       "message": "Please add a bug describing the problem being fixed",
       "revId": "0e73b5a14a401f8950752445d2df707e6ad3fae0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04d197b5_a5ef554c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1634819
+      },
+      "writtenOn": "2023-12-14T11:15:01Z",
+      "side": 1,
+      "message": "Thanks for the comment, is this sufficient?\nThe mentioned bug report explains what the issue is and provides a screenshot of the misbehaviour.\n\nI would be in favour of squashing this chain into one commit, but thought it would be easier to review it this way. Hence i just added the bug to this commit message.",
+      "parentUuid": "5e8ca495_2a55a214",
+      "revId": "0e73b5a14a401f8950752445d2df707e6ad3fae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
