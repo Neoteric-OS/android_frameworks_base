@@ -33,6 +33,23 @@
       "message": "As requested in the buganizer comments. Since the buganizer is 18 months old and we haven\u0027t actually been using this patch, it was not up to date, nor have we tested it to confirm it still solves the problem.",
       "revId": "95a86edf8f29c8d71647d059b07767a803cbc290",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb518283_0e8e7feb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2023-12-14T01:05:50Z",
+      "side": 1,
+      "message": "This was discussed briefly in b/230028571 and I think this is the right fix because we consider odm an extension to vendor.\n\nThis needs to be reviewed/approved by the pm team.",
+      "revId": "95a86edf8f29c8d71647d059b07767a803cbc290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
