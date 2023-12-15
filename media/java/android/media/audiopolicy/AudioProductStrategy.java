@@ -29,6 +29,7 @@ import android.media.AudioAttributes;
 import android.media.AudioSystem;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -59,6 +60,8 @@ public final class AudioProductStrategy implements Parcelable {
      * default zone id is the primary. Legacy API without zone id uses this default
      * @hide
      */
+    @FlaggedApi(Flags.FLAG_MULTI_ZONE_AUDIO)
+    @SystemApi
     public static final int DEFAULT_ZONE_ID = 0;
 
     private static final int MATCH_ON_ZONE_ID_SCORE = 1 << 4;
@@ -83,7 +86,12 @@ public final class AudioProductStrategy implements Parcelable {
      * upper layer but was transpiring in the {@link AudioAttributes#getUsage()}.
      */
     private int mId;
-
+    /**
+     * @hide
+     * @return the product strategy zone ID, default is {@code DEFAULT_ZONE_ID}.
+     */
+    @FlaggedApi(Flags.FLAG_MULTI_ZONE_AUDIO)
+    @SystemApi
     private int mZoneId = DEFAULT_ZONE_ID;
 
     private static final Object sLock = new Object();
@@ -555,6 +563,24 @@ public final class AudioProductStrategy implements Parcelable {
      */
     private static final @NonNull AudioAttributes DEFAULT_ATTRIBUTES =
             new AudioAttributes.Builder().build();
+
+    /**
+     * @hide
+     */
+    public static void setZoneIdForUserId(int zoneId, int userId) {
+        native_set_userid_strategies_affinity(zoneId, userId);
+    }
+
+    /**
+     * @hide
+     */
+    public static void resetZoneIdForUserId(int userId) {
+        native_remove_userid_strategies_affinity(userId);
+    }
+
+    private static native int native_set_userid_strategies_affinity(int zoneId, int userId);
+
+    private static native int native_remove_userid_strategies_affinity(int userId);
 
     /**
      * @hide

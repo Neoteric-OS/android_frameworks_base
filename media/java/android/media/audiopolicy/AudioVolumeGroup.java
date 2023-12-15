@@ -16,6 +16,7 @@
 
 package android.media.audiopolicy;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -50,6 +51,9 @@ public final class AudioVolumeGroup implements Parcelable {
      * Unique identifier of a volume group.
      */
     private int mId;
+
+    private int mZoneId = AudioProductStrategy.DEFAULT_ZONE_ID;
+
     /**
      * human-readable name of this volume group.
      */
@@ -103,7 +107,7 @@ public final class AudioVolumeGroup implements Parcelable {
      * @param id of the volume group
      * @param legacyStreamTypes of volume group
      */
-    AudioVolumeGroup(@NonNull String name, int id,
+    AudioVolumeGroup(@NonNull String name, int id, int zoneId,
                      @NonNull AudioAttributes[] audioAttributes,
                      @NonNull int[] legacyStreamTypes) {
         Preconditions.checkNotNull(name, "name must not be null");
@@ -111,6 +115,7 @@ public final class AudioVolumeGroup implements Parcelable {
         Preconditions.checkNotNull(legacyStreamTypes, "legacyStreamTypes must not be null");
         mName = name;
         mId = id;
+        mZoneId = zoneId;
         mAudioAttributes = audioAttributes;
         mLegacyStreamTypes = legacyStreamTypes;
     }
@@ -122,7 +127,7 @@ public final class AudioVolumeGroup implements Parcelable {
 
         AudioVolumeGroup thatAvg = (AudioVolumeGroup) o;
 
-        return mName.equals(thatAvg.mName) && mId == thatAvg.mId
+        return mName.equals(thatAvg.mName) && mId == thatAvg.mId && mZoneId == thatAvg.mZoneId
                 && Arrays.equals(mAudioAttributes, thatAvg.mAudioAttributes);
     }
 
@@ -154,6 +159,16 @@ public final class AudioVolumeGroup implements Parcelable {
         return mId;
     }
 
+    /**
+     * @hide
+     * @return the volume group zone ID, default is {@code DEFAULT_ZONE_ID}.
+     */
+    @FlaggedApi(Flags.FLAG_MULTI_ZONE_AUDIO)
+    @SystemApi
+    public int getZoneId() {
+        return mZoneId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -163,6 +178,7 @@ public final class AudioVolumeGroup implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(mName);
         dest.writeInt(mId);
+        dest.writeInt(mZoneId);
         dest.writeInt(mAudioAttributes.length);
         for (AudioAttributes attributes : mAudioAttributes) {
             attributes.writeToParcel(dest, flags | AudioAttributes.FLATTEN_TAGS/*flags*/);
@@ -180,6 +196,7 @@ public final class AudioVolumeGroup implements Parcelable {
                     Preconditions.checkNotNull(in, "in Parcel must not be null");
                     String name = in.readString();
                     int id = in.readInt();
+                    int zoneId = in.readInt();
                     int nbAttributes = in.readInt();
                     AudioAttributes[] audioAttributes = new AudioAttributes[nbAttributes];
                     for (int index = 0; index < nbAttributes; index++) {
@@ -190,7 +207,7 @@ public final class AudioVolumeGroup implements Parcelable {
                     for (int index = 0; index < nbStreamTypes; index++) {
                         streamTypes[index] = in.readInt();
                     }
-                    return new AudioVolumeGroup(name, id, audioAttributes, streamTypes);
+                    return new AudioVolumeGroup(name, id, zoneId, audioAttributes, streamTypes);
                 }
 
                 @Override
@@ -209,6 +226,7 @@ public final class AudioVolumeGroup implements Parcelable {
         s.append("\n").append(indent);
         s.append("Name: ").append(mName);
         s.append(" Id: ").append(Integer.toString(mId));
+        s.append(" ZoneId: ").append(Integer.toString(mZoneId));
         s.append("\n").append(indent).append(indent).append("Supported Audio Attributes:");
         for (AudioAttributes attribute : mAudioAttributes) {
             s.append("\n").append(indent).append(indent).append(indent).append("-");

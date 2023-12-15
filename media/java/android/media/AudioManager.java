@@ -22,6 +22,7 @@ import static android.content.Context.DEVICE_ID_DEFAULT;
 import static android.media.audio.Flags.autoPublicVolumeApiHardening;
 import static android.media.audio.Flags.automaticBtDeviceType;
 import static android.media.audio.Flags.FLAG_FOCUS_FREEZE_TEST_API;
+import static android.media.audiopolicy.Flags.FLAG_MULTI_ZONE_AUDIO;
 
 import android.Manifest;
 import android.annotation.CallbackExecutor;
@@ -1672,6 +1673,71 @@ public class AudioManager {
     }
 
     /**
+     * Map a zone Id to a given user Id.
+     * @param zoneId the userId shall be assigned to
+     * @param userId to consider
+     * @hide
+     */
+    @GuardedBy("mSettingsLock")
+    @SystemApi
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED,
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING
+    })
+    public void setZoneIdForUserId(int zoneId, int userId) {
+        IAudioService service = getService();
+        try {
+            service.setZoneIdForUserId(zoneId, userId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Reset zone Id mapping for a given user Id.
+     * @param userId to consider
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED,
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING
+    })
+    public void resetZoneIdForUserId(int userId) {
+        IAudioService service = getService();
+        try {
+            service.resetZoneIdForUserId(userId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @hide
+     * @param zoneId to consider
+     * @return the UserId if the zone is mapped to a UserId, {@code UserHandle.USER_CURRENT}
+     * otherwise.
+     */
+    @GuardedBy("mSettingsLock")
+    @SystemApi
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MODIFY_AUDIO_ROUTING,
+            Manifest.permission.QUERY_AUDIO_STATE,
+            Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int getUserIdForZoneId(int zoneId) {
+        IAudioService service = getService();
+        try {
+            return service.getUserIdForZoneId(zoneId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Set the system usages to be supported on this device.
      * @param systemUsages array of system usages to support {@link AttributeSystemUsage}
      * @hide
@@ -2853,7 +2919,7 @@ public class AudioManager {
                                                @NonNull AudioAttributes attributes) {
         Objects.requireNonNull(format);
         Objects.requireNonNull(attributes);
-        return AudioSystem.getDirectPlaybackSupport(format, attributes);
+        return AudioSystem.getDirectPlaybackSupport(format, attributes, Binder.getCallingUid());
     }
 
     //====================================================================
@@ -6233,10 +6299,29 @@ public class AudioManager {
     })
     public @NonNull List<AudioDeviceAttributes> getDevicesForAttributes(
             @NonNull AudioAttributes attributes) {
+        return getDevicesForAttributes(attributes, AudioProductStrategy.DEFAULT_ZONE_ID);
+    }
+
+    /**
+     * @hide
+     * Get the audio devices that would be used for the routing of the given audio attributes.
+     * @param attributes the {@link AudioAttributes} for which the routing is being queried
+     * @param zoneId for which the routing is being queried.
+     * @return an empty list if there was an issue with the request, a list of audio devices
+     *   otherwise (typically one device, except for duplicated paths).
+     */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MODIFY_AUDIO_ROUTING,
+            Manifest.permission.QUERY_AUDIO_STATE
+    })
+    public @NonNull List<AudioDeviceAttributes> getDevicesForAttributes(
+            @NonNull AudioAttributes attributes, int zoneId) {
         Objects.requireNonNull(attributes);
         final IAudioService service = getService();
         try {
-            return service.getDevicesForAttributes(attributes);
+            return service.getDevicesForAttributes(attributes, zoneId);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -8937,7 +9022,8 @@ public class AudioManager {
     public List<AudioProfile> getDirectProfilesForAttributes(@NonNull AudioAttributes attributes) {
         Objects.requireNonNull(attributes);
         ArrayList<AudioProfile> audioProfilesList = new ArrayList<>();
-        int status = AudioSystem.getDirectProfilesForAttributes(attributes, audioProfilesList);
+        int status = AudioSystem.getDirectProfilesForAttributes(attributes, Binder.getCallingUid(),
+                audioProfilesList);
         if (status != SUCCESS) {
             Log.w(TAG, "getDirectProfilesForAttributes failed.");
             return new ArrayList<>();

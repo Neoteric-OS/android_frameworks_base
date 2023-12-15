@@ -449,7 +449,8 @@ interface IAudioService {
     @EnforcePermission("MODIFY_AUDIO_ROUTING")
     List<AudioDeviceAttributes> getNonDefaultDevicesForStrategy(in int strategy);
 
-    List<AudioDeviceAttributes> getDevicesForAttributes(in AudioAttributes attributes);
+    List<AudioDeviceAttributes> getDevicesForAttributes(in AudioAttributes attributes,
+            in int zoneId);
 
     List<AudioDeviceAttributes> getDevicesForAttributesUnprotected(in AudioAttributes attributes);
 
@@ -759,4 +760,13 @@ interface IAudioService {
     oneway void removeLoudnessCodecInfo(int piid, in LoudnessCodecInfo codecInfo);
 
     PersistableBundle getLoudnessParams(int piid, in LoudnessCodecInfo codecInfo);
+
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
+    void setZoneIdForUserId(int zoneId, int UserId);
+
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
+    void resetZoneIdForUserId(int UserId);
+
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "QUERY_AUDIO_STATE", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
+    int getUserIdForZoneId(int zoneId);
 }

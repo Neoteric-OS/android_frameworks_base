@@ -678,7 +678,7 @@ public class AudioDeviceBroker {
                     AudioProductStrategy.getAudioAttributesForStrategyWithLegacyStreamType(
                             AudioSystem.STREAM_VOICE_CALL);
             List<AudioDeviceAttributes> devices = mAudioSystem.getDevicesForAttributes(
-                    attr, false /* forVolume */);
+                    attr, mAudioService.getUidForVolume(), false /* forVolume */);
             if (devices.isEmpty()) {
                 if (mAudioService.isPlatformVoice()) {
                     Log.w(TAG,

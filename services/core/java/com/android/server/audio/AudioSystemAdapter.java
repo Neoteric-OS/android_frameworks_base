@@ -28,6 +28,7 @@ import android.media.ISoundDoseCallback;
 import android.media.audiopolicy.AudioMix;
 import android.media.audiopolicy.AudioMixingRule;
 import android.os.IBinder;
+import android.os.UserHandle;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -135,10 +136,11 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
                 if (attrList == null) {
                     throw new IllegalStateException("Attribute list must not be null");
                 }
-
+                final int uid = UserHandle.getUid(AudioService.getCurrentUserId(),
+                        android.os.Process.ROOT_UID);
                 for (Pair<AudioAttributes, Boolean> attr : attrList) {
                     ArrayList<AudioDeviceAttributes> devices =
-                            getDevicesForAttributes(attr.first, attr.second);
+                            getDevicesForAttributes(attr.first, uid, attr.second);
                     if (!mLastDevicesForAttr.containsKey(attr)
                             || !sameDeviceList(devices, mLastDevicesForAttr.get(attr))) {
                         try {
@@ -177,7 +179,7 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
      *      AudioAttributes, Executor, OnDevicesForAttributesChangedListener)
      */
     public void addOnDevicesForAttributesChangedListener(AudioAttributes attributes,
-            boolean forVolume, @NonNull IDevicesForAttributesCallback listener) {
+            int uid, boolean forVolume, @NonNull IDevicesForAttributesCallback listener) {
         List<Pair<AudioAttributes, Boolean>> res;
         final Pair<AudioAttributes, Boolean> attr = new Pair(attributes, forVolume);
         synchronized (mRegisteredAttributesMap) {
@@ -194,7 +196,7 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         }
 
         // Make query on registration to populate cache
-        getDevicesForAttributes(attributes, forVolume);
+        getDevicesForAttributes(attributes, uid, forVolume);
     }
 
     /**
@@ -302,27 +304,27 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
      * @return the devices that the stream with the given attributes would be routed to
      */
     public @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributes(
-            @NonNull AudioAttributes attributes, boolean forVolume) {
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
         if (!ENABLE_GETDEVICES_STATS) {
-            return getDevicesForAttributesImpl(attributes, forVolume);
+            return getDevicesForAttributesImpl(attributes, uid, forVolume);
         }
         mMethodCallCounter[METHOD_GETDEVICESFORATTRIBUTES]++;
         final long startTime = SystemClock.uptimeNanos();
         final ArrayList<AudioDeviceAttributes> res = getDevicesForAttributesImpl(
-                attributes, forVolume);
+                attributes, uid, forVolume);
         mMethodTimeNs[METHOD_GETDEVICESFORATTRIBUTES] += SystemClock.uptimeNanos() - startTime;
         return res;
     }
 
     private @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributesImpl(
-            @NonNull AudioAttributes attributes, boolean forVolume) {
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
         if (USE_CACHE_FOR_GETDEVICES) {
             ArrayList<AudioDeviceAttributes> res;
             final Pair<AudioAttributes, Boolean> key = new Pair(attributes, forVolume);
             synchronized (sDeviceCacheLock) {
                 res = mDevicesForAttrCache.get(key);
                 if (res == null) {
-                    res = AudioSystem.getDevicesForAttributes(attributes, forVolume);
+                    res = AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
                     mDevicesForAttrCache.put(key, res);
                     if (DEBUG_CACHE) {
                         Log.d(TAG, mMethodNames[METHOD_GETDEVICESFORATTRIBUTES]
@@ -334,7 +336,7 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
                 mMethodCacheHit[METHOD_GETDEVICESFORATTRIBUTES]++;
                 if (DEBUG_CACHE) {
                     final ArrayList<AudioDeviceAttributes> real =
-                            AudioSystem.getDevicesForAttributes(attributes, forVolume);
+                            AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
                     if (res.equals(real)) {
                         Log.d(TAG, mMethodNames[METHOD_GETDEVICESFORATTRIBUTES]
                                 + attrDeviceToDebugString(attributes, res) + " CACHE");
@@ -348,7 +350,7 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
             return res;
         }
         // not using cache
-        return AudioSystem.getDevicesForAttributes(attributes, forVolume);
+        return AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
     }
 
     private static String attrDeviceToDebugString(@NonNull AudioAttributes attr,
@@ -541,12 +543,13 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
     /**
      * Same as {@link AudioSystem#setStreamVolumeIndexAS(int, int, int)}
      * @param stream
+     * @param uid to consider
      * @param index
      * @param device
      * @return
      */
-    public int setStreamVolumeIndexAS(int stream, int index, int device) {
-        return AudioSystem.setStreamVolumeIndexAS(stream, index, device);
+    public int setStreamVolumeIndexAS(int stream, int uid, int index, int device) {
+        return AudioSystem.setStreamVolumeIndexAS(stream, uid, index, device);
     }
 
     /**
