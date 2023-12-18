@@ -50,6 +50,23 @@
       "message": "This was discussed briefly in b/230028571 and I think this is the right fix because we consider odm an extension to vendor.\n\nThis needs to be reviewed/approved by the pm team.",
       "revId": "95a86edf8f29c8d71647d059b07767a803cbc290",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30e3f6d4_cb7e13d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2023-12-18T02:29:03Z",
+      "side": 1,
+      "message": "Nate, could you please take a look and +2 as well, since AOSP Gerrit now requires 2 +2\u0027s?",
+      "revId": "95a86edf8f29c8d71647d059b07767a803cbc290",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
