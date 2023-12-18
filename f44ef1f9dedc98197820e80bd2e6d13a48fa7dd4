@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39ce6ca5_90c632af",
+        "filename": "services/tests/servicestests/src/com/android/server/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1897855
+      },
+      "writtenOn": "2023-12-18T21:54:43Z",
+      "side": 1,
+      "message": "This file path no longer exists. Commenting it out to resolve OWNERS validation checks",
+      "revId": "f44ef1f9dedc98197820e80bd2e6d13a48fa7dd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
