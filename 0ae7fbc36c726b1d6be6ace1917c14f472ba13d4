@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "246325a3_05ee3ded",
+        "filename": "telephony/java/android/telephony/AnomalyReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2023-12-18T19:09:41Z",
+      "side": 0,
+      "message": "Thanks for fixing it.\n\ninstead of removing it, can we make it better\n\nif (r.activityInfo \u003d\u003d null) {\n    Rlog.w(TAG,\n            \"Found package without proper permissions or no activity\"\n} else if ( pm.checkPermission(\n                android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,\n                r.activityInfo.packageName)) {\n    Rlog.w(TAG,\"Found package without proper permissions or no activity\"\n               + r.activityInfo.packageName);\n}",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 62
+      },
+      "revId": "0ae7fbc36c726b1d6be6ace1917c14f472ba13d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
