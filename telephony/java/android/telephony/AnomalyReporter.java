@@ -192,9 +192,7 @@ public final class AnomalyReporter {
                             android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE,
                             r.activityInfo.packageName)
                     != PackageManager.PERMISSION_GRANTED) {
-                Rlog.w(TAG,
-                        "Found package without proper permissions or no activity"
-                                + r.activityInfo.packageName);
+                Rlog.w(TAG, "Found package without proper permissions or no activity");
                 continue;
             }
             Rlog.d(TAG, "Found a valid package " + r.activityInfo.packageName);
