@@ -334,7 +334,7 @@ void binder_report_exception(JNIEnv* env, jthrowable excep, const char* msg) {
 
 class JavaBBinderHolder;
 
-// JavaBBinder is a native binder object that forwards IPC calls to the the associated Java Binder
+// JavaBBinder is a native binder object that forwards IPC calls to the associated Java Binder
 // object. JavaBBinder holds either a (strong) global or a weak global reference to the Java object.
 // The choice is made by the Binder.isWeaklyReferencedFromRemote method on the object.
 //
@@ -384,16 +384,17 @@ protected:
         gNumLocalRefsDeleted.fetch_add(1, memory_order_relaxed);
         JNIEnv* env = javavm_to_jnienv(mVM);
 
-        ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak != NULL ? mObjectWeak : mObject));
+        ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak != NULL ? mObjectWeak
+                                                                                 : mObject));
         if (object.get() != NULL) {
             env->CallVoidMethod(object.get(), gBinderOffsets.mOnLastReferenceFromRemote);
         }
         if (mObjectWeak != NULL) {
             env->DeleteWeakGlobalRef(mObjectWeak);
-            ALOGV("Destroyed JavaBBinder %p weakly referencing Java object %p\n", this, mObjectWeak);
+            ALOGV("Destroyed %p weakly referencing Java object %p\n", this, mObjectWeak);
         } else {
             env->DeleteGlobalRef(mObject);
-            ALOGV("Destroyed JavaBBinder %p strongly referencing Java object %p\n", this, mObject);
+            ALOGV("Destroyed %p strongly referencing Java object %p\n", this, mObject);
         }
     }
 
@@ -401,14 +402,17 @@ protected:
     {
         call_once(mPopulateDescriptor, [this] {
             JNIEnv* env = javavm_to_jnienv(mVM);
-            ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak != NULL ? mObjectWeak : mObject));
+            ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak != NULL ? mObjectWeak
+                                                                                     : mObject));
             LOG_ALWAYS_FATAL_IF(object.get() == NULL,
                 "Java Binder object %p is already dead before getInterfaceDescriptor is called.",
                 mObjectWeak);
 
-            ALOGV("getInterfaceDescriptor() on %p calling object %p in env %p vm %p\n", this, object.get(), env, mVM);
+            ALOGV("getInterfaceDescriptor() on %p calling object %p in env %p vm %p\n",
+                this, object.get(), env, mVM);
 
-            jstring descriptor = (jstring)env->CallObjectMethod(object.get(), gBinderOffsets.mGetInterfaceDescriptor);
+            jstring descriptor = (jstring)env->CallObjectMethod(object.get(),
+                gBinderOffsets.mGetInterfaceDescriptor);
 
             if (descriptor == nullptr) {
                 return;

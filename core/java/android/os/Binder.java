@@ -734,16 +734,16 @@ public class Binder implements IBinder {
      * <p>The Binder object {@code callback} can stay in memory after it is set to {@code null},
      * because the remote Binder object implementing {@code IFoo} may be holding a remote reference
      * to the passed-in {@code callback}, and the remote Binder object is referenced back in this
-     * process via {@code remote}. Further reseting {@code remote} may not make the {@code callback}
-     * object to be eligible for garbage collection in case when the remote Binder object is still
-     * referenced from another process.
+     * process via {@code remote}. Further resetting {@code remote} may not make the
+     * {@code callback} object to be eligible for garbage collection in case when the remote Binder
+     * object is still referenced from another process.
      *
      * <p>This can be the desired behavior in some cases, but not always. A great care must be taken
      * since this behavior is non-conventional for ordinary Java programmers. This can lead to a
      * very delayed garbage collection or even a memory leak.
      *
      * <p>If {@code bindLifetimeTo} is set to a remote Binder object, the lifetime of this Binder
-     * object is bound to that object. This object becomes elibigle for garbage collection when
+     * object is bound to that object. This object becomes eligible for garbage collection when
      * <strong>either</strong> of the following two conditions is met:
      *
      * <ul>
@@ -769,7 +769,7 @@ public class Binder implements IBinder {
      *
      * <p>Note that {@code callback} is not guaranteed to stay in memory until @{code remote} is
      * garbage collected. {@code callback} can be garbage collected if there is no remote reference
-     * to it, even if {@code remote} is alive. That case is described in the the following example:
+     * to it, even if {@code remote} is alive. That case is described in the following example:
      *
      * <pre>
      * IFoo remote = ServiceManager.getService("foo");
@@ -797,7 +797,8 @@ public class Binder implements IBinder {
                 remote.bindLifetime(this);
                 mLifetimeBoundTo = remote;
             } else {
-                throw new IllegalArgumentException("Lifetime can be bound only to remote Binder object");
+                throw new IllegalArgumentException(
+                        "Lifetime can be bound only to remote Binder object");
             }
         }
     }

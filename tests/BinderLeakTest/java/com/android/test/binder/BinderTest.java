@@ -133,4 +133,69 @@ public class BinderTest {
     private static int getSdkVersion() {
         return ApplicationProvider.getApplicationContext().getApplicationInfo().targetSdkVersion;
     }
+
+    @Test
+    public void testBinderIsNotDeletedIfRemotelyReferenced()
+            throws RemoteException, TimeoutException, InterruptedException {
+        testLifetimeOfBinder(/* isLifetimeBoundToProxy= */false);
+    }
+
+    @Test
+    public void testBinderIsDeletedIfLifetimeBounded()
+            throws RemoteException, TimeoutException, InterruptedException {
+        testLifetimeOfBinder(/* isLifetimeBoundToProxy= */true);
+    }
+
+    private int receivedArg;
+    private void testLifetimeOfBinder(boolean isLifetimeBoundToProxy)
+            throws RemoteException, TimeoutException, InterruptedException {
+        Intent intent = new Intent(ApplicationProvider.getApplicationContext(), MyService.class);
+        IFooProvider provider = IFooProvider.Stub.asInterface(serviceRule.bindService(intent));
+        IFoo proxy = provider.createFooAndKeep();
+
+        IFooCallback cb = new IFooCallback.Stub(isLifetimeBoundToProxy ? proxy : null) {
+            @Override
+            public void onCallback(int arg) {
+                receivedArg = arg;
+            }
+        };
+        proxy.registerCallback(cb);
+
+        // Check if IFooCallback is alive
+        proxy.invokeCallback(100);
+        assertEquals(100, receivedArg);
+
+        ReferenceChecker proxyChecker = new ReferenceChecker(proxy);
+        ReferenceChecker cbChecker = new ReferenceChecker(cb);
+
+        // Dropping the local reference to IFooCallback doesn't make it eligible for garbage
+        // collection. This is because it is still referenced locally from proxy (in case
+        // isLifetimeBoundToProxy is true) or remotely in the process that implements IFoo.
+        cb = null;
+        assertFalse(cbChecker.forceGcAndCheckIfDeleted());
+        // Check again if IFooCallback is really alive
+        proxy.invokeCallback(200);
+        assertEquals(200, receivedArg);
+
+        // Now, the local reference to proxy is dropped. Make sure that it is garbage collected.
+        proxy = null;
+        assertTrue(proxyChecker.forceGcAndCheckIfDeleted());
+
+        // Check if the dropping of proxy also removes IFooCallback or not.
+        if (isLifetimeBoundToProxy) {
+            // The new behavior. If libetime is bound to the proxy, dropping the proxy object
+            // deletes IFooCallback as well.
+            assertTrue(cbChecker.forceGcAndCheckIfDeleted());
+        } else {
+            // The old behavior. Memory is leaked(?)
+            assertFalse(cbChecker.forceGcAndCheckIfDeleted());
+
+            // .. until the remote reference to it is gone. Prove this by killing the remote
+            // process.
+            provider.killProcess();
+            Thread.sleep(1000); // give some time for the service process to die and reaped
+            assertTrue(cbChecker.forceGcAndCheckIfDeleted());
+        }
+    }
+
 }

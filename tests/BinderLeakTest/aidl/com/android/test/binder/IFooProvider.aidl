@@ -4,6 +4,8 @@ import com.android.test.binder.IFoo;
 interface IFooProvider {
     IFoo createFoo();
 
+    IFoo createFooAndKeep();
+
     boolean isFooGarbageCollected();
 
     oneway void killProcess();
