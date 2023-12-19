@@ -22,6 +22,30 @@
       },
       "revId": "0ae7fbc36c726b1d6be6ace1917c14f472ba13d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "186b4340_965a67b4",
+        "filename": "telephony/java/android/telephony/AnomalyReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1947030
+      },
+      "writtenOn": "2023-12-19T01:56:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "246325a3_05ee3ded",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 62
+      },
+      "revId": "0ae7fbc36c726b1d6be6ace1917c14f472ba13d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
