@@ -26,11 +26,35 @@ public class MyService extends Service {
     public IBinder onBind(Intent intent) {
         return new IFooProvider.Stub() {
             ReferenceChecker<IFoo> mFooChecker;
+            IFoo mFoo;
 
             @Override
             public IFoo createFoo() throws RemoteException {
-                IFoo binder = new IFoo.Stub() {};
+                return createFooInternal(false);
+            }
+
+            @Override
+            public IFoo createFooAndKeep() throws RemoteException {
+                return createFooInternal(true);
+            }
+
+            private IFoo createFooInternal(boolean keep) throws RemoteException {
+                IFoo binder = new IFoo.Stub() {
+                    IFooCallback mCb;
+                    @Override
+                    public void registerCallback(IFooCallback callback) {
+                        mCb = callback;
+                    }
+
+                    @Override
+                    public void invokeCallback(int arg) throws RemoteException {
+                        mCb.onCallback(arg);
+                    }
+                };
                 mFooChecker = new ReferenceChecker<>(binder);
+                if (keep) {
+                    mFoo = binder;
+                }
                 return binder;
             }
 
