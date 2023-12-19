@@ -34,8 +34,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.ref.PhantomReference;
-import java.lang.ref.ReferenceQueue;
 import java.util.concurrent.TimeoutException;
 
 @RunWith(AndroidJUnit4.class)
@@ -50,9 +48,7 @@ public class BinderTest {
         IFooProvider provider = IFooProvider.Stub.asInterface(serviceRule.bindService(intent));
         FooHolder holder = new FooHolder(provider.createFoo());
 
-        // ref will get enqueued right after holder is finalized for gc.
-        ReferenceQueue<FooHolder> refQueue = new ReferenceQueue<>();
-        PhantomReference<FooHolder> ref = new PhantomReference<>(holder, refQueue);
+        ReferenceChecker checker = new ReferenceChecker(holder);
 
         DeathRecorder deathRecorder = new DeathRecorder();
         holder.registerDeathRecorder(deathRecorder);
@@ -73,8 +69,7 @@ public class BinderTest {
             holder = null;
 
             // Ensure that the objects are garbage collected
-            forceGc();
-            assertEquals(ref, refQueue.poll());
+            assertTrue(checker.forceGcAndCheckIfDeleted());
             assertTrue(provider.isFooGarbageCollected());
 
             // The binder has died, but we don't get notified since the death recipient is GC'ed.
@@ -98,8 +93,7 @@ public class BinderTest {
             holder = null;
 
             // Check that objects are not garbage collected
-            forceGc();
-            assertNotEquals(ref, refQueue.poll());
+            assertFalse(checker.forceGcAndCheckIfDeleted());
             assertFalse(provider.isFooGarbageCollected());
 
             // The legacy behavior is getting notified even when there's no reference
@@ -134,17 +128,6 @@ public class BinderTest {
 
     static class DeathRecorder {
         public boolean deathRecorded = false;
-    }
-
-    // Try calling System.gc() until an orphaned object is confirmed to be finalized
-    private static void forceGc() {
-        Object obj = new Object();
-        ReferenceQueue<Object> refQueue = new ReferenceQueue<>();
-        PhantomReference<Object> ref = new PhantomReference<>(obj, refQueue);
-        obj = null; // make it an orphan
-        while (refQueue.poll() != ref) {
-            System.gc();
-        }
     }
 
     private static int getSdkVersion() {

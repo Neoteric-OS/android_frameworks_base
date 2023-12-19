@@ -21,27 +21,22 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import java.lang.ref.PhantomReference;
-import java.lang.ref.ReferenceQueue;
-
 public class MyService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return new IFooProvider.Stub() {
-            ReferenceQueue<IFoo> mRefQueue = new ReferenceQueue<>();
-            PhantomReference<IFoo> mRef;
+            ReferenceChecker<IFoo> mFooChecker;
 
             @Override
             public IFoo createFoo() throws RemoteException {
                 IFoo binder = new IFoo.Stub() {};
-                mRef = new PhantomReference<>(binder, mRefQueue);
+                mFooChecker = new ReferenceChecker<>(binder);
                 return binder;
             }
 
             @Override
             public boolean isFooGarbageCollected() throws RemoteException {
-                forceGc();
-                return mRefQueue.poll() == mRef;
+                return mFooChecker != null && mFooChecker.forceGcAndCheckIfDeleted();
             }
 
             @Override
@@ -49,15 +44,5 @@ public class MyService extends Service {
                 android.os.Process.killProcess(android.os.Process.myPid());
             }
         };
-    }
-
-    private static void forceGc() {
-        Object obj = new Object();
-        ReferenceQueue<Object> refQueue = new ReferenceQueue<>();
-        PhantomReference<Object> ref = new PhantomReference<>(obj, refQueue);
-        obj = null; // make it an orphan
-        while (refQueue.poll() != ref) {
-            System.gc();
-        }
     }
 }
