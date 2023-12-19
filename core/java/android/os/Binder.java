@@ -676,7 +676,7 @@ public class Binder implements IBinder {
      * you should use {@link #Binder(String)} instead.
      */
     public Binder() {
-        this(null);
+        this((String)null);
     }
 
     /**
@@ -704,6 +704,103 @@ public class Binder implements IBinder {
             }
         }
         mDescriptor = descriptor;
+    }
+
+    /**
+     * Constructor for creating a Binder object with an ability to bind its lifetime to a remote
+     * Binder object.
+     *
+     * <p>If the argument {@code bindLifetimeTo} is set to {@code null}, the behavior is the same as
+     * constructing this object using {@link #Binder()}. In that case, the lifetime of this object
+     * is different from conventional Java objects. It becomes eligible for garbage collection only
+     * when it is not referenced locally in the current process, and at the same time it is not
+     * referenced from any of the remote processes. In other words, dropping a reference to this
+     * object in the current process may not make it a candidate for garbage collection if it was
+     * passed to another process and the process holds a reference to this object via
+     * {@link IBinder}.
+     *
+     * <p>Consider following case.
+     * <pre>
+     * IFoo remote = ServiceManager.getService("foo");
+     * // IFooCallback.Stub() internally calls Binder() or Binder(null).
+     * IFooCallback callback = new IFooCallback.Stub() { ... };
+     * remote.registerCallback(callback);
+     * callback = null;
+     * // callback may or may not be eligible for garbage collection at this point.
+     * remote = null;
+     * // callback still may or may not be eligible for garbage collection at this point.
+     * </pre>
+     *
+     * <p>The Binder object {@code callback} can stay in memory after it is set to {@code null},
+     * because the remote Binder object implementing {@code IFoo} may be holding a remote reference
+     * to the passed-in {@code callback}, and the remote Binder object is referenced back in this
+     * process via {@code remote}. Further resetting {@code remote} may not make the
+     * {@code callback} object to be eligible for garbage collection in case when the remote Binder
+     * object is still referenced from another process.
+     *
+     * <p>This can be the desired behavior in some cases, but not always. A great care must be taken
+     * since this behavior is non-conventional for ordinary Java programmers. This can lead to a
+     * very delayed garbage collection or even a memory leak.
+     *
+     * <p>If {@code bindLifetimeTo} is set to a remote Binder object, the lifetime of this Binder
+     * object is bound to that object. This object becomes eligible for garbage collection when
+     * <strong>either</strong> of the following two conditions is met:
+     *
+     * <ul>
+     *   <li>There is no remote reference to this object, or
+     *   <li>There is no local reference to this object and {@code bindLifetimeTo} as well.
+     * </ul>
+     *
+     * <p>Let's revisit previous example with a non-null @{code bindLifetimeTo}.
+     * <pre>
+     * IFoo remote = ServiceManager.getService("foo");
+     * // IFooCallback.Stub(remote) internally calls Binder(remote)
+     * IFooCallback callback = new IFooCallback.Stub(remote) { ... };
+     * remote.registerCallback(callback);
+     * callback = null;
+     * // callback may or may not be eligible for garbage collection at this point
+     * remote = null;
+     * // callback (and remote as well) is eligible for garbage collection
+     * </pre>
+     *
+     * <p>The Binder object {@code callback} is eligible for garbage collection at the end of the
+     * code fragment, because {@code remote} which the lifetime of {@code callback} is bound to is
+     * no longer accessible in the current process.
+     *
+     * <p>Note that {@code callback} is not guaranteed to stay in memory until @{code remote} is
+     * garbage collected. {@code callback} can be garbage collected if there is no remote reference
+     * to it, even if {@code remote} is alive. That case is described in the following example:
+     *
+     * <pre>
+     * IFoo remote = ServiceManager.getService("foo");
+     * // IFooCallback.Stub(remote) internally calls Binder(remote)
+     * IFooCallback callback = new IFooCallback.Stub(remote) { ... };
+     * remote.registerCallback(callback);
+     * remote.deleteAllCallbacks(); // the remote side drops all references to IFooCallback
+     * callback = null;
+     * // callback is always eligible for garbage collection at this point
+     * </pre>
+     *
+     * <p>@{code bindLifetimeTo} must be either {@code null} or a remote Binder object. It cannot be
+     * a local Binder object which is implemented in the current process.
+     *
+     * @param bindLifetimeTo Remote Binder object to which this Binder object binds its lifetime to
+     *
+     * @throws IllegalArgumentException If {@code bindLifetimeTo} is not a remote Binder object
+     */
+    public Binder(@Nullable IBinder bindLifetimeTo) {
+        this((String)null);
+
+        if (bindLifetimeTo != null) {
+            if (bindLifetimeTo instanceof BinderProxy) {
+                BinderProxy remote = (BinderProxy)bindLifetimeTo;
+                remote.bindLifetime(this);
+                mLifetimeBoundTo = remote;
+            } else {
+                throw new IllegalArgumentException(
+                        "Lifetime can be bound only to remote Binder object");
+            }
+        }
     }
 
     /**
@@ -1435,6 +1532,31 @@ public class Binder implements IBinder {
             }
         } else if (watcher != null) {
             watcher.setConfig(false, 0, 0.0f, null);
+        }
+    }
+
+    /**
+     * The remote Binder object to which the lifetime of this Binder object is bound.
+     */
+    private @Nullable BinderProxy mLifetimeBoundTo;
+
+    /**
+     * Tells if this object is constructed in a way that its lifetime is bound to another Java
+     * object and therefore should be weakly referenced from remote processes. This is called when
+     * constructing JavaBBinder object on the JNI side.
+     */
+    private boolean isWeaklyReferencedFromRemote() {
+        return mLifetimeBoundTo != null;
+    }
+
+    /**
+     * Called when the last remote reference to this Binder object is dropped. If this object is
+     * bound to a Binder proxy object, it gets un-bound from it because there's no reason to keep
+     * this object longer
+    */
+    private void onLastReferenceFromRemote() {
+        if (mLifetimeBoundTo != null) {
+            mLifetimeBoundTo.unbindLifetime(this);
         }
     }
 }

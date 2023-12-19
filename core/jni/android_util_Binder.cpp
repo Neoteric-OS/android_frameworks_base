@@ -73,6 +73,8 @@ static struct bindernative_offsets_t
     jclass mClass;
     jmethodID mExecTransact;
     jmethodID mGetInterfaceDescriptor;
+    jmethodID mIsWeaklyReferencedFromRemote;
+    jmethodID mOnLastReferenceFromRemote;
 
     // Object state.
     jfieldID mObject;
@@ -332,13 +334,36 @@ void binder_report_exception(JNIEnv* env, jthrowable excep, const char* msg) {
 
 class JavaBBinderHolder;
 
+// JavaBBinder is a native binder object that forwards IPC calls to the associated Java Binder
+// object. JavaBBinder holds either a (strong) global or a weak global reference to the Java object.
+// The choice is made by the Binder.isWeaklyReferencedFromRemote method on the object.
+//
+// If it returns false, the lifetime of the Java object is bound to this JavaBBinder. The Java
+// object is released only after JavaBBinder is released which happens only when there's no
+// reference to it from any remote process.
+//
+// If it returns true, they don't share lifetime; the Java object may live shorter or longer than
+// JavaBBinder. The Java object is strongly referenced by a Java BinderProxy object in the current
+// process. When JavaBBinder is released, the Java object is notified via the
+// Binder.onLastReferenceFromRemote method. The Java-side strong reference is dropped there.
 class JavaBBinder : public BBinder
 {
 public:
     JavaBBinder(JNIEnv* env, jobject /* Java Binder */ object)
-        : mVM(jnienv_to_javavm(env)), mObject(env->NewGlobalRef(object))
+        : mVM(jnienv_to_javavm(env))
     {
-        ALOGV("Creating JavaBBinder %p\n", this);
+
+        jboolean res = env->CallBooleanMethod(object, gBinderOffsets.mIsWeaklyReferencedFromRemote);
+        if (res == JNI_TRUE) {
+            mObject = NULL;
+            mObjectWeak = env->NewWeakGlobalRef(object);
+            ALOGV("Created JavaBBinder %p weakly referencing Java object %p\n", this, object);
+        } else {
+            mObject = env->NewGlobalRef(object);
+            mObjectWeak = NULL;
+            ALOGV("Created JavaBBinder %p strongly referencing Java object %p\n", this, object);
+        }
+
         gNumLocalRefsCreated.fetch_add(1, std::memory_order_relaxed);
         gcIfManyNewRefs(env);
     }
@@ -356,20 +381,38 @@ public:
 protected:
     virtual ~JavaBBinder()
     {
-        ALOGV("Destroying JavaBBinder %p\n", this);
         gNumLocalRefsDeleted.fetch_add(1, memory_order_relaxed);
         JNIEnv* env = javavm_to_jnienv(mVM);
-        env->DeleteGlobalRef(mObject);
+
+        ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak != NULL ? mObjectWeak
+                                                                                 : mObject));
+        if (object.get() != NULL) {
+            env->CallVoidMethod(object.get(), gBinderOffsets.mOnLastReferenceFromRemote);
+        }
+        if (mObjectWeak != NULL) {
+            env->DeleteWeakGlobalRef(mObjectWeak);
+            ALOGV("Destroyed %p weakly referencing Java object %p\n", this, mObjectWeak);
+        } else {
+            env->DeleteGlobalRef(mObject);
+            ALOGV("Destroyed %p strongly referencing Java object %p\n", this, mObject);
+        }
     }
 
     const String16& getInterfaceDescriptor() const override
     {
         call_once(mPopulateDescriptor, [this] {
             JNIEnv* env = javavm_to_jnienv(mVM);
+            ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak != NULL ? mObjectWeak
+                                                                                     : mObject));
+            LOG_ALWAYS_FATAL_IF(object.get() == NULL,
+                "Java Binder object %p is already dead before getInterfaceDescriptor is called.",
+                mObjectWeak);
 
-            ALOGV("getInterfaceDescriptor() on %p calling object %p in env %p vm %p\n", this, mObject, env, mVM);
+            ALOGV("getInterfaceDescriptor() on %p calling object %p in env %p vm %p\n",
+                this, object.get(), env, mVM);
 
-            jstring descriptor = (jstring)env->CallObjectMethod(mObject, gBinderOffsets.mGetInterfaceDescriptor);
+            jstring descriptor = (jstring)env->CallObjectMethod(object.get(),
+                gBinderOffsets.mGetInterfaceDescriptor);
 
             if (descriptor == nullptr) {
                 return;
@@ -394,7 +437,14 @@ protected:
         LOG_ALWAYS_FATAL_IF(env == nullptr,
                             "Binder thread started or Java binder used, but env null. Attach JVM?");
 
-        ALOGV("onTransact() on %p calling object %p in env %p vm %p\n", this, mObject, env, mVM);
+        ScopedLocalRef<jobject> object(env, env->NewLocalRef(mObjectWeak != NULL ? mObjectWeak
+                                                                                 : mObject));
+        if (object.get() == NULL) {
+            ALOGW("Java Binder object %p is already dead. Ignoring transaction.", mObjectWeak);
+            return DEAD_OBJECT;
+        }
+        ALOGV("onTransact() on %p calling object %p in env %p vm %p\n",
+            this, object.get(), env, mVM);
 
         IPCThreadState* thread_state = IPCThreadState::self();
         const int32_t strict_policy_before = thread_state->getStrictModePolicy();
@@ -402,7 +452,7 @@ protected:
         //printf("Transact from %p to Java code sending: ", this);
         //data.print();
         //printf("\n");
-        jboolean res = env->CallBooleanMethod(mObject, gBinderOffsets.mExecTransact,
+        jboolean res = env->CallBooleanMethod(object.get(), gBinderOffsets.mExecTransact,
             code, reinterpret_cast<jlong>(&data), reinterpret_cast<jlong>(reply), flags);
 
         if (env->ExceptionCheck()) {
@@ -451,7 +501,12 @@ protected:
 
 private:
     JavaVM* const   mVM;
-    jobject const   mObject;  // GlobalRef to Java Binder
+
+    // Reference to the Java object (of type Binder) that this JavaBBinder object will pass
+    // transactions to. The reference can be strong or weak depending on how the Java object is
+    // configured. These two can not be non-NULL at the same time.
+    jobject mObject;
+    jweak mObjectWeak;
 
     mutable std::once_flag mPopulateDescriptor;
     mutable String16 mDescriptor;
@@ -1173,6 +1228,10 @@ static int int_register_android_os_Binder(JNIEnv* env)
     gBinderOffsets.mExecTransact = GetMethodIDOrDie(env, clazz, "execTransact", "(IJJI)Z");
     gBinderOffsets.mGetInterfaceDescriptor = GetMethodIDOrDie(env, clazz, "getInterfaceDescriptor",
         "()Ljava/lang/String;");
+    gBinderOffsets.mIsWeaklyReferencedFromRemote = GetMethodIDOrDie(env, clazz,
+        "isWeaklyReferencedFromRemote", "()Z");
+    gBinderOffsets.mOnLastReferenceFromRemote = GetMethodIDOrDie(env, clazz,
+        "onLastReferenceFromRemote", "()V");
     gBinderOffsets.mObject = GetFieldIDOrDie(env, clazz, "mObject", "J");
 
     return RegisterMethodsOrDie(

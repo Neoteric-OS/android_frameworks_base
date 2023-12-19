@@ -34,8 +34,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -735,4 +737,50 @@ public final class BinderProxy implements IBinder {
      * native IBinder object, and a DeathRecipientList.
      */
     private final long mNativeData;
+
+    /**
+     * Binder objects whose lifetime is bound to this object. The lifetime binding is achieved by
+     * referencing them strongly here, and weakly from JNI (i.e. JavaBBinder). Such Binder objects
+     * can get garbage collected even when remote processes have references to them. It is useful
+     * when the owner of the Binder object wants full control over it and doesn't want to rely on
+     * remote process releasing the remote reference soon enough.
+     *
+     * @see {@link Binder(IBinder)}.
+     */
+    private final Set<Binder> mBoundBinders = Collections.synchronizedSet(new HashSet<>());
+
+    /**
+     * Bind the lifetime of the given Binder object to this object. This is called if the Binder
+     * object is constructed with an option to bind its lifetime to this object. This shouldn't be
+     * called from anywhere other than the constructor of Binder.
+     *
+     * @see {@link Binder(IBinder)}.
+     *
+     * @hide
+     */
+    /* package */ void bindLifetime(Binder b) {
+        boolean added = mBoundBinders.add(b);
+        if (!added && (Build.IS_USERDEBUG || Build.IS_ENG)) {
+            Log.wtf(Binder.TAG, "Lifetime of Binder " + b + " is already bound to " + this,
+                    new Throwable());
+        }
+    }
+
+    /**
+     * Unbind the lifetime of the given Binder object from this object. This is called when the
+     * last remote reference to the Binder object is dropped. If that happens before this object
+     * gets garbage collected, there's no need to keep it here longer. This shouldn't be called from
+     * anywhere other than Binder.onLastReferenceFromRemote.
+     *
+     * @see {@link Binder(IBinder)}.
+     *
+     * @hide
+     */
+    /* package */ void unbindLifetime(Binder b) {
+        boolean removed = mBoundBinders.remove(b);
+        if (!removed && (Build.IS_USERDEBUG || Build.IS_ENG)) {
+            Log.wtf(Binder.TAG, "Lifetime of Binder " + b + " is already unbound from " + this,
+                    new Throwable());
+        }
+    }
 }
