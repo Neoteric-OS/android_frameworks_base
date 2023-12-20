@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ac65717_57ad747a",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2023-12-20T21:37:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298b7c30_429194b0",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 166
+      },
+      "revId": "eb7328c2af579e57e348185411a3bbcdd4a04178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3850c8c0_e1002bea",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d3e8522_2bf5b05a",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2023-12-20T21:37:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3850c8c0_e1002bea",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 168
+      },
+      "revId": "eb7328c2af579e57e348185411a3bbcdd4a04178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee08869d_a47fe58c",
@@ -60,6 +108,24 @@
       "writtenOn": "2023-11-24T22:30:02Z",
       "side": 1,
       "message": "please specify\n\n- what happens when unset (one buffer per frame?)\n- what happens when it\u0027s too small (ignored? exception?)\n- what happens if this value is too big (component overrides to a reasonable default?)",
+      "revId": "eb7328c2af579e57e348185411a3bbcdd4a04178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32015976_dbf3c718",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2023-12-20T21:37:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee08869d_a47fe58c",
       "revId": "eb7328c2af579e57e348185411a3bbcdd4a04178",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
