@@ -32565,6 +32565,7 @@ package android.os {
   public class Binder implements android.os.IBinder {
     ctor public Binder();
     ctor public Binder(@Nullable String);
+    ctor @FlaggedApi("android.os.binder_new_constructor_for_lifetime_binding") public Binder(@Nullable android.os.IBinder);
     method public void attachInterface(@Nullable android.os.IInterface, @Nullable String);
     method public static final long clearCallingIdentity();
     method public static final long clearCallingWorkSource();

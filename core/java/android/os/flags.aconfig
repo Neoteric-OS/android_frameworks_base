@@ -20,3 +20,10 @@ flag {
     description: "Guards a new UserManager user restriction that admins can use to require cellular encryption on their managed devices."
     bug: "276752881"
 }
+
+flag {
+    name: "binder_new_constructor_for_lifetime_binding"
+    namespace: "binder"
+    description: "Adds a new constructor to the Binder class which allows users to bind the lifetime of the Binder object to another interface."
+    bug: "TBD"
+}

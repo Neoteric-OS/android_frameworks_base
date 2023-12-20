@@ -24,7 +24,11 @@ import static org.junit.Assert.assertTrue;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.Flags;
 import android.os.RemoteException;
+import android.platform.test.annotations.RequiresFlagsEnabled;
+import android.platform.test.flag.junit.CheckFlagsRule;
+import android.platform.test.flag.junit.DeviceFlagsValueProvider;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -40,6 +44,9 @@ import java.util.concurrent.TimeoutException;
 public class BinderTest {
     @Rule
     public final ServiceTestRule serviceRule = new ServiceTestRule();
+
+    @Rule
+    public final CheckFlagsRule mCheckFlagsRule = DeviceFlagsValueProvider.createCheckFlagsRule();
 
     @Test
     public void testDeathRecipientLeaksOrNot()
@@ -135,12 +142,14 @@ public class BinderTest {
     }
 
     @Test
+    @RequiresFlagsEnabled(Flags.FLAG_BINDER_NEW_CONSTRUCTOR_FOR_LIFETIME_BINDING)
     public void testBinderIsNotDeletedIfRemotelyReferenced()
             throws RemoteException, TimeoutException, InterruptedException {
         testLifetimeOfBinder(/* isLifetimeBoundToProxy= */false);
     }
 
     @Test
+    @RequiresFlagsEnabled(Flags.FLAG_BINDER_NEW_CONSTRUCTOR_FOR_LIFETIME_BINDING)
     public void testBinderIsDeletedIfLifetimeBounded()
             throws RemoteException, TimeoutException, InterruptedException {
         testLifetimeOfBinder(/* isLifetimeBoundToProxy= */true);

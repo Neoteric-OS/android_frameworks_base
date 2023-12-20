@@ -16,6 +16,7 @@
 
 package android.os;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
@@ -788,6 +789,7 @@ public class Binder implements IBinder {
      *
      * @throws IllegalArgumentException If {@code bindLifetimeTo} is not a remote Binder object
      */
+    @FlaggedApi(Flags.FLAG_BINDER_NEW_CONSTRUCTOR_FOR_LIFETIME_BINDING)
     public Binder(@Nullable IBinder bindLifetimeTo) {
         this((String)null);
 
