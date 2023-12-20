@@ -37,6 +37,7 @@ import static android.os.Process.INVALID_UID;
 import static android.provider.Settings.Secure.VOLUME_HUSH_MUTE;
 import static android.provider.Settings.Secure.VOLUME_HUSH_OFF;
 import static android.provider.Settings.Secure.VOLUME_HUSH_VIBRATE;
+
 import static com.android.server.audio.SoundDoseHelper.ACTION_CHECK_MUSIC_ACTIVE;
 import static com.android.server.utils.EventLogger.Event.ALOGE;
 import static com.android.server.utils.EventLogger.Event.ALOGI;
@@ -12053,12 +12054,16 @@ public class AudioService extends IAudioService.Stub
     public @Nullable AudioHalVersionInfo getHalVersion() {
         for (AudioHalVersionInfo version : AudioHalVersionInfo.VERSIONS) {
             try {
-                // TODO: check AIDL service.
                 String versionStr = version.getMajorVersion() + "." + version.getMinorVersion();
-                HwBinder.getService(
-                        String.format("android.hardware.audio@%s::IDevicesFactory", versionStr),
-                        "default");
-                return version;
+                final String aidlStr = "android.hardware.audio.core.IModule/default";
+                final String hidlStr = String.format("android.hardware.audio@%s::IDevicesFactory",
+                        versionStr);
+                if (null != ServiceManager.checkService(aidlStr)) {
+                    return version;
+                } else {
+                    HwBinder.getService(hidlStr, "default");
+                    return version;
+                }
             } catch (NoSuchElementException e) {
                 // Ignore, the specified HAL interface is not found.
             } catch (RemoteException re) {
