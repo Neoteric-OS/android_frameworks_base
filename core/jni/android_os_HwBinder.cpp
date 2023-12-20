@@ -227,7 +227,10 @@ bool validateCanUseHwBinder(const sp<hardware::IBinder>& binder) {
         // (note, even if this is fixed to work with scatter gather, we would also need
         // to convert this to the Java object rather than re-wrapping with a proxy)
         LOG(ERROR) << "Local Java Binder not supported.";
-        return false;
+        /* FIXME DO NOT SUBMIT */
+        CHECK(false) << "FIXME I just want to see the callstack here if it ever happens";
+        /* FIXME */
+        ////// like for real, don't submit with this.
     }
 
     return true;
@@ -258,14 +261,44 @@ static void JHwBinder_native_setup(JNIEnv *env, jobject thiz) {
     JHwBinder::SetNativeContext(env, thiz, context);
 }
 
-static void JHwBinder_native_transact(
-        JNIEnv * /* env */,
-        jobject /* thiz */,
-        jint /* code */,
-        jobject /* requestObj */,
-        jobject /* replyObj */,
-        jint /* flags */) {
-    CHECK(!"Should not be here");
+static void JHwBinder_native_transact(JNIEnv *env, jobject thiz, jint code, jobject requestObj,
+                                      jobject replyObj, jint flags) {
+    if (requestObj == NULL) {
+        jniThrowException(env, "java/lang/NullPointerException", NULL);
+        return;
+    }
+
+    const hardware::Parcel *request = JHwParcel::GetNativeContext(env, requestObj)->getParcel();
+    sp<JHwParcel> replyContext = JHwParcel::GetNativeContext(env, replyObj);
+    hardware::Parcel *reply = replyContext->getParcel();
+
+    request->setDataPosition(0);
+
+    bool isOneway = (flags & IBinder::FLAG_ONEWAY) != 0;
+    if (!isOneway) {
+        replyContext->setTransactCallback([](auto &replyParcel) {});
+    }
+
+    env->CallVoidMethod(thiz, gFields.onTransactID, code, requestObj, replyObj, flags);
+
+    if (env->ExceptionCheck()) {
+        jthrowable excep = env->ExceptionOccurred();
+        env->ExceptionDescribe();
+        env->ExceptionClear();
+
+        binder_report_exception(env, excep, "Uncaught error or exception in hwbinder!");
+
+        env->DeleteLocalRef(excep);
+    }
+
+    if (!isOneway) {
+        if (!replyContext->wasSent()) {
+            // The implementation never finished the transaction.
+            LOG(ERROR) << "The reply failed to send!";
+        }
+    }
+
+    reply->setDataPosition(0);
 }
 
 static void JHwBinder_native_registerService(

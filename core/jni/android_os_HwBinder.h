@@ -36,15 +36,15 @@ struct JHwBinder : public hardware::BHwBinder {
 
     JHwBinder(JNIEnv *env, jobject thiz);
 
-protected:
-    virtual ~JHwBinder();
-
     virtual status_t onTransact(
             uint32_t code,
             const hardware::Parcel &data,
             hardware::Parcel *reply,
             uint32_t flags,
             TransactCallback callback);
+
+protected:
+    virtual ~JHwBinder();
 
 private:
     jobject mObject;
