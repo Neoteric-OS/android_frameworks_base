@@ -22,6 +22,30 @@
       },
       "revId": "4879ed9bfdedf71a71349ab7d400976af192a459",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a61e5511_71f71855",
+        "filename": "native/graphics/jni/libjnigraphics.map.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2023-12-21T02:57:30Z",
+      "side": 1,
+      "message": "Huh, does it mean that these symbols have been incorrectly recognized as being introduced with API level 24?\n\n\n```\nReproduce locally with m out/soong/.intermediates/frameworks/base/native/graphics/jni/libjnigraphics.ndk/android_arm_armv8-a_sdk_shared_24/aadf941852f0a7e6fde60167836788ba/stgdiff.timestamp\n```",
+      "parentUuid": "e838b7be_fe5077f5",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "4879ed9bfdedf71a71349ab7d400976af192a459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
