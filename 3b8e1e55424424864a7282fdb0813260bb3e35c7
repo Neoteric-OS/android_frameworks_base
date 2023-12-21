@@ -127,6 +127,30 @@
       },
       "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c221c35d_92cbcb1a",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-21T22:23:49Z",
+      "side": 1,
+      "message": "like this:\n\n```\nsp\u003chardware::IBinder\u003e binder \u003d\n        JHwRemoteBinder::GetNativeContext(env, thiz)-\u003egetBinder();\nsp\u003cIBase\u003e base \u003d android::hidl::base::V1_0::BpHwBase(binder);\nbase-\u003egetInterfaceChain...\n```",
+      "parentUuid": "16f369e7_b462b43a",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 96
+      },
+      "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
