@@ -365,6 +365,9 @@ class BroadcastProcessQueue {
      * {@link #makeActiveIdle()} after re-enqueuing it.
      */
     public void reEnqueueActiveBroadcast() {
+        if (!isActive()) {
+            return;
+        }
         final BroadcastRecord record = getActive();
         final int recordIndex = getActiveIndex();
 
