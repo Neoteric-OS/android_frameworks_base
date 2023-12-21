@@ -16,6 +16,24 @@
       "message": "(as this is what we discussed, which I said I would -2, because I think it\u0027s fragile to allow servers to pass out strong references and have clients which expect strong references to go away, which would introduce the need for additional error recovery paths, whereas today, these error recovery paths are often handled by process death recovery logic. I will still prepare an alternative proposal, and I still think the next step should be to get frameworks team to make a comment on this or share a perspective on this)",
       "revId": "00d051740389fa8ca4070bae9f41685e5eff2a5a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee0083e1_d7f44ebb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2023-12-21T02:07:51Z",
+      "side": 1,
+      "message": "the clients of an already garbage collected binder object will experience DEAD_OBJECT error when trying to call onto it. I think that\u0027s already a part of the contract when using binder?",
+      "parentUuid": "e83ff0c5_cb20dc02",
+      "revId": "00d051740389fa8ca4070bae9f41685e5eff2a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
