@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b9e8dc2_abf3bbaf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-21T22:04:25Z",
+      "side": 1,
+      "message": "Martijn/Andreas, please do your best to review this. We need in-process comms to work in order to remove hwservicemanager and maintain it. So, please take a look if you can and help w/ anything you remember, and this will be the last time anyone ever asks you to look 😊 thank you!",
+      "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad6a472e_d05e81fb",
         "filename": "core/jni/android_os_HwBinder.cpp",
         "patchSetId": 1
