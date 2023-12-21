@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "305fd7bc_cd7e91cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:39:42Z",
+      "side": 1,
+      "message": "I am still hoping to be able to drop _BUFFER_ from these.",
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a7840c3_d914f072",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:39:42Z",
+      "side": 1,
+      "message": "should we batching somewhere in this first sentence, as this will be the main description in JavaDoc.\n\nE.g.\n\nA key describing the maximum output buffer size in bytes when using large buffer mode containing multiple access units.\n\nThe as described by this MediaFormat I think adds too much confusion for this line and is only used at a few places (we should probably remove those in the future.)\n\nThen please add @see FEATURE_MultipleFrames",
+      "range": {
+        "startLine": 466,
+        "startChar": 42,
+        "endLine": 466,
+        "endChar": 53
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "638aa61e_c7f5bbd9",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:39:42Z",
+      "side": 1,
+      "message": "I don\u0027t think we know this. How can we implement this? Also, how will developers know what the size of one access unit is so that they can properly avoid this? (Especially for encoders where there is no guarantee on the size of the access unit.)\n\nI would  prefer to say that not setting this, or setting this to less than the size of two access-units, will make the codec operate in single access-unit per output frame.",
+      "range": {
+        "startLine": 468,
+        "startChar": 7,
+        "endLine": 468,
+        "endChar": 89
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "588e7c02_aa5209cf",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:39:42Z",
+      "side": 1,
+      "message": "I would rephrase this as \"The component or the framework will override this value to a reasonable max size not exceeding typical 10 seconds of data (device dependent) when set to a value larger than that. The value final value used will be returned in the output format.\"",
+      "range": {
+        "startLine": 469,
+        "startChar": 40,
+        "endLine": 469,
+        "endChar": 49
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9837f948_d931296f",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:39:42Z",
+      "side": 1,
+      "message": "output-size?",
+      "range": {
+        "startLine": 474,
+        "startChar": 84,
+        "endLine": 474,
+        "endChar": 88
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f66917e_07cdceba",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:39:42Z",
+      "side": 1,
+      "message": "threshold output size?\n\nE.g.\n\nA key describing the threshold output size in bytes when using large buffer mode containing multiple access units.\n\nPlease add @FEATURE_MultipleFrames to this one as well.",
+      "range": {
+        "startLine": 477,
+        "startChar": 38,
+        "endLine": 477,
+        "endChar": 42
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8a30328_1b58628a",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:39:42Z",
+      "side": 1,
+      "message": "We can now say that the component will return a partial output buffer if it reaches or surpasses this limit.\n\nAlso, in the spirit of making config easier, I would say that this value will be clipped to the max buffer batching output size if larger.\n\nWe also need to set the expectation that the component can adjust this value, and will return the actual threshold used in the output format.",
+      "range": {
+        "startLine": 478,
+        "startChar": 55,
+        "endLine": 481,
+        "endChar": 88
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96c7e26c_b552c0de",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:39:42Z",
+      "side": 1,
+      "message": "we usually keep these analogous to the name, e.g.\n\"threshold-buffer-batch-output-size\"",
+      "range": {
+        "startLine": 487,
+        "startChar": 0,
+        "endLine": 487,
+        "endChar": 42
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
