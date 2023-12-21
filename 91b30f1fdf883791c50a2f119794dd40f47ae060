@@ -16,6 +16,41 @@
       "message": "Can you point to the specific logic in the noted file that this change is trying to match and what end result this change is intended to have?",
       "revId": "91b30f1fdf883791c50a2f119794dd40f47ae060",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "634ff5e0_98589591",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965558
+      },
+      "writtenOn": "2023-12-21T07:46:53Z",
+      "side": 1,
+      "message": "Hi @adamp@android.com,\nVelocityTracker.cpp#addMovement(const MotionEvent* event)\nWhen ACTION_UP times out, mConfiguredStrategies.erase(axis) will be called and the speed will be erased, so we need to add ACTION_UP\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/native/libs/input/VelocityTracker.cpp;l\u003d304?q\u003dVelocityTracker.cpp\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain",
+      "parentUuid": "5d3b89dc_0a175103",
+      "revId": "91b30f1fdf883791c50a2f119794dd40f47ae060",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a18d010b_df97f4fe",
+        "filename": "core/java/android/widget/AbsListView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4044,
+      "author": {
+        "id": 1965558
+      },
+      "writtenOn": "2023-12-21T07:46:53Z",
+      "side": 1,
+      "message": "onTouchUp() is called before addMovement()",
+      "revId": "91b30f1fdf883791c50a2f119794dd40f47ae060",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
