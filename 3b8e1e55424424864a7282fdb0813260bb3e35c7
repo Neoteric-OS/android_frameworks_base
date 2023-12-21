@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9705431e_80ad88dd",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2023-12-21T22:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad6a472e_d05e81fb",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 19
+      },
+      "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19090e63_954c3c50",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-12-21T22:03:32Z",
       "side": 1,
       "message": "to limit risk, get the binder from the native context and assert that it is IServiceManager?",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 96
+      },
+      "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16f369e7_b462b43a",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2023-12-21T22:04:57Z",
+      "side": 1,
+      "message": "I don\u0027t know how. There is no `getInterfaceDescriptor` on `android::hardware::IBinder`. I could call onTransact and manually get it, but that doesn\u0027t feel right.",
+      "parentUuid": "19090e63_954c3c50",
       "range": {
         "startLine": 271,
         "startChar": 0,
