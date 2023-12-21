@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "444188c4_7301d714",
+        "filename": "core/api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 23674,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2023-12-21T21:41:19Z",
+      "side": 1,
+      "message": "@jmtrivi@google.com, can we consider dropping BUFFER_ from this? We are currently at 43 characters for this ID.",
+      "range": {
+        "startLine": 23674,
+        "startChar": 100,
+        "endLine": 23674,
+        "endChar": 138
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8a7840c3_d914f072",
         "filename": "media/java/android/media/MediaFormat.java",
         "patchSetId": 5
