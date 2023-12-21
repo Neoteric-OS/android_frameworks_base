@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03efd09e_306333dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-21T22:03:32Z",
+      "side": 1,
+      "message": "lgtm",
+      "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad6a472e_d05e81fb",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-21T22:03:32Z",
+      "side": 1,
+      "message": "will you remove this for submission?",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 19
+      },
+      "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19090e63_954c3c50",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-21T22:03:32Z",
+      "side": 1,
+      "message": "to limit risk, get the binder from the native context and assert that it is IServiceManager?",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 96
+      },
+      "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
