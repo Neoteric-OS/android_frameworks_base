@@ -255,6 +255,77 @@ public class TileUtils {
     public static final String META_DATA_PREFERENCE_SEARCHABLE = "com.android.settings.searchable";
 
     /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to specify the content provider providing the availability status of the preference.
+     *
+     * This works with {@link #META_DATA_PREFERENCE_KEYHINT} which should also be set in the
+     * AndroidManifest.xml
+     *
+     * @see #META_DATA_PREFERENCE_AVAILABILITY
+     */
+    public static final String META_DATA_PREFERENCE_AVAILABILITY_STATUS_URI =
+            "com.android.settings.availability_status_uri";
+
+    /**
+     * The availability of the preference.
+     *
+     * Availability status is one of {@link #AVAILABILITY_AVAILABLE},
+     * {@link #AVAILABILITY_DISABLED} or {@link #AVAILABILITY_UNSUPPORTED}.
+     *
+     * Note: The availability must be set using a content provider
+     * Setting this in the AndroidManifest.xml gives no meaning and is not supported.
+     *
+     * @see #META_DATA_PREFERENCE_AVAILABILITY_STATUS_URI
+     * @see #AVAILABILITY_AVAILABLE
+     * @see #AVAILABILITY_DISABLED
+     * @see #AVAILABILITY_UNSUPPORTED
+     */
+    public static final String META_DATA_PREFERENCE_AVAILABILITY =
+            "com.android.settings.availability_status";
+
+    /**
+     * Values for {@link #META_DATA_PREFERENCE_AVAILABILITY}, set by the content provider to control
+     * the preference's availability.
+     *
+     * @see #META_DATA_PREFERENCE_AVAILABILITY
+     * @see #META_DATA_PREFERENCE_AVAILABILITY_STATUS_URI
+     */
+    public static final String AVAILABILITY_AVAILABLE = "available";
+    public static final String AVAILABILITY_DISABLED = "disabled";
+    public static final String AVAILABILITY_UNSUPPORTED = "unsupported";
+
+    /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to specify positioning of the preference before/above another preference.
+     *
+     * Valid value is the key of another preference in the PreferenceGroup, or
+     * {@link #POSITION_FIRST} to position the Preference before the first Preference in the group.
+     */
+    public static final String META_DATA_POSITION_BEFORE = "com.android.settings.position.before";
+
+    /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to specify positioning of the preference after/below another preference.
+     *
+     * Valid value is the key of another preference in the PreferenceGroup, or
+     * {@link #POSITION_LAST} to position the Preference after the last Preference in the group.
+     *
+     * @see #POSITION_FIRST
+     * @see #POSITION_LAST
+     */
+    public static final String META_DATA_POSITION_AFTER = "com.android.settings.position.after";
+
+    /**
+     * Values for {@link #META_DATA_POSITION_BEFORE} and {@link #META_DATA_POSITION_AFTER}.
+     * Enables positioning of a Preference first or last in a PreferenceGroup.
+     *
+     * @see #META_DATA_POSITION_BEFORE
+     * @see #META_DATA_POSITION_AFTER
+     */
+    public static final String POSITION_FIRST = "first";
+    public static final String POSITION_LAST = "last";
+
+    /**
      * Build a list of DashboardCategory.
      */
     public static List<DashboardCategory> getCategories(Context context,
