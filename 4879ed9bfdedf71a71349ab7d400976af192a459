@@ -87,6 +87,30 @@
       },
       "revId": "4879ed9bfdedf71a71349ab7d400976af192a459",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "022a960b_f45c7fa9",
+        "filename": "native/graphics/jni/libjnigraphics.map.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2023-12-21T22:10:23Z",
+      "side": 1,
+      "message": "Yeah, I think we should update the stgdiff entries, but I\u0027m going to remove the symbols to decouple these two bugs and then file a separate bug for that.",
+      "parentUuid": "a61e5511_71f71855",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "4879ed9bfdedf71a71349ab7d400976af192a459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
