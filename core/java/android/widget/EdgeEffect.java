@@ -25,7 +25,9 @@ import android.compat.Compatibility;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledSince;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.BlendMode;
 import android.graphics.Canvas;
@@ -35,6 +37,10 @@ import android.graphics.RecordingCanvas;
 import android.graphics.Rect;
 import android.graphics.RenderNode;
 import android.os.Build;
+import android.os.UserHandle;
+import android.os.Vibrator;
+import android.os.VibrationEffect;
+import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
@@ -218,6 +224,12 @@ public class EdgeEffect {
     private float mDisplacement = 0.5f;
     private float mTargetDisplacement = 0.5f;
 
+    private Vibrator mVibrator;
+    private static final VibrationEffect VIBRATE_CLICK =
+        VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK);
+    private boolean mHasVibratePermission;
+    private ContentResolver mResolver;
+
     /**
      * Current edge effect type, consumers should always query
      * {@link #getCurrentEdgeEffectBehavior()} instead of this parameter
@@ -253,6 +265,13 @@ public class EdgeEffect {
         mPaint.setColor((themeColor & 0xffffff) | 0x33000000);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setBlendMode(DEFAULT_BLEND_MODE);
+
+        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+
+        mHasVibratePermission = context.checkCallingOrSelfPermission(
+                    android.Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED;
+
+        mResolver = context.getContentResolver();
     }
 
     @EdgeEffectType
@@ -497,6 +516,11 @@ public class EdgeEffect {
             mState = STATE_RECEDE;
             mVelocity = velocity * ON_ABSORB_VELOCITY_ADJUSTMENT;
             mStartTime = AnimationUtils.currentAnimationTimeMillis();
+            if (mVibrator != null && mHasVibratePermission &&
+                   mResolver != null && Settings.System.getInt(mResolver,
+                   Settings.System.HAPTIC_ON_SCROLL, 1) != 0) {
+                mVibrator.vibrate(VIBRATE_CLICK);
+            }
         } else if (edgeEffectBehavior == TYPE_GLOW) {
             mState = STATE_ABSORB;
             mVelocity = 0;
@@ -521,6 +545,11 @@ public class EdgeEffect {
                     mGlowAlphaStart,
                     Math.min(velocity * VELOCITY_GLOW_FACTOR * .00001f, MAX_ALPHA));
             mTargetDisplacement = 0.5f;
+            if (mVibrator != null && mHasVibratePermission &&
+                   mResolver != null && Settings.System.getInt(mResolver,
+                   Settings.System.HAPTIC_ON_SCROLL, 1) != 0) {
+                mVibrator.vibrate(VIBRATE_CLICK);
+            }
         } else {
             finish();
         }
