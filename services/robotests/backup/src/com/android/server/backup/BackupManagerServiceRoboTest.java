@@ -422,9 +422,7 @@ public class BackupManagerServiceRoboTest {
         BackupManagerService backupManagerService = createService();
         registerUser(backupManagerService, mUserOneId, mUserOneService);
         setCallerAndGrantInteractUserPermission(mUserTwoId, /* shouldGrantPermission */ false);
-
         backupManagerService.listAllTransports(mUserTwoId);
-
         verify(mUserOneService, never()).listAllTransports();
     }
 
