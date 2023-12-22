@@ -4720,6 +4720,10 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
             mContext.enforceCallingOrSelfPermission(
                     android.Manifest.permission.CLEAR_APP_USER_DATA, null);
 
+            if (packageName == null) {
+                return;
+            }
+
             final int callingUid = Binder.getCallingUid();
             final Computer snapshot = snapshotComputer();
             snapshot.enforceCrossUserPermission(callingUid, userId, true /* requireFullPermission */,

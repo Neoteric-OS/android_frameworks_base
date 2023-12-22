@@ -3596,6 +3596,9 @@ public class NotificationManagerService extends SystemService {
         @Override
         public void setNotificationsEnabledWithImportanceLockForPackage(
                 String pkg, int uid, boolean enabled) {
+            if (pkg == null) {
+                return;
+            }
             setNotificationsEnabledForPackage(pkg, uid, enabled);
         }
 
@@ -3662,6 +3665,9 @@ public class NotificationManagerService extends SystemService {
         @Override
         public void setBubblesAllowed(String pkg, int uid, int bubblePreference) {
             checkCallerIsSystemOrSystemUiOrShell("Caller not system or sysui or shell");
+            if (pkg == null) {
+                return;
+            }
             mPreferencesHelper.setBubblesAllowed(pkg, uid, bubblePreference);
             handleSavePolicyFile();
         }
