@@ -6642,6 +6642,14 @@ public final class Settings {
          */
         public static final String QS_BT_CLICK_BEHAVIOR = "qs_bt_click_behavior";
 
+
+        /**
+         * Whether do haptic feedback on fling scroll
+         * @hide
+         */
+        @Readable
+        public static final String HAPTIC_ON_SCROLL = "haptic_on_scroll";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
