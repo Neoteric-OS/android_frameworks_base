@@ -132,7 +132,9 @@ public class PerformAdbRestoreTask implements Runnable {
                 if (rawInStream != null) {
                     rawInStream.close();
                 }
-                mInputFile.close();
+                if (mInputFile != null) {
+                    mInputFile.close();
+                }
             } catch (IOException e) {
                 Slog.w(TAG, "Close of restore data pipe threw", e);
                 /* nothing we can do about this */

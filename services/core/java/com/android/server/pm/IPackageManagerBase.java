@@ -283,6 +283,10 @@ public abstract class IPackageManagerBase extends IPackageManager.Stub {
     @Deprecated
     public final void deletePackageAsUser(String packageName, int versionCode,
             IPackageDeleteObserver observer, int userId, int flags) {
+        if (packageName == null) {
+            return;
+        }
+
         deletePackageVersioned(new VersionedPackage(packageName, versionCode),
                 new PackageManager.LegacyPackageDeleteObserver(observer).getBinder(), userId,
                 flags);

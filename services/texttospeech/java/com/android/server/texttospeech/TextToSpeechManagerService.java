@@ -62,6 +62,10 @@ public final class TextToSpeechManagerService extends
         @Override
         public void createSession(String engine,
                 ITextToSpeechSessionCallback sessionCallback) {
+            if (engine == null || sessionCallback == null) {
+                return;
+            }
+
             synchronized (mLock) {
                 if (engine == null) {
                     runSessionCallbackMethod(

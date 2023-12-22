@@ -910,7 +910,7 @@ public class BackupManagerService extends IBackupManager.Stub {
      */
     @Override
     public void adbRestore(@UserIdInt int userId, ParcelFileDescriptor fd) {
-        if (!isUserReadyForBackup(userId)) {
+        if (!isUserReadyForBackup(userId) || fd == null) {
             return;
         }
         UserBackupManagerService userBackupManagerService =
