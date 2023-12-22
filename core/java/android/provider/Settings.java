@@ -6906,6 +6906,14 @@ public final class Settings {
          */
         public static final String QS_BT_CLICK_BEHAVIOR = "qs_bt_click_behavior";
 
+
+        /**
+         * Whether do haptic feedback on fling scroll
+         * @hide
+         */
+        @Readable
+        public static final String HAPTIC_ON_SCROLL = "haptic_on_scroll";
+
         /**
          * Whether to show the notification ticker on the status bar
          * @hide
