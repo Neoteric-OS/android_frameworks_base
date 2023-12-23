@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "167f0be7_f392a389",
+        "filename": "services/robotests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-23T03:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b10155_bef1c337",
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6bfac2f_a6f258b8",
@@ -89,6 +107,30 @@
       "side": 1,
       "message": "will return them.   had to figure out your tests weren\u0027t meant to throw security execptions, at first I thought I need to have these calls wrapped in a lambda to catch securityexceptions.  Turns out if a user doesn\u0027t have permission to do something, it\u0027ll just silently ignore the request rather than throwing a security exception.   Threw me for a loop.",
       "parentUuid": "d6bfac2f_a6f258b8",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 427,
+        "endChar": 5
+      },
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "987887ba_96075434",
+        "filename": "services/robotests/backup/src/com/android/server/backup/BackupManagerServiceRoboTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-23T03:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "757c596e_a957aa68",
       "range": {
         "startLine": 421,
         "startChar": 4,
@@ -172,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b7ea6408_1e725399",
+        "filename": "services/robotests/backup/src/com/android/server/backup/fullbackup/AppMetadataBackupWriterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-23T03:40:12Z",
+      "side": 1,
+      "message": "Disabling all capability in the ShadowSigningInfo in the latest robolectric was needed for this test to pass.  Replaces the logic that should try to use certs with null/default value returning methods, just like before I upgraded the project.",
+      "parentUuid": "b29c1e8a_88479e1f",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 57
+      },
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6332ca8b_c43b404c",
         "filename": "services/robotests/backup/src/com/android/server/backup/keyvalue/KeyValueBackupTaskTest.java",
         "patchSetId": 1
@@ -207,6 +273,30 @@
       "side": 1,
       "message": "It\u0027s not, but I did have to change your extension of the ShadowLooper to extend the ShadowLegacyLooper, and find a way to make robolectric load that looper, lost a day to that one.   Again, not a great practice to extend shadows.  Anywho this is legacy from debugging that behavior.",
       "parentUuid": "6332ca8b_c43b404c",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 50
+      },
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4e2fc8e_7e5c688c",
+        "filename": "services/robotests/backup/src/com/android/server/backup/keyvalue/KeyValueBackupTaskTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-23T03:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f263e8c_b3abbbd2",
       "range": {
         "startLine": 152,
         "startChar": 0,
@@ -254,6 +344,30 @@
       "side": 1,
       "message": "Again -- a big nasty fight with robolectric looper.",
       "parentUuid": "d0299d5b_efd96c0c",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "737579ff_201ed198",
+        "filename": "services/robotests/backup/src/com/android/server/backup/transport/TransportConnectionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-23T03:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "963015ee_d90d37a8",
       "range": {
         "startLine": 66,
         "startChar": 0,
