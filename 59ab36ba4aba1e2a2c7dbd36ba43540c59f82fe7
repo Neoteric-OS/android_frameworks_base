@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "757c596e_a957aa68",
+        "filename": "services/robotests/backup/src/com/android/server/backup/BackupManagerServiceRoboTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-23T00:16:02Z",
+      "side": 1,
+      "message": "will return them.   had to figure out your tests weren\u0027t meant to throw security execptions, at first I thought I need to have these calls wrapped in a lambda to catch securityexceptions.  Turns out if a user doesn\u0027t have permission to do something, it\u0027ll just silently ignore the request rather than throwing a security exception.   Threw me for a loop.",
+      "parentUuid": "d6bfac2f_a6f258b8",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 427,
+        "endChar": 5
+      },
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3ec23a43_384d964e",
         "filename": "services/robotests/backup/src/com/android/server/backup/fullbackup/AppMetadataBackupWriterTest.java",
         "patchSetId": 1
