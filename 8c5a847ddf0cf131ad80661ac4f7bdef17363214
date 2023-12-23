@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db2d2962_ecfaea7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2023-12-23T00:35:50Z",
+      "side": 1,
+      "message": "done to change to @hide and removed from current.txt.",
+      "parentUuid": "aaf1dcbf_144eb276",
+      "revId": "8c5a847ddf0cf131ad80661ac4f7bdef17363214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "648124dc_c78b9bc6",
@@ -48,6 +66,30 @@
       "writtenOn": "2023-12-13T17:18:58Z",
       "side": 1,
       "message": "Please don\u0027t suppress it. We don\u0027t want more public Settings APIs. In your case I think the Setting can be @hide since it\u0027s only used by system_server. Please and also remove `@Readable`.",
+      "range": {
+        "startLine": 12111,
+        "startChar": 8,
+        "endLine": 12111,
+        "endChar": 43
+      },
+      "revId": "8c5a847ddf0cf131ad80661ac4f7bdef17363214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf3f6555_651eebdb",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 12111,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2023-12-23T00:35:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "648124dc_c78b9bc6",
       "range": {
         "startLine": 12111,
         "startChar": 8,
