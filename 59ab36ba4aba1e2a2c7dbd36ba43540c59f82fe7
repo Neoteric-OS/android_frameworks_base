@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83b10155_bef1c337",
+        "filename": "services/robotests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-23T00:26:43Z",
+      "side": 1,
+      "message": "Incidentally this is what matters.   It shifts you from the unmaintained, outdated, and hacked over the years version of robolectric in /external/robolectric-shadows to the maintained and locked to upstream robolectric (github\u0027s google branch of robolectric) which is cloned in to /external/robolectric and maintained by uptesting.   It was a large lift to disentangle all the modifications made to shadows in over the years in robolectric-shadows and make them work with the newer/maintained version.",
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6bfac2f_a6f258b8",
         "filename": "services/robotests/backup/src/com/android/server/backup/BackupManagerServiceRoboTest.java",
         "patchSetId": 1
