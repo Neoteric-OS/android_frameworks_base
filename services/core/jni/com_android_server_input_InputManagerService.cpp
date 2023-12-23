@@ -1778,17 +1778,6 @@ static jint nativeGetKeyCodeForKeyLocation(JNIEnv* env, jobject nativeImplObj, j
                                                                              locationKeyCode);
 }
 
-static void handleInputChannelDisposed(JNIEnv* env, jobject /* inputChannelObj */,
-                                       const std::shared_ptr<InputChannel>& inputChannel,
-                                       void* data) {
-    NativeInputManager* im = static_cast<NativeInputManager*>(data);
-
-    ALOGW("Input channel object '%s' was disposed without first being removed with "
-          "the input manager!",
-          inputChannel->getName().c_str());
-    im->removeInputChannel(inputChannel->getConnectionToken());
-}
-
 static jobject nativeCreateInputChannel(JNIEnv* env, jobject nativeImplObj, jstring nameObj) {
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
 
@@ -1810,8 +1799,6 @@ static jobject nativeCreateInputChannel(JNIEnv* env, jobject nativeImplObj, jstr
         return nullptr;
     }
 
-    android_view_InputChannel_setDisposeCallback(env, inputChannelObj,
-            handleInputChannelDisposed, im);
     return inputChannelObj;
 }
 
