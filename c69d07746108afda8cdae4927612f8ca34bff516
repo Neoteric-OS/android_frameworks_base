@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe3c2bff_03587384",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-24T17:53:40Z",
+      "side": 1,
+      "message": "Incidentally the new reported flake is not a robolectric test, and wan\u0027t impacted by this change:\n\nhttps://source.corp.google.com/search?q\u003dNotificationManagerServiceTest\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20b:main",
+      "revId": "c69d07746108afda8cdae4927612f8ca34bff516",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
