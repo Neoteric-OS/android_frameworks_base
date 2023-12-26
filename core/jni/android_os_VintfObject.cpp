@@ -21,12 +21,11 @@
 #include <vector>
 #include <string>
 
-#include <nativehelper/JNIHelp.h>
 #include <vintf/VintfObject.h>
 #include <vintf/parse_string.h>
 #include <vintf/parse_xml.h>
 
-#include "core_jni_helpers.h"
+#include "vintf_jni_common.h"
 
 static jclass gString;
 static jclass gHashMapClazz;
@@ -93,7 +92,7 @@ static jobjectArray android_os_VintfObject_report(JNIEnv* env, jclass)
     return toJavaStringArray(env, cStrings);
 }
 
-static jint android_os_VintfObject_verifyWithoutAvb(JNIEnv* env, jclass) {
+static jint android_os_VintfObject_verifyWithoutAvb(JNIEnv*, jclass) {
     std::string error;
     int32_t status = VintfObject::GetInstance()->checkCompatibility(&error,
             ::android::vintf::CheckFlags::DISABLE_AVB_CHECK);
@@ -199,4 +198,23 @@ int register_android_os_VintfObject(JNIEnv* env)
             NELEM(gVintfObjectMethods));
 }
 
-};
+extern int register_android_os_VintfRuntimeInfo(JNIEnv *env);
+
+}
+
+jint JNI_OnLoad(JavaVM* vm, void* /* reserved */) {
+    JNIEnv* env = NULL;
+    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6)) {
+        return JNI_ERR;
+    }
+
+    if (android::register_android_os_VintfObject(env) < 0) {
+        return JNI_ERR;
+    }
+
+    if (android::register_android_os_VintfRuntimeInfo(env) < 0) {
+        return JNI_ERR;
+    }
+
+    return JNI_VERSION_1_6;
+}
