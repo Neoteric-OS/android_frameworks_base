@@ -17,12 +17,11 @@
 #define LOG_TAG "VintfRuntimeInfo"
 //#define LOG_NDEBUG 0
 
-#include <nativehelper/JNIHelp.h>
 #include <vintf/VintfObject.h>
 #include <vintf/parse_string.h>
 #include <vintf/parse_xml.h>
 
-#include "core_jni_helpers.h"
+#include "vintf_jni_common.h"
 
 namespace android {
 
@@ -30,7 +29,7 @@ using vintf::RuntimeInfo;
 using vintf::VintfObject;
 
 #define MAP_STRING_METHOD(javaMethod, cppString, flags)                                  \
-    static jstring android_os_VintfRuntimeInfo_##javaMethod(JNIEnv* env, jclass clazz) { \
+    static jstring android_os_VintfRuntimeInfo_##javaMethod(JNIEnv* env, jclass) {       \
         std::shared_ptr<const RuntimeInfo> info = VintfObject::GetRuntimeInfo(flags);    \
         if (info == nullptr) return nullptr;                                             \
         return env->NewStringUTF((cppString).c_str());                                   \
@@ -50,8 +49,7 @@ MAP_STRING_METHOD(getBootVbmetaAvbVersion, vintf::to_string(info->bootVbmetaAvbV
                   RuntimeInfo::FetchFlag::AVB);
 
 
-static jlong android_os_VintfRuntimeInfo_getKernelSepolicyVersion(JNIEnv *env, jclass clazz)
-{
+static jlong android_os_VintfRuntimeInfo_getKernelSepolicyVersion(JNIEnv*, jclass) {
     std::shared_ptr<const RuntimeInfo> info =
             VintfObject::GetRuntimeInfo(RuntimeInfo::FetchFlag::POLICYVERS);
     if (info == nullptr) return 0;
