@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a8f3b7a_6631b7bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2023-12-26T21:39:52Z",
+      "side": 1,
+      "message": "Hey Hu,\n\nI don\u0027t think this description is quite correct. In this callback, we are returning the client channel, not the server channel. You are right that the server channel remains internal to InputDispatcher.\n\nHowever, the idea here is to remove the dispatcher\u0027s channel when the client channel is removed. So this dispose callback will be invoked when the app is killed.\n\nIn general, I was thinking that we could just let the app close the fd, and this way, the dispatcher would remove its server-side channel using the existing mechanisms. However, the concern here is that someone might have a copy of the channel, so they would have a duplicate fd. If the app closes the fd, then we can\u0027t guarantee that the dispatcher will actually receive the hangup signal. I don\u0027t know whether this actually occurs in practice, though. In my mind, the client-side channel should just be owned by the app process, so if the app isn\u0027t behaving well, then it\u0027s the choice of the app. That\u0027s something I could potentially discuss with Prabir, and let me know if you have any additional thoughts here.\n\nThat said, I do agree that this log is spammy. I could be open to removing that log. What do you think?",
+      "range": {
+        "startLine": 9,
+        "startChar": 332,
+        "endLine": 9,
+        "endChar": 466
+      },
+      "revId": "66ae48fb07a57b5c434be8576fbf3f7234399458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
