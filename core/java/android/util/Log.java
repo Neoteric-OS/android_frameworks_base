@@ -19,7 +19,9 @@ package android.util;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.DeadSystemException;
 
@@ -111,6 +113,22 @@ public final class Log {
      * Exception class used to capture a stack trace in {@link #wtf}.
      * @hide
      */
+    @SuppressLint("UnflaggedApi") // @TestApi without associated feature.
+    @TestApi
+    public static class TerribleFailureException extends Exception {
+        TerribleFailureException(String msg, Throwable cause) {
+            super(msg, cause);
+        }
+    }
+
+    /**
+     * Exception class used to capture a stack trace in {@link #wtf}.
+     * @hide
+     */
+    // This exception name is used in many tests since N
+    // @TestApi without associated feature.
+    @SuppressLint({"UnflaggedApi", "ExceptionName"})
+    @TestApi
     public static class TerribleFailure extends Exception {
         TerribleFailure(String msg, Throwable cause) { super(msg, cause); }
     }
@@ -120,8 +138,20 @@ public final class Log {
      *
      * @hide
      */
+    @SuppressLint("UnflaggedApi") // @TestApi without associated feature.
+    @TestApi
     public interface TerribleFailureHandler {
-        void onTerribleFailure(String tag, TerribleFailure what, boolean system);
+        /**
+         * Indicates that a terrible failure happened.
+         *
+         * @param tag Tag as per {@link #wtf(String, String)}.
+         * @param what Details of the failure.
+         * @param system Whether the failure originated from a system component.
+         * @hide
+         */
+        @SuppressLint("UnflaggedApi") // @TestApi without associated feature.
+        @TestApi
+        void onTerribleFailure(@NonNull String tag, @NonNull TerribleFailure what, boolean system);
     }
 
     private static TerribleFailureHandler sWtfHandler = new TerribleFailureHandler() {
@@ -350,6 +380,8 @@ public final class Log {
      *
      * @hide
      */
+    @TestApi
+    @SuppressLint("UnflaggedApi") // @TestApi without associated feature.
     @NonNull
     public static TerribleFailureHandler setWtfHandler(@NonNull TerribleFailureHandler handler) {
         if (handler == null) {
