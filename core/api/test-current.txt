@@ -3347,6 +3347,17 @@ package android.util {
     field public static final String SETTINGS_WIFITRACKER2 = "settings_wifitracker2";
   }
 
+  public final class Log {
+    method @NonNull public static android.util.Log.TerribleFailureHandler setWtfHandler(@NonNull android.util.Log.TerribleFailureHandler);
+  }
+
+  public static class Log.TerribleFailureException extends java.lang.Exception {
+  }
+
+  public static interface Log.TerribleFailureHandler {
+    method public default void onTerribleFailure(@NonNull String, @NonNull android.util.Log.TerribleFailureException);
+  }
+
   public class SparseArrayMap<K, V> {
     ctor public SparseArrayMap();
     method public V add(int, @NonNull K, @Nullable V);
