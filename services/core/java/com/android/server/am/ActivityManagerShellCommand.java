@@ -3648,7 +3648,7 @@ final class ActivityManagerShellCommand extends ShellCommand {
             IActivityManager iam, IActivityTaskManager iatm)
             throws RemoteException {
 
-        ProcessObserver observer = new ProcessObserver(pw, iam, iatm, mInternal);
+        ProcessObserver observer = new ProcessObserver(pw, iam);
         iam.registerProcessObserver(observer);
 
         final InputStream mInput = getRawInputStream();
@@ -3683,15 +3683,10 @@ final class ActivityManagerShellCommand extends ShellCommand {
 
         private PrintWriter mPw;
         private IActivityManager mIam;
-        private IActivityTaskManager mIatm;
-        private ActivityManagerService mInternal;
 
-        ProcessObserver(PrintWriter mPw, IActivityManager mIam,
-                IActivityTaskManager mIatm, ActivityManagerService ams) {
+        ProcessObserver(PrintWriter mPw, IActivityManager mIam) {
             this.mPw = mPw;
             this.mIam = mIam;
-            this.mIatm = mIatm;
-            this.mInternal = ams;
         }
 
         @Override
