@@ -284,6 +284,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afd4763d_0446dcc3",
+        "filename": "services/robotests/backup/src/com/android/server/backup/fullbackup/AppMetadataBackupWriterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2023-12-28T13:07:47Z",
+      "side": 1,
+      "message": "No worries, I\u0027ve got a moral thing about leaving codebase better than I found them.  Not always a personally useful trait, but when upgrading and creating a new repo for robolectric (which isn\u0027t allowed to deviate from upstream in github/google) in android, that means cleaning up all the old repos that depend on the older version and deleting that old version.   Been quite a lift with all the code deltas that went in to that /external/robolectric-shadows/\n\nCan you give ovrerall owner approval so I can land this?   Seems others are out for another week or so?   Might also try finding other owners?",
+      "parentUuid": "25c36932_dd035feb",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 57
+      },
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6332ca8b_c43b404c",
