@@ -308,6 +308,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad852e75_ba5445bb",
+        "filename": "services/robotests/backup/src/com/android/server/backup/fullbackup/AppMetadataBackupWriterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1963450
+      },
+      "writtenOn": "2023-12-28T13:49:22Z",
+      "side": 1,
+      "message": "I don\u0027t think I can since I\u0027m only an owner for the backup directory.",
+      "parentUuid": "afd4763d_0446dcc3",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 57
+      },
+      "revId": "59ab36ba4aba1e2a2c7dbd36ba43540c59f82fe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6332ca8b_c43b404c",
