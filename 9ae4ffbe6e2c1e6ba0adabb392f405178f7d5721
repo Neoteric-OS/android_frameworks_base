@@ -22,6 +22,30 @@
       },
       "revId": "9ae4ffbe6e2c1e6ba0adabb392f405178f7d5721",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b801ed39_ae374b7e",
+        "filename": "services/robotests/src/com/android/server/testing/shadows/FrameworkShadowLooper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1957215
+      },
+      "writtenOn": "2024-01-02T20:41:14Z",
+      "side": 1,
+      "message": "Ah I can remove the println, yes.   This picker class is required though.",
+      "parentUuid": "edea71f1_f273d26b",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "9ae4ffbe6e2c1e6ba0adabb392f405178f7d5721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
