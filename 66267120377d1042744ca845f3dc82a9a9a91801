@@ -16,6 +16,24 @@
       "message": "I think Chris has fixed the issue per internal bug b/306994352 with ag/25248757. Add Chris here to confirm.",
       "revId": "66267120377d1042744ca845f3dc82a9a9a91801",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cfda03d_2c118992",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-01-02T23:10:16Z",
+      "side": 1,
+      "message": "Thanks Hongwei!\n\nHi buwenjing@,\n\nWould you mind filing a partner bug?",
+      "parentUuid": "870d4fad_1c756d37",
+      "revId": "66267120377d1042744ca845f3dc82a9a9a91801",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
