@@ -151,6 +151,30 @@
       },
       "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcdab7bc_d866ff6b",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-01-02T10:03:28Z",
+      "side": 1,
+      "message": "if this should really be only on the (fake) hwservicemanager, could we just create a JNI class for that to have this method? That will make it easier to understand what is going on here.",
+      "parentUuid": "c221c35d_92cbcb1a",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 96
+      },
+      "revId": "3b8e1e55424424864a7282fdb0813260bb3e35c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

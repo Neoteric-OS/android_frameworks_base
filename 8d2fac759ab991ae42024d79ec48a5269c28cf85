@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9fd1064_1b9c59b3",
+        "filename": "core/jni/android_os_HwBinder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-01-02T10:03:28Z",
+      "side": 1,
+      "message": "could this be null, in case of oneway? If so I don\u0027t think this is valid.",
+      "range": {
+        "startLine": 269,
+        "startChar": 66,
+        "endLine": 269,
+        "endChar": 74
+      },
+      "revId": "8d2fac759ab991ae42024d79ec48a5269c28cf85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
