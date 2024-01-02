@@ -505,6 +505,7 @@ public class SpannableStringBuilder implements CharSequence, GetChars, Spannable
 
     // Documentation from interface
     public SpannableStringBuilder replace(int start, int end, CharSequence tb) {
+        if (tb == null) return this;
         return replace(start, end, tb, 0, tb.length());
     }
 
