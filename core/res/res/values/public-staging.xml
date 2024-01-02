@@ -110,6 +110,8 @@
   <eat-comment/>
 
   <staging-public-group type="attr" first-id="0x01bd0000">
+    <!-- @hide @SystemApi @FlaggedApi("android.content.res.manifest_flagging") -->
+    <public name="featureFlag"/>
   </staging-public-group>
 
   <staging-public-group type="id" first-id="0x01bc0000">
