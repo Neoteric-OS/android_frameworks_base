@@ -58,8 +58,12 @@ type CombinedApisProperties struct {
 	Bootclasspath []string
 	// Module libraries on the bootclasspath if include_nonpublic_framework_api is true.
 	Conditional_bootclasspath []string
+	// Module libraries on the bootclasspath if experimental_modules_allowed is true.
+	Additional_bootclasspath []string
 	// Module libraries in system server
 	System_server_classpath []string
+	// Module libraries on the system server if experimental_modules_allowed is true.
+	Additional_system_server_classpath []string
 }
 
 type CombinedApis struct {
@@ -386,8 +390,14 @@ func (a *CombinedApis) createInternalModules(ctx android.LoadHookContext) {
 	system_server_classpath := a.properties.System_server_classpath
 	if ctx.Config().VendorConfig("ANDROID").Bool("include_nonpublic_framework_api") {
 		bootclasspath = append(bootclasspath, a.properties.Conditional_bootclasspath...)
-		sort.Strings(bootclasspath)
 	}
+	if ctx.Config().VendorConfig("ANDROID").Bool("experimental_modules_allowed") {
+		bootclasspath = append(bootclasspath, a.properties.Additional_bootclasspath...)
+		system_server_classpath = append(bootclasspath, a.properties.Additional_system_server_classpath...)
+	}
+	sort.Strings(bootclasspath)
+	sort.Strings(system_server_classpath)
+
 	createMergedTxts(ctx, bootclasspath, system_server_classpath)
 
 	createMergedPublicStubs(ctx, bootclasspath)
