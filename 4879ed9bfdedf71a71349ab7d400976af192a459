@@ -111,6 +111,30 @@
       },
       "revId": "4879ed9bfdedf71a71349ab7d400976af192a459",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bb07c5e_ca626487",
+        "filename": "native/graphics/jni/libjnigraphics.map.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2024-01-02T19:25:07Z",
+      "side": 1,
+      "message": "Fixing the stgdiff entries is more correct, these symbols definitely did not exist prior to API 31.",
+      "parentUuid": "022a960b_f45c7fa9",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "4879ed9bfdedf71a71349ab7d400976af192a459",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
