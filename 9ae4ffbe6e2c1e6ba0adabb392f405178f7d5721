@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edea71f1_f273d26b",
+        "filename": "services/robotests/src/com/android/server/testing/shadows/FrameworkShadowLooper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1019174
+      },
+      "writtenOn": "2024-01-02T20:20:07Z",
+      "side": 1,
+      "message": "Is this supposed to be here, or was it temporary code for manual testing?",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 18
+      },
+      "revId": "9ae4ffbe6e2c1e6ba0adabb392f405178f7d5721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
