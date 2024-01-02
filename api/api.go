@@ -52,12 +52,25 @@ var non_updatable_modules = []string{virtualization, location, nfc}
 // the module current.txts). This simplifies the addition of new android
 // modules, by reducing the number of genrules etc a new module must be added to.
 
+type ConditionalProperties struct {
+	// Flag that controls corresponding bootclasspath and system server classpath
+	Bool_flag string
+	// Namespace of the boolean flag
+	Namespace string
+	// Module libraries in the bootclasspath
+	Bootclasspath []string
+	// Module libraries in system server
+	System_server_classpath []string
+}
+
 // The properties of the combined_apis module type.
 type CombinedApisProperties struct {
 	// Module libraries in the bootclasspath
 	Bootclasspath []string
 	// Module libraries on the bootclasspath if include_nonpublic_framework_api is true.
 	Conditional_bootclasspath []string
+	// Conditional module libraries to be added
+	Conditional_properties []ConditionalProperties
 	// Module libraries in system server
 	System_server_classpath []string
 }
@@ -386,8 +399,16 @@ func (a *CombinedApis) createInternalModules(ctx android.LoadHookContext) {
 	system_server_classpath := a.properties.System_server_classpath
 	if ctx.Config().VendorConfig("ANDROID").Bool("include_nonpublic_framework_api") {
 		bootclasspath = append(bootclasspath, a.properties.Conditional_bootclasspath...)
-		sort.Strings(bootclasspath)
 	}
+	for _, conditionalProps := range a.properties.Conditional_properties {
+		if ctx.Config().VendorConfig(conditionalProps.Namespace).Bool(conditionalProps.Bool_flag) {
+			bootclasspath = append(bootclasspath, conditionalProps.Bootclasspath...)
+			system_server_classpath = append(system_server_classpath, conditionalProps.System_server_classpath...)
+		}
+	}
+	sort.Strings(bootclasspath)
+	sort.Strings(system_server_classpath)
+
 	createMergedTxts(ctx, bootclasspath, system_server_classpath)
 
 	createMergedPublicStubs(ctx, bootclasspath)
