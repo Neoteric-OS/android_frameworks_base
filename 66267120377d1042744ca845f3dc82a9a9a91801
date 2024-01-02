@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "870d4fad_1c756d37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060688
+      },
+      "writtenOn": "2024-01-02T20:07:34Z",
+      "side": 1,
+      "message": "I think Chris has fixed the issue per internal bug b/306994352 with ag/25248757. Add Chris here to confirm.",
+      "revId": "66267120377d1042744ca845f3dc82a9a9a91801",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
