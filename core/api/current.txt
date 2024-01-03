@@ -29124,6 +29124,8 @@ package android.nfc {
     field public static final String ACTION_NDEF_DISCOVERED = "android.nfc.action.NDEF_DISCOVERED";
     field @RequiresPermission(android.Manifest.permission.NFC_PREFERRED_PAYMENT_INFO) public static final String ACTION_PREFERRED_PAYMENT_CHANGED = "android.nfc.action.PREFERRED_PAYMENT_CHANGED";
     field public static final String ACTION_TAG_DISCOVERED = "android.nfc.action.TAG_DISCOVERED";
+    field @FlaggedApi("android.nfc.enable_tag_detection_broadcasts") public static final String ACTION_TAG_ENTERED_FIELD = "android.nfc.action.TAG_ENTERED_FIELD";
+    field @FlaggedApi("android.nfc.enable_tag_detection_broadcasts") public static final String ACTION_TAG_LEFT_FIELD = "android.nfc.action.TAG_LEFT_FIELD";
     field public static final String ACTION_TECH_DISCOVERED = "android.nfc.action.TECH_DISCOVERED";
     field @RequiresPermission(android.Manifest.permission.NFC_TRANSACTION_EVENT) public static final String ACTION_TRANSACTION_DETECTED = "android.nfc.action.TRANSACTION_DETECTED";
     field public static final String EXTRA_ADAPTER_STATE = "android.nfc.extra.ADAPTER_STATE";
