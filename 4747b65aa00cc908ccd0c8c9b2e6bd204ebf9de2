@@ -16,6 +16,23 @@
       "message": "Please give it another retry of presubmit, because no-googler do not have that trigger. 😂",
       "revId": "4747b65aa00cc908ccd0c8c9b2e6bd204ebf9de2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57ede8ba_5e0c25da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2024-01-03T17:24:41Z",
+      "side": 1,
+      "message": "This may need a googler to submit manually.",
+      "revId": "4747b65aa00cc908ccd0c8c9b2e6bd204ebf9de2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
