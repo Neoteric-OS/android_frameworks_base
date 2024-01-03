@@ -22,6 +22,30 @@
       },
       "revId": "15eb4e2119c3d8ce18cdff06fae844b33f1ba9e4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f828c343_f6421339",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-01-03T23:21:57Z",
+      "side": 1,
+      "message": "Updated the CL to allow overriding the test mode timeout",
+      "parentUuid": "f4612a88_07efaf67",
+      "range": {
+        "startLine": 1253,
+        "startChar": 45,
+        "endLine": 1253,
+        "endChar": 79
+      },
+      "revId": "15eb4e2119c3d8ce18cdff06fae844b33f1ba9e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
