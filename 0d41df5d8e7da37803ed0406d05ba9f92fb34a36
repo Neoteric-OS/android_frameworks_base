@@ -33,6 +33,24 @@
       "message": "android_opengl_GLES30.cpp is a generated file and should not be modified manually",
       "revId": "0d41df5d8e7da37803ed0406d05ba9f92fb34a36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7905653c_79fb1d2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2024-01-03T18:49:27Z",
+      "side": 1,
+      "message": "I shall revert this file from this CL, however the question remains: how can this warning be eliminated?",
+      "parentUuid": "be5fe990_16a1daf7",
+      "revId": "0d41df5d8e7da37803ed0406d05ba9f92fb34a36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
