@@ -189,9 +189,13 @@ public final class NfcAdapter {
 
     /**
      * Broadcast to only the activity that handles ACTION_TAG_DISCOVERED
-     * @hide
      */
-    public static final String ACTION_TAG_LEFT_FIELD = "android.nfc.action.TAG_LOST";
+    @FlaggedApi(Flags.FLAG_ENABLE_TAG_DETECTION_BROADCASTS)
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_TAG_LEFT_FIELD = "android.nfc.action.TAG_LEFT_FIELD";
+    @FlaggedApi(Flags.FLAG_ENABLE_TAG_DETECTION_BROADCASTS)
+    @SdkConstant(SdkConstantType.BROADCAST_INTENT_ACTION)
+    public static final String ACTION_TAG_ENTERED_FIELD = "android.nfc.action.TAG_ENTERED_FIELD";
 
     /**
      * Mandatory extra containing the {@link Tag} that was discovered for the
