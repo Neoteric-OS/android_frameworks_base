@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6af86fb0_593bfb7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2024-01-03T00:30:13Z",
+      "side": 1,
+      "message": "Removing Prahlad from the attention set.",
+      "revId": "0d41df5d8e7da37803ed0406d05ba9f92fb34a36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
