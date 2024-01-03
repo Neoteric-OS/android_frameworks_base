@@ -52,6 +52,24 @@
       "parentUuid": "8cfda03d_2c118992",
       "revId": "66267120377d1042744ca845f3dc82a9a9a91801",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "303372bc_b9fb613f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-01-03T13:04:09Z",
+      "side": 1,
+      "message": "Please check if the following CLs can fix the issue:\n\nhttps://partner-android.googlesource.com/platform/frameworks/base/+/112b7a069fdae2111c4521639e61a045424cbc50\n\nhttps://partner-android.googlesource.com/platform/packages/apps/Launcher3/+/cd3064236d9486afe5699fcce1789867f477b2c4\n\nAnd you may also be interested in the following for another pip animation issue:\n\nhttps://partner-android.googlesource.com/platform/frameworks/base/+/6646820d65a735c5431cdccf29502da3e94b1f17",
+      "parentUuid": "a40be3c3_cda3f775",
+      "revId": "66267120377d1042744ca845f3dc82a9a9a91801",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
