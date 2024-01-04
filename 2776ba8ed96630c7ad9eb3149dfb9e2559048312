@@ -3,6 +3,92 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8bc107c2_696d5cce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-04T02:07:29Z",
+      "side": 1,
+      "message": "This is a simple class, so I really do think it would be simpler and less abstraction layers to only have it in settings, rather than adding it here. However, I\u0027m also okay with this if it works. seems fine.",
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c2b83cc_83f1218a",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-04T02:07:29Z",
+      "side": 1,
+      "message": "use \u0027this\u0027 instead? any reason not to? I actually don\u0027t know",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 72
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7b39b8d_0552cdd1",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-04T02:07:29Z",
+      "side": 1,
+      "message": "\" + UPDATE_ENGINE_STABLE_SERVICE?",
+      "range": {
+        "startLine": 86,
+        "startChar": 60,
+        "endLine": 86,
+        "endChar": 80
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ed4acea_2288f8f6",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-04T02:07:29Z",
+      "side": 1,
+      "message": "I\u0027d make the client post these on the handler rather than make it the default in this class?",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 51
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "856094a8_b13d4e8e",
         "filename": "core/java/android/os/UpdateEngineStable.java",
         "patchSetId": 1
@@ -86,6 +172,30 @@
       "side": 1,
       "message": "UpdateEngine is not a versioned interface like UpdateEngineStable,that is the reason https://cs.android.com/android/platform/superproject/main/+/main:out/soong/.intermediates/frameworks/base/framework-minus-apex-intdefs/android_common/xref48/srcjars.xref/android/os/IUpdateEngineCallback.java;l\u003d26;drc\u003dc0ad42c2f997b6dc8c09f9ff739d7357595a4790. this interface doesn\u0027t have gethash and getVersion methods.\n\nBut the stable interface stub has unimplemented methods which need to be implemented in call like this: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/UpdateEngine.java;l\u003d262;drc\u003dc0ad42c2f997b6dc8c09f9ff739d7357595a4790",
       "parentUuid": "40cae8d7_eab6d18d",
+      "range": {
+        "startLine": 138,
+        "startChar": 35,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4290ad7_f5954953",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-04T02:07:29Z",
+      "side": 1,
+      "message": "See https://source.android.com/docs/core/architecture/aidl/stable-aidl#querying-the-interface-version-of-the-remote-object\n\n\u003e For Java language, the remote side MUST implement getInterfaceVersion() and getInterfaceHash() as follows (super is used instead of IFoo to avoid copy/paste mistakes. The annotation @SuppressWarnings(\"static\") may be needed to disable warnings, depending on the javac configuration):\n\n```\nclass MyFoo extends IFoo.Stub {\n    @Override\n    public final int getInterfaceVersion() { return super.VERSION; }\n\n    @Override\n    public final String getInterfaceHash() { return super.HASH; }\n}\n```",
+      "parentUuid": "a2d3c1b3_a98b6cdd",
       "range": {
         "startLine": 138,
         "startChar": 35,
