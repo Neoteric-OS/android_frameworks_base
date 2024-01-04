@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "856094a8_b13d4e8e",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-01-04T00:47:53Z",
+      "side": 1,
+      "message": "@devinmoore@google.com Not sure if this should return hash of interface v2.",
+      "range": {
+        "startLine": 138,
+        "startChar": 35,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
