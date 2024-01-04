@@ -46,6 +46,30 @@
       },
       "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40cae8d7_eab6d18d",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-01-04T01:14:28Z",
+      "side": 1,
+      "message": "Not overriding them is again causing errors. AIDL generated file has the same method signature as golden output here: https://source.corp.google.com/h/android/platform/superproject/main/+/main:system/tools/aidl/tests/golden_output/aidl-test-versioned-interface-V1-java-source/gen/android/aidl/versioned/tests/IFooInterface.java;l\u003d35;drc\u003d100544f1dc8b30d6ae46422b14a66fb644d4a07d",
+      "parentUuid": "42296504_a61774f5",
+      "range": {
+        "startLine": 138,
+        "startChar": 35,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
