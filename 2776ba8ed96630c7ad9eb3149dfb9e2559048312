@@ -22,6 +22,30 @@
       },
       "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42296504_a61774f5",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2024-01-04T00:59:46Z",
+      "side": 1,
+      "message": "Yes, but it\u0027s already handled. Don\u0027t override `getInterfaceVersion` or `getInterfaceHash` (they should be final - not sure why they aren\u0027t...).",
+      "parentUuid": "856094a8_b13d4e8e",
+      "range": {
+        "startLine": 138,
+        "startChar": 35,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
