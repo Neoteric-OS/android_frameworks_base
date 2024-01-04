@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a694a458_016ec657",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-01-04T23:36:54Z",
+      "side": 1,
+      "message": "This is really to mimic UpdateEngine usage. I have removed the functionalities from UpdateEngine.java to match Stable interface. Also, Wrapper class is needed if we decided this API to be public in future.",
+      "parentUuid": "8bc107c2_696d5cce",
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c2b83cc_83f1218a",
@@ -64,6 +82,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76790340_994d17ec",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-01-04T23:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b39b8d_0552cdd1",
+      "range": {
+        "startLine": 86,
+        "startChar": 60,
+        "endLine": 86,
+        "endChar": 80
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ed4acea_2288f8f6",
@@ -77,6 +119,30 @@
       "writtenOn": "2024-01-04T02:07:29Z",
       "side": 1,
       "message": "I\u0027d make the client post these on the handler rather than make it the default in this class?",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 51
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a6dc0ce_3b565320",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-01-04T23:36:54Z",
+      "side": 1,
+      "message": "handler here will be supplied by client. This is same as UpdateEngine : https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/UpdateEngine.java;l\u003d261;drc\u003d8af2abfcc7a95d3f3155b47ff1a8e8ba81b34a5e",
+      "parentUuid": "6ed4acea_2288f8f6",
       "range": {
         "startLine": 118,
         "startChar": 31,
@@ -196,6 +262,30 @@
       "side": 1,
       "message": "See https://source.android.com/docs/core/architecture/aidl/stable-aidl#querying-the-interface-version-of-the-remote-object\n\n\u003e For Java language, the remote side MUST implement getInterfaceVersion() and getInterfaceHash() as follows (super is used instead of IFoo to avoid copy/paste mistakes. The annotation @SuppressWarnings(\"static\") may be needed to disable warnings, depending on the javac configuration):\n\n```\nclass MyFoo extends IFoo.Stub {\n    @Override\n    public final int getInterfaceVersion() { return super.VERSION; }\n\n    @Override\n    public final String getInterfaceHash() { return super.HASH; }\n}\n```",
       "parentUuid": "a2d3c1b3_a98b6cdd",
+      "range": {
+        "startLine": 138,
+        "startChar": 35,
+        "endLine": 138,
+        "endChar": 39
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ad514cc_e551ecde",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-01-04T23:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4290ad7_f5954953",
       "range": {
         "startLine": 138,
         "startChar": 35,
