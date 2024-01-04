@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "007a0cc5_7e778901",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2024-01-04T23:26:46Z",
+      "side": 1,
+      "message": "Adding Steven and Joe for OWNERS.\n\nFor Steven: This creates a skeleton for the JNI file that will allow `AccessibilityManagerService` (`system_server`) to call the HIDRAW IOCTLs for communicating with a connected HID Braille display. The fleshing out of this skeleton file is in internal ([in progress change here](https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/25678831/26/services/core/jni/com_android_server_accessibility_BrailleDisplayConnection.cpp)), but linter suggested I make the OWNERs change in AOSP first.\n\nFor Joe: It looks like Steven doesn\u0027t have OWNERS of `services/core/jni/Android.bp`, so it\u0027ll also need your stamp to include this new `system_server` JNI file.\n\nPlease let me know if you have any questions!",
+      "revId": "21419d962ae62b1c929c10881b602fed331c8ab7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
