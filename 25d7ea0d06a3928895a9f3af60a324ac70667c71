@@ -33,6 +33,23 @@
       "message": "@lorenzo@google.com, @akulian@google.com wasn\u0027t comfortable reviewing the two outstanding files, hope your okay with looking at them, otherwise let me know and I\u0027ll try to find someone to bypass owners.",
       "revId": "25d7ea0d06a3928895a9f3af60a324ac70667c71",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd8f5975_a81945b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2024-01-04T21:02:18Z",
+      "side": 1,
+      "message": "LGTM for the gnss test.",
+      "revId": "25d7ea0d06a3928895a9f3af60a324ac70667c71",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
