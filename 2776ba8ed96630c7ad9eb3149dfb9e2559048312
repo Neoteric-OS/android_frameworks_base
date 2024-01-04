@@ -59,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b231d8f1_3753f1b6",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1956258
+      },
+      "writtenOn": "2024-01-04T23:56:32Z",
+      "side": 1,
+      "message": "If any other code knows about the object and choose to lock on it, then possibly deadlock can happen. privately held object is more safer. Plus, UpdateEngine uses in the same way.",
+      "parentUuid": "6c2b83cc_83f1218a",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 72
+      },
+      "revId": "2776ba8ed96630c7ad9eb3149dfb9e2559048312",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7b39b8d_0552cdd1",
