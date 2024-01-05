@@ -87,4 +87,7 @@ interface INfcAdapter
     boolean isObserveModeSupported();
     boolean setObserveMode(boolean enabled);
     void updateDiscoveryTechnology(IBinder b, int pollFlags, int listenFlags);
+
+    void notifyPollingLoop(in Bundle frame);
+    void notifyHceDeactivated();
 }
