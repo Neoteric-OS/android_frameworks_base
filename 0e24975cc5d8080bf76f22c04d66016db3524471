@@ -16,6 +16,23 @@
       "message": "Hi Shikha, this is for the trunk stable project about which I reached out to you a while ago. PTAL when you\u0027re back, thanks!",
       "revId": "0e24975cc5d8080bf76f22c04d66016db3524471",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ca678c0_50ba2651",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1951675
+      },
+      "writtenOn": "2024-01-05T08:45:51Z",
+      "side": 1,
+      "message": "Gentle ping.",
+      "revId": "0e24975cc5d8080bf76f22c04d66016db3524471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
