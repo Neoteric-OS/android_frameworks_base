@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d263d409_7ef60927",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1994575
+      },
+      "writtenOn": "2024-01-05T18:32:22Z",
+      "side": 1,
+      "message": "https://issuetracker.google.com/issues/318825347",
+      "revId": "4f007dea767436b361213ecc0c0efe347c950d1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
