@@ -16,6 +16,24 @@
       "message": "I\u0027d wait to merge this until there is a use of it ready. Otherwise, no need, right?",
       "revId": "29df4ff1362913b32eadd165b50290b1d203a00f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26967a8e_6256fcf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2024-01-05T23:00:16Z",
+      "side": 1,
+      "message": "That works for me; I\u0027ll add you if you don\u0027t mind (unless you suggest another JNI directory reviewer but I didn\u0027t see any particular OWNER there) to the internal implementation change instead, and then revive this OWNERs change after that\u0027s merged. Thanks!",
+      "parentUuid": "445118b0_d7d7633b",
+      "revId": "29df4ff1362913b32eadd165b50290b1d203a00f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
