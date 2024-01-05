@@ -46,6 +46,30 @@
       },
       "revId": "34dcbe9974a71a4d54efd27e29a63555cd60a54a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57ad7ba1_02c132da",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1659435
+      },
+      "writtenOn": "2024-01-05T09:56:48Z",
+      "side": 1,
+      "message": "PM and UX agree with the change since in line with other devices and is consistent with user expectations of symmetry.",
+      "parentUuid": "60b045db_bfb4457c",
+      "range": {
+        "startLine": 1340,
+        "startChar": 0,
+        "endLine": 1340,
+        "endChar": 60
+      },
+      "revId": "34dcbe9974a71a4d54efd27e29a63555cd60a54a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
