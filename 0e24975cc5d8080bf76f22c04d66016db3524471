@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad73186e_6f298247",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-01-05T08:56:55Z",
+      "side": 1,
+      "message": "what specifically makes this fail only on Lynx? Is the storage layout different somehow?\n\nI am not totally opposed to this, but long term really callers should deal with EXDEV being returned from rename() and do the correct thing themselves. (Since generally, callers expect Os.rename() to be atomic, which it is not in this case).",
+      "range": {
+        "startLine": 23,
+        "startChar": 50,
+        "endLine": 23,
+        "endChar": 75
+      },
+      "revId": "0e24975cc5d8080bf76f22c04d66016db3524471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "3b1293f2_eb30580b",
