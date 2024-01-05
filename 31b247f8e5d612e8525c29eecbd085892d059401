@@ -94,6 +94,30 @@
       },
       "revId": "31b247f8e5d612e8525c29eecbd085892d059401",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d942b12_17c17a5c",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-05T22:44:09Z",
+      "side": 0,
+      "message": "UnsupportedAppUsage are from apps bypassing \u0027private\u0027 here in the past.",
+      "parentUuid": "4f8aecd6_aad579b7",
+      "range": {
+        "startLine": 438,
+        "startChar": 5,
+        "endLine": 438,
+        "endChar": 24
+      },
+      "revId": "31b247f8e5d612e8525c29eecbd085892d059401",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
