@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b04f9fd_8c25e16f",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2024-01-06T00:24:29Z",
+      "side": 1,
+      "message": "can you add a link to which API to use, and potentially how to detect the generation?",
+      "range": {
+        "startLine": 429,
+        "startChar": 48,
+        "endLine": 430,
+        "endChar": 33
+      },
+      "revId": "16da32b05d1231cf0c9ca62105e1808a2ad0a31c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
