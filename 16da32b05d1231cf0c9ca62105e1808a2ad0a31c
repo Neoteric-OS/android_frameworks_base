@@ -22,6 +22,30 @@
       },
       "revId": "16da32b05d1231cf0c9ca62105e1808a2ad0a31c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15fd3ff6_5de2dcbb",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2024-01-06T00:39:06Z",
+      "side": 1,
+      "message": "Compatibility is checked at build time when the OTA package is generated, so there\u0027s no API at run time. I could point to the code in build/make, but is that really meaningful in Javadoc like this?\n\nAt run time, this API was supposed to check the compatibility, but it is effectively always returning true since 2019 (CL:1194233), except when the ZIP file is not a valid ZIP file. So, any potential users (if any) should replace the expression with `true`.\n\nI am happy to take any suggestions on the wording.",
+      "parentUuid": "1b04f9fd_8c25e16f",
+      "range": {
+        "startLine": 429,
+        "startChar": 48,
+        "endLine": 430,
+        "endChar": 33
+      },
+      "revId": "16da32b05d1231cf0c9ca62105e1808a2ad0a31c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
