@@ -75,6 +75,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Handler;
 
 /**
  * Manages users and user details on a multi-user system. There are two major categories of
@@ -1845,6 +1846,30 @@ public class UserManager {
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_USER_RESTRICTION)
     public static final String DISALLOW_NEAR_FIELD_COMMUNICATION_RADIO =
             "no_near_field_communication_radio";
+
+    /**
+     * This user restriction specifies if Thread network is disallowed on the device. If Thread
+     * network is disallowed it cannot be turned on via Settings.
+     *
+     * <p>This restriction can only be set by a device owner or a profile owner of an
+     * organization-owned managed profile on the parent profile.
+     * In both cases, the restriction applies globally on the device and will turn off the
+     * Thread network radio if it's currently on and prevent the radio from being turned
+     * on in the future.
+     *
+     * <p> <a href="https://www.threadgroup.org">Thread</a> is a low-power and low-latency wireless
+     * mesh networking protocol built on IPv6.
+     *
+     * <p>Default is <code>false</code>.
+     *
+     * <p>Key for user restrictions.
+     * <p>Type: Boolean
+     * @see DevicePolicyManager#addUserRestriction(ComponentName, String)
+     * @see DevicePolicyManager#clearUserRestriction(ComponentName, String)
+     * @see #getUserRestrictions()
+     */
+    @FlaggedApi("com.android.net.thread.flags.thread_enabled")
+    public static final String DISALLOW_THREAD_NETWORK = "no_thread_network";
 
     /**
      * List of key values that can be passed into the various user restriction related methods
