@@ -1,5 +1,29 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76f119e0_3cf5a5a9",
+        "filename": "core/java/android/security/flags.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2024-01-08T23:07:14Z",
+      "side": 1,
+      "message": "I didn\u0027t see the flag on Gantry, and realized this is wrong.  It has to be \"hardware_backed_security\".",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "22a837438da0837686e005401b9fabfa967f3ea6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
