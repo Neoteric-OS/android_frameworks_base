@@ -19,6 +19,10 @@ java_library_static {
     defaults: ["platform_service_defaults"],
     srcs: [":services.devicepolicy-sources"],
 
+    static_libs: [
+        "thread_aconfig_flags_lib",
+    ],
+
     libs: [
         "services.core",
         "app-compat-annotations",
