@@ -22,6 +22,7 @@ import android.util.Log
 import com.android.internal.annotations.VisibleForTesting
 import com.android.systemui.broadcast.BroadcastSender
 import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.media.controls.models.player.MediaData
 import com.android.systemui.media.controls.models.recommendation.EXTRA_KEY_TRIGGER_RESUME
 import com.android.systemui.media.controls.models.recommendation.SmartspaceMediaData
@@ -66,7 +67,7 @@ constructor(
     private val userTracker: UserTracker,
     private val broadcastSender: BroadcastSender,
     private val lockscreenUserManager: NotificationLockscreenUserManager,
-    @Main private val executor: Executor,
+    @Background private val executor: Executor,
     private val systemClock: SystemClock,
     private val logger: MediaUiEventLogger,
     private val mediaFlags: MediaFlags,
