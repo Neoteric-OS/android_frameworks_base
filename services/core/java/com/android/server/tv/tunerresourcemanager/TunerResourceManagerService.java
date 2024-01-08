@@ -1066,16 +1066,17 @@ public class TunerResourceManagerService extends SystemService implements IBinde
         // When all the resources are occupied, grant the lowest priority resource if the
         // request client has higher priority.
         if (inUseLowestPriorityFrHandle != TunerResourceManager.INVALID_RESOURCE_HANDLE
-            && ((requestClient.getPriority() > currentLowestPriority) || (
-            (requestClient.getPriority() == currentLowestPriority) && isRequestFromSameProcess))) {
+                && ((requestClient.getPriority() > currentLowestPriority)
+                        || ((requestClient.getPriority() == currentLowestPriority)
+                                && isRequestFromSameProcess
+                                && !requestClient.shouldResourceHolderRetain()))) {
             if (!reclaimResource(
                     getFrontendResource(inUseLowestPriorityFrHandle).getOwnerClientId(),
                     TunerResourceManager.TUNER_RESOURCE_TYPE_FRONTEND)) {
                 return false;
             }
             frontendHandle[0] = inUseLowestPriorityFrHandle;
-            updateFrontendClientMappingOnNewGrant(
-                    inUseLowestPriorityFrHandle, request.clientId);
+            updateFrontendClientMappingOnNewGrant(inUseLowestPriorityFrHandle, request.clientId);
             return true;
         }
 
@@ -1223,8 +1224,10 @@ public class TunerResourceManagerService extends SystemService implements IBinde
         // When all the resources are occupied, grant the lowest priority resource if the
         // request client has higher priority.
         if (inUseLowestPriorityLnbHandle > TunerResourceManager.INVALID_RESOURCE_HANDLE
-            && ((requestClient.getPriority() > currentLowestPriority) || (
-            (requestClient.getPriority() == currentLowestPriority) && isRequestFromSameProcess))) {
+                && ((requestClient.getPriority() > currentLowestPriority)
+                        || ((requestClient.getPriority() == currentLowestPriority)
+                                && isRequestFromSameProcess
+                                && !requestClient.shouldResourceHolderRetain()))) {
             if (!reclaimResource(getLnbResource(inUseLowestPriorityLnbHandle).getOwnerClientId(),
                     TunerResourceManager.TUNER_RESOURCE_TYPE_LNB)) {
                 return false;
@@ -1276,8 +1279,11 @@ public class TunerResourceManagerService extends SystemService implements IBinde
 
         // When all the Cas sessions are occupied, reclaim the lowest priority client if the
         // request client has higher priority.
-        if (lowestPriorityOwnerId > -1 && ((requestClient.getPriority() > currentLowestPriority)
-        || ((requestClient.getPriority() == currentLowestPriority) && isRequestFromSameProcess))) {
+        if (lowestPriorityOwnerId > -1
+                && ((requestClient.getPriority() > currentLowestPriority)
+                        || ((requestClient.getPriority() == currentLowestPriority)
+                                && isRequestFromSameProcess
+                                && !requestClient.shouldResourceHolderRetain()))) {
             if (!reclaimResource(lowestPriorityOwnerId,
                     TunerResourceManager.TUNER_RESOURCE_TYPE_CAS_SESSION)) {
                 return false;
@@ -1329,10 +1335,13 @@ public class TunerResourceManagerService extends SystemService implements IBinde
 
         // When all the CiCam sessions are occupied, reclaim the lowest priority client if the
         // request client has higher priority.
-        if (lowestPriorityOwnerId > -1 && ((requestClient.getPriority() > currentLowestPriority)
-            || ((requestClient.getPriority() == currentLowestPriority)
-                && isRequestFromSameProcess))) {
-            if (!reclaimResource(lowestPriorityOwnerId,
+        if (lowestPriorityOwnerId > -1
+                && ((requestClient.getPriority() > currentLowestPriority)
+                        || ((requestClient.getPriority() == currentLowestPriority)
+                                && isRequestFromSameProcess
+                                && !requestClient.shouldResourceHolderRetain()))) {
+            if (!reclaimResource(
+                    lowestPriorityOwnerId,
                     TunerResourceManager.TUNER_RESOURCE_TYPE_FRONTEND_CICAM)) {
                 return false;
             }
@@ -1501,19 +1510,19 @@ public class TunerResourceManagerService extends SystemService implements IBinde
         // When all the resources are occupied, grant the lowest priority resource if the
         // request client has higher priority.
         if (inUseLowestPriorityDrHandle != TunerResourceManager.INVALID_RESOURCE_HANDLE
-            && ((requestClient.getPriority() > currentLowestPriority) || (
-            (requestClient.getPriority() == currentLowestPriority) && isRequestFromSameProcess))) {
+                && ((requestClient.getPriority() > currentLowestPriority)
+                        || ((requestClient.getPriority() == currentLowestPriority)
+                                && isRequestFromSameProcess
+                                && !requestClient.shouldResourceHolderRetain()))) {
             if (!reclaimResource(
                     getDemuxResource(inUseLowestPriorityDrHandle).getOwnerClientId(),
                     TunerResourceManager.TUNER_RESOURCE_TYPE_DEMUX)) {
                 return false;
             }
             demuxHandle[0] = inUseLowestPriorityDrHandle;
-            updateDemuxClientMappingOnNewGrant(
-                    inUseLowestPriorityDrHandle, request.clientId);
+            updateDemuxClientMappingOnNewGrant(inUseLowestPriorityDrHandle, request.clientId);
             return true;
         }
-
         return false;
     }
 
