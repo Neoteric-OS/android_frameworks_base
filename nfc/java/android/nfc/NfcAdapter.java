@@ -2775,12 +2775,12 @@ public final class NfcAdapter {
     @SystemApi
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_CHARGING)
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
-    public boolean enableWlc(boolean enable) {
+    public boolean setWlcEnabled(boolean enable) {
         if (!sHasNfcWlcFeature) {
             throw new UnsupportedOperationException();
         }
         try {
-            return sService.enableWlc(enable);
+            return sService.setWlcEnabled(enable);
         } catch (RemoteException e) {
             attemptDeadServiceRecovery(e);
             // Try one more time
@@ -2789,7 +2789,7 @@ public final class NfcAdapter {
                 return false;
             }
             try {
-                return sService.enableWlc(enable);
+                return sService.setWlcEnabled(enable);
             } catch (RemoteException ee) {
                 Log.e(TAG, "Failed to recover NFC Service.");
             }
@@ -2841,7 +2841,7 @@ public final class NfcAdapter {
         /**
          * Called on NFC WLC state changes
          */
-        void onWlcStateChanged(@NonNull WlcLDeviceInfo wlcLDeviceInfo);
+        void onWlcStateChanged(@NonNull WlcListenerDeviceInfo wlcListenerDeviceInfo);
     }
 
     /**
@@ -2899,12 +2899,12 @@ public final class NfcAdapter {
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_CHARGING)
     @Nullable
-    public WlcLDeviceInfo getWlcLDeviceInfo() {
+    public WlcListenerDeviceInfo getWlcListenerDeviceInfo() {
         if (!sHasNfcWlcFeature) {
             throw new UnsupportedOperationException();
         }
         try {
-            return sService.getWlcLDeviceInfo();
+            return sService.getWlcListenerDeviceInfo();
         } catch (RemoteException e) {
             attemptDeadServiceRecovery(e);
             // Try one more time
@@ -2913,7 +2913,7 @@ public final class NfcAdapter {
                 return null;
             }
             try {
-                return sService.getWlcLDeviceInfo();
+                return sService.getWlcListenerDeviceInfo();
             } catch (RemoteException ee) {
                 Log.e(TAG, "Failed to recover NFC Service.");
             }
