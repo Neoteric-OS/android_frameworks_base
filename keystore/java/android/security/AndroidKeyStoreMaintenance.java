@@ -218,4 +218,26 @@ public class AndroidKeyStoreMaintenance {
             return SYSTEM_ERROR;
         }
     }
+
+    /**
+     * Returns the list of Application UIDs that have auth-bound keys that are bound to
+     * the given SID. This enables to warn the user when they are about to invalidate
+     * a SID (for example, removing the LSKF).
+     *
+     * @param userId - The ID of the user the SID is associated with.
+     * @param userSecureId - The SID in question.
+     *
+     * @return A list of app UIDs.
+     */
+    public static long[] getAllAppUidsAffectedBySid(int userId, long userSecureId) {
+        StrictMode.noteDiskWrite();
+        try {
+            return getService().getAppUidsAffectedBySid(userId, userSecureId);
+        } catch (ServiceSpecificException e) {
+            Log.e(TAG, "getAppUidsAffectedBySid failed", e);
+        } catch (Exception e) {
+            Log.e(TAG, "Can not connect to keystore", e);
+        }
+        return new long[0];
+    }
 }
