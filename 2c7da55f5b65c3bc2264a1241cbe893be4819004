@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7e45178_305fa8f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-01-09T16:43:38Z",
+      "side": 1,
+      "message": "See comments on other CL about potentially just passing in the buffer. That said, don\u0027t feel strongly either way, thanks!",
+      "revId": "2c7da55f5b65c3bc2264a1241cbe893be4819004",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
