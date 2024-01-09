@@ -51,6 +51,7 @@ class EmbeddedWindowController {
         new ArrayMap<>();
     private final Object mGlobalLock;
     private final ActivityTaskManagerService mAtmService;
+    private boolean mGrantFocusComplete = false;
 
     EmbeddedWindowController(ActivityTaskManagerService atmService) {
         mAtmService = atmService;
@@ -213,6 +214,9 @@ class EmbeddedWindowController {
 
         void onRemoved() {
             if (mInputChannel != null) {
+                if (mGrantFocusComplete) {
+                    mWmService.grantEmbeddedWindowFocus(mSession, mFocusGrantToken, false);
+                }
                 mWmService.mInputManager.removeInputChannel(mInputChannel.getToken());
                 mInputChannel.dispose();
                 mInputChannel = null;
@@ -286,6 +290,7 @@ class EmbeddedWindowController {
 
         private void handleTap(boolean grantFocus) {
             if (mInputChannel != null) {
+                mGrantFocusComplete = grantFocus;
                 if (mHostWindowState != null) {
                     // Use null session since this is being granted by system server and doesn't
                     // require the host session to be passed in
