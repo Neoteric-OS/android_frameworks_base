@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea73092f_0c660923",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1717283
+      },
+      "writtenOn": "2024-01-10T17:21:57Z",
+      "side": 1,
+      "message": "Looks good once my commend is addressed",
+      "revId": "ef435e24c420ace4f7891c830eca88a7c490b517",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f3d71e8_cd558a73",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3528,
+      "author": {
+        "id": 1717283
+      },
+      "writtenOn": "2024-01-10T17:21:57Z",
+      "side": 1,
+      "message": "We can remove this because this user restriction applies device wide",
+      "range": {
+        "startLine": 3527,
+        "startChar": 8,
+        "endLine": 3528,
+        "endChar": 98
+      },
+      "revId": "ef435e24c420ace4f7891c830eca88a7c490b517",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
