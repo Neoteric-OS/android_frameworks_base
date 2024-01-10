@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "676ff8cc_d7db3582",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-01-10T19:35:06Z",
+      "side": 1,
+      "message": "Hi Guolun,\n\nThe patch adds the new category to the array in the JNI implemetaion, however it is not clear what API will make use of the new category in the Java side.\n\nThe API is not public, so would not be usable by apps:\n\n```\n    /** @hide */\n    public static final native long[] getRss(int pid);\n```\n\n\nCan you please clarify what is the motivation or provide follow up CL with your use case.\n\nThanks,\nKalesh",
+      "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
