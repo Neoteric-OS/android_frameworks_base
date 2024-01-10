@@ -207,6 +207,7 @@ struct fields_t {
     jfieldID queueRequestIndexID;
     jfieldID outputFrameLinearBlockID;
     jfieldID outputFrameHardwareBufferID;
+    jfieldID outputFramebufferInfosID;
     jfieldID outputFrameChangedKeysID;
     jfieldID outputFrameFormatID;
     jfieldID bufferInfoFlags;
@@ -456,10 +457,10 @@ status_t JMediaCodec::queueSecureInputBuffer(
 }
 
 status_t JMediaCodec::queueBuffer(
-        size_t index, const std::shared_ptr<C2Buffer> &buffer, int64_t timeUs,
-        uint32_t flags, const sp<AMessage> &tunings, AString *errorDetailMsg) {
+        size_t index, const std::shared_ptr<C2Buffer> &buffer,
+        const sp<RefBase> &infos, const sp<AMessage> &tunings, AString *errorDetailMsg) {
     return mCodec->queueBuffer(
-            index, buffer, timeUs, flags, tunings, errorDetailMsg);
+            index, buffer, infos, tunings, errorDetailMsg);
 }
 
 status_t JMediaCodec::queueEncryptedLinearBlock(
@@ -472,13 +473,12 @@ status_t JMediaCodec::queueEncryptedLinearBlock(
         const uint8_t iv[16],
         CryptoPlugin::Mode mode,
         const CryptoPlugin::Pattern &pattern,
-        int64_t presentationTimeUs,
-        uint32_t flags,
+        const sp<RefBase> &bufferInfo,
         const sp<AMessage> &tunings,
         AString *errorDetailMsg) {
     return mCodec->queueEncryptedBuffer(
             index, buffer, offset, subSamples, numSubSamples, key, iv, mode, pattern,
-            presentationTimeUs, flags, tunings, errorDetailMsg);
+            bufferInfo, tunings, errorDetailMsg);
 }
 
 status_t JMediaCodec::dequeueInputBuffer(size_t *index, int64_t timeoutUs) {
@@ -748,6 +748,30 @@ status_t JMediaCodec::getImage(
     return OK;
 }
 
+void setBufferInfos(JNIEnv *env, jobject &frame, const std::vector<AccessUnitInfo> &infos) {
+    ScopedLocalRef<jobject> dequeObj{env, env->NewObject(
+            gArrayDequeInfo.clazz, gArrayDequeInfo.ctorId)};
+    jint offset = 0;
+    for (int i = 0 ; i < infos.size(); i++) {
+        jobject bufferInfo = env->NewObject(
+                gBufferInfo.clazz, gBufferInfo.ctorId);
+        if (bufferInfo != NULL) {
+            env->CallVoidMethod(bufferInfo, gBufferInfo.setId,
+                    offset,
+                    (jint)(infos)[i].mSize,
+                    (infos)[i].mTimestamp,
+                    (infos)[i].mFlags);
+            (void)env->CallBooleanMethod(
+                    dequeObj.get(), gArrayDequeInfo.addId, bufferInfo);
+            offset += (infos)[i].mSize;
+        }
+    }
+    env->SetObjectField(
+            frame,
+            gFields.outputFramebufferInfosID,
+            dequeObj.get());
+}
+
 status_t JMediaCodec::getOutputFrame(
         JNIEnv *env, jobject frame, size_t index) const {
     sp<MediaCodecBuffer> buffer;
@@ -758,6 +782,11 @@ status_t JMediaCodec::getOutputFrame(
     }
 
     if (buffer->size() > 0) {
+        sp<RefBase> obj;
+        sp<BufferInfosWrapper> bufInfos;
+        if (buffer->meta()->findObject("accessUnitInfo", &obj)) {
+            bufInfos = std::move(((decltype(bufInfos.get()))obj.get()));
+        }
         std::shared_ptr<C2Buffer> c2Buffer = buffer->asC2Buffer();
         if (c2Buffer) {
             switch (c2Buffer->data().type()) {
@@ -773,6 +802,12 @@ status_t JMediaCodec::getOutputFrame(
                             (jlong)context.release(),
                             true);
                     env->SetObjectField(frame, gFields.outputFrameLinearBlockID, linearBlock.get());
+                    if (bufInfos) {
+                        std::vector<AccessUnitInfo> &infos = bufInfos.get()->value;
+                        if (!infos.empty()) {
+                            setBufferInfos(env, frame, infos);
+                        }
+                    }
                     break;
                 }
                 case C2BufferData::GRAPHIC: {
@@ -813,6 +848,12 @@ status_t JMediaCodec::getOutputFrame(
                         (jlong)context.release(),
                         true);
                 env->SetObjectField(frame, gFields.outputFrameLinearBlockID, linearBlock.get());
+                if (bufInfos) {
+                    std::vector<AccessUnitInfo> &infos = bufInfos.get()->value;
+                    if (!infos.empty()) {
+                        setBufferInfos(env, frame, infos);
+                    }
+                }
             } else {
                 // No-op.
             }
@@ -2701,8 +2742,7 @@ static void extractBufferFromContext(
 
 static void android_media_MediaCodec_native_queueLinearBlock(
         JNIEnv *env, jobject thiz, jint index, jobject bufferObj,
-        jint offset, jint size, jobject cryptoInfoObj,
-        jlong presentationTimeUs, jint flags, jobject keys, jobject values) {
+        jobject cryptoInfoObj, jobjectArray objArray, jobject keys, jobject values) {
     ALOGV("android_media_MediaCodec_native_queueLinearBlock");
 
     sp<JMediaCodec> codec = getMediaCodec(env, thiz);
@@ -2720,7 +2760,24 @@ static void android_media_MediaCodec_native_queueLinearBlock(
                 "error occurred while converting tunings from Java to native");
         return;
     }
-
+    jint totalSize;
+    jint initialOffset;
+    std::vector<AccessUnitInfo> infoVec;
+    AString errorDetailMsg;
+    err = extractInfosFromObject(env,
+            &initialOffset,
+            &totalSize,
+            &infoVec,
+            objArray,
+            &errorDetailMsg);
+    if (err != OK) {
+        throwExceptionAsNecessary(
+                env, INVALID_OPERATION, ACTION_CODE_FATAL,
+                codec->getExceptionMessage(errorDetailMsg.c_str()).c_str());
+        return;
+    }
+    sp<BufferInfosWrapper> infos =
+            new BufferInfosWrapper{std::move(infoVec)};
     std::shared_ptr<C2Buffer> buffer;
     sp<hardware::HidlMemory> memory;
     ScopedLocalRef<jobject> lock{env, env->GetObjectField(bufferObj, gLinearBlockInfo.lockId)};
@@ -2729,10 +2786,10 @@ static void android_media_MediaCodec_native_queueLinearBlock(
             JMediaCodecLinearBlock *context =
                 (JMediaCodecLinearBlock *)env->GetLongField(bufferObj, gLinearBlockInfo.contextId);
             if (codec->hasCryptoOrDescrambler()) {
-                extractMemoryFromContext(context, offset, size, &memory);
-                offset += context->mHidlMemoryOffset;
+                extractMemoryFromContext(context, initialOffset, totalSize, &memory);
+                initialOffset += context->mHidlMemoryOffset;
             } else {
-                extractBufferFromContext(context, offset, size, &buffer);
+                extractBufferFromContext(context, initialOffset, totalSize, &buffer);
             }
         }
         env->MonitorExit(lock.get());
@@ -2743,7 +2800,6 @@ static void android_media_MediaCodec_native_queueLinearBlock(
         return;
     }
 
-    AString errorDetailMsg;
     if (codec->hasCryptoOrDescrambler()) {
         if (!memory) {
             // It means there was an unexpected failure in extractMemoryFromContext above
@@ -2757,7 +2813,7 @@ static void android_media_MediaCodec_native_queueLinearBlock(
             return;
         }
         auto cryptoInfo =
-                cryptoInfoObj ? NativeCryptoInfo{env, cryptoInfoObj} : NativeCryptoInfo{size};
+                cryptoInfoObj ? NativeCryptoInfo{env, cryptoInfoObj} : NativeCryptoInfo{totalSize};
         if (env->ExceptionCheck()) {
             // Creation of cryptoInfo failed. Let the exception bubble up.
             return;
@@ -2765,13 +2821,12 @@ static void android_media_MediaCodec_native_queueLinearBlock(
         err = codec->queueEncryptedLinearBlock(
                 index,
                 memory,
-                offset,
+                initialOffset,
                 cryptoInfo.mSubSamples, cryptoInfo.mNumSubSamples,
                 (const uint8_t *)cryptoInfo.mKey, (const uint8_t *)cryptoInfo.mIv,
                 cryptoInfo.mMode,
                 cryptoInfo.mPattern,
-                presentationTimeUs,
-                flags,
+                infos,
                 tunings,
                 &errorDetailMsg);
         ALOGI_IF(err != OK, "queueEncryptedLinearBlock returned err = %d", err);
@@ -2788,7 +2843,7 @@ static void android_media_MediaCodec_native_queueLinearBlock(
             return;
         }
         err = codec->queueBuffer(
-                index, buffer, presentationTimeUs, flags, tunings, &errorDetailMsg);
+                index, buffer, infos, tunings, &errorDetailMsg);
     }
     throwExceptionAsNecessary(
             env, err, ACTION_CODE_FATAL,
@@ -2846,8 +2901,11 @@ static void android_media_MediaCodec_native_queueHardwareBuffer(
     std::shared_ptr<C2Buffer> buffer = C2Buffer::CreateGraphicBuffer(block->share(
             block->crop(), C2Fence{}));
     AString errorDetailMsg;
+    sp<BufferInfosWrapper> infos =
+        new BufferInfosWrapper{decltype(infos->value)()};
+    infos->value.emplace_back(flags, 0 /*not used*/, presentationTimeUs);
     err = codec->queueBuffer(
-            index, buffer, presentationTimeUs, flags, tunings, &errorDetailMsg);
+            index, buffer, infos, tunings, &errorDetailMsg);
     throwExceptionAsNecessary(
             env, err, ACTION_CODE_FATAL,
             codec->getExceptionMessage(errorDetailMsg.c_str()).c_str());
@@ -3355,6 +3413,10 @@ static void android_media_MediaCodec_native_init(JNIEnv *env, jclass) {
     gFields.outputFrameLinearBlockID =
         env->GetFieldID(clazz.get(), "mLinearBlock", "Landroid/media/MediaCodec$LinearBlock;");
     CHECK(gFields.outputFrameLinearBlockID != NULL);
+
+    gFields.outputFramebufferInfosID =
+        env->GetFieldID(clazz.get(), "mBufferInfos", "Ljava/util/ArrayDeque;");
+    CHECK(gFields.outputFramebufferInfosID != NULL);
 
     gFields.outputFrameHardwareBufferID =
         env->GetFieldID(clazz.get(), "mHardwareBuffer", "Landroid/hardware/HardwareBuffer;");
@@ -3875,8 +3937,8 @@ static const JNINativeMethod gMethods[] = {
     { "native_closeMediaImage", "(J)V", (void *)android_media_MediaCodec_closeMediaImage },
 
     { "native_queueLinearBlock",
-      "(ILandroid/media/MediaCodec$LinearBlock;IILandroid/media/MediaCodec$CryptoInfo;JI"
-      "Ljava/util/ArrayList;Ljava/util/ArrayList;)V",
+      "(ILandroid/media/MediaCodec$LinearBlock;Landroid/media/MediaCodec$CryptoInfo;"
+      "[Ljava/lang/Object;Ljava/util/ArrayList;Ljava/util/ArrayList;)V",
       (void *)android_media_MediaCodec_native_queueLinearBlock },
 
     { "native_queueHardwareBuffer",
