@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96e309f4_1a2876e1",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-01-10T14:30:30Z",
+      "side": 1,
+      "message": "Feels like this will be problematic if we ever add a new KeyMint algorithm.\n\nProbably safer to use KeymasterDefs.KM_ALGORITHM_EC + 1000 or another high constant.",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "9ae1c7eae9e0f427313c1fdcb3862095372ce28b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
