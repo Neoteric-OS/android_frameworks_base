@@ -16,6 +16,24 @@
       "message": "Hi Guolun,\n\nThe patch adds the new category to the array in the JNI implemetaion, however it is not clear what API will make use of the new category in the Java side.\n\nThe API is not public, so would not be usable by apps:\n\n```\n    /** @hide */\n    public static final native long[] getRss(int pid);\n```\n\n\nCan you please clarify what is the motivation or provide follow up CL with your use case.\n\nThanks,\nKalesh",
       "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ad3c500_486ce7ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1961582
+      },
+      "writtenOn": "2024-01-11T02:03:45Z",
+      "side": 1,
+      "message": "Hi Kalesh,\n\nI found that this JNI used obviously in frameworks/base/services/core/java/com/android/server/am/CachedAppOptimizer.java which use rss information to show mem before and after compaction.\n\nAs i comment in commit message, total_rss \u003d anon + file + shmem, use of getRss in CachedAppOptimizer.java want to show detail of a compacted process.\n\nI think this show without shmem is not rigorous, so add shmem show may be more rigorous.\n\nThanks,\nGuolun",
+      "parentUuid": "676ff8cc_d7db3582",
+      "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
