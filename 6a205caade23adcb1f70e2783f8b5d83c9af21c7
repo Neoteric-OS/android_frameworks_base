@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cab22647_b86d8976",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1643016
+      },
+      "writtenOn": "2024-01-11T13:04:26Z",
+      "side": 1,
+      "message": "Unfortunately, we can\u0027t accept this change as it is, please see my reply on the associated bug.",
+      "revId": "6a205caade23adcb1f70e2783f8b5d83c9af21c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
