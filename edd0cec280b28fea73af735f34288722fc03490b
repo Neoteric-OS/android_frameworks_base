@@ -16,6 +16,47 @@
       "message": "@rubinxu@google.com @schfan@google.com please kindly review the update.",
       "revId": "edd0cec280b28fea73af735f34288722fc03490b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00aff860_ffe84920",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-01-11T14:09:52Z",
+      "side": 1,
+      "message": "Since this seems most related to PowerManager, I added some folks (Philip) there who might help. I\u0027m not the right stakeholder to review this change.",
+      "parentUuid": "cfc64d1a_52198343",
+      "revId": "edd0cec280b28fea73af735f34288722fc03490b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4964b085_f172d523",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 12488,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2024-01-11T14:09:52Z",
+      "side": 1,
+      "message": "You can remove this since this is no longer a public API.",
+      "range": {
+        "startLine": 12488,
+        "startChar": 0,
+        "endLine": 12488,
+        "endChar": 76
+      },
+      "revId": "edd0cec280b28fea73af735f34288722fc03490b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
