@@ -34,6 +34,24 @@
       "parentUuid": "676ff8cc_d7db3582",
       "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b2f2845_bf6f76ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-01-11T06:54:50Z",
+      "side": 1,
+      "message": "Hi Guolun, understood the cached app optimizer calculates the rss before and after compaction as the sum of the diff between the anon file and swap categories. Do you intend to add the shmem diff into this calculation as well? Currently the new shmem category in the array will not be used anywhere.\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/am/CachedAppOptimizer.java;l\u003d1877-1890",
+      "parentUuid": "6ad3c500_486ce7ca",
+      "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
