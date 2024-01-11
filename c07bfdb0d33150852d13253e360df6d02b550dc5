@@ -1,0 +1,250 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b84d1db_a2a0dbaf",
+        "filename": "packages/SystemUI/src/com/android/systemui/GuestResumeSessionReceiver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please make this `final` like all the other fields in this class.",
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a58ffd5_6d676ebc",
+        "filename": "packages/SystemUI/src/com/android/systemui/GuestResumeSessionReceiver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Common Typos: Common typo found: \"Reciver\" -- should it be \"Receiver\"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \"Reciver\" -- should it be \"Receiver\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 113,
+        "startChar": 62,
+        "endLine": 113,
+        "endChar": 69
+      },
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34d0ac00_254a899a",
+        "filename": "packages/SystemUI/src/com/android/systemui/GuestResumeSessionReceiver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 111
+      },
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c1f9a3f_70aa9988",
+        "filename": "packages/SystemUI/src/com/android/systemui/power/PowerUI.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please make this `final` as well.",
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ed5506d_b560670d",
+        "filename": "packages/SystemUI/src/com/android/systemui/power/PowerUI.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 111
+      },
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b42af81b_274799d6",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/interruption/KeyguardNotificationVisibilityProvider.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "nit: there\u0027s no need to specify the type here as it\u0027s clear from the constructor call.",
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd57cc63_0722ab6d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/interruption/KeyguardNotificationVisibilityProvider.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please refrain from adding an `m` prefix for fields in Kotlin, this is outdated and not necessary.",
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4aa5d6c_59f8a99f",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/interruption/KeyguardNotificationVisibilityProvider.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Long line, please fix.",
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8bab211_1ca8da36",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/Clock.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 115
+      },
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dadf10b7_5a1a7464",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/NextAlarmControllerImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 111
+      },
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e6eb316_b9be82e2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/ZenModeControllerImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 111
+      },
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0ee6f66_239966d6",
+        "filename": "packages/SystemUI/src/com/android/systemui/wmshell/WMShell.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-11T21:34:41Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 111
+      },
+      "revId": "c07bfdb0d33150852d13253e360df6d02b550dc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
