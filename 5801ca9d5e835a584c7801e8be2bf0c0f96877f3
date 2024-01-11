@@ -94,6 +94,30 @@
       },
       "revId": "5801ca9d5e835a584c7801e8be2bf0c0f96877f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b4aed6d_d206012c",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12234,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-11T19:23:35Z",
+      "side": 1,
+      "message": "\u003e I can check page size and not save this setting at all. Switch will be set purely on page size which is being used.\n\n\n+1 we can do that later",
+      "parentUuid": "c2fd4274_f2de3eea",
+      "range": {
+        "startLine": 12227,
+        "startChar": 0,
+        "endLine": 12234,
+        "endChar": 72
+      },
+      "revId": "5801ca9d5e835a584c7801e8be2bf0c0f96877f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
