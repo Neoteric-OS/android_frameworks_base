@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdd290b1_864327f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-01-11T00:43:05Z",
+      "side": 1,
+      "message": "Seems 11297647 (build with the suspect CL) is passing v2/android-ota/cf_incremental_from_but_resume now, as per https://android-build.corp.google.com/test_investigate/?invocationId\u003dI23700010235332124\u0026testResultId\u003dTR42329125454938781\u0026redirect\u003dhttp://fusion2/d8858d86-31c0-4114-8e09-36ae93d27af2\n\nI also left a comment in b/319512735",
+      "revId": "32184cca8b5ccabe52fb2da91809d0a0057b8477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
