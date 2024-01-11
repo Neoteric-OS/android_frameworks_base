@@ -70,6 +70,24 @@
       "parentUuid": "9b2f2845_bf6f76ec",
       "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2ead952_0e09d96a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-01-11T16:46:43Z",
+      "side": 1,
+      "message": "Hi Golun, thanks for the clarification.",
+      "parentUuid": "41b43780_b8b893b0",
+      "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
