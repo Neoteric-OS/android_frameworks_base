@@ -52,6 +52,24 @@
       "parentUuid": "6ad3c500_486ce7ca",
       "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41b43780_b8b893b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1961582
+      },
+      "writtenOn": "2024-01-11T07:33:42Z",
+      "side": 1,
+      "message": "Hi Kalesh,\n\nYes, i have some optimize code in cacheappoptimize in our devices, so i found here total_rss do not equal anon+file+swap, instead of anon+file+shmem.\n\nI think your doubt is few use of shmem, but i may be return shmem more rigorous when someone want to use, and it is no more negative impact to add shmem.\n\nThanks!",
+      "parentUuid": "9b2f2845_bf6f76ec",
+      "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
