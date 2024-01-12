@@ -126,6 +126,24 @@
       "parentUuid": "03af1492_666005a1",
       "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d07b8124_3875831d",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1941946
+      },
+      "writtenOn": "2024-01-12T21:00:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a39a2d98_a0c68a9b",
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
