@@ -6604,4 +6604,13 @@
     <!-- Enables or disables the "Share" action item shown in the context menu that appears upon
         long-pressing on selected text. Enabled by default. -->
     <bool name="config_textShareSupported">true</bool>
+
+    <!-- Array of KeyEvent.xxxx constants for additional keys that wake up the device.
+         Default is empty. -->
+    <integer-array translatable="false" name="config_additionalWakeKeys">
+        <!-- Example:
+        <item>24</item>
+        <item>25</item>
+        -->
+    </integer-array>
 </resources>

@@ -29,6 +29,7 @@ import static android.content.pm.PackageManager.FEATURE_WATCH;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.os.Build.VERSION_CODES.M;
 import static android.os.Build.VERSION_CODES.O;
+import static android.provider.Settings.Secure.ADDITIONAL_WAKE_KEYS_ENABLED;
 import static android.provider.Settings.Secure.VOLUME_HUSH_OFF;
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.Display.INVALID_DISPLAY;
@@ -240,6 +241,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -666,6 +668,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     // Timeout for showing the keyguard after the screen is on, in case no "ready" is received.
     private int mKeyguardDrawnTimeout = 1000;
 
+    private boolean mAdditionalWakeKeysEnabled;
+    private int[] mAdditionalWakeKeys;
+
     private static final int MSG_DISPATCH_MEDIA_KEY_WITH_WAKE_LOCK = 3;
     private static final int MSG_DISPATCH_MEDIA_KEY_REPEAT_WITH_WAKE_LOCK = 4;
     private static final int MSG_KEYGUARD_DRAWN_COMPLETE = 5;
@@ -826,6 +831,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STYLUS_BUTTONS_ENABLED), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.ADDITIONAL_WAKE_KEYS_ENABLED), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -2290,6 +2298,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         initKeyCombinationRules();
         initSingleKeyGestureRules();
         mSideFpsEventHandler = new SideFpsEventHandler(mContext, mHandler, mPowerManager);
+
+        mAdditionalWakeKeys = res.getIntArray(R.array.config_additionalWakeKeys);
     }
 
     private void initKeyCombinationRules() {
@@ -2685,6 +2695,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mStylusButtonsEnabled = Settings.Secure.getIntForUser(resolver,
                     Secure.STYLUS_BUTTONS_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
             mInputManagerInternal.setStylusButtonMotionEventsEnabled(mStylusButtonsEnabled);
+
+            mAdditionalWakeKeysEnabled = Settings.Secure.getIntForUser(resolver,
+                    ADDITIONAL_WAKE_KEYS_ENABLED, 0 /* def */, UserHandle.USER_CURRENT) == 1;
         }
         if (updateRotation) {
             updateRotation(true);
@@ -4578,7 +4591,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     "Virtual Key - Press");
         }
 
-        if (isWakeKey) {
+        if (isWakeKey || (mAdditionalWakeKeysEnabled
+                && Arrays.stream(mAdditionalWakeKeys).anyMatch(wakeKey -> wakeKey == keyCode))) {
             wakeUpFromWakeKey(event);
         }
 

@@ -11696,6 +11696,15 @@ public final class Settings {
         public static final String LOCK_SCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
 
         /**
+         * Whether additional wake keys are enabled.
+         *
+         * If enabled, keys added to config_additionalWakeKeys will wake up the device.
+         *
+         * @hide
+         */
+        public static final String ADDITIONAL_WAKE_KEYS_ENABLED = "additional_wake_keys_enabled";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */
