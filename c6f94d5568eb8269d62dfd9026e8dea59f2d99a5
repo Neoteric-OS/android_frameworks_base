@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e25e40c_a57dbf19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T21:50:18Z",
+      "side": 1,
+      "message": "Can you break this up a bit so the new properties are easily distinguishable and can be copied/pasted from CL message?",
+      "range": {
+        "startLine": 17,
+        "startChar": 47,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cb83a8cd_7cbb1ab1",
         "filename": "core/java/android/os/GraphicsEnvironment.java",
         "patchSetId": 2
@@ -65,6 +88,29 @@
         "startChar": 0,
         "endLine": 129,
         "endChar": 95
+      },
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "671a725c_28a9692b",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T21:50:18Z",
+      "side": 1,
+      "message": "We\u0027ve already got some examples of package lists that exceed the character limit on debug properties, so I think you\u0027ll need to expand this to:\n```\nsetprop debug.angle.allowlist\nsetprop debug.angle.allowlist.1\nsetprop debug.angle.allowlist.2\netc...\n```\n\nThis is how the vulkan loader handles it:\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/native/vulkan/libvulkan/api.cpp;l\u003d188;drc\u003d8ef2a261136c267bc941952190f32d9e72c3bf4c\n\nHere is the debug property limit (92):\nhttps://cs.android.com/android/platform/superproject/main/+/main:bionic/libc/include/sys/system_properties.h;l\u003d41;drc\u003d8ef2a261136c267bc941952190f32d9e72c3bf4c;bpv\u003d1;bpt\u003d1",
+      "range": {
+        "startLine": 130,
+        "startChar": 67,
+        "endLine": 130,
+        "endChar": 88
       },
       "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
