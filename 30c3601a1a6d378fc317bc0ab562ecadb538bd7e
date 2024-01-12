@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fd00b6f_4eb22965",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T20:58:12Z",
+      "side": 0,
+      "message": "This appears to be completely redundant with ref1?",
+      "range": {
+        "startLine": 181,
+        "startChar": 19,
+        "endLine": 181,
+        "endChar": 35
+      },
+      "revId": "30c3601a1a6d378fc317bc0ab562ecadb538bd7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dec6094_c63f0c3b",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T20:58:12Z",
+      "side": 0,
+      "message": "ref1",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 413,
+        "endChar": 9
+      },
+      "revId": "30c3601a1a6d378fc317bc0ab562ecadb538bd7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

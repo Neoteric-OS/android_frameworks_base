@@ -3,6 +3,98 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "428b11d5_fe0eca04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T20:58:12Z",
+      "side": 1,
+      "message": "Can you reword the commit message to reflect this being a new method that overrides settings, vs replacing the settings approach?  We\u0027ve been using settings long before they showed up in the UI, for a variety of reasons.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb83a8cd_7cbb1ab1",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T20:58:12Z",
+      "side": 1,
+      "message": "typo: lists",
+      "range": {
+        "startLine": 121,
+        "startChar": 46,
+        "endLine": 121,
+        "endChar": 53
+      },
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9433942_1c3e6fe6",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T20:58:12Z",
+      "side": 1,
+      "message": "I think it\u0027s okay for folks to move to debug properties, but not be forced to (which would require run time checks for which version of Android was being targeted by tools)",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 95
+      },
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9eff0c95_3152036e",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T20:58:12Z",
+      "side": 1,
+      "message": "This should really be a descriptive constant like `PACKAGE_NOT_FOUND` or something.",
+      "range": {
+        "startLine": 406,
+        "startChar": 61,
+        "endLine": 406,
+        "endChar": 63
+      },
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "03af1492_666005a1",
         "filename": "core/java/android/os/GraphicsEnvironment.java",
         "patchSetId": 2
@@ -14,6 +106,24 @@
       "writtenOn": "2023-11-29T20:47:49Z",
       "side": 1,
       "message": "Can I ask how is 1) different from 3)?",
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a39a2d98_a0c68a9b",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1097542
+      },
+      "writtenOn": "2024-01-12T20:58:12Z",
+      "side": 1,
+      "message": "1) is configured through the debug property system, which is cleared on reboot, limited to 92 characters in length\n3) is available through the global settings system, which persists across reboot",
+      "parentUuid": "03af1492_666005a1",
       "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
