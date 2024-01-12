@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d17d0e77_1a41d2e3",
+        "filename": "libs/hwui/renderthread/CanvasContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2024-01-12T23:53:24Z",
+      "side": 1,
+      "message": "is this comment still accurate, since the lock is no longer broad?",
+      "range": {
+        "startLine": 593,
+        "startChar": 8,
+        "endLine": 598,
+        "endChar": 46
+      },
+      "revId": "30fb700b56cc950d2d9020204c1599dc8008f8fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7d3c64c_8669cbe5",
+        "filename": "libs/hwui/renderthread/CanvasContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2024-01-12T23:53:24Z",
+      "side": 1,
+      "message": "remove this commented out code",
+      "range": {
+        "startLine": 599,
+        "startChar": 8,
+        "endLine": 599,
+        "endChar": 61
+      },
+      "revId": "30fb700b56cc950d2d9020204c1599dc8008f8fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
