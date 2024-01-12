@@ -146,6 +146,30 @@
       },
       "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9397672b_ed01479f",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1961582
+      },
+      "writtenOn": "2024-01-12T01:58:08Z",
+      "side": 1,
+      "message": "Hi Steven,\n\nI found that java API did not describe for getRss about what it return.\nIf you think it need, i can add comment in Process.java about what it return and combination of total_rss.\n\n    /** @hide */\n    public static final native long[] getRss(int pid);",
+      "parentUuid": "c3c33bbc_17283f75",
+      "range": {
+        "startLine": 1135,
+        "startChar": 18,
+        "endLine": 1135,
+        "endChar": 43
+      },
+      "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
