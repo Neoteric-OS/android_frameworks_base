@@ -22,6 +22,30 @@
       },
       "revId": "9ae1c7eae9e0f427313c1fdcb3862095372ce28b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e426c288_b402a7e4",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1896276
+      },
+      "writtenOn": "2024-01-12T11:29:35Z",
+      "side": 1,
+      "message": "Used 1200 which is less likely to be used by someone else than 1000.",
+      "parentUuid": "96e309f4_1a2876e1",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "9ae1c7eae9e0f427313c1fdcb3862095372ce28b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
