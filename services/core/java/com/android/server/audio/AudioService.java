@@ -4770,7 +4770,10 @@ public class AudioService extends IAudioService.Stub
         synchronized (mHdmiClientLock) {
             if (mHdmiTvClient != null && mHdmiSystemAudioSupported
                     && mHdmiCecVolumeControlEnabled) {
-                flags &= ~AudioManager.FLAG_SHOW_UI;
+                if ((getDeviceForStream(AudioSystem.STREAM_MUSIC) &
+                             AudioSystem.DEVICE_OUT_HDMI_ARC) != 0) {
+                    flags &= ~AudioManager.FLAG_SHOW_UI;
+                }
             }
         }
         return flags;
