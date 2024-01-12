@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3ed21c5_cdff0a78",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6612,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-01-12T14:55:57Z",
+      "side": 1,
+      "message": "Done, I have changed it to a string-array where symbolic names for keycode constants can be added, for example \"VOLUME_DOWN\".\n\nAllowing multiple additional wake keys seems like a more generic solution. Sony will probably add all HW keys except the power key so the user can wake up the device on \"any\" key.",
+      "parentUuid": "7cafd47f_bebf99d6",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51207452_51f4c88b",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "In addition to that, it should not override all the processing of the wake key flow, but set it at the definition of `isWakeKey`.",
       "parentUuid": "51207452_51f4c88b",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72826199_cac007ed",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4594,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-01-12T14:55:57Z",
+      "side": 1,
+      "message": "Thank you for your comments.\n\nRegarding your first comment, can you please explain more your concerns with this logic and the relation this has to the internal keyboard? The purpose of this is to allow the user to enable a setting and when it is enabled, the keys added to config_additionalWakeKeys will always wake up the device (except for if there is some logic in interceptKeyBeforeQueueing that will disregard the wake key). The idea is that OEMs can add hardware keys such as camera, volume up/down or any other HW key to the array so the user can wake up the display when the power key is unavailable.\n\nRegarding the second comment, I have moved the logic up to where isWakeKey is defined.",
+      "parentUuid": "595b75d2_753509f2",
       "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
