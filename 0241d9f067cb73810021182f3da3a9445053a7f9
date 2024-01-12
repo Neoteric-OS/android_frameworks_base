@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7cafd47f_bebf99d6",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6612,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2024-01-12T13:27:36Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea to use the constant; we could use the string and load it with `KeyEvent#keyCodeFromString`. That said, what is the use case of having multiple additional wake keys? Maybe one would suffice?",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "51207452_51f4c88b",
         "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
         "patchSetId": 2
