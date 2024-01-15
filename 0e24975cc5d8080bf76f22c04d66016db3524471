@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bed480f_4dcc4b9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1951675
+      },
+      "writtenOn": "2024-01-15T14:46:42Z",
+      "side": 1,
+      "message": "Thanks for the input, and sorry for the late response. The idea of making test-side changes sounds good to me.\n\nI was looking into handling EXDEV on the test side by preparing a patch like https://r.android.com/c/2909050/2, but apparently the test does not have enough permission to perform the copy. testRenameDirectory still fails on ARC due to an AccessDeniedException from Files.copy() called for source\u003d`/storage/emulated/0/DCIM/\u003cmediaDirectoryName\u003e/` and target\u003d`/storage/emulated/0/Download/\u003cmediaDirectoryName\u003e/`, which was originally thrown from [here](https://cs.android.com/android/platform/superproject/main/+/main:libcore/ojluni/src/main/java/sun/nio/fs/UnixCopyFile.java;l\u003d204;drc\u003ddd2c67a47dc742e19c6710ddd6e1b85f95dd1d1f):\n```\n01-15 20:08:16.057  5476  5493 V ScopedStorageTest: Recovering failed rename from /storage/emulated/0/DCIM/ScopedStorageDeviceTestDirectory411448484386Media to /storage/emulated/0/Download/ScopedStorageDeviceTestDirectory411448484386Media\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest: Failed to recover rename:\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest: java.nio.file.AccessDeniedException: /storage/emulated/0/Download/ScopedStorageDeviceTestDirectory411448484386Media\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at sun.nio.fs.UnixCopyFile.copyDirectory(UnixCopyFile.java:204)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at sun.nio.fs.UnixCopyFile.copy(UnixCopyFile.java:572)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at sun.nio.fs.UnixFileSystemProvider.copy(UnixFileSystemProvider.java:259)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at java.nio.file.Files.copy(Files.java:1274)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at android.scopedstorage.cts.lib.TestUtils$1.copyFileOrEmptyDir(TestUtils.java:1396)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at android.scopedstorage.cts.lib.TestUtils$1.preVisitDirectory(TestUtils.java:1404)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at android.scopedstorage.cts.lib.TestUtils$1.preVisitDirectory(TestUtils.java:1392)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at java.nio.file.Files.walkFileTree(Files.java:2677)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at java.nio.file.Files.walkFileTree(Files.java:2742)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at android.scopedstorage.cts.lib.TestUtils.copyContentsAndDir(TestUtils.java:1392)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at android.scopedstorage.cts.lib.TestUtils.renameDirectoryAndHandlePossibleExdev(TestUtils.java:1446)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at android.scopedstorage.cts.lib.TestUtils.assertCanRenameDirectory(TestUtils.java:1460)\n01-15 20:08:16.086  5476  5493 V ScopedStorageTest:     at android.scopedstorage.cts.device.ScopedStorageDeviceTest.testRenameDirectory(ScopedStorageDeviceTest.java:1865)\n```\n\nThis failure of Files.copy() is not specific to ARC. The AccessDeniedException was thrown from the same location when I ran the test on Android phone (aosp_lynx) after modifying assertCanRenameDirectory to always perform the copy instead of File.renameTo().\n\nInstead of trying to recover the rename by a recursive copy, would it make sense to replace the use of the Download directory in testRenameDirectory with other top-level default directory in `/storage/emulated/0`, such as `/storage/emulated/0/Documents`?",
+      "parentUuid": "cce2b55e_28c0e3e7",
+      "range": {
+        "startLine": 23,
+        "startChar": 50,
+        "endLine": 23,
+        "endChar": 75
+      },
+      "revId": "0e24975cc5d8080bf76f22c04d66016db3524471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "3b1293f2_eb30580b",
