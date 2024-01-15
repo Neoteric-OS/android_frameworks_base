@@ -87,6 +87,24 @@
       "parentUuid": "595b75d2_753509f2",
       "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4dcd4b1_1693ab74",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4594,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2024-01-15T13:15:01Z",
+      "side": 1,
+      "message": "Could you provide some more context about the use cases? I recall reading one about waking the device when it is placed in a case that prevents access to the power button, but in that case it would be better to restrict it to internal keyboards; in a way, a setting to just make all internal keyboard keys a wake key would be more clear, right?",
+      "parentUuid": "72826199_cac007ed",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
