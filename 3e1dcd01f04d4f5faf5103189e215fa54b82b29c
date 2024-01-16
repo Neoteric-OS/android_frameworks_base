@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8828cd7_f695c8c8",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1974,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2024-01-16T23:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08ee98b_dc06e766",
+      "revId": "3e1dcd01f04d4f5faf5103189e215fa54b82b29c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc032b5e_ff58b479",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eee5a32_62269bd5",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4582,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2024-01-16T23:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc032b5e_ff58b479",
+      "revId": "3e1dcd01f04d4f5faf5103189e215fa54b82b29c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e07ffa0_8c670585",
@@ -48,6 +84,30 @@
       "writtenOn": "2024-01-08T22:16:45Z",
       "side": 1,
       "message": "can we typedef this as BufferInfosWrapper and use it throughout the code?",
+      "range": {
+        "startLine": 786,
+        "startChar": 11,
+        "endLine": 786,
+        "endChar": 64
+      },
+      "revId": "3e1dcd01f04d4f5faf5103189e215fa54b82b29c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eba8d34d_316483b7",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2024-01-16T23:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e07ffa0_8c670585",
       "range": {
         "startLine": 786,
         "startChar": 11,
