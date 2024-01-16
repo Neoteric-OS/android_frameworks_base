@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "485c5161_d72780ed",
+        "filename": "core/api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 23674,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2024-01-16T23:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "444188c4_7301d714",
+      "range": {
+        "startLine": 23674,
+        "startChar": 100,
+        "endLine": 23674,
+        "endChar": 138
+      },
+      "revId": "97d980ae571ab0bcda0a1ffc96154fdd5d588aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a7840c3_d914f072",
