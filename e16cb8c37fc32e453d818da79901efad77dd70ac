@@ -16,6 +16,24 @@
       "message": "Hi Ale, Could you please help to check and let us know on presubmit failures ?",
       "revId": "e16cb8c37fc32e453d818da79901efad77dd70ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8d71b17_b3cba93a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-16T18:43:09Z",
+      "side": 1,
+      "message": "It looks like a merge conflict. You would need to sync your workspace to the top of the main branch and rebase your change on top of that, then upload an additional patchset.",
+      "parentUuid": "3a4beb8b_00aeae3b",
+      "revId": "e16cb8c37fc32e453d818da79901efad77dd70ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
