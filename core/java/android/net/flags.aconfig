@@ -43,6 +43,13 @@ flag {
 }
 
 flag {
+  name: "request_restricted_wifi"
+  namespace: "android_core_networking"
+  description: "Allow requesting a restricted wifi network"
+  bug: "315835605"
+}
+
+flag {
   name: "ipsec_transform_state"
   namespace: "android_core_networking_ipsec"
   description: "The flag controls the access for getIpSecTransformState and IpSecTransformState"
