@@ -105,6 +105,24 @@
       "parentUuid": "72826199_cac007ed",
       "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c197ca_ce97998c",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4594,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-01-16T17:19:08Z",
+      "side": 1,
+      "message": "For internal keys, we can define additional wake keys by adding the `WAKE` flag to the KL file for that device ([example](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/data/keyboards/Vendor_0957_Product_0001.kl;l\u003d19;drc\u003db4d4b1f22fa7c72764c3b89eaba302a9c02bc1cc)). The difference is that this can\u0027t be enabled/disabled via a setting, but rather is fixed in the build. Is that approach acceptable for your use case?",
+      "parentUuid": "c4dcd4b1_1693ab74",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
