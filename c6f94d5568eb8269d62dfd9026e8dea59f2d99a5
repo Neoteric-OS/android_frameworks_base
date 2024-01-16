@@ -118,6 +118,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4b91bb4b_5d300a39",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1959901
+      },
+      "writtenOn": "2024-01-16T23:23:40Z",
+      "side": 1,
+      "message": "can we add another global setting? so `ANGLE_GL_DRIVER_SELECTION_PKGS` is used for the legacy testing flow and `ANGLE_GL_DRIVER_SELECTION_PKGS_NEW` is used for another purpose.   The loading logic becomes `if (in ANGLE_GL_DRIVER_SELECTION_PKGS) or (in ANGLE_GL_DRIVER_SELECTION_PKGS_NEW), then load ANGLE`.\n\nthe thinking was mainly to avoid the length limit and the risk of \"clear-on-reboot\".",
+      "parentUuid": "671a725c_28a9692b",
+      "range": {
+        "startLine": 130,
+        "startChar": 67,
+        "endLine": 130,
+        "endChar": 88
+      },
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9eff0c95_3152036e",
         "filename": "core/java/android/os/GraphicsEnvironment.java",
         "patchSetId": 2
