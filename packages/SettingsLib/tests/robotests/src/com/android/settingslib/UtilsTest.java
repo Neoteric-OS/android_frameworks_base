@@ -19,12 +19,19 @@ import static com.android.settingslib.Utils.STORAGE_MANAGER_ENABLED_PROPERTY;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +50,8 @@ import android.telephony.NetworkRegistrationInfo;
 import android.telephony.ServiceState;
 import android.text.TextUtils;
 
+import com.android.settingslib.R;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,6 +65,7 @@ import org.robolectric.annotation.Config;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.ShadowSettings;
+import org.robolectric.shadows.ShadowAlertDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,6 +123,61 @@ public class UtilsTest {
         assertThat(Settings.Secure.getInt(mContext.getContentResolver(),
                 Settings.Secure.LOCATION_CHANGER, Settings.Secure.LOCATION_CHANGER_UNKNOWN))
                 .isEqualTo(Settings.Secure.LOCATION_CHANGER_QUICK_SETTINGS);
+    }
+
+    @Test
+    @Config(shadows = ShadowAlertDialog.class)
+    public void testEnableLocation_locationConsentAccepted_shouldEnableAndBroadcast() {
+        String consentAction = "location.enabled";
+        int currentUserId = ActivityManager.getCurrentUser();
+        Resources resources = spy(mContext.getResources());
+
+        // Enable Location consent dialog and set the (optional) broadcast
+        when(mContext.getResources()).thenReturn(resources);
+        when(resources.getBoolean(R.bool.config_showEnableLocationConsentDialog)).
+                thenReturn(true);
+        when(resources.getString(R.string.config_location_consented_intent_action)).
+                thenReturn(consentAction);
+
+        // Try to enable Location
+        Utils.updateLocationEnabled(mContext, true, currentUserId,
+                Settings.Secure.LOCATION_CHANGER_QUICK_SETTINGS);
+
+        // Verfiy that the consent dialog is displayed and click "Accept"
+        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
+        assertThat(dialog).isNotNull();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+
+        // Verify that Location is enabled and that the (optional) broadcast is sent
+        verify(mLocationManager, times(1)).setLocationEnabledForUser(
+                true, UserHandle.of(currentUserId));
+        verify(mContext).sendBroadcastAsUser(argThat(actionMatches(consentAction)),
+                any(UserHandle.class), anyString());
+    }
+
+    @Test
+    @Config(shadows = ShadowAlertDialog.class)
+    public void testEnableLocation_locationConsentDeclined_shouldNotEnable() {
+        int currentUserId = ActivityManager.getCurrentUser();
+        Resources resources = spy(mContext.getResources());
+
+        // Enable Location consent dialog
+        when(mContext.getResources()).thenReturn(resources);
+        when(resources.getBoolean(R.bool.config_showEnableLocationConsentDialog)).
+                thenReturn(true);
+
+        // Try to enable Location
+        Utils.updateLocationEnabled(mContext, true, currentUserId,
+                Settings.Secure.LOCATION_CHANGER_QUICK_SETTINGS);
+
+        // Verfiy that the consent dialog is displayed and click "Decline"
+        AlertDialog dialog = ShadowAlertDialog.getLatestAlertDialog();
+        assertThat(dialog).isNotNull();
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
+
+        // Verify that Location is not enabled
+        verify(mLocationManager, never()).setLocationEnabledForUser(
+                eq(true), any(UserHandle.class));
     }
 
     @Test

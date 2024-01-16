@@ -1364,6 +1364,19 @@
     <!-- Help button label [CHAR LIMIT=40] -->
     <string name="help_label">Help &amp; feedback</string>
 
+    <!-- Title for Location consent dialog [CHAR LIMIT=65] -->
+    <string name="location_consent_dialog_title">Attention</string>
+    <!-- Main message for Location consent dialog. [CHAR LIMIT=NONE] -->
+    <string name="location_consent_dialog_message">Your approximate location may be shared with the providers of apps and services that use location data.</string>
+    <!-- Optional supplemental message for Location consent dialog. [CHAR LIMIT=NONE] -->
+    <string name="location_consent_dialog_supplemental_message"></string>
+    <!-- Button text to consent and enable Location [CHAR LIMIT=25] -->
+    <string name="location_consent_button_positive">Accept</string>
+    <!-- Button text not consenting to Location [CHAR LIMIT=25] -->
+    <string name="location_consent_button_negative">Decline</string>
+    <!-- Checkbox text where the user can opt out of showing the Location consent dialog again [CHAR LIMIT=40] -->
+    <string name="location_consent_dont_ask_again">Don\'t ask me again</string>
+
     <!-- Preference category for storage development settings. [CHAR LIMIT=50] -->
     <string name="storage_category">Storage</string>
     <!-- Storage: view and access information about shared blobs [CHAR LIMIT=50] -->

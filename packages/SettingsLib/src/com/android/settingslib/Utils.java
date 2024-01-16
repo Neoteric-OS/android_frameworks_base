@@ -56,6 +56,7 @@ import com.android.launcher3.icons.BaseIconFactory.IconOptions;
 import com.android.launcher3.icons.IconFactory;
 import com.android.settingslib.drawable.UserIconDrawable;
 import com.android.settingslib.fuelgauge.BatteryStatus;
+import com.android.settingslib.location.LocationConsentDialog;
 import com.android.settingslib.utils.BuildCompatUtils;
 
 import java.text.NumberFormat;
@@ -99,7 +100,14 @@ public class Utils {
                 userId);
 
         LocationManager locationManager = context.getSystemService(LocationManager.class);
-        locationManager.setLocationEnabledForUser(enabled, UserHandle.of(userId));
+        if (enabled && LocationConsentDialog.shouldShowConsentDialog(context)) {
+            // Get user consent before enabling location
+            LocationConsentDialog.showConsentDialog(context, userId, () -> {
+                locationManager.setLocationEnabledForUser(enabled, UserHandle.of(userId));
+            });
+        } else {
+            locationManager.setLocationEnabledForUser(enabled, UserHandle.of(userId));
+        }
     }
 
     /**
