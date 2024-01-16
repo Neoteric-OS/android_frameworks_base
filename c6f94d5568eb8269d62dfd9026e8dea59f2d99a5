@@ -208,6 +208,42 @@
       "parentUuid": "d07b8124_3875831d",
       "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "694d131c_96dc839f",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1959901
+      },
+      "writtenOn": "2024-01-16T22:56:23Z",
+      "side": 1,
+      "message": "Does global settings have the",
+      "parentUuid": "94cc42db_3806cb8b",
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abd2e738_e99fbf04",
+        "filename": "core/java/android/os/GraphicsEnvironment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1959901
+      },
+      "writtenOn": "2024-01-16T22:56:23Z",
+      "side": 1,
+      "message": "does a global setting has have the length limit?",
+      "parentUuid": "94cc42db_3806cb8b",
+      "revId": "c6f94d5568eb8269d62dfd9026e8dea59f2d99a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
