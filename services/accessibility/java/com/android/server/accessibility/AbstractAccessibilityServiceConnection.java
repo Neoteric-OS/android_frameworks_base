@@ -1708,20 +1708,20 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
                 event.setSource((View) null);
             }
             event.setSealed(true);
-        }
 
-        try {
-            if (svcClientTracingEnabled()) {
-                logTraceSvcClient("onAccessibilityEvent", event + ";" + serviceWantsEvent);
+            try {
+                if (svcClientTracingEnabled()) {
+                    logTraceSvcClient("onAccessibilityEvent", event + ";" + serviceWantsEvent);
+                }
+                listener.onAccessibilityEvent(event, serviceWantsEvent);
+                if (DEBUG) {
+                    Slog.i(LOG_TAG, "Event " + event + " sent to " + listener);
+                }
+            } catch (RemoteException re) {
+                Slog.e(LOG_TAG, "Error during sending " + event + " to " + listener, re);
+            } finally {
+                event.recycle();
             }
-            listener.onAccessibilityEvent(event, serviceWantsEvent);
-            if (DEBUG) {
-                Slog.i(LOG_TAG, "Event " + event + " sent to " + listener);
-            }
-        } catch (RemoteException re) {
-            Slog.e(LOG_TAG, "Error during sending " + event + " to " + listener, re);
-        } finally {
-            event.recycle();
         }
     }
 
