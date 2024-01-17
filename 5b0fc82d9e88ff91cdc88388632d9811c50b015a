@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f655608_baaa2770",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1970380
+      },
+      "writtenOn": "2024-01-17T17:17:23Z",
+      "side": 1,
+      "message": "Hi Ale, Could you please help to check and let us know on presubmit failures",
+      "revId": "5b0fc82d9e88ff91cdc88388632d9811c50b015a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
