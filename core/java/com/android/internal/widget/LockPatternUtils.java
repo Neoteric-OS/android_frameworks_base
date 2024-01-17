@@ -1333,6 +1333,34 @@ public class LockPatternUtils {
         }
     }
 
+    /**
+     * Register a LockSettingsStateListener
+     * @param listener The listener to be registered
+     */
+    public void registerLockSettingsStateListener(
+            @NonNull final ILockSettingsStateListener listener) {
+        try {
+            getLockSettings().registerLockSettingsStateListener(listener);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Could not register LockSettingsStateListener");
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Unregister a LockSettingsStateListener
+     * @param listener The listener to be unregistered
+     */
+    public void unregisterLockSettingsStateListener(
+            @NonNull final ILockSettingsStateListener listener) {
+        try {
+            getLockSettings().unregisterLockSettingsStateListener(listener);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Could not unregister LockSettingsStateListener");
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     public void reportSuccessfulBiometricUnlock(boolean isStrongBiometric, int userId) {
         try {
             getLockSettings().reportSuccessfulBiometricUnlock(isStrongBiometric, userId);

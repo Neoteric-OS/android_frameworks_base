@@ -26,6 +26,7 @@ import android.security.keystore.recovery.KeyChainSnapshot;
 import android.security.keystore.recovery.KeyChainProtectionParams;
 import android.security.keystore.recovery.RecoveryCertPath;
 import com.android.internal.widget.ICheckCredentialProgressCallback;
+import com.android.internal.widget.ILockSettingsStateListener;
 import com.android.internal.widget.IWeakEscrowTokenActivatedListener;
 import com.android.internal.widget.IWeakEscrowTokenRemovedListener;
 import com.android.internal.widget.LockscreenCredential;
@@ -109,4 +110,6 @@ interface ILockSettings {
     boolean isWeakEscrowTokenActive(long handle, int userId);
     boolean isWeakEscrowTokenValid(long handle, in byte[] token, int userId);
     void unlockUserKeyIfUnsecured(int userId);
+    void registerLockSettingsStateListener(in ILockSettingsStateListener listener);
+    void unregisterLockSettingsStateListener(in ILockSettingsStateListener listener);
 }
