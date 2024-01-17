@@ -34,6 +34,24 @@
       "parentUuid": "3a4beb8b_00aeae3b",
       "revId": "e16cb8c37fc32e453d818da79901efad77dd70ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96fdbdeb_34c173a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1970380
+      },
+      "writtenOn": "2024-01-17T04:57:58Z",
+      "side": 1,
+      "message": "I did rebase by clicking Rebase button for now, Could you please run presubmit again ? if still sees merge conflict , i will upload a new patchset by doing above",
+      "parentUuid": "c8d71b17_b3cba93a",
+      "revId": "e16cb8c37fc32e453d818da79901efad77dd70ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
