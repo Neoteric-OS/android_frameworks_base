@@ -123,6 +123,24 @@
       "parentUuid": "c4dcd4b1_1693ab74",
       "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49244215_6f95bc4e",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4594,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-01-17T08:50:35Z",
+      "side": 1,
+      "message": "We do want the user to be able to enable/disable this via a setting.\n\n\u003e in a way, a setting to just make all internal keyboard keys a wake key would be more clear, right?\n\nYes, I think this would be preferable.\n\nThe question is if there is a way to do what while also being able to enable/disable it with a setting?",
+      "parentUuid": "51c197ca_ce97998c",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
