@@ -69,3 +69,10 @@ flag {
     description: "Use BluetoothDevice.getAlias to populate the name of Bluetooth MediaRoute2Infos."
     bug: "314324170"
 }
+
+flag {
+    name: "update_client_profile_priority"
+    namespace: "media"
+    description : "Feature flag to add updateResourcePriority api to MediaCas"
+    bug: "300565729"
+}
