@@ -144,3 +144,10 @@ flag {
         purpose: PURPOSE_BUGFIX
     }
 }
+
+flag {    
+    name: "update_client_profile_priority"
+    namespace: "media"
+    description : "Feature flag to add updateResourcePriority api to MediaCas"
+    bug: "300565729"
+}
