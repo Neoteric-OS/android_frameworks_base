@@ -16,6 +16,7 @@ aconfig_srcjars = [
     ":android.content.pm.flags-aconfig-java{.generated_srcjars}",
     ":android.content.res.flags-aconfig-java{.generated_srcjars}",
     ":android.hardware.biometrics.flags-aconfig-java{.generated_srcjars}",
+    ":android.media.flags-aconfig-java{.generated_srcjars}",
     ":android.net.vcn.flags-aconfig-java{.generated_srcjars}",
     ":android.nfc.flags-aconfig-java{.generated_srcjars}",
     ":android.os.flags-aconfig-java{.generated_srcjars}",
@@ -231,6 +232,18 @@ java_aconfig_library {
 }
 
 // Media
+aconfig_declarations {
+    name: "android.media.flags-aconfig",
+    package: "android.media",
+    srcs: ["media/java/android/media/*.aconfig"],
+}
+
+java_aconfig_library {
+    name: "android.media.flags-aconfig-java",
+    aconfig_declarations: "android.media.flags-aconfig",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
 aconfig_declarations {
     name: "android.media.playback.flags-aconfig",
     package: "com.android.media.playback.flags",
