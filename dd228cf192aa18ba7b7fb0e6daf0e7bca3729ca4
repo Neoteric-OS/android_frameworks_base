@@ -104,6 +104,30 @@
       },
       "revId": "dd228cf192aa18ba7b7fb0e6daf0e7bca3729ca4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09063c14_833db31e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/fragment/CollapsedStatusBarFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-01-18T16:37:52Z",
+      "side": 1,
+      "message": "It does thank you!",
+      "parentUuid": "7ff7d1d2_e3256622",
+      "range": {
+        "startLine": 555,
+        "startChar": 3,
+        "endLine": 557,
+        "endChar": 40
+      },
+      "revId": "dd228cf192aa18ba7b7fb0e6daf0e7bca3729ca4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
