@@ -22584,7 +22584,7 @@ package android.media {
     method public void setInputSurface(@NonNull android.view.Surface);
     method public void setOnFirstTunnelFrameReadyListener(@Nullable android.os.Handler, @Nullable android.media.MediaCodec.OnFirstTunnelFrameReadyListener);
     method public void setOnFrameRenderedListener(@Nullable android.media.MediaCodec.OnFrameRenderedListener, @Nullable android.os.Handler);
-    method public void setOutputSurface(@NonNull android.view.Surface);
+    method public void setOutputSurface(@Nullable android.view.Surface);
     method public void setParameters(@Nullable android.os.Bundle);
     method public void setVideoScalingMode(int);
     method public void signalEndOfInputStream();
@@ -22598,6 +22598,7 @@ package android.media {
     field public static final int BUFFER_FLAG_KEY_FRAME = 1; // 0x1
     field public static final int BUFFER_FLAG_PARTIAL_FRAME = 8; // 0x8
     field @Deprecated public static final int BUFFER_FLAG_SYNC_FRAME = 1; // 0x1
+    field @FlaggedApi("android.media.codec.null_output_surface") public static final int CONFIGURE_FLAG_ALLOW_NULL_SURFACE = 8; // 0x8
     field public static final int CONFIGURE_FLAG_ENCODE = 1; // 0x1
     field public static final int CONFIGURE_FLAG_USE_BLOCK_MODEL = 2; // 0x2
     field public static final int CONFIGURE_FLAG_USE_CRYPTO_ASYNC = 4; // 0x4
@@ -22838,13 +22839,16 @@ package android.media {
     field @Deprecated public static final int COLOR_QCOM_FormatYUV420SemiPlanar = 2141391872; // 0x7fa30c00
     field @Deprecated public static final int COLOR_TI_FormatYUV420PackedSemiPlanar = 2130706688; // 0x7f000100
     field public static final String FEATURE_AdaptivePlayback = "adaptive-playback";
+    field @FlaggedApi("android.media.codec.dynamic_color_aspects") public static final String FEATURE_DynamicColorAspects = "dynamic-color-aspects";
     field public static final String FEATURE_DynamicTimestamp = "dynamic-timestamp";
     field public static final String FEATURE_EncodingStatistics = "encoding-statistics";
     field public static final String FEATURE_FrameParsing = "frame-parsing";
     field public static final String FEATURE_HdrEditing = "hdr-editing";
+    field @FlaggedApi("android.media.codec.hlg_editing") public static final String FEATURE_HlgEditing = "hlg-editing";
     field public static final String FEATURE_IntraRefresh = "intra-refresh";
     field public static final String FEATURE_LowLatency = "low-latency";
     field public static final String FEATURE_MultipleFrames = "multiple-frames";
+    field @FlaggedApi("android.media.codec.null_output_surface") public static final String FEATURE_NullSurface = "null-surface";
     field public static final String FEATURE_PartialFrame = "partial-frame";
     field public static final String FEATURE_QpBounds = "qp-bounds";
     field public static final String FEATURE_SecurePlayback = "secure-playback";

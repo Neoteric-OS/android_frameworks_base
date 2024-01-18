@@ -16,7 +16,10 @@
 
 package android.media;
 
+import static android.media.codec.Flags.FLAG_NULL_OUTPUT_SURFACE;
+
 import android.Manifest;
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -2172,6 +2175,21 @@ final public class MediaCodec {
      */
     public static final int CONFIGURE_FLAG_USE_CRYPTO_ASYNC = 4;
 
+    /**
+     * Allow null output Surface in Surface mode.
+     * <p>
+     * This flag is only defined for a video decoder. MediaCodec
+     * configured with this flag will be in Surface mode even if the
+     * surface parameter is null. Additionally, setOutputSurtface
+     * can be called with {@code null} surface.
+     *
+     * @see setOutputSurface
+     * @see releaseOutputBuffer(int, long)
+     * @see releaseOutputBuffer(int, boolean)
+     */
+    @FlaggedApi(FLAG_NULL_OUTPUT_SURFACE)
+    public static final int CONFIGURE_FLAG_ALLOW_NULL_SURFACE = 8;
+
     /** @hide */
     @IntDef(
         flag = true,
@@ -2223,7 +2241,11 @@ final public class MediaCodec {
      *                decoder. Pass {@code null} as {@code surface} if the
      *                codec does not generate raw video output (e.g. not a video
      *                decoder) and/or if you want to configure the codec for
-     *                {@link ByteBuffer} output.
+     *                {@link ByteBuffer} output. If flags contais
+     *                {@link #CONFIGURE_FLAG_ALLOW_NULL_SURFACE},
+     *                video decoder will not produce {@link
+     *                ByteBuffer} output even if the surface is
+     *                {@code null}.
      * @param crypto  Specify a crypto object to facilitate secure decryption
      *                of the media data. Pass {@code null} as {@code crypto} for
      *                non-secure codecs.
@@ -2232,7 +2254,13 @@ final public class MediaCodec {
      *                responsibility to properly cleanup the {@link MediaCrypto} object
      *                when not in use.
      * @param flags   Specify {@link #CONFIGURE_FLAG_ENCODE} to configure the
-     *                component as an encoder.
+     *                component as an encoder. Additional flags are
+     *                also supported for {@link
+     *                #CONFIGURE_FLAG_USE_BLOCK_MODEL block model
+     *                API}, {@link #CONFIGURE_FLAG_USE_CRYPTO_ASYNC
+     *                asynchronous decryption} and {@link
+     *                #CONFIGURE_FLAG_ALLOW_NULL_SURFACE
+     *                null-surface support}.
      * @throws IllegalArgumentException if the surface has been released (or is invalid),
      * or the format is unacceptable (e.g. missing a mandatory key),
      * or the flags are not set properly
@@ -2339,12 +2367,23 @@ final public class MediaCodec {
      *  new output surface should have a compatible usage type to the original output surface.
      *  E.g. codecs may not support switching from a SurfaceTexture (GPU readable) output
      *  to ImageReader (software readable) output.
+     *  <p>
+     *  If the codec was configured with {@link
+     *  #CONFIGURE_FLAG_ALLOW_NULL_SURFACE null-surface support},
+     *  the output surface can be {@code null}. Rendering output on
+     *  a null surface is not allowed.
+     *
      *  @param surface the output surface to use. It must not be {@code null}.
      *  @throws IllegalStateException if the codec does not support setting the output
      *            surface in the current state.
+     *  @throws IllegalStateException if surface is {@code null} and
+     *            the codec was not configured with {@link
+     *            #CONFIGURE_FLAG_ALLOW_NULL_SURFACE null-surface
+     *            support}.
      *  @throws IllegalArgumentException if the new surface is not of a suitable type for the codec.
+     *  @see CONFIGURE_FLAG_ALLOW_NULL_SURFACE
      */
-    public void setOutputSurface(@NonNull Surface surface) {
+    public void setOutputSurface(@Nullable Surface surface) {
         if (!mHasSurface) {
             throw new IllegalStateException("codec was not configured for an output surface");
         }
