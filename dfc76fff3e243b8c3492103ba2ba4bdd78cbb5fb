@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a90ab3b0_67278133",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-01-18T07:25:29Z",
+      "side": 1,
+      "message": "Could you try if https://android-review.googlesource.com/c/platform/frameworks/base/+/2853062 has fixed it? (It was merged in internal branch)",
+      "revId": "dfc76fff3e243b8c3492103ba2ba4bdd78cbb5fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
