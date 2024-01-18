@@ -1369,6 +1369,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         mExitSplitScreenOnHide = exitSplitScreenOnHide;
     }
 
+    /** Exits split screen with legacy transition */
     void exitSplitScreen(int toTopTaskId, @ExitReason int exitReason) {
         if (!mMainStage.isActive()) return;
 
@@ -1386,6 +1387,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         applyExitSplitScreen(childrenToTop, wct, exitReason);
     }
 
+    /** Exits split screen with legacy transition */
     private void exitSplitScreen(@Nullable StageTaskListener childrenToTop,
             @ExitReason int exitReason) {
         if (!mMainStage.isActive()) return;
@@ -1460,6 +1462,14 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         }
     }
 
+    void dismissSplitScreen(int toTopTaskId, @ExitReason int exitReason) {
+        if (!mMainStage.isActive()) return;
+        final int stage = getStageOfTask(toTopTaskId);
+        final WindowContainerTransaction wct = new WindowContainerTransaction();
+        prepareExitSplitScreen(stage, wct);
+        mSplitTransitions.startDismissTransition(wct, this, stage, exitReason);
+    }
+
     /**
      * Overridden by child classes.
      */
@@ -1521,6 +1531,8 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                 // The device is folded
             case EXIT_REASON_FULLSCREEN_SHORTCUT:
                 // User has used a keyboard shortcut to go back to fullscreen from split
+            case EXIT_REASON_UNKNOWN:
+                // Unknown reason
                 return true;
             default:
                 return false;
