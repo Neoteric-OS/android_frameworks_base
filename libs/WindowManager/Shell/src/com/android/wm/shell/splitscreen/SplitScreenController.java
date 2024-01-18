@@ -447,7 +447,11 @@ public class SplitScreenController implements DragAndDropPolicy.Starter,
     }
 
     public void exitSplitScreen(int toTopTaskId, @ExitReason int exitReason) {
-        mStageCoordinator.exitSplitScreen(toTopTaskId, exitReason);
+        if (ENABLE_SHELL_TRANSITIONS) {
+            mStageCoordinator.dismissSplitScreen(toTopTaskId, exitReason);
+        } else {
+            mStageCoordinator.exitSplitScreen(toTopTaskId, exitReason);
+        }
     }
 
     @Override
