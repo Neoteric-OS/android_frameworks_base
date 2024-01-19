@@ -282,6 +282,15 @@ public class SplitScreenControllerTests extends ShellTestCase {
         verify(mStageCoordinator).switchSplitPosition(anyString());
     }
 
+    @Test
+    public void testSwitchSplitPosition_checksIsSplitScreenVisible() {
+        final String reason = "test";
+        when(mSplitScreenController.isSplitScreenVisible()).thenReturn(true, false);
+        mSplitScreenController.switchSplitPosition(reason);
+        mSplitScreenController.switchSplitPosition(reason);
+        verify(mStageCoordinator, times(1)).switchSplitPosition(reason);
+    }
+
     private Intent createStartIntent(String activityName) {
         Intent intent = new Intent();
         intent.setComponent(new ComponentName(mContext, activityName));
