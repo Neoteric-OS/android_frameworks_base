@@ -170,6 +170,30 @@
       },
       "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75cf7c20_53f80038",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-01-19T19:13:17Z",
+      "side": 1,
+      "message": "This API is not very clearly designed, and it is undocumented which is bad, so it would be good to document it when making it more complex. If we make this change, we\u0027d also need to check clients to see how they use the result values. This code may not be tested, so it\u0027s possible it could introduce crashing, so we must survey all the clients. Thanks.",
+      "parentUuid": "9397672b_ed01479f",
+      "range": {
+        "startLine": 1135,
+        "startChar": 18,
+        "endLine": 1135,
+        "endChar": 43
+      },
+      "revId": "dc4145f5fda915f95c4645873827a40ad2653f7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
