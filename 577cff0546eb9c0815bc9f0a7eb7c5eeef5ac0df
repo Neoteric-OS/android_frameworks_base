@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "146b7093_bbbf38ce",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-20T00:59:14Z",
+      "side": 1,
+      "message": "Note, this part (which I\u0027ve left alone in this CL) doesn\u0027t yet consider the case of *unsecured* profiles with separate challenge.  Both the case where the profile\u0027s credential is shareable with its parent but is set to be separate, and the case where the credential isn\u0027t shareable at all.\n\nFor those cases I think we want:\n\n* If the profile has a parent, then match the parent state (same as unified challenge)\n* If the profile doesn\u0027t have a parent, then always be unlocked (same as unsecured full user)\n\nThoughts?\n\nI\u0027m thinking if there\u0027s a succinct description that applies, or should apply, to all profiles.  Like, the device is locked for a profile if and only if the profile\u0027s own challenge is currently needed to (re)gain access to it *or* the profile has a parent user and the device is locked for that parent user.",
+      "range": {
+        "startLine": 730,
+        "startChar": 0,
+        "endLine": 736,
+        "endChar": 75
+      },
+      "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
