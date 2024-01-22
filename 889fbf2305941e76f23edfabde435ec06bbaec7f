@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "971e7576_1b7599b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1964620
+      },
+      "writtenOn": "2024-01-22T21:38:58Z",
+      "side": 1,
+      "message": "Updated BackgroundInstallControl service ownership to move from PM team to georgechan and wenhaowang.",
+      "revId": "889fbf2305941e76f23edfabde435ec06bbaec7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
