@@ -16,6 +16,24 @@
       "message": "Should have:\n\nMerged-In: Ie8393cf876435a3ffb77a4b27bcf419b529fd785",
       "revId": "23fec1efc6cd7979bcd180cd9e5c43c05b25d38b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6ea75ed_237e811a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1693933
+      },
+      "writtenOn": "2024-01-22T10:41:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d3d702a_8f5b10c2",
+      "revId": "23fec1efc6cd7979bcd180cd9e5c43c05b25d38b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
