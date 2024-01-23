@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea269242_5dcadd65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2024-01-23T16:27:19Z",
+      "side": 1,
+      "message": "Thanks for making the validation code match the spec!",
+      "revId": "09e7bdc61a3b7df9295fb8f388ad28e180420c31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
