@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c55de4c7_b7e9c287",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3572,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "nit: indent",
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2abd01bc_a835453f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3575,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "Let\u0027s have mBufferInfos always non-null:\n\n```suggestion\n          mBufferInfos.clear();\n          mBufferInfos.addAll(infos);\n```",
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a189cea_f3831c7f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3698,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "Let\u0027s have mBufferInfos always non-null:\n\n```suggestion\n            setAccessible(false);\n            if (mBufferInfos.isEmpty()) {\n```",
+      "range": {
+        "startLine": 3694,
+        "startChar": 13,
+        "endLine": 3698,
+        "endChar": 34
+      },
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48e865ad_aa0102d4",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3727,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "```suggestion\n            mBufferInfos.clear();\n```",
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "100245af_bd563f78",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 3751,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "```suggestion\n        private ArrayDeque\u003cBufferInfo\u003e mBufferInfos \u003d new ArrayDeque\u003c\u003e();\n```",
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "723c689b_3a792c5c",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 4554,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2bbbb18_e969ddc4",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "```suggestion\n\nvoid maybeSetBufferInfos(JNIEnv *env, jobject \u0026frame, const sp\u003cBufferInfosWrapper\u003e \u0026bufInfos) {\n    if (!bufInfos) {\n        // Nothing to do\n        return;\n    }\n    std::vector\u003cAccessUnitInfo\u003e \u0026infos \u003d bufInfos.get()-\u003evalue;\n    if (infos.empty()) {\n        // Nothing to do\n        return;\n    }\n    ScopedLocalRef\u003cjobject\u003e dequeObj{env, env-\u003eNewObject(\n            gArrayDequeInfo.clazz, gArrayDequeInfo.ctorId)};\n```",
+      "range": {
+        "startLine": 751,
+        "startChar": 0,
+        "endLine": 754,
+        "endChar": 60
+      },
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "505930dc_73edb2f8",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "```suggestion\n                    maybeSetBufferInfos(env, frame, infos);\n```",
+      "range": {
+        "startLine": 806,
+        "startChar": 20,
+        "endLine": 811,
+        "endChar": 21
+      },
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd9f205e_c5fdc53c",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-23T18:54:50Z",
+      "side": 1,
+      "message": "```suggestion\n                maybeSetBufferInfos(env, frame, infos);\n```",
+      "range": {
+        "startLine": 852,
+        "startChar": 15,
+        "endLine": 857,
+        "endChar": 17
+      },
+      "revId": "352fa4fe5e8d960b1412d616d69994ae701d08e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
