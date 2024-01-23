@@ -39,6 +39,7 @@
 #include <hwbinder/ProcessState.h>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedUtfChars.h>
+#include <vintf/parse_string.h>
 #include <utils/misc.h>
 
 #include "core_jni_helpers.h"

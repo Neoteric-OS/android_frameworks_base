@@ -28,10 +28,6 @@ public class VintfRuntimeInfo {
 
     private VintfRuntimeInfo() {}
 
-    static {
-        System.loadLibrary("vintf_jni");
-    }
-
     /**
      * @return /sys/fs/selinux/policyvers, via security_policyvers() native call
      *
