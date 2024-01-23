@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4162dfc_fb9ae6a2",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-01-23T09:56:07Z",
+      "side": 1,
+      "message": "the order between A2DP suspend and BT SCO ON must be respected as in updateAudioHalBluetoothState():\nif (mBluetoothScoOnApplied) {\n    AudioSystem.setParameters(\"A2dpSuspended\u003dtrue\");\n    AudioSystem.setParameters(\"LeAudioSuspended\u003dtrue\");\n    AudioSystem.setParameters(\"BT_SCO\u003don\");\n} else {\n    AudioSystem.setParameters(\"BT_SCO\u003doff\");\n    if (mBluetoothA2dpSuspendedApplied) {\n        AudioSystem.setParameters(\"A2dpSuspended\u003dtrue\");\n    } else {\n        AudioSystem.setParameters(\"A2dpSuspended\u003dfalse\");\n    }\n    if (mBluetoothLeSuspendedApplied) {\n        AudioSystem.setParameters(\"LeAudioSuspended\u003dtrue\");\n    } else {\n        AudioSystem.setParameters(\"LeAudioSuspended\u003dfalse\");\n    }\n}",
+      "range": {
+        "startLine": 1100,
+        "startChar": 0,
+        "endLine": 1114,
+        "endChar": 9
+      },
+      "revId": "d8fcc3f3952bc8a6507911f8467e22e9e17359a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
