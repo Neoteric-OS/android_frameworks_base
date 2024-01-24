@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da52f04a_df736265",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 3752,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2024-01-24T21:43:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a75d2f6a_c0188b8b",
+      "revId": "61bca04f8ea9583a754bc609ff6983b374514d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cfae92f_f6193a4e",
@@ -31,6 +49,30 @@
       "writtenOn": "2024-01-24T21:40:34Z",
       "side": 1,
       "message": "nit: \n```suggestion\n        private final ArrayDeque\u003cBufferInfo\u003e mBufferInfos \u003d new ArrayDeque\u003c\u003e();\n```",
+      "range": {
+        "startLine": 4632,
+        "startChar": 34,
+        "endLine": 4632,
+        "endChar": 35
+      },
+      "revId": "61bca04f8ea9583a754bc609ff6983b374514d25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0015ae7_89468a85",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 4632,
+      "author": {
+        "id": 1939216
+      },
+      "writtenOn": "2024-01-24T21:43:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cfae92f_f6193a4e",
       "range": {
         "startLine": 4632,
         "startChar": 34,
