@@ -22,6 +22,30 @@
       },
       "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc1394d2_12545d9f",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-24T00:46:39Z",
+      "side": 1,
+      "message": "\u003e [For separate-but-unsecure profiles] If the profile has a parent, then match the parent state (same as unified challenge)\n\nAre you saying that we already do that today, or that you\u0027d change the implementation to do that?\n\nAlso, this is a (public) API, right? Do we really want to make such a strong guarantee? What if, in the future, we invent some new profile type that has a parent but is able to be unsecurely accessed (from the parent\u0027s lockscreen) without the parent being unlocked? Do we need to word things in a softer way (with words like \"typically\" or whatever), or is it fine to update this later if needed? Why does the caller even need to know the policy? Don\u0027t they just need to know the outcome (locked vs. not)?",
+      "parentUuid": "146b7093_bbbf38ce",
+      "range": {
+        "startLine": 730,
+        "startChar": 0,
+        "endLine": 736,
+        "endChar": 75
+      },
+      "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
