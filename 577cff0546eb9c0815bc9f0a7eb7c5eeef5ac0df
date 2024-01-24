@@ -70,6 +70,30 @@
       },
       "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b782bd2_61450da8",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-24T03:45:06Z",
+      "side": 1,
+      "message": "I\u0027ve updated this CL according to my suggestion to define the meaning of \"device locked\" in a more abstract way.  Please take a look.   I think that what I wrote applies in every case, but let me know if you can think of any exceptions.  Thanks!",
+      "parentUuid": "62c4f8d4_134943eb",
+      "range": {
+        "startLine": 730,
+        "startChar": 0,
+        "endLine": 736,
+        "endChar": 75
+      },
+      "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
