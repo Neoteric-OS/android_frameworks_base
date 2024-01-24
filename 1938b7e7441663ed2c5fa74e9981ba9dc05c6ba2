@@ -155,6 +155,24 @@
       "parentUuid": "a1a4715a_5cae73fa",
       "revId": "1938b7e7441663ed2c5fa74e9981ba9dc05c6ba2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f677b776_75aac989",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-01-24T19:23:22Z",
+      "side": 1,
+      "message": "thanks, now it finally passed, please submit it 😊",
+      "parentUuid": "a91929ad_b738dfcf",
+      "revId": "1938b7e7441663ed2c5fa74e9981ba9dc05c6ba2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
