@@ -46,6 +46,30 @@
       },
       "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c4f8d4_134943eb",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-24T03:04:47Z",
+      "side": 1,
+      "message": "\u003e Are you saying that we already do that today, or that you\u0027d change the implementation to do that?\n\nI\u0027m asking what the expected behavior is.  Hopefully it\u0027s the actual behavior too. If it\u0027s not the actual behavior, hopefully we can fix it; as new profile types are being added, this may be a good time for any such fix.  But in either case we need to agree on the expected behavior.\n\nAnyway, I was just pointing out that this CL still leaves the behavior of those cases unspecified.  I think this CL is an improvement regardless of those cases.\n\n\u003e Also, this is a (public) API, right? Do we really want to make such a strong guarantee? What if, in the future, we invent some new profile type that has a parent but is able to be unsecurely accessed (from the parent\u0027s lockscreen) without the parent being unlocked? Do we need to word things in a softer way (with words like \"typically\" or whatever), or is it fine to update this later if needed? Why does the caller even need to know the policy? Don\u0027t they just need to know the outcome (locked vs. not)?\n\nYes this is a public API.  Part of the reason I\u0027d like to document it clearly is because apps can create Keystore keys that are only usable when the device is unlocked, via `KeyProtection.Builder#setUnlockedDeviceRequired(true)`.  That API currently does not define what it means for the device to be unlocked, so it\u0027s hard for app developers to understand whether it\u0027s safe or useful to apply it to their Keystore keys or not.  By documenting `KeyguardManager#isDeviceLocked()` which uses the same concept of \"device is unlocked\", I hope that we can help app developers understand whether it\u0027s appropriate for them to use the Keystore key protection or not.  There are other use cases for `isDeviceLocked()` too, which we have less visibility into, but the callers within Android itself give some hints.\n\nIn any case, just knowing a true/false result without any meaning attached is not  useful.  We clearly shouldn\u0027t write something like \"This method returns a bool with unspecified meaning, good luck!\".  We need to define what it means.  We do need to write it carefully, writing something that\u0027s useful and understandable while avoiding overly-detailed information that likely would need later revision.\n\nIt might that the best solution is to define the meaning of \"device locked\" in a more abstract way that applies to any type of user or profile, instead of trying to list the behavior for different types of users.  E.g., the device is locked for a user if and only if some form of authentication (LSKF, biometrics of all classes, or trust agent) is currently required to access to the apps of that user.  We probably should think about it that way and have the documentation reflect that.",
+      "parentUuid": "dc1394d2_12545d9f",
+      "range": {
+        "startLine": 730,
+        "startChar": 0,
+        "endLine": 736,
+        "endChar": 75
+      },
+      "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
