@@ -17,6 +17,7 @@ aconfig_srcjars = [
     ":aconfig_mediacodec_flags_java_lib{.generated_srcjars}",
     ":android.content.pm.flags-aconfig-java{.generated_srcjars}",
     ":android.content.res.flags-aconfig-java{.generated_srcjars}",
+    ":android.crashrecovery.flags-aconfig-java{.generated_srcjars}",
     ":android.hardware.biometrics.flags-aconfig-java{.generated_srcjars}",
     ":android.media.playback.flags-aconfig-java{.generated_srcjars}",
     ":android.net.vcn.flags-aconfig-java{.generated_srcjars}",
@@ -237,6 +238,19 @@ aconfig_declarations {
 java_aconfig_library {
     name: "android.hardware.biometrics.flags-aconfig-java",
     aconfig_declarations: "android.hardware.biometrics.flags-aconfig",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// Crash Recovery
+aconfig_declarations {
+    name: "android.crashrecovery.flags-aconfig",
+    package: "android.crashrecovery.flags",
+    srcs: ["packages/CrashRecovery/services/java/com/android/server/flags.aconfig"],
+}
+
+java_aconfig_library {
+    name: "android.crashrecovery.flags-aconfig-java",
+    aconfig_declarations: "android.crashrecovery.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 
