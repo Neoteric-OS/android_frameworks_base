@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dc16c99_49f33ae6",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-24T22:19:37Z",
+      "side": 1,
+      "message": "Why are we removing the part about\n`the user has a secure lock screen {@link #isDeviceSecure()} returns true`\n?\nAssuming that still holds, it seems important: it gets the idea of \"secure\" across, and additionally defines exactly what it means in terms of APIs.",
+      "range": {
+        "startLine": 719,
+        "startChar": 9,
+        "endLine": 719,
+        "endChar": 10
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dc74f1a_ea707cc7",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-24T22:19:37Z",
+      "side": 1,
+      "message": "nit: Personally, I\u0027d say `{@link Context} user`, without the `\u0027s`.",
+      "range": {
+        "startLine": 723,
+        "startChar": 90,
+        "endLine": 723,
+        "endChar": 92
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d21562aa_2039f885",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-24T22:19:37Z",
+      "side": 1,
+      "message": "For my own understanding: is this concept of non-trivial authentication the same thing as `isDeviceSecure()`?",
+      "range": {
+        "startLine": 725,
+        "startChar": 49,
+        "endLine": 725,
+        "endChar": 63
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d36b60e9_6c2d5ceb",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-24T22:19:37Z",
+      "side": 1,
+      "message": "We are no longer mentioning the \"non-current full user\" case. Was it wrong?\n\nThere is ambiguity here. If the full user isn\u0027t the current user, then what does it even mean to ask \"whether the lock screen is showing\"? Whose lock screen - the current user\u0027s? The context user\u0027s lock screen obviously cannot be showing because it isn\u0027t the current user. I assume that\u0027s why this case was spelled out in detail before.",
+      "range": {
+        "startLine": 737,
+        "startChar": 97,
+        "endLine": 737,
+        "endChar": 98
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

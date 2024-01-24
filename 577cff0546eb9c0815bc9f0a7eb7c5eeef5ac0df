@@ -94,6 +94,30 @@
       },
       "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c5ed568_8abe9ce5",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-24T22:19:37Z",
+      "side": 1,
+      "message": "\u003e define the meaning of \"device locked\" in a more abstract way\n\nYes, this is what I meant (rather than saying \"This method returns a bool with unspecified meaning, good luck!\". :) ). We should explain what idea the method is trying to convey, but I don\u0027t think we should list all broad scenarios that we\u0027ve thought of so far and the detailed policy that we currently employ for them individually.",
+      "parentUuid": "4b782bd2_61450da8",
+      "range": {
+        "startLine": 730,
+        "startChar": 0,
+        "endLine": 736,
+        "endChar": 75
+      },
+      "revId": "577cff0546eb9c0815bc9f0a7eb7c5eeef5ac0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
