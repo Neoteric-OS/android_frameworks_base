@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.VersionedPackage;
+import android.crashrecovery.flags.Flags;
 import android.net.ConnectivityModuleConnector;
 import android.os.Environment;
 import android.os.Handler;
@@ -130,8 +131,24 @@ public class PackageWatchdog {
 
     @VisibleForTesting
     static final int DEFAULT_BOOT_LOOP_TRIGGER_COUNT = 5;
-    @VisibleForTesting
+
     static final long DEFAULT_BOOT_LOOP_TRIGGER_WINDOW_MS = TimeUnit.MINUTES.toMillis(10);
+    // Boot loop at which packageWatchdog starts first mitigation
+    private static final String BOOT_LOOP_THRESHOLD = "sys.boot_loop_threshold";
+    @VisibleForTesting
+    static final int DEFAULT_BOOT_LOOP_THRESHOLD = 15;
+    // Once boot_loop_threshold is surpassed next mitigation would be triggered after
+    // specified number of reboots.
+    private static final String BOOT_LOOP_MITIGATION_INCREMENT =
+            "sys.boot_loop_mitigation_increment";
+    @VisibleForTesting
+    static final int DEFAULT_BOOT_LOOP_MITIGATION_INCREMENT = 2;
+
+    // Threshold level at which or above user might experience significant disruption.
+    private static final String MAJOR_USER_IMPACT_LEVEL_THRESHOLD =
+            "persist.device_config.configuration.major_user_impact_level_threshold";
+    private static final int DEFAULT_MAJOR_USER_IMPACT_LEVEL_THRESHOLD =
+            PackageHealthObserverImpact.USER_IMPACT_LEVEL_71;
 
     private long mNumberOfNativeCrashPollsRemaining;
 
@@ -230,8 +247,16 @@ public class PackageWatchdog {
         mConnectivityModuleConnector = connectivityModuleConnector;
         mSystemClock = clock;
         mNumberOfNativeCrashPollsRemaining = NUMBER_OF_NATIVE_CRASH_POLLS;
-        mBootThreshold = new BootThreshold(DEFAULT_BOOT_LOOP_TRIGGER_COUNT,
-                DEFAULT_BOOT_LOOP_TRIGGER_WINDOW_MS);
+        if (Flags.recoverabilityDetection()) {
+            mBootThreshold = new BootThreshold(DEFAULT_BOOT_LOOP_TRIGGER_COUNT,
+                    DEFAULT_BOOT_LOOP_TRIGGER_WINDOW_MS,
+                    SystemProperties.getInt(BOOT_LOOP_MITIGATION_INCREMENT,
+                            DEFAULT_BOOT_LOOP_MITIGATION_INCREMENT));
+        } else {
+            mBootThreshold = new BootThreshold(DEFAULT_BOOT_LOOP_TRIGGER_COUNT,
+                    DEFAULT_BOOT_LOOP_TRIGGER_WINDOW_MS);
+        }
+
         loadFromFile();
         sPackageWatchdog = this;
     }
@@ -436,8 +461,13 @@ public class PackageWatchdog {
                                 mitigationCount =
                                         currentMonitoredPackage.getMitigationCountLocked();
                             }
-                            currentObserverToNotify.execute(versionedPackage,
-                                    failureReason, mitigationCount);
+                            if (Flags.recoverabilityDetection()) {
+                                maybeExecute(currentObserverToNotify, versionedPackage,
+                                        failureReason, currentObserverImpact, mitigationCount);
+                            } else {
+                                currentObserverToNotify.execute(versionedPackage,
+                                        failureReason, mitigationCount);
+                            }
                         }
                     }
                 }
@@ -467,9 +497,25 @@ public class PackageWatchdog {
             }
         }
         if (currentObserverToNotify != null) {
-            currentObserverToNotify.execute(failingPackage,  failureReason, 1);
+            if (Flags.recoverabilityDetection()) {
+                maybeExecute(currentObserverToNotify, failingPackage, failureReason,
+                        currentObserverImpact, /*mitigationCount=*/ 1);
+            } else {
+                currentObserverToNotify.execute(failingPackage,  failureReason, 1);
+            }
         }
     }
+
+    private void maybeExecute(PackageHealthObserver currentObserverToNotify,
+                              VersionedPackage versionedPackage,
+                              @FailureReasons int failureReason,
+                              int currentObserverImpact,
+                              int mitigationCount) {
+        if (currentObserverImpact < getUserImpactLevelLimit()) {
+            currentObserverToNotify.execute(versionedPackage, failureReason, mitigationCount);
+        }
+    }
+
 
     /**
      * Called when the system server boots. If the system server is detected to be in a boot loop,
@@ -477,8 +523,11 @@ public class PackageWatchdog {
      */
     public void noteBoot() {
         synchronized (mLock) {
-            if (mBootThreshold.incrementAndTest()) {
-                mBootThreshold.reset();
+            boolean mitigate = mBootThreshold.incrementAndTest();
+            if (mitigate) {
+                if (!Flags.recoverabilityDetection()) {
+                    mBootThreshold.reset();
+                }
                 int mitigationCount = mBootThreshold.getMitigationCount() + 1;
                 PackageHealthObserver currentObserverToNotify = null;
                 int currentObserverImpact = Integer.MAX_VALUE;
@@ -495,9 +544,19 @@ public class PackageWatchdog {
                     }
                 }
                 if (currentObserverToNotify != null) {
-                    mBootThreshold.setMitigationCount(mitigationCount);
-                    mBootThreshold.saveMitigationCountToMetadata();
-                    currentObserverToNotify.executeBootLoopMitigation(mitigationCount);
+                    if (Flags.recoverabilityDetection()) {
+                        if (currentObserverImpact < getUserImpactLevelLimit()
+                                || (currentObserverImpact >= getUserImpactLevelLimit()
+                                        && mBootThreshold.getCount() >= getBootLoopThreshold())) {
+                            mBootThreshold.setMitigationCount(mitigationCount);
+                            mBootThreshold.saveMitigationCountToMetadata();
+                            currentObserverToNotify.executeBootLoopMitigation(mitigationCount);
+                        }
+                    } else {
+                        mBootThreshold.setMitigationCount(mitigationCount);
+                        mBootThreshold.saveMitigationCountToMetadata();
+                        currentObserverToNotify.executeBootLoopMitigation(mitigationCount);
+                    }
                 }
             }
         }
@@ -567,13 +626,27 @@ public class PackageWatchdog {
         mShortTaskHandler.post(()->checkAndMitigateNativeCrashes());
     }
 
+    private int getUserImpactLevelLimit() {
+        return SystemProperties.getInt(MAJOR_USER_IMPACT_LEVEL_THRESHOLD,
+                DEFAULT_MAJOR_USER_IMPACT_LEVEL_THRESHOLD);
+    }
+
+    private int getBootLoopThreshold() {
+        return SystemProperties.getInt(BOOT_LOOP_THRESHOLD,
+                DEFAULT_BOOT_LOOP_THRESHOLD);
+    }
+
     /** Possible severity values of the user impact of a {@link PackageHealthObserver#execute}. */
     @Retention(SOURCE)
     @IntDef(value = {PackageHealthObserverImpact.USER_IMPACT_LEVEL_0,
                      PackageHealthObserverImpact.USER_IMPACT_LEVEL_10,
+                     PackageHealthObserverImpact.USER_IMPACT_LEVEL_20,
                      PackageHealthObserverImpact.USER_IMPACT_LEVEL_30,
                      PackageHealthObserverImpact.USER_IMPACT_LEVEL_50,
                      PackageHealthObserverImpact.USER_IMPACT_LEVEL_70,
+                     PackageHealthObserverImpact.USER_IMPACT_LEVEL_71,
+                     PackageHealthObserverImpact.USER_IMPACT_LEVEL_75,
+                     PackageHealthObserverImpact.USER_IMPACT_LEVEL_80,
                      PackageHealthObserverImpact.USER_IMPACT_LEVEL_90,
                      PackageHealthObserverImpact.USER_IMPACT_LEVEL_100})
     public @interface PackageHealthObserverImpact {
@@ -582,11 +655,15 @@ public class PackageWatchdog {
         /* Action has low user impact, user of a device will barely notice. */
         int USER_IMPACT_LEVEL_10 = 10;
         /* Actions having medium user impact, user of a device will likely notice. */
+        int USER_IMPACT_LEVEL_20 = 20;
         int USER_IMPACT_LEVEL_30 = 30;
         int USER_IMPACT_LEVEL_50 = 50;
         int USER_IMPACT_LEVEL_70 = 70;
-        int USER_IMPACT_LEVEL_90 = 90;
         /* Action has high user impact, a last resort, user of a device will be very frustrated. */
+        int USER_IMPACT_LEVEL_71 = 71;
+        int USER_IMPACT_LEVEL_75 = 75;
+        int USER_IMPACT_LEVEL_80 = 80;
+        int USER_IMPACT_LEVEL_90 = 90;
         int USER_IMPACT_LEVEL_100 = 100;
     }
 
@@ -643,6 +720,11 @@ public class PackageWatchdog {
         default boolean executeBootLoopMitigation(int mitigationCount) {
             return false;
         }
+
+        /**
+         * Resets observer specific boot mitigation count
+         */
+        default void resetObserverBootMitigationCount() {};
 
         // TODO(b/120598832): Ensure uniqueness?
         /**
@@ -1679,6 +1761,16 @@ public class PackageWatchdog {
         }
     }
 
+    private void resetAllObserversBootMitigationCount() {
+        for (int i = 0; i < mAllObservers.size(); i++) {
+            final ObserverInternal observer = mAllObservers.valueAt(i);
+            PackageHealthObserver registeredObserver = observer.registeredObserver;
+            if (registeredObserver != null) {
+                registeredObserver.resetObserverBootMitigationCount();
+            }
+        }
+    }
+
     /**
      * Handles the thresholding logic for system server boots.
      */
@@ -1686,10 +1778,16 @@ public class PackageWatchdog {
 
         private final int mBootTriggerCount;
         private final long mTriggerWindow;
+        private final int mBootMitigationIncrement;
 
         BootThreshold(int bootTriggerCount, long triggerWindow) {
+            this(bootTriggerCount, triggerWindow, /*mBootMitigationIncrement=*/ 1);
+        }
+
+        BootThreshold(int bootTriggerCount, long triggerWindow, int bootMitigationIncrement) {
             this.mBootTriggerCount = bootTriggerCount;
             this.mTriggerWindow = triggerWindow;
+            this.mBootMitigationIncrement = bootMitigationIncrement;
         }
 
         public void reset() {
@@ -1772,6 +1870,7 @@ public class PackageWatchdog {
             if (now - getMitigationStart() > DEFAULT_DEESCALATION_WINDOW_MS) {
                 setMitigationCount(0);
                 setMitigationStart(now);
+                resetAllObserversBootMitigationCount();
             }
             final long window = now - getStart();
             if (window >= mTriggerWindow) {
@@ -1782,6 +1881,11 @@ public class PackageWatchdog {
                 int count = getCount() + 1;
                 setCount(count);
                 EventLogTags.writeRescueNote(Process.ROOT_UID, count, window);
+                if (Flags.recoverabilityDetection()) {
+                    boolean mitigate = (count >= mBootTriggerCount)
+                            && (count - mBootTriggerCount) % mBootMitigationIncrement == 0;
+                    return mitigate;
+                }
                 return count >= mBootTriggerCount;
             }
         }
