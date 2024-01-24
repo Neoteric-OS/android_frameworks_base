@@ -36,11 +36,13 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.VersionedPackage;
+import android.crashrecovery.flags.Flags;
 import android.net.ConnectivityModuleConnector;
 import android.net.ConnectivityModuleConnector.ConnectivityModuleHealthListener;
 import android.os.Handler;
 import android.os.SystemProperties;
 import android.os.test.TestLooper;
+import android.platform.test.flag.junit.SetFlagsRule;
 import android.provider.DeviceConfig;
 import android.util.AtomicFile;
 import android.util.LongArrayQueue;
@@ -59,6 +61,7 @@ import com.android.server.PackageWatchdog.PackageHealthObserverImpact;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -98,6 +101,10 @@ public class PackageWatchdogTest {
     private static final String OBSERVER_NAME_4 = "observer4";
     private static final long SHORT_DURATION = TimeUnit.SECONDS.toMillis(1);
     private static final long LONG_DURATION = TimeUnit.SECONDS.toMillis(5);
+
+    @Rule
+    public final SetFlagsRule mSetFlagsRule = new SetFlagsRule();
+
     private final TestClock mTestClock = new TestClock();
     private TestLooper mTestLooper;
     private Context mSpyContext;
@@ -124,6 +131,7 @@ public class PackageWatchdogTest {
 
     @Before
     public void setUp() throws Exception {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         MockitoAnnotations.initMocks(this);
         new File(InstrumentationRegistry.getContext().getFilesDir(),
                 "package-watchdog.xml").delete();
@@ -440,11 +448,58 @@ public class PackageWatchdogTest {
      */
     @Test
     public void testPackageFailureNotifyAllDifferentImpacts() throws Exception {
+        mSetFlagsRule.disableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         PackageWatchdog watchdog = createWatchdog();
         TestObserver observerNone = new TestObserver(OBSERVER_NAME_1,
                 PackageHealthObserverImpact.USER_IMPACT_LEVEL_0);
         TestObserver observerHigh = new TestObserver(OBSERVER_NAME_2,
                 PackageHealthObserverImpact.USER_IMPACT_LEVEL_100);
+        TestObserver observerMid = new TestObserver(OBSERVER_NAME_3,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_30);
+        TestObserver observerLow = new TestObserver(OBSERVER_NAME_4,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_10);
+
+        // Start observing for all impact observers
+        watchdog.startObservingHealth(observerNone, Arrays.asList(APP_A, APP_B, APP_C, APP_D),
+                SHORT_DURATION);
+        watchdog.startObservingHealth(observerHigh, Arrays.asList(APP_A, APP_B, APP_C),
+                SHORT_DURATION);
+        watchdog.startObservingHealth(observerMid, Arrays.asList(APP_A, APP_B),
+                SHORT_DURATION);
+        watchdog.startObservingHealth(observerLow, Arrays.asList(APP_A),
+                SHORT_DURATION);
+
+        // Then fail all apps above the threshold
+        raiseFatalFailureAndDispatch(watchdog,
+                Arrays.asList(new VersionedPackage(APP_A, VERSION_CODE),
+                        new VersionedPackage(APP_B, VERSION_CODE),
+                        new VersionedPackage(APP_C, VERSION_CODE),
+                        new VersionedPackage(APP_D, VERSION_CODE)),
+                PackageWatchdog.FAILURE_REASON_UNKNOWN);
+
+        // Verify least impact observers are notifed of package failures
+        List<String> observerNonePackages = observerNone.mMitigatedPackages;
+        List<String> observerHighPackages = observerHigh.mMitigatedPackages;
+        List<String> observerMidPackages = observerMid.mMitigatedPackages;
+        List<String> observerLowPackages = observerLow.mMitigatedPackages;
+
+        // APP_D failure observed by only observerNone is not caught cos its impact is none
+        assertThat(observerNonePackages).isEmpty();
+        // APP_C failure is caught by observerHigh cos it's the lowest impact observer
+        assertThat(observerHighPackages).containsExactly(APP_C);
+        // APP_B failure is caught by observerMid cos it's the lowest impact observer
+        assertThat(observerMidPackages).containsExactly(APP_B);
+        // APP_A failure is caught by observerLow cos it's the lowest impact observer
+        assertThat(observerLowPackages).containsExactly(APP_A);
+    }
+
+    @Test
+    public void testPackageFailureNotifyAllDifferentImpactsRecoverability() throws Exception {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver observerNone = new TestObserver(OBSERVER_NAME_1,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_0);
+        TestObserver observerHigh = new TestObserver(OBSERVER_NAME_2,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_50);
         TestObserver observerMid = new TestObserver(OBSERVER_NAME_3,
                 PackageHealthObserverImpact.USER_IMPACT_LEVEL_30);
         TestObserver observerLow = new TestObserver(OBSERVER_NAME_4,
@@ -497,6 +552,7 @@ public class PackageWatchdogTest {
      */
     @Test
     public void testPackageFailureNotifyLeastImpactSuccessively() throws Exception {
+        mSetFlagsRule.disableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         PackageWatchdog watchdog = createWatchdog();
         TestObserver observerFirst = new TestObserver(OBSERVER_NAME_1,
                 PackageHealthObserverImpact.USER_IMPACT_LEVEL_10);
@@ -559,16 +615,103 @@ public class PackageWatchdogTest {
         assertThat(observerSecond.mMitigatedPackages).isEmpty();
     }
 
+    @Test
+    public void testPackageFailureNotifyLeastImpactSuccessivelyRecoverability() throws Exception {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver observerFirst = new TestObserver(OBSERVER_NAME_1,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_10);
+        TestObserver observerSecond = new TestObserver(OBSERVER_NAME_2,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_30);
+
+        // Start observing for observerFirst and observerSecond with failure handling
+        watchdog.startObservingHealth(observerFirst, Arrays.asList(APP_A), LONG_DURATION);
+        watchdog.startObservingHealth(observerSecond, Arrays.asList(APP_A), LONG_DURATION);
+
+        // Then fail APP_A above the threshold
+        raiseFatalFailureAndDispatch(watchdog,
+                Arrays.asList(new VersionedPackage(APP_A, VERSION_CODE)),
+                PackageWatchdog.FAILURE_REASON_UNKNOWN);
+
+        // Verify only observerFirst is notifed
+        assertThat(observerFirst.mMitigatedPackages).containsExactly(APP_A);
+        assertThat(observerSecond.mMitigatedPackages).isEmpty();
+
+        // After observerFirst handles failure, next action it has is high impact
+        observerFirst.mImpact = PackageHealthObserverImpact.USER_IMPACT_LEVEL_50;
+        observerFirst.mMitigatedPackages.clear();
+        observerSecond.mMitigatedPackages.clear();
+
+        // Then fail APP_A again above the threshold
+        raiseFatalFailureAndDispatch(watchdog,
+                Arrays.asList(new VersionedPackage(APP_A, VERSION_CODE)),
+                PackageWatchdog.FAILURE_REASON_UNKNOWN);
+
+        // Verify only observerSecond is notifed cos it has least impact
+        assertThat(observerSecond.mMitigatedPackages).containsExactly(APP_A);
+        assertThat(observerFirst.mMitigatedPackages).isEmpty();
+
+        // After observerSecond handles failure, it has no further actions
+        observerSecond.mImpact = PackageHealthObserverImpact.USER_IMPACT_LEVEL_0;
+        observerFirst.mMitigatedPackages.clear();
+        observerSecond.mMitigatedPackages.clear();
+
+        // Then fail APP_A again above the threshold
+        raiseFatalFailureAndDispatch(watchdog,
+                Arrays.asList(new VersionedPackage(APP_A, VERSION_CODE)),
+                PackageWatchdog.FAILURE_REASON_UNKNOWN);
+
+        // Verify only observerFirst is notifed cos it has the only action
+        assertThat(observerFirst.mMitigatedPackages).containsExactly(APP_A);
+        assertThat(observerSecond.mMitigatedPackages).isEmpty();
+
+        // After observerFirst handles failure, it too has no further actions
+        observerFirst.mImpact = PackageHealthObserverImpact.USER_IMPACT_LEVEL_0;
+        observerFirst.mMitigatedPackages.clear();
+        observerSecond.mMitigatedPackages.clear();
+
+        // Then fail APP_A again above the threshold
+        raiseFatalFailureAndDispatch(watchdog,
+                Arrays.asList(new VersionedPackage(APP_A, VERSION_CODE)),
+                PackageWatchdog.FAILURE_REASON_UNKNOWN);
+
+        // Verify no observer is notified cos no actions left
+        assertThat(observerFirst.mMitigatedPackages).isEmpty();
+        assertThat(observerSecond.mMitigatedPackages).isEmpty();
+    }
+
     /**
      * Test package failure and notifies only one observer even with observer impact tie.
      */
     @Test
     public void testPackageFailureNotifyOneSameImpact() throws Exception {
+        mSetFlagsRule.disableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         PackageWatchdog watchdog = createWatchdog();
         TestObserver observer1 = new TestObserver(OBSERVER_NAME_1,
                 PackageHealthObserverImpact.USER_IMPACT_LEVEL_100);
         TestObserver observer2 = new TestObserver(OBSERVER_NAME_2,
                 PackageHealthObserverImpact.USER_IMPACT_LEVEL_100);
+
+        // Start observing for observer1 and observer2 with failure handling
+        watchdog.startObservingHealth(observer2, Arrays.asList(APP_A), SHORT_DURATION);
+        watchdog.startObservingHealth(observer1, Arrays.asList(APP_A), SHORT_DURATION);
+
+        // Then fail APP_A above the threshold
+        raiseFatalFailureAndDispatch(watchdog,
+                Arrays.asList(new VersionedPackage(APP_A, VERSION_CODE)),
+                PackageWatchdog.FAILURE_REASON_UNKNOWN);
+
+        // Verify only one observer is notifed
+        assertThat(observer1.mMitigatedPackages).containsExactly(APP_A);
+        assertThat(observer2.mMitigatedPackages).isEmpty();
+    }
+
+    @Test
+    public void testPackageFailureNotifyOneSameImpactRecoverabilityDetection() throws Exception {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver observer1 = new TestObserver(OBSERVER_NAME_1,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_50);
+        TestObserver observer2 = new TestObserver(OBSERVER_NAME_2,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_50);
 
         // Start observing for observer1 and observer2 with failure handling
         watchdog.startObservingHealth(observer2, Arrays.asList(APP_A), SHORT_DURATION);
@@ -814,6 +957,26 @@ public class PackageWatchdogTest {
 
     @Test
     public void testNetworkStackFailure() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        final PackageWatchdog wd = createWatchdog();
+
+        // Start observing with failure handling
+        TestObserver observer = new TestObserver(OBSERVER_NAME_1,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_100);
+        wd.startObservingHealth(observer, Collections.singletonList(APP_A), SHORT_DURATION);
+
+        // Notify of NetworkStack failure
+        mConnectivityModuleCallbackCaptor.getValue().onNetworkStackFailure(APP_A);
+
+        // Run handler so package failures are dispatched to observers
+        mTestLooper.dispatchAll();
+
+        // Verify the NetworkStack observer is notified
+        assertThat(observer.mMitigatedPackages).containsExactly(APP_A);
+    }
+
+    @Test
+    public void testNetworkStackFailureRecoverabilityDetection() {
         final PackageWatchdog wd = createWatchdog();
 
         // Start observing with failure handling
@@ -1041,6 +1204,7 @@ public class PackageWatchdogTest {
     /** Ensure that boot loop mitigation is done when the number of boots meets the threshold. */
     @Test
     public void testBootLoopDetection_meetsThreshold() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         PackageWatchdog watchdog = createWatchdog();
         TestObserver bootObserver = new TestObserver(OBSERVER_NAME_1);
         watchdog.registerHealthObserver(bootObserver);
@@ -1050,6 +1214,16 @@ public class PackageWatchdogTest {
         assertThat(bootObserver.mitigatedBootLoop()).isTrue();
     }
 
+    @Test
+    public void testBootLoopDetection_meetsThresholdRecoverability() {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver bootObserver = new TestObserver(OBSERVER_NAME_1);
+        watchdog.registerHealthObserver(bootObserver);
+        for (int i = 0; i < PackageWatchdog.DEFAULT_BOOT_LOOP_THRESHOLD; i++) {
+            watchdog.noteBoot();
+        }
+        assertThat(bootObserver.mitigatedBootLoop()).isTrue();
+    }
 
     /**
      * Ensure that boot loop mitigation is not done when the number of boots does not meet the
@@ -1067,10 +1241,43 @@ public class PackageWatchdogTest {
     }
 
     /**
+     * Ensure that boot loop mitigation is not done when the number of boots does not meet the
+     * threshold.
+     */
+    @Test
+    public void testBootLoopDetection_doesNotMeetThresholdRecoverabilityLowImpact() {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver bootObserver = new TestObserver(OBSERVER_NAME_1,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_30);
+        watchdog.registerHealthObserver(bootObserver);
+        for (int i = 0; i < PackageWatchdog.DEFAULT_BOOT_LOOP_TRIGGER_COUNT - 1; i++) {
+            watchdog.noteBoot();
+        }
+        assertThat(bootObserver.mitigatedBootLoop()).isFalse();
+    }
+
+    /**
+     * Ensure that boot loop mitigation is not done when the number of boots does not meet the
+     * threshold.
+     */
+    @Test
+    public void testBootLoopDetection_doesNotMeetThresholdRecoverabilityHighImpact() {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver bootObserver = new TestObserver(OBSERVER_NAME_1,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_80);
+        watchdog.registerHealthObserver(bootObserver);
+        for (int i = 0; i < PackageWatchdog.DEFAULT_BOOT_LOOP_THRESHOLD - 1; i++) {
+            watchdog.noteBoot();
+        }
+        assertThat(bootObserver.mitigatedBootLoop()).isFalse();
+    }
+
+    /**
      * Ensure that boot loop mitigation is done for the observer with the lowest user impact
      */
     @Test
     public void testBootLoopMitigationDoneForLowestUserImpact() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         PackageWatchdog watchdog = createWatchdog();
         TestObserver bootObserver1 = new TestObserver(OBSERVER_NAME_1);
         bootObserver1.setImpact(PackageHealthObserverImpact.USER_IMPACT_LEVEL_10);
@@ -1085,11 +1292,28 @@ public class PackageWatchdogTest {
         assertThat(bootObserver2.mitigatedBootLoop()).isFalse();
     }
 
+    @Test
+    public void testBootLoopMitigationDoneForLowestUserImpactRecoverability() {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver bootObserver1 = new TestObserver(OBSERVER_NAME_1);
+        bootObserver1.setImpact(PackageHealthObserverImpact.USER_IMPACT_LEVEL_10);
+        TestObserver bootObserver2 = new TestObserver(OBSERVER_NAME_2);
+        bootObserver2.setImpact(PackageHealthObserverImpact.USER_IMPACT_LEVEL_30);
+        watchdog.registerHealthObserver(bootObserver1);
+        watchdog.registerHealthObserver(bootObserver2);
+        for (int i = 0; i < PackageWatchdog.DEFAULT_BOOT_LOOP_THRESHOLD; i++) {
+            watchdog.noteBoot();
+        }
+        assertThat(bootObserver1.mitigatedBootLoop()).isTrue();
+        assertThat(bootObserver2.mitigatedBootLoop()).isFalse();
+    }
+
     /**
      * Ensure that the correct mitigation counts are sent to the boot loop observer.
      */
     @Test
     public void testMultipleBootLoopMitigation() {
+        mSetFlagsRule.disableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         PackageWatchdog watchdog = createWatchdog();
         TestObserver bootObserver = new TestObserver(OBSERVER_NAME_1);
         watchdog.registerHealthObserver(bootObserver);
@@ -1103,6 +1327,64 @@ public class PackageWatchdogTest {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_TRIGGER_COUNT; j++) {
+                watchdog.noteBoot();
+            }
+        }
+
+        assertThat(bootObserver.mBootMitigationCounts).isEqualTo(List.of(1, 2, 3, 4, 1, 2, 3, 4));
+    }
+
+    @Test
+    public void testMultipleBootLoopMitigationRecoverabilityLowImpact() {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver bootObserver = new TestObserver(OBSERVER_NAME_1,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_30);
+        watchdog.registerHealthObserver(bootObserver);
+        for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_TRIGGER_COUNT - 1; j++) {
+            watchdog.noteBoot();
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_MITIGATION_INCREMENT; j++) {
+                watchdog.noteBoot();
+            }
+        }
+
+        moveTimeForwardAndDispatch(PackageWatchdog.DEFAULT_DEESCALATION_WINDOW_MS + 1);
+
+        for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_TRIGGER_COUNT - 1; j++) {
+            watchdog.noteBoot();
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_MITIGATION_INCREMENT; j++) {
+                watchdog.noteBoot();
+            }
+        }
+
+        assertThat(bootObserver.mBootMitigationCounts).isEqualTo(List.of(1, 2, 3, 4, 1, 2, 3, 4));
+    }
+
+    @Test
+    public void testMultipleBootLoopMitigationRecoverabilityHighImpact() {
+        PackageWatchdog watchdog = createWatchdog();
+        TestObserver bootObserver = new TestObserver(OBSERVER_NAME_1,
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_80);
+        watchdog.registerHealthObserver(bootObserver);
+        for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_THRESHOLD - 1; j++) {
+            watchdog.noteBoot();
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_MITIGATION_INCREMENT; j++) {
+                watchdog.noteBoot();
+            }
+        }
+
+        moveTimeForwardAndDispatch(PackageWatchdog.DEFAULT_DEESCALATION_WINDOW_MS + 1);
+
+        for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_THRESHOLD - 1; j++) {
+            watchdog.noteBoot();
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < PackageWatchdog.DEFAULT_BOOT_LOOP_MITIGATION_INCREMENT; j++) {
                 watchdog.noteBoot();
             }
         }
