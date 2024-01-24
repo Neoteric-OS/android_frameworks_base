@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9daa249f_ce35a01a",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-24T23:27:36Z",
+      "side": 1,
+      "message": "It\u0027s not necessary to include because it\u0027s implied by the new explanation about the types of authentication required to gain access to the user\u0027s apps.  The new explanation generalizes better to profiles, where it\u0027s not just the profile itself that\u0027s important but also the parent (when applicable).\n\nWe could include a separate paragraph that mentions the relationship with `isDeviceSecure()`, but I\u0027m not sure it would be worthwhile.\n\nBTW, that text was in PS1, not current main.  So I\u0027m not \"removing\" it per se.",
+      "parentUuid": "6dc16c99_49f33ae6",
+      "range": {
+        "startLine": 719,
+        "startChar": 9,
+        "endLine": 719,
+        "endChar": 10
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1dc74f1a_ea707cc7",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-01-24T22:19:37Z",
       "side": 1,
       "message": "nit: Personally, I\u0027d say `{@link Context} user`, without the `\u0027s`.",
+      "range": {
+        "startLine": 723,
+        "startChar": 90,
+        "endLine": 723,
+        "endChar": 92
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8429220_6d0a7084",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-24T23:27:36Z",
+      "side": 1,
+      "message": "There are other instances of `{@link Context}\u0027s user` in this file, so I\u0027ll keep it as-is for consistency, unless you care strongly enough that we should change them all.",
+      "parentUuid": "1dc74f1a_ea707cc7",
       "range": {
         "startLine": 723,
         "startChar": 90,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0806d13_3086836b",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-24T23:27:36Z",
+      "side": 1,
+      "message": "Considering one user, `isDeviceSecure()` has to be true for any of the non-trivial authentication methods to be required.  But as mentioned later in the paragraph, there are cases where the lock screen can be showing but only requiring swipe even if `isDeviceSecure()`.",
+      "parentUuid": "d21562aa_2039f885",
+      "range": {
+        "startLine": 725,
+        "startChar": 49,
+        "endLine": 725,
+        "endChar": 63
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d36b60e9_6c2d5ceb",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-01-24T22:19:37Z",
       "side": 1,
       "message": "We are no longer mentioning the \"non-current full user\" case. Was it wrong?\n\nThere is ambiguity here. If the full user isn\u0027t the current user, then what does it even mean to ask \"whether the lock screen is showing\"? Whose lock screen - the current user\u0027s? The context user\u0027s lock screen obviously cannot be showing because it isn\u0027t the current user. I assume that\u0027s why this case was spelled out in detail before.",
+      "range": {
+        "startLine": 737,
+        "startChar": 97,
+        "endLine": 737,
+        "endChar": 98
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64b00dbe_f72c275f",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-24T23:27:36Z",
+      "side": 1,
+      "message": "\u003e We are no longer mentioning the \"non-current full user\" case. Was it wrong?\n\nIt wasn\u0027t wrong, but it wasn\u0027t clear, particularly in the case of an *unsecured* non-current full user.\n\n\u003e There is ambiguity here. If the full user isn\u0027t the current user, then what does it even mean to ask \"whether the lock screen is showing\"? Whose lock screen - the current user\u0027s?\n\nWhether the lock screen is showing or not is a global property.  This is reflected in the documentation for `isKeyguardLocked()` which is the method that returns whether the lock screen is showing.  (Yes, it really should be called `isKeyguardShowing()`.)\n\nThis is why my first paragraph says that *in most cases*, `isDeviceLocked()` returns whether the lock screen is showing and isn\u0027t dismissible just with swipe.\n\nThe second paragraph then gives the more precise definition, which I *think* applies in all known multiuser scenarios.  It talks about what authentication is needed to get access to the user\u0027s apps.  For example, in the case of a full user B, that\u0027s user B\u0027s lock screen authentication, not user A\u0027s.\n\nIt makes sense to give the basic idea first, then the precise definition second which considers all edge cases.",
+      "parentUuid": "d36b60e9_6c2d5ceb",
       "range": {
         "startLine": 737,
         "startChar": 97,
