@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "755b800f_b4418131",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 4611,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-24T00:06:00Z",
+      "side": 1,
+      "message": "```suggestion\n            mBufferInfos.clear();\n            mBufferInfos.addAll(infos);\n```",
+      "revId": "1ee4ea9edd2e12be3fab66da624a0a872b883e87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
