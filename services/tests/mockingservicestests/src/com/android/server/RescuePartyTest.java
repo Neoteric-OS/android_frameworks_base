@@ -26,6 +26,7 @@ import static com.android.dx.mockito.inline.extended.ExtendedMockito.doReturn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.verify;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.when;
 import static com.android.server.RescueParty.LEVEL_FACTORY_RESET;
+import static com.android.server.RescueParty.RESCUE_LEVEL_FACTORY_RESET;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -40,9 +41,11 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.VersionedPackage;
+import android.crashrecovery.flags.Flags;
 import android.os.RecoverySystem;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.platform.test.flag.junit.SetFlagsRule;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.util.ArraySet;
@@ -54,6 +57,7 @@ import com.android.server.am.SettingsToPropertiesMapper;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Answers;
 import org.mockito.ArgumentCaptor;
@@ -98,6 +102,9 @@ public class RescuePartyTest {
     private static final String PROP_LAST_FACTORY_RESET_TIME_MS = "persist.sys.last_factory_reset";
 
     private static final int THROTTLING_DURATION_MIN = 10;
+
+    @Rule
+    public final SetFlagsRule mSetFlagsRule = new SetFlagsRule();
 
     private MockitoSession mSession;
     private HashMap<String, String> mSystemSettingsMap;
@@ -261,6 +268,43 @@ public class RescuePartyTest {
     }
 
     @Test
+    public void testBootLoopDetectionWithExecutionForAllRescueLevelsRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        RescueParty.onSettingsProviderPublished(mMockContext);
+        verify(() -> DeviceConfig.setMonitorCallback(eq(mMockContentResolver),
+                any(Executor.class),
+                mMonitorCallbackCaptor.capture()));
+        HashMap<String, Integer> verifiedTimesMap = new HashMap<String, Integer>();
+
+        // Record DeviceConfig accesses
+        RescuePartyObserver observer = RescuePartyObserver.getInstance(mMockContext);
+        DeviceConfig.MonitorCallback monitorCallback = mMonitorCallbackCaptor.getValue();
+        monitorCallback.onDeviceConfigAccess(CALLING_PACKAGE1, NAMESPACE1);
+        monitorCallback.onDeviceConfigAccess(CALLING_PACKAGE1, NAMESPACE2);
+
+        final String[] expectedAllResetNamespaces = new String[]{NAMESPACE1, NAMESPACE2};
+
+        noteBoot(1);
+        verifyDeviceConfigReset(expectedAllResetNamespaces, verifiedTimesMap);
+
+        noteBoot(2);
+        assertTrue(RescueParty.isRebootPropertySet());
+
+        noteBoot(3);
+        verifyOnlySettingsReset(Settings.RESET_MODE_UNTRUSTED_DEFAULTS);
+
+        noteBoot(4);
+        verifyOnlySettingsReset(Settings.RESET_MODE_UNTRUSTED_CHANGES);
+
+        noteBoot(5);
+        verifyOnlySettingsReset(Settings.RESET_MODE_TRUSTED_DEFAULTS);
+
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        noteBoot(6);
+        assertTrue(RescueParty.isFactoryResetPropertySet());
+    }
+
+    @Test
     public void testPersistentAppCrashDetectionWithExecutionForAllRescueLevels() {
         noteAppCrash(1, true);
 
@@ -286,6 +330,48 @@ public class RescuePartyTest {
     }
 
     @Test
+    public void testPersistentAppCrashDetectionWithExecutionForAllRescueLevelsRecoverability() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        RescueParty.onSettingsProviderPublished(mMockContext);
+        verify(() -> DeviceConfig.setMonitorCallback(eq(mMockContentResolver),
+                any(Executor.class),
+                mMonitorCallbackCaptor.capture()));
+        HashMap<String, Integer> verifiedTimesMap = new HashMap<String, Integer>();
+
+        // Record DeviceConfig accesses
+        RescuePartyObserver observer = RescuePartyObserver.getInstance(mMockContext);
+        DeviceConfig.MonitorCallback monitorCallback = mMonitorCallbackCaptor.getValue();
+        monitorCallback.onDeviceConfigAccess(PERSISTENT_PACKAGE, NAMESPACE1);
+        monitorCallback.onDeviceConfigAccess(CALLING_PACKAGE1, NAMESPACE1);
+        monitorCallback.onDeviceConfigAccess(CALLING_PACKAGE1, NAMESPACE2);
+
+        final String[] expectedResetNamespaces = new String[]{NAMESPACE1};
+        final String[] expectedAllResetNamespaces = new String[]{NAMESPACE1, NAMESPACE2};
+
+        noteAppCrash(1, true);
+        verifyDeviceConfigReset(expectedResetNamespaces, verifiedTimesMap);
+
+        noteAppCrash(2, true);
+        verifyDeviceConfigReset(expectedAllResetNamespaces, verifiedTimesMap);
+
+        noteAppCrash(3, true);
+        assertTrue(RescueParty.isRebootPropertySet());
+
+        noteAppCrash(4, true);
+        verifyOnlySettingsReset(Settings.RESET_MODE_UNTRUSTED_DEFAULTS);
+
+        noteAppCrash(5, true);
+        verifyOnlySettingsReset(Settings.RESET_MODE_UNTRUSTED_CHANGES);
+
+        noteAppCrash(6, true);
+        verifyOnlySettingsReset(Settings.RESET_MODE_TRUSTED_DEFAULTS);
+
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        noteAppCrash(7, true);
+        assertTrue(RescueParty.isFactoryResetPropertySet());
+    }
+
+    @Test
     public void testNonPersistentAppOnlyPerformsFlagResets() {
         noteAppCrash(1, false);
 
@@ -307,6 +393,48 @@ public class RescuePartyTest {
 
         noteAppCrash(5, false);
         assertFalse(RescueParty.isFactoryResetPropertySet());
+    }
+
+    @Test
+    public void testNonPersistentAppOnlyPerformsFlagResetsRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        RescueParty.onSettingsProviderPublished(mMockContext);
+        verify(() -> DeviceConfig.setMonitorCallback(eq(mMockContentResolver),
+                any(Executor.class),
+                mMonitorCallbackCaptor.capture()));
+        HashMap<String, Integer> verifiedTimesMap = new HashMap<String, Integer>();
+
+        // Record DeviceConfig accesses
+        RescuePartyObserver observer = RescuePartyObserver.getInstance(mMockContext);
+        DeviceConfig.MonitorCallback monitorCallback = mMonitorCallbackCaptor.getValue();
+        monitorCallback.onDeviceConfigAccess(NON_PERSISTENT_PACKAGE, NAMESPACE1);
+        monitorCallback.onDeviceConfigAccess(CALLING_PACKAGE1, NAMESPACE1);
+        monitorCallback.onDeviceConfigAccess(CALLING_PACKAGE1, NAMESPACE2);
+
+        final String[] expectedResetNamespaces = new String[]{NAMESPACE1};
+        final String[] expectedAllResetNamespaces = new String[]{NAMESPACE1, NAMESPACE2};
+
+        noteAppCrash(1, false);
+        verifyDeviceConfigReset(expectedResetNamespaces, verifiedTimesMap);
+
+        noteAppCrash(2, false);
+        verifyDeviceConfigReset(expectedAllResetNamespaces, verifiedTimesMap);
+
+        noteAppCrash(3, false);
+        assertTrue(RescueParty.isRebootPropertySet());
+
+        noteAppCrash(4, false);
+        verifyOnlySettingsReset(Settings.RESET_MODE_UNTRUSTED_DEFAULTS);
+
+        noteAppCrash(5, false);
+        verifyOnlySettingsReset(Settings.RESET_MODE_UNTRUSTED_CHANGES);
+
+        noteAppCrash(6, false);
+        verifyOnlySettingsReset(Settings.RESET_MODE_TRUSTED_DEFAULTS);
+
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        noteAppCrash(7, false);
+        assertTrue(RescueParty.isFactoryResetPropertySet());
     }
 
     @Test
@@ -445,11 +573,43 @@ public class RescuePartyTest {
     }
 
     @Test
+    public void testIsAttemptingFactoryResetRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        for (int i = 0; i < RESCUE_LEVEL_FACTORY_RESET; i++) {
+            noteBoot(i + 1);
+        }
+        assertFalse(RescueParty.isFactoryResetPropertySet());
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        noteBoot(RESCUE_LEVEL_FACTORY_RESET + 1);
+        assertTrue(RescueParty.isAttemptingFactoryReset());
+        assertTrue(RescueParty.isFactoryResetPropertySet());
+    }
+
+    @Test
     public void testIsAttemptingFactoryResetOnlyAfterRebootCompleted() {
         for (int i = 0; i < LEVEL_FACTORY_RESET; i++) {
             noteBoot(i + 1);
         }
         int mitigationCount = LEVEL_FACTORY_RESET + 1;
+        assertFalse(RescueParty.isFactoryResetPropertySet());
+        noteBoot(mitigationCount++);
+        assertFalse(RescueParty.isFactoryResetPropertySet());
+        noteBoot(mitigationCount++);
+        assertFalse(RescueParty.isFactoryResetPropertySet());
+        noteBoot(mitigationCount++);
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        noteBoot(mitigationCount + 1);
+        assertTrue(RescueParty.isAttemptingFactoryReset());
+        assertTrue(RescueParty.isFactoryResetPropertySet());
+    }
+
+    @Test
+    public void testIsAttemptingFactoryResetOnlyAfterRebootCompletedRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        for (int i = 0; i < RESCUE_LEVEL_FACTORY_RESET; i++) {
+            noteBoot(i + 1);
+        }
+        int mitigationCount = RESCUE_LEVEL_FACTORY_RESET + 1;
         assertFalse(RescueParty.isFactoryResetPropertySet());
         noteBoot(mitigationCount++);
         assertFalse(RescueParty.isFactoryResetPropertySet());
@@ -475,12 +635,38 @@ public class RescuePartyTest {
     }
 
     @Test
+    public void testThrottlingOnBootFailuresRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        long now = System.currentTimeMillis();
+        long beforeTimeout = now - TimeUnit.MINUTES.toMillis(THROTTLING_DURATION_MIN - 1);
+        SystemProperties.set(PROP_LAST_FACTORY_RESET_TIME_MS, Long.toString(beforeTimeout));
+        for (int i = 1; i <= RESCUE_LEVEL_FACTORY_RESET; i++) {
+            noteBoot(i);
+        }
+        assertFalse(RescueParty.isAttemptingFactoryReset());
+    }
+
+    @Test
     public void testThrottlingOnAppCrash() {
         SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
         long now = System.currentTimeMillis();
         long beforeTimeout = now - TimeUnit.MINUTES.toMillis(THROTTLING_DURATION_MIN - 1);
         SystemProperties.set(PROP_LAST_FACTORY_RESET_TIME_MS, Long.toString(beforeTimeout));
         for (int i = 0; i <= LEVEL_FACTORY_RESET; i++) {
+            noteAppCrash(i + 1, true);
+        }
+        assertFalse(RescueParty.isAttemptingFactoryReset());
+    }
+
+    @Test
+    public void testThrottlingOnAppCrashRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        long now = System.currentTimeMillis();
+        long beforeTimeout = now - TimeUnit.MINUTES.toMillis(THROTTLING_DURATION_MIN - 1);
+        SystemProperties.set(PROP_LAST_FACTORY_RESET_TIME_MS, Long.toString(beforeTimeout));
+        for (int i = 0; i <= RESCUE_LEVEL_FACTORY_RESET; i++) {
             noteAppCrash(i + 1, true);
         }
         assertFalse(RescueParty.isAttemptingFactoryReset());
@@ -497,6 +683,20 @@ public class RescuePartyTest {
         }
         assertTrue(RescueParty.isAttemptingFactoryReset());
     }
+
+    @Test
+    public void testNotThrottlingAfterTimeoutOnBootFailuresRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        long now = System.currentTimeMillis();
+        long afterTimeout = now - TimeUnit.MINUTES.toMillis(THROTTLING_DURATION_MIN + 1);
+        SystemProperties.set(PROP_LAST_FACTORY_RESET_TIME_MS, Long.toString(afterTimeout));
+        for (int i = 1; i <= RESCUE_LEVEL_FACTORY_RESET; i++) {
+            noteBoot(i);
+        }
+        assertTrue(RescueParty.isAttemptingFactoryReset());
+    }
+
     @Test
     public void testNotThrottlingAfterTimeoutOnAppCrash() {
         SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
@@ -504,6 +704,19 @@ public class RescuePartyTest {
         long afterTimeout = now - TimeUnit.MINUTES.toMillis(THROTTLING_DURATION_MIN + 1);
         SystemProperties.set(PROP_LAST_FACTORY_RESET_TIME_MS, Long.toString(afterTimeout));
         for (int i = 0; i <= LEVEL_FACTORY_RESET; i++) {
+            noteAppCrash(i + 1, true);
+        }
+        assertTrue(RescueParty.isAttemptingFactoryReset());
+    }
+
+    @Test
+    public void testNotThrottlingAfterTimeoutOnAppCrashRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
+        long now = System.currentTimeMillis();
+        long afterTimeout = now - TimeUnit.MINUTES.toMillis(THROTTLING_DURATION_MIN + 1);
+        SystemProperties.set(PROP_LAST_FACTORY_RESET_TIME_MS, Long.toString(afterTimeout));
+        for (int i = 0; i <= RESCUE_LEVEL_FACTORY_RESET; i++) {
             noteAppCrash(i + 1, true);
         }
         assertTrue(RescueParty.isAttemptingFactoryReset());
@@ -525,6 +738,7 @@ public class RescuePartyTest {
 
     @Test
     public void testExplicitlyEnablingAndDisablingRescue() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         SystemProperties.set(RescueParty.PROP_ENABLE_RESCUE, Boolean.toString(false));
         SystemProperties.set(PROP_DISABLE_RESCUE, Boolean.toString(true));
         assertEquals(RescuePartyObserver.getInstance(mMockContext).execute(sFailingPackage,
@@ -537,6 +751,7 @@ public class RescuePartyTest {
 
     @Test
     public void testDisablingRescueByDeviceConfigFlag() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
         SystemProperties.set(RescueParty.PROP_ENABLE_RESCUE, Boolean.toString(false));
         SystemProperties.set(PROP_DEVICE_CONFIG_DISABLE_FLAG, Boolean.toString(true));
 
@@ -553,6 +768,20 @@ public class RescuePartyTest {
         SystemProperties.set(PROP_DISABLE_FACTORY_RESET_FLAG, Boolean.toString(true));
 
         for (int i = 0; i < LEVEL_FACTORY_RESET; i++) {
+            noteBoot(i + 1);
+        }
+        assertFalse(RescueParty.isFactoryResetPropertySet());
+
+        // Restore the property value initialized in SetUp()
+        SystemProperties.set(PROP_DISABLE_FACTORY_RESET_FLAG, "");
+    }
+
+    @Test
+    public void testDisablingFactoryResetByDeviceConfigFlagRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        SystemProperties.set(PROP_DISABLE_FACTORY_RESET_FLAG, Boolean.toString(true));
+
+        for (int i = 0; i < RESCUE_LEVEL_FACTORY_RESET; i++) {
             noteBoot(i + 1);
         }
         assertFalse(RescueParty.isFactoryResetPropertySet());
@@ -588,6 +817,46 @@ public class RescuePartyTest {
     }
 
     @Test
+    public void testHealthCheckLevelsRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        RescuePartyObserver observer = RescuePartyObserver.getInstance(mMockContext);
+
+        // Ensure that no action is taken for cases where the failure reason is unknown
+        assertEquals(observer.onHealthCheckFailed(sFailingPackage,
+                PackageWatchdog.FAILURE_REASON_UNKNOWN, 1),
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_0);
+
+        // Ensure the correct user impact is returned for each mitigation count.
+        assertEquals(observer.onHealthCheckFailed(sFailingPackage,
+                PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING, 1),
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_10);
+
+        assertEquals(observer.onHealthCheckFailed(sFailingPackage,
+                PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING, 2),
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_20);
+
+        assertEquals(observer.onHealthCheckFailed(sFailingPackage,
+                PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING, 3),
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_50);
+
+        assertEquals(observer.onHealthCheckFailed(sFailingPackage,
+                PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING, 4),
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_71);
+
+        assertEquals(observer.onHealthCheckFailed(sFailingPackage,
+                PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING, 5),
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_75);
+
+        assertEquals(observer.onHealthCheckFailed(sFailingPackage,
+                PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING, 6),
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_80);
+
+        assertEquals(observer.onHealthCheckFailed(sFailingPackage,
+                PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING, 7),
+                PackageHealthObserverImpact.USER_IMPACT_LEVEL_100);
+    }
+
+    @Test
     public void testBootLoopLevels() {
         RescuePartyObserver observer = RescuePartyObserver.getInstance(mMockContext);
 
@@ -597,6 +866,20 @@ public class RescuePartyTest {
         assertEquals(observer.onBootLoop(3), PackageHealthObserverImpact.USER_IMPACT_LEVEL_50);
         assertEquals(observer.onBootLoop(4), PackageHealthObserverImpact.USER_IMPACT_LEVEL_50);
         assertEquals(observer.onBootLoop(5), PackageHealthObserverImpact.USER_IMPACT_LEVEL_100);
+    }
+
+    @Test
+    public void testBootLoopLevelsRecoverabilityDetection() {
+        mSetFlagsRule.enableFlags(Flags.FLAG_RECOVERABILITY_DETECTION);
+        RescuePartyObserver observer = RescuePartyObserver.getInstance(mMockContext);
+
+        assertEquals(observer.onBootLoop(0), PackageHealthObserverImpact.USER_IMPACT_LEVEL_0);
+        assertEquals(observer.onBootLoop(1), PackageHealthObserverImpact.USER_IMPACT_LEVEL_20);
+        assertEquals(observer.onBootLoop(2), PackageHealthObserverImpact.USER_IMPACT_LEVEL_50);
+        assertEquals(observer.onBootLoop(3), PackageHealthObserverImpact.USER_IMPACT_LEVEL_71);
+        assertEquals(observer.onBootLoop(4), PackageHealthObserverImpact.USER_IMPACT_LEVEL_75);
+        assertEquals(observer.onBootLoop(5), PackageHealthObserverImpact.USER_IMPACT_LEVEL_80);
+        assertEquals(observer.onBootLoop(6), PackageHealthObserverImpact.USER_IMPACT_LEVEL_100);
     }
 
     @Test
@@ -721,11 +1004,19 @@ public class RescuePartyTest {
 
     private void verifySettingsResets(int resetMode, String[] resetNamespaces,
             HashMap<String, Integer> configResetVerifiedTimesMap) {
+        verifyOnlySettingsReset(resetMode);
+        verifyDeviceConfigReset(resetNamespaces, configResetVerifiedTimesMap);
+    }
+
+    private void verifyOnlySettingsReset(int resetMode) {
         verify(() -> Settings.Global.resetToDefaultsAsUser(mMockContentResolver, null,
                 resetMode, UserHandle.USER_SYSTEM));
         verify(() -> Settings.Secure.resetToDefaultsAsUser(eq(mMockContentResolver), isNull(),
                 eq(resetMode), anyInt()));
-        // Verify DeviceConfig resets
+    }
+
+    private void verifyDeviceConfigReset(String[] resetNamespaces,
+            HashMap<String, Integer> configResetVerifiedTimesMap) {
         if (resetNamespaces == null) {
             verify(() -> DeviceConfig.resetToDefaults(anyInt(), anyString()), never());
         } else {
