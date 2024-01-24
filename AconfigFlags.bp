@@ -19,6 +19,7 @@ aconfig_srcjars = [
     ":android.content.res.flags-aconfig-java{.generated_srcjars}",
     ":android.hardware.biometrics.flags-aconfig-java{.generated_srcjars}",
     ":android.media.playback.flags-aconfig-java{.generated_srcjars}",
+    ":android.net.thread.flags-aconfig-java{.generated_srcjars}",
     ":android.net.vcn.flags-aconfig-java{.generated_srcjars}",
     ":android.nfc.flags-aconfig-java{.generated_srcjars}",
     ":android.os.flags-aconfig-java{.generated_srcjars}",
@@ -245,6 +246,13 @@ aconfig_declarations {
     name: "com.android.net.flags-aconfig",
     package: "com.android.net.flags",
     srcs: ["core/java/android/net/flags.aconfig"],
+}
+
+// Thread network
+aconfig_declarations {
+    name: "android.net.thread.flags-aconfig",
+    package: "android.net.thread.flags",
+    srcs: ["core/java/android/net/thread/flags.aconfig"],
 }
 
 java_aconfig_library {
