@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d482be3b_3a655e09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-24T21:40:55Z",
+      "side": 1,
+      "message": "Update: the CL has been merged in the downstream branch; I kicked off presubmits for it now, it _should_ be merged shortly.",
+      "revId": "a7bacefff2bd10fb95320b67a0d0b4b11f2b136f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
