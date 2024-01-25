@@ -210,8 +210,8 @@
     <!-- New Zealand: 3-4 digits, known premium codes listed -->
     <shortcode country="nz" pattern="\\d{3,4}" premium="3903|8995|4679" free="1737|176|2141|3067|3068|3110|3876|4006|4053|4061|4062|4202|4300|4334|4412|4575|5626|8006|8681" />
 
-    <!-- Peru: 4-5 digits (not confirmed), known premium codes listed -->
-    <shortcode country="pe" pattern="\\d{4,5}" free="9963|40778" />
+    <!-- Peru: 1-6 digits (not confirmed), known premium codes listed -->
+    <shortcode country="pe" pattern="\\d{1,6}" free="9963|40778|301303" />
 
     <!-- Philippines -->
     <shortcode country="ph" pattern="\\d{1,5}" free="2147|5495|5496" />
