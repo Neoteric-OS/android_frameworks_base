@@ -1,0 +1,8 @@
+package: "android.crashrecovery.flags"
+
+flag {
+    name: "enable_crashrecovery"
+    namespace: "crashrecovery"
+    description: "Enables various dependencies of crashrecovery module"
+    bug: "289203818"
+}

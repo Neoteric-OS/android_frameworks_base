@@ -156,6 +156,15 @@ package android.content.pm {
 
 }
 
+package android.content.rollback {
+
+  public final class PackageRollbackInfo implements android.os.Parcelable {
+    method @FlaggedApi("android.crashrecovery.flags.enable_crashrecovery") public boolean isApex();
+    method @FlaggedApi("android.crashrecovery.flags.enable_crashrecovery") public boolean isApkInApex();
+  }
+
+}
+
 package android.hardware.usb {
 
   public class UsbManager {
