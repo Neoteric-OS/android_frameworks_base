@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6c4da77_4050e71e",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-25T20:35:34Z",
+      "side": 1,
+      "message": "no `@link` or `@see` reference to flagged api is allowed from non-flagged API Javadoc.",
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b660b75c_b6fba4b8",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2376,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-25T20:35:34Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 2376,
+        "startChar": 50,
+        "endLine": 2376,
+        "endChar": 78
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "daaaaba4_81c6c647",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-01-25T20:35:34Z",
+      "side": 1,
+      "message": "does this feature depend on HAL implementation? If not we may not need this defined as `FEATURE`.",
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
