@@ -24,6 +24,7 @@
 #include <android-base/stringprintf.h>
 #include <android-base/unique_fd.h>
 #include <android_runtime/AndroidRuntime.h>
+#include <binder/BinderGenl.h>
 #include <binder/IPCThreadState.h>
 #include <cutils/compiler.h>
 #include <dirent.h>
@@ -84,6 +85,8 @@ using android::base::unique_fd;
 #define ERROR_COMPACTION_CANCELLED -1000
 
 namespace android {
+
+static BinderGenl genl("binder");
 
 // Signal happening in separate thread that would bail out compaction
 // before starting next VMA batch
@@ -579,6 +582,90 @@ static jboolean com_android_server_am_CachedAppOptimizer_isFreezerProfileValid(J
             isProfileValidForProcess("Unfrozen", uid, pid);
 }
 
+static void handleBinderReport(JNIEnv* env, jobject thiz, jmethodID method, void* data, __u16 len) {
+    struct binder_report* report;
+
+    if (len < sizeof(struct binder_report)) {
+        ALOGW("Invalid binder report %d", len);
+        return;
+    }
+
+    report = (struct binder_report*)data;
+    ALOGD("Binder report: %s %d 0x%08x %d:%d -> %d:%d %d 0x08%x %d %llu %d", "binder", report->err,
+          report->err, report->from_pid, report->from_tid, report->to_pid, report->to_pid,
+          report->reply, report->flags, report->code, report->data_size, len);
+
+    switch (report->err) {
+        case BR_FROZEN_REPLY:
+            ATRACE_BEGIN("binderErrorFrozen");
+            ALOGD("binderErrorFrozen");
+            env->CallVoidMethod(thiz, method, report->to_pid,
+                                env->NewStringUTF("Sync transaction while frozen"),
+                                14 /* ApplicationExitInfo.REASON_FREEZER */,
+                                20 /* ApplicationExitInfo.SUBREASON_FREEZER_BINDER_TRANSACTION */);
+            ATRACE_END();
+            break;
+        case BR_FAILED_REPLY:
+            ATRACE_BEGIN("binderErrorFailed");
+            ALOGD("binderErrorFailed");
+            env->CallVoidMethod(thiz, method, report->to_pid,
+                                env->NewStringUTF("Async binder space running out while frozen"),
+                                14 /* ApplicationExitInfo.REASON_FREEZER */,
+                                31 /* ApplicationExitInfo.SUBREASON_FREEZER_BINDER_ASYNC_FULL */);
+            ATRACE_END();
+            break;
+        case BR_ONEWAY_SPAM_SUSPECT:
+        case BR_TRANSACTION_PENDING_FROZEN:
+            // TODO: punish the sender
+            ATRACE_BEGIN("binderSpamming");
+            ALOGD("binderSpamming");
+            ATRACE_END();
+            break;
+    }
+}
+
+static jboolean com_android_server_am_CachedAppOptimizer_enableBinderReport(JNIEnv* env,
+                                                                            jobject thiz) {
+    if (genl.open() < 0) {
+        ALOGE("Failed to open binder genl socket");
+        return false;
+    }
+
+    __u32 flags = BINDER_GENL_FLAG_FAILED | BINDER_GENL_FLAG_DELAYED | BINDER_GENL_FLAG_SPAM;
+    if (genl.setReport(0, flags) < 0) {
+        ALOGE("Failed to enable binder report");
+        genl.close();
+        return false;
+    }
+
+    return true;
+}
+
+static void com_android_server_am_CachedAppOptimizer_handleBinderReport(JNIEnv* env, jobject thiz) {
+    jclass clazz = env->GetObjectClass(thiz);
+    jmethodID method = env->GetMethodID(clazz, "killFrozenProcess", "(ILjava/lang/String;II)V");
+    if (!method) {
+        jniThrowException(env, "java/lang/RuntimeException", "Failed to find killFrozenProcess");
+        return;
+    }
+    using std::placeholders::_1, std::placeholders::_2;
+    GenlCallback callback = std::bind(handleBinderReport, env, thiz, method, _1, _2);
+
+    while (true) {
+        struct GenlMsg msg;
+        ALOGD("Waiting for next binder report");
+        if (!genl.recv(&msg, sizeof(msg), BINDER_GENL_CMD_REPORT, BINDER_GENL_A_ATTR_REPORT,
+                       callback)) {
+            ALOGD("Failed to find BINDER_GENL_CMD_REPORT/BINDER_GENL_ATTR_REPORT");
+            sleep(1);
+            continue;
+        }
+
+        // Don't starve other threads in case there are huge amount of abnormal binder transactions
+        sched_yield();
+    }
+}
+
 static const JNINativeMethod sMethods[] = {
         /* name, signature, funcPtr */
         {"cancelCompaction", "()V",
@@ -598,7 +685,12 @@ static const JNINativeMethod sMethods[] = {
         {"getFreezerCheckPath", "()Ljava/lang/String;",
          (void*)com_android_server_am_CachedAppOptimizer_getFreezerCheckPath},
         {"isFreezerProfileValid", "()Z",
-         (void*)com_android_server_am_CachedAppOptimizer_isFreezerProfileValid}};
+         (void*)com_android_server_am_CachedAppOptimizer_isFreezerProfileValid},
+        {"enableBinderReport", "()Z",
+         (void*)com_android_server_am_CachedAppOptimizer_enableBinderReport},
+        {"handleBinderReport", "()V",
+         (void*)com_android_server_am_CachedAppOptimizer_handleBinderReport},
+};
 
 int register_android_server_am_CachedAppOptimizer(JNIEnv* env)
 {
