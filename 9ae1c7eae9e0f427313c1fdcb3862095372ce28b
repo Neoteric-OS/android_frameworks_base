@@ -46,6 +46,30 @@
       },
       "revId": "9ae1c7eae9e0f427313c1fdcb3862095372ce28b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "607083c1_72c21ecc",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-01-25T10:21:13Z",
+      "side": 1,
+      "message": "Either is fine - please just add a comment saying the following:\n\"For curve 25519, KeyMint uses the KM_ALGORITHM_EC constant, but in the Java layer we need to distinguish between Curve 25519 and other EC algorithms, so we use a different constant with a value that is outside the range of the enum used for KeyMint algorithms.\"",
+      "parentUuid": "e426c288_b402a7e4",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "9ae1c7eae9e0f427313c1fdcb3862095372ce28b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
