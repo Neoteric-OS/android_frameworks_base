@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67321a91_d5338de9",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 3568,
+      "author": {
+        "id": 1951601
+      },
+      "writtenOn": "2024-01-25T20:38:18Z",
+      "side": 1,
+      "message": "nit: replace with mark",
+      "range": {
+        "startLine": 3568,
+        "startChar": 76,
+        "endLine": 3568,
+        "endChar": 81
+      },
+      "revId": "73e9225fc1e1f76ee82f54563d0f840b4e7ccbf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbc4107e_d8bfbb80",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 3570,
+      "author": {
+        "id": 1951601
+      },
+      "writtenOn": "2024-01-25T20:38:18Z",
+      "side": 1,
+      "message": "nit: in",
+      "range": {
+        "startLine": 3570,
+        "startChar": 67,
+        "endLine": 3570,
+        "endChar": 69
+      },
+      "revId": "73e9225fc1e1f76ee82f54563d0f840b4e7ccbf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
