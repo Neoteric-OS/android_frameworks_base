@@ -517,6 +517,7 @@ public final class CachedAppOptimizer {
     @GuardedBy("mProcLock")
     private boolean mFreezerOverride = false;
     private long mFreezerBinderCallbackLast = -1;
+    private boolean mBinderMonitorEnabled = false;
 
     @VisibleForTesting volatile long mFreezerDebounceTimeout = DEFAULT_FREEZER_DEBOUNCE_TIMEOUT;
     @VisibleForTesting volatile boolean mFreezerExemptInstPkg = DEFAULT_FREEZER_EXEMPT_INST_PKG;
@@ -684,6 +685,23 @@ public final class CachedAppOptimizer {
         mSettingsObserver = new SettingsContentObserver();
         mProcLocksReader = new ProcLocksReader();
         mFreezer = mAm.getFreezer();
+
+        new Thread("BinderMonitor") {
+            @Override
+            public void run() {
+                Slog.d(TAG_AM, "Enabling BinderMonitor");
+                mBinderMonitorEnabled = enableBinderReport();
+                Slog.i(TAG_AM, "BinderMonitor enabled: " + mBinderMonitorEnabled);
+                if (mBinderMonitorEnabled) {
+                    try {
+                        handleBinderReport();
+                    } catch (RuntimeException e) {
+                        mBinderMonitorEnabled = false;
+                        Slog.e(TAG_AM, "BinderMonitor disabled: " + e.toString());
+                    }
+                }
+            }
+        }.start();
     }
 
     /**
@@ -942,6 +960,17 @@ public final class CachedAppOptimizer {
     }
 
     private native void compactSystem();
+
+    /**
+     * Enable binder reports via generic netlink
+     * @return true if the operation completed successfully, false otherwise.
+     */
+    private native boolean enableBinderReport();
+
+    /**
+     * Wait, read and process binder reports from kernel binder driver.
+     */
+    private native void handleBinderReport();
 
     /**
      * Compacts a process or app
@@ -2547,7 +2576,7 @@ public final class CachedAppOptimizer {
     /**
      * Kill a frozen process with a specified reason
      */
-    public void killProcess(int pid, String reason, @Reason int reasonCode,
+    public void killFrozenProcess(int pid, String reason, @Reason int reasonCode,
             @SubReason int subReason) {
         mAm.mHandler.post(() -> {
             synchronized (mAm) {
@@ -2596,7 +2625,7 @@ public final class CachedAppOptimizer {
 
         // Do nothing if the binder error callback is not enabled.
         // That means the frozen apps in a wrong state will be killed when they are unfrozen later.
-        if (!mUseFreezer || !mFreezerBinderCallbackEnabled) {
+        if (!mUseFreezer || !mFreezerBinderCallbackEnabled || mBinderMonitorEnabled) {
             return;
         }
 
@@ -2622,7 +2651,7 @@ public final class CachedAppOptimizer {
                 int freezeInfo = mFreezer.getBinderFreezeInfo(current);
 
                 if ((freezeInfo & SYNC_RECEIVED_WHILE_FROZEN) != 0) {
-                    killProcess(current, "Sync transaction while frozen",
+                    killFrozenProcess(current, "Sync transaction while frozen",
                             ApplicationExitInfo.REASON_FREEZER,
                             ApplicationExitInfo.SUBREASON_FREEZER_BINDER_TRANSACTION);
 
@@ -2665,7 +2694,7 @@ public final class CachedAppOptimizer {
                     if (free < mFreezerBinderAsyncThreshold) {
                         Slog.w(TAG_AM, "pid " + current
                                 + " has " + free + " free async space, killing");
-                        killProcess(current, "Async binder space running out while frozen",
+                        killFrozenProcess(current, "Async binder space running out while frozen",
                                 ApplicationExitInfo.REASON_FREEZER,
                                 ApplicationExitInfo.SUBREASON_FREEZER_BINDER_ASYNC_FULL);
                     }
