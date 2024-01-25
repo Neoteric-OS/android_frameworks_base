@@ -16,6 +16,23 @@
       "message": "Update: the CL has been merged in the downstream branch; I kicked off presubmits for it now, it _should_ be merged shortly.",
       "revId": "a7bacefff2bd10fb95320b67a0d0b4b11f2b136f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f45e6ee_3dffb2fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-01-25T18:24:02Z",
+      "side": 1,
+      "message": "Ashok, it looks like we need one more review from the Qualcomm side to get this submitted.",
+      "revId": "a7bacefff2bd10fb95320b67a0d0b4b11f2b136f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
