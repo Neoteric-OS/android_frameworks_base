@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d36c60c_2be63011",
+        "filename": "packages/SettingsLib/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c68e2736_8dc1e2f6",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d1039d2_357c6035",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "My understanding is that drawables inside `frameworks/base` should not have this redistribution text, and should instead have the default copyright header (see `frameworks/base/packages/SystemUI/res/drawable/ic_cast.xml` as an example).\n\n\nWarning text copied below:\n\nPlease fix this ERROR reported by Open-source Licensing: Third-party license (BSD) disallowed in repository platform/frameworks/base:\n\nAnalyzer Description: Identifies changes requiring human review for potential licensing issues.\nOwner: opensource-licensing@google.com\n\nThird-party license (BSD) disallowed in repository platform/frameworks/base:\nRedistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:...Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and or other materials provided with the distribution.",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c927989_a53171e2",
+        "filename": "packages/SystemUI/res/drawable/ic_volte.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d1039d2_357c6035",
       "range": {
         "startLine": 4,
         "startChar": 4,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "339f18f6_303a528a",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/model/MobileConnectivityModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d0c2a1_5b3f4522",
+      "range": {
+        "startLine": 31,
+        "startChar": 26,
+        "endLine": 31,
+        "endChar": 69
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1c7fa32_377dbf9c",
@@ -100,6 +172,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "Can you add KDoc above each of these values to explain what they mean (similar to what `isConnected` and `isValidated` has)?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dc79f8c_23954907",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/model/MobileConnectivityModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1c7fa32_377dbf9c",
       "range": {
         "startLine": 31,
         "startChar": 0,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f341ad9_4a9002d1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/MobileConnectionRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14e43436_44c33197",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8518e87b_4501d541",
@@ -146,6 +266,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "Sueprnit: Here and below, prefer using trailing commas.",
+      "range": {
+        "startLine": 298,
+        "startChar": 54,
+        "endLine": 298,
+        "endChar": 55
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abd48dac_3af79891",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/FullMobileConnectionRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8518e87b_4501d541",
       "range": {
         "startLine": 298,
         "startChar": 54,
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcca1464_17e9b69d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14612401_2c82c58f",
+      "range": {
+        "startLine": 108,
+        "startChar": 21,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe54ada0_a8c4566d",
@@ -192,6 +360,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "Could we instead pass in a created `ImsMmTelManager` to the constructor so that we can appropriately mock it in tests?",
+      "range": {
+        "startLine": 109,
+        "startChar": 51,
+        "endLine": 109,
+        "endChar": 97
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e33e0bf_411ca3d1",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe54ada0_a8c4566d",
       "range": {
         "startLine": 109,
         "startChar": 51,
@@ -225,6 +417,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3062a3b6_8633f749",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "735fffee_27e17bde",
+      "range": {
+        "startLine": 193,
+        "startChar": 40,
+        "endLine": 193,
+        "endChar": 49
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d854980d_649710f3",
@@ -238,6 +454,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "Instead of grouping two different callback registrations in one `conflatedCallbackFlow`, we should separate them into two separate flows. (A `conflatedCallbackFlow` is intended to be used for exactly one callback.)\n\nI\u0027m guessing that the reason it\u0027s registered here is because the `imsStateCallback` doesn\u0027t emit any state that can be `collect`ed on, it just registers other callbacks? I wonder if we can use some `flatMapLatest` magic to help us here. `flatMapLatest` lets us switch between different flows based on a value. Here\u0027s some pseudocode of what I\u0027m picturing:\n\n```\n// Translates the `ImsStateCallback` into a `Flow\u003cImsState\u003e`\nval imsRegistrationState: Flow\u003cImsState\u003e \u003d conflatedCallbackFlow {\n       val callback \u003d  object : ImsStateCallback() {\n           override fun onAvailable() { trySend(ImsState.AVAILABLE) }\n           override fun onUnavailable() { trySend(ImsState.UNAVAILABLE) }\n           override fun onError() { trySend(ImsState.ERROR) }\n        }\n        // register \u0026 unregister callback\n    }\n     \n// Translates the `ImsMmTelManager.CapabilityCallback` into a `Flow\u003cImsCapabilities\u003e`        \nval imsCapabilities \u003d conflatedCallbackFlow {\n  val capabilityCallback \u003d\n        object : ImsMmTelManager.CapabilityCallback() {\n            override fun onCapabilitiesStatusChanged(config: MmTelCapabilities) {\n                trySend(ImsCapabilities(voiceCapable \u003d config.isCapable(MmTelCapabilities.CAPABILITY_TYPE_VOICE),\n                videoCapable \u003d config.isCapable(MmTelCapabilities.CAPABILITY_TYPE_VIDEO),\n                )\n            }\n        }\n        // register \u0026 unregister callback\n}    \n\n// What this flow does: When IMS becomes available, use the `imsCapabilites` flow\n// defined above to fetch the `voiceCapable` status. When IMS is unavailable or has\n// an error, stop using the `imsCapabilites` flow, and instead just define\n// `isVoiceCapable` as `false`.\noverride val isVoiceCapable \u003d\n  imsRegistrationState.flatMapLatest { state -\u003e\n    if (state \u003d\u003d State.AVAILABLE) {\n      imsCapabilites.map { it.voiceCapable }\n    } else {\n      flowOf(false)\n    }\n  }\n  \n// Similar for isVideoCapable  \n```\n\nNote that `ImsState` and `ImsCapabilities` would be data classes that are defined internally to SysUI.\n\nLet me know if that works for this use case.",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 17
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19e95cd6_086dbd88",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d854980d_649710f3",
       "range": {
         "startLine": 181,
         "startChar": 0,
@@ -271,6 +511,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a09f571_ada8b3a3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93d5bc3_4659e37b",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 94
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f2bf26c_e31b2eb2",
@@ -284,6 +548,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "It\u0027s best not to expose `MutableStateFlow` as the type because then other classes could mutate the value, which we don\u0027t want. Could we instead just expose a `StateFlow`?\n\nInternally, it could be defined as:\n```\nprivate val _voiceCapable \u003d MutableStateFlow\u003cBoolean\u003e(false)\noverride val voiceCapable \u003d _voiceCapable.asStateFlow()\n```",
+      "range": {
+        "startLine": 386,
+        "startChar": 31,
+        "endLine": 386,
+        "endChar": 47
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49529c8b_6ac0e0e3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f2bf26c_e31b2eb2",
       "range": {
         "startLine": 386,
         "startChar": 31,
@@ -317,6 +605,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "24ef4b24_43dc3757",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/data/repository/prod/MobileConnectionRepositoryImpl.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e31707c_111e1fb1",
+      "range": {
+        "startLine": 395,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 9
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f02b435f_a3852b6b",
@@ -330,6 +642,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "Can you add some KDoc for what this flow means?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 41
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "406546ac_7ba7331b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/MobileIconInteractor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f02b435f_a3852b6b",
       "range": {
         "startLine": 122,
         "startChar": 0,
@@ -363,6 +699,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db378b84_4b0d206d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/MobileIconInteractor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1bce68b_d49abbf1",
+      "range": {
+        "startLine": 226,
+        "startChar": 3,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03743336_1e7dad00",
@@ -376,6 +736,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "For the `networkTypeIcon`, we chose to use `Icon.Resource?` as the type and send `null` if the icon shouldn\u0027t be displayed. Can we use a similar pattern here?",
+      "range": {
+        "startLine": 201,
+        "startChar": 31,
+        "endLine": 201,
+        "endChar": 32
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fab04170_be785c36",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/ui/viewmodel/MobileIconViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03743336_1e7dad00",
       "range": {
         "startLine": 201,
         "startChar": 31,
@@ -409,6 +793,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0b54551_8f88871e",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/pipeline/mobile/ui/viewmodel/MobileIconViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b56a1e3_84ff2513",
+      "range": {
+        "startLine": 204,
+        "startChar": 19,
+        "endLine": 204,
+        "endChar": 20
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3ce1581_c91e57c6",
@@ -422,6 +830,30 @@
       "writtenOn": "2023-09-18T20:09:07Z",
       "side": 1,
       "message": "Comment about tests as a whole: Could you add unit tests for each of the new APIs that have been defined? That would greatly help us ensure that this logic doesn\u0027t break in the future. The existing test classes should provide good examples for how to write the tests, but don\u0027t hesitate to reach out with questions!",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 41
+      },
+      "revId": "630dc586cb13c9b59803d53b3cd32f1c8911a6a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77610084_1eea32d6",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/pipeline/mobile/domain/interactor/FakeMobileIconsInteractor.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-01-26T06:15:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3ce1581_c91e57c6",
       "range": {
         "startLine": 89,
         "startChar": 0,
