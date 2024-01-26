@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21d4ab3f_d2d0e477",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2024-01-26T14:27:41Z",
+      "side": 1,
+      "message": "Hi there, I\u0027m on a temporary 6 month assignment away from Android System UI so I won\u0027t be able to review the adjusted CL. Evan, any chance you could take a look at this while I\u0027m away?",
+      "revId": "dffd73d2615cc580fbfed43c198590b2468fa8a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
