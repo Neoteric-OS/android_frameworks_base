@@ -211,6 +211,30 @@
       },
       "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89e9db66_f743ba80",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-26T22:25:38Z",
+      "side": 1,
+      "message": "\u003e  non-current full user\n\nThis is mostly only an issue because the opening phrase \"In most cases, this method returns whether the lock screen is showing...\". I realise that this is only \"in most cases\", and you sort of backpedal a little afterwards, but not explicitly, so it could lead to misunderstanding. \n(It also later says \"...when the device goes to the lock screen...\", so the repeated reference to the lock screen might really make one think it\u0027s somehow related to whether it is showing.)\n\nI think either don\u0027t say \"showing\" in the general description, or else briefly call out the non-current case explicitly in the later details.\n\n\n______\n\u003e Whether the lock screen is showing or not is a global property. \n\nAs an outsider, I should perhaps point out:\n\nTo me, `isDeviceLocked` also sounds like a Global property, since it is literally asking about the device. Only by reading the javadoc (or the code, where it internally takes a `userId`) can I tell that it isn\u0027t; it\u0027s not obvious. Given that, the fact that \"Whether the lock screen is showing or not is a global property.\" was no longer obvious.",
+      "parentUuid": "53ac8db7_17efe76f",
+      "range": {
+        "startLine": 737,
+        "startChar": 97,
+        "endLine": 737,
+        "endChar": 98
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
