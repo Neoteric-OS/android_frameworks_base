@@ -1541,8 +1541,14 @@ class SyntheticPasswordManager {
      */
     public @NonNull AuthenticationResult unlockTokenBasedProtector(
             IGateKeeperService gatekeeper, long protectorId, byte[] token, int userId) {
-        SyntheticPasswordBlob blob = SyntheticPasswordBlob.fromBytes(loadState(SP_BLOB_NAME,
-                    protectorId, userId));
+        byte[] data = loadState(SP_BLOB_NAME, protectorId, userId);
+        if (data == null) {
+            AuthenticationResult result = new AuthenticationResult();
+            result.gkResponse = VerifyCredentialResponse.ERROR;
+            Slogf.w(TAG, "spblob not found for userId=%d, protectorId=%d", userId, protectorId);
+            return result;
+        }
+        SyntheticPasswordBlob blob = SyntheticPasswordBlob.fromBytes(data);
         return unlockTokenBasedProtectorInternal(gatekeeper, protectorId, blob.mProtectorType,
                 token, userId);
     }
