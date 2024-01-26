@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a27c62eb_a49cb6a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1693933
+      },
+      "writtenOn": "2024-01-26T11:34:16Z",
+      "side": 1,
+      "message": "The error is build timeout:\n\n```\nBuildbot: Command timed out (time limit 6h0m0s): TARGET_SKIP_OTA_PACKAGE\u003d\"true\" ANDROID_BUILD_ENVIRONMENT_CONFIG\u003d\"googler-ci\" RBE_invocation_id\u003d\"git_aosp-main-future-errorprone-trunk_staging-11363359\" RBE_proxy_log_dir\u003d\"/buildbot/dist_dirs/git_aosp-main-future-linux-errorprone-trunk_staging/11363359/logs\" build/soong/soong_ui.bash --make-mode javac-check lint-check dist DIST_DIR\u003d/buildbot/dist_dirs/git_aosp-main-future-linux-errorprone-trunk_staging/11363359 TARGET_RELEASE\u003dtrunk_staging RUN_ERROR_PRONE\u003dtrue\n```\n\nDoesn\u0027t seem related to this CL at all",
+      "revId": "fab1b430ca09b22e5124c61edace1f079d7a9c8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
