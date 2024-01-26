@@ -187,6 +187,30 @@
       },
       "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53ac8db7_17efe76f",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2024-01-26T00:18:36Z",
+      "side": 1,
+      "message": "I can see how it follows, but I think it\u0027s still worth being explicit that this definition implies that users who are not the current user and have an LSKF are still locked.",
+      "parentUuid": "64b00dbe_f72c275f",
+      "range": {
+        "startLine": 737,
+        "startChar": 97,
+        "endLine": 737,
+        "endChar": 98
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
