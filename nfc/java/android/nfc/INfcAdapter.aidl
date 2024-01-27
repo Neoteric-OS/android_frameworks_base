@@ -85,6 +85,7 @@ interface INfcAdapter
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)")
     boolean enableReaderOption(boolean enable);
     boolean isObserveModeSupported();
+    boolean isObserveModeEnabled();
     boolean setObserveMode(boolean enabled);
     void updateDiscoveryTechnology(IBinder b, int pollFlags, int listenFlags);
 
