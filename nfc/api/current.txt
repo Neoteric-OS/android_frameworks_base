@@ -72,6 +72,7 @@ package android.nfc {
     method @Nullable public android.nfc.NfcAntennaInfo getNfcAntennaInfo();
     method public boolean ignore(android.nfc.Tag, int, android.nfc.NfcAdapter.OnTagRemovedListener, android.os.Handler);
     method public boolean isEnabled();
+    method @FlaggedApi("android.nfc.nfc_observe_mode") public boolean isObserveModeEnabled();
     method @FlaggedApi("android.nfc.nfc_observe_mode") public boolean isObserveModeSupported();
     method @FlaggedApi("android.nfc.enable_nfc_reader_option") public boolean isReaderOptionEnabled();
     method @FlaggedApi("android.nfc.enable_nfc_reader_option") public boolean isReaderOptionSupported();
