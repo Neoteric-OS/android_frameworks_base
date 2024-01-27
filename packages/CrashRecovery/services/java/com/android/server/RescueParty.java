@@ -39,7 +39,6 @@ import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArraySet;
-import android.util.ExceptionUtils;
 import android.util.Log;
 import android.util.Slog;
 
@@ -120,6 +119,11 @@ public class RescueParty {
     private static final String PROP_THROTTLE_DURATION_MIN_FLAG =
             "persist.device_config.configuration.rescue_party_throttle_duration_min";
 
+    private static final String PROP_BUILD_TYPE = "ro.build.type";
+    private static final String BUILD_ENG = "eng";
+    private static final String BUILD_UNKNOWN = "unknown";
+
+
     private static final int PERSISTENT_MASK = ApplicationInfo.FLAG_PERSISTENT
             | ApplicationInfo.FLAG_SYSTEM;
 
@@ -142,8 +146,9 @@ public class RescueParty {
             return true;
         }
 
+        final String buildType =  SystemProperties.get(PROP_BUILD_TYPE, BUILD_UNKNOWN);
         // We're disabled on all engineering devices
-        if (Build.IS_ENG) {
+        if (BUILD_ENG.equals(buildType)) {
             Slog.v(TAG, "Disabled because of eng build");
             return true;
         }
@@ -151,7 +156,7 @@ public class RescueParty {
         // We're disabled on userdebug devices connected over USB, since that's
         // a decent signal that someone is actively trying to debug the device,
         // or that it's in a lab environment.
-        if (Build.IS_USERDEBUG && isUsbActive()) {
+        if (Build.isDebuggable() && isUsbActive()) {
             Slog.v(TAG, "Disabled because of active USB connection");
             return true;
         }
@@ -170,9 +175,8 @@ public class RescueParty {
      * return true if RescueParty tries to reboot early during a boot loop, since the device
      * will not be fully booted at this time.
      *
-     * TODO(gavincorkery): Rename method since its scope has expanded.
      */
-    public static boolean isAttemptingFactoryReset() {
+    public static boolean isRecoveryTriggeredReboot() {
         return isFactoryResetPropertySet() || isRebootPropertySet();
     }
 
@@ -476,9 +480,18 @@ public class RescueParty {
         }
     }
 
+    private static String getCompleteMessage(Throwable t) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(t.getMessage());
+        while ((t = t.getCause()) != null) {
+            builder.append(": ").append(t.getMessage());
+        }
+        return builder.toString();
+    }
+
     private static void logRescueException(int level, @Nullable String failedPackageName,
             Throwable t) {
-        final String msg = ExceptionUtils.getCompleteMessage(t);
+        final String msg = getCompleteMessage(t);
         EventLogTags.writeRescueFailure(level, msg);
         String failureMsg = "Failed rescue level " + levelToString(level);
         if (!TextUtils.isEmpty(failedPackageName)) {
