@@ -39,7 +39,6 @@ import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArraySet;
-import android.util.ExceptionUtils;
 import android.util.Log;
 import android.util.Slog;
 
@@ -143,7 +142,7 @@ public class RescueParty {
         }
 
         // We're disabled on all engineering devices
-        if (Build.IS_ENG) {
+        if (Build.TYPE.equals("eng")) {
             Slog.v(TAG, "Disabled because of eng build");
             return true;
         }
@@ -151,7 +150,7 @@ public class RescueParty {
         // We're disabled on userdebug devices connected over USB, since that's
         // a decent signal that someone is actively trying to debug the device,
         // or that it's in a lab environment.
-        if (Build.IS_USERDEBUG && isUsbActive()) {
+        if (Build.TYPE.equals("userdebug") && isUsbActive()) {
             Slog.v(TAG, "Disabled because of active USB connection");
             return true;
         }
@@ -476,9 +475,18 @@ public class RescueParty {
         }
     }
 
+    private static String getCompleteMessage(Throwable t) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(t.getMessage());
+        while ((t = t.getCause()) != null) {
+            builder.append(": ").append(t.getMessage());
+        }
+        return builder.toString();
+    }
+
     private static void logRescueException(int level, @Nullable String failedPackageName,
             Throwable t) {
-        final String msg = ExceptionUtils.getCompleteMessage(t);
+        final String msg = getCompleteMessage(t);
         EventLogTags.writeRescueFailure(level, msg);
         String failureMsg = "Failed rescue level " + levelToString(level);
         if (!TextUtils.isEmpty(failedPackageName)) {
