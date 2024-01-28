@@ -1022,7 +1022,7 @@ package android.content.pm {
     method @Nullable public abstract String[] getNamesForUids(int[]);
     method @NonNull public String getPermissionControllerPackageName();
     method @NonNull public String getSdkSandboxPackageName();
-    method @NonNull public abstract String getServicesSystemSharedLibraryPackageName();
+    method @NonNull @RequiresPermission(android.Manifest.permission.ACCESS_SHARED_LIBRARIES) public abstract String getServicesSystemSharedLibraryPackageName();
     method @NonNull public abstract String getSharedSystemSharedLibraryPackageName();
     method @Nullable public String getSystemTextClassifierPackageName();
     method @Nullable public String getWellbeingPackageName();
