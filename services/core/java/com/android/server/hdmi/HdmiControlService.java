@@ -947,7 +947,13 @@ public class HdmiControlService extends SystemService {
                                     // onInitializeCecComplete()
                                     // since we reallocate the logical address only.
                                     onInitializeCecComplete(initiatedBy);
+                                } else {
+                                    // Force to update display status for hotplug event.
+                                    if (mDisplayStatusCallback == null) {
+                                        announceHdmiControlStatusChange(mHdmiControlEnabled);
+                                    }
                                 }
+
                                 notifyAddressAllocated(allocatedDevices, initiatedBy);
                                 // Reinvoke the saved display status callback once the local
                                 // device is ready.
