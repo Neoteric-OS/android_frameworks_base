@@ -11,7 +11,6 @@ package android.test.mock {
     method @Deprecated public int getInstallReason(String, android.os.UserHandle);
     method @Deprecated public java.util.List<android.content.pm.ApplicationInfo> getInstalledApplicationsAsUser(int, int);
     method @Deprecated public String[] getNamesForUids(int[]);
-    method @Deprecated @NonNull public String getServicesSystemSharedLibraryPackageName();
     method @Deprecated @NonNull public String getSharedSystemSharedLibraryPackageName();
   }
 

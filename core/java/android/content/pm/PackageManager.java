@@ -30,6 +30,7 @@ import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.StringRes;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UserIdInt;
@@ -7176,10 +7177,15 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    @SuppressWarnings("HiddenAbstractMethod")
-    @UnsupportedAppUsage
-    @TestApi
-    public abstract @NonNull String getServicesSystemSharedLibraryPackageName();
+    @SuppressLint("UnflaggedApi")  // promoting from @TestApi.
+    @NonNull
+    @RequiresPermission(Manifest.permission.ACCESS_SHARED_LIBRARIES)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public String getServicesSystemSharedLibraryPackageName() {
+        throw new UnsupportedOperationException(
+            "getServicesSystemSharedLibraryPackageName() not implemented in subclass");
+    }
+
 
     /**
      * Get the name of the package hosting the shared components shared library.
