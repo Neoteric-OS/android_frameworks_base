@@ -69,6 +69,54 @@
       },
       "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dffa769_69c48acb",
+        "filename": "services/core/java/com/android/server/wm/WindowList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-01-29T15:25:14Z",
+      "side": 1,
+      "message": "Let me take a look of aosp/2931991 to see if I can make it build.",
+      "parentUuid": "350b7874_7a6be663",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "798f89ba_dba1601b",
+        "filename": "services/core/java/com/android/server/wm/WindowList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-01-29T15:25:14Z",
+      "side": 1,
+      "message": "Right now, deleting doesn\u0027t work because the actual ART module in 24Q2 is shipped from `udc-mainline-prod`. Basically, a UDC implementation. And I will have to flag `@FlaggedApi` the new APIs, i.e. the APIs are not available in `-next` for some time. There is API boundary between ART and frameworks.",
+      "parentUuid": "3c47fbbb_d8962707",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
