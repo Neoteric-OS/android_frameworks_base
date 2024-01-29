@@ -117,6 +117,30 @@
       },
       "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cd3c15c_cae23e77",
+        "filename": "services/core/java/com/android/server/wm/WindowList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-01-29T15:52:38Z",
+      "side": 1,
+      "message": "Actually, Is it okay to use `iterator` in WindowContainer? \nI see many of `for (int i \u003d mChildren.size() - 1; i \u003e\u003d 0; --i)` which seems to avoid creating `Iterator` objects in the first place.\n\nAlternatively, is it okay to submit this CL first? I filed http://b/322790232 to remove `WindowList` once my feature has landed `-next` config. This CL is needed to update `ArrayList` APIs.",
+      "parentUuid": "7dffa769_69c48acb",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
