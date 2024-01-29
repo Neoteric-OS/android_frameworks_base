@@ -141,6 +141,30 @@
       },
       "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b18f8d2_b6ab6d93",
+        "filename": "services/core/java/com/android/server/wm/WindowList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-01-29T17:42:08Z",
+      "side": 1,
+      "message": "Yes, we can submit this CL first. Ugh, even code in the same repo isn\u0027t compatible any more :(",
+      "parentUuid": "3cd3c15c_cae23e77",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
