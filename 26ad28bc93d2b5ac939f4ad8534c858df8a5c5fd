@@ -235,6 +235,30 @@
       },
       "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cce74ee_94c2b15f",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-29T19:04:25Z",
+      "side": 1,
+      "message": "I\u0027ve deleted the sentence with the simplified definition, as it seems to have been causing confusion.  My intent was to provide a simple definition that suffices for most cases, but it sounds like it\u0027s better to just lead with the real definition.\n\nIt\u0027s actually not strictly true that \"this definition implies that users who are not the current user and have an LSKF are still locked.\"  This is because it *could* be the case that Extend Unlock (e.g. a trusted bluetooth device) is keeping the device unlocked for a non-current full user.  Or, it *could* be the case that the user did face unlock and then switched users without dismissing Keyguard, and the face unlock state doesn\u0027t get cleared.  Now, I\u0027ve tested this and it appears that both the Extend Unlock and face unlock states get cleared, so the user\u0027s device-locked state does indeed become locked.  So we could document that, but I think that would be getting into over-documenting implementation details, which as we\u0027ve discussed is something that should be avoided.  The important thing is that the device-locked state simply follows whether lock screen authentication is currently required or not.\n\nI\u0027ve added the following, which should further clarify the definition already given without providing a competing definition:\n\n```\n     * Note that in the case of multiple full users, each user can have their own lock screen\n     * authentication configured. The device-locked state may differ between different users. For\n     * example, the device may be unlocked for the current user, but locked for a non-current user\n     * if switching to that user requires lock screen authentication.\n```\n\nAs for \"device locked\" sounding like a global thing but actually being a per-user thing, that\u0027s just something we have to deal with.  The naming was chosen many years ago.",
+      "parentUuid": "89e9db66_f743ba80",
+      "range": {
+        "startLine": 737,
+        "startChar": 97,
+        "endLine": 737,
+        "endChar": 98
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
