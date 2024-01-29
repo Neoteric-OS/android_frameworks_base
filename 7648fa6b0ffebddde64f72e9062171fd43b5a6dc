@@ -22,6 +22,29 @@
       },
       "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c47fbbb_d8962707",
+        "filename": "services/core/java/com/android/server/wm/WindowList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-01-29T14:49:47Z",
+      "side": 1,
+      "message": "```suggestion\n\n\n```",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7648fa6b0ffebddde64f72e9062171fd43b5a6dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
