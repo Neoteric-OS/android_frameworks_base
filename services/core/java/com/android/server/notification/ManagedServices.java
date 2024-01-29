@@ -1020,7 +1020,8 @@ abstract public class ManagedServices {
         synchronized (mSnoozing) {
             mSnoozing.remove(user);
         }
-        rebindServices(true, user);
+        int currentUserId = ActivityManager.getCurrentUser();
+        rebindServices(true, currentUserId);
     }
 
     public void onUserSwitched(int user) {
