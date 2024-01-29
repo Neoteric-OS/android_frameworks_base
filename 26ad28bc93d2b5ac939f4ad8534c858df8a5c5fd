@@ -283,6 +283,30 @@
       },
       "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1d7cdc9_8ff5503b",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2024-01-29T21:59:20Z",
+      "side": 1,
+      "message": "I think your latest edit resolves this nicely, thanks!",
+      "parentUuid": "7bf170c4_cd52c362",
+      "range": {
+        "startLine": 737,
+        "startChar": 97,
+        "endLine": 737,
+        "endChar": 98
+      },
+      "revId": "26ad28bc93d2b5ac939f4ad8534c858df8a5c5fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

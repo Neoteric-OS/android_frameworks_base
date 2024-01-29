@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2fea241_1b281048",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2024-01-29T21:59:20Z",
+      "side": 1,
+      "message": "Probably both \"Note that\"s can be removed.\n```suggestion\n     * In the case of a profile, when the device goes to the lock screen, up to two layers\n```",
+      "range": {
+        "startLine": 734,
+        "startChar": 7,
+        "endLine": 734,
+        "endChar": 16
+      },
+      "revId": "8555a8097faad1b9e1641563cc8e8fa54604911f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
