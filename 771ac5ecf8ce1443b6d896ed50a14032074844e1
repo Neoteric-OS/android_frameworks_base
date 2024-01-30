@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3c873f5_11bc5cea",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-30T04:03:01Z",
+      "side": 1,
+      "message": "Why add the word \"main\" (here and below)? What is a \"main lock screen\"? What is the \"non-main lock screen\"... I guess the secondary separate work profile authentication request (is that even called a \"lock screen\")?",
+      "range": {
+        "startLine": 736,
+        "startChar": 61,
+        "endLine": 736,
+        "endChar": 65
+      },
+      "revId": "771ac5ecf8ce1443b6d896ed50a14032074844e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
