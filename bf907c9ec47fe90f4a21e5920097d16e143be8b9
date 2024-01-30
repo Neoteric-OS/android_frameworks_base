@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "136e0821_7f6f15e3",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-01-30T01:49:31Z",
+      "side": 1,
+      "message": "\u003e if switching to that user requires lock screen authentication. \n\nThis is misleading: it sounds like it\u0027s saying that the second user\u0027s authentication is required to do the switch, which isn\u0027t actually true. You can always switch to any user, you just might not be able to access any of it data.\n\nPerhaps reword along the lines of:\n\u003e if, after switching to that user, it requires lock screen authentication to access.",
+      "range": {
+        "startLine": 733,
+        "startChar": 7,
+        "endLine": 733,
+        "endChar": 69
+      },
+      "revId": "bf907c9ec47fe90f4a21e5920097d16e143be8b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
