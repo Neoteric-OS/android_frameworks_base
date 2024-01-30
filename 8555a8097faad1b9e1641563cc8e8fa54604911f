@@ -46,6 +46,30 @@
       },
       "revId": "8555a8097faad1b9e1641563cc8e8fa54604911f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4af2e8d_39353626",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2024-01-30T23:17:31Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "23db895e_4dac823c",
+      "range": {
+        "startLine": 734,
+        "startChar": 7,
+        "endLine": 734,
+        "endChar": 16
+      },
+      "revId": "8555a8097faad1b9e1641563cc8e8fa54604911f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
