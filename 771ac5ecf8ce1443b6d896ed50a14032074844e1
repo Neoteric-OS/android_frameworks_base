@@ -22,6 +22,30 @@
       },
       "revId": "771ac5ecf8ce1443b6d896ed50a14032074844e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "385abe52_bd46ea25",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-30T18:01:30Z",
+      "side": 1,
+      "message": "I think it\u0027s helpful to add the \"main\" qualifier because the paragraphs above use \"lock screen authentication\" in the broad sense to include profile challenges, similar to how elsewhere we use the term \"lock screen knowledge factor\" (LSKF) to refer to the PIN, pattern, or password even if it\u0027s for a profile.  Yes, *technically* the separate profile challenge is not the lock screen, since it\u0027s a different part of SystemUI from the actual lock screen (Keyguard).  But users may very well see it as a \"lock screen\".  After all, it\u0027s a screen that they unlock to get to the profile, and it looks and behaves similarly to the real lock screen.",
+      "parentUuid": "d3c873f5_11bc5cea",
+      "range": {
+        "startLine": 736,
+        "startChar": 61,
+        "endLine": 736,
+        "endChar": 65
+      },
+      "revId": "771ac5ecf8ce1443b6d896ed50a14032074844e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
