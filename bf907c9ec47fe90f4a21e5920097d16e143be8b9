@@ -22,6 +22,30 @@
       },
       "revId": "bf907c9ec47fe90f4a21e5920097d16e143be8b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb0a2c46_ac3eb41d",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-01-30T02:07:03Z",
+      "side": 1,
+      "message": "Done.  I used \"if lock screen authentication would be required to access that user\u0027s apps after switching to that user\", since that keeps down the number of commas.",
+      "parentUuid": "136e0821_7f6f15e3",
+      "range": {
+        "startLine": 733,
+        "startChar": 7,
+        "endLine": 733,
+        "endChar": 69
+      },
+      "revId": "bf907c9ec47fe90f4a21e5920097d16e143be8b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
