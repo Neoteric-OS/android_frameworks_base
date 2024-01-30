@@ -433,19 +433,19 @@ public class RescuePartyTest {
     }
 
     @Test
-    public void testIsAttemptingFactoryReset() {
+    public void testIsRecoveryTriggeredReboot() {
         for (int i = 0; i < LEVEL_FACTORY_RESET; i++) {
             noteBoot(i + 1);
         }
         assertFalse(RescueParty.isFactoryResetPropertySet());
         SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
         noteBoot(LEVEL_FACTORY_RESET + 1);
-        assertTrue(RescueParty.isAttemptingFactoryReset());
+        assertTrue(RescueParty.isRecoveryTriggeredReboot());
         assertTrue(RescueParty.isFactoryResetPropertySet());
     }
 
     @Test
-    public void testIsAttemptingFactoryResetOnlyAfterRebootCompleted() {
+    public void testIsRecoveryTriggeredRebootOnlyAfterRebootCompleted() {
         for (int i = 0; i < LEVEL_FACTORY_RESET; i++) {
             noteBoot(i + 1);
         }
@@ -458,7 +458,7 @@ public class RescuePartyTest {
         noteBoot(mitigationCount++);
         SystemProperties.set(RescueParty.PROP_ATTEMPTING_REBOOT, Boolean.toString(false));
         noteBoot(mitigationCount + 1);
-        assertTrue(RescueParty.isAttemptingFactoryReset());
+        assertTrue(RescueParty.isRecoveryTriggeredReboot());
         assertTrue(RescueParty.isFactoryResetPropertySet());
     }
 
@@ -471,7 +471,7 @@ public class RescuePartyTest {
         for (int i = 1; i <= LEVEL_FACTORY_RESET; i++) {
             noteBoot(i);
         }
-        assertFalse(RescueParty.isAttemptingFactoryReset());
+        assertFalse(RescueParty.isRecoveryTriggeredReboot());
     }
 
     @Test
@@ -483,7 +483,7 @@ public class RescuePartyTest {
         for (int i = 0; i <= LEVEL_FACTORY_RESET; i++) {
             noteAppCrash(i + 1, true);
         }
-        assertFalse(RescueParty.isAttemptingFactoryReset());
+        assertFalse(RescueParty.isRecoveryTriggeredReboot());
     }
 
     @Test
@@ -495,7 +495,7 @@ public class RescuePartyTest {
         for (int i = 1; i <= LEVEL_FACTORY_RESET; i++) {
             noteBoot(i);
         }
-        assertTrue(RescueParty.isAttemptingFactoryReset());
+        assertTrue(RescueParty.isRecoveryTriggeredReboot());
     }
     @Test
     public void testNotThrottlingAfterTimeoutOnAppCrash() {
@@ -506,7 +506,7 @@ public class RescuePartyTest {
         for (int i = 0; i <= LEVEL_FACTORY_RESET; i++) {
             noteAppCrash(i + 1, true);
         }
-        assertTrue(RescueParty.isAttemptingFactoryReset());
+        assertTrue(RescueParty.isRecoveryTriggeredReboot());
     }
 
     @Test
