@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d927d34_0f6c53bb",
+        "filename": "core/java/android/content/pm/PackageInstaller.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2775,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-01-31T21:38:42Z",
+      "side": 1,
+      "message": "Hi @alexbuy@google.com, \nI\u0027m just trying to resolve the merge conflicts from this change \nhttps://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/24853053\n\nSadly the cherry-picker didn\u0027t worked correctly, so had to do it somewhat manually, can I please get approvals? This comments would need to be addressed in a separate CL.",
+      "parentUuid": "a4a399f6_c19e1dbf",
+      "range": {
+        "startLine": 2775,
+        "startChar": 85,
+        "endLine": 2775,
+        "endChar": 89
+      },
+      "revId": "42ef4d2aa8beffd36bce08a21c447c6885a5ce2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e4c8c60_972fc43c",
@@ -70,6 +94,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26a15f2a_08fa276e",
+        "filename": "core/java/android/content/pm/PackageInstaller.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2776,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-01-31T21:38:42Z",
+      "side": 1,
+      "message": "[replied above.](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2936899/comment/a4a399f6_c19e1dbf/)",
+      "parentUuid": "1e4c8c60_972fc43c",
+      "range": {
+        "startLine": 2776,
+        "startChar": 32,
+        "endLine": 2776,
+        "endChar": 49
+      },
+      "revId": "42ef4d2aa8beffd36bce08a21c447c6885a5ce2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "697ce86e_b3f684db",
+        "filename": "core/java/android/content/pm/PackageInstaller.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2776,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-01-31T21:38:42Z",
+      "side": 1,
+      "message": "[replied above.](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2936899/comment/a4a399f6_c19e1dbf/)",
+      "parentUuid": "49ea7438_cd43df31",
+      "range": {
+        "startLine": 2776,
+        "startChar": 50,
+        "endLine": 2776,
+        "endChar": 58
+      },
+      "revId": "42ef4d2aa8beffd36bce08a21c447c6885a5ce2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dadc4fed_cf83af7c",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-01-31T21:11:39Z",
       "side": 1,
       "message": "ditto, this is not time",
+      "range": {
+        "startLine": 2781,
+        "startChar": 33,
+        "endLine": 2781,
+        "endChar": 43
+      },
+      "revId": "42ef4d2aa8beffd36bce08a21c447c6885a5ce2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b68dc18_57a79231",
+        "filename": "core/java/android/content/pm/PackageInstaller.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-01-31T21:38:42Z",
+      "side": 1,
+      "message": "[replied above.](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/2936899/comment/a4a399f6_c19e1dbf/)",
+      "parentUuid": "dadc4fed_cf83af7c",
       "range": {
         "startLine": 2781,
         "startChar": 33,
