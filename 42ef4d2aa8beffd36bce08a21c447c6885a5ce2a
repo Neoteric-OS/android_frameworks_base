@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6d48c41_5a661cc0",
+        "filename": "core/java/android/content/pm/PackageInstaller.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2775,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-01-31T21:43:01Z",
+      "side": 1,
+      "message": "Sorry that sounds confusing, just to be more clear: I meant conflicts between aosp and main due to that change not present in aosp. So I\u0027m just cherry-picking that here.",
+      "parentUuid": "0d927d34_0f6c53bb",
+      "range": {
+        "startLine": 2775,
+        "startChar": 85,
+        "endLine": 2775,
+        "endChar": 89
+      },
+      "revId": "42ef4d2aa8beffd36bce08a21c447c6885a5ce2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e4c8c60_972fc43c",
