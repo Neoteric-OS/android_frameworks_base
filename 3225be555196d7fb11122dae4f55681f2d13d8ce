@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c6d28e8_495f509b",
+        "filename": "core/java/android/nfc/INfcVendorNciCallback.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-01-31T06:34:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f39c249c_654f2551",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 2
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a886b503_b633d140",
@@ -180,6 +204,30 @@
       "side": 1,
       "message": "This file is licensed with Apache License V2.0 inline with link below\nhttps://source.android.com/docs/setup/about/licenses#android-open-source-project-license\n\nOnly the copyright/Author is set as NXP",
       "parentUuid": "d4903f32_4a3cbb17",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "3225be555196d7fb11122dae4f55681f2d13d8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "035dffda_86314040",
+        "filename": "core/java/android/nfc/NfcVendorNciCallbackListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-01-31T06:34:01Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7b0d34af_9695b7a0",
       "range": {
         "startLine": 3,
         "startChar": 0,
