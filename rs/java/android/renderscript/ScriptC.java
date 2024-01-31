@@ -16,10 +16,12 @@
 
 package android.renderscript;
 
+import android.annotation.FlaggedApi;
 import android.app.compat.CompatChanges;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledAfter;
 import android.content.res.Resources;
+import android.renderscript.flags.Flags;
 import android.util.Slog;
 
 import java.io.IOException;
@@ -73,6 +75,7 @@ public class ScriptC extends Script {
      * @param resources
      * @param resourceID
      */
+    @FlaggedApi(android.renderscript.flags.Flags.FLAG_DISABLE_RENDERSCRIPT)
     protected ScriptC(RenderScript rs, Resources resources, int resourceID) {
         super(0, rs);
         long id = internalCreate(rs, resources, resourceID);
@@ -87,6 +90,7 @@ public class ScriptC extends Script {
      *
      * @param rs
      */
+    @FlaggedApi(android.renderscript.flags.Flags.FLAG_DISABLE_RENDERSCRIPT)
     protected ScriptC(RenderScript rs, String resName, byte[] bitcode32, byte[] bitcode64) {
         super(0, rs);
         long id = 0;
@@ -107,8 +111,10 @@ public class ScriptC extends Script {
                     + "to https://developer.android.com/guide/topics/renderscript/migration-guide "
                     + "for proposed alternatives.";
         Slog.w(TAG, message);
-        if (CompatChanges.isChangeEnabled(RENDERSCRIPT_SCRIPTC_DEPRECATION_CHANGE_ID)) {
-            throw new UnsupportedOperationException(message);
+        if (Flags.disableRenderscript()) {
+            if (CompatChanges.isChangeEnabled(RENDERSCRIPT_SCRIPTC_DEPRECATION_CHANGE_ID)) {
+                throw new UnsupportedOperationException(message);
+            }
         }
     }
 

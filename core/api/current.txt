@@ -38311,8 +38311,8 @@ package android.renderscript {
   @Deprecated public class ScriptC extends android.renderscript.Script {
     ctor @Deprecated protected ScriptC(int, android.renderscript.RenderScript);
     ctor @Deprecated protected ScriptC(long, android.renderscript.RenderScript);
-    ctor @Deprecated protected ScriptC(android.renderscript.RenderScript, android.content.res.Resources, int);
-    ctor @Deprecated protected ScriptC(android.renderscript.RenderScript, String, byte[], byte[]);
+    ctor @Deprecated @FlaggedApi("android.renderscript.flags.disable_renderscript") protected ScriptC(android.renderscript.RenderScript, android.content.res.Resources, int);
+    ctor @Deprecated @FlaggedApi("android.renderscript.flags.disable_renderscript") protected ScriptC(android.renderscript.RenderScript, String, byte[], byte[]);
   }
 
   @Deprecated public final class ScriptGroup extends android.renderscript.BaseObj {

@@ -1,0 +1,8 @@
+package: "android.renderscript.flags"
+
+flag {
+    name: "disable_renderscript"
+    namespace: "machine_learning"
+    description: "Flag disabling renderscript's support of scripts."
+    bug: "319417711"
+}

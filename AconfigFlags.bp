@@ -23,6 +23,7 @@ aconfig_srcjars = [
     ":android.net.vcn.flags-aconfig-java{.generated_srcjars}",
     ":android.nfc.flags-aconfig-java{.generated_srcjars}",
     ":android.os.flags-aconfig-java{.generated_srcjars}",
+    ":android.renderscript.flags-aconfig-java{.generated_srcjars}",
     ":android.security.flags-aconfig-java{.generated_srcjars}",
     ":com.android.hardware.camera2-aconfig-java{.generated_srcjars}",
     ":com.android.hardware.input-aconfig-java{.generated_srcjars}",
@@ -44,6 +45,7 @@ stubs_defaults {
         "android.net.vcn.flags-aconfig",
         "android.nfc.flags-aconfig",
         "android.os.flags-aconfig",
+        "android.renderscript.flags-aconfig",
         "android.security.flags-aconfig",
         "com.android.hardware.camera2-aconfig",
         "com.android.hardware.input.input-aconfig",
@@ -311,5 +313,18 @@ aconfig_declarations {
 java_aconfig_library {
     name: "android.crashrecovery.flags-aconfig-java",
     aconfig_declarations: "android.crashrecovery.flags-aconfig",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// Renderscript
+aconfig_declarations {
+    name: "android.renderscript.flags-aconfig",
+    package: "android.renderscript.flags",
+    srcs: ["rs/java/android/renderscript/*.aconfig"],
+}
+
+java_aconfig_library {
+    name: "android.renderscript.flags-aconfig-java",
+    aconfig_declarations: "android.renderscript.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
