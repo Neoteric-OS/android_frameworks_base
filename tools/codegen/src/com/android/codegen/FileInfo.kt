@@ -216,7 +216,7 @@ class FileInfo(
                                     thisClass = classBounds,
                                     nextNestedClass = classBounds.nestedDataClasses.getOrNull(0))))
 
-                    val chunks = mutableListOf<CodeChunk>(initial)
+                    var chunks = mutableListOf<CodeChunk>(initial)
 
                     classBounds.nestedDataClasses.forEachSequentialPair {
                             nestedDataClass, nextNestedDataClass ->
