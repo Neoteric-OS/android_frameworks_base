@@ -4634,7 +4634,7 @@ public class ActivityManager {
     }
 
     /**
-     * Unsupported compiled sdk warning should always be shown for the intput activity
+     * Unsupported compiled sdk warning should always be shown for the input activity
      * even in cases where the system would normally not show the warning. E.g. when running in a
      * test harness.
      *
