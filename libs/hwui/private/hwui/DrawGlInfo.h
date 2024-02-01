@@ -59,7 +59,7 @@ struct DrawGlInfo {
     enum Mode {
         // Indicates that the functor is called to perform a draw
         kModeDraw,
-        // Indicates the the functor is called only to perform
+        // Indicates the functor is called only to perform
         // processing and that no draw should be attempted
         kModeProcess,
         // Same as kModeProcess, however there is no GL context because it was

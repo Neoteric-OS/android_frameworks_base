@@ -148,7 +148,7 @@ public class PhysicsAnimationLayout extends FrameLayout {
          */
         abstract void onChildRemoved(View child, int index, Runnable finishRemoval);
 
-        /** Called when a child view has been reordered in the view hierachy. */
+        /** Called when a child view has been reordered in the view hierarchy. */
         abstract void onChildReordered(View child, int oldIndex, int newIndex);
 
         /**
