@@ -667,6 +667,7 @@ static void EnableKeepCapabilities(fail_fn_t fail_fn) {
 
 static void DropCapabilitiesBoundingSet(fail_fn_t fail_fn) {
   for (int i = 0; prctl(PR_CAPBSET_READ, i, 0, 0, 0) >= 0; i++) {;
+    if (i == CAP_SYS_NICE) continue;
     if (prctl(PR_CAPBSET_DROP, i, 0, 0, 0) == -1) {
       if (errno == EINVAL) {
         ALOGE("prctl(PR_CAPBSET_DROP) failed with EINVAL. Please verify "
@@ -1763,6 +1764,7 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
         EnableKeepCapabilities(fail_fn);
     }
 
+    permitted_capabilities |= (1LL << CAP_SYS_NICE);
     SetInheritable(permitted_capabilities, fail_fn);
 
     DropCapabilitiesBoundingSet(fail_fn);
