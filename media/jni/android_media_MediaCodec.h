@@ -30,6 +30,7 @@
 #include <media/stagefright/foundation/AHandler.h>
 #include <utils/Errors.h>
 
+
 class C2Buffer;
 
 namespace android {
@@ -112,6 +113,14 @@ struct JMediaCodec : public AHandler {
             const CryptoPlugin::Pattern &pattern,
             int64_t presentationTimeUs,
             uint32_t flags,
+            AString *errorDetailMsg);
+
+    status_t queueSecureInputBuffers(
+            size_t index,
+            size_t offset,
+            size_t size,
+            const sp<RefBase> &auInfos,
+            const sp<RefBase> &cryptoInfos,
             AString *errorDetailMsg);
 
     status_t queueBuffer(
@@ -197,7 +206,6 @@ private:
         kWhatAsyncReleaseComplete,
         kWhatFirstTunnelFrameReady,
     };
-
     jclass mClass;
     jweak mObject;
     sp<Surface> mSurfaceTextureClient;
