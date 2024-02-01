@@ -16,6 +16,24 @@
       "message": "Hey, you appear to have OWNERS here which is great, can you get a team-specific review, as I do not know about the details of the designs of ArtModuleServiceManager - it seems fine/good? but I\u0027m not on the team",
       "revId": "5de562459899e84b37d459bb284bdfb0e4ed8a9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05878688_a2cc18e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-02-01T03:16:33Z",
+      "side": 1,
+      "message": "Good to know we have OWNERS! I\u0027ll leave it to Martin to take a look.",
+      "parentUuid": "33cc5187_dd30ac0a",
+      "revId": "5de562459899e84b37d459bb284bdfb0e4ed8a9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
