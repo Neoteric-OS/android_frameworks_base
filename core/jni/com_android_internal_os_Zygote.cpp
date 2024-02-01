@@ -665,8 +665,9 @@ static void EnableKeepCapabilities(fail_fn_t fail_fn) {
   }
 }
 
-static void DropCapabilitiesBoundingSet(fail_fn_t fail_fn) {
+static void DropCapabilitiesBoundingSet(fail_fn_t fail_fn, jlong keep_binding_caps) {
   for (int i = 0; prctl(PR_CAPBSET_READ, i, 0, 0, 0) >= 0; i++) {;
+    if ((1LL << i) & keep_binding_caps) continue;
     if (prctl(PR_CAPBSET_DROP, i, 0, 0, 0) == -1) {
       if (errno == EINVAL) {
         ALOGE("prctl(PR_CAPBSET_DROP) failed with EINVAL. Please verify "
@@ -676,6 +677,27 @@ static void DropCapabilitiesBoundingSet(fail_fn_t fail_fn) {
       }
     }
   }
+}
+
+static bool MatchGid(JNIEnv* env, jintArray gids, jint gid, jint gid_to_find) {
+  if (gid == gid_to_find) return true;
+
+  if (gids == nullptr) return false;
+
+  jsize gids_num = env->GetArrayLength(gids);
+  ScopedIntArrayRO native_gid_proxy(env, gids);
+
+  if (native_gid_proxy.get() == nullptr) {
+    RuntimeAbort(env, __LINE__, "Bad gids array");
+  }
+
+  for (int gids_index = 0; gids_index < gids_num; ++gids_index) {
+    if (native_gid_proxy[gids_index] == gid_to_find) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 static void SetInheritable(uint64_t inheritable, fail_fn_t fail_fn) {
@@ -1757,15 +1779,28 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
     auto nice_name = extract_fn(managed_nice_name);
     auto instruction_set = extract_fn(managed_instruction_set);
     auto app_data_dir = extract_fn(managed_app_data_dir);
+    jlong keep_binding_caps = 0;
 
     // Keep capabilities across UID change, unless we're staying root.
     if (uid != 0) {
         EnableKeepCapabilities(fail_fn);
     }
 
+    /*
+     * Grant CAP_SYS_NICE to CapInh/CapPrm/CapBnd for processes that can spawn
+     * VMs.  This enables processes to execve on binaries with elevated
+     * capabilities if its file capability bits are set. This does not grant
+     * capability to the parent process(that spawns the VM) as the effective
+     * bits are not set.
+     */
+    if (MatchGid(env, gids, gid, AID_VIRTUALMACHINE)) {
+        permitted_capabilities |= (1LL << CAP_SYS_NICE);
+        keep_binding_caps = permitted_capabilities;
+    }
+
     SetInheritable(permitted_capabilities, fail_fn);
 
-    DropCapabilitiesBoundingSet(fail_fn);
+    DropCapabilitiesBoundingSet(fail_fn, keep_binding_caps);
 
     bool need_pre_initialize_native_bridge = !is_system_server && instruction_set.has_value() &&
             android::NativeBridgeAvailable() &&
@@ -2061,26 +2096,7 @@ static jlong CalculateCapabilities(JNIEnv* env, jint uid, jint gid, jintArray gi
    * Grant CAP_BLOCK_SUSPEND to processes that belong to GID "wakelock"
    */
 
-  bool gid_wakelock_found = false;
-  if (gid == AID_WAKELOCK) {
-    gid_wakelock_found = true;
-  } else if (gids != nullptr) {
-    jsize gids_num = env->GetArrayLength(gids);
-    ScopedIntArrayRO native_gid_proxy(env, gids);
-
-    if (native_gid_proxy.get() == nullptr) {
-      RuntimeAbort(env, __LINE__, "Bad gids array");
-    }
-
-    for (int gids_index = 0; gids_index < gids_num; ++gids_index) {
-      if (native_gid_proxy[gids_index] == AID_WAKELOCK) {
-        gid_wakelock_found = true;
-        break;
-      }
-    }
-  }
-
-  if (gid_wakelock_found) {
+  if (MatchGid(env, gids, gid, AID_WAKELOCK)) {
     capabilities |= (1LL << CAP_BLOCK_SUSPEND);
   }
 
