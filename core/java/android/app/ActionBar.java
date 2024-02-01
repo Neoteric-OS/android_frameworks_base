@@ -80,7 +80,7 @@ import java.lang.annotation.RetentionPolicy;
  * <p>From your activity, you can retrieve an instance of {@link ActionBar} by calling {@link
  * android.app.Activity#getActionBar getActionBar()}.</p>
  *
- * <p>In some cases, the action bar may be overlayed by another bar that enables contextual actions,
+ * <p>In some cases, the action bar may be overlaid by another bar that enables contextual actions,
  * using an {@link android.view.ActionMode}. For example, when the user selects one or more items in
  * your activity, you can enable an action mode that offers actions specific to the selected
  * items, with a UI that temporarily replaces the action bar. Although the UI may occupy the
