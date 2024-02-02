@@ -847,6 +847,7 @@ public class AppOpsCheckingServiceImpl implements AppOpsCheckingServiceInterface
                     return;
                 }
 
+                boolean success = false;
                 try {
                     TypedXmlPullParser parser = Xml.resolvePullParser(stream);
                     int type;
@@ -884,11 +885,30 @@ public class AppOpsCheckingServiceImpl implements AppOpsCheckingServiceInterface
                             XmlUtils.skipCurrentTag(parser);
                         }
                     }
+                    success = true;
                     return;
+                } catch (IllegalStateException e) {
+                    Slog.w(TAG, "Failed parsing " + e);
+                } catch (NullPointerException e) {
+                    Slog.w(TAG, "Failed parsing " + e);
+                } catch (NumberFormatException e) {
+                    Slog.w(TAG, "Failed parsing " + e);
                 } catch (XmlPullParserException e) {
-                    throw new RuntimeException(e);
+                    Slog.w(TAG, "Failed parsing " + e);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    Slog.w(TAG, "Failed parsing " + e);
+                } catch (IndexOutOfBoundsException e) {
+                    Slog.w(TAG, "Failed parsing " + e);
+                } finally {
+                    if (!success) {
+                        // File contains errors, so handle it as not existing
+                        mVersionAtBoot = NO_FILE_VERSION;
+                        this.clearAllModes();
+                    }
+                    try {
+                        stream.close();
+                    } catch (IOException e) {
+                    }
                 }
             }
         }
