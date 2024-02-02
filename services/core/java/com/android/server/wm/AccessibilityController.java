@@ -78,6 +78,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.util.ArraySet;
 import android.util.Pair;
 import android.util.Slog;
@@ -1169,6 +1170,7 @@ final class AccessibilityController {
                 private int mAlpha;
 
                 private boolean mInvalidated;
+                private boolean mOmitBorder;
 
                 ViewportWindow(Context context) {
                     SurfaceControl surfaceControl = null;
@@ -1211,6 +1213,8 @@ final class AccessibilityController {
                     mPaint.setColor(borderColor);
 
                     mInvalidated = true;
+                    mOmitBorder = SystemProperties.getBoolean(
+                        "ro.config.omit_magnification_border", false);
                 }
 
                 void setShown(boolean shown, boolean animate) {
@@ -1287,7 +1291,7 @@ final class AccessibilityController {
                     Rect drawingRect = null;
                     Region drawingBounds = null;
                     synchronized (mService.mGlobalLock) {
-                        if (!mInvalidated) {
+                        if (!mInvalidated || mOmitBorder) {
                             return;
                         }
                         mInvalidated = false;
