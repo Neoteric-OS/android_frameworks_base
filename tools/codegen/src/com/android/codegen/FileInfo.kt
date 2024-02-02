@@ -238,7 +238,7 @@ class FileInfo(
                     } else if (classBounds.isDataclass) {
 
                         // Insert placeholder for generated code to be inserted for the 1st time
-                        chunks.last = (chunks.last as Code)
+                        val placeholderChunk = (chunks.last as Code)
                                 .lines
                                 .dropLastWhile { it.isBlank() }
                                 .run {
@@ -248,6 +248,7 @@ class FileInfo(
                                         this
                                     }
                                 }.let { Code(it) }
+                        chunks[chunks.lastIndex] = placeholderChunk
                         generatedCode = GeneratedCode.Placeholder()
                         chunks += generatedCode
                         chunks += ClosingBrace
