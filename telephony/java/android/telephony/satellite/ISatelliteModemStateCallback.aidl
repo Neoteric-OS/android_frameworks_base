@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,14 @@
 package android.telephony.satellite;
 
 /**
- * A callback class for monitoring satellite modem state change events.
- *
+ * Interface for satellite state change callback.
  * @hide
  */
-public interface SatelliteStateCallback {
+oneway interface ISatelliteModemStateCallback {
     /**
-     * Called when satellite modem state changes.
-     * @param state The new satellite modem state.
+     * Indicates that the satellite modem state has changed.
+     *
+     * @param state The current satellite modem state.
      */
-    void onSatelliteModemStateChanged(@SatelliteManager.SatelliteModemState int state);
+    void onSatelliteModemStateChanged(in int state);
 }

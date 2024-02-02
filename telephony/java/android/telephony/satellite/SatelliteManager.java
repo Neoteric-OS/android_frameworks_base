@@ -63,8 +63,9 @@ public class SatelliteManager {
     private static final ConcurrentHashMap<SatelliteProvisionStateCallback,
             ISatelliteProvisionStateCallback> sSatelliteProvisionStateCallbackMap =
             new ConcurrentHashMap<>();
-    private static final ConcurrentHashMap<SatelliteStateCallback, ISatelliteStateCallback>
-            sSatelliteStateCallbackMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<SatelliteModemStateCallback,
+            ISatelliteModemStateCallback> sSatelliteModemStateCallbackMap =
+            new ConcurrentHashMap<>();
     private static final ConcurrentHashMap<SatelliteTransmissionUpdateCallback,
             ISatelliteTransmissionUpdateCallback> sSatelliteTransmissionUpdateCallbackMap =
             new ConcurrentHashMap<>();
@@ -1151,21 +1152,22 @@ public class SatelliteManager {
 
     @SatelliteError public int registerForSatelliteModemStateChanged(
             @NonNull @CallbackExecutor Executor executor,
-            @NonNull SatelliteStateCallback callback) {
+            @NonNull SatelliteModemStateCallback callback) {
         Objects.requireNonNull(executor);
         Objects.requireNonNull(callback);
 
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
-                ISatelliteStateCallback internalCallback = new ISatelliteStateCallback.Stub() {
+                ISatelliteModemStateCallback internalCallback =
+                        new ISatelliteModemStateCallback.Stub() {
                     @Override
                     public void onSatelliteModemStateChanged(int state) {
                         executor.execute(() -> Binder.withCleanCallingIdentity(() ->
                                 callback.onSatelliteModemStateChanged(state)));
                     }
                 };
-                sSatelliteStateCallbackMap.put(callback, internalCallback);
+                sSatelliteModemStateCallbackMap.put(callback, internalCallback);
                 return telephony.registerForSatelliteModemStateChanged(mSubId, internalCallback);
             } else {
                 throw new IllegalStateException("telephony service is null.");
@@ -1182,16 +1184,18 @@ public class SatelliteManager {
      * If callback was not registered before, the request will be ignored.
      *
      * @param callback The callback that was passed to
-     * {@link #registerForSatelliteModemStateChanged(Executor, SatelliteStateCallback)}.
+     * {@link #registerForSatelliteModemStateChanged(Executor, SatelliteModemStateCallback)}.
      *
      * @throws SecurityException if the caller doesn't have required permission.
      * @throws IllegalStateException if the Telephony process is not currently available.
      */
     @RequiresPermission(Manifest.permission.SATELLITE_COMMUNICATION)
 
-    public void unregisterForSatelliteModemStateChanged(@NonNull SatelliteStateCallback callback) {
+    public void unregisterForSatelliteModemStateChanged(
+            @NonNull SatelliteModemStateCallback callback) {
         Objects.requireNonNull(callback);
-        ISatelliteStateCallback internalCallback = sSatelliteStateCallbackMap.remove(callback);
+        ISatelliteModemStateCallback internalCallback =
+                sSatelliteModemStateCallbackMap.remove(callback);
 
         try {
             ITelephony telephony = getITelephony();
