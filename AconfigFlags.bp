@@ -81,6 +81,7 @@ java_defaults {
 aconfig_declarations {
     name: "com.android.hardware.camera2-aconfig",
     package: "com.android.hardware.camera2",
+    container: "system",
     srcs: ["core/java/android/hardware/camera2/camera_platform.aconfig"],
 }
 
@@ -94,6 +95,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "com.android.window.flags.window-aconfig",
     package: "com.android.window.flags",
+    container: "system",
     srcs: ["core/java/android/window/flags/*.aconfig"],
 }
 
@@ -107,6 +109,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "com.android.hardware.input.input-aconfig",
     package: "com.android.hardware.input",
+    container: "system",
     srcs: ["core/java/android/hardware/input/*.aconfig"],
 }
 
@@ -120,6 +123,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "com.android.text.flags-aconfig",
     package: "com.android.text.flags",
+    container: "system",
     srcs: ["core/java/android/text/flags/*.aconfig"],
 }
 
@@ -133,6 +137,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "android.os.flags-aconfig",
     package: "android.os",
+    container: "system",
     srcs: ["core/java/android/os/*.aconfig"],
 }
 
@@ -146,6 +151,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "android.nfc.flags-aconfig",
     package: "android.nfc",
+    container: "system",
     srcs: ["nfc/java/android/nfc/*.aconfig"],
 }
 
@@ -176,6 +182,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "android.security.flags-aconfig",
     package: "android.security",
+    container: "system",
     srcs: ["core/java/android/security/*.aconfig"],
 }
 
@@ -202,6 +209,7 @@ rust_aconfig_library {
 aconfig_declarations {
     name: "android.content.pm.flags-aconfig",
     package: "android.content.pm",
+    container: "system",
     srcs: ["core/java/android/content/pm/flags.aconfig"],
 }
 
@@ -222,6 +230,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "android.content.res.flags-aconfig",
     package: "android.content.res",
+    container: "system",
     srcs: ["core/java/android/content/res/*.aconfig"],
 }
 
@@ -235,6 +244,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "android.hardware.biometrics.flags-aconfig",
     package: "android.hardware.biometrics",
+    container: "system",
     srcs: ["core/java/android/hardware/biometrics/flags.aconfig"],
 }
 
@@ -255,6 +265,7 @@ aconfig_declarations {
 aconfig_declarations {
     name: "com.android.net.thread.flags-aconfig",
     package: "com.android.net.thread.flags",
+    container: "system",
     srcs: ["core/java/android/net/thread/flags.aconfig"],
 }
 
@@ -274,6 +285,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "android.media.playback.flags-aconfig",
     package: "com.android.media.playback.flags",
+    container: "system",
     srcs: ["media/jni/playback_flags.aconfig"],
 }
 
@@ -292,6 +304,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "android.net.vcn.flags-aconfig",
     package: "android.net.vcn",
+    container: "system",
     srcs: ["core/java/android/net/vcn/*.aconfig"],
 }
 
@@ -305,6 +318,7 @@ java_aconfig_library {
 aconfig_declarations {
     name: "android.crashrecovery.flags-aconfig",
     package: "android.crashrecovery.flags",
+    container: "system",
     srcs: ["packages/CrashRecovery/aconfig/flags.aconfig"],
 }
 
