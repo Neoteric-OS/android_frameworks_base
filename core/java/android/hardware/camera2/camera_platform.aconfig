@@ -1,4 +1,5 @@
 package: "com.android.hardware.camera2"
+container: "system"
 
 flag {
      namespace: "camera_platform"
