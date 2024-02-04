@@ -4403,7 +4403,7 @@ public class SettingsProvider extends ContentProvider {
 
         @VisibleForTesting
         final class UpgradeController {
-            private static final int SETTINGS_VERSION = 236;
+            private static final int SETTINGS_VERSION = 237;
 
             private final int mUserId;
             private final int mDeviceId;
@@ -7098,6 +7098,21 @@ public class SettingsProvider extends ContentProvider {
                 }
 
                 // vXXX: Add new settings above this point.
+
+                if (currentVersion == (SETTINGS_VERSION - 1)) {
+                    if (userId == UserHandle.USER_OWNER) {
+                        globalSettings.insertSettingOverrideableByRestoreLocked(
+                                Global.RESTRICTED_NETWORKING_MODE,
+                                "1", null, true,
+                                SettingsState.SYSTEM_PACKAGE_NAME);
+                        globalSettings.insertSettingOverrideableByRestoreLocked(
+                                // Form packages/modules/Connectivity/framework/src/android/net/ConnectivitySettingsManager.java
+                                "uids_allowed_on_restricted_networks",
+                                "", null, true,
+                                SettingsState.SYSTEM_PACKAGE_NAME);
+                    }
+                    currentVersion = SETTINGS_VERSION;
+                }
 
                 if (currentVersion != newVersion) {
                     Slog.wtf(
