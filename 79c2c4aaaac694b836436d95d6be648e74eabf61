@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "524eab49_6da7b6e9",
+        "filename": "core/java/android/content/pm/PackageInstaller.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3417,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-02-05T20:40:06Z",
+      "side": 1,
+      "message": "Session info changes doesnt seem to be cherry picked. This should contain a rollbackImpactLevel field.",
+      "revId": "79c2c4aaaac694b836436d95d6be648e74eabf61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
