@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d68c492c_f1c3519d",
+        "filename": "services/core/java/com/android/server/appop/AppOpsCheckingServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-02-05T11:11:54Z",
+      "side": 1,
+      "message": "The downside with doing like this, is that the file might be in half parsed state.\n\nIn readRecentAccesses() upon failure, some extra methods are called to clear state if reading file failed:\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/appop/AppOpsService.java;drc\u003daa240ece334858daa68b7e876f6707098eb8a97f;l\u003d4135\n\nAny thoughts?",
+      "range": {
+        "startLine": 888,
+        "startChar": 0,
+        "endLine": 892,
+        "endChar": 17
+      },
+      "revId": "2bf00b268e9e86ca8b5b2ab1f2f436cc4ee19eee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
