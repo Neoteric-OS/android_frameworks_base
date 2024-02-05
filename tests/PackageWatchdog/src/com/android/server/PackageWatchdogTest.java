@@ -54,7 +54,7 @@ import com.android.modules.utils.TypedXmlPullParser;
 import com.android.modules.utils.TypedXmlSerializer;
 import com.android.server.PackageWatchdog.HealthCheckState;
 import com.android.server.PackageWatchdog.MonitoredPackage;
-import com.android.server.PackageWatchdog.PackageHealthObserver;
+import com.android.server.PackageHealthObserver;
 import com.android.server.PackageWatchdog.PackageHealthObserverImpact;
 
 import org.junit.After;

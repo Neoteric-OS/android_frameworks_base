@@ -39,14 +39,12 @@ soong_config_module_type {
 
 module_filegroup {
     name: "services-crashrecovery-module-sources",
-    srcs: [],
     soong_config_variables: {
         // if this flag is enabled, then files are part of module
         crashrecovery_files_in_module: {
             srcs: [
                 "java/**/*.java",
                 "java/**/*.aidl",
-                ":statslog-crashrecovery-java-gen",
             ],
         },
     },

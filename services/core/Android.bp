@@ -96,9 +96,40 @@ genrule {
     out: ["com/android/server/location/contexthub/ContextHubStatsLog.java"],
 }
 
+
+// This would add conditional dependency of crashrecovery services on platform
+// to allow using APIs exposed from CrashRecovery in platform
+soong_config_module_type {
+    name: "enable_crashrecovery_module",
+    module_type: "java_defaults",
+    config_namespace: "ANDROID",
+    bool_variables: ["release_crashrecovery_module"],
+    properties: [
+        "libs",
+    ],
+}
+
+soong_config_bool_variable {
+    name: "release_crashrecovery_module",
+}
+
+enable_crashrecovery_module {
+    name: "crashrecovery_service_defaults",
+    soong_config_variables: {
+        release_crashrecovery_module: {
+            libs: [
+                "service-crashrecovery.stubs.system_server",
+            ],
+        },
+    },
+}
+
 java_library_static {
     name: "services.core.unboosted",
-    defaults: ["platform_service_defaults"],
+    defaults: [
+        "platform_service_defaults",
+        "crashrecovery_service_defaults",
+    ],
     srcs: [
         ":android.hardware.biometrics.face-V3-java-source",
         ":android.hardware.tv.hdmi.connection-V1-java-source",

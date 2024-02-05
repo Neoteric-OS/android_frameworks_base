@@ -363,8 +363,8 @@ class ExplicitHealthCheckController {
     @GuardedBy("mLock")
     @Nullable
     private ServiceInfo getServiceInfoLocked() {
-        final String packageName =
-                mContext.getPackageManager().getServicesSystemSharedLibraryPackageName();
+        final String packageName = null;
+                // mContext.getPackageManager().getServicesSystemSharedLibraryPackageName();
         if (packageName == null) {
             Slog.w(TAG, "no external services package!");
             return null;

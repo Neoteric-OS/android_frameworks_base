@@ -149,7 +149,10 @@ java_library {
 // ============================================================
 java_library {
     name: "services",
-    defaults: ["services_java_defaults"],
+    defaults: [
+        "services_java_defaults",
+        "crashrecovery_service_defaults",
+    ],
     installable: true,
 
     dex_preopt: {

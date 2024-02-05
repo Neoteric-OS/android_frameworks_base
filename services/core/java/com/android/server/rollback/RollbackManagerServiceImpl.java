@@ -1280,7 +1280,7 @@ class RollbackManagerServiceImpl extends IRollbackManager.Stub implements Rollba
             }
 
         });
-        PackageWatchdog.getInstance(mContext).dump(ipw);
+        // PackageWatchdog.getInstance(mContext).dump(ipw);
     }
 
     @AnyThread

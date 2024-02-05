@@ -17,6 +17,8 @@
 package com.android.server.rollback;
 
 import android.annotation.AnyThread;
+import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.WorkerThread;
@@ -29,13 +31,13 @@ import android.content.rollback.PackageRollbackInfo;
 import android.content.rollback.RollbackInfo;
 import android.content.rollback.RollbackManager;
 import android.os.Environment;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.sysprop.CrashRecoveryProperties;
 import android.util.ArraySet;
+import android.util.FileUtils;
 import android.util.Slog;
 import android.util.SparseArray;
 
@@ -43,11 +45,11 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.Preconditions;
 import com.android.server.PackageWatchdog;
 import com.android.server.PackageWatchdog.FailureReasons;
-import com.android.server.PackageWatchdog.PackageHealthObserver;
+import com.android.server.PackageHealthObserver;
 import com.android.server.PackageWatchdog.PackageHealthObserverImpact;
-import com.android.server.SystemConfig;
+// import com.android.server.SystemConfig;
 import com.android.server.crashrecovery.proto.CrashRecoveryStatsLog;
-import com.android.server.pm.ApexManager;
+// import com.android.server.pm.ApexManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -68,7 +70,9 @@ import java.util.function.Consumer;
  *
  * @hide
  */
-final class RollbackPackageHealthObserver implements PackageHealthObserver {
+@SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
+@SuppressLint("CallbackName")
+public final class RollbackPackageHealthObserver implements PackageHealthObserver {
     private static final String TAG = "RollbackPackageHealthObserver";
     private static final String NAME = "rollback-observer";
     private static final int PERSISTENT_MASK = ApplicationInfo.FLAG_PERSISTENT
@@ -76,7 +80,7 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
 
     private final Context mContext;
     private final Handler mHandler;
-    private final ApexManager mApexManager;
+    // private final ApexManager mApexManager;
     private final File mLastStagedRollbackIdsFile;
     private final File mTwoPhaseRollbackEnabledFile;
     // Staged rollback ids that have been committed but their session is not yet ready
@@ -84,7 +88,7 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
     // True if needing to roll back only rebootless apexes when native crash happens
     private boolean mTwoPhaseRollbackEnabled;
 
-    RollbackPackageHealthObserver(Context context) {
+    public RollbackPackageHealthObserver(@NonNull Context context) {
         mContext = context;
         HandlerThread handlerThread = new HandlerThread("RollbackPackageHealthObserver");
         handlerThread.start();
@@ -94,7 +98,7 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
         mLastStagedRollbackIdsFile = new File(dataDir, "last-staged-rollback-ids");
         mTwoPhaseRollbackEnabledFile = new File(dataDir, "two-phase-rollback-enabled");
         PackageWatchdog.getInstance(mContext).registerHealthObserver(this);
-        mApexManager = ApexManager.getInstance();
+        // mApexManager = ApexManager.getInstance();
 
         if (SystemProperties.getBoolean("sys.boot_completed", false)) {
             // Load the value from the file if system server has crashed and restarted
@@ -150,7 +154,7 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
     }
 
     @Override
-    public String getName() {
+    public @NonNull String getName() {
         return NAME;
     }
 
@@ -160,7 +164,7 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
     }
 
     @Override
-    public boolean mayObservePackage(String packageName) {
+    public boolean mayObservePackage(@NonNull String packageName) {
         if (mContext.getSystemService(RollbackManager.class)
                 .getAvailableRollbacks().isEmpty()) {
             return false;
@@ -187,12 +191,12 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
      * This may cause {@code packages} to be rolled back if they crash too freqeuntly.
      */
     @AnyThread
-    void startObservingHealth(List<String> packages, long durationMs) {
+    public void startObservingHealth(@NonNull List<String> packages, @NonNull long durationMs) {
         PackageWatchdog.getInstance(mContext).startObservingHealth(this, packages, durationMs);
     }
 
     @AnyThread
-    void notifyRollbackAvailable(RollbackInfo rollback) {
+    public void notifyRollbackAvailable(@NonNull RollbackInfo rollback) {
         mHandler.post(() -> {
             // Enable two-phase rollback when a rebootless apex rollback is made available.
             // We assume the rebootless apex is stable and is less likely to be the cause
@@ -220,7 +224,7 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
      * to check for native crashes and mitigate them if needed.
      */
     @AnyThread
-    void onBootCompletedAsync() {
+    public void onBootCompletedAsync() {
         mHandler.post(()->onBootCompleted());
     }
 
@@ -371,8 +375,9 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
     private boolean isModule(String packageName) {
         // Check if the package is an APK inside an APEX. If it is, use the parent APEX package when
         // querying PackageManager.
-        String apexPackageName = mApexManager.getActiveApexPackageNameContainingPackage(
-                packageName);
+        String apexPackageName = null;
+        // mApexManager.getActiveApexPackageNameContainingPackage(
+        //         packageName);
         if (apexPackageName != null) {
             packageName = apexPackageName;
         }
@@ -396,11 +401,11 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
             @FailureReasons int rollbackReason) {
         assertInWorkerThread();
 
-        if (isAutomaticRollbackDenied(SystemConfig.getInstance(), failedPackage)) {
-            Slog.d(TAG, "Automatic rollback not allowed for package "
-                    + failedPackage.getPackageName());
-            return;
-        }
+        // if (isAutomaticRollbackDenied(SystemConfig.getInstance(), failedPackage)) {
+        //     Slog.d(TAG, "Automatic rollback not allowed for package "
+        //             + failedPackage.getPackageName());
+        //     return;
+        // }
 
         final RollbackManager rollbackManager = mContext.getSystemService(RollbackManager.class);
         int reasonToLog = WatchdogRollbackLogger.mapFailureReasonToMetric(rollbackReason);
@@ -456,24 +461,24 @@ final class RollbackPackageHealthObserver implements PackageHealthObserver {
             }
         };
 
-        final LocalIntentReceiver rollbackReceiver = new LocalIntentReceiver(result -> {
-            mHandler.post(() -> onResult.accept(result));
-        });
-
-        rollbackManager.commitRollback(rollback.getRollbackId(),
-                Collections.singletonList(failedPackage), rollbackReceiver.getIntentSender());
+        // final LocalIntentReceiver rollbackReceiver = new LocalIntentReceiver(result -> {
+        //     mHandler.post(() -> onResult.accept(result));
+        // });
+        //
+        // rollbackManager.commitRollback(rollback.getRollbackId(),
+        //         Collections.singletonList(failedPackage), rollbackReceiver.getIntentSender());
     }
 
-    /**
-     * Returns true if this package is not eligible for automatic rollback.
-     */
-    @VisibleForTesting
-    @AnyThread
-    public static boolean isAutomaticRollbackDenied(SystemConfig systemConfig,
-            VersionedPackage versionedPackage) {
-        return systemConfig.getAutomaticRollbackDenylistedPackages()
-            .contains(versionedPackage.getPackageName());
-    }
+    // /**
+    //  * Returns true if this package is not eligible for automatic rollback.
+    //  */
+    // @VisibleForTesting
+    // @AnyThread
+    // public static boolean isAutomaticRollbackDenied(SystemConfig systemConfig,
+    //         VersionedPackage versionedPackage) {
+    //     return systemConfig.getAutomaticRollbackDenylistedPackages()
+    //         .contains(versionedPackage.getPackageName());
+    // }
 
     /**
      * Two-phase rollback:

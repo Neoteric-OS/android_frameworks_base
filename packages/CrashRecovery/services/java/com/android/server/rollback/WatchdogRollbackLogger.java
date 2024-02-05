@@ -50,6 +50,7 @@ import java.util.Set;
 
 /**
  * This class handles the logic for logging Watchdog-triggered rollback events.
+ * @hide
  */
 public final class WatchdogRollbackLogger {
     private static final String TAG = "WatchdogRollbackLogger";
@@ -241,10 +242,10 @@ public final class WatchdogRollbackLogger {
             return;
         }
         String key = prefix + rollbackTypeToString(type);
-        SystemProperties.set(key, String.valueOf(true));
-        SystemProperties.set(key + ".logPackage", logPackage != null ? logPackage.toString() : "");
-        SystemProperties.set(key + ".rollbackReason", rollbackReasonToString(rollbackReason));
-        SystemProperties.set(key + ".failedPackageName", failingPackageName);
+        // SystemProperties.set(key, String.valueOf(true));
+        // SystemProperties.set(key + ".logPackage", logPackage != null ? logPackage.toString() : "");
+        // SystemProperties.set(key + ".rollbackReason", rollbackReasonToString(rollbackReason));
+        // SystemProperties.set(key + ".failedPackageName", failingPackageName);
     }
 
     @VisibleForTesting

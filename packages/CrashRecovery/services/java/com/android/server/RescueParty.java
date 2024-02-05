@@ -18,10 +18,12 @@ package com.android.server;
 
 import static android.provider.DeviceConfig.Properties;
 
-import static com.android.server.pm.PackageManagerServiceUtils.logCriticalInfo;
+//import static com.android.server.pm.PackageManagerServiceUtils.logCriticalInfo;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -29,7 +31,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.VersionedPackage;
 import android.os.Build;
 import android.os.Environment;
-import android.os.FileUtils;
+// import android.os.FileUtils;
 import android.os.PowerManager;
 import android.os.RecoverySystem;
 import android.os.SystemClock;
@@ -45,16 +47,20 @@ import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.ArrayUtils;
+import android.util.ArrayUtils;//com.android.internal.util.ArrayUtils;
 import com.android.server.PackageWatchdog.FailureReasons;
-import com.android.server.PackageWatchdog.PackageHealthObserver;
+import com.android.server.PackageHealthObserver;
 import com.android.server.PackageWatchdog.PackageHealthObserverImpact;
-import com.android.server.am.SettingsToPropertiesMapper;
+//import com.android.server.am.SettingsToPropertiesMapper;
 import com.android.server.crashrecovery.proto.CrashRecoveryStatsLog;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import android.util.FileUtils;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -73,6 +79,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @hide
  */
+@SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
+@SuppressLint("StaticUtils")
 public class RescueParty {
     @VisibleForTesting
     static final String PROP_ENABLE_RESCUE = "persist.sys.enable_rescue";
@@ -118,7 +126,7 @@ public class RescueParty {
             | ApplicationInfo.FLAG_SYSTEM;
 
     /** Register the Rescue Party observer as a Package Watchdog health observer */
-    public static void registerHealthObserver(Context context) {
+    public static void registerHealthObserver(@NonNull Context context) {
         PackageWatchdog.getInstance(context).registerHealthObserver(
                 RescuePartyObserver.getInstance(context));
     }
@@ -178,25 +186,32 @@ public class RescueParty {
         return CrashRecoveryProperties.attemptingReboot().orElse(false);
     }
 
+    /** @hide **/
     protected static long getLastFactoryResetTimeMs() {
         return CrashRecoveryProperties.lastFactoryResetTimeMs().orElse(0L);
     }
 
+    /** @hide **/
     protected static int getMaxRescueLevelAttempted() {
         return CrashRecoveryProperties.maxRescueLevelAttempted().orElse(LEVEL_NONE);
     }
 
+    /** @hide **/
     protected static void setFactoryResetProperty(boolean value) {
         CrashRecoveryProperties.attemptingFactoryReset(value);
     }
+
+    /** @hide **/
     protected static void setRebootProperty(boolean value) {
         CrashRecoveryProperties.attemptingReboot(value);
     }
 
+    /** @hide **/
     protected static void setLastFactoryResetTimeMs(long value) {
         CrashRecoveryProperties.lastFactoryResetTimeMs(value);
     }
 
+    /** @hide **/
     protected static void setMaxRescueLevelAttempted(int level) {
         CrashRecoveryProperties.maxRescueLevelAttempted(level);
     }
@@ -205,7 +220,7 @@ public class RescueParty {
      * Called when {@code SettingsProvider} has been published, which is a good
      * opportunity to reset any settings depending on our rescue level.
      */
-    public static void onSettingsProviderPublished(Context context) {
+    public static void onSettingsProviderPublished(@NonNull Context context) {
         handleNativeRescuePartyResets();
         ContentResolver contentResolver = context.getContentResolver();
         DeviceConfig.setMonitorCallback(
@@ -220,7 +235,7 @@ public class RescueParty {
      * to avoid rolled back modules consuming flag values only expected to work
      * on modules of newer versions.
      */
-    public static void resetDeviceConfigForPackages(List<String> packageNames) {
+    public static void resetDeviceConfigForPackages(@NonNull List<String> packageNames) {
         if (packageNames == null) {
             return;
         }
@@ -251,17 +266,17 @@ public class RescueParty {
         while (namespaceIt.hasNext()) {
             String namespaceToReset = namespaceIt.next();
             Properties properties = new Properties.Builder(namespaceToReset).build();
-            try {
-                if (!DeviceConfig.setProperties(properties)) {
-                    logCriticalInfo(Log.ERROR, "Failed to clear properties under "
-                            + namespaceToReset
-                            + ". Running `device_config get_sync_disabled_for_tests` will confirm"
-                            + " if config-bulk-update is enabled.");
-                }
-            } catch (DeviceConfig.BadConfigException exception) {
-                logCriticalInfo(Log.WARN, "namespace " + namespaceToReset
-                        + " is already banned, skip reset.");
-            }
+            // try {
+            //     if (!DeviceConfig.setProperties(properties)) {
+            //         logCriticalInfo(Log.ERROR, "Failed to clear properties under "
+            //                 + namespaceToReset
+            //                 + ". Running `device_config get_sync_disabled_for_tests` will confirm"
+            //                 + " if config-bulk-update is enabled.");
+            //     }
+            // } catch (DeviceConfig.BadConfigException exception) {
+            //     logCriticalInfo(Log.WARN, "namespace " + namespaceToReset
+            //             + " is already banned, skip reset.");
+            // }
         }
     }
 
@@ -334,9 +349,64 @@ public class RescueParty {
                 DEFAULT_OBSERVING_DURATION_MS);
     }
 
+    private static final String RESET_PERFORMED_PROPERTY = "device_config.reset_performed";
+    private static final String RESET_RECORD_FILE_PATH =
+        "/data/server_configurable_flags/reset_flags";
+    /**
+     *
+     * @return
+     * @hide
+     */
+    private static boolean isNativeFlagsResetPerformed() {
+        String value = SystemProperties.get(RESET_PERFORMED_PROPERTY);
+        return "true".equals(value);
+    }
+    @VisibleForTesting
+    static String getResetFlagsFileContent() {
+        String content = null;
+        try {
+            File reset_flag_file = new File(RESET_RECORD_FILE_PATH);
+            BufferedReader br = new BufferedReader(new FileReader(reset_flag_file));
+            content = br.readLine();
+
+            br.close();
+        } catch (IOException ioe) {
+//            log("failed to read file " + RESET_RECORD_FILE_PATH, ioe);
+        }
+        return content;
+    }
+
+    /**
+     *
+     * @return
+     * @hide
+     */
+    public static @NonNull String[] getResetNativeCategories() {
+        if (!isNativeFlagsResetPerformed()) {
+            return new String[0];
+        }
+
+        String content = getResetFlagsFileContent();
+        if (TextUtils.isEmpty(content)) {
+            return new String[0];
+        }
+
+        String[] property_names = content.split(";");
+        HashSet<String> categories = new HashSet<>();
+        for (String property_name : property_names) {
+            String[] segments = property_name.split("\\.");
+            if (segments.length < 3) {
+//                log("failed to extract category name from property " + property_name);
+                continue;
+            }
+            categories.add(segments[2]);
+        }
+        return categories.toArray(new String[0]);
+    }
+
     private static void handleNativeRescuePartyResets() {
-        if (SettingsToPropertiesMapper.isNativeFlagsResetPerformed()) {
-            String[] resetNativeCategories = SettingsToPropertiesMapper.getResetNativeCategories();
+        if (isNativeFlagsResetPerformed()) {
+            String[] resetNativeCategories = getResetNativeCategories();
             for (int i = 0; i < resetNativeCategories.length; i++) {
                 // Don't let RescueParty reset the namespace for RescueParty switches.
                 if (NAMESPACE_CONFIGURATION.equals(resetNativeCategories[i])) {
@@ -391,7 +461,7 @@ public class RescueParty {
             if (!TextUtils.isEmpty(failedPackage)) {
                 successMsg += " for package " + failedPackage;
             }
-            logCriticalInfo(Log.DEBUG, successMsg);
+            //logCriticalInfo(Log.DEBUG, successMsg);
         } catch (Throwable t) {
             logRescueException(level, failedPackage, t);
         }
@@ -519,7 +589,7 @@ public class RescueParty {
         if (!TextUtils.isEmpty(failedPackageName)) {
             failureMsg += " for package " + failedPackageName;
         }
-        logCriticalInfo(Log.ERROR, failureMsg + ": " + msg);
+        //logCriticalInfo(Log.ERROR, failureMsg + ": " + msg);
     }
 
     private static int mapRescueLevelToUserImpact(int rescueLevel) {
@@ -625,6 +695,7 @@ public class RescueParty {
      * Handle mitigation action for package failures. This observer will be register to Package
      * Watchdog and will receive calls about package failures. This observer is persistent so it
      * may choose to mitigate failures for packages it has not explicitly asked to observe.
+     * @hide
      */
     public static class RescuePartyObserver implements PackageHealthObserver {
 
@@ -639,7 +710,7 @@ public class RescueParty {
             mContext = context;
         }
 
-        /** Creates or gets singleton instance of RescueParty. */
+        /** @hide Creates or gets singleton instance of RescueParty. */
         public static RescuePartyObserver getInstance(Context context) {
             synchronized (RescuePartyObserver.class) {
                 if (sRescuePartyObserver == null) {
@@ -700,7 +771,7 @@ public class RescueParty {
         }
 
         @Override
-        public boolean mayObservePackage(String packageName) {
+        public boolean mayObservePackage(@NonNull String packageName) {
             PackageManager pm = mContext.getPackageManager();
             try {
                 // A package is a module if this is non-null
@@ -733,7 +804,7 @@ public class RescueParty {
         }
 
         @Override
-        public String getName() {
+        public @NonNull String getName() {
             return NAME;
         }
 
