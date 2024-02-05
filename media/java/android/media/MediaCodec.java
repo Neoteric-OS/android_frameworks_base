@@ -16,6 +16,8 @@
 
 package android.media;
 
+import static android.media.codec.Flags.FLAG_NULL_OUTPUT_SURFACE;
+
 import android.Manifest;
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
@@ -2211,6 +2213,18 @@ final public class MediaCodec {
      */
     public static final int CONFIGURE_FLAG_USE_CRYPTO_ASYNC = 4;
 
+    /**
+     * Configure the codec with a detached output surface.
+     * <p>
+     * This flag is only defined for a video decoder. MediaCodec
+     * configured with this flag will be in Surface mode even though
+     * the surface parameter is null.
+     *
+     * @see detachOutputSurface
+     */
+    @FlaggedApi(FLAG_NULL_OUTPUT_SURFACE)
+    public static final int CONFIGURE_FLAG_DETACHED_SURFACE = 8;
+
     /** @hide */
     @IntDef(
         flag = true,
@@ -2263,6 +2277,9 @@ final public class MediaCodec {
      *                codec does not generate raw video output (e.g. not a video
      *                decoder) and/or if you want to configure the codec for
      *                {@link ByteBuffer} output.
+     * // If flags contains {link #CONFIGURE_FLAG_DETACHED_SURFACE}, video decoder
+     * // will not produce {link ByteBuffer} output even if the surface is
+     * // {code null}.
      * @param crypto  Specify a crypto object to facilitate secure decryption
      *                of the media data. Pass {@code null} as {@code crypto} for
      *                non-secure codecs.
@@ -2272,6 +2289,9 @@ final public class MediaCodec {
      *                when not in use.
      * @param flags   Specify {@link #CONFIGURE_FLAG_ENCODE} to configure the
      *                component as an encoder.
+     * // Additional flags are also supported for {link #CONFIGURE_FLAG_USE_BLOCK_MODEL
+     * // block model API}, {link #CONFIGURE_FLAG_USE_CRYPTO_ASYNC asynchronous decryption}
+     * // and {link #CONFIGURE_FLAG_DETACHED_SURFACE detached-output-surface mode}.
      * @throws IllegalArgumentException if the surface has been released (or is invalid),
      * or the format is unacceptable (e.g. missing a mandatory key),
      * or the flags are not set properly
@@ -2298,8 +2318,14 @@ final public class MediaCodec {
      *                codec does not generate raw video output (e.g. not a video
      *                decoder) and/or if you want to configure the codec for
      *                {@link ByteBuffer} output.
+     * // If flags contains {link #CONFIGURE_FLAG_DETACHED_SURFACE}, video decoder
+     * // will not produce {link ByteBuffer} output even if the surface is
+     * // {code null}.
      * @param flags   Specify {@link #CONFIGURE_FLAG_ENCODE} to configure the
      *                component as an encoder.
+     * // Additional flags are also supported for {link #CONFIGURE_FLAG_USE_BLOCK_MODEL
+     * // block model API}, {link #CONFIGURE_FLAG_USE_CRYPTO_ASYNC asynchronous decryption}
+     * // and {link #CONFIGURE_FLAG_DETACHED_SURFACE detached-output-surface mode}.
      * @param descrambler Specify a descrambler object to facilitate secure
      *                descrambling of the media data, or null for non-secure codecs.
      * @throws IllegalArgumentException if the surface has been released (or is invalid),
@@ -2391,6 +2417,31 @@ final public class MediaCodec {
     }
 
     private native void native_setSurface(@NonNull Surface surface);
+
+    /**
+     *  Detach the current output surface of a codec.
+     *  <p>
+     *  Detaches the currently associated output Surface from the
+     *  MediaCodec decoder. This allows the SurfaceView or other
+     *  component holding the Surface to be safely destroyed or
+     *  modified without affecting the decoder's operation. After
+     *  calling this method (and after it returns), the decoder will
+     *  enter detached-Surface mode and will no longer render
+     *  output.
+     *
+     *  @throws IllegalStateException if the codec was not
+     *                                configured in surface mode.
+     *  @see CONFIGURE_FLAG_DETACHED_SURFACE
+     */
+    @FlaggedApi(FLAG_NULL_OUTPUT_SURFACE)
+    public void detachOutputSurface() {
+        if (!mHasSurface) {
+            throw new IllegalStateException("codec was not configured for an output surface");
+        }
+        // note: we still have a surface in detached mode, so keep mHasSurface
+        // we also technically allow calling detachOutputSurface multiple times in a row
+        // native_detachSurface();
+    }
 
     /**
      * Create a persistent input surface that can be used with codecs that normally have an input
