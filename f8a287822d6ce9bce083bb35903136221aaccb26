@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f656612_4f50e2ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-02-05T14:41:09Z",
+      "side": 1,
+      "message": "Patchset #4 handles the same exceptions that the ordinary parser does in https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/appop/AppOpsService.java;drc\u003daa240ece334858daa68b7e876f6707098eb8a97f;l\u003d4077",
+      "revId": "f8a287822d6ce9bce083bb35903136221aaccb26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
