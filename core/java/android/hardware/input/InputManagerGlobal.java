@@ -52,6 +52,7 @@ import android.view.InputDevice;
 import android.view.InputEvent;
 import android.view.InputMonitor;
 import android.view.PointerIcon;
+import android.view.IInputFilter;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.SomeArgs;
@@ -1324,6 +1325,18 @@ public final class InputManagerGlobal {
     public void pilferPointers(IBinder inputChannelToken) {
         try {
             mIm.pilferPointers(inputChannelToken);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @see InputManager#setInputFilter(IInputFilter)
+     */
+    @RequiresPermission(Manifest.permission.MONITOR_INPUT)
+    public void setInputFilter(@Nullable IInputFilter filter) {
+        try {
+            mIm.setInputFilter(filter);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

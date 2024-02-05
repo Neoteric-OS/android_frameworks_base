@@ -51,6 +51,7 @@ import android.view.VerifiedInputEvent;
 import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodSubtype;
+import android.view.IInputFilter;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -1316,6 +1317,17 @@ public final class InputManager {
     public void unregisterKeyboardBacklightListener(
             @NonNull KeyboardBacklightListener listener) {
         mGlobal.unregisterKeyboardBacklightListener(listener);
+    }
+
+    /**
+     * An entrance to set InputFilter to the input system.
+     *
+     * @param filter an {@link android.view.InputFilter}
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.MONITOR_INPUT)
+    public void setInputFilter(@Nullable IInputFilter filter){
+        mGlobal.setInputFilter(filter);
     }
 
     /**

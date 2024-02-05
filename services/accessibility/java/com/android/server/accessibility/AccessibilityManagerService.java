@@ -198,7 +198,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         SystemActionPerformer.SystemActionsChangedListener,
         SystemActionPerformer.DisplayUpdateCallBack, ProxyManager.SystemSupport {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String LOG_TAG = "AccessibilityManagerService";
 

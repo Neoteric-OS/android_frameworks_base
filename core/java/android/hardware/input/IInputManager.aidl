@@ -42,6 +42,7 @@ import android.view.InputEvent;
 import android.view.InputMonitor;
 import android.view.PointerIcon;
 import android.view.VerifiedInputEvent;
+import android.view.IInputFilter;
 
 /** @hide */
 interface IInputManager {
@@ -236,4 +237,6 @@ interface IInputManager {
     void unregisterKeyboardBacklightListener(IKeyboardBacklightListener listener);
 
     HostUsiVersion getHostUsiVersionFromDisplayConfig(int displayId);
+
+    void setInputFilter(IInputFilter filter);
 }

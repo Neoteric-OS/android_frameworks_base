@@ -797,7 +797,8 @@ public class InputManagerService extends IInputManager.Stub
      *
      * @param filter The input filter, or null to remove the current filter.
      */
-    public void setInputFilter(IInputFilter filter) {
+    @Override // Binder call & Local call
+    public void setInputFilter(@Nullable IInputFilter filter) {
         synchronized (mInputFilterLock) {
             final IInputFilter oldFilter = mInputFilter;
             if (oldFilter == filter) {

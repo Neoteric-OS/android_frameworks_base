@@ -60,7 +60,7 @@ class AccessibilityInputFilter extends InputFilter implements EventStreamTransfo
 
     private static final String TAG = AccessibilityInputFilter.class.getSimpleName();
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     /**
      * Flag for enabling the screen magnification feature.
