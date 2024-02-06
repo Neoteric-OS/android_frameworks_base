@@ -118,6 +118,30 @@
       },
       "revId": "7ef18f6ae7e72c98d99f20f145022d3e7c16b369",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd559451_5bc9f5e6",
+        "filename": "core/java/android/util/MemoryIntArray.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-02-06T23:00:26Z",
+      "side": 1,
+      "message": "Changed to `mSize \u003d nativeSize(mFd);` to ensure full consistency with earlier size checks, with an extra comparative check.\n\n\u003e (it might also be the case that the comment is wrong -- I am assuming it rounds up to the nearest page or something -- haven\u0027t checked the other details)\n\nThe unrounded size should be set/get using the underlying `ASHMEM_GET/SET_SIZE` ioctls, so we should be OK otherwise. All the original authors/contributors of this code seem to have left Google \u003d/.",
+      "parentUuid": "84ce09fe_3f5c2941",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "7ef18f6ae7e72c98d99f20f145022d3e7c16b369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
