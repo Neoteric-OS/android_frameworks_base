@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43c3a5f3_2f64a19f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-02-06T22:17:45Z",
+      "side": 1,
+      "message": "@smoreland@google.com can you think of any reason why this would be inherently less safe? If the underlying buffer size can change, then even the current dynamic size check wouldn\u0027t be safe, so I see this as no worse in practice, with a lot of upside for perf.",
+      "revId": "017bc5abdda8bbe91058616d38348f4f4700335d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
