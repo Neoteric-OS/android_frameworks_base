@@ -1,12 +1,14 @@
+#include <stdio.h>
+
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <string>
+
 #include "Errors.h"
 #include "stream_proto_utils.h"
 #include "string_utils.h"
-
-#include <stdio.h>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-#include <map>
 
 using namespace android::stream_proto;
 using namespace google::protobuf::io;
@@ -240,20 +242,35 @@ write_multiple_files(CodeGeneratorResponse* response, const FileDescriptorProto&
     }
 }
 
-static void
-write_single_file(CodeGeneratorResponse* response, const FileDescriptorProto& file_descriptor)
-{
+static void write_single_file(CodeGeneratorResponse* response,
+                              const FileDescriptorProto& file_descriptor,
+                              set<string> messages_to_compile) {
     int N;
 
     vector<EnumDescriptorProto> enums;
     N = file_descriptor.enum_type_size();
     for (int i=0; i<N; i++) {
+        auto message_full_name =
+                file_descriptor.package() + "." + file_descriptor.enum_type(i).name();
+        if (!messages_to_compile.empty() && !messages_to_compile.count(message_full_name)) {
+            continue;
+        }
+
         enums.push_back(file_descriptor.enum_type(i));
     }
 
     vector<DescriptorProto> messages;
     N = file_descriptor.message_type_size();
     for (int i=0; i<N; i++) {
+        auto message_full_name =
+                file_descriptor.package() + "." + file_descriptor.message_type(i).name();
+        // cout << message_full_name << endl;
+
+        if (!messages_to_compile.empty() && !messages_to_compile.count(message_full_name)) {
+            // cout << "IGNORING MESSAGE" << endl;
+            continue;
+        }
+
         messages.push_back(file_descriptor.message_type(i));
     }
 
@@ -279,6 +296,28 @@ main(int argc, char const*const* argv)
     // Read the request
     request.ParseFromIstream(&cin);
 
+    set<string> messages_to_compile;
+    auto request_params = request.parameter();
+    if (!request_params.empty()) {
+        stringstream ss(request_params);
+
+        string line;
+        while (getline(ss, line, ';')) {
+            stringstream line_ss(request_params);
+            string arg_name;
+            getline(line_ss, arg_name, ':');
+            if (arg_name == "include_filter") {
+                string full_message_name;
+                while (getline(line_ss, full_message_name, ',')) {
+                    messages_to_compile.insert(full_message_name);
+                }
+            } else {
+                ERRORS.Add(UNKNOWN_FILE, UNKNOWN_LINE, "Unable to process argument '%s'.",
+                           arg_name.c_str());
+            }
+        }
+    }
+
     // Build the files we need.
     const int N = request.proto_file_size();
     for (int i=0; i<N; i++) {
@@ -287,7 +326,7 @@ main(int argc, char const*const* argv)
             if (file_descriptor.options().java_multiple_files()) {
                 write_multiple_files(&response, file_descriptor);
             } else {
-                write_single_file(&response, file_descriptor);
+                write_single_file(&response, file_descriptor, messages_to_compile);
             }
         }
     }

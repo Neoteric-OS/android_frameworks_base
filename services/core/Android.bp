@@ -125,6 +125,7 @@ java_library_static {
 
         // Java/AIDL sources to be moved out to CrashRecovery module
         ":services-crashrecovery-sources",
+        // ":perfetto_trace_javastream_protos",
     ],
 
     libs: [
