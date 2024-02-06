@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86fa7f35_a42034dc",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/WatchdogRollbackLogger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1060436
+      },
+      "writtenOn": "2024-02-06T19:55:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this gets used, but I think we may need a new value here...\n\nIIUC REASON_NATIVE_CRASH_DURING_BOOT is used for logging filesystem based rollbacks which occur automatically when a devices crashes repeatedly prior to boot.\n\nBootlooping that triggers RollbackManager rollbacks should be something else.",
+      "revId": "ef9f6711c0f48dbdcf033985f63d179f159622b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
