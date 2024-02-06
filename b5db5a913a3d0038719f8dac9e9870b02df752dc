@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61aa2115_e608f1e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-02-06T23:04:03Z",
+      "side": 1,
+      "message": "(Svet, please let me know if you don\u0027t want anything like this, but adding you in case you do care - Meta jgao also still contributes to AOSP and he has modified this file, but he put \u0027P0\u0027 in his name so will refrain from adding it here)",
+      "revId": "b5db5a913a3d0038719f8dac9e9870b02df752dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
