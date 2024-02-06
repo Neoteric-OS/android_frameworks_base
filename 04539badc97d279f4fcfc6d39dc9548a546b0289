@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f8c69b5_822df2af",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-02-06T18:29:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67813abc_b1792f37",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 224,
+        "endChar": 85
+      },
+      "revId": "04539badc97d279f4fcfc6d39dc9548a546b0289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bc863ec_92c912e0",
@@ -41,6 +65,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c830f89_2701350f",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-02-06T18:29:24Z",
+      "side": 1,
+      "message": "Nope - the flag will be for the UI changes.",
+      "parentUuid": "9bc863ec_92c912e0",
+      "revId": "04539badc97d279f4fcfc6d39dc9548a546b0289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c369d59d_58038f3a",
@@ -54,6 +96,30 @@
       "writtenOn": "2024-02-06T17:17:48Z",
       "side": 1,
       "message": "Silently ignoring failures seems wrong to me.\n\nWe should throw and let the caller decide how to deal with it. e.g. the lock settings UI may decide to toss up some sort of user warning.",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 27
+      },
+      "revId": "04539badc97d279f4fcfc6d39dc9548a546b0289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2facf532_c7109cc1",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2024-02-06T18:29:24Z",
+      "side": 1,
+      "message": "Per OOB discussion, using KeystoreException here.",
+      "parentUuid": "c369d59d_58038f3a",
       "range": {
         "startLine": 237,
         "startChar": 0,
