@@ -46,6 +46,30 @@
       },
       "revId": "7ef18f6ae7e72c98d99f20f145022d3e7c16b369",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7450a79_4947d37e",
+        "filename": "core/java/android/util/MemoryIntArray.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-02-06T22:42:26Z",
+      "side": 1,
+      "message": "That is, the `size` here feeds into the ashmem size via\n\n`const int ashmemSize \u003d sizeof(std::atomic_int) * size`\n\nI suppose I could change this to be `mSize \u003d nativeSize(mFd)`, don\u0027t feel strongly either way?",
+      "parentUuid": "5ba12c45_bae61f74",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "7ef18f6ae7e72c98d99f20f145022d3e7c16b369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
