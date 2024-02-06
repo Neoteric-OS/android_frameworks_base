@@ -1,0 +1,4 @@
+# Bug component: 315013
+include /services/core/java/com/android/server/uri/OWNERS
+
+per-file ComponentCaller.java = brufino@google.com,mpgroover@google.com
