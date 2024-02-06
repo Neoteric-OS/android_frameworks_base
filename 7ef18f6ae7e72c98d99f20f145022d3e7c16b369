@@ -70,6 +70,30 @@
       },
       "revId": "7ef18f6ae7e72c98d99f20f145022d3e7c16b369",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d08093e8_3d1ea4b8",
+        "filename": "core/java/android/util/MemoryIntArray.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-02-06T22:48:54Z",
+      "side": 1,
+      "message": "I think `mSize \u003d nativeSize(mFd);` should work, but as I haven\u0027t seen MemoryIntArray, ideally you could double check that is enough or find someone familiar with it.",
+      "parentUuid": "d7450a79_4947d37e",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "7ef18f6ae7e72c98d99f20f145022d3e7c16b369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
