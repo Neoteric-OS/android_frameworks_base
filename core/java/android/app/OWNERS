@@ -55,6 +55,10 @@ per-file IBackupAgent.aidl = file:/services/backup/OWNERS
 per-file Broadcast* = file:/BROADCASTS_OWNERS
 per-file ReceiverInfo* = file:/BROADCASTS_OWNERS
 
+# ComponentCaller
+per-file ComponentCaller.java = file:/services/core/java/com/android/server/uri/OWNERS
+per-file ComponentCaller.java = brufino@google.com,mpgroover@google.com
+
 # KeyguardManager
 per-file KeyguardManager.java = file:/services/core/java/com/android/server/locksettings/OWNERS
 
