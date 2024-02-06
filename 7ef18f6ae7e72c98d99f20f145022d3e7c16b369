@@ -22,6 +22,30 @@
       },
       "revId": "7ef18f6ae7e72c98d99f20f145022d3e7c16b369",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ba12c45_bae61f74",
+        "filename": "core/java/android/util/MemoryIntArray.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-02-06T22:39:58Z",
+      "side": 1,
+      "message": "\u003e So it seems that nativeSize may be different actually?\n\nRight, that\u0027s ensuring consistent ashmem vs mmap region sizes. `nativeSize` returns the number of int elements (`ashmem_get_size_region()/sizeof(atomic_int)`), so calling that and and caching after the initial `MemoryIntArray_open` validation should be fine (and consistent with the `size` arg in the public Java constructor)?\n\n\u003e Also, note historical bug b/294609150.\n\nInteresting, good to know about existing safeguards!",
+      "parentUuid": "1607bdc6_64494725",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 21
+      },
+      "revId": "7ef18f6ae7e72c98d99f20f145022d3e7c16b369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
