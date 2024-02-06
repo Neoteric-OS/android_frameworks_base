@@ -258,6 +258,8 @@ public final class WatchdogRollbackLogger {
                 return WATCHDOG_ROLLBACK_OCCURRED__ROLLBACK_REASON__REASON_APP_CRASH;
             case PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING:
                 return WATCHDOG_ROLLBACK_OCCURRED__ROLLBACK_REASON__REASON_APP_NOT_RESPONDING;
+            case PackageWatchdog.FAILURE_REASON_BOOT_LOOP:
+                return WATCHDOG_ROLLBACK_OCCURRED__ROLLBACK_REASON__REASON_NATIVE_CRASH_DURING_BOOT;
             default:
                 return WATCHDOG_ROLLBACK_OCCURRED__ROLLBACK_REASON__REASON_UNKNOWN;
         }
