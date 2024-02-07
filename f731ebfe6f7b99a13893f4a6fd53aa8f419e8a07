@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "215d6964_b6bb15cd",
+        "filename": "core/java/android/app/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2024-02-07T20:56:07Z",
+      "side": 1,
+      "message": "I believe we should only be referencing other OWNERS files in this file.\n\ncan you add a new URI_OWNERS file in this directory with the per-file specific owners in there and link the new owners file here instead?",
+      "range": {
+        "startLine": 60,
+        "startChar": 32,
+        "endLine": 60,
+        "endChar": 71
+      },
+      "revId": "f731ebfe6f7b99a13893f4a6fd53aa8f419e8a07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
