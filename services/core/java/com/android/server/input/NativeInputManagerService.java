@@ -117,8 +117,6 @@ interface NativeInputManagerService {
      */
     boolean transferTouch(IBinder destChannelToken, int displayId);
 
-    int getMousePointerSpeed();
-
     void setPointerSpeed(int speed);
 
     void setPointerAcceleration(float acceleration);
@@ -343,9 +341,6 @@ interface NativeInputManagerService {
 
         @Override
         public native boolean transferTouch(IBinder destChannelToken, int displayId);
-
-        @Override
-        public native int getMousePointerSpeed();
 
         @Override
         public native void setPointerSpeed(int speed);
