@@ -34,6 +34,24 @@
       "parentUuid": "86fa7f35_a42034dc",
       "revId": "ef9f6711c0f48dbdcf033985f63d179f159622b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86c1c50f_1dbffe4d",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/WatchdogRollbackLogger.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-02-07T14:57:04Z",
+      "side": 1,
+      "message": "Updated this to boot looping",
+      "parentUuid": "5c8b3f64_2a1fb918",
+      "revId": "ef9f6711c0f48dbdcf033985f63d179f159622b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
