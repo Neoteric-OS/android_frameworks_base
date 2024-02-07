@@ -3286,6 +3286,43 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         }
     }
 
+    @Override
+    public void setFirewallEnabled(int firewallChain, boolean enabled) {
+        setFirewallEnabled_enforcePermission();
+        Trace.traceBegin(Trace.TRACE_TAG_NETWORK, "setFirewallEnabled");
+        try {
+            final long token = Binder.clearCallingIdentity();
+            try {
+                synchronized (mUidRulesFirstLock) {
+                    if (!mBackgroundNetworkRestricted
+                            && firewallChain == FIREWALL_CHAIN_BACKGROUND) {
+                        // Don't change it at runtime if the feature flag is disabled to avoid an
+                        // inconsistent state within the service.
+                        return;
+                    }
+                    enableFirewallChainUL(firewallChain, enabled);
+                }
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_NETWORK);
+        }
+    }
+
+    @Override
+    public boolean isFirewallEnabled(int firewallChain) {
+        isFirewallEnabled_enforcePermission();
+        Trace.traceBegin(Trace.TRACE_TAG_NETWORK, "isFirewallEnabled");
+        try {
+            synchronized (mUidRulesFirstLock) {
+                return mFirewallChainStates.get(firewallChain);
+            }
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_NETWORK);
+        }
+    }
+
     @GuardedBy("mUidRulesFirstLock")
     private void setRestrictBackgroundUL(boolean restrictBackground, String reason) {
         Trace.traceBegin(Trace.TRACE_TAG_NETWORK, "setRestrictBackgroundUL");

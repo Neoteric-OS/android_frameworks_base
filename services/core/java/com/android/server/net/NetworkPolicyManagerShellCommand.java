@@ -16,6 +16,18 @@
 
 package com.android.server.net;
 
+import static android.net.ConnectivityManager.FIREWALL_CHAIN_BACKGROUND;
+import static android.net.ConnectivityManager.FIREWALL_CHAIN_DOZABLE;
+import static android.net.ConnectivityManager.FIREWALL_CHAIN_LOW_POWER_STANDBY;
+import static android.net.ConnectivityManager.FIREWALL_CHAIN_POWERSAVE;
+import static android.net.ConnectivityManager.FIREWALL_CHAIN_RESTRICTED;
+import static android.net.ConnectivityManager.FIREWALL_CHAIN_STANDBY;
+import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_BACKGROUND;
+import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_DOZABLE;
+import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_LOW_POWER_STANDBY;
+import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_POWERSAVE;
+import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_RESTRICTED;
+import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_STANDBY;
 import static android.net.NetworkPolicyManager.POLICY_ALLOW_METERED_BACKGROUND;
 import static android.net.NetworkPolicyManager.POLICY_NONE;
 import static android.net.NetworkPolicyManager.POLICY_REJECT_METERED_BACKGROUND;
@@ -107,6 +119,10 @@ class NetworkPolicyManagerShellCommand extends ShellCommand {
         pw.println("    Sets the global restrict background usage status.");
         pw.println("  set sub-plan-owner subId [packageName]");
         pw.println("    Sets the data plan owner package for subId.");
+        pw.println("  set firewall-state NAME BOOLEAN");
+        pw.println("    Toggles the state of the firewall with the given NAME");
+        pw.println("  get firewall-state NAME");
+        pw.println("    Returns the current state of the firewall with the given NAME");
     }
 
     private int runGet() throws RemoteException {
@@ -121,6 +137,8 @@ class NetworkPolicyManagerShellCommand extends ShellCommand {
                 return getRestrictBackground();
             case "restricted-mode":
                 return getRestrictedModeState();
+            case "firewall-state":
+                return getFirewallState();
         }
         pw.println("Error: unknown get type '" + type + "'");
         return -1;
@@ -140,6 +158,8 @@ class NetworkPolicyManagerShellCommand extends ShellCommand {
                 return setRestrictBackground();
             case "sub-plan-owner":
                 return setSubPlanOwner();
+            case "firewall-state":
+                return setFirewallState();
         }
         pw.println("Error: unknown set type '" + type + "'");
         return -1;
@@ -277,6 +297,49 @@ class NetworkPolicyManagerShellCommand extends ShellCommand {
             return enabled;
         }
         mInterface.setRestrictBackground(enabled > 0);
+        return 0;
+    }
+
+    private static int getFirewallByName(String name) {
+        return switch (name.toLowerCase()) {
+            case FIREWALL_CHAIN_NAME_STANDBY -> FIREWALL_CHAIN_STANDBY;
+            case FIREWALL_CHAIN_NAME_DOZABLE -> FIREWALL_CHAIN_DOZABLE;
+            case FIREWALL_CHAIN_NAME_BACKGROUND ->
+                    Flags.networkBlockedForTopSleepingAndAbove() ? FIREWALL_CHAIN_BACKGROUND : -1;
+            case FIREWALL_CHAIN_NAME_POWERSAVE -> FIREWALL_CHAIN_POWERSAVE;
+            case FIREWALL_CHAIN_NAME_LOW_POWER_STANDBY -> FIREWALL_CHAIN_LOW_POWER_STANDBY;
+            case FIREWALL_CHAIN_NAME_RESTRICTED -> FIREWALL_CHAIN_RESTRICTED;
+            default -> -1;
+        };
+    }
+
+    private int setFirewallState() {
+        final String firewallName = getNextArgRequired();
+        final int firewallChain = getFirewallByName(firewallName);
+        if (firewallChain < 0) {
+            final PrintWriter pw = getOutPrintWriter();
+            pw.println("Unknown chain: " + firewallName);
+            return firewallChain;
+        }
+        final int enabled = getNextBooleanArg();
+        if (enabled < 0) {
+            return enabled;
+        }
+        mInterface.setFirewallEnabled(firewallChain, enabled > 0);
+        return 0;
+    }
+
+    private int getFirewallState() {
+        final String firewallName = getNextArgRequired();
+        final int firewallChain = getFirewallByName(firewallName);
+        if (firewallChain < 0) {
+            final PrintWriter pw = getOutPrintWriter();
+            pw.println("Unknown chain: " + firewallName);
+            return firewallChain;
+        }
+        final PrintWriter pw = getOutPrintWriter();
+        pw.print(firewallName + " firewall status: ");
+        pw.println(mInterface.isFirewallEnabled(firewallChain) ? "enabled" : "disabled");
         return 0;
     }
 

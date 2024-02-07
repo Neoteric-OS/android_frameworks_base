@@ -80,4 +80,8 @@ interface INetworkPolicyManager {
 
     boolean isUidNetworkingBlocked(int uid, boolean meteredNetwork);
     boolean isUidRestrictedOnMeteredNetworks(int uid);
+    @EnforcePermission("MANAGE_NETWORK_POLICY")
+    void setFirewallEnabled(int firewallChain, boolean enabled);
+    @EnforcePermission("OBSERVE_NETWORK_POLICY")
+    boolean isFirewallEnabled(int firewallChain);
 }
