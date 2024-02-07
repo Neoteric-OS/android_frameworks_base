@@ -352,7 +352,7 @@ func createMergedTxts(ctx android.LoadHookContext, bootclasspath, system_server_
 		textFiles = append(textFiles, MergedTxtDefinition{
 			TxtFilename:  f,
 			DistFilename: distFilename[i],
-			BaseTxt:      ":non-updatable-" + f,
+			BaseTxt:      ":non-updatable-exportable-" + f,
 			Modules:      bootclasspath,
 			ModuleTag:    "{.public" + tagSuffix[i],
 			Scope:        "public",
@@ -360,7 +360,7 @@ func createMergedTxts(ctx android.LoadHookContext, bootclasspath, system_server_
 		textFiles = append(textFiles, MergedTxtDefinition{
 			TxtFilename:  f,
 			DistFilename: distFilename[i],
-			BaseTxt:      ":non-updatable-system-" + f,
+			BaseTxt:      ":non-updatable-exportable-system-" + f,
 			Modules:      bootclasspath,
 			ModuleTag:    "{.system" + tagSuffix[i],
 			Scope:        "system",
@@ -368,7 +368,7 @@ func createMergedTxts(ctx android.LoadHookContext, bootclasspath, system_server_
 		textFiles = append(textFiles, MergedTxtDefinition{
 			TxtFilename:  f,
 			DistFilename: distFilename[i],
-			BaseTxt:      ":non-updatable-module-lib-" + f,
+			BaseTxt:      ":non-updatable-exportable-module-lib-" + f,
 			Modules:      bootclasspath,
 			ModuleTag:    "{.module-lib" + tagSuffix[i],
 			Scope:        "module-lib",
@@ -376,7 +376,7 @@ func createMergedTxts(ctx android.LoadHookContext, bootclasspath, system_server_
 		textFiles = append(textFiles, MergedTxtDefinition{
 			TxtFilename:  f,
 			DistFilename: distFilename[i],
-			BaseTxt:      ":non-updatable-system-server-" + f,
+			BaseTxt:      ":non-updatable-exportable-system-server-" + f,
 			Modules:      system_server_classpath,
 			ModuleTag:    "{.system-server" + tagSuffix[i],
 			Scope:        "system-server",
