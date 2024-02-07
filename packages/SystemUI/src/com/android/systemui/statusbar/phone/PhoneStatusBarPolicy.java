@@ -33,6 +33,7 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings.Global;
 import android.service.notification.ZenModeConfig;
@@ -260,7 +261,7 @@ public class PhoneStatusBarPolicy
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
-        mBroadcastDispatcher.registerReceiverWithHandler(mIntentReceiver, filter, mHandler);
+        mBroadcastDispatcher.registerReceiverWithHandler(mIntentReceiver, filter, mHandler, UserHandle.ALL);
         Observer<Integer> observer = ringer -> mHandler.post(this::updateVolumeZen);
 
         mRingerModeTracker.getRingerMode().observeForever(observer);
