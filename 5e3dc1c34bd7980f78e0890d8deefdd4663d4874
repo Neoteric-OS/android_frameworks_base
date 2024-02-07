@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5961586_76de1aa2",
+        "filename": "core/java/android/app/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-02-07T10:51:32Z",
+      "side": 1,
+      "message": "Hmm, should this be part of WM? Or maybe it makes more sense to be reviewed and owned by Uri grant related folks? @omakoto@google.com, hdyt?",
+      "revId": "5e3dc1c34bd7980f78e0890d8deefdd4663d4874",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
