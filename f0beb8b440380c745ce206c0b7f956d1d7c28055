@@ -135,6 +135,30 @@
       },
       "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a58a48b5_69a660de",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3293,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-02-08T22:52:39Z",
+      "side": 1,
+      "message": "Which is called here:\n\nhttps://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/net/NetworkPolicyManagerService.java;l\u003d4199-4205;drc\u003d7b647e4ea0e92f33c19b315eaed364ee067ba0aa\n\nNote that we\u0027ve already crossed the binder by this time.",
+      "parentUuid": "a7668839_45392fc8",
+      "range": {
+        "startLine": 3293,
+        "startChar": 0,
+        "endLine": 3293,
+        "endChar": 61
+      },
+      "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
