@@ -33,6 +33,29 @@
       "message": "Thank you Kalesh for the review! Friendly reminder to @jji@google.com for review as the Code-Owner approval is needed. Thanks!",
       "revId": "2dc1e8e331f9386d087684cfbbe3b03abce07317",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72980435_1a8b48fc",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11424,
+      "author": {
+        "id": 1275554
+      },
+      "writtenOn": "2024-02-08T23:30:24Z",
+      "side": 1,
+      "message": "This added additional new line for dumpsys meminfo -S.\n\nSo the output format was changed.",
+      "range": {
+        "startLine": 11424,
+        "startChar": 37,
+        "endLine": 11424,
+        "endChar": 39
+      },
+      "revId": "2dc1e8e331f9386d087684cfbbe3b03abce07317",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
