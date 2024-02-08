@@ -111,6 +111,30 @@
       },
       "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7668839_45392fc8",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3293,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2024-02-08T22:47:01Z",
+      "side": 1,
+      "message": "When I look at\n\nframeworks/base/services/core/java/com/android/server/net/NetworkPolicyManagerService.java\n\nI get to\n\nframeworks/base/services/core/java/com/android/server/net/NetworkPolicyManagerShellCommand.java\n\nwhich inherits from\n\nframeworks/base/core/java/android/os/ShellCommand.java\n\nwhich inherits from\n\nframeworks/libs/modules-utils/java/com/android/modules/utils/BasicShellCommandHandler.java\n\nwhich has\n\n   /**\n     * Implement parsing and execution of a command.  If it isn\u0027t a command you understand,\n     * call {@link #handleDefaultCommands(String)} and return its result as a last resort.\n     * Use {@link #getNextOption()}, {@link #getNextArg()}, and {@link #getNextArgRequired()}\n     * to process additional command line arguments.  Command output can be written to\n     * {@link #getOutPrintWriter()} and errors to {@link #getErrPrintWriter()}.\n     *\n     * \u003cp class\u003d\"caution\"\u003eNote that no permission checking has been done before entering this\n     * function, so you need to be sure to do your own security verification for any commands you\n     * are executing.  The easiest way to do this is to have the ShellCommand contain\n     * only a reference to your service\u0027s aidl interface, and do all of your command\n     * implementations on top of that -- that way you can rely entirely on your executing security\n     * code behind that interface.\u003c/p\u003e\n     *\n     * @param cmd The first command line argument representing the name of the command to execute.\n     * @return Return the command result; generally 0 or positive indicates success and\n     * negative values indicate error.\n     */\n    public abstract int onCommand(String cmd);",
+      "parentUuid": "7621740a_ba93ee27",
+      "range": {
+        "startLine": 3293,
+        "startChar": 0,
+        "endLine": 3293,
+        "endChar": 61
+      },
+      "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
