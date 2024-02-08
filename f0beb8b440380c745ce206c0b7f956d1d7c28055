@@ -159,6 +159,30 @@
       },
       "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49aeaf2a_f159f357",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3293,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2024-02-08T22:59:43Z",
+      "side": 1,
+      "message": "Talked with Yuyang and followed it.\nThis is insane and IMHO bug prone but yeah it\u0027s correct...",
+      "parentUuid": "a7668839_45392fc8",
+      "range": {
+        "startLine": 3293,
+        "startChar": 0,
+        "endLine": 3293,
+        "endChar": 61
+      },
+      "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
