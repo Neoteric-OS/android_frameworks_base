@@ -63,6 +63,30 @@
       },
       "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7621740a_ba93ee27",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3293,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-02-08T22:42:40Z",
+      "side": 1,
+      "message": "As I mentioned in the meeting, this should only be accessible to ROOT and SHELL. Hence there is no need for additional permission checks. (https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/Binder.java;l\u003d1101-1113;drc\u003d910c4f25d7ce7e0f6d74dd7662355a76ffbcf6e2)",
+      "parentUuid": "4224bccb_807a9463",
+      "range": {
+        "startLine": 3293,
+        "startChar": 0,
+        "endLine": 3293,
+        "endChar": 61
+      },
+      "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
