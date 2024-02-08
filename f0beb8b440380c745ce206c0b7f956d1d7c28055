@@ -22,6 +22,30 @@
       },
       "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4224bccb_807a9463",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3293,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2024-02-08T03:28:10Z",
+      "side": 1,
+      "message": "system/sepolicy/public/service.te\n\ntype netpolicy_service, app_api_service, ephemeral_app_api_service, system_server_service, service_manager_type;",
+      "parentUuid": "5494dab2_6e52fd32",
+      "range": {
+        "startLine": 3293,
+        "startChar": 0,
+        "endLine": 3293,
+        "endChar": 61
+      },
+      "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
