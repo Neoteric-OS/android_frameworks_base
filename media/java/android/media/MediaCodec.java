@@ -60,6 +60,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
@@ -2141,6 +2142,7 @@ final public class MediaCodec {
     protected void finalize() {
         native_finalize();
         mCrypto = null;
+        clearScheduledParamsList();
     }
 
     /**
@@ -2157,6 +2159,7 @@ final public class MediaCodec {
         freeAllTrackedBuffers(); // free buffers first
         native_reset();
         mCrypto = null;
+        clearScheduledParamsList();
     }
 
     private native final void native_reset();
@@ -2172,6 +2175,7 @@ final public class MediaCodec {
         freeAllTrackedBuffers(); // free buffers first
         native_release();
         mCrypto = null;
+        clearScheduledParamsList();
     }
 
     private native final void native_release();
@@ -2249,6 +2253,17 @@ final public class MediaCodec {
      */
     public class InvalidBufferFlagsException extends RuntimeException {
         InvalidBufferFlagsException(String message) {
+            super(message);
+        }
+    }
+
+    /**
+     * Thrown when the codec is configured for large audio frame mode and an incompatible API is
+     * called.
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public class IncompatibleWithLargeAudioFrameModeException extends RuntimeException {
+        IncompatibleWithLargeAudioFrameModeException(String message) {
             super(message);
         }
     }
@@ -2492,6 +2507,7 @@ final public class MediaCodec {
     public final void stop() {
         native_stop();
         freeAllTrackedBuffers();
+        clearScheduledParamsList();
 
         synchronized (mListenerLock) {
             if (mCallbackHandler != null) {
@@ -2542,6 +2558,7 @@ final public class MediaCodec {
             mDequeuedInputBuffers.clear();
             mDequeuedOutputBuffers.clear();
         }
+        clearScheduledParamsList();
         native_flush();
     }
 
@@ -2859,6 +2876,10 @@ final public class MediaCodec {
                 && (flags & BUFFER_FLAG_END_OF_STREAM) != 0) {
             throw new InvalidBufferFlagsException(EOS_AND_DECODE_ONLY_ERROR_MESSAGE);
         }
+        Bundle params = getParamsToApply(presentationTimeUs);
+        if (params != null) {
+            setParameters(params);
+        }
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("queueInputBuffer() "
@@ -2915,6 +2936,13 @@ final public class MediaCodec {
     public final void queueInputBuffers(
             int index,
             @NonNull ArrayDeque<BufferInfo> bufferInfos) {
+        synchronized (mParamLock) {
+            if (!mDeferredParamsList.isEmpty()) {
+                throw new IncompatibleWithLargeAudioFrameModeException(
+                        "setParameterDeferred() is not compatible with FLAG_LARGE_AUDIO_FRAME."
+                        + "Please use setParameters() to queue parameters");
+            }
+        }
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("queueInputBuffers() "
@@ -3193,6 +3221,10 @@ final public class MediaCodec {
         if ((flags & BUFFER_FLAG_DECODE_ONLY) != 0
                 && (flags & BUFFER_FLAG_END_OF_STREAM) != 0) {
             throw new InvalidBufferFlagsException(EOS_AND_DECODE_ONLY_ERROR_MESSAGE);
+        }
+        Bundle params = getParamsToApply(presentationTimeUs);
+        if (params != null) {
+            setParameters(params);
         }
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
@@ -3706,6 +3738,15 @@ final public class MediaCodec {
                 info.presentationTimeUs = mPresentationTimeUs;
                 info.flags = mFlags;
                 mBufferInfos.add(info);
+            }
+            Bundle params = getParamsToApply(mPresentationTimeUs);
+            if (params != null) {
+                for (final String key: params.keySet()) {
+                    if (!mTuningKeys.contains(key)) {
+                        mTuningKeys.add(key);
+                        mTuningValues.add(params.get(key));
+                    }
+                }
             }
             if (mLinearBlock != null) {
                 mCodec.native_queueLinearBlock(
@@ -4994,6 +5035,66 @@ final public class MediaCodec {
         }
 
         setParameters(keys, values);
+    }
+
+    private final Map<Long, Bundle> mDeferredParamsList = new TreeMap<>();
+    private final Object mParamLock = new Object();
+
+    /**
+     * Entries in param list that are behind by a margin from the current timestamp are
+     * considered stale and can be removed
+     */
+    private static final long STALE_PARAM_INTERVAL_US = 3000000;
+
+    /**
+     * Interface to communicate additional parameter changes to the component at a
+     * presentation timestamp
+     * <p>
+     * This method can be used to set multiple parameters at a given presentation time or to
+     * avoid multiple binder calls for each parameter.
+     * <p>
+     * <b>Note:</b> Some of these parameter changes may silently fail to apply.
+     * @param params The bundle of parameters to set.
+     * @param presentationTimeUs point at which the parameters are committed to component instance.
+     */
+    @FlaggedApi(FLAG_REGION_OF_INTEREST)
+    public void setParameterDeferred(@Nullable Bundle params, long presentationTimeUs) {
+        if (params == null) {
+            return;
+        }
+        synchronized (mParamLock) {
+            if (mDeferredParamsList.containsKey(presentationTimeUs)) {
+                Bundle paramsScheduled = mDeferredParamsList.get(presentationTimeUs);
+                paramsScheduled.putAll(params);
+                mDeferredParamsList.put(presentationTimeUs, paramsScheduled);
+            } else {
+                mDeferredParamsList.put(presentationTimeUs, params);
+            }
+        }
+    }
+
+    private Bundle getParamsToApply(long presentationTimeUs) {
+        Bundle params = null;
+        synchronized (mParamLock) {
+            for (final Long paramPts : mDeferredParamsList.keySet()) {
+                if (paramPts < (presentationTimeUs - STALE_PARAM_INTERVAL_US)) {
+                    mDeferredParamsList.remove(paramPts);
+                } else if (paramPts == presentationTimeUs) {
+                    params = mDeferredParamsList.get(paramPts);
+                    mDeferredParamsList.remove(paramPts);
+                    break;
+                } else if (paramPts > presentationTimeUs) {
+                    break;
+                }
+            }
+        }
+        return params;
+    }
+
+    private void clearScheduledParamsList() {
+        synchronized (mParamLock) {
+            mDeferredParamsList.clear();
+        }
     }
 
     /**
