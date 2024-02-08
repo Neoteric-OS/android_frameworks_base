@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f0c5a6a_67289b56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-02-08T17:06:43Z",
+      "side": 1,
+      "message": "Presubmit failure seems to be preexisting (https://b.corp.google.com/issues/303754573#comment4), also wasn\u0027t able to repro it locally.",
+      "revId": "a577a998891cff28b9687d56a46621ac51beb197",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
