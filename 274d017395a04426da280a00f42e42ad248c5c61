@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73b83a65_cea673f9",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1949655
+      },
+      "writtenOn": "2024-02-08T16:22:16Z",
+      "side": 1,
+      "message": "```suggestion\n        Slog.i(TAG, \"Rolling back all available low impact rollbacks\");\n```",
+      "range": {
+        "startLine": 680,
+        "startChar": 47,
+        "endLine": 680,
+        "endChar": 48
+      },
+      "revId": "274d017395a04426da280a00f42e42ad248c5c61",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
