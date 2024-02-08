@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea7dc99a_7c3e4384",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-02-08T09:02:26Z",
+      "side": 1,
+      "message": "Per discussion today, it seems like it would be better to have a way to allow individual UIDs through the background rule than to disable the rule.\n\nTo address your concern that NPMS shouldn\u0027t maintain rules for UIDs that don\u0027t exist we could do it in ConnectivityService instead? We could add an \"allow-uid-in-background\" command to ConnectivityService.ShellCmd#onCommand that would be very simple to implement (it would just call setUidFirewallRule). It doesn\u0027t matter if the UID exists or not, since CS doesn\u0027t know which UIDs exist or not anyway.",
+      "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5494dab2_6e52fd32",
