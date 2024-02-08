@@ -183,6 +183,30 @@
       },
       "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59c98d6c_ecdfa18a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3293,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-02-08T23:28:25Z",
+      "side": 1,
+      "message": "This pattern is used by many services, including ConnectivityService, which is where I\u0027ll add the shell command we discussed: https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:packages/modules/Connectivity/service/src/com/android/server/ConnectivityService.java;l\u003d11274-11279;drc\u003d804aa2326d46f4c76db17d8c89cea58ed5f367a2",
+      "parentUuid": "49aeaf2a_f159f357",
+      "range": {
+        "startLine": 3293,
+        "startChar": 0,
+        "endLine": 3293,
+        "endChar": 61
+      },
+      "revId": "f0beb8b440380c745ce206c0b7f956d1d7c28055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
