@@ -18,6 +18,7 @@ package android.provider;
 
 import android.Manifest;
 import android.annotation.CallbackExecutor;
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
@@ -6631,6 +6632,9 @@ public final class Settings {
          *
          * @hide
          */
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+        @FlaggedApi(android.crashrecovery.flags.Flags.FLAG_ENABLE_CRASHRECOVERY)
         public static void resetToDefaultsAsUser(@NonNull ContentResolver resolver,
                 @Nullable String tag, @ResetMode int mode, @IntRange(from = 0) int userHandle) {
             try {
@@ -17058,6 +17062,9 @@ public final class Settings {
          *
          * @hide
          */
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+        @FlaggedApi(android.crashrecovery.flags.Flags.FLAG_ENABLE_CRASHRECOVERY)
         public static void resetToDefaultsAsUser(@NonNull ContentResolver resolver,
                 @Nullable String tag, @ResetMode int mode, @IntRange(from = 0) int userHandle) {
             try {

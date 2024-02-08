@@ -156,6 +156,15 @@ package android.content.pm {
 
 }
 
+package android.content.rollback {
+
+  public final class PackageRollbackInfo implements android.os.Parcelable {
+    method @FlaggedApi("android.crashrecovery.flags.enable_crashrecovery") public boolean isApex();
+    method @FlaggedApi("android.crashrecovery.flags.enable_crashrecovery") public boolean isApkInApex();
+  }
+
+}
+
 package android.hardware.usb {
 
   public class UsbManager {
@@ -412,6 +421,10 @@ package android.os {
     field public static final int DEVICE_INITIAL_SDK_INT;
   }
 
+  public class Environment {
+    method @FlaggedApi("android.crashrecovery.flags.enable_crashrecovery") @NonNull public static java.io.File getDataSystemDeDirectory();
+  }
+
   public class IpcDataCache<Query, Result> {
     ctor public IpcDataCache(int, @NonNull String, @NonNull String, @NonNull String, @NonNull android.os.IpcDataCache.QueryHandler<Query,Result>);
     method public void disableForCurrentProcess();
@@ -434,6 +447,10 @@ package android.os {
     method public static final int toSdkSandboxUid(int);
     field public static final int NFC_UID = 1027; // 0x403
     field public static final int VPN_UID = 1016; // 0x3f8
+  }
+
+  public class RecoverySystem {
+    method @FlaggedApi("android.crashrecovery.flags.enable_crashrecovery") @RequiresPermission(android.Manifest.permission.RECOVERY) public static void rebootPromptAndWipeUserData(@NonNull android.content.Context, @NonNull String) throws java.io.IOException;
   }
 
   public final class ServiceManager {
@@ -539,6 +556,7 @@ package android.provider {
   }
 
   public static final class Settings.Global extends android.provider.Settings.NameValueTable {
+    method @FlaggedApi("android.crashrecovery.flags.enable_crashrecovery") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public static void resetToDefaultsAsUser(@NonNull android.content.ContentResolver, @Nullable String, int, @IntRange(from=0) int);
     field public static final String BLE_SCAN_ALWAYS_AVAILABLE = "ble_scan_always_enabled";
     field public static final String BLE_SCAN_BACKGROUND_MODE = "ble_scan_background_mode";
     field public static final String BLE_SCAN_BALANCED_INTERVAL_MS = "ble_scan_balanced_interval_ms";
@@ -553,6 +571,7 @@ package android.provider {
   }
 
   public static final class Settings.Secure extends android.provider.Settings.NameValueTable {
+    method @FlaggedApi("android.crashrecovery.flags.enable_crashrecovery") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public static void resetToDefaultsAsUser(@NonNull android.content.ContentResolver, @Nullable String, int, @IntRange(from=0) int);
     field public static final String BLUETOOTH_ADDRESS = "bluetooth_address";
     field public static final String BLUETOOTH_ADDR_VALID = "bluetooth_addr_valid";
     field public static final String BLUETOOTH_NAME = "bluetooth_name";
