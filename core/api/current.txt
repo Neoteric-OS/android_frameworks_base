@@ -22586,6 +22586,7 @@ package android.media {
     method public void setOnFirstTunnelFrameReadyListener(@Nullable android.os.Handler, @Nullable android.media.MediaCodec.OnFirstTunnelFrameReadyListener);
     method public void setOnFrameRenderedListener(@Nullable android.media.MediaCodec.OnFrameRenderedListener, @Nullable android.os.Handler);
     method public void setOutputSurface(@NonNull android.view.Surface);
+    method @FlaggedApi("android.media.codec.region_of_interest") public void setParameterDeferred(@Nullable android.os.Bundle, long);
     method public void setParameters(@Nullable android.os.Bundle);
     method public void setVideoScalingMode(int);
     method public void signalEndOfInputStream();
@@ -22689,6 +22690,9 @@ package android.media {
   }
 
   public class MediaCodec.IncompatibleWithBlockModelException extends java.lang.RuntimeException {
+  }
+
+  @FlaggedApi("android.media.codec.region_of_interest") public class MediaCodec.IncompatibleWithLargeAudioFrameModeException extends java.lang.RuntimeException {
   }
 
   public class MediaCodec.InvalidBufferFlagsException extends java.lang.RuntimeException {
