@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ab509b8_ac65a2e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-09T18:47:53Z",
+      "side": 1,
+      "message": "nit: I have no idea what this means.\n\nIf this is relevant and meaningful to others, I\u0027d recommend putting it on a separate line anyway. Fixing typos seems pretty self explanatory, and good enough justification for landing a CL.",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "521488acb2fc09955b869c286d80a4d67cd634f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
