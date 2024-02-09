@@ -2348,6 +2348,9 @@ public final class MediaFormat {
      */
     public void setFeatureEnabled(@NonNull String feature, boolean enabled) {
         setInteger(KEY_FEATURE_ + feature, enabled ? 1 : 0);
+        if (feature.equals(MediaCodecInfo.CodecCapabilities.FEATURE_ROI) && enabled) {
+            setString(KEY_QP_OFFSET_RECTS_INFO, new QpOffsetRect(0, 0, 0, 0, 0).flattenToString());
+        }
     }
 
     /**
