@@ -67,7 +67,7 @@ public class UsbHostManager {
 
     private final Context mContext;
 
-    // USB busses to exclude from USB host support
+    // USB buses to exclude from USB host support
     private final String[] mHostDenyList;
 
     private final UsbAlsaManager mUsbAlsaManager;
