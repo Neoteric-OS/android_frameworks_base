@@ -96,7 +96,7 @@ public final class PixelCopy {
      *
      * The contents of the source will be scaled to fit exactly inside the bitmap.
      * The pixel format of the source buffer will be converted, as part of the copy,
-     * to fit the the bitmap's {@link Bitmap.Config}. The most recently queued buffer
+     * to fit the bitmap's {@link Bitmap.Config}. The most recently queued buffer
      * in the SurfaceView's Surface will be used as the source of the copy.
      *
      * @param source The source from which to copy
