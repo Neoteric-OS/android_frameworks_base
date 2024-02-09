@@ -195,7 +195,7 @@ public abstract class UsageStatsManagerInternal {
     public abstract void onActiveAdminAdded(String packageName, int userId);
 
     /**
-     * Called by DevicePolicyManagerService to inform about the active admins in an user.
+     * Called by DevicePolicyManagerService to inform about the active admins in a user.
      *
      * @param adminApps the set of active admins in {@param userId} or null if there are none.
      * @param userId the userId to which the admin apps belong.
