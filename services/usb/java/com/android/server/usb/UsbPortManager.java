@@ -271,7 +271,7 @@ public class UsbPortManager implements IBinder.DeathRecipient {
                     UserHandle.ALL);
             mIsPortContaminatedNotificationId = 0;
 
-            // Dont show safe to use notification when contaminant detection is disabled.
+            // Don't show safe to use notification when contaminant detection is disabled.
             // Show only when the status is changing from detected to not detected.
             if (contaminantStatus == UsbPortStatus.CONTAMINANT_DETECTION_NOT_DETECTED) {
                 mIsPortContaminatedNotificationId =
