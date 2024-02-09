@@ -47,7 +47,7 @@ public class AppWidget {
         + "  <PACKAGE> an Android package name.\n"
         + "  <USER_ID> The user id under which the package is installed.\n"
         + "  Example:\n"
-        + "  # Revoke the permisison to bind app widgets from the \"foo.bar.baz\" package.\n"
+        + "  # Revoke the permission to bind app widgets from the \"foo.bar.baz\" package.\n"
         + "  adb shell revokebind --package foo.bar.baz --user current\n"
         + "\n";
 
