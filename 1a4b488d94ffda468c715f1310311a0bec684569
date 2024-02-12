@@ -34,6 +34,24 @@
       "parentUuid": "fda1a323_c44820ec",
       "revId": "1a4b488d94ffda468c715f1310311a0bec684569",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ca67259_386af056",
+        "filename": "core/java/com/android/internal/protolog/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2024-02-12T13:54:01Z",
+      "side": 1,
+      "message": "LGTM",
+      "parentUuid": "60557da8_447827c8",
+      "revId": "1a4b488d94ffda468c715f1310311a0bec684569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
