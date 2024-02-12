@@ -70,6 +70,24 @@
       "parentUuid": "7a7cd416_34396428",
       "revId": "67b7906e5f4fbab2843efbb3ad145071665ab263",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26629c96_1a5ea786",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1878380
+      },
+      "writtenOn": "2024-02-12T19:20:19Z",
+      "side": 1,
+      "message": "Re incremental performance: Here are the numbers before and after this change\n\nClean build\n```\n$ m clean \u0026\u0026 time m android_stubs_current\n# Before\nreal    6m27.740s\nuser    28m29.922s\nsys     10m9.417s\n\n# After\nreal    6m23.089s\nuser    28m26.940s                                                                                                                               \nsys     10m1.041s\n\n```\n\nIncremental build\n```\n$ touch frameworks/base/core/java/android/accessibilityservice/AccessibilityService.java \u0026\u0026 time m android_stubs_current\n# Before\nreal    0m8.474s\nuser    0m47.973s\nsys     0m23.488s\n\n# After\nreal    0m8.439s\nuser    0m48.708s\nsys     0m23.985s\n```\n\nN\u003d1 and the numbers seem to be within standard deviation\n\nre: adding a property \"framework-module-common-defaults\"\nI think we could, but we will also need to have some validation to ensure that modules listed in `bootclasspath` and `system_server_classpath` of `combined_apis` set this explicitly. I would like to defer this for now.",
+      "parentUuid": "5c36f7ca_ce0b7952",
+      "revId": "67b7906e5f4fbab2843efbb3ad145071665ab263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
