@@ -28,10 +28,12 @@ genrule {
     tools: ["protologtool"],
     cmd: "$(location protologtool) transform-protolog-calls " +
         "--protolog-class com.android.internal.protolog.common.ProtoLog " +
-        "--protolog-impl-class com.android.internal.protolog.ProtoLogImpl " +
-        "--protolog-cache-class 'com.android.server.wm.ProtoLogCache' " +
         "--loggroups-class com.android.internal.protolog.ProtoLogGroup " +
         "--loggroups-jar $(location :protolog-groups) " +
+        // TODO: Set these properly...
+        "--viewer-config-file-path /system_ext/etc/wmshell.protolog.pb " +
+        "--legacy-viewer-config-file-path /system_ext/etc/wmshell.protolog.json.gz " +
+        "--legacy-output-file-path /data/misc/wmtrace/shell_log.winscope " +
         "--output-srcjar $(out) " +
         "$(locations :wmtests-sources)",
     out: ["wmtests.protolog.srcjar"],
