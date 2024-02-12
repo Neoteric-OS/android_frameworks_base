@@ -16,6 +16,24 @@
       "message": "`combined_apis` currently works similar to a singleton module, and adding dependencies to a singleton module generally harms the incremental build time. I\u0027m not fully knowledgeable about how `ctx.WalkDeps` works, but I would not be the biggest supporter of this approach if `ctx.WalkDeps` blocks the compilation of the internally generated modules of `combined_apis`.\n\nQuestion: Why is `ctx.WalkDeps` being added in `combined_apis`? Is there a reason why this can\u0027t be done in individual stub libraries level? It does not seem too intuitive to have `java_sdk_library` specific logic in `combined_apis`",
       "revId": "67b7906e5f4fbab2843efbb3ad145071665ab263",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea91d00a_5bfd15fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1878380
+      },
+      "writtenOn": "2024-02-12T18:25:05Z",
+      "side": 1,
+      "message": "\u003e combined_apis currently works similar to a singleton module, and adding dependencies to a singleton module generally harms the incremental build time.\n\nJihoon, are you referring to incremental analysis or incremental execution? Afaik, the latter should not be affected. The former will be affected because we are adding a new dependency, but I dont think this is specific to singletons.\n\nWould you be able to suggest any steps to verify that the incremental build time is not harmed?\n\n\u003e but I would not be the biggest supporter of this approach if ctx.WalkDeps blocks the compilation of the internally generated modules of combined_apis\n\nWould your be concern in the realm on execution or are you concerned about analysis as well? I believe this CL should only affect ninja analysis, and the generated ninja file should be equivalent (modulo some changes to metadata files like license)\n\n\u003e Question: Why is ctx.WalkDeps being added in combined_apis? Is there a reason why this can\u0027t be done in individual stub libraries level? \n\nimo, combined_apis is appropriate because we want to restrict it to `bootclasspath` and `system_server_classpath` properties of `combined_apis` and not every single java_sdk_library. (wear e.g. do not care about this check). Another option would be having a hardcoded list in `build/soong` like this [list](https://source.corp.google.com/h/googleplex-android/platform/build/soong/+/15cb34ab29b747136cb4d707bcb59907753d8a86:android/config.go;l\u003d640-671;drc\u003d5c1baf9627d9912d2f4e1d030bbc353a9024374d;bpv\u003d1;bpt\u003d0) but I would prefer not to do that",
+      "parentUuid": "5ddf8713_eb5ec6ec",
+      "revId": "67b7906e5f4fbab2843efbb3ad145071665ab263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
