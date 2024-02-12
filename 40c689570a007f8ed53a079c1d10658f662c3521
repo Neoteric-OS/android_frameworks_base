@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c57108d7_81e80eef",
+        "filename": "services/core/java/com/android/server/rollback/RollbackManagerServiceImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1060436
+      },
+      "writtenOn": "2024-02-12T23:41:50Z",
+      "side": 1,
+      "message": "Did you intend to use this above?",
+      "revId": "40c689570a007f8ed53a079c1d10658f662c3521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
