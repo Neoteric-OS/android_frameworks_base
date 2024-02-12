@@ -34,6 +34,24 @@
       "parentUuid": "5ddf8713_eb5ec6ec",
       "revId": "67b7906e5f4fbab2843efbb3ad145071665ab263",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a7cd416_34396428",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-02-12T18:43:06Z",
+      "side": 1,
+      "message": "\u003e Would you be able to suggest any steps to verify that the incremental build time is not harmed?\n\nI\u0027d appreciate it if you can compare the clean \u0026 incremental build time of `android_stubs_current` with \u0026 without this change.\n\n\u003e Would your be concern in the realm on execution or are you concerned about analysis as well?\n\nMore about execution, given that no-op ninja analysis takes a couple of minutes regardless. \n\n\u003e imo, combined_apis is appropriate because we want to restrict it to bootclasspath and system_server_classpath properties of combined_apis and not every single java_sdk_library.\n\nAFAIK the modules listed in bcpf and sscf of `combined_apis` all depends on [`\"framework-module-common-defaults\"`](https://cs.android.com/android/platform/superproject/main/+/main:packages/modules/common/sdk/ModuleDefaults.bp;drc\u003d15a0f3d7564d8d6e857ee6716fc2027a162e1e12;l\u003d22) (with exception of some core modules). WDYT about introducing a property that signifies that the module contributes to the platform bcpf/sscf, and execute the logic based on that property?",
+      "parentUuid": "ea91d00a_5bfd15fc",
+      "revId": "67b7906e5f4fbab2843efbb3ad145071665ab263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
