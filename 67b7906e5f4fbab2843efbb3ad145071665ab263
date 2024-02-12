@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ddf8713_eb5ec6ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-02-12T18:09:39Z",
+      "side": 1,
+      "message": "`combined_apis` currently works similar to a singleton module, and adding dependencies to a singleton module generally harms the incremental build time. I\u0027m not fully knowledgeable about how `ctx.WalkDeps` works, but I would not be the biggest supporter of this approach if `ctx.WalkDeps` blocks the compilation of the internally generated modules of `combined_apis`.\n\nQuestion: Why is `ctx.WalkDeps` being added in `combined_apis`? Is there a reason why this can\u0027t be done in individual stub libraries level? It does not seem too intuitive to have `java_sdk_library` specific logic in `combined_apis`",
+      "revId": "67b7906e5f4fbab2843efbb3ad145071665ab263",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
