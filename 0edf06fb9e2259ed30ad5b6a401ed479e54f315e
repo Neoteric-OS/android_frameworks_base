@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a295827_a4550d2f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3572,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-12T22:44:11Z",
+      "side": 1,
+      "message": "@wonsik@google.com, for block model it seems one sets a linear block or an encrypted linear block. For multi-access unit, one can set multiple \"bufferinfos\" after setting a linear block. Does that work with the spirit of this API?\n\nperhaps, setBufferInfos is really markAccessUnits(BufferInfo[])? (since the user would have had to set the offset/size already in setLinearBlocks).\n\nSimilarly, this could be markEncryptedAccesssUnits(BufferInfo[], CryptoInfo[])?\nHowever, then we may have no expectations for the cryptoInfo being set in setEncryptedLinearBlock? (So perhaps it may make sense to have the new method of setEncryptedLinearBlockWithAccessUnits?)",
+      "range": {
+        "startLine": 3572,
+        "startChar": 37,
+        "endLine": 3572,
+        "endChar": 61
+      },
+      "revId": "0edf06fb9e2259ed30ad5b6a401ed479e54f315e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
