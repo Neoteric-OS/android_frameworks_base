@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fda1a323_c44820ec",
+        "filename": "core/java/com/android/internal/protolog/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2024-02-12T12:55:38Z",
+      "side": 1,
+      "message": "nit: `include ...` the more canonical of those two from the other instead of duplicating. (c.f. go/gerrit-code-owners-syntax)",
+      "revId": "1a4b488d94ffda468c715f1310311a0bec684569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
