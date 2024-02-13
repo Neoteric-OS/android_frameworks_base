@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d8e44df_75aff528",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-02-13T18:21:59Z",
+      "side": 1,
+      "message": "Note that these CL\u0027s have already been merged into internal branch. Running into some issues with submitting to aosp.",
+      "revId": "ace29c1a360a5a4c1189e795c0ace30952b299ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
