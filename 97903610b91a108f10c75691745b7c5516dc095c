@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "429f78c6_1d942c27",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:50:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bfbe4dc5_6d057ab1",
+      "range": {
+        "startLine": 2186,
+        "startChar": 8,
+        "endLine": 2186,
+        "endChar": 11
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d69619e8_49890a24",
@@ -70,6 +94,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d13ec1f5_3fe793ef",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2244,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:50:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2963ebd7_b8decdde",
+      "range": {
+        "startLine": 2244,
+        "startChar": 58,
+        "endLine": 2244,
+        "endChar": 65
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f46394e0_98ef79ef",
@@ -93,6 +141,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb37211c_b974274f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:50:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f46394e0_98ef79ef",
+      "range": {
+        "startLine": 2247,
+        "startChar": 49,
+        "endLine": 2247,
+        "endChar": 52
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6c4da77_4050e71e",
@@ -106,6 +178,24 @@
       "writtenOn": "2024-01-25T20:35:34Z",
       "side": 1,
       "message": "no `@link` or `@see` reference to flagged api is allowed from non-flagged API Javadoc.",
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3f146f9_31927a08",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:50:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6c4da77_4050e71e",
       "revId": "97903610b91a108f10c75691745b7c5516dc095c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
