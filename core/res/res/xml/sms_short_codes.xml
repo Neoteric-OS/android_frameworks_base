@@ -204,6 +204,9 @@
     <!-- Macedonia: 1-6 digits (not confirmed), known premium codes listed -->
     <shortcode country="mk" pattern="\\d{1,6}" free="129005|122" />
 
+    <!-- Mongolia: 1-6 digits (standard system default, not country specific) -->
+    <shortcode country="mn" pattern="\\d{1,6}" free="44444|45678|445566" />
+
     <!-- Malawi: 1-5 digits (standard system default, not country specific) -->
     <shortcode country="mw" pattern="\\d{1,5}" free="4276" />
 
@@ -241,7 +244,7 @@
     <shortcode country="ph" pattern="\\d{1,5}" free="2147|5495|5496" />
 
     <!-- Pakistan -->
-    <shortcode country="pk" pattern="\\d{1,5}" free="2057" />
+    <shortcode country="pk" pattern="\\d{1,5}" free="2057|71522|71512|71502" />
 
     <!-- Palestine: 5 digits, known premium codes listed -->
     <shortcode country="ps" pattern="\\d{1,5}" free="37477" />
@@ -285,7 +288,7 @@
     <shortcode country="sk" premium="\\d{4}" free="116\\d{3}|8000" />
 
     <!-- Senegal(SN): 1-5 digits (standard system default, not country specific) -->
-    <shortcode country="sn" pattern="\\d{1,5}" free="21215" />
+    <shortcode country="sn" pattern="\\d{1,5}" free="21215|21098" />
 
     <!-- El Salvador(SV): 1-5 digits (standard system default, not country specific) -->
     <shortcode country="sv" pattern="\\d{4,6}" free="466453" />
@@ -315,6 +318,9 @@
          visual voicemail code for T-Mobile: 122 -->
     <shortcode country="us" pattern="\\d{5,6}" premium="20433|21(?:344|472)|22715|23(?:333|847)|24(?:15|28)0|25209|27(?:449|606|663)|28498|305(?:00|83)|32(?:340|941)|33(?:166|786|849)|34746|35(?:182|564)|37975|38(?:135|146|254)|41(?:366|463)|42335|43(?:355|500)|44(?:578|711|811)|45814|46(?:157|173|327)|46666|47553|48(?:221|277|669)|50(?:844|920)|51(?:062|368)|52944|54(?:723|892)|55928|56483|57370|59(?:182|187|252|342)|60339|61(?:266|982)|62478|64(?:219|898)|65(?:108|500)|69(?:208|388)|70877|71851|72(?:078|087|465)|73(?:288|588|882|909|997)|74(?:034|332|815)|76426|79213|81946|83177|84(?:103|685)|85797|86(?:234|236|666)|89616|90(?:715|842|938)|91(?:362|958)|94719|95297|96(?:040|666|835|969)|97(?:142|294|688)|99(?:689|796|807)" standard="44567|244444" free="122|87902|21696|24614|28003|30356|33669|40196|41064|41270|43753|44034|46645|52413|56139|57969|61785|66975|75136|76227|81398|83952|85140|86566|86799|95737|96684|99245|611611|96831" />
 
+    <!-- Uruguay: 1-5 digits (standard system default, not country specific) -->
+    <shortcode country="uy" pattern="\\d{1,5}" free="55002" />
+
     <!-- Vietnam: 1-5 digits (standard system default, not country specific) -->
     <shortcode country="vn" pattern="\\d{1,5}" free="5001|9055" />
 
@@ -322,6 +328,6 @@
     <shortcode country="yt" pattern="\\d{1,5}" free="38600,36300,36303,959" />
 
     <!-- South Africa -->
-    <shortcode country="za" pattern="\\d{1,5}" free="44136|30791|36056" />
+    <shortcode country="za" pattern="\\d{1,5}" free="44136|30791|36056|33009" />
 
 </shortcodes>
