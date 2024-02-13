@@ -1115,3 +1115,10 @@ flag {
     purpose: PURPOSE_BUGFIX
   }
 }
+
+flag {
+    name: "force_screenshot_sound_if_must_play_shutter_sound"
+    namespace: "systemui"
+    description: "Whether to force the screenshot sound when the camera is open if the camera shutter sound is forced"
+    bug: "329483874"
+}

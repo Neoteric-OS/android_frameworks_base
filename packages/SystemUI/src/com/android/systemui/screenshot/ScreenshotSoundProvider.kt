@@ -19,6 +19,7 @@ package com.android.systemui.screenshot
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioSystem
+import android.media.MediaActionSound
 import android.media.MediaPlayer
 import android.net.Uri
 import com.android.internal.R
@@ -34,6 +35,12 @@ interface ScreenshotSoundProvider {
      * a background thread, as it might take time.
      */
     fun getScreenshotSound(): MediaPlayer
+
+    /**
+     * Creates a new [MediaActionSound] that plays the forced screenshot sound. This should be
+     * called from a background thread, as it might take time.
+     */
+    fun getForcedScreenshotSound(): MediaActionSound
 }
 
 @SysUISingleton
@@ -53,5 +60,9 @@ constructor(
                 .build(),
             AudioSystem.newAudioSessionId()
         )
+    }
+
+    override fun getForcedScreenshotSound(): MediaActionSound {
+        return MediaActionSound().apply { load(MediaActionSound.SHUTTER_CLICK) }
     }
 }

@@ -27,6 +27,8 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.hardware.camera2.CameraManager
+import android.media.MediaActionSound
 import android.os.Process
 import android.os.RemoteException
 import android.os.UserHandle
@@ -34,6 +36,7 @@ import android.os.UserManager
 import android.util.Log
 import com.android.internal.annotations.VisibleForTesting
 import com.android.internal.infra.ServiceConnector
+import com.android.systemui.Flags
 import com.android.systemui.SystemUIService
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Background
@@ -64,8 +67,32 @@ internal open class ScreenshotPolicyImpl @Inject constructor(
             IScreenshotProxy.Stub::asInterface
         )
 
+    private var isCameraOpen: Boolean = false
+    private val cameraManager: CameraManager = context.getSystemService(CameraManager::class.java)!!
+    private val availabilityCallback: CameraManager.AvailabilityCallback =
+        object : CameraManager.AvailabilityCallback() {
+            override fun onCameraClosed(cameraId: String) {
+                isCameraOpen = false
+            }
+
+            override fun onCameraOpened(cameraId: String, packageId: String) {
+                isCameraOpen = true
+            }
+        }
+
+    init {
+        cameraManager.registerAvailabilityCallback(context.mainExecutor, availabilityCallback)
+    }
+
     override fun getDefaultDisplayId(): Int {
         return displayTracker.defaultDisplayId
+    }
+
+    /** Returns [true] if a camera is open and [MediaActionSound.mustPlayShutterSound] is true */
+    override fun shouldPlayForcedCameraSound(): Boolean {
+        return Flags.forceScreenshotSoundIfMustPlayShutterSound()
+                && MediaActionSound.mustPlayShutterSound()
+                && isCameraOpen
     }
 
     override suspend fun isManagedProfile(@UserIdInt userId: Int): Boolean {
