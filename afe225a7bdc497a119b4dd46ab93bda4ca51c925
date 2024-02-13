@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d52953b5_93436687",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:40:16Z",
+      "side": 1,
+      "message": "Verified that // does not work in our javadoc generation so I will move those lines into a follow-up CL.",
+      "revId": "afe225a7bdc497a119b4dd46ab93bda4ca51c925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

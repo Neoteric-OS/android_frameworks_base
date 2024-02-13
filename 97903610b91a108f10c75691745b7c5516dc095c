@@ -3,6 +3,98 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bfbe4dc5_6d057ab1",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:40:16Z",
+      "side": 1,
+      "message": "need to also link @see configure",
+      "range": {
+        "startLine": 2186,
+        "startChar": 8,
+        "endLine": 2186,
+        "endChar": 11
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d69619e8_49890a24",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:40:16Z",
+      "side": 1,
+      "message": "if this API is okay, I will update the doc for these methods as well to describe that releaseOutputBuffer will not work if output surface is null.\n\nthere is a question if those should just do nothing silently, or throw IllegalState.",
+      "range": {
+        "startLine": 2188,
+        "startChar": 12,
+        "endLine": 2188,
+        "endChar": 31
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2963ebd7_b8decdde",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2244,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:40:16Z",
+      "side": 1,
+      "message": "nit: contains",
+      "range": {
+        "startLine": 2244,
+        "startChar": 58,
+        "endLine": 2244,
+        "endChar": 65
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f46394e0_98ef79ef",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:40:16Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 2247,
+        "startChar": 49,
+        "endLine": 2247,
+        "endChar": 52
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c6c4da77_4050e71e",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 1
@@ -41,6 +133,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8106691_017d7906",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2376,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:40:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b660b75c_b6fba4b8",
+      "range": {
+        "startLine": 2376,
+        "startChar": 50,
+        "endLine": 2376,
+        "endChar": 78
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "daaaaba4_81c6c647",
@@ -54,6 +170,24 @@
       "writtenOn": "2024-01-25T20:35:34Z",
       "side": 1,
       "message": "does this feature depend on HAL implementation? If not we may not need this defined as `FEATURE`.",
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a4146fb_c18a2d78",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T06:40:16Z",
+      "side": 1,
+      "message": "It does not in general, however, we don\u0027t support it for Tunneled codecs for the moment. In the future we may add support for that as well. Thus I was thinking of using a feature so apps do not need to navigate this ambiguity in the future.",
+      "parentUuid": "daaaaba4_81c6c647",
       "revId": "97903610b91a108f10c75691745b7c5516dc095c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
