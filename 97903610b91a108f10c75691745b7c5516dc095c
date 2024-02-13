@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38eefac8_39c23f44",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T18:31:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bf358d04_a4576d8a",
+      "range": {
+        "startLine": 2188,
+        "startChar": 12,
+        "endLine": 2188,
+        "endChar": 31
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2963ebd7_b8decdde",
