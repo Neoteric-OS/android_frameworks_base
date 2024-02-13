@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bf358d04_a4576d8a",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-02-13T18:14:10Z",
+      "side": 1,
+      "message": "if we throw an exception the app needs to pay a close attention to the order of execution, and it could be difficult if there are separate threads that do the detaching surface and releasing buffers.",
+      "parentUuid": "d69619e8_49890a24",
+      "range": {
+        "startLine": 2188,
+        "startChar": 12,
+        "endLine": 2188,
+        "endChar": 31
+      },
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2963ebd7_b8decdde",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 1
@@ -278,6 +302,24 @@
       "side": 1,
       "message": "It does not in general, however, we don\u0027t support it for Tunneled codecs for the moment. In the future we may add support for that as well. Thus I was thinking of using a feature so apps do not need to navigate this ambiguity in the future.",
       "parentUuid": "daaaaba4_81c6c647",
+      "revId": "97903610b91a108f10c75691745b7c5516dc095c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbfa2743_bb29d394",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-02-13T18:14:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3a4146fb_c18a2d78",
       "revId": "97903610b91a108f10c75691745b7c5516dc095c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
