@@ -16,6 +16,7 @@
 
 package com.android.systemui.screenshot
 
+import android.media.MediaActionSound
 import android.media.MediaPlayer
 import android.util.Log
 import com.android.app.tracing.TraceUtils.Companion.async
@@ -44,7 +45,8 @@ class ScreenshotSoundControllerImpl
 constructor(
     private val soundProvider: ScreenshotSoundProvider,
     @Application private val coroutineScope: CoroutineScope,
-    @Background private val bgDispatcher: CoroutineDispatcher
+    @Background private val bgDispatcher: CoroutineDispatcher,
+    private val screenshotPolicy: ScreenshotPolicy,
 ) : ScreenshotSoundController {
 
     val player: Deferred<MediaPlayer?> =
@@ -57,11 +59,29 @@ constructor(
             }
         }
 
+    val forcedCameraSound: Deferred<MediaActionSound?> =
+        coroutineScope.async("loadForcedCameraSound", bgDispatcher) {
+            soundProvider.getForcedScreenshotSound()
+        }
+
     override fun playCameraSound(): Deferred<Unit> {
-        return coroutineScope.async("playCameraSound", bgDispatcher) { player.await()?.start() }
+        return coroutineScope.async("playCameraSound", bgDispatcher) {
+            if (screenshotPolicy.shouldPlayForcedCameraSound()) {
+                forcedCameraSound.await()?.play(MediaActionSound.SHUTTER_CLICK)
+            } else {
+                player.await()?.start()
+            }
+        }
     }
+
     override fun releaseScreenshotSound(): Deferred<Unit> {
         return coroutineScope.async("releaseScreenshotSound", bgDispatcher) {
+            try {
+                withTimeout(1.seconds) { forcedCameraSound.await()?.release() }
+            } catch (e: TimeoutCancellationException) {
+                forcedCameraSound.cancel()
+                Log.w(TAG, "Error releasing forced screenshot sound", e)
+            }
             try {
                 withTimeout(1.seconds) { player.await()?.release() }
             } catch (e: TimeoutCancellationException) {
