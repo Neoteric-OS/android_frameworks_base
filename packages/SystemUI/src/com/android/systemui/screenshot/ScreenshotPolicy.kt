@@ -48,4 +48,6 @@ interface ScreenshotPolicy {
     )
 
     fun getDefaultDisplayId(): Int = Display.DEFAULT_DISPLAY
+
+    fun shouldPlayForcedCameraSound(): Boolean = false
 }
