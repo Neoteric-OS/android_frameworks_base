@@ -22,6 +22,30 @@
       },
       "revId": "0edf06fb9e2259ed30ad5b6a401ed479e54f315e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03e50752_40479e1f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3572,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-02-13T16:24:05Z",
+      "side": 1,
+      "message": "we discussed this and the plan is to rename and combine the setBufferInfos method into a similar setMultiFrameLinearBlock method.",
+      "parentUuid": "2a295827_a4550d2f",
+      "range": {
+        "startLine": 3572,
+        "startChar": 37,
+        "endLine": 3572,
+        "endChar": 61
+      },
+      "revId": "0edf06fb9e2259ed30ad5b6a401ed479e54f315e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
