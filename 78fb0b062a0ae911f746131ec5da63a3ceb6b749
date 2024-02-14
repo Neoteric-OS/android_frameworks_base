@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb1a963c_475952bf",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-02-14T15:39:44Z",
+      "side": 1,
+      "message": "Since it was decided that the high impact rollbacks will be applied only for bootloop scenarios update this to propose only low impact level and later in execute to perform only low impact rollbacks",
+      "revId": "78fb0b062a0ae911f746131ec5da63a3ceb6b749",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
