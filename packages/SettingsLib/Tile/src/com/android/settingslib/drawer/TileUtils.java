@@ -255,6 +255,39 @@ public class TileUtils {
     public static final String META_DATA_PREFERENCE_SEARCHABLE = "com.android.settings.searchable";
 
     /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to specify positioning of the preference before/above another preference.
+     *
+     * Valid value is the key of another preference in the PreferenceGroup, or
+     * {@link #POSITION_FIRST} or {@link #POSITION_LAST} to position the Preference before the first
+     * Preference in the group or after the last Preference in the group, respectively.
+     */
+    public static final String META_DATA_POSITION_BEFORE = "com.android.settings.position.before";
+
+    /**
+     * Name of the meta-data item that should be set in the AndroidManifest.xml
+     * to specify positioning of the preference after/below another preference.
+     *
+     * Valid value is the key of another preference in the PreferenceGroup, or
+     * {@link #POSITION_FIRST} or {@link #POSITION_LAST} to position the Preference before the first
+     * Preference in the group or after the last Preference in the group, respectively.
+     *
+     * @see #POSITION_FIRST
+     * @see #POSITION_LAST
+     */
+    public static final String META_DATA_POSITION_AFTER = "com.android.settings.position.after";
+
+    /**
+     * Values for {@link #META_DATA_POSITION_BEFORE} and {@link #META_DATA_POSITION_AFTER}.
+     * Enabled positioning of a Preference first or last in a group.
+     *
+     * @see #META_DATA_POSITION_BEFORE
+     * @see #META_DATA_POSITION_AFTER
+     */
+    public static final String POSITION_FIRST = "first";
+    public static final String POSITION_LAST = "last";
+
+    /**
      * Build a list of DashboardCategory.
      */
     public static List<DashboardCategory> getCategories(Context context,
