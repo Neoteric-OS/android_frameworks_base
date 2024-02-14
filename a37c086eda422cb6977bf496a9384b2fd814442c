@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a54c39e_522df6e9",
+        "filename": "core/java/android/service/ondeviceintelligence/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1622353
+      },
+      "writtenOn": "2024-02-14T18:53:19Z",
+      "side": 1,
+      "message": "You can keep one canonical file, and reference this in 2 other places?",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 14
+      },
+      "revId": "a37c086eda422cb6977bf496a9384b2fd814442c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
