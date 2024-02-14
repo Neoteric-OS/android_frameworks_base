@@ -1160,6 +1160,7 @@ public final class CameraAdvancedExtensionSessionImpl extends CameraExtensionSes
 
         builder.setTag(request.requestId);
         CaptureRequest ret = builder.build();
+        CameraExtensionUtils.filterExtensionTags(request.parameters);
         CameraMetadataNative.update(ret.getNativeMetadata(), request.parameters);
         return ret;
     }

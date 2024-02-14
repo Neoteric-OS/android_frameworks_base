@@ -23,6 +23,9 @@ import android.graphics.PixelFormat;
 import android.hardware.HardwareBuffer;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraExtensionCharacteristics;
+import android.hardware.camera2.CameraMetadata;
+import android.hardware.camera2.CaptureRequest;
+import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.params.OutputConfiguration;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.hardware.camera2.utils.SurfaceUtils;
@@ -179,5 +182,24 @@ public final class CameraExtensionUtils {
             ret.put(entry.getKey(), entry.getValue().getNativeMetadata());
         }
         return ret;
+    }
+
+    public static void filterExtensionTags(@NonNull CameraMetadataNative meta) {
+        final CaptureResult.Key[] EXTENSION_RESULT_KEYS = {
+                CaptureResult.EXTENSION_STRENGTH,
+                CaptureResult.EXTENSION_CURRENT_TYPE
+        };
+
+        final CaptureRequest.Key[] EXTENSION_REQUEST_KEYS = {
+                CaptureRequest.EXTENSION_STRENGTH
+        };
+
+        for (CaptureRequest.Key requestKey : EXTENSION_REQUEST_KEYS) {
+            meta.set(requestKey, null);
+        }
+
+        for (CaptureResult.Key resultKey : EXTENSION_RESULT_KEYS) {
+            meta.set(resultKey, null);
+        }
     }
 }
