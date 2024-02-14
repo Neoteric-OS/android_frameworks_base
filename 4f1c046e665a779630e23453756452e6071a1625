@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a341c317_d8cca377",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-02-14T13:55:55Z",
+      "side": 1,
+      "message": "typo: using",
+      "revId": "4f1c046e665a779630e23453756452e6071a1625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac127a98_c586127c",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-02-14T13:55:55Z",
+      "side": 1,
+      "message": "Why are we adding this permissions?\nAs I understand the RollbackManager which actually gets the details of rollbacks already has this permission checks in place so I think we shouldn\u0027t need to duplicate those here.",
+      "revId": "4f1c046e665a779630e23453756452e6071a1625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4780a946_f127c692",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-02-14T13:55:55Z",
+      "side": 1,
+      "message": "maybe `triggerLeastImpactLevelRollback`?",
+      "revId": "4f1c046e665a779630e23453756452e6071a1625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a61b530_897e0001",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-02-14T13:55:55Z",
+      "side": 1,
+      "message": "nit\n```suggestion\n    private List\u003cRollbackInfo\u003e getRollbacksAvailableForImpactLevel(\n```",
+      "revId": "4f1c046e665a779630e23453756452e6071a1625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0809dd65_f46e3e5e",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-02-14T13:55:55Z",
+      "side": 1,
+      "message": "Would keeping it as -1 work? `ROLLBACK_USER_IMPACT_ONLY_MANUAL` actually has the highest rollback impact.\nI get that you are doing this as currently returning this won\u0027t rollback anything, but it might confusing later as the name suggest it is returning the minimum.",
+      "revId": "4f1c046e665a779630e23453756452e6071a1625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4f925dd_0405502d",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-02-14T13:55:55Z",
+      "side": 1,
+      "message": "I think `getUserImpactBasedOnRollbackImpactLevel` might be a better name. What do you think?",
+      "revId": "4f1c046e665a779630e23453756452e6071a1625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8845b1b2_593f13d9",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-02-14T13:55:55Z",
+      "side": 1,
+      "message": "nit: could be removed.",
+      "revId": "4f1c046e665a779630e23453756452e6071a1625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
