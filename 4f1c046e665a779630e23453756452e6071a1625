@@ -118,6 +118,23 @@
       "message": "nit: could be removed.",
       "revId": "4f1c046e665a779630e23453756452e6071a1625",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ade2661a_728e03c1",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/rollback/RollbackPackageHealthObserverTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-02-14T14:03:38Z",
+      "side": 1,
+      "message": "fix the warning of this unused variable here and in `executeBootLoopMitigation_impactLevelHigh_rollbackHigh` ?",
+      "revId": "4f1c046e665a779630e23453756452e6071a1625",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
