@@ -87,6 +87,24 @@
       "parentUuid": "b2c0b4de_89b583c1",
       "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2925c150_461eeb69",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-15T16:24:02Z",
+      "side": 1,
+      "message": "ah, now i get what you\u0027re saying --- but i think we _still_ want to reject renderscript scripts in that case? if you\u0027re in this \"backwards\" case where you\u0027re dbt\u0027ing riscv64, that\u0027s because you\u0027re trying to test a riscv64 app, and we\u0027d be hurting you if we pretended renderscript was going to be okay on a _real_ riscv64 device.\n\n(probably worth a comment though!)",
+      "parentUuid": "f51af48c_fb78559f",
+      "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
