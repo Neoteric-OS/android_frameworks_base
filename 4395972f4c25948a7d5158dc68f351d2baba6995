@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "968460cf_8d2808d0",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-02-15T14:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "481268ac_ae8bae94",
+      "revId": "4395972f4c25948a7d5158dc68f351d2baba6995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e06a95fd_e24a801e",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b79ebf7_a43ecfb7",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-02-15T14:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e06a95fd_e24a801e",
+      "revId": "4395972f4c25948a7d5158dc68f351d2baba6995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f31172e_4d603646",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-02-14T19:55:54Z",
       "side": 1,
       "message": "It\u0027s a little weird not to have a default in the switch statement below. Perhaps instead of defining impact as a local variable, you could just have return statements inside the switch statement, and add default: return USER_IMPACT_LEVEL_0",
+      "revId": "4395972f4c25948a7d5158dc68f351d2baba6995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d831b23a_9ea1e8fb",
+        "filename": "packages/CrashRecovery/services/java/com/android/server/rollback/RollbackPackageHealthObserver.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-02-15T14:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f31172e_4d603646",
       "revId": "4395972f4c25948a7d5158dc68f351d2baba6995",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
