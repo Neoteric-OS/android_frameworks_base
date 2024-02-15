@@ -1243,6 +1243,25 @@ public class RecoverySystem {
         bootCommand(context, "--wipe_ab", filenameArg, reasonArg, localeArg);
     }
 
+
+    /**
+     * Reboot into recovery and wipe the data partition with ext4
+     *
+     * @param cmd  Executes the provided command with recovery service
+     *
+     * @throws IOException if something goes wrong.
+     *
+     * @hide
+     */
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.RECOVERY,
+            android.Manifest.permission.REBOOT
+    })
+    public void rebootWithCommand(String cmd)
+            throws IOException {
+        rebootRecoveryWithCommand(cmd);
+    }
+
     /**
      * Reboot into the recovery system with the supplied argument.
      * @param args to pass to the recovery utility.
