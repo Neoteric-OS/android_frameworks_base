@@ -33,6 +33,24 @@
       "message": "is this the right check? i wouldn\u0027t assume that a system with riscv64 plus dynamic binary translation of one of the others (which i think is what you\u0027re thinking of?) would \"just work\"?\n\nshouldn\u0027t this just be a check _for_ riscv64?",
       "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d61733b_9edc12f0",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1102053
+      },
+      "writtenOn": "2024-02-15T15:59:57Z",
+      "side": 1,
+      "message": "I had multiple theories on why SUPPORTED_ABIS is an array, and that did include dynamic binary translation.\nI wasn\u0027t sure what to do with the array, so I did the most correct thing I could think of.\n\nI have a preference for allowlists instead of denylists, but I don\u0027t mind checking for `riscv64` here because hopefully that code should go away before we start supported a new architecture.\n\nNow we also can\u0027t just check if `riscv64` is present in `SUPPORTED_ABIS`, because that could also trigger false positives (because berberis).\n\nShould we check that the *first* element of `Build.SUPPORTED_ABIS` is riscv64?\nSee https://developer.android.com/reference/android/os/Build#SUPPORTED_ABIS where it is stated that \"The most preferred ABI is the first element in the list\".\n\nOr perhaps you have another solution? How do we traditionally check that we are running on a RISC-V device?",
+      "parentUuid": "2f908b80_a05292ee",
+      "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
