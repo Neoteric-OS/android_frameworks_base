@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f908b80_a05292ee",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-15T15:41:03Z",
+      "side": 1,
+      "message": "is this the right check? i wouldn\u0027t assume that a system with riscv64 plus dynamic binary translation of one of the others (which i think is what you\u0027re thinking of?) would \"just work\"?\n\nshouldn\u0027t this just be a check _for_ riscv64?",
+      "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
