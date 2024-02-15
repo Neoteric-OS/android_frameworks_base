@@ -51,6 +51,24 @@
       "parentUuid": "2f908b80_a05292ee",
       "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2c0b4de_89b583c1",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-02-15T16:04:53Z",
+      "side": 1,
+      "message": "\u003e Now we also can\u0027t just check if riscv64 is present in SUPPORTED_ABIS, because that could also trigger false positives (because berberis).\n\nlike i said, my assumption is that that doesn\u0027t work? i\u0027ve asked levarum to comment though --- he\u0027ll know[1]. (because, yes, if that works, this is the right code.)\n\n(that is: my suggestion is literally \"if the list contains riscv64, throw\".)\n\n____\n1. at least from the _berberis_ side --- i\u0027d still assume someone would have to do work on the renderscript side to have renderscript generate code _not_ for the native architecture, if the native architecture is riscv64. i can guarantee _that_ code doesn\u0027t currently exist, unless you have another patch pending :-)",
+      "parentUuid": "7d61733b_9edc12f0",
+      "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
