@@ -69,6 +69,24 @@
       "parentUuid": "7d61733b_9edc12f0",
       "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f51af48c_fb78559f",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1102053
+      },
+      "writtenOn": "2024-02-15T16:15:03Z",
+      "side": 1,
+      "message": "\u003e my suggestion is literally \"if the list contains riscv64, throw\".\n\nHere\u0027s why I think this would be problematic:\n\nIf berberis is present on an x86 device, `SUPPORTED_ABIS` would contain riscv64.\nIn that case we\u0027d throw on an x86 device, which we shouldn\u0027t.",
+      "parentUuid": "b2c0b4de_89b583c1",
+      "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
