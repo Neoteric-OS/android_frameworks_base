@@ -776,6 +776,26 @@
          we rely on gravity to determine the effective orientation. -->
     <bool name="config_deskDockEnablesAccelerometer">true</bool>
 
+     <!-- Dropbox configurations -->
+
+     <!-- The number set the dropbox age limit -->
+     <integer name="dropbox_age_seconds">0</integer>
+
+     <!-- This number set the maximum dropbox files limit -->
+     <integer name="dropbox_max_files">0</integer>
+
+     <!-- This number set the max dropbox files limit in low ram case -->
+     <integer name="dropbox_max_files_lowram ">0</integer>
+
+     <!-- This number set the dropbox quota limit in kb -->
+     <integer name="dropbox_quota_kb">0</integer>
+
+     <!-- This number set the dropbox quota percentage limit -->
+     <integer name="dropbox_quota_percent">0</integer>
+
+     <!-- This number set the dropbox reserve percent limit -->
+     <integer name="dropbox_reserve_percent">0</integer>
+
     <!-- Car dock behavior -->
 
     <!-- The number of degrees to rotate the display when the device is in a car dock.

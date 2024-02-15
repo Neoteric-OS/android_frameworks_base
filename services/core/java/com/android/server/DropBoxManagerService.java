@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.content.res.Resources.NotFoundException;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Binder;
@@ -1140,6 +1141,19 @@ public final class DropBoxManagerService extends SystemService {
         return t;
     }
 
+    private int getDropboxConfigValue(int key, int defaultValue) {
+        try {
+            int keyValue = Resources.getSystem().getInteger(key);
+            if (keyValue == 0) {
+                // there is no value set by config
+                return defaultValue;
+            }
+            return keyValue;
+        } catch (NotFoundException ex) {
+            return defaultValue;
+        }
+    }
+
     /**
      * Trims the files on disk to make sure they aren't using too much space.
      * @return the overall quota for storage (in bytes)
@@ -1148,11 +1162,15 @@ public final class DropBoxManagerService extends SystemService {
         // Expunge aged items (including tombstones marking deleted data).
 
         int ageSeconds = Settings.Global.getInt(mContentResolver,
-                Settings.Global.DROPBOX_AGE_SECONDS, DEFAULT_AGE_SECONDS);
+                Settings.Global.DROPBOX_AGE_SECONDS,
+                getDropboxConfigValue(R.integer.dropbox_age_seconds, DEFAULT_AGE_SECONDS));
+
         mMaxFiles = Settings.Global.getInt(mContentResolver,
                 Settings.Global.DROPBOX_MAX_FILES,
                 (ActivityManager.isLowRamDeviceStatic()
-                        ?  DEFAULT_MAX_FILES_LOWRAM : DEFAULT_MAX_FILES));
+                        ? getDropboxConfigValue(R.integer.dropbox_max_files_lowram,
+                                DEFAULT_MAX_FILES_LOWRAM)
+                        : getDropboxConfigValue(R.integer.dropbox_max_files, DEFAULT_MAX_FILES)));
         long curTimeMillis = System.currentTimeMillis();
         long cutoffMillis = curTimeMillis - ageSeconds * 1000;
         while (!mAllFiles.contents.isEmpty()) {
@@ -1180,11 +1198,15 @@ public final class DropBoxManagerService extends SystemService {
         long uptimeMillis = SystemClock.uptimeMillis();
         if (uptimeMillis > mCachedQuotaUptimeMillis + QUOTA_RESCAN_MILLIS) {
             int quotaPercent = Settings.Global.getInt(mContentResolver,
-                    Settings.Global.DROPBOX_QUOTA_PERCENT, DEFAULT_QUOTA_PERCENT);
+                    Settings.Global.DROPBOX_QUOTA_PERCENT,
+                    getDropboxConfigValue(R.integer.dropbox_quota_percent, DEFAULT_QUOTA_PERCENT));
             int reservePercent = Settings.Global.getInt(mContentResolver,
-                    Settings.Global.DROPBOX_RESERVE_PERCENT, DEFAULT_RESERVE_PERCENT);
+                    Settings.Global.DROPBOX_RESERVE_PERCENT,
+                    getDropboxConfigValue(R.integer.dropbox_reserve_percent,
+                            DEFAULT_RESERVE_PERCENT));
             int quotaKb = Settings.Global.getInt(mContentResolver,
-                    Settings.Global.DROPBOX_QUOTA_KB, DEFAULT_QUOTA_KB);
+                    Settings.Global.DROPBOX_QUOTA_KB,
+                    getDropboxConfigValue(R.integer.dropbox_quota_kb, DEFAULT_QUOTA_KB));
 
             String dirPath = mDropBoxDir.getPath();
             try {
