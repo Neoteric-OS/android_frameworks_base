@@ -105,6 +105,24 @@
       "parentUuid": "f51af48c_fb78559f",
       "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58f9f6b5_603be3ee",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1069898
+      },
+      "writtenOn": "2024-02-16T01:37:17Z",
+      "side": 1,
+      "message": "For berberis we have disabled guest renderscript libraries [1] because we couldn\u0027t even build them. Berberis will not make riscv64 apps use host (x86/arm) renderscript. Such apps will crash.\n\nOTOH, I\u0027m not sure we want to break x86 apps on systems with berberis by saying that \"renderscript is not supported since there is riscv64 *in addition* to x86_64\".\n\nIdeally, we should only throw here if the app is launched as riscv64. Unfortunately I don\u0027t know an easy way to tell this from here.\n\nI\u0027m thinking the most general way to detect unsupported situation is when attempting to load `libRS.so` or `libRSDriver.so` in app\u0027s loader namespace since iiuc they won\u0027t exist for riscv64.\n\n[1] https://cs.android.com/android/platform/superproject/main/+/main:frameworks/libs/native_bridge_support/native_bridge_support.mk;l\u003d108;drc\u003d6da5256fdae204110bb948556194af885a16a9f9",
+      "parentUuid": "2925c150_461eeb69",
+      "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
