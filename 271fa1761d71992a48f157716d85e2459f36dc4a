@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b18559_e7ad4b66",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2024-02-16T22:39:15Z",
+      "side": 1,
+      "message": "Thanks clang-format...\nI only added `#include \u003cbinderdebug/BinderDebug.h\u003e` here",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "271fa1761d71992a48f157716d85e2459f36dc4a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
