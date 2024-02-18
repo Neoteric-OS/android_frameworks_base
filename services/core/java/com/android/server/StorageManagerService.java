@@ -1435,13 +1435,14 @@ class StorageManagerService extends IStorageManager.Stub
 
         @Override
         public void onDiskMetadataChanged(String diskId, long sizeBytes, String label,
-                String sysPath) {
+                String sysPath, int speedClass) {
             synchronized (mLock) {
                 final DiskInfo disk = mDisks.get(diskId);
                 if (disk != null) {
                     disk.size = sizeBytes;
                     disk.label = label;
                     disk.sysPath = sysPath;
+                    disk.speedClass = speedClass;
                 }
             }
         }
