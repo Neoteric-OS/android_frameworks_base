@@ -2930,6 +2930,29 @@ public class StorageManager {
         }
     }
 
+    /**
+     * Returns the speed class of an SDCard mounted
+     * Takes StorageVolume as input parameter and returns -1 if it is not a SDCard
+     * or is not a valid speed class
+     *
+     * @param   storageVolume the storagevolume of the SDCard.
+     * @return                an integral speedClass of the SDCard
+     *
+     * @hide
+     */
+    @SystemApi
+    @SuppressLint("UnflaggedApi")
+    public int getSpeedClassOfSdCard(@Nullable StorageVolume storageVolume) {
+        Preconditions.checkNotNull(storageVolume);
+
+        VolumeInfo volInfo = findVolumeByUuid(storageVolume.getUuid());
+        if (volInfo != null && volInfo.getDisk() != null) {
+            return volInfo.getDisk().isSd() ? volInfo.getDisk().getSpeedClass() : -1;
+        }
+
+        return -1;
+    }
+
     private final Object mFuseAppLoopLock = new Object();
 
     @GuardedBy("mFuseAppLoopLock")
