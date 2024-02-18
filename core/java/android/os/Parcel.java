@@ -1128,7 +1128,7 @@ public final class Parcel {
      * growing dataCapacity() if needed.
      */
     public final void writeString(@Nullable String val) {
-        writeString16(val);
+        writeString8(val);
     }
 
     /** {@hide} */
@@ -3198,7 +3198,7 @@ public final class Parcel {
      */
     @Nullable
     public final String readString() {
-        return readString16();
+        return readString8();
     }
 
     /** {@hide} */
