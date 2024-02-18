@@ -63,6 +63,7 @@ public class DiskInfo implements Parcelable {
     /** Hacky; don't rely on this count */
     public int volumeCount;
     public String sysPath;
+    public int speedClass;
 
     public DiskInfo(String id, int flags) {
         this.id = Preconditions.checkNotNull(id);
@@ -77,6 +78,7 @@ public class DiskInfo implements Parcelable {
         label = parcel.readString();
         volumeCount = parcel.readInt();
         sysPath = parcel.readString();
+        speedClass = parcel.readInt();
     }
 
     @UnsupportedAppUsage
@@ -158,6 +160,10 @@ public class DiskInfo implements Parcelable {
         return (flags & FLAG_STUB_VISIBLE) != 0;
     }
 
+    public int getSpeedClass() {
+        return speedClass;
+    }
+
     @Override
     public String toString() {
         final CharArrayWriter writer = new CharArrayWriter();
@@ -171,6 +177,7 @@ public class DiskInfo implements Parcelable {
         pw.printPair("flags", DebugUtils.flagsToString(getClass(), "FLAG_", flags));
         pw.printPair("size", size);
         pw.printPair("label", label);
+        pw.printPair("speedClass", speedClass);
         pw.println();
         pw.printPair("sysPath", sysPath);
         pw.decreaseIndent();
@@ -229,5 +236,6 @@ public class DiskInfo implements Parcelable {
         parcel.writeString(label);
         parcel.writeInt(volumeCount);
         parcel.writeString(sysPath);
+        parcel.writeInt(speedClass);
     }
 }

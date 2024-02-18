@@ -28,6 +28,7 @@ import static android.os.UserHandle.PER_USER_RANGE;
 
 import android.annotation.BytesLong;
 import android.annotation.CallbackExecutor;
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -2926,6 +2927,21 @@ public class StorageManager {
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    /**
+     * @hide
+     */
+    @FlaggedApi("sdcard_speed_class_enabled")
+    public int getSpeedClassOfSdCard(@Nullable StorageVolume storageVolume) {
+        Preconditions.checkNotNull(storageVolume);
+
+        VolumeInfo volInfo = findVolumeByUuid(storageVolume.getUuid());
+        if (volInfo != null && volInfo.getDisk() != null) {
+            return volInfo.getDisk().isSd() ? volInfo.getDisk().getSpeedClass() : -1;
+        }
+
+        return -1;
     }
 
     private final Object mFuseAppLoopLock = new Object();
