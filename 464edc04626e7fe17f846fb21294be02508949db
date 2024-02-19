@@ -85,6 +85,24 @@
       "parentUuid": "3bb05511_39405ca3",
       "revId": "464edc04626e7fe17f846fb21294be02508949db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40985171_c9a2fd5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651174
+      },
+      "writtenOn": "2024-02-19T14:43:19Z",
+      "side": 1,
+      "message": "If possible, can you tell me which test fails in that class?",
+      "parentUuid": "0d661720_cdf2f5fc",
+      "revId": "464edc04626e7fe17f846fb21294be02508949db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
