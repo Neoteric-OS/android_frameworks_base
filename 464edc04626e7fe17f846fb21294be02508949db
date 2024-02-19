@@ -33,6 +33,23 @@
       "message": "2967148",
       "revId": "464edc04626e7fe17f846fb21294be02508949db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bf7d3d3_a0bc6dd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3308347
+      },
+      "writtenOn": "2024-02-19T04:47:24Z",
+      "side": 1,
+      "message": "2967148: ScreenOffAnimation: Fix system animation disable check | https://android-review.googlesource.com/c/platform/frameworks/base/+/2967148",
+      "revId": "464edc04626e7fe17f846fb21294be02508949db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
