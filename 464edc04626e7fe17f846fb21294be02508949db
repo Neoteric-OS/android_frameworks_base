@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5601ac62_0a08a7a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651174
+      },
+      "writtenOn": "2024-02-19T04:45:32Z",
+      "side": 1,
+      "message": "It fixes AOD when system animation disabled",
+      "revId": "464edc04626e7fe17f846fb21294be02508949db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
