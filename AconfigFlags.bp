@@ -24,13 +24,13 @@ aconfig_declarations_group {
         "android.media.codec-aconfig-java",
         "android.media.playback.flags-aconfig-java",
         "android.net.platform.flags-aconfig-java",
+        "android.net.thread.platform.flags-aconfig-java",
         "android.net.vcn.flags-aconfig-java",
         "android.nfc.flags-aconfig-java",
         "android.os.flags-aconfig-java",
         "android.security.flags-aconfig-java",
         "com.android.hardware.camera2-aconfig-java",
         "com.android.hardware.input-aconfig-java",
-        "com.android.net.thread.flags-aconfig-java",
         "com.android.text.flags-aconfig-java",
         "com.android.window.flags.window-aconfig-java",
         // !!! KEEP THIS LIST ALPHABETICAL !!!
@@ -241,8 +241,8 @@ aconfig_declarations {
 
 // Thread network
 aconfig_declarations {
-    name: "com.android.net.thread.flags-aconfig",
-    package: "com.android.net.thread.flags",
+    name: "android.net.thread.platform.flags-aconfig",
+    package: "android.net.thread.platform.flags",
     srcs: ["core/java/android/net/thread/flags.aconfig"],
 }
 
@@ -254,8 +254,8 @@ java_aconfig_library {
 }
 
 java_aconfig_library {
-    name: "com.android.net.thread.flags-aconfig-java",
-    aconfig_declarations: "com.android.net.thread.flags-aconfig",
+    name: "android.net.thread.platform.flags-aconfig-java",
+    aconfig_declarations: "android.net.thread.platform.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 
