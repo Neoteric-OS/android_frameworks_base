@@ -34,6 +34,24 @@
       "parentUuid": "8af5e299_a75eb0fe",
       "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5c76658_82c4441f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2043423
+      },
+      "writtenOn": "2024-02-19T09:38:04Z",
+      "side": 1,
+      "message": "oh, i forgot this CL will break backward compatibility...",
+      "parentUuid": "1a57182a_bf3be950",
+      "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
