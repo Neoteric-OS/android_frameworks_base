@@ -16,6 +16,24 @@
       "message": "I don\u0027t think we can do this...",
       "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a57182a_bf3be950",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2043423
+      },
+      "writtenOn": "2024-02-19T09:14:22Z",
+      "side": 1,
+      "message": "Yes, I understand that this is not a simple CL :)\n\nBut I did a little test and found that the modified UTF-8, which is used in Java serialization, is the best choice for storing strings.\n\n\n| Test Case | Serializable (KB) | Parcelable (KB) | UTF-8 Parcelable (KB) | ASCII Strings Size Diff (%) |\n|-----------|-------------------|-----------------|-----------------------|-----------------------------|\n| 5x        | 0.17              | 0.17            | 0.16                  | 6.25% / 6.25% / 0%          |\n| 10x       | 0.19              | 0.25            | 0.22                  | 0% / 31.6% / 15.8%          |\n| 100x      | 0.63              | 1.7             | 1.3                   | 0% / 169.8% / 106.4%        |\n| 1000x     | 5                 | 15.7            | 11.8                  | 0% / 214% / 136%            |\n| 10000x    | 49                | 156.3           | 117.3                 | 0% / 219% / 139.4%          |\n\n| Test Case | Serializable (KB) | Parcelable (KB) | UTF-8 Parcelable (KB) | non-ASCII Strings Size Diff (%) |\n|-----------|-------------------|-----------------|-----------------------|---------------------------------|\n| 5x        | 0.18              | 0.19            | 0.2                   | 0% / 5.6% / 11.1%               |\n| 10x       | 0.2               | 0.29            | 0.3                   | 0% / 45% / 50%                  |\n| 100x      | 0.64              | 2               | 2.1                   | 0% / 212.5% / 228.13%           |\n| 1000x     | 5                 | 19.6            | 19.6                  | 0% / 292% / 292%                |\n| 10000x    | 49                | 195.4           | 195.4                 | 0% / 298.8% / 298.8%            |",
+      "parentUuid": "8af5e299_a75eb0fe",
+      "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
