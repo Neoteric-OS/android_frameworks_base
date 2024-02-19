@@ -123,6 +123,24 @@
       "parentUuid": "2925c150_461eeb69",
       "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79f23127_5a396375",
+        "filename": "rs/java/android/renderscript/ScriptC.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1102053
+      },
+      "writtenOn": "2024-02-19T14:28:53Z",
+      "side": 1,
+      "message": "I agree, there won\u0027t be a libRS.so on RISC-V devices.\nThank you Lev, I did what you suggested.",
+      "parentUuid": "58f9f6b5_603be3ee",
+      "revId": "3ba8ac993e5129fd6213fb47c148e4a4ae65d90d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
