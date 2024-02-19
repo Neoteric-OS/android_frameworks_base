@@ -50,6 +50,23 @@
       "message": "2967148: ScreenOffAnimation: Fix system animation disable check | https://android-review.googlesource.com/c/platform/frameworks/base/+/2967148",
       "revId": "464edc04626e7fe17f846fb21294be02508949db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bb05511_39405ca3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2024-02-19T14:15:44Z",
+      "side": 1,
+      "message": "`UnlockedScreenOffAnimationControllerTest` will need to be updated as well, and thank you!",
+      "revId": "464edc04626e7fe17f846fb21294be02508949db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
