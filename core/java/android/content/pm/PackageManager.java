@@ -51,6 +51,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageInstaller.SessionParams;
+import android.content.pm.PackageManager.ApplicationInfoFlags;
+import android.content.pm.PackageManager.ComponentEnabledSetting;
+import android.content.pm.PackageManager.ComponentInfoFlags;
+import android.content.pm.PackageManager.PackageInfoFlags;
+import android.content.pm.PackageManager.ResolveInfoFlags;
+import android.content.pm.PackageManager.UninstallCompleteCallback;
 import android.content.pm.dex.ArtManager;
 import android.content.pm.pkg.FrameworkPackageUserState;
 import android.content.pm.verify.domain.DomainVerificationManager;
@@ -105,6 +111,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
+import java.util.zip.Checksum;
 
 /**
  * Class for retrieving various kinds of information related to the application
@@ -3756,7 +3763,9 @@ public abstract class PackageManager {
      * The device is capable of communicating with other devices via
      * <a href="https://www.threadgroup.org">Thread</a> networking protocol.
      */
-    @FlaggedApi(com.android.net.thread.flags.Flags.FLAG_THREAD_ENABLED_PLATFORM)
+    // TODO (b/325886480): update the flag to
+    // "android.net.thread.platform.flags.Flags.FLAG_THREAD_ENABLED_PLATFORM"
+    @FlaggedApi("com.android.net.thread.flags.thread_enabled_platform")
     @SdkConstant(SdkConstantType.FEATURE)
     public static final String FEATURE_THREAD_NETWORK = "android.hardware.thread_network";
 

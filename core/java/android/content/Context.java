@@ -55,6 +55,7 @@ import android.companion.virtual.VirtualDeviceManager;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledSince;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.Context.BindServiceFlags;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
@@ -4767,7 +4768,9 @@ public abstract class Context {
      * @see android.net.thread.ThreadNetworkManager
      * @hide
      */
-    @FlaggedApi(com.android.net.thread.flags.Flags.FLAG_THREAD_ENABLED_PLATFORM)
+    // TODO (b/325886480): update the flag to
+    // "android.net.thread.platform.flags.Flags.FLAG_THREAD_ENABLED_PLATFORM"
+    @FlaggedApi("com.android.net.thread.flags.thread_enabled_platform")
     @SystemApi
     public static final String THREAD_NETWORK_SERVICE = "thread_network";
 

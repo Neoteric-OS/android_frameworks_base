@@ -71,10 +71,12 @@ import com.android.internal.R;
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Handler;
 
 /**
  * Manages users and user details on a multi-user system. There are two major categories of
@@ -1867,7 +1869,9 @@ public class UserManager {
      * @see DevicePolicyManager#clearUserRestriction(ComponentName, String)
      * @see #getUserRestrictions()
      */
-    @FlaggedApi(com.android.net.thread.flags.Flags.FLAG_THREAD_USER_RESTRICTION_ENABLED)
+    // TODO (b/325886480): update the flag to
+    // "android.net.thread.platform.flags.Flags.FLAG_THREAD_ENABLED_PLATFORM"
+    @FlaggedApi("com.android.net.thread.flags.thread_user_restriction_enabled")
     public static final String DISALLOW_THREAD_NETWORK = "no_thread_network";
 
     /**
