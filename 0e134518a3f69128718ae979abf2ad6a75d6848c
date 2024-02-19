@@ -52,6 +52,24 @@
       "parentUuid": "1a57182a_bf3be950",
       "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f76fa15_33dbb07c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-02-19T09:40:13Z",
+      "side": 1,
+      "message": "Yes, backward compat is the main issue here. But I added Steven to comment, because I\u0027m not sure what parts of the wire protocol must be kept stable these days.",
+      "parentUuid": "c5c76658_82c4441f",
+      "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
