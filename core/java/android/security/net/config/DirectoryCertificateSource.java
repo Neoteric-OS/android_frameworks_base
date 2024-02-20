@@ -25,6 +25,9 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.String;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -44,13 +47,24 @@ import javax.security.auth.x500.X500Principal;
 abstract class DirectoryCertificateSource implements CertificateSource {
     private static final String LOG_TAG = "DirectoryCertificateSrc";
     private final File mDir;
+    private final File mDir2;
     private final Object mLock = new Object();
     private final CertificateFactory mCertFactory;
 
     private Set<X509Certificate> mCertificates;
-
+  
     protected DirectoryCertificateSource(File caDir) {
         mDir = caDir;
+        try {
+            mCertFactory = CertificateFactory.getInstance("X.509");
+        } catch (CertificateException e) {
+            throw new RuntimeException("Failed to obtain X.509 CertificateFactory", e);
+        }
+    }
+
+    protected DirectoryCertificateSource(File caDir, File caDir2) {
+        mDir = caDir;
+        mDir2 = caDir2;
         try {
             mCertFactory = CertificateFactory.getInstance("X.509");
         } catch (CertificateException e) {
@@ -69,8 +83,24 @@ abstract class DirectoryCertificateSource implements CertificateSource {
             }
 
             Set<X509Certificate> certs = new ArraySet<X509Certificate>();
+            List<String> certList;
             if (mDir.isDirectory()) {
-                for (String caFile : mDir.list()) {
+                certList = ArrayList<String>(Arrays.asList(mDir.list()));
+                for (String caFile : certList) {
+                    if (isCertMarkedAsRemoved(caFile)) {
+                        continue;
+                    }
+                    X509Certificate cert = readCertificate(caFile);
+                    if (cert != null) {
+                        certs.add(cert);
+                    }
+                }
+            }
+            if (mDir2 != null && mdir2.isDirectory()) {
+                List<String> certList2 = ArrayList<String>(Arrays.asList(mDir.list()));
+                if (certList != null)
+                    certList2.removeAll(certList);
+                for (String caFile : certList2) {
                     if (isCertMarkedAsRemoved(caFile)) {
                         continue;
                     }

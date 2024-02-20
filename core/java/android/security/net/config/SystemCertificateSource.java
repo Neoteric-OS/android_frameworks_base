@@ -33,7 +33,7 @@ public final class SystemCertificateSource extends DirectoryCertificateSource {
     private final File mUserRemovedCaDir;
 
     private SystemCertificateSource() {
-        super(getDirectory());
+        super(getDirectory(), getDirectory2());
         File configDir = Environment.getUserConfigDirectory(UserHandle.myUserId());
         mUserRemovedCaDir = new File(configDir, "cacerts-removed");
     }
@@ -47,6 +47,14 @@ public final class SystemCertificateSource extends DirectoryCertificateSource {
         if (updatable_dir.exists()
                 && !(updatable_dir.list().length == 0)) {
             return updatable_dir;
+        }
+        return new File(System.getenv("ANDROID_ROOT") + "/etc/security/cacerts");
+    }
+
+    private static File getDirectory2() {
+        if ((System.getProperty("system.certs.enabled") != null)
+                && (System.getProperty("system.certs.enabled")).equals("true")) {
+            return null;
         }
         return new File(System.getenv("ANDROID_ROOT") + "/etc/security/cacerts");
     }
