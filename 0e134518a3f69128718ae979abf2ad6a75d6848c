@@ -70,6 +70,24 @@
       "parentUuid": "c5c76658_82c4441f",
       "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c55749a0_f245f1de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-02-20T21:46:58Z",
+      "side": 1,
+      "message": "This CL breaks backcompat, and it will also break native\u003c-\u003eJava transactions. Internal bug b/172502290 has some prior work moving towards this.\n\nAnyway, I spent some time a few years ago starting to do this, but I never found the time to finish it. What you would have to consider:\n- making this work in libbinder (C++/Rust) not just Java\n- app backcompat (some apps freeze the format)\n- utf-8 is only common in some regions (utf encoding may be less efficient for certain strings)\n- converting to utf-8 will require extra allocations in some places, likely have to support both (e.g. write \u00271\u0027 if utf-8 or \u00272\u0027 if utf-16)\n- RPC binder code needs to be backwards compatible\n\nSo, there is quite a significant amount of work this would take.",
+      "parentUuid": "3f76fa15_33dbb07c",
+      "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
