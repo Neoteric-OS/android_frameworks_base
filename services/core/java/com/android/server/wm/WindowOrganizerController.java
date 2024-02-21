@@ -2016,6 +2016,14 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
         ownerTask.addChild(taskFragment, position);
         taskFragment.setWindowingMode(creationParams.getWindowingMode());
         if (!creationParams.getInitialRelativeBounds().isEmpty()) {
+            if (transition != null && transition.getSyncId() > 0
+                    && isStartingWindowAssociateWithTask(ownerTask, ownerActivity)) {
+                // starting window transfer to task by sync transaction,but recompute
+                // configuration will trigger task fragment crop by pending transaction,pending
+                // and sync transaction apply() has race-condition which will cause flash black,
+                // so add target to sync set,see b/324148725.
+                addToSyncSet(transition.getSyncId(), taskFragment);
+            }
             // Set relative bounds instead of using setBounds. This will avoid unnecessary update in
             // case the parent has resized since the last time parent info is sent to the organizer.
             taskFragment.setRelativeEmbeddedBounds(creationParams.getInitialRelativeBounds());
@@ -2026,6 +2034,12 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
         mLaunchTaskFragments.put(creationParams.getFragmentToken(), taskFragment);
 
         if (transition != null) transition.collectExistenceChange(taskFragment);
+    }
+
+    private boolean isStartingWindowAssociateWithTask(Task root, ActivityRecord ar) {
+        return ar.mStartingData != null
+                && ar.mStartingData.equals(root.mSharedStartingData)
+                && root.equals(ar.mStartingData.mAssociatedTask);
     }
 
     private int deleteTaskFragment(@NonNull TaskFragment taskFragment,
