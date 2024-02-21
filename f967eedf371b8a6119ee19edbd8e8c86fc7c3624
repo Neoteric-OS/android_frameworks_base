@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02c298fd_4a15680e",
+        "filename": "tools/streaming_proto/test/unit/streaming_proto_java.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1772825
+      },
+      "writtenOn": "2024-02-21T15:26:35Z",
+      "side": 1,
+      "message": "resolve",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "f967eedf371b8a6119ee19edbd8e8c86fc7c3624",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
