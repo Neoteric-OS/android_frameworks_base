@@ -88,6 +88,24 @@
       "parentUuid": "3f76fa15_33dbb07c",
       "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "665386ca_2a04efee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2043423
+      },
+      "writtenOn": "2024-02-21T00:03:13Z",
+      "side": 1,
+      "message": "Thanks for the clarification! Now, I understand your decisions. Yeah, it seems there is a lot of work, but I hope it will be worth it if it gives some performance improvements",
+      "parentUuid": "c55749a0_f245f1de",
+      "revId": "0e134518a3f69128718ae979abf2ad6a75d6848c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
