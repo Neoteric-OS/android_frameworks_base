@@ -859,8 +859,9 @@ final class DeletePackageHelper {
         }
         final int callingUserId = UserHandle.getUserId(callingUid);
         // If the caller installed the pkgName, then allow it to silently uninstall.
-        if (callingUid == snapshot.getPackageUid(
-                snapshot.getInstallerPackageName(pkgName, userId), 0, callingUserId)) {
+        final PackageSetting ps = mPm.mSettings.getPackageLPr(pkgName);
+        if (ps != null && callingUid == snapshot.getPackageUid(
+                ps.getInstallSource().mInstallerPackageName, 0, callingUserId)) {
             return true;
         }
 
