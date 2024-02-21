@@ -16,6 +16,23 @@
       "message": "Please have a look, thanks!",
       "revId": "711e095f48c5c1712b414d0c58272a4a0c8d3746",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec7a685c_9597623d",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4135,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2024-02-21T16:05:17Z",
+      "side": 1,
+      "message": "Please check the following link for an example on how to determine that an event comes from an internal device: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/policy/PhoneWindowManager.java;l\u003d3016",
+      "revId": "711e095f48c5c1712b414d0c58272a4a0c8d3746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
