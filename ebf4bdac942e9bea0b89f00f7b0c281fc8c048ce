@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "823438ff_2d3f25c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949170
+      },
+      "writtenOn": "2024-02-21T21:37:41Z",
+      "side": 1,
+      "message": "NOTE: removed cast for AIDL--the new AIDL interface uses int as address type, so proper casting to/from unsigned short should be handled by the HAL impl instead of here.",
+      "revId": "ebf4bdac942e9bea0b89f00f7b0c281fc8c048ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
