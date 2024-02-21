@@ -141,6 +141,24 @@
       "parentUuid": "51c197ca_ce97998c",
       "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c5e38be_f28c46e9",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4594,
+      "author": {
+        "id": 1950315
+      },
+      "writtenOn": "2024-02-21T16:11:26Z",
+      "side": 1,
+      "message": "Added a link to an example on how this can be derived from a `KeyEvent`, so it should be quite straightforward to implement.",
+      "parentUuid": "49244215_6f95bc4e",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
