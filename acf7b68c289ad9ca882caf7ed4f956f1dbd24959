@@ -16,6 +16,24 @@
       "message": "As per my understanding, we just need to change in CTS for `android14-tests-dev` branch. We don\u0027t need other changes. Can you please confirm with rossyeh@ about this?",
       "revId": "acf7b68c289ad9ca882caf7ed4f956f1dbd24959",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b13cb67_6948d555",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1973455
+      },
+      "writtenOn": "2024-02-22T17:54:57Z",
+      "side": 1,
+      "message": "I think this CL is already restricted to `android14-tests-dev` with the `DO NOT MERGE` tag?",
+      "parentUuid": "e2d28989_6a00f9ef",
+      "revId": "acf7b68c289ad9ca882caf7ed4f956f1dbd24959",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
