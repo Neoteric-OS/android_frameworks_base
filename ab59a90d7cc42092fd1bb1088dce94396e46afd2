@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42c94d4c_45cfdb3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958248
+      },
+      "writtenOn": "2024-02-22T22:48:30Z",
+      "side": 1,
+      "message": "We need to consider other approaches because this change is likely to increase battery usage.",
+      "revId": "ab59a90d7cc42092fd1bb1088dce94396e46afd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
