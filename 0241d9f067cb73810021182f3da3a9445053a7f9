@@ -159,6 +159,24 @@
       "parentUuid": "49244215_6f95bc4e",
       "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfffbe19_e33ccd69",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4594,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-02-22T14:47:38Z",
+      "side": 1,
+      "message": "Thanks for the example.\n\nI have added a check for whether the device is internal.",
+      "parentUuid": "2c5e38be_f28c46e9",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
