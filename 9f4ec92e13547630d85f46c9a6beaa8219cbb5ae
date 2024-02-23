@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e3019c4_e93fc097",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 0,
+      "message": "I suspect that removing this limit will lead to more OOMs, making the fuzzer give us lots of false positives.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "9f4ec92e13547630d85f46c9a6beaa8219cbb5ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

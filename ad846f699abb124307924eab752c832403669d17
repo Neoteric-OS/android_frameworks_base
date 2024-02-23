@@ -1,0 +1,204 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfe6c52e_b01b5efe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "nit: Refactor*",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cdd2bc0_d8116b3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "This seems like it could be a separate CL.",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a663cf3_480f77f6",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "These variables aren\u0027t used anywhere. Did you intend to use them?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18effcad_95693fe1",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "Can this be `constexpr`? It could also be moved to the one place it\u0027s used.",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3929664a_6a36c42d",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "Why is this necessary? I don\u0027t see where you\u0027ve removed `android::` from anything, e.g. `android::ProcessState::self()`, and I don\u0027t think `FuzzedDataProvider` is in the `android` namespace? Maybe you added something else I missed?",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7212e6e_3df8da46",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "This should be a `bool` (or an `enum`) describing what it does. Perhaps `useFileDescriptor`.",
+      "range": {
+        "startLine": 48,
+        "startChar": 54,
+        "endLine": 48,
+        "endChar": 68
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "915593fd_bf20c89e",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "Please move this inside the the second case, where it\u0027s used.",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "221b03ca_e8043053",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "I think we typically uses this naming convention for member variables. I would name this something like `dataProvider`, or I think I\u0027ve seen `fdp` elsewhere - though that\u0027s not very descriptive to me!",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 27
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "752edb93_6d9f2220",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "This is confusing. You don\u0027t ever use the variables in a way that it makes sense to declare them outside the loop. If you\u0027re not going to do that (e.g. pass them to `AImageDecoder_setTargetSize`), you may as well declare them where they are used. (You actually never use `width`.)\n\nYou *could* assign them `AImageDecoderHeaderInfo_getWidth`/`Height`, and then randomize them and update them in the `AImageDecoder_setTargetSize` section, which would address my concern on line 131.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea103599_ad2478ee",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-02-23T22:32:59Z",
+      "side": 1,
+      "message": "This isn\u0027t going to do what you want. [This function](https://developer.android.com/ndk/reference/group/image-decoder#aimagedecoderheaderinfo_getheight) returns the *encoded* size of the image. If this loop has called `AImageDecoder_setTargetSize` to use a larger size, then the allocated memory for the pixels won\u0027t be big enough, and `AImageDecoder_decodeImage` will write to memory outside the pixels.",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
