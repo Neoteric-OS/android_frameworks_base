@@ -131,3 +131,29 @@ cc_fuzz {
         "-DPNG_MUTATOR_DEFINE_LIBFUZZER_CUSTOM_MUTATOR",
     ],
 }
+
+cc_fuzz {
+    name: "imagedecoder_heif_fuzzer",
+    defaults: ["imagedecoder_fuzzer_defaults"],
+    shared_libs: [
+        "libfakeservicemanager",
+    ],
+    target: {
+        android: {
+            shared_libs: [
+                "libmediaplayerservice",
+                "libmediaextractorservice",
+            ],
+        },
+        host: {
+            static_libs: [
+                "libbinder_random_parcel",
+                "libcutils",
+            ],
+        },
+    },
+    include_dirs: ["frameworks/av/services/mediaextractor"],
+    cflags: [
+        "-DFUZZ_HEIF_FORMAT",
+    ],
+}

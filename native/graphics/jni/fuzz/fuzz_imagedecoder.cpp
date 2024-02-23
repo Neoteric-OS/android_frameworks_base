@@ -22,12 +22,24 @@
 #include <cstdlib>
 #include <memory>
 
+#ifdef FUZZ_HEIF_FORMAT
+#include <fakeservicemanager/FakeServiceManager.h>
+#ifdef __ANDROID__
+#include <MediaExtractorService.h>
+#include <MediaPlayerService.h>
+#else
+#include <fuzzbinder/random_binder.h>
+#endif //__ANDROID__
+std::once_flag callOnceHEIF;
+using namespace android;
+#endif //FUZZ_HEIF_FORMAT
+
 #ifdef PNG_MUTATOR_DEFINE_LIBFUZZER_CUSTOM_MUTATOR
 #include <fuzz/png_mutator.h>
 #endif
-
 constexpr int32_t kMaxDimension = 5000;
 constexpr int32_t kMinDimension = 0;
+
 constexpr AndroidBitmapFormat kAndroidBitmapFormat[] = {ANDROID_BITMAP_FORMAT_NONE,
                                                         ANDROID_BITMAP_FORMAT_RGBA_8888,
                                                         ANDROID_BITMAP_FORMAT_RGB_565,
@@ -42,8 +54,39 @@ struct PixelFreer {
 
 using PixelPointer = std::unique_ptr<void, PixelFreer>;
 
+#ifndef FUZZ_HEIF_FORMAT
+/** Reverse all 4 bytes in a 32bit value.
+    e.g. 0x12345678 -> 0x78563412
+*/
+static uint32_t endianSwap32(uint32_t value) {
+    return ((value & 0xFF) << 24) |
+           ((value & 0xFF00) << 8) |
+           ((value & 0xFF0000) >> 8) |
+            (value >> 24);
+}
+
+bool isFtyp(const uint8_t* data, size_t size) {
+    int32_t headerSize = 8;
+    int32_t chunkTypeOffset = 4;
+    int32_t ftypFourCCVal = 1718909296;
+    if (size >= headerSize) {
+        const uint32_t* chunk = reinterpret_cast<const uint32_t*>(data + chunkTypeOffset);
+        if (endianSwap32(*chunk) == ftypFourCCVal) {
+            return true;
+        }
+    }
+    return false;
+}
+#endif
+
 AImageDecoder* init(const uint8_t* data, size_t size, bool useFileDescriptor) {
     AImageDecoder* decoder = nullptr;
+#ifndef FUZZ_HEIF_FORMAT
+    if (isFtyp(data, size)) {
+        // Ignore HEIF data when fuzzing non-HEIF image decoders.
+        return nullptr;
+    }
+#endif //FUZZ_HEIF_FORMAT
     if (useFileDescriptor) {
         AImageDecoder_createFromBuffer(data, size, &decoder);
     } else {
@@ -56,8 +99,36 @@ AImageDecoder* init(const uint8_t* data, size_t size, bool useFileDescriptor) {
     return decoder;
 }
 
+#ifdef FUZZ_HEIF_FORMAT
+#ifdef __ANDROID__
+extern "C" int LLVMFuzzerInitialize(int* /* argc */, char*** /* argv */) {
+    /**
+     * For image formats like HEIF, a new metadata object is
+     * created which requires "media.player" service running
+     */
+    sp<IServiceManager> fakeServiceManager = new FakeServiceManager();
+    setDefaultServiceManager(fakeServiceManager);
+    MediaPlayerService::instantiate();
+    MediaExtractorService::instantiate();
+    return 0;
+}
+#endif //__ANDROID__
+#endif //FUZZ_HEIF_FORMAT
+
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
     FuzzedDataProvider dataProvider = FuzzedDataProvider(data, size);
+#ifdef FUZZ_HEIF_FORMAT
+#ifndef __ANDROID__
+    std::call_once(callOnceHEIF, [&] {
+        sp<IServiceManager> fakeServiceManager = new FakeServiceManager();
+        setDefaultServiceManager(fakeServiceManager);
+        auto binderExtractor = getRandomBinder(&dataProvider);
+        auto binderPlayer = getRandomBinder(&dataProvider);
+        fakeServiceManager->addService(String16("media.extractor"), binderExtractor);
+        fakeServiceManager->addService(String16("media.player"), binderPlayer);
+    });
+#endif //__ANDROID__
+#endif //FUZZ_HEIF_FORMAT
     int32_t dataSize = dataProvider.ConsumeIntegralInRange<int32_t>(0, 1920 * 1080);
     std::vector<uint8_t> inputBuffer = dataProvider.ConsumeBytes<uint8_t>(dataSize);
     AImageDecoder* decoder =
