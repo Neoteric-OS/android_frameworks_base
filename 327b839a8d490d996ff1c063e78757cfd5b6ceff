@@ -34,6 +34,24 @@
       "parentUuid": "81b9b04c_8a0cd263",
       "revId": "327b839a8d490d996ff1c063e78757cfd5b6ceff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a35a06a5_03e63b4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001146
+      },
+      "writtenOn": "2024-02-23T22:25:51Z",
+      "side": 1,
+      "message": "Agreed. Neither weak nor soft references are the answer (and soft references even less so than weak references!).",
+      "parentUuid": "7c5323dd_8eec85eb",
+      "revId": "327b839a8d490d996ff1c063e78757cfd5b6ceff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
