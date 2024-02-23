@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81b9b04c_8a0cd263",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060493
+      },
+      "writtenOn": "2024-02-23T22:20:33Z",
+      "side": 1,
+      "message": "Changing a WeakReference to a SoftReference hides a bug at best.\n\nWe probably don\u0027t want a soft or weak reference if we need the reference after it has been collected. I don\u0027t know if that will cause a leak.\n\nPerhaps we just need to ensure that we don\u0027t do some action on a collected reference instead?",
+      "revId": "327b839a8d490d996ff1c063e78757cfd5b6ceff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
