@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3291246e_9ecbc008",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-02-23T10:33:23Z",
+      "side": 1,
+      "message": "New patch set, now simplified to only check the setting and if it\u0027s enabled wake up the device on any internal key event.",
+      "revId": "1e7a1069509ec4e702482eb1a961c9343f7f7bc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

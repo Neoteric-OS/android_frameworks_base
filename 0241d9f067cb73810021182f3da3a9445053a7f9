@@ -213,6 +213,24 @@
       "parentUuid": "44e9531e_ec86073a",
       "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "685fb7b2_8b2fba56",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4594,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-02-23T10:33:23Z",
+      "side": 1,
+      "message": "I think that makes sense. I have uploaded a new patch set. Thanks!",
+      "parentUuid": "82153448_ed523d86",
+      "revId": "0241d9f067cb73810021182f3da3a9445053a7f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
