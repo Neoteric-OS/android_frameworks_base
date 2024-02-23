@@ -16,6 +16,24 @@
       "message": "seems like we needed manual help to submit this even if Treehugger approved 😊",
       "revId": "bb2ca61b83de3b076926fc9c2b9f5cff9e9c8fc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37963b99_208f8a04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2024-02-23T12:08:26Z",
+      "side": 1,
+      "message": "You need to press submit within two days from when the CL gets the Presubmit-Verified+1 vote, otherwise it expires and has to be run again. I started it again now.",
+      "parentUuid": "6850c0c3_e5c922ac",
+      "revId": "bb2ca61b83de3b076926fc9c2b9f5cff9e9c8fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
