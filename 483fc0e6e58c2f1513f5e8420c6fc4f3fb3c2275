@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f509efba_d0c927c5",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1951730
+      },
+      "writtenOn": "2024-02-23T10:10:00Z",
+      "side": 1,
+      "message": "Can we record the time taken for this operation to complete, either through before-and-after uptimes or just by measuring the elapsed time? This is significant to us since this adds latency to the critical dump path and we\u0027ve spent some time optimizing it",
+      "revId": "483fc0e6e58c2f1513f5e8420c6fc4f3fb3c2275",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
