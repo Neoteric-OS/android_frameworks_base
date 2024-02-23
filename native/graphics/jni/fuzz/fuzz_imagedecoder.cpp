@@ -15,8 +15,8 @@
  */
 
 #include <android/imagedecoder.h>
-
 #include <binder/IPCThreadState.h>
+#include <fuzzer/FuzzedDataProvider.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <cstdlib>
@@ -26,21 +26,15 @@
 #include <fuzz/png_mutator.h>
 #endif
 
-struct DecoderDeleter {
-    void operator()(AImageDecoder* decoder) const { AImageDecoder_delete(decoder); }
-};
-
-using DecoderPointer = std::unique_ptr<AImageDecoder, DecoderDeleter>;
-
-static DecoderPointer makeDecoder(const uint8_t* data, size_t size) {
-    AImageDecoder* decoder = nullptr;
-    int result = AImageDecoder_createFromBuffer(data, size, &decoder);
-    if (result != ANDROID_IMAGE_DECODER_SUCCESS) {
-        // This was not a valid image.
-        return nullptr;
-    }
-    return DecoderPointer(decoder);
-}
+constexpr int32_t kMaxDimension = 5000;
+constexpr int32_t kMinDimension = 0;
+constexpr AndroidBitmapFormat kAndroidBitmapFormat[] = {ANDROID_BITMAP_FORMAT_NONE,
+                                                        ANDROID_BITMAP_FORMAT_RGBA_8888,
+                                                        ANDROID_BITMAP_FORMAT_RGB_565,
+                                                        ANDROID_BITMAP_FORMAT_RGBA_4444,
+                                                        ANDROID_BITMAP_FORMAT_A_8,
+                                                        ANDROID_BITMAP_FORMAT_RGBA_F16,
+                                                        ANDROID_BITMAP_FORMAT_RGBA_1010102};
 
 struct PixelFreer {
     void operator()(void* pixels) const { std::free(pixels); }
@@ -48,41 +42,106 @@ struct PixelFreer {
 
 using PixelPointer = std::unique_ptr<void, PixelFreer>;
 
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
-    // Without this call, decoding HEIF may time out on binder IPC calls.
-    android::ProcessState::self()->startThreadPool();
+AImageDecoder* init(const uint8_t* data, size_t size, bool useFileDescriptor) {
+    AImageDecoder* decoder = nullptr;
+    if (useFileDescriptor) {
+        AImageDecoder_createFromBuffer(data, size, &decoder);
+    } else {
+        constexpr char testFd[] = "tempFd";
+        int32_t fileDesc = open(testFd, O_RDWR | O_CREAT | O_TRUNC);
+        write(fileDesc, data, size);
+        AImageDecoder_createFromFd(fileDesc, &decoder);
+        close(fileDesc);
+    }
+    return decoder;
+}
 
-    DecoderPointer decoder = makeDecoder(data, size);
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+    FuzzedDataProvider dataProvider = FuzzedDataProvider(data, size);
+    int32_t dataSize = dataProvider.ConsumeIntegralInRange<int32_t>(0, 1920 * 1080);
+    std::vector<uint8_t> inputBuffer = dataProvider.ConsumeBytes<uint8_t>(dataSize);
+    AImageDecoder* decoder =
+            init(inputBuffer.data(), inputBuffer.size(), dataProvider.ConsumeBool());
+
     if (!decoder) {
         return 0;
     }
-
-    const AImageDecoderHeaderInfo* info = AImageDecoder_getHeaderInfo(decoder.get());
-    int32_t width = AImageDecoderHeaderInfo_getWidth(info);
-    int32_t height = AImageDecoderHeaderInfo_getHeight(info);
-
-    // Set an arbitrary limit on the size of an image. The fuzzer runs with a
-    // limited amount of memory, and keeping this allocation small allows the
-    // fuzzer to continue running to try to find more serious problems. This
-    // size is large enough to hold a photo taken by a current gen phone.
-    constexpr int32_t kMaxDimension = 5000;
-    if (width > kMaxDimension || height > kMaxDimension) {
-        return 0;
+    const AImageDecoderHeaderInfo* headerInfo = AImageDecoder_getHeaderInfo(decoder);
+    AImageDecoderFrameInfo* frameInfo = AImageDecoderFrameInfo_create();
+    int32_t height = dataProvider.ConsumeIntegralInRange<int32_t>(kMinDimension, kMaxDimension);
+    int32_t width = dataProvider.ConsumeIntegralInRange<int32_t>(kMinDimension, kMaxDimension);
+    AImageDecoder_setTargetSize(decoder, width, height);
+    while (dataProvider.remaining_bytes()) {
+        auto invokeImageApi = dataProvider.PickValueInArray<const std::function<void()>>({
+                [&]() {
+                    height = dataProvider.ConsumeIntegralInRange<int32_t>(kMinDimension,
+                                                                          kMaxDimension);
+                    width = dataProvider.ConsumeIntegralInRange<int32_t>(kMinDimension,
+                                                                         kMaxDimension);
+                    AImageDecoder_setTargetSize(decoder, width, height);
+                },
+                [&]() {
+                    AImageDecoder_setUnpremultipliedRequired(decoder,
+                                                             dataProvider
+                                                                     .ConsumeBool() /* required */);
+                },
+                [&]() {
+                    AImageDecoder_setAndroidBitmapFormat(
+                            decoder,
+                            dataProvider.ConsumeIntegralInRange<
+                                    int32_t>(ANDROID_BITMAP_FORMAT_NONE,
+                                             ANDROID_BITMAP_FORMAT_RGBA_1010102) /* format */);
+                },
+                [&]() {
+                    AImageDecoder_setDataSpace(decoder,
+                                               dataProvider
+                                                       .ConsumeIntegral<int32_t>() /* dataspace */);
+                },
+                [&]() {
+                    ARect rect{dataProvider.ConsumeIntegral<int32_t>() /* left */,
+                               dataProvider.ConsumeIntegral<int32_t>() /* top */,
+                               dataProvider.ConsumeIntegral<int32_t>() /* right */,
+                               dataProvider.ConsumeIntegral<int32_t>() /* bottom */};
+                    AImageDecoder_setCrop(decoder, rect);
+                },
+                [&]() { AImageDecoderHeaderInfo_getWidth(headerInfo); },
+                [&]() { AImageDecoderHeaderInfo_getMimeType(headerInfo); },
+                [&]() { AImageDecoderHeaderInfo_getAlphaFlags(headerInfo); },
+                [&]() { AImageDecoderHeaderInfo_getAndroidBitmapFormat(headerInfo); },
+                [&]() {
+                    AImageDecoder_computeSampledSize(decoder,
+                                                     dataProvider.ConsumeIntegral<
+                                                             int>() /* sampleSize */,
+                                                     &width, &height);
+                },
+                [&]() { AImageDecoderHeaderInfo_getDataSpace(headerInfo); },
+                [&]() { AImageDecoder_getRepeatCount(decoder); },
+                [&]() { AImageDecoder_getFrameInfo(decoder, frameInfo); },
+                [&]() { AImageDecoderFrameInfo_getDuration(frameInfo); },
+                [&]() { AImageDecoderFrameInfo_hasAlphaWithinBounds(frameInfo); },
+                [&]() { AImageDecoderFrameInfo_getDisposeOp(frameInfo); },
+                [&]() { AImageDecoderFrameInfo_getBlendOp(frameInfo); },
+                [&]() {
+                    AImageDecoder_setInternallyHandleDisposePrevious(
+                            decoder, dataProvider.ConsumeBool() /* handle */);
+                },
+                [&]() { AImageDecoder_rewind(decoder); },
+                [&]() { AImageDecoder_advanceFrame(decoder); },
+                [&]() {
+                    height = AImageDecoderHeaderInfo_getHeight(headerInfo);
+                    size_t stride = AImageDecoder_getMinimumStride(decoder);
+                    size_t pixelSize = height * stride;
+                    auto pixels = PixelPointer(std::malloc(pixelSize));
+                    if (!pixels.get()) {
+                        return;
+                    }
+                    AImageDecoder_decodeImage(decoder, pixels.get(), stride, pixelSize);
+                },
+        });
+        invokeImageApi();
     }
 
-    size_t stride = AImageDecoder_getMinimumStride(decoder.get());
-    size_t pixelSize = height * stride;
-    auto pixels = PixelPointer(std::malloc(pixelSize));
-    if (!pixels.get()) {
-        return 0;
-    }
-
-    while (true) {
-        int result = AImageDecoder_decodeImage(decoder.get(), pixels.get(), stride, pixelSize);
-        if (result != ANDROID_IMAGE_DECODER_SUCCESS) break;
-
-        result = AImageDecoder_advanceFrame(decoder.get());
-        if (result != ANDROID_IMAGE_DECODER_SUCCESS) break;
-    }
+    AImageDecoderFrameInfo_delete(frameInfo);
+    AImageDecoder_delete(decoder);
     return 0;
 }
