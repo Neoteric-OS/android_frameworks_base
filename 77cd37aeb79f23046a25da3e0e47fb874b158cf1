@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de91bb30_0ba92a03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003403
+      },
+      "writtenOn": "2024-02-23T15:25:39Z",
+      "side": 1,
+      "message": "Thank you for reducing the glycemic index of this code.",
+      "revId": "77cd37aeb79f23046a25da3e0e47fb874b158cf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
