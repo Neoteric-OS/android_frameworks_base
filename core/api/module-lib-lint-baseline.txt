@@ -1,4 +1,8 @@
 // Baseline format: 1.0
+HiddenAbstractMethod: android.app.Notification.Style#areNotificationsVisiblyDifferent(android.app.Notification.Style):
+    areNotificationsVisiblyDifferent cannot be hidden and abstract when Style has a visible constructor, in case a third-party attempts to subclass it.
+
+
 SamShouldBeLast: android.app.Activity#convertToTranslucent(android.app.Activity.TranslucentConversionListener, android.app.ActivityOptions):
     SAM-compatible parameters (such as parameter 1, "callback", in android.app.Activity.convertToTranslucent) should be last to improve Kotlin interoperability; see https://kotlinlang.org/docs/reference/java-interop.html#sam-conversions
 SamShouldBeLast: android.app.ActivityManager#addOnUidImportanceListener(android.app.ActivityManager.OnUidImportanceListener, int):

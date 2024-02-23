@@ -1,4 +1,8 @@
 // Baseline format: 1.0
+HiddenAbstractMethod: android.app.Notification.Style#areNotificationsVisiblyDifferent(android.app.Notification.Style):
+    areNotificationsVisiblyDifferent cannot be hidden and abstract when Style has a visible constructor, in case a third-party attempts to subclass it.
+
+
 UnflaggedApi: android.content.pm.PackageManager#FEATURE_THREAD_NETWORK:
     New API must be flagged with @FlaggedApi: field android.content.pm.PackageManager.FEATURE_THREAD_NETWORK
 UnflaggedApi: android.os.Build.VERSION_CODES#VANILLA_ICE_CREAM:

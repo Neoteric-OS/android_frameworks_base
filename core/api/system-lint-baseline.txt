@@ -11,6 +11,10 @@ GenericException: android.service.autofill.augmented.FillWindow#finalize():
     Methods must not throw generic exceptions (`java.lang.Throwable`)
 
 
+HiddenAbstractMethod: android.app.Notification.Style#areNotificationsVisiblyDifferent(android.app.Notification.Style):
+    areNotificationsVisiblyDifferent cannot be hidden and abstract when Style has a visible constructor, in case a third-party attempts to subclass it.
+
+
 KotlinKeyword: android.app.Notification#when:
     Avoid field names that are Kotlin hard keywords ("when"); see https://android.github.io/kotlin-guides/interop.html#no-hard-keywords
 

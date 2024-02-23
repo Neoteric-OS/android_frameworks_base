@@ -135,6 +135,10 @@ GetterSetterNames: android.net.NetworkPolicyManager#getRestrictBackground():
     Symmetric method for `setRestrictBackground` must be named `isRestrictBackground`; was `getRestrictBackground`
 
 
+HiddenAbstractMethod: android.app.Notification.Style#areNotificationsVisiblyDifferent(android.app.Notification.Style):
+    areNotificationsVisiblyDifferent cannot be hidden and abstract when Style has a visible constructor, in case a third-party attempts to subclass it.
+
+
 IntentBuilderName: android.hardware.soundtrigger.KeyphraseEnrollmentInfo#getManageKeyphraseIntent(int, String, java.util.Locale):
     Methods creating an Intent should be named `create<Foo>Intent()`, was `getManageKeyphraseIntent`
 
