@@ -16,6 +16,23 @@
       "message": "Thank you for reducing the glycemic index of this code.",
       "revId": "77cd37aeb79f23046a25da3e0e47fb874b158cf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2990ec0_35620d6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-02-23T15:37:32Z",
+      "side": 1,
+      "message": "Chatted with dsandler@. The implementation is ArrayDeque and LinkedList. It\u0027s not needed. It\u0027s mainly needed for a few implementation, e.g. ArrayList. I will abandon this CL. Sorry for the noise.",
+      "revId": "77cd37aeb79f23046a25da3e0e47fb874b158cf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
