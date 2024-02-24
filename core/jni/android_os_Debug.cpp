@@ -50,6 +50,7 @@
 #include <utils/misc.h>
 #include <vintf/KernelConfigs.h>
 
+#include <chrono>
 #include <iomanip>
 #include <string>
 #include <vector>
@@ -771,6 +772,7 @@ static bool dumpTraces(JNIEnv* env, jint pid, jstring fileName, jint timeoutSecs
         return false;
     }
 
+    auto t1 = std::chrono::high_resolution_clock::now();
     std::string binderState;
     android::status_t status = android::getBinderTransactions(pid, binderState);
     if (status == android::OK) {
@@ -780,10 +782,19 @@ static bool dumpTraces(JNIEnv* env, jint pid, jstring fileName, jint timeoutSecs
     } else {
         PLOG(ERROR) << "Failed to get binder state info for pid: " << pid << " status: " << status;
     }
+    auto t2 = std::chrono::high_resolution_clock::now();
+    LOG(INFO) << "Microseconds for getting/writing binder transactions for pid " << pid << ": "
+              << std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
     int res = dump_backtrace_to_file_timeout(pid, dumpType, timeoutSecs, fd);
+    auto t3 = std::chrono::high_resolution_clock::now();
+    LOG(INFO) << "Microseconds for getting/writing backtrace for pid " << pid << ": "
+              << std::chrono::duration_cast<std::chrono::microseconds>(t3 - t2).count();
     if (fdatasync(fd.get()) != 0) {
         PLOG(ERROR) << "Failed flushing trace.";
     }
+    auto t4 = std::chrono::high_resolution_clock::now();
+    LOG(INFO) << "Microseconds for fdatasync for pid " << pid << ": "
+              << std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
     return res == 0;
 }
 
