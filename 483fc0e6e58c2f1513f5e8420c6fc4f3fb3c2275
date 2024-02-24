@@ -16,6 +16,24 @@
       "message": "Can we record the time taken for this operation to complete, either through before-and-after uptimes or just by measuring the elapsed time? This is significant to us since this adds latency to the critical dump path and we\u0027ve spent some time optimizing it",
       "revId": "483fc0e6e58c2f1513f5e8420c6fc4f3fb3c2275",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8553908_f43ee3ee",
+        "filename": "core/jni/android_os_Debug.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2024-02-24T01:23:16Z",
+      "side": 1,
+      "message": "Yes! aosp/2976058 adds 3 measurements. 1) getting the new transactions and writing them to the file, 2) the existing call to `dump_backtrace_to_file_timeout` and 3) for the `fdatasync` call.\n\nI built and booted `aosp_cf_x86_64_phone-trunk_staging-userdebug` on my Cloudtop.\n```\nadb root\nadb shell am hang\n# in another shell\nadb logcat | grep Microseconds\n```\nAfter the ANR happens I grabbed the logs and checked them.\nRaw logs: https://paste.googleplex.com/6660839681032192\n\n```\n~/workspace/aosp/main/frameworks/av$ cat raw_data.txt | grep transactions | awk \u0027END {print s} NF\u003e1{s +\u003d $NF}\u0027 \n47296\n~/workspace/aosp/main/frameworks/av$ cat raw_data.txt | grep backtrace | awk \u0027END {print s} NF\u003e1{s +\u003d $NF}\u0027 \n1425946\n~/workspace/aosp/main/frameworks/av$ cat raw_data.txt | grep fdatasync | awk \u0027END {print s} NF\u003e1{s +\u003d $NF}\u0027 \n153988\n```\n\nIt looks like the total time spent doing these three operations during an ANR on CF is 1) 47ms, 2) 1400ms, 3) 150ms. 47/(1400+150) \u003d ~3% additional time.\n\nDoes that sound/look right? Is there anything else I can do differently?\n\nI\u0027ll add the final data to the bug once we have enough info.",
+      "parentUuid": "f509efba_d0c927c5",
+      "revId": "483fc0e6e58c2f1513f5e8420c6fc4f3fb3c2275",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
