@@ -46,6 +46,30 @@
       },
       "revId": "75f1970fe3b00ac85174279f889d2e6b72ff9dc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b22c04c_198cd7eb",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2024-02-26T21:52:12Z",
+      "side": 1,
+      "message": "which one are you looking at? the one in snapshot is @Nullable.\n        if (installSource \u003d\u003d null) {\n            throw new IllegalArgumentException(\"Unknown package: \" + packageName);\n        }",
+      "parentUuid": "4e7b28ea_e0222223",
+      "range": {
+        "startLine": 863,
+        "startChar": 12,
+        "endLine": 864,
+        "endChar": 78
+      },
+      "revId": "75f1970fe3b00ac85174279f889d2e6b72ff9dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
