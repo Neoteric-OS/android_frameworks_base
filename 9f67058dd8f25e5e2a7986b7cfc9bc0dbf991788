@@ -111,6 +111,30 @@
       },
       "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44436689_82ab3a9a",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-02-26T21:19:56Z",
+      "side": 1,
+      "message": "+1 to use getInstallSource + mInstallerPackageName.\n\nNormally the Settings app uses SYSTEM_UID. Is it different for your case? If not, is this change sufficient for your use case?",
+      "parentUuid": "b868bad1_809998e1",
+      "range": {
+        "startLine": 864,
+        "startChar": 40,
+        "endLine": 864,
+        "endChar": 63
+      },
+      "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
