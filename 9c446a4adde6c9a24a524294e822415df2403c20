@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b55445d6_76a098b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947461
+      },
+      "writtenOn": "2024-02-26T06:22:26Z",
+      "side": 1,
+      "message": "Don\u0027t we need to also update frameworks/base/core/res/AndroidManifest.xml for permission?",
+      "revId": "9c446a4adde6c9a24a524294e822415df2403c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
