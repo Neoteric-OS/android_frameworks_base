@@ -135,6 +135,30 @@
       },
       "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84c23809_5d91f7df",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2024-02-26T21:23:22Z",
+      "side": 1,
+      "message": "It\u0027s the same for my case, com.android.settings is uid 1000. Not sure what the problem is, there. I haven\u0027t debugged that.\n\nI see the same issue on stock OS with a Pixel device as well.",
+      "parentUuid": "44436689_82ab3a9a",
+      "range": {
+        "startLine": 864,
+        "startChar": 40,
+        "endLine": 864,
+        "endChar": 63
+      },
+      "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
