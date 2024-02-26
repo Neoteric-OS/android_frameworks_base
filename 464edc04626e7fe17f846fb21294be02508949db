@@ -247,6 +247,24 @@
       "parentUuid": "b40a61d0_4206e08a",
       "revId": "464edc04626e7fe17f846fb21294be02508949db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12798f5_a63ad77a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651174
+      },
+      "writtenOn": "2024-02-26T14:04:03Z",
+      "side": 1,
+      "message": "Sorry I couldn\u0027t run before (due to limitation of hardware). now thank you for your detailed failure report. I will fix and update",
+      "parentUuid": "4420b332_4f372e0d",
+      "revId": "464edc04626e7fe17f846fb21294be02508949db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
