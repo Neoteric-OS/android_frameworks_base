@@ -39,6 +39,30 @@
       },
       "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "440715aa_587ba402",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2024-02-26T20:42:05Z",
+      "side": 1,
+      "message": "\u003e With this change, any app will be able to silently uninstall an app for another user.\n\nIf the installer package name can\u0027t be retrieved, it doesn\u0027t allow it -- doesn\u0027t return true. It just continues the checks, the same way it would if the installer package name didn\u0027t match at all. That\u0027s the intention, anyway. The previous behavior was to throw an exception. This is basically only adding a null check. What am I missing?\n\n\u003e Taking a step back, Settings is a system app, shouldn\u0027t it pass the SYSTEM_UID check above?\n\nIt doesn\u0027t appear to be working that way, for some reason.",
+      "parentUuid": "9792ce27_3a292da8",
+      "range": {
+        "startLine": 864,
+        "startChar": 40,
+        "endLine": 864,
+        "endChar": 63
+      },
+      "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
