@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29ae383a_46df637f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2024-02-26T03:41:30Z",
+      "side": 1,
+      "message": "+Song for visibility",
+      "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9792ce27_3a292da8",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2024-02-26T03:41:30Z",
+      "side": 1,
+      "message": "With this change, any app will be able to silently uninstall an app for another user. At the very least, we need to check DELETE_ALL_USERS flag.\n\nTaking a step back, Settings is a system app, shouldn\u0027t it pass the SYSTEM_UID check above?",
+      "range": {
+        "startLine": 864,
+        "startChar": 40,
+        "endLine": 864,
+        "endChar": 63
+      },
+      "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
