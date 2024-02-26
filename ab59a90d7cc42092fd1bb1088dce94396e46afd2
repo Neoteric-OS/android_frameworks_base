@@ -16,6 +16,23 @@
       "message": "We need to consider other approaches because this change is likely to increase battery usage.",
       "revId": "ab59a90d7cc42092fd1bb1088dce94396e46afd2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c307aff_3cea0826",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1586686
+      },
+      "writtenOn": "2024-02-26T01:29:01Z",
+      "side": 1,
+      "message": "Thank you very much for your quick code review.\nWe will check if there is any battery consumption impact and any good way to solve it.\nDo you have any suggestion of changing this patch at the moment?",
+      "revId": "ab59a90d7cc42092fd1bb1088dce94396e46afd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
