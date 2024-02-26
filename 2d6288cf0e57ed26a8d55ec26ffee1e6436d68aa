@@ -16,6 +16,23 @@
       "message": "I think test was failed because of getFloat exception thrown when settings not available by default. In case of getString, it will just return null instead of exception",
       "revId": "2d6288cf0e57ed26a8d55ec26ffee1e6436d68aa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70da4c61_81c49c8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651174
+      },
+      "writtenOn": "2024-02-26T03:27:16Z",
+      "side": 1,
+      "message": "any follow up? Can you check once?",
+      "revId": "2d6288cf0e57ed26a8d55ec26ffee1e6436d68aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
