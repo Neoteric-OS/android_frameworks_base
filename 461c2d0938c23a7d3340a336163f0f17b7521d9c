@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb8c6d64_1c1052b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-02-26T22:30:49Z",
+      "side": 1,
+      "message": "LGTM but why was it excluded initially?",
+      "revId": "461c2d0938c23a7d3340a336163f0f17b7521d9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
