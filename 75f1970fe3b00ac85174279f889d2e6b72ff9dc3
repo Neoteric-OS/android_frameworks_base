@@ -22,6 +22,30 @@
       },
       "revId": "75f1970fe3b00ac85174279f889d2e6b72ff9dc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e7b28ea_e0222223",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2024-02-26T21:48:07Z",
+      "side": 1,
+      "message": "`getInstallSource()` is annotated with `@NonNull`, so it looks like we\u0027re okay there, or no?\n\nIf `mInstallerPackageName` is null or not found, though, then this should be a `callingUid \u003d\u003d -1` check, which should always be false, right?",
+      "parentUuid": "aa8ee050_f431e74f",
+      "range": {
+        "startLine": 863,
+        "startChar": 12,
+        "endLine": 864,
+        "endChar": 78
+      },
+      "revId": "75f1970fe3b00ac85174279f889d2e6b72ff9dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
