@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8477cf27_623f0a51",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-02-26T23:12:10Z",
+      "side": 1,
+      "message": "nit: check if this is null first? E.g., something like \n\n```\nfinal PackageStateInternal pkgState \u003d snapshot.getPackageStateInternal(pkgName);\nfinal String installerPackageName \u003d pkgState \u003d\u003d null ? null : pkgState.getInstallSource().mInstallerPackageName;\nif (installerPackageName !\u003d null \u0026\u0026 callingUid \u003d\u003d snapshot.getPackageUid(\n                installerPackageName, 0, callingUserId)) {\n    return true;\n}\n```",
+      "range": {
+        "startLine": 864,
+        "startChar": 15,
+        "endLine": 864,
+        "endChar": 65
+      },
+      "revId": "ac0ca7cb8d84043fbbef907e62f267e6386c9ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

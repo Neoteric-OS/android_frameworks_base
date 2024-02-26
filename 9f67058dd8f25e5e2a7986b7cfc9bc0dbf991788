@@ -159,6 +159,30 @@
       },
       "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80678fa4_7ec09b37",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-02-26T23:12:10Z",
+      "side": 1,
+      "message": "Ohhh, Settings use the PackageInstaller app (PIA) to uninstall apps (started by Intent.ACTION_UNINSTALL_PACKAGE) instead of directly calling the `uninstall` API. So the callingUid here is the UID of PIA, which isn\u0027t SYSTEM_UID. The new code works because PIA is the `mRequiredUninstallerPackage`.",
+      "parentUuid": "84c23809_5d91f7df",
+      "range": {
+        "startLine": 864,
+        "startChar": 40,
+        "endLine": 864,
+        "endChar": 63
+      },
+      "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
