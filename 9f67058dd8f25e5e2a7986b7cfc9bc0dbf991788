@@ -63,6 +63,30 @@
       },
       "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b868bad1_809998e1",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2024-02-26T20:52:38Z",
+      "side": 1,
+      "message": "ah, I see. can we use getInstallSource + mInstallerPackageName instead, which does not throw an exception?",
+      "parentUuid": "440715aa_587ba402",
+      "range": {
+        "startLine": 864,
+        "startChar": 40,
+        "endLine": 864,
+        "endChar": 63
+      },
+      "revId": "9f67058dd8f25e5e2a7986b7cfc9bc0dbf991788",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
