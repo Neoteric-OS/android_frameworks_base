@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2023 The Android Open Source Project
  *
@@ -13,9 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.android.server.input
-
 import android.hardware.input.KeyboardLayout
 import android.icu.util.ULocale
 import android.platform.test.annotations.Presubmit
@@ -25,11 +24,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
-
 private fun createKeyboard(
     deviceId: Int,
     vendorId: Int,
     productId: Int,
+    deviceBus: Int,
     languageTag: String?,
     layoutType: String?
 ): InputDevice =
@@ -42,10 +41,10 @@ private fun createKeyboard(
         .setExternal(true)
         .setVendorId(vendorId)
         .setProductId(productId)
+        .setDeviceBus(deviceBus)
         .setKeyboardLanguageTag(languageTag)
         .setKeyboardLayoutType(layoutType)
         .build()
-
 private fun createImeSubtype(
     imeSubtypeId: Int,
     languageTag: ULocale?,
@@ -53,22 +52,20 @@ private fun createImeSubtype(
 ): InputMethodSubtype =
     InputMethodSubtype.InputMethodSubtypeBuilder().setSubtypeId(imeSubtypeId)
         .setPhysicalKeyboardHint(languageTag, layoutType).build()
-
 /**
  * Tests for {@link KeyboardMetricsCollector}.
  *
  * Build/Install/Run:
- * atest FrameworksServicesTests:KeyboardMetricsCollectorTests
+ * atest InputTests:KeyboardMetricsCollectorTests
  */
 @Presubmit
 class KeyboardMetricsCollectorTests {
-
     companion object {
         const val DEVICE_ID = 1
         const val DEFAULT_VENDOR_ID = 123
         const val DEFAULT_PRODUCT_ID = 456
+        const val DEFAULT_DEVICE_BUS = 789
     }
-
     @Test
     fun testCreateKeyboardConfigurationEvent_throwsExceptionWithoutAnyLayoutConfiguration() {
         assertThrows(IllegalStateException::class.java) {
@@ -77,13 +74,13 @@ class KeyboardMetricsCollectorTests {
                     DEVICE_ID,
                     DEFAULT_VENDOR_ID,
                     DEFAULT_PRODUCT_ID,
+                    DEFAULT_DEVICE_BUS,
                     null,
                     null
                 )
             ).build()
         }
     }
-
     @Test
     fun testCreateKeyboardConfigurationEvent_throwsExceptionWithInvalidLayoutSelectionCriteria() {
         assertThrows(IllegalStateException::class.java) {
@@ -92,6 +89,7 @@ class KeyboardMetricsCollectorTests {
                     DEVICE_ID,
                     DEFAULT_VENDOR_ID,
                     DEFAULT_PRODUCT_ID,
+                    DEFAULT_DEVICE_BUS,
                     null,
                     null
                 )
@@ -99,7 +97,6 @@ class KeyboardMetricsCollectorTests {
              null, 123).build()
         }
     }
-
     @Test
     fun testCreateKeyboardConfigurationEvent_withMultipleConfigurations() {
         val builder = KeyboardMetricsCollector.KeyboardConfigurationEvent.Builder(
@@ -107,24 +104,17 @@ class KeyboardMetricsCollectorTests {
                 DEVICE_ID,
                 DEFAULT_VENDOR_ID,
                 DEFAULT_PRODUCT_ID,
+                DEFAULT_DEVICE_BUS,
                 "de-CH",
                 "qwertz"
             )
         )
         val event = builder.addLayoutSelection(
             createImeSubtype(1, ULocale.forLanguageTag("en-US"), "qwerty"),
-            KeyboardLayout(null, "English(US)(Qwerty)", null, 0, null, 0, 0, 0),
+            "English(US)(Qwerty)",
             KeyboardMetricsCollector.LAYOUT_SELECTION_CRITERIA_VIRTUAL_KEYBOARD
         ).addLayoutSelection(
             createImeSubtype(2, ULocale.forLanguageTag("en-US"), "azerty"),
-            null, // Default layout type
-            KeyboardMetricsCollector.LAYOUT_SELECTION_CRITERIA_USER
-        ).addLayoutSelection(
-            createImeSubtype(3, ULocale.forLanguageTag("en-US"), "qwerty"),
-            KeyboardLayout(null, "German", null, 0, null, 0, 0, 0),
-            KeyboardMetricsCollector.LAYOUT_SELECTION_CRITERIA_DEVICE
-        ).setIsFirstTimeConfiguration(true).build()
-
         assertEquals(
             "KeyboardConfigurationEvent should pick vendor ID from provided InputDevice",
             DEFAULT_VENDOR_ID,
@@ -135,8 +125,12 @@ class KeyboardMetricsCollectorTests {
             DEFAULT_PRODUCT_ID,
             event.productId
         )
+        assertEquals(
+             "KeyboardConfigurationEvent should pick device bus from provided InputDevice",
+             DEFAULT_DEVICE_BUS,
+             event.deviceBus
+        )
         assertTrue(event.isFirstConfiguration)
-
         assertEquals(
             "KeyboardConfigurationEvent should contain 3 configurations provided",
             3,
@@ -170,7 +164,6 @@ class KeyboardMetricsCollectorTests {
             KeyboardLayout.LayoutType.getLayoutTypeEnumValue("qwerty"),
         )
     }
-
     @Test
     fun testCreateKeyboardConfigurationEvent_withDefaultLanguageTag() {
         val builder = KeyboardMetricsCollector.KeyboardConfigurationEvent.Builder(
@@ -178,16 +171,16 @@ class KeyboardMetricsCollectorTests {
                 DEVICE_ID,
                 DEFAULT_VENDOR_ID,
                 DEFAULT_PRODUCT_ID,
+                DEFAULT_DEVICE_BUS,
                 "und", // Undefined language tag
                 "azerty"
             )
         )
         val event = builder.addLayoutSelection(
             createImeSubtype(4, null, "qwerty"), // Default language tag
-            KeyboardLayout(null, "German", null, 0, null, 0, 0, 0),
+            "German",
             KeyboardMetricsCollector.LAYOUT_SELECTION_CRITERIA_DEVICE
         ).build()
-
         assertExpectedLayoutConfiguration(
             event.layoutConfigurations[0],
             KeyboardMetricsCollector.DEFAULT_LANGUAGE_TAG,
@@ -198,7 +191,6 @@ class KeyboardMetricsCollectorTests {
             KeyboardLayout.LayoutType.getLayoutTypeEnumValue("qwerty"),
         )
     }
-
     private fun assertExpectedLayoutConfiguration(
         configuration: KeyboardMetricsCollector.LayoutConfiguration,
         expectedKeyboardLanguageTag: String,
