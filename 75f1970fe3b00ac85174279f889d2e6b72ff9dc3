@@ -70,6 +70,30 @@
       },
       "revId": "75f1970fe3b00ac85174279f889d2e6b72ff9dc3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27b67e9b_5e8cdf69",
+        "filename": "services/core/java/com/android/server/pm/DeletePackageHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1958109
+      },
+      "writtenOn": "2024-02-26T22:05:54Z",
+      "side": 1,
+      "message": "Well, I was using PackageSetting... I only see getInstallSourceInfo in Snapshot (Computer).\n\nI do what may be a better option, which is also @NonNull, being used right above in the `isOrphaned` check -- PackageStateInternal.",
+      "parentUuid": "8b22c04c_198cd7eb",
+      "range": {
+        "startLine": 863,
+        "startChar": 12,
+        "endLine": 864,
+        "endChar": 78
+      },
+      "revId": "75f1970fe3b00ac85174279f889d2e6b72ff9dc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
