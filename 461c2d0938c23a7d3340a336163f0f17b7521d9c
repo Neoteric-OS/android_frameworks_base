@@ -16,6 +16,24 @@
       "message": "LGTM but why was it excluded initially?",
       "revId": "461c2d0938c23a7d3340a336163f0f17b7521d9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ba3cc8a_67c2a48e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-02-26T23:53:53Z",
+      "side": 1,
+      "message": "It\u0027s been this way since the cgroups code was added, but I see no reason for it to persist as a special case. I also suspect the `uid \u003d\u003d 0` check is no longer necessary given the current perms at `/sys/fs/cgroup`.",
+      "parentUuid": "cb8c6d64_1c1052b9",
+      "revId": "461c2d0938c23a7d3340a336163f0f17b7521d9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
