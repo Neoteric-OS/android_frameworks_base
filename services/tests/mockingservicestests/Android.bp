@@ -40,6 +40,10 @@ android_test {
         ":framework-internal-display-sources",
     ],
 
+    exclude_srcs: [
+        "src/com/android/server/rollback/*.java",
+    ],
+
     static_libs: [
         "androidx.test.core",
         "androidx.test.runner",
