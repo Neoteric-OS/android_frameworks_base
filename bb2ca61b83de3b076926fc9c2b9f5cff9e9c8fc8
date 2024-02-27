@@ -88,6 +88,24 @@
       "parentUuid": "ad63e3f0_6c76af20",
       "revId": "bb2ca61b83de3b076926fc9c2b9f5cff9e9c8fc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c071d62_0d41635d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2024-02-27T20:17:39Z",
+      "side": 1,
+      "message": "Yay! Looks like autosubmit worked this time!",
+      "parentUuid": "298500e2_3f8533f1",
+      "revId": "bb2ca61b83de3b076926fc9c2b9f5cff9e9c8fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
