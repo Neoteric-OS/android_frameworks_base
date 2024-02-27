@@ -29,6 +29,7 @@ import android.os.ParcelFileDescriptor;
 interface IDropBoxManagerService {
     void addData(String tag, in byte[] data, int flags);
     void addFile(String tag, in ParcelFileDescriptor fd, int flags);
+    void moveFile(String tag, in String filePath, int flags);
 
     /** @see DropBoxManager#getNextEntry */
     boolean isTagEnabled(String tag);

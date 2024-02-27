@@ -62,6 +62,12 @@ public:
     // file descriptor.
     Status addFile(const String16& tag, int fd, int flags);
 
+    // Help to move the file into dropbox space.
+    // This API internally uses the renameTo method, which requires specific permissions.
+    // Check the below link for that.
+    // Ref: https://developer.android.com/reference/java/io/File#renameTo(java.io.File)
+    Status moveFile(const String16& tag, const String16& filePath, int flags);
+
     class Entry : public Parcelable {
     public:
         Entry();

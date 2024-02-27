@@ -364,6 +364,27 @@ public class DropBoxManager {
     }
 
     /**
+     * Help to move the file into dropbox space.
+     * This API internally uses the renameTo method, which requires specific permissions.
+     * Check the below link for that.
+     * Ref: https://developer.android.com/reference/java/io/File#renameTo(java.io.File)
+     *
+     * @param tag describing the type of entry being stored
+     * @param file to move from
+     * @param flags describing the data
+     */
+    public void moveFile(@NonNull String tag, @NonNull String filePath, @Flags int flags) {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new NullPointerException("filePath is empty");
+        }
+        try {
+            mService.moveFile(tag, filePath, flags);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Checks any denylists (set in system settings) to see whether a certain
      * tag is allowed.  Entries with disabled tags will be dropped immediately,
      * so you can save the work of actually constructing and sending the data.

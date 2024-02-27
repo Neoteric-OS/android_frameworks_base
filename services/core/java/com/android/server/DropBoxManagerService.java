@@ -176,6 +176,11 @@ public final class DropBoxManagerService extends SystemService {
         }
 
         @Override
+        public void moveFile(String tag, String filePath, int flags) {
+            DropBoxManagerService.this.moveFile(tag, filePath, flags);
+        }
+
+        @Override
         public boolean isTagEnabled(String tag) {
             return DropBoxManagerService.this.isTagEnabled(tag);
         }
@@ -435,6 +440,27 @@ public final class DropBoxManagerService extends SystemService {
 
         addEntry(tag, new ParcelFileDescriptor.AutoCloseInputStream(fd), stat.st_size, flags);
     }
+
+    public void moveFile(String tag, String filePath, int flags) {
+        if (filePath == null || filePath.isEmpty()) {
+            // path isn't valid
+            Slog.w(TAG, "File path is empty");
+            return;
+        }
+        File file = new File(filePath);
+        if (!file.exists()) {
+            // file not exists
+            Slog.w(TAG, "File isn't exist in device");
+            return;
+        }
+        try {
+            init();
+            trimToFit();
+            createEntry(file, tag, flags);
+        } catch (IOException e) {
+            Slog.e(TAG, "File isn't moved into dropbox", e);
+        }
+   }
 
     public void addEntry(String tag, InputStream in, long length, int flags) {
         // If entry being added is large, and if it's not already compressed,

@@ -234,4 +234,18 @@ DropBoxManager::addFile(const String16& tag, int fd, int flags)
     return status;
 }
 
+Status
+DropBoxManager::moveFile(const String16& tag, const String16& filePath, int flags)
+{
+    sp<IDropBoxManagerService> service = interface_cast<IDropBoxManagerService>(
+        defaultServiceManager()->getService(android::String16("dropbox")));
+    if (service == NULL) {
+        return Status::fromExceptionCode(Status::EX_NULL_POINTER, "can't find dropbox service");
+    }
+    ALOGD("About to call service->moveFile()");
+    Status status = service->moveFile(tag, filePath, flags);
+    ALOGD("service->moveFile returned %s", status.toString8().string());
+    return status;
+}
+
 }} // namespace android::os
