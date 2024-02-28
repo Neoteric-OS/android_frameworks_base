@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b626c49_753284cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3315923
+      },
+      "writtenOn": "2024-02-28T22:38:56Z",
+      "side": 1,
+      "message": "Wanted to check on when I can expect an approval for this change. Thanks.",
+      "revId": "54e7156c24f891e0b6191afdf1e7217def48656c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
