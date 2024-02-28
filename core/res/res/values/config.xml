@@ -6604,4 +6604,10 @@
     <!-- Enables or disables the "Share" action item shown in the context menu that appears upon
         long-pressing on selected text. Enabled by default. -->
     <bool name="config_textShareSupported">true</bool>
+
+    <!-- Frame-rate compatibility value for Wallpaper BBQ wrapper.
+         If set to null, it means there's no device-specific request and the system may adopt the
+         minimum frame rate to save battery consumption.
+         Any integer value of Surface.FRAME_RATE_COMPATIBILITY_* can be set here. -->
+    <string name="config_wallpaperBbqWrapperFrameRateCompatibility" translatable="false">@null</string>
 </resources>
