@@ -5180,4 +5180,7 @@
 
   <!-- Whether we order unlocking and waking -->
   <java-symbol type="bool" name="config_orderUnlockAndWake" />
+
+  <!-- Frame-rate compatibility value for Wallpaper BBQ wrapper -->
+  <java-symbol type="string" name="config_wallpaperBbqWrapperFrameRateCompatibility" />
 </resources>
