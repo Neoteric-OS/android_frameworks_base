@@ -6859,4 +6859,8 @@
 
     <!-- Whether the media player is shown on the quick settings -->
     <bool name="config_quickSettingsShowMediaPlayer">true</bool>
+
+    <!-- Frame rate compatibility value for Wallpaper
+         FRAME_RATE_COMPATIBILITY_MIN (102) is used by default for lower power consumption -->
+    <integer name="config_wallpaperFrameRateCompatibility">102</integer>
 </resources>
