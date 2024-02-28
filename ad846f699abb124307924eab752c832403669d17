@@ -163,6 +163,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c0d6f1d1_1b07b0a9",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1137703
+      },
+      "writtenOn": "2024-02-28T23:51:24Z",
+      "side": 1,
+      "message": "This reuses some fuzz data for multiple purposes, which makes it more difficult for the fuzzer to make progress.  The entire data buffer is being passed to init(), but it\u0027s also been passed to the FuzzedDataProvider, which is pulling from that data for other needs.  It would be better to read a buffer from the FuzzedDataProvider (randomly sized, based on fuzz data), then use that buffer as the data + size parameters here.  Then the FDP can still pull values from the remaining fuzz data and it won\u0027t overlap what was used to initialize the decoder.",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "752edb93_6d9f2220",
         "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
         "patchSetId": 1
