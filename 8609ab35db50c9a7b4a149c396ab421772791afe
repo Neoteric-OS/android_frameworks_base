@@ -16,6 +16,29 @@
       "message": "Pat, could you review this CL? Looks like the associated bug has a history.",
       "revId": "8609ab35db50c9a7b4a149c396ab421772791afe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52279e8d_38d198de",
+        "filename": "services/core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-02-28T20:49:23Z",
+      "side": 1,
+      "message": "Can this not be the same as SKU_PROPRTY? The key is also awkward with this one being a \"product sku\" and not containing product in its key somewhere.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 78
+      },
+      "revId": "8609ab35db50c9a7b4a149c396ab421772791afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
