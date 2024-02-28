@@ -6859,4 +6859,10 @@
 
     <!-- Whether the media player is shown on the quick settings -->
     <bool name="config_quickSettingsShowMediaPlayer">true</bool>
+	
+    <!-- Frame-rate compatibility value for Wallpaper BBQ wrapper.
+         If set to null, it means there's no device-specific request and the system may adopt the
+         minimum frame rate to save battery consumption.
+         Any integer value of Surface.FRAME_RATE_COMPATIBILITY_* can be set here. -->
+    <string name="config_wallpaperBbqWrapperFrameRateCompatibility" translatable="false">@null</string>
 </resources>

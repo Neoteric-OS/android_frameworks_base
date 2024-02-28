@@ -78,6 +78,7 @@ import android.util.ArraySet;
 import android.util.Log;
 import android.util.MergedConfiguration;
 import android.util.Slog;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.DisplayCutout;
 import android.view.Gravity;
@@ -102,6 +103,7 @@ import android.view.WindowManagerGlobal;
 import android.window.ClientWindowFrames;
 import android.window.ScreenCapture;
 
+import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.HandlerCaller;
@@ -1277,8 +1279,23 @@ public abstract class WallpaperService extends Service {
                                     .build();
                             SurfaceControl.Transaction transaction =
                                     new SurfaceControl.Transaction();
+                            TypedValue outValue = new TypedValue();
+                            getResources().getValue(
+                                    R.string.config_wallpaperBbqWrapperFrameRateCompatibility,
+                                    outValue, true);
+                            int frameRateCompatibility = Surface.FRAME_RATE_COMPATIBILITY_MIN;
+                            if (outValue.string != null) {
+                                try {
+                                    int configFrameRateCompatibility = Integer.parseInt(
+                                            outValue.string.toString());
+                                    frameRateCompatibility = configFrameRateCompatibility;
+                                } catch (NumberFormatException e) {
+                                    Log.w(TAG, "Invalid "
+                                            + "config_wallpaperBbqWrapperFrameRateCompatibility");
+                                }
+                            }
                             transaction.setDefaultFrameRateCompatibility(mBbqSurfaceControl,
-                                Surface.FRAME_RATE_COMPATIBILITY_MIN).apply();
+                                    frameRateCompatibility).apply();
                         }
                         // Propagate transform hint from WM, so we can use the right hint for the
                         // first frame.
