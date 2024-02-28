@@ -124,6 +124,24 @@
       "parentUuid": "0c071d62_0d41635d",
       "revId": "bb2ca61b83de3b076926fc9c2b9f5cff9e9c8fc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edf2243c_47342e41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2024-02-28T09:49:33Z",
+      "side": 1,
+      "message": "Yeah it\u0027s unfortunate... I wasn\u0027t aware that you wouldn\u0027t be allowed to press the submit button so I assumed this change was already resolved back in Jan. Glad it made it after all though.",
+      "parentUuid": "5ff5035a_64aa0146",
+      "revId": "bb2ca61b83de3b076926fc9c2b9f5cff9e9c8fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
