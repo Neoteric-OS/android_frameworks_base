@@ -106,6 +106,24 @@
       "parentUuid": "298500e2_3f8533f1",
       "revId": "bb2ca61b83de3b076926fc9c2b9f5cff9e9c8fc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ff5035a_64aa0146",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-02-28T08:47:14Z",
+      "side": 1,
+      "message": "Thanks for all your help, a lot of work for this small change 😊.",
+      "parentUuid": "0c071d62_0d41635d",
+      "revId": "bb2ca61b83de3b076926fc9c2b9f5cff9e9c8fc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
