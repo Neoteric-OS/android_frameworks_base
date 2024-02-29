@@ -584,10 +584,11 @@ public class GestureLauncherService extends SystemService {
             if (mEmergencyGestureEnabled) {
                 // Commit to intercepting the powerkey event after the second "quick" tap to avoid
                 // lockscreen changes between launching camera and the emergency gesture flow.
-                // Since watch doesn't have camera gesture, only intercept power key event after
-                // emergency gesture tap count.
-                if (mPowerButtonConsecutiveTaps
-                        > (mHasFeatureWatch ? EMERGENCY_GESTURE_POWER_TAP_COUNT_THRESHOLD : 1)) {
+                // If the event is triggered on a watch or the camera double tap gesture is
+                // disabled, only intercept power key event after emergency gesture tap count.
+                if (mPowerButtonConsecutiveTaps > (
+                        (mHasFeatureWatch || !mCameraDoubleTapPowerEnabled)
+                                ? EMERGENCY_GESTURE_POWER_TAP_COUNT_THRESHOLD - 1 : 1)) {
                     intercept = interactive;
                 }
                 if (mPowerButtonConsecutiveTaps == EMERGENCY_GESTURE_POWER_TAP_COUNT_THRESHOLD) {

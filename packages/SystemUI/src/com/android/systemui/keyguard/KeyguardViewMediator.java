@@ -3587,7 +3587,20 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
     }
 
     public void dismissKeyguardToLaunch(Intent intentToLaunch) {
-        // do nothing
+        dismiss(new IKeyguardDismissCallback.Stub() {
+            @Override
+            public void onDismissError() {
+            }
+
+            @Override
+            public void onDismissSucceeded() {
+                mContext.startActivityAsUser(intentToLaunch, UserHandle.CURRENT);
+            }
+
+            @Override
+            public void onDismissCancelled() {
+            }
+        }, null /* message */);
     }
 
     public void onSystemKeyPressed(int keycode) {

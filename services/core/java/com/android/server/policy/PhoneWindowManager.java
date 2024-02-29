@@ -827,6 +827,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STYLUS_BUTTONS_ENABLED), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                            Settings.Secure.DOUBLE_PRESS_ON_POWER_TARGET_ACTIVITY), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -2179,9 +2182,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.integer.config_veryLongPressOnPowerBehavior);
         mDoublePressOnPowerBehavior = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_doublePressOnPowerBehavior);
-        mPowerDoublePressTargetActivity = ComponentName.unflattenFromString(
-            mContext.getResources().getString(
-                com.android.internal.R.string.config_doublePressOnPowerTargetActivity));
         mTriplePressOnPowerBehavior = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_triplePressOnPowerBehavior);
         mShortPressOnSleepBehavior = mContext.getResources().getInteger(
@@ -2685,6 +2685,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mStylusButtonsEnabled = Settings.Secure.getIntForUser(resolver,
                     Secure.STYLUS_BUTTONS_ENABLED, 1, UserHandle.USER_CURRENT) == 1;
             mInputManagerInternal.setStylusButtonMotionEventsEnabled(mStylusButtonsEnabled);
+
+            final String powerDoublePressTargetActivitySetting = Settings.Secure.getStringForUser(
+                    mContext.getContentResolver(), Secure.DOUBLE_PRESS_ON_POWER_TARGET_ACTIVITY,
+                    UserHandle.USER_CURRENT);
+            final String target = powerDoublePressTargetActivitySetting != null
+                    ? powerDoublePressTargetActivitySetting : mContext.getResources().getString(
+                    com.android.internal.R.string.config_defaultDoublePressOnPowerTargetActivity);
+            mPowerDoublePressTargetActivity = ComponentName.unflattenFromString(target);
         }
         if (updateRotation) {
             updateRotation(true);

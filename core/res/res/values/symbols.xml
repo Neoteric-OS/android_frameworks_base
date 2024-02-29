@@ -466,7 +466,7 @@
   <java-symbol type="integer" name="config_shortPressOnStemPrimaryBehavior" />
   <java-symbol type="integer" name="config_doublePressOnStemPrimaryBehavior" />
   <java-symbol type="integer" name="config_triplePressOnStemPrimaryBehavior" />
-  <java-symbol type="string" name="config_doublePressOnPowerTargetActivity" />
+  <java-symbol type="string" name="config_defaultDoublePressOnPowerTargetActivity" />
   <java-symbol type="integer" name="config_searchKeyBehavior" />
   <java-symbol type="string" name="config_searchKeyTargetActivity" />
   <java-symbol type="integer" name="config_windowOutsetBottom" />
