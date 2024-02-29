@@ -16,6 +16,24 @@
       "message": "Not sure what is the better practice but since Vpn.java is in `frameworks/base/services/core/java/com/android/server/connectivity/`, I imagine the test file VpnTest.java could be in `frameworks/base/services/tests/servicestests/src/com/android/server/connectivity` (similar to LockdownVpnTrackerTest) and be a part of FrameworksServiceTests instead of creating a new test?",
       "revId": "fd7b09bcaf34a47c8a6e2a2f218fd3345db8c11f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5b3086c_5464bd8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-02-29T06:01:09Z",
+      "side": 1,
+      "message": "Put the test under FrameworksServiceTests will result in lots of irrelevant servicetest being run while we update the code. I had concern put the LockdownVpnTrackerTest in FrameworksServiceTests. I think it will be cleaner to create a separate test apk.",
+      "parentUuid": "2c0d1ce9_793e5123",
+      "revId": "fd7b09bcaf34a47c8a6e2a2f218fd3345db8c11f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
