@@ -637,7 +637,7 @@ public class KeyguardService extends Service {
         public void dismissKeyguardToLaunch(Intent intentToLaunch) {
             trace("dismissKeyguardToLaunch");
             checkPermission();
-            Slog.d(TAG, "Ignoring dismissKeyguardToLaunch " + intentToLaunch);
+            mKeyguardViewMediator.dismissKeyguardToLaunch(intentToLaunch);
         }
 
         @Override // Binder interface

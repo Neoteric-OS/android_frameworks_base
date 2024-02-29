@@ -12435,6 +12435,15 @@ public final class Settings {
         public static final String STYLUS_POINTER_ICON_ENABLED = "stylus_pointer_icon_enabled";
 
         /**
+         * The activity component to launch when the power key is double pressed. Note that
+         * config_doublePressOnPowerBehavior must be set to 3 for this to work.
+         *
+         * @hide
+         */
+        public static final String DOUBLE_PRESS_ON_POWER_TARGET_ACTIVITY =
+                "double_press_on_power_target_activity";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */

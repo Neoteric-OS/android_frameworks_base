@@ -906,6 +906,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NAV_BAR_KIDS_MODE), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.DOUBLE_PRESS_ON_POWER_TARGET_ACTIVITY), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -2331,9 +2334,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.integer.config_longPressOnPowerDurationMs);
         mVeryLongPressOnPowerBehavior = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_veryLongPressOnPowerBehavior);
-        mPowerDoublePressTargetActivity = ComponentName.unflattenFromString(
-            mContext.getResources().getString(
-                com.android.internal.R.string.config_doublePressOnPowerTargetActivity));
         mPrimaryShortPressTargetActivity = ComponentName.unflattenFromString(
             mContext.getResources().getString(
                 com.android.internal.R.string.config_primaryShortPressTargetActivity));
@@ -3001,6 +3001,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mKidsModeEnabled = kidsModeEnabled;
                 updateKidsModeSettings();
             }
+
+            final String powerDoublePressTargetActivitySetting = Settings.Secure.getStringForUser(
+                    mContext.getContentResolver(), Secure.DOUBLE_PRESS_ON_POWER_TARGET_ACTIVITY,
+                    UserHandle.USER_CURRENT);
+            final String target = powerDoublePressTargetActivitySetting != null
+                    ? powerDoublePressTargetActivitySetting : mContext.getResources().getString(
+                    com.android.internal.R.string.config_doublePressOnPowerTargetActivity);
+            mPowerDoublePressTargetActivity = ComponentName.unflattenFromString(target);
         }
         if (updateRotation) {
             updateRotation(true);

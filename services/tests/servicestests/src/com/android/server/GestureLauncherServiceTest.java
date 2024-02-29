@@ -590,7 +590,7 @@ public class GestureLauncherServiceTest {
             outLaunched.value = false;
             intercepted = mGestureLauncherService.interceptPowerKeyDown(keyEvent, interactive,
                     outLaunched);
-            assertTrue(intercepted);
+            assertFalse(intercepted);
             assertFalse(outLaunched.value);
         }
 
@@ -636,7 +636,7 @@ public class GestureLauncherServiceTest {
         assertFalse(outLaunched.value);
 
         final long interval = CAMERA_POWER_DOUBLE_TAP_MAX_TIME_MS - 1;
-        // 3 more button presses which should not trigger any gesture, but intercepts action.
+        // 3 more button presses which should not trigger any gesture or intercept.
         for (int i = 0; i < 3; i++) {
             eventTime += interval;
             keyEvent = new KeyEvent(IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE,
@@ -644,7 +644,7 @@ public class GestureLauncherServiceTest {
             outLaunched.value = false;
             intercepted = mGestureLauncherService.interceptPowerKeyDown(keyEvent, interactive,
                     outLaunched);
-            assertTrue(intercepted);
+            assertFalse(intercepted);
             assertFalse(outLaunched.value);
         }
 
