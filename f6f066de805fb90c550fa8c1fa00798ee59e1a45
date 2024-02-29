@@ -33,6 +33,24 @@
       "message": "Don\u0027t `set noparent`.",
       "revId": "f6f066de805fb90c550fa8c1fa00798ee59e1a45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03bb000e_21cfc5e5",
+        "filename": "services/tests/VpnTests/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2024-02-29T16:07:17Z",
+      "side": 1,
+      "message": "Or if you do, explicitly include the root OWNERS\n\nSee https://g3doc.corp.google.com/devtools/piper/g3doc/public/owners_syntax.md?cl\u003dhead#noparent for the g3 docs on it.",
+      "parentUuid": "27a2c665_840115c0",
+      "revId": "f6f066de805fb90c550fa8c1fa00798ee59e1a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
