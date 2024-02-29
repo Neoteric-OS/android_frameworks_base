@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abe09033_868e87c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2024-02-29T03:15:49Z",
+      "side": 1,
+      "message": "I think you should have AndroidTest.xml too.",
+      "revId": "ba2b9edd4d75547db0e51fa40e3c8f061809bcf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
