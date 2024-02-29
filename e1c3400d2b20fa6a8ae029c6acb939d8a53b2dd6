@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eebfb74_d45cf197",
+        "filename": "services/tests/VpnTests/AndroidManifest.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-02-29T07:20:26Z",
+      "side": 1,
+      "message": "Out of curiosity, why uses-sdk at all here? These tests test platform code so they probably don\u0027t need to be version-independent and I think you can just leave this out.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "e1c3400d2b20fa6a8ae029c6acb939d8a53b2dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
