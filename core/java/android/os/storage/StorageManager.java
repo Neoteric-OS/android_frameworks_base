@@ -78,6 +78,9 @@ import android.provider.DeviceConfig;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.security.Flags;
+import android.security.keystore.KeyProperties;
+import android.security.keystore.KeyProtection;
+import android.security.keystore2.AndroidKeyStoreSecretKey;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
@@ -106,9 +109,17 @@ import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.KeyStore.SecretKeyEntry;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -126,6 +137,10 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
 
 /**
  * StorageManager is the interface to the systems storage service. The storage
@@ -309,6 +324,9 @@ public class StorageManager {
     private final AppOpsManager mAppOps;
     private final Looper mLooper;
     private final AtomicInteger mNextNonce = new AtomicInteger(0);
+
+    private KeyStore mKeyStore;
+    private final KeyProtection mKeyProtection;
 
     @GuardedBy("mDelegates")
     private final ArrayList<StorageEventListenerDelegate> mDelegates = new ArrayList<>();
@@ -494,6 +512,16 @@ public class StorageManager {
         mLooper = looper;
         mStorageManager = IStorageManager.Stub.asInterface(ServiceManager.getServiceOrThrow("mount"));
         mAppOps = mContext.getSystemService(AppOpsManager.class);
+        mKeyProtection = new KeyProtection.Builder(KeyProperties.PURPOSE_SIGN)
+                                            .setUnlockedDeviceRequired(true)
+                                            .build();
+        try {
+            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
+            mKeyStore.load(null, null);
+        } catch(Exception e) {
+            /* don't crash here -- check for null keystore in openStorageArea */
+        }
+
     }
 
     /**
@@ -2971,8 +2999,58 @@ public class StorageManager {
     @NonNull
     @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
     public OpenStorageArea openStorageArea(@NonNull String storageAreaName) throws IOException {
-        // TODO: provide proper secret
-        return openStorageArea(storageAreaName, new byte[STORAGE_AREA_KEY_LENGTH]);
+        if (mKeyStore == null) {
+            throw new IOException("failed to open storage area "
+                        + storageAreaName + " b/c keystore was null");
+        }
+        // the key alias should be pkgname_storageAreaName
+        String keyAlias = mContext.getOpPackageName() + "_" + storageAreaName;
+        try {
+            byte[] secret;
+            if (!mKeyStore.isKeyEntry(keyAlias)) {
+                // make the new key and add it to keystore
+                KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
+                mKeyStore.load(null);
+                SecretKey sk = keyGen.generateKey();
+                mKeyStore.setEntry(keyAlias, new KeyStore.SecretKeyEntry(sk), mKeyProtection);
+                secret = deriveHMACSecretFromSecretKey(storageAreaName, sk);
+            } else {
+                secret = deriveHMACSecretFromSecretKey(storageAreaName,
+                            (SecretKey) mKeyStore.getKey(keyAlias, null));
+            }
+            return openStorageArea(storageAreaName, secret);
+        } catch(KeyStoreException
+                | InvalidKeyException
+                | NoSuchAlgorithmException
+                | CertificateException
+                | UnrecoverableEntryException e) {
+            throw new IOException("failed to open storage area b/c of key error "
+                            + storageAreaName, e);
+        }
+    }
+
+    @NonNull
+    private byte[] deriveHMACSecretFromSecretKey(@NonNull String storageAreaName, SecretKey sk)
+            throws InvalidKeyException, NoSuchAlgorithmException{
+        final Mac m = Mac.getInstance("HmacSHA256");
+        m.init(sk);
+        // now, derive the byte array
+        // hardcode label and context for this storage area for this package
+        byte[] label = ("storage-area-" + storageAreaName + "-key").getBytes();
+        byte[] context = ("android-storage-manager-package-"
+                + mContext.getOpPackageName() + "-storage-area-context").getBytes();
+        // copying the code from
+        // frameworks/base/services/core/java/com/android/server/locksettings/SP800Derive.java
+        // the `withContext` method (also copying the comments)
+        m.update(ByteBuffer.allocate(Integer.BYTES).putInt(1).array()); // hardwired counter value
+        m.update(label);
+        m.update((byte)0);
+        m.update(context);
+        // disabmiguate context
+        m.update(ByteBuffer.allocate(Integer.BYTES).putInt(context.length * 8).array());
+        // hardwired output length
+        m.update(ByteBuffer.allocate(Integer.BYTES).allocate(STORAGE_AREA_KEY_LENGTH).array());
+        return m.doFinal();
     }
 
     @NonNull
@@ -3036,9 +3114,13 @@ public class StorageManager {
                 }
         }
         // dispatch the deletion of the (now empty) storage area directory
+        // and delete the keystore key
         try {
             mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
-        } catch (RemoteException e) {
+            // the key alias should be pkgname_storageAreaName
+            String keyAlias = mContext.getOpPackageName() + "_" + storageAreaName;
+            mKeyStore.deleteEntry(keyAlias);
+        } catch (RemoteException | KeyStoreException e) {
             throw new IOException("failed to delete storage area " + storageAreaName, e);
         }
     }
