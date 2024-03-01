@@ -51,6 +51,24 @@
       "parentUuid": "27a2c665_840115c0",
       "revId": "f6f066de805fb90c550fa8c1fa00798ee59e1a45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abcd96a7_8f8fc1ac",
+        "filename": "services/tests/VpnTests/OWNERS",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-01T01:27:14Z",
+      "side": 1,
+      "message": "Thanks for the review. I update it in the aosp/2984214.",
+      "parentUuid": "03bb000e_21cfc5e5",
+      "revId": "f6f066de805fb90c550fa8c1fa00798ee59e1a45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
