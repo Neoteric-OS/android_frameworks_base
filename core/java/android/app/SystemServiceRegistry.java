@@ -117,6 +117,8 @@ import android.hardware.radio.RadioManager;
 import android.hardware.usb.IUsbManager;
 import android.hardware.usb.UsbManager;
 import android.health.connect.HealthServicesInitializer;
+import android.inputspy.IInputSpy;
+import android.inputspy.InputSpyManager;
 import android.location.CountryDetector;
 import android.location.ICountryDetector;
 import android.location.ILocationManager;
@@ -1577,6 +1579,15 @@ public final class SystemServiceRegistry {
                         return SharedConnectivityManager.create(ctx);
                     }
                 });
+        registerService(Context.INPUT_SPY_SERVICE, InputSpyManager.class,
+                new CachedServiceFetcher<InputSpyManager>() {
+                    @Override
+                    public InputSpyManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        IBinder iBinder = ServiceManager.getServiceOrThrow(Context.INPUT_SPY_SERVICE);
+                        IInputSpy manager = IInputSpy.Stub.asInterface(iBinder);
+                        return new InputSpyManager(ctx.getOuterContext(), manager);
+                    }});
 
         sInitializing = true;
         try {

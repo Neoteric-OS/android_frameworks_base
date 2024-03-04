@@ -211,6 +211,7 @@ public final class ServiceManager {
             int dumpPriority) {
         try {
             getIServiceManager().addService(name, service, allowIsolated, dumpPriority);
+            Log.d("Utopia", "added service " + service.toString() + " under name " + name);
         } catch (RemoteException e) {
             Log.e(TAG, "error in addService", e);
         }

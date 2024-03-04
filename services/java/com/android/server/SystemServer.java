@@ -139,6 +139,7 @@ import com.android.server.hdmi.HdmiControlService;
 import com.android.server.incident.IncidentCompanionService;
 import com.android.server.input.InputManagerService;
 import com.android.server.inputmethod.InputMethodManagerService;
+import com.android.server.inputspy.InputSpyManagerService;
 import com.android.server.integrity.AppIntegrityManagerService;
 import com.android.server.lights.LightsService;
 import com.android.server.locales.LocaleManagerService;
@@ -1414,6 +1415,11 @@ public final class SystemServer implements Dumpable {
           mSystemServiceManager.startService(CpuMonitorService.class);
           t.traceEnd();
         }
+
+        // Service to spy the user's input.
+        t.traceBegin("StartInputSpyManagerService");
+        mSystemServiceManager.startService(InputSpyManagerService.Lifecycle.class);
+        t.traceEnd();
 
         t.traceEnd(); // startCoreServices
     }

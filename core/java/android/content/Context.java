@@ -4193,6 +4193,7 @@ public abstract class Context {
             DEVICE_LOCK_SERVICE,
             VIRTUALIZATION_SERVICE,
             GRAMMATICAL_INFLECTION_SERVICE,
+            INPUT_SPY_SERVICE,
 
     })
     @Retention(RetentionPolicy.SOURCE)
@@ -6401,6 +6402,14 @@ public abstract class Context {
      * @see #getSystemService(String)
      */
     public static final String GRAMMATICAL_INFLECTION_SERVICE = "grammatical_inflection";
+
+    /**
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.inputspy.InputSpyManager}.
+     *
+     * @see #getSystemService(String)
+     */
+    public static final String INPUT_SPY_SERVICE = "input_spy";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a

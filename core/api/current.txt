@@ -10395,6 +10395,7 @@ package android.content {
     field public static final String HEALTHCONNECT_SERVICE = "healthconnect";
     field public static final String INPUT_METHOD_SERVICE = "input_method";
     field public static final String INPUT_SERVICE = "input";
+    field public static final String INPUT_SPY_SERVICE = "input_spy";
     field public static final String IPSEC_SERVICE = "ipsec";
     field public static final String JOB_SCHEDULER_SERVICE = "jobscheduler";
     field public static final String KEYGUARD_SERVICE = "keyguard";
@@ -20251,6 +20252,19 @@ package android.inputmethodservice {
     method @Deprecated public void swipeLeft();
     method @Deprecated public void swipeRight();
     method @Deprecated public void swipeUp();
+  }
+
+}
+
+package android.inputspy {
+
+  public class InputSpyManager {
+    method public void addCheckPoint();
+    method public void analyze();
+    method public void startPlaying();
+    method public void startRecording();
+    method public void stopPlaying();
+    method public void stopRecording();
   }
 
 }
