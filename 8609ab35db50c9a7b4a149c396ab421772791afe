@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad0f998f_3987d545",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-03-04T16:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65e7ae3d_76ce13b4",
+      "revId": "8609ab35db50c9a7b4a149c396ab421772791afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52279e8d_38d198de",
@@ -55,6 +73,30 @@
       "side": 1,
       "message": "Hi this is according to the definitions in \nhttps://docs.partner.android.com/gms/building/integrating/build-image?hl\u003den\nUnfortunately there does not seem to be a clear definition publicly on developer.android.com.\n\nro.boot.hardware.sku is for product partition\n\nro.boot.product.hardware.sku is for the odm partition.\n\nI agree that the naming is a bit confusing.\n\n\nOne alternative might be to instead check:\nBuild.SKU\nhttps://developer.android.com/reference/android/os/Build#SKU\n\n\n\nThen SKU_PROPERTY could be replaced by Build.ODM_SKU \n\nIf build properties are used, when need to check against Build.UNKNOWN instead of empty string.\n\n\nThere does not seem to be a corresponding BUILD value for \"ro.boot.product.vendor.sku\"",
       "parentUuid": "52279e8d_38d198de",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 78
+      },
+      "revId": "8609ab35db50c9a7b4a149c396ab421772791afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cf87a66_bfbd382c",
+        "filename": "services/core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-03-04T16:45:08Z",
+      "side": 1,
+      "message": "Your original proposal here is consistent with prior naming and I don\u0027t know that other options are any more clear. I\u0027m Ok with this approach.",
+      "parentUuid": "b0c7b3d6_ed9917ef",
       "range": {
         "startLine": 108,
         "startChar": 0,
