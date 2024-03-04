@@ -45,33 +45,6 @@ abstract class RequestArcAction extends HdmiCecFeatureAction {
         mAvrAddress = avrAddress;
     }
 
-    @Override
-    boolean processCommand(HdmiCecMessage cmd) {
-        if (mState != STATE_WATING_FOR_REQUEST_ARC_REQUEST_RESPONSE
-                || !HdmiUtils.checkCommandSource(cmd, mAvrAddress, TAG)) {
-            return false;
-        }
-        int opcode = cmd.getOpcode();
-        switch (opcode) {
-            // Handles only <Feature Abort> here and, both <Initiate ARC> and <Terminate ARC>
-            // are handled in HdmiControlService itself because both can be
-            // received without <Request ARC Initiation> or <Request ARC Termination>.
-            case Constants.MESSAGE_FEATURE_ABORT:
-                int originalOpcode = cmd.getParams()[0] & 0xFF;
-                if (originalOpcode == Constants.MESSAGE_REQUEST_ARC_TERMINATION) {
-                    disableArcTransmission();
-                    finish();
-                    return true;
-                } else if (originalOpcode == Constants.MESSAGE_REQUEST_ARC_INITIATION) {
-                    tv().setArcStatus(false);
-                    finish();
-                    return true;
-                }
-                return false;
-        }
-        return false;
-    }
-
     protected final void disableArcTransmission() {
         // Start Set ARC Transmission State action.
         SetArcTransmissionStateAction action = new SetArcTransmissionStateAction(localDevice(),

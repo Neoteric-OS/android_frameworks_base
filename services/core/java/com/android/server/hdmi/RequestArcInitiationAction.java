@@ -55,4 +55,28 @@ final class RequestArcInitiationAction extends RequestArcAction {
         });
         return true;
     }
+
+    @Override
+    boolean processCommand(HdmiCecMessage cmd) {
+        if (mState != STATE_WATING_FOR_REQUEST_ARC_REQUEST_RESPONSE
+                || !HdmiUtils.checkCommandSource(cmd, mAvrAddress, TAG)) {
+            return false;
+        }
+        int opcode = cmd.getOpcode();
+        switch (opcode) {
+            case Constants.MESSAGE_FEATURE_ABORT:
+                int originalOpcode = cmd.getParams()[0] & 0xFF;
+                if (originalOpcode == Constants.MESSAGE_REQUEST_ARC_INITIATION) {
+                    tv().setArcStatus(false);
+                    finish();
+                    return true;
+                }
+                return false;
+            case Constants.MESSAGE_INITIATE_ARC:
+                finish();
+                // This message still needs to be handled in HdmiCecLocalDeviceTv as well.
+                return false;
+        }
+        return false;
+    }
 }
