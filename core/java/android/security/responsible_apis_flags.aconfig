@@ -41,3 +41,11 @@ flag {
     description: "Do not allow intents without an action to match any intent filters"
     bug: "293560872"
 }
+
+flag {
+    name: "safer_native_dcl"
+    namespace: "responsible_apis"
+    description: "Do not allow writable ELFs to be loaded from app process"
+    bug: "293562573"
+    is_fixed_read_only: true
+}
