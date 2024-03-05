@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f7db6f2_e6b10d19",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137703
+      },
+      "writtenOn": "2024-03-05T22:10:08Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 110
+      },
+      "revId": "f1bb123164e08f6bb3231391497ee8e83d488acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d170d5d_2bfb9435",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137703
+      },
+      "writtenOn": "2024-03-05T22:10:08Z",
+      "side": 1,
+      "message": "The corpus in testdata looks like it\u0027s all composed of regular XML files.  If that\u0027s the data being fed into the FDP, I don\u0027t see anywhere here that the data would end up as a buffer of XML data.\n\nThis function does a bunch of ConsumeIntegralInRange calls, which will read bits off the end of the buffer (with a min value and range that ends up changing the raw input values to something in range)...\n\n...And I don\u0027t see anything here that reads the remaining bytes from FDP, after we\u0027re done setting up these package names.  It seems like we read these initial few values, but anything after that in the fuzz corpus is ignored.  Is this fuzzer actually getting any significant coverage?",
+      "revId": "f1bb123164e08f6bb3231391497ee8e83d488acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
