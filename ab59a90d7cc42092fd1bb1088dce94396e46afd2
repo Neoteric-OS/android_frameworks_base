@@ -51,6 +51,24 @@
       "parentUuid": "3c307aff_3cea0826",
       "revId": "ab59a90d7cc42092fd1bb1088dce94396e46afd2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9657154b_0c42789c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958248
+      },
+      "writtenOn": "2024-03-05T14:26:40Z",
+      "side": 1,
+      "message": "I\u0027ve added reviewers more familiar with battery usage and this part of the code.",
+      "parentUuid": "27570bc7_bd455ea9",
+      "revId": "ab59a90d7cc42092fd1bb1088dce94396e46afd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
