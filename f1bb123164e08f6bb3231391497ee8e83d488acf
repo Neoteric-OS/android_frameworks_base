@@ -81,6 +81,24 @@
       "parentUuid": "4d170d5d_2bfb9435",
       "revId": "f1bb123164e08f6bb3231391497ee8e83d488acf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9afdcc7_d11a5d72",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137703
+      },
+      "writtenOn": "2024-03-06T01:08:49Z",
+      "side": 1,
+      "message": "Looks good.  Thanks.",
+      "parentUuid": "45d77596_6b5c7d7b",
+      "revId": "f1bb123164e08f6bb3231391497ee8e83d488acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
