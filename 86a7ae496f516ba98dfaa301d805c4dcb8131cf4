@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a34fa4e4_c683cae6",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1353865
+      },
+      "writtenOn": "2024-03-06T23:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a419713e_684baa3e",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "86a7ae496f516ba98dfaa301d805c4dcb8131cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "003155dd_95ff853e",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-03-06T18:07:06Z",
       "side": 1,
       "message": "static ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "86a7ae496f516ba98dfaa301d805c4dcb8131cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44d3fbe4_014a4f5d",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1353865
+      },
+      "writtenOn": "2024-03-06T23:16:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "003155dd_95ff853e",
       "range": {
         "startLine": 7,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f922e96_4368ac94",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1353865
+      },
+      "writtenOn": "2024-03-06T23:16:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a7a343a6_dff51035",
+      "range": {
+        "startLine": 15,
+        "startChar": 41,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "86a7ae496f516ba98dfaa301d805c4dcb8131cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f11608b_bb40f892",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-03-06T18:07:06Z",
       "side": 1,
       "message": "package name can be longer, IMO up to 128 characters should be ok",
+      "range": {
+        "startLine": 17,
+        "startChar": 87,
+        "endLine": 17,
+        "endChar": 90
+      },
+      "revId": "86a7ae496f516ba98dfaa301d805c4dcb8131cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3b3735d_f3366577",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1353865
+      },
+      "writtenOn": "2024-03-06T23:16:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7f11608b_bb40f892",
       "range": {
         "startLine": 17,
         "startChar": 87,
