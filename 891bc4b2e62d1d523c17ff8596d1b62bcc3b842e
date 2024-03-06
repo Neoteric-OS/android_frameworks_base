@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93c7fcbf_bdfcc54d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-03-06T21:32:35Z",
+      "side": 1,
+      "message": "It would be useful to indicate why this is being reverted.",
+      "revId": "891bc4b2e62d1d523c17ff8596d1b62bcc3b842e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
