@@ -16,6 +16,24 @@
       "message": "We can\u0027t change public API (public resources in this case) to make tests pass on an already shipped version of Android.",
       "revId": "a53eb7644fe6fc9c6b3484c1c91d6be26e82025a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c926f0c2_1a91d88f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137303
+      },
+      "writtenOn": "2024-03-06T22:16:42Z",
+      "side": 1,
+      "message": "Ack - @chenbai is working on a revision of the test that allows for *compatible* changes (i.e. additions) rather than checking for an exact match of a strict set (similar to ApiSignature tests) aosp/2990265\n\nWe can abandon these.",
+      "parentUuid": "06f13957_29b2a235",
+      "revId": "a53eb7644fe6fc9c6b3484c1c91d6be26e82025a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
