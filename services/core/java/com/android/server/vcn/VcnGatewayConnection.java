@@ -1225,10 +1225,10 @@ public class VcnGatewayConnection extends StateMachine {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     void setSafeModeAlarm() {
         final boolean isFlagSafeModeConfigEnabled = mVcnContext.getFeatureFlags().safeModeConfig();
-        logVdbg("isFlagSafeModeConfigEnabled " + isFlagSafeModeConfigEnabled);
+        logInfo("isFlagSafeModeConfigEnabled " + isFlagSafeModeConfigEnabled);
 
         if (isFlagSafeModeConfigEnabled && !mConnectionConfig.isSafeModeEnabled()) {
-            logVdbg("setSafeModeAlarm: safe mode disabled");
+            logInfo("setSafeModeAlarm: safe mode disabled");
             return;
         }
 
@@ -1258,6 +1258,10 @@ public class VcnGatewayConnection extends StateMachine {
 
         final PersistableBundleWrapper carrierConfig = snapshot.getCarrierConfigForSubGrp(subGrp);
         int resultSeconds = defaultSeconds;
+
+        logInfo(
+                "isFlagSafeModeTimeoutConfigEnabled "
+                        + vcnContext.isFlagSafeModeTimeoutConfigEnabled());
 
         if (vcnContext.isFlagSafeModeTimeoutConfigEnabled() && carrierConfig != null) {
             resultSeconds =
