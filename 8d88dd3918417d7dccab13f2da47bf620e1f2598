@@ -16,6 +16,24 @@
       "message": "there isn\u0027t any file / changes here?",
       "revId": "8d88dd3918417d7dccab13f2da47bf620e1f2598",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d59f331a_fd0721ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1932911
+      },
+      "writtenOn": "2024-03-06T14:38:25Z",
+      "side": 1,
+      "message": "Just owners update: libs/WindowManager/Shell/src/com/android/wm/shell/bubbles/OWNERS",
+      "parentUuid": "0d0075cb_47150a1f",
+      "revId": "8d88dd3918417d7dccab13f2da47bf620e1f2598",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
