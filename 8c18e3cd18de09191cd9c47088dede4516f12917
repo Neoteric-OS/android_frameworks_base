@@ -51,6 +51,24 @@
       "parentUuid": "436b6dc1_c02feaab",
       "revId": "8c18e3cd18de09191cd9c47088dede4516f12917",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cf18244_9cdd0239",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1929915
+      },
+      "writtenOn": "2024-03-06T23:28:36Z",
+      "side": 1,
+      "message": "Also can only add a +1 for code review. Still shows as needing code review.",
+      "parentUuid": "ed069085_78bce5a6",
+      "revId": "8c18e3cd18de09191cd9c47088dede4516f12917",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
