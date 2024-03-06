@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06f13957_29b2a235",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-03-06T22:03:58Z",
+      "side": 1,
+      "message": "We can\u0027t change public API (public resources in this case) to make tests pass on an already shipped version of Android.",
+      "revId": "a53eb7644fe6fc9c6b3484c1c91d6be26e82025a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
