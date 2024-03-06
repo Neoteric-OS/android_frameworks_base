@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b773959_094c55e7",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1353865
+      },
+      "writtenOn": "2024-03-06T00:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f7db6f2_e6b10d19",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 110
+      },
+      "revId": "f1bb123164e08f6bb3231391497ee8e83d488acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d170d5d_2bfb9435",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-03-05T22:10:08Z",
       "side": 1,
       "message": "The corpus in testdata looks like it\u0027s all composed of regular XML files.  If that\u0027s the data being fed into the FDP, I don\u0027t see anywhere here that the data would end up as a buffer of XML data.\n\nThis function does a bunch of ConsumeIntegralInRange calls, which will read bits off the end of the buffer (with a min value and range that ends up changing the raw input values to something in range)...\n\n...And I don\u0027t see anything here that reads the remaining bytes from FDP, after we\u0027re done setting up these package names.  It seems like we read these initial few values, but anything after that in the fuzz corpus is ignored.  Is this fuzzer actually getting any significant coverage?",
+      "revId": "f1bb123164e08f6bb3231391497ee8e83d488acf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45d77596_6b5c7d7b",
+        "filename": "libs/androidfw/fuzz/resxmlparser_fuzzer/resxmlparser_fuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1353865
+      },
+      "writtenOn": "2024-03-06T00:57:33Z",
+      "side": 1,
+      "message": "Good catch. I have left out the line adding the remainder of the FDP. After adding it I can see the fuzzer getting over 100 feature coverage in few seconds.",
+      "parentUuid": "4d170d5d_2bfb9435",
       "revId": "f1bb123164e08f6bb3231391497ee8e83d488acf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
