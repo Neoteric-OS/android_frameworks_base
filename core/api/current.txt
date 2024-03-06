@@ -20265,6 +20265,7 @@ package android.inputspy {
     method public void startRecording();
     method public void stopPlaying();
     method public void stopRecording();
+    method public void test();
   }
 
 }

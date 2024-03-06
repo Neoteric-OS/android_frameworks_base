@@ -14,4 +14,5 @@ interface IInputSpy{
     void stopPlaying();
     void addCheckPoint();
     void analyze();
+    void test();
 }

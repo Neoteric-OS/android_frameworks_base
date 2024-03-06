@@ -83,4 +83,14 @@ public class InputSpyManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    public void test() {
+        Log.d(TAG, "test");
+        Toast.makeText(mContext, "test", Toast.LENGTH_SHORT).show();
+        try {
+            mService.test();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
