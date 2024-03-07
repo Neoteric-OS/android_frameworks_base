@@ -72,14 +72,14 @@ class SecondFingerMultiTap extends GestureMatcher {
         mSecondFingerPointerId = event.getPointerId(index);
         cancelAfterTapTimeout(event, rawEvent, policyFlags);
         if (Float.isNaN(mBaseX) && Float.isNaN(mBaseY)) {
-            mBaseX = event.getX();
-            mBaseY = event.getY();
+            mBaseX = event.getX(index);
+            mBaseY = event.getY(index);
         }
         if (!isSecondFingerInsideSlop(rawEvent, mDoubleTapSlop)) {
             cancelGesture(event, rawEvent, policyFlags);
         }
-        mBaseX = event.getX();
-        mBaseY = event.getY();
+        mBaseX = event.getX(index);
+        mBaseY = event.getY(index);
     }
 
     @Override
@@ -97,6 +97,9 @@ class SecondFingerMultiTap extends GestureMatcher {
             if (mCurrentTaps == mTargetTaps) {
                 // Done.
                 completeGesture(event, rawEvent, policyFlags);
+                // Clear the gesture so a user can perform multiple SecondFingerMultiTaps without
+                // lifting their other finger.
+                clear();
                 return;
             }
             // Needs more taps.

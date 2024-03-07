@@ -122,8 +122,6 @@ class GestureManifold implements GestureMatcher.StateChangeListener {
         // Start with double tap.
         mGestures.add(new MultiTap(context, 2, GESTURE_DOUBLE_TAP, this));
         mGestures.add(new MultiTapAndHold(context, 2, GESTURE_DOUBLE_TAP_AND_HOLD, this));
-        // Second-finger double tap.
-        mGestures.add(new SecondFingerMultiTap(context, 2, GESTURE_DOUBLE_TAP, this));
         // One-direction swipes.
         mGestures.add(new Swipe(context, RIGHT, GESTURE_SWIPE_RIGHT, this));
         mGestures.add(new Swipe(context, LEFT, GESTURE_SWIPE_LEFT, this));
@@ -143,6 +141,9 @@ class GestureManifold implements GestureMatcher.StateChangeListener {
         mGestures.add(new Swipe(context, UP, LEFT, GESTURE_SWIPE_UP_AND_LEFT, this));
         mGestures.add(new Swipe(context, UP, RIGHT, GESTURE_SWIPE_UP_AND_RIGHT, this));
         // Set up multi-finger gestures to be enabled later.
+        // Second-finger double tap. This is a multi finger gesture because otherwise the second
+        // finger's taps would be passed through the touch exploration layer.
+        mMultiFingerGestures.add(new SecondFingerMultiTap(context, 2, GESTURE_DOUBLE_TAP, this));
         // Two-finger taps.
         mMultiFingerGestures.add(
                 new MultiFingerMultiTap(mContext, 2, 1, GESTURE_2_FINGER_SINGLE_TAP, this));

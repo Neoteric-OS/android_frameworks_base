@@ -391,7 +391,12 @@ public class TouchExplorer extends BaseEventStreamTransformation
             mAms.getTraceManager().logTrace(LOG_TAG + ".onDoubleTap", LOGGING_FLAGS,
                     "event=" + event + ";rawEvent=" + rawEvent + ";policyFlags=" + policyFlags);
         }
-        mAms.onTouchInteractionEnd();
+        // Check if a finger is still down and keep touch exploring if so
+        boolean secondFingerMultiTapPerformed =
+                mReceivedPointerTracker.getReceivedPointerDownCount() == 1;
+        if (!secondFingerMultiTapPerformed) {
+            mAms.onTouchInteractionEnd();
+        }
         // Remove pending event deliveries.
         mSendHoverEnterAndMoveDelayed.cancel();
         mSendHoverExitDelayed.cancel();
@@ -404,12 +409,18 @@ public class TouchExplorer extends BaseEventStreamTransformation
             dispatchGesture(gestureEvent);
         }
         if (mSendTouchExplorationEndDelayed.isPending()) {
-            mSendTouchExplorationEndDelayed.forceSendAndRemove();
+            if (secondFingerMultiTapPerformed) {
+                mSendTouchExplorationEndDelayed.cancel();
+            } else {
+                mSendTouchExplorationEndDelayed.forceSendAndRemove();
+            }
+        }
+        if (!secondFingerMultiTapPerformed) {
+            // Announce the end of a new touch interaction.
+            mDispatcher.sendAccessibilityEvent(TYPE_TOUCH_INTERACTION_END);
+            mSendTouchInteractionEndDelayed.cancel();
         }
 
-        // Announce the end of a new touch interaction.
-        mDispatcher.sendAccessibilityEvent(TYPE_TOUCH_INTERACTION_END);
-        mSendTouchInteractionEndDelayed.cancel();
         // Try to use the standard accessibility API to click
         if (!mAms.performActionOnAccessibilityFocusedItem(
                 AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)) {
@@ -417,7 +428,9 @@ public class TouchExplorer extends BaseEventStreamTransformation
             if (event != null && rawEvent != null) {
                 mDispatcher.clickWithTouchEvents(event, rawEvent, policyFlags);
             }
-            return true;
+        }
+        if (secondFingerMultiTapPerformed) {
+            enableTouchExploration();
         }
         return true;
     }
@@ -467,8 +480,16 @@ public class TouchExplorer extends BaseEventStreamTransformation
             mAms.getTraceManager().logTrace(LOG_TAG + ".onGestureCompleted",
                     LOGGING_FLAGS, "event=" + gestureEvent);
         }
-        endGestureDetection(true);
-        mSendTouchInteractionEndDelayed.cancel();
+        if (gestureEvent.getGestureId() == AccessibilityService.GESTURE_DOUBLE_TAP &&
+                mReceivedPointerTracker.getReceivedPointerDownCount() == 1) {
+            // If we have received a double tap event, but there is still a pointer down,
+            // then the user has performed a SecondFingerMultiTap.  Allow them to keep touch
+            // exploring so they do not have to lift their primary pointer between split taps.
+            enableTouchExploration();
+        } else {
+            endGestureDetection(true);
+            mSendTouchInteractionEndDelayed.cancel();
+        }
         dispatchGesture(gestureEvent);
         return true;
     }
@@ -1064,12 +1085,11 @@ public class TouchExplorer extends BaseEventStreamTransformation
     }
 
     private void endGestureDetection(boolean interactionEnd) {
-        mAms.onTouchInteractionEnd();
-
         // Announce the end of the gesture recognition.
         mDispatcher.sendAccessibilityEvent(TYPE_GESTURE_DETECTION_END);
         // Don't announce the end of a the touch interaction if users didn't lift their fingers.
         if (interactionEnd) {
+            mAms.onTouchInteractionEnd();
             mDispatcher.sendAccessibilityEvent(TYPE_TOUCH_INTERACTION_END);
         }
 
@@ -1330,30 +1350,34 @@ public class TouchExplorer extends BaseEventStreamTransformation
             Slog.d(LOG_TAG, "Starting touch explorer from service.");
         }
         if (mState.isServiceDetectingGestures() && mState.isTouchInteracting()) {
-            // Cancel without deleting events.
-            mHandler.removeCallbacks(mSendHoverEnterAndMoveDelayed);
-            int pointerId = mReceivedPointerTracker.getPrimaryPointerId();
-            if (pointerId == INVALID_POINTER_ID) {
-                MotionEvent event = mState.getLastReceivedEvent();
-                if (event != null) {
-                    // Use the first pointer of the most recent event.
-                    pointerId = event.getPointerId(0);
-                }
+            enableTouchExploration();
+        }
+    }
+
+    private void enableTouchExploration() {
+        // Cancel without deleting events.
+        mHandler.removeCallbacks(mSendHoverEnterAndMoveDelayed);
+        int pointerId = mReceivedPointerTracker.getPrimaryPointerId();
+        if (pointerId == INVALID_POINTER_ID) {
+            MotionEvent event = mState.getLastReceivedEvent();
+            if (event != null) {
+                // Use the first pointer of the most recent event.
+                pointerId = event.getPointerId(0);
             }
-            if (pointerId == INVALID_POINTER_ID) {
-                Slog.e(LOG_TAG, "Unable to find a valid pointer for touch exploration.");
-                return;
-            }
-            final int pointerIdBits = (1 << pointerId);
-            final int policyFlags = mState.getLastReceivedPolicyFlags();
-            mSendHoverEnterAndMoveDelayed.setPointerIdBits(pointerIdBits);
-            mSendHoverEnterAndMoveDelayed.setPolicyFlags(policyFlags);
-            mSendHoverEnterAndMoveDelayed.run();
-            mSendHoverEnterAndMoveDelayed.clear();
-            if (mReceivedPointerTracker.getReceivedPointerDownCount() == 0) {
-                // We need to send hover exit because there will be no future ACTION_UP
-                sendHoverExitAndTouchExplorationGestureEndIfNeeded(policyFlags);
-            }
+        }
+        if (pointerId == INVALID_POINTER_ID) {
+            Slog.e(LOG_TAG, "Unable to find a valid pointer for touch exploration.");
+            return;
+        }
+        final int pointerIdBits = (1 << pointerId);
+        final int policyFlags = mState.getLastReceivedPolicyFlags();
+        mSendHoverEnterAndMoveDelayed.setPointerIdBits(pointerIdBits);
+        mSendHoverEnterAndMoveDelayed.setPolicyFlags(policyFlags);
+        mSendHoverEnterAndMoveDelayed.run();
+        mSendHoverEnterAndMoveDelayed.clear();
+        if (mReceivedPointerTracker.getReceivedPointerDownCount() == 0) {
+            // We need to send hover exit because there will be no future ACTION_UP
+            sendHoverExitAndTouchExplorationGestureEndIfNeeded(policyFlags);
         }
     }
 
