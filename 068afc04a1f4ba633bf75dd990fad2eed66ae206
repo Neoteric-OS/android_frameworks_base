@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8fe00c2_c34742bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1845626
+      },
+      "writtenOn": "2024-03-07T16:53:11Z",
+      "side": 1,
+      "message": "Hi Google team,\nI solved merge conflict.\nCould you resume your code review?\nThank you.",
+      "revId": "068afc04a1f4ba633bf75dd990fad2eed66ae206",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
