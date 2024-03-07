@@ -10,23 +10,18 @@ import com.android.server.SystemService;
 public class InputSpyManagerService extends IInputSpy.Stub {
     private static final String TAG = InputSpyManagerService.class.getSimpleName();
 
-    static {
-        // nativeInit();
-    }
-
     private final Context mContext;
 
     public InputSpyManagerService(Context context) {
         mContext = context;
     }
 
-//    private static native void nativeInit();
 //
 //    private native void nativeStartRecording();
 //
 //    private native void nativeStopRecording();
 //
-//    private native void nativeStartPlaying();
+    private native void nativeStartPlaying();
 //
 //    private native void nativeStopPlaying();
 //
@@ -42,7 +37,6 @@ public class InputSpyManagerService extends IInputSpy.Stub {
         // nativeStartRecording();
     }
 
-
     @Override
     public void stopRecording() {
         Log.d(TAG, "stopRecording");
@@ -52,7 +46,7 @@ public class InputSpyManagerService extends IInputSpy.Stub {
     @Override
     public void startPlaying() {
         Log.d(TAG, "startPlaying");
-        // nativeStartPlaying();
+        nativeStartPlaying();
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.annotation.SystemService;
 import android.content.Context;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
 
 
 @SuppressLint("NewApi")
@@ -26,7 +25,6 @@ public class InputSpyManager {
 
     public void startRecording() {
         Log.d(TAG, "startRecording");
-        Toast.makeText(mContext, "startRecording", Toast.LENGTH_SHORT).show();
         try {
             mService.startRecording();
         } catch (RemoteException e) {
@@ -36,7 +34,6 @@ public class InputSpyManager {
 
     public void stopRecording() {
         Log.d(TAG, "stopRecording");
-        Toast.makeText(mContext, "stopRecording", Toast.LENGTH_SHORT).show();
         try {
             mService.stopRecording();
         } catch (RemoteException e) {
@@ -46,7 +43,6 @@ public class InputSpyManager {
 
     public void startPlaying() {
         Log.d(TAG, "startPlaying");
-        Toast.makeText(mContext, "startPlaying", Toast.LENGTH_SHORT).show();
         try {
             mService.startPlaying();
         } catch (RemoteException e) {
@@ -56,7 +52,6 @@ public class InputSpyManager {
 
     public void stopPlaying() {
         Log.d(TAG, "stopPlaying");
-        Toast.makeText(mContext, "stopPlaying", Toast.LENGTH_SHORT).show();
         try {
             mService.stopPlaying();
         } catch (RemoteException e) {
@@ -66,7 +61,6 @@ public class InputSpyManager {
 
     public void addCheckPoint() {
         Log.d(TAG, "addCheckPoint");
-        Toast.makeText(mContext, "addCheckPoint", Toast.LENGTH_SHORT).show();
         try {
             mService.addCheckPoint();
         } catch (RemoteException e) {
@@ -76,7 +70,6 @@ public class InputSpyManager {
 
     public void analyze() {
         Log.d(TAG, "analyze");
-        Toast.makeText(mContext, "analyze", Toast.LENGTH_SHORT).show();
         try {
             mService.analyze();
         } catch (RemoteException e) {
@@ -86,7 +79,6 @@ public class InputSpyManager {
 
     public void test() {
         Log.d(TAG, "test");
-        Toast.makeText(mContext, "test", Toast.LENGTH_SHORT).show();
         try {
             mService.test();
         } catch (RemoteException e) {
