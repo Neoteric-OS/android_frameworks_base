@@ -26,15 +26,13 @@
 #define TAG "InputSpyManagerService-JNI"
 
 
-// jni静态注册
-/*extern "C" jstring
-Java_com_android_server_keepalive_KeepAliveManagerService_onResumeNative(JNIEnv *env, jclass thiz, jlong value) {
-    // 进行本地处理，生成返回值
-    std::string hello = "Hello from C++";
-    jstring result = env->NewStringUTF(hello.c_str());
-    return result;
-}*/
+void log_v(const char *msg) {
+    __android_log_print(ANDROID_LOG_VERBOSE, TAG, "%s", msg);
+}
 
+void log_v(const std::string &msg) {
+    __android_log_print(ANDROID_LOG_VERBOSE, TAG, "%s", msg.c_str());
+}
 
 void log_d(const char *msg) {
     __android_log_print(ANDROID_LOG_DEBUG, TAG, "%s", msg);
@@ -159,22 +157,22 @@ std::list<record_unit> readRecords() {
         std::string rawTime = line.substr(6, 10);
         double time = std::stod(rawTime);
         auto microsecond = static_cast<long long>(time * 1000 * 1000);
-        log_d("microsecond = " + std::to_string(microsecond));
+        log_v("microsecond = " + std::to_string(microsecond));
 
         // read event type
         std::string rawType = line.substr(37, 4);
         int type = std::stoi(rawType, nullptr, 16);
-        log_d("type = " + std::to_string(type));
+        log_v("type = " + std::to_string(type));
 
         // read event code
         std::string rawCode = line.substr(42, 4);
         int code = std::stoi(rawCode, nullptr, 16);
-        log_d("code = " + std::to_string(code));
+        log_v("code = " + std::to_string(code));
 
         // read event value
         std::string rawValue = line.substr(47, 8);
         long long value = std::stoll(rawValue, nullptr, 16);
-        log_d("value = " + std::to_string(value));
+        log_v("value = " + std::to_string(value));
 
         // create input_event
         input_event ev{};
@@ -214,7 +212,7 @@ void replay() {
     int fd = open(DEVICE_PATH_TOUCHSCREEN, O_RDWR);
     if (fd == -1) {
         std::string reason = strerror(errno);
-        log_d("Failed to open file, reason = " + reason);
+        log_e("Failed to open file, reason = " + reason);
         return;
     }
     std::list<record_unit> records = readRecords();
@@ -228,7 +226,7 @@ void replay() {
         long long waitTime = shouldPlayAt - now;
         if (waitTime > 0) {
             // wait
-            log_d("wait for " + std::to_string(waitTime) + " micro seconds");
+            log_v("wait for " + std::to_string(waitTime) + " micro seconds");
             std::this_thread::sleep_for(std::chrono::microseconds(waitTime));
         }
         injectEvents(fd, record.events);
@@ -245,6 +243,18 @@ static void android_server_inputspy_InputSpyManagerService_nativeTest(JNIEnv *, 
 static void android_server_inputspy_InputSpyManagerService_nativeStartPlaying(JNIEnv *, jobject) {
     replay();
 }
+
+
+// jni静态注册
+/*extern "C" jstring
+Java_android_server_inputspy_InputSpyManagerService_nativeTest(JNIEnv *env, jclass thiz) {
+     injectToPowerKey();
+}*/
+
+/*extern "C" jstring
+Java_android_server_inputspy_InputSpyManagerService_nativeStartPlaying(JNIEnv *env, jclass thiz) {
+     replay();
+}*/
 
 
 // jni动态注册
@@ -265,6 +275,7 @@ namespace android {
     };
 
     int register_android_server_inputspy_InputSpyManagerService(JNIEnv *env) {
+        log_d("register native methods of InputSpyManagerService.java");
         return jniRegisterNativeMethods(
                 env,
                 "com/android/server/inputspy/InputSpyManagerService",
@@ -274,6 +285,7 @@ namespace android {
     }
 
     jint JNI_OnLoad(JavaVM *vm, void * /* reserved */) {
+        log_d("JNI_OnLoad is invoked");
         JNIEnv *env = NULL;
         jint result = -1;
 
