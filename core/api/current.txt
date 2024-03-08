@@ -34315,8 +34315,9 @@ package android.os.storage {
     field public static final int UNMOUNTED = 2; // 0x2
   }
 
-  @FlaggedApi("android.security.unlocked_storage_api") public class OpenStorageArea implements java.io.Closeable {
+  @FlaggedApi("android.security.unlocked_storage_api") public class StorageArea implements java.io.Closeable {
     method @FlaggedApi("android.security.unlocked_storage_api") public void close() throws java.io.IOException;
+    method public void finalize() throws java.io.IOException;
     method @FlaggedApi("android.security.unlocked_storage_api") @NonNull public java.io.File getDirectory();
   }
 
@@ -34345,7 +34346,7 @@ package android.os.storage {
     method @FlaggedApi("android.security.unlocked_storage_api") @NonNull public java.util.Set<java.lang.String> listStorageAreas();
     method public boolean mountObb(String, String, android.os.storage.OnObbStateChangeListener);
     method @NonNull public android.os.ParcelFileDescriptor openProxyFileDescriptor(int, android.os.ProxyFileDescriptorCallback, android.os.Handler) throws java.io.IOException;
-    method @FlaggedApi("android.security.unlocked_storage_api") @NonNull public android.os.storage.OpenStorageArea openStorageArea(@NonNull String) throws java.io.IOException;
+    method @FlaggedApi("android.security.unlocked_storage_api") @NonNull public android.os.storage.StorageArea openStorageArea(@NonNull String) throws java.io.IOException;
     method public void registerStorageVolumeCallback(@NonNull java.util.concurrent.Executor, @NonNull android.os.storage.StorageManager.StorageVolumeCallback);
     method public void setCacheBehaviorGroup(java.io.File, boolean) throws java.io.IOException;
     method public void setCacheBehaviorTombstone(java.io.File, boolean) throws java.io.IOException;

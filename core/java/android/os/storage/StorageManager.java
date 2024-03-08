@@ -60,6 +60,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.IInstalld;
 import android.os.IVold;
 import android.os.IVoldTaskListener;
@@ -493,6 +494,23 @@ public class StorageManager {
         return context.getSystemService(StorageManager.class);
     }
 
+    // binder support for closing all storage areas when an app crashes
+    private final IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
+        @Override
+        public void binderDied() {
+            Log.w(TAG, mContext.getOpPackageName() + "crashed, closing open storage areas");
+            unlinkToDeath();
+            try {
+                for(String storageArea: listStorageAreas()) {
+                    mStorageManager.closeStorageArea(mContext.getOpPackageName(), storageArea);
+                }
+            } catch(RemoteException e) {
+                Log.w(TAG, mContext.getOpPackageName() + 
+                    ": remote error trying to close open storage areas on app crash");
+            }
+        }
+    };
+
     /**
      * Constructs a StorageManager object through which an application can
      * can communicate with the systems mount service.
@@ -521,7 +539,6 @@ public class StorageManager {
         } catch(Exception e) {
             /* don't crash here -- check for null keystore in openStorageArea */
         }
-
     }
 
     /**
@@ -2990,15 +3007,15 @@ public class StorageManager {
      * However, it is recommended that applications close storage areas when the screen is locked.
      * <p>
      * A storage area can be opened multiple times at once, causing multiple {@link
-     * OpenStorageArea}s to exist for the same underlying storage area. In this case, the storage
-     * area will not be fully closed until each individual {@link OpenStorageArea} has been closed.
+     * StorageArea}s to exist for the same underlying storage area. In this case, the storage
+     * area will not be fully closed until each individual {@link StorageArea} has been closed.
      *
-     * @return an {@link OpenStorageArea} that is a handle to the storage area. This should be used
+     * @return an {@link StorageArea} that is a handle to the storage area. This should be used
      *         in a try-with-resources statement to ensure that the storage area gets closed.
      */
     @NonNull
     @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
-    public OpenStorageArea openStorageArea(@NonNull String storageAreaName) throws IOException {
+    public StorageArea openStorageArea(@NonNull String storageAreaName) throws IOException {
         if (mKeyStore == null) {
             throw new IOException("failed to open storage area "
                         + storageAreaName + " b/c keystore was null");
@@ -3054,19 +3071,25 @@ public class StorageManager {
     }
 
     @NonNull
-    private OpenStorageArea openStorageArea(@NonNull String storageAreaName, byte[] secret)
+    private StorageArea openStorageArea(@NonNull String storageAreaName, byte[] secret)
             throws IOException {
         try {
+            if (this.listStorageAreas().size() == 0) {
+                // if we will have at least one storage area, make sure it's closed if app crashes
+                // do this before creation in case there is a race condition and length jumps to > 1
+                // this way we try to avoid calling linkToDeath more than necessary
+                linkToDeath();
+            }
             String directory = mStorageManager.openStorageArea(mContext.getOpPackageName(),
                     storageAreaName, secret);
-            return new OpenStorageArea(this, storageAreaName, new File(directory));
+            return new StorageArea(this, storageAreaName, new File(directory));
         } catch (RemoteException e) {
             throw new IOException("failed to open storage area " + storageAreaName, e);
         }
     }
 
     /** {@hide} */
-    public void closeStorageArea(@NonNull OpenStorageArea storageArea) throws IOException, FileNotFoundException {
+    public void closeStorageArea(@NonNull StorageArea storageArea) throws IOException, FileNotFoundException {
         // throw an error if the storage area does not exist
         // note: dealing with this error here instead of in vold in order to avoid 
         // having to distinguish vold errors based on the error code (ENOENT, etc)
@@ -3134,6 +3157,28 @@ public class StorageManager {
     @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
     public Set<String> listStorageAreas() {
         return Set.of(this.getPackageDirectoryOfStorageAreas().list());
+    }
+
+    private void linkToDeath() {
+        IBinder binder = mStorageManager.asBinder();
+        if (binder == null) {
+            Log.w(TAG, "Linking to binder death recipient skipped");
+            return;
+        }
+        try {
+            binder.linkToDeath(mDeathRecipient, 0);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Linking to binder death recipient failed: " + e);
+        }
+    }
+
+    private void unlinkToDeath() {
+        IBinder binder = mStorageManager.asBinder();
+        if (binder == null) {
+            Log.w(TAG, "Unlinking from binder death recipient skipped");
+            return;
+        }
+        binder.unlinkToDeath(mDeathRecipient, 0);
     }
 
     private File getPackageDirectoryOfStorageAreas() {
