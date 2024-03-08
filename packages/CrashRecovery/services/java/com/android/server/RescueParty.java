@@ -829,6 +829,9 @@ public class RescueParty {
         @Override
         public int onHealthCheckFailed(@Nullable VersionedPackage failedPackage,
                 @FailureReasons int failureReason, int mitigationCount) {
+            Slog.i(TAG, "in onHealthCheckFailed");
+            Slog.i(TAG, "rescue party enable flag: " + SystemProperties.getBoolean(
+                    PROP_ENABLE_RESCUE, false));
             if (!isDisabled() && (failureReason == PackageWatchdog.FAILURE_REASON_APP_CRASH
                     || failureReason == PackageWatchdog.FAILURE_REASON_APP_NOT_RESPONDING)) {
                 if (Flags.recoverabilityDetection()) {
@@ -945,6 +948,8 @@ public class RescueParty {
             PackageManager pm = mContext.getPackageManager();
             try {
                 ApplicationInfo info = pm.getApplicationInfo(packageName, 0);
+                Slog.i(TAG, "Persistent app? " + ((info.flags & PERSISTENT_MASK)
+                        == PERSISTENT_MASK));
                 return (info.flags & PERSISTENT_MASK) == PERSISTENT_MASK;
             } catch (PackageManager.NameNotFoundException e) {
                 return false;
