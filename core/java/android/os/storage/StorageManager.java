@@ -60,6 +60,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.IInstalld;
 import android.os.IVold;
 import android.os.IVoldTaskListener;
@@ -113,12 +114,6 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.InvalidKeyException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableEntryException;
-import java.security.KeyStore.SecretKeyEntry;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -137,10 +132,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.Mac;
-import javax.crypto.SecretKey;
 
 /**
  * StorageManager is the interface to the systems storage service. The storage
@@ -315,6 +306,9 @@ public class StorageManager {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static final int ENCRYPTION_STATE_NONE = 1;
 
+    /** {@hide} */
+    public static final int STORAGE_AREA_KEY_LENGTH = 32;
+
     private static volatile IStorageManager sStorageManager = null;
 
     private final Context mContext;
@@ -324,9 +318,6 @@ public class StorageManager {
     private final AppOpsManager mAppOps;
     private final Looper mLooper;
     private final AtomicInteger mNextNonce = new AtomicInteger(0);
-
-    private KeyStore mKeyStore;
-    private final KeyProtection mKeyProtection;
 
     @GuardedBy("mDelegates")
     private final ArrayList<StorageEventListenerDelegate> mDelegates = new ArrayList<>();
@@ -493,6 +484,23 @@ public class StorageManager {
         return context.getSystemService(StorageManager.class);
     }
 
+    // binder support for closing all storage areas when an app crashes
+    private final IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
+        @Override
+        public void binderDied() {
+            Log.w(TAG, mContext.getOpPackageName() + "crashed, closing open storage areas");
+            unlinkToDeath();
+            try {
+                for(String storageArea: listStorageAreas()) {
+                    mStorageManager.closeStorageArea(mContext.getOpPackageName(), storageArea);
+                }
+            } catch(RemoteException e) {
+                Log.w(TAG, mContext.getOpPackageName() + 
+                    ": remote error trying to close open storage areas on app crash");
+            }
+        }
+    };
+
     /**
      * Constructs a StorageManager object through which an application can
      * can communicate with the systems mount service.
@@ -512,16 +520,6 @@ public class StorageManager {
         mLooper = looper;
         mStorageManager = IStorageManager.Stub.asInterface(ServiceManager.getServiceOrThrow("mount"));
         mAppOps = mContext.getSystemService(AppOpsManager.class);
-        mKeyProtection = new KeyProtection.Builder(KeyProperties.PURPOSE_SIGN)
-                                            .setUnlockedDeviceRequired(true)
-                                            .build();
-        try {
-            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
-            mKeyStore.load(null, null);
-        } catch(Exception e) {
-            /* don't crash here -- check for null keystore in openStorageArea */
-        }
-
     }
 
     /**
@@ -2964,15 +2962,19 @@ public class StorageManager {
         }
     }
 
-    /** {@hide} */
-    public static final int STORAGE_AREA_KEY_LENGTH = 32;
-
     /**
-     * Opens a "storage area", creating it if it doesn't exist.
+     * Opens a "storage area", creating it if it doesn't exist, and protecting it with a
+     * <code>byte[]<\code> secret that is used to derive a FBE key to encrypt it.
      * <p>
-     * A "storage area" is a transparently encrypted directory, private to the application, that can
-     * normally only be accessed while the screen is unlocked. This provides a level of protection
-     * above that of the Credential Encrypted storage which is the default for app data.
+     * A "storage area" is a transparently encrypted directory, private to the application, that
+     * provides at least the same level of protection as that of the Credential Encrypted storage
+     * which is the default for app data.
+     *
+     * <b>WARNING</b>: This internal API is <b>not</b> the recommended way to create/open storage
+     * areas. The intended usage is through the library, which will create an UnlockedDeviceRequired
+     * key for the storage area, ensuring that it can only be accessed when the screen is unlocked.
+     * This provides protection <b>above</b> that of the CE storage.
+     *
      * <p>
      * Storage areas are identified by application-provided <code>storageAreaName</code>. The name
      * must contain only the characters <code>a-z</code>, <code>A-Z</code>, <code>0-9</code>,
@@ -2985,83 +2987,33 @@ public class StorageManager {
      * However, it is recommended that applications close storage areas when the screen is locked.
      * <p>
      * A storage area can be opened multiple times at once, causing multiple {@link
-     * OpenStorageArea}s to exist for the same underlying storage area. In this case, the storage
-     * area will not be fully closed until each individual {@link OpenStorageArea} has been closed.
+     * StorageArea}s to exist for the same underlying storage area. In this case, the storage
+     * area will not be fully closed until each individual {@link StorageArea} has been closed.
      *
-     * @return an {@link OpenStorageArea} that is a handle to the storage area. This should be used
+     * @return an {@link StorageArea} that is a handle to the storage area. This should be used
      *         in a try-with-resources statement to ensure that the storage area gets closed.
      */
     @NonNull
     @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
-    public OpenStorageArea openStorageArea(@NonNull String storageAreaName) throws IOException {
-        if (mKeyStore == null) {
-            throw new IOException("failed to open storage area "
-                        + storageAreaName + " b/c keystore was null");
-        }
-        // the key alias should be pkgname_storageAreaName
-        String keyAlias = mContext.getOpPackageName() + "_" + storageAreaName;
-        try {
-            byte[] secret;
-            if (!mKeyStore.isKeyEntry(keyAlias)) {
-                // make the new key and add it to keystore
-                KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-                mKeyStore.load(null);
-                SecretKey sk = keyGen.generateKey();
-                mKeyStore.setEntry(keyAlias, new KeyStore.SecretKeyEntry(sk), mKeyProtection);
-                secret = deriveHMACSecretFromSecretKey(storageAreaName, sk);
-            } else {
-                secret = deriveHMACSecretFromSecretKey(storageAreaName,
-                            (SecretKey) mKeyStore.getKey(keyAlias, null));
-            }
-            return openStorageArea(storageAreaName, secret);
-        } catch(KeyStoreException
-                | InvalidKeyException
-                | NoSuchAlgorithmException
-                | CertificateException
-                | UnrecoverableEntryException e) {
-            throw new IOException("failed to open storage area b/c of key error "
-                            + storageAreaName, e);
-        }
-    }
-
-    @NonNull
-    private byte[] deriveHMACSecretFromSecretKey(@NonNull String storageAreaName, SecretKey sk)
-            throws InvalidKeyException, NoSuchAlgorithmException{
-        final Mac m = Mac.getInstance("HmacSHA256");
-        m.init(sk);
-        // now, derive the byte array
-        // hardcode label and context for this storage area for this package
-        byte[] label = ("storage-area-" + storageAreaName + "-key").getBytes();
-        byte[] context = ("android-storage-manager-package-"
-                + mContext.getOpPackageName() + "-storage-area-context").getBytes();
-        // copying the code from
-        // frameworks/base/services/core/java/com/android/server/locksettings/SP800Derive.java
-        // the `withContext` method (also copying the comments)
-        m.update(ByteBuffer.allocate(Integer.BYTES).putInt(1).array()); // hardwired counter value
-        m.update(label);
-        m.update((byte)0);
-        m.update(context);
-        // disabmiguate context
-        m.update(ByteBuffer.allocate(Integer.BYTES).putInt(context.length * 8).array());
-        // hardwired output length
-        m.update(ByteBuffer.allocate(Integer.BYTES).allocate(STORAGE_AREA_KEY_LENGTH).array());
-        return m.doFinal();
-    }
-
-    @NonNull
-    private OpenStorageArea openStorageArea(@NonNull String storageAreaName, byte[] secret)
+    public StorageArea openStorageArea(@NonNull String storageAreaName, @NonNull byte[] secret)
             throws IOException {
         try {
+            if (this.listStorageAreas().size() == 0) {
+                // if we will have at least one storage area, make sure it's closed if app crashes
+                // do this before creation in case there is a race condition and length jumps to > 1
+                // this way we try to avoid calling linkToDeath more than necessary
+                linkToDeath();
+            }
             String directory = mStorageManager.openStorageArea(mContext.getOpPackageName(),
                     storageAreaName, secret);
-            return new OpenStorageArea(this, storageAreaName, new File(directory));
+            return new StorageArea(this, storageAreaName, new File(directory));
         } catch (RemoteException e) {
             throw new IOException("failed to open storage area " + storageAreaName, e);
         }
     }
 
     /** {@hide} */
-    public void closeStorageArea(@NonNull OpenStorageArea storageArea)
+    public void closeStorageArea(@NonNull StorageArea storageArea)
         throws IOException, FileNotFoundException {
         // throw an error if the storage area does not exist
         // note: dealing with this error here instead of in vold in order to avoid
@@ -3081,6 +3033,11 @@ public class StorageManager {
 
     /**
      * If the app has a storage area with the given name, deletes it as securely as possible.
+     *
+     * <b>WARNING</b>: This internal API is <b>not</b> the recommended way to delete storage
+     * areas. The intended usage is through the library. If a storage area is opened via the 
+     * library, then calling this method to delete it will result in the area's Keystore key
+     * not being cleared.
      *
      * @throws IOException if the storage area is currently open
      * @throws NoSuchElementException if no storage area with the specified name exists
@@ -3114,13 +3071,9 @@ public class StorageManager {
                 }
         }
         // dispatch the deletion of the (now empty) storage area directory
-        // and delete the keystore key
         try {
             mStorageManager.deleteStorageArea(mContext.getOpPackageName(), storageAreaName);
-            // the key alias should be pkgname_storageAreaName
-            String keyAlias = mContext.getOpPackageName() + "_" + storageAreaName;
-            mKeyStore.deleteEntry(keyAlias);
-        } catch (RemoteException | KeyStoreException e) {
+        } catch (RemoteException e) {
             throw new IOException("failed to delete storage area " + storageAreaName, e);
         }
     }
@@ -3134,6 +3087,28 @@ public class StorageManager {
     @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
     public Set<String> listStorageAreas() {
         return Set.of(this.getPackageDirectoryOfStorageAreas().list());
+    }
+
+    private void linkToDeath() {
+        IBinder binder = mStorageManager.asBinder();
+        if (binder == null) {
+            Log.w(TAG, "Linking to binder death recipient skipped");
+            return;
+        }
+        try {
+            binder.linkToDeath(mDeathRecipient, 0);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Linking to binder death recipient failed: " + e);
+        }
+    }
+
+    private void unlinkToDeath() {
+        IBinder binder = mStorageManager.asBinder();
+        if (binder == null) {
+            Log.w(TAG, "Unlinking from binder death recipient skipped");
+            return;
+        }
+        binder.unlinkToDeath(mDeathRecipient, 0);
     }
 
     private File getPackageDirectoryOfStorageAreas() {
