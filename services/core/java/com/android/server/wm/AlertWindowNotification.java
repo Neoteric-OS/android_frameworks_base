@@ -144,6 +144,7 @@ class AlertWindowNotification {
     }
 
     private void createNotificationChannel(Context context, String appName) {
+        sChannelGroup = mNotificationManager.getNotificationChannelGroup(CHANNEL_PREFIX);
         if (sChannelGroup == null) {
             sChannelGroup = new NotificationChannelGroup(CHANNEL_PREFIX,
                     mService.mContext.getString(
