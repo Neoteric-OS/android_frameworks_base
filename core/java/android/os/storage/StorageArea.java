@@ -20,6 +20,8 @@ import android.annotation.NonNull;
 import android.annotation.FlaggedApi;
 import android.security.Flags;
 
+import dalvik.system.CloseGuard;
+
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -29,18 +31,22 @@ import java.util.Objects;
  * A handle to an open storage area.
  */
 @FlaggedApi(Flags.FLAG_UNLOCKED_STORAGE_API)
-public class OpenStorageArea implements Closeable {
+public class StorageArea implements Closeable {
 
     private final StorageManager mManager;
     private final String mName;
     private final File mDirectory;
     private boolean mClosed;
 
+    private final CloseGuard mCloseGuard = CloseGuard.get();
+
     /** {@hide} */
-    public OpenStorageArea(StorageManager manager, String name, File directory) {
+    public StorageArea(StorageManager manager, String name, File directory) {
         mManager = Objects.requireNonNull(manager);
         mName = Objects.requireNonNull(name);
         mDirectory = Objects.requireNonNull(directory);
+        // tracker to warn if a user did not call "close"
+        mCloseGuard.open("close");
     }
 
     /** {@hide} */
@@ -62,9 +68,9 @@ public class OpenStorageArea implements Closeable {
 
     /**
      * Closes the storage area. This complies with the {@link Closeable} interface, so that {@link
-     * OpenStorageArea} can be used with try-with-resources.
+     * StorageArea} can be used with try-with-resources.
      * <p>
-     * If other {@link OpenStorageArea}s exist for the same storage area, then this method only
+     * If other {@link StorageArea}s exist for the same storage area, then this method only
      * decrements an internal reference count. Otherwise, this method actually closes the storage
      * area. In this case, there must no longer be any open files in the storage area; otherwise an
      * {@link IOException} will be thrown and the storage area is not guaranteed to be securely
@@ -84,5 +90,14 @@ public class OpenStorageArea implements Closeable {
             mManager.closeStorageArea(this);
             mClosed = true;
         }
+    }
+
+    /** {@hide} */
+    @Override
+    public void finalize() throws IOException {
+        if (mCloseGuard != null) {
+            mCloseGuard.warnIfOpen();
+        }
+        this.close();
     }
 }
