@@ -16,6 +16,24 @@
       "message": "It would be useful to indicate why this is being reverted.",
       "revId": "891bc4b2e62d1d523c17ff8596d1b62bcc3b842e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "814a8c55_908d5dd0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-03-08T02:50:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c7fcbf_bdfcc54d",
+      "revId": "891bc4b2e62d1d523c17ff8596d1b62bcc3b842e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
