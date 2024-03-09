@@ -38,6 +38,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import libcore.io.IoUtils;
+
 class LegacyAppOpStateParser {
     static final String TAG = LegacyAppOpStateParser.class.getSimpleName();
 
@@ -99,6 +101,8 @@ class LegacyAppOpStateParser {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            IoUtils.closeQuietly(stream);
         }
     }
 
