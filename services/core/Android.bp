@@ -18,7 +18,7 @@ filegroup {
 }
 
 filegroup {
-    name: "services.core-sources",
+    name: "services.core-sources-old",
     srcs: ["java/**/*.java"],
     exclude_srcs: [
         ":services.core-sources-am-wm",
@@ -27,6 +27,15 @@ filegroup {
     visibility: [
         "//frameworks/base/services",
         "//frameworks/base/core/java/com/android/internal/protolog",
+    ],
+}
+
+filegroup {
+    name: "services.core-sources",
+    srcs: [
+        ":services.core-sources-old",
+        // Java/AIDL sources to be moved out to CrashRecovery module
+        ":services.crashrecovery-sources",
     ],
 }
 
@@ -126,8 +135,6 @@ java_library_static {
         "java/com/android/server/wm/EventLogTags.logtags",
         "java/com/android/server/policy/EventLogTags.logtags",
 
-        // Java/AIDL sources to be moved out to CrashRecovery module
-        ":services-crashrecovery-sources",
     ],
 
     libs: [

@@ -6,6 +6,12 @@ package com.android.server {
     method @Nullable public static <T> T getManager(@NonNull Class<T>);
   }
 
+  public class RescueParty {
+    method public static void onSettingsProviderPublished(@NonNull android.content.Context);
+    method public static void registerHealthObserver(@NonNull android.content.Context);
+    method public static void resetDeviceConfigForPackages(@NonNull java.util.List<java.lang.String>);
+  }
+
   public abstract class SystemService {
     ctor public SystemService(@NonNull android.content.Context);
     method @NonNull public final android.content.Context getContext();

@@ -11,7 +11,7 @@ soong_config_module_type {
 }
 
 platform_filegroup {
-    name: "services-crashrecovery-sources",
+    name: "services.crashrecovery-sources",
     soong_config_variables: {
         // if this flag is enabled, then files are part of platform
         crashrecovery_files_in_platform: {
