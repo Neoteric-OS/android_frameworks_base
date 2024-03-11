@@ -22,6 +22,7 @@ import static com.android.server.pm.PackageManagerServiceUtils.logCriticalInfo;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -73,7 +74,10 @@ import java.util.concurrent.TimeUnit;
  *
  * @hide
  */
+@SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
 public class RescueParty {
+    /** Fully-static utility classes must not have constructor */
+    private RescueParty() {}
     @VisibleForTesting
     static final String PROP_ENABLE_RESCUE = "persist.sys.enable_rescue";
     @VisibleForTesting
@@ -118,7 +122,7 @@ public class RescueParty {
             | ApplicationInfo.FLAG_SYSTEM;
 
     /** Register the Rescue Party observer as a Package Watchdog health observer */
-    public static void registerHealthObserver(Context context) {
+    public static void registerHealthObserver(@NonNull Context context) {
         PackageWatchdog.getInstance(context).registerHealthObserver(
                 RescuePartyObserver.getInstance(context));
     }
@@ -165,6 +169,7 @@ public class RescueParty {
      * will not be fully booted at this time.
      *
      * TODO(gavincorkery): Rename method since its scope has expanded.
+     * @hide
      */
     public static boolean isAttemptingFactoryReset() {
         return isFactoryResetPropertySet() || isRebootPropertySet();
@@ -178,25 +183,31 @@ public class RescueParty {
         return CrashRecoveryProperties.attemptingReboot().orElse(false);
     }
 
+    /** @hide **/
     protected static long getLastFactoryResetTimeMs() {
         return CrashRecoveryProperties.lastFactoryResetTimeMs().orElse(0L);
     }
 
+    /** @hide **/
     protected static int getMaxRescueLevelAttempted() {
         return CrashRecoveryProperties.maxRescueLevelAttempted().orElse(LEVEL_NONE);
     }
 
+    /** @hide **/
     protected static void setFactoryResetProperty(boolean value) {
         CrashRecoveryProperties.attemptingFactoryReset(value);
     }
+    /** @hide **/
     protected static void setRebootProperty(boolean value) {
         CrashRecoveryProperties.attemptingReboot(value);
     }
 
+    /** @hide **/
     protected static void setLastFactoryResetTimeMs(long value) {
         CrashRecoveryProperties.lastFactoryResetTimeMs(value);
     }
 
+    /** @hide **/
     protected static void setMaxRescueLevelAttempted(int level) {
         CrashRecoveryProperties.maxRescueLevelAttempted(level);
     }
@@ -205,7 +216,7 @@ public class RescueParty {
      * Called when {@code SettingsProvider} has been published, which is a good
      * opportunity to reset any settings depending on our rescue level.
      */
-    public static void onSettingsProviderPublished(Context context) {
+    public static void onSettingsProviderPublished(@NonNull Context context) {
         handleNativeRescuePartyResets();
         ContentResolver contentResolver = context.getContentResolver();
         DeviceConfig.setMonitorCallback(
@@ -220,7 +231,7 @@ public class RescueParty {
      * to avoid rolled back modules consuming flag values only expected to work
      * on modules of newer versions.
      */
-    public static void resetDeviceConfigForPackages(List<String> packageNames) {
+    public static void resetDeviceConfigForPackages(@NonNull List<String> packageNames) {
         if (packageNames == null) {
             return;
         }
@@ -359,8 +370,8 @@ public class RescueParty {
     /**
      * Get the rescue level to perform if this is the n-th attempt at mitigating failure.
      *
-     * @param mitigationCount: the mitigation attempt number (1 = first attempt etc.)
-     * @param mayPerformReboot: whether or not a reboot and factory reset may be performed
+     * @param mitigationCount the mitigation attempt number (1 = first attempt etc.)
+     * @param mayPerformReboot whether or not a reboot and factory reset may be performed
      *                          for the given failure.
      * @return the rescue level for the n-th mitigation attempt.
      */
@@ -550,7 +561,7 @@ public class RescueParty {
         final ContentResolver resolver = context.getContentResolver();
         try {
             Settings.Global.resetToDefaultsAsUser(resolver, null, mode,
-                UserHandle.SYSTEM.getIdentifier());
+                        UserHandle.SYSTEM.getIdentifier());
         } catch (Exception e) {
             res = new RuntimeException("Failed to reset global settings", e);
         }
@@ -625,6 +636,7 @@ public class RescueParty {
      * Handle mitigation action for package failures. This observer will be register to Package
      * Watchdog and will receive calls about package failures. This observer is persistent so it
      * may choose to mitigate failures for packages it has not explicitly asked to observe.
+     * @hide
      */
     public static class RescuePartyObserver implements PackageHealthObserver {
 
@@ -639,7 +651,9 @@ public class RescueParty {
             mContext = context;
         }
 
-        /** Creates or gets singleton instance of RescueParty. */
+        /** Creates or gets singleton instance of RescueParty.
+         * @hide
+         */
         public static RescuePartyObserver getInstance(Context context) {
             synchronized (RescuePartyObserver.class) {
                 if (sRescuePartyObserver == null) {
@@ -707,7 +721,7 @@ public class RescueParty {
                 if (pm.getModuleInfo(packageName, 0) != null) {
                     return true;
                 }
-            } catch (PackageManager.NameNotFoundException | IllegalStateException ignore) {
+            } catch (PackageManager.NameNotFoundException ignore) {
             }
 
             return isPersistentSystemApp(packageName);
@@ -847,7 +861,8 @@ public class RescueParty {
     private static String levelToString(int level) {
         switch (level) {
             case LEVEL_NONE: return "NONE";
-            case LEVEL_RESET_SETTINGS_UNTRUSTED_DEFAULTS: return "RESET_SETTINGS_UNTRUSTED_DEFAULTS";
+            case LEVEL_RESET_SETTINGS_UNTRUSTED_DEFAULTS:
+                return "RESET_SETTINGS_UNTRUSTED_DEFAULTS";
             case LEVEL_RESET_SETTINGS_UNTRUSTED_CHANGES: return "RESET_SETTINGS_UNTRUSTED_CHANGES";
             case LEVEL_RESET_SETTINGS_TRUSTED_DEFAULTS: return "RESET_SETTINGS_TRUSTED_DEFAULTS";
             case LEVEL_WARM_REBOOT: return "WARM_REBOOT";
