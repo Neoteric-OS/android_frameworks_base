@@ -33,6 +33,40 @@
       "message": "LGTM",
       "revId": "7d485ee5a1df9579ea6d8edf7e5944e671075b8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e337822d_a9fa84c2",
+        "filename": "services/tests/VpnTests/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-03-11T09:00:29Z",
+      "side": 1,
+      "message": "What would be needed to make this build without these defaults, and just using framework-connectivity and framework-connectivity-t in \"libs\" ? This depends on internals of the module so it may break on module update.",
+      "revId": "7d485ee5a1df9579ea6d8edf7e5944e671075b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "791979b4_1bb2e279",
+        "filename": "services/tests/VpnTests/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-03-11T09:00:29Z",
+      "side": 1,
+      "message": "The benefit of this change should be to avoid breaking the test when module code is updated. But here the test includes a copy (!) of the module code (and also a lot more stuff with services.core etc).\n\nThis will be problematic for updating the module code, since that would break this test that isn\u0027t updated together.\n\nCould you remove this dependency ? I expect some things in the test would need to be changed (for example use a mock IpSecManager instead of a mock IpSecService wrapped by IpSecManager), but otherwise we\u0027d likely get problems.",
+      "revId": "7d485ee5a1df9579ea6d8edf7e5944e671075b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
