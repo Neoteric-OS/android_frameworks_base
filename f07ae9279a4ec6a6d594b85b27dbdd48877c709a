@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55e2872a_0cfb8d31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-03-11T14:46:19Z",
+      "side": 1,
+      "message": "Hi @schfan could you help out?\nThere seems to be some other kind of warning.",
+      "revId": "f07ae9279a4ec6a6d594b85b27dbdd48877c709a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
