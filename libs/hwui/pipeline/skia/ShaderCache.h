@@ -21,6 +21,7 @@
 #include <cutils/compiler.h>
 #include <ftl/shared_mutex.h>
 #include <utils/Mutex.h>
+#include "FileBlobCache.h"
 
 #include <memory>
 #include <string>
@@ -32,7 +33,6 @@ class SkData;
 namespace android {
 
 class BlobCache;
-class FileBlobCache;
 
 namespace uirenderer {
 namespace skiapipeline {
