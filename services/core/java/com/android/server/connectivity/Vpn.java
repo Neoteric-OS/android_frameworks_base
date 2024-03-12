@@ -149,6 +149,7 @@ import com.android.net.module.util.NetdUtils;
 import com.android.net.module.util.NetworkStackConstants;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
+import com.android.server.connectivity.VpnConnectivityMetrics.VpnMetricCollector;
 import com.android.server.net.BaseNetworkObserver;
 import com.android.server.vcn.util.MtuUtils;
 import com.android.server.vcn.util.PersistableBundleUtils;
@@ -382,6 +383,8 @@ public class Vpn {
     private final UserManager mUserManager;
 
     private final VpnProfileStore mVpnProfileStore;
+    private final VpnMetricCollector mVpnMetricCollector;
+
 
     @VisibleForTesting
     VpnProfileStore getVpnProfileStore() {
@@ -596,25 +599,28 @@ public class Vpn {
     }
 
     public Vpn(Looper looper, Context context, INetworkManagementService netService, INetd netd,
-            @UserIdInt int userId, VpnProfileStore vpnProfileStore) {
+            @UserIdInt int userId, VpnProfileStore vpnProfileStore,
+            VpnMetricCollector vpnMetricCollector) {
         this(looper, context, new Dependencies(), netService, netd, userId, vpnProfileStore,
-                new SystemServices(context), new Ikev2SessionCreator());
+                vpnMetricCollector, new SystemServices(context), new Ikev2SessionCreator());
     }
 
     @VisibleForTesting
     public Vpn(Looper looper, Context context, Dependencies deps,
             INetworkManagementService netService, INetd netd, @UserIdInt int userId,
-            VpnProfileStore vpnProfileStore) {
-        this(looper, context, deps, netService, netd, userId, vpnProfileStore,
+            VpnProfileStore vpnProfileStore, VpnMetricCollector vpnMetricCollector) {
+        this(looper, context, deps, netService, netd, userId, vpnProfileStore, vpnMetricCollector,
                 new SystemServices(context), new Ikev2SessionCreator());
     }
 
     @VisibleForTesting
     protected Vpn(Looper looper, Context context, Dependencies deps,
             INetworkManagementService netService, INetd netd,
-            int userId, VpnProfileStore vpnProfileStore, SystemServices systemServices,
-            Ikev2SessionCreator ikev2SessionCreator) {
+            int userId, VpnProfileStore vpnProfileStore, VpnMetricCollector vpnMetricCollector,
+            SystemServices systemServices, Ikev2SessionCreator ikev2SessionCreator) {
         mVpnProfileStore = vpnProfileStore;
+        mVpnMetricCollector = vpnMetricCollector;
+
         mContext = context;
         mConnectivityManager = mContext.getSystemService(ConnectivityManager.class);
         mAppOpsManager = mContext.getSystemService(AppOpsManager.class);

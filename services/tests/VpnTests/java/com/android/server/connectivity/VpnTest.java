@@ -179,6 +179,7 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.IpSecService;
 import com.android.server.VpnTestBase;
+import com.android.server.connectivity.VpnConnectivityMetrics.VpnMetricCollector;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
 import org.junit.Before;
@@ -302,6 +303,7 @@ public class VpnTest extends VpnTestBase {
     @Mock private CarrierConfigManager mConfigManager;
     @Mock private SubscriptionManager mSubscriptionManager;
     @Mock private IpSecService mIpSecService;
+    @Mock private VpnMetricCollector mVpnMetricCollector;
     @Mock private VpnProfileStore mVpnProfileStore;
     private final TestExecutor mExecutor;
     @Mock DeviceIdleInternal mDeviceIdleInternal;
@@ -3240,7 +3242,8 @@ public class VpnTest extends VpnTestBase {
                 .thenReturn(asUserContext);
         final TestLooper testLooper = new TestLooper();
         final Vpn vpn = new Vpn(testLooper.getLooper(), mContext, mTestDeps, mNetService,
-                mNetd, userId, mVpnProfileStore, mSystemServices, mIkev2SessionCreator);
+                mNetd, userId, mVpnProfileStore, mVpnMetricCollector, mSystemServices,
+                mIkev2SessionCreator);
         verify(mConnectivityManager, times(1)).registerNetworkProvider(argThat(
                 provider -> provider.getName().contains("VpnNetworkProvider")
         ));

@@ -52,6 +52,7 @@ import androidx.test.filters.SmallTest;
 
 import com.android.internal.net.VpnProfile;
 import com.android.server.connectivity.Vpn;
+import com.android.server.connectivity.VpnConnectivityMetrics;
 import com.android.server.connectivity.VpnProfileStore;
 import com.android.server.net.LockdownVpnTracker;
 import com.android.testutils.HandlerUtils;
@@ -85,6 +86,7 @@ public class VpnManagerServiceTest extends VpnTestBase {
     @Mock private INetd mNetd;
     @Mock private PackageManager mPackageManager;
     @Mock private VpnProfileStore mVpnProfileStore;
+    @Mock private VpnConnectivityMetrics mVpnConnectivityMetrics;
     @Mock private LockdownVpnTracker mLockdownVpnTracker;
 
     private VpnManagerServiceDependencies mDeps;
@@ -111,13 +113,18 @@ public class VpnManagerServiceTest extends VpnTestBase {
 
         @Override
         public Vpn createVpn(Looper looper, Context context, INetworkManagementService nms,
-                INetd netd, @UserIdInt int userId) {
+                INetd netd, @UserIdInt int userId, VpnConnectivityMetrics vpnConnectivityMetrics) {
             return mVpn;
         }
 
         @Override
         public VpnProfileStore getVpnProfileStore() {
             return mVpnProfileStore;
+        }
+
+        @Override
+        public VpnConnectivityMetrics getVpnConnectivityMetrics() {
+            return mVpnConnectivityMetrics;
         }
 
         @Override

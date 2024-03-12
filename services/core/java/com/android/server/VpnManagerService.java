@@ -64,6 +64,7 @@ import com.android.internal.net.VpnProfile;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.connectivity.Vpn;
+import com.android.server.connectivity.VpnConnectivityMetrics;
 import com.android.server.connectivity.VpnProfileStore;
 import com.android.server.net.LockdownVpnTracker;
 import com.android.server.pm.UserManagerInternal;
@@ -93,6 +94,8 @@ public class VpnManagerService extends IVpnManager.Stub {
     private final INetd mNetd;
     private final UserManager mUserManager;
     private final int mMainUserId;
+    private final VpnConnectivityMetrics mVpnConnectivityMetrics;
+
 
     @VisibleForTesting
     @GuardedBy("mVpns")
@@ -125,6 +128,11 @@ public class VpnManagerService extends IVpnManager.Stub {
             return new VpnProfileStore();
         }
 
+        /** Return the VpnConnectivityMetrics to be used by this class */
+        public VpnConnectivityMetrics getVpnConnectivityMetrics() {
+            return new VpnConnectivityMetrics();
+        }
+
         public INetd getNetd() {
             return NetdService.getInstance();
         }
@@ -136,8 +144,9 @@ public class VpnManagerService extends IVpnManager.Stub {
 
         /** Create a VPN. */
         public Vpn createVpn(Looper looper, Context context, INetworkManagementService nms,
-                INetd netd, int userId) {
-            return new Vpn(looper, context, nms, netd, userId, new VpnProfileStore());
+                INetd netd, int userId, VpnConnectivityMetrics vpnConnectivityMetrics) {
+            return new Vpn(looper, context, nms, netd, userId, new VpnProfileStore(),
+                    vpnConnectivityMetrics.newCollector(userId));
         }
 
         /** Create a LockDownVpnTracker. */
@@ -160,6 +169,7 @@ public class VpnManagerService extends IVpnManager.Stub {
         mHandlerThread.start();
         mHandler = mHandlerThread.getThreadHandler();
         mVpnProfileStore = mDeps.getVpnProfileStore();
+        mVpnConnectivityMetrics = mDeps.getVpnConnectivityMetrics();
         mUserAllContext = mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */);
         mNMS = mDeps.getINetworkManagementService();
         mNetd = mDeps.getNetd();
@@ -793,7 +803,8 @@ public class VpnManagerService extends IVpnManager.Stub {
                 loge("Starting user already has a VPN");
                 return;
             }
-            userVpn = mDeps.createVpn(mHandler.getLooper(), mContext, mNMS, mNetd, userId);
+            userVpn = mDeps.createVpn(mHandler.getLooper(), mContext, mNMS, mNetd, userId,
+                    mVpnConnectivityMetrics);
             mVpns.put(userId, userVpn);
 
             if (userId == mMainUserId && isLockdownVpnEnabled()) {
