@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e363df7f_853e1d3d",
+        "filename": "services/tests/VpnTests/Android.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2024-03-12T08:56:27Z",
+      "side": 1,
+      "message": "done in aosp/2999776",
+      "parentUuid": "e337822d_a9fa84c2",
+      "revId": "7d485ee5a1df9579ea6d8edf7e5944e671075b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "791979b4_1bb2e279",
