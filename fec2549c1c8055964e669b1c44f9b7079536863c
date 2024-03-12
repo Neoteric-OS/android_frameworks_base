@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7e8161d_aada901b",
+        "filename": "apex/jobscheduler/service/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2024-03-12T17:04:03Z",
+      "side": 1,
+      "message": "This should be public by default, right?",
+      "revId": "fec2549c1c8055964e669b1c44f9b7079536863c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
