@@ -28,4 +28,5 @@ cc_library_shared {
         "liblog",
         "libbase",
     ],
+    visibility: ["//visibility:any_system_partition"],
 }
