@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a10dc5b4_05534600",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-12T19:47:13Z",
+      "side": 1,
+      "message": "Dichen, \nThe class is QpOffsetRect, so QpOffsetRect.setQpOffsetRect() is redundant.\n\nThis is consistent with the [BufferInfo#set()](https://developer.android.com/reference/android/media/MediaCodec.BufferInfo?hl\u003den#set(int,%20int,%20long,%20int)) that Wonsik referred.\n\nPlease let me know if changing the name to setQpOffsetRect() is still preferred.\nThanks.",
+      "parentUuid": "b362daf9_44e8dedc",
+      "range": {
+        "startLine": 1807,
+        "startChar": 20,
+        "endLine": 1807,
+        "endChar": 23
+      },
+      "revId": "567087a871b03ca178ee2b2b881705ef369cddd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "506078c7_437dae37",
         "filename": "media/java/android/media/MediaFormat.java",
         "patchSetId": 5
