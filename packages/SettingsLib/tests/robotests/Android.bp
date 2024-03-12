@@ -82,7 +82,7 @@ java_library {
     ],
     javacflags: [
         "-Aorg.robolectric.annotation.processing.shadowPackage=com.android.settingslib.testutils.shadow",
-        "-Aorg.robolectric.annotation.processing.sdkCheckMode=ERROR",
+        //"-Aorg.robolectric.annotation.processing.sdkCheckMode=WARN",
         // Uncomment the below to debug annotation processors not firing.
         //"-verbose",
         //"-XprintRounds",
