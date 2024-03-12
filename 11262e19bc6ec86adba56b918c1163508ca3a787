@@ -33,6 +33,24 @@
       "message": "Why making this in AOSP?",
       "revId": "11262e19bc6ec86adba56b918c1163508ca3a787",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bad4f6c3_197f9e68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1523749
+      },
+      "writtenOn": "2024-03-12T11:23:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0248dcec_41b2499e",
+      "revId": "11262e19bc6ec86adba56b918c1163508ca3a787",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
