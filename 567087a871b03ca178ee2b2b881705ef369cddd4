@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b362daf9_44e8dedc",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1807,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-03-12T19:11:19Z",
+      "side": 1,
+      "message": "I prefer this method name to be more descriptive e.g. `setQpOffsetRect()`. Other this name may be ambiguous if this refers to a collection of something.",
+      "range": {
+        "startLine": 1807,
+        "startChar": 20,
+        "endLine": 1807,
+        "endChar": 23
+      },
+      "revId": "567087a871b03ca178ee2b2b881705ef369cddd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "506078c7_437dae37",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-03-12T19:11:19Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Build Warnings: [AndroidFrameworkEfficientStrings] Simple format strings can be replaced with TextUtils.formatSimple() for a 6x performance improvement\n\nAnalyzer Description: Reports warnings that originate from build.log in the build artifacts.\nOwner: farivar@google.com\n\n    [AndroidFrameworkEfficientStrings] Simple format strings can be replaced with TextUtils.formatSimple() for a 6x performance improvement\n                return String.format(Locale.getDefault(), \"%d,%d-%d,%d\u003d%d;\", mContour.top,\n                                                          ^\n\nThis finding was found on https://android-build.googleplex.com/builds/build-details/P71385041/targets/errorprone-trunk_staging, but may also be present on other builds.\n\nThis is a different branch than your cl originated on (it was automerged), and thus might better reflect the state of the code in the git_main branch.",
+      "range": {
+        "startLine": 1818,
+        "startChar": 0,
+        "endLine": 1818,
+        "endChar": 86
+      },
+      "revId": "567087a871b03ca178ee2b2b881705ef369cddd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
