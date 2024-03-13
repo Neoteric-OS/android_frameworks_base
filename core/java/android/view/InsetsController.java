@@ -1530,6 +1530,9 @@ public class InsetsController implements WindowInsetsController, InsetsAnimation
     @VisibleForTesting
     @Override
     public void notifyFinished(InsetsAnimationControlRunner runner, boolean shown) {
+        if (runner.getTypes() == 2 && shown == true) {
+            return;
+        }
         setRequestedVisibleTypes(shown ? runner.getTypes() : 0, runner.getTypes());
         cancelAnimation(runner, false /* invokeCallback */);
         if (DEBUG) Log.d(TAG, "notifyFinished. shown: " + shown);
