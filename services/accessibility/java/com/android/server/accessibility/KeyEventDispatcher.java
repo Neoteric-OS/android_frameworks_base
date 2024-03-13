@@ -24,6 +24,7 @@ import android.util.ArrayMap;
 import android.util.Pools;
 import android.util.Pools.Pool;
 import android.util.Slog;
+import android.view.InputDevice;
 import android.view.InputEventConsistencyVerifier;
 import android.view.KeyEvent;
 
@@ -218,6 +219,16 @@ public class KeyEventDispatcher implements Handler.Callback {
         return true;
     }
 
+    /**
+     * Configures a key event for injection and sends it to the input filter.
+     *
+     * @param event The event to configure and send for injection.
+     */
+    public void injectKeyEventToInputFilter(KeyEvent event) {
+        event.setSource(InputDevice.SOURCE_KEYBOARD);
+        sendKeyEventToInputFilter(event, WindowManagerPolicy.FLAG_INJECTED);
+    }
+
     private PendingKeyEvent obtainPendingEventLocked(KeyEvent event, int policyFlags) {
         PendingKeyEvent pendingEvent = mPendingEventPool.acquire();
         if (pendingEvent == null) {
@@ -260,22 +271,31 @@ public class KeyEventDispatcher implements Handler.Callback {
         }
         mKeyEventTimeoutHandler.removeMessages(MSG_ON_KEY_EVENT_TIMEOUT, pendingEvent);
         if (!pendingEvent.handled) {
-                /* Pass event to input filter */
-            if (DEBUG) {
-                Slog.i(LOG_TAG, "Injecting event: " + pendingEvent.event);
-            }
-            if (mSentEventsVerifier != null) {
-                mSentEventsVerifier.onKeyEvent(pendingEvent.event, 0);
-            }
-            int policyFlags = pendingEvent.policyFlags | WindowManagerPolicy.FLAG_PASS_TO_USER;
-            mHandlerToSendKeyEventsToInputFilter
-                    .obtainMessage(mMessageTypeForSendKeyEvent, policyFlags, 0, pendingEvent.event)
-                    .sendToTarget();
+            sendKeyEventToInputFilter(pendingEvent.event, pendingEvent.policyFlags);
         } else {
             pendingEvent.event.recycle();
         }
         mPendingEventPool.release(pendingEvent);
         return true;
+    }
+
+    /**
+     * Pass key event to input filter.
+     *
+     * @param event The event to pass to the input filter.
+     * @param policyFlags Policy flags for the corresponding key event.
+     */
+    private void sendKeyEventToInputFilter(KeyEvent event, int policyFlags) {
+        if (DEBUG) {
+            Slog.i(LOG_TAG, "Injecting event: " + event);
+        }
+        if (mSentEventsVerifier != null) {
+            mSentEventsVerifier.onKeyEvent(event, 0);
+        }
+        mHandlerToSendKeyEventsToInputFilter
+                .obtainMessage(mMessageTypeForSendKeyEvent,
+                    policyFlags | WindowManagerPolicy.FLAG_PASS_TO_USER, 0, event)
+                .sendToTarget();
     }
 
     private static final class PendingKeyEvent {

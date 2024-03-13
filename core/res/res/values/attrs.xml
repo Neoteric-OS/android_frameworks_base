@@ -4208,6 +4208,8 @@
         <attr name="canControlMagnification" format="boolean" />
         <!-- Attribute whether the accessibility service wants to be able to perform gestures. -->
         <attr name="canPerformGestures" format="boolean" />
+        <!-- Attribute whether the accessibility service can inject key events to the system. -->
+        <attr name="canInjectKeys" format="boolean" />
         <!-- Attribute whether the accessibility service wants to be able to capture gestures from
              the fingerprint sensor.
              <p>

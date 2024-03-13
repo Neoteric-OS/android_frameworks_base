@@ -1300,6 +1300,53 @@ public abstract class AccessibilityService extends Service {
     }
 
     /**
+     * Injects a key to the device by sending down and up key events
+     * for the given key code. The key events will bypass other
+     * accessibility services and be forwarded to the rest of the
+     * system.
+     *
+     * <p>
+     * <strong>Note:</strong> In order to dispatch key events, your
+     * service must declare the capability by setting the
+     * {@link android.R.styleable#AccessibilityService_canInjectKeys}
+     * property in its meta-data. For more information, see
+     * {@link #SERVICE_META_DATA}.
+     * </p>
+     *
+     * <p>
+     * <strong>Note:</strong> It is important that the key events are
+     * handled in a way such that the event stream is consistent and
+     * well-formed. For example, if a key is injected while a key with
+     * the same key code is pressed, ensure that appropriate handling
+     * is added in {@link #onKeyEvent(KeyEvent)} to intercept the
+     * user-generated key.
+     * </p>
+     *
+     * <p>
+     * Use {@link #performGlobalAction(int)} instead of dispatching a key
+     * if your action can be performed as a global action.
+     * </p>
+     *
+     * @param keyCode The key code for the key being dispatched. See {@link KeyEvent}.
+     * @return {@code true} if the key is dispatched, {@code false} if not.
+     */
+    public final boolean dispatchKeyEvent(int keyCode) {
+        final IAccessibilityServiceConnection connection =
+                AccessibilityInteractionClient.getInstance(this).getConnection(mConnectionId);
+        if (connection == null) {
+            return false;
+        }
+        try {
+            synchronized (mLock) {
+                connection.dispatchKeyEvent(keyCode);
+            }
+        } catch (RemoteException re) {
+            throw new RuntimeException(re);
+        }
+        return true;
+    }
+
+    /**
      * Returns the sample time in millis of gesture steps for the current display.
      *
      * <p>For gestures to be smooth they should line up with the refresh rate of the display.

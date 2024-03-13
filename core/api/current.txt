@@ -548,6 +548,7 @@ package android {
     field public static final int calendarViewStyle = 16843613; // 0x101035d
     field public static final int canControlMagnification = 16844039; // 0x1010507
     field public static final int canDisplayOnRemoteDevices = 16844368; // 0x1010650
+    field public static final int canInjectKeys = 16844424; // 0x1010688
     field public static final int canPauseRecording = 16844314; // 0x101061a
     field public static final int canPerformGestures = 16844045; // 0x101050d
     field public static final int canRecord = 16844060; // 0x101051c
@@ -3299,6 +3300,7 @@ package android.accessibilityservice {
     method public boolean clearCachedSubtree(@NonNull android.view.accessibility.AccessibilityNodeInfo);
     method public final void disableSelf();
     method public final boolean dispatchGesture(@NonNull android.accessibilityservice.GestureDescription, @Nullable android.accessibilityservice.AccessibilityService.GestureResultCallback, @Nullable android.os.Handler);
+    method public final boolean dispatchKeyEvent(int);
     method public android.view.accessibility.AccessibilityNodeInfo findFocus(int);
     method @NonNull public final android.accessibilityservice.AccessibilityButtonController getAccessibilityButtonController();
     method @NonNull public final android.accessibilityservice.AccessibilityButtonController getAccessibilityButtonController(int);
@@ -3497,6 +3499,7 @@ package android.accessibilityservice {
     method public void setNonInteractiveUiTimeoutMillis(@IntRange(from=0) int);
     method public void writeToParcel(android.os.Parcel, int);
     field public static final int CAPABILITY_CAN_CONTROL_MAGNIFICATION = 16; // 0x10
+    field public static final int CAPABILITY_CAN_INJECT_KEYS = 256; // 0x100
     field public static final int CAPABILITY_CAN_PERFORM_GESTURES = 32; // 0x20
     field @Deprecated public static final int CAPABILITY_CAN_REQUEST_ENHANCED_WEB_ACCESSIBILITY = 4; // 0x4
     field public static final int CAPABILITY_CAN_REQUEST_FILTER_KEY_EVENTS = 8; // 0x8

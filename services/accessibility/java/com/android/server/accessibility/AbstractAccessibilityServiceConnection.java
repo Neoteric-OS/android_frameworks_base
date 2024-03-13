@@ -1042,6 +1042,13 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
     }
 
     @Override
+    public void dispatchKeyEvent(int keyCode) {
+        if (svcConnTracingEnabled()) {
+            logTraceSvcConn("dispatchKeyEvent", "keyCode=" + keyCode);
+        }
+    }
+
+    @Override
     public boolean performAccessibilityAction(int accessibilityWindowId,
             long accessibilityNodeId, int action, Bundle arguments, int interactionId,
             IAccessibilityInteractionConnectionCallback callback, long interrogatingTid)

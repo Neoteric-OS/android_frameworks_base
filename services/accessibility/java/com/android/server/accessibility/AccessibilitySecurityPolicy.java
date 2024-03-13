@@ -396,6 +396,18 @@ public class AccessibilitySecurityPolicy {
     }
 
     /**
+     * Check if a service can inject key events.
+     *
+     * @param service The service requesting access
+     *
+     * @return Whether or not the service may inject key events
+     */
+    public boolean canInjectKeys(@NonNull AccessibilityServiceConnection service) {
+        return (service.getCapabilities()
+                & AccessibilityServiceInfo.CAPABILITY_CAN_INJECT_KEYS) != 0;
+    }
+
+    /**
      * Check whether the input method can be enabled or disabled by the accessibility service.
      *
      * @param imeId The id of the input method.

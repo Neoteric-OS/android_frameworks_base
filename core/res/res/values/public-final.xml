@@ -3741,4 +3741,18 @@
     <!-- @hide @SystemApi -->
   <public type="bool" name="config_enableDefaultNotesForWorkProfile" id="0x0111000b" />
 
+  <!-- ===============================================================
+    Resources added in version V of the platform
+
+    NOTE: After this version of the platform is forked, changes cannot be made to the root
+    branch's groups for that release. Only merge changes to the forked platform branch.
+    =============================================================== -->
+  <eat-comment/>
+
+  <staging-public-group-final type="attr" first-id="0x01bd0000">
+    <public name="canInjectKeys" />
+  </staging-public-group-final>
+
+  <public type="attr" name="canInjectKeys" id="0x01010688" />
+
 </resources>

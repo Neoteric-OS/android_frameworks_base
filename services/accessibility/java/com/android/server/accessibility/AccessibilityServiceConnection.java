@@ -41,11 +41,13 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Slog;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import com.android.internal.inputmethod.IAccessibilityInputMethodSession;
@@ -538,6 +540,22 @@ class AccessibilityServiceConnection extends AbstractAccessibilityServiceConnect
                     Binder.restoreCallingIdentity(identity);
                 }
 
+            }
+        }
+    }
+
+    @Override
+    public void dispatchKeyEvent(int keyCode) {
+        synchronized (mLock) {
+            if (mSecurityPolicy.canInjectKeys(this)) {
+                KeyEventDispatcher keyEventDispatcher = mSystemSupport.getKeyEventDispatcher();
+                if (keyEventDispatcher != null) {
+                    long currentTime = SystemClock.uptimeMillis();
+                    keyEventDispatcher.injectKeyEventToInputFilter(
+                        new KeyEvent(currentTime, currentTime, KeyEvent.ACTION_DOWN, keyCode, 0));
+                    keyEventDispatcher.injectKeyEventToInputFilter(
+                        new KeyEvent(currentTime, currentTime, KeyEvent.ACTION_UP, keyCode, 0));
+                }
             }
         }
     }

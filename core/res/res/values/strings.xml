@@ -987,6 +987,11 @@
     <!-- Description for the capability of an accessibility service to take screenshot. [CHAR LIMIT=NONE] -->
     <string name="capability_desc_canTakeScreenshot">Can take a screenshot of the display.</string>
 
+    <!-- Title for the capability of an accessibility service to inject key events. -->
+    <string name="capability_title_canInjectKeys">Inject key events</string>
+    <!-- Description for the capability of an accessibility service to inject key events. -->
+    <string name="capability_desc_canInjectKeys">Can send key events to the device.</string>
+
     <!-- Dream -->
 
     <!-- The title to use when a dream is opened in preview mode. [CHAR LIMIT=NONE] -->

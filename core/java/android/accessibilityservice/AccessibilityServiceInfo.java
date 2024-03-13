@@ -154,6 +154,12 @@ public class AccessibilityServiceInfo implements Parcelable {
      */
     public static final int CAPABILITY_CAN_TAKE_SCREENSHOT = 1 << 7;
 
+    /**
+     * Capability: This accessibility service can inject key events.
+     * @see android.R.styleable#AccessibilityService_canInjectKeys
+     */
+    public static final int CAPABILITY_CAN_INJECT_KEYS = 0x00000100;
+
     private static SparseArray<CapabilityInfo> sAvailableCapabilityInfos;
 
     /**
@@ -748,6 +754,10 @@ public class AccessibilityServiceInfo implements Parcelable {
                     .AccessibilityService_canTakeScreenshot, false)) {
                 mCapabilities |= CAPABILITY_CAN_TAKE_SCREENSHOT;
             }
+            if (asAttributes.getBoolean(com.android.internal.R.styleable
+                    .AccessibilityService_canInjectKeys, false)) {
+                mCapabilities |= CAPABILITY_CAN_INJECT_KEYS;
+            }
             TypedValue peekedValue = asAttributes.peekValue(
                     com.android.internal.R.styleable.AccessibilityService_description);
             if (peekedValue != null) {
@@ -970,6 +980,7 @@ public class AccessibilityServiceInfo implements Parcelable {
      * @see #CAPABILITY_CAN_CONTROL_MAGNIFICATION
      * @see #CAPABILITY_CAN_PERFORM_GESTURES
      * @see #CAPABILITY_CAN_TAKE_SCREENSHOT
+     * @see #CAPABILITY_CAN_INJECT_KEYS
      */
     public int getCapabilities() {
         return mCapabilities;
@@ -987,6 +998,7 @@ public class AccessibilityServiceInfo implements Parcelable {
      * @see #CAPABILITY_CAN_CONTROL_MAGNIFICATION
      * @see #CAPABILITY_CAN_PERFORM_GESTURES
      * @see #CAPABILITY_CAN_TAKE_SCREENSHOT
+     * @see #CAPABILITY_CAN_INJECT_KEYS
      *
      * @hide
      */
@@ -1615,6 +1627,8 @@ public class AccessibilityServiceInfo implements Parcelable {
                 return "CAPABILITY_CAN_REQUEST_FINGERPRINT_GESTURES";
             case CAPABILITY_CAN_TAKE_SCREENSHOT:
                 return "CAPABILITY_CAN_TAKE_SCREENSHOT";
+            case CAPABILITY_CAN_INJECT_KEYS:
+                return "CAPABILITY_CAN_INJECT_KEYS";
             default:
                 return "UNKNOWN";
         }
@@ -1680,6 +1694,10 @@ public class AccessibilityServiceInfo implements Parcelable {
                     new CapabilityInfo(CAPABILITY_CAN_TAKE_SCREENSHOT,
                             R.string.capability_title_canTakeScreenshot,
                             R.string.capability_desc_canTakeScreenshot));
+            sAvailableCapabilityInfos.put(CAPABILITY_CAN_INJECT_KEYS,
+                    new CapabilityInfo(CAPABILITY_CAN_INJECT_KEYS,
+                            R.string.capability_title_canInjectKeys,
+                            R.string.capability_desc_canInjectKeys));
             if ((context == null) || fingerprintAvailable(context)) {
                 sAvailableCapabilityInfos.put(CAPABILITY_CAN_REQUEST_FINGERPRINT_GESTURES,
                         new CapabilityInfo(CAPABILITY_CAN_REQUEST_FINGERPRINT_GESTURES,
