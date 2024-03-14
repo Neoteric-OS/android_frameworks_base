@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f240ed6_ccaa70ef",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1781,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-03-14T20:21:35Z",
+      "side": 1,
+      "message": "please spell out the acronym",
+      "range": {
+        "startLine": 1781,
+        "startChar": 11,
+        "endLine": 1781,
+        "endChar": 15
+      },
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a863a2e_202db79a",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-03-14T20:21:35Z",
+      "side": 1,
+      "message": "Are the right \u0026 bottom exclusive or inclusive? Rect documentation says they are exclusive, but PARAMETER_KEY_QP_OFFSET_RECTS is not clear on that. It\u0027d be nice that this is clarified as well.",
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1426af13_6c75d625",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-03-14T20:21:35Z",
+      "side": 1,
+      "message": "nit: PARAMETER_KEY_QP_OFFSET_RECTS",
+      "range": {
+        "startLine": 1814,
+        "startChar": 49,
+        "endLine": 1814,
+        "endChar": 68
+      },
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be176917_04812486",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-03-14T20:21:35Z",
+      "side": 1,
+      "message": "nit: PARAMETER_KEY_QP_OFFSET_RECTS",
+      "range": {
+        "startLine": 1824,
+        "startChar": 49,
+        "endLine": 1824,
+        "endChar": 68
+      },
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
