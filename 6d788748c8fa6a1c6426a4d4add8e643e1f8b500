@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8e903a1_79e1b803",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1782,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-03-14T21:06:05Z",
+      "side": 1,
+      "message": "better to spell out \"largest coding unit (LCU)\"",
+      "range": {
+        "startLine": 1782,
+        "startChar": 14,
+        "endLine": 1782,
+        "endChar": 20
+      },
+      "revId": "6d788748c8fa6a1c6426a4d4add8e643e1f8b500",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec7254bd_73a9f8aa",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-03-14T21:06:05Z",
+      "side": 1,
+      "message": "I saw the doc update about being exclusive for the class, but I think it\u0027s better to also mention it here.",
+      "range": {
+        "startLine": 1791,
+        "startChar": 71,
+        "endLine": 1792,
+        "endChar": 37
+      },
+      "revId": "6d788748c8fa6a1c6426a4d4add8e643e1f8b500",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
