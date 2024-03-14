@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e012be70_4a5a68a1",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1781,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-14T20:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f240ed6_ccaa70ef",
+      "range": {
+        "startLine": 1781,
+        "startChar": 11,
+        "endLine": 1781,
+        "endChar": 15
+      },
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a863a2e_202db79a",
@@ -59,6 +83,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35079c34_7212f735",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-14T20:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1386142_cb6111d2",
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1426af13_6c75d625",
@@ -82,6 +124,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5face32_43c22cf3",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-14T20:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1426af13_6c75d625",
+      "range": {
+        "startLine": 1814,
+        "startChar": 49,
+        "endLine": 1814,
+        "endChar": 68
+      },
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be176917_04812486",
@@ -95,6 +161,30 @@
       "writtenOn": "2024-03-14T20:21:35Z",
       "side": 1,
       "message": "nit: PARAMETER_KEY_QP_OFFSET_RECTS",
+      "range": {
+        "startLine": 1824,
+        "startChar": 49,
+        "endLine": 1824,
+        "endChar": 68
+      },
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecadba18_fb531409",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-14T20:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be176917_04812486",
       "range": {
         "startLine": 1824,
         "startChar": 49,
