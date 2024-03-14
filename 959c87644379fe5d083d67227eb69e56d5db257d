@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b9c9031_2a5d7742",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-03-14T09:25:45Z",
+      "side": 1,
+      "message": "Hi,\n\nThis change is about preventing users to work around the forced camera shutter sound by taking a screenshot of the camera viewfinder.",
+      "revId": "959c87644379fe5d083d67227eb69e56d5db257d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
