@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "414d096d_0fe67af3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2024-03-14T18:11:39Z",
+      "side": 1,
+      "message": "+re\u003d insets owners, others should be removed. Do not spam reviewers.",
+      "revId": "16153183a802d7591d5b0094739c10cbcc21f216",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
