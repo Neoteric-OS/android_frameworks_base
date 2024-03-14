@@ -43,6 +43,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1386142_cb6111d2",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1392607
+      },
+      "writtenOn": "2024-03-14T20:54:26Z",
+      "side": 1,
+      "message": "We have defined in `PARAMETER_KEY_QP_OFFSET_RECTS` the the value represents the \"top, left corner of the pixel\", so it is exclusive. Yes it\u0027s better we add that in the document here.",
+      "parentUuid": "3a863a2e_202db79a",
+      "revId": "baa9d4008ad6a0f91fe2a4b17aaae9dee0a92762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1426af13_6c75d625",
         "filename": "media/java/android/media/MediaFormat.java",
         "patchSetId": 6
