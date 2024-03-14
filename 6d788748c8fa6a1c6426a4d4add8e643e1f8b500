@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "591a7133_096e7ff3",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1782,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-14T21:09:34Z",
+      "side": 1,
+      "message": "largest codec unit is HEVC terminology. Hence changed it to a generic blocks.\nPlease let me know if largest coding unit is still preferred.",
+      "parentUuid": "f8e903a1_79e1b803",
+      "range": {
+        "startLine": 1782,
+        "startChar": 14,
+        "endLine": 1782,
+        "endChar": 20
+      },
+      "revId": "6d788748c8fa6a1c6426a4d4add8e643e1f8b500",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ec7254bd_73a9f8aa",
         "filename": "media/java/android/media/MediaFormat.java",
         "patchSetId": 7
@@ -37,6 +61,30 @@
       "writtenOn": "2024-03-14T21:06:05Z",
       "side": 1,
       "message": "I saw the doc update about being exclusive for the class, but I think it\u0027s better to also mention it here.",
+      "range": {
+        "startLine": 1791,
+        "startChar": 71,
+        "endLine": 1792,
+        "endChar": 37
+      },
+      "revId": "6d788748c8fa6a1c6426a4d4add8e643e1f8b500",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43dc7987_6882b32a",
+        "filename": "media/java/android/media/MediaFormat.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-14T21:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec7254bd_73a9f8aa",
       "range": {
         "startLine": 1791,
         "startChar": 71,
