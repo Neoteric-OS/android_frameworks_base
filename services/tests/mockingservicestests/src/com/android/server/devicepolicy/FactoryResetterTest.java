@@ -119,7 +119,7 @@ public final class FactoryResetterTest {
         assertThrows(SecurityException.class,
                 () -> FactoryResetter.newBuilder(mContext).build().factoryReset());
 
-        verifyWipeAdoptableStorageNotCalled();
+        verifyWipeExternalStorageNotCalled();
         verifyWipeFactoryResetProtectionNotCalled();
         verifyRebootWipeUserDataNotCalled();
     }
@@ -131,7 +131,7 @@ public final class FactoryResetterTest {
         assertThrows(SecurityException.class,
                 () -> FactoryResetter.newBuilder(mContext).build().factoryReset());
 
-        verifyWipeAdoptableStorageNotCalled();
+        verifyWipeExternalStorageNotCalled();
         verifyWipeFactoryResetProtectionNotCalled();
         verifyRebootWipeUserDataNotCalled();
     }
@@ -142,7 +142,7 @@ public final class FactoryResetterTest {
 
         FactoryResetter.newBuilder(mContext).build().factoryReset();
 
-        verifyWipeAdoptableStorageNotCalled();
+        verifyWipeExternalStorageNotCalled();
         verifyWipeFactoryResetProtectionNotCalled();
         verifyRebootWipeUserDataMinimumArgsCalled();
     }
@@ -153,7 +153,7 @@ public final class FactoryResetterTest {
 
         FactoryResetter.newBuilder(mContext).setForce(true).build().factoryReset();
 
-        verifyWipeAdoptableStorageNotCalled();
+        verifyWipeExternalStorageNotCalled();
         verifyWipeFactoryResetProtectionNotCalled();
         verifyRebootWipeUserDataMinimumArgsButForceCalled();
     }
@@ -163,7 +163,7 @@ public final class FactoryResetterTest {
         allowFactoryReset();
 
         boolean success = FactoryResetter.newBuilder(mContext)
-                .setWipeAdoptableStorage(true).build()
+                .setWipeExternalStorage(true).build()
                 .factoryReset();
 
         assertThat(success).isTrue();
@@ -183,7 +183,7 @@ public final class FactoryResetterTest {
 
         assertThat(success).isTrue();
         assertThat(isFactoryResetting()).isTrue();
-        verifyWipeAdoptableStorageNotCalled();
+        verifyWipeExternalStorageNotCalled();
         verifyWipeFactoryResetProtectionCalled();
         verifyRebootWipeUserDataMinimumArgsCalled();
     }
@@ -197,7 +197,7 @@ public final class FactoryResetterTest {
                 .setForce(true)
                 .setShutdown(true)
                 .setWipeEuicc(true)
-                .setWipeAdoptableStorage(true)
+                .setWipeExternalStorage(true)
                 .setWipeFactoryResetProtection(true)
                 .build().factoryReset();
 
@@ -217,7 +217,7 @@ public final class FactoryResetterTest {
 
         assertThat(success).isFalse();
         assertThat(isFactoryResetting()).isTrue();
-        verifyWipeAdoptableStorageNotCalled();
+        verifyWipeExternalStorageNotCalled();
         verifyWipeFactoryResetProtectionNotCalled();
         verifyRebootWipeUserDataNotCalled();
     }
@@ -239,7 +239,7 @@ public final class FactoryResetterTest {
                 .setForce(true)
                 .setShutdown(true)
                 .setWipeEuicc(true)
-                .setWipeAdoptableStorage(true)
+                .setWipeExternalStorage(true)
                 .setWipeFactoryResetProtection(true)
                 .build().factoryReset();
 
@@ -286,12 +286,12 @@ public final class FactoryResetterTest {
                 /* keepMemtagMode= */ false));
     }
 
-    private void verifyWipeAdoptableStorageNotCalled() {
-        verify(mSm, never()).wipeAdoptableDisks();
+    private void verifyWipeExternalStorageNotCalled() {
+        verify(mSm, never()).wipeExternalDisks();
     }
 
     private void verifyWipeAdoptableStorageCalled() {
-        verify(mSm).wipeAdoptableDisks();
+        verify(mSm).wipeExternalDisks();
     }
 
     private void verifyWipeFactoryResetProtectionNotCalled() {

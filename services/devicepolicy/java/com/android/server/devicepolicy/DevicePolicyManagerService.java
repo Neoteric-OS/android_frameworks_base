@@ -1854,7 +1854,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                         throws IOException {
             return FactoryResetter.newBuilder(mContext).setSafetyChecker(mSafetyChecker)
                     .setReason(reason).setShutdown(shutdown).setForce(force).setWipeEuicc(wipeEuicc)
-                    .setWipeAdoptableStorage(wipeExtRequested)
+                    .setWipeExternalStorage(wipeExtRequested)
                     .setWipeFactoryResetProtection(wipeResetProtectionData)
                     .build().factoryReset();
         }
@@ -7462,7 +7462,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     .setReason(policy.mFactoryResetReason).setForce(true)
                     .setWipeEuicc((policy.mFactoryResetFlags & DevicePolicyData
                             .FACTORY_RESET_FLAG_WIPE_EUICC) != 0)
-                    .setWipeAdoptableStorage((policy.mFactoryResetFlags & DevicePolicyData
+                    .setWipeExternalStorage((policy.mFactoryResetFlags & DevicePolicyData
                             .FACTORY_RESET_FLAG_WIPE_EXTERNAL_STORAGE) != 0)
                     .setWipeFactoryResetProtection((policy.mFactoryResetFlags & DevicePolicyData
                             .FACTORY_RESET_FLAG_WIPE_FACTORY_RESET_PROTECTION) != 0)

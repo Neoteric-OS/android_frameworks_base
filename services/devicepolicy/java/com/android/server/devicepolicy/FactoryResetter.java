@@ -52,7 +52,7 @@ public final class FactoryResetter {
     private final boolean mShutdown;
     private final boolean mForce;
     private final boolean mWipeEuicc;
-    private final boolean mWipeAdoptableStorage;
+    private final boolean mWipeExternalStorage;
     private final boolean mWipeFactoryResetProtection;
 
     /**
@@ -109,8 +109,8 @@ public final class FactoryResetter {
         if (mWipeEuicc) {
             builder.append(",wipeEuicc");
         }
-        if (mWipeAdoptableStorage) {
-            builder.append(",wipeAdoptableStorage");
+        if (mWipeExternalStorage) {
+            builder.append(",wipeExternalStorage");
         }
         if (mWipeFactoryResetProtection) {
             builder.append(",ipeFactoryResetProtection");
@@ -120,8 +120,8 @@ public final class FactoryResetter {
 
     private void factoryResetInternalUnchecked() throws IOException {
         Slogf.i(TAG, "factoryReset(): reason=%s, shutdown=%b, force=%b, wipeEuicc=%b, "
-                + "wipeAdoptableStorage=%b, wipeFRP=%b", mReason, mShutdown, mForce, mWipeEuicc,
-                mWipeAdoptableStorage, mWipeFactoryResetProtection);
+                + "wipeExternalStorage=%b, wipeFRP=%b", mReason, mShutdown, mForce, mWipeEuicc,
+                mWipeExternalStorage, mWipeFactoryResetProtection);
 
         UserManager um = mContext.getSystemService(UserManager.class);
         if (!mForce && um.hasUserRestriction(UserManager.DISALLOW_FACTORY_RESET)) {
@@ -139,10 +139,10 @@ public final class FactoryResetter {
             }
         }
 
-        if (mWipeAdoptableStorage) {
-            Slogf.w(TAG, "Wiping adoptable storage");
+        if (mWipeExternalStorage) {
+            Slogf.w(TAG, "Wiping external storage");
             StorageManager sm = mContext.getSystemService(StorageManager.class);
-            sm.wipeAdoptableDisks();
+            sm.wipeExternalDisks();
         }
 
         RecoverySystem.rebootWipeUserData(mContext, mShutdown, mReason, mForce, mWipeEuicc);
@@ -155,7 +155,7 @@ public final class FactoryResetter {
         mShutdown = builder.mShutdown;
         mForce = builder.mForce;
         mWipeEuicc = builder.mWipeEuicc;
-        mWipeAdoptableStorage = builder.mWipeAdoptableStorage;
+        mWipeExternalStorage = builder.mWipeExternalStorage;
         mWipeFactoryResetProtection = builder.mWipeFactoryResetProtection;
     }
 
@@ -177,7 +177,7 @@ public final class FactoryResetter {
         private boolean mShutdown;
         private boolean mForce;
         private boolean mWipeEuicc;
-        private boolean mWipeAdoptableStorage;
+        private boolean mWipeExternalStorage;
         private boolean mWipeFactoryResetProtection;
 
         private Builder(Context context) {
@@ -228,10 +228,10 @@ public final class FactoryResetter {
         }
 
         /**
-         * Sets whether to wipe the adoptable external storage (if any).
+         * Sets whether to wipe the external storage (if any).
          */
-        public Builder setWipeAdoptableStorage(boolean value) {
-            mWipeAdoptableStorage = value;
+        public Builder setWipeExternalStorage(boolean value) {
+            mWipeExternalStorage = value;
             return this;
         }
 

@@ -1109,22 +1109,15 @@ public class StorageManager {
         // long-term stable slot/location on the device, where apps have a
         // reasonable chance of storing sensitive data. (Apps need to go through
         // SAF to write to transient volumes.)
-        final List<DiskInfo> disks = getDisks();
-        for (DiskInfo disk : disks) {
-            final String diskId = disk.getId();
-            if (disk.isAdoptable()) {
-                Slog.d(TAG, "Found adoptable " + diskId + "; wiping");
-                try {
-                    // TODO: switch to explicit wipe command when we have it,
-                    // for now rely on the fact that vfat format does a wipe
-                    mStorageManager.partitionPublic(diskId);
-                } catch (Exception e) {
-                    Slog.w(TAG, "Failed to wipe " + diskId + ", but soldiering onward", e);
-                }
-            } else {
-                Slog.d(TAG, "Ignorning non-adoptable disk " + disk.getId());
-            }
-        }
+        wipeExternalDisks(false /* wipeSdcard */);
+    }
+
+    /** {@hide} */
+    public void wipeExternalDisks() {
+        // Wipe adoptable and external sdcard disks. The documentation
+        // states that external sdcard disks are wiped at
+        // DevicePolicyManager#WIPE_EXTERNAL_STORAGE
+        wipeExternalDisks(true /* wipeSdcard */);
     }
 
     /** {@hide} */
@@ -1926,6 +1919,25 @@ public class StorageManager {
         // If app doesn't have MANAGE_EXTERNAL_STORAGE, then check if it has requested granular
         // permission.
         return checkPermissionAndAppOp(enforce, pid, uid, packageName, featureId, permission, op);
+    }
+
+    private void wipeExternalDisks(boolean wipeSdcard) {
+        final List<DiskInfo> disks = getDisks();
+        for (DiskInfo disk : disks) {
+            final String diskId = disk.getId();
+            if (disk.isAdoptable() || (wipeSdcard && disk.isSd())) {
+                Slog.d(TAG, "Found adoptable or sdcard " + diskId + "; wiping");
+                try {
+                    // TODO: switch to explicit wipe command when we have it,
+                    // for now rely on the fact that vfat format does a wipe
+                    mStorageManager.partitionPublic(diskId);
+                } catch (Exception e) {
+                    Slog.w(TAG, "Failed to wipe " + diskId + ", but soldiering onward", e);
+                }
+            } else {
+                Slog.d(TAG, "Ignorning disk that shouldn't be wiped " + disk.getId());
+            }
+        }
     }
 
     /** {@hide} */

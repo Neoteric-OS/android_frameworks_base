@@ -6555,7 +6555,7 @@ public class DevicePolicyManagerTest extends DpmTestBase {
     private void verifyRebootWipeUserData(boolean wipeEuicc) throws Exception {
         verify(getServices().recoverySystem).rebootWipeUserData(/*shutdown=*/ eq(false),
                 /* reason= */ anyString(), /*force=*/ eq(true), eq(wipeEuicc),
-                /* wipeAdoptableStorage= */ eq(false), /* wipeFactoryResetProtection= */ eq(false));
+                /* wipeExternalStorage= */ eq(false), /* wipeFactoryResetProtection= */ eq(false));
     }
 
     private void assertAttestationFlags(int attestationFlags, int[] expectedFlags) {
