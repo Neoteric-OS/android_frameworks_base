@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f71fa71_516260ce",
+        "filename": "core/jni/android_database_SQLiteConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1001100
+      },
+      "writtenOn": "2024-03-15T18:11:57Z",
+      "side": 1,
+      "message": "With a unique_ptr, you can simply write \"if (!mappedFile)\".\nhttps://en.cppreference.com/w/cpp/memory/unique_ptr/operator_bool",
+      "revId": "9fcea03531699b3d7d8488864b63d18e268feed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2f34b90_42f1ed35",
+        "filename": "libs/androidfw/CursorWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001100
+      },
+      "writtenOn": "2024-03-15T18:11:57Z",
+      "side": 1,
+      "message": "if (!mappedFile)\n\nSame below at #176.",
+      "revId": "9fcea03531699b3d7d8488864b63d18e268feed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
