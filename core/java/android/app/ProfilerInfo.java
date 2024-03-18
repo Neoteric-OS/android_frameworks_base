@@ -32,7 +32,8 @@ import java.util.Objects;
  * {@hide}
  */
 public class ProfilerInfo implements Parcelable {
-
+    // Version of the profiler output
+    public static final int OUTPUT_VERSION_DEFAULT = 1;
     // CLOCK_TYPE_DEFAULT chooses the default used by ART. ART uses CLOCK_TYPE_DUAL by default (see
     // kDefaultTraceClockSource in art/runtime/runtime_globals.h).
     public static final int CLOCK_TYPE_DEFAULT = 0x000;
@@ -83,8 +84,14 @@ public class ProfilerInfo implements Parcelable {
      */
     public final int clockType;
 
+    /**
+     * Indicates the version of profiler output.
+     */
+    public final int profilerOutputVersion;
+
     public ProfilerInfo(String filename, ParcelFileDescriptor fd, int interval, boolean autoStop,
-            boolean streaming, String agent, boolean attachAgentDuringBind, int clockType) {
+            boolean streaming, String agent, boolean attachAgentDuringBind, int clockType,
+            int profilerOutputVersion) {
         profileFile = filename;
         profileFd = fd;
         samplingInterval = interval;
@@ -93,6 +100,7 @@ public class ProfilerInfo implements Parcelable {
         this.clockType = clockType;
         this.agent = agent;
         this.attachAgentDuringBind = attachAgentDuringBind;
+        this.profilerOutputVersion = profilerOutputVersion;
     }
 
     public ProfilerInfo(ProfilerInfo in) {
@@ -104,6 +112,7 @@ public class ProfilerInfo implements Parcelable {
         agent = in.agent;
         attachAgentDuringBind = in.attachAgentDuringBind;
         clockType = in.clockType;
+        profilerOutputVersion = in.profilerOutputVersion;
     }
 
     /**
@@ -125,13 +134,28 @@ public class ProfilerInfo implements Parcelable {
     }
 
     /**
+     * Get the flags that need to be passed to VMDebug.startMethodTracing to specify the desired
+     * output format.
+     */
+    public static int getFlagsForOutputVersion(int version) {
+        if (version == 1) {
+            return 0;
+        } else if (version == 2) {
+            // The second bit specifies which output version to use.
+            return 1 << 1;
+        }
+        // Unknown version, so just use the default.
+        return 0;
+    }
+
+    /**
      * Return a new ProfilerInfo instance, with fields populated from this object,
      * and {@link agent} and {@link attachAgentDuringBind} as given.
      */
     public ProfilerInfo setAgent(String agent, boolean attachAgentDuringBind) {
         return new ProfilerInfo(this.profileFile, this.profileFd, this.samplingInterval,
                 this.autoStopProfiler, this.streamingOutput, agent, attachAgentDuringBind,
-                this.clockType);
+                this.clockType, this.profilerOutputVersion);
     }
 
     /**
@@ -172,6 +196,7 @@ public class ProfilerInfo implements Parcelable {
         out.writeString(agent);
         out.writeBoolean(attachAgentDuringBind);
         out.writeInt(clockType);
+        out.writeInt(profilerOutputVersion);
     }
 
     /** @hide */
@@ -186,6 +211,7 @@ public class ProfilerInfo implements Parcelable {
         proto.write(ProfilerInfoProto.STREAMING_OUTPUT, streamingOutput);
         proto.write(ProfilerInfoProto.AGENT, agent);
         proto.write(ProfilerInfoProto.CLOCK_TYPE, clockType);
+        proto.write(ProfilerInfoProto.PROFILER_OUTPUT_VERSION, profilerOutputVersion);
         proto.end(token);
     }
 
@@ -211,6 +237,7 @@ public class ProfilerInfo implements Parcelable {
         agent = in.readString();
         attachAgentDuringBind = in.readBoolean();
         clockType = in.readInt();
+        profilerOutputVersion = in.readInt();
     }
 
     @Override
@@ -226,9 +253,9 @@ public class ProfilerInfo implements Parcelable {
         return Objects.equals(profileFile, other.profileFile)
                 && autoStopProfiler == other.autoStopProfiler
                 && samplingInterval == other.samplingInterval
-                && streamingOutput == other.streamingOutput
-                && Objects.equals(agent, other.agent)
-                && clockType == other.clockType;
+                && streamingOutput == other.streamingOutput && Objects.equals(agent, other.agent)
+                && clockType == other.clockType
+                && profilerOutputVersion == other.profilerOutputVersion;
     }
 
     @Override
@@ -240,6 +267,7 @@ public class ProfilerInfo implements Parcelable {
         result = 31 * result + (streamingOutput ? 1 : 0);
         result = 31 * result + Objects.hashCode(agent);
         result = 31 * result + clockType;
+        result = 31 * result + profilerOutputVersion;
         return result;
     }
 }
