@@ -3191,8 +3191,8 @@ public final class SurfaceControl implements Parcelable {
         @UnsupportedAppUsage
         public Transaction setMatrix(SurfaceControl sc, Matrix matrix, float[] float9) {
             matrix.getValues(float9);
-            setMatrix(sc, float9[MSCALE_X], float9[MSKEW_Y],
-                    float9[MSKEW_X], float9[MSCALE_Y]);
+            setMatrix(sc, float9[MSCALE_X], float9[MSKEW_X],
+                    float9[MSKEW_Y], float9[MSCALE_Y]);
             setPosition(sc, float9[MTRANS_X], float9[MTRANS_Y]);
             return this;
         }
