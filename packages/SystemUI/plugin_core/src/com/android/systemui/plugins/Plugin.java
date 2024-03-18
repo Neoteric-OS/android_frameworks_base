@@ -40,7 +40,7 @@ import android.content.Context;
  *     this plugin and drop all references to it.
  *
  * plugin.onDestroy();
- * --- Finally the plugin can perform any cleanup to ensure that its not
+ * --- Finally the plugin can perform any cleanup to ensure that it's not
  *     leaking into the SysUI process.
  *
  * Any time a plugin APK is updated the plugin is destroyed and recreated
