@@ -183,7 +183,7 @@ public class BitmapFactory {
 
         /**
          * If true (which is the default), the resulting bitmap will have its
-         * color channels pre-multipled by the alpha channel.
+         * color channels pre-multiplied by the alpha channel.
          *
          * <p>This should NOT be set to false for images to be directly drawn by
          * the view system or through a {@link Canvas}. The view system and
