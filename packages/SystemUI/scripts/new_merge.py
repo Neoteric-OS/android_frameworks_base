@@ -52,7 +52,8 @@ if len(DIFF_TOOL) == 0:
 
 print "Using differ", DIFF_TOOL
 
-#Anything file which contains any string in this list as a substring will be ommitted
+# Anything file which contains any string in this list as a substring will be
+# omitted
 IGNORE=["LockHotnessActivity.java", "unified_lock_activity.xml", "optionmenu.xml"]
 WATCH=[]
 
