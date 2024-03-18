@@ -41,6 +41,7 @@ import android.graphics.Insets;
 import android.graphics.Rect;
 import android.os.Trace;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.WindowInsets;
 import android.view.WindowInsetsAnimationControlListener;
 import android.view.WindowInsetsAnimationController;
@@ -81,6 +82,15 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
 
     public KeyguardPasswordView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void wipePassword() {
+        mPasswordEntry.wipe();
+    }
+
+    @Override
+    public void finalize() {
+        wipePassword();
     }
 
     /**
