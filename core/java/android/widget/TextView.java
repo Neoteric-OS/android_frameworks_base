@@ -42,6 +42,7 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.Px;
 import android.annotation.RequiresPermission;
 import android.annotation.Size;
@@ -233,6 +234,7 @@ import android.view.translation.UiTranslationController;
 import android.view.translation.ViewTranslationCallback;
 import android.view.translation.ViewTranslationRequest;
 import android.widget.RemoteViews.RemoteView;
+import android.widget.TextView.SavedState;
 
 import com.android.internal.accessibility.util.AccessibilityUtils;
 import com.android.internal.annotations.VisibleForTesting;
@@ -16208,5 +16210,18 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             }
         }
         requestsCollector.accept(requestBuilder.build());
+    }
+
+    @Override
+    public void finalize() {
+        wipe();
+    }
+
+    @SuppressLint("UnflaggedApi")
+    public void wipe() {
+        if (mText instanceof Editable) {
+            ((Editable) mText).clear(); // from the docs: equivalent to replace(0, length(), "", 0, 0)
+        }
+        setText("");
     }
 }
