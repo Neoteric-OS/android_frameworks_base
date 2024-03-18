@@ -50,7 +50,7 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>To extend this class, you must declare the service in your manifest file with the
  * {@link android.Manifest.permission#BIND_EXPLICIT_HEALTH_CHECK_SERVICE} permission,
- * and include an intent filter with the {@link #SERVICE_INTERFACE} action. In adddition,
+ * and include an intent filter with the {@link #SERVICE_INTERFACE} action. In addition,
  * your implementation must live in
  * {@link PackageManager#getServicesSystemSharedLibraryPackageName()}.
  * For example:</p>
