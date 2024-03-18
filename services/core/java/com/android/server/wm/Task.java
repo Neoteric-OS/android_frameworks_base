@@ -4777,6 +4777,7 @@ class Task extends TaskFragment {
             if (lastParentBeforePip.isAttached()) {
                 top.reparent(lastParentBeforePip, lastParentBeforePip.getChildCount() /* top */,
                         "movePinnedActivityToOriginalTask");
+                lastParentBeforePip.moveTaskToBackInner(lastParentBeforePip, transition);
             }
         }
         if (isAttached()) {
