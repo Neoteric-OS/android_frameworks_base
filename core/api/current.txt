@@ -59809,6 +59809,7 @@ package android.widget {
     method public boolean didTouchFocusSelect();
     method public void endBatchEdit();
     method public boolean extractText(android.view.inputmethod.ExtractedTextRequest, android.view.inputmethod.ExtractedText);
+    method public void finalize();
     method public final int getAutoLinkMask();
     method public int getAutoSizeMaxTextSize();
     method public int getAutoSizeMinTextSize();
@@ -60066,6 +60067,7 @@ package android.widget {
     method public void setTypeface(@Nullable android.graphics.Typeface);
     method @FlaggedApi("com.android.text.flags.use_bounds_for_width") public void setUseBoundsForWidth(boolean);
     method public void setWidth(int);
+    method public void wipe();
     field public static final int AUTO_SIZE_TEXT_TYPE_NONE = 0; // 0x0
     field public static final int AUTO_SIZE_TEXT_TYPE_UNIFORM = 1; // 0x1
     field public static final int FOCUSED_SEARCH_RESULT_INDEX_NONE = -1; // 0xffffffff

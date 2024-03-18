@@ -25,6 +25,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -182,6 +183,7 @@ public class KeyguardPasswordViewController
         super.onViewDetached();
         mPasswordEntry.setOnEditorActionListener(null);
         mPostureController.removeCallback(mPostureCallback);
+        mPasswordEntry.wipe();
     }
 
     @Override
