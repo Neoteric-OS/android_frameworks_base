@@ -129,6 +129,30 @@
       },
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c0380c7_fede207c",
+        "filename": "services/proguard.flags",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2024-03-19T21:33:52Z",
+      "side": 1,
+      "message": "Thank you Jared. This is an interesting case. My current understanding is `wear-service` is not like these `*-service` in mainline module, it kind of an extension of `services` for wear, in the non-updatable part? so based on the go/android-flag-containers, both `wear-container` and `services` belong to `system`. the go/repackage_flags actually is for exportable flags (yea, I think should rename it), and in this case since both of them belong to the same container, the same repackage rule will be applied..\n\nSeems like this would be a common issue for building module explicitly depends on `services`",
+      "parentUuid": "238cf3eb_8da56ab9",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
