@@ -88,6 +88,24 @@
       "parentUuid": "adb2988a_a1c899eb",
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12fcef3f_98d59099",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-03-19T20:36:06Z",
+      "side": 1,
+      "message": "@zhidou@google.com the issue here is that `wear-services` is transitively using flags from `services`, while `services` is optimizing flag usage independently of that downstream usage. Would the right approach here be to use go/repackage_flags for flags used in system server (particularly the `services.jar` target).",
+      "parentUuid": "d8c619d1_98cfcda0",
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
