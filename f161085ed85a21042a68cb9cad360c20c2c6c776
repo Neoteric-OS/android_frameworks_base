@@ -52,6 +52,24 @@
       "parentUuid": "2d8a7d46_abaec244",
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adb2988a_a1c899eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2024-03-19T19:22:07Z",
+      "side": 1,
+      "message": "For the flags, \"the error is: java.lang.NoSuchMethodError: No static method ringerModeAffectsAlarm()Z in class Lcom/android/media/audio/Flags; or its super classes\", but I think the static method is generated during build time.\n\nFor the PowerStatsService, I think that was something I forgot to remove when testing the flags.",
+      "parentUuid": "5cca57b6_f951046d",
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
