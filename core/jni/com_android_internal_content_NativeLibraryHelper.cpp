@@ -36,6 +36,7 @@
 
 #include <memory>
 
+#include "com_android_internal_content_FileSystemUtils.h"
 #include "core_jni_helpers.h"
 
 #define RS_BITCODE_SUFFIX ".bc"
@@ -144,7 +145,7 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
 
     uint16_t method;
     off64_t offset;
-
+    ALOGD("copyFileIfChanged: Reading zip file %s", zipFile->getZipFileName());
     if (!zipFile->getEntryInfo(zipEntry, &method, &uncompLen, nullptr, &offset, &when, &crc)) {
         ALOGE("Couldn't read zip entry info\n");
         return INSTALL_FAILED_INVALID_APK;
@@ -167,6 +168,13 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
             ALOGE("Library '%s' is not PAGE(%zu)-aligned - will not be able to open it directly "
                   "from apk.\n", fileName, kPageSize);
             return INSTALL_FAILED_INVALID_APK;
+        }
+
+        // if library is uncompressed, punch hole in it in place
+        if (!punchHolesInElf64(zipFile->getZipFileName(), offset)) {
+            ALOGW("Failed to punch uncompressed elf file :%s inside apk : %s at offset: "
+                  "%" PRIu64 "",
+                  fileName, zipFile->getZipFileName(), offset);
         }
 
         return INSTALL_SUCCEEDED;
@@ -267,6 +275,12 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
         ALOGE("Couldn't rename %s to %s: %s\n", localTmpFileName, localFileName, strerror(errno));
         unlink(localTmpFileName);
         return INSTALL_FAILED_CONTAINER_ERROR;
+    }
+
+    // punch holes in copied file here
+    if (!punchHolesInElf64(localFileName, 0)) {
+        ALOGW("Failed to punch extracted elf file :%s extracted from apk : %s", localFileName,
+              zipFile->getZipFileName());
     }
 
     ALOGV("Successfully moved %s to %s\n", localTmpFileName, localFileName);
