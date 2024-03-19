@@ -36,6 +36,7 @@
 
 #include <memory>
 
+#include "com_android_internal_content_FileSystemUtils.h"
 #include "core_jni_helpers.h"
 
 #define RS_BITCODE_SUFFIX ".bc"
@@ -167,6 +168,13 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
             ALOGE("Library '%s' is not PAGE(%zu)-aligned - will not be able to open it directly "
                   "from apk.\n", fileName, kPageSize);
             return INSTALL_FAILED_INVALID_APK;
+        }
+
+        // if library is uncompressed, punch hole in it in place
+        if (!punchHolesInElf64(zipFile->getZipFileName(), offset)) {
+            ALOGW("Failed to punch uncompressed elf file :%s inside apk : %s at offset: "
+                  "%" PRIu64 "",
+                  fileName, zipFile->getZipFileName(), offset);
         }
 
         return INSTALL_SUCCEEDED;
