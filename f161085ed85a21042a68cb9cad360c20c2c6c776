@@ -153,6 +153,30 @@
       },
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c6f28df_b3bd8a63",
+        "filename": "services/proguard.flags",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2024-03-19T21:38:19Z",
+      "side": 1,
+      "message": "hmm, but I just check the local build of `services`, `ringerModeAffectsAlarm` is not stripped from the final build",
+      "parentUuid": "7c0380c7_fede207c",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
