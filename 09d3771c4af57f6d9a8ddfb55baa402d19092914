@@ -70,6 +70,30 @@
       },
       "revId": "09d3771c4af57f6d9a8ddfb55baa402d19092914",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "576a749b_feecd795",
+        "filename": "test-legacy/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1307893
+      },
+      "writtenOn": "2024-03-19T02:53:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "92bee36f_f6b70dcc",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "09d3771c4af57f6d9a8ddfb55baa402d19092914",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
