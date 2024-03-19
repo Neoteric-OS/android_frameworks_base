@@ -106,6 +106,29 @@
       "parentUuid": "d8c619d1_98cfcda0",
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "238cf3eb_8da56ab9",
+        "filename": "services/proguard.flags",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-03-19T21:32:03Z",
+      "side": 1,
+      "message": "If we\u0027re not yet ready to repackage or jarjar isolate flags, one thing we could do is proxy flags referenced downstream in wear services with a wrapper, e.g.,\n\n```\npackage com.android.server.flags;\n\nimport static com.android.media.audio.Flags.ringerModeAffectsAlarm;\n\n@KeepForApi(description\u003d\"Flags referenced in downstream system server jars\")\npublic class ExportedFlags {\n    public static boolean ringerModeAffectsAlarm() {\n         return ringerModeAffectsAlarm();\n    }\n    \n    // ... Any other flags that might be transitively referenced\n}\n```",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
