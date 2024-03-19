@@ -34,6 +34,24 @@
       "parentUuid": "ada4f3a3_66a21dab",
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cca57b6_f951046d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-03-19T17:59:19Z",
+      "side": 1,
+      "message": "Depends on how they\u0027re used, why they need to be kept, and what issue you\u0027re seeing without these rules. You can use something like `@UsesReflection` at a downstream call site to keep certain classes, but in this case I see usage from within AudioService. Do you have any more details about what fails when you don\u0027t have the `Flags` keep rule?",
+      "parentUuid": "2d8a7d46_abaec244",
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
