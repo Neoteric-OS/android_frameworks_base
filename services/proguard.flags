@@ -55,6 +55,7 @@
 -keep,allowoptimization,allowaccessmodification class com.android.server.input.NativeInputManagerService$NativeImpl { *; }
 -keep,allowoptimization,allowaccessmodification class com.android.server.ThreadPriorityBooster { *; }
 -keep,allowaccessmodification class android.app.admin.flags.Flags { *; }
+-keep,allowaccessmodification class com.android.media.audio.Flags { *; }
 
 # Referenced via CarServiceHelperService in car-frameworks-service (avoid removing)
 -keep public class com.android.server.utils.Slogf { *; }
@@ -90,6 +91,7 @@
 -keep,allowoptimization,allowaccessmodification class com.android.server.location.gnss.GnssPowerStats { *; }
 -keep,allowoptimization,allowaccessmodification class com.android.server.location.gnss.hal.GnssNative { *; }
 -keep,allowoptimization,allowaccessmodification class com.android.server.pm.PackageManagerShellCommandDataLoader { *; }
+-keep,allowoptimization,allowaccessmodification class com.android.server.powerstats.PowerStatsService { *; }
 -keep,allowoptimization,allowaccessmodification class com.android.server.sensors.SensorManagerInternal$RuntimeSensorCallback { *; }
 -keep,allowoptimization,allowaccessmodification class com.android.server.sensors.SensorManagerInternal$ProximityActiveListener { *; }
 -keep,allowoptimization,allowaccessmodification class com.android.server.sensors.SensorService { *; }
