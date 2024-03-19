@@ -16,6 +16,24 @@
       "message": "Why is this needed, and can it be done with annotations?",
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d8a7d46_abaec244",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2024-03-19T17:28:33Z",
+      "side": 1,
+      "message": "I will take a look at PowerStatsService. For auto generated java flag files, is there a way to keep it without altering the proguard rules??",
+      "parentUuid": "ada4f3a3_66a21dab",
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
