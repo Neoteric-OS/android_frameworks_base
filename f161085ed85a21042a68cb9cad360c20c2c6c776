@@ -225,6 +225,30 @@
       },
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99a60c6f_ed09458f",
+        "filename": "services/proguard.flags",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2024-03-20T14:50:15Z",
+      "side": 1,
+      "message": "It happens when I tried to set the FULL_SYSTEM_OPTIMIZE_JAVA flag, here is the crash log: https://paste.googleplex.com/5449210175946752.\n\nI tried comparing the proguard dictionary from both settings:\nWhen the flag is set: https://paste.googleplex.com/6442840759992320\nWhen the flag is not set: https://paste.googleplex.com/5785500410970112",
+      "parentUuid": "7306ebe0_593b133d",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
