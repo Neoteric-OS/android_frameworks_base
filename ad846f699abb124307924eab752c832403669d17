@@ -364,6 +364,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "631d9026_e9e38bc8",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1137703
+      },
+      "writtenOn": "2024-03-20T18:53:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4f0f609a_26092351",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "752edb93_6d9f2220",
