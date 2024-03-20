@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c837a397_2e1fb2e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe6c52e_b01b5efe",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6cdd2bc0_d8116b3c",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-02-23T22:32:59Z",
       "side": 1,
       "message": "This seems like it could be a separate CL.",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a20dd615_03470be7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "The change would be creating decoder using AImageDecoder_createFromFd() along with AImageDecoder_createFromBuffer(). The other APIs remain unchanged. Since this CL contains all updates to the fuzzer, it was added here. Please let us know if a standlone CL is required for this.",
+      "parentUuid": "6cdd2bc0_d8116b3c",
       "revId": "ad846f699abb124307924eab752c832403669d17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -66,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "721d896e_383c4ede",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "They are used to set height and width dimensions for AImageDecoder_setTargetSize @line#71",
+      "parentUuid": "4a663cf3_480f77f6",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "18effcad_95693fe1",
         "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
         "patchSetId": 1
@@ -83,6 +149,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88cb5514_381e3121",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "Done. Moved to local scope.",
+      "parentUuid": "18effcad_95693fe1",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3929664a_6a36c42d",
         "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
         "patchSetId": 1
@@ -94,6 +178,24 @@
       "writtenOn": "2024-02-23T22:32:59Z",
       "side": 1,
       "message": "Why is this necessary? I don\u0027t see where you\u0027ve removed `android::` from anything, e.g. `android::ProcessState::self()`, and I don\u0027t think `FuzzedDataProvider` is in the `android` namespace? Maybe you added something else I missed?",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb13a6a0_22323601",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "3929664a_6a36c42d",
       "revId": "ad846f699abb124307924eab752c832403669d17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -121,6 +223,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb163ff1_f0f743bf",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7212e6e_3df8da46",
+      "range": {
+        "startLine": 48,
+        "startChar": 54,
+        "endLine": 48,
+        "endChar": 68
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "915593fd_bf20c89e",
@@ -138,6 +264,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a4b5883_d0416140",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "915593fd_bf20c89e",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "221b03ca_e8043053",
@@ -151,6 +295,30 @@
       "writtenOn": "2024-02-23T22:32:59Z",
       "side": 1,
       "message": "I think we typically uses this naming convention for member variables. I would name this something like `dataProvider`, or I think I\u0027ve seen `fdp` elsewhere - though that\u0027s not very descriptive to me!",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 27
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d5aefa_03eabdad",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "221b03ca_e8043053",
       "range": {
         "startLine": 70,
         "startChar": 23,
@@ -180,6 +348,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4f0f609a_26092351",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "Updated fuzzer to use `consumeBytes()` and send the data buffer for `init()`. Since passing whole data buffer will consume all FDP, kept a limit of `0.8*size` for `consumeBytes()`.",
+      "parentUuid": "c0d6f1d1_1b07b0a9",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "752edb93_6d9f2220",
         "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
         "patchSetId": 1
@@ -203,6 +389,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9da5d60d_a3228992",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "updated code to set height and width using FDP.",
+      "parentUuid": "752edb93_6d9f2220",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ea103599_ad2478ee",
         "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
         "patchSetId": 1
@@ -214,6 +424,24 @@
       "writtenOn": "2024-02-23T22:32:59Z",
       "side": 1,
       "message": "This isn\u0027t going to do what you want. [This function](https://developer.android.com/ndk/reference/group/image-decoder#aimagedecoderheaderinfo_getheight) returns the *encoded* size of the image. If this loop has called `AImageDecoder_setTargetSize` to use a larger size, then the allocated memory for the pixels won\u0027t be big enough, and `AImageDecoder_decodeImage` will write to memory outside the pixels.",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65fef43e_d942a7f2",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 1,
+      "message": "Initially, height and width were not limited to 5000 and without calling AImageDecoder_setTargetSize would result in large malloc. Updated the code to set the height and width once via AImageDecoder_setTargetSize. Hence both are limited to 5000.",
+      "parentUuid": "ea103599_ad2478ee",
       "revId": "ad846f699abb124307924eab752c832403669d17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

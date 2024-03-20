@@ -22,6 +22,30 @@
       },
       "revId": "9f4ec92e13547630d85f46c9a6beaa8219cbb5ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "beb10a8a_663d5215",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-20T12:18:34Z",
+      "side": 0,
+      "message": "height and width are now initialized to be less than 5000 before calling\nAImageDecoder_setTargetSize",
+      "parentUuid": "6e3019c4_e93fc097",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "9f4ec92e13547630d85f46c9a6beaa8219cbb5ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
