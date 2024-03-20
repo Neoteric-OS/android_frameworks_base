@@ -5675,41 +5675,41 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         final int callingUid = caller.getUid();
         final int userHandle = UserHandle.getUserId(callingUid);
         final boolean isPin = PasswordMetrics.isNumericOnly(password);
-        final LockscreenCredential newCredential;
-        if (isPin) {
-            newCredential = LockscreenCredential.createPin(password);
-        } else {
-            newCredential = LockscreenCredential.createPasswordOrNone(password);
-        }
-        synchronized (getLockObject()) {
-            final PasswordMetrics minMetrics = getPasswordMinimumMetricsUnchecked(userHandle);
-            final int complexity = getAggregatedPasswordComplexityLocked(userHandle);
-            final List<PasswordValidationError> validationErrors =
-                    PasswordMetrics.validateCredential(minMetrics, complexity, newCredential);
-            if (!validationErrors.isEmpty()) {
-                Slogf.w(LOG_TAG, "Failed to reset password due to constraint violation: %s",
-                        validationErrors.get(0));
+        long ident = 0;
+        boolean identWasInitialized = false;
+        try (final LockscreenCredential newCredential =
+                isPin? LockscreenCredential.createPin(password) :
+                       LockscreenCredential.createPasswordOrNone(password)) {
+            synchronized (getLockObject()) {
+                final PasswordMetrics minMetrics = getPasswordMinimumMetricsUnchecked(userHandle);
+                final int complexity = getAggregatedPasswordComplexityLocked(userHandle);
+                final List<PasswordValidationError> validationErrors =
+                        PasswordMetrics.validateCredential(minMetrics, complexity, newCredential);
+                if (!validationErrors.isEmpty()) {
+                    Slogf.w(LOG_TAG, "Failed to reset password due to constraint violation: %s",
+                            validationErrors.get(0));
+                    return false;
+                }
+            }
+
+            DevicePolicyData policy = getUserData(userHandle);
+            if (policy.mPasswordOwner >= 0 && policy.mPasswordOwner != callingUid) {
+                Slogf.w(LOG_TAG,
+                    "resetPassword: already set by another uid and not entered by user");
                 return false;
             }
-        }
 
-        DevicePolicyData policy = getUserData(userHandle);
-        if (policy.mPasswordOwner >= 0 && policy.mPasswordOwner != callingUid) {
-            Slogf.w(LOG_TAG, "resetPassword: already set by another uid and not entered by user");
-            return false;
-        }
-
-        boolean callerIsDeviceOwnerAdmin = isDefaultDeviceOwner(caller);
-        boolean doNotAskCredentialsOnBoot =
+            boolean callerIsDeviceOwnerAdmin = isDefaultDeviceOwner(caller);
+            boolean doNotAskCredentialsOnBoot =
                 (flags & DevicePolicyManager.RESET_PASSWORD_DO_NOT_ASK_CREDENTIALS_ON_BOOT) != 0;
-        if (callerIsDeviceOwnerAdmin && doNotAskCredentialsOnBoot) {
-            setDoNotAskCredentialsOnBoot();
-        }
+            if (callerIsDeviceOwnerAdmin && doNotAskCredentialsOnBoot) {
+                setDoNotAskCredentialsOnBoot();
+            }
 
-        // Don't do this with the lock held, because it is going to call
-        // back in to the service.
-        final long ident = mInjector.binderClearCallingIdentity();
-        try {
+            // Don't do this with the lock held, because it is going to call
+            // back in to the service.
+            ident = mInjector.binderClearCallingIdentity();
+            identWasInitialized = true;
             if (tokenHandle == 0 || token == null) {
                 if (!mLockPatternUtils.setLockCredential(newCredential,
                         LockscreenCredential.createNone(), userHandle)) {
@@ -5721,7 +5721,8 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     return false;
                 }
             }
-            boolean requireEntry = (flags & DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY) != 0;
+            boolean requireEntry =
+                (flags & DevicePolicyManager.RESET_PASSWORD_REQUIRE_ENTRY) != 0;
             if (requireEntry) {
                 mLockPatternUtils.requireStrongAuth(STRONG_AUTH_REQUIRED_AFTER_DPM_LOCK_NOW,
                         UserHandle.USER_ALL);
@@ -5734,7 +5735,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 }
             }
         } finally {
-            mInjector.binderRestoreCallingIdentity(ident);
+            if(identWasInitialized) mInjector.binderRestoreCallingIdentity(ident);
         }
         return true;
     }
