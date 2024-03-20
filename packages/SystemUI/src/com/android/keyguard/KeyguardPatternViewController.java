@@ -125,37 +125,40 @@ public class KeyguardPatternViewController
 
             mLatencyTracker.onActionStart(ACTION_CHECK_CREDENTIAL);
             mLatencyTracker.onActionStart(ACTION_CHECK_CREDENTIAL_UNLOCKED);
-            mPendingLockCheck = LockPatternChecker.checkCredential(
-                    mLockPatternUtils,
-                    LockscreenCredential.createPattern(pattern),
-                    userId,
-                    new LockPatternChecker.OnCheckCallback() {
+            try (LockscreenCredential credPattern = LockscreenCredential.createPattern(pattern)) {
+                mPendingLockCheck = LockPatternChecker.checkCredential(
+                        mLockPatternUtils,
+                        credPattern,
+                        userId,
+                        new LockPatternChecker.OnCheckCallback() {
 
-                        @Override
-                        public void onEarlyMatched() {
-                            mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL);
-                            onPatternChecked(userId, true /* matched */, 0 /* timeoutMs */,
-                                    true /* isValidPattern */);
-                        }
-
-                        @Override
-                        public void onChecked(boolean matched, int timeoutMs) {
-                            mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
-                            mLockPatternView.enableInput();
-                            mPendingLockCheck = null;
-                            if (!matched) {
-                                onPatternChecked(userId, false /* matched */, timeoutMs,
+                            @Override
+                            public void onEarlyMatched() {
+                                mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL);
+                                onPatternChecked(userId, true /* matched */, 0 /* timeoutMs */,
                                         true /* isValidPattern */);
                             }
-                        }
 
-                        @Override
-                        public void onCancelled() {
-                            // We already got dismissed with the early matched callback, so we
-                            // cancelled the check. However, we still need to note down the latency.
-                            mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
-                        }
-                    });
+                            @Override
+                            public void onChecked(boolean matched, int timeoutMs) {
+                                mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
+                                mLockPatternView.enableInput();
+                                mPendingLockCheck = null;
+                                if (!matched) {
+                                    onPatternChecked(userId, false /* matched */, timeoutMs,
+                                            true /* isValidPattern */);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled() {
+                                // We already got dismissed with the early matched callback, so we
+                                // cancelled the check. However, we still need to note down
+                                // the latency.
+                                mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
+                            }
+                        });
+            }
             if (pattern.size() > MIN_PATTERN_BEFORE_POKE_WAKELOCK) {
                 getKeyguardSecurityCallback().userActivity();
                 getKeyguardSecurityCallback().onUserInput();

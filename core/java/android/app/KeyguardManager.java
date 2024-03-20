@@ -1244,14 +1244,15 @@ public class KeyguardManager {
             Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE
     })
     public boolean checkLock(@LockTypes int lockType, @Nullable byte[] password) {
-        final LockscreenCredential credential = createLockscreenCredential(
-                lockType, password);
-        final VerifyCredentialResponse response = mLockPatternUtils.verifyCredential(
-                credential, mContext.getUserId(), /* flags= */ 0);
-        if (response == null) {
-            return false;
+        try (final LockscreenCredential credential = createLockscreenCredential(
+                lockType, password)) {
+            final VerifyCredentialResponse response = mLockPatternUtils.verifyCredential(
+                    credential, mContext.getUserId(), /* flags= */ 0);
+            if (response == null) {
+                return false;
+            }
+            return response.getResponseCode() == VerifyCredentialResponse.RESPONSE_OK;
         }
-        return response.getResponseCode() == VerifyCredentialResponse.RESPONSE_OK;
     }
 
     /** Starts a session to verify lockscreen credentials provided by a remote device.

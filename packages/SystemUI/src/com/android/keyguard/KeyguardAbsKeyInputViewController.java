@@ -24,8 +24,10 @@ import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.PluralsMessageFormatter;
 import android.view.KeyEvent;
+import android.widget.TextView;
 
 import com.android.internal.util.LatencyTracker;
 import com.android.internal.widget.LockPatternChecker;
@@ -207,61 +209,61 @@ public abstract class KeyguardAbsKeyInputViewController<T extends KeyguardAbsKey
         if (mDismissing) return; // already verified but haven't been dismissed; don't do it again.
         if (mLockedOut) return;
 
-        final LockscreenCredential password = mView.getEnteredCredential();
-        mView.setPasswordEntryInputEnabled(false);
-        if (mPendingLockCheck != null) {
-            mPendingLockCheck.cancel(false);
-        }
+        try (final LockscreenCredential password = mView.getEnteredCredential()){
+            mView.setPasswordEntryInputEnabled(false);
 
-        final int userId = mSelectedUserInteractor.getSelectedUserId();
-        if (password.size() <= MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT) {
-            // to avoid accidental lockout, only count attempts that are long enough to be a
-            // real password. This may require some tweaking.
-            mView.setPasswordEntryInputEnabled(true);
-            onPasswordChecked(userId, false /* matched */, 0, false /* not valid - too short */);
-            password.zeroize();
-            return;
-        }
+            if (mPendingLockCheck != null) {
+                mPendingLockCheck.cancel(false);
+            }
 
-        mLatencyTracker.onActionStart(ACTION_CHECK_CREDENTIAL);
-        mLatencyTracker.onActionStart(ACTION_CHECK_CREDENTIAL_UNLOCKED);
+            final int userId = mSelectedUserInteractor.getSelectedUserId();
+            if (password.size() <= MINIMUM_PASSWORD_LENGTH_BEFORE_REPORT) {
+                // to avoid accidental lockout, only count attempts that are long enough to be a
+                // real password. This may require some tweaking.
+                mView.setPasswordEntryInputEnabled(true);
+                onPasswordChecked(userId, false /* matched */,
+                    0, false /* not valid - too short */);
+                return;
+            }
 
-        mKeyguardUpdateMonitor.setCredentialAttempted();
-        mPendingLockCheck = LockPatternChecker.checkCredential(
-                mLockPatternUtils,
-                password,
-                userId,
-                new LockPatternChecker.OnCheckCallback() {
+            mLatencyTracker.onActionStart(ACTION_CHECK_CREDENTIAL);
+            mLatencyTracker.onActionStart(ACTION_CHECK_CREDENTIAL_UNLOCKED);
 
-                    @Override
-                    public void onEarlyMatched() {
-                        mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL);
+            mKeyguardUpdateMonitor.setCredentialAttempted();
+            mPendingLockCheck = LockPatternChecker.checkCredential(
+                    mLockPatternUtils,
+                    password,
+                    userId,
+                    new LockPatternChecker.OnCheckCallback() {
 
-                        onPasswordChecked(userId, true /* matched */, 0 /* timeoutMs */,
-                                true /* isValidPassword */);
-                        password.zeroize();
-                    }
+                        @Override
+                        public void onEarlyMatched() {
+                            mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL);
 
-                    @Override
-                    public void onChecked(boolean matched, int timeoutMs) {
-                        mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
-                        mView.setPasswordEntryInputEnabled(true);
-                        mPendingLockCheck = null;
-                        if (!matched) {
-                            onPasswordChecked(userId, false /* matched */, timeoutMs,
+                            onPasswordChecked(userId, true /* matched */, 0 /* timeoutMs */,
                                     true /* isValidPassword */);
                         }
-                        password.zeroize();
-                    }
 
-                    @Override
-                    public void onCancelled() {
-                        // We already got dismissed with the early matched callback, so we cancelled
-                        // the check. However, we still need to note down the latency.
-                        mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
-                        password.zeroize();
-                    }
-                });
+                        @Override
+                        public void onChecked(boolean matched, int timeoutMs) {
+                            mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
+                            mView.setPasswordEntryInputEnabled(true);
+                            mPendingLockCheck = null;
+                            if (!matched) {
+                                onPasswordChecked(userId, false /* matched */, timeoutMs,
+                                        true /* isValidPassword */);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled() {
+                            // We already got dismissed with the early matched callback,
+                            // so we cancelled the check. However, we still need to note
+                            // down the latency.
+                            mLatencyTracker.onActionEnd(ACTION_CHECK_CREDENTIAL_UNLOCKED);
+                        }
+                    });
+        }
     }
 
     @Override
