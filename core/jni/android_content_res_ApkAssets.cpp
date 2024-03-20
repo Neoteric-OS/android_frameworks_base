@@ -262,7 +262,11 @@ static jlong NativeLoadFromFd(JNIEnv* env, jclass /*clazz*/, const format_type_t
     return 0;
   }
 
+#if !defined(_WIN32) // Windows does not have F_DUPFD_CLOEXEC
   unique_fd dup_fd(::fcntl(fd, F_DUPFD_CLOEXEC, 0));
+#else
+  unique_fd dup_fd(::dup(fd));
+#endif
   if (dup_fd < 0) {
     jniThrowIOException(env, errno);
     return 0;
@@ -329,7 +333,11 @@ static jlong NativeLoadFromFdOffset(JNIEnv* env, jclass /*clazz*/, const format_
     return 0;
   }
 
+#if !defined(_WIN32) // Windows does not have F_DUPFD_CLOEXEC
   unique_fd dup_fd(::fcntl(fd, F_DUPFD_CLOEXEC, 0));
+#else
+  unique_fd dup_fd(::dup(fd));
+#endif
   if (dup_fd < 0) {
     jniThrowIOException(env, errno);
     return 0;

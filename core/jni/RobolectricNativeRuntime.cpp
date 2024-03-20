@@ -31,6 +31,8 @@ extern int register_android_database_CursorWindow(JNIEnv* env);
 extern int register_android_database_SQLiteConnection(JNIEnv* env);
 extern int register_android_view_Surface(JNIEnv* env);
 extern int register_com_android_internal_util_VirtualRefBasePtr(JNIEnv* env);
+extern int register_android_content_res_ApkAssets(JNIEnv* env);
+extern int register_android_content_AssetManager(JNIEnv* env);
 
 #define REG_JNI(name) \
     { name }
@@ -49,6 +51,11 @@ static const RegJNIRec graphicsJNI[] = {
         REG_JNI(register_android_view_Surface),
         REG_JNI(register_com_android_internal_util_VirtualRefBasePtr),
         REG_JNI(register_libcore_util_NativeAllocationRegistry),
+};
+
+static const RegJNIRec resourcesJNI[] = {
+        REG_JNI(register_android_content_res_ApkAssets),
+        REG_JNI(register_android_content_AssetManager),
 };
 
 JNIEnv* AndroidRuntime::getJNIEnv() {
@@ -166,6 +173,11 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
     if (register_jni_procs(sqliteJNI, NELEM(sqliteJNI), env) < 0) {
         return JNI_ERR;
     }
+
+    if (register_jni_procs(resourcesJNI, NELEM(resourcesJNI), env) < 0) {
+        return JNI_ERR;
+    }
+
     jclass runtimeEnvironment = FindClassOrDie(env, "org/robolectric/RuntimeEnvironment");
     jmethodID getApiLevelMethod =
             GetStaticMethodIDOrDie(env, runtimeEnvironment, "getApiLevel", "()I");

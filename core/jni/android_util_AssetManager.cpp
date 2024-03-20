@@ -18,11 +18,15 @@
 #define LOG_TAG "asset"
 
 #include <inttypes.h>
+#ifdef __ANDROID__
 #include <linux/capability.h>
+#endif
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#ifndef _WIN32
 #include <sys/wait.h>
+#endif
 #include <unistd.h>
 
 #include <sstream>
@@ -54,8 +58,10 @@
 #include "utils/Trace.h"
 #include "utils/misc.h"
 
+#ifdef __ANDROID__
 extern "C" int capget(cap_user_header_t hdrp, cap_user_data_t datap);
 extern "C" int capset(cap_user_header_t hdrp, const cap_user_data_t datap);
+#endif
 
 using ::android::base::StringPrintf;
 
@@ -596,7 +602,11 @@ static jlong NativeOpenXmlAssetFd(JNIEnv* env, jobject /*clazz*/, jlong ptr, int
     return 0;
   }
 
+#if !defined(_WIN32) // Windows does not have F_DUPFD_CLOEXEC
   base::unique_fd dup_fd(::fcntl(fd, F_DUPFD_CLOEXEC, 0));
+#else
+  base::unique_fd dup_fd(::dup(fd));
+#endif
   if (dup_fd < 0) {
     jniThrowIOException(env, errno);
     return 0;
