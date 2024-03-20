@@ -50,6 +50,23 @@
       "message": "Chris, can you provide OCR+1?",
       "revId": "cafdfc74711ede6660e98a75bbf00f5b33b3a531",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cd864e0_b54b266a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-03-20T18:40:25Z",
+      "side": 1,
+      "message": "Friendly ping received 😊",
+      "revId": "cafdfc74711ede6660e98a75bbf00f5b33b3a531",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
