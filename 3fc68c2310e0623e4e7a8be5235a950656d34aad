@@ -16,6 +16,23 @@
       "message": "LGTM.",
       "revId": "3fc68c2310e0623e4e7a8be5235a950656d34aad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60ba3852_a7eb06f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-03-20T20:58:03Z",
+      "side": 1,
+      "message": "Hi Tyler,\n\nCan you give an API review? This change is part of the effort of b/310710841. It makes VCN doc align with the implementations change in ag/26636092. Although metalava does not treat this CL as an API change, alanv@ suggests it has API impact and thus we think we should get an API councilor to review it.",
+      "revId": "3fc68c2310e0623e4e7a8be5235a950656d34aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
