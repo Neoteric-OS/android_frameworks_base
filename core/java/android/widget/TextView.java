@@ -233,6 +233,7 @@ import android.view.translation.UiTranslationController;
 import android.view.translation.ViewTranslationCallback;
 import android.view.translation.ViewTranslationRequest;
 import android.widget.RemoteViews.RemoteView;
+import android.widget.TextView.SavedState;
 
 import com.android.internal.accessibility.util.AccessibilityUtils;
 import com.android.internal.annotations.VisibleForTesting;
@@ -16208,5 +16209,14 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
             }
         }
         requestsCollector.accept(requestBuilder.build());
+    }
+
+    /** @hide */
+    public void clear() {
+        if (mText instanceof Editable) {
+            // from the docs: equivalent to replace(0, length(), "", 0, 0)
+            ((Editable) mText).clear();
+        }
+        setText("");
     }
 }
