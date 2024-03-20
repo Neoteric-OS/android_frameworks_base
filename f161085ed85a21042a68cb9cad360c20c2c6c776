@@ -201,6 +201,30 @@
       },
       "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bf9bd53_64f3031f",
+        "filename": "services/proguard.flags",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2024-03-20T14:16:32Z",
+      "side": 1,
+      "message": "thank you. hmm if so then how could `wear-service` cannot find the symbol, because of some reflection usage on the flag? hmm so it seems who ever use the reflection should keep the flag, but not in the proguard rules of `services` I think",
+      "parentUuid": "7306ebe0_593b133d",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
