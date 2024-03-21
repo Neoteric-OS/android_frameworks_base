@@ -52,6 +52,7 @@ import android.os.ServiceManager;
 import android.os.ShellCallback;
 import android.os.SystemProperties;
 import android.provider.DeviceConfig;
+import android.security.AndroidKeyStoreMaintenance;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.FastImmutableArraySet;
@@ -66,7 +67,9 @@ import com.android.internal.widget.RebootEscrowListener;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.pm.ApexManager;
+import com.android.server.power.PowerManagerService;
 import com.android.server.recoverysystem.hal.BootControlHIDL;
+import com.android.server.utils.Slogf;
 
 import libcore.io.IoUtils;
 
@@ -117,6 +120,8 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
 
     static final String LSKF_CAPTURED_TIMESTAMP_PREF = "lskf_captured_timestamp";
     static final String LSKF_CAPTURED_COUNT_PREF = "lskf_captured_count";
+
+    static final String RECOVERY_WIPE_DATA_COMMAND = "--wipe_data";
 
     private final Injector mInjector;
     private final Context mContext;
@@ -521,18 +526,49 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     @Override // Binder call
     public void rebootRecoveryWithCommand(String command) {
         if (DEBUG) Slog.d(TAG, "rebootRecoveryWithCommand: [" + command + "]");
+
+        boolean isForcedWipe = command != null && command.contains(RECOVERY_WIPE_DATA_COMMAND);
         synchronized (sRequestLock) {
             if (!setupOrClearBcb(true, command)) {
                 Slog.e(TAG, "rebootRecoveryWithCommand failed to setup BCB");
                 return;
             }
 
+            if (isForcedWipe) {
+                deleteSecrets();
+            }
+
             // Having set up the BCB, go ahead and reboot.
             PowerManager pm = mInjector.getPowerManager();
-            pm.reboot(PowerManager.REBOOT_RECOVERY);
+            if (isForcedWipe) {
+                // send SIGKILL to all process but init
+                // (reboot with 'b' causes a ramdump so can't used as is)
+                doSysRq('i');
+                PowerManagerService.lowLevelReboot(PowerManager.REBOOT_RECOVERY);
+            } else {
+                pm.reboot(PowerManager.REBOOT_RECOVERY);
+            }
         }
     }
 
+    private static void deleteSecrets() {
+        Slogf.w(TAG, "deleteSecrets");
+        try {
+            AndroidKeyStoreMaintenance.deleteAllKeys();
+        } catch (android.security.KeyStoreException e) {
+            Log.wtf(TAG, "Failed to delete all keys from keystore.", e);
+        }
+    }
+
+    private static void doSysRq(char c) {
+        try {
+            FileWriter sysrq_trigger = new FileWriter("/proc/sysrq-trigger");
+            sysrq_trigger.write(c);
+            sysrq_trigger.close();
+        } catch (IOException e) {
+            Slog.w(TAG, "Failed to write to /proc/sysrq-trigger", e);
+        }
+    }
     private void enforcePermissionForResumeOnReboot() {
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.RECOVERY)
                 != PackageManager.PERMISSION_GRANTED
