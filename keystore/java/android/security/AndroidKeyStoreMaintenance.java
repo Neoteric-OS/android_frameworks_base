@@ -229,4 +229,23 @@ public class AndroidKeyStoreMaintenance {
                     "Keystore error while trying to get apps affected by SID.");
         }
     }
+
+    /**
+    * Deletes all keys in all KeyMint devices.
+    * Called by RecoverySystem before rebooting to recovery in order to delete all synthetic
+    * password protector keys. This ensures that FBE-encrypted data is unrecoverable even if the
+    * data wipe in recovery is interrupted or skipped.
+    */
+    public static void deleteAllKeys() throws KeyStoreException {
+        StrictMode.noteDiskWrite();
+        try {
+            getService().deleteAllKeys();
+        } catch (RemoteException | NullPointerException e) {
+            throw new KeyStoreException(SYSTEM_ERROR,
+                    "Failure to connect to Keystore while trying to delete all keys.");
+        } catch (ServiceSpecificException e) {
+            throw new KeyStoreException(e.errorCode,
+                    "Keystore error while trying to delete all keys.");
+        }
+    }
 }
