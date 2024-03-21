@@ -108,6 +108,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e6da2fb_625de610",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2024-03-21T23:54:46Z",
+      "side": 1,
+      "message": "Reached a temporary resolution, please refer to the other comment.",
+      "parentUuid": "12fcef3f_98d59099",
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "238cf3eb_8da56ab9",
@@ -241,6 +259,30 @@
       "side": 1,
       "message": "It happens when I tried to set the FULL_SYSTEM_OPTIMIZE_JAVA flag, here is the crash log: https://paste.googleplex.com/5449210175946752.\n\nI tried comparing the proguard dictionary from both settings:\nWhen the flag is set: https://paste.googleplex.com/6442840759992320\nWhen the flag is not set: https://paste.googleplex.com/5785500410970112",
       "parentUuid": "7306ebe0_593b133d",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 65
+      },
+      "revId": "f161085ed85a21042a68cb9cad360c20c2c6c776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "698b558d_a9c0c809",
+        "filename": "services/proguard.flags",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1969256
+      },
+      "writtenOn": "2024-03-21T23:54:46Z",
+      "side": 1,
+      "message": "Recapping the conversations offline. We are now settled with the temporary fix for keep all android.**.Flags and com.android.**.Flags public members while we continue to have conversations with owners of modules that references service statically to see if it is possible to eliminate the problem by combining the services jar with other dependencies.",
+      "parentUuid": "99a60c6f_ed09458f",
       "range": {
         "startLine": 57,
         "startChar": 60,
