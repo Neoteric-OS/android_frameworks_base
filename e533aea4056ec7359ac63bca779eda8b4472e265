@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d838ba65_718bbea1",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-03-22T16:59:09Z",
+      "side": 1,
+      "message": "1. What\u0027s the difference between `isSystemApp` and `MATCH_SYSTEM_ONLY`?\n\n2. Is it an option to just do `MATCH_ANY_USER | MATCH_SYSTEM_ONLY`?\n\nI assume that `MATCH_SYSTEM_ONLY` doesn\u0027t actually care if it\u0027s installed on the system user, but just that it is a system app (like `isSystemApp`), and we could therefore filter at the flag level instead of as a separate `if` section?",
+      "range": {
+        "startLine": 2568,
+        "startChar": 27,
+        "endLine": 2568,
+        "endChar": 38
+      },
+      "revId": "e533aea4056ec7359ac63bca779eda8b4472e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
