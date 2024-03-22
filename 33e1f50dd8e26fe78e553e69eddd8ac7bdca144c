@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a4abf0e_105a9155",
+        "filename": "services/core/java/com/android/server/inputmethod/LocaleUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2024-03-22T11:05:21Z",
+      "side": 1,
+      "message": "nit: add comment which says that this operation is called `maximization` as per [1]?\n\n[1] https://www.unicode.org/reports/tr35/#Likely_Subtags",
+      "revId": "33e1f50dd8e26fe78e553e69eddd8ac7bdca144c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
