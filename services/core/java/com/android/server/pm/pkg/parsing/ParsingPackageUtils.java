@@ -447,8 +447,9 @@ public class ParsingPackageUtils {
      */
     private ParseResult<ParsingPackage> parseMonolithicPackage(ParseInput input, File apkFile,
             int flags) {
+        int liteParseFlags = flags & ~PARSE_COLLECT_CERTIFICATES;
         final ParseResult<PackageLite> liteResult =
-                ApkLiteParseUtils.parseMonolithicPackageLite(input, apkFile, flags);
+                ApkLiteParseUtils.parseMonolithicPackageLite(input, apkFile, liteParseFlags);
         if (liteResult.isError()) {
             return input.error(liteResult);
         }
