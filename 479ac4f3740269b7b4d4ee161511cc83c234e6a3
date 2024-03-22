@@ -89,6 +89,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7510295_c6cb72aa",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2543,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2024-03-22T15:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d2efc9c_22934f48",
+      "range": {
+        "startLine": 2542,
+        "startChar": 20,
+        "endLine": 2543,
+        "endChar": 59
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab0430f0_f845ebf9",
@@ -126,6 +150,30 @@
       "side": 1,
       "message": "just for easy upmerge to later Android releases.  Added same way https://android.googlesource.com/platform/frameworks/base/+/android-n-preview-4/services/core/java/com/android/server/DeviceIdleController.java#897\n\nAnyway can update",
       "parentUuid": "ab0430f0_f845ebf9",
+      "range": {
+        "startLine": 2544,
+        "startChar": 24,
+        "endLine": 2544,
+        "endChar": 69
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c85fdab_35817bb0",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2544,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2024-03-22T15:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1f70569_74b2f0ad",
       "range": {
         "startLine": 2544,
         "startChar": 24,
@@ -183,6 +231,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "074af4dd_ee546bef",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2024-03-22T15:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81afa9cc_e2316f72",
+      "range": {
+        "startLine": 2556,
+        "startChar": 20,
+        "endLine": 2556,
+        "endChar": 67
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e4c0219_86214bff",
@@ -220,6 +292,30 @@
       "side": 1,
       "message": "Same as above comment",
       "parentUuid": "2e4c0219_86214bff",
+      "range": {
+        "startLine": 2558,
+        "startChar": 24,
+        "endLine": 2558,
+        "endChar": 69
+      },
+      "revId": "479ac4f3740269b7b4d4ee161511cc83c234e6a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49b268a2_4a1bd6c7",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2558,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2024-03-22T15:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba05c1c_a6deb52a",
       "range": {
         "startLine": 2558,
         "startChar": 24,
