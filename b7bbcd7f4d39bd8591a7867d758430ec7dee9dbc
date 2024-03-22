@@ -16,6 +16,24 @@
       "message": "Looks good to me. Adding the file owner to review.\n\nJust curious why we fix this on the AOSP main branch but not the internal main branch.",
       "revId": "b7bbcd7f4d39bd8591a7867d758430ec7dee9dbc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be987bd0_091faef6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1535516
+      },
+      "writtenOn": "2024-03-22T17:41:32Z",
+      "side": 1,
+      "message": "aosp automerges to internal main, and I need to fix the issue on both branches to promote it to an error everywhere.",
+      "parentUuid": "21d1fa8b_1cafb9e8",
+      "revId": "b7bbcd7f4d39bd8591a7867d758430ec7dee9dbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
