@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66304dff_4ad07a8e",
+        "filename": "apex/jobscheduler/service/jni/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-03-23T05:21:38Z",
+      "side": 1,
+      "message": "No need. This is `required` by `service-jobscheduler`",
+      "revId": "6d394c65101f2672346f12e913f24f6ea1625538",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
