@@ -16,6 +16,24 @@
       "message": "This should be public by default, right?",
       "revId": "fec2549c1c8055964e669b1c44f9b7079536863c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4c407d6_a0a7c04c",
+        "filename": "apex/jobscheduler/service/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2024-03-23T02:52:53Z",
+      "side": 1,
+      "message": "I am not sure about that, but there is default visibility __subpackage__ in `frameworks/base/apex/Android.bp`, in this case, is this module also applied?",
+      "parentUuid": "b7e8161d_aada901b",
+      "revId": "fec2549c1c8055964e669b1c44f9b7079536863c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
