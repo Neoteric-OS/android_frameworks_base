@@ -472,7 +472,7 @@ interface IAudioService {
     oneway void setRttEnabled(in boolean rttEnabled);
 
     @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
-    void setDeviceVolumeBehavior(in AudioDeviceAttributes device,
+    oneway void setDeviceVolumeBehavior(in AudioDeviceAttributes device,
              in int deviceVolumeBehavior, in String pkgName);
 
     @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "QUERY_AUDIO_STATE", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
