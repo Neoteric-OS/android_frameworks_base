@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c72f9c2_b9064ef5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-03-25T17:27:31Z",
+      "side": 1,
+      "message": "FYI. SequencedCollection has landed `-next` config. I think that you can submit, but looks like the build fails.",
+      "revId": "b49d104eea23124cadb6a562d149a2feb49f8622",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
