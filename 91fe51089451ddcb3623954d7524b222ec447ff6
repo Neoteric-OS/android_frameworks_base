@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3666724_bf9e0a6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2024-03-25T22:58:50Z",
+      "side": 1,
+      "message": "Ok, this is the AOSP version. Andrii, would you mind owner-reviewing?",
+      "revId": "91fe51089451ddcb3623954d7524b222ec447ff6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
