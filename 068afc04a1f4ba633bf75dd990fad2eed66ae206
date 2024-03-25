@@ -34,6 +34,46 @@
       "parentUuid": "a8fe00c2_c34742bb",
       "revId": "068afc04a1f4ba633bf75dd990fad2eed66ae206",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c7d9c5d_362d3536",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2024-03-25T20:10:21Z",
+      "side": 1,
+      "message": "Looks good overall, only one small comment.",
+      "revId": "068afc04a1f4ba633bf75dd990fad2eed66ae206",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2584cdbc_56016a79",
+        "filename": "core/java/android/service/wallpaper/WallpaperService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2024-03-25T20:10:21Z",
+      "side": 1,
+      "message": "This can be:\n```\nString frameRateCompatStr \u003d getResources().getString(R.string.config_wallpaperBbqWrapperFrameRateCompatibility)\n```\n\nfilling an existent variable is cheaper, but you\u0027re constructing it right above, so the optimization isn\u0027t really doing much.",
+      "range": {
+        "startLine": 1282,
+        "startChar": 28,
+        "endLine": 1285,
+        "endChar": 51
+      },
+      "revId": "068afc04a1f4ba633bf75dd990fad2eed66ae206",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
