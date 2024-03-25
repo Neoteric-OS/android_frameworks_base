@@ -34,6 +34,24 @@
       "parentUuid": "b7e8161d_aada901b",
       "revId": "fec2549c1c8055964e669b1c44f9b7079536863c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d21a1b40_a6b602c3",
+        "filename": "apex/jobscheduler/service/jni/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2024-03-25T01:16:35Z",
+      "side": 1,
+      "message": "it is unnecessary to set visibility for this module as jiyong mentioned.",
+      "parentUuid": "a4c407d6_a0a7c04c",
+      "revId": "fec2549c1c8055964e669b1c44f9b7079536863c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

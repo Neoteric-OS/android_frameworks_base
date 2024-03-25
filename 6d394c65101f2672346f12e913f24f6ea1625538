@@ -16,6 +16,24 @@
       "message": "No need. This is `required` by `service-jobscheduler`",
       "revId": "6d394c65101f2672346f12e913f24f6ea1625538",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1171fbc4_f49e1537",
+        "filename": "apex/jobscheduler/service/jni/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2024-03-25T01:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66304dff_4ad07a8e",
+      "revId": "6d394c65101f2672346f12e913f24f6ea1625538",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
