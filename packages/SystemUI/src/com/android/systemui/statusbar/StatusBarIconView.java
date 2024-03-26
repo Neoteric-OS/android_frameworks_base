@@ -342,9 +342,9 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         if (applyRadius) {
             mDotRadius = mStaticDotRadius;
         }
-        mSystemIconDesiredHeight = res.getDimension(
+        mSystemIconDesiredHeight = res.getDimensionPixelSize(
                 com.android.internal.R.dimen.status_bar_system_icon_size);
-        mSystemIconIntrinsicHeight = res.getDimension(
+        mSystemIconIntrinsicHeight = res.getDimensionPixelSize(
                 com.android.internal.R.dimen.status_bar_system_icon_intrinsic_size);
         mSystemIconDefaultScale = mSystemIconDesiredHeight / mSystemIconIntrinsicHeight;
     }
