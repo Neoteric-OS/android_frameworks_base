@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e97caa2_974e0ecc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2033275
+      },
+      "writtenOn": "2024-03-26T15:54:43Z",
+      "side": 1,
+      "message": "There\u0027s a minor typo here",
+      "revId": "f26f1a7716c951a878160be24e78e6f2eefc7019",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a7d4aab_588df41e",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 2033275
+      },
+      "writtenOn": "2024-03-26T15:54:43Z",
+      "side": 1,
+      "message": "This should probably be \"but\" instead of \"bug\".\n\n```suggestion\n                // send SIGKILL to all process but init\n```",
+      "revId": "f26f1a7716c951a878160be24e78e6f2eefc7019",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
