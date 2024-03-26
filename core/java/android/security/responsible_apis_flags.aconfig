@@ -5,6 +5,7 @@ flag {
     namespace: "responsible_apis"
     description: "Allow all app settings to be restrictable via configuration"
     bug: "297372999"
+    is_exported: true
 }
 
 flag {
