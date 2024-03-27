@@ -1352,6 +1352,11 @@ public class HdmiControlService extends SystemService {
                                 localDevice.setDeviceInfo(deviceInfo);
                                 // If a local device of the same type already exists, it will be
                                 // replaced.
+                                // Before replace local device, clear all action for old device.
+                                HdmiCecLocalDevice oldLocalDevice = mHdmiCecNetwork.getLocalDevice(deviceType);
+                                if (oldLocalDevice != null) {
+                                    oldLocalDevice.removeAllActions();
+                                }
                                 mHdmiCecNetwork.addLocalDevice(deviceType, localDevice);
                                 mHdmiCecNetwork.addCecDevice(localDevice.getDeviceInfo());
                                 mCecController.addLogicalAddress(logicalAddress);
