@@ -22,6 +22,30 @@
       },
       "revId": "c2fed05a6c02f0e72aa3bc48d6fc9659a88cf276",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c2eb0c_7d394f1d",
+        "filename": "tests/testables/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1206103
+      },
+      "writtenOn": "2024-03-27T13:47:29Z",
+      "side": 1,
+      "message": "Ohh, I didn\u0027t know include pulled in noparent as well. Thanks!",
+      "parentUuid": "af0a6a74_4a528e6a",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 33
+      },
+      "revId": "c2fed05a6c02f0e72aa3bc48d6fc9659a88cf276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
