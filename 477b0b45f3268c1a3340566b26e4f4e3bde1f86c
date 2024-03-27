@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a8e8bc6_623b9763",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2024-03-27T19:18:08Z",
+      "side": 1,
+      "message": "I\u0027m really not an expert on Soong and advanced Android.bp magic. The CL LGTM but I\u0027ll defer the CR+2 to Paul.",
+      "revId": "477b0b45f3268c1a3340566b26e4f4e3bde1f86c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
