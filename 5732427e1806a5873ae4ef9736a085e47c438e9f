@@ -94,6 +94,30 @@
       },
       "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "267e918a_b6506ee7",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-03-27T07:27:59Z",
+      "side": 1,
+      "message": "`com.android.internal.R` is also hidden (non-public).\nAnd the comment `Any integer value of Surface.FRAME_RATE_COMPATIBILITY_ can be set here` already mentioned where the value is referenced from?",
+      "parentUuid": "db850107_9e98a8fc",
+      "range": {
+        "startLine": 6867,
+        "startChar": 5,
+        "endLine": 6867,
+        "endChar": 11
+      },
+      "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
