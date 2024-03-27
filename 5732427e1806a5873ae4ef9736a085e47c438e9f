@@ -70,6 +70,30 @@
       },
       "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db850107_9e98a8fc",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1845626
+      },
+      "writtenOn": "2024-03-27T07:22:52Z",
+      "side": 1,
+      "message": "FRAME_RATE_COMPATIBILITY_MIN looks like a hidden API.\nSo, I hesitate to use it in the config,xml.",
+      "parentUuid": "703d377a_cd68ef22",
+      "range": {
+        "startLine": 6867,
+        "startChar": 5,
+        "endLine": 6867,
+        "endChar": 11
+      },
+      "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
