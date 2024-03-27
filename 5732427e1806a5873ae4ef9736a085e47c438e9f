@@ -46,6 +46,30 @@
       },
       "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "703d377a_cd68ef22",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-03-27T07:06:20Z",
+      "side": 1,
+      "message": "Maybe simplify use integer 102 (FRAME_RATE_COMPATIBILITY_MIN) as the default config? As WallpaperService also uses it as default originally.",
+      "parentUuid": "a614f4ea_1b074a0e",
+      "range": {
+        "startLine": 6867,
+        "startChar": 5,
+        "endLine": 6867,
+        "endChar": 11
+      },
+      "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
