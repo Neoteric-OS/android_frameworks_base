@@ -22,6 +22,30 @@
       },
       "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a614f4ea_1b074a0e",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1586686
+      },
+      "writtenOn": "2024-03-27T07:00:11Z",
+      "side": 1,
+      "message": "Thank you for your comment.\nAs you guess, the reason to use string is to set \u003cempty\u003e for its default value and to manage this configuration with only 1 resource.\n0 is FRAME_RATE_COMPATIBILITY_DEFAULT and another number may also conflict in the future.\nSo, I thought integer resource was not good for 1 resouce solution.\n\nIt is also possible to have 2 resources, where 1 bool resource for enable/disable and 1 integer value for overlaid frame rate values.\nShould I change this commit to 2 resource solution?",
+      "parentUuid": "18cfa9e8_ff6906eb",
+      "range": {
+        "startLine": 6867,
+        "startChar": 5,
+        "endLine": 6867,
+        "endChar": 11
+      },
+      "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
