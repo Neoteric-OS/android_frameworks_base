@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f57cb170_b36e0ee1",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2024-03-27T02:51:12Z",
+      "side": 1,
+      "message": "Please rename to config_wallpaperFrameRateCompatibility",
+      "range": {
+        "startLine": 6867,
+        "startChar": 18,
+        "endLine": 6867,
+        "endChar": 66
+      },
+      "revId": "c42cf52aeadc0ffcea88c1ca2ef0104b9954f7d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
