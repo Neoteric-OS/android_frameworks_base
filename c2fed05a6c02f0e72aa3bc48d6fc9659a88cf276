@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af0a6a74_4a528e6a",
+        "filename": "tests/testables/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2024-03-27T13:33:15Z",
+      "side": 1,
+      "message": "the referenced file has `set noparent` set; given that mocks a bunch of non-SystemUI classes, that seems like it\u0027s going to create unnecessary friction.\n\nCould you replace this with \n```suggestion\nfile:/packages/SystemUI/OWNERS\n```\n? (c.f. https://android-review.googlesource.com/plugins/code-owners/Documentation/backend-find-owners.html#syntax:~:text\u003da%20code%20owner).-,file%20keyword,-A%20file%3A%3Cpath)",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 33
+      },
+      "revId": "c2fed05a6c02f0e72aa3bc48d6fc9659a88cf276",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
