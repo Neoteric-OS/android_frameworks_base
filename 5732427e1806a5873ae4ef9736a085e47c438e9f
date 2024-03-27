@@ -214,6 +214,30 @@
       },
       "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6c79970_0c680289",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2024-03-27T16:23:54Z",
+      "side": 1,
+      "message": "Sorry for the back and forth, Riddle\u0027s suggestion to specify the default value as 102 (FRAME_RATE_COMPATIBILITY_MIN) seems cleanest. We do hard code constants inside the config file see config_defaultUiModeType and config_defaultNightMode.",
+      "parentUuid": "22e23387_9f5a8c78",
+      "range": {
+        "startLine": 6867,
+        "startChar": 5,
+        "endLine": 6867,
+        "endChar": 11
+      },
+      "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
