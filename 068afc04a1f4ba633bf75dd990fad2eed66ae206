@@ -70,6 +70,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f052ae8_688b0cf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1845626
+      },
+      "writtenOn": "2024-03-27T02:22:52Z",
+      "side": 1,
+      "message": "Could you review again?",
+      "parentUuid": "ddc841a0_46d38e9e",
+      "revId": "068afc04a1f4ba633bf75dd990fad2eed66ae206",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2584cdbc_56016a79",
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "Thank you for your review. I\u0027m now updating it.",
       "parentUuid": "2584cdbc_56016a79",
+      "range": {
+        "startLine": 1282,
+        "startChar": 28,
+        "endLine": 1285,
+        "endChar": 51
+      },
+      "revId": "068afc04a1f4ba633bf75dd990fad2eed66ae206",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "616cf918_5d556ce5",
+        "filename": "core/java/android/service/wallpaper/WallpaperService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1845626
+      },
+      "writtenOn": "2024-03-27T02:22:52Z",
+      "side": 1,
+      "message": "I have updated this commit to use getString(). Could you review again?",
+      "parentUuid": "c1430d5f_e66ae6bf",
       "range": {
         "startLine": 1282,
         "startChar": 28,
