@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18cfa9e8_ff6906eb",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-03-27T06:47:57Z",
+      "side": 1,
+      "message": "Wondering what\u0027s the meaning of the string content, if it is only empty and non-empty, why not a bool.",
+      "range": {
+        "startLine": 6867,
+        "startChar": 5,
+        "endLine": 6867,
+        "endChar": 11
+      },
+      "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
