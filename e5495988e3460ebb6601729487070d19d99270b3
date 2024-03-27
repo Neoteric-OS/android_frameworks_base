@@ -16,6 +16,24 @@
       "message": "I honestly don\u0027t think you need the `try/catch`, as the resource will always exist (it\u0027s part of the framework.)\nBut no strong opinions 😊",
       "revId": "e5495988e3460ebb6601729487070d19d99270b3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59059eb6_f1b4ce33",
+        "filename": "core/java/android/service/wallpaper/WallpaperService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1845626
+      },
+      "writtenOn": "2024-03-27T18:04:32Z",
+      "side": 1,
+      "message": "Thanks, I checked other getInteger() callers in frameworks/base and I understand most of them don\u0027t have try/catch for NameNotFoundException. I have updated this commit to remove it.",
+      "parentUuid": "2c23b37c_9db00d18",
+      "revId": "e5495988e3460ebb6601729487070d19d99270b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
