@@ -166,6 +166,30 @@
       },
       "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67a6077f_893e8537",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 6867,
+      "author": {
+        "id": 1845626
+      },
+      "writtenOn": "2024-03-27T08:21:16Z",
+      "side": 1,
+      "message": "Thank you for your replies.\nNow, I would like to add 1 more bool resource to remove strange use of string resource.\nI will update this commit soon.",
+      "parentUuid": "ce519b95_3fbf52ca",
+      "range": {
+        "startLine": 6867,
+        "startChar": 5,
+        "endLine": 6867,
+        "endChar": 11
+      },
+      "revId": "5732427e1806a5873ae4ef9736a085e47c438e9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
