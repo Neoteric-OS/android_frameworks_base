@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d5dee44_6704ef68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137703
+      },
+      "writtenOn": "2024-03-28T16:07:00Z",
+      "side": 1,
+      "message": "Looks like most comments need to be marked Resolved. Assuming that\u0027s done, LGTM.",
+      "revId": "f65feaefc6cf8a46c6b3a75181aab2b6ba9eeddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
