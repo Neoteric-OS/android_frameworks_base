@@ -246,10 +246,13 @@ import static android.provider.Telephony.Carriers.INVALID_APN_ID;
 import static android.security.keystore.AttestationUtils.USE_INDIVIDUAL_ATTESTATION;
 
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent.PROVISIONING_ENTRY_POINT_ADB;
+import static com.android.internal.util.ConcurrentUtils.DIRECT_EXECUTOR;
 import static com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_NONE;
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_REQUIRED_AFTER_DPM_LOCK_NOW;
 import static com.android.server.SystemTimeZone.TIME_ZONE_CONFIDENCE_HIGH;
 import static com.android.server.am.ActivityManagerService.STOCK_PM_FLAGS;
+import static com.android.server.devicepolicy.DevicePolicyStatsLog.DEVICE_POLICY;
+import static com.android.server.devicepolicy.DevicePolicyStatsLog.DEVICE_POLICY__MANAGEMENT_MODE__COPE;
 import static com.android.server.devicepolicy.TransferOwnershipMetadataManager.ADMIN_TYPE_DEVICE_OWNER;
 import static com.android.server.devicepolicy.TransferOwnershipMetadataManager.ADMIN_TYPE_PROFILE_OWNER;
 import static com.android.server.pm.PackageManagerService.PLATFORM_PACKAGE_NAME;
@@ -284,6 +287,7 @@ import android.app.IServiceConnection;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.StatsManager;
 import android.app.StatusBarManager;
 import android.app.admin.AccountTypePolicyKey;
 import android.app.admin.BooleanPolicyValue;
@@ -453,6 +457,7 @@ import android.util.IntArray;
 import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
+import android.util.StatsEvent;
 import android.util.Xml;
 import android.view.IWindowManager;
 import android.view.accessibility.AccessibilityManager;
@@ -3373,6 +3378,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                         migratePoliciesToDevicePolicyEngine();
                     }
                 }
+                registerStatsCallbacks();
                 maybeStartSecurityLogMonitorOnActivityManagerReady();
                 break;
             case SystemService.PHASE_BOOT_COMPLETED:
@@ -3383,6 +3389,30 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 ensureDeviceOwnerUserStarted(); // TODO Consider better place to do this.
                 break;
         }
+    }
+
+    /** Register callbacks for statsd pulled atoms. */
+    private void registerStatsCallbacks() {
+        final StatsManager statsManager = mContext.getSystemService(StatsManager.class);
+        statsManager.setPullAtomCallback(
+                DEVICE_POLICY,
+                null, // use defaultPullAtomMetadata values
+                DIRECT_EXECUTOR,
+                this::onPullAtom);
+    }
+
+    /** Writes the pulled atoms. */
+    private int onPullAtom(int atomTag, List<StatsEvent> statsEvents) {
+        switch (atomTag) {
+            case DEVICE_POLICY ->
+                    DevicePolicyStatsLog.buildStatsEvent(
+                            DEVICE_POLICY,
+                            DEVICE_POLICY__MANAGEMENT_MODE__COPE);
+            default -> {
+                return StatsManager.PULL_SKIP;
+            }
+        }
+        return StatsManager.PULL_SUCCESS;
     }
 
     private void applyManagedSubscriptionsPolicyIfRequired() {
