@@ -39,6 +39,30 @@
       },
       "revId": "f65feaefc6cf8a46c6b3a75181aab2b6ba9eeddb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fbd7ea7_9a04f3df",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1137703
+      },
+      "writtenOn": "2024-03-28T16:48:46Z",
+      "side": 1,
+      "message": "I\u0027m fine either way. (See my earlier comment for my concerns, but...it\u0027s a rare case, so 80% is fine if that\u0027s your preference).",
+      "parentUuid": "c7349834_a9e7be05",
+      "range": {
+        "startLine": 61,
+        "startChar": 71,
+        "endLine": 61,
+        "endChar": 82
+      },
+      "revId": "f65feaefc6cf8a46c6b3a75181aab2b6ba9eeddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
