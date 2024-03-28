@@ -16,6 +16,23 @@
       "message": "I\u0027m really not an expert on Soong and advanced Android.bp magic. The CL LGTM but I\u0027ll defer the CR+2 to Paul.",
       "revId": "477b0b45f3268c1a3340566b26e4f4e3bde1f86c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d47961b1_349c0818",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-03-28T14:10:01Z",
+      "side": 1,
+      "message": "There is a lot of duplication here. AFAICT the only difference is the tag name.",
+      "revId": "477b0b45f3268c1a3340566b26e4f4e3bde1f86c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
