@@ -16,6 +16,29 @@
       "message": "Looks like most comments need to be marked Resolved. Assuming that\u0027s done, LGTM.",
       "revId": "f65feaefc6cf8a46c6b3a75181aab2b6ba9eeddb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7349834_a9e7be05",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-28T16:20:02Z",
+      "side": 1,
+      "message": "1920x1080 is 2M.. most of the cases, fuzzer runs with a smaller buffer (for eg: the size gets limited to 1MB if the max-len is not specified).\n\nIMHO, (size * 80) / 100 is better as we want bulk of the data to be treated as input buffer for the decoder anyways.",
+      "range": {
+        "startLine": 61,
+        "startChar": 71,
+        "endLine": 61,
+        "endChar": 82
+      },
+      "revId": "f65feaefc6cf8a46c6b3a75181aab2b6ba9eeddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
