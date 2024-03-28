@@ -63,6 +63,30 @@
       },
       "revId": "f65feaefc6cf8a46c6b3a75181aab2b6ba9eeddb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b8e8ff7_369421c8",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1546599
+      },
+      "writtenOn": "2024-03-28T16:52:13Z",
+      "side": 1,
+      "message": "Kevin,\nThanks.\n\nOnkar,\nPlease change this to 80%.",
+      "parentUuid": "8fbd7ea7_9a04f3df",
+      "range": {
+        "startLine": 61,
+        "startChar": 71,
+        "endLine": 61,
+        "endChar": 82
+      },
+      "revId": "f65feaefc6cf8a46c6b3a75181aab2b6ba9eeddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
