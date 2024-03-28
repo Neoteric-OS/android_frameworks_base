@@ -16,6 +16,24 @@
       "message": "Hi Google team,\nThank you so much for your review.\nI cannot check about Treehugger presubmit -1.\nCould you support to merge this change?",
       "revId": "c5615f05afe11e2bc2be03545985e57576591b99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba5a7469_73fa5712",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958248
+      },
+      "writtenOn": "2024-03-28T12:21:58Z",
+      "side": 1,
+      "message": "There\u0027s a merge conflict. You\u0027ll need to update to head and resolve the conflict, then upload the change.",
+      "parentUuid": "e678166b_e28b163c",
+      "revId": "c5615f05afe11e2bc2be03545985e57576591b99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
