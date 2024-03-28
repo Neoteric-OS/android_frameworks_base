@@ -16,6 +16,24 @@
       "message": "Should this #if macro just be checking _WIN32? In my opinion, platform-specific ifdefs are easier to reason about, because you do not have to do any additional research about which platform supports F_DUPFD_CLOEXEC.\n\n#if !defined(_WIN32) // Windows does not have F_DUPFD_CLOEXEC\n    unique_fd dup_fd(::fcntl(fd, F_DUPFD_CLOEXEC, 0));\n#else \n    unique_fd dup_fd(::dup(fd));\n#endif",
       "revId": "113424c01b94cea71274bea7b1ef2b8394e854c6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "953fbbef_4c11f180",
+        "filename": "core/jni/android_content_res_ApkAssets.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001100
+      },
+      "writtenOn": "2024-03-28T18:53:42Z",
+      "side": 1,
+      "message": "Done. This seems to be the way this codebase works, thus the lack of modularity is probably more consistent.",
+      "parentUuid": "d98b44bb_79aa9f8c",
+      "revId": "113424c01b94cea71274bea7b1ef2b8394e854c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
