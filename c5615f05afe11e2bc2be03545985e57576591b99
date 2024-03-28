@@ -52,6 +52,24 @@
       "parentUuid": "ba5a7469_73fa5712",
       "revId": "c5615f05afe11e2bc2be03545985e57576591b99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b69cd9fc_b5052c53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2024-03-28T16:29:27Z",
+      "side": 1,
+      "message": "The conflict is with internal `git_main`, I cherry-picked your change and resolved it.\nFeel free to abandon this CL, I\u0027ll make sure your change is merged internally.",
+      "parentUuid": "d6c16c1c_3e98d106",
+      "revId": "c5615f05afe11e2bc2be03545985e57576591b99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
