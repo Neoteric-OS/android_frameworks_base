@@ -52,6 +52,24 @@
       "parentUuid": "3b72b8b3_9dc92281",
       "revId": "34c2458929efcbaf41affa77251058834454260e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31968f3c_7725cc0a",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-03-28T06:16:43Z",
+      "side": 1,
+      "message": "Updated max range to `1920*1080` image resolution.",
+      "parentUuid": "700b997c_2c3cf3b5",
+      "revId": "34c2458929efcbaf41affa77251058834454260e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
