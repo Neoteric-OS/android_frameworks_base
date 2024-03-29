@@ -211,6 +211,12 @@ public class BinaryTransparencyService extends SystemService {
 
             var results = new ArrayList<IBinaryTransparencyService.AppInfo>();
 
+            if (packageState.getAndroidPackage() == null) {
+                Slog.w(TAG, "The physical APK on device for " + packageState.getPackageName()
+                        + " at " + packageState.getPath() + " is missing.");
+                return results;
+            }
+
             // Same attributes across base and splits.
             String packageName = packageState.getPackageName();
             long versionCode = packageState.getVersionCode();
