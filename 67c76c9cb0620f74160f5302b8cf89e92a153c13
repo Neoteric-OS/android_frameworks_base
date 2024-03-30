@@ -16,6 +16,24 @@
       "message": "can this ifdef be updated too?",
       "revId": "67c76c9cb0620f74160f5302b8cf89e92a153c13",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0ca5b81_cd37d168",
+        "filename": "core/jni/android_content_res_ApkAssets.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001100
+      },
+      "writtenOn": "2024-03-30T00:21:09Z",
+      "side": 1,
+      "message": "Good catch, thanks!",
+      "parentUuid": "2cdb386c_d8eb2f7b",
+      "revId": "67c76c9cb0620f74160f5302b8cf89e92a153c13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
