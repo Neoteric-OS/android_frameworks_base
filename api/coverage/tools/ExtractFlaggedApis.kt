@@ -29,7 +29,7 @@ fun main(args: Array<String>) {
     for (pkg in cb.getPackages().packages) {
         val packageName = pkg.qualifiedName()
         pkg.allClasses()
-            .filter { it.methods().size > 0 }
+            .filter { it.methods().isNotEmpty() || it.constructors().isNotEmpty()}
             .forEach {
                 extractFlaggedApisFromClass(it, it.methods(), packageName, builder)
                 extractFlaggedApisFromClass(it, it.constructors(), packageName, builder)
