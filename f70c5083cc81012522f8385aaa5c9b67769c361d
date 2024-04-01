@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5c29399_d02e40b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-04-01T15:45:29Z",
+      "side": 1,
+      "message": "This needs the other CL (aosp/3008017), but I want to submit aosp/3008017 separately ahead of time, so waiting for that.",
+      "revId": "f70c5083cc81012522f8385aaa5c9b67769c361d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
