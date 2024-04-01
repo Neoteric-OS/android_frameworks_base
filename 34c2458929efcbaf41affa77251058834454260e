@@ -70,6 +70,24 @@
       "parentUuid": "700b997c_2c3cf3b5",
       "revId": "34c2458929efcbaf41affa77251058834454260e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b301a76_0df28327",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-04-01T14:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31968f3c_7725cc0a",
+      "revId": "34c2458929efcbaf41affa77251058834454260e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

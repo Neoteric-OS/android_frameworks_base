@@ -83,6 +83,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "910e958b_177a84ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-04-01T14:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a20dd615_03470be7",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a663cf3_480f77f6",
@@ -130,6 +148,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "858fbd8b_47bbe600",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-04-01T14:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "721d896e_383c4ede",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18effcad_95693fe1",
@@ -165,6 +207,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e48242a1_e1bcd0be",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-04-01T14:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88cb5514_381e3121",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3929664a_6a36c42d",
@@ -196,6 +256,24 @@
       "side": 1,
       "message": "removed.",
       "parentUuid": "3929664a_6a36c42d",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9acb41be_43060521",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-04-01T14:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb13a6a0_22323601",
       "revId": "ad846f699abb124307924eab752c832403669d17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -429,6 +507,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d48d301c_e2b2dda1",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-04-01T14:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9da5d60d_a3228992",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea103599_ad2478ee",
@@ -460,6 +562,24 @@
       "side": 1,
       "message": "Initially, height and width were not limited to 5000 and without calling AImageDecoder_setTargetSize would result in large malloc. Updated the code to set the height and width once via AImageDecoder_setTargetSize. Hence both are limited to 5000.",
       "parentUuid": "ea103599_ad2478ee",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bebf2a76_bc94a978",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-04-01T14:15:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65fef43e_d942a7f2",
       "revId": "ad846f699abb124307924eab752c832403669d17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
