@@ -966,6 +966,7 @@ public class PackageInfoUtils {
         int flags = pkgWithoutStateFlags;
         if (pkgSetting != null) {
             flags |= flag(pkgSetting.isUpdatedSystemApp(), ApplicationInfo.FLAG_UPDATED_SYSTEM_APP);
+            flags |= flag(pkgSetting.isDataOnly(), ApplicationInfo.FLAG_IS_DATA_ONLY);
         }
         return flags;
         // @formatter:on

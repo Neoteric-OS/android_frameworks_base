@@ -990,6 +990,7 @@ public class PackageManagerTests extends AndroidTestCase {
             if (retainData) {
                 assertNotNull(info);
                 assertEquals(info.packageName, ip.pkg.getPackageName());
+                assertTrue((info.flags & ApplicationInfo.FLAG_IS_DATA_ONLY) != 0);
             } else {
                 assertNull(info);
             }

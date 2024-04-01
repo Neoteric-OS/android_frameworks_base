@@ -30,6 +30,7 @@ import static com.android.server.pm.PackageManagerService.RANDOM_DIR_PREFIX;
 import static com.android.server.pm.PackageManagerService.TAG;
 
 import android.annotation.NonNull;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.parsing.ApkLiteParseUtils;
 import android.content.pm.parsing.PackageLite;
@@ -414,6 +415,11 @@ final class RemovePackageHelper {
                 }
             }
         }
+
+        if ((flags & PackageManager.DELETE_KEEP_DATA) != 0) {
+            deletedPs.setFlags(deletedPs.getFlags() | ApplicationInfo.FLAG_IS_DATA_ONLY);
+        }
+
         synchronized (mPm.mLock) {
             // can downgrade to reader
             if (writeSettings) {

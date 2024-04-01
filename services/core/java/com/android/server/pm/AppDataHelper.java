@@ -510,7 +510,9 @@ public class AppDataHelper {
                     "Package " + packageName + " found on unknown volume " + volumeUuid
                             + "; expected volume " + packageState.getVolumeUuid(),
                     PackageManagerException.INTERNAL_ERROR_STORAGE_INVALID_VOLUME_UNKNOWN);
-        } else if (!packageState.getUserStateOrDefault(userId).isInstalled()) {
+        } else if (!packageState.getUserStateOrDefault(userId).isInstalled()
+                && !packageState.isDataOnly()) {
+            // If the code file is removed, but the data still exists, do not mark as removed
             throw PackageManagerException.ofInternalError(
                     "Package " + packageName + " not installed for user " + userId,
                     PackageManagerException.INTERNAL_ERROR_STORAGE_INVALID_NOT_INSTALLED_FOR_USER);

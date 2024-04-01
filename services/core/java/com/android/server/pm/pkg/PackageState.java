@@ -472,4 +472,10 @@ public interface PackageState {
      * @hide
      */
     boolean isScannedAsStoppedSystemApp();
+
+    /**
+     * @see ApplicationInfo#FLAG_IS_DATA_ONLY
+     * @hide
+     */
+    boolean isDataOnly();
 }

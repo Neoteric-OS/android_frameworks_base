@@ -4823,6 +4823,7 @@ public final class Settings implements Watchable, Snappable, ResilientAtomicFile
         ApplicationInfo.FLAG_RESTORE_ANY_VERSION, "RESTORE_ANY_VERSION",
         ApplicationInfo.FLAG_EXTERNAL_STORAGE, "EXTERNAL_STORAGE",
         ApplicationInfo.FLAG_LARGE_HEAP, "LARGE_HEAP",
+        ApplicationInfo.FLAG_IS_DATA_ONLY, "IS_DATA_ONLY",
     };
 
     private static final Object[] PRIVATE_FLAG_DUMP_SPEC = new Object[] {
