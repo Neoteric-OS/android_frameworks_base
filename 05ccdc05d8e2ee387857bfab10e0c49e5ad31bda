@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b0a6bbd_ae77300d",
+        "filename": "core/tests/FileSystemUtilsTest/apk_embedded_native_libs/src/android/test/embedded/MainActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-04-01T15:59:36Z",
+      "side": 1,
+      "message": "To make sure that the library is working, how about adding a jni method to do some simple task (like some simple arithmetic task) and verify that the result is as expected?",
+      "range": {
+        "startLine": 28,
+        "startChar": 39,
+        "endLine": 28,
+        "endChar": 40
+      },
+      "revId": "05ccdc05d8e2ee387857bfab10e0c49e5ad31bda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
