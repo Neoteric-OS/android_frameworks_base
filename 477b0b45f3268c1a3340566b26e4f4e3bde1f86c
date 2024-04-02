@@ -33,6 +33,24 @@
       "message": "There is a lot of duplication here. AFAICT the only difference is the tag name.",
       "revId": "477b0b45f3268c1a3340566b26e4f4e3bde1f86c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a514d016_13a06852",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-04-02T22:53:17Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I was worried that if I separate `dists.tag` from the rest of the `dists` structs it will create another entry in the `dists` array. However it seems like the entry is added to the existing `dist` entries instead of creating a new one. I tried to make this into a `stubs_default` and pass the `dists.tag` as defaults, but that led to errors.",
+      "parentUuid": "d47961b1_349c0818",
+      "revId": "477b0b45f3268c1a3340566b26e4f4e3bde1f86c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
