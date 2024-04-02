@@ -41,6 +41,7 @@ import android.graphics.Insets;
 import android.graphics.Rect;
 import android.os.Trace;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.WindowInsets;
 import android.view.WindowInsetsAnimationControlListener;
 import android.view.WindowInsetsAnimationController;
@@ -53,6 +54,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout;
 import com.android.app.animation.Interpolators;
 import com.android.internal.widget.LockscreenCredential;
 import com.android.internal.widget.TextViewInputDisabler;
+import com.android.keyguard.KeyguardPasswordView.DisappearAnimationListener;
 import com.android.systemui.DejankUtils;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.policy.DevicePostureController;
@@ -64,7 +66,7 @@ import com.android.systemui.statusbar.policy.DevicePostureController;
  */
 public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
 
-    private TextView mPasswordEntry;
+    private WipeOnFinalizeTextView mPasswordEntry;
     private TextViewInputDisabler mPasswordEntryDisabler;
     private DisappearAnimationListener mDisappearAnimationListener;
     @Nullable private MotionLayout mContainerMotionLayout;
@@ -75,12 +77,47 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
     private static final int[] DISABLE_STATE_SET = {-android.R.attr.state_enabled};
     private static final int[] ENABLE_STATE_SET = {android.R.attr.state_enabled};
 
+    private class WipeOnFinalizeTextView extends TextView {
+        public WipeOnFinalizeTextView(Context context) {
+            super(context);
+        }
+
+        public WipeOnFinalizeTextView(Context context, @Nullable AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public WipeOnFinalizeTextView(Context context,
+            @Nullable AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        public WipeOnFinalizeTextView(
+                Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        @Override
+        public void finalize() {
+            clear();
+        }
+    }
+
     public KeyguardPasswordView(Context context) {
         this(context, null);
     }
 
     public KeyguardPasswordView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void wipePassword() {
+        mPasswordEntry.clear();
+    }
+
+    /** @hide */
+    @Override
+    public void finalize() {
+        wipePassword();
     }
 
     /**
@@ -167,7 +204,7 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        mPasswordEntry = findViewById(getPasswordTextViewId());
+        mPasswordEntry = (WipeOnFinalizeTextView)findViewById(getPasswordTextViewId());
         mPasswordEntryDisabler = new TextViewInputDisabler(mPasswordEntry);
 
         // EditText cursor can fail screenshot tests, so disable it when testing

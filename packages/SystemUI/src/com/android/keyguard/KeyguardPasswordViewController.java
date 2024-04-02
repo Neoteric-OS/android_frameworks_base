@@ -18,6 +18,7 @@ package com.android.keyguard;
 
 import static com.android.systemui.flags.Flags.LOCKSCREEN_ENABLE_LANDSCAPE;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.UserHandle;
 import android.text.Editable;
@@ -25,6 +26,8 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -34,6 +37,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.android.internal.util.LatencyTracker;
@@ -60,9 +64,33 @@ public class KeyguardPasswordViewController
     private final DelayableExecutor mMainExecutor;
     private final KeyguardViewController mKeyguardViewController;
     private final boolean mShowImeAtScreenOn;
-    private EditText mPasswordEntry;
+    private WipeOnFinalizeEditText mPasswordEntry;
     private ImageView mSwitchImeButton;
     private boolean mPaused;
+
+    private class WipeOnFinalizeEditText extends EditText {
+        public WipeOnFinalizeEditText(Context context) {
+            super(context);
+        }
+
+        public WipeOnFinalizeEditText(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public WipeOnFinalizeEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        public WipeOnFinalizeEditText(Context context, AttributeSet attrs,
+            int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        @Override
+        public void finalize() {
+            clear();
+        }
+    }
 
     private final OnEditorActionListener mOnEditorActionListener = (v, actionId, event) -> {
         // Check if this was the result of hitting the IME done action
@@ -134,7 +162,7 @@ public class KeyguardPasswordViewController
             view.setIsLockScreenLandscapeEnabled();
         }
         mShowImeAtScreenOn = resources.getBoolean(R.bool.kg_show_ime_at_screen_on);
-        mPasswordEntry = mView.findViewById(mView.getPasswordTextViewId());
+        mPasswordEntry = (WipeOnFinalizeEditText) mView.findViewById(mView.getPasswordTextViewId());
         mSwitchImeButton = mView.findViewById(R.id.switch_ime_button);
     }
 
@@ -182,6 +210,7 @@ public class KeyguardPasswordViewController
         super.onViewDetached();
         mPasswordEntry.setOnEditorActionListener(null);
         mPostureController.removeCallback(mPostureCallback);
+        mPasswordEntry.clear();
     }
 
     @Override

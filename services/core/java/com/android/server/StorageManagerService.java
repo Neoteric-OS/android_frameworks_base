@@ -3270,7 +3270,7 @@ class StorageManagerService extends IStorageManager.Stub
             throws RemoteException {
         super.setCeStorageProtection_enforcePermission();
 
-        mVold.setCeStorageProtection(userId, HexDump.toHexString(secret));
+        mVold.setCeStorageProtection(userId, secret);
     }
 
     /* Only for use by LockSettingsService */
