@@ -40,14 +40,14 @@ object PinPadViewBinder {
                 }
 
                 override fun onBackspaceClick() {
-                    val pin = LockscreenCredential.createPinOrNone(passwordField.text)
-                    if (pin.size() > 0) {
-                        passwordField.text.delete(
-                            passwordField.selectionEnd - 1,
-                            passwordField.selectionEnd
-                        )
+                    LockscreenCredential.createPinOrNone(passwordField.text).use { pin ->
+                        if (pin.size() > 0) {
+                            passwordField.text.delete(
+                                passwordField.selectionEnd - 1,
+                                passwordField.selectionEnd
+                            )
+                        }
                     }
-                    pin.zeroize()
                 }
 
                 override fun onEnterKeyClick() {
