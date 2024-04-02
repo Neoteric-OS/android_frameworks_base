@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85114875_45a20bbe",
+        "filename": "keystore/java/android/security/AndroidKeyStoreMaintenance.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1989371
+      },
+      "writtenOn": "2024-04-02T04:38:59Z",
+      "side": 1,
+      "message": "Thanks, added clarification about vold-managed keys.",
+      "parentUuid": "678d861a_190a3340",
+      "range": {
+        "startLine": 235,
+        "startChar": 60,
+        "endLine": 236,
+        "endChar": 67
+      },
+      "revId": "f35e38d590fbd054a5728b4543af0ed4bbdb251a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "758d3f90_11d49c25",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b2a5545_4b74dcf7",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1989371
+      },
+      "writtenOn": "2024-04-02T04:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "758d3f90_11d49c25",
+      "range": {
+        "startLine": 530,
+        "startChar": 16,
+        "endLine": 530,
+        "endChar": 22
+      },
+      "revId": "f35e38d590fbd054a5728b4543af0ed4bbdb251a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99147269_b9fa642b",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-04-01T17:45:30Z",
       "side": 1,
       "message": "This is a super exceptional code path, so the `if (DEBUG)` thing here is a bit out of place.  It should just log something unconditionally at INFO or WARNING level.",
+      "range": {
+        "startLine": 555,
+        "startChar": 8,
+        "endLine": 555,
+        "endChar": 49
+      },
+      "revId": "f35e38d590fbd054a5728b4543af0ed4bbdb251a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e2f693a_133ac374",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1989371
+      },
+      "writtenOn": "2024-04-02T04:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99147269_b9fa642b",
       "range": {
         "startLine": 555,
         "startChar": 8,
