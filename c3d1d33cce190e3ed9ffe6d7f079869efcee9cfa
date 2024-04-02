@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf387b62_20939ab9",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-04-02T20:45:00Z",
+      "side": 1,
+      "message": "The name of the variable is inverted from the choice you\u0027re making.",
+      "revId": "c3d1d33cce190e3ed9ffe6d7f079869efcee9cfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bafcb32_630dc6b0",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-04-02T20:45:00Z",
+      "side": 1,
+      "message": "nit: `const`",
+      "revId": "c3d1d33cce190e3ed9ffe6d7f079869efcee9cfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c1a4137_1cbc643f",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-04-02T20:45:00Z",
+      "side": 1,
+      "message": "This deserves a comment. Why are we using 80% of the size?",
+      "range": {
+        "startLine": 61,
+        "startChar": 71,
+        "endLine": 61,
+        "endChar": 88
+      },
+      "revId": "c3d1d33cce190e3ed9ffe6d7f079869efcee9cfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70b018d6_3266cab2",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-04-02T20:45:00Z",
+      "side": 1,
+      "message": "Do you intend to use integer divide here? I don\u0027t remember if the fuzzer will ever use a `size` of `0`, but then this would be `0`?",
+      "range": {
+        "startLine": 61,
+        "startChar": 83,
+        "endLine": 61,
+        "endChar": 84
+      },
+      "revId": "c3d1d33cce190e3ed9ffe6d7f079869efcee9cfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "489cf9c1_5a46e7d5",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-04-02T20:45:00Z",
+      "side": 1,
+      "message": "You should check the return value of `AImageDecoder_setTargetSize` and only update `width` and `height` if the function succeeds. Otherwise you\u0027re not honoring the API contract.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 72
+      },
+      "revId": "c3d1d33cce190e3ed9ffe6d7f079869efcee9cfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b95e09fe_8217ea16",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-04-02T20:45:00Z",
+      "side": 1,
+      "message": "These should use temporaries. If you reach here, you don\u0027t ever use the answer.\n\n**OR** you should follow this up with a call to `AImageDecoder_setTargetSize`",
+      "range": {
+        "startLine": 115,
+        "startChar": 53,
+        "endLine": 115,
+        "endChar": 70
+      },
+      "revId": "c3d1d33cce190e3ed9ffe6d7f079869efcee9cfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0583af75_d0ba7388",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-04-02T20:45:00Z",
+      "side": 1,
+      "message": "You should use the existing `height`. This method returns the encoded height, but you may have changed it with a call to `AImageDecoder_setTargetSize` to something larger. Then your pixel allocation will be too small.\n\nThough now that I take another look, `AImageDecoder_decodeImage` lets you pass in the allocation size, so it\u0027ll just fail. My initial concern was that the fuzzer itself would be forcing the decoder to write to memory it doesn\u0027t own, and that\u0027s not actually a problem here, thanks to that allocation size parameter. But you\u0027re effectively not testing the path that attempts to decode to a larger size.",
+      "revId": "c3d1d33cce190e3ed9ffe6d7f079869efcee9cfa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

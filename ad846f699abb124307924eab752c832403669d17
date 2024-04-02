@@ -103,6 +103,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d77277d8_47f11bc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-04-02T20:45:00Z",
+      "side": 1,
+      "message": "This CL tries to make many orthogonal changes. It makes things a lot easier for the reviewer if you break them up into logical chunks. Part of the reason for my delay in getting back to this review is I need to re-remember everything that\u0027s going on here. That\u0027s a lot easier with separate CLs.\n\nYes, please break into a separate CL.",
+      "parentUuid": "910e958b_177a84ec",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a663cf3_480f77f6",
         "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
         "patchSetId": 1
