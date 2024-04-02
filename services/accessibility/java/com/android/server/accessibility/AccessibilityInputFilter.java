@@ -250,7 +250,7 @@ class AccessibilityInputFilter extends InputFilter implements EventStreamTransfo
 
     @Override
     public void onInputEvent(InputEvent event, int policyFlags) {
-        if (DEBUG) {
+        if (event instanceof KeyEvent) {
             Slog.d(TAG, "Received event: " + event + ", policyFlags=0x"
                     + Integer.toHexString(policyFlags));
         }
@@ -275,6 +275,7 @@ class AccessibilityInputFilter extends InputFilter implements EventStreamTransfo
         final int eventSource = event.getSource();
         final int displayId = event.getDisplayId();
         if ((policyFlags & WindowManagerPolicy.FLAG_PASS_TO_USER) == 0) {
+            // When the Power Key is pressed, the state will be reset
             state.reset();
             clearEventStreamHandler(displayId, eventSource);
             super.onInputEvent(event, policyFlags);
@@ -371,6 +372,7 @@ class AccessibilityInputFilter extends InputFilter implements EventStreamTransfo
             super.onInputEvent(event, policyFlags);
             return;
         }
+        Slog.d(TAG, "processKeyEvent: " + event);
         // Since the display id of KeyEvent always would be -1 and there is only one
         // KeyboardInterceptor for all display, pass KeyEvent to the mEventHandler of
         // DEFAULT_DISPLAY to handle.
@@ -987,6 +989,7 @@ class AccessibilityInputFilter extends InputFilter implements EventStreamTransfo
         @Override
         final public void reset() {
             super.reset();
+            Slog.d("AccessibilityInputFilter", "EventSequenceStartedMap reset !!!");
             mEventSequenceStartedMap.clear();
         }
 
@@ -1014,6 +1017,9 @@ class AccessibilityInputFilter extends InputFilter implements EventStreamTransfo
             }
             boolean shouldProcess = event.getAction() == KeyEvent.ACTION_DOWN;
             mEventSequenceStartedMap.put(deviceId, shouldProcess);
+            // Because the state has been reset, the Up of the volume key will not be processed
+            // and is immediately injected into the input subsystem, but the Down of the volume key
+            // is still in the process at this time.
             return shouldProcess;
         }
     }

@@ -3045,6 +3045,9 @@ public class InputManagerService extends IInputManager.Stub
 
             synchronized (mInputFilterLock) {
                 if (!mDisconnected) {
+                    if (event instanceof KeyEvent) {
+                        Slog.d("InputFilter","Inject into the input system event :" + event);
+                    }
                     mNative.injectInputEvent(event, false /* injectIntoUid */, -1 /* uid */,
                             InputManager.INJECT_INPUT_EVENT_MODE_ASYNC, 0 /* timeout */,
                             policyFlags | WindowManagerPolicy.FLAG_FILTERED);
