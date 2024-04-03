@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d51d987_7d2703f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2024-04-03T13:15:01Z",
+      "side": 1,
+      "message": "Hi arteiro@, thanks for your reviewing. Looks like TH passed, can you help to merge it? Thanks.",
+      "revId": "78ebf69c4692c2af4ea148ee194acb55c411e614",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
