@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb8e98ec_5a3916d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962375
+      },
+      "writtenOn": "2024-04-03T00:40:52Z",
+      "side": 1,
+      "message": "@paulduffin@google.com I have lost the CR+2 vote after uploading a new patchset. Do you mind taking another look?",
+      "revId": "2d295aea9fd3fabb29daff6e700f5e59c30ed854",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
