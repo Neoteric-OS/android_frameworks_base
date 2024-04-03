@@ -16,8 +16,10 @@
 
 package com.android.server.vcn.routeselection;
 
+import static com.android.internal.annotations.VisibleForTesting.Visibility;
 import static com.android.server.vcn.util.PersistableBundleUtils.PersistableBundleWrapper;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.BroadcastReceiver;
@@ -38,6 +40,10 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.server.vcn.VcnContext;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.BitSet;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -56,8 +62,32 @@ import java.util.concurrent.TimeUnit;
 public class IpSecPacketLossDetector extends NetworkMetricMonitor {
     private static final String TAG = IpSecPacketLossDetector.class.getSimpleName();
 
-    @VisibleForTesting(visibility = Visibility.PRIVATE)
-    static final int PACKET_LOSS_UNAVALAIBLE = -1;
+    private static final int PACKET_LOSS_PERCENT_UNAVALAIBLE = -1;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(
+            prefix = {"PACKET_LOSS_"},
+            value = {
+                PACKET_LOSS_RATE_VALID,
+                PACKET_LOSS_RATE_INVALID,
+            })
+    @Target({ElementType.TYPE_USE})
+    private @interface PacketLossRateState {}
+
+    /** The reliable packet loss rate is avalaible */
+    private static final int PACKET_LOSS_RATE_VALID = 0;
+
+    /**
+     * Not able to get a reliable packet loss rate due to following reasons:
+     *
+     * <ul>
+     *   <li>The replay window did not proceed and all packets might have been delivered out of
+     *       order
+     *   <li>The sample size (the expected received packets) is too small
+     *   <li>Errors
+     * </ul>
+     */
+    private static final int PACKET_LOSS_RATE_INVALID = 1;
 
     // For VoIP, losses between 5% and 10% of the total packet stream will affect the quality
     // significantly (as per "Computer Networking for LANS to WANS: Hardware, Software and
@@ -69,7 +99,7 @@ public class IpSecPacketLossDetector extends NetworkMetricMonitor {
     private static final int POLL_IPSEC_STATE_INTERVAL_SECONDS_DEFAULT = 20;
 
     private long mPollIpSecStateIntervalMs;
-    private final int mPacketLossRatePercentThreshold;
+    private int mPacketLossRatePercentThreshold;
 
     @NonNull private final Handler mHandler;
     @NonNull private final PowerManager mPowerManager;
@@ -307,24 +337,24 @@ public class IpSecPacketLossDetector extends NetworkMetricMonitor {
             return;
         }
 
-        final int packetLossRate =
+        final PacketLossCalculationResult calculateResult =
                 mPacketLossCalculator.getPacketLossRatePercentage(
                         mLastIpSecTransformState, state, getLogPrefix());
 
-        if (packetLossRate == PACKET_LOSS_UNAVALAIBLE) {
+        if (calculateResult.getState() == PACKET_LOSS_RATE_INVALID) {
             return;
         }
 
         final String logMsg =
-                "packetLossRate: "
-                        + packetLossRate
+                "calculateResult: "
+                        + calculateResult
                         + "% in the past "
                         + (state.getTimestampMillis()
                                 - mLastIpSecTransformState.getTimestampMillis())
                         + "ms";
 
         mLastIpSecTransformState = state;
-        if (packetLossRate < mPacketLossRatePercentThreshold) {
+        if (calculateResult.getPercent() < mPacketLossRatePercentThreshold) {
             logV(logMsg);
             onValidationResultReceivedInternal(false /* isFailed */);
         } else {
@@ -343,7 +373,7 @@ public class IpSecPacketLossDetector extends NetworkMetricMonitor {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public static class PacketLossCalculator {
         /** Calculate the packet loss rate between two timestamps */
-        public int getPacketLossRatePercentage(
+        public PacketLossCalculationResult getPacketLossRatePercentage(
                 @NonNull IpSecTransformState oldState,
                 @NonNull IpSecTransformState newState,
                 String logPrefix) {
@@ -359,7 +389,7 @@ public class IpSecPacketLossDetector extends NetworkMetricMonitor {
             if (oldSeqHi == newSeqHi || newSeqHi < replayWindowSize) {
                 // The replay window did not proceed and all packets might have been delivered out
                 // of order
-                return PACKET_LOSS_UNAVALAIBLE;
+                return PacketLossCalculationResult.invalid();
             }
 
             // Get the expected packet count by assuming there is no packet loss. In this case, SA
@@ -386,10 +416,11 @@ public class IpSecPacketLossDetector extends NetworkMetricMonitor {
                     || actualPktCntDiff < 0
                     || actualPktCntDiff > expectedPktCntDiff) {
                 logWtf(TAG, "Impossible values for expectedPktCntDiff or" + " actualPktCntDiff");
-                return PACKET_LOSS_UNAVALAIBLE;
+                return PacketLossCalculationResult.invalid();
             }
 
-            return 100 - (int) (actualPktCntDiff * 100 / expectedPktCntDiff);
+            final int percent = 100 - (int) (actualPktCntDiff * 100 / expectedPktCntDiff);
+            return PacketLossCalculationResult.valid(percent);
         }
     }
 
@@ -408,5 +439,57 @@ public class IpSecPacketLossDetector extends NetworkMetricMonitor {
     /** Get the number of received packets within the replay window */
     private static long getPacketCntInReplayWindow(@NonNull IpSecTransformState state) {
         return BitSet.valueOf(state.getReplayBitmap()).cardinality();
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static class PacketLossCalculationResult {
+        @PacketLossRateState private final int mPacketLossRateState;
+        private final int mPacketLossRatePercent;
+
+        private PacketLossCalculationResult(@PacketLossRateState int state, int percent) {
+            mPacketLossRateState = state;
+            mPacketLossRatePercent = percent;
+        }
+
+        /** Construct an instance that represents a valid packet loss rate */
+        public static PacketLossCalculationResult valid(int percent) {
+            return new PacketLossCalculationResult(PACKET_LOSS_RATE_VALID, percent);
+        }
+
+        /** Construct an instance when there is no valid packet loss rate */
+        public static PacketLossCalculationResult invalid() {
+            return new PacketLossCalculationResult(
+                    PACKET_LOSS_RATE_INVALID, PACKET_LOSS_PERCENT_UNAVALAIBLE);
+        }
+
+        @PacketLossRateState
+        public int getState() {
+            return mPacketLossRateState;
+        }
+
+        public int getPercent() {
+            return mPacketLossRatePercent;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(mPacketLossRateState, mPacketLossRatePercent);
+        }
+
+        @Override
+        public boolean equals(@Nullable Object other) {
+            if (!(other instanceof PacketLossCalculationResult)) {
+                return false;
+            }
+
+            final PacketLossCalculationResult rhs = (PacketLossCalculationResult) other;
+            return mPacketLossRateState == rhs.mPacketLossRateState
+                    && mPacketLossRatePercent == rhs.mPacketLossRatePercent;
+        }
+
+        @Override
+        public String toString() {
+            return "state: " + mPacketLossRateState + " | percent: " + mPacketLossRatePercent;
+        }
     }
 }
