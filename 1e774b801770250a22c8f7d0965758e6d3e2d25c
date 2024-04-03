@@ -16,6 +16,23 @@
       "message": "Better than deleting this file, if we replace it with one that is empty and has limited owners (maybe only me), then it will block other new ones from being added in frameworks/base.",
       "revId": "1e774b801770250a22c8f7d0965758e6d3e2d25c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f96ddbbd_490ed195",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2024-04-03T04:57:56Z",
+      "side": 1,
+      "message": "Nevermind. Adding it to the denylist is better.",
+      "revId": "1e774b801770250a22c8f7d0965758e6d3e2d25c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
