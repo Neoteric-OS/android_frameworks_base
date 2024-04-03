@@ -22,6 +22,30 @@
       },
       "revId": "fb226587ff1c347ed6f0e16c786bee0eb1fd1e5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d2fbec8_10e225d1",
+        "filename": "graphics/java/android/graphics/Bitmap.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1850729
+      },
+      "writtenOn": "2024-04-03T20:07:15Z",
+      "side": 1,
+      "message": "No reason. Just updated.",
+      "parentUuid": "3ddfd657_8876a9cb",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 79
+      },
+      "revId": "fb226587ff1c347ed6f0e16c786bee0eb1fd1e5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
