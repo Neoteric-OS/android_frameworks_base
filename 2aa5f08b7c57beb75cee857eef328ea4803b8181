@@ -46,6 +46,30 @@
       },
       "revId": "2aa5f08b7c57beb75cee857eef328ea4803b8181",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87a86499_bc3bca3c",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-04T16:47:19Z",
+      "side": 1,
+      "message": "If the `PowerManagerService.lowLevelReboot(PowerManager.REBOOT_RECOVERY)` is not expected to be reached, what actually ensures the device is rebooted?",
+      "parentUuid": "e4e0ed75_b45cf100",
+      "range": {
+        "startLine": 544,
+        "startChar": 0,
+        "endLine": 547,
+        "endChar": 81
+      },
+      "revId": "2aa5f08b7c57beb75cee857eef328ea4803b8181",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
