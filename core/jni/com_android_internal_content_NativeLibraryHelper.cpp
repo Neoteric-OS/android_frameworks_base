@@ -144,7 +144,8 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
     uint32_t crc;
 
     IF_ALOGD() {
-        ALOGD("copyFileIfChanged: Reading zip file %s", zipFile->getZipFileName());
+        ALOGD("copyFileIfChanged: Reading zip file %s entry name:%s", zipFile->getZipFileName(),
+              fileName);
     }
 
     uint16_t method;

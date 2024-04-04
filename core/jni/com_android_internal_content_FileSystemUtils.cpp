@@ -40,9 +40,19 @@ using android::base::ReadFullyAtOffset;
 
 namespace android {
 
+bool checkAllZeros(const std::vector<uint8_t> &readContent) {
+    for (auto i : readContent) {
+        if (i != 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 bool punchHoles(const char *filePath, const uint64_t zipOffset,
                 const std::vector<Elf64_Phdr> &programHeaders) {
-    IF_ALOGD() {
+    {
         ALOGD("Total number of LOAD segments %zu", programHeaders.size());
         struct stat64 beforePunch;
         lstat64(filePath, &beforePunch);
@@ -74,19 +84,38 @@ bool punchHoles(const char *filePath, const uint64_t zipOffset,
             return false;
         }
 
-        IF_ALOGD() {
-            std::vector<uint8_t> buffer(punchLen);
-            ReadFullyAtOffset(fd, buffer.data(), punchLen, zipOffset + punchOffset);
-            ALOGD("Punching holes for content %s", HexString(buffer.data(), buffer.size()).c_str());
+        if (punchLen < 4096) {
+            ALOGD("SKIPPING :Punching holes for length:%llu", punchLen);
+            continue;
+        }
+
+        uint64_t punchStartOffset;
+        if (__builtin_add_overflow(zipOffset, punchOffset, &punchStartOffset)) {
+            ALOGW("punchHolesInLib::Overflow occurred when calculating punch start offset "
+                  "zipoffset:%llu punchOffset:%llu",
+                  zipOffset, punchOffset);
+            return false;
+        }
+
+        ALOGD("punchHolesInLib::Punching hole in lib start: %llu len:%llu", punchStartOffset,
+              punchLen);
+
+        std::vector<uint8_t> buffer(punchLen);
+        ReadFullyAtOffset(fd, buffer.data(), punchLen, punchStartOffset);
+        ALOGD("Punching holes for length:%zu expected length:%llu content: %s", buffer.size(),
+              punchLen, HexString(buffer.data(), buffer.size()).c_str());
+
+        if (!checkAllZeros(buffer)) {
+            ALOGE("punchHolesInLib:: Trying to punch non zero content");
+            return false;
         }
 
         // if we have a uncompressed file which is being opened from APK, use the zipoffset to punch
         // native lib inside Apk.
-        fallocate(fd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE, zipOffset + punchOffset,
-                  punchLen);
+        fallocate(fd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE, punchStartOffset, punchLen);
     }
 
-    IF_ALOGD() {
+    {
         struct stat64 afterPunch;
         lstat64(filePath, &afterPunch);
         ALOGD("Size after punching holes st_blocks: %" PRIu64 ", st_blksize: %ld, st_size: %" PRIu64
@@ -115,6 +144,7 @@ bool punchHolesInElf64(const char *filePath, const uint64_t zipOffset) {
     // read executable headers
     inputStream->read((char *)&ehdr, sizeof(ehdr));
     if (!inputStream->good()) {
+        ALOGW("End of input stream while reading executable header");
         return false;
     }
 
@@ -128,7 +158,7 @@ bool punchHolesInElf64(const char *filePath, const uint64_t zipOffset) {
     uint64_t programHeaderOffset = ehdr.e_phoff;
     uint16_t programHeaderNum = ehdr.e_phnum;
 
-    IF_ALOGD() {
+    {
         ALOGD("Punching holes in file : %s programHeaderOffset: %" PRIu64 " programHeaderNum: %hu",
               filePath, programHeaderOffset, programHeaderNum);
     }
@@ -142,6 +172,7 @@ bool punchHolesInElf64(const char *filePath, const uint64_t zipOffset) {
         inputStream->read((char *)&header, sizeof(header));
 
         if (!inputStream->good()) {
+            ALOGW("End of input stream while reading program header");
             return false;
         }
 
@@ -172,12 +203,12 @@ bool punchHolesInApk(const char *filePath, uint64_t zipOffset, uint64_t extraFie
     // Read the entire extra fields at once and punch file according to zero stretches.
     std::vector<uint8_t> buffer(extraFieldLen);
     ReadFullyAtOffset(fd, buffer.data(), extraFieldLen, extraFieldStart);
-    IF_ALOGD() {
+    {
         ALOGD("Extra field content near offset: %lld, is %s", zipOffset,
               HexString(buffer.data(), buffer.size()).c_str());
     }
 
-    IF_ALOGD() {
+    {
         struct stat64 beforePunch;
         lstat64(filePath, &beforePunch);
         ALOGD("punchHolesInApk:: Size before punching holes st_blocks: %" PRIu64
@@ -200,7 +231,7 @@ bool punchHolesInApk(const char *filePath, uint64_t zipOffset, uint64_t extraFie
         }
 
         // Don't punch for every stretch of zero which is found
-        if (punchLen > 512) {
+        if (punchLen > 4096) {
             uint64_t punchOffset;
             if (__builtin_add_overflow(extraFieldStart, currentSize, &punchOffset)) {
                 ALOGW("Overflow occurred when calculating punch start offset");
@@ -215,7 +246,7 @@ bool punchHolesInApk(const char *filePath, uint64_t zipOffset, uint64_t extraFie
         ++currentSize;
     }
 
-    IF_ALOGD() {
+    {
         struct stat64 afterPunch;
         lstat64(filePath, &afterPunch);
         ALOGD("punchHolesInApk:: Size after punching holes st_blocks: %" PRIu64
