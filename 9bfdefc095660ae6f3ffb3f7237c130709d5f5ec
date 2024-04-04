@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fc62371_5d9cbccb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-04-04T08:14:48Z",
+      "side": 1,
+      "message": "service",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "9bfdefc095660ae6f3ffb3f7237c130709d5f5ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "504de5a0_917e2422",
+        "filename": "services/core/java/com/android/server/audio/MusicFxHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-04-04T08:14:48Z",
+      "side": 1,
+      "message": "mIsBound",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "9bfdefc095660ae6f3ffb3f7237c130709d5f5ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1ebafec_0bf0dcec",
+        "filename": "services/core/java/com/android/server/audio/MusicFxHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-04-04T08:14:48Z",
+      "side": 1,
+      "message": "the doc for bindServiceAsUser says:\n\"You should call {@link #unbindService} to release the connection even if this method returned {@code false}.\"\n     \nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/content/Context.java;l\u003d3937?q\u003dcontext%20bindServiceAsUser\n\nshould we call unbindService() immediately in case of error then?\n\nWe need to understand if the doc is correct and if yes why do we have this problme when unbinding.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 59
+      },
+      "revId": "9bfdefc095660ae6f3ffb3f7237c130709d5f5ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
