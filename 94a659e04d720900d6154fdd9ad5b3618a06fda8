@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f7ecfe7_987ceba1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2024-04-04T16:20:07Z",
+      "side": 1,
+      "message": "Ah, is there supposed to be a change in this CL?",
+      "revId": "94a659e04d720900d6154fdd9ad5b3618a06fda8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
