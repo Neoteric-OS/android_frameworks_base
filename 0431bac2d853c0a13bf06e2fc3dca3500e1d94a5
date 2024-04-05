@@ -22,6 +22,30 @@
       },
       "revId": "0431bac2d853c0a13bf06e2fc3dca3500e1d94a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bfaef62_9e8d08d6",
+        "filename": "apex/jobscheduler/service/jni/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2024-04-05T11:23:22Z",
+      "side": 1,
+      "message": "https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/apex/Android.bp \n```\npackage {\n    default_visibility: [\":__subpackages__\"],\n}\n```\n\nThere is a package level visibility config.",
+      "parentUuid": "cc8580f8_abd395f2",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "0431bac2d853c0a13bf06e2fc3dca3500e1d94a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
