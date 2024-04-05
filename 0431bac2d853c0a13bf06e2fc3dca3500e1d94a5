@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc8580f8_abd395f2",
+        "filename": "apex/jobscheduler/service/jni/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-04-05T11:21:49Z",
+      "side": 1,
+      "message": "This module didn\u0027t have visibility, which means it\u0027s available to system by default?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "0431bac2d853c0a13bf06e2fc3dca3500e1d94a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
