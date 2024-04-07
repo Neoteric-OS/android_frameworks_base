@@ -16,6 +16,23 @@
       "message": "PTAL. This is just a cherry-pick from the internal main.",
       "revId": "d7579be9ec95d10c30605df5298f942c7d503cdc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5a9ba70_6de92ad8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480345
+      },
+      "writtenOn": "2024-04-07T07:53:50Z",
+      "side": 1,
+      "message": "Can anyone explain the reason why it is removed?\n\nI used 6.6 kernel and found that this case fails at the teardown stage when mini-keyctl is used to unlink the key and report that \"Required key not available\". Is it the reason?",
+      "revId": "d7579be9ec95d10c30605df5298f942c7d503cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
