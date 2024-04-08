@@ -16,6 +16,24 @@
       "message": "Do you hold the right permission according to https://source.corp.google.com/h/android/platform/superproject/main/+/main:system/security/keystore2/src/permission.rs;l\u003d143-145?q\u003ddeleteAllKeys%20keystore2\u0026ss\u003dh%2Fandroid%2Fplatform%2Fsuperproject%2Fmain%2F%2B%2Frefs%2Fheads%2Fmain ?",
       "revId": "0d00031851e9f5d8ef93947205a7e8b5257f0d8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f65e6f64_a129e22f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1989371
+      },
+      "writtenOn": "2024-04-08T10:17:04Z",
+      "side": 1,
+      "message": "Yes, it\u0027s in aosp/3002585.",
+      "parentUuid": "2d1e10b0_ef8b5b10",
+      "revId": "0d00031851e9f5d8ef93947205a7e8b5257f0d8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
