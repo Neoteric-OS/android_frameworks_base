@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0719d222_58a52ff0",
+        "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/TunerResourceManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2348,
+      "author": {
+        "id": 1927725
+      },
+      "writtenOn": "2024-04-08T23:43:12Z",
+      "side": 1,
+      "message": "better keep the bit allocation as is, just add a bit mask for resourceId",
+      "range": {
+        "startLine": 2336,
+        "startChar": 0,
+        "endLine": 2348,
+        "endChar": 5
+      },
+      "revId": "e2d3bb613623be864d196503d14daac4bdc114dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
