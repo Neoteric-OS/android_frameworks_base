@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e158475_b81977e5",
+        "filename": "core/jni/flags/file_system_utils_flags.aconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2024-04-09T22:21:22Z",
+      "side": 1,
+      "message": "What is this namespace? How do we see track the progress of this flag in this namespace?",
+      "range": {
+        "startLine": 5,
+        "startChar": 14,
+        "endLine": 5,
+        "endChar": 33
+      },
+      "revId": "ef19839fb7198b2cfab06ffa54af451a2ee42825",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
