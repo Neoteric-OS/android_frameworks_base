@@ -1,0 +1,8 @@
+package: "com.android.internal.content.flags"
+
+flag {
+  name: "enable_punch_holes"
+  namespace: "treble"
+  description: "This flag controls punching of Shared libs and APKs"
+  bug: "301631861"
+}

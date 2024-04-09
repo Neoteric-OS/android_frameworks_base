@@ -939,3 +939,18 @@ java_aconfig_library {
     aconfig_declarations: "android.crashrecovery.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
+
+cc_aconfig_library {
+    name: "libfilesystem_utils_flags",
+    aconfig_declarations: "com.android.internal.content.fsutils-aconfig",
+    host_supported: true,
+}
+
+// File system utils to punch holes in apk
+aconfig_declarations {
+    name: "com.android.internal.content.fsutils-aconfig",
+    package: "com.android.internal.content.flags",
+    srcs: [
+        "core/jni/flags/file_system_utils_flags.aconfig",
+    ],
+}

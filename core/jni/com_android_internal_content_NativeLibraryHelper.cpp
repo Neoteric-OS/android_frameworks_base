@@ -37,12 +37,15 @@
 #include <memory>
 
 #include "com_android_internal_content_FileSystemUtils.h"
+#include "com_android_internal_content_flags.h"
 #include "core_jni_helpers.h"
 
 #define RS_BITCODE_SUFFIX ".bc"
 
 #define TMP_FILE_PATTERN "/tmp.XXXXXX"
 #define TMP_FILE_PATTERN_LEN (sizeof(TMP_FILE_PATTERN) - 1)
+
+namespace flags = com::android::internal::content::flags;
 
 namespace android {
 
@@ -170,7 +173,7 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
         }
 
         // if library is uncompressed, punch hole in it in place
-        if (!punchHolesInElf64(zipFile->getZipFileName(), offset)) {
+        if (flags::enable_punch_holes() && !punchHolesInElf64(zipFile->getZipFileName(), offset)) {
             ALOGW("Failed to punch uncompressed elf file :%s inside apk : %s at offset: "
                   "%" PRIu64 "",
                   fileName, zipFile->getZipFileName(), offset);
