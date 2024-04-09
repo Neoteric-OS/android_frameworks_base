@@ -16,6 +16,52 @@
       "message": "move to internal main to avoid merge conflicts on presubmit: ag/26881559",
       "revId": "e8d4d794c1a11e864b905ab4696c722731539ff7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7658e28_6d1ad71b",
+        "filename": "media/java/android/media/MediaCas.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2024-04-09T03:50:56Z",
+      "side": 1,
+      "message": "wouldn\u0027t it be clearer to have a separate `updateResourceNiceValuePriority`, this is less error prone than having to pass a negative value for one parameter to update the other.",
+      "range": {
+        "startLine": 988,
+        "startChar": 41,
+        "endLine": 989,
+        "endChar": 74
+      },
+      "revId": "e8d4d794c1a11e864b905ab4696c722731539ff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f803b8fb_4b925407",
+        "filename": "media/java/android/media/MediaCas.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2024-04-09T03:50:56Z",
+      "side": 1,
+      "message": "use IntRange for positive values\n```suggestion\n            @IntRange(from \u003d 0) int priority, @IntRange(from \u003d 0) int niceValue) {\n        return mTunerResourceManager.updateClientPriority(mClientId, priority, niceValue);\n```",
+      "range": {
+        "startLine": 993,
+        "startChar": 56,
+        "endLine": 993,
+        "endChar": 69
+      },
+      "revId": "e8d4d794c1a11e864b905ab4696c722731539ff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
