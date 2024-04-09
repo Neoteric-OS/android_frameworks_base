@@ -1,5 +1,3 @@
-<<<<<<< PATCH SET (393391 Moving the files back)
-=======
 /*
  * Copyright (C) 2017 The Android Open Source Project
  *
@@ -33,6 +31,7 @@ import android.content.pm.VersionedPackage;
 import android.crashrecovery.flags.Flags;
 import android.os.Build;
 import android.os.Environment;
+import android.os.FileUtils;
 import android.os.PowerManager;
 import android.os.RecoverySystem;
 import android.os.SystemClock;
@@ -45,11 +44,10 @@ import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
 import android.util.Slog;
-import android.utils.ArrayUtils;
-import android.utils.FileUtils;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.ArrayUtils;
 import com.android.server.PackageWatchdog.FailureReasons;
 import com.android.server.PackageWatchdog.PackageHealthObserver;
 import com.android.server.PackageWatchdog.PackageHealthObserverImpact;
@@ -1064,4 +1062,3 @@ public class RescueParty {
         }
     }
 }
->>>>>>> BASE      (412cb1 Merge "Google RCS uses FTEU MO SMS for phone number verifica)

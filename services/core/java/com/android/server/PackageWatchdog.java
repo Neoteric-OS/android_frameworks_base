@@ -1,5 +1,3 @@
-<<<<<<< PATCH SET (393391 Moving the files back)
-=======
 /*
  * Copyright (C) 2018 The Android Open Source Project
  *
@@ -41,15 +39,15 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.AtomicFile;
+import android.util.LongArrayQueue;
 import android.util.Slog;
 import android.util.Xml;
-import android.utils.BackgroundThread;
-import android.utils.LongArrayQueue;
-import android.utils.XmlUtils;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.os.BackgroundThread;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.internal.util.XmlUtils;
 import com.android.modules.utils.TypedXmlPullParser;
 import com.android.modules.utils.TypedXmlSerializer;
 
@@ -1971,4 +1969,3 @@ public class PackageWatchdog {
 
     }
 }
->>>>>>> BASE      (412cb1 Merge "Google RCS uses FTEU MO SMS for phone number verifica)
