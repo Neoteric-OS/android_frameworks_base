@@ -18,6 +18,7 @@ package android.media;
 
 import static android.media.codec.Flags.FLAG_NULL_OUTPUT_SURFACE;
 import static android.media.codec.Flags.FLAG_REGION_OF_INTEREST;
+import static android.media.codec.Flags.FLAG_SET_CALLBACK_STALL;
 
 import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
 
@@ -5230,6 +5231,13 @@ final public class MediaCodec {
         setParameters(keys, values);
     }
 
+    private void logAndRun(String message, Runnable r) {
+        final String TAG = "MediaCodec";
+        android.util.Log.d(TAG, "enter: " + message);
+        r.run();
+        android.util.Log.d(TAG, "exit : " + message);
+    }
+
     /**
      * Sets an asynchronous callback for actionable MediaCodec events.
      *
@@ -5259,14 +5267,40 @@ final public class MediaCodec {
                 // even if we were to extend this to be callable dynamically, it must
                 // be called when codec is flushed, so no messages are pending.
                 if (newHandler != mCallbackHandler) {
-                    mCallbackHandler.removeMessages(EVENT_SET_CALLBACK);
-                    mCallbackHandler.removeMessages(EVENT_CALLBACK);
+                    if (android.media.codec.Flags.setCallbackStall()) {
+                        logAndRun(
+                                "[new handler] removeMessages(SET_CALLBACK)",
+                                () -> {
+                                    mCallbackHandler.removeMessages(EVENT_SET_CALLBACK);
+                                });
+                        logAndRun(
+                                "[new handler] removeMessages(CALLBACK)",
+                                () -> {
+                                    mCallbackHandler.removeMessages(EVENT_CALLBACK);
+                                });
+                    } else {
+                        mCallbackHandler.removeMessages(EVENT_SET_CALLBACK);
+                        mCallbackHandler.removeMessages(EVENT_CALLBACK);
+                    }
                     mCallbackHandler = newHandler;
                 }
             }
         } else if (mCallbackHandler != null) {
-            mCallbackHandler.removeMessages(EVENT_SET_CALLBACK);
-            mCallbackHandler.removeMessages(EVENT_CALLBACK);
+            if (android.media.codec.Flags.setCallbackStall()) {
+                logAndRun(
+                        "[null handler] removeMessages(SET_CALLBACK)",
+                        () -> {
+                            mCallbackHandler.removeMessages(EVENT_SET_CALLBACK);
+                        });
+                logAndRun(
+                        "[null handler] removeMessages(CALLBACK)",
+                        () -> {
+                            mCallbackHandler.removeMessages(EVENT_CALLBACK);
+                        });
+            } else {
+                mCallbackHandler.removeMessages(EVENT_SET_CALLBACK);
+                mCallbackHandler.removeMessages(EVENT_CALLBACK);
+            }
         }
 
         if (mCallbackHandler != null) {
