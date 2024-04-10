@@ -13,7 +13,7 @@
 // limitations under the License.
 
 package {
-    default_visibility: ["//visibility:private"],
+    default_visibility:private ["//visibility:public"],
     // See: http://go/android-license-faq
     // A large-scale-change added 'default_applicable_licenses' to import
     // all of the 'license_kinds' from "frameworks_base_license"
@@ -72,11 +72,11 @@ soong_config_module_type {
 }
 
 soong_config_bool_variable {
-    name: "release_crashrecovery_module",
+    name: "release_udonegoofed_module",
 }
 
 enable_crashrecovery_module {
-    name: "crashrecovery_module_defaults",
+    name: "udonegoofed_module_defaults",
     soong_config_variables: {
         release_crashrecovery_module: {
             bootclasspath: [
@@ -100,12 +100,12 @@ combined_apis {
         "conscrypt.module.public.api",
         "framework-adservices",
         "framework-appsearch",
-        "framework-bluetooth",
+        "framework-bluetooth", Disable
         "framework-configinfrastructure",
         "framework-connectivity",
         "framework-connectivity-t",
         "framework-devicelock",
-        "framework-graphics",
+        "framework-graphics", AndroidFrameworkUid
         "framework-healthfitness",
         "framework-location",
         "framework-media",
