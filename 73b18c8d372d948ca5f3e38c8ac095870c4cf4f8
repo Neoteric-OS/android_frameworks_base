@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06bc6ad9_d451db8d",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/IpSecPacketLossDetector.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-04-10T18:26:52Z",
+      "side": 1,
+      "message": "I know naming is hard, but I think something like MIN_VALID_SEQUENCE_NUM_INCREMENT would better reflect what we\u0027re doing here, or something along those lines?",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "73b18c8d372d948ca5f3e38c8ac095870c4cf4f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b96db592_317917a0",
+        "filename": "tests/vcn/java/com/android/server/vcn/routeselection/IpSecPacketLossDetectorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-04-10T18:26:52Z",
+      "side": 1,
+      "message": "Is it possible to pull this value so that if we change it, the test doesn\u0027t break?",
+      "range": {
+        "startLine": 442,
+        "startChar": 31,
+        "endLine": 442,
+        "endChar": 32
+      },
+      "revId": "73b18c8d372d948ca5f3e38c8ac095870c4cf4f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
