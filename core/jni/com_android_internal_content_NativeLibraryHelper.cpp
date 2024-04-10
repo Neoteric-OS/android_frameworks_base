@@ -170,12 +170,14 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
             return INSTALL_FAILED_INVALID_APK;
         }
 
+#ifdef ENABLE_PUNCH_HOLES
         // if library is uncompressed, punch hole in it in place
         if (!punchHolesInElf64(zipFile->getZipFileName(), offset)) {
             ALOGW("Failed to punch uncompressed elf file :%s inside apk : %s at offset: "
                   "%" PRIu64 "",
                   fileName, zipFile->getZipFileName(), offset);
         }
+#endif // ENABLE_PUNCH_HOLES
 
         return INSTALL_SUCCEEDED;
     }
