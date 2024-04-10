@@ -16,6 +16,24 @@
       "message": "nit\n```suggestion\n            Slog.e(TAG, \"No receiver found for the user\" + user);\n```",
       "revId": "15e4e59661d609f2a4c56b33b80ca09453160658",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38acaa32_01fa5803",
+        "filename": "services/core/java/com/android/server/rollback/RollbackManagerServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1269628
+      },
+      "writtenOn": "2024-04-10T01:55:48Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "197d5e6d_507c4fa1",
+      "revId": "15e4e59661d609f2a4c56b33b80ca09453160658",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
