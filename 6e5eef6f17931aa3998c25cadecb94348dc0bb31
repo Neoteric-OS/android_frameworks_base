@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1137afeb_2ffaf93c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2024-04-11T16:28:57Z",
+      "side": 1,
+      "message": "Is there a bug for it with logs?",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 57
+      },
+      "revId": "6e5eef6f17931aa3998c25cadecb94348dc0bb31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bcb01a5_647bfff8",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/NonRequiredPackageDeleteObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2024-04-11T16:28:57Z",
+      "side": 1,
+      "message": "I don\u0027t think you need two members. And I don\u0027t think you need mPackageCount either - the latch already counts those packages.\n\nawaitPackageDeletion shoudl fail in these cases: \n* it times out\n* it is interrupted\n* at least one package failed to be uninstalled\n\nSo I think you can remove `mSuccess` and `mPackageCount` and the whole `if (currentPackageCount \u003d\u003d 0) {` thing, and instead check the return value of `mLatch.await` to know whether it timed out before getting `packageDeleted` for all packages and return false in that case, as well as from the `catch` clause.",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "6e5eef6f17931aa3998c25cadecb94348dc0bb31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
