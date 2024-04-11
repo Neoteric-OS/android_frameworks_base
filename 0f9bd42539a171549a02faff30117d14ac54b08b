@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cc0935a_89098be1",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/IpSecPacketLossDetector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-04-11T23:55:44Z",
+      "side": 1,
+      "message": "nit UNAVAILABLE\n```suggestion\n    private static final int PACKET_LOSS_PERCENT_UNAVAILABLE \u003d -1;\n```",
+      "range": {
+        "startLine": 65,
+        "startChar": 29,
+        "endLine": 65,
+        "endChar": 60
+      },
+      "revId": "0f9bd42539a171549a02faff30117d14ac54b08b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5515ef9d_2fefe558",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/IpSecPacketLossDetector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-04-11T23:55:44Z",
+      "side": 1,
+      "message": "maybe it\u0027ll make sense in a later patch, but for the moment it\u0027s not clear to me why this isn\u0027t a bool.",
+      "range": {
+        "startLine": 78,
+        "startChar": 29,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "0f9bd42539a171549a02faff30117d14ac54b08b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43af6c98_d92abba9",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/IpSecPacketLossDetector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-04-11T23:55:44Z",
+      "side": 1,
+      "message": "I suppose this is fine, but after looking at the other patches, I\u0027m not sure why this isn\u0027t just an int that\u0027s either -1 (invalid), 0-100 (valid). We kind of have a reason code for invalid, but I don\u0027t see anything being done with it.",
+      "range": {
+        "startLine": 445,
+        "startChar": 24,
+        "endLine": 445,
+        "endChar": 51
+      },
+      "revId": "0f9bd42539a171549a02faff30117d14ac54b08b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
