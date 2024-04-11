@@ -2534,6 +2534,7 @@ final class InstallPackageHelper {
 
             if (performDexopt) {
                 Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "dexopt");
+                DexOptHelper.sDexoptRunning = true;
 
                 // This mirrors logic from commitReconciledScanResultLocked, where the library files
                 // needed for dexopt are assigned.
@@ -2572,6 +2573,7 @@ final class InstallPackageHelper {
                     }
                 }
                 Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
+                DexOptHelper.sDexoptRunning = false;
             }
 
             if (!useArtService()) {

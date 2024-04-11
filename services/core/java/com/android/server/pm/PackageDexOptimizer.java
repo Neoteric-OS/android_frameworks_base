@@ -239,8 +239,9 @@ public class PackageDexOptimizer {
         synchronized (mInstallLock) {
             final long acquireTime = acquireWakeLockLI(pkg.getUid());
             try {
-                return performDexOptLI(pkg, pkgSetting, instructionSets,
+                int result = performDexOptLI(pkg, pkgSetting, instructionSets,
                         packageStats, packageUseInfo, options);
+                return result;
             } finally {
                 releaseWakeLockLI(acquireTime);
             }

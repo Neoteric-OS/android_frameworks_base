@@ -111,6 +111,9 @@ public final class DexOptHelper {
     // used, to make it available to the onDexoptDone callback.
     private volatile long mBootDexoptStartTime;
 
+    /** Track dexopt running state */
+    public static boolean sDexOptRunning = false;
+
     DexOptHelper(PackageManagerService pm) {
         mPm = pm;
     }
@@ -472,11 +475,13 @@ public final class DexOptHelper {
     @DexOptResult
     private int performDexOptTraced(DexoptOptions options) {
         Trace.traceBegin(TRACE_TAG_DALVIK, "dexopt");
+        sDexoptRunning = true;
         try {
             return performDexOptInternal(options);
         } finally {
             Trace.traceEnd(TRACE_TAG_DALVIK);
         }
+        sDexoptRunning = false;
     }
 
     // Run dexopt on a given package. Returns true if dexopt did not fail, i.e.
@@ -607,6 +612,7 @@ public final class DexOptHelper {
         }
 
         Trace.traceBegin(TRACE_TAG_DALVIK, "dexopt");
+        sDexoptRunning = true;
 
         // Whoever is calling forceDexOpt wants a compiled package.
         // Don't use profiles since that may cause compilation to be skipped.
@@ -617,6 +623,7 @@ public final class DexOptHelper {
         @DexOptResult int res = performDexOptInternalWithDependenciesLI(pkg, packageState, options);
 
         Trace.traceEnd(TRACE_TAG_DALVIK);
+        sDexoptRunning = false;
         if (res != PackageDexOptimizer.DEX_OPT_PERFORMED) {
             throw new IllegalStateException("Failed to dexopt: " + res);
         }
