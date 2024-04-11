@@ -113,6 +113,8 @@ public class PackageDexOptimizer {
     public static final int DEX_OPT_CANCELLED = 2;
     /** Failed to run dexopt */
     public static final int DEX_OPT_FAILED = -1;
+    /** Track dexopt running state */
+    private static boolean sDexOptRunning = false;
 
     @IntDef(prefix = {"DEX_OPT_"}, value = {
             DEX_OPT_SKIPPED,
@@ -239,8 +241,11 @@ public class PackageDexOptimizer {
         synchronized (mInstallLock) {
             final long acquireTime = acquireWakeLockLI(pkg.getUid());
             try {
-                return performDexOptLI(pkg, pkgSetting, instructionSets,
+                sDexoptRunning = true;
+                int result = performDexOptLI(pkg, pkgSetting, instructionSets,
                         packageStats, packageUseInfo, options);
+                sDexoptRunning = false;
+                return result;
             } finally {
                 releaseWakeLockLI(acquireTime);
             }
@@ -1063,6 +1068,13 @@ public class PackageDexOptimizer {
         }
 
         return String.join(",", flagsList);
+    }
+
+    /**
+     * Returns true or false depending if dexopt is running for any package.
+     */
+    public static boolean isDexOptRunningBool() {
+        return sDexOptRunning;
     }
 
     /**

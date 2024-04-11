@@ -17,6 +17,7 @@ import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
 import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
+import static android.os.Temperature.THROTTLING_NONE;
 
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent.ACTION_ACTIVITY_START;
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent.APP_TRANSITION;
@@ -89,20 +90,32 @@ import android.annotation.Nullable;
 import android.app.ActivityOptions;
 import android.app.ActivityOptions.SourceInfo;
 import android.app.AppCompatTaskInfo.CameraCompatControlState;
+import android.app.DownloadManager;
 import android.app.WaitResult;
 import android.app.WindowConfiguration.WindowingMode;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IncrementalStatesInfo;
+import android.content.pm.InstallSourceInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.dex.ArtManagerInternal;
 import android.content.pm.dex.PackageOptimizationInfo;
+import android.database.Cursor;
 import android.metrics.LogMaker;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
+import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.os.Trace;
+import android.os.UserHandle;
 import android.os.incremental.IncrementalManager;
+import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.EventLog;
 import android.util.Log;
@@ -117,9 +130,13 @@ import com.android.internal.util.LatencyTracker;
 import com.android.internal.util.function.pooled.PooledLambda;
 import com.android.server.FgThread;
 import com.android.server.LocalServices;
+import com.android.server.am.ActivityManagerService;
+import com.android.server.am.LowMemDetector;
 import com.android.server.apphibernation.AppHibernationManagerInternal;
 import com.android.server.apphibernation.AppHibernationService;
+import com.android.server.pm.PackageDexOptimizer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -172,6 +189,8 @@ class ActivityMetricsLogger {
     private static final String[] TRON_WINDOW_STATE_VARZ_STRINGS = {
             "window_time_0", "window_time_1", "window_time_2", "window_time_3", "window_time_4"};
 
+    private static final String PROP_VIRTUAL_DEVICE = "ro.hardware.virtual_device";
+
     private int mWindowState = WINDOW_STATE_STANDARD;
     private long mLastLogTimeSecs;
     private final ActivityTaskSupervisor mSupervisor;
@@ -196,6 +215,11 @@ class ActivityMetricsLogger {
     private final LaunchObserverRegistryImpl mLaunchObserver;
     private final ArrayMap<String, Boolean> mLastHibernationStates = new ArrayMap<>();
     private AppHibernationManagerInternal mAppHibernationManagerInternal;
+    private Context mContext;
+    private PackageManager mPackageManager;
+    private PowerManager mPowerManager;
+    private DownloadManager mDownloadManager;
+    private ActivityManagerService mActivityManagerService;
 
     /**
      * The information created when an intent is incoming but we do not yet know whether it will be
@@ -547,6 +571,7 @@ class ActivityMetricsLogger {
         mLastLogTimeSecs = SystemClock.elapsedRealtime() / 1000;
         mSupervisor = supervisor;
         mLaunchObserver = new LaunchObserverRegistryImpl(looper);
+        mContext = supervisor.mService.mContext;
     }
 
     private void logWindowState(String state, int durationSecs) {
@@ -1137,6 +1162,8 @@ class ActivityMetricsLogger {
         final int packageState = stopped
                 ? APP_START_OCCURRED__PACKAGE_STOPPED_STATE__PACKAGE_STATE_STOPPED
                 : APP_START_OCCURRED__PACKAGE_STOPPED_STATE__PACKAGE_STATE_NORMAL;
+        // We want to capture system context. Initialize the service variables if they are null.
+        lazyInitSystemServices();
         FrameworkStatsLog.write(
                 FrameworkStatsLog.APP_START_OCCURRED,
                 info.applicationInfo.uid,
@@ -1163,7 +1190,15 @@ class ActivityMetricsLogger {
                 TimeUnit.NANOSECONDS.toMillis(info.timestampNs),
                 processState,
                 processOomAdj,
-                packageState);
+                packageState,
+                getDeviceInteractive(),
+                isDownloading(),
+                PackageDexOptimizer.isDexOptRunningBool(),
+                getThermalStatus(),
+                getMemoryStatus(),
+                getAppVersion(info.packageName),
+                getInstaller(info.packageName),
+                isAdbActive());
 
         if (DEBUG_METRICS) {
             Slog.i(TAG, String.format("APP_START_OCCURRED(%s, %s, %s, %s, %s)",
@@ -1334,7 +1369,15 @@ class ActivityMetricsLogger {
                 isIncremental,
                 isLoading,
                 info.launchedActivityName.hashCode(),
-                TimeUnit.NANOSECONDS.toMillis(info.timestampNs));
+                TimeUnit.NANOSECONDS.toMillis(info.timestampNs),
+                getDeviceInteractive(),
+                isDownloading(),
+                PackageDexOptimizer.isDexOptRunningBool(),
+                getThermalStatus(),
+                getMemoryStatus(),
+                getAppVersion(info.packageName),
+                getInstaller(info.packageName),
+                isAdbActive());
     }
 
     private void logAppFullyDrawn(TransitionInfoSnapshot info) {
@@ -1671,6 +1714,139 @@ class ActivityMetricsLogger {
             mArtManagerInternal = LocalServices.getService(ArtManagerInternal.class);
         }
         return mArtManagerInternal;
+    }
+
+    /**  Returns true if the device is in an interactive state, false otherwise */
+    public boolean getDeviceInteractive() {
+        if (mPowerManager != null) {
+            return mPowerManager.isInteractive();
+        }
+        return false;
+    }
+
+    /** This function returns the current thermal status of the device. */
+    private int getThermalStatus() {
+        if (mPowerManager != null) {
+            return mPowerManager.getCurrentThermalStatus();
+        }
+        return THROTTLING_NONE;
+    }
+
+    /**
+     * If DownloadManager is running, it may slow down the launch of an application.
+     * This detail can help us identify any background bottleneck impacting launch events.
+     *  Returns true if DownloadManager is running, false otherwise.
+     */
+    private boolean isDownloading() {
+        if (mDownloadManager != null) {
+            DownloadManager.Query query = new DownloadManager.Query();
+            if (query != null) {
+                Cursor c = mDownloadManager.query(query);
+                if (c != null && c.moveToFirst()) {
+                    return c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                            == DownloadManager.STATUS_RUNNING;
+                }
+            }
+        }
+        return false;
+    }
+
+    /** Returns current LowMemDetector pressure state */
+    private int getMemoryStatus() {
+        if (mActivityManagerService != null) {
+            return mActivityManagerService.getMemoryTrimLevel();
+        }
+        return LowMemDetector.ADJ_MEM_FACTOR_NOTHING;
+    }
+
+    /* This function returns the application version to be added in the corresponding metric */
+    private long getAppVersion(String pkg) {
+        if (mPackageManager != null && pkg != null) {
+            try {
+                PackageInfo packageInfo = mPackageManager.getPackageInfoAsUser(pkg,
+                        /* flags */ 0, UserHandle.getCallingUserId());
+                if (packageInfo != null) {
+                    return packageInfo.getLongVersionCode();
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                return -1;
+            }
+        }
+        return -1;
+    }
+
+    private String getInstaller(String pkg) {
+        if (mPackageManager != null && pkg != null) {
+            try {
+                InstallSourceInfo installer = mPackageManager.getInstallSourceInfo(pkg);
+                if (installer != null) {
+                    return installer.getInstallingPackageName();
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                return "unknown";
+            }
+        }
+        return "unknown";
+    }
+
+    /**
+     * Development and test devices can distort TP99 values.
+     * Check if adb is actively being used.
+     */
+    private boolean isAdbActive() {
+        if (mContext != null) {
+            boolean adbEnabled = Settings.Global.getInt(
+                    mContext.getContentResolver(), Settings.Global.ADB_ENABLED, 0) > 0;
+            // check usb active only if adb is enabled
+            if (adbEnabled) {
+                return isUsbActive();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if the device has an active USB connection, which is
+     * a good proxy for someone doing local development work.
+     */
+    private boolean isUsbActive() {
+        if (SystemProperties.getBoolean(PROP_VIRTUAL_DEVICE, false)) {
+            Slog.v(TAG, "Assuming virtual device is connected over USB");
+            return true;
+        }
+        try {
+            final String state = FileUtils
+                    .readTextFile(new File("/sys/class/android_usb/android0/state"), 128, "");
+            return "CONFIGURED".equals(state.trim());
+        } catch (Throwable t) {
+            Slog.w(TAG, "Failed to determine if device was on USB", t);
+            return false;
+        }
+    }
+
+    /**
+     * We expect system services to be available before ActivityMetricsLogger is initialized.
+     * Hence we lazy initialize the service variables.
+     */
+    private void lazyInitSystemServices() {
+        if (mActivityManagerService == null) {
+            mActivityManagerService = (ActivityManagerService) ServiceManager.getService(
+                    "activity");
+        }
+        if (mContext == null) {
+            mContext = mSupervisor.mService.mContext;
+        }
+        if (mContext != null) {
+            if (mPackageManager == null) {
+                mPackageManager = mSupervisor.mService.mContext.getPackageManager();
+            }
+            if (mPowerManager == null) {
+                mPowerManager = mContext.getSystemService(PowerManager.class);
+            }
+        }
+        if (mDownloadManager == null) {
+            mDownloadManager = mContext.getSystemService(DownloadManager.class);
+        }
     }
 
     /** Starts trace for an activity is actually launching. */
