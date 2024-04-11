@@ -33,6 +33,24 @@
       "message": "lcnathalie@ It looks like you worked on this file recently, do you know who would be the best reviewer for this change?",
       "revId": "ebf4bdac942e9bea0b89f00f7b0c281fc8c048ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "520723f6_ef830980",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2024-04-11T16:17:43Z",
+      "side": 1,
+      "message": "Sorry for the delay. Nathalie\u0027s no longer on this team. She\u0027s already added the necessary reviewers.",
+      "parentUuid": "d987d2bf_32823231",
+      "revId": "ebf4bdac942e9bea0b89f00f7b0c281fc8c048ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
