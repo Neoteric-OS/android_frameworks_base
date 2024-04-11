@@ -4393,6 +4393,9 @@
   <java-symbol type="string" name="accessibility_system_action_dpad_left_label" />
   <java-symbol type="string" name="accessibility_system_action_dpad_right_label" />
   <java-symbol type="string" name="accessibility_system_action_dpad_center_label" />
+  <java-symbol type="string" name="accessibility_system_action_menu_label" />
+  <java-symbol type="string" name="accessibility_system_action_media_play_pause_label" />
+
 
   <java-symbol type="string" name="accessibility_freeform_caption" />
 

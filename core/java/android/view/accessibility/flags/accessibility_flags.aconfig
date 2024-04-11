@@ -59,6 +59,20 @@ flag {
 }
 
 flag {
+    namespace: "accessibility"
+    name: "global_action_menu"
+    description: "Allow AccessibilityService to perform GLOBAL_ACTION_MENU"
+    bug: "334954140"
+}
+
+flag {
+    namespace: "accessibility"
+    name: "global_action_media_play_pause"
+    description: "Allow AccessibilityService to perform GLOBAL_ACTION_MEDIA_PLAY_PAUSE"
+    bug: "334954140"
+}
+
+flag {
     name: "motion_event_observing"
     namespace: "accessibility"
     description: "Allows accessibility services to intercept but not consume motion events from specified sources."
