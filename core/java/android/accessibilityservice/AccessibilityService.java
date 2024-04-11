@@ -624,6 +624,16 @@ public abstract class AccessibilityService extends Service {
      */
     public static final int GLOBAL_ACTION_DPAD_CENTER = 20;
 
+    /**
+     * Action to open the menu.
+     */
+    public static final int GLOBAL_ACTION_MENU = 21;
+
+    /**
+     * Action to trigger media play/pause key event.
+     */
+    public static final int GLOBAL_ACTION_MEDIA_PLAY_PAUSE = 22;
+
     private static final String LOG_TAG = "AccessibilityService";
 
     /**

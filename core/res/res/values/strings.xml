@@ -5892,6 +5892,10 @@
     <string name="accessibility_system_action_dpad_right_label">Dpad Right</string>
     <!-- Label for Dpad center action [CHAR LIMIT=NONE] -->
     <string name="accessibility_system_action_dpad_center_label">Dpad Center</string>
+     <!-- Label for menu action [CHAR LIMIT=NONE] -->
+    <string name="accessibility_system_action_menu_label">Menu</string>
+     <!-- Label for media play/pause action [CHAR LIMIT=NONE] -->
+    <string name="accessibility_system_action_media_play_pause_label">Media Play/Pause</string>
     <!-- Accessibility description of caption view -->
     <string name="accessibility_freeform_caption">Caption bar of <xliff:g id="app_name">%1$s</xliff:g>.</string>
 
