@@ -120,7 +120,7 @@ class StatusBarNotificationActivityStarterLogger @Inject constructor(
     fun logSendingFullScreenIntent(entry: NotificationEntry, pendingIntent: PendingIntent) {
         buffer.log(TAG, INFO, {
             str1 = entry.logKey
-            str2 = pendingIntent.intent.toString()
+            str2 = pendingIntent.intent?.toString()
         }, {
             "Notification $str1 has fullScreenIntent; sending fullScreenIntent $str2"
         })
