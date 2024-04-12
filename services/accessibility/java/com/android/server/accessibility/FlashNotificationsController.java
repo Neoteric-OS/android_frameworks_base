@@ -660,6 +660,11 @@ class FlashNotificationsController {
             } catch (CameraAccessException e) {
                 Log.e(LOG_TAG, "Failed to setTorchMode: " + e);
             }
+            // MIUI ADD: SYSTEMUI_StatusBarControlCenter
+            catch (IllegalArgumentException e) {
+                Log.e(LOG_TAG, "Failed to setTorchMode: " + e);
+            }
+            // END SYSTEMUI_StatusBarControlCenter
         } else {
             Log.e(LOG_TAG, "Can not use camera flash notification, please check CameraManager!");
         }
