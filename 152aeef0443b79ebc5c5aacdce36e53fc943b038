@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87c51c3c_49cc5486",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1091002
+      },
+      "writtenOn": "2024-04-12T07:31:20Z",
+      "side": 1,
+      "message": "lumark@ - b/265969292#comment14 is the background we introduced the check. I wonder if we should keep the current condition.",
+      "revId": "152aeef0443b79ebc5c5aacdce36e53fc943b038",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
