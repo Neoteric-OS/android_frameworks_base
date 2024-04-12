@@ -5417,7 +5417,7 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
             // Check the current IME target so that it does not lift this window above the IME if
             // the Z-order of the current IME layering target is greater than it.
             final WindowState imeTarget = getImeLayeringTarget();
-            return imeTarget != null && imeTarget != this && imeTarget.compareTo(this) <= 0;
+            return imeTarget != null && imeTarget != this && imeTarget.compareTo(this) >= 0;
         }
         return false;
     }
