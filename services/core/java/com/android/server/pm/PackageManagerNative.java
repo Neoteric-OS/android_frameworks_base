@@ -68,6 +68,12 @@ final class PackageManagerNative extends IPackageManagerNative.Stub {
         }
     }
 
+    @Override
+    public int getPackageUid(String packageName) throws RemoteException {
+        final int callingUser = UserHandle.getUserId(Binder.getCallingUid());
+        return mPm.snapshotComputer().getPackageUid(packageName, /*flags*/ 0, callingUser);
+    }
+
     // NB: this differentiates between preloads and sideloads
     @Override
     public String getInstallerForPackage(String packageName) throws RemoteException {
