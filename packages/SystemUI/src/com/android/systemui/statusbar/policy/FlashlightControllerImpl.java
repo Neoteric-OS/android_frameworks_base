@@ -136,6 +136,10 @@ public class FlashlightControllerImpl implements FlashlightController {
                         Log.e(TAG, "Couldn't set torch mode", e);
                         dispatchError();
                     }
+                    catch (IllegalArgumentException e) {
+                        Log.e(TAG, "Couldn't set torch mode due to illergal argument", e);
+                        dispatchError();
+                    }
                 }
             }
         });

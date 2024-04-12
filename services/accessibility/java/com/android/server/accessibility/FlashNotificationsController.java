@@ -660,6 +660,9 @@ class FlashNotificationsController {
             } catch (CameraAccessException e) {
                 Log.e(LOG_TAG, "Failed to setTorchMode: " + e);
             }
+            catch (IllegalArgumentException e) {
+                Log.e(LOG_TAG, "Failed to setTorchMode: " + e);
+            }
         } else {
             Log.e(LOG_TAG, "Can not use camera flash notification, please check CameraManager!");
         }
