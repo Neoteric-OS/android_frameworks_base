@@ -204,6 +204,9 @@ public class OverlayPackagesProvider {
             return false;
         }
         final String metadataKey = sActionToMetadataKeyMap.get(provisioningAction);
+        if (packageInfo.applicationInfo.metaData == null) {
+            return false;
+        }
         return packageInfo.applicationInfo.metaData.getBoolean(metadataKey);
     }
 
