@@ -45,6 +45,30 @@
       },
       "revId": "6e5eef6f17931aa3998c25cadecb94348dc0bb31",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "830bd36f_a80461f8",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/NonRequiredPackageDeleteObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3373579
+      },
+      "writtenOn": "2024-04-12T03:48:58Z",
+      "side": 1,
+      "message": "In fact, the reason why I make this CL is just that \"mLatch.notifyAll()\" is meaningless and even causes system server crash. The crash stack is posted at https://partnerissuetracker.corp.google.com/issues/333845008\n\nI will try optimizing the code to make it look better.",
+      "parentUuid": "1bcb01a5_647bfff8",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "6e5eef6f17931aa3998c25cadecb94348dc0bb31",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
