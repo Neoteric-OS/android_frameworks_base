@@ -135,6 +135,9 @@ public class FlashlightControllerImpl implements FlashlightController {
                     } catch (CameraAccessException e) {
                         Log.e(TAG, "Couldn't set torch mode", e);
                         dispatchError();
+                    } catch (IllegalArgumentException e) {
+                        Log.e(TAG, "Couldn't set torch mode due to illergal argument", e);
+                        dispatchError();
                     }
                 }
             }
