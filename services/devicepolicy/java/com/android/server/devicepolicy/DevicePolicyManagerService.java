@@ -13346,11 +13346,8 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 UserManager.DISALLOW_SMS, new String[]{MANAGE_DEVICE_POLICY_SMS});
         USER_RESTRICTION_PERMISSIONS.put(
                 UserManager.DISALLOW_SYSTEM_ERROR_DIALOGS, new String[]{MANAGE_DEVICE_POLICY_SYSTEM_DIALOGS});
-        if (com.android.net.thread.platform.flags.Flags.threadUserRestrictionEnabled()) {
-            USER_RESTRICTION_PERMISSIONS.put(
-                    UserManager.DISALLOW_THREAD_NETWORK,
-                    new String[]{MANAGE_DEVICE_POLICY_THREAD_NETWORK});
-        }
+        USER_RESTRICTION_PERMISSIONS.put(
+                UserManager.DISALLOW_THREAD_NETWORK, new String[]{MANAGE_DEVICE_POLICY_THREAD_NETWORK});
         USER_RESTRICTION_PERMISSIONS.put(
                 UserManager.DISALLOW_ULTRA_WIDEBAND_RADIO, new String[]{MANAGE_DEVICE_POLICY_NEARBY_COMMUNICATION});
         USER_RESTRICTION_PERMISSIONS.put(
