@@ -848,8 +848,8 @@ public class BiometricService extends SystemService {
 
             Slog.d(TAG, "resetLockout(userId=" + userId
                     + ", hat=" + (hardwareAuthToken == null ? "null " : "present") + ")");
-            mBiometricContext.getAuthSessionCoordinator()
-                    .resetLockoutFor(userId, Authenticators.BIOMETRIC_STRONG, -1);
+            mHandler.post(()-> mBiometricContext.getAuthSessionCoordinator()
+                    .resetLockoutFor(userId, Authenticators.BIOMETRIC_STRONG, -1));
         }
 
         @android.annotation.EnforcePermission(android.Manifest.permission.USE_BIOMETRIC_INTERNAL)
