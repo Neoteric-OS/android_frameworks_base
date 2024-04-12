@@ -68,6 +68,30 @@
       },
       "revId": "0f9bd42539a171549a02faff30117d14ac54b08b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b716d433_b9552575",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/IpSecPacketLossDetector.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-04-12T00:37:03Z",
+      "side": 1,
+      "message": "As per discussion, maybe overkill, but it\u0027s fine. It\u0027s supporting 3 cases:\n\n1-\u003e valid\n2-\u003e sequence number leap w/ few packets received : triggers validation\n3-\u003e sequence number leap w/ lots of packets received : in this case, we just have a high data rate, so the network is affirmatively good.",
+      "parentUuid": "43af6c98_d92abba9",
+      "range": {
+        "startLine": 445,
+        "startChar": 24,
+        "endLine": 445,
+        "endChar": 51
+      },
+      "revId": "0f9bd42539a171549a02faff30117d14ac54b08b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
