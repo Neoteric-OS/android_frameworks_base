@@ -286,6 +286,15 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
         return INSTALL_FAILED_CONTAINER_ERROR;
     }
 
+#ifdef ENABLE_PUNCH_HOLES
+    // punch extracted elf files as well. This will fail where compression is on (like f2fs) but it
+    // will be useful for ext4 based systems
+    if (!punchHolesInElf64(localFileName, 0)) {
+        ALOGW("Failed to punch extracted elf file :%s from apk : %s", fileName,
+              zipFile->getZipFileName());
+    }
+#endif // ENABLE_PUNCH_HOLES
+
     ALOGV("Successfully moved %s to %s\n", localTmpFileName, localFileName);
 
     return INSTALL_SUCCEEDED;
