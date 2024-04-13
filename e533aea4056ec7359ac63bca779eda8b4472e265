@@ -22,6 +22,30 @@
       },
       "revId": "e533aea4056ec7359ac63bca779eda8b4472e265",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39d746d1_ce75201a",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1791160
+      },
+      "writtenOn": "2024-04-13T03:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d838ba65_718bbea1",
+      "range": {
+        "startLine": 2568,
+        "startChar": 27,
+        "endLine": 2568,
+        "endChar": 38
+      },
+      "revId": "e533aea4056ec7359ac63bca779eda8b4472e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
