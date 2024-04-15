@@ -16,6 +16,23 @@
       "message": "+Julia for OWNERS. Thanks!",
       "revId": "3f5693f37d9f182c35bb41469af4095b9f490c19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dee5314_43fa420c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2024-04-15T17:42:18Z",
+      "side": 1,
+      "message": "If you want to change this file please reach out to one of the \u0027core\u0027 OWNERs",
+      "revId": "3f5693f37d9f182c35bb41469af4095b9f490c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
