@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2437535d_d76b2240",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/OverlayPackagesProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2024-04-15T10:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01eeac6f_72183337",
+      "range": {
+        "startLine": 206,
+        "startChar": 8,
+        "endLine": 206,
+        "endChar": 83
+      },
+      "revId": "d76584708753d73053ba29be07890751b2f8aece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "536f74ca_c0768cbc",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-04-15T10:37:46Z",
       "side": 1,
       "message": "What about a null check for applicationInfo? Or will it not be null as long as a NameNotFoundException isn\u0027t thrown?",
+      "range": {
+        "startLine": 207,
+        "startChar": 12,
+        "endLine": 207,
+        "endChar": 39
+      },
+      "revId": "d76584708753d73053ba29be07890751b2f8aece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5f8675c_76ecb7c2",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/OverlayPackagesProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2024-04-15T10:46:24Z",
+      "side": 1,
+      "message": "It might be, but just added null check for that as well because it looks like it is not documented.",
+      "parentUuid": "536f74ca_c0768cbc",
       "range": {
         "startLine": 207,
         "startChar": 12,
