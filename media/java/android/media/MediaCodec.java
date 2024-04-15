@@ -67,6 +67,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
+import android.util.Log;
+
 /**
  MediaCodec class can be used to access low-level media codecs, i.e. encoder/decoder components.
  It is part of the Android low-level multimedia support infrastructure (normally used together
@@ -2173,6 +2175,7 @@ final public class MediaCodec {
      * @throws IllegalStateException if in the Released state.
      */
     public final void reset() {
+        Log.d("AAKK", "calling reset here");
         freeAllTrackedBuffers(); // free buffers first
         native_reset();
         mCrypto = null;
@@ -2945,6 +2948,8 @@ final public class MediaCodec {
                 && (flags & BUFFER_FLAG_END_OF_STREAM) != 0) {
             throw new InvalidBufferFlagsException(EOS_AND_DECODE_ONLY_ERROR_MESSAGE);
         }
+        android.os.Trace.beginSection("MediaCodec: queueInputBuffer");
+        
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("queueInputBuffer() "
@@ -2961,6 +2966,7 @@ final public class MediaCodec {
             revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
             throw e;
         }
+        android.os.Trace.endSection();
     }
 
     /**
@@ -3001,6 +3007,7 @@ final public class MediaCodec {
     public final void queueInputBuffers(
             int index,
             @NonNull ArrayDeque<BufferInfo> bufferInfos) {
+        android.os.Trace.beginSection("MediaCodec: queueInputBuffers");
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("queueInputBuffers() "
@@ -3017,6 +3024,7 @@ final public class MediaCodec {
             revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
             throw e;
         }
+        android.os.Trace.endSection();
     }
 
     private native final void native_queueInputBuffer(
@@ -3280,6 +3288,7 @@ final public class MediaCodec {
                 && (flags & BUFFER_FLAG_END_OF_STREAM) != 0) {
             throw new InvalidBufferFlagsException(EOS_AND_DECODE_ONLY_ERROR_MESSAGE);
         }
+        android.os.Trace.beginSection("MediaCodec: queueSecureInputBuffer");
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("queueSecureInputBuffer() "
@@ -3296,6 +3305,7 @@ final public class MediaCodec {
             revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
             throw e;
         }
+        android.os.Trace.endSection();
     }
 
     /**
@@ -3325,6 +3335,7 @@ final public class MediaCodec {
             int index,
             @NonNull ArrayDeque<BufferInfo> bufferInfos,
             @NonNull ArrayDeque<CryptoInfo> cryptoInfos) {
+        android.os.Trace.beginSection("MediaCodec: queueSecureInputBuffers");
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("queueSecureInputBuffers() "
@@ -3341,6 +3352,7 @@ final public class MediaCodec {
             revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
             throw e;
         }
+        android.os.Trace.endSection();
     }
 
     private native final void native_queueSecureInputBuffer(
@@ -3591,6 +3603,8 @@ final public class MediaCodec {
                 @NonNull LinearBlock block,
                 int offset,
                 int size) {
+            android.os.Trace.beginSection("MediaCodec: setLinearBlock");
+            
             if (!isAccessible()) {
                 throw new IllegalStateException("The request is stale");
             }
@@ -3601,6 +3615,7 @@ final public class MediaCodec {
             mOffset = offset;
             mSize = size;
             mCryptoInfos.clear();
+            android.os.Trace.endSection();
             return this;
         }
 
@@ -3621,6 +3636,7 @@ final public class MediaCodec {
         public @NonNull QueueRequest setMultiFrameLinearBlock(
                 @NonNull LinearBlock block,
                 @NonNull ArrayDeque<BufferInfo> infos) {
+            android.os.Trace.beginSection("MediaCodec: setMultiFrameLinearBlock");
             if (!isAccessible()) {
                 throw new IllegalStateException("The request is stale");
             }
@@ -3631,6 +3647,7 @@ final public class MediaCodec {
             mBufferInfos.clear();
             mBufferInfos.addAll(infos);
             mCryptoInfos.clear();
+            android.os.Trace.endSection();
             return this;
         }
 
@@ -3655,6 +3672,7 @@ final public class MediaCodec {
                 int size,
                 @NonNull MediaCodec.CryptoInfo cryptoInfo) {
             Objects.requireNonNull(cryptoInfo);
+            android.os.Trace.beginSection("MediaCodec: setEncryptedLinearBlock");
             if (!isAccessible()) {
                 throw new IllegalStateException("The request is stale");
             }
@@ -3666,6 +3684,7 @@ final public class MediaCodec {
             mSize = size;
             mCryptoInfos.clear();
             mCryptoInfos.add(cryptoInfo);
+            android.os.Trace.endSection();
             return this;
         }
 
@@ -3691,6 +3710,7 @@ final public class MediaCodec {
                 @NonNull LinearBlock block,
                 @NonNull ArrayDeque<MediaCodec.BufferInfo> bufferInfos,
                 @NonNull ArrayDeque<MediaCodec.CryptoInfo> cryptoInfos) {
+            android.os.Trace.beginSection("MediaCodec: setMultiFrameEncryptedLinearBlock");
             if (!isAccessible()) {
                 throw new IllegalStateException("The request is stale");
             }
@@ -3702,6 +3722,7 @@ final public class MediaCodec {
             mBufferInfos.addAll(bufferInfos);
             mCryptoInfos.clear();
             mCryptoInfos.addAll(cryptoInfos);
+            android.os.Trace.endSection();
             return this;
         }
 
@@ -4434,6 +4455,7 @@ final public class MediaCodec {
             mDequeuedInputBuffers.clear();
             mDequeuedOutputBuffers.clear();
             mQueueRequests.clear();
+            Log.d("AAKK", "Freeing output frames here");
             mOutputFrames.clear();
         }
     }
@@ -4859,8 +4881,11 @@ final public class MediaCodec {
                         "The output frame is stale at index " + index);
             }
             if (!frame.isLoaded()) {
+                Log.d("AAKK", "Getting output frame(not loaded) at index " + index);
                 native_getOutputFrame(frame, index);
                 frame.setLoaded(true);
+            } else {
+              Log.d("AAKK", "Getting output frame(already loaded) at index " + index);
             }
             return frame;
         }

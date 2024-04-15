@@ -841,6 +841,7 @@ status_t JMediaCodec::getOutputFrame(
                             (jlong)context.release(),
                             true);
                     env->SetObjectField(frame, gFields.outputFrameLinearBlockID, linearBlock.get());
+                    ALOGE("AAKK 1. Seting buffer infos for index : %d", index);
                     maybeSetBufferInfos(env, frame, bufInfos);
                     break;
                 }
@@ -882,6 +883,7 @@ status_t JMediaCodec::getOutputFrame(
                         (jlong)context.release(),
                         true);
                 env->SetObjectField(frame, gFields.outputFrameLinearBlockID, linearBlock.get());
+                ALOGE("AAKK 2. Seting buffer infos for index : %d", index);
                 maybeSetBufferInfos(env, frame, bufInfos);
             } else {
                 // No-op.
@@ -1379,7 +1381,7 @@ void JMediaCodec::handleCallback(const sp<AMessage> &msg) {
                                   "Fatal error: could not create MediaCodec.BufferInfo object");
                 return;
             }
-
+            ALOGE("AAKK CB_OUTPUT_AVAILABLE for index %d", arg2);
             env->CallVoidMethod(obj, gBufferInfo.setId, (jint)offset, (jint)size, timeUs, flags);
             break;
         }
@@ -1409,6 +1411,9 @@ void JMediaCodec::handleCallback(const sp<AMessage> &msg) {
                         jObjectInfos.push_back(bufferInfo);
                     }
                 }
+                ALOGE("AAKK CB_LARGE_FRAME_OUTPUT_AVAILABLE for index %d", arg2);
+            } else {
+                ALOGE("AAKK CB_LARGE_FRAME_OUTPUT_AVAILABLE(null infos error) for index %d", arg2);
             }
             break;
         }
@@ -1471,6 +1476,7 @@ void JMediaCodec::handleCallback(const sp<AMessage> &msg) {
             arg1,
             arg2,
             obj);
+     ALOGE("AAKK Actual callback completed for index %d", arg2);
 
     for (int i = 0; i < jObjectInfos.size(); i++) {
         env->DeleteLocalRef(jObjectInfos[i]);
@@ -2099,9 +2105,14 @@ static status_t extractInfosFromObject(
         }
         if (i == 0) {
             *initialOffset = offset;
+            if (CC_UNLIKELY(*initialOffset < 0)) {
+                if (errorDetailMsg) {
+                    *errorDetailMsg = "Error: offset/size in BufferInfo";
+                }
+                return BAD_VALUE;
+            }
         }
-        if (CC_UNLIKELY((offset >  UINT32_MAX)
-                || ((long)(offset + size) > UINT32_MAX)
+        if (CC_UNLIKELY(((ssize_t)(UINT32_MAX - offset) < (ssize_t)size)
                 || ((offset - *initialOffset) != *totalSize))) {
             if (errorDetailMsg) {
                 *errorDetailMsg = "Error: offset/size in BufferInfo";
@@ -3042,6 +3053,7 @@ static void android_media_MediaCodec_native_queueLinearBlock(
             // Creation of cryptoInfo failed. Let the exception bubble up.
             return;
         }
+        ALOGE("AAKK queuing with an initialOffset : %d and sampleSize : %d", initialOffset, sampleSize);
         err = codec->queueEncryptedLinearBlock(
                 index,
                 memory,
