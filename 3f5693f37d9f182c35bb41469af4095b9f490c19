@@ -50,6 +50,24 @@
       "message": "In a top-level directory like this, you\u0027d want to restrict this to `per-file`. If you expect to need multiple aconfig files here in the future, then you\u0027d want a dedicated directory for that team.\n\n```\nper-file settingslib_media_flag_declarations.aconfig \u003d file:platform/frameworks/av:/media/janitors/media_solutions_OWNERS\n```",
       "revId": "3f5693f37d9f182c35bb41469af4095b9f490c19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6882d985_0291382c",
+        "filename": "packages/SettingsLib/aconfig/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1949138
+      },
+      "writtenOn": "2024-04-15T17:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28fe5e4d_07ecf72c",
+      "revId": "3f5693f37d9f182c35bb41469af4095b9f490c19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
