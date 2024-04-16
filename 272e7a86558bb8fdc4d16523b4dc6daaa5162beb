@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4a73492c_dc80193c",
+        "filename": "core/jni/android_os_ServiceManagerNative.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2024-04-16T15:49:54Z",
+      "side": 1,
+      "message": "What can cause this? Should we throw something in this case?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b4aeccf_5656bf59",
         "filename": "core/jni/android_os_ServiceManagerNative.cpp",
         "patchSetId": 1
@@ -128,6 +151,29 @@
         "startChar": 50,
         "endLine": 164,
         "endChar": 70
+      },
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f7f0ac8_e7ce8f3f",
+        "filename": "core/jni/android_os_ServiceManagerNative.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2024-04-16T15:49:54Z",
+      "side": 1,
+      "message": "`if (!result)` throw an error? Or will we get a useful error when trying to set an element?",
+      "range": {
+        "startLine": 232,
+        "startChar": 4,
+        "endLine": 232,
+        "endChar": 23
       },
       "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
