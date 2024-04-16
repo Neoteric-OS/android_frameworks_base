@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b271c204_1f4eb3bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1791160
+      },
+      "writtenOn": "2024-04-16T02:05:31Z",
+      "side": 1,
+      "message": "I have tried with proposed change and tested the following usecases  with XML file preloaded with allow-in-powersave package\u003d\"a.b.c\"\n  - Keep the app in system partition and it gets whitelisted (dumpsys deviceidle whitelist)\n  - Install the app  (stores in data partition) and it does NOT show in whitelist\n  - App not installed ( cannot find package) and it does NOT show in whitelist.\n  \n  So will do changes",
+      "revId": "e533aea4056ec7359ac63bca779eda8b4472e265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d838ba65_718bbea1",
