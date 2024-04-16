@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68d78534_2df584f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-16T01:07:12Z",
+      "side": 1,
+      "message": "This is getting pretty complicated to convert errors and such. There are a few approaches I\u0027m thinking. Right now we have ServiceManagerShim. If you add another layer here, so it\u0027s ServiceManagerShim (thin layer) -in-process-\u003e AidlServiceManagerShim (thick layer which has the logic which is currently ServiceManagerShim) -in-process-\u003e theRealServiceManager.\n\nThen, you can use the binder API to convert AidlServiceManagerShim to IBinder, and the ServiceManagerNative code can use that directly. If this is done in a way that AidlServiceManagerShim preserves the errors from theRealServiceManager (and ServiceManagerShim collapses them), you could get most things for free (ignoring some of the C++/Java AIDL differences). WDYT?",
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b4aeccf_5656bf59",
+        "filename": "core/jni/android_os_ServiceManagerNative.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-16T01:07:12Z",
+      "side": 1,
+      "message": "L29 already throws an exception, so that should be handled?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 32
+      },
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06f30660_e2f57f22",
+        "filename": "core/jni/android_os_ServiceManagerNative.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-16T01:07:12Z",
+      "side": 1,
+      "message": "You can actually pass it to servicemanager and let that return the result",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 32
+      },
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "135eb295_e04f6f7d",
+        "filename": "core/jni/android_os_ServiceManagerNative.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-16T01:07:12Z",
+      "side": 1,
+      "message": "We\u0027d want to return the same error Java would (throw the same exceptions). You can see how the exceptions get transformed in frameworks/base/core/jni/android_util_Binder.cpp. That might get complicated because native can be different.\n\nIf there isn\u0027t a test for these already, we might want to add one.",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3544cb8_a34a2167",
+        "filename": "core/jni/android_os_ServiceManagerNative.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-16T01:07:12Z",
+      "side": 1,
+      "message": "(same check errors for all of these)",
+      "range": {
+        "startLine": 131,
+        "startChar": 29,
+        "endLine": 131,
+        "endChar": 53
+      },
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f0345d8_10a681e0",
+        "filename": "core/jni/android_os_ServiceManagerNative.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-04-16T01:07:12Z",
+      "side": 1,
+      "message": "we also need to forward/create exceptions for these cases (the native API actually hides the error though - that might be okay, but what could the errors be? we might need to go through each API)",
+      "range": {
+        "startLine": 164,
+        "startChar": 50,
+        "endLine": 164,
+        "endChar": 70
+      },
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
