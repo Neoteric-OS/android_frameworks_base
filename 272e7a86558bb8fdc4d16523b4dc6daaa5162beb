@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "275febcf_110350c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-04-17T15:59:12Z",
+      "side": 1,
+      "message": "Since this sounds like a different approach, I tried this in a different cl aosp/3046752.\n\nBut based on the logcats, I think the `asInterface` returns a new android.os.IServiceManager.Stub.Proxy(obj) instead as I don\u0027t see the addService log being followed by a similar log I\u0027ve added to ServiceManagerShim::addService in IServiceManager.cpp.\n\nI wonder if I\u0027m missing something from your explanation above.",
+      "parentUuid": "68d78534_2df584f0",
+      "revId": "272e7a86558bb8fdc4d16523b4dc6daaa5162beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a73492c_dc80193c",
         "filename": "core/jni/android_os_ServiceManagerNative.cpp",
         "patchSetId": 1
