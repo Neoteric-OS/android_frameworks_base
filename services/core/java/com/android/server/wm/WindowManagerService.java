@@ -654,6 +654,9 @@ public class WindowManagerService extends IWindowManager.Stub
     boolean mBootAnimationStopped = false;
     long mBootWaitForWindowsStartTime = -1;
 
+    // Cache whether to Magnify the Navigation Bar and IME.
+    private boolean mMagnifyNavAndIme;
+
     /** Dump of the windows and app tokens at the time of the last ANR. Cleared after
      * LAST_ANR_LIFETIME_DURATION_MSECS */
     String mLastANRState;
@@ -1340,6 +1343,14 @@ public class WindowManagerService extends IWindowManager.Stub
             }
         }, mTransactionFactory);
         mSystemPerformanceHinter.mTraceTag = TRACE_TAG_WINDOW_MANAGER;
+
+        mMagnifyNavAndIme = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+            Settings.Secure.ACCESSIBILITY_MAGNIFY_NAV_AND_IME,
+            0, UserHandle.USER_CURRENT) == 1;
+    }
+
+    public boolean isMagnifyNavAndImeEnabled() {
+        return mMagnifyNavAndIme;
     }
 
     DisplayAreaPolicy.Provider getDisplayAreaPolicyProvider() {
@@ -7761,6 +7772,10 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     private final class LocalService extends WindowManagerInternal {
+        @Override
+        public void setMagnifyNavAndImeEnabled(boolean enabled) {
+            mMagnifyNavAndIme = enabled;
+        }
 
         @Override
         public AccessibilityControllerInternal getAccessibilityController() {
@@ -7789,6 +7804,13 @@ public class WindowManagerService extends IWindowManager.Stub
                     mRoot.onDisplayManagerReceivedDeviceState(deviceState);
                 }
             });
+        }
+
+        @Override
+        public void reapplyDisplayMagnification() {
+            synchronized (mGlobalLock) {
+                mAccessibilityController.reapplyDisplayMagnification();
+            }
         }
 
         @Override

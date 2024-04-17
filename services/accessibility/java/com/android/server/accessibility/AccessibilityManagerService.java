@@ -3118,6 +3118,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         somethingChanged |= readMagnificationModeForDefaultDisplayLocked(userState);
         somethingChanged |= readMagnificationCapabilitiesLocked(userState);
         somethingChanged |= readMagnificationFollowTypingLocked(userState);
+        somethingChanged |= readMagnifyNavAndImeLocked(userState);
         somethingChanged |= readAlwaysOnMagnificationLocked(userState);
         return somethingChanged;
     }
@@ -5017,6 +5018,9 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         private final Uri mMagnificationCapabilityUri = Settings.Secure.getUriFor(
                 Settings.Secure.ACCESSIBILITY_MAGNIFICATION_CAPABILITY);
 
+        private final Uri mMagnifyNavAndImeUri = Settings.Secure.getUriFor(
+                Settings.Secure.ACCESSIBILITY_MAGNIFY_NAV_AND_IME);
+
         private final Uri mMagnificationFollowTypingUri = Settings.Secure.getUriFor(
                 Settings.Secure.ACCESSIBILITY_MAGNIFICATION_FOLLOW_TYPING_ENABLED);
 
@@ -5065,6 +5069,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                     mMagnificationModeUri, false, this, UserHandle.USER_ALL);
             contentResolver.registerContentObserver(
                     mMagnificationCapabilityUri, false, this, UserHandle.USER_ALL);
+            contentResolver.registerContentObserver(
+                    mMagnifyNavAndImeUri, false, this, UserHandle.USER_ALL);
             contentResolver.registerContentObserver(
                     mMagnificationFollowTypingUri, false, this, UserHandle.USER_ALL);
             contentResolver.registerContentObserver(
@@ -5140,6 +5146,10 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 } else if (mMagnificationCapabilityUri.equals(uri)) {
                     if (readMagnificationCapabilitiesLocked(userState)) {
                         updateMagnificationCapabilitiesSettingsChangeLocked(userState);
+                    }
+                } else if (mMagnifyNavAndImeUri.equals(uri)) {
+                    if (readMagnifyNavAndImeLocked(userState)) {
+                        updateMagnifyNavAndImeLocked(userState);
                     }
                 } else if (mMagnificationFollowTypingUri.equals(uri)) {
                     readMagnificationFollowTypingLocked(userState);
@@ -5238,6 +5248,22 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         if (capabilities != userState.getMagnificationCapabilitiesLocked()) {
             userState.setMagnificationCapabilitiesLocked(capabilities);
             mMagnificationController.setMagnificationCapabilities(capabilities);
+            return true;
+        }
+        return false;
+    }
+
+    private void updateMagnifyNavAndImeLocked(AccessibilityUserState userState) {
+        mMainHandler.post(mWindowManagerService::reapplyDisplayMagnification);
+    }
+
+    boolean readMagnifyNavAndImeLocked(AccessibilityUserState userState) {
+        final boolean magnifyNavAndImeEnabled = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(),
+                Settings.Secure.ACCESSIBILITY_MAGNIFY_NAV_AND_IME, 0, userState.mUserId) == 1;
+        if (magnifyNavAndImeEnabled != userState.isMagnifyNavAndImeEnabled()) {
+            userState.setMagnifyNavAndImeEnabled(magnifyNavAndImeEnabled);
+            mWindowManagerService.setMagnifyNavAndImeEnabled(magnifyNavAndImeEnabled);
             return true;
         }
         return false;

@@ -1837,6 +1837,10 @@ class SettingsProtoDumpUtil {
                 Settings.Secure.ODI_CAPTIONS_VOLUME_UI_ENABLED,
                 SecureSettingsProto.Accessibility.ODI_CAPTIONS_VOLUME_UI_ENABLED);
         dumpSetting(s, p,
+                Settings.Secure.ACCESSIBILITY_MAGNIFY_NAV_AND_IME,
+                SecureSettingsProto.Accessibility
+                        .ACCESSIBILITY_MAGNIFY_NAV_AND_IME);
+        dumpSetting(s, p,
                 Settings.Secure.ACCESSIBILITY_MAGNIFICATION_FOLLOW_TYPING_ENABLED,
                 SecureSettingsProto.Accessibility
                         .ACCESSIBILITY_MAGNIFICATION_FOLLOW_TYPING_ENABLED);

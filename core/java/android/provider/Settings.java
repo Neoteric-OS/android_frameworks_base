@@ -11739,6 +11739,14 @@ public final class Settings {
                 "accessibility_magnification_always_on_enabled";
 
         /**
+         * Whether we should magnify the navigation bar and keyboard.
+         *
+         * @hide
+         */
+        public static final String ACCESSIBILITY_MAGNIFY_NAV_AND_IME =
+                "accessibility_magnify_nav_and_ime";
+
+        /**
          * Whether the following typing focus feature for magnification is enabled.
          * @hide
          */

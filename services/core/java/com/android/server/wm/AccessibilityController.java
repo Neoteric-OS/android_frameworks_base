@@ -264,6 +264,21 @@ final class AccessibilityController {
         }
     }
 
+    void reapplyDisplayMagnification() {
+        for (int i = 0; i < mDisplayMagnifiers.size(); i++) {
+            final DisplayMagnifier displayMagnifier = mDisplayMagnifiers.valueAt(i);
+            // If there is a valid display and magnification is on,
+            // there should exist a DisplayMagnifier.
+            if (displayMagnifier != null) {
+                final MagnificationSpec spec = displayMagnifier.getMagnifiedViewport()
+                        .getMagnificationSpec();
+                if (spec != null) {
+                    setMagnificationSpec(displayMagnifier.getDisplay().getDisplayId(), spec);
+                }
+            }
+        }
+    }
+
     void setMagnificationSpec(int displayId, MagnificationSpec spec) {
         if (mAccessibilityTracing.isTracingEnabled(FLAGS_MAGNIFICATION_CALLBACK
                 | FLAGS_WINDOWS_FOR_ACCESSIBILITY_CALLBACK)) {
@@ -634,6 +649,14 @@ final class AccessibilityController {
                                 + displayContent + "}; display={" + display + "}; callbacks={"
                                 + callbacks + "}");
             }
+        }
+
+        MagnifiedViewport getMagnifiedViewport() {
+            return mMagnifedViewport;
+        }
+
+        Display getDisplay() {
+            return mDisplay;
         }
 
         void setMagnificationSpec(MagnificationSpec spec) {

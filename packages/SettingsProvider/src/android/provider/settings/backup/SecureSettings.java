@@ -204,6 +204,7 @@ public class SecureSettings {
         Settings.Secure.ACCESSIBILITY_MAGNIFICATION_MODE,
         Settings.Secure.ACCESSIBILITY_BUTTON_TARGETS,
         Settings.Secure.ACCESSIBILITY_MAGNIFICATION_CAPABILITY,
+        Settings.Secure.ACCESSIBILITY_MAGNIFY_NAV_AND_IME,
         Settings.Secure.ACCESSIBILITY_MAGNIFICATION_FOLLOW_TYPING_ENABLED,
         Settings.Secure.ONE_HANDED_MODE_ACTIVATED,
         Settings.Secure.ONE_HANDED_MODE_ENABLED,
