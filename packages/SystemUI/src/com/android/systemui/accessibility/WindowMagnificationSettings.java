@@ -20,6 +20,7 @@ import static android.provider.Settings.Secure.ACCESSIBILITY_MAGNIFICATION_MODE_
 import static android.provider.Settings.Secure.ACCESSIBILITY_MAGNIFICATION_MODE_FULLSCREEN;
 import static android.provider.Settings.Secure.ACCESSIBILITY_MAGNIFICATION_MODE_WINDOW;
 import static android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_NOT_MAGNIFIABLE;
 
 import static com.android.internal.accessibility.common.MagnificationConstants.SCALE_MAX_VALUE;
 import static com.android.internal.accessibility.common.MagnificationConstants.SCALE_MIN_VALUE;
@@ -667,6 +668,7 @@ class WindowMagnificationSettings implements MagnificationGestureDetector.OnGest
         params.gravity = Gravity.TOP | Gravity.START;
         params.accessibilityTitle = getAccessibilityWindowTitle(context);
         params.layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+        params.privateFlags |= PRIVATE_FLAG_NOT_MAGNIFIABLE;
         return params;
     }
 

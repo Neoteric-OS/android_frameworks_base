@@ -133,6 +133,8 @@ class AccessibilityUserState {
     private final SparseIntArray mMagnificationModes = new SparseIntArray();
     // The magnification capabilities used to know magnification mode could be switched.
     private int mMagnificationCapabilities = ACCESSIBILITY_MAGNIFICATION_MODE_FULLSCREEN;
+    // Whether the magnify navigation bar and IME is enabled.
+    private boolean mMagnifyNavAndImeEnabled = false;
     // Whether the following typing focus feature for magnification is enabled.
     private boolean mMagnificationFollowTypingEnabled = true;
     // Whether the always on magnification feature is enabled.
@@ -220,6 +222,7 @@ class AccessibilityUserState {
         mMagnificationModes.clear();
         mFocusStrokeWidth = mFocusStrokeWidthDefaultValue;
         mFocusColor = mFocusColorDefaultValue;
+        mMagnifyNavAndImeEnabled = false;
         mMagnificationFollowTypingEnabled = true;
         mAlwaysOnMagnificationEnabled = false;
     }
@@ -532,6 +535,8 @@ class AccessibilityUserState {
                 .append(String.valueOf(mMagnificationCapabilities));
         pw.append(", audioDescriptionByDefaultEnabled=")
                 .append(String.valueOf(mIsAudioDescriptionByDefaultRequested));
+        pw.append(", magnifyNavAndImeEnabled=")
+                .append(String.valueOf(mMagnifyNavAndImeEnabled));
         pw.append(", magnificationFollowTypingEnabled=")
                 .append(String.valueOf(mMagnificationFollowTypingEnabled));
         pw.append(", alwaysOnMagnificationEnabled=")
@@ -714,6 +719,14 @@ class AccessibilityUserState {
      */
     public void setMagnificationCapabilitiesLocked(int capabilities) {
         mMagnificationCapabilities = capabilities;
+    }
+
+    public void setMagnifyNavAndImeEnabled(boolean enabled) {
+        mMagnifyNavAndImeEnabled = enabled;
+    }
+
+    public boolean isMagnifyNavAndImeEnabled() {
+        return mMagnifyNavAndImeEnabled;
     }
 
     public void setMagnificationFollowTypingEnabled(boolean enabled) {
