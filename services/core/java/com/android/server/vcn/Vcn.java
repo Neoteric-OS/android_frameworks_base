@@ -626,6 +626,8 @@ public class Vcn extends Handler {
      * Dumps the state of this Vcn for logging and debugging purposes.
      *
      * <p>PII and credentials MUST NEVER be dumped here.
+     *
+     * <p>This method is not thread safe and MUST run on the VCN thread.
      */
     public void dump(IndentingPrintWriter pw) {
         pw.println("Vcn (" + mSubscriptionGroup + "):");
