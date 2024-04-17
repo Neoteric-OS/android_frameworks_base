@@ -48,9 +48,10 @@ public final class ServiceManagerNative {
 // This class should be deleted and replaced with IServiceManager.Stub whenever
 // mRemote is no longer used
 class ServiceManagerProxy implements IServiceManager {
+    private static final String TAG = "ServiceManagerProxy";
     public ServiceManagerProxy(IBinder remote) {
         mRemote = remote;
-        mServiceManager = IServiceManager.Stub.asInterface(remote);
+        mServiceManager = IServiceManager.Stub.asInterface(this.getNativeServiceManager());
     }
 
     public IBinder asBinder() {
@@ -128,4 +129,6 @@ class ServiceManagerProxy implements IServiceManager {
     private IBinder mRemote;
 
     private IServiceManager mServiceManager;
+
+    private native IBinder getNativeServiceManager();
 }
