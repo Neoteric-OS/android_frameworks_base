@@ -733,7 +733,10 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
                             if (DEBUG_SIM_STATES) Log.d(TAG, "SIM moved to READY when the "
                                     + "previously was locked. Reset the state.");
                             mSimWasLocked.append(slotId, false);
-                            resetStateLocked();
+                            if (mLockPatternUtils.isSecure(KeyguardUpdateMonitor.getCurrentUser())
+                                    || mUpdateMonitor.isDeviceProvisioned()) {
+                                resetStateLocked();
+                            }
                         }
                     }
                     break;
