@@ -197,7 +197,7 @@ public abstract class WindowManagerInternal {
 
         /**
          * Called when the region where magnification operates changes. Note that this isn't the
-         * entire screen. For example, IMEs are not magnified.
+         * entire screen. For example, IMEs are not always magnified.
          *
          * @param magnificationRegion the current magnification region
          */
@@ -401,6 +401,11 @@ public abstract class WindowManagerInternal {
      *        {@link android.hardware.devicestate.DeviceStateManager}
      */
     public abstract void onDisplayManagerReceivedDeviceState(int deviceState);
+
+    /**
+     * Cache whether to Magnify the Navigation Bar and IME in WindowManagerService.
+     */
+    public abstract void setMagnifyNavAndImeEnabled(boolean enabled);
 
     /**
      * Set by the accessibility layer to observe changes in the magnified region,

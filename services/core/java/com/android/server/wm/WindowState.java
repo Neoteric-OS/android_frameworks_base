@@ -53,6 +53,7 @@ import static android.view.WindowManager.LayoutParams.LAST_SUB_WINDOW;
 import static android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
 import static android.view.WindowManager.LayoutParams.MATCH_PARENT;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_NOT_MAGNIFIABLE;
+import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_IS_ROUNDED_CORNERS_OVERLAY;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_NO_MOVE_ANIMATION;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_SYSTEM_APPLICATION_OVERLAY;
 import static android.view.WindowManager.LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY;
@@ -5056,17 +5057,21 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
     @Override
     boolean shouldMagnify() {
         if (mAttrs.type == TYPE_ACCESSIBILITY_MAGNIFICATION_OVERLAY
-                || mAttrs.type == TYPE_INPUT_METHOD
-                || mAttrs.type == TYPE_INPUT_METHOD_DIALOG
                 || mAttrs.type == TYPE_MAGNIFICATION_OVERLAY
-                || mAttrs.type == TYPE_NAVIGATION_BAR
-                // It's tempting to wonder: Have we forgotten the rounded corners overlay?
-                // worry not: it's a fake TYPE_NAVIGATION_BAR_PANEL
-                || mAttrs.type == TYPE_NAVIGATION_BAR_PANEL) {
+                || (mAttrs.privateFlags & PRIVATE_FLAG_NOT_MAGNIFIABLE) != 0
+                // The rounded corners overlay was never magnified due to it
+                // being a fake TYPE_NAVIGATION_BAR_PANEL. Since it is now possible
+                // to magnify TYPE_NAVIGATION_BAR_PANEL, we add the following check
+                // to not magnify rounded corners overlay.
+                || (mAttrs.privateFlags & PRIVATE_FLAG_IS_ROUNDED_CORNERS_OVERLAY) != 0) {
             return false;
         }
-        if ((mAttrs.privateFlags & PRIVATE_FLAG_NOT_MAGNIFIABLE) != 0) {
-            return false;
+        if (mAttrs.type == TYPE_INPUT_METHOD
+                || mAttrs.type == TYPE_INPUT_METHOD_DIALOG
+                || mAttrs.type == TYPE_NAVIGATION_BAR
+                || mAttrs.type == TYPE_NAVIGATION_BAR_PANEL) {
+
+            return mWmService.isMagnifyNavAndImeEnabled();
         }
         return true;
     }

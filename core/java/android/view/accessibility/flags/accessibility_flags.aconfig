@@ -142,3 +142,10 @@ flag {
     description: "Feature flag for declaring system pinch zoom opt-out apis"
     bug: "315089687"
 }
+
+flag {
+    name: "magnify_nav_and_ime"
+    namespace: "accessibility"
+    description: "Feature flag for magnifying navigation bar and IME (e.g. keyboard)"
+    bug: "342446315"
+}
