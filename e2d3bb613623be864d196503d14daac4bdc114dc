@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "38a4ecad_cc152189",
+        "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/TunerResourceManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2339,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2024-04-17T16:54:56Z",
+      "side": 1,
+      "message": "the reason for this change ?",
+      "range": {
+        "startLine": 2338,
+        "startChar": 7,
+        "endLine": 2339,
+        "endChar": 51
+      },
+      "revId": "e2d3bb613623be864d196503d14daac4bdc114dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0719d222_58a52ff0",
         "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/TunerResourceManagerService.java",
         "patchSetId": 3
