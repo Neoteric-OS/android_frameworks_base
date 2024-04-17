@@ -46,6 +46,30 @@
       },
       "revId": "e2d3bb613623be864d196503d14daac4bdc114dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a716fd10_1bbc828e",
+        "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/TunerResourceManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2348,
+      "author": {
+        "id": 1927725
+      },
+      "writtenOn": "2024-04-17T01:04:05Z",
+      "side": 1,
+      "message": "is the original resourceId 16 bit or \u003c\u003d 65535? the parameter type is int, which has 32 bits, not sure 16 bit can keep its original value. \n\nAlso, can you confirm that the variable resourceHandle is not used in other parts of code? otherwise changing the bit allocation may break other functionalities.",
+      "parentUuid": "84841772_4b8b0013",
+      "range": {
+        "startLine": 2336,
+        "startChar": 0,
+        "endLine": 2348,
+        "endChar": 5
+      },
+      "revId": "e2d3bb613623be864d196503d14daac4bdc114dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
