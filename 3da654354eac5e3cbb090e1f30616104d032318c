@@ -16,6 +16,24 @@
       "message": "I believe that `update-api` is required?",
       "revId": "3da654354eac5e3cbb090e1f30616104d032318c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95ad1063_33af0aa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-04-18T20:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65e8f5d7_413f313c",
+      "revId": "3da654354eac5e3cbb090e1f30616104d032318c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
