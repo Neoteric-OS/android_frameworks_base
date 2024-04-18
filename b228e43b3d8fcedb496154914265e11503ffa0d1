@@ -16,6 +16,24 @@
       "message": "Ping. Please approve this ASAP as it is blocking some changes needed for VIC finalization.",
       "revId": "b228e43b3d8fcedb496154914265e11503ffa0d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c90d1bb_40ab4cfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-04-18T20:36:51Z",
+      "side": 1,
+      "message": "Resolving so it does not block auto submit.",
+      "parentUuid": "1efacf0d_3271f127",
+      "revId": "b228e43b3d8fcedb496154914265e11503ffa0d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
