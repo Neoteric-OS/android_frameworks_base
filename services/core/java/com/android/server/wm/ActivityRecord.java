@@ -3928,6 +3928,9 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
 
             nowVisible = false;
 
+            if (finishing) {
+                setVisibleRequested(false);
+            }
             // If the activity is finishing, we need to wait on removing it from the list to give it
             // a chance to do its cleanup.  During that time it may make calls back with its token
             // so we need to be able to find it on the list and so we don't want to remove it from
