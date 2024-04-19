@@ -190,15 +190,25 @@ android_hardware_UsbDeviceConnection_bulk_request(JNIEnv *env, jobject thiz,
         return -1;
     }
 
-    jbyte* bufferBytes = NULL;
-    if (buffer) {
-        bufferBytes = (jbyte*)env->GetPrimitiveArrayCritical(buffer, NULL);
+    bool is_dir_in = (endpoint & USB_ENDPOINT_DIR_MASK) == USB_DIR_IN;
+    std::unique_ptr<jbyte, decltype(&free)> bufferBytes(static_cast<jbyte *>(malloc(length)),
+                                                        &free);
+    if (!bufferBytes) {
+        jniThrowException(env, "java/lang/OutOfMemoryError", NULL);
+        return -1;
     }
 
-    jint result = usb_device_bulk_transfer(device, endpoint, bufferBytes + start, length, timeout);
+    if (!is_dir_in && buffer) {
+        env->GetByteArrayRegion(buffer, start, length, bufferBytes.get());
+    }
 
-    if (bufferBytes) {
-        env->ReleasePrimitiveArrayCritical(buffer, bufferBytes, 0);
+    jint result = usb_device_bulk_transfer(device, endpoint, bufferBytes.get(), length, timeout);
+
+    if (result > 0 && is_dir_in) {
+        if (result < length) {
+            length = result;
+        }
+        env->SetByteArrayRegion(buffer, start, length, bufferBytes.get());
     }
 
     return result;
