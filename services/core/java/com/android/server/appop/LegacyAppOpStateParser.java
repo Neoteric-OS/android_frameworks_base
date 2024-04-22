@@ -50,6 +50,9 @@ class LegacyAppOpStateParser {
     public int readState(AtomicFile file, SparseArray<SparseIntArray> uidModes,
             SparseArray<ArrayMap<String, SparseIntArray>> userPackageModes) {
         try (FileInputStream stream = file.openRead()) {
+            SparseArray<SparseIntArray> tmpUidModes = new SparseArray<>();
+            SparseArray<ArrayMap<String, SparseIntArray>> tmpUserPackageModes = new SparseArray<>();
+
             TypedXmlPullParser parser = Xml.resolvePullParser(stream);
             int type;
             while ((type = parser.next()) != XmlPullParser.START_TAG
@@ -75,26 +78,36 @@ class LegacyAppOpStateParser {
                     // version 2 has the structure pkg -> uid -> op ->
                     // in version 3, since pkg and uid states are kept completely
                     // independent we switch to user -> pkg -> op
-                    readPackage(parser, userPackageModes);
+                    readPackage(parser, tmpUserPackageModes);
                 } else if (tagName.equals("uid")) {
-                    readUidOps(parser, uidModes);
+                    readUidOps(parser, tmpUidModes);
                 } else if (tagName.equals("user")) {
-                    readUser(parser, userPackageModes);
+                    readUser(parser, tmpUserPackageModes);
                 } else {
                     Slog.w(TAG, "Unknown element under <app-ops>: "
                             + parser.getName());
                     XmlUtils.skipCurrentTag(parser);
                 }
             }
+
+            // Parsing is complete, copy all temp values to output
+            for (int index = 0; index < tmpUidModes.size(); index++) {
+                uidModes.put(tmpUidModes.keyAt(index),
+                             tmpUidModes.valueAt(index));
+            }
+            for (int index = 0; index < tmpUserPackageModes.size(); index++) {
+                userPackageModes.put(tmpUserPackageModes.keyAt(index),
+                                     tmpUserPackageModes.valueAt(index));
+            }
+
             return versionAtBoot;
         } catch (FileNotFoundException e) {
             Slog.i(TAG, "No existing app ops " + file.getBaseFile() + "; starting empty");
-            return NO_FILE_VERSION;
-        } catch (XmlPullParserException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            // All exceptions must be caught, otherwise device will not be able to boot
+            Slog.w(TAG, "Failed parsing " + e);
         }
+        return NO_FILE_VERSION;
     }
 
     private void readPackage(TypedXmlPullParser parser,
