@@ -1585,7 +1585,7 @@ public final class ActivityThread extends ClientTransactionHandler
                     ViewRootImpl.class
             };
             long[] instanceCounts = VMDebug.countInstancesOfClasses(classesToCount, true);
-            long appContextInstanceCount = instanceCounts[0];
+            long contextImplInstanceCount = instanceCounts[0];
             long activityInstanceCount = instanceCounts[1];
             long webviewInstanceCount = instanceCounts[2];
             long viewInstanceCount = instanceCounts[3];
@@ -1613,7 +1613,7 @@ public final class ActivityThread extends ClientTransactionHandler
                 // Object counts
                 pw.print(viewInstanceCount); pw.print(',');
                 pw.print(viewRootInstanceCount); pw.print(',');
-                pw.print(appContextInstanceCount); pw.print(',');
+                pw.print(contextImplInstanceCount); pw.print(',');
                 pw.print(activityInstanceCount); pw.print(',');
 
                 pw.print(globalAssetCount); pw.print(',');
@@ -1648,7 +1648,7 @@ public final class ActivityThread extends ClientTransactionHandler
             printRow(pw, TWO_COUNT_COLUMNS, "Views:", viewInstanceCount, "ViewRootImpl:",
                     viewRootInstanceCount);
 
-            printRow(pw, TWO_COUNT_COLUMNS, "AppContexts:", appContextInstanceCount,
+            printRow(pw, TWO_COUNT_COLUMNS, "ContextImpls:", contextImplInstanceCount,
                     "Activities:", activityInstanceCount);
 
             printRow(pw, TWO_COUNT_COLUMNS, "Assets:", globalAssetCount,
@@ -1760,7 +1760,7 @@ public final class ActivityThread extends ClientTransactionHandler
                     ViewRootImpl.class
             };
             long[] instanceCounts = VMDebug.countInstancesOfClasses(classesToCount, true);
-            long appContextInstanceCount = instanceCounts[0];
+            long contextImplInstanceCount = instanceCounts[0];
             long activityInstanceCount = instanceCounts[1];
             long webviewInstanceCount = instanceCounts[2];
             long viewInstanceCount = instanceCounts[3];
@@ -1790,7 +1790,7 @@ public final class ActivityThread extends ClientTransactionHandler
             proto.write(MemInfoDumpProto.AppData.ObjectStats.VIEW_ROOT_INSTANCE_COUNT,
                     viewRootInstanceCount);
             proto.write(MemInfoDumpProto.AppData.ObjectStats.APP_CONTEXT_INSTANCE_COUNT,
-                    appContextInstanceCount);
+                    contextImplInstanceCount);
             proto.write(MemInfoDumpProto.AppData.ObjectStats.ACTIVITY_INSTANCE_COUNT,
                     activityInstanceCount);
             proto.write(MemInfoDumpProto.AppData.ObjectStats.GLOBAL_ASSET_COUNT,
