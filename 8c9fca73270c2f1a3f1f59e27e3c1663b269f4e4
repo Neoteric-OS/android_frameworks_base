@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10f55c00_1e3a19da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-04-22T07:04:31Z",
+      "side": 1,
+      "message": "this has been fixed internally. I will upload the corresponding CL to AOSP",
+      "revId": "8c9fca73270c2f1a3f1f59e27e3c1663b269f4e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
