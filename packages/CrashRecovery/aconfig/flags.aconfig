@@ -1,3 +1,5 @@
+<<<<<<< PATCH SET (3f5653 Fixing RescuePartyTests)
+=======
 package: "android.crashrecovery.flags"
 
 flag {
@@ -23,3 +25,4 @@ flag {
     bug: "287618292"
     is_fixed_read_only: true
 }
+>>>>>>> BASE      (50e954 Create a flag for rescue party flag resets)
