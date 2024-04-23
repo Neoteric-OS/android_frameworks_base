@@ -105,6 +105,30 @@
       },
       "revId": "2f102b0700f763e43a1ecac825d3e86730289ae0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5abc229a_6c356e13",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4769,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2024-04-23T22:59:50Z",
+      "side": 1,
+      "message": "Hi Deeraj - I don\u0027t think this method is being called on TV at all on main - see my reasoning above, please tell me if you disagree. It used to be called on TV on older versions of Android - are you testing with one of those?",
+      "parentUuid": "4fd4e0ce_d48c0117",
+      "range": {
+        "startLine": 4769,
+        "startChar": 16,
+        "endLine": 4769,
+        "endChar": 40
+      },
+      "revId": "2f102b0700f763e43a1ecac825d3e86730289ae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
