@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5976726c_1434fcd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1127078
+      },
+      "writtenOn": "2024-04-23T08:19:48Z",
+      "side": 1,
+      "message": "Dave: please advice if this is a good time to do this % your schedule",
+      "revId": "d63d225ade9b78af891fc549a2bcdcba79a22766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
