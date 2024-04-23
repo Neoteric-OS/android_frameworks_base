@@ -16,6 +16,24 @@
       "message": "Thanks for the patch!\n\nI double checked the source code again. The function enableFreezer() also tries to get the mAm lock at https://android.googlesource.com/platform/frameworks/base/+/master/services/core/java/com/android/server/am/CachedAppOptimizer.java#1019",
       "revId": "70afb9ade268f6d6b9c077440b472c8e22ff86d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e43baa07_4851b737",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1277956
+      },
+      "writtenOn": "2024-04-23T00:07:43Z",
+      "side": 1,
+      "message": "Yes, from this bug: 333751417, both \"binder:1909_16\" and \"binder:1909_6\" wait for \nlocked \u003c0x0c37bf94\u003e (a com.android.server.am.CachedAppOptimizer) first, so there is no dead lock.",
+      "parentUuid": "2c11aa95_f6e831a1",
+      "revId": "70afb9ade268f6d6b9c077440b472c8e22ff86d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
