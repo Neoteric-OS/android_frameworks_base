@@ -16,6 +16,23 @@
       "message": "Dave: please advice if this is a good time to do this % your schedule",
       "revId": "d63d225ade9b78af891fc549a2bcdcba79a22766",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d873536_9bf45dcb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-04-23T16:13:45Z",
+      "side": 1,
+      "message": "Defer to Dave on whether we\u0027d want to flag guard this, haven\u0027t looked at the APK diff to see if there might be any problematic removals.",
+      "revId": "d63d225ade9b78af891fc549a2bcdcba79a22766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
