@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c16e86e8_0e0bd5d2",
+        "filename": "services/core/java/com/android/server/RescueParty.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 2030150
+      },
+      "writtenOn": "2024-04-23T17:16:41Z",
+      "side": 1,
+      "message": "Should it be removed?",
+      "range": {
+        "startLine": 499,
+        "startChar": 0,
+        "endLine": 501,
+        "endChar": 91
+      },
+      "revId": "65d0ad8b6883f3df75c5c0f009805690ed48e9ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
