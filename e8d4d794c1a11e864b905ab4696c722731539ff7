@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2ac52d7_0593541e",
+        "filename": "media/java/android/media/MediaCas.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1986430
+      },
+      "writtenOn": "2024-04-23T12:46:04Z",
+      "side": 1,
+      "message": "In TunerResourceManager It takes both nice value and priority at same time, and similar implementation can be found for [Tuner JAVA](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/media/java/android/media/tv/tuner/Tuner.java;l\u003d741). Added IntRange for fix.",
+      "parentUuid": "a7658e28_6d1ad71b",
+      "range": {
+        "startLine": 988,
+        "startChar": 41,
+        "endLine": 989,
+        "endChar": 74
+      },
+      "revId": "e8d4d794c1a11e864b905ab4696c722731539ff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f803b8fb_4b925407",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-04-09T03:50:56Z",
       "side": 1,
       "message": "use IntRange for positive values\n```suggestion\n            @IntRange(from \u003d 0) int priority, @IntRange(from \u003d 0) int niceValue) {\n        return mTunerResourceManager.updateClientPriority(mClientId, priority, niceValue);\n```",
+      "range": {
+        "startLine": 993,
+        "startChar": 56,
+        "endLine": 993,
+        "endChar": 69
+      },
+      "revId": "e8d4d794c1a11e864b905ab4696c722731539ff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c706519_ab4f8515",
+        "filename": "media/java/android/media/MediaCas.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1986430
+      },
+      "writtenOn": "2024-04-23T12:46:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f803b8fb_4b925407",
       "range": {
         "startLine": 993,
         "startChar": 56,
