@@ -207,6 +207,16 @@ public class TvView extends ViewGroup {
         mCallback = callback;
     }
 
+    /**
+     * Sets the handler to be invoked when an event is dispatched to this TvView.
+     * If handler is not set by this function, TvView will use its default handler.
+     *
+     * @param handler The handler to handle events.
+     */
+    public void setHandler(@NonNull Handler handler) {
+        mHandler = handler;
+    }
+
     /** @hide */
     public Session getInputSession() {
         return mSession;
