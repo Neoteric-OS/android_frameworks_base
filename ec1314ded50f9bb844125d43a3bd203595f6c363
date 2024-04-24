@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42aaca67_41bf685f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-24T23:14:15Z",
+      "side": 1,
+      "message": "Commit title needs to be fixed, since it doesn\u0027t have anything to do with `LockscreenCredential`",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 82
+      },
+      "revId": "ec1314ded50f9bb844125d43a3bd203595f6c363",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
