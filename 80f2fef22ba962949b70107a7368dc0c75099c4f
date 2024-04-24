@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18a7bbbb_0843c625",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-24T01:55:06Z",
+      "side": 1,
+      "message": "What about the two `setLock()` methods?",
+      "revId": "80f2fef22ba962949b70107a7368dc0c75099c4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdb16f32_03daeffc",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-04-24T01:55:06Z",
+      "side": 1,
+      "message": "Make this 1 line, since it fits in 100 columns",
+      "range": {
+        "startLine": 1247,
+        "startChar": 0,
+        "endLine": 1248,
+        "endChar": 38
+      },
+      "revId": "80f2fef22ba962949b70107a7368dc0c75099c4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
