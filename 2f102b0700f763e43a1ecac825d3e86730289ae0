@@ -129,6 +129,30 @@
       },
       "revId": "2f102b0700f763e43a1ecac825d3e86730289ae0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be371757_2ad67275",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4769,
+      "author": {
+        "id": 2066470
+      },
+      "writtenOn": "2024-04-24T11:40:18Z",
+      "side": 1,
+      "message": "Yes, this issue was observed in Android 11 based TV device.\nSharing the usecase FYI:\nThe issue is happening on TV platform when a higher priority audio device(take wired headphone for example) is connected together with HDMI ARC. The current routing device is headphone, but volume adjustment still sends to HDMI ARC sink device through HDMI CEC, and TV gets ACK from the sink. Then, FLAG_SHOW_UI will be removed per original AOSP logic even though HDMI ARC is not valid device for sound output, causes no volume bar to display for headphone output. \n\nBased on the Android 14 code, https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/audio/AudioService.java;drc\u003d3063c64e322a77667c50a84c43dc65bf645071aa;l\u003d4914 seems the issue would get fixed with it.\n\nAbandoning the patchset based on the above.",
+      "parentUuid": "5abc229a_6c356e13",
+      "range": {
+        "startLine": 4769,
+        "startChar": 16,
+        "endLine": 4769,
+        "endChar": 40
+      },
+      "revId": "2f102b0700f763e43a1ecac825d3e86730289ae0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
