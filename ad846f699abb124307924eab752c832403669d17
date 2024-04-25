@@ -139,6 +139,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a46cfbf4_04106c71",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-04-25T10:46:47Z",
+      "side": 1,
+      "message": "Updated CL as:\n\u003e`Created common APIs for ImageDecoder fuzzer`: Created common base class for fuzzer and moved all APIs to be fuzzed in this base class.\n\u003e`Refactored imagedecoder_fuzzer`: Updated imagedecoder_fuzzer and imagedecoder_png_fuzzer. Both use base class to fuzz common APIs.\n\u003e`Add imagedecoder_heif_fuzzer`: Created new fuzzer for decoding HEIF format and used the base class to fuzz common APIs.",
+      "parentUuid": "0f48eb5a_5bac3cda",
+      "revId": "ad846f699abb124307924eab752c832403669d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4a663cf3_480f77f6",
         "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
         "patchSetId": 1
