@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bf22cfd_76391819",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-04-29T08:53:40Z",
+      "side": 1,
+      "message": "An updated solution has been uploaded to to partner-gerrit, see details in b/323262109",
+      "revId": "357ea3c054acb93e0b755a36a31221b0f9e488ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
