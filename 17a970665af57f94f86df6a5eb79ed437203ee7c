@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72900491_c63b244f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-29T23:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "972b6af1_e83e4bde",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "17a970665af57f94f86df6a5eb79ed437203ee7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a8c81aa_1d95b545",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-04-29T15:25:48Z",
       "side": 1,
       "message": "Join this into one line since it fits in 100 columns",
+      "range": {
+        "startLine": 1035,
+        "startChar": 0,
+        "endLine": 1036,
+        "endChar": 38
+      },
+      "revId": "17a970665af57f94f86df6a5eb79ed437203ee7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1b0a57e_743425e7",
+        "filename": "core/java/android/app/KeyguardManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-04-29T23:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a8c81aa_1d95b545",
       "range": {
         "startLine": 1035,
         "startChar": 0,
