@@ -1746,8 +1746,9 @@ public class SpatializerHelper {
      *     will contain null.
      */
     private @NonNull ArrayList<AudioDeviceAttributes> getRoutingDevices(AudioAttributes aa) {
+        // Devices for attributes (for routing purpose) shall use UID and not Root UID for UserId.
         final ArrayList<AudioDeviceAttributes> devices = mASA.getDevicesForAttributes(
-                aa, false /* forVolume */);
+                aa, mAudioService.getRootUidForCurrentUser(), false /* forVolume */);
         for (AudioDeviceAttributes ada : devices) {
             if (ada == null) {
                 // invalid entry, reject this routing query by returning an empty list

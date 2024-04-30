@@ -1773,11 +1773,12 @@ public class AudioSystem
      * set a volume for the given {@link AudioAttributes} and for all other stream that belong to
      * the same volume group.
      * @param groupId the {@link AudioVolumeGroup} id to be considered
+     * @param uid to be considered
      * @param index to be applied
      * @param device the volume device to be considered
      * @return command completion status.
      */
-    public static native int setVolumeGroupVolumeIndex(int groupId, int index, int device);
+    public static native int setVolumeGroupVolumeIndex(int groupId, int uid, int index, int device);
    /**
     * @hide
     * get the volume index for the given {@link AudioAttributes}.
@@ -1823,7 +1824,7 @@ public class AudioSystem
         final AudioAttributes attr =
                 AudioProductStrategy.getAudioAttributesForStrategyWithLegacyStreamType(stream);
         return getDeviceMaskFromSet(generateAudioDeviceTypesSet(
-                getDevicesForAttributes(attr, true /* forVolume */)));
+                getDevicesForAttributes(attr, /* uid= */ 0, true /* forVolume */)));
     }
 
     /** @hide
@@ -1878,10 +1879,10 @@ public class AudioSystem
      *   otherwise (typically one device, except for duplicated paths).
      */
     public static @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributes(
-            @NonNull AudioAttributes attributes, boolean forVolume) {
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
         Objects.requireNonNull(attributes);
         final AudioDeviceAttributes[] devices = new AudioDeviceAttributes[MAX_DEVICE_ROUTING];
-        final int res = getDevicesForAttributes(attributes, devices, forVolume);
+        final int res = getDevicesForAttributes(attributes, uid, devices, forVolume);
         final ArrayList<AudioDeviceAttributes> routeDevices = new ArrayList<>();
         if (res != SUCCESS) {
             Log.e(TAG, "error " + res + " in getDevicesForAttributes attributes: " + attributes
@@ -1903,7 +1904,7 @@ public class AudioSystem
      */
     private static final int MAX_DEVICE_ROUTING = 4;
 
-    private static native int getDevicesForAttributes(@NonNull AudioAttributes aa,
+    private static native int getDevicesForAttributes(@NonNull AudioAttributes aa, int uid,
                                                       @NonNull AudioDeviceAttributes[] devices,
                                                       boolean forVolume);
 
@@ -2038,12 +2039,13 @@ public class AudioSystem
      * Returns how direct playback of an audio format is currently available on the device.
      * @param format the audio format (codec, sample rate, channels) being checked.
      * @param attributes the {@link AudioAttributes} to be used for playback
+     * @param userId the user that may initiate the playback
      * @return the direct playback mode available with given format and attributes. Any combination
      *         of {@link #DIRECT_NOT_SUPPORTED}, {@link #DIRECT_OFFLOAD_SUPPORTED},
      *         {@link #DIRECT_OFFLOAD_GAPLESS_SUPPORTED} and {@link #DIRECT_BITSTREAM_SUPPORTED}.
      */
     public static native int getDirectPlaybackSupport(
-            @NonNull AudioFormat format, @NonNull AudioAttributes attributes);
+            @NonNull AudioFormat format, @NonNull AudioAttributes attributes, int userId);
 
     static int getOffloadSupport(@NonNull AudioFormat format, @NonNull AudioAttributes attr) {
         return native_get_offload_support(format.getEncoding(), format.getSampleRate(),
@@ -2407,11 +2409,12 @@ public class AudioSystem
     /**
      * @hide
      * @param attributes audio attributes describing the playback use case
+     * @param userId the user that may initiate the playback
      * @param audioProfilesList the list of AudioProfiles that can be played as direct output
      * @return {@link #SUCCESS} if the list of AudioProfiles was successfully created (can be empty)
      */
     public static native int getDirectProfilesForAttributes(@NonNull AudioAttributes attributes,
-            @NonNull ArrayList<AudioProfile> audioProfilesList);
+            int userId, @NonNull ArrayList<AudioProfile> audioProfilesList);
 
     // Items shared with audio service
 

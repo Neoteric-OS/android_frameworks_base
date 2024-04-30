@@ -296,6 +296,12 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         }
     }
 
+    public @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributes(
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
+        // not using cache for version with UID. Would need to generate a key with UserId? Uid?
+        return AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
+    }
+
     /**
      * Same as {@link AudioSystem#getDevicesForAttributes(AudioAttributes)}
      * @param attributes the attributes for which the routing is queried
@@ -316,13 +322,14 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
 
     private @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributesImpl(
             @NonNull AudioAttributes attributes, boolean forVolume) {
+        final int uid = AudioService.getRootUidForCurrentUser();
         if (USE_CACHE_FOR_GETDEVICES) {
             ArrayList<AudioDeviceAttributes> res;
             final Pair<AudioAttributes, Boolean> key = new Pair(attributes, forVolume);
             synchronized (sDeviceCacheLock) {
                 res = mDevicesForAttrCache.get(key);
                 if (res == null) {
-                    res = AudioSystem.getDevicesForAttributes(attributes, forVolume);
+                    res = AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
                     mDevicesForAttrCache.put(key, res);
                     if (DEBUG_CACHE) {
                         Log.d(TAG, mMethodNames[METHOD_GETDEVICESFORATTRIBUTES]
@@ -334,7 +341,7 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
                 mMethodCacheHit[METHOD_GETDEVICESFORATTRIBUTES]++;
                 if (DEBUG_CACHE) {
                     final ArrayList<AudioDeviceAttributes> real =
-                            AudioSystem.getDevicesForAttributes(attributes, forVolume);
+                            AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
                     if (res.equals(real)) {
                         Log.d(TAG, mMethodNames[METHOD_GETDEVICESFORATTRIBUTES]
                                 + attrDeviceToDebugString(attributes, res) + " CACHE");
@@ -348,7 +355,7 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
             return res;
         }
         // not using cache
-        return AudioSystem.getDevicesForAttributes(attributes, forVolume);
+        return AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
     }
 
     private static String attrDeviceToDebugString(@NonNull AudioAttributes attr,
