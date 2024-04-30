@@ -154,6 +154,14 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         }
     }
 
+    public int setProductStrategiesZoneIdForUserId(int userId, int zoneId) {
+        return AudioSystem.setProductStrategiesZoneIdForUserId(userId, zoneId);
+    }
+
+    public int resetProductStrategiesZoneIdForUserId(int userId) {
+        return AudioSystem.resetProductStrategiesZoneIdForUserId(userId);
+    }
+
     interface OnRoutingUpdatedListener {
         void onRoutingUpdatedFromNative();
     }

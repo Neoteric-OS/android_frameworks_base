@@ -47,6 +47,7 @@ import static android.media.AudioManager.RINGER_MODE_NORMAL;
 import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static android.media.AudioManager.RINGER_MODE_VIBRATE;
 import static android.media.AudioManager.STREAM_SYSTEM;
+import static android.media.AudioSystem.AUDIO_STATUS_ERROR;
 import static android.media.audio.Flags.autoPublicVolumeApiHardening;
 import static android.media.audio.Flags.automaticBtDeviceType;
 import static android.media.audio.Flags.concurrentAudioRecordBypassPermission;
@@ -9145,6 +9146,73 @@ public class AudioService extends IAudioService.Stub
             Arrays.stream(getLegacyStreamTypes())
                     .forEach(stream -> pw.print(AudioSystem.streamToString(stream) + " "));
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    ///////////////////////////////////////////////////////////////////////////
+
+    @GuardedBy("mSettingsLock")
+    private Map<Integer, Integer> mUseridToZoneMap = new HashMap<>();
+
+    /** @see AudioManager#setProductStrategiesZoneIdForUserId(int, int) */
+    @GuardedBy("mSettingsLock")
+    @android.annotation.EnforcePermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING,
+            MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int setProductStrategiesZoneIdForUserId(int userId, int zoneId) {
+        super.setProductStrategiesZoneIdForUserId_enforcePermission();
+        synchronized (mSettingsLock) {
+            int status = mAudioSystem.setProductStrategiesZoneIdForUserId(userId, zoneId);
+            if (status == AudioSystem.AUDIO_STATUS_OK){
+                mUseridToZoneMap.put(userId, zoneId);
+            }
+            return status;
+        }
+    }
+
+    /** @see AudioManager#resetProductStrategiesZoneIdForUserId(int) */
+    @GuardedBy("mSettingsLock")
+    @android.annotation.EnforcePermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING,
+            MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int resetProductStrategiesZoneIdForUserId(int userId) {
+        super.resetProductStrategiesZoneIdForUserId_enforcePermission();
+        synchronized (mSettingsLock) {
+            if (!mUseridToZoneMap.containsKey(userId)) {
+                return AudioSystem.AUDIO_STATUS_ERROR;
+            }
+            mUseridToZoneMap.remove(userId);
+            return mAudioSystem.resetProductStrategiesZoneIdForUserId(userId);
+        }
+    }
+
+    /** @see AudioManager#getUserIdForZoneId(int) */
+    @GuardedBy("mSettingsLock")
+    @android.annotation.EnforcePermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING,
+            android.Manifest.permission.QUERY_AUDIO_STATE,
+            MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int getUserIdForZoneId(int zoneId) {
+        super.getUserIdForZoneId_enforcePermission();
+        synchronized (mSettingsLock) {
+            return getUserIdForZoneIdLocked(zoneId);
+        }
+    }
+
+    private int getUserIdForZoneIdLocked(int zoneId) {
+        if (mUseridToZoneMap.isEmpty()) {
+            return UserHandle.USER_CURRENT;
+        }
+        for (Map.Entry<Integer, Integer> entry : mUseridToZoneMap.entrySet()) {
+            if (entry.getValue().equals(zoneId)) {
+                return entry.getKey();
+            }
+        }
+        return UserHandle.USER_CURRENT;
     }
 
     // NOTE: Locking order for synchronized objects related to volume or ringer mode management:
