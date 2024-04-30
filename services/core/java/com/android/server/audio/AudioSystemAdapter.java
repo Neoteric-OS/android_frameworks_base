@@ -16,6 +16,9 @@
 
 package com.android.server.audio;
 
+import static android.media.audiopolicy.Flags.FLAG_MULTI_ZONE_AUDIO;
+
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.media.AudioAttributes;
@@ -299,6 +302,13 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         }
     }
 
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    public @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributes(
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
+        // not using cache for version with UID. Would need to generate a key with UserId? Uid?
+        return AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
+    }
+
     /**
      * Same as {@link AudioSystem#getDevicesForAttributes(AudioAttributes)}
      * @param attributes the attributes for which the routing is queried
@@ -558,11 +568,12 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         return AudioSystem.setVolumeIndexForAttributes(attributes, index, muted, device);
     }
 
-    /** Same as {@link AudioSystem#setVolumeGroupVolumeIndex(int, int, boolean, int)} */
-    @FlaggedApi(FLAG_VOLUME_GROUP_MANAGEMENT_UPDATE)
-    public int setVolumeGroupVolumeIndex(int groupId, int index, boolean muted,
+    /** Same as {@link AudioSystem#setVolumeGroupVolumeIndex(int, int, int, boolean, int)} */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    //@FlaggedApi(FLAG_VOLUME_GROUP_MANAGEMENT_UPDATE)
+    public int setVolumeGroupVolumeIndex(int groupId, int uid, int index, boolean muted,
             int device) {
-        return AudioSystem.setVolumeGroupVolumeIndex(groupId, index, muted, device);
+        return AudioSystem.setVolumeGroupVolumeIndex(groupId, uid, index, muted, device);
     }
 
     /**
