@@ -9213,6 +9213,78 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    ///////////////////////////////////////////////////////////////////////////
+
+    @GuardedBy("mSettingsLock")
+    private Map<Integer, Integer> mUseridToZoneMap = new HashMap<>();
+
+    /** @see AudioManager#setProductStrategiesZoneIdForUserId(int, int) */
+    @GuardedBy("mSettingsLock")
+    @android.annotation.EnforcePermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING,
+            MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int setProductStrategiesZoneIdForUserId(int userId, int zoneId) {
+        super.setProductStrategiesZoneIdForUserId_enforcePermission();
+        synchronized (mSettingsLock) {
+            int status = AudioSystem.ERROR;
+            try (SafeCloseable ignored = ClearCallingIdentityContext.create()) {
+                status = mAudioSystem.setProductStrategiesZoneIdForUserId(userId, zoneId);
+            }
+            if (status == AudioSystem.SUCCESS) {
+                mUseridToZoneMap.put(userId, zoneId);
+            }
+            return status;
+        }
+    }
+
+    /** @see AudioManager#resetProductStrategiesZoneIdForUserId(int) */
+    @GuardedBy("mSettingsLock")
+    @android.annotation.EnforcePermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING,
+            MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int resetProductStrategiesZoneIdForUserId(int userId) {
+        super.resetProductStrategiesZoneIdForUserId_enforcePermission();
+        synchronized (mSettingsLock) {
+            if (!mUseridToZoneMap.containsKey(userId)) {
+                return AudioSystem.AUDIO_STATUS_ERROR;
+            }
+            mUseridToZoneMap.remove(userId);
+            try (SafeCloseable ignored = ClearCallingIdentityContext.create()) {
+                return mAudioSystem.resetProductStrategiesZoneIdForUserId(userId);
+            }
+        }
+    }
+
+    /** @see AudioManager#getUserIdForZoneId(int) */
+    @GuardedBy("mSettingsLock")
+    @android.annotation.EnforcePermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING,
+            android.Manifest.permission.QUERY_AUDIO_STATE,
+            MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int getUserIdForZoneId(int zoneId) {
+        super.getUserIdForZoneId_enforcePermission();
+        synchronized (mSettingsLock) {
+            return getUserIdForZoneIdLocked(zoneId);
+        }
+    }
+
+    private int getUserIdForZoneIdLocked(int zoneId) {
+        for (Map.Entry<Integer, Integer> entry : mUseridToZoneMap.entrySet()) {
+            if (entry.getValue().equals(zoneId)) {
+                return entry.getKey();
+            }
+        }
+        // If no mapping registered, all the UserIds are assigned to the default zone.
+        // As other zones are unreachable for volume/routing operation, returns USER_NULL to
+        // prevent the client setting the volume / routing for the non default zone.
+        return zoneId == DEFAULT_ZONE_ID ? UserHandle.USER_CURRENT : UserHandle.USER_NULL;
+    }
+
     // NOTE: Locking order for synchronized objects related to volume or ringer mode management:
     //  1 mScoclient OR mSafeMediaVolumeState
     //  2   mSetModeLock
