@@ -298,8 +298,14 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         }
     }
 
+    public @NonNull List<AudioDeviceAttributes> getDevicesForAttributes(
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
+        // not using cache for version with UID. Would need to generate a key with UserId? Uid?
+        return AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
+    }
+
     /**
-     * Same as {@link AudioSystem#getDevicesForAttributes(AudioAttributes)}
+     * Same as {@link AudioSystem#getDevicesForAttributes(AudioAttributes, boolean)}
      * @param attributes the attributes for which the routing is queried
      * @return the devices that the stream with the given attributes would be routed to
      */
@@ -557,6 +563,12 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         return AudioSystem.setVolumeIndexForAttributes(attributes, index, muted, device);
     }
 
+    /** Same as {@link AudioSystem#setVolumeIndexForGroup(int, int, int, boolean, int)} */
+    public int setVolumeIndexForGroup(int groupId, int uid, int index, boolean muted,
+            int device) {
+        return AudioSystem.setVolumeIndexForGroup(groupId, uid, index, muted, device);
+    }
+
     /**
      * Same as {@link AudioSystem#setPhoneState(int, int)}
      * @param state
@@ -773,7 +785,18 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
      * @return
      */
     public int resetProductStrategiesZoneIdForUserId(int userId) {
-        return resetProductStrategiesZoneIdForUserId(userId);
+        return AudioSystem.resetProductStrategiesZoneIdForUserId(userId);
+    }
+
+    /**
+     * Same as {@link AudioSystem#getZoneIdForAudioVolumeGroupId(int)}
+     * @param groupId
+     * @return
+     */
+    public int getZoneIdForAudioVolumeGroupId(int groupId) {
+        List<AudioProductStrategy> strategies =
+                getAudioProductStrategies(/* filterInternal= */ true);
+        return AudioProductStrategy.getZoneIdForAudioVolumeGroupId(strategies, groupId);
     }
 
     /**
