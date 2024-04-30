@@ -462,7 +462,7 @@ public class DownloadManagerBaseTest extends InstrumentationTestCase {
     }
 
     /**
-     * Helper to create and register a new MultipleDownloadCompletedReciever
+     * Helper to create and register a new MultipleDownloadCompletedReceiver
      *
      * This is used to track many simultaneous downloads by keeping count of all the downloads
      * that have completed.
