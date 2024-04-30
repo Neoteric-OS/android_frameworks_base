@@ -449,7 +449,8 @@ interface IAudioService {
     @EnforcePermission("MODIFY_AUDIO_ROUTING")
     List<AudioDeviceAttributes> getNonDefaultDevicesForStrategy(in int strategy);
 
-    List<AudioDeviceAttributes> getDevicesForAttributes(in AudioAttributes attributes);
+    List<AudioDeviceAttributes> getDevicesForAttributes(in AudioAttributes attributes,
+            in int zoneId);
 
     List<AudioDeviceAttributes> getDevicesForAttributesUnprotected(in AudioAttributes attributes);
 

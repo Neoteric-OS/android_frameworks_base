@@ -320,7 +320,8 @@ public final class PlaybackActivityMonitor
                         mSavedAlarmVolume = AudioSystem.getStreamVolumeIndex(
                                 AudioSystem.STREAM_ALARM, AudioSystem.DEVICE_OUT_SPEAKER);
                         AudioSystem.setStreamVolumeIndexAS(AudioSystem.STREAM_ALARM,
-                                mMaxAlarmVolume, AudioSystem.DEVICE_OUT_SPEAKER);
+                                apc.getClientUid(), mMaxAlarmVolume,
+                                AudioSystem.DEVICE_OUT_SPEAKER);
                     }
                 } else if (event != AudioPlaybackConfiguration.PLAYER_STATE_STARTED &&
                         apc.getPlayerState() == AudioPlaybackConfiguration.PLAYER_STATE_STARTED) {
@@ -329,7 +330,8 @@ public final class PlaybackActivityMonitor
                                 AudioSystem.STREAM_ALARM, AudioSystem.DEVICE_OUT_SPEAKER) ==
                                 mMaxAlarmVolume) {
                             AudioSystem.setStreamVolumeIndexAS(AudioSystem.STREAM_ALARM,
-                                    mSavedAlarmVolume, AudioSystem.DEVICE_OUT_SPEAKER);
+                                    apc.getClientUid(), mSavedAlarmVolume,
+                                    AudioSystem.DEVICE_OUT_SPEAKER);
                         }
                     }
                 }

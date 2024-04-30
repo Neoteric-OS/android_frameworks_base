@@ -1747,7 +1747,7 @@ public class SpatializerHelper {
      */
     private @NonNull ArrayList<AudioDeviceAttributes> getRoutingDevices(AudioAttributes aa) {
         final ArrayList<AudioDeviceAttributes> devices = mASA.getDevicesForAttributes(
-                aa, false /* forVolume */);
+                aa, mAudioService.getUidForVolume(), false /* forVolume */);
         for (AudioDeviceAttributes ada : devices) {
             if (ada == null) {
                 // invalid entry, reject this routing query by returning an empty list

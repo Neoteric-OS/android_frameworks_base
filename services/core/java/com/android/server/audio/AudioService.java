@@ -2201,6 +2201,7 @@ public class AudioService extends IAudioService.Stub
         // This may include devices such as SPEAKER_SAFE.
         List<AudioDeviceAttributes> devicesForAttributes = getDevicesForAttributesInt(
                 new AudioAttributes.Builder().setInternalLegacyStreamType(streamType).build(),
+                getUidForVolume(mStreamStates[streamType].getUserId()),
                 true /* forVolume */);
         for (AudioDeviceAttributes deviceAttributes : devicesForAttributes) {
             if (deviceAttributes.getType() == AudioDeviceInfo.convertInternalDeviceToDeviceType(
@@ -3224,11 +3225,11 @@ public class AudioService extends IAudioService.Stub
 
     /** @see AudioManager#getDevicesForAttributes(AudioAttributes) */
     public @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributes(
-            @NonNull AudioAttributes attributes) {
+            @NonNull AudioAttributes attributes, int zoneId) {
         enforceQueryStateOrModifyRoutingPermission();
-
         return new ArrayList<AudioDeviceAttributes>(anonymizeAudioDeviceAttributesList(
-                getDevicesForAttributesInt(attributes, false /* forVolume */)));
+                getDevicesForAttributesInt(attributes, getUidForVolume(zoneId),
+                        false /* forVolume */)));
     }
 
     /** @see AudioManager#getAudioDevicesForAttributes(AudioAttributes)
@@ -3239,7 +3240,7 @@ public class AudioService extends IAudioService.Stub
     public @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributesUnprotected(
             @NonNull AudioAttributes attributes) {
         return new ArrayList<AudioDeviceAttributes>(anonymizeAudioDeviceAttributesList(
-                getDevicesForAttributesInt(attributes, false /* forVolume */)));
+                getDevicesForAttributesInt(attributes, getUidForVolume(), false /* forVolume */)));
     }
 
     /**
@@ -3261,9 +3262,14 @@ public class AudioService extends IAudioService.Stub
     }
 
     protected @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributesInt(
-            @NonNull AudioAttributes attributes, boolean forVolume) {
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
         Objects.requireNonNull(attributes);
-        return mAudioSystem.getDevicesForAttributes(attributes, forVolume);
+        return mAudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
+    }
+
+    protected @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributesInt(
+            @NonNull AudioAttributes attributes, boolean forVolume) {
+        return getDevicesForAttributesInt(attributes, getUidForVolume(), forVolume);
     }
 
     /**
@@ -3272,8 +3278,9 @@ public class AudioService extends IAudioService.Stub
      */
     public void addOnDevicesForAttributesChangedListener(AudioAttributes attributes,
             IDevicesForAttributesCallback callback) {
+        final int uid = UserHandle.getUid(getCurrentUserId(), Process.SYSTEM_UID);
         mAudioSystem.addOnDevicesForAttributesChangedListener(
-                attributes, false /* forVolume */, callback);
+                attributes, uid, false /* forVolume */, callback);
     }
 
     /**
@@ -4693,7 +4700,7 @@ public class AudioService extends IAudioService.Stub
 
         int streamType = getBluetoothContextualVolumeStream(newMode);
 
-        final Set<Integer> deviceTypes = getDeviceSetForStreamDirect(streamType);
+        final Set<Integer> deviceTypes = getDeviceSetForStreamDirect(streamType, getUidForVolume());
         final Set<Integer> absVolumeMultiModeCaseDevices = AudioSystem.intersectionAudioDeviceTypes(
                 mAbsVolumeMultiModeCaseDevices, deviceTypes);
         if (absVolumeMultiModeCaseDevices.isEmpty()) {
@@ -5017,7 +5024,7 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
-    private int getCurrentUserId() {
+    /* package */ static int getCurrentUserId() {
         final long ident = Binder.clearCallingIdentity();
         try {
             UserInfo currentUser = ActivityManager.getService().getCurrentUser();
@@ -5028,6 +5035,31 @@ public class AudioService extends IAudioService.Stub
             Binder.restoreCallingIdentity(ident);
         }
         return UserHandle.USER_SYSTEM;
+    }
+
+    /**
+     * For volume, the UID does not make sense as it is not expected to be changed for a single app.
+     * However, as volume applies per device, the UId must be given to get current rooted device
+     * for UID, and more precisely for current UserId.
+     * Need just to get the UID formated with the User ID, so appending {@code Process.ROOT_UID}.
+     *
+     * @return
+     */
+    /* package */
+    int getUidForVolume() {
+        return getUidForVolume(AudioProductStrategy.DEFAULT_ZONE_ID);
+    }
+
+    /**
+     * For volume, the UID does not make sense. Need just to get the UID formated with the
+     * User ID, so appending {@code Process.ROOT_UID}.
+     * @param zoneId to consider
+     * @return
+     */
+    private int getUidForVolume(int zoneId) {
+        int userId = getUserIdForZoneIdLocked(zoneId);
+        userId = (userId == UserHandle.USER_CURRENT ? getCurrentUserId() : userId);
+        return UserHandle.getUid(userId, Process.ROOT_UID);
     }
 
     // UI update and Broadcast Intent
@@ -7520,7 +7552,7 @@ public class AudioService extends IAudioService.Stub
         final long token = Binder.clearCallingIdentity();
         try {
             return AudioSystem.getDeviceMaskFromSet(
-                    getDeviceSetForStreamDirect(streamType));
+                    getDeviceSetForStreamDirect(streamType, getUidForVolume()));
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -7532,12 +7564,12 @@ public class AudioService extends IAudioService.Stub
      * SPEAKER_SAFE will alias to SPEAKER.
      */
     @NonNull
-    private Set<Integer> getDeviceSetForStreamDirect(int stream) {
+    private Set<Integer> getDeviceSetForStreamDirect(int stream, int uid) {
         final AudioAttributes attr =
                 AudioProductStrategy.getAudioAttributesForStrategyWithLegacyStreamType(stream);
         Set<Integer> deviceSet =
                 AudioSystem.generateAudioDeviceTypesSet(
-                        getDevicesForAttributesInt(attr, true /* forVolume */));
+                        getDevicesForAttributesInt(attr, uid, true /* forVolume */));
         return deviceSet;
     }
 
@@ -7808,7 +7840,7 @@ public class AudioService extends IAudioService.Stub
                 .build();
         // calling getDevice*Int to bypass permission check
         final List<AudioDeviceAttributes> devices =
-                getDevicesForAttributesInt(attributes, true /* forVolume */);
+                getDevicesForAttributesInt(attributes, getUidForVolume(), true /* forVolume */);
         for (AudioDeviceAttributes device : devices) {
             if (getDeviceVolumeBehaviorInt(device) == AudioManager.DEVICE_VOLUME_BEHAVIOR_FIXED) {
                 return true;
@@ -8013,7 +8045,9 @@ public class AudioService extends IAudioService.Stub
                 && DEVICE_MEDIA_UNMUTED_ON_PLUG_SET.contains(newDevice)
                 && mStreamStates[AudioSystem.STREAM_MUSIC].mIsMuted
                 && mStreamStates[AudioSystem.STREAM_MUSIC].getIndex(newDevice) != 0
-                && getDeviceSetForStreamDirect(AudioSystem.STREAM_MUSIC).contains(newDevice)) {
+                && getDeviceSetForStreamDirect(AudioSystem.STREAM_MUSIC,
+                        getUidForVolume(mStreamStates[AudioSystem.STREAM_MUSIC].getZoneId()))
+                                .contains(newDevice)) {
             if (DEBUG_VOL) {
                 Log.i(TAG, String.format("onAccessoryPlugMediaUnmute unmuting device=%d [%s]",
                         newDevice, AudioSystem.getOutputDeviceName(newDevice)));
@@ -8229,6 +8263,9 @@ public class AudioService extends IAudioService.Stub
             return mAudioVolumeGroup.name();
         }
 
+        public int getZoneId() { return mAudioVolumeGroup.getZoneId(); }
+        public int getUserId() { return getUserIdForZoneIdLocked(getZoneId()); }
+
         /**
          * VOICE_CALL stream has minVolumeIndex > 0  but can be muted directly by an
          * app that has MODIFY_PHONE_STATE permission.
@@ -8361,7 +8398,8 @@ public class AudioService extends IAudioService.Stub
         }
 
         private void setVolumeIndex(int index, int device) {
-            AudioSystem.setVolumeGroupVolumeIndex(mAudioVolumeGroup.getId(), index, device);
+            AudioSystem.setVolumeGroupVolumeIndex(mAudioVolumeGroup.getId(),
+                    getUidForVolume(mAudioVolumeGroup.getZoneId()), index, device);
         }
 
         @GuardedBy("AudioService.VolumeStreamState.class")
@@ -8747,6 +8785,16 @@ public class AudioService extends IAudioService.Stub
             mStreamDevicesChangedOptions = streamDevicesChangedOptions.toBundle();
         }
 
+        public int getUserId() {
+            return (mVolumeGroupState != null ?
+                    getUserIdForZoneIdLocked(mVolumeGroupState.getUserId()) :
+                    UserHandle.USER_CURRENT);
+        }
+        public int getZoneId() {
+            return (mVolumeGroupState != null ?
+                    mVolumeGroupState.getZoneId() : AudioProductStrategy.DEFAULT_ZONE_ID);
+        }
+
         public void clearIndexCache() {
             mIndexMap.clear();
         }
@@ -8776,7 +8824,7 @@ public class AudioService extends IAudioService.Stub
                 return new TreeSet<Integer>();
             }
             final Set<Integer> deviceSet =
-                    getDeviceSetForStreamDirect(mStreamType);
+                    getDeviceSetForStreamDirect(mStreamType, getUidForVolume(getZoneId()));
             if (deviceSet.equals(mObservedDeviceSet)) {
                 return mObservedDeviceSet;
             }
@@ -8916,7 +8964,8 @@ public class AudioService extends IAudioService.Stub
                     && !isFullyMuted()) {
                 index = 1;
             }
-            mAudioSystem.setStreamVolumeIndexAS(mStreamType, index, device);
+            mAudioSystem.setStreamVolumeIndexAS(mStreamType, getUidForVolume(getZoneId()), index,
+                    device);
         }
 
         // must be called while synchronized VolumeStreamState.class
