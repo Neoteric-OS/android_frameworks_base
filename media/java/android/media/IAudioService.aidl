@@ -817,4 +817,14 @@ interface IAudioService {
     @EnforcePermission("QUERY_AUDIO_STATE")
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.QUERY_AUDIO_STATE)")
     boolean shouldNotificationSoundPlay(in AudioAttributes aa);
+
+
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
+    int setProductStrategiesZoneIdForUserId(int userId, int zoneId);
+
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
+    int resetProductStrategiesZoneIdForUserId(int userId);
+
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "QUERY_AUDIO_STATE", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
+    int getUserIdForZoneId(int zoneId);
 }
