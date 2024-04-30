@@ -16,6 +16,8 @@
 
 package com.android.server.audio;
 
+import static android.media.audiopolicy.AudioProductStrategy.DEFAULT_ZONE_ID;
+
 import android.annotation.NonNull;
 import android.media.AudioAttributes;
 import android.media.AudioDeviceAttributes;
@@ -144,6 +146,11 @@ public class NoOpAudioSystemAdapter extends AudioSystemAdapter {
     }
 
     @Override
+    public int setVolumeIndexForGroup(int groupId, int uid, int index, boolean muted, int device) {
+        return AudioSystem.AUDIO_STATUS_OK;
+    }
+
+    @Override
     @NonNull
     public ArrayList<AudioDeviceAttributes> getDevicesForAttributes(
             @NonNull AudioAttributes attributes, boolean forVolume) {
@@ -168,5 +175,10 @@ public class NoOpAudioSystemAdapter extends AudioSystemAdapter {
 
     public void configureFailOnSetProductStrategiesZoneIdForUserId(boolean fail) {
         mFailOnUserSetProducStrategiesMapping = fail;
+    }
+
+    @Override
+    public int getZoneIdForAudioVolumeGroupId(int groupId) {
+        return DEFAULT_ZONE_ID;
     }
 }
