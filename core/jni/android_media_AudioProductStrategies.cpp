@@ -26,6 +26,8 @@
 #include <utils/Log.h>
 #include <vector>
 
+#include <android_media_audiopolicy.h>
+
 #include <media/AudioSystem.h>
 #include <media/AudioPolicy.h>
 
@@ -35,6 +37,8 @@
 #include "android_media_AudioErrors.h"
 
 // ----------------------------------------------------------------------------
+
+namespace audio_flags = android::media::audiopolicy;
 
 using namespace android;
 
@@ -48,6 +52,7 @@ static const char* const kAudioAttributesGroupsClassPathName =
 
 static jclass gAudioProductStrategyClass;
 static jmethodID gAudioProductStrategyCstor;
+static jmethodID gAudioProductStrategyCstorWithZoneId;
 static struct {
     jfieldID    mAudioAttributesGroups;
     jfieldID    mName;
@@ -85,8 +90,9 @@ static jint convertAudioProductStrategiesFromNative(
 
     jName = env->NewStringUTF(strategy.getName().c_str());
     jStrategyId = static_cast<jint>(strategy.getId());
-    jZoneId = static_cast<jint>(strategy.getZoneId());
-
+    if (audio_flags::multi_zone_audio()) {
+        jZoneId = static_cast<jint>(strategy.getZoneId());
+    }
     // Audio Attributes Group array
     int attrGroupIndex = 0;
     std::map<int /**attributesGroupIndex*/, std::vector<VolumeGroupAttributes> > groups;
@@ -149,10 +155,18 @@ static jint convertAudioProductStrategiesFromNative(
             jAudioAttributesGroup = NULL;
         }
     }
-    *jAudioStrategy = env->NewObject(gAudioProductStrategyClass, gAudioProductStrategyCstor,
-                                     jName,
-                                     jStrategyId, jZoneId,
-                                     jAudioAttributesGroups);
+    if (audio_flags::multi_zone_audio()) {
+        *jAudioStrategy = env->NewObject(gAudioProductStrategyClass,
+                                         gAudioProductStrategyCstorWithZoneId,
+                                         jName,
+                                         jStrategyId, jZoneId,
+                                         jAudioAttributesGroups);
+    } else {
+        *jAudioStrategy = env->NewObject(gAudioProductStrategyClass, gAudioProductStrategyCstor,
+                                         jName,
+                                         jStrategyId,
+                                         jAudioAttributesGroups);
+    }
 exit:
     if (jAudioAttributes != NULL) {
         env->DeleteLocalRef(jAudioAttributes);
@@ -228,10 +242,13 @@ int register_android_media_AudioProductStrategies(JNIEnv *env)
 
     jclass audioProductStrategyClass = FindClassOrDie(env, kAudioProductStrategyClassPathName);
     gAudioProductStrategyClass = MakeGlobalRefOrDie(env, audioProductStrategyClass);
-    gAudioProductStrategyCstor = GetMethodIDOrDie(
+    gAudioProductStrategyCstorWithZoneId = GetMethodIDOrDie(
                 env, audioProductStrategyClass, "<init>",
                 "(Ljava/lang/String;"
                 "II[Landroid/media/audiopolicy/AudioProductStrategy$AudioAttributesGroup;)V");
+    gAudioProductStrategyCstor = GetMethodIDOrDie(
+            env, audioProductStrategyClass, "<init>",
+            "(Ljava/lang/String;I[Landroid/media/audiopolicy/AudioProductStrategy$AudioAttributesGroup;)V");
     gAudioProductStrategyFields.mAudioAttributesGroups = GetFieldIDOrDie(
                 env, audioProductStrategyClass, "mAudioAttributesGroups",
                 "[Landroid/media/audiopolicy/AudioProductStrategy$AudioAttributesGroup;");
