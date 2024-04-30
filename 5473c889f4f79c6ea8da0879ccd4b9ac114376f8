@@ -22,6 +22,30 @@
       },
       "revId": "5473c889f4f79c6ea8da0879ccd4b9ac114376f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a706ad98_1eb932e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1315793
+      },
+      "writtenOn": "2024-04-30T10:00:24Z",
+      "side": 1,
+      "message": "yes, agree with @roosa@google.com commented, this CL change will make IME cannot lift on top of the IME layering target if the Z-order of IME layering target above than the window with `FLAG_ALT_FOCUSABLE_IM`.\n\nBasically the issue should focus on removing `FLAG_ALT_FOCUSABLE_IM` \u0026 set not focusable for the status bar window:  \nhttps://b.corp.google.com/issues/336409037#comment3",
+      "parentUuid": "e79fa207_71dd0cdf",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 92
+      },
+      "revId": "5473c889f4f79c6ea8da0879ccd4b9ac114376f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
