@@ -32,10 +32,9 @@ import androidx.compose.ui.geometry.isUnspecified
 import androidx.compose.ui.geometry.lerp
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.scale
-import androidx.compose.ui.layout.IntermediateMeasureScope
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.Placeable
-import androidx.compose.ui.layout.intermediateLayout
+import androidx.compose.ui.layout.approachLayout
 import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.platform.testTag
@@ -153,7 +152,9 @@ internal fun Modifier.element(
     return this.then(ElementModifier(layoutImpl, scene, element, sceneValues))
         // TODO(b/311132415): Move this into ElementNode once we can create a delegate
         // IntermediateLayoutModifierNode.
-        .intermediateLayout { measurable, constraints ->
+        .approachLayout(
+            isMeasurementApproachInProgress = { scope.layoutState.isTransitioning() }
+        ) { measurable, constraints ->
             val placeable =
                 measure(layoutImpl, scene, element, sceneValues, measurable, constraints)
             layout(placeable.width, placeable.height) {
@@ -428,7 +429,7 @@ private fun elementAlpha(
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
-private fun IntermediateMeasureScope.measure(
+private fun measure(
     layoutImpl: SceneTransitionLayoutImpl,
     scene: Scene,
     element: Element,
@@ -436,13 +437,6 @@ private fun IntermediateMeasureScope.measure(
     measurable: Measurable,
     constraints: Constraints,
 ): Placeable {
-    // Update the size this element has in this scene when idle.
-    val targetSizeInScene = lookaheadSize
-    if (targetSizeInScene != sceneValues.targetSize) {
-        // TODO(b/290930950): Better handle when this changes to avoid instant size jumps.
-        sceneValues.targetSize = targetSizeInScene
-    }
-
     // Some lambdas called (max once) by computeValue() will need to measure [measurable], in which
     // case we store the resulting placeable here to make sure the element is not measured more than
     // once.
@@ -457,7 +451,7 @@ private fun IntermediateMeasureScope.measure(
             element,
             sceneValue = { it.targetSize },
             transformation = { it.size },
-            idleValue = lookaheadSize,
+            idleValue = it.size,
             currentValue = { measurable.measure(constraints).also { maybePlaceable = it }.size() },
             lastValue = {
                 sceneValues.lastValues.size.takeIf { it != Element.SizeUnspecified }
@@ -504,8 +498,7 @@ private fun getDrawScale(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
-private fun IntermediateMeasureScope.place(
+private fun place(
     layoutImpl: SceneTransitionLayoutImpl,
     scene: Scene,
     element: Element,
@@ -517,13 +510,8 @@ private fun IntermediateMeasureScope.place(
         // Update the offset (relative to the SceneTransitionLayout) this element has in this scene
         // when idle.
         val coords = coordinates!!
-        val targetOffsetInScene = lookaheadScopeCoordinates.localLookaheadPositionOf(coords)
-        if (targetOffsetInScene != sceneValues.targetOffset) {
-            // TODO(b/290930950): Better handle when this changes to avoid instant offset jumps.
-            sceneValues.targetOffset = targetOffsetInScene
-        }
-
-        val currentOffset = lookaheadScopeCoordinates.localPositionOf(coords, Offset.Zero)
+        val targetOffsetInScene = sceneValues.targetOffset
+        val currentOffset = sceneValues.targetOffset
         val lastSharedValues = element.lastSharedValues
         val lastValues = sceneValues.lastValues
         val targetOffset =
