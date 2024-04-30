@@ -159,6 +159,7 @@ public class VolumeHelperTest {
 
     private static class MyAudioService extends AudioService {
         private final SparseIntArray mStreamDevice = new SparseIntArray();
+        private final SparseIntArray mGroupDevice = new SparseIntArray();
 
         MyAudioService(Context context, AudioSystemAdapter audioSystem,
                 SystemServerAdapter systemServer, SettingsAdapter settings,
@@ -174,6 +175,10 @@ public class VolumeHelperTest {
             mStreamDevice.put(stream, device);
         }
 
+        public void setDeviceForVolumeGroup(int group, int device) {
+            mGroupDevice.put(group, device);
+        }
+
         @Override
         public int getDeviceForStream(int stream) {
             if (mStreamDevice.indexOfKey(stream) < 0) {
@@ -182,6 +187,7 @@ public class VolumeHelperTest {
             return mStreamDevice.get(stream);
         }
 
+        @Override
         public void setMuteAffectedStreams(int muteAffectedStreams) {
             mMuteAffectedStreams = muteAffectedStreams;
         }
@@ -366,7 +372,6 @@ public class VolumeHelperTest {
     }
 
     // --------------- Volume Group APIs ---------------
-
     @Test
     public void setVolumeGroupVolumeIndex_callsASSetVolumeIndexForAttributes() throws Exception {
         assumeFalse(

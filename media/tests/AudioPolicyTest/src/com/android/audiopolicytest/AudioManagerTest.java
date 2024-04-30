@@ -21,6 +21,8 @@ import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.android.audiopolicytest.AudioVolumeTestUtil.DEFAULT_ATTRIBUTES;
 import static com.android.audiopolicytest.AudioVolumeTestUtil.incrementVolumeIndex;
 
+import static com.google.common.truth.Truth.assertWithMessage;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -143,6 +145,11 @@ public class AudioManagerTest {
         for (final AudioVolumeGroup audioVolumeGroup : audioVolumeGroups) {
             List<AudioAttributes> avgAttributes = audioVolumeGroup.getAudioAttributes();
             int[] avgStreamTypes = audioVolumeGroup.getLegacyStreamTypes();
+
+            // Non primary audio zone require zone to user mapping
+            if (!groupBelongsToPrimaryAudioZone(audioVolumeGroup, avgAttributes.getFirst())) {
+                continue;
+            }
 
             // for each volume group attributes, find the matching product strategy and ensure
             // it is linked the considered volume group
@@ -300,6 +307,11 @@ public class AudioManagerTest {
                 List<AudioAttributes> avgAttributes = audioVolumeGroup.getAudioAttributes();
                 int[] avgStreamTypes = audioVolumeGroup.getLegacyStreamTypes();
 
+                // Non primary audio zone require zone to user mapping
+                if (!groupBelongsToPrimaryAudioZone(audioVolumeGroup, avgAttributes.getFirst())) {
+                    continue;
+                }
+
                 int index = 0;
                 int indexMax = 0;
                 int indexMin = 0;
@@ -358,4 +370,24 @@ public class AudioManagerTest {
             mAudioManager.unregisterVolumeGroupCallback(vgCbReceiver);
         }
     }
+
+    private boolean groupBelongsToPrimaryAudioZone(AudioVolumeGroup volumeGroup,
+            AudioAttributes attributes) {
+        if (!Flags.multiZoneAudio()) {
+            return true;
+        }
+        int audioZone = -1;
+        List<AudioProductStrategy> strategies = AudioManager.getAudioProductStrategies();
+        for (var strategy : strategies) {
+            int groupId = strategy.getVolumeGroupIdForAudioAttributes(attributes);
+            if (groupId == volumeGroup.getId()) {
+                audioZone = strategy.getZoneId();
+                break;
+            }
+        }
+        assertWithMessage("Audio zone id for group %s and attributes %s", volumeGroup, attributes)
+                .that(audioZone).isAtLeast(DEFAULT_ZONE_ID);
+        return audioZone == DEFAULT_ZONE_ID;
+    }
+
 }
