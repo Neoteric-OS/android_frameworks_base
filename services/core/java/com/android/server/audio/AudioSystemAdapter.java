@@ -769,6 +769,25 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
     }
 
     /**
+     * Same as {@link AudioSystem#setProductStrategiesZoneIdForUserId(int, userid_t)}
+     * @param zoneId
+     * @param userId
+     * @return
+     */
+    public int setProductStrategiesZoneIdForUserId(int zoneId, int userId) {
+        return AudioSystem.setProductStrategiesZoneIdForUserId(zoneId, userId);
+    }
+
+    /**
+     * Same as {@link AudioSystem#resetProductStrategiesZoneIdForUserId(userid_t)}
+     * @param userId
+     * @return
+     */
+    public int resetProductStrategiesZoneIdForUserId(int userId) {
+        return resetProductStrategiesZoneIdForUserId(userId);
+    }
+
+    /**
      * Same as {@link AudioSystem#registerAudioVolumeGroupCallback(INativeAudioVolumeGroupCallback)}
      * @param callback to register
      * @return {@link #SUCCESS} if successfully registered.
