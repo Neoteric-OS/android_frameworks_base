@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5326bf8e_48b8c196",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-04-30T21:30:44Z",
+      "side": 1,
+      "message": "Now that I submitted the change to soong to allow these suites to be device-tests, I\u0027m fixing them so they will end up in the same suite zip file as their base.",
+      "revId": "6ca67e2d646d5952e1a8ada6e02cfffd4ec3ccc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
