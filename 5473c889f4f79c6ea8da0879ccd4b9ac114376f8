@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e79fa207_71dd0cdf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2024-04-30T09:13:47Z",
+      "side": 1,
+      "message": "That\u0027s not what this is checking - the check is for the IME **layering target**, i.e. the window that\u0027s using the IME.\n\nThe purpose of the existing check is to prevent lifting a dialog that is below the IME layering target onto the IME. \n\nExample: Let\u0027s consider the following windows (bottom to top):\n\n`NotificationShade` (FLAG_ALT_FOCUSABLE_IM) -\u003e `Wifi Password Dialog` (layering target) -\u003e `IME`\n\nWith your change, we would raise the NotificationShade onto the IME, making it unusable.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 92
+      },
+      "revId": "5473c889f4f79c6ea8da0879ccd4b9ac114376f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
