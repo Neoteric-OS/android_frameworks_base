@@ -34,6 +34,7 @@ public class NoOpAudioSystemAdapter extends AudioSystemAdapter {
     private boolean mIsMicMuted = false;
     private boolean mMuteMicrophoneFails = false;
     private boolean mIsStreamActive = false;
+    private boolean mFailOnUserSetProducStrategiesMapping = false;
 
     public void configureIsMicrophoneMuted(boolean muted) {
         mIsMicMuted = muted;
@@ -152,5 +153,20 @@ public class NoOpAudioSystemAdapter extends AudioSystemAdapter {
     @Override
     public int setMasterMute(boolean muted) {
         return AudioSystem.AUDIO_STATUS_OK;
+    }
+
+    @Override
+    public int setProductStrategiesZoneIdForUserId(int userId, int zoneId) {
+        return mFailOnUserSetProducStrategiesMapping ?
+                AudioSystem.AUDIO_STATUS_ERROR : AudioSystem.AUDIO_STATUS_OK;
+    }
+
+    @Override
+    public int resetProductStrategiesZoneIdForUserId(int userId) {
+        return AudioSystem.AUDIO_STATUS_OK;
+    }
+
+    public void configureFailOnSetProductStrategiesZoneIdForUserId(boolean fail) {
+        mFailOnUserSetProducStrategiesMapping = fail;
     }
 }
