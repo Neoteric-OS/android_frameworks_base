@@ -3441,6 +3441,34 @@ static void android_media_AudioSystem_triggerSystemPropertyUpdate(JNIEnv *env,  
 }
 
 
+static jint android_media_AudioSystem_setProductStrategiesZoneIdForUserId(
+        JNIEnv *env, jobject clazz, jint userId, jint zoneId)
+{
+    if (env == NULL) {
+        return AUDIO_JAVA_DEAD_OBJECT;
+    }
+    status_t status = AudioSystem::setProductStrategiesZoneIdForUserId(userId, zoneId);
+    if (status != NO_ERROR) {
+        ALOGE("AudioSystem::setProductStrategiesZoneIdForUserId user id %d and zone %d error %d",
+              userId, zoneId, status);
+    }
+    return nativeToJavaStatus(status);
+}
+
+static jint android_media_AudioSystem_resetProductStrategiesZoneIdForUserId(
+        JNIEnv *env, jobject clazz, jint userId)
+{
+    if (env == NULL) {
+        return AUDIO_JAVA_DEAD_OBJECT;
+    }
+    status_t status = AudioSystem::resetProductStrategiesZoneIdForUserId(userId);
+    if (status != NO_ERROR) {
+        ALOGE("AudioSystem::resetProductStrategiesZoneIdForUserId error %d", status);
+        return nativeToJavaStatus(status);
+    }
+    return nativeToJavaStatus(status);
+}
+
 // ----------------------------------------------------------------------------
 
 #define MAKE_AUDIO_SYSTEM_METHOD(x) \
@@ -3556,6 +3584,10 @@ static const JNINativeMethod gMethods[] = {
         MAKE_AUDIO_SYSTEM_METHOD(setRttEnabled),
         MAKE_AUDIO_SYSTEM_METHOD(setAudioHalPids),
         MAKE_AUDIO_SYSTEM_METHOD(isCallScreeningModeSupported),
+        MAKE_JNI_NATIVE_METHOD("setProductStrategiesZoneIdForUserId", "(II)I",
+                               android_media_AudioSystem_setProductStrategiesZoneIdForUserId),
+        MAKE_JNI_NATIVE_METHOD("resetProductStrategiesZoneIdForUserId", "(I)I",
+                               android_media_AudioSystem_resetProductStrategiesZoneIdForUserId),
         MAKE_JNI_NATIVE_METHOD("setDevicesRoleForStrategy", "(II[I[Ljava/lang/String;)I",
                                android_media_AudioSystem_setDevicesRoleForStrategy),
         MAKE_JNI_NATIVE_METHOD("removeDevicesRoleForStrategy", "(II[I[Ljava/lang/String;)I",
