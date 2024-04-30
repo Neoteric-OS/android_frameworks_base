@@ -27,6 +27,7 @@ import static android.media.audio.Flags.FLAG_FOCUS_FREEZE_TEST_API;
 import static android.media.audio.Flags.FLAG_SUPPORTED_DEVICE_TYPES_API;
 import static android.media.audiopolicy.Flags.FLAG_ENABLE_FADE_MANAGER_CONFIGURATION;
 import static android.media.audiopolicy.Flags.FLAG_MULTI_ZONE_AUDIO;
+import static android.media.audiopolicy.Flags.multiZoneAudio;
 
 import android.Manifest;
 import android.annotation.CallbackExecutor;
@@ -3006,7 +3007,15 @@ public class AudioManager {
                                                @NonNull AudioAttributes attributes) {
         Objects.requireNonNull(format);
         Objects.requireNonNull(attributes);
-        return AudioSystem.getDirectPlaybackSupport(format, attributes);
+        if (multiZoneAudio()) {
+            final IAudioService service = getService();
+            try {
+                return service.getDirectPlaybackSupport(format, attributes);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        return AudioSystem.getDirectPlaybackSupport(format, attributes, /* uid= */ 0);
     }
 
     //====================================================================
@@ -6504,6 +6513,32 @@ public class AudioManager {
         }
     }
 
+    /**
+     * Get the audio devices that would be used for the routing of the given audio attributes.
+     * @param attributes the {@link AudioAttributes} for which the routing is being queried
+     * @param uid for which the device is being queried.
+     * @return an empty list if there was an issue with the request, a list of audio devices
+     *   otherwise (typically one device, except for duplicated paths).
+     *
+     * @hide
+     */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MODIFY_AUDIO_ROUTING,
+            Manifest.permission.QUERY_AUDIO_STATE
+    })
+    public @NonNull List<AudioDeviceAttributes> getDevicesForAttributesAndUid(
+            @NonNull AudioAttributes attributes, int uid) {
+        Objects.requireNonNull(attributes);
+        final IAudioService service = getService();
+        try {
+            return service.getDevicesForAttributesAndUid(attributes, uid);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     // Each listener corresponds to a unique callback stub because each listener can subscribe to
     // different AudioAttributes.
     private final ConcurrentHashMap<OnDevicesForAttributesChangedListener,
@@ -9267,9 +9302,25 @@ public class AudioManager {
     public List<AudioProfile> getDirectProfilesForAttributes(@NonNull AudioAttributes attributes) {
         Objects.requireNonNull(attributes);
         ArrayList<AudioProfile> audioProfilesList = new ArrayList<>();
-        int status = AudioSystem.getDirectProfilesForAttributes(attributes, audioProfilesList);
+        int status = AudioSystem.getDirectProfilesForAttributes(attributes, /* uid= */ 0,
+                audioProfilesList);
         if (status != SUCCESS) {
             Log.w(TAG, "getDirectProfilesForAttributes failed.");
+            return new ArrayList<>();
+        }
+        return audioProfilesList;
+    }
+
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @NonNull
+    public List<AudioProfile> getDirectProfilesForAttributes(@NonNull AudioAttributes attributes,
+            int uid) {
+        Objects.requireNonNull(attributes);
+        ArrayList<AudioProfile> audioProfilesList = new ArrayList<>();
+        int status = AudioSystem.getDirectProfilesForAttributes(
+                attributes, uid, audioProfilesList);
+        if (status != SUCCESS) {
+            Log.w(TAG, "getDirectProfilesForAttributes failed: " + status);
             return new ArrayList<>();
         }
         return audioProfilesList;

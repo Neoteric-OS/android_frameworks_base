@@ -482,7 +482,12 @@ interface IAudioService {
     @EnforcePermission("MODIFY_AUDIO_ROUTING")
     List<AudioDeviceAttributes> getNonDefaultDevicesForStrategy(in int strategy);
 
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "QUERY_AUDIO_STATE"})
     List<AudioDeviceAttributes> getDevicesForAttributes(in AudioAttributes attributes);
+
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "QUERY_AUDIO_STATE"})
+    List<AudioDeviceAttributes> getDevicesForAttributesAndUid(in AudioAttributes attributes,
+            in int uid);
 
     List<AudioDeviceAttributes> getDevicesForAttributesUnprotected(in AudioAttributes attributes);
 
@@ -827,4 +832,10 @@ interface IAudioService {
 
     @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "QUERY_AUDIO_STATE", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
     int getUserIdForZoneId(int zoneId);
+
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "QUERY_AUDIO_STATE", "MODIFY_AUDIO_SETTINGS_PRIVILEGED"})
+    int getZoneIdForAudioVolumeGroupId(int groupId);
+
+    @EnforcePermission("MODIFY_AUDIO_ROUTING")
+    int getDirectPlaybackSupport(in AudioFormat format, in AudioAttributes attributes);
 }
