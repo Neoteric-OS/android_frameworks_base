@@ -587,6 +587,24 @@ public final class AudioProductStrategy implements Parcelable {
     /**
      * @hide
      */
+    public static void setZoneIdForUserId(int zoneId, int userId) {
+        native_set_userid_strategies_affinity(userId, zoneId);
+    }
+
+    /**
+     * @hide
+     */
+    public static void resetZoneIdForUserId(int userId) {
+        native_remove_userid_strategies_affinity(userId);
+    }
+
+    private static native int native_set_userid_strategies_affinity(int zoneId, int userId);
+
+    private static native int native_remove_userid_strategies_affinity(int userId);
+
+    /**
+     * @hide
+     */
     @TestApi
     public static @NonNull AudioAttributes getDefaultAttributes() {
         return DEFAULT_ATTRIBUTES;

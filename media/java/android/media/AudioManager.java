@@ -1695,6 +1695,69 @@ public class AudioManager {
     }
 
     /**
+     * Map a zone Id to a given user Id.
+     * @param zoneId the userId shall be assigned to
+     * @param userId to consider
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED,
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING
+    })
+    public void setZoneIdForUserId(int zoneId, int userId) {
+        IAudioService service = getService();
+        try {
+            service.setZoneIdForUserId(zoneId, userId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Reset zone Id mapping for a given user Id.
+     * @param userId to consider
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @RequiresPermission(anyOf = {
+            android.Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED,
+            android.Manifest.permission.MODIFY_AUDIO_ROUTING
+    })
+    public void resetZoneIdForUserId(int userId) {
+        IAudioService service = getService();
+        try {
+            service.resetZoneIdForUserId(userId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @hide
+     * @param zoneId to consider
+     * @return the UserId if the zone is mapped to a UserId, {@code UserHandle.USER_CURRENT}
+     * otherwise.
+     */
+    @SystemApi
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MODIFY_AUDIO_ROUTING,
+            Manifest.permission.QUERY_AUDIO_STATE,
+            Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED
+    })
+    public int getUserIdForZoneId(int zoneId) {
+        IAudioService service = getService();
+        try {
+            return service.getUserIdForZoneId(zoneId);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Set the system usages to be supported on this device.
      * @param systemUsages array of system usages to support {@link AttributeSystemUsage}
      * @hide

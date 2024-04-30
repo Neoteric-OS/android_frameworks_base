@@ -210,12 +210,47 @@ exit:
     return jStatus;
 }
 
+static jint
+android_media_AudioSystem_setUserIdStrategiesAffinity(JNIEnv *env, jobject clazz, jint userId,
+        jint zoneId)
+{
+    if (env == NULL) {
+        return AUDIO_JAVA_DEAD_OBJECT;
+    }
+    jint jStatus = (jint)AUDIO_JAVA_SUCCESS;
+    status_t status = AudioSystem::setUserIdStrategiesAffinity(userId, zoneId);
+    if (status != NO_ERROR) {
+        ALOGE("AudioSystem::setUserIdStrategiesAffinity error %d", status);
+        return nativeToJavaStatus(status);
+    }
+    return jStatus;
+}
+
+static jint
+android_media_AudioSystem_removeUserIdStrategiesAffinity(JNIEnv *env, jobject clazz, jint userId)
+{
+    if (env == NULL) {
+        return AUDIO_JAVA_DEAD_OBJECT;
+    }
+    jint jStatus = (jint)AUDIO_JAVA_SUCCESS;
+    status_t status = AudioSystem::removeUserIdStrategiesAffinity(userId);
+    if (status != NO_ERROR) {
+        ALOGE("AudioSystem::removeUserIddStrategiesAffinity error %d", status);
+        return nativeToJavaStatus(status);
+    }
+    return jStatus;
+}
+
 /*
  * JNI registration.
  */
 static const JNINativeMethod gMethods[] = {
     {"native_list_audio_product_strategies", "(Ljava/util/ArrayList;)I",
                         (void *)android_media_AudioSystem_listAudioProductStrategies},
+    {"native_set_userid_strategies_affinity", "(II)I",
+            (void *)android_media_AudioSystem_setUserIdStrategiesAffinity},
+    {"native_remove_userid_strategies_affinity", "(I)I",
+            (void *)android_media_AudioSystem_removeUserIdStrategiesAffinity},
 };
 
 int register_android_media_AudioProductStrategies(JNIEnv *env)
