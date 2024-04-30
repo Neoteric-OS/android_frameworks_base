@@ -3035,6 +3035,48 @@ static jint android_media_AudioSystem_getDevicesForAttributes(JNIEnv *env, jobje
     return jStatus;
 }
 
+static jint android_media_AudioSystem_getDevicesForAttributesAndUid(JNIEnv *env, jobject thiz,
+                                                              jobject jaa, jint juid,
+                                                              jobjectArray jDeviceArray,
+                                                              jboolean forVolume) {
+    const jsize maxResultSize = env->GetArrayLength(jDeviceArray);
+    // the JNI is always expected to provide us with an array capable of holding enough
+    // devices i.e. the most we ever route a track to. This is preferred over receiving an ArrayList
+    // with reverse JNI to make the array grow as need as this would be less efficient, and some
+    // components call this method often
+    if (jDeviceArray == nullptr || maxResultSize == 0) {
+        ALOGE("%s invalid array to store AudioDeviceAttributes", __FUNCTION__);
+        return AUDIO_JAVA_BAD_VALUE;
+    }
+
+    JNIAudioAttributeHelper::UniqueAaPtr paa = JNIAudioAttributeHelper::makeUnique();
+    jint jStatus = JNIAudioAttributeHelper::nativeFromJava(env, jaa, paa.get());
+    if (jStatus != AUDIO_JAVA_SUCCESS) {
+        return jStatus;
+    }
+
+    AudioDeviceTypeAddrVector devices;
+    jStatus = check_AudioSystem_Command(
+            AudioSystem::getDevicesForAttributes(*(paa.get()), juid, &devices, forVolume));
+    if (jStatus != NO_ERROR) {
+        return jStatus;
+    }
+
+    if (devices.size() > static_cast<size_t>(maxResultSize)) {
+        return AUDIO_JAVA_INVALID_OPERATION;
+    }
+    size_t index = 0;
+    jobject jAudioDeviceAttributes = NULL;
+    for (const auto& device : devices) {
+        jStatus = createAudioDeviceAttributesFromNative(env, &jAudioDeviceAttributes, &device);
+        if (jStatus != AUDIO_JAVA_SUCCESS) {
+            return jStatus;
+        }
+        env->SetObjectArrayElement(jDeviceArray, index++, jAudioDeviceAttributes);
+    }
+    return jStatus;
+}
+
 static jint android_media_AudioSystem_setVibratorInfos(JNIEnv *env, jobject thiz,
                                                        jobject jVibrators) {
     if (!env->IsInstanceOf(jVibrators, gListClass)) {
@@ -3166,6 +3208,26 @@ static jint android_media_AudioSystem_getDirectPlaybackSupport(JNIEnv *env, jobj
     return convertAudioDirectModeFromNative(directMode);
 }
 
+static jint android_media_AudioSystem_getDirectPlaybackSupportWithUid(JNIEnv *env, jobject thiz,
+        jobject jFormat, jobject jaa, jint juid) {
+    JNIAudioAttributeHelper::UniqueAaPtr paa = JNIAudioAttributeHelper::makeUnique();
+    jint jStatus = JNIAudioAttributeHelper::nativeFromJava(env, jaa, paa.get());
+    if (jStatus != AUDIO_JAVA_SUCCESS) {
+        return DIRECT_NOT_SUPPORTED;
+    }
+
+    audio_config_t nConfig;
+    javaAudioFormatToNativeAudioConfig(env, &nConfig, jFormat, false /*isInput*/);
+
+    audio_direct_mode_t directMode;
+    status_t status = AudioSystem::getDirectPlaybackSupport(paa.get(), juid, &nConfig, &directMode);
+    if (status != NO_ERROR) {
+        ALOGW("%s native returned error %d", __func__, status);
+        return DIRECT_NOT_SUPPORTED;
+    }
+    return convertAudioDirectModeFromNative(directMode);
+}
+
 static jint android_media_AudioSystem_getDirectProfilesForAttributes(JNIEnv *env, jobject thiz,
                                                                      jobject jAudioAttributes,
                                                                      jobject jAudioProfilesList) {
@@ -3202,6 +3264,53 @@ static jint android_media_AudioSystem_getDirectProfilesForAttributes(JNIEnv *env
         ScopedLocalRef<jobject> jAudioProfile(env);
         jint jConvertProfileStatus = convertAudioProfileFromNative(
                                         env, &jAudioProfile, &audioProfile, false);
+        if (jConvertProfileStatus == AUDIO_JAVA_BAD_VALUE) {
+            // skipping Java layer unsupported audio formats
+            continue;
+        }
+        if (jConvertProfileStatus != AUDIO_JAVA_SUCCESS) {
+            return jConvertProfileStatus;
+        }
+        env->CallBooleanMethod(jAudioProfilesList, gArrayListMethods.add, jAudioProfile.get());
+    }
+    return jStatus;
+}
+
+static jint android_media_AudioSystem_getDirectProfilesForAttributesAndUid(JNIEnv *env,
+        jobject thiz, jobject jAudioAttributes, jint juid, jobject jAudioProfilesList) {
+    ALOGV("getDirectProfilesForAttributes");
+
+    if (jAudioAttributes == nullptr) {
+        ALOGE("jAudioAttributes is NULL");
+        return AUDIO_JAVA_BAD_VALUE;
+    }
+    if (jAudioProfilesList == nullptr) {
+        ALOGE("jAudioProfilesList is NULL");
+        return AUDIO_JAVA_BAD_VALUE;
+    }
+    if (!env->IsInstanceOf(jAudioProfilesList, gArrayListClass)) {
+        ALOGE("jAudioProfilesList not an ArrayList");
+        return AUDIO_JAVA_BAD_VALUE;
+    }
+
+    JNIAudioAttributeHelper::UniqueAaPtr paa = JNIAudioAttributeHelper::makeUnique();
+    jint jStatus = JNIAudioAttributeHelper::nativeFromJava(env, jAudioAttributes, paa.get());
+    if (jStatus != AUDIO_JAVA_SUCCESS) {
+        return jStatus;
+    }
+
+    std::vector<audio_profile> audioProfiles;
+    status_t status = AudioSystem::getDirectProfilesForAttributes(paa.get(), juid, &audioProfiles);
+    if (status != NO_ERROR) {
+        ALOGE("AudioSystem::getDirectProfilesForAttributes error %d", status);
+        jStatus = nativeToJavaStatus(status);
+        return jStatus;
+    }
+
+    for (const auto &audioProfile : audioProfiles) {
+        ScopedLocalRef<jobject> jAudioProfile(env);
+        jint jConvertProfileStatus = convertAudioProfileFromNative(
+                env, &jAudioProfile, &audioProfile, false);
         if (jConvertProfileStatus == AUDIO_JAVA_BAD_VALUE) {
             // skipping Java layer unsupported audio formats
             continue;
@@ -3508,6 +3617,8 @@ static const JNINativeMethod gMethods[] = {
         MAKE_JNI_NATIVE_METHOD("getMaxVolumeIndexForAttributes",
                                "(Landroid/media/AudioAttributes;)I",
                                android_media_AudioSystem_getMaxVolumeIndexForAttributes),
+        MAKE_JNI_NATIVE_METHOD("setVolumeIndexForGroup", "(IIIZI)I",
+                               android_media_AudioSystem_setVolumeIndexForGroup)
         MAKE_AUDIO_SYSTEM_METHOD(setMasterVolume),
         MAKE_AUDIO_SYSTEM_METHOD(getMasterVolume),
         MAKE_AUDIO_SYSTEM_METHOD(setMasterMute),
@@ -3609,6 +3720,10 @@ static const JNINativeMethod gMethods[] = {
                                "(Landroid/media/AudioAttributes;[Landroid/media/"
                                "AudioDeviceAttributes;Z)I",
                                android_media_AudioSystem_getDevicesForAttributes),
+        MAKE_JNI_NATIVE_METHOD("getDevicesForAttributesAndUid",
+                               "(Landroid/media/AudioAttributes;I[Landroid/media/"
+                               "AudioDeviceAttributes;Z)I",
+                               android_media_AudioSystem_getDevicesForAttributesAndUid),
         MAKE_JNI_NATIVE_METHOD("setUserIdDeviceAffinities", "(I[I[Ljava/lang/String;)I",
                                android_media_AudioSystem_setUserIdDeviceAffinities),
         MAKE_AUDIO_SYSTEM_METHOD(removeUserIdDeviceAffinities),
@@ -3628,6 +3743,12 @@ static const JNINativeMethod gMethods[] = {
         MAKE_JNI_NATIVE_METHOD("getDirectPlaybackSupport",
                                "(Landroid/media/AudioFormat;Landroid/media/AudioAttributes;)I",
                                android_media_AudioSystem_getDirectPlaybackSupport),
+        MAKE_JNI_NATIVE_METHOD("getDirectPlaybackSupportWithUid",
+                               "(Landroid/media/AudioFormat;Landroid/media/AudioAttributes;I)I",
+                               android_media_AudioSystem_getDirectPlaybackSupportWithUid),
+        MAKE_JNI_NATIVE_METHOD("getDirectProfilesForAttributesAndUid",
+                               "(Landroid/media/AudioAttributes;ILjava/util/List;)I",
+                               android_media_AudioSystem_getDirectProfilesForAttributesAndUid),
         MAKE_JNI_NATIVE_METHOD("getDirectProfilesForAttributes",
                                "(Landroid/media/AudioAttributes;Ljava/util/ArrayList;)I",
                                android_media_AudioSystem_getDirectProfilesForAttributes),

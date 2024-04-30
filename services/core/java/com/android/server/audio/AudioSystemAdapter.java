@@ -16,6 +16,10 @@
 
 package com.android.server.audio;
 
+import static android.media.audiopolicy.Flags.FLAG_MULTI_ZONE_AUDIO;
+import static android.media.audiopolicy.Flags.FLAG_VOLUME_GROUP_MANAGEMENT_UPDATE;
+
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.media.AudioAttributes;
@@ -162,6 +166,12 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         return AudioSystem.resetProductStrategiesZoneIdForUserId(userId);
     }
 
+    public int getZoneIdForAudioVolumeGroupId(int groupId) {
+        List<AudioProductStrategy> strategies =
+                getAudioProductStrategies(/* filterInternal= */ true);
+        return AudioProductStrategy.getZoneIdForAudioVolumeGroupId(strategies, groupId);
+    }
+
     interface OnRoutingUpdatedListener {
         void onRoutingUpdatedFromNative();
     }
@@ -306,8 +316,15 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         }
     }
 
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    public @NonNull List<AudioDeviceAttributes> getDevicesForAttributes(
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
+        // not using cache for version with UID. Would need to generate a key with UserId? Uid?
+        return AudioSystem.getDevicesForAttributes(attributes, uid, forVolume);
+    }
+
     /**
-     * Same as {@link AudioSystem#getDevicesForAttributes(AudioAttributes)}
+     * Same as {@link AudioSystem#getDevicesForAttributes(AudioAttributes, int, boolean)}
      * @param attributes the attributes for which the routing is queried
      * @return the devices that the stream with the given attributes would be routed to
      */
@@ -563,6 +580,12 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
     public int setVolumeIndexForAttributes(AudioAttributes attributes, int index, boolean muted,
             int device) {
         return AudioSystem.setVolumeIndexForAttributes(attributes, index, muted, device);
+    }
+
+    /** Same as {@link AudioSystem#setVolumeIndexForGroup(int, int, int, boolean, int)} */
+    public int setVolumeIndexForGroup(int groupId, int uid, int index, boolean muted,
+            int device) {
+        return AudioSystem.setVolumeIndexForGroup(groupId, uid, index, muted, device);
     }
 
     /**
