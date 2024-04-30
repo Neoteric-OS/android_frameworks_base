@@ -466,6 +466,10 @@ interface IAudioService {
 
     List<AudioDeviceAttributes> getDevicesForAttributes(in AudioAttributes attributes);
 
+    @EnforcePermission(anyOf = {"MODIFY_AUDIO_ROUTING", "QUERY_AUDIO_STATE"})
+    List<AudioDeviceAttributes> getDevicesForAttributesAndUid(in AudioAttributes attributes,
+            in int uid);
+
     List<AudioDeviceAttributes> getDevicesForAttributesUnprotected(in AudioAttributes attributes);
 
     void addOnDevicesForAttributesChangedListener(in AudioAttributes attributes,

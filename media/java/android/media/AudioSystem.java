@@ -1818,16 +1818,19 @@ public class AudioSystem
     public static native int getMaxVolumeIndexForAttributes(@NonNull AudioAttributes attributes);
 
     /**
-     * Set a volume for the given group id and device type.
+     * Set a volume for the given {@link AudioAttributes} and for all other stream that belong to
+     * the same volume group.
      * @param groupId the {@link AudioVolumeGroup} id to be considered
+     * @param uid to be considered
      * @param index to be applied
      * @param device the volume device to be considered
      * @return command completion status.
      *
      * @hide
      */
-    @FlaggedApi(FLAG_VOLUME_GROUP_MANAGEMENT_UPDATE)
-    public static native int setVolumeGroupVolumeIndex(int groupId, int index, int device);
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    //@FlaggedApi(FLAG_VOLUME_GROUP_MANAGEMENT_UPDATE)
+    public static native int setVolumeGroupVolumeIndex(int groupId, int uid, int index, int device);
 
     /**
      * Get the volume index for the given group id and device.
@@ -1957,6 +1960,36 @@ public class AudioSystem
     }
 
     /**
+     * Do not use directly, see {@link AudioManager#getDevicesForAttributes(AudioAttributes)}
+     * Get the audio devices that would be used for the routing of the given audio attributes.
+     * @param attributes the {@link AudioAttributes} for which the routing is being queried
+     * @return an empty list if there was an issue with the request, a list of audio devices
+     *   otherwise (typically one device, except for duplicated paths).
+     *
+     * @hide
+     */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    public static @NonNull ArrayList<AudioDeviceAttributes> getDevicesForAttributes(
+            @NonNull AudioAttributes attributes, int uid, boolean forVolume) {
+        Objects.requireNonNull(attributes);
+        final AudioDeviceAttributes[] devices = new AudioDeviceAttributes[MAX_DEVICE_ROUTING];
+        final int res = getDevicesForAttributesAndUid(attributes, uid, devices, forVolume);
+        final ArrayList<AudioDeviceAttributes> routeDevices = new ArrayList<>();
+        if (res != SUCCESS) {
+            Log.e(TAG, "error " + res + " in getDevicesForAttributes attributes: " + attributes
+                    + " forVolume: " + forVolume);
+            return routeDevices;
+        }
+
+        for (AudioDeviceAttributes device : devices) {
+            if (device != null) {
+                routeDevices.add(device);
+            }
+        }
+        return routeDevices;
+    }
+
+    /**
      * Maximum number of audio devices a track is ever routed to, determines the size of the
      * array passed to {@link #getDevicesForAttributes(AudioAttributes, AudioDeviceAttributes[])}
      */
@@ -1965,6 +1998,10 @@ public class AudioSystem
     private static native int getDevicesForAttributes(@NonNull AudioAttributes aa,
                                                       @NonNull AudioDeviceAttributes[] devices,
                                                       boolean forVolume);
+
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    private static native int getDevicesForAttributesAndUid(@NonNull AudioAttributes aa, int uid,
+            @NonNull AudioDeviceAttributes[] devices, boolean forVolume);
 
     /** @hide returns true if master mono is enabled. */
     public static native boolean getMasterMono();
@@ -2108,6 +2145,21 @@ public class AudioSystem
      */
     public static native int getDirectPlaybackSupport(
             @NonNull AudioFormat format, @NonNull AudioAttributes attributes);
+
+    /**
+     * Returns how direct playback of an audio format is currently available on the device.
+     * @param format the audio format (codec, sample rate, channels) being checked.
+     * @param attributes the {@link AudioAttributes} to be used for playback
+     * @param uid the uid that may initiate the playback
+     * @return the direct playback mode available with given format and attributes. Any combination
+     *         of {@link #DIRECT_NOT_SUPPORTED}, {@link #DIRECT_OFFLOAD_SUPPORTED},
+     *         {@link #DIRECT_OFFLOAD_GAPLESS_SUPPORTED} and {@link #DIRECT_BITSTREAM_SUPPORTED}.
+     *
+     * @hide
+     */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    public static native int getDirectPlaybackSupportWithUid(
+            @NonNull AudioFormat format, @NonNull AudioAttributes attributes, int uid);
 
     static int getOffloadSupport(@NonNull AudioFormat format, @NonNull AudioAttributes attr) {
         return native_get_offload_support(format.getEncoding(), format.getSampleRate(),
@@ -2475,6 +2527,19 @@ public class AudioSystem
      * @return {@link #SUCCESS} if the list of AudioProfiles was successfully created (can be empty)
      */
     public static native int getDirectProfilesForAttributes(@NonNull AudioAttributes attributes,
+            @NonNull ArrayList<AudioProfile> audioProfilesList);
+
+    /**
+     * @param attributes audio attributes describing the playback use case
+     * @param uid the uid that may initiate the playback
+     * @param audioProfilesList the list of AudioProfiles that can be played as direct output
+     * @return {@link #SUCCESS} if the list of AudioProfiles was successfully created (can be empty)
+     *
+     * @hide
+     */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    public static native int getDirectProfilesForAttributesAndUid(
+            @NonNull AudioAttributes attributes, int uid,
             @NonNull ArrayList<AudioProfile> audioProfilesList);
 
     // Items shared with audio service

@@ -2953,6 +2953,36 @@ public class AudioManager {
         return AudioSystem.getDirectPlaybackSupport(format, attributes);
     }
 
+    /**
+     * Returns a bitfield representing the different forms of direct playback currently available
+     * for a given audio format.
+     * <p>Direct playback means that the audio stream is not altered by the framework. The audio
+     * stream will not be resampled, volume scaled, downmixed or mixed with other content by
+     * the framework. But it may be wrapped in a higher level protocol such as IEC61937 for
+     * passthrough.
+     * <p>Checking for direct support can help the app select the representation of audio content
+     * that most closely matches the capabilities of the device and peripherals (e.g. A/V receiver)
+     * connected to it. Note that the provided stream can still be re-encoded or mixed with other
+     * streams, if needed.
+     * @param format the audio format (codec, sample rate, channels) being checked.
+     * @param attributes the {@link AudioAttributes} to be used for playback
+     * @return the direct playback mode available with given format and attributes. The returned
+     *         value will be {@link #DIRECT_PLAYBACK_NOT_SUPPORTED} or a combination of
+     *         {@link #DIRECT_PLAYBACK_OFFLOAD_SUPPORTED},
+     *         {@link #DIRECT_PLAYBACK_OFFLOAD_GAPLESS_SUPPORTED} and
+     *         {@link #DIRECT_PLAYBACK_BITSTREAM_SUPPORTED}. Note that if
+     *         {@link #DIRECT_PLAYBACK_OFFLOAD_GAPLESS_SUPPORTED} is present in the returned value,
+     *         then {@link #DIRECT_PLAYBACK_OFFLOAD_SUPPORTED} will be too.
+     */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @AudioDirectPlaybackMode
+    public static int getDirectPlaybackSupport(@NonNull AudioFormat format,
+                                               @NonNull AudioAttributes attributes, int uid) {
+        Objects.requireNonNull(format);
+        Objects.requireNonNull(attributes);
+        return AudioSystem.getDirectPlaybackSupportWithUid(format, attributes, uid);
+    }
+
     //====================================================================
     // Offload query
     /**
@@ -6424,6 +6454,32 @@ public class AudioManager {
         }
     }
 
+    /**
+     * Get the audio devices that would be used for the routing of the given audio attributes.
+     * @param attributes the {@link AudioAttributes} for which the routing is being queried
+     * @param uid for which the device is being queried.
+     * @return an empty list if there was an issue with the request, a list of audio devices
+     *   otherwise (typically one device, except for duplicated paths).
+     *
+     * @hide
+     */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MODIFY_AUDIO_ROUTING,
+            Manifest.permission.QUERY_AUDIO_STATE
+    })
+    public @NonNull List<AudioDeviceAttributes> getDevicesForAttributesAndUid(
+            @NonNull AudioAttributes attributes, int uid) {
+        Objects.requireNonNull(attributes);
+        final IAudioService service = getService();
+        try {
+            return service.getDevicesForAttributesAndUid(attributes, uid);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     // Each listener corresponds to a unique callback stub because each listener can subscribe to
     // different AudioAttributes.
     private final ConcurrentHashMap<OnDevicesForAttributesChangedListener,
@@ -9181,6 +9237,21 @@ public class AudioManager {
         Objects.requireNonNull(attributes);
         ArrayList<AudioProfile> audioProfilesList = new ArrayList<>();
         int status = AudioSystem.getDirectProfilesForAttributes(attributes, audioProfilesList);
+        if (status != SUCCESS) {
+            Log.w(TAG, "getDirectProfilesForAttributes failed.");
+            return new ArrayList<>();
+        }
+        return audioProfilesList;
+    }
+
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @NonNull
+    public List<AudioProfile> getDirectProfilesForAttributes(@NonNull AudioAttributes attributes,
+            int uid) {
+        Objects.requireNonNull(attributes);
+        ArrayList<AudioProfile> audioProfilesList = new ArrayList<>();
+        int status = AudioSystem.getDirectProfilesForAttributesAndUid(
+                attributes, uid, audioProfilesList);
         if (status != SUCCESS) {
             Log.w(TAG, "getDirectProfilesForAttributes failed.");
             return new ArrayList<>();
