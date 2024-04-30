@@ -1422,8 +1422,11 @@ public class AudioTrack extends PlayerBase
                     throw new UnsupportedOperationException(
                             "Offload and low latency modes are incompatible");
                 }
-                if (AudioSystem.getDirectPlaybackSupport(mFormat, mAttributes)
-                        == AudioSystem.DIRECT_NOT_SUPPORTED) {
+                AttributionSource attributionSource = mContext == null
+                        ? AttributionSource.myAttributionSource() : mContext.getAttributionSource();
+
+                if (AudioSystem.getDirectPlaybackSupport(mFormat, mAttributes,
+                        attributionSource.getUid()) == AudioSystem.DIRECT_NOT_SUPPORTED) {
                     throw new UnsupportedOperationException(
                             "Cannot create AudioTrack, offload format / attributes not supported");
                 }

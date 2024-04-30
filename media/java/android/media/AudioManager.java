@@ -2945,7 +2945,7 @@ public class AudioManager {
                                                @NonNull AudioAttributes attributes) {
         Objects.requireNonNull(format);
         Objects.requireNonNull(attributes);
-        return AudioSystem.getDirectPlaybackSupport(format, attributes);
+        return AudioSystem.getDirectPlaybackSupport(format, attributes, Binder.getCallingUid());
     }
 
     //====================================================================
@@ -6334,6 +6334,31 @@ public class AudioManager {
         }
     }
 
+    /**
+     * @hide
+     * Get the audio devices that would be used for the routing of the given audio attributes.
+     * @param attributes the {@link AudioAttributes} for which the routing is being queried
+     * @param uid for which the device is being queried.
+     * @return an empty list if there was an issue with the request, a list of audio devices
+     *   otherwise (typically one device, except for duplicated paths).
+     */
+    @FlaggedApi(FLAG_MULTI_ZONE_AUDIO)
+    @SystemApi
+    @RequiresPermission(anyOf = {
+            Manifest.permission.MODIFY_AUDIO_ROUTING,
+            Manifest.permission.QUERY_AUDIO_STATE
+    })
+    public @NonNull List<AudioDeviceAttributes> getDevicesForAttributesAndUid(
+            @NonNull AudioAttributes attributes, int uid) {
+        Objects.requireNonNull(attributes);
+        final IAudioService service = getService();
+        try {
+            return service.getDevicesForAttributesAndUid(attributes, uid);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     // Each listener corresponds to a unique callback stub because each listener can subscribe to
     // different AudioAttributes.
     private final ConcurrentHashMap<OnDevicesForAttributesChangedListener,
@@ -9029,7 +9054,8 @@ public class AudioManager {
     public List<AudioProfile> getDirectProfilesForAttributes(@NonNull AudioAttributes attributes) {
         Objects.requireNonNull(attributes);
         ArrayList<AudioProfile> audioProfilesList = new ArrayList<>();
-        int status = AudioSystem.getDirectProfilesForAttributes(attributes, audioProfilesList);
+        int status = AudioSystem.getDirectProfilesForAttributes(attributes, Binder.getCallingUid(),
+                audioProfilesList);
         if (status != SUCCESS) {
             Log.w(TAG, "getDirectProfilesForAttributes failed.");
             return new ArrayList<>();
