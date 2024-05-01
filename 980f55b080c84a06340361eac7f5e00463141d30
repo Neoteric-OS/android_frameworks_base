@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fce25f6c_12c74c37",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-01T22:25:02Z",
+      "side": 1,
+      "message": "Where do these copies get zeroized?",
+      "range": {
+        "startLine": 1848,
+        "startChar": 0,
+        "endLine": 1849,
+        "endChar": 69
+      },
+      "revId": "980f55b080c84a06340361eac7f5e00463141d30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
