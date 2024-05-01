@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0701dd31_81927cce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-05-01T12:19:41Z",
+      "side": 1,
+      "message": "Almaz, Chaohui is OOO. Can you take a look of this CL?",
+      "revId": "3c626b6ce098b1501d344a5c8c272c4c8e43f445",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
