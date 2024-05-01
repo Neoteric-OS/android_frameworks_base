@@ -16,6 +16,23 @@
       "message": "Parent:     de8f4b28 (Merge \"Revert \"Get HDMI CEC physical address with service thread, so TIF can get it for Player.\"\")\nAuthor:     Neil Fuller \u003cnfuller@google.com\u003e\nAuthorDate: 2022-10-12 21:20:36 +0100\nCommit:     Neil Fuller \u003cnfuller@google.com\u003e\nCommitDate: 2022-10-13 11:48:12 +0100\n\nFix permission issues for network update service\n\nFix permission issues for network update service command-line commands\nused in tests.\n\nBug: 251726675\nTest: atest android.os.cts.SystemClockSntpTest\nMerged-In: I8a34c801d82c769fd8d06e5b0b3177ce92b5f072\nChange-Id: I8a34c801d82c769fd8d06e5b0b3177ce92b5f072",
       "revId": "605d4acdcdea376d8f0f1212157b50f9fa606ff1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74f4d32d_0a7217a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3409162
+      },
+      "writtenOn": "2024-05-01T17:09:12Z",
+      "side": 1,
+      "message": "/**\n     * Clears the cached NTP time. For use during tests to simulate when no NTP time is available.\n     *\n     * \u003cp\u003eThis operation takes place in the calling thread rather than the service\u0027s handler thread.\n     */\n    void clearTimeForTests() {\n        mContext.enforceCallingPermission(\n                android.Manifest.permission.SET_TIME, \"clear latest network time\");\n\n        final long token \u003d Binder.clearCallingIdentity();\n        try {\n            mTime.clearCachedTimeResult();\n\n            mLocalLog.log(\"clearTimeForTests\");\n        } finally {\n            Binder.restoreCallingIdentity(token);\n        }\n    }\n\n    /**\n     * Forces the service to refresh the NTP time.\n     *\n     * \u003cp\u003eThis operation takes place in the calling thread rather than the service\u0027s handler thread.\n     * This method does not affect currently scheduled refreshes. If the NTP request is successful\n     * it will make an (asynchronously handled) suggestion to the time detector.\n     */\n    boolean forceRefreshForTests() {\n        mContext.enforceCallingPermission(\n                android.Manifest.permission.SET_TIME, \"force network time refresh\");\n\n        final long token \u003d Binder.clearCallingIdentity();\n        try {\n            boolean success \u003d mTime.forceRefresh();\n            mLocalLog.log(\"forceRefreshForTests: success\u003d\" + success);\n\n            if (success) {\n                makeNetworkTimeSuggestion(mTime.getCachedTimeResult(),\n                        \"Origin: NetworkTimeUpdateService: forceRefreshForTests\");\n            }\n            return success;\n        } finally {\n            Binder.restoreCallingIdentity(token);\n        }\n    }\n\n    /**\n     * Overrides the NTP server config for tests. Passing {@code null} to a parameter clears the\n     * test value, i.e. so the normal value will be used next time.\n     */\n    void setServerConfigForTests(\n            @Nullable String hostname, @Nullable Integer port, @Nullable Duration timeout) {\n        mContext.enforceCallingPermission(\n                android.Manifest.permission.SET_TIME, \"set NTP server config for tests\");\n\n        final long token \u003d Binder.clearCallingIdentity();\n        try {\n            mLocalLog.log(\"Setting server config for tests: hostname\u003d\" + hostname\n                    + \", port\u003d\" + port\n                    + \", timeout\u003d\" + timeout);\n            mTime.setServerConfigForTests(hostname, port, timeout);\n        } finally {\n            Binder.restoreCallingIdentity(token);\n        }\n    }\n\n    private void onPollNetworkTime(int event) {\n        // If we don\u0027t have any default network, don\u0027t bother.\n        if (mDefaultNetwork \u003d\u003d null) return;\n        mWakeLock.acquire();\n        try {\n            onPollNetworkTimeUnderWakeLock(event);\n        } finally {\n            mWakeLock.release();r",
+      "revId": "605d4acdcdea376d8f0f1212157b50f9fa606ff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
