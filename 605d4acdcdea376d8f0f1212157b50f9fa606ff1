@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6e4296a_70bc0afe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3409162
+      },
+      "writtenOn": "2024-05-01T17:08:15Z",
+      "side": 1,
+      "message": "Parent:     de8f4b28 (Merge \"Revert \"Get HDMI CEC physical address with service thread, so TIF can get it for Player.\"\")\nAuthor:     Neil Fuller \u003cnfuller@google.com\u003e\nAuthorDate: 2022-10-12 21:20:36 +0100\nCommit:     Neil Fuller \u003cnfuller@google.com\u003e\nCommitDate: 2022-10-13 11:48:12 +0100\n\nFix permission issues for network update service\n\nFix permission issues for network update service command-line commands\nused in tests.\n\nBug: 251726675\nTest: atest android.os.cts.SystemClockSntpTest\nMerged-In: I8a34c801d82c769fd8d06e5b0b3177ce92b5f072\nChange-Id: I8a34c801d82c769fd8d06e5b0b3177ce92b5f072",
+      "revId": "605d4acdcdea376d8f0f1212157b50f9fa606ff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
