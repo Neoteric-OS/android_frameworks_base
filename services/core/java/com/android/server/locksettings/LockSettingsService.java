@@ -1782,7 +1782,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                     return false;
                 }
                 setSeparateProfileChallengeEnabledLocked(userId, true, /* unused */ null);
-                notifyPasswordChanged(credential, userId);
+                notifyPasswordChanged(credential.duplicate(), userId);
             }
             if (isCredentialSharableWithParent(userId)) {
                 // Make sure the profile doesn't get locked straight after setting challenge.
@@ -2454,6 +2454,9 @@ public class LockSettingsService extends ILockSettings.Stub {
                     PasswordMetrics.computeForCredential(newCredential),
                     userId);
             LocalServices.getService(WindowManagerInternal.class).reportPasswordChanged(userId);
+            // this function takes ownership of the LockscreenCredential, because it captures
+            // it in this callback it needs to deal with it after use
+            newCredential.zeroize();
         });
     }
 
@@ -3250,7 +3253,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                 // the caller like DPMS), otherwise it can lead to deadlock.
                 mHandler.post(() -> unlockUser(userId));
             }
-            notifyPasswordChanged(credential, userId);
+            notifyPasswordChanged(credential.duplicate(), userId);
             notifySeparateProfileChallengeChanged(userId);
         }
         return result;

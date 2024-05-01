@@ -541,4 +541,9 @@ public class KeySyncTask implements Runnable {
         return mCredentialType == LockPatternUtils.CREDENTIAL_TYPE_PASSWORD
                 || mCredentialType == LockPatternUtils.CREDENTIAL_TYPE_PIN;
     }
+
+    @Override
+    public void finalize() {
+        Arrays.fill(mCredential, (byte) 0);
+    }
 }
