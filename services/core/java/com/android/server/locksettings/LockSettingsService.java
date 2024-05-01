@@ -1845,8 +1845,8 @@ public class LockSettingsService extends ILockSettings.Stub {
             }
 
             onSyntheticPasswordUnlocked(userId, sp);
-            setLockCredentialWithSpLocked(credential, sp, userId);
-            sendCredentialsOnChangeIfRequired(credential, userId, isLockTiedToParent);
+            setLockCredentialWithSpLocked(credential.duplicate(), sp, userId);
+            sendCredentialsOnChangeIfRequired(credential.duplicate(), userId, isLockTiedToParent);
             return true;
         }
     }
