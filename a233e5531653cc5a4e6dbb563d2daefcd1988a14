@@ -16,6 +16,23 @@
       "message": "Hi, please check if this works for you (`adb shell cmd hdmi_control help`)",
       "revId": "a233e5531653cc5a4e6dbb563d2daefcd1988a14",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd523737_3206e217",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2024-05-02T22:32:16Z",
+      "side": 1,
+      "message": "Hi Sherry,\nPlease review this CL.",
+      "revId": "a233e5531653cc5a4e6dbb563d2daefcd1988a14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
