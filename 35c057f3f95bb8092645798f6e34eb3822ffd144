@@ -16,6 +16,24 @@
       "message": "This should be \n \u0026\u0026 event.getDevice() !\u003d null \u0026\u0026 !event.getDevice().isExternal() right?\n \n bitwise and with boolean does not really make sense.",
       "revId": "35c057f3f95bb8092645798f6e34eb3822ffd144",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67629c5d_d5cd20db",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 4533,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-05-02T10:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d5ffd11_fc68bdb6",
+      "revId": "35c057f3f95bb8092645798f6e34eb3822ffd144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
