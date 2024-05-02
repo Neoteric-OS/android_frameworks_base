@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d849e9e_7659e057",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097570
+      },
+      "writtenOn": "2024-05-02T20:27:12Z",
+      "side": 1,
+      "message": "Hi, please check if this works for you (`adb shell cmd hdmi_control help`)",
+      "revId": "a233e5531653cc5a4e6dbb563d2daefcd1988a14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
