@@ -22,6 +22,30 @@
       },
       "revId": "980f55b080c84a06340361eac7f5e00463141d30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d42b33d5_e3c4f94d",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-05-02T02:22:33Z",
+      "side": 1,
+      "message": "Resolved b/c not applicable anymore",
+      "parentUuid": "fce25f6c_12c74c37",
+      "range": {
+        "startLine": 1848,
+        "startChar": 0,
+        "endLine": 1849,
+        "endChar": 69
+      },
+      "revId": "980f55b080c84a06340361eac7f5e00463141d30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

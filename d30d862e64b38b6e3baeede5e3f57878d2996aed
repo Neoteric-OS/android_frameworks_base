@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d7016a7_12263e0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954616
+      },
+      "writtenOn": "2024-05-02T02:22:33Z",
+      "side": 1,
+      "message": "The `credential` was not getting captured where I initially thought it was; I\u0027ve updated this CL to fix that. The problem was actually the `credential` being captured by the callback in `notifyPasswordChanged`.",
+      "revId": "d30d862e64b38b6e3baeede5e3f57878d2996aed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
