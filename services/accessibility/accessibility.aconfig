@@ -1,5 +1,4 @@
 package: "com.android.server.accessibility"
-container: "system"
 
 # NOTE: Keep alphabetized to help limit merge conflicts from multiple simultaneous editors.
 
