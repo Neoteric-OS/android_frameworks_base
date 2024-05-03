@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "626608ba_f8c9349f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-05-03T10:40:03Z",
+      "side": 1,
+      "message": "@Ed, when you have time please rebase and update this with RESERVE_NEW_UI_EVENT_ID.\n @kozynski@google.com if you have no objections on the contribution, can you help Ed with the Google job that generates the UI_EVENT_ID?",
+      "revId": "7caed19f72e16b723dae97d29bcf8d5d34e29cdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "927b5ca4_6bc7d556",
+        "filename": "packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialogLite.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-05-03T10:40:03Z",
+      "side": 1,
+      "message": "RESERVE_NEW_UI_EVENT_ID",
+      "range": {
+        "startLine": 320,
+        "startChar": 25,
+        "endLine": 320,
+        "endChar": 28
+      },
+      "revId": "7caed19f72e16b723dae97d29bcf8d5d34e29cdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
