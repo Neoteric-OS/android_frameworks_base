@@ -1,5 +1,4 @@
 package: "android.provider"
-container: "system"
 
 flag {
     name: "system_settings_default"

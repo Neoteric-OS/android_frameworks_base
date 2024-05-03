@@ -1,5 +1,4 @@
 package: "com.android.internal.foldables.flags"
-container: "system"
 
 flag {
     name: "fold_lock_setting_enabled"
