@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f21f961_892827bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2024-05-03T12:48:08Z",
+      "side": 1,
+      "message": "There\u0027s no discussion of power saver mode on the bug. Isn\u0027t it more expected that things might not work in power saver mode? And that\u0027s initiated by (or with the consent of) the user.",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5c539a2_841d7a7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2024-05-03T12:48:08Z",
+      "side": 1,
+      "message": "To continue onto another line, put spaces at the front of the continuation lines to keep the parser happy (go/commit-change#footers-and-machine-parsable-text).",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44b175e5_70a0da1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2024-05-03T12:48:08Z",
+      "side": 1,
+      "message": "Delete this and subsequent blank line",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ba0ff38_0d68ce69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2024-05-03T12:48:08Z",
+      "side": 1,
+      "message": "I think you\u0027re still waiting on sys health approval?",
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
