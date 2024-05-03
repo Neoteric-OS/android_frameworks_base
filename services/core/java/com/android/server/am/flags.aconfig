@@ -1,5 +1,4 @@
 package: "com.android.server.am"
-container: "system"
 
 flag {
     name: "oomadjuster_correctness_rewrite"

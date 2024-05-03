@@ -1,5 +1,4 @@
 package: "com.android.providers.settings"
-container: "system"
 
 flag {
     name: "support_overrides"

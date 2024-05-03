@@ -1,5 +1,4 @@
 package: "com.android.server.job"
-container: "system"
 
 flag {
     name: "relax_prefetch_connectivity_constraint_only_on_charger"

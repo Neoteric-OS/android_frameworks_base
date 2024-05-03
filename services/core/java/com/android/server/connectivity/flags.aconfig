@@ -1,5 +1,4 @@
 package: "com.android.server.connectivity"
-container: "system"
 
 flag {
     name: "replace_vpn_profile_store"

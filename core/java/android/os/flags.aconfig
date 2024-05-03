@@ -1,5 +1,4 @@
 package: "android.os"
-container: "system"
 
 flag {
     name: "android_os_build_vanilla_ice_cream"

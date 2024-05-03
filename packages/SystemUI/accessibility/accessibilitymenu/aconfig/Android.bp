@@ -1,7 +1,6 @@
 aconfig_declarations {
     name: "com_android_a11y_menu_flags",
     package: "com.android.systemui.accessibility.accessibilitymenu",
-    container: "system",
     srcs: [
         "accessibility.aconfig",
     ],

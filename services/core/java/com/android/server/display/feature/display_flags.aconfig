@@ -1,5 +1,4 @@
 package: "com.android.server.display.feature.flags"
-container: "system"
 
 # Important: Flags must be accessed through DisplayManagerFlags.
 

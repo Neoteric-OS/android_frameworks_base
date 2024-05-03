@@ -1,7 +1,6 @@
 aconfig_declarations {
     name: "am_flags",
     package: "com.android.server.am",
-    container: "system",
     srcs: ["*.aconfig"],
 }
 
