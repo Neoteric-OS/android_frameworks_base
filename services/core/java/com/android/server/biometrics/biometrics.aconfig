@@ -1,5 +1,4 @@
 package: "com.android.server.biometrics"
-container: "system"
 
 flag {
   name: "face_vhal_feature"
