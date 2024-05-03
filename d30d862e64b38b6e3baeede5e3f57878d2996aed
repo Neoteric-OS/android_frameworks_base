@@ -16,6 +16,63 @@
       "message": "The `credential` was not getting captured where I initially thought it was; I\u0027ve updated this CL to fix that. The problem was actually the `credential` being captured by the callback in `notifyPasswordChanged`.",
       "revId": "d30d862e64b38b6e3baeede5e3f57878d2996aed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "391c6a38_dee9a2b8",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3256,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-03T17:33:18Z",
+      "side": 1,
+      "message": "`notifyPasswordChanged()` should do the duplication itself, since it\u0027s the place that decides to do something asynchronously.  This would also allow the duplication to be more clearly paired with the corresponding zeroization.",
+      "range": {
+        "startLine": 3256,
+        "startChar": 0,
+        "endLine": 3256,
+        "endChar": 66
+      },
+      "revId": "d30d862e64b38b6e3baeede5e3f57878d2996aed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3b9dfba_51045034",
+        "filename": "services/core/java/com/android/server/locksettings/recoverablekeystore/KeySyncTask.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-03T17:33:18Z",
+      "side": 1,
+      "message": "This should be a separate CL",
+      "revId": "d30d862e64b38b6e3baeede5e3f57878d2996aed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3a06c61_e8a3a5d1",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5676,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-03T17:33:18Z",
+      "side": 1,
+      "message": "This should be a separate CL",
+      "revId": "d30d862e64b38b6e3baeede5e3f57878d2996aed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
