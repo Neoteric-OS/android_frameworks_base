@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "35085360_245bca33",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2024-05-04T14:45:04Z",
+      "side": 1,
+      "message": "It is definitely expected that things may not work properly but functionality of some apps still remain. Without RKP, we may lose even that.\nIn the extreme battery saver case, some applications may break but the standard battery saver should not break application functionality.",
+      "parentUuid": "5f21f961_892827bc",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f5c539a2_841d7a7c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -100,6 +124,30 @@
       "writtenOn": "2024-05-03T12:51:43Z",
       "side": 1,
       "message": "The com.google ones shouldn\u0027t be in this AOSP platform.xml. \n\nMaybe vendor/google/data/etc/sysconfig/google.xml ?",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 64
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12a4d8fa_5ca4d737",
+        "filename": "data/etc/platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2024-05-04T14:45:04Z",
+      "side": 1,
+      "message": "Would that be used for all the devices taking the mainline module?",
+      "parentUuid": "a725f620_2348cb32",
       "range": {
         "startLine": 329,
         "startChar": 0,
