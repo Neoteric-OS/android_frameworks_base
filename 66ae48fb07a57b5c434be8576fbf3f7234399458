@@ -22,6 +22,30 @@
       },
       "revId": "66ae48fb07a57b5c434be8576fbf3f7234399458",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d26f9113_3338c90c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1976388
+      },
+      "writtenOn": "2024-05-04T11:48:58Z",
+      "side": 1,
+      "message": "Hey Siarhei,\nSorry for taking so long to reply to you. Something happened to me in the middle and I was delayed. I discussed this problem with my colleagues in the team and came up with some methods, but in the end, the feasibility was not high, and we did not have a good idea. log has been removed from my new submission. Please help me have a look. Thank you",
+      "parentUuid": "0a8f3b7a_6631b7bb",
+      "range": {
+        "startLine": 9,
+        "startChar": 332,
+        "endLine": 9,
+        "endChar": 466
+      },
+      "revId": "66ae48fb07a57b5c434be8576fbf3f7234399458",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
