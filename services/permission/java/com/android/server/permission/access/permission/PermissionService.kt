@@ -2067,7 +2067,7 @@ class PermissionService(private val service: AccessCheckingService) :
                     }
                 }
             }
-        } else if (args[0] == "--app-id" && args.size == 2) {
+        } else if (args[0] == "--app-id" && args.size >= 2) {
             val appId = args[1].toInt()
             service.getState {
                 val appIdPackageNames = getAllAppIdPackageNames(state)
@@ -2077,8 +2077,20 @@ class PermissionService(private val service: AccessCheckingService) :
                     writer.println("Unknown app ID $appId.")
                 }
             }
+        } else if (args[0] == "--package" && args.size >= 2) {
+            val packageName = args[1]
+            service.getState {
+                val packageState = state.externalState.packageStates[packageName]
+                if (packageState != null) {
+                    writer.dumpAppIdState(packageState.appId, state, indexedSetOf(packageName))
+                } else {
+                    writer.println("Unknown package $packageName.")
+                }
+            }
         } else {
-            writer.println("Usage: dumpsys permission [--app-id APP_ID]")
+            writer.println(
+                "Usage: dumpsys permissionmgr [--app-id <APP_ID>] [--package <PACKAGE_NAME>]"
+            )
         }
     }
 
