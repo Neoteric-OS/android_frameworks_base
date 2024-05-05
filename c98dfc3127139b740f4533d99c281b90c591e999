@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5de67fe_1aaaa76c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-05-05T03:34:55Z",
+      "side": 1,
+      "message": "Hello,\n\nWe found that it is difficult to obtain the appid directly during debugging, so we hope to support dumping according to the package name. In addition, the Usage part has also been modified.",
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
