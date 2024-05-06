@@ -156,6 +156,30 @@
       },
       "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4d9d5b2_473b4ca9",
+        "filename": "data/etc/platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2024-05-06T15:44:40Z",
+      "side": 1,
+      "message": "Yeah, I think the concern here is that we don\u0027t know if an OEM is using the Google-signed version of the module or they are rolling their own.\n\nIn the case of roll-their-own, we are assuming the package name matches the AOSP version of the package.",
+      "parentUuid": "12a4d8fa_5ca4d737",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 64
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
