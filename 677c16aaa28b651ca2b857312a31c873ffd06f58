@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "271d254f_7dbc26a1",
+        "filename": "packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialogLite.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2024-05-06T10:08:47Z",
+      "side": 1,
+      "message": "The presubmit hook does not seem to be active on AOSP. Is it possible to trigger this manually?",
+      "range": {
+        "startLine": 323,
+        "startChar": 25,
+        "endLine": 323,
+        "endChar": 48
+      },
+      "revId": "677c16aaa28b651ca2b857312a31c873ffd06f58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
