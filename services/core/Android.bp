@@ -4,14 +4,14 @@ package {
     // all of the 'license_kinds' from "frameworks_base_license"
     // to get the below license kinds:
     //   SPDX-license-identifier-Apache-2.0
-    // TEST
+    // TEST!!
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
 filegroup {
     name: "services.core-sources-am-wm",
     srcs: [
-        "java/com/android/server/am/**/*.java",
+        "java/com/android/server/am/**/*.java"p,
         "java/com/android/server/wm/**/*.java",
     ],
     path: "java",
