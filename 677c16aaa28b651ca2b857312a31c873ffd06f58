@@ -22,6 +22,30 @@
       },
       "revId": "677c16aaa28b651ca2b857312a31c873ffd06f58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84345331_ac200220",
+        "filename": "packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialogLite.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2024-05-06T13:16:19Z",
+      "side": 1,
+      "message": "As this will introduce a new ui event, we probably want to cherry pick this and merge internally. I\u0027ll evaluate the solution and if necessary perform the cherry pick and merge.",
+      "parentUuid": "271d254f_7dbc26a1",
+      "range": {
+        "startLine": 323,
+        "startChar": 25,
+        "endLine": 323,
+        "endChar": 48
+      },
+      "revId": "677c16aaa28b651ca2b857312a31c873ffd06f58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
