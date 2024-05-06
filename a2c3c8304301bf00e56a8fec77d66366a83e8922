@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d157d779_e20417bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2024-05-06T18:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5c539a2_841d7a7c",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44b175e5_70a0da1d",
@@ -84,6 +108,30 @@
       "writtenOn": "2024-05-03T12:48:08Z",
       "side": 1,
       "message": "Delete this and subsequent blank line",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "925126e6_705dd130",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2024-05-06T18:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b175e5_70a0da1d",
       "range": {
         "startLine": 17,
         "startChar": 0,
