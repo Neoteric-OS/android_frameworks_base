@@ -34,6 +34,29 @@
       "parentUuid": "c3c2823a_7ae99c36",
       "revId": "17c1093b5122e69e4cfb83f9169a1320591bd73a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eda8743b_ae3c935b",
+        "filename": "core/java/android/view/ViewGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4524,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2024-05-07T21:48:49Z",
+      "side": 1,
+      "message": "Change this to throw an exception instead. This is an illegal operation so it should throw, not just silently continue.",
+      "range": {
+        "startLine": 4523,
+        "startChar": 0,
+        "endLine": 4524,
+        "endChar": 25
+      },
+      "revId": "17c1093b5122e69e4cfb83f9169a1320591bd73a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
