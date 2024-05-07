@@ -33,6 +33,24 @@
       "message": "+1, but why can\u0027t we just kill the mk module in favor of this? (.. and drop installable: false or no_full_install: true at all)",
       "revId": "8541b878803050de6ec921cb9f3d6e8c6c15f1f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9806cc2_65c773a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2024-05-07T05:45:50Z",
+      "side": 1,
+      "message": "it\u0027s currently installed with `PRODUCT_COPY_FILES` and some targets are overriding them.",
+      "parentUuid": "5a6adddb_5b3565d5",
+      "revId": "8541b878803050de6ec921cb9f3d6e8c6c15f1f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
