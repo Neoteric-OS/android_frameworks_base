@@ -520,6 +520,10 @@ public class WebChromeClient {
      * To cancel the request, call <code>filePathCallback.onReceiveValue(null)</code> and
      * return {@code true}.
      *
+     * <p class="note"><b>Note:</b> The app is responsible for checking the
+     * validity of the chosen file(s) before calling the <code>filePathCallback</code>.
+     * See {@link #createIntent} and {@link #parseResult} for details.</p>
+     *
      * @param webView The WebView instance that is initiating the request.
      * @param filePathCallback Invoke this callback to supply the list of paths to files to upload,
      *                         or {@code null} to cancel. Must only be called if the
@@ -555,6 +559,11 @@ public class WebChromeClient {
         /**
          * Parse the result returned by the file picker activity. This method should be used with
          * {@link #createIntent}. Refer to {@link #createIntent} for how to use it.
+         *
+         * <p class="note"><b>Note:</b> The intent returned by the file picker activity
+         * should be treated as untrusted. A third-party app handling the implicit
+         * intent created by {@link #createIntent} might return data Uris pointing
+         * to sensitive app data. Data Uris should be validated before being returned.</p>
          *
          * @param resultCode the integer result code returned by the file picker activity.
          * @param data the intent returned by the file picker activity.
@@ -617,6 +626,12 @@ public class WebChromeClient {
          *   <li>Send the result using filePathCallback of {@link
          *   WebChromeClient#onShowFileChooser}</li>
          * </ol>
+         *
+         * <p class="note"><b>Note:</b> The created intent may be handled by
+         * third-party applications on device. The received result must be treated
+         * as untrustworthy as it can contain data Uris pointing to sensitive
+         * app data. Calling app should validate the result in {@link #parseResult}
+         * before calling the <code>filePathCallback</code>.</p>
          *
          * @return an Intent that supports basic file chooser sources.
          */
