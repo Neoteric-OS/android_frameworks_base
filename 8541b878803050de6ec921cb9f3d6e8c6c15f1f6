@@ -16,6 +16,23 @@
       "message": "svv@ nelsonli@ for data/keyboards\n\nngeoffray@ islamelbanna@ for config",
       "revId": "8541b878803050de6ec921cb9f3d6e8c6c15f1f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a6adddb_5b3565d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-05-07T05:42:30Z",
+      "side": 1,
+      "message": "+1, but why can\u0027t we just kill the mk module in favor of this? (.. and drop installable: false or no_full_install: true at all)",
+      "revId": "8541b878803050de6ec921cb9f3d6e8c6c15f1f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
