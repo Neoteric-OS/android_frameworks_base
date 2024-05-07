@@ -16,6 +16,24 @@
       "message": "Hello,\n\nWe found that it is difficult to obtain the appid directly during debugging, so we hope to support dumping according to the package name. In addition, the Usage part has also been modified.",
       "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b57468e5_0f5d2808",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1989932
+      },
+      "writtenOn": "2024-05-07T23:18:14Z",
+      "side": 1,
+      "message": "You can get app id from package name by `adb shell dumpsys package \u003cpackage_name\u003e | grep appId`. It seems not too much a hassle to me. What are your use cases for dumping and how do you do it currently?",
+      "parentUuid": "d5de67fe_1aaaa76c",
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
