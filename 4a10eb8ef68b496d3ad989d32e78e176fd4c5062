@@ -16,6 +16,23 @@
       "message": "Atom modifications are done https://android-review.googlesource.com/c/platform/frameworks/base/+/3077947",
       "revId": "4a10eb8ef68b496d3ad989d32e78e176fd4c5062",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f9ea892_a0302deb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3392411
+      },
+      "writtenOn": "2024-05-07T21:46:00Z",
+      "side": 1,
+      "message": "atom modifications are done in https://android-review.googlesource.com/c/platform/frameworks/proto_logging/+/3077886",
+      "revId": "4a10eb8ef68b496d3ad989d32e78e176fd4c5062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
