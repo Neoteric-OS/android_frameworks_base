@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8570c20_adf457d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3392411
+      },
+      "writtenOn": "2024-05-07T21:45:30Z",
+      "side": 1,
+      "message": "Atom modifications are done https://android-review.googlesource.com/c/platform/frameworks/base/+/3077947",
+      "revId": "4a10eb8ef68b496d3ad989d32e78e176fd4c5062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
