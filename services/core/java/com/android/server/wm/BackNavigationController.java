@@ -1188,6 +1188,7 @@ class BackNavigationController {
                             .setContainerLayer()
                             .setHidden(false)
                             .setParent(task.getSurfaceControl())
+                            .setCallsite("BackWindowAnimationAdaptorWrapper.getOrCreateAnimationTarget")
                             .build();
                     final SurfaceControl.Transaction pt = wc.getPendingTransaction();
                     pt.setLayer(leashSurface, wc.getParent().getLastLayer());
