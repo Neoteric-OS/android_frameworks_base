@@ -57,6 +57,30 @@
       },
       "revId": "17c1093b5122e69e4cfb83f9169a1320591bd73a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09969975_27a7b887",
+        "filename": "core/java/android/view/ViewGroup.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4524,
+      "author": {
+        "id": 1976388
+      },
+      "writtenOn": "2024-05-08T02:45:38Z",
+      "side": 1,
+      "message": "done,log is as follows:\n```\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: java.lang.RuntimeException: DecorView contained null child at index 3 when traversal in dispatchGetDisplayList, the view may have been removed.\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ViewGroup.dispatchGetDisplayList(ViewGroup.java:4610)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.View.updateDisplayListIfDirty(View.java:23917)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ThreadedRenderer.updateViewTreeDisplayList(ThreadedRenderer.java:711)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ThreadedRenderer.updateRootDisplayList(ThreadedRenderer.java:717)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ThreadedRenderer.draw(ThreadedRenderer.java:815)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ViewRootImpl.draw(ViewRootImpl.java:5844)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ViewRootImpl.performDraw(ViewRootImpl.java:5494)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:4566)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:3111)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:10758)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.Choreographer$CallbackRecord.run(Choreographer.java:1602)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.Choreographer$CallbackRecord.run(Choreographer.java:1611)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.Choreographer.doCallbacks(Choreographer.java:1168)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.Choreographer.doFrame(Choreographer.java:1057)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:1585)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.os.Handler.handleCallback(Handler.java:959)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.os.Handler.dispatchMessage(Handler.java:100)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.os.Looper.loopOnce(Looper.java:232)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.os.Looper.loop(Looper.java:317)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat android.app.ActivityThread.main(ActivityThread.java:8947)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat java.lang.reflect.Method.invoke(Native Method)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:612)\n05-08 10:39:11.709  6049  6049 E AndroidRuntime: \tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:924)\n```",
+      "parentUuid": "eda8743b_ae3c935b",
+      "range": {
+        "startLine": 4523,
+        "startChar": 0,
+        "endLine": 4524,
+        "endChar": 25
+      },
+      "revId": "17c1093b5122e69e4cfb83f9169a1320591bd73a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
