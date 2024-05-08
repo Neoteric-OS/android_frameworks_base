@@ -39,6 +39,30 @@
       },
       "revId": "3b88afbba2a68c732400516e15ac1097f7a5d75d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfe282ca_86e95a33",
+        "filename": "services/core/java/com/android/server/display/DisplayPowerController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1879,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-05-08T19:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04cfec16_d40af777",
+      "range": {
+        "startLine": 1879,
+        "startChar": 43,
+        "endLine": 1879,
+        "endChar": 51
+      },
+      "revId": "3b88afbba2a68c732400516e15ac1097f7a5d75d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
