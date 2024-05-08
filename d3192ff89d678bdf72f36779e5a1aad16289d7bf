@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "149e9371_d7af616b",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1057683
+      },
+      "writtenOn": "2024-05-08T18:19:30Z",
+      "side": 1,
+      "message": "Wonder if this could safely be increased. If the system is under heavy load it might take longer for these asynchronous mitigations to happen. I think a good inspiration might be the watchdog android.fg limit (I don\u0027t know off the top of my head) because that seems to be the general limit for \"how long things should take\". Also I think the downside of waiting too long might be an extra, say, minute of crashlooping, which I think is preferable to having mitigations that don\u0027t work properly?",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 82
+      },
+      "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
