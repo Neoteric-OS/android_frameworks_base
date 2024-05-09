@@ -885,6 +885,7 @@ public final class PinnerService extends SystemService {
             }
             synchronized (this) {
                 pinnedApp.mFiles.add(pf);
+	        mPinnedFiles.put(pf.fileName, pf);
             }
 
             apkPinSizeLimit -= pf.bytesPinned;
