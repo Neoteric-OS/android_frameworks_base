@@ -179,6 +179,23 @@
       },
       "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14c0f06c_c878b043",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2092,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-05-09T19:23:42Z",
+      "side": 1,
+      "message": "```suggestion\n            writer.println(\n                \"Usage: dumpsys permissionmgr [--app-id \u003cAPP_ID\u003e] [--package \u003cPACKAGE_NAME\u003e]\"\n            )\n```",
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
