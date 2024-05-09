@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "743d7b35_567ec062",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 3392411
+      },
+      "writtenOn": "2024-05-09T17:59:03Z",
+      "side": 1,
+      "message": "Ack, thank you for looking into this. I will update the patch accordingly",
+      "parentUuid": "dceecb91_ea774a46",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 30
+      },
+      "revId": "4a10eb8ef68b496d3ad989d32e78e176fd4c5062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "499af1d9_a45ed482",
         "filename": "services/core/java/com/android/server/wm/ActivityMetricsLogger.java",
         "patchSetId": 1
@@ -71,6 +95,30 @@
       "writtenOn": "2024-05-09T17:29:56Z",
       "side": 1,
       "message": "What\u0027s the intention with this metric? Detect concurrent app install dexopting?",
+      "range": {
+        "startLine": 1196,
+        "startChar": 16,
+        "endLine": 1196,
+        "endChar": 57
+      },
+      "revId": "4a10eb8ef68b496d3ad989d32e78e176fd4c5062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce8dcbf9_0518ff2b",
+        "filename": "services/core/java/com/android/server/wm/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 3392411
+      },
+      "writtenOn": "2024-05-09T17:59:03Z",
+      "side": 1,
+      "message": "Is correct. This can help us monitor if there is any bottleneck in dexopt which impacts application launch.",
+      "parentUuid": "499af1d9_a45ed482",
       "range": {
         "startLine": 1196,
         "startChar": 16,
