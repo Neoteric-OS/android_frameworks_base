@@ -105,6 +105,24 @@
       "parentUuid": "dd78eadb_e1b134d9",
       "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22208e74_0d403080",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1060436
+      },
+      "writtenOn": "2024-05-09T22:07:18Z",
+      "side": 1,
+      "message": "The first time onPackageFailure is called, this logic will be applied. If uptime \u003c 5 seconds at that point, we won\u0027t run a mitigation... we shouldn\u0027t wait in this circumstance, as we haven\u0027t started any other mitigations.",
+      "parentUuid": "559389f5_899be0f1",
+      "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
