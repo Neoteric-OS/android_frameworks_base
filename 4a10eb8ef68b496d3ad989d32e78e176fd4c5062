@@ -33,6 +33,52 @@
       "message": "atom modifications are done in https://android-review.googlesource.com/c/platform/frameworks/proto_logging/+/3077886",
       "revId": "4a10eb8ef68b496d3ad989d32e78e176fd4c5062",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dceecb91_ea774a46",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-05-09T17:29:56Z",
+      "side": 1,
+      "message": "This is a legacy code path that isn\u0027t used in UDC and later. It\u0027s better to instrument the calls to `com.android.server.art.ArtManagerLocal.dexoptPackage` instead, e.g. [here](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/DexOptHelper.java;l\u003d535;drc\u003d29a8babf1eb6db382d750db9945a431dba36563f) and [here](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/InstallPackageHelper.java;l\u003d2560;drc\u003d29a8babf1eb6db382d750db9945a431dba36563f).",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 30
+      },
+      "revId": "4a10eb8ef68b496d3ad989d32e78e176fd4c5062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "499af1d9_a45ed482",
+        "filename": "services/core/java/com/android/server/wm/ActivityMetricsLogger.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-05-09T17:29:56Z",
+      "side": 1,
+      "message": "What\u0027s the intention with this metric? Detect concurrent app install dexopting?",
+      "range": {
+        "startLine": 1196,
+        "startChar": 16,
+        "endLine": 1196,
+        "endChar": 57
+      },
+      "revId": "4a10eb8ef68b496d3ad989d32e78e176fd4c5062",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
