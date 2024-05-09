@@ -34,6 +34,24 @@
       "parentUuid": "d5de67fe_1aaaa76c",
       "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3554810f_4f6e38a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-05-09T08:38:55Z",
+      "side": 1,
+      "message": "There are many applications under uid 1000 and 1001,etc. It is not particularly convenient when we need to check the permission status of a specific application. Moreover, dump information similar to AppOps also supports dumping according to the package name. So we recommend being able to support more dimensions.",
+      "parentUuid": "b57468e5_0f5d2808",
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
