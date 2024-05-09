@@ -41,6 +41,8 @@ import android.app.sdksandbox.SdkSandboxManagerFrameworkInitializer;
 import android.app.search.SearchUiManager;
 import android.app.slice.SliceManager;
 import android.app.smartspace.SmartspaceManager;
+import android.app.supervision.ISupervisionManager;
+import android.app.supervision.SupervisionManager;
 import android.app.time.TimeManager;
 import android.app.timedetector.TimeDetector;
 import android.app.timedetector.TimeDetectorImpl;
@@ -1620,6 +1622,17 @@ public final class SystemServiceRegistry {
                         return new E2eeContactKeysManager(ctx);
                     }});
 
+        registerService(Context.SUPERVISION_SERVICE, SupervisionManager.class,
+                new CachedServiceFetcher<>() {
+                    @Override
+                    public SupervisionManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        IBinder iBinder = ServiceManager.getServiceOrThrow(
+                                Context.SUPERVISION_SERVICE);
+                        ISupervisionManager service = ISupervisionManager.Stub.asInterface(iBinder);
+                        return new SupervisionManager(ctx, service);
+                    }
+                });
         // DO NOT do a flag check like this unless the flag is read-only.
         // (because this code is executed during preload in zygote.)
         // If the flag is mutable, the check should be inside CachedServiceFetcher.

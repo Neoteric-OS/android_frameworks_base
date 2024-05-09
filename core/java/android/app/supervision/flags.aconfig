@@ -1,0 +1,10 @@
+package: "android.app.supervision.flags"
+container: "system"
+
+flag {
+  name: "api"
+  is_exported: true
+  namespace: "supervision"
+  description: "Flag to enable the FlaggedApi to include SupervisionService"
+  bug: "340351729"
+}
