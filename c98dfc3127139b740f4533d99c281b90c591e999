@@ -69,6 +69,116 @@
       "message": "cc @zhanghai@google.com. It seems reasonable to add a dumping by package option. Hai, what do you think?",
       "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c45260f_958e9aee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-05-09T19:22:15Z",
+      "side": 1,
+      "message": "yes, makes sense to me.",
+      "parentUuid": "f7e4de95_97d69124",
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c512cfc6_0ced5228",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2070,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-05-09T19:22:15Z",
+      "side": 1,
+      "message": "why changed to `\u003e\u003d`?",
+      "range": {
+        "startLine": 2070,
+        "startChar": 54,
+        "endLine": 2070,
+        "endChar": 56
+      },
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cda90b3_072867e9",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2080,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-05-09T19:22:15Z",
+      "side": 1,
+      "message": "why changed to `\u003e\u003d`?",
+      "range": {
+        "startLine": 2080,
+        "startChar": 55,
+        "endLine": 2080,
+        "endChar": 57
+      },
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c05904b_356364b9",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-05-09T19:22:15Z",
+      "side": 1,
+      "message": "```suggestion\n                    writer.dumpAppIdState(packageState.appId, state, indexedSetOf(packageName))\n```",
+      "range": {
+        "startLine": 2085,
+        "startChar": 0,
+        "endLine": 2086,
+        "endChar": 92
+      },
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cdac451_ea3be696",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-05-09T19:22:15Z",
+      "side": 1,
+      "message": "```suggestion\n                    writer.println(\"Unknown package $packageName.\")\n```",
+      "range": {
+        "startLine": 2088,
+        "startChar": 44,
+        "endLine": 2088,
+        "endChar": 55
+      },
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
