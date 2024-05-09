@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5ab8bb2_37b262fc",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 2030150
+      },
+      "writtenOn": "2024-05-09T21:58:55Z",
+      "side": 1,
+      "message": "We can introduce flag to keep track when mitigations are done. We should keep time limit though as well in case mitigation won\u0027t be able to succeed. Will it complicate logic unnecessary?\n\nI\u0027ll set MAJOR_USER_IMPACT_LEVEL_THRESHOLD as a device config property.",
+      "parentUuid": "94762b3d_adb2fc27",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 82
+      },
+      "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dd78eadb_e1b134d9",
         "filename": "services/core/java/com/android/server/PackageWatchdog.java",
         "patchSetId": 5
@@ -61,6 +85,24 @@
       "writtenOn": "2024-05-09T21:47:25Z",
       "side": 1,
       "message": "I\u0027m not sure if this really matters, but if mLastMitigation is zero you can probably proceed here always, as we won\u0027t have applied one before.",
+      "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "559389f5_899be0f1",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 2030150
+      },
+      "writtenOn": "2024-05-09T21:58:55Z",
+      "side": 1,
+      "message": "Not sure if I understand the question correctly, but mLastMitigation being zero shouldn\u0027t matter, in fact we initialize it as zero.",
+      "parentUuid": "dd78eadb_e1b134d9",
       "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
