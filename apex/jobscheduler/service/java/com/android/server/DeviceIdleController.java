@@ -618,6 +618,7 @@ public class DeviceIdleController extends SystemService
      * List of end times for app-IDs that are temporarily marked as being allowed to access
      * the network and acquire wakelocks. Times are in milliseconds.
      */
+    @GuardedBy("this")
     private final SparseArray<Pair<MutableLong, String>> mTempWhitelistAppIdEndTimes
             = new SparseArray<>();
 
@@ -5412,23 +5413,25 @@ public class DeviceIdleController extends SystemService
     }
 
     void dumpTempWhitelistSchedule(PrintWriter pw, boolean printTitle) {
-        final int size = mTempWhitelistAppIdEndTimes.size();
-        if (size > 0) {
-            String prefix = "";
-            if (printTitle) {
-                pw.println("  Temp whitelist schedule:");
-                prefix = "    ";
-            }
-            final long timeNow = SystemClock.elapsedRealtime();
-            for (int i = 0; i < size; i++) {
-                pw.print(prefix);
-                pw.print("UID=");
-                pw.print(mTempWhitelistAppIdEndTimes.keyAt(i));
-                pw.print(": ");
-                Pair<MutableLong, String> entry = mTempWhitelistAppIdEndTimes.valueAt(i);
-                TimeUtils.formatDuration(entry.first.value, timeNow, pw);
-                pw.print(" - ");
-                pw.println(entry.second);
+        synchronized (this) {
+            final int size = mTempWhitelistAppIdEndTimes.size();
+            if (size > 0) {
+                String prefix = "";
+                if (printTitle) {
+                    pw.println("  Temp whitelist schedule:");
+                    prefix = "    ";
+                }
+                final long timeNow = SystemClock.elapsedRealtime();
+                for (int i = 0; i < size; i++) {
+                    pw.print(prefix);
+                    pw.print("UID=");
+                    pw.print(mTempWhitelistAppIdEndTimes.keyAt(i));
+                    pw.print(": ");
+                    Pair<MutableLong, String> entry = mTempWhitelistAppIdEndTimes.valueAt(i);
+                    TimeUtils.formatDuration(entry.first.value, timeNow, pw);
+                    pw.print(" - ");
+                    pw.println(entry.second);
+                }
             }
         }
     }
