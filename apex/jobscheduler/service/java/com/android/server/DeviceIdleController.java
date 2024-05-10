@@ -618,6 +618,7 @@ public class DeviceIdleController extends SystemService
      * List of end times for app-IDs that are temporarily marked as being allowed to access
      * the network and acquire wakelocks. Times are in milliseconds.
      */
+    @GuardedBy("this")
     private final SparseArray<Pair<MutableLong, String>> mTempWhitelistAppIdEndTimes
             = new SparseArray<>();
 
@@ -5411,7 +5412,7 @@ public class DeviceIdleController extends SystemService
         }
     }
 
-    void dumpTempWhitelistSchedule(PrintWriter pw, boolean printTitle) {
+    synchronized void dumpTempWhitelistSchedule(PrintWriter pw, boolean printTitle) {
         final int size = mTempWhitelistAppIdEndTimes.size();
         if (size > 0) {
             String prefix = "";
