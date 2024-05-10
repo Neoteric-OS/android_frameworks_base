@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "067de465_abbe8a9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 2030150
+      },
+      "writtenOn": "2024-05-10T16:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0d9136_20aa71ec",
+      "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e52803b_71a4bfcc",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-05-10T10:56:00Z",
       "side": 1,
       "message": "This bug is closed.",
+      "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83dcee7b_31aea9d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2030150
+      },
+      "writtenOn": "2024-05-10T16:50:47Z",
+      "side": 1,
+      "message": "Reopened the bug.",
+      "parentUuid": "3e52803b_71a4bfcc",
       "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
