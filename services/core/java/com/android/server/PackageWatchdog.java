@@ -39,15 +39,15 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.AtomicFile;
+import android.util.LongArrayQueue;
 import android.util.Slog;
 import android.util.Xml;
-import android.utils.BackgroundThread;
-import android.utils.LongArrayQueue;
-import android.utils.XmlUtils;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.os.BackgroundThread;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.internal.util.XmlUtils;
 import com.android.modules.utils.TypedXmlPullParser;
 import com.android.modules.utils.TypedXmlSerializer;
 
@@ -1396,7 +1396,14 @@ public class PackageWatchdog {
             int innerDepth = parser.getDepth();
             try {
                 if (Flags.recoverabilityDetection()) {
-                    observerMitigationCount = parser.getAttributeInt(null, ATTR_MITIGATION_COUNT);
+                    try {
+                        observerMitigationCount =
+                                parser.getAttributeInt(null, ATTR_MITIGATION_COUNT);
+                    } catch (XmlPullParserException e) {
+                        Slog.i(
+                            TAG,
+                            "ObserverInternal mitigation count was not present.");
+                    }
                 }
                 while (XmlUtils.nextElementWithin(parser, innerDepth)) {
                     if (TAG_PACKAGE.equals(parser.getName())) {
