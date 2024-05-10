@@ -156,6 +156,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4af88479_b89df135",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2070,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-05-10T01:49:23Z",
+      "side": 1,
+      "message": "I don\u0027t think the current code supports dump both at the same time, and the developer can just dump multiple times if they have multiple things to dump. So if someone does enter both parameters I think we should make it an error and tell them to dump one by one.",
+      "parentUuid": "ef14f307_3320f3cf",
+      "range": {
+        "startLine": 2070,
+        "startChar": 54,
+        "endLine": 2070,
+        "endChar": 56
+      },
+      "revId": "c98dfc3127139b740f4533d99c281b90c591e999",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4cda90b3_072867e9",
         "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
         "patchSetId": 2
