@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "762a7eca_1a92d9de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1933916
+      },
+      "writtenOn": "2024-05-10T05:04:35Z",
+      "side": 1,
+      "message": "Thanks for adding the option.",
+      "revId": "8c7171885abfb070d98773df9c8e1d0d7a8e493d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
