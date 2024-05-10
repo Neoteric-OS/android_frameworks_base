@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c77fd750_01870a34",
+        "filename": "core/java/android/view/ViewGroup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4523,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2024-05-10T15:37:38Z",
+      "side": 1,
+      "message": "should be IllegalStateException",
+      "range": {
+        "startLine": 4523,
+        "startChar": 26,
+        "endLine": 4523,
+        "endChar": 42
+      },
+      "revId": "c1758e5f75ced57b69a1de4758d47e553587d26a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
