@@ -127,6 +127,11 @@ public final class Bitmap implements Parcelable {
      */
     private static final WeakHashMap<Bitmap, Void> sAllBitmaps = new WeakHashMap<>();
 
+    private static NativeAllocationRegistry sRegistryMalloced =
+        NativeAllocationRegistry.create(Bitmap.class, nativeGetNativeFinalizer(), 0, true);
+    private static NativeAllocationRegistry sRegistryNonmalloced =
+        NativeAllocationRegistry.create(Bitmap.class, nativeGetNativeFinalizer(), 0, false);
+
     /**
      * Private constructor that must receive an already allocated native bitmap
      * int (pointer).
@@ -151,7 +156,6 @@ public final class Bitmap implements Parcelable {
         mWidth = width;
         mHeight = height;
         mRequestPremultiplied = requestPremultiplied;
-
         mNinePatchChunk = ninePatchChunk;
         mNinePatchInsets = ninePatchInsets;
         if (density >= 0) {
@@ -160,16 +164,10 @@ public final class Bitmap implements Parcelable {
 
         mNativePtr = nativeBitmap;
 
-        final int allocationByteCount = getAllocationByteCount();
-        NativeAllocationRegistry registry;
-        if (fromMalloc) {
-            registry = NativeAllocationRegistry.createMalloced(
-                    Bitmap.class.getClassLoader(), nativeGetNativeFinalizer(), allocationByteCount);
-        } else {
-            registry = NativeAllocationRegistry.createNonmalloced(
-                    Bitmap.class.getClassLoader(), nativeGetNativeFinalizer(), allocationByteCount);
-        }
-        registry.registerNativeAllocation(this, nativeBitmap);
+        NativeAllocationRegistry registry = fromMalloc ? sRegistryMalloced
+                                                       : sRegistryNonmalloced;
+        registry.registerNativeAllocation(this, mNativePtr, getAllocationByteCount());
+
         synchronized (Bitmap.class) {
           sAllBitmaps.put(this, null);
         }
