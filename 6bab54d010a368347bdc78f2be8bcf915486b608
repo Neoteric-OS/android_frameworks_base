@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7827f1d8_b3ce9c67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-05-11T09:49:18Z",
+      "side": 1,
+      "message": "Hello,\n\nWe are developers from Xiaomi team. We recently discovered that in some scenarios this null pointer can cause the device to reboot. Please help us review this change.",
+      "revId": "6bab54d010a368347bdc78f2be8bcf915486b608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
