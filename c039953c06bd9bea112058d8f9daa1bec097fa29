@@ -16,6 +16,24 @@
       "message": "Hello,\n\nWe are developers of the Xiaomi team. We found that if a system application configures a non-existent group when declaring permissions, such as gid\u003d\"xxx\", then this permission will be added with a gid of -1, which will cause setgroups fail when the application using this permission creates a process and starts fail. So add a check to improve robustness.",
       "revId": "c039953c06bd9bea112058d8f9daa1bec097fa29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43edd65c_9373f9e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-05-13T15:38:53Z",
+      "side": 1,
+      "message": "Commented in the other thread.",
+      "parentUuid": "506d1300_e3c8446d",
+      "revId": "c039953c06bd9bea112058d8f9daa1bec097fa29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

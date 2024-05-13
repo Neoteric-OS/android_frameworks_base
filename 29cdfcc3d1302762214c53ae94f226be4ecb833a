@@ -34,6 +34,24 @@
       "parentUuid": "d05533ab_d503e7f5",
       "revId": "29cdfcc3d1302762214c53ae94f226be4ecb833a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c762a1b_5961ca38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-05-13T15:38:53Z",
+      "side": 1,
+      "message": "This seems to be a misuse of \"gid\" if it is not generally defined. Adding the owner of Permissions to take a look.",
+      "parentUuid": "a12009ba_d12960af",
+      "revId": "29cdfcc3d1302762214c53ae94f226be4ecb833a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
