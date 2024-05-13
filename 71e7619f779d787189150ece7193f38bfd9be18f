@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afed29b2_1ee5a1fb",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1698,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-13T15:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77da8f2a_3c2908c5",
+      "range": {
+        "startLine": 1698,
+        "startChar": 7,
+        "endLine": 1698,
+        "endChar": 40
+      },
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ca19be1_b200acb6",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdf0f206_99f20213",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-13T15:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ca19be1_b200acb6",
+      "range": {
+        "startLine": 1709,
+        "startChar": 16,
+        "endLine": 1709,
+        "endChar": 34
+      },
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "986e4dab_505a88bd",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-05-03T21:53:01Z",
       "side": 1,
       "message": "Since this does not return a value do we want to add a callback to monitor the user id to zone id mapping?",
+      "range": {
+        "startLine": 1712,
+        "startChar": 11,
+        "endLine": 1712,
+        "endChar": 38
+      },
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08cd8291_c39dbab3",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-13T15:08:48Z",
+      "side": 1,
+      "message": "i can definitly add a return code.\nHowever, do you forecast a need to such callback? I guess it is high time to think / add it if any added value.",
+      "parentUuid": "986e4dab_505a88bd",
       "range": {
         "startLine": 1712,
         "startChar": 11,
@@ -111,6 +183,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12062da4_c436b08f",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-13T15:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bed9f8f_ae8ea503",
+      "range": {
+        "startLine": 1719,
+        "startChar": 7,
+        "endLine": 1719,
+        "endChar": 49
+      },
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9abf62c7_805964df",
@@ -152,6 +248,24 @@
           ]
         }
       ],
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bff452b_4f8be231",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-13T15:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9abf62c7_805964df",
       "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -209,6 +323,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5ec88a1d_b96be791",
+        "filename": "media/java/android/media/audiopolicy/AudioProductStrategy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-13T15:08:48Z",
+      "side": 1,
+      "message": "yes, usually it [AudioManager/AudioService] would use AudioSystem to make jni call.\nI guess I shall apply this pattern instead. I do not want to skip audioservice to take benefit of permission check",
+      "parentUuid": "d8a4520c_dce25190",
+      "range": {
+        "startLine": 587,
+        "startChar": 0,
+        "endLine": 603,
+        "endChar": 83
+      },
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "34afd671_f79c13ca",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 5
@@ -220,6 +358,30 @@
       "writtenOn": "2024-05-03T21:53:01Z",
       "side": 1,
       "message": "Would be hard to determine if this is user current by actual mapping or because there is no mapping... Can we use USER_NULL instead?",
+      "range": {
+        "startLine": 8654,
+        "startChar": 26,
+        "endLine": 8654,
+        "endChar": 38
+      },
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "732ca48e_72faa581",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8654,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-13T15:08:48Z",
+      "side": 1,
+      "message": "Even I would tend to think:\n-for defaault zone (0): allow to return CURRENT \n-for others zone, return NULL if no mapping registered",
+      "parentUuid": "34afd671_f79c13ca",
       "range": {
         "startLine": 8654,
         "startChar": 26,
