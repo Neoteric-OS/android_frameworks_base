@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2227497d_a857162c",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T18:26:49Z",
+      "side": 1,
+      "message": "Mostly want to make sure we can get inform somehow about the change or if there is a failure in the system while attempting the change.\n\nIf we had the callback the mapping (and internal changes routing/volume) could be managed asynchronously.",
+      "parentUuid": "08cd8291_c39dbab3",
+      "range": {
+        "startLine": 1712,
+        "startChar": 11,
+        "endLine": 1712,
+        "endChar": 38
+      },
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4bed9f8f_ae8ea503",
         "filename": "media/java/android/media/AudioManager.java",
         "patchSetId": 5
@@ -382,6 +406,30 @@
       "side": 1,
       "message": "Even I would tend to think:\n-for defaault zone (0): allow to return CURRENT \n-for others zone, return NULL if no mapping registered",
       "parentUuid": "34afd671_f79c13ca",
+      "range": {
+        "startLine": 8654,
+        "startChar": 26,
+        "endLine": 8654,
+        "endChar": 38
+      },
+      "revId": "71e7619f779d787189150ece7193f38bfd9be18f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fca62ba0_3eedc283",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8654,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T18:26:49Z",
+      "side": 1,
+      "message": "Sounds reasonable.",
+      "parentUuid": "732ca48e_72faa581",
       "range": {
         "startLine": 8654,
         "startChar": 26,
