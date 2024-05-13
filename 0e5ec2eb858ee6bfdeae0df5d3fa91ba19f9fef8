@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfc019eb_6c5754c1",
+        "filename": "services/core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-05-13T19:22:25Z",
+      "side": 1,
+      "message": "I think we should at least `Slog.w` for an incorrect config, similar to the group-without-gid-case. I\u0027ll leave the review to Songchun since I\u0027m going to be ooo.",
+      "fixSuggestions": [
+        {
+          "fixId": "6290962e_4e2de96c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/SystemConfig.java",
+              "range": {
+                "startLine": 1643,
+                "startChar": 0,
+                "endLine": 1643,
+                "endChar": 0
+              },
+              "replacement": "                    } else {\n                        Slog.w(TAG, \"\u003cgroup\u003e with unknown gid \\\"\"\n                                + gidStr + \"  in \" + permFile + \" at \"\n                                + parser.getPositionDescription());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0e5ec2eb858ee6bfdeae0df5d3fa91ba19f9fef8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
