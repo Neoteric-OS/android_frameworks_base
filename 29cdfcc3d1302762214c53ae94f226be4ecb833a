@@ -16,6 +16,24 @@
       "message": "I am not convinced that this change is necessary. It seems to me that actually letting the system crash/not boot is a better indicator that something is wrong with the system configuration.",
       "revId": "29cdfcc3d1302762214c53ae94f226be4ecb833a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a12009ba_d12960af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-05-13T07:01:20Z",
+      "side": 1,
+      "message": "Sorry for the late reply, we have customized a gid as \"theme\" on some models, and configured the corresponding permissions in the product partition as follows:\n\u003cpermission name\u003d\"android.permission.READ_PRIVILEGED_PHONE_STATE\"\u003e\n     \u003cgroup gid\u003d\"theme\"/\u003e\n\u003c/permission\u003e\nHowever, the definition of this gid cannot be found on many models, so a -1 is added to READ_PRIVILEGED_PHONE_STATE, causing many system application processes that use this permission to fail to start. The error is reported as follows:\nJNI FatalError called: (com.android.permissioncontroller) frameworks/base/core/jni/com_android_internal_os_Zygote.cpp:598: setgroups failed: Invalid argument, gids.size\u003d4\nSo we hope to add some judgments to enhance robustness when reading gid.",
+      "parentUuid": "d05533ab_d503e7f5",
+      "revId": "29cdfcc3d1302762214c53ae94f226be4ecb833a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
