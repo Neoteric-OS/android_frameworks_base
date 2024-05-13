@@ -1,0 +1,290 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28b31268_3fc6354a",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6346,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "I think most app/services outside of car are unlikely to know about zoneId, less we provide an API to query that info.\n\nInstead I wonder if we can use userId or UID instead? This way we can update the other callers with their respective user ID  or app UID call.",
+      "range": {
+        "startLine": 6346,
+        "startChar": 49,
+        "endLine": 6346,
+        "endChar": 59
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48707688_f3f834eb",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 9051,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "So it is UID?",
+      "range": {
+        "startLine": 9051,
+        "startChar": 83,
+        "endLine": 9051,
+        "endChar": 96
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2ef8bf74_a49af1d7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 9045,
+                "startChar": 0,
+                "endLine": 9045,
+                "endChar": 0
+              },
+              "replacement": "    * @param uid the uid of the client application.\n"
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 9048,
+                "startChar": 0,
+                "endLine": 9049,
+                "endChar": 0
+              },
+              "replacement": "    public List\u003cAudioProfile\u003e getDirectProfilesForAttributes(@NonNull AudioAttributes attributes,\n            int uid) {\n"
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 9051,
+                "startChar": 0,
+                "endLine": 9052,
+                "endChar": 0
+              },
+              "replacement": "        int status \u003d AudioSystem.getDirectProfilesForAttributes(attributes, uid,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "085f78c9_be444909",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "How about `UserHandle.getUid(getCurrentUserId(), 0)` instead.",
+      "range": {
+        "startLine": 1830,
+        "startChar": 46,
+        "endLine": 1830,
+        "endChar": 58
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0ff65ca_04f70082",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "UID here also?\n\nI was wondering if in general we want to support UID based routing along with userID based routing.",
+      "range": {
+        "startLine": 2051,
+        "startChar": 82,
+        "endLine": 2051,
+        "endChar": 88
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "619797f9_c1e86884",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "Same here UID?",
+      "range": {
+        "startLine": 2420,
+        "startChar": 16,
+        "endLine": 2420,
+        "endChar": 22
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bee5fa60_ebf3d34e",
+        "filename": "media/java/android/media/AudioTrack.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "So it is UID?",
+      "range": {
+        "startLine": 1429,
+        "startChar": 42,
+        "endLine": 1429,
+        "endChar": 48
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e127612e_63526556",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 5047,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Common Typos: Common typo found: \"formated\" -- should it be \"formatted\"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \"formated\" -- should it be \"formatted\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 5047,
+        "startChar": 73,
+        "endLine": 5047,
+        "endChar": 81
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "980d0351_2d782cdb",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 7513,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "How about, \"Volume group not found for group id \" ...",
+      "range": {
+        "startLine": 7513,
+        "startChar": 48,
+        "endLine": 7513,
+        "endChar": 50
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bd052ad_f3c37468",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 8331,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "Nit space between method above and start of javadoc.",
+      "range": {
+        "startLine": 8331,
+        "startChar": 8,
+        "endLine": 8331,
+        "endChar": 11
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf44f67a_343840a2",
+        "filename": "services/core/java/com/android/server/audio/SpatializerHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1749,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2024-05-13T21:39:20Z",
+      "side": 1,
+      "message": "This will limit the espatializer to the current user, anyway to pass in the UID from the caller?",
+      "range": {
+        "startLine": 1749,
+        "startChar": 0,
+        "endLine": 1749,
+        "endChar": 98
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7ab04a37_53abc083",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/SpatializerHelper.java",
+              "range": {
+                "startLine": 1749,
+                "startChar": 0,
+                "endLine": 1750,
+                "endChar": 0
+              },
+              "replacement": "        // Devices for attributes (for routing purpose) shall use UID and not Root UID for UserId\n        // as the routing is done for the current user.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
