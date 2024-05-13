@@ -16,6 +16,7 @@
 
 package com.android.keyguard;
 
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +35,10 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
 
     private final LiftToActivateListener mLiftToActivateListener;
     private final FalsingCollector mFalsingCollector;
+    private static boolean mStopFocusReq = false;
+    private static int mCount = 0;
+    private static final int mMaxRetry = 20;
+    private static final int mRetryInterval = 1000;
     protected PasswordTextView mPasswordEntry;
 
     private final OnKeyListener mOnKeyListener = (v, keyCode, event) -> {
@@ -48,6 +53,17 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
             mView.doHapticKeyClick();
         }
         return false;
+    };
+
+    final Handler mHandler = new Handler();
+    private final Runnable mRetryRequestFocus = new Runnable() {
+        @Override
+        public void run() {
+            if (!mStopFocusReq && mCount++ < mMaxRetry) {
+                mHandler.postDelayed(mRetryRequestFocus, mRetryInterval);
+                mPasswordEntry.requestFocus();
+            }
+        }
     };
 
     protected KeyguardPinBasedInputViewController(T view,
@@ -135,6 +151,14 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
         // it's guaranteed that the view has focus.
         mPasswordEntry.clearFocus();
         mPasswordEntry.requestFocus();
+        mHandler.postDelayed(mRetryRequestFocus, 100);
+        mStopFocusReq = false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mStopFocusReq = true;
     }
 
     @Override
