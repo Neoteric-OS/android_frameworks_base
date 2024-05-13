@@ -170,7 +170,7 @@ import com.android.internal.os.IResultReceiver;
  * credentials in "vaults": the first response would contain fake datasets with the vault names,
  * and the subsequent response would contain the app credentials stored in that vault.
  *
- * <a name="DataPartioning"></a>
+ * <a name="DataPartitioning"></a>
  * <h3>Data partitioning</h3>
  *
  * <p>The autofillable views in a screen should be grouped in logical groups called "partitions".
