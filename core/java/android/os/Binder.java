@@ -1364,6 +1364,23 @@ public class Binder implements IBinder {
         return true;
     }
 
+    /**
+     * Local implementation is a no-op.
+     * @hide
+     */
+    public void addFrozenStateChangeCallback(IFrozenStateChangeCallback callback)
+            throws RemoteException {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Local implementation is a no-op.
+     * @hide
+     */
+    public boolean removeFrozenStateChangeCallback(IFrozenStateChangeCallback callback) {
+        throw new UnsupportedOperationException();
+    }
+
     static void checkParcel(IBinder obj, int code, Parcel parcel, String msg) {
         if (CHECK_PARCEL_SIZE && parcel.dataSize() >= 800*1024) {
             // Trying to send > 800k, this is way too much.
