@@ -183,6 +183,11 @@ abstract class BaseParceledListSlice<T> implements Parcelable {
                 writeElement(parcelable, dest, callFlags);
 
                 if (DEBUG) Log.d(TAG, "Wrote inline #" + i + ": " + mList.get(i));
+                if (dest.dataSize() > MAX_IPC_SIZE) {
+                    Log.d(TAG,  + i + " : " + N +
+                            " dest.dataSize(): " + dest.dataSize() +
+                            " parcelable: " + parcelable.toString());
+                }
                 i++;
             }
             if (i < N) {
@@ -214,6 +219,11 @@ abstract class BaseParceledListSlice<T> implements Parcelable {
                                 writeElement(parcelable, reply, callFlags);
 
                                 if (DEBUG) Log.d(TAG, "Wrote extra #" + i + ": " + mList.get(i));
+                                if (reply.dataSize() > MAX_IPC_SIZE) {
+                                    Log.d(TAG,  + i + " : " + N +
+                                            " reply.dataSize(): " + reply.dataSize() +
+                                            " parcelable: " + parcelable.toString());
+                                }
                                 i++;
                             }
                             if (i < N) {
