@@ -89,7 +89,6 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.server.LocalManagerRegistry;
 import com.android.server.LocalServices;
-import com.android.server.RescueParty;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.sdksandbox.SdkSandboxManagerLocal;
@@ -1369,9 +1368,6 @@ public class ContentProviderHelper {
         new DevelopmentSettingsObserver(); // init to observe developer settings enable/disable
         SettingsToPropertiesMapper.start(mService.mContext.getContentResolver());
         mService.mOomAdjuster.initSettings();
-
-        // Now that the settings provider is published we can consider sending in a rescue party.
-        RescueParty.onSettingsProviderPublished(mService.mContext);
 
         synchronized (mSettingsProviderCallbacks) {
             for (SettingsProviderCallback callback : mSettingsProviderCallbacks) {

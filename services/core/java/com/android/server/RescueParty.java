@@ -51,6 +51,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.server.PackageWatchdog.FailureReasons;
 import com.android.server.PackageWatchdog.PackageHealthObserver;
 import com.android.server.PackageWatchdog.PackageHealthObserverImpact;
+import com.android.server.am.ActivityManagerLocal;
 import com.android.server.am.SettingsToPropertiesMapper;
 import com.android.server.crashrecovery.proto.CrashRecoveryStatsLog;
 
@@ -78,6 +79,9 @@ import java.util.concurrent.TimeUnit;
  * @hide
  */
 public class RescueParty {
+
+    private static Context sSystemContext;
+
     @VisibleForTesting
     static final String PROP_ENABLE_RESCUE = "persist.sys.enable_rescue";
     @VisibleForTesting
@@ -155,10 +159,17 @@ public class RescueParty {
     private static final int PERSISTENT_MASK = ApplicationInfo.FLAG_PERSISTENT
             | ApplicationInfo.FLAG_SYSTEM;
 
+    /** Initialize rescue party */
+    public static void initialize(Context context) {
+        sSystemContext = context;
+        RescueParty.registerHealthObserver();
+        RescueParty.registerSettingsProviderCallback();
+    }
+
     /** Register the Rescue Party observer as a Package Watchdog health observer */
-    public static void registerHealthObserver(Context context) {
-        PackageWatchdog.getInstance(context).registerHealthObserver(
-                RescuePartyObserver.getInstance(context));
+    private static void registerHealthObserver() {
+        PackageWatchdog.getInstance(sSystemContext).registerHealthObserver(
+                RescuePartyObserver.getInstance(sSystemContext));
     }
 
     private static boolean isDisabled() {
@@ -238,16 +249,23 @@ public class RescueParty {
     }
 
     /**
-     * Called when {@code SettingsProvider} has been published, which is a good
+     * Register for settings provider callback.
+     * Callback is received when {@code SettingsProvider} has been published, which is a good
      * opportunity to reset any settings depending on our rescue level.
      */
-    public static void onSettingsProviderPublished(Context context) {
-        handleNativeRescuePartyResets();
-        ContentResolver contentResolver = context.getContentResolver();
-        DeviceConfig.setMonitorCallback(
-                contentResolver,
-                Executors.newSingleThreadExecutor(),
-                new RescuePartyMonitorCallback(context));
+    private static void registerSettingsProviderCallback() {
+        LocalManagerRegistry.getManager(ActivityManagerLocal.class)
+                .registerSettingsProviderInstalledCallback(
+                    () -> {
+                        Slog.i(TAG, "SettingsProvider published");
+                        handleNativeRescuePartyResets();
+                        ContentResolver contentResolver = sSystemContext.getContentResolver();
+                        DeviceConfig.setMonitorCallback(
+                                contentResolver,
+                                Executors.newSingleThreadExecutor(),
+                                new RescuePartyMonitorCallback(sSystemContext));
+                    }
+                );
     }
 
 

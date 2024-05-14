@@ -1231,7 +1231,7 @@ public final class SystemServer implements Dumpable {
         // Now that we have the bare essentials of the OS up and running, take
         // note that we just booted, which might send out a rescue party if
         // we're stuck in a runtime restart loop.
-        RescueParty.registerHealthObserver(mSystemContext);
+        RescueParty.initialize(mSystemContext);
         PackageWatchdog.getInstance(mSystemContext).noteBoot();
 
         // Manages LEDs and display backlight so we need it to bring up the display.
