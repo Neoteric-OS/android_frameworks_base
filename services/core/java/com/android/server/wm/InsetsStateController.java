@@ -78,7 +78,7 @@ class InsetsStateController {
                 return;
             }
             for (InsetsSourceControl control : controls) {
-                if (control.getType() == WindowInsets.Type.ime()) {
+                if (control != null && control.getType() == WindowInsets.Type.ime()) {
                     mDisplayContent.mWmService.mH.post(() ->
                             InputMethodManagerInternal.get().removeImeSurface());
                 }
