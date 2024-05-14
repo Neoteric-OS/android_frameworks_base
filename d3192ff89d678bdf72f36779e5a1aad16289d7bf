@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a5a37893_fadf558e",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-05-14T13:31:01Z",
+      "side": 1,
+      "message": "I think just having mitigation window is fine but like Dan mentioned we should make it a device config so we can change it later if needed",
+      "parentUuid": "f5ab8bb2_37b262fc",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 82
+      },
+      "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dd78eadb_e1b134d9",
         "filename": "services/core/java/com/android/server/PackageWatchdog.java",
         "patchSetId": 5
