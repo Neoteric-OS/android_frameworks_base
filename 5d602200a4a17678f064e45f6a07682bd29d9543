@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6fad461_817d33d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-05-14T12:28:03Z",
+      "side": 1,
+      "message": "I was wrong, it was reproduced with live wallpapers, your suggestion worked fine @pomini@google.com .\n\nUnfortunately I cannot set auto submit on Fukui-sans upload, perhaps you can give me a hand with that?",
+      "revId": "5d602200a4a17678f064e45f6a07682bd29d9543",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
