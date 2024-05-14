@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44f75776_4d1ee4e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2024-05-14T12:14:33Z",
+      "side": 1,
+      "message": "`getControlsForDispatch` shouldn\u0027t ever return null elements.",
+      "revId": "c28d5cbbd31ef47e8255a1ece42b04d30ea0b3a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
