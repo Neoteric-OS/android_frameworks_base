@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20bf6594_820d4fd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-05-14T01:39:21Z",
+      "side": 1,
+      "message": "The \u0027permFile\u0027 cannot be found here. I have modified it. Please help review it again.",
+      "revId": "6f419cf2b5f71a2af0fff1ac4e1e8ce10a7c474c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
