@@ -621,6 +621,10 @@ final public class MediaMuxer {
      *        {@link MediaFormat#MIMETYPE_VIDEO_HEVC HEVC} (H.265)</td>
      *    <td>as above, plus<br>
      *        {@link MediaFormat#MIMETYPE_VIDEO_VP9 VP9}</td>
+     *   </tr><tr>
+     *    <td>{@link android.os.Build.VERSION_CODES#UPSIDE_DOWN_CAKE}</td>
+     *    <td>as above, plus<br>
+     *        {@link MediaFormat#MIMETYPE_VIDEO_AV1 AV1}</td>
      *   </tr>
      *  </tbody>
      * </table>
