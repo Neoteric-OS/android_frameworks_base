@@ -34,6 +34,47 @@
       "parentUuid": "20bf6594_820d4fd0",
       "revId": "6f419cf2b5f71a2af0fff1ac4e1e8ce10a7c474c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05cecdf6_3eb9cddc",
+        "filename": "services/core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-05-14T16:13:51Z",
+      "side": 1,
+      "message": "Why not just check that gid !\u003d -1?",
+      "range": {
+        "startLine": 1641,
+        "startChar": 24,
+        "endLine": 1641,
+        "endChar": 31
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4771f12b_dc7ae6c0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/SystemConfig.java",
+              "range": {
+                "startLine": 1641,
+                "startChar": 0,
+                "endLine": 1642,
+                "endChar": 0
+              },
+              "replacement": "                    if (gid !\u003d -1) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6f419cf2b5f71a2af0fff1ac4e1e8ce10a7c474c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
