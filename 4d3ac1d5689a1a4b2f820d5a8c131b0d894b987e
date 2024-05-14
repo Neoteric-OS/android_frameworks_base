@@ -22,6 +22,30 @@
       },
       "revId": "4d3ac1d5689a1a4b2f820d5a8c131b0d894b987e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d8a2783_09120888",
+        "filename": "services/core/java/com/android/server/WallpaperUpdateReceiver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2024-05-14T12:33:28Z",
+      "side": 0,
+      "message": "Resolving since patchset 6 implements this suggestion",
+      "parentUuid": "7ee20e72_3533243d",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 92
+      },
+      "revId": "4d3ac1d5689a1a4b2f820d5a8c131b0d894b987e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
