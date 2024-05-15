@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74093f79_853effb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-05-15T00:19:05Z",
+      "side": 1,
+      "message": "Valid gids are all greater than 0, but checking -1 is enough here. Please help.review again.",
+      "revId": "020e7e1490aeae197df6757daab4d2ed4e139471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
