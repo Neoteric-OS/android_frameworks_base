@@ -16,6 +16,7 @@
 
 //#define LOG_NDEBUG 0
 #define LOG_TAG "MediaCodec-JNI"
+#include <android_media_codec.h>
 #include <utils/Log.h>
 
 #include <type_traits>
@@ -74,6 +75,9 @@
 #include <system/window.h>
 
 namespace android {
+
+jobject constructJavaCodecCapabilitiesFromNative(
+        JNIEnv *env, std::shared_ptr<CodecCapabilities> codecCaps);
 
 // Keep these in sync with their equivalents in MediaCodec.java !!!
 enum {
@@ -1027,11 +1031,18 @@ status_t JMediaCodec::getCodecInfo(JNIEnv *env, jobject *codecInfoObject) const 
         env->NewObjectArray(mediaTypes.size(), gCodecInfo.capsClazz, NULL));
 
     for (size_t i = 0; i < mediaTypes.size(); i++) {
-        const sp<MediaCodecInfo::Capabilities> caps =
-                codecInfo->getCapabilitiesFor(mediaTypes[i].c_str());
-
-        ScopedLocalRef<jobject> capsObj(env, getCodecCapabilitiesObject(
-                env, mediaTypes[i].c_str(), isEncoder, caps));
+        jobject jCodecCaps = NULL;
+        if (android::media::codec::provider_->native_capabilites()) {
+            const std::shared_ptr<CodecCapabilities> codecCaps
+                    = codecInfo->getCodecCapsFor(mediaTypes[i].c_str());
+            jCodecCaps = constructJavaCodecCapabilitiesFromNative(env, codecCaps);
+        } else {
+            const sp<MediaCodecInfo::Capabilities> caps =
+                    codecInfo->getCapabilitiesFor(mediaTypes[i].c_str());
+            jCodecCaps = getCodecCapabilitiesObject(
+                    env, mediaTypes[i].c_str(), isEncoder, caps);
+        }
+        ScopedLocalRef<jobject> capsObj(env, jCodecCaps);
 
         env->SetObjectArrayElement(capsArrayObj.get(), i, capsObj.get());
     }

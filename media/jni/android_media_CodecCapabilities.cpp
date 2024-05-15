@@ -17,14 +17,19 @@
 //#define LOG_NDEBUG 0
 #define LOG_TAG "MediaCodec-JNI"
 
+#include "android_media_Streams.h"
 #include "android_runtime/AndroidRuntime.h"
 #include "jni.h"
 
 #include <media/AudioCapabilities.h>
+#include <media/CodecCapabilities.h>
 #include <media/EncoderCapabilities.h>
 #include <media/VideoCapabilities.h>
 #include <media/stagefright/foundation/ADebug.h>
+#include <media/stagefright/foundation/AMessage.h>
 #include <nativehelper/JNIHelp.h>
+#include <nativehelper/ScopedLocalRef.h>
+#include <utils/Log.h>
 
 namespace android {
 
@@ -32,6 +37,7 @@ struct fields_t {
     jfieldID audioCapsContext;
     jfieldID videoCapsContext;
     jfieldID encoderCapsContext;
+    jfieldID codecCapsContext;
 };
 static fields_t fields;
 
@@ -52,6 +58,12 @@ static VideoCapabilities* getVideoCapabilities(JNIEnv *env, jobject thiz) {
 static EncoderCapabilities* getEncoderCapabilities(JNIEnv *env, jobject thiz) {
     EncoderCapabilities* const p = (EncoderCapabilities*)env->GetLongField(
             thiz, fields.encoderCapsContext);
+    return p;
+}
+
+static CodecCapabilities* getCodecCapabilities(JNIEnv *env, jobject thiz) {
+    CodecCapabilities* const p = (CodecCapabilities*)env->GetLongField(
+            thiz, fields.codecCapsContext);
     return p;
 }
 
@@ -344,6 +356,123 @@ static jobject convertToJavaEncoderCapabilities(JNIEnv *env,
     return jEncoderCaps;
 }
 
+// Java CodecCapabilities keeps the defaultFormat, profileLevels, colorFormats, audioCapabilities,
+// videoCapabilities and encoderCapabilities in it to prevent reconsturction when called by getter.
+jobject constructJavaCodecCapabilitiesFromNative(
+        JNIEnv *env, std::shared_ptr<CodecCapabilities> codecCaps) {
+    if (codecCaps == nullptr) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return NULL;
+    }
+
+    // Construct defaultFormat
+    sp<AMessage> defaultFormat = codecCaps->getDefaultFormat();
+
+    jobject formatMap = NULL;
+    if (ConvertMessageToMap(env, defaultFormat, &formatMap)) {
+        return NULL;
+    }
+
+    ScopedLocalRef<jclass> mediaFormatClass{env, env->FindClass("android/media/MediaFormat")};
+    ScopedLocalRef<jobject> jDefaultFormat{env, env->NewObject(
+            mediaFormatClass.get(),
+            env->GetMethodID(mediaFormatClass.get(), "<init>", "(Ljava/util/Map;)V"),
+            formatMap)};
+
+    env->DeleteLocalRef(formatMap);
+    formatMap = NULL;
+
+    // Construct Java ProfileLevelArray
+    std::vector<ProfileLevel> profileLevels = codecCaps->getProfileLevels();
+
+    jclass profileLevelClazz =
+        env->FindClass("android/media/MediaCodecInfo$CodecProfileLevel");
+    CHECK(profileLevelClazz != NULL);
+
+    jobjectArray profileLevelArray =
+            env->NewObjectArray(profileLevels.size(), profileLevelClazz, NULL);
+
+    jfieldID profileField =
+            env->GetFieldID(profileLevelClazz, "profile", "I");
+    jfieldID levelField =
+            env->GetFieldID(profileLevelClazz, "level", "I");
+
+    for (size_t i = 0; i < profileLevels.size(); ++i) {
+        const ProfileLevel &src = profileLevels.at(i);
+
+        jobject profileLevelObj = env->AllocObject(profileLevelClazz);
+
+        env->SetIntField(profileLevelObj, profileField, src.mProfile);
+        env->SetIntField(profileLevelObj, levelField, src.mLevel);
+
+        env->SetObjectArrayElement(profileLevelArray, i, profileLevelObj);
+
+        env->DeleteLocalRef(profileLevelObj);
+        profileLevelObj = NULL;
+    }
+
+    // Construct ColorFormatArray
+    std::vector<uint32_t> colorFormats = codecCaps->getColorFormats();
+
+    jintArray colorFormatsArray = env->NewIntArray(colorFormats.size());
+    for (size_t i = 0; i < colorFormats.size(); ++i) {
+        jint val = colorFormats.at(i);
+        env->SetIntArrayRegion(colorFormatsArray, i, 1, &val);
+    }
+
+    // Construct and set AudioCapabilities
+    jobject jAudioCaps = NULL;
+    std::shared_ptr<AudioCapabilities> audioCaps = codecCaps->getAudioCapabilities();
+    jAudioCaps = convertToJavaAudioCapabilities(env, audioCaps);
+
+    // Set VideoCapabilities
+    jobject jVideoCaps = NULL;
+    std::shared_ptr<VideoCapabilities> videoCaps = codecCaps->getVideoCapabilities();
+    jVideoCaps = convertToJavaVideoCapabilities(env, videoCaps);
+
+    // Set EncoderCapabilities
+    jobject jEncoderCaps = NULL;
+    if (codecCaps->isEncoder()) {
+        std::shared_ptr<EncoderCapabilities> encoderCaps = codecCaps->getEncoderCapabilities();
+        jEncoderCaps = convertToJavaEncoderCapabilities(env, encoderCaps);
+    }
+
+    // Construct CodecCapabilities
+    jclass capsClazz =
+        env->FindClass("android/media/MediaCodecInfo$CodecCapabilities");
+    CHECK(capsClazz != NULL);
+
+    jmethodID capsConstructID = env->GetMethodID(capsClazz, "<init>",
+                "([Landroid/media/MediaCodecInfo$CodecProfileLevel;[I"
+                "Landroid/media/MediaFormat;"
+                "Landroid/media/MediaCodecInfo$AudioCapabilities;"
+                "Landroid/media/MediaCodecInfo$VideoCapabilities;"
+                "Landroid/media/MediaCodecInfo$EncoderCapabilities;)V");
+
+    jobject jCodecCaps = env->NewObject(capsClazz, capsConstructID,
+            profileLevelArray, colorFormatsArray, jDefaultFormat.get(),
+            jAudioCaps, jVideoCaps, jEncoderCaps);
+
+    env->DeleteLocalRef(profileLevelArray);
+    profileLevelArray = NULL;
+
+    env->DeleteLocalRef(colorFormatsArray);
+    colorFormatsArray = NULL;
+
+    env->DeleteLocalRef(jAudioCaps);
+    jAudioCaps = NULL;
+
+    env->DeleteLocalRef(jVideoCaps);
+    jVideoCaps = NULL;
+
+    env->DeleteLocalRef(jEncoderCaps);
+    jEncoderCaps = NULL;
+
+    env->SetLongField(jCodecCaps, fields.codecCapsContext, (jlong)codecCaps.get());
+
+    return jCodecCaps;
+}
+
 }  // namespace android
 
 // ----------------------------------------------------------------------------
@@ -557,6 +686,146 @@ static jboolean android_media_EncoderCapabilities_isBitrateModeSupported(JNIEnv 
     return res;
 }
 
+// CodecCapabilities
+
+static void android_media_CodecCapabilities_native_init(JNIEnv *env) {
+    jclass codecCapsClazz
+            = env->FindClass("android/media/MediaCodecInfo$CodecCapabilities");
+    if (codecCapsClazz == NULL) {
+        return;
+    }
+
+    fields.codecCapsContext = env->GetFieldID(codecCapsClazz, "mNativeContext", "J");
+    if (fields.codecCapsContext == NULL) {
+        return;
+    }
+
+    env->DeleteLocalRef(codecCapsClazz);
+}
+
+static jint android_media_CodecCapabilities_getMaxSupportedInstances(JNIEnv *env, jobject thiz) {
+    CodecCapabilities* const codecCaps = getCodecCapabilities(env, thiz);
+    if (codecCaps == nullptr) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return 0;
+    }
+
+    int maxSupportedInstances = codecCaps->getMaxSupportedInstances();
+    return maxSupportedInstances;
+}
+
+static jstring android_media_CodecCapabilities_getMimeType(JNIEnv *env, jobject thiz) {
+    CodecCapabilities* const codecCaps = getCodecCapabilities(env, thiz);
+    if (codecCaps == nullptr) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return NULL;
+    }
+
+    std::string mediaType = codecCaps->getMediaType();
+    return env->NewStringUTF(mediaType.c_str());
+}
+
+static jboolean android_media_CodecCapabilities_isFeatureRequired(
+        JNIEnv *env, jobject thiz, jstring name) {
+    CodecCapabilities* const codecCaps = getCodecCapabilities(env, thiz);
+    if (codecCaps == nullptr) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return false;
+    }
+
+    if (name == NULL) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return -ENOENT;
+    }
+
+    const char *nameStr = env->GetStringUTFChars(name, NULL);
+    if (nameStr == NULL) {
+        // Out of memory exception already pending.
+        return -ENOENT;
+    }
+
+    bool isFeatureRequired = codecCaps->isFeatureRequired(std::string(nameStr));
+
+    env->ReleaseStringUTFChars(name, nameStr);
+
+    return isFeatureRequired;
+}
+
+static jboolean android_media_CodecCapabilities_isFeatureSupported(
+        JNIEnv *env, jobject thiz, jstring name) {
+    CodecCapabilities* const codecCaps = getCodecCapabilities(env, thiz);
+    if (codecCaps == nullptr) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return false;
+    }
+
+    if (name == NULL) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return -ENOENT;
+    }
+
+    const char *nameStr = env->GetStringUTFChars(name, NULL);
+    if (nameStr == NULL) {
+        // Out of memory exception already pending.
+        return -ENOENT;
+    }
+
+    bool isFeatureSupported = codecCaps->isFeatureSupported(std::string(nameStr));
+
+    env->ReleaseStringUTFChars(name, nameStr);
+
+    return isFeatureSupported;
+}
+
+static jboolean android_media_CodecCapabilities_isFormatSupported(JNIEnv *env, jobject thiz,
+        jobjectArray keys, jobjectArray values) {
+    CodecCapabilities* const codecCaps = getCodecCapabilities(env, thiz);
+    if (codecCaps == nullptr) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return false;
+    }
+
+    sp<AMessage> format;
+    status_t err = ConvertKeyValueArraysToMessage(env, keys, values, &format);
+    if (err != OK) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return -ENOENT;;
+    }
+
+    return codecCaps->isFormatSupported(format);
+}
+
+static jobject android_media_CodecCapabilities_CreateFromProfileLevel(JNIEnv *env,
+        jobject /* thiz */, jstring mediaType, jint profile, jint level) {
+    if (mediaType == NULL) {
+        jniThrowException(env, "java/lang/IllegalArgumentException", NULL);
+        return NULL;
+    }
+
+    const char *mediaTypeStr = env->GetStringUTFChars(mediaType, NULL);
+    if (mediaTypeStr == NULL) {
+        return NULL;
+    }
+
+    std::shared_ptr<CodecCapabilities> codecCaps = CodecCapabilities::CreateFromProfileLevel(
+            mediaTypeStr, profile, level);
+
+    jobject jCodecCaps = constructJavaCodecCapabilitiesFromNative(env, codecCaps);
+
+    return jCodecCaps;
+}
+
+static jboolean android_media_CodecCapabilities_isRegular(JNIEnv *env, jobject thiz) {
+    CodecCapabilities* const codecCaps = getCodecCapabilities(env, thiz);
+    if (codecCaps == nullptr) {
+        jniThrowException(env, "java/lang/IllegalStateException", NULL);
+        return false;
+    }
+
+    bool res = codecCaps->isRegular();
+    return res;
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gAudioCapsMethods[] = {
@@ -584,6 +853,17 @@ static const JNINativeMethod gVideoCapsMethods[] = {
 static const JNINativeMethod gEncoderCapsMethods[] = {
     {"native_init", "()V", (void *)android_media_EncoderCapabilities_native_init},
     {"native_isBitrateModeSupported", "(I)Z", (void *)android_media_EncoderCapabilities_isBitrateModeSupported}
+};
+
+static const JNINativeMethod gCodecCapsMethods[] = {
+    { "native_init", "()V", (void *)android_media_CodecCapabilities_native_init },
+    { "native_getMaxSupportedInstances", "()I", (void *)android_media_CodecCapabilities_getMaxSupportedInstances },
+    { "native_getMimeType", "()Ljava/lang/String;", (void *)android_media_CodecCapabilities_getMimeType },
+    { "native_isFeatureRequired", "(Ljava/lang/String;)Z", (void *)android_media_CodecCapabilities_isFeatureRequired },
+    { "native_isFeatureSupported", "(Ljava/lang/String;)Z", (void *)android_media_CodecCapabilities_isFeatureSupported },
+    { "native_isFormatSupported", "([Ljava/lang/String;[Ljava/lang/Object;)Z", (void *)android_media_CodecCapabilities_isFormatSupported},
+    { "native_CreateFromProfileLevel", "(Ljava/lang/String;II)Landroid/media/MediaCodecInfo$CodecCapabilities;", (void *)android_media_CodecCapabilities_CreateFromProfileLevel},
+    { "native_isRegular", "()Z", (void *)android_media_CodecCapabilities_isRegular },
 };
 
 int register_android_media_CodecCapabilities(JNIEnv *env) {
@@ -615,5 +895,8 @@ int register_android_media_CodecCapabilities(JNIEnv *env) {
         return result;
     }
 
+    result = AndroidRuntime::registerNativeMethods(env,
+            "android/media/MediaCodecInfo$CodecCapabilities",
+            gCodecCapsMethods, NELEM(gCodecCapsMethods));
     return result;
 }
