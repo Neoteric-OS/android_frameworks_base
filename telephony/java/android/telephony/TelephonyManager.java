@@ -4557,7 +4557,7 @@ public class TelephonyManager {
      * Returns carrier specific information that will be used to encrypt the IMSI and IMPI,
      * including the public key and the key identifier; or {@code null} if not available.
      * <p>
-     * For a multi-sim device, the dafault data sim is used if not specified.
+     * For a multi-sim device, the default data sim is used if not specified.
      * <p>
      * Requires Permission: READ_PRIVILEGED_PHONE_STATE.
      *
