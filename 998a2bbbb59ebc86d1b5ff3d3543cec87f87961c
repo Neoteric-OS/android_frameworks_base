@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71f68546_1c132ace",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-05-15T07:06:37Z",
+      "side": 1,
+      "message": "Hi reck @jreck@google.com, I don\u0027t have permission, can you help trigger presubmit-verified to merge this change",
+      "revId": "998a2bbbb59ebc86d1b5ff3d3543cec87f87961c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
