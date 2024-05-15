@@ -1466,10 +1466,14 @@ extern int register_android_media_ImageReader(JNIEnv *env);
 extern int register_android_media_ImageWriter(JNIEnv *env);
 extern int register_android_media_JetPlayer(JNIEnv *env);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern int register_android_media_AudioCapabilities(JNIEnv *env);
 extern int register_android_media_CodecCapabilities(JNIEnv *env);
 >>>>>>> d66eac654e43 (Java and JNI support for native AudioCapabilities.)
+=======
+extern int register_android_media_CodecCapabilities(JNIEnv *env);
+>>>>>>> 9fddce090cb4 (Java and JNI support for native CodecCapabilities.)
 extern int register_android_media_Crypto(JNIEnv *env);
 extern int register_android_media_Drm(JNIEnv *env);
 extern int register_android_media_Descrambler(JNIEnv *env);

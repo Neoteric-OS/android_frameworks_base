@@ -65,6 +65,7 @@ cc_library_shared {
         "libbinder",
         "libmedia",
         "libmedia_codeclist",
+        "libmedia_codeclist_capabilities",
         "libmedia_jni_utils",
         "libmedia_omx",
         "libmediametrics",
