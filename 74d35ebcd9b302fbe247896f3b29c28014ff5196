@@ -142,6 +142,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d457258a_dbae12d3",
+        "filename": "proto/src/am_capabilities.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1077723
+      },
+      "writtenOn": "2024-05-15T15:10:42Z",
+      "side": 1,
+      "message": "I get what you are saying, but then what is the purpose of this string from a consumer perspective, i.e. what are consumers supported to do with these values if they have no semantics attached to them, i.e. you may as well call them \"string1\" and \"string2\" if there is no semantics for it.\n\nIf you don\u0027t want to guarantee the value will not change in the future, I would comment as\n\n \"The VM name, currently the value of the \"`java.vm.name`\" property or empty if the value is not known or not supported anymore\"\n\nWhen/if we get a different semantics in the future, I would add another field for that new value, named it appropriately and document it appropriately, and make this one always empty string and mark it as obsolete.",
+      "parentUuid": "d3c967c6_8200add9",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "74d35ebcd9b302fbe247896f3b29c28014ff5196",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "89be9d0f_6f5fe048",
         "filename": "proto/src/am_capabilities.proto",
         "patchSetId": 2
