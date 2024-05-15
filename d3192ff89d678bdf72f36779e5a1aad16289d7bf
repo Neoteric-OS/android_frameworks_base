@@ -259,6 +259,24 @@
       "parentUuid": "22208e74_0d403080",
       "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb4f0c65_21b052d6",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1060436
+      },
+      "writtenOn": "2024-05-15T18:22:22Z",
+      "side": 1,
+      "message": "Not sure what happens when you subtract Long.MIN_VALUE... overflow?\n\nCan you instead just have a special case for 0?",
+      "parentUuid": "630fe5bf_52b4631f",
+      "revId": "d3192ff89d678bdf72f36779e5a1aad16289d7bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
