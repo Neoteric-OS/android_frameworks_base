@@ -653,12 +653,12 @@ public abstract class PackageManagerInternal {
     public abstract void removeIsolatedUid(int isolatedUid);
 
     /**
-     * Return the taget SDK version for the app with the given UID.
+     * Return the target SDK version for the app with the given UID.
      */
     public abstract int getUidTargetSdkVersion(int uid);
 
     /**
-     * Return the taget SDK version for the app with the given package name.
+     * Return the target SDK version for the app with the given package name.
      */
     public abstract int getPackageTargetSdkVersion(String packageName);
 
