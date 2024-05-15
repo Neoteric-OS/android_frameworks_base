@@ -75,6 +75,30 @@
       ],
       "revId": "6f419cf2b5f71a2af0fff1ac4e1e8ce10a7c474c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82428782_2e6c6677",
+        "filename": "services/core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-05-15T00:16:24Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "05cecdf6_3eb9cddc",
+      "range": {
+        "startLine": 1641,
+        "startChar": 24,
+        "endLine": 1641,
+        "endChar": 31
+      },
+      "revId": "6f419cf2b5f71a2af0fff1ac4e1e8ce10a7c474c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
