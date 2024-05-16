@@ -16,6 +16,23 @@
       "message": "Hi reck @jreck@google.com, I don\u0027t have permission, can you help trigger presubmit-verified to merge this change",
       "revId": "998a2bbbb59ebc86d1b5ff3d3543cec87f87961c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f46bb6f_82d00200",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1939396
+      },
+      "writtenOn": "2024-05-16T08:54:46Z",
+      "side": 1,
+      "message": "Hi ralu@google.com, is Verfy -1 caused by the change or the platform. I can\u0027t see the specific reason for the failed.",
+      "revId": "998a2bbbb59ebc86d1b5ff3d3543cec87f87961c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
