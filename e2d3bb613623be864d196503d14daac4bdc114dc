@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8343598_ede832bf",
+        "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/TunerResourceManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2339,
+      "author": {
+        "id": 1590836
+      },
+      "writtenOn": "2024-05-16T06:22:20Z",
+      "side": 1,
+      "message": "Updated the commit message to justify the CL",
+      "parentUuid": "38a4ecad_cc152189",
+      "range": {
+        "startLine": 2338,
+        "startChar": 7,
+        "endLine": 2339,
+        "endChar": 51
+      },
+      "revId": "e2d3bb613623be864d196503d14daac4bdc114dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0719d222_58a52ff0",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "is the original resourceId 16 bit or \u003c\u003d 65535? the parameter type is int, which has 32 bits, not sure 16 bit can keep its original value. \n\nAlso, can you confirm that the variable resourceHandle is not used in other parts of code? otherwise changing the bit allocation may break other functionalities.",
       "parentUuid": "84841772_4b8b0013",
+      "range": {
+        "startLine": 2336,
+        "startChar": 0,
+        "endLine": 2348,
+        "endChar": 5
+      },
+      "revId": "e2d3bb613623be864d196503d14daac4bdc114dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2995ad1f_53100394",
+        "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/TunerResourceManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2348,
+      "author": {
+        "id": 1590836
+      },
+      "writtenOn": "2024-05-16T06:22:20Z",
+      "side": 1,
+      "message": "I have modified the data type of resourceHandler to long so as to accomodate 32 bit resourceId.\nThere is TunerHelper doing the same calculations, I have modifed that as well.",
+      "parentUuid": "a716fd10_1bbc828e",
       "range": {
         "startLine": 2336,
         "startChar": 0,
