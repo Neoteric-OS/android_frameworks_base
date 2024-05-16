@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b70c771f_0516756c",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6346,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-16T15:09:25Z",
+      "side": 1,
+      "message": "agree",
+      "parentUuid": "28b31268_3fc6354a",
+      "range": {
+        "startLine": 6346,
+        "startChar": 49,
+        "endLine": 6346,
+        "endChar": 59
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48707688_f3f834eb",
@@ -87,6 +111,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fe9621cf_1fd8e217",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 9051,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-16T15:09:25Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "48707688_f3f834eb",
+      "range": {
+        "startLine": 9051,
+        "startChar": 83,
+        "endLine": 9051,
+        "endChar": 96
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "085f78c9_be444909",
         "filename": "media/java/android/media/AudioSystem.java",
         "patchSetId": 9
@@ -98,6 +146,30 @@
       "writtenOn": "2024-05-13T21:39:20Z",
       "side": 1,
       "message": "How about `UserHandle.getUid(getCurrentUserId(), 0)` instead.",
+      "range": {
+        "startLine": 1830,
+        "startChar": 46,
+        "endLine": 1830,
+        "endChar": 58
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2752497b_8bea4e10",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-16T15:09:25Z",
+      "side": 1,
+      "message": "this API is even not used anymore... so I did not want to add code here to retrieve current user uid",
+      "parentUuid": "085f78c9_be444909",
       "range": {
         "startLine": 1830,
         "startChar": 46,
@@ -133,6 +205,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3e5eedb5_88d38d80",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-16T15:09:25Z",
+      "side": 1,
+      "message": "for routing, I remember that UID is preferred. It will also work if a rule is set for User ID in AudioPolicyManager",
+      "parentUuid": "a0ff65ca_04f70082",
+      "range": {
+        "startLine": 2051,
+        "startChar": 82,
+        "endLine": 2051,
+        "endChar": 88
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "619797f9_c1e86884",
         "filename": "media/java/android/media/AudioSystem.java",
         "patchSetId": 9
@@ -144,6 +240,30 @@
       "writtenOn": "2024-05-13T21:39:20Z",
       "side": 1,
       "message": "Same here UID?",
+      "range": {
+        "startLine": 2420,
+        "startChar": 16,
+        "endLine": 2420,
+        "endChar": 22
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "481d51af_06afacab",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-16T15:09:25Z",
+      "side": 1,
+      "message": "UID yes",
+      "parentUuid": "619797f9_c1e86884",
       "range": {
         "startLine": 2420,
         "startChar": 16,
@@ -179,6 +299,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "85a25506_923196dd",
+        "filename": "media/java/android/media/AudioTrack.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-16T15:09:25Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "bee5fa60_ebf3d34e",
+      "range": {
+        "startLine": 1429,
+        "startChar": 42,
+        "endLine": 1429,
+        "endChar": 48
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e127612e_63526556",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 9
@@ -190,6 +334,30 @@
       "writtenOn": "2024-05-13T21:39:20Z",
       "side": 1,
       "message": "Please fix this ERROR reported by Common Typos: Common typo found: \"formated\" -- should it be \"formatted\"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \"formated\" -- should it be \"formatted\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 5047,
+        "startChar": 73,
+        "endLine": 5047,
+        "endChar": 81
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d747bfad_62710b5f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 5047,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-16T15:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e127612e_63526556",
       "range": {
         "startLine": 5047,
         "startChar": 73,
@@ -213,6 +381,30 @@
       "writtenOn": "2024-05-13T21:39:20Z",
       "side": 1,
       "message": "How about, \"Volume group not found for group id \" ...",
+      "range": {
+        "startLine": 7513,
+        "startChar": 48,
+        "endLine": 7513,
+        "endChar": 50
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e8a18a7_9323eb3f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 7513,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2024-05-16T15:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "980d0351_2d782cdb",
       "range": {
         "startLine": 7513,
         "startChar": 48,
