@@ -36,3 +36,10 @@ flag {
     description: "Log the excessive incoming binder proxies into statsd"
     bug: "298263955"
 }
+
+flag {
+    name: "batching_oom_adj"
+    namespace: "backstage_power"
+    description: "Batch OOM adjustment calls to LMKD"
+    bug: "244232958"
+}
