@@ -351,6 +351,7 @@ public final class ProcessList {
     // LMK_KILL_OCCURRED
     // LMK_START_MONITORING
     // LMK_BOOT_COMPLETED
+    // LMK_PROCS_PRIO
     static final byte LMK_TARGET = 0;
     static final byte LMK_PROCPRIO = 1;
     static final byte LMK_PROCREMOVE = 2;
@@ -362,6 +363,7 @@ public final class ProcessList {
     static final byte LMK_KILL_OCCURRED = 8; // Msg to subscribed clients on kill occurred event
     static final byte LMK_START_MONITORING = 9; // Start monitoring if delayed earlier
     static final byte LMK_BOOT_COMPLETED = 10;
+    static final byte LMK_PROCS_PRIO = 11;  // Batch option for LMK_PROCPRIO
 
     // Low Memory Killer Daemon command codes.
     // These must be kept in sync with async_event_type definitions in lmkd.h
@@ -1550,6 +1552,39 @@ public final class ProcessList {
             Slog.w("ActivityManager", "SLOW OOM ADJ: " + (now-start) + "ms for pid " + pid
                     + " = " + amt);
         }
+    }
+
+    public record OomAdjProc(int pid, int uid, int amt) {}
+
+    /**
+     * Set the out-of-memory badness adjustment for a list of processes.
+     *
+     * @param procs Process list to adjust their respective oom score.
+     *
+     * {@hide}
+     */
+    public static void batchSetOomAdj(OomAdjProc[] procs) {
+        // (4 bytes per field * 4 fields * 3 processes per batch) + 4 bytes for the LMKD cmd
+        final int max_procs_prio_packet_size = 3;
+        final int max_batch_size = ((4 * 4) * max_procs_prio_packet_size) + 4;
+        ByteBuffer buf = ByteBuffer.allocate(max_batch_size);
+        int total_procs_in_buf = 0;
+        buf.putInt(LMK_PROCS_PRIO);
+        for (OomAdjProc proc: procs) {
+            if (proc.pid <= 0 || proc.amt == UNKNOWN_ADJ) continue;
+            if (total_procs_in_buf >= max_procs_prio_packet_size) {
+                writeLmkd(buf, null);
+                buf.clear();
+                buf.allocate(max_batch_size);
+                buf.putInt(LMK_PROCS_PRIO);
+            }
+            buf.putInt(proc.pid);
+            buf.putInt(proc.uid);
+            buf.putInt(proc.amt);
+            buf.putInt(0);  // Default proc type to PROC_TYPE_APP
+            total_procs_in_buf++;
+        }
+        writeLmkd(buf, null);
     }
 
     /*
