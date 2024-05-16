@@ -107,6 +107,7 @@ import static com.android.server.am.ProcessList.FOREGROUND_APP_ADJ;
 import static com.android.server.am.ProcessList.HEAVY_WEIGHT_APP_ADJ;
 import static com.android.server.am.ProcessList.HOME_APP_ADJ;
 import static com.android.server.am.ProcessList.INVALID_ADJ;
+import static com.android.server.am.ProcessList.OomAdjProc;
 import static com.android.server.am.ProcessList.PERCEPTIBLE_APP_ADJ;
 import static com.android.server.am.ProcessList.PERCEPTIBLE_LOW_APP_ADJ;
 import static com.android.server.am.ProcessList.PERCEPTIBLE_MEDIUM_APP_ADJ;
@@ -381,6 +382,13 @@ public class OomAdjuster {
     protected final ArraySet<ProcessRecord> mTmpProcessSet = new ArraySet<>();
     protected final ArraySet<ProcessRecord> mPendingProcessSet = new ArraySet<>();
     protected final ArraySet<ProcessRecord> mProcessesInCycle = new ArraySet<>();
+
+    /**
+     * List of processes that we want to batch for LMKD to adjust their respective
+     * OOM scores.
+     */
+    @GuardedBy("mService")
+    protected final ArrayList<OomAdjProc> mProcsToOomAdj = new ArrayList<OomAdjProc>();
 
     /**
      * Flag to mark if there is an ongoing oomAdjUpdate: potentially the oomAdjUpdate
@@ -1316,11 +1324,6 @@ public class OomAdjuster {
             ProcessRecord app = lruList.get(i);
             final ProcessStateRecord state = app.mState;
             if (!app.isKilledByAm() && app.getThread() != null) {
-                // We don't need to apply the update for the process which didn't get computed
-                if (state.getCompletedAdjSeq() == mAdjSeq) {
-                    applyOomAdjLSP(app, true, now, nowElapsed, oomAdjReason);
-                }
-
                 if (app.isPendingFinishAttach()) {
                     // Avoid trimming processes that are still initializing. If they aren't
                     // hosting any components yet because they may be unfairly killed.
@@ -1329,6 +1332,7 @@ public class OomAdjuster {
                 }
 
                 final ProcessServiceRecord psr = app.mServices;
+                boolean isAppKilled = false;
                 // Count the number of process types.
                 switch (state.getCurProcState()) {
                     case PROCESS_STATE_CACHED_ACTIVITY:
@@ -1356,6 +1360,7 @@ public class OomAdjuster {
                                     ApplicationExitInfo.REASON_OTHER,
                                     ApplicationExitInfo.SUBREASON_TOO_MANY_CACHED,
                                     true);
+                            isAppKilled = true;
                         } else if (proactiveKillsEnabled) {
                             lruCachedApp = app;
                         }
@@ -1369,6 +1374,7 @@ public class OomAdjuster {
                                     ApplicationExitInfo.REASON_OTHER,
                                     ApplicationExitInfo.SUBREASON_TRIM_EMPTY,
                                     true);
+                            isAppKilled = true;
                         } else {
                             numEmpty++;
                             if (numEmpty > emptyProcessLimit) {
@@ -1377,6 +1383,7 @@ public class OomAdjuster {
                                         ApplicationExitInfo.REASON_OTHER,
                                         ApplicationExitInfo.SUBREASON_TOO_MANY_EMPTY,
                                         true);
+                                isAppKilled = true;
                             } else if (proactiveKillsEnabled) {
                                 lruCachedApp = app;
                             }
@@ -1384,7 +1391,13 @@ public class OomAdjuster {
                         break;
                     default:
                         mNumNonCachedProcs++;
+                        isAppKilled = false;
                         break;
+                }
+
+                // We don't need to apply the update for the process which didn't get computed
+                if (state.getCompletedAdjSeq() == mAdjSeq && !isAppKilled) {
+                    applyOomAdjLSP(app, true, now, nowElapsed, oomAdjReason, true);
                 }
 
                 if (app.isolated && psr.numberOfRunningServices() <= 0
@@ -1415,6 +1428,11 @@ public class OomAdjuster {
                     numTrimming++;
                 }
             }
+        }
+
+        if (!mProcsToOomAdj.isEmpty()) {
+            ProcessList.batchSetOomAdj(mProcsToOomAdj);
+            mProcsToOomAdj.clear();
         }
 
         if (proactiveKillsEnabled                               // Proactive kills enabled?
@@ -3203,10 +3221,15 @@ public class OomAdjuster {
         mCachedAppOptimizer.onWakefulnessChanged(wakefulness);
     }
 
-    /** Applies the computed oomadj, procstate and sched group values and freezes them in set* */
     @GuardedBy({"mService", "mProcLock"})
     protected boolean applyOomAdjLSP(ProcessRecord app, boolean doingAll, long now,
-            long nowElapsed, @OomAdjReason int oomAdjReson) {
+            long nowElapsed, @OomAdjReason int oomAdjReason) {
+        return applyOomAdjLSP(app, doingAll, now, nowElapsed, oomAdjReason, false);
+    }
+
+    @GuardedBy({"mService", "mProcLock"})
+    protected boolean applyOomAdjLSP(ProcessRecord app, boolean doingAll, long now,
+            long nowElapsed, @OomAdjReason int oomAdjReson, boolean isBatchingOomAdj) {
         boolean success = true;
         final ProcessStateRecord state = app.mState;
         final UidRecord uidRec = app.getUidRecord();
@@ -3222,12 +3245,18 @@ public class OomAdjuster {
         }
 
         if (state.getCurAdj() != state.getSetAdj()) {
-            ProcessList.setOomAdj(app.getPid(), app.uid, state.getCurAdj());
+            if (isBatchingOomAdj) {
+                mProcsToOomAdj.add((new OomAdjProc(app.getPid(), app.uid, state.getCurAdj())));
+            } else {
+                ProcessList.setOomAdj(app.getPid(), app.uid, state.getCurAdj());
+            }
+
             if (DEBUG_SWITCH || DEBUG_OOM_ADJ || mService.mCurOomAdjUid == app.info.uid) {
                 String msg = "Set " + app.getPid() + " " + app.processName + " adj "
                         + state.getCurAdj() + ": " + state.getAdjType();
                 reportOomAdjMessageLocked(TAG_OOM_ADJ, msg);
             }
+
             state.setSetAdj(state.getCurAdj());
             if (uidRec != null) {
                 uidRec.noteProcAdjChanged();
