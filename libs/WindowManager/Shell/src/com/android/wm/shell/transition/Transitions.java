@@ -50,6 +50,7 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.provider.Settings;
@@ -88,6 +89,7 @@ import com.android.wm.shell.util.TransitionUtil;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Plays transition animations. Within this player, each transition has a lifecycle.
@@ -294,6 +296,7 @@ public class Transitions implements RemoteCallable<Transitions>,
         mAnimExecutor = animExecutor;
         mDisplayController = displayController;
         mPlayerImpl = new TransitionPlayerImpl();
+        mMainHandler = mainHandler;
         mDefaultTransitionHandler = new DefaultTransitionHandler(context, shellInit,
                 displayController, pool, mainExecutor, mainHandler, animExecutor, rootTDAOrganizer);
         mRemoteTransitionHandler = new RemoteTransitionHandler(mMainExecutor);
@@ -1391,8 +1394,15 @@ public class Transitions implements RemoteCallable<Transitions>,
         public void onTransitionReady(IBinder iBinder, TransitionInfo transitionInfo,
                 SurfaceControl.Transaction t, SurfaceControl.Transaction finishT)
                 throws RemoteException {
-            mMainExecutor.execute(() -> Transitions.this.onTransitionReady(
-                    iBinder, transitionInfo, t, finishT));
+            Runnable transitionReadyRun = () -> Transitions.this.onTransitionReady(
+                       iBinder, transitionInfo, t, finishT);
+            try {
+                 mMainExecutor.executeBlocking(transitionReadyRun, 3, TimeUnit.SECONDS);
+            } catch (Exception e) {
+                 Log.w(TAG, "Failed to reach main onTransitionReady!!!", e);
+                 Looper.getMainLooper().setSlowLogThresholdMs(1000, 1000);
+                 mMainHandler.postAtFrontOfQueue(transitionReadyRun);
+            }
         }
 
         @Override
