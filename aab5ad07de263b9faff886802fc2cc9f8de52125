@@ -1,0 +1,68 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edb05743_22af30f8",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1057683
+      },
+      "writtenOn": "2024-05-16T23:46:18Z",
+      "side": 1,
+      "message": "If this is totally arbitrary, why not MIN_INT? :-)",
+      "range": {
+        "startLine": 219,
+        "startChar": 35,
+        "endLine": 219,
+        "endChar": 44
+      },
+      "revId": "aab5ad07de263b9faff886802fc2cc9f8de52125",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c58386ed_89b6f638",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1057683
+      },
+      "writtenOn": "2024-05-16T23:46:18Z",
+      "side": 1,
+      "message": "If now is \u003d\u003d the last mitigation (very unlikely), I imagine you would also want to throttle.\n\nMy understanding is that mSystemClock.uptimeMillis() is never supposed to go backwards, but I assume you have this here just in the odd chance it does go backwards?",
+      "range": {
+        "startLine": 413,
+        "startChar": 20,
+        "endLine": 413,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bdfdad48_aa9a873a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/PackageWatchdog.java",
+              "range": {
+                "startLine": 413,
+                "startChar": 0,
+                "endLine": 414,
+                "endChar": 0
+              },
+              "replacement": "            if (now \u003e\u003d mLastMitigation\n"
+            }
+          ]
+        }
+      ],
+      "revId": "aab5ad07de263b9faff886802fc2cc9f8de52125",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
