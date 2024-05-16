@@ -34,6 +34,24 @@
       "parentUuid": "7827f1d8_b3ce9c67",
       "revId": "6bab54d010a368347bdc78f2be8bcf915486b608",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "902a1915_a926c4d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-05-16T12:53:32Z",
+      "side": 1,
+      "message": "Sorry for late reply. \nI accidentally discovered a command that will cause the device to reboot as follows:\nadb shell am start-activity --task 2 -n com.android.settings/.Settings\n(2 is the ID of the split-screen root task, which can be obtained through adb shell dumpsys window displays) At first, I thought it only needed a simple empty check, but after careful analysis, I found that it was because the split-screen root task contained two subtasks. If Adding ActivityRecord will cause many null pointer errors and restart, so the change has been readjusted. Please help review.",
+      "parentUuid": "6c898528_5764fc8a",
+      "revId": "6bab54d010a368347bdc78f2be8bcf915486b608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
