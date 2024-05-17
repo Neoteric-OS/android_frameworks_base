@@ -57,10 +57,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.crypto.SecretKey;
 
@@ -138,6 +141,7 @@ class RebootEscrowManager {
             ERROR_KEYSTORE_FAILURE,
             ERROR_NO_NETWORK,
             ERROR_TIMEOUT_EXHAUSTED,
+            ERROR_NO_REBOOT_ESCROW_DATA,
     })
     @Retention(RetentionPolicy.SOURCE)
     @interface RebootEscrowErrorCode {
@@ -153,7 +157,7 @@ class RebootEscrowManager {
     static final int ERROR_KEYSTORE_FAILURE = 7;
     static final int ERROR_NO_NETWORK = 8;
     static final int ERROR_TIMEOUT_EXHAUSTED = 9;
-
+    static final int ERROR_NO_REBOOT_ESCROW_DATA = 10;
     private @RebootEscrowErrorCode int mLoadEscrowDataErrorCode = ERROR_NONE;
 
     /**
@@ -281,9 +285,9 @@ class RebootEscrowManager {
                     connectivityManager.getNetworkCapabilities(activeNetwork);
             return networkCapabilities != null
                     && networkCapabilities.hasCapability(
-                            NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    NetworkCapabilities.NET_CAPABILITY_INTERNET)
                     && networkCapabilities.hasCapability(
-                            NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+                    NetworkCapabilities.NET_CAPABILITY_VALIDATED);
         }
 
         /**
@@ -384,8 +388,8 @@ class RebootEscrowManager {
         }
 
         public void reportMetric(boolean success, int errorCode, int serviceType, int attemptCount,
-                int escrowDurationInSeconds, int vbmetaDigestStatus,
-                int durationSinceBootCompleteInSeconds) {
+                                 int escrowDurationInSeconds, int vbmetaDigestStatus,
+                                 int durationSinceBootCompleteInSeconds) {
             FrameworkStatsLog.write(FrameworkStatsLog.REBOOT_ESCROW_RECOVERY_REPORTED, success,
                     errorCode, serviceType, attemptCount, escrowDurationInSeconds,
                     vbmetaDigestStatus, durationSinceBootCompleteInSeconds);
@@ -402,13 +406,13 @@ class RebootEscrowManager {
     }
 
     RebootEscrowManager(Context context, Callbacks callbacks, LockSettingsStorage storage,
-            Handler handler) {
+                        Handler handler) {
         this(new Injector(context, storage), callbacks, storage, handler);
     }
 
     @VisibleForTesting
     RebootEscrowManager(Injector injector, Callbacks callbacks,
-            LockSettingsStorage storage, Handler handler) {
+                        LockSettingsStorage storage, Handler handler) {
         mInjector = injector;
         mCallbacks = callbacks;
         mStorage = storage;
@@ -418,7 +422,9 @@ class RebootEscrowManager {
         mHandler = handler;
     }
 
-    /** Wrapper function to set error code serialized through handler, */
+    /**
+     * Wrapper function to set error code serialized through handler,
+     */
     private void setLoadEscrowDataErrorCode(@RebootEscrowErrorCode int value, Handler handler) {
         if (mInjector.waitForInternet()) {
             mInjector.post(
@@ -431,7 +437,9 @@ class RebootEscrowManager {
         }
     }
 
-    /** Wrapper function to compare and set error code serialized through handler. */
+    /**
+     * Wrapper function to compare and set error code serialized through handler.
+     */
     private void compareAndSetLoadEscrowDataErrorCode(
             @RebootEscrowErrorCode int expectedValue,
             @RebootEscrowErrorCode int newValue,
@@ -451,18 +459,52 @@ class RebootEscrowManager {
         onEscrowRestoreComplete(false, attemptCount, retryHandler);
     }
 
-    void loadRebootEscrowDataIfAvailable(Handler retryHandler) {
-        List<UserInfo> users = mUserManager.getUsers();
+    private List<UserInfo> getUsersToUnlock(List<UserInfo> users) {
+        // User 0 must be unlocked to unlock any other user
+        if (mCallbacks.isUserSecure(/* userId= */ 0)
+                && !mStorage.hasRebootEscrow(/* userId= */ 0)) {
+            Slog.i(TAG, "No reboot escrow data found for user 0");
+            return Collections.emptyList();
+        }
+
+        Set<Integer> fullUsersNoEscrowData = new HashSet<>();
         List<UserInfo> rebootEscrowUsers = new ArrayList<>();
         for (UserInfo user : users) {
-            if (mCallbacks.isUserSecure(user.id) && mStorage.hasRebootEscrow(user.id)) {
+            // No lskf, no need to unlock.
+            if (!mCallbacks.isUserSecure(user.id)) {
+                continue;
+            }
+
+            boolean userHasEscrowData = mStorage.hasRebootEscrow(user.id);
+
+            // Don't unlock if parent user does not have reboot data
+            if (user.isFull() && !userHasEscrowData) {
+                fullUsersNoEscrowData.add(user.id);
+                Slog.d(TAG, "No reboot escrow data found for user " + user);
+                continue;
+            }
+            // Don't unlock if profile's parent does not have reboot data
+            if (!user.isFull() && fullUsersNoEscrowData.contains(user.profileGroupId)) {
+                Slog.d(TAG, "Parent user does not contain escrow data for profile " + user.id);
+                continue;
+            }
+            // All other cases, we can unlock.
+            if (userHasEscrowData) {
                 rebootEscrowUsers.add(user);
             }
         }
+        return rebootEscrowUsers;
+    }
+
+    void loadRebootEscrowDataIfAvailable(Handler retryHandler) {
+        List<UserInfo> users = mUserManager.getUsers();
+        List<UserInfo> rebootEscrowUsers = getUsersToUnlock(users);
 
         if (rebootEscrowUsers.isEmpty()) {
-            Slog.i(TAG, "No reboot escrow data found for users,"
-                    + " skipping loading escrow data");
+            Slog.i(TAG, "No reboot escrow data");
+            setLoadEscrowDataErrorCode(ERROR_NO_REBOOT_ESCROW_DATA, retryHandler);
+            reportMetricOnRestoreComplete(
+                    /* success= */ false, /* attemptCount= */ 1, retryHandler);
             clearMetricsStorage();
             return;
         }
@@ -769,7 +811,7 @@ class RebootEscrowManager {
     }
 
     private boolean restoreRebootEscrowForUser(@UserIdInt int userId, RebootEscrowKey ks,
-            SecretKey kk) {
+                                               SecretKey kk) {
         if (!mStorage.hasRebootEscrow(userId)) {
             return false;
         }
@@ -792,7 +834,7 @@ class RebootEscrowManager {
     }
 
     void callToRebootEscrowIfNeeded(@UserIdInt int userId, byte spVersion,
-            byte[] syntheticPassword) {
+                                    byte[] syntheticPassword) {
         if (!mRebootEscrowWanted) {
             return;
         }
@@ -874,7 +916,8 @@ class RebootEscrowManager {
         mEventLog.addEntry(RebootEscrowEvent.CLEARED_LSKF_REQUEST);
     }
 
-    @ArmRebootEscrowErrorCode int armRebootEscrowIfNeeded() {
+    @ArmRebootEscrowErrorCode
+    int armRebootEscrowIfNeeded() {
         if (!mRebootEscrowReady) {
             return ARM_REBOOT_ERROR_ESCROW_NOT_READY;
         }
