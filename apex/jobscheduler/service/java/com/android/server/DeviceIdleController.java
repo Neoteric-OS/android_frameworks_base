@@ -4315,6 +4315,9 @@ public class DeviceIdleController extends SystemService
 
     private void scheduleMotionTimeoutAlarmLocked() {
         if (DEBUG) Slog.d(TAG, "scheduleMotionAlarmLocked");
+        if (!hasMotionSensor()) {
+            return;
+        }
         long nextMotionTimeoutAlarmTime =
                 mInjector.getElapsedRealtime() + mConstants.MOTION_INACTIVE_TIMEOUT;
         if (mConstants.USE_WINDOW_ALARMS) {
