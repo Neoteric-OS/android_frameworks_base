@@ -51,16 +51,20 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.widget.RebootEscrowListener;
+import com.android.server.pm.UserManagerInternal;
 
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.crypto.SecretKey;
 
@@ -138,6 +142,7 @@ class RebootEscrowManager {
             ERROR_KEYSTORE_FAILURE,
             ERROR_NO_NETWORK,
             ERROR_TIMEOUT_EXHAUSTED,
+            ERROR_NO_REBOOT_ESCROW_DATA,
     })
     @Retention(RetentionPolicy.SOURCE)
     @interface RebootEscrowErrorCode {
@@ -153,6 +158,7 @@ class RebootEscrowManager {
     static final int ERROR_KEYSTORE_FAILURE = 7;
     static final int ERROR_NO_NETWORK = 8;
     static final int ERROR_TIMEOUT_EXHAUSTED = 9;
+    static final int ERROR_NO_REBOOT_ESCROW_DATA = 10;
 
     private @RebootEscrowErrorCode int mLoadEscrowDataErrorCode = ERROR_NONE;
 
@@ -222,11 +228,16 @@ class RebootEscrowManager {
         private final RebootEscrowKeyStoreManager mKeyStoreManager;
         private final LockSettingsStorage mStorage;
         private RebootEscrowProviderInterface mRebootEscrowProvider;
+        private final UserManagerInternal mUserManagerInternal;
 
-        Injector(Context context, LockSettingsStorage storage) {
+        Injector(
+                Context context,
+                LockSettingsStorage storage,
+                UserManagerInternal userManagerInternal) {
             mContext = context;
             mStorage = storage;
             mKeyStoreManager = new RebootEscrowKeyStoreManager();
+            mUserManagerInternal = userManagerInternal;
         }
 
         private RebootEscrowProviderInterface createRebootEscrowProvider() {
@@ -326,6 +337,10 @@ class RebootEscrowManager {
             return (UserManager) mContext.getSystemService(Context.USER_SERVICE);
         }
 
+        public UserManagerInternal getUserManagerInternal() {
+            return mUserManagerInternal;
+        }
+
         public RebootEscrowKeyStoreManager getKeyStoreManager() {
             return mKeyStoreManager;
         }
@@ -402,8 +417,8 @@ class RebootEscrowManager {
     }
 
     RebootEscrowManager(Context context, Callbacks callbacks, LockSettingsStorage storage,
-            Handler handler) {
-        this(new Injector(context, storage), callbacks, storage, handler);
+                        Handler handler, UserManagerInternal userManagerInternal) {
+        this(new Injector(context, storage, userManagerInternal), callbacks, storage, handler);
     }
 
     @VisibleForTesting
@@ -416,6 +431,7 @@ class RebootEscrowManager {
         mEventLog = injector.getEventLog();
         mKeyStoreManager = injector.getKeyStoreManager();
         mHandler = handler;
+
     }
 
     /** Wrapper function to set error code serialized through handler, */
@@ -451,18 +467,55 @@ class RebootEscrowManager {
         onEscrowRestoreComplete(false, attemptCount, retryHandler);
     }
 
-    void loadRebootEscrowDataIfAvailable(Handler retryHandler) {
-        List<UserInfo> users = mUserManager.getUsers();
+    private List<UserInfo> getUsersToUnlock(List<UserInfo> users) {
+        // System user must be unlocked to unlock any other user
+        if (mCallbacks.isUserSecure(/* userId= */ USER_SYSTEM)
+                && !mStorage.hasRebootEscrow(/* userId= */ USER_SYSTEM)) {
+            Slog.i(TAG, "No reboot escrow data found for system user");
+            return Collections.emptyList();
+        }
+
+        Set<Integer> fullUsersNoEscrowData = new HashSet<>();
+        for (UserInfo user : users) {
+            if (mCallbacks.isUserSecure(user.id)
+                    && mInjector.getUserManagerInternal().getProfileParentId(user.id) == user.id
+                    && !mStorage.hasRebootEscrow(user.id)) {
+                Slog.d(TAG, "No reboot escrow data found for full user " + user);
+                fullUsersNoEscrowData.add(user.id);
+            }
+        }
+
         List<UserInfo> rebootEscrowUsers = new ArrayList<>();
         for (UserInfo user : users) {
-            if (mCallbacks.isUserSecure(user.id) && mStorage.hasRebootEscrow(user.id)) {
+            // No lskf, no need to unlock.
+            if (!mCallbacks.isUserSecure(user.id)) {
+                continue;
+            }
+            // Don't unlock if profile's parent does not have reboot data
+            if (mInjector.getUserManagerInternal().getProfileParentId(user.id) != user.id
+                    && fullUsersNoEscrowData.contains(
+                            mInjector.getUserManagerInternal().getProfileParentId(user.id))) {
+                Slog.d(TAG, "Parent user does not contain escrow data for profile " + user.id);
+                continue;
+            }
+            // All other cases, we can unlock.
+            if (mStorage.hasRebootEscrow(user.id)) {
                 rebootEscrowUsers.add(user);
             }
         }
+        return rebootEscrowUsers;
+    }
+
+    void loadRebootEscrowDataIfAvailable(Handler retryHandler) {
+        List<UserInfo> users = mUserManager.getUsers();
+        List<UserInfo> rebootEscrowUsers = getUsersToUnlock(users);
 
         if (rebootEscrowUsers.isEmpty()) {
             Slog.i(TAG, "No reboot escrow data found for users,"
                     + " skipping loading escrow data");
+            setLoadEscrowDataErrorCode(ERROR_NO_REBOOT_ESCROW_DATA, retryHandler);
+            reportMetricOnRestoreComplete(
+                    /* success= */ false, /* attemptCount= */ 1, retryHandler);
             clearMetricsStorage();
             return;
         }
