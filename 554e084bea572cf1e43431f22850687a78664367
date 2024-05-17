@@ -16,6 +16,93 @@
       "message": "sorry, wrong cl",
       "revId": "554e084bea572cf1e43431f22850687a78664367",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da4e5d9e_d6a429e3",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2024-05-17T20:27:05Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Build Warnings: [EmptyBlockTag] A block tag (@param, @return, @throws, @deprecated) has an empty description. Block tags without descriptions don\u0027t add much value for future readers of the code; consider removing the tag entirely or adding a description.\n\nAnalyzer Description: Reports warnings that originate from build.log in the build artifacts.\nOwner: farivar@google.com\n\n    [EmptyBlockTag] A block tag (@param, @return, @throws, @deprecated) has an empty description. Block tags without descriptions don\u0027t add much value for future readers of the code; consider removing the tag entirely or adding a description.\n         * @throws IOException\n           ^\n        (see https://google.github.io/styleguide/javaguide.html#s7.1.3-javadoc-block-tags)\n      Did you mean \u0027*\u0027?\n\nThis finding was found on https://android-build.googleplex.com/builds/build-details/P74867827/targets/errorprone-trunk_staging, but may also be present on other builds.\n\nThis is a different branch than your cl originated on (it was automerged), and thus might better reflect the state of the code in the git_main branch.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 26
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1ed4a2c_926ae459",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2024-05-17T20:27:05Z",
+      "side": 1,
+      "message": "Why public?\n\nEDIT: Instead of having the native code finding this method and executing it, it might be easier to read to:\n\n```\nprivate static @Nullable String getFcm() { return runShellCommand(...); }\nprivate static @Nullable String getDm() {...}\nprivate static @Nullable String getDcm() {...}\nprivate static @Nullable String getFm() {...}\npublic String[] report() {\n   return new String[]{ getFcm(), ... }; // also do null checks\n}\npublic String[] getHalNames() {\n   return runShellCommand(...)...; // also do checks\n}\n```",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "cbd5a61d_fd7357b5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/VintfObject.java",
+              "range": {
+                "startLine": 129,
+                "startChar": 0,
+                "endLine": 130,
+                "endChar": 0
+              },
+              "replacement": "    private static @Nullable String runShellCommand(@NonNull String command) throws IOException {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee82f0cb_c1706535",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2024-05-17T20:27:05Z",
+      "side": 1,
+      "message": "Isn\u0027t this just readAllBytes?\n\nhttps://docs.oracle.com/javase%2F9%2Fdocs%2Fapi%2F%2F/java/io/InputStream.html#readAllBytes--",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 5
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
