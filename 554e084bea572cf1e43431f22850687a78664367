@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdf52403_e66857c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2024-05-17T20:30:06Z",
+      "side": 1,
+      "message": "Please also check that EDI properly collects the information",
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "bb0e1815_7007130f",
@@ -78,6 +95,30 @@
           ]
         }
       ],
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c9c22fa_b9a23597",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2024-05-17T20:30:06Z",
+      "side": 1,
+      "message": "That is, I think it is easier to understand to put as much code in Java as possible now that you don\u0027t actually need libvintf for certain APIs (but instead calling `vintf`)",
+      "parentUuid": "c1ed4a2c_926ae459",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 10
+      },
       "revId": "554e084bea572cf1e43431f22850687a78664367",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
