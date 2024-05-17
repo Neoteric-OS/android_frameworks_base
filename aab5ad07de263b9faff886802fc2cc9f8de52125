@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31cbf160_aa6cc918",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1060436
+      },
+      "writtenOn": "2024-05-17T18:33:43Z",
+      "side": 1,
+      "message": "You can use MIN_INT, or -1, or whatever; but you then need to explicitly check for that value, instead of just subtracting it from now. I was worried that subtracting MIN_INT might cause overflow.\n\n-1000000 should work with the logic you\u0027ve got fine.",
+      "parentUuid": "50dbdf6a_07e9dd66",
+      "range": {
+        "startLine": 219,
+        "startChar": 35,
+        "endLine": 219,
+        "endChar": 44
+      },
+      "revId": "aab5ad07de263b9faff886802fc2cc9f8de52125",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c58386ed_89b6f638",
