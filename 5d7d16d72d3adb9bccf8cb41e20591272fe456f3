@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52c2adad_479d660b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-05-17T16:45:45Z",
+      "side": 1,
+      "message": "Thanks for this CL.\n\nAfter some investigation, though, we found that the problem is actually a regression from an earlier change we made: so we\u0027ll fix that instead and send a patch.",
+      "revId": "5d7d16d72d3adb9bccf8cb41e20591272fe456f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
