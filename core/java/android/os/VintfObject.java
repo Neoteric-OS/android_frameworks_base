@@ -17,8 +17,13 @@
 package android.os;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.TestApi;
+import android.app.ActivityThread;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -112,6 +117,39 @@ public class VintfObject {
      */
     @TestApi
     public static native Long getTargetFrameworkCompatibilityMatrixVersion();
+
+    /**
+     * Executes a shell command using shell user identity, and return the standard output in string.
+     *
+     * @param command the command to run
+     * @return the standard output of the command
+     * @throws IOException
+     * @hide
+     */
+    public static @Nullable String runShellCommand(@NonNull String command) throws IOException {
+        var activityThread = ActivityThread.currentActivityThread();
+        var instrumentation = activityThread.getInstrumentation();
+        var automation = instrumentation.getUiAutomation();
+        var pfd = automation.executeShellCommand(command);
+        try (var is = new ParcelFileDescriptor.AutoCloseInputStream(pfd)) {
+            return new String(readInputStreamFully(is));
+        }
+    }
+
+    private static byte[] readInputStreamFully(InputStream is) {
+        var os = new ByteArrayOutputStream();
+        var buffer = new byte[1024];
+        int count;
+        try {
+            while ((count = is.read(buffer)) != -1) {
+                os.write(buffer, 0, count);
+            }
+            is.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return os.toByteArray();
+    }
 
     private VintfObject() {}
 }
