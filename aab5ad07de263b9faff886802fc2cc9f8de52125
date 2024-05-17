@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50dbdf6a_07e9dd66",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 2030150
+      },
+      "writtenOn": "2024-05-17T17:19:33Z",
+      "side": 1,
+      "message": "Just went with Dan\u0027s suggestion.",
+      "parentUuid": "edb05743_22af30f8",
+      "range": {
+        "startLine": 219,
+        "startChar": 35,
+        "endLine": 219,
+        "endChar": 44
+      },
+      "revId": "aab5ad07de263b9faff886802fc2cc9f8de52125",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c58386ed_89b6f638",
@@ -61,6 +85,30 @@
           ]
         }
       ],
+      "revId": "aab5ad07de263b9faff886802fc2cc9f8de52125",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b4a5592_3dac572a",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 2030150
+      },
+      "writtenOn": "2024-05-17T17:19:33Z",
+      "side": 1,
+      "message": "Updated. Yes, after reboot mSystemClock.uptimeMillis() should always go up in theory, just playing it safe.",
+      "parentUuid": "c58386ed_89b6f638",
+      "range": {
+        "startLine": 413,
+        "startChar": 20,
+        "endLine": 413,
+        "endChar": 21
+      },
       "revId": "aab5ad07de263b9faff886802fc2cc9f8de52125",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
