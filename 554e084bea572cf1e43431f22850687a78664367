@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4e1271ad_d44fb722",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-05-18T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "404ef653_3296279b",
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "bb0e1815_7007130f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -66,6 +84,30 @@
       "writtenOn": "2024-05-17T20:27:05Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Build Warnings: [EmptyBlockTag] A block tag (@param, @return, @throws, @deprecated) has an empty description. Block tags without descriptions don\u0027t add much value for future readers of the code; consider removing the tag entirely or adding a description.\n\nAnalyzer Description: Reports warnings that originate from build.log in the build artifacts.\nOwner: farivar@google.com\n\n    [EmptyBlockTag] A block tag (@param, @return, @throws, @deprecated) has an empty description. Block tags without descriptions don\u0027t add much value for future readers of the code; consider removing the tag entirely or adding a description.\n         * @throws IOException\n           ^\n        (see https://google.github.io/styleguide/javaguide.html#s7.1.3-javadoc-block-tags)\n      Did you mean \u0027*\u0027?\n\nThis finding was found on https://android-build.googleplex.com/builds/build-details/P74867827/targets/errorprone-trunk_staging, but may also be present on other builds.\n\nThis is a different branch than your cl originated on (it was automerged), and thus might better reflect the state of the code in the git_main branch.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 26
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89c838e1_ab1f39da",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-05-18T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da4e5d9e_d6a429e3",
       "range": {
         "startLine": 126,
         "startChar": 0,
@@ -167,6 +209,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f4eedec5_d71167be",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-05-18T02:19:31Z",
+      "side": 1,
+      "message": "Can we keep this way for now? I think it\u0027s working well with this change (fixing tests/EDI collectors/etc) and rewriting things in Java might be overkill. We could do in Java in the future when we need new things in EDI.",
+      "parentUuid": "79843b16_7c35396c",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee82f0cb_c1706535",
         "filename": "core/java/android/os/VintfObject.java",
         "patchSetId": 1
@@ -202,6 +268,30 @@
       "side": 1,
       "message": "Thanks. (I just copied this from other snippets using uiAutomation.)",
       "parentUuid": "ee82f0cb_c1706535",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 5
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "562de4ca_ab9c12c7",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-05-18T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ac3f58_f0a02669",
       "range": {
         "startLine": 139,
         "startChar": 0,
