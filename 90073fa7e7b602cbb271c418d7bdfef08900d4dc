@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2101a438_af7c2023",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-05-18T02:48:37Z",
+      "side": 1,
+      "message": "LGTM, but should definitely be processed by the owners. Also I see that there\u0027s merge conflict. We will have to land this on git_main first and then cherry-pick to AOSP.",
+      "revId": "90073fa7e7b602cbb271c418d7bdfef08900d4dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56a8b9ed_f1f40b6f",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3367,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-05-18T02:48:37Z",
+      "side": 1,
+      "message": "I guess this condition makes this feature \"less\" risky than it sounds.",
+      "range": {
+        "startLine": 3367,
+        "startChar": 48,
+        "endLine": 3367,
+        "endChar": 75
+      },
+      "revId": "90073fa7e7b602cbb271c418d7bdfef08900d4dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
