@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "404ef653_3296279b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-05-18T01:31:57Z",
+      "side": 1,
+      "message": "SELinuxNeverallowRulesTest relies on VintfDeviceInfo.",
+      "parentUuid": "cdf52403_e66857c3",
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "bb0e1815_7007130f",
@@ -125,6 +143,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79843b16_7c35396c",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-05-18T01:31:57Z",
+      "side": 1,
+      "message": "\u003e  think it is easier to understand to put as much code in Java as possible now\n\nThis was what I did first and in fact I have a working CL. I found myself re-implementing libvintf in Java ;-). Especially with parsing/comparing/formatting values (fqname, sepolicy-version, etc).\n\nHence, this CL. I wanted to keep the change minimal.\n\nBut, in general, agree with your idea. We\u0027d better move code from libvintf_jni to VintfObject Java class.\n\nTo be specific, `report()` can be written as you suggested. Regaading hal names, I\u0027m not sure. It relies on libvintf heavily (not just libvintf_jni). It\u0027s doable (I did it in the other change) but with duplication between java and c++.",
+      "parentUuid": "3c9c22fa_b9a23597",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee82f0cb_c1706535",
         "filename": "core/java/android/os/VintfObject.java",
         "patchSetId": 1
@@ -136,6 +178,30 @@
       "writtenOn": "2024-05-17T20:27:05Z",
       "side": 1,
       "message": "Isn\u0027t this just readAllBytes?\n\nhttps://docs.oracle.com/javase%2F9%2Fdocs%2Fapi%2F%2F/java/io/InputStream.html#readAllBytes--",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 5
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89ac3f58_f0a02669",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-05-18T01:31:57Z",
+      "side": 1,
+      "message": "Thanks. (I just copied this from other snippets using uiAutomation.)",
+      "parentUuid": "ee82f0cb_c1706535",
       "range": {
         "startLine": 139,
         "startChar": 0,
