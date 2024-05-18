@@ -233,6 +233,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92645713_b2823436",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2024-05-18T04:35:00Z",
+      "side": 1,
+      "message": "yeah, I am fine with this for now.\n\ngetHalNames() can also be a new `vintf` call in the future.",
+      "parentUuid": "f4eedec5_d71167be",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee82f0cb_c1706535",
         "filename": "core/java/android/os/VintfObject.java",
         "patchSetId": 1
