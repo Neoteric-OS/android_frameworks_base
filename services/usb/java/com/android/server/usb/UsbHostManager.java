@@ -303,6 +303,18 @@ public class UsbHostManager {
 
     }
 
+    /* returns true if the USB device should not be accessible by applications */
+    private boolean isCustomUsbDenyListed(int vendorID, int productID) {
+        int count = mHostDenyList.length;
+        String vid_pid = String.format("%04x:%04x", vendorID, productID);
+        for (int i = 0; i < count; i++) {
+            if (vid_pid.equals(mHostDenyList[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void addConnectionRecord(String deviceAddress, int mode, byte[] rawDescriptors) {
         mNumConnects++;
         while (mConnections.size() >= MAX_CONNECT_RECORDS) {
@@ -362,6 +374,9 @@ public class UsbHostManager {
     @SuppressWarnings("unused")
     private boolean usbDeviceAdded(String deviceAddress, int deviceClass, int deviceSubclass,
             byte[] descriptors) {
+        int vendorId = 0;
+        int productId = 0;
+
         if (DEBUG) {
             Slog.d(TAG, "usbDeviceAdded(" + deviceAddress + ") - start");
         }
@@ -384,6 +399,18 @@ public class UsbHostManager {
         if (deviceClass == UsbConstants.USB_CLASS_PER_INTERFACE
                 && !checkUsbInterfacesDenyListed(parser)) {
             return false;
+        }
+
+        UsbDeviceDescriptor deviceDescriptor = parser.getDeviceDescriptor();
+        if (deviceDescriptor != null) {
+            vendorId  = deviceDescriptor.getVendorID();
+            productId = deviceDescriptor.getProductID();
+            if (isCustomUsbDenyListed(vendorId, productId)) {
+                if (DEBUG) {
+                    Slog.d(TAG, "Device class is deny listed");
+                }
+                return false;
+            }
         }
 
         // Potentially can block as it may read data from the USB device.
