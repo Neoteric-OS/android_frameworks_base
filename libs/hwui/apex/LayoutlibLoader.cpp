@@ -46,6 +46,7 @@ namespace android {
 
 extern int register_android_graphics_Canvas(JNIEnv* env);
 extern int register_android_graphics_CanvasProperty(JNIEnv* env);
+extern int register_android_graphics_Color(JNIEnv* env);
 extern int register_android_graphics_ColorFilter(JNIEnv* env);
 extern int register_android_graphics_ColorSpace(JNIEnv* env);
 extern int register_android_graphics_DrawFilter(JNIEnv* env);
@@ -72,13 +73,15 @@ extern int register_android_util_PathParser(JNIEnv* env);
 extern int register_android_view_DisplayListCanvas(JNIEnv* env);
 extern int register_android_view_RenderNode(JNIEnv* env);
 
-#define REG_JNI(name)      { name }
+#define REG_JNI(name) \
+    { name }
 struct RegJNIRec {
     int (*mProc)(JNIEnv*);
 };
 
-// Map of all possible class names to register to their corresponding JNI registration function pointer
-// The actual list of registered classes will be determined at runtime via the 'native_classes' System property
+// Map of all possible class names to register to their corresponding JNI registration function
+// pointer The actual list of registered classes will be determined at runtime via the
+// 'native_classes' System property
 static const std::unordered_map<std::string, RegJNIRec> gRegJNIMap = {
         {"android.graphics.Bitmap", REG_JNI(register_android_graphics_Bitmap)},
         {"android.graphics.BitmapFactory", REG_JNI(register_android_graphics_BitmapFactory)},
@@ -87,6 +90,7 @@ static const std::unordered_map<std::string, RegJNIRec> gRegJNIMap = {
         {"android.graphics.Camera", REG_JNI(register_android_graphics_Camera)},
         {"android.graphics.Canvas", REG_JNI(register_android_graphics_Canvas)},
         {"android.graphics.CanvasProperty", REG_JNI(register_android_graphics_CanvasProperty)},
+        {"android.graphics.Color", REG_JNI(register_android_graphics_Color)},
         {"android.graphics.ColorFilter", REG_JNI(register_android_graphics_ColorFilter)},
         {"android.graphics.ColorSpace", REG_JNI(register_android_graphics_ColorSpace)},
         {"android.graphics.CreateJavaOutputStreamAdaptor",
@@ -132,8 +136,7 @@ static const std::unordered_map<std::string, RegJNIRec> gRegJNIMap = {
 };
 
 static int register_jni_procs(const std::unordered_map<std::string, RegJNIRec>& jniRegMap,
-        const vector<string>& classesToRegister, JNIEnv* env) {
-
+                              const vector<string>& classesToRegister, JNIEnv* env) {
     for (const string& className : classesToRegister) {
         if (jniRegMap.at(className).mProc(env) < 0) {
             return -1;
@@ -143,11 +146,10 @@ static int register_jni_procs(const std::unordered_map<std::string, RegJNIRec>& 
 }
 
 static vector<string> parseCsv(const string& csvString) {
-    vector<string>   result;
+    vector<string> result;
     istringstream stream(csvString);
     string segment;
-    while(getline(stream, segment, ','))
-    {
+    while (getline(stream, segment, ',')) {
         result.push_back(segment);
     }
     return result;
@@ -161,7 +163,7 @@ static vector<string> parseCsv(JNIEnv* env, jstring csvJString) {
     return result;
 }
 
-} // namespace android
+}  // namespace android
 
 using namespace android;
 
@@ -169,7 +171,7 @@ void init_android_graphics() {
     SkGraphics::Init();
 }
 
-int register_android_graphics_classes(JNIEnv *env) {
+int register_android_graphics_classes(JNIEnv* env) {
     JavaVM* vm = nullptr;
     env->GetJavaVM(&vm);
     GraphicsJNI::setJavaVM(vm);
@@ -177,8 +179,8 @@ int register_android_graphics_classes(JNIEnv *env) {
     // Configuration is stored as java System properties.
     // Get a reference to System.getProperty
     jclass system = FindClassOrDie(env, "java/lang/System");
-    jmethodID getPropertyMethod = GetStaticMethodIDOrDie(env, system, "getProperty",
-                                                         "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
+    jmethodID getPropertyMethod = GetStaticMethodIDOrDie(
+            env, system, "getProperty", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
 
     // Get the names of classes that need to register their native methods
     auto nativesClassesJString = (jstring)env->CallStaticObjectMethod(
@@ -193,4 +195,4 @@ int register_android_graphics_classes(JNIEnv *env) {
     return 0;
 }
 
-void zygote_preload_graphics() { }
+void zygote_preload_graphics() {}
