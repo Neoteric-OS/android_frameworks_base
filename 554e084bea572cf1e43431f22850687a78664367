@@ -255,6 +255,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "379f56df_e0083986",
+        "filename": "core/java/android/os/VintfObject.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-05-20T01:21:14Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "92645713_b2823436",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 10
+      },
+      "revId": "554e084bea572cf1e43431f22850687a78664367",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee82f0cb_c1706535",
