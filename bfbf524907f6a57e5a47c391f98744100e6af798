@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "997ff8b6_d21b108a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-05-20T16:04:13Z",
+      "side": 1,
+      "message": "Thank you for the contribution! I\u0027m afraid we wish not to merge this CL. First of all, those metrics go to our Android metrics infrastructure, and I\u0027m not sure we can accept external changes for those. Secondly, in the CL, some fields are not populated in an ideal way. For example, this CL adds a flag (`DexOptHelper.sDexoptRunning`) to track whether dexopt is running, which is not sufficient because [ART Service](https://cs.android.com/android/platform/superproject/main/+/main:art/libartservice/service/README.md;drc\u003da8b6a489210919720542d87da1f6e3891b38e704) manages dexopt since Android U and can initiate dexopt itself (e.g., background dexopt).\n\nYou are still welcome to keep this change in your downstream branches to track metrics on your own. We appreciate your devotion to upstreaming changes, but we can\u0027t merge this one given the reasons above.",
+      "revId": "bfbf524907f6a57e5a47c391f98744100e6af798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
