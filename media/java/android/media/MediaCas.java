@@ -16,6 +16,7 @@
 
 package android.media;
 
+import static com.android.media.flags.Flags.FLAG_SET_RESOURCE_HOLDER_RETAIN;
 import static com.android.media.flags.Flags.FLAG_UPDATE_CLIENT_PROFILE_PRIORITY;
 
 import android.annotation.FlaggedApi;
@@ -995,6 +996,20 @@ public final class MediaCas implements AutoCloseable {
     public boolean updateResourcePriority(
             @IntRange(from = 0) int priority, @IntRange(from = 0) int niceValue) {
         return mTunerResourceManager.updateClientPriority(mClientId, priority, niceValue);
+    }
+
+    /*
+     * Determines whether the Resource Holder retains ownership of the resource during a challenge
+     * scenario, when both Resource Holder and Resource Challenger have same processId and same
+     * priority.
+     *
+     * @param resourceHolderRetain Set to true to allow the Resource Holder to retain ownership, or
+     *     false to allow the Resource Challenger to acquire the resource. If not explicitly set,
+     *     resourceHolderRetain is set to false.
+     */
+    @FlaggedApi(FLAG_SET_RESOURCE_HOLDER_RETAIN)
+    public void setResourceHolderRetain(boolean resourceHolderRetain) {
+        mTunerResourceManager.setResourceHolderRetain(mClientId, resourceHolderRetain);
     }
 
     IHwBinder getBinder() {

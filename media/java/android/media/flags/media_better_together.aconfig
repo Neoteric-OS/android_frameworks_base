@@ -151,3 +151,10 @@ flag {
     description : "Feature flag to add updateResourcePriority api to MediaCas"
     bug: "300565729"
 }
+
+flag {
+    name: "set_resource_holder_retain"
+    namespace: "media"
+    description : "Feature flag to add setResourceHolderRetain api to MediaCas and Tuner JAVA."
+    bug: "300565729"
+}
