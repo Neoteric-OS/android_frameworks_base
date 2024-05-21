@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95450ab2_0942ce7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-05-21T13:47:08Z",
+      "side": 1,
+      "message": "IMO, it looks like a brute force workaround. Force-stop should not allow to restart process. It is better to find the reason of starting the home activity again.",
+      "revId": "728d957a85a12b1257a8f5302d7e504bc87971f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
