@@ -70,3 +70,10 @@ flag {
     description: "Use BluetoothDevice.getAlias to populate the name of Bluetooth MediaRoute2Infos."
     bug: "314324170"
 }
+
+flag {
+    name: "set_resource_holder_retain"
+    namespace: "media"
+    description : "Feature flag to add setResourceHolderRetain api to MediaCas and Tuner JAVA."
+    bug: "300565729"
+}

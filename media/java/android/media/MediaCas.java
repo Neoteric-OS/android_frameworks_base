@@ -16,6 +16,9 @@
 
 package android.media;
 
+import static com.android.media.flags.Flags.FLAG_SET_RESOURCE_HOLDER_RETAIN;
+
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -970,6 +973,20 @@ public final class MediaCas implements AutoCloseable {
         setEventListener(listener, handler);
         createPlugin(casSystemId);
         registerClient(context, tvInputServiceSessionId, priorityHint);
+    }
+
+    /**
+     * Determines whether the Resource Holder retains ownership of the resource during a challenge
+     * scenario, when both Resource Holder and Resource Challenger have same processId and same
+     * priority.
+     *
+     * @param resourceHolderRetain Set to true to allow the Resource Holder to retain ownership, or
+     *     false to allow the Resource Challenger to acquire the resource. If not explicitly set,
+     *     resourceHolderRetain is set to false.
+     */
+    @FlaggedApi(FLAG_SET_RESOURCE_HOLDER_RETAIN)
+    public void setResourceHolderRetain(boolean resourceHolderRetain) {
+        mTunerResourceManager.setResourceHolderRetain(mClientId, resourceHolderRetain);
     }
 
     IHwBinder getBinder() {

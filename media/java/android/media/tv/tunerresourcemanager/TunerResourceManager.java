@@ -220,6 +220,25 @@ public class TunerResourceManager {
     }
 
     /**
+     * Determines whether the Resource Holder retains ownership of the resource during a challenge
+     * scenario, when both Resource Holder and Resource Challenger have same processId and same
+     * priority.
+     *
+     * @param clientId The client id used to set ownership of resource to owner in case of resource
+     *     challenger situation.
+     * @param resourceHolderRetain Set to true to allow the Resource Holder to retain ownership, or
+     *     false to allow the Resource Challenger to acquire the resource. If not explicitly set,
+     *     resourceHolderRetain is set to false.
+     */
+    public void setResourceHolderRetain(int clientId, boolean resourceHolderRetain) {
+        try {
+            mService.setResourceHolderRetain(clientId, resourceHolderRetain);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Stores the frontend resource map if it was stored before.
      *
      * <p>This API is only for testing purpose and should be used in pair with
