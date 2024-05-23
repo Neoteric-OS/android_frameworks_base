@@ -93,6 +93,30 @@
       },
       "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83234e83_d86dd966",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-23T19:41:13Z",
+      "side": 1,
+      "message": "\u003e a parent\u0027s profile must be unlocked before a managed profile.\n\nIt\u0027s supposed to work that way, and as far as I know Android doesn\u0027t do otherwise (except in this RoR case).",
+      "parentUuid": "6d338c08_4bdadea7",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 473,
+        "endChar": 31
+      },
+      "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
