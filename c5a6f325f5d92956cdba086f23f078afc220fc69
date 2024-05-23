@@ -117,6 +117,30 @@
       },
       "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83ef981d_de328c35",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-23T19:42:44Z",
+      "side": 1,
+      "message": "(Caveat: I guess with Private Space delayed locking, it is now possible for a profile to *remain* unlocked even when the parent locks? I\u0027m not sure. But even that is different from the case we\u0027re discussing here, which is that we never even unlocked/started the parent in the first place.)",
+      "parentUuid": "9175750f_eaf30e88",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 473,
+        "endChar": 31
+      },
+      "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
