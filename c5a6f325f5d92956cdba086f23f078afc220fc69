@@ -45,6 +45,30 @@
       },
       "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d338c08_4bdadea7",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-23T19:27:10Z",
+      "side": 1,
+      "message": "Was it agreed on that a managed profile needed to be unlocked after the parent profile? From b/324085891#comment10, it looks like the system user must be unlocked first but there isn\u0027t a strict requirement that a a parent\u0027s profile must be unlocked before a managed profile.",
+      "parentUuid": "a8a08919_ac811f3c",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 473,
+        "endChar": 31
+      },
+      "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
