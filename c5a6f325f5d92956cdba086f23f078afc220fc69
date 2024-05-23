@@ -22,6 +22,29 @@
       },
       "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8a08919_ac811f3c",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-05-23T19:12:04Z",
+      "side": 1,
+      "message": "Is this enough?  Doesn\u0027t the bug apply to other cases where users have a parent-child relationship too?  For example, suppose that a full user other than user 0 has a work profile.  This could be e.g. user 10 having a profile with user ID 11.  User 10 would need to be unlocked before user 11 in that case.",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 473,
+        "endChar": 31
+      },
+      "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
