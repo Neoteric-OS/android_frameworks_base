@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f59afee_ba40be2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1981500
+      },
+      "writtenOn": "2024-05-24T10:25:13Z",
+      "side": 1,
+      "message": "Thanks",
+      "revId": "5cc801f597595ea65e20ce27442ba72de2444980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6408df6_f5c4ea7b",
+        "filename": "packages/SoundPicker/src/com/android/soundpicker/RingtonePickerActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1981500
+      },
+      "writtenOn": "2024-05-24T10:25:13Z",
+      "side": 1,
+      "message": "This could potentially result in a NullPointerException if the extra key is not found in the Intent. Perhaps we could do something like this:\n```\nCharSequence title \u003d intent.getCharSequenceExtra(RingtoneManager.EXTRA_RINGTONE_TITLE);\n        \n        if (title \u003d\u003d null) {\n            if (mType \u003d\u003d RingtoneManager.TYPE_ALARM) {\n                p.mTitle \u003d getString(com.android.internal.R.string.ringtone_picker_title_alarm);\n            } else if (mType \u003d\u003d RingtoneManager.TYPE_NOTIFICATION) {\n                p.mTitle \u003d\n                        getString(com.android.internal.R.string.ringtone_picker_title_notification);\n            } else {\n                p.mTitle \u003d getString(com.android.internal.R.string.ringtone_picker_title);\n            }\n        } else {\n            p.mTitle \u003d Html.escapeHtml(title.toString());\n        }\n```",
+      "range": {
+        "startLine": 246,
+        "startChar": 8,
+        "endLine": 246,
+        "endChar": 95
+      },
+      "revId": "5cc801f597595ea65e20ce27442ba72de2444980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
