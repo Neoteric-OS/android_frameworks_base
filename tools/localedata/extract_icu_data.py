@@ -25,7 +25,7 @@ import sys
 
 def get_locale_parts(locale):
     """Split a locale into three parts, for langauge, script, and region."""
-    parts = locale.split('_')
+    parts = locale.split('-')
     if len(parts) == 1:
         return (parts[0], None, None)
     elif len(parts) == 2:
@@ -46,35 +46,37 @@ def read_likely_subtags(input_file_name):
             # sure that the pseudo-locales would not match other English or
             # Arabic locales. (We can't use private-use ISO 15924 codes, since
             # they may be used by apps for other purposes.)
-            "en_XA": "~~~A",
-            "ar_XB": "~~~B",
+            "en-XA": "~~~A",
+            "ar-XB": "~~~B",
             # Removed data from later versions of ICU
             "ji": "Hebr", # Old code for Yiddish, still used in Java and Android
         }
         representative_locales = {
             # Android's additions
-            "en_Latn_GB", # representative for en_Latn_001
-            "es_Latn_MX", # representative for es_Latn_419
-            "es_Latn_US", # representative for es_Latn_419 (not the best idea,
+            "en-Latn-GB", # representative for en_Latn_001
+            "es-Latn-MX", # representative for es_Latn_419
+            "es-Latn-US", # representative for es_Latn_419 (not the best idea,
                           # but Android has been shipping with it for quite a
                           # while. Fortunately, MX < US, so if both exist, MX
                           # would be chosen.)
         }
         for line in input_file:
             line = line.strip(u' \n\uFEFF')
-            if line.startswith('//'):
+            if line.startswith('#') or len(line) == 0:
                 continue
-            if '{' in line and '}' in line:
-                from_locale = line[:line.index('{')]
-                to_locale = line[line.index('"')+1:line.rindex('"')]
-                from_lang, from_scr, from_region = get_locale_parts(from_locale)
-                _, to_scr, to_region = get_locale_parts(to_locale)
-                if from_lang == 'und':
-                    continue  # not very useful for our purposes
-                if from_region is None and to_region not in ['001', 'ZZ']:
-                    representative_locales.add(to_locale)
-                if from_scr is None:
-                    likely_script_dict[from_locale] = to_scr
+            elements = [e.strip() for e in line.split(";")]
+            from_locale = elements[0]
+            to_locale = elements[1]
+            from_lang, from_scr, from_region = get_locale_parts(from_locale)
+            _, to_scr, to_region = get_locale_parts(to_locale)
+            if to_locale == "FAIL":
+                continue # "FAIL" cases are not useful here.
+            if from_lang == 'und':
+                continue  # not very useful for our purposes
+            if from_region is None and to_region not in ['001', 'ZZ']:
+                representative_locales.add(to_locale)
+            if from_scr is None:
+                likely_script_dict[from_locale] = to_scr
         return likely_script_dict, frozenset(representative_locales)
 
 
@@ -86,7 +88,7 @@ def pack_language_or_region(inp, base):
     elif len(inp) == 2:
         return ord(inp[0]), ord(inp[1])
     else:
-        assert len(inp) == 3
+        assert len(inp) == 3, f'Expects a 3-character string, but "{inp}" '
         base = ord(base)
         first = ord(inp[0]) - base
         second = ord(inp[1]) - base
@@ -161,11 +163,11 @@ def dump_representative_locales(representative_locales):
     print('});')
 
 
-def read_and_dump_likely_data(icu_data_dir):
+def read_and_dump_likely_data(icu4c_source_dir):
     """Read and dump the likely-script data."""
-    likely_subtags_txt = os.path.join(icu_data_dir, 'misc', 'likelySubtags.txt')
-    likely_script_dict, representative_locales = read_likely_subtags(
-        likely_subtags_txt)
+    likely_subtags_txt = os.path.join(icu4c_source_dir,
+                                      'test/testdata/cldr/localeIdentifiers/likelySubtags.txt')
+    likely_script_dict, representative_locales = read_likely_subtags(likely_subtags_txt)
 
     all_scripts = list(set(likely_script_dict.values()))
     assert len(all_scripts) <= 256
@@ -180,9 +182,9 @@ def escape_script_variable_name(script):
     """Escape characters, e.g. '~', in a C++ variable name"""
     return script.replace("~", "_")
 
-def read_parent_data(icu_data_dir):
+def read_parent_data(icu4c_source_dir):
     """Read locale parent data from ICU data files."""
-    all_icu_data_files = glob.glob(os.path.join(icu_data_dir, '*', '*.txt'))
+    all_icu_data_files = glob.glob(os.path.join(icu4c_source_dir, '*', '*.txt'))
     parent_dict = {}
     for data_file in all_icu_data_files:
         locale = os.path.splitext(os.path.basename(data_file))[0]
@@ -260,9 +262,9 @@ def dump_parent_tree_depth(parent_dict):
     print('const size_t MAX_PARENT_DEPTH = %d;' % max_depth)
 
 
-def read_and_dump_parent_data(icu_data_dir, likely_script_dict):
+def read_and_dump_parent_data(icu4c_source_dir, likely_script_dict):
     """Read parent data from ICU and dump it."""
-    parent_dict = read_parent_data(icu_data_dir)
+    parent_dict = read_parent_data(icu4c_source_dir)
     script_organized_dict = collections.defaultdict(dict)
     for locale in parent_dict:
         parent = parent_dict[locale]
@@ -277,14 +279,14 @@ def read_and_dump_parent_data(icu_data_dir, likely_script_dict):
 def main():
     """Read the data files from ICU and dump the output to a C++ file."""
     source_root = sys.argv[1]
-    icu_data_dir = os.path.join(
+    icu4c_source_dir = os.path.join(
         source_root,
-        'external', 'icu', 'icu4c', 'source', 'data')
+        'external', 'icu', 'icu4c', 'source')
 
     print('// Auto-generated by %s' % sys.argv[0])
     print()
-    likely_script_dict = read_and_dump_likely_data(icu_data_dir)
-    read_and_dump_parent_data(icu_data_dir, likely_script_dict)
+    likely_script_dict = read_and_dump_likely_data(icu4c_source_dir)
+    read_and_dump_parent_data(icu4c_source_dir, likely_script_dict)
 
 
 if __name__ == '__main__':
