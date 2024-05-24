@@ -39,6 +39,30 @@
       },
       "revId": "5cc801f597595ea65e20ce27442ba72de2444980",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e17fe8d_0e703056",
+        "filename": "packages/SoundPicker/src/com/android/soundpicker/RingtonePickerActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-05-24T16:24:04Z",
+      "side": 1,
+      "message": "Nice catch, thanks! Done.",
+      "parentUuid": "d6408df6_f5c4ea7b",
+      "range": {
+        "startLine": 246,
+        "startChar": 8,
+        "endLine": 246,
+        "endChar": 95
+      },
+      "revId": "5cc801f597595ea65e20ce27442ba72de2444980",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
