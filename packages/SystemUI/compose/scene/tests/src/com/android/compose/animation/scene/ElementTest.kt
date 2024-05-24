@@ -38,10 +38,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+<<<<<<< PATCH SET (2df3ac Revert "Revert "[STL] Address API council feedback on Approa)
+import androidx.compose.ui.layout.approachLayout
+=======
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.approachLayout
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.test.assertTopPositionInRootIsEqualTo
+>>>>>>> BASE      (d67711 Revert "Revert "Fix LargeTopAppBarNestedScrollConnectionTest)
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onRoot

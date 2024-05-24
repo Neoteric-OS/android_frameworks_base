@@ -28,10 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ApproachLayoutModifierNode
 import androidx.compose.ui.layout.ApproachMeasureScope
 import androidx.compose.ui.layout.LookaheadScope
+<<<<<<< PATCH SET (2df3ac Revert "Revert "[STL] Address API council feedback on Approa)
+import androidx.compose.ui.layout.approachLayout
+=======
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.unit.Constraints
+>>>>>>> BASE      (d67711 Revert "Revert "Fix LargeTopAppBarNestedScrollConnectionTest)
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.util.fastForEach
@@ -192,9 +196,47 @@ internal class SceneTransitionLayoutImpl(
                 // Handle horizontal and vertical swipes on this layout.
                 // Note: order here is important and will give a slight priority to the vertical
                 // swipes.
+<<<<<<< PATCH SET (2df3ac Revert "Revert "[STL] Address API council feedback on Approa)
+                .swipeToScene(horizontalGestureHandler)
+                .swipeToScene(verticalGestureHandler)
+                // Animate the size of this layout.
+                .approachLayout(
+                    isMeasurementApproachInProgress = { state.isTransitioning() },
+                ) { measurable, constraints ->
+                    // Measure content normally.
+                    val placeable = measurable.measure(constraints)
+
+                    val width: Int
+                    val height: Int
+                    val transition = state.currentTransition
+                    if (transition == null) {
+                        width = placeable.width
+                        height = placeable.height
+                    } else {
+                        // Interpolate the size.
+                        val fromSize = scene(transition.fromScene).targetSize
+                        val toSize = scene(transition.toScene).targetSize
+
+                        // Optimization: make sure we don't read state.progress if fromSize ==
+                        // toSize to avoid running this code every frame when the layout size does
+                        // not change.
+                        if (fromSize == toSize) {
+                            width = fromSize.width
+                            height = fromSize.height
+                        } else {
+                            val size = lerp(fromSize, toSize, transition.progress)
+                            width = size.width.coerceAtLeast(0)
+                            height = size.height.coerceAtLeast(0)
+                        }
+                    }
+
+                    layout(width, height) { placeable.place(0, 0) }
+                }
+=======
                 .swipeToScene(horizontalDraggableHandler)
                 .swipeToScene(verticalDraggableHandler)
                 .then(LayoutElement(layoutImpl = this))
+>>>>>>> BASE      (d67711 Revert "Revert "Fix LargeTopAppBarNestedScrollConnectionTest)
         ) {
             LookaheadScope {
                 val scenesToCompose =
