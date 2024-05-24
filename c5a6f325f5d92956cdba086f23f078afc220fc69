@@ -141,6 +141,30 @@
       },
       "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee3b6b68_59e7f2e7",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-24T21:43:59Z",
+      "side": 1,
+      "message": "Noted, will send a follow up CL with these changes. Are you all opposed to first submitting this so we can let the change soak before the beta cutoff?",
+      "parentUuid": "83ef981d_de328c35",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 473,
+        "endChar": 31
+      },
+      "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
