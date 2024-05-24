@@ -26,6 +26,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+<<<<<<< PATCH SET (2df3ac Revert "Revert "[STL] Address API council feedback on Approa)
+import androidx.compose.ui.graphics.Shape
+=======
+>>>>>>> BASE      (d67711 Revert "Revert "Fix LargeTopAppBarNestedScrollConnectionTest)
 import androidx.compose.ui.layout.approachLayout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.IntSize

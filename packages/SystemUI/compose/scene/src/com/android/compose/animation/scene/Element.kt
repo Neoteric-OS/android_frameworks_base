@@ -29,13 +29,21 @@ import androidx.compose.ui.geometry.lerp
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
 import androidx.compose.ui.graphics.drawscope.scale
+<<<<<<< PATCH SET (2df3ac Revert "Revert "[STL] Address API council feedback on Approa)
+import androidx.compose.ui.layout.ApproachMeasureScope
+=======
 import androidx.compose.ui.layout.ApproachLayoutModifierNode
 import androidx.compose.ui.layout.ApproachMeasureScope
 import androidx.compose.ui.layout.LayoutCoordinates
+>>>>>>> BASE      (d67711 Revert "Revert "Fix LargeTopAppBarNestedScrollConnectionTest)
 import androidx.compose.ui.layout.LookaheadScope
 import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.Placeable
+<<<<<<< PATCH SET (2df3ac Revert "Revert "[STL] Address API council feedback on Approa)
+import androidx.compose.ui.layout.approachLayout
+=======
+>>>>>>> BASE      (d67711 Revert "Revert "Fix LargeTopAppBarNestedScrollConnectionTest)
 import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.platform.testTag
@@ -94,7 +102,38 @@ internal fun Modifier.element(
     layoutImpl: SceneTransitionLayoutImpl,
     scene: Scene,
     key: ElementKey,
+<<<<<<< PATCH SET (2df3ac Revert "Revert "[STL] Address API council feedback on Approa)
+): Modifier {
+    val element: Element
+    val sceneValues: Element.TargetValues
+
+    // Get the element associated to [key] if it was already composed in another scene,
+    // otherwise create it and add it to our Map<ElementKey, Element>. This is done inside a
+    // withoutReadObservation() because there is no need to recompose when that map is mutated.
+    Snapshot.withoutReadObservation {
+        element = layoutImpl.elements[key] ?: Element(key).also { layoutImpl.elements[key] = it }
+        sceneValues =
+            element.sceneValues[scene.key]
+                ?: Element.TargetValues(scene.key).also { element.sceneValues[scene.key] = it }
+    }
+
+    return this.then(ElementModifier(layoutImpl, scene, element, sceneValues))
+        // TODO(b/311132415): Move this into ElementNode once we can create a delegate
+        // IntermediateLayoutModifierNode.
+        .approachLayout(
+            isMeasurementApproachInProgress = { layoutImpl.state.isTransitioning() },
+        ) { measurable, constraints ->
+            val placeable =
+                measure(layoutImpl, scene, element, sceneValues, measurable, constraints)
+            layout(placeable.width, placeable.height) {
+                place(layoutImpl, scene, element, sceneValues, placeable, placementScope = this)
+            }
+        }
+        .testTag(key.testTag)
+}
+=======
 ): Modifier = this.then(ElementModifier(layoutImpl, scene, key)).testTag(key.testTag)
+>>>>>>> BASE      (d67711 Revert "Revert "Fix LargeTopAppBarNestedScrollConnectionTest)
 
 /**
  * An element associated to [ElementNode]. Note that this element does not support updates as its
