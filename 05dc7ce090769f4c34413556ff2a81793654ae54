@@ -16,6 +16,24 @@
       "message": "Can someone share me the failed tests? I ran atest locally, passes for me",
       "revId": "05dc7ce090769f4c34413556ff2a81793654ae54",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5a9ba37_0c4c9c52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2024-05-26T02:33:30Z",
+      "side": 1,
+      "message": "There are merge conflicts. @jorgegil@google.com should be able to help.\n\nThanks for the fix.",
+      "parentUuid": "3de78f71_c8ecbe73",
+      "revId": "05dc7ce090769f4c34413556ff2a81793654ae54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
