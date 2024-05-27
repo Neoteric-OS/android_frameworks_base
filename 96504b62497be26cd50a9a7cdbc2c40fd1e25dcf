@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d6b1ad2_47014527",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097570
+      },
+      "writtenOn": "2024-05-27T20:01:34Z",
+      "side": 1,
+      "message": "Backport to Android U for b/343006994",
+      "revId": "96504b62497be26cd50a9a7cdbc2c40fd1e25dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
