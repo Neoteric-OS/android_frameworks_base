@@ -16,6 +16,23 @@
       "message": "Backport to Android U for b/343006994",
       "revId": "96504b62497be26cd50a9a7cdbc2c40fd1e25dcf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6717b22a_4d363068",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2024-05-28T14:30:58Z",
+      "side": 1,
+      "message": "I believe this branch (android14-dev) is read-only.",
+      "revId": "96504b62497be26cd50a9a7cdbc2c40fd1e25dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
