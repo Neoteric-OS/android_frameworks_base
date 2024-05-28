@@ -33,6 +33,23 @@
       "message": "I believe this branch (android14-dev) is read-only.",
       "revId": "96504b62497be26cd50a9a7cdbc2c40fd1e25dcf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd71b1c5_b6670c53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097570
+      },
+      "writtenOn": "2024-05-28T18:17:50Z",
+      "side": 1,
+      "message": "Hi everyone, if android14-dev is truly read-only, this review will have to be abandoned and someone from Google will need to cherry-pick the change to some internal gerrit server (not even partner-android-review) for merging into a brcm-specific branch (framework fork, just like we used to do for the Netflix CEC activeness patch). I don\u0027t have access to do that.",
+      "revId": "96504b62497be26cd50a9a7cdbc2c40fd1e25dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
