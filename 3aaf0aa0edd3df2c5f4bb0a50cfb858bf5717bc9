@@ -85,6 +85,23 @@
       "message": "I can help cherrypick later today",
       "revId": "3aaf0aa0edd3df2c5f4bb0a50cfb858bf5717bc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef9fab1a_6abe3ccc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2024-05-28T23:36:17Z",
+      "side": 1,
+      "message": "The change is submitted and merged internally, thanks!",
+      "revId": "3aaf0aa0edd3df2c5f4bb0a50cfb858bf5717bc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
