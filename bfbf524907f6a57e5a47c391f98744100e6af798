@@ -34,6 +34,24 @@
       "parentUuid": "997ff8b6_d21b108a",
       "revId": "bfbf524907f6a57e5a47c391f98744100e6af798",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "151ff8b2_1bc263fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3392411
+      },
+      "writtenOn": "2024-05-28T05:58:03Z",
+      "side": 1,
+      "message": "Thank you for the review and feedback. I have created a bug with justification on how these data might help in applications performance tracking https://issuetracker.google.com/u/1/issues/341991444\nI am unable to understand a couple of concerns called out above.\n1. not sure we can accept external changes -\u003e Apps listening to statsd can request for certain configs and gather data which they require. I am not sure if I follow this concern completely. Can you please elaborate?\n2. Android U and can initiate dexopt itself -\u003e During app launch we want to check if install is still in progress which causes latency regressions. Background dex will not be an issue as far as I understand. Also I am flexible to remove this metadata from patchset if not approved from google and if we think it doesn’t add value to Application launch metrics.\n3. Pushing the data to ActivityMetricsLogger vs. pulling data from ActivityMetricsLogger -\u003e Sure, if we feel that should be the right way, I am open to work with you with the right guidelines for the code structure. That is, we can discuss each metadata being added and evaluate if we can push the data in some data structure. For example, if we can find a way to add app version in the TrackingInfo data structure and grab it from there.",
+      "parentUuid": "74be3954_0c4e177d",
+      "revId": "bfbf524907f6a57e5a47c391f98744100e6af798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
