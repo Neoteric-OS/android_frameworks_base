@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad72b644_7e441963",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/Transitions.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2024-05-29T23:05:26Z",
+      "side": 1,
+      "message": "Lets spawn the root cause to another bug (b/343544451) for now, can you instead change this to call setHomeTransitionListener(transitions) instead of mTransitions?  The transitions variable should always be non-null",
+      "range": {
+        "startLine": 1477,
+        "startChar": 86,
+        "endLine": 1477,
+        "endChar": 98
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4865188f_5e85cb27",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/Transitions.java",
+              "range": {
+                "startLine": 1473,
+                "startChar": 0,
+                "endLine": 1477,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "5cc2ac1dba7fa9e6a8caec7c21d5acbdc280b190",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
