@@ -34,6 +34,24 @@
       "parentUuid": "95450ab2_0942ce7c",
       "revId": "728d957a85a12b1257a8f5302d7e504bc87971f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1d85596_ed755492",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-05-29T13:20:05Z",
+      "side": 1,
+      "message": "Is there a callstack of step 2? Can we only skip that step?",
+      "parentUuid": "660b9ed8_c6c2b50e",
+      "revId": "728d957a85a12b1257a8f5302d7e504bc87971f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
