@@ -36,7 +36,7 @@ interface IWindowOrganizerController {
      * Apply multiple WindowContainer operations at once.
      * @param t The transaction to apply.
      */
-    void applyTransaction(in WindowContainerTransaction t);
+    oneway void applyTransaction(in WindowContainerTransaction t);
 
     /**
      * Apply multiple WindowContainer operations at once.
@@ -63,7 +63,7 @@ interface IWindowOrganizerController {
      * @param transitionToken A token associated with the transition to start.
      * @param t Operations that are part of the transition.
      */
-    void startTransition(IBinder transitionToken, in @nullable WindowContainerTransaction t);
+    oneway void startTransition(IBinder transitionToken, in @nullable WindowContainerTransaction t);
 
     /**
      * Starts a legacy transition.
@@ -81,7 +81,7 @@ interface IWindowOrganizerController {
      * @param transitionToken Which transition to finish
      * @param t Changes to make before finishing but in the same SF Transaction. Can be null.
      */
-    void finishTransition(in IBinder transitionToken, in @nullable WindowContainerTransaction t);
+    oneway void finishTransition(in IBinder transitionToken, in @nullable WindowContainerTransaction t);
 
     /** @return An interface enabling the management of task organizers. */
     ITaskOrganizerController getTaskOrganizerController();
@@ -96,7 +96,7 @@ interface IWindowOrganizerController {
      * Registers a transition player with Core. There is only one of these at a time and calling
      * this will replace the existing one if set.
      */
-    void registerTransitionPlayer(in ITransitionPlayer player);
+    oneway void registerTransitionPlayer(in ITransitionPlayer player);
 
     /** @return An interface enabling the transition players to report its metrics. */
     ITransitionMetricsReporter getTransitionMetricsReporter();
