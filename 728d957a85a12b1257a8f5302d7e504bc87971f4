@@ -16,6 +16,24 @@
       "message": "IMO, it looks like a brute force workaround. Force-stop should not allow to restart process. It is better to find the reason of starting the home activity again.",
       "revId": "728d957a85a12b1257a8f5302d7e504bc87971f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "660b9ed8_c6c2b50e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3433025
+      },
+      "writtenOn": "2024-05-29T13:17:44Z",
+      "side": 1,
+      "message": "As Launcher is registered as HOME activity, if there are no UI activity in the foreground, then activityTaskManager is pushing the registered HOME activity to start every time.  Eventually the HOME Launcher is trying to start, but activity manager has already had condition \"allowRestart\u003dFalse\", hence it is stopping the launcher from being launched. This operation is happening in a loop and causing a high CPU utilisation and hence delay installation.\n\n \n1. Activitymanager\u003d\u003d\u003e\n -\u003eKill launcher during installation\n -\u003eam_kill\n \n2. ActivityTaskManager\u003d\u003d\u003e\n  -\u003eStartMainActivity\n  \n3. WindowManager\u003d\u003d\u003e\n  -\u003ewm_task_created\n  -\u003ewm_stack_created\n  -\u003ewm_create_activity\n  \n4. System_server  \n  -\u003eLong Monitor contention - more than 100Ms\n\n5. ActivityManager\n\n  -\u003echeck if package startable\n\n   -\u003e force-stop launcher as allowRestart\u003dFalse.\n\n6. WindowManager\u003d\u003d\u003e\n  -\u003eFailed looking up  window session for the launcher app as it is terminated already\n  -\u003eForce finishing activity  -Launcher\n  -\u003ewm_Finish_activity\n\n \n\nLoops back to step-2 again\n2. ActivityTaskManager\u003d\u003d\u003e\n  -\u003eStartMainActivity",
+      "parentUuid": "95450ab2_0942ce7c",
+      "revId": "728d957a85a12b1257a8f5302d7e504bc87971f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
