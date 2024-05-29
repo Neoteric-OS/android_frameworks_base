@@ -52,6 +52,24 @@
       "parentUuid": "74be3954_0c4e177d",
       "revId": "bfbf524907f6a57e5a47c391f98744100e6af798",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d20f058_fe0f6a0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-05-29T15:30:59Z",
+      "side": 1,
+      "message": "\u003e not sure we can accept external changes -\u003e Apps listening to statsd can request for certain configs and gather data which they require. I am not sure if I follow this concern completely. Can you please elaborate?\n\nAs far as I understand, the framework stats log is for Google\u0027s own telemetry purposes. There are many reasons why it can\u0027t be modified. Apps may be able to listen to them, but the main purpose of the stats log is not for that.\n\nDo you want this change as a device vendor or as an app developer? As a device vendor, you can add your own atom logging in the vendor range if you need specific data from your own devices. As an app developer, if you need specific data from all Android devices, we can add new APIs for you in new Android versions.",
+      "parentUuid": "151ff8b2_1bc263fd",
+      "revId": "bfbf524907f6a57e5a47c391f98744100e6af798",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
