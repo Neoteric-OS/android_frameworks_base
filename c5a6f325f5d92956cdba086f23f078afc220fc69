@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "851ad82e_fcd6f68c",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-30T00:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e3fe95_7da3e682",
+      "range": {
+        "startLine": 285,
+        "startChar": 20,
+        "endLine": 285,
+        "endChar": 63
+      },
+      "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8a08919_ac811f3c",
@@ -205,6 +229,30 @@
       "side": 1,
       "message": "I\u0027m also okay with submitting this first. Preferably add a `TODO` noting that it needs to also handle profiles.",
       "parentUuid": "d09a2fca_6292ce16",
+      "range": {
+        "startLine": 472,
+        "startChar": 0,
+        "endLine": 473,
+        "endChar": 31
+      },
+      "revId": "c5a6f325f5d92956cdba086f23f078afc220fc69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aae18ec0_98a45b2c",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-30T00:05:32Z",
+      "side": 1,
+      "message": "Ended up completing handling the other case in this CL itself. Please review the changes, thanks!",
+      "parentUuid": "99f4bc74_116a8323",
       "range": {
         "startLine": 472,
         "startChar": 0,
