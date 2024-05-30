@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2a65c29_c94b468b",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14811,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-05-30T01:35:34Z",
+      "side": 1,
+      "message": "Should we integrate the trace tags together with this one?",
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b17a70f_c47e7a62",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 15791,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-05-30T01:35:34Z",
+      "side": 1,
+      "message": "Do you want to move the `Trace.traceBegin()` after this line? In case the caller gets rejected because of a permission issue.. So we won\u0027t have an open-ended slice.",
+      "range": {
+        "startLine": 15791,
+        "startChar": 12,
+        "endLine": 15791,
+        "endChar": 53
+      },
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
