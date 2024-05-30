@@ -7305,6 +7305,36 @@ public class AppOpsManager {
                 int attributionFlags, int attributionChainId) {
             onOpActiveChanged(op, uid, packageName, active);
         }
+
+        /**
+         * Similar to {@link #onOpActiveChanged(String, int, String, String, boolean, int, int)},
+         * but also includes the virtual device id of the op is now active or inactive.
+         *
+         * <p> Implement this method if callbacks are required on all devices.
+         * If not implemented explicitly, the default implementation will notify for op state
+         * changes on the default device {@link Context#DEVICE_ID_DEFAULT} only.
+         *
+         * <p> If implemented,
+         * {@link #onOpActiveChanged(String, int, String, String, boolean, int, int)}
+         * will not be called automatically.
+         *
+         * @param op The operation that changed.
+         * @param uid The UID performing the operation.
+         * @param packageName The package performing the operation.
+         * @param attributionTag The operation's attribution tag.
+         * @param virtualDeviceId the virtual device id whose operation has changed
+         * @param active Whether the operation became active or inactive.
+         * @param attributionFlags the attribution flags for this operation.
+         * @param attributionChainId the unique id of the attribution chain this op is a part of.
+         */
+        default void onOpActiveChanged(@NonNull String op, int uid, @NonNull String packageName,
+                @Nullable String attributionTag, int virtualDeviceId, boolean active,
+                @AttributionFlags int attributionFlags, int attributionChainId) {
+            if (virtualDeviceId == Context.DEVICE_ID_DEFAULT) {
+                onOpActiveChanged(op, uid, packageName, attributionTag, active, attributionFlags,
+                        attributionChainId);
+            }
+        }
     }
 
     /**
