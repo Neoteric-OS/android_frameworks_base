@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "5d73b1f4_50e58db5",
         "filename": "core/java/android/os/ZygoteProcess.java",
@@ -20,10 +21,10 @@
         "endChar": 91
       },
       "revId": "ce78dae9c5a34cb5f7dfed441682f6d8f0e6d0f5",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "ab3ff4ff_884e2efb",
         "filename": "core/java/android/os/ZygoteProcess.java",
@@ -44,8 +45,31 @@
         "endChar": 91
       },
       "revId": "ce78dae9c5a34cb5f7dfed441682f6d8f0e6d0f5",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eda8c6a_dd3b239b",
+        "filename": "core/java/android/os/ZygoteProcess.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1807985
+      },
+      "writtenOn": "2024-05-30T07:46:34Z",
+      "side": 1,
+      "message": ".",
+      "parentUuid": "ab3ff4ff_884e2efb",
+      "range": {
+        "startLine": 654,
+        "startChar": 71,
+        "endLine": 654,
+        "endChar": 91
+      },
+      "revId": "ce78dae9c5a34cb5f7dfed441682f6d8f0e6d0f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
