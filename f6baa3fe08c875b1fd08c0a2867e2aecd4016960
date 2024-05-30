@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1631433_a8a81f22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-05-30T20:36:56Z",
+      "side": 1,
+      "message": "Thanks for your patience!",
+      "revId": "f6baa3fe08c875b1fd08c0a2867e2aecd4016960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5dfac52_2e9599ee",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-05-30T20:36:56Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Common Typos: Common typo found: \" atleast \" -- should it be \" at least \"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \" atleast \" -- should it be \" at least \"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 36,
+        "startChar": 65,
+        "endLine": 36,
+        "endChar": 74
+      },
+      "revId": "f6baa3fe08c875b1fd08c0a2867e2aecd4016960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32b86b89_65482768",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2024-05-30T20:36:56Z",
+      "side": 1,
+      "message": "nit: These would be better as something like\n\n```\nconst bool required \u003d dataProvider.ConsumeBool();\n```",
+      "range": {
+        "startLine": 66,
+        "startChar": 84,
+        "endLine": 66,
+        "endChar": 98
+      },
+      "revId": "f6baa3fe08c875b1fd08c0a2867e2aecd4016960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
