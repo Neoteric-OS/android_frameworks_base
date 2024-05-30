@@ -141,8 +141,7 @@ import java.util.stream.Collectors;
  */
 public class HdmiControlService extends SystemService {
     private static final String TAG = "HdmiControlService";
-    private static final Locale HONG_KONG = new Locale("zh", "HK");
-    private static final Locale MACAU = new Locale("zh", "MO");
+    private static final String Hant = "Hant";
 
     private static final Map<String, String> sTerminologyToBibliographicMap =
             createsTerminologyToBibliographicMap();
@@ -173,7 +172,7 @@ public class HdmiControlService extends SystemService {
     }
 
     @VisibleForTesting static String localeToMenuLanguage(Locale locale) {
-        if (locale.equals(Locale.TAIWAN) || locale.equals(HONG_KONG) || locale.equals(MACAU)) {
+        if (locale.toString().indexOf(Hant) >= 0) {
             // Android always returns "zho" for all Chinese variants.
             // Use "bibliographic" code defined in CEC639-2 for traditional
             // Chinese used in Taiwan/Hong Kong/Macau.
