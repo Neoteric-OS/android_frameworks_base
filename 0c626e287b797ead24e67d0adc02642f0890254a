@@ -3,6 +3,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b194e5a8_5ac2ed3e",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-30T21:05:23Z",
+      "side": 1,
+      "message": "Rather than use the magic number `0`, could you instead use `UserHandle.USER_SYSTEM`?",
+      "range": {
+        "startLine": 461,
+        "startChar": 50,
+        "endLine": 461,
+        "endChar": 51
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c366ca7d_0f8f2c3d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+              "range": {
+                "startLine": 461,
+                "startChar": 0,
+                "endLine": 463,
+                "endChar": 0
+              },
+              "replacement": "        if (mCallbacks.isUserSecure(USER_SYSTEM)\n                \u0026\u0026 !mStorage.hasRebootEscrow(USER_SYSTEM)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da7f882c_c5f5bdab",
         "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
         "patchSetId": 9
@@ -38,6 +79,116 @@
           ]
         }
       ],
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e84e321a_bd8b8b85",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-30T21:05:23Z",
+      "side": 1,
+      "message": "To be extra careful, you should probably make sure that `profileGroupId` isn\u0027t equal to `UserInfo.NO_PROFILE_GROUP_ID` first.\n\nActually, instead of checking `isFull` or `isProfile`, you could probably just check that `profileGroupId !\u003d NO_PROFILE_GROUP_ID` \u0026\u0026 profileGroupId !\u003d userId`, if you\u0027d prefer.",
+      "range": {
+        "startLine": 484,
+        "startChar": 70,
+        "endLine": 484,
+        "endChar": 84
+      },
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a24cbdd5_ec196a6d",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-30T21:05:23Z",
+      "side": 1,
+      "message": "Don\u0027t you need to do this in a *second* for loop, not the same for loop as above? I don\u0027t think there\u0027s a guarantee that the parent user comes before the profile, in which case the parent may not have been added to `fullUsersNoEscrowData` prior to the profile being considered.\n\nThat is, the first for loop only handles the `full` users, and then a second for loop would handle the `profile` users.\n\n[An alternative that just uses one for-loop would be to re-calculate `userHasEscrowData`, etc., on the profile\u0027s parent.]",
+      "range": {
+        "startLine": 484,
+        "startChar": 12,
+        "endLine": 484,
+        "endChar": 14
+      },
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73040d61_2c339cfe",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-30T21:05:23Z",
+      "side": 1,
+      "message": "A slightly better choice might be `user.isProfile()` rather than `!user.isFull()`.",
+      "range": {
+        "startLine": 484,
+        "startChar": 16,
+        "endLine": 484,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "52b9a015_c247ea2b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+              "range": {
+                "startLine": 484,
+                "startChar": 0,
+                "endLine": 485,
+                "endChar": 0
+              },
+              "replacement": "            if (user.isProfile() \u0026\u0026 fullUsersNoEscrowData.contains(user.profileGroupId)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6e40cd_80c760ab",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-30T21:05:23Z",
+      "side": 1,
+      "message": "Just curious: why pass in `users`, instead of simply having `getUsersToUnlock()` make the the `mUserManager.getUsers()` call directly (around line 467)?",
+      "range": {
+        "startLine": 498,
+        "startChar": 60,
+        "endLine": 498,
+        "endChar": 65
+      },
       "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
