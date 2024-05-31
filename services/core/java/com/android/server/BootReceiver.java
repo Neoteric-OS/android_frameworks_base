@@ -390,6 +390,12 @@ public class BootReceiver extends BroadcastReceiver {
     private static void addAugmentedProtoToDropbox(
                 File tombstone, DropBoxManager db,
                 DropboxRateLimiter.RateLimitResult rateLimitResult) throws IOException {
+        // Do not add proto files larger than 20Mb to DropBox as they can cause OOMs when
+        // processing large tombstones. The text tombstone is still added to DropBox.
+        if (tombstone.length() > DropboxManagerService.DEFAULT_QUOTA_KB) {
+            Slog.w(TAG, "Tombstone too large to add to DropBox: " + tombstone.toPath());
+            return;
+        }
         // Read the proto tombstone file as bytes.
         final byte[] tombstoneBytes = Files.readAllBytes(tombstone.toPath());
 
