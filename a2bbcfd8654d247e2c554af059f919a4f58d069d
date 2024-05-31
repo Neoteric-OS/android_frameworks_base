@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a596b33_992f3683",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T21:35:37Z",
+      "side": 1,
+      "message": "nope, removed.",
+      "parentUuid": "3370c74a_5caa25dc",
+      "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e1ab130_69d2781e",
@@ -55,6 +73,30 @@
           ]
         }
       ],
+      "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a37b2da3_98fe07f8",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T21:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e1ab130_69d2781e",
+      "range": {
+        "startLine": 472,
+        "startChar": 36,
+        "endLine": 472,
+        "endChar": 49
+      },
       "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -100,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9917c05_b2c53786",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T21:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2174a53f_2b44758b",
+      "range": {
+        "startLine": 495,
+        "startChar": 16,
+        "endLine": 495,
+        "endChar": 89
+      },
+      "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d734662c_46535a27",
@@ -137,6 +203,30 @@
           ]
         }
       ],
+      "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "648c4aac_b2152e9b",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T21:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d734662c_46535a27",
+      "range": {
+        "startLine": 497,
+        "startChar": 28,
+        "endLine": 497,
+        "endChar": 90
+      },
       "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
