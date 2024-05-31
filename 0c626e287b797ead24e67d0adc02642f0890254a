@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d92abec_eedda681",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T00:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b194e5a8_5ac2ed3e",
+      "range": {
+        "startLine": 461,
+        "startChar": 50,
+        "endLine": 461,
+        "endChar": 51
+      },
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da7f882c_c5f5bdab",
@@ -242,6 +266,102 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6f38781_bbfd6804",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T00:42:38Z",
+      "side": 1,
+      "message": "Ok thanks, changed to use the \"official\" way.",
+      "parentUuid": "aa1df47c_443d36d4",
+      "range": {
+        "startLine": 484,
+        "startChar": 33,
+        "endLine": 484,
+        "endChar": 85
+      },
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07cde5da_b7066176",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T00:42:38Z",
+      "side": 1,
+      "message": "Obsolete now that I\u0027m using using getProfileParentId",
+      "parentUuid": "3825aaa5_1c67ac69",
+      "range": {
+        "startLine": 484,
+        "startChar": 16,
+        "endLine": 484,
+        "endChar": 30
+      },
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b251a358_6e416be6",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T00:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42736c33_3354fb66",
+      "range": {
+        "startLine": 484,
+        "startChar": 70,
+        "endLine": 484,
+        "endChar": 84
+      },
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ccc38c1_4d824a1d",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T00:42:38Z",
+      "side": 1,
+      "message": "Thanks for catching, I had assumed that the users returned would be ordered.",
+      "parentUuid": "a24cbdd5_ec196a6d",
+      "range": {
+        "startLine": 484,
+        "startChar": 12,
+        "endLine": 484,
+        "endChar": 14
+      },
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e6e40cd_80c760ab",
@@ -255,6 +375,30 @@
       "writtenOn": "2024-05-30T21:05:23Z",
       "side": 1,
       "message": "Just curious: why pass in `users`, instead of simply having `getUsersToUnlock()` make the the `mUserManager.getUsers()` call directly (around line 467)?",
+      "range": {
+        "startLine": 498,
+        "startChar": 60,
+        "endLine": 498,
+        "endChar": 65
+      },
+      "revId": "0c626e287b797ead24e67d0adc02642f0890254a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1778bd68_9c88f13b",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1952191
+      },
+      "writtenOn": "2024-05-31T00:42:38Z",
+      "side": 1,
+      "message": "We use `users` later in the function and pass this variable in to subsequent function calls. \n\nThat being said, I also found this strange. I\u0027m not actually sure why we even need to store `users` in a local variable and pass it around but I\u0027m not sure if this CL is the right place to address that.",
+      "parentUuid": "9e6e40cd_80c760ab",
       "range": {
         "startLine": 498,
         "startChar": 60,
