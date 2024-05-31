@@ -1,0 +1,144 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3370c74a_5caa25dc",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-31T19:37:00Z",
+      "side": 1,
+      "message": "nit: did you mean to add this blank line?",
+      "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e1ab130_69d2781e",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-31T19:37:00Z",
+      "side": 1,
+      "message": "optional nit: Now that you\u0027re using `USER_SYSTEM`, rather than just `0`, you probably don\u0027t need to put the `/* userId\u003d */` comment. Same with the line below.",
+      "range": {
+        "startLine": 472,
+        "startChar": 36,
+        "endLine": 472,
+        "endChar": 49
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3de6abf7_4fb14e5f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+              "range": {
+                "startLine": 472,
+                "startChar": 0,
+                "endLine": 474,
+                "endChar": 0
+              },
+              "replacement": "        if (mCallbacks.isUserSecure(USER_SYSTEM)\n                \u0026\u0026 !mStorage.hasRebootEscrow(USER_SYSTEM)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2174a53f_2b44758b",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-31T19:37:00Z",
+      "side": 1,
+      "message": "Actually, you don\u0027t *really* need this. If it isn\u0027t a profile, and it\u0027s in `fullUsersNoEscrowData` already, then we already know we can skip it. In fact, `fullUsersNoEscrowData` could just list *all* non-`hasRebootEscrow` users, not just full ones, and then you only need to do a single `getProfileParentId` call in this entire function. I think that you could then change this (all the way down to line 504) to just\n```\nif (noEscrowDataUsers.contains(user.id) || noEscrowDataUsers.contains(mInjector.getUserManagerInternal().getProfileParentId(user.id)) { \n    continue; \n}\n```\n\nAnyway, up to you.",
+      "range": {
+        "startLine": 495,
+        "startChar": 16,
+        "endLine": 495,
+        "endChar": 89
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "dd9e0d88_8a1c2292",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+              "range": {
+                "startLine": 495,
+                "startChar": 0,
+                "endLine": 498,
+                "endChar": 0
+              },
+              "replacement": "            if (fullUsersNoEscrowData.contains(\n                    mInjector.getUserManagerInternal().getProfileParentId(user.id))) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d734662c_46535a27",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2024-05-31T19:37:00Z",
+      "side": 1,
+      "message": "Consider caching this to a local variable, rather than querying it twice.\n(Querying it does cost a lock and two SparseArray lookups.)",
+      "range": {
+        "startLine": 497,
+        "startChar": 28,
+        "endLine": 497,
+        "endChar": 90
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e84ca017_cfcbcced",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+              "range": {
+                "startLine": 495,
+                "startChar": 0,
+                "endLine": 498,
+                "endChar": 0
+              },
+              "replacement": "            int parentId \u003d mInjector.getUserManagerInternal().getProfileParentId(user.id);\n            if (parentId !\u003d user.id \u0026\u0026 fullUsersNoEscrowData.contains(parentId)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a2bbcfd8654d247e2c554af059f919a4f58d069d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
