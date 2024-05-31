@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "508bd17b_0b683a3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1996295
+      },
+      "writtenOn": "2024-05-31T22:09:54Z",
+      "side": 1,
+      "message": "I don\u0027t understand. Can you explain in the CL description what the CL does a bit more clearly? I see that it\u0027s setting strict mode to false for a bunch of test targets but the CL description doesn\u0027t explain why or what that does.",
+      "revId": "c1c110eed2f0236019b8e537d247b6a68e4d4ebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
