@@ -141,6 +141,9 @@ public class BootReceiver extends BroadcastReceiver {
     private static final int MAX_ERROR_REPORTS = 8;
     private static int sSentReports = 0;
 
+    // Max tombstone file size to add to dropbox.
+    private static final long MAX_TOMBSTONE_SIZE = 20971520;
+
     @Override
     public void onReceive(final Context context, Intent intent) {
         // Log boot events in the background to avoid blocking the main thread with I/O
@@ -390,6 +393,10 @@ public class BootReceiver extends BroadcastReceiver {
     private static void addAugmentedProtoToDropbox(
                 File tombstone, DropBoxManager db,
                 DropboxRateLimiter.RateLimitResult rateLimitResult) throws IOException {
+        // Do not add files larger than 20Mb to DropBox as they will not fit.
+        if (tombstone.length > MAX_TOMBSTONE_SIZE) {
+            return;
+        }
         // Read the proto tombstone file as bytes.
         final byte[] tombstoneBytes = Files.readAllBytes(tombstone.toPath());
 
