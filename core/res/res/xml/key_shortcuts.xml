@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+** Copyright 2024, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<!-- Key shortcuts
+All Key Shortcuts must have two keys, an action, componentName, startType, and
+        minimumComboPressTimeMillis.
+An intent with the given action will be dispatched to the declared component when both keys
+        have been pressed for at least minimumComboPressTimeMillis. The intent will be dispatched using
+        the method specified in startType.
+KeyInterceptDelayMillis and keyCombineDelayMillis are optional and have default values (defined
+        in KeyCombinationManager.java) of 150ms if not specified.
+keyInterceptDelayMillis defines how many ms to wait when one of the combo's keys is pressed
+        before passing the key to the application.  This value can be 0 for combinations
+        including keys that require low user facing latency (like navigation keys). The value can
+        be higher if the key's normal action should not be triggered until we know that we are not
+        performing a key combination.
+keyCombineDelayMillis specifies how many ms apart the two keys can be pressed down before the key
+        combination is invalid.  This should be greater than or equal to keyInterceptDelayMillis.
+startType specifies how this intent should be delivered to the provided component. This must be one
+        of "startService", "startForegroundService", or "sendBroadcast". The intent action
+        must be declared as a protected-broadcast if using the sendBroadcast start type.
+
+Note that these key shortcuts should not overlap with other shortcuts defined in PhoneWindowManager.java.
+-->
+
+<key_shortcuts version="1">
+    <!-- This entry will create a key combination to be triggered when the Menu and Back keys have
+           both been pressed down for 2 seconds, and were pressed down within 5 seconds of each other.
+           The ExampleService class will be started as a Foreground Service using the given action.
+           When the Back or Menu key is pressed, they will immediately be dispatched to the
+           application because their keyInterceptDelayMillis is 0.  This means that both the application's
+           behavior and the key combination behavior can happen.
+        <shortcut keyCodeOne="KEYCODE_MENU" keyCodeTwo="KEYCODE_BACK" action="com.android.example.settings.TOGGLE_ON_OFF" startType="startForegroundService" componentName="com.android.example/.ExampleService" keyInterceptDelayMillis="0" keyCombineDelayMillis="5000" minimumComboPressTimeMillis="2000" />
+          This entry will create a key combination to be triggered when the FastForward and Rewind
+          keys have both been pressed for 1 second. The keys must be pressed within 150ms of each
+          other. If one of these keys is pressed, it will be passed to the application after 150ms.
+          The action will be sent as an explicit broadcast to the ExampleReceiver.
+          com.android.example.settings.EXAMPLE_ACTION must be defined as a protected-broadcast
+          somewhere on the system.
+        <shortcut keyCodeOne="KEYCODE_MEDIA_FAST_FORWARD" keyCodeTwo="KEYCODE_MEDIA_REWIND" action="com.android.example.settings.EXAMPLE_ACTION" startType="sendBroadcast" componentName="com.android.example/.ExampleReceiver" minimumComboPressTimeMillis="1000" />
+        -->
+</key_shortcuts>

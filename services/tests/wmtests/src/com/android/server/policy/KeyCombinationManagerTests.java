@@ -19,6 +19,8 @@ package com.android.server.policy;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_BACK;
+import static android.view.KeyEvent.KEYCODE_MEDIA_FAST_FORWARD;
+import static android.view.KeyEvent.KEYCODE_MEDIA_REWIND;
 import static android.view.KeyEvent.KEYCODE_POWER;
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
@@ -53,6 +55,8 @@ public class KeyCombinationManagerTests {
     private final CountDownLatch mAction1Triggered = new CountDownLatch(1);
     private final CountDownLatch mAction2Triggered = new CountDownLatch(1);
     private final CountDownLatch mAction3Triggered = new CountDownLatch(1);
+    private final CountDownLatch mAction4Triggered = new CountDownLatch(1);
+
 
     private boolean mPreCondition = true;
     private static final long SCHEDULE_TIME = 300;
@@ -122,6 +126,25 @@ public class KeyCombinationManagerTests {
                     @Override
                     void cancel() {
                         mHandler.removeCallbacks(mAction);
+                    }
+                });
+
+        // Rule 4 : fastforward + rewind trigger action with custom keyCombineDelay.
+        mKeyCombinationManager.addRule(
+                new KeyCombinationManager.TwoKeysCombinationRule(KEYCODE_MEDIA_FAST_FORWARD,
+                        KEYCODE_MEDIA_REWIND) {
+                    @Override
+                    void execute() {
+                        mAction4Triggered.countDown();
+                    }
+
+                    @Override
+                    void cancel() {
+                    }
+
+                    @Override
+                    long getKeyCombineDelayMs() {
+                        return 1000;
                     }
                 });
     }
@@ -253,5 +276,24 @@ public class KeyCombinationManagerTests {
         eventTime = SystemClock.uptimeMillis();
         pressKeys(eventTime, KEYCODE_POWER, eventTime, KEYCODE_VOLUME_DOWN);
         assertTrue(mAction1Triggered.await(SCHEDULE_TIME, TimeUnit.MILLISECONDS));
+    }
+
+    /**
+     * Test that the rule uses the overridden getKeyCombineDelayMs() method
+     */
+    @Test
+    public void testOverriddenKeyCombineTimeout_triggered() throws InterruptedException {
+        final long eventTime = SystemClock.uptimeMillis();
+        final long earlyEventTime = eventTime - 900; // We overrode keyCombineDelay to be 1000
+        pressKeys(earlyEventTime, KEYCODE_MEDIA_FAST_FORWARD, eventTime, KEYCODE_MEDIA_REWIND);
+        assertTrue(mAction4Triggered.await(SCHEDULE_TIME, TimeUnit.MILLISECONDS));
+    }
+
+    @Test
+    public void testOverriddenKeyCombineTimeout_notTriggered() throws InterruptedException {
+        final long eventTime = SystemClock.uptimeMillis();
+        final long earlyEventTime = eventTime - 1100; // We overrode keyCombineDelay to be 1000
+        pressKeys(earlyEventTime, KEYCODE_MEDIA_FAST_FORWARD, eventTime, KEYCODE_MEDIA_REWIND);
+        assertFalse(mAction4Triggered.await(SCHEDULE_TIME, TimeUnit.MILLISECONDS));
     }
 }

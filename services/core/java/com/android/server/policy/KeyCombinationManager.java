@@ -86,8 +86,8 @@ public class KeyCombinationManager {
             final long now = SystemClock.uptimeMillis();
             if (downTimes.get(mKeyCode1) > 0
                     && downTimes.get(mKeyCode2) > 0
-                    && now <= downTimes.get(mKeyCode1) + COMBINE_KEY_DELAY_MILLIS
-                    && now <= downTimes.get(mKeyCode2) + COMBINE_KEY_DELAY_MILLIS) {
+                    && now <= downTimes.get(mKeyCode1) + getKeyCombineDelayMs()
+                    && now <= downTimes.get(mKeyCode2) + getKeyCombineDelayMs()) {
                 return true;
             }
             return false;
@@ -95,6 +95,10 @@ public class KeyCombinationManager {
 
         // The excessive delay before it dispatching to client.
         long getKeyInterceptDelayMs() {
+            return COMBINE_KEY_DELAY_MILLIS;
+        }
+
+        long getKeyCombineDelayMs() {
             return COMBINE_KEY_DELAY_MILLIS;
         }
 
@@ -157,18 +161,21 @@ public class KeyCombinationManager {
     private boolean interceptKeyLocked(KeyEvent event, boolean interactive) {
         final boolean down = event.getAction() == KeyEvent.ACTION_DOWN;
         final int keyCode = event.getKeyCode();
-        final int count = mActiveRules.size();
         final long eventTime = event.getEventTime();
 
         if (interactive && down) {
             if (mDownTimes.size() > 0) {
-                if (count > 0
-                        && eventTime > mDownTimes.valueAt(0) + COMBINE_KEY_DELAY_MILLIS) {
+                if (!mActiveRules.isEmpty()) {
                     // exceed time from first key down.
-                    forAllRules(mActiveRules, (rule)-> rule.cancel());
-                    mActiveRules.clear();
-                    return false;
-                } else if (count == 0) { // has some key down but no active rule exist.
+                    for (int index = mActiveRules.size() - 1; index >= 0; index--) {
+                        TwoKeysCombinationRule rule = mActiveRules.get(index);
+                        if (eventTime > mDownTimes.valueAt(0) + rule.getKeyCombineDelayMs()) {
+                            rule.cancel();
+                            mActiveRules.remove(rule);
+                        }
+                    }
+                }
+                if (mActiveRules.isEmpty()) {
                     return false;
                 }
             }
@@ -212,7 +219,7 @@ public class KeyCombinationManager {
             }
         } else {
             mDownTimes.delete(keyCode);
-            for (int index = count - 1; index >= 0; index--) {
+            for (int index = mActiveRules.size() - 1; index >= 0; index--) {
                 final TwoKeysCombinationRule rule = mActiveRules.get(index);
                 if (rule.shouldInterceptKey(keyCode)) {
                     mHandler.post(rule::cancel);
@@ -232,13 +239,15 @@ public class KeyCombinationManager {
                 return 0;
             }
             long delayMs = 0;
+            long combineMs = Long.MAX_VALUE;
             for (final TwoKeysCombinationRule rule : mActiveRules) {
                 if (rule.shouldInterceptKey(keyCode)) {
                     delayMs = Math.max(delayMs, rule.getKeyInterceptDelayMs());
+                    combineMs = Math.min(combineMs, rule.getKeyCombineDelayMs());
                 }
             }
-            // Make sure the delay is less than COMBINE_KEY_DELAY_MILLIS.
-            delayMs = Math.min(delayMs, COMBINE_KEY_DELAY_MILLIS);
+            // Make sure the delay is less than the smallest relevant combineDelay.
+            delayMs = Math.min(delayMs, combineMs);
             return mDownTimes.get(keyCode) + delayMs;
         }
     }
