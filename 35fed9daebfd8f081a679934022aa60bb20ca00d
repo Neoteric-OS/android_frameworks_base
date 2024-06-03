@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "be6ed557_811f2d58",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14811,
+      "author": {
+        "id": 1974290
+      },
+      "writtenOn": "2024-06-03T18:32:08Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "917194b9_0d505c21",
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b17a70f_c47e7a62",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 3
@@ -49,6 +67,30 @@
       "writtenOn": "2024-05-30T01:35:34Z",
       "side": 1,
       "message": "Do you want to move the `Trace.traceBegin()` after this line? In case the caller gets rejected because of a permission issue.. So we won\u0027t have an open-ended slice.",
+      "range": {
+        "startLine": 15791,
+        "startChar": 12,
+        "endLine": 15791,
+        "endChar": 53
+      },
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65360ae2_0e00298b",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 15791,
+      "author": {
+        "id": 1974290
+      },
+      "writtenOn": "2024-06-03T18:32:08Z",
+      "side": 1,
+      "message": "Just updated, thanks!",
+      "parentUuid": "7b17a70f_c47e7a62",
       "range": {
         "startLine": 15791,
         "startChar": 12,
