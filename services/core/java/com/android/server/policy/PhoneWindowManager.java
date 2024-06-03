@@ -126,6 +126,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.hardware.SensorPrivacyManager;
@@ -178,6 +179,7 @@ import android.util.FeatureFlagUtils;
 import android.util.Log;
 import android.util.MathUtils;
 import android.util.MutableBoolean;
+import android.util.Pair;
 import android.util.PrintWriterPrinter;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -217,6 +219,7 @@ import com.android.internal.policy.LogDecelerateInterpolator;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.policy.TransitionAnimation;
 import com.android.internal.statusbar.IStatusBarService;
+import com.android.internal.util.XmlUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.server.AccessibilityManagerInternal;
 import com.android.server.ExtconStateObserver;
@@ -245,6 +248,8 @@ import com.android.server.wm.DisplayRotation;
 import com.android.server.wm.WindowManagerInternal;
 import com.android.server.wm.WindowManagerInternal.AppTransitionListener;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -268,6 +273,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final boolean DEBUG_INPUT = false;
     static final boolean DEBUG_KEYGUARD = false;
     static final boolean DEBUG_WAKEUP = false;
+    static final boolean DEBUG_SHORTCUTS = false;
 
     // Whether to allow dock apps with METADATA_DOCK_HOME to temporarily take over the Home key.
     // No longer recommended for desk docks;
@@ -384,6 +390,23 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public static final String TRACE_WAIT_FOR_ALL_WINDOWS_DRAWN_METHOD = "waitForAllWindowsDrawn";
 
     private static final int POWER_BUTTON_SUPPRESSION_DELAY_DEFAULT_MILLIS = 800;
+
+
+    private static final String TAG_KEY_SHORTCUTS = "key_shortcuts";
+    private static final String TAG_SHORTCUT = "shortcut";
+    private static final String ATTR_KEY_CODE_ONE = "keyCodeOne";
+    private static final String ATTR_KEY_CODE_TWO = "keyCodeTwo";
+    private static final String ATTR_ACTION = "action";
+    private static final String ATTR_COMPONENT_NAME = "componentName";
+    private static final String ATTR_KEY_INTERCEPT_DELAY = "keyInterceptDelay";
+    private static final String ATTR_KEY_COMBINE_DELAY = "keyCombineDelay";
+    private static final String ATTR_MINIMUM_PRESS_TIME = "minimumComboPressTime";
+    private static final String ATTR_START_TYPE = "startType";
+
+    private static final String SERVICE_START_TYPE = "startService";
+    private static final String FOREGROUND_SERVICE_START_TYPE = "startForegroundService";
+    private static final String BROADCAST_START_TYPE = "sendBroadcast";
+
 
     /**
      * Keyguard stuff
@@ -727,6 +750,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_SWITCH_KEYBOARD_LAYOUT = 25;
     private static final int MSG_LOG_KEYBOARD_SYSTEM_EVENT = 26;
     private static final int MSG_SET_DEFERRED_KEY_ACTIONS_EXECUTABLE = 27;
+    private static final int MSG_INTENT_SHORTCUT = 28;
 
     private class PolicyHandler extends Handler {
 
@@ -806,6 +830,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     break;
                 case MSG_SCREENSHOT_CHORD:
                     handleScreenShot(msg.arg1);
+                    break;
+                case MSG_INTENT_SHORTCUT:
+                    sendExplicitIntent((Intent) ((Pair) msg.obj).first,
+                            (String) ((Pair) msg.obj).second);
                     break;
                 case MSG_SWITCH_KEYBOARD_LAYOUT:
                     SwitchKeyboardLayoutMessageObject object =
@@ -2587,6 +2615,139 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             return 0;
                         }
                     });
+        }
+        loadShortcuts();
+    }
+
+    /**
+     * Load key shortcuts defined in key_shortcuts.xml
+     */
+    private void loadShortcuts() {
+        try (XmlResourceParser parser = mContext.getResources().getXml(
+                com.android.internal.R.xml.key_shortcuts)) {
+            XmlUtils.beginDocument(parser, TAG_KEY_SHORTCUTS);
+            while (true) {
+                XmlUtils.nextElement(parser);
+                String element = parser.getName();
+                if (element == null) {
+                    break;
+                }
+                if (TAG_SHORTCUT.equals(element)) {
+                    String firstKeyName = parser.getAttributeValue(null, ATTR_KEY_CODE_ONE);
+                    String secondKeyName = parser.getAttributeValue(null, ATTR_KEY_CODE_TWO);
+                    String action = parser.getAttributeValue(null, ATTR_ACTION);
+                    String componentNameString = parser.getAttributeValue(null,
+                            ATTR_COMPONENT_NAME);
+                    String keyInterceptDelayString = parser.getAttributeValue(null,
+                            ATTR_KEY_INTERCEPT_DELAY);
+                    String keyCombineDelayString = parser.getAttributeValue(null,
+                            ATTR_KEY_COMBINE_DELAY);
+                    String minimumComboPressTimeString = parser.getAttributeValue(null,
+                            ATTR_MINIMUM_PRESS_TIME);
+                    String startType = parser.getAttributeValue(null, ATTR_START_TYPE);
+
+                    if (firstKeyName == null || secondKeyName == null || action == null
+                            || componentNameString == null || minimumComboPressTimeString == null
+                            || startType == null) {
+                        Log.wtf(TAG, "Failed to parse key shortcut: " + parser.getText());
+                        continue;
+                    }
+                    if (!startType.equals(FOREGROUND_SERVICE_START_TYPE)
+                            && !startType.equals(SERVICE_START_TYPE)
+                            && !startType.equals(BROADCAST_START_TYPE)) {
+                        Log.wtf(TAG, "Invalid start type: " + startType);
+                        continue;
+                    }
+                    int firstKeyCode = KeyEvent.keyCodeFromString(firstKeyName);
+                    int secondKeyCode = KeyEvent.keyCodeFromString(secondKeyName);
+                    if (firstKeyCode == KeyEvent.KEYCODE_UNKNOWN
+                            || secondKeyCode == KeyEvent.KEYCODE_UNKNOWN) {
+                        Log.wtf(TAG, "Key combination " + firstKeyName + ", " + secondKeyName
+                                + " doesn't map to valid keys");
+                        continue;
+                    }
+                    long keyInterceptDelay, minimumComboPressTime, keyCombineDelay;
+                    try {
+                        minimumComboPressTime = Long.parseLong(minimumComboPressTimeString);
+                        keyInterceptDelay = keyInterceptDelayString == null ? -1
+                                : Long.parseLong(keyInterceptDelayString);
+                        keyCombineDelay = keyCombineDelayString == null ? -1
+                                : Long.parseLong(keyCombineDelayString);
+                    } catch (NumberFormatException nfe) {
+                        Log.wtf(TAG, "Unable to parse timeouts " + nfe);
+                        continue;
+                    }
+                    ComponentName componentName =
+                            ComponentName.unflattenFromString(componentNameString);
+                    if (DEBUG_SHORTCUTS) {
+                        Log.d(TAG, "Creating key shortcut firstKey: " + firstKeyName
+                                + " secondKey: " + secondKeyName + ", action: " + action
+                                + ", componentName: " + componentName + ", keyInterceptDelay: "
+                                + keyInterceptDelay + ", keyCombineDelay: " + keyCombineDelay
+                                + ", minimumComboPressTime: " + minimumComboPressTime);
+                    }
+
+                    mKeyCombinationManager.addRule(
+                        new TwoKeysCombinationRule(firstKeyCode, secondKeyCode) {
+                            @Override
+                            void execute() {
+                                Intent intent = new Intent(action);
+                                intent.setComponent(componentName);
+                                sendDelayedIntentMessage(intent, startType, minimumComboPressTime);
+                            }
+                            @Override
+                            void cancel() {
+                                cancelDelayedIntentMessage();
+                            }
+                            @Override
+                            long getKeyInterceptDelayMs() {
+                                return keyInterceptDelay == -1 ? super.getKeyInterceptDelayMs()
+                                        : keyInterceptDelay;
+                            }
+                            @Override
+                            long getKeyCombineDelayMs() {
+                                return keyCombineDelay == -1 ? super.getKeyCombineDelayMs()
+                                        : keyCombineDelay;
+                            }
+                        });
+                }
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.wtf(TAG, "key_shortcut file not found", e);
+        } catch (XmlPullParserException e) {
+            Log.wtf(TAG, "XML parser exception reading key shortcut file ", e);
+        } catch (IOException e) {
+            Log.e(TAG, "I/O exception reading key shortcut file", e);
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Error converting string to number", e);
+        }
+    }
+
+    private void sendDelayedIntentMessage(Intent intent, String startType, long timeout) {
+        Message msg = Message.obtain(mHandler, MSG_INTENT_SHORTCUT, new Pair(intent, startType));
+        msg.setAsynchronous(true);
+        mHandler.sendMessageDelayed(msg, timeout);
+    }
+
+    private void cancelDelayedIntentMessage() {
+        mHandler.removeMessages(MSG_INTENT_SHORTCUT);
+    }
+
+    private void sendExplicitIntent(Intent intent, String startType) {
+        if (DEBUG_SHORTCUTS) {
+            Log.d(TAG, "Sending intent: " + intent + ", startType: " + startType);
+        }
+
+        switch(startType) {
+            case FOREGROUND_SERVICE_START_TYPE:
+                mContext.startForegroundService(intent);
+                break;
+            case SERVICE_START_TYPE:
+                mContext.startService(intent);
+                break;
+            case BROADCAST_START_TYPE:
+                mContext.sendBroadcast(intent);
+                break;
         }
     }
 
