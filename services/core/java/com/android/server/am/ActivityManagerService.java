@@ -9241,17 +9241,23 @@ public class ActivityManagerService extends IActivityManager.Stub
     @Override
     public void registerStrictModeCallback(IBinder callback) {
         int callingPid = Binder.getCallingPid();
-        mStrictModeCallbacks.put(callingPid,
-                IUnsafeIntentStrictModeCallback.Stub.asInterface(callback));
+        synchronized (this) {
+            mStrictModeCallbacks.put(callingPid,
+                    IUnsafeIntentStrictModeCallback.Stub.asInterface(callback));
+        }
         try {
             callback.linkToDeath(new DeathRecipient() {
                 @Override
                 public void binderDied() {
-                    mStrictModeCallbacks.remove(callingPid);
+                    synchronized (ActivityManagerService.this) {
+                        mStrictModeCallbacks.remove(callingPid);
+                    }
                 }
             }, 0);
         } catch (RemoteException e) {
-            mStrictModeCallbacks.remove(callingPid);
+            synchronized (this) {
+                mStrictModeCallbacks.remove(callingPid);
+            }
         }
     }
 
@@ -13344,7 +13350,9 @@ public class ActivityManagerService extends IActivityManager.Stub
                 || ActivityManager.canAccessUnexportedComponents(callingUid)) {
             return;
         }
-        IUnsafeIntentStrictModeCallback callback = mStrictModeCallbacks.get(callingPid);
+        synchronized (this) {
+            IUnsafeIntentStrictModeCallback callback = mStrictModeCallbacks.get(callingPid);
+        }
         for (int i = query.size() - 1; i >= 0; i--) {
             String componentInfo;
             ResolveInfo resolveInfo;
@@ -13370,7 +13378,9 @@ public class ActivityManagerService extends IActivityManager.Stub
                     try {
                         callback.onImplicitIntentMatchedInternalComponent(intent.cloneFilter());
                     } catch (RemoteException e) {
-                        mStrictModeCallbacks.remove(callingPid);
+                        synchronized (ActivityManagerService.this) {
+                            mStrictModeCallbacks.remove(callingPid);
+                        }
                     }
                 });
             }
@@ -19306,12 +19316,16 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         @Override
         public IUnsafeIntentStrictModeCallback getRegisteredStrictModeCallback(int callingPid) {
-            return mStrictModeCallbacks.get(callingPid);
+            synchronized (this) {
+                return mStrictModeCallbacks.get(callingPid);
+            }
         }
 
         @Override
         public void unregisterStrictModeCallback(int callingPid) {
-            mStrictModeCallbacks.remove(callingPid);
+            synchronized (this) {
+                mStrictModeCallbacks.remove(callingPid);
+            }
         }
 
         @Override
