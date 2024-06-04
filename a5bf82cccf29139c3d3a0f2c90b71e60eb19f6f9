@@ -16,6 +16,24 @@
       "message": "these have already been fixed by Change-Id I246bf789246f626d6addc5626ba23524e73fbaa4 and will be released with the next Android OS push.",
       "revId": "a5bf82cccf29139c3d3a0f2c90b71e60eb19f6f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97f374a3_94e879cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1700909
+      },
+      "writtenOn": "2024-06-04T06:07:09Z",
+      "side": 1,
+      "message": "@varunshah@google.com\nI can\u0027t access this link, could you provide the patch to me?",
+      "parentUuid": "23fc401e_8dbe9b2d",
+      "revId": "a5bf82cccf29139c3d3a0f2c90b71e60eb19f6f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
