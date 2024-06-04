@@ -286,7 +286,7 @@ class UiAutomationManager {
                     // If the serviceInterface is null, the UiAutomation has been shut down on
                     // another thread.
                     if (serviceInterface != null) {
-                        if (Flags.addWindowTokenWithoutLock()) {
+                        if (Flags.addWindowTokenWithoutLock() && mUiAutomationService != null) {
                             mUiAutomationService.addWindowTokensForAllDisplays();
                         }
                         if (mTrace.isA11yTracingEnabledForTypes(
