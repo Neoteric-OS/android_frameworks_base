@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b298956c_af8d775e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-06-05T15:28:40Z",
+      "side": 1,
+      "message": "I\u0027m at best neutral on this. We\u0027re replacing a Java standard call with an Android-shrinker-specific annotation, whose semantics are even less clear to me. In practice, I\u0027m sure either works. As far as the language spec is concerned, I think we have no guarantee that the containing NativeTombstoneManager object stays around, as opposed to the implementation just caching any fields it needs somewhere. I don\u0027t think ART pays attention to @Keep, so it could theoretically again get rid of the \"dead\" field assignment.\n\nI do agree that @Keep looks cleaner.\n\nI\u0027d be tempted to go with the \"belt and suspenders\" approach, and leave them both in.",
+      "revId": "c4da7b09a87bbb881892769d4d82aaa8c5118d56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
