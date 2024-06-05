@@ -344,6 +344,9 @@ class TaskFragmentContainer {
         if (activities == null) {
             return null;
         }
+        if (activities.isEmpty()) {
+            android.util.Log.e("FFTL", "toActivityStackIfStable this=" + this);
+        }
         return new ActivityStack(activities, isEmpty(), mToken);
     }
 
