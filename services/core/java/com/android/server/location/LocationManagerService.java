@@ -805,10 +805,8 @@ public class LocationManagerService extends ILocationManager.Stub implements
                 PERMISSION_COARSE);
 
         // clients in the system process should have an attribution tag set
-        if (identity.getPid() == Process.myPid() && attributionTag == null) {
-            Log.w(TAG, "system location request with no attribution tag",
-                    new IllegalArgumentException());
-        }
+        Preconditions.checkState(identity.getPid() != Process.myPid() || attributionTag != null, 
+                "system location request with no attribution tag");
 
         request = validateLocationRequest(provider, request, identity);
 
