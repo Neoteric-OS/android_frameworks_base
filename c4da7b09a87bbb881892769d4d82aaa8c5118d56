@@ -16,6 +16,65 @@
       "message": "I\u0027m at best neutral on this. We\u0027re replacing a Java standard call with an Android-shrinker-specific annotation, whose semantics are even less clear to me. In practice, I\u0027m sure either works. As far as the language spec is concerned, I think we have no guarantee that the containing NativeTombstoneManager object stays around, as opposed to the implementation just caching any fields it needs somewhere. I don\u0027t think ART pays attention to @Keep, so it could theoretically again get rid of the \"dead\" field assignment.\n\nI do agree that @Keep looks cleaner.\n\nI\u0027d be tempted to go with the \"belt and suspenders\" approach, and leave them both in.",
       "revId": "c4da7b09a87bbb881892769d4d82aaa8c5118d56",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "239f736a_2dd8db10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609189
+      },
+      "writtenOn": "2024-06-05T18:41:17Z",
+      "side": 1,
+      "message": "+1 Reference.reachabilityFence looks like a good thing to be kept still.",
+      "parentUuid": "b298956c_af8d775e",
+      "revId": "c4da7b09a87bbb881892769d4d82aaa8c5118d56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eddc3b1_891506b8",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1609189
+      },
+      "writtenOn": "2024-06-05T18:41:17Z",
+      "side": 1,
+      "message": "shrink/shrunk is the better word. @Keep doesn\u0027t get involved during GC, reachability will",
+      "range": {
+        "startLine": 77,
+        "startChar": 69,
+        "endLine": 77,
+        "endChar": 86
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "65392115_b3129903",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+              "range": {
+                "startLine": 77,
+                "startChar": 0,
+                "endLine": 78,
+                "endChar": 0
+              },
+              "replacement": "    // TODO(b/339371242): Prevent this member from being aggresively shrunk on WearOS.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c4da7b09a87bbb881892769d4d82aaa8c5118d56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e203df41_e8d8cedd",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1609189
+      },
+      "writtenOn": "2024-06-05T18:41:17Z",
+      "side": 0,
+      "message": "I think you still want to keep this....",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "a362fe4662a4840ac3dcbd9603b9ba05ce23230f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
