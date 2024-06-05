@@ -3300,6 +3300,10 @@ public final class Settings {
         public boolean putStringForUser(ContentResolver cr, String name, String value,
                 String tag, boolean makeDefault, final int userHandle,
                 boolean overrideableByRestore) {
+            if (DEBUG) {
+                Log.d(TAG, "System.putString(name=" + name + ", value=" + value + ") for "
+                        + userHandle + " from " + cr.getAttributionSource().getPackageName());
+            }
             try {
                 Bundle arg = new Bundle();
                 arg.putString(Settings.NameValueTable.VALUE, value);
