@@ -86,6 +86,24 @@
       "message": "wilczynskip@google.com could you please suggest additional reviewers for this?",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e85c02ed_7cf5b621",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2024-06-06T13:00:58Z",
+      "side": 1,
+      "message": "It looks like they\u0027re already added to the reviewers list",
+      "parentUuid": "ed0884b6_51ba27de",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
