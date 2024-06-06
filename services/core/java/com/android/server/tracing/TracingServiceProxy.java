@@ -93,7 +93,6 @@ public class TracingServiceProxy extends SystemService {
     private final Context mContext;
     private final PackageManager mPackageManager;
     private final LruCache<ComponentName, ServiceConnector<IMessenger>> mCachedReporterServices;
-    private boolean mServicePublished = false;
 
     private final ITracingServiceProxy.Stub mTracingServiceProxy = new ITracingServiceProxy.Stub() {
         /**
@@ -123,12 +122,9 @@ public class TracingServiceProxy extends SystemService {
     public void onStart() {}
 
     @Override
-    public void onUserUnlocking(@NonNull TargetUser user) {
-        // We need the device storage to be unlocked before we can accept and forward
-        // requests.
-        if (!mServicePublished) {
+    public void onBootPhase(int phase) {
+        if (phase == SystemService.PHASE_THIRD_PARTY_APPS_CAN_START) {
             publishBinderService(TRACING_SERVICE_PROXY_BINDER_NAME, mTracingServiceProxy);
-            mServicePublished = true;
         }
     }
 
