@@ -332,7 +332,7 @@ public final class NfcAdapter {
      * <p>
      * Setting this flag enables polling for NfcBarcode technology.
      */
-    public static final int FLAG_READER_NFC_BARCODE = 0x10;
+    public static final int FLAG_READER_NFC_BARCODE = 0x20;
 
     /** @hide */
     @IntDef(flag = true, prefix = {"FLAG_READER_"}, value = {
@@ -1811,7 +1811,7 @@ public final class NfcAdapter {
      *  Passive B         0x02   (NFC_B)           0x02  (NFC_PASSIVE_B)
      *  Passive F         0x04   (NFC_F)           0x04  (NFC_PASSIVE_F)
      *  ISO 15693         0x08   (NFC_V)             -
-     *  Kovio             0x10   (NFC_BARCODE)       -
+     *  Kovio             0x20   (NFC_BARCODE)       -
      * </pre>
      * <p>Example usage in an Activity that requires to disable poll,
      * keep current listen technologies:
