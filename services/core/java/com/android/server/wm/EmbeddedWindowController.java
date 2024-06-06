@@ -74,6 +74,7 @@ class EmbeddedWindowController {
                 synchronized (mGlobalLock) {
                     mWindows.remove(inputToken);
                     mWindowsByInputTransferToken.remove(inputTransferToken);
+                    mWindowsByWindowToken.remove(window.getWindowToken());
                 }
             }, 0);
         } catch (RemoteException e) {
