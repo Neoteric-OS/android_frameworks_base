@@ -250,6 +250,7 @@ import libcore.io.ForwardingOs;
 import libcore.io.IoUtils;
 import libcore.io.Os;
 import libcore.net.event.NetworkEventDispatcher;
+import libcore.util.NativeAllocationRegistry;
 
 import org.apache.harmony.dalvik.ddmc.DdmVmInternal;
 
@@ -1691,6 +1692,29 @@ public final class ActivityThread extends ClientTransactionHandler
                     "Parcel count:", parcelCount);
             printRow(pw, TWO_COUNT_COLUMNS, "Death Recipients:", binderDeathObjectCount,
                     "WebViews:", webviewInstanceCount);
+
+            // Native Allocations
+            pw.println(" ");
+            pw.println(" Native Allocations");
+            printRow(pw, TWO_COUNT_COLUMN_HEADER, "", "Count", "", "Total(kB)");
+            printRow(pw, TWO_COUNT_COLUMN_HEADER, "", "------", "", "------");
+
+            Map<Class, NativeAllocationRegistry.Metrics> metrics = NativeAllocationRegistry.getMetrics();
+            for (Class cls : metrics.keySet()) {
+                NativeAllocationRegistry.Metrics m = metrics.get(cls);
+                String className = cls.getName();
+                if (className.equals("libcore.util.NativeAllocationRegistry")) {
+                    className = "Other";
+                }
+                if (m.count_malloced != 0 || m.bytes_malloced != 0) {
+                    printRow(pw, TWO_COUNT_COLUMNS, className + " (malloced):",
+                        m.count_malloced, "", m.bytes_malloced / 1024);
+                }
+                if (m.count_nonmalloced != 0 || m.bytes_nonmalloced != 0) {
+                    printRow(pw, TWO_COUNT_COLUMNS, className + " (nonmalloced):",
+                        m.count_nonmalloced, "", m.bytes_nonmalloced / 1024);
+                }
+            }
 
             // SQLite mem info
             pw.println(" ");
