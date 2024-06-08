@@ -937,6 +937,10 @@ public class RecentsTransitionHandler implements Transitions.TransitionHandler {
                     mWillFinishToHome = false;
                     cancel(false /* toHome */, false /* withScreenshots */, "didn't merge");
                 }
+                if (recentsOpening && info.getChanges().size() == 1 && mRecentsTaskId > 0) {
+                    mWillFinishToHome = true;
+                    cancel(true /* toHome */, false /* withScreenshots */, "didn't merge");
+                }
                 return;
             }
             // At this point, we are accepting the merge.
