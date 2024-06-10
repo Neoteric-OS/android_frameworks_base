@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f27c9389_9f9a8475",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14811,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2024-06-10T22:10:16Z",
+      "side": 1,
+      "message": "So there\u0027s 2 (overlapping) goals:\n\n1. Attribute broadcastIntent() over binder from other processes\n2. Trace the internal state of the BroadcastQueue\n\nThe original intention of this change was for #1. The existing async BroadcastQueue track was really designed for #2. \n\nGiven the different goals, it seems reasonable to still address #1 with the current cl where we emit additional information on the binder thread itself. \n\nI think #2 needs some more discussion about what we want to see in the traces. Especially because there are existing slices and we\u0027d need to understand if/what is redundant. A slightly broader goal for #2 would be to trace a lifecycle  all the way from enqueue to dispatch and receipt in the receiving process. We did something similar for bindService.\n\nwdyt?",
+      "parentUuid": "490fb8da_b27b3b66",
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b17a70f_c47e7a62",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 3
