@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ede1f9d_f1f00c11",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-06-10T06:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5dfac52_2e9599ee",
+      "range": {
+        "startLine": 36,
+        "startChar": 65,
+        "endLine": 36,
+        "endChar": 74
+      },
+      "revId": "f6baa3fe08c875b1fd08c0a2867e2aecd4016960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32b86b89_65482768",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-05-30T20:36:56Z",
       "side": 1,
       "message": "nit: These would be better as something like\n\n```\nconst bool required \u003d dataProvider.ConsumeBool();\n```",
+      "range": {
+        "startLine": 66,
+        "startChar": 84,
+        "endLine": 66,
+        "endChar": 98
+      },
+      "revId": "f6baa3fe08c875b1fd08c0a2867e2aecd4016960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a703b99_a130f2a5",
+        "filename": "native/graphics/jni/fuzz/fuzz_imagedecoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 2046576
+      },
+      "writtenOn": "2024-06-10T06:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32b86b89_65482768",
       "range": {
         "startLine": 66,
         "startChar": 84,
