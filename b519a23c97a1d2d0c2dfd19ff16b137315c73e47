@@ -104,6 +104,23 @@
       "parentUuid": "ed0884b6_51ba27de",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "566ba537_80ef27c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2024-06-10T14:05:30Z",
+      "side": 1,
+      "message": "Can you help me understand why this helps?  The state calculated is determined by DisplayManagerService.mDisplayStates, which gets sets for all display types, including virtual and overlay, to STATE_OFF.  It seems this would work fine as is.  Can you explain why it is not?",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
