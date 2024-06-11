@@ -164,6 +164,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9c8f908_d6b33920",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14811,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T23:17:44Z",
+      "side": 1,
+      "message": "Not sure IIUC. But would you elaborate why it\u0027d be infeasible to change this to `final int cookie \u003d BroadcastQueue.traceBegin(\"broadcastIntentLockedTraced \" + + (cn !\u003d null ? cn.toString() : intent.getAction()))`?",
+      "parentUuid": "539352fe_09d55284",
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b17a70f_c47e7a62",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 3
