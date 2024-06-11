@@ -146,6 +146,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "539352fe_09d55284",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14811,
+      "author": {
+        "id": 1974290
+      },
+      "writtenOn": "2024-06-11T19:59:13Z",
+      "side": 1,
+      "message": "While the two tags appear to cover similar regions of code, the broadcastIntent tag provides a fuller picture into what\u0027s happening during a binder transaction since the tag slice is displayed alongside other slices (accomplishing goal #1 from Zim\u0027s comment).\n\nIt would be more difficult to visualize the same contextual information if we were to solely rely on the BroadcastQueue track.\n\nLet me know if I can clarify anything else!",
+      "parentUuid": "6c7adfc6_908ab548",
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b17a70f_c47e7a62",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 3
