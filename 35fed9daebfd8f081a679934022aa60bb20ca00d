@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c7adfc6_908ab548",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14811,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-11T00:33:28Z",
+      "side": 1,
+      "message": "Since this function (`broadcastIntentLocked`) is being called by the `broadcastIntentWithFeature` at line 15795 below, I feel it\u0027s covering almost the same range of the code, while the new `broadcastIntent` tag has a little bit more information. From the perfetto trace, it\u0027ll look like the below. Is this really necessary?\n\n```\n[.... broadcastIntent             ....]\n [ .. broadcastIntentLockedTraced ...]\n```",
+      "parentUuid": "f27c9389_9f9a8475",
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b17a70f_c47e7a62",
         "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
         "patchSetId": 3
