@@ -115,7 +115,11 @@ public class ScrollCaptureConnection extends IScrollCaptureConnection.Stub imple
         Runnable listener =
                 SafeCallback.create(mCancellation, mUiThread, this::onStartCaptureCompleted);
         // -> UiThread
-        mUiThread.execute(() -> mLocal.onScrollCaptureStart(mSession, mCancellation, listener));
+        mUiThread.execute(() -> {
+            if (mLocal != null) {
+                mLocal.onScrollCaptureStart(mSession, mCancellation, listener)
+            }
+        });
         return cancellation;
     }
 
