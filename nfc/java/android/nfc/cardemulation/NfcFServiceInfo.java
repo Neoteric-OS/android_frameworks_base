@@ -119,30 +119,35 @@ public final class NfcFServiceInfo implements Parcelable {
     /**
      * Creates a new NfcFServiceInfo object.
      *
-     * @param pm packageManager instance
+     * @param pm   packageManager instance
      * @param info app component info
      * @throws XmlPullParserException If an error occurs parsing the element.
-     * @throws IOException If an error occurs reading the element.
+     * @throws IOException            If an error occurs reading the element.
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
     public NfcFServiceInfo(@NonNull PackageManager pm, @NonNull ResolveInfo info)
             throws XmlPullParserException, IOException {
         ServiceInfo si = info.serviceInfo;
+        Log.d(TAG, "NfcFServiceInfo() - start");
         XmlResourceParser parser = null;
         try {
             parser = si.loadXmlMetaData(pm, HostNfcFService.SERVICE_META_DATA);
             if (parser == null) {
+                Log.d(TAG, "NfcFServiceInfo() - parser is null");
                 throw new XmlPullParserException("No " + HostNfcFService.SERVICE_META_DATA +
                         " meta-data");
             }
 
             int eventType = parser.getEventType();
+            Log.d(TAG, "NfcFServiceInfo() - eventType = " + eventType);
             while (eventType != XmlPullParser.START_TAG &&
                     eventType != XmlPullParser.END_DOCUMENT) {
                 eventType = parser.next();
+                Log.d(TAG, "NfcFServiceInfo() - inside while loop, eventType = " + eventType);
             }
-
+            Log.d(TAG, "NfcFServiceInfo() - after the loop, eventType = " + eventType);
             String tagName = parser.getName();
+            Log.d(TAG, "NfcFServiceInfo() - tagName = " + tagName);
             if (!"host-nfcf-service".equals(tagName)) {
                 throw new XmlPullParserException(
                         "Meta-data does not start with <host-nfcf-service> tag");
@@ -167,6 +172,8 @@ public final class NfcFServiceInfo implements Parcelable {
             while (((eventType = parser.next()) != XmlPullParser.END_TAG ||
                     parser.getDepth() > depth) && eventType != XmlPullParser.END_DOCUMENT) {
                 tagName = parser.getName();
+                Log.d(TAG, "NfcFServiceInfo() -next while loop, eventType = " + eventType
+                        + ", tagName = " + tagName);
                 if (eventType == XmlPullParser.START_TAG &&
                         "system-code-filter".equals(tagName) && systemCode == null) {
                     final TypedArray a = res.obtainAttributes(attrs,
@@ -211,6 +218,7 @@ public final class NfcFServiceInfo implements Parcelable {
         }
         // Set uid
         mUid = si.applicationInfo.uid;
+        Log.d(TAG, "NfcFServiceInfo() - end ");
     }
 
     /**
@@ -238,6 +246,7 @@ public final class NfcFServiceInfo implements Parcelable {
 
     /**
      * Add or replace a system code to this service.
+     *
      * @param systemCode system code to set or replace
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
@@ -268,6 +277,7 @@ public final class NfcFServiceInfo implements Parcelable {
 
     /**
      * Returns description of service.
+     *
      * @return user readable description of service
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
@@ -278,6 +288,7 @@ public final class NfcFServiceInfo implements Parcelable {
 
     /**
      * Returns uid of service.
+     *
      * @return uid of the service
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
@@ -287,6 +298,7 @@ public final class NfcFServiceInfo implements Parcelable {
 
     /**
      * Returns LF_T3T_PMM of the service
+     *
      * @return returns LF_T3T_PMM of the service
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
@@ -297,6 +309,7 @@ public final class NfcFServiceInfo implements Parcelable {
 
     /**
      * Load application label for this service.
+     *
      * @param pm packagemanager instance
      * @return label name corresponding to service
      */
@@ -308,6 +321,7 @@ public final class NfcFServiceInfo implements Parcelable {
 
     /**
      * Load application icon for this service.
+     *
      * @param pm packagemanager instance
      * @return app icon corresponding to service
      */
@@ -377,47 +391,50 @@ public final class NfcFServiceInfo implements Parcelable {
         }
         dest.writeInt(mUid);
         dest.writeString(mT3tPmm);
-    };
+    }
+
+    ;
 
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
     public static final @NonNull Parcelable.Creator<NfcFServiceInfo> CREATOR =
             new Parcelable.Creator<NfcFServiceInfo>() {
-        @Override
-        public NfcFServiceInfo createFromParcel(Parcel source) {
-            ResolveInfo info = ResolveInfo.CREATOR.createFromParcel(source);
-            String description = source.readString();
-            String systemCode = source.readString();
-            String dynamicSystemCode = null;
-            if (source.readInt() != 0) {
-                dynamicSystemCode = source.readString();
-            }
-            String nfcid2 = source.readString();
-            String dynamicNfcid2 = null;
-            if (source.readInt() != 0) {
-                dynamicNfcid2 = source.readString();
-            }
-            int uid = source.readInt();
-            String t3tPmm = source.readString();
-            NfcFServiceInfo service = new NfcFServiceInfo(info, description,
-                    systemCode, dynamicSystemCode, nfcid2, dynamicNfcid2, uid, t3tPmm);
-            return service;
-        }
+                @Override
+                public NfcFServiceInfo createFromParcel(Parcel source) {
+                    ResolveInfo info = ResolveInfo.CREATOR.createFromParcel(source);
+                    String description = source.readString();
+                    String systemCode = source.readString();
+                    String dynamicSystemCode = null;
+                    if (source.readInt() != 0) {
+                        dynamicSystemCode = source.readString();
+                    }
+                    String nfcid2 = source.readString();
+                    String dynamicNfcid2 = null;
+                    if (source.readInt() != 0) {
+                        dynamicNfcid2 = source.readString();
+                    }
+                    int uid = source.readInt();
+                    String t3tPmm = source.readString();
+                    NfcFServiceInfo service = new NfcFServiceInfo(info, description,
+                            systemCode, dynamicSystemCode, nfcid2, dynamicNfcid2, uid, t3tPmm);
+                    return service;
+                }
 
-        @Override
-        public NfcFServiceInfo[] newArray(int size) {
-            return new NfcFServiceInfo[size];
-        }
-    };
+                @Override
+                public NfcFServiceInfo[] newArray(int size) {
+                    return new NfcFServiceInfo[size];
+                }
+            };
 
     /**
      * Dump contents of the service for debugging.
-     * @param fd parcelfiledescriptor instance
-     * @param pw printwriter instance
+     *
+     * @param fd   parcelfiledescriptor instance
+     * @param pw   printwriter instance
      * @param args args for dumping
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
     public void dump(@NonNull ParcelFileDescriptor fd, @NonNull PrintWriter pw,
-                     @NonNull String[] args) {
+            @NonNull String[] args) {
         pw.println("    " + getComponent()
                 + " (Description: " + getDescription() + ")"
                 + " (UID: " + getUid() + ")");
@@ -445,6 +462,7 @@ public final class NfcFServiceInfo implements Parcelable {
 
     /**
      * Copied over from {@link NfcFCardEmulation#isValidSystemCode(String)}
+     *
      * @hide
      */
     private static boolean isValidSystemCode(String systemCode) {
@@ -471,6 +489,7 @@ public final class NfcFServiceInfo implements Parcelable {
 
     /**
      * Copied over from {@link NfcFCardEmulation#isValidNfcid2(String)}
+     *
      * @hide
      */
     private static boolean isValidNfcid2(String nfcid2) {
