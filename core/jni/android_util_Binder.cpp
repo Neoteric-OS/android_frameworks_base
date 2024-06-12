@@ -796,7 +796,7 @@ namespace android {
 // We aggregate native pointer fields for BinderProxy in a single object to allow
 // management with a single NativeAllocationRegistry, and to reduce the number of JNI
 // Java field accesses. This costs us some extra indirections here.
-struct BinderProxyNativeData {
+struct BinderProxyNativeData final : public RefBase /* RefBase non-virtual must be final */ {
     // Both fields are constant and not null once javaObjectForIBinder returns this as
     // part of a BinderProxy.
 
@@ -806,10 +806,52 @@ struct BinderProxyNativeData {
     // Death recipients for mObject. Reference counted only because DeathRecipients
     // hold a weak reference that can be temporarily promoted.
     sp<DeathRecipientList> mOrgue;  // Death recipients for mObject.
+
+private:
+    // This object must be owned by RefBase.
+    ~BinderProxyNativeData() = default;
+    friend class RefBase;
 };
 
-BinderProxyNativeData* getBPNativeData(JNIEnv* env, jobject obj) {
-    return (BinderProxyNativeData *) env->GetLongField(obj, gBinderProxyOffsets.mNativeData);
+struct CloseableBinderProxyNativeData {
+    CloseableBinderProxyNativeData() {
+        mDataWeak = mData = sp<BinderProxyNativeData>::make();
+    }
+
+    sp<BinderProxyNativeData> getUnlessClosed() {
+        return mDataWeak.promote();
+    }
+
+    void neverClose() {
+        mNeverClose = true;
+    }
+
+    bool close() {
+        if (mNeverClose) return false;
+
+        sp<BinderProxyNativeData> data = mDataWeak.promote();
+        if (!data) return false;
+        sp<IBinder> binder = data->mObject;
+        if (!binder) return false;
+
+        binder->withLock([&]() {
+            // drop strong ref
+            mData = nullptr;
+        });
+
+        return true;
+    }
+
+private:
+    wp<BinderProxyNativeData> mDataWeak;
+    std::atomic<bool> mNeverClose;
+
+    // NEVER ACCESS - may be deleted (closed) at any time
+    sp<BinderProxyNativeData> mData; // guarded by mDataWeak->mObject's lock, if it's there
+};
+
+CloseableBinderProxyNativeData* getBPNativeData(JNIEnv* env, jobject obj) {
+    return (CloseableBinderProxyNativeData*)env->GetLongField(obj, gBinderProxyOffsets.mNativeData);
 }
 
 // If the argument is a JavaBBinder, return the Java object that was used to create it.
@@ -829,9 +871,12 @@ jobject javaObjectForIBinder(JNIEnv* env, const sp<IBinder>& val)
         return object;
     }
 
-    BinderProxyNativeData* nativeData = new BinderProxyNativeData();
-    nativeData->mOrgue = new DeathRecipientList;
-    nativeData->mObject = val;
+    CloseableBinderProxyNativeData* nativeData = new CloseableBinderProxyNativeData();
+
+    // cannot be closed right when created
+    sp<BinderProxyNativeData> realNativeData = nativeData->getUnlessClosed();
+    realNativeData->mOrgue = new DeathRecipientList;
+    realNativeData->mObject = val;
 
     jobject object = env->CallStaticObjectMethod(gBinderProxyOffsets.mClass,
             gBinderProxyOffsets.mGetInstance, (jlong) nativeData, (jlong) val.get());
@@ -839,8 +884,9 @@ jobject javaObjectForIBinder(JNIEnv* env, const sp<IBinder>& val)
         // In the exception case, getInstance still took ownership of nativeData.
         return NULL;
     }
-    BinderProxyNativeData* actualNativeData = getBPNativeData(env, object);
+    CloseableBinderProxyNativeData* actualNativeData = getBPNativeData(env, object);
     if (actualNativeData != nativeData) {
+        actualNativeData->neverClose(); // multiple clients may hold this
         delete nativeData;
     }
 
@@ -866,7 +912,8 @@ sp<IBinder> ibinderForJavaObject(JNIEnv* env, jobject obj)
 
     // Instance of BinderProxy?
     if (env->IsInstanceOf(obj, gBinderProxyOffsets.mClass)) {
-        return getBPNativeData(env, obj)->mObject;
+        sp<BinderProxyNativeData> nativeData = getBPNativeData(env, obj)->getUnlessClosed();
+        return nativeData ? nativeData->mObject : nullptr;
     }
 
     ALOGW("ibinderForJavaObject: %p is not a Binder object", obj);
@@ -1347,7 +1394,14 @@ static int int_register_android_os_BinderInternal(JNIEnv* env)
 
 static jboolean android_os_BinderProxy_pingBinder(JNIEnv* env, jobject obj)
 {
-    IBinder* target = getBPNativeData(env, obj)->mObject.get();
+    sp<BinderProxyNativeData> nativeData = getBPNativeData(env, obj)->getUnlessClosed();
+    if (nativeData == nullptr) {
+        jniThrowException(env, "java/lang/RuntimeException", "Cannot ping closed binder object.");
+        return JNI_FALSE;
+    }
+
+    IBinder* target = nativeData->mObject.get();
+
     if (target == NULL) {
         return JNI_FALSE;
     }
@@ -1355,21 +1409,34 @@ static jboolean android_os_BinderProxy_pingBinder(JNIEnv* env, jobject obj)
     return err == NO_ERROR ? JNI_TRUE : JNI_FALSE;
 }
 
+static jboolean android_os_BinderProxy_close(JNIEnv* env, jobject obj) {
+    return getBPNativeData(env, obj)->close() ? JNI_TRUE : JNI_FALSE;
+}
+
 static jstring android_os_BinderProxy_getInterfaceDescriptor(JNIEnv* env, jobject obj)
 {
-    IBinder* target = getBPNativeData(env, obj)->mObject.get();
-    if (target != NULL) {
-        const String16& desc = target->getInterfaceDescriptor();
-        return env->NewString(reinterpret_cast<const jchar*>(desc.c_str()), desc.size());
+    sp<BinderProxyNativeData> nativeData = getBPNativeData(env, obj)->getUnlessClosed();
+    if (nativeData) {
+        IBinder* target = nativeData->mObject.get();
+        if (target != NULL) {
+            const String16& desc = target->getInterfaceDescriptor();
+            return env->NewString(reinterpret_cast<const jchar*>(desc.c_str()), desc.size());
+        }
     }
-    jniThrowException(env, "java/lang/RuntimeException",
-            "No binder found for object");
+    jniThrowException(env, "java/lang/RuntimeException", "No binder found for object or closed.");
     return NULL;
 }
 
 static jboolean android_os_BinderProxy_isBinderAlive(JNIEnv* env, jobject obj)
 {
-    IBinder* target = getBPNativeData(env, obj)->mObject.get();
+    sp<BinderProxyNativeData> nativeData = getBPNativeData(env, obj)->getUnlessClosed();
+    if (nativeData == nullptr) {
+        jniThrowException(env, "java/lang/RuntimeException",
+                          "Cannot check if closed binder object is alive.");
+        return JNI_FALSE;
+    }
+
+    IBinder* target = nativeData->mObject.get();
     if (target == NULL) {
         return JNI_FALSE;
     }
@@ -1394,7 +1461,14 @@ static jboolean android_os_BinderProxy_transact(JNIEnv* env, jobject obj,
         return JNI_FALSE;
     }
 
-    IBinder* target = getBPNativeData(env, obj)->mObject.get();
+    sp<BinderProxyNativeData> nativeData = getBPNativeData(env, obj)->getUnlessClosed();
+    if (nativeData == nullptr) {
+        jniThrowException(env, "java/lang/RuntimeException",
+                          "Cannot make transaction on closed binder object.");
+        return JNI_FALSE;
+    }
+
+    IBinder* target = nativeData->mObject.get();
     if (target == NULL) {
         jniThrowException(env, "java/lang/IllegalStateException", "Binder has been finalized!");
         return JNI_FALSE;
@@ -1430,7 +1504,12 @@ static void android_os_BinderProxy_linkToDeath(JNIEnv* env, jobject obj,
         return;
     }
 
-    BinderProxyNativeData *nd = getBPNativeData(env, obj);
+    sp<BinderProxyNativeData> nd = getBPNativeData(env, obj)->getUnlessClosed();
+    if (nd == nullptr) {
+        jniThrowException(env, "java/lang/RuntimeException",
+                          "Cannot linkToDeath on closed binder object.");
+        return;
+    }
     IBinder* target = nd->mObject.get();
 
     LOGDEATH("linkToDeath: binder=%p recipient=%p\n", target, recipient);
@@ -1448,16 +1527,20 @@ static void android_os_BinderProxy_linkToDeath(JNIEnv* env, jobject obj,
     }
 }
 
-static jboolean android_os_BinderProxy_unlinkToDeath(JNIEnv* env, jobject obj,
-                                                 jobject recipient, jint flags)
-{
-    jboolean res = JNI_FALSE;
+static jboolean android_os_BinderProxy_unlinkToDeath(JNIEnv* env, jobject obj, jobject recipient,
+                                                     jint flags) {
     if (recipient == NULL) {
         jniThrowNullPointerException(env, NULL);
-        return res;
+        return JNI_FALSE;
     }
 
-    BinderProxyNativeData* nd = getBPNativeData(env, obj);
+    sp<BinderProxyNativeData> nd = getBPNativeData(env, obj)->getUnlessClosed();
+    if (nd == nullptr) {
+        jniThrowException(env, "java/lang/RuntimeException",
+                          "Cannot unlinkToDeath on closed binder object.");
+        return JNI_FALSE;
+    }
+
     IBinder* target = nd->mObject.get();
     if (target == NULL) {
         ALOGW("Binder has been finalized when calling linkToDeath() with recip=%p)\n", recipient);
@@ -1466,6 +1549,7 @@ static jboolean android_os_BinderProxy_unlinkToDeath(JNIEnv* env, jobject obj,
 
     LOGDEATH("unlinkToDeath: binder=%p recipient=%p\n", target, recipient);
 
+    jboolean res = JNI_FALSE;
     if (!target->localBinder()) {
         status_t err = NAME_NOT_FOUND;
 
@@ -1500,9 +1584,17 @@ static jboolean android_os_BinderProxy_unlinkToDeath(JNIEnv* env, jobject obj,
 
 static void BinderProxy_destroy(void* rawNativeData)
 {
-    BinderProxyNativeData * nativeData = (BinderProxyNativeData *) rawNativeData;
-    LOGDEATH("Destroying BinderProxy: binder=%p drl=%p\n",
-            nativeData->mObject.get(), nativeData->mOrgue.get());
+    CloseableBinderProxyNativeData* nativeData =
+            reinterpret_cast<CloseableBinderProxyNativeData*>(rawNativeData);
+
+    sp<BinderProxyNativeData> nd = nativeData->getUnlessClosed();
+
+    if (nd) {
+        LOGDEATH("Destroying BinderProxy: binder=%p drl=%p\n", nd->mObject.get(), nd->mOrgue.get());
+    } else {
+        LOGDEATH("Destroying BinderProxy: already closed\n");
+    }
+
     delete nativeData;
     IPCThreadState::self()->flushCommands();
 }
@@ -1512,7 +1604,8 @@ JNIEXPORT jlong JNICALL android_os_BinderProxy_getNativeFinalizer(JNIEnv*, jclas
 }
 
 static jobject android_os_BinderProxy_getExtension(JNIEnv* env, jobject obj) {
-    IBinder* binder = getBPNativeData(env, obj)->mObject.get();
+    sp<BinderProxyNativeData> nd = getBPNativeData(env, obj)->getUnlessClosed();
+    IBinder* binder = nd->mObject.get();
     if (binder == nullptr) {
         jniThrowException(env, "java/lang/IllegalStateException", "Native IBinder is null");
         return nullptr;
@@ -1532,6 +1625,7 @@ static jobject android_os_BinderProxy_getExtension(JNIEnv* env, jobject obj) {
 static const JNINativeMethod gBinderProxyMethods[] = {
      /* name, signature, funcPtr */
     {"pingBinder",          "()Z", (void*)android_os_BinderProxy_pingBinder},
+    {"close",               "()Z", (void*)android_os_BinderProxy_close},
     {"isBinderAlive",       "()Z", (void*)android_os_BinderProxy_isBinderAlive},
     {"getInterfaceDescriptor", "()Ljava/lang/String;", (void*)android_os_BinderProxy_getInterfaceDescriptor},
     {"transactNative",      "(ILandroid/os/Parcel;Landroid/os/Parcel;I)Z", (void*)android_os_BinderProxy_transact},
