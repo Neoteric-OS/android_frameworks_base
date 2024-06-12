@@ -1155,18 +1155,37 @@ public class ContentProviderHelper {
         }
 
         final int callingPid = Binder.getCallingPid();
-        ProcessRecord r;
-        final String appName;
-        synchronized (mService.mPidsSelfLocked) {
-            r = mService.mPidsSelfLocked.get(callingPid);
-            if (r == null) {
-                return "Failed to find PID " + callingPid;
-            }
-            appName = r.toString();
+        final int callingUid = Binder.getCallingUid();
+        final String appName = resolveAppNameForLogging(callingPid, callingUid);
+        if (appName == null) {
+            return "Failed to find PID " + callingPid;
         }
 
-        return checkContentProviderPermission(cpi, callingPid, Binder.getCallingUid(),
+        return checkContentProviderPermission(cpi, callingPid, callingUid,
                 userId, checkUser, appName);
+    }
+
+    private String resolveAppNameForLogging(int callingPid, int callingUid) {
+        synchronized (mService.mPidsSelfLocked) {
+            final ProcessRecord processRecord = mService.mPidsSelfLocked.get(callingPid);
+            if (processRecord != null) {
+                return processRecord.toString();
+            }
+            // Processes for some special UIDs can be started without involving
+            // the activity manager. For example, running a shell command. We
+            // resolve these consistently with other places in the OS.
+            if (UserHandle.getAppId(callingUid) < Process.FIRST_APPLICATION_UID) {
+                final String specialUidPackageName = AppOpsManager.resolvePackageName(
+                        callingUid, null /*packageName*/);
+                // Format as close as possible to ProcessRecord for consistency.
+                if (specialUidPackageName != null) {
+                    return "ExternalProcess{" + Integer.toHexString(System.identityHashCode(this))
+                            + " " + callingPid + ":" + specialUidPackageName + "/" + callingUid
+                            + "}";
+                }
+            }
+        }
+        return null;
     }
 
     int checkContentProviderUriPermission(Uri uri, int userId, int callingUid, int modeFlags) {
