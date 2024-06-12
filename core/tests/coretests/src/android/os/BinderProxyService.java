@@ -20,7 +20,17 @@ import android.app.Service;
 import android.content.Intent;
 
 public class BinderProxyService extends Service {
-    private final Binder mBinder = new Binder();
+    private final Binder mBinder = new IBinderProxyTest.Stub() {
+        @Override
+        public IBinder newBinder() throws RemoteException {
+            return new Binder();
+        }
+
+        @Override
+        public IBinder repeatBinder(IBinder repeatMe) throws RemoteException {
+            return repeatMe;
+        }
+    };
 
     @Override
     public void onCreate() {

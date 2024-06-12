@@ -31,19 +31,25 @@ import android.platform.test.annotations.IgnoreUnderRavenwood;
 import android.platform.test.ravenwood.RavenwoodRule;
 
 import androidx.test.InstrumentationRegistry;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
+import androidx.test.filters.SmallTest;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+<<<<<<< PATCH SET (54b99a BinderProxy: tryDrop)
+@IgnoreUnderRavenwood(blockedBy = PowerManager.class)
+||||||| BASE
+@RunWith(AndroidJUnit4.class)
+@IgnoreUnderRavenwood(blockedBy = PowerManager.class)
+=======
 @RunWith(AndroidJUnit4.class)
 @IgnoreUnderRavenwood(blockedBy = ActivityManager.class)
+>>>>>>> BASE      (7bf935 Merge "BinderProxyTest: more time to get proxy" into main)
 public class BinderProxyTest {
     private static class CountingListener implements Binder.ProxyTransactListener {
         int mStartedCount;
@@ -116,41 +122,89 @@ public class BinderProxyTest {
         mActivityManager.isUserRunning(47); // something which does a binder call
     }
 
-    private IBinder mRemoteBinder = null;
+    private class MyServiceConnection implements ServiceConnection, AutoCloseable {
+        private final CountDownLatch mBindLatch = new CountDownLatch(1);
+        private IBinder mRemoteBinder = null;
 
-    @Test
-    @MediumTest
-    public void testGetExtension() throws Exception {
-        final CountDownLatch bindLatch = new CountDownLatch(1);
-        ServiceConnection connection =
-                new ServiceConnection() {
-                    @Override
-                    public void onServiceConnected(ComponentName name, IBinder service) {
-                        mRemoteBinder = service;
-                        bindLatch.countDown();
-                    }
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mRemoteBinder = service;
+            mBindLatch.countDown();
+        }
 
-                    @Override
-                    public void onServiceDisconnected(ComponentName name) {}
-                };
-        try {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {}
+
+        public IBinder getBinder() {
+            return mRemoteBinder;
+        }
+
+        public IBinderProxyTest getInterface() {
+            return IBinderProxyTest.Stub.asInterface(mRemoteBinder);
+        }
+
+        private MyServiceConnection() {}
+        public MyServiceConnection bind() throws Exception {
             mContext.bindService(
                     new Intent(mContext, BinderProxyService.class),
-                    connection,
+                    this,
                     Context.BIND_AUTO_CREATE);
+<<<<<<< PATCH SET (54b99a BinderProxy: tryDrop)
+
+            if (!mBindLatch.await(500, TimeUnit.MILLISECONDS)) {
+||||||| BASE
+            if (!bindLatch.await(500, TimeUnit.MILLISECONDS)) {
+=======
             if (!bindLatch.await(1000, TimeUnit.MILLISECONDS)) {
+>>>>>>> BASE      (7bf935 Merge "BinderProxyTest: more time to get proxy" into main)
                 fail(
                         "Timed out while binding service: "
                                 + BinderProxyService.class.getSimpleName());
             }
             assertTrue(mRemoteBinder instanceof BinderProxy);
             assertNotNull(mRemoteBinder);
+            return this;
+        }
 
-            IBinder extension = mRemoteBinder.getExtension();
+        public void close() {
+            mContext.unbindService(this);
+        }
+    }
+
+    @Test
+    @SmallTest
+    public void testClose() throws Exception {
+        try (MyServiceConnection connection = new MyServiceConnection().bind()) {
+            BinderProxy binder = (BinderProxy) connection.getInterface().newBinder();
+            assertEquals(true, binder.tryDrop());
+            assertEquals(false, binder.tryDrop());
+        }
+    }
+
+    @Test
+    @SmallTest
+    public void testCantCloseLostBinder() throws Exception {
+        try (MyServiceConnection connection = new MyServiceConnection().bind()) {
+            BinderProxy binder1 = (BinderProxy) connection.getInterface().newBinder();
+
+            // when we send the binder out again, and we re-read it, it's impossible for
+            // the infrastructure to understand where else it goes in the process (here
+            // we know it goes back to the same stack frame, but infra can only tell it
+            // is passed to Java multiple times)
+            BinderProxy binder2 = (BinderProxy) connection.getInterface().repeatBinder(binder1);
+
+            assertEquals(binder1, binder2);
+            assertEquals(false, binder1.tryDrop());
+        }
+    }
+
+    @Test
+    @MediumTest
+    public void testGetExtension() throws Exception {
+        try (MyServiceConnection connection = new MyServiceConnection().bind()) {
+            IBinder extension = connection.getBinder().getExtension();
             assertNotNull(extension);
             assertTrue(extension.pingBinder());
-        } finally {
-            mContext.unbindService(connection);
         }
     }
 }
