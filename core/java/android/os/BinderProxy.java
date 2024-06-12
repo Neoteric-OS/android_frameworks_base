@@ -494,6 +494,24 @@ public final class BinderProxy implements IBinder {
     public native boolean pingBinder();
 
     /**
+     * This tries to drop the binder proxy object for Java users in process. Existing
+     * calls to this binder object will continue. Anyone who holds this binder in
+     * native code will continue to hold a valid binder (this only force-drops
+     * the reference in Java).
+     *
+     * Note: Java binder objects are re-used. If the same native binder object is
+     * converted to a Java binder multiple times, false will be returned and the
+     * binder is dropped. This return value is for debugging only. This return
+     * value is for debugging only. This return value is for debugging only.
+     * Specifically, you may want to log if drop fails if it is critical to work
+     * for memory performance, as this would allow you to discover the binder
+     * object is used elsewhere.
+     *
+     * @return for debugging only, whether
+     */
+    public native boolean tryDrop();
+
+    /**
      * Check to see if the process that the binder is in is still alive.
      *
      * Note, this only reflects the last known death state, if the object
