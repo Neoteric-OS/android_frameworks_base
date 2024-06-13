@@ -33,6 +33,41 @@
       "message": "Please avoid adding more than 2 reviews to increase the likelihood that someone will look at it.",
       "revId": "2feb7eabff122e92d2f3d62389a9a959b69eddcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a272041f_13272147",
+        "filename": "services/core/java/com/android/server/am/ContentProviderHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2024-06-13T23:24:59Z",
+      "side": 1,
+      "message": "Would like to avoid doing object allocation here.  Generally we try to keep these paths free of allocations -- for example, ProcessRecord.toString() only builds that string once and caches it.  Can we do something like that here?",
+      "fixSuggestions": [
+        {
+          "fixId": "e69aaa54_88549916",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/ContentProviderHelper.java",
+              "range": {
+                "startLine": 1182,
+                "startChar": 0,
+                "endLine": 1193,
+                "endChar": 0
+              },
+              "replacement": "                    return \"ExternalProcess{\" + Integer.toHexString(System.identityHashCode(this))\n                            + \" \" + callingPid + \":\" + specialUidPackageName + \"/\" + callingUid\n                            + \"}\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2feb7eabff122e92d2f3d62389a9a959b69eddcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
