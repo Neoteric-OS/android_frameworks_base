@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0559e30_5c3ea210",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1274868
+      },
+      "writtenOn": "2024-06-13T14:42:17Z",
+      "side": 1,
+      "message": "According to a code owner, the documentation is actually correct, and it\u0027s the annotation that\u0027s incorrect in this case.",
+      "revId": "aee584e6cabc59bc7d6baf31c9d7360df44be6d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
