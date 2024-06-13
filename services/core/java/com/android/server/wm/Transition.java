@@ -1642,7 +1642,13 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
             final ActivityRecord ar = mParticipants.valueAt(i).asActivityRecord();
             if (ar == null || !ar.isVisibleRequested()) continue;
             transaction.show(ar.getSurfaceControl());
-
+            Task task = ar.getTask();
+            if (task != null && mController.isTransientHide(task)
+                    && mController.inPlayingTransition(task)
+                    && !containsChangeFor(task, mTargets)) {
+                Slog.d(TAG, "Skip show parent for " + ar + " for in playing transient hide.");
+                continue;
+            }
             // Also manually show any non-reported parents. This is necessary in a few cases
             // where a task is NOT organized but had its visibility changed within its direct
             // parent. An example of this is if an alternate home leaf-task HB is started atop the
