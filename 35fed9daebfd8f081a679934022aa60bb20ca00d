@@ -180,6 +180,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae35b435_f1b448c7",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14811,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-06-13T18:12:44Z",
+      "side": 1,
+      "message": "Acknowledged.\n\nDiscussed offline and the question is clarified.",
+      "parentUuid": "d9c8f908_d6b33920",
+      "revId": "35fed9daebfd8f081a679934022aa60bb20ca00d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b17a70f_c47e7a62",
