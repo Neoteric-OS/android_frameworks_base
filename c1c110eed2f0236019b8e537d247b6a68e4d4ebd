@@ -16,6 +16,24 @@
       "message": "I don\u0027t understand. Can you explain in the CL description what the CL does a bit more clearly? I see that it\u0027s setting strict mode to false for a bunch of test targets but the CL description doesn\u0027t explain why or what that does.",
       "revId": "c1c110eed2f0236019b8e537d247b6a68e4d4ebd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "315fb240_867ede60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1959907
+      },
+      "writtenOn": "2024-06-14T21:16:22Z",
+      "side": 1,
+      "message": "Oh of course, base on the doc (go/roboStrictMode).\nWe have implemented strict_mode for Robolectric to enforcing developers writing multivalent tests. In strict_mode, no Robolectric API invocation are allowed, e.g.: \nshadowOf(context.getPackageManager())\n        .setSystemFeature(PackageManager.FEATURE_NFC, /* supported\u003d */ true);\nUnfortunately, there are still many existing Robolectric tests that had to use some Robolectric API more or less. \nThis is the main reason that we are massively opting out these tests manually as `strict_mode: false`. Next step will be making all Robolectric test by default as \"strict_mode: true\"",
+      "parentUuid": "508bd17b_0b683a3c",
+      "revId": "c1c110eed2f0236019b8e537d247b6a68e4d4ebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
