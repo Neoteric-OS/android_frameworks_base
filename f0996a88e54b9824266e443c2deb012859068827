@@ -22,6 +22,30 @@
       },
       "revId": "f0996a88e54b9824266e443c2deb012859068827",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49e8ab90_9369ea59",
+        "filename": "services/core/java/com/android/server/wm/SafeActivityOptions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1282799
+      },
+      "writtenOn": "2024-06-14T10:47:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59033f6b_b3162e67",
+      "range": {
+        "startLine": 128,
+        "startChar": 40,
+        "endLine": 128,
+        "endChar": 61
+      },
+      "revId": "f0996a88e54b9824266e443c2deb012859068827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
