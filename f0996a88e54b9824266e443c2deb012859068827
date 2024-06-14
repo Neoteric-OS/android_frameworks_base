@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59033f6b_b3162e67",
+        "filename": "services/core/java/com/android/server/wm/SafeActivityOptions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-06-14T04:22:48Z",
+      "side": 1,
+      "message": "nit: clone the windowing-mode in there.",
+      "range": {
+        "startLine": 128,
+        "startChar": 40,
+        "endLine": 128,
+        "endChar": 61
+      },
+      "revId": "f0996a88e54b9824266e443c2deb012859068827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
