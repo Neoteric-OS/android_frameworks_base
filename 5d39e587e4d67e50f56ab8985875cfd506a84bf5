@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d81f1aeb_dcbe92e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060888
+      },
+      "writtenOn": "2024-06-14T17:35:58Z",
+      "side": 1,
+      "message": "LGTM b/c most of the changes to this file are from people closely associated with the new owners being added",
+      "revId": "5d39e587e4d67e50f56ab8985875cfd506a84bf5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
