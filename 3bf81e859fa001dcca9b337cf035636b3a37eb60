@@ -39,6 +39,30 @@
       },
       "revId": "3bf81e859fa001dcca9b337cf035636b3a37eb60",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4eb7b29b_f61a0dd7",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsDatabase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-06-17T13:55:58Z",
+      "side": 1,
+      "message": "Hello,google:\n  Sorry for this build error and i have modify this build error,please help review this CL.\n  Thanks.",
+      "parentUuid": "a50ec297_37e6fb28",
+      "range": {
+        "startLine": 775,
+        "startChar": 0,
+        "endLine": 775,
+        "endChar": 28
+      },
+      "revId": "3bf81e859fa001dcca9b337cf035636b3a37eb60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
