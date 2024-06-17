@@ -5811,11 +5811,11 @@ public class AppOpsService extends IAppOpsService.Stub {
                     includeDiscreteOps = true;
                 } else if ("--history".equals(arg)) {
                     dumpHistory = true;
+                } else if ("--uid-state-changes".equals(arg)) {
+                    dumpUidStateChangeLogs = true;
                 } else if (arg.length() > 0 && arg.charAt(0) == '-') {
                     pw.println("Unknown option: " + arg);
                     return;
-                } else if ("--uid-state-changes".equals(arg)) {
-                    dumpUidStateChangeLogs = true;
                 } else {
                     pw.println("Unknown command: " + arg);
                     return;
