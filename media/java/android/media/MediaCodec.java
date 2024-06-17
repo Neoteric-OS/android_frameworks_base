@@ -5141,9 +5141,9 @@ final public class MediaCodec {
      * of negative QP and positive QP are chosen wisely, the overall viewing experience can be
      * improved.
      * <p>
-     * If byte array size is too small than the expected size, components may ignore the
-     * configuration silently. If the byte array exceeds the expected size, components shall use
-     * the initial portion and ignore the rest.
+     * If byte array size is lesser than the expected size, then the parameter setting is ignored.
+     * If the byte array is greater than or equal to the expected size, then [0- expected size]
+     * bytes are communicated to the component
      * <p>
      * The scope of this key is throughout the encoding session until it is reconfigured during
      * running state.
@@ -5169,9 +5169,9 @@ final public class MediaCodec {
      * negative QP and positive QP are chosen wisely, the overall viewing experience can be
      * improved.
      * <p>
-     * If Roi rect is not valid that is bounding box width is < 0 or bounding box height is < 0,
-     * components may ignore the configuration silently. If Roi rect extends outside frame
-     * boundaries, then rect shall be clamped to the frame boundaries.
+     * If roi rect is outside the frame boundaries, that is, left < 0 or top < 0 or right > width
+     * or bottom > height, then rect shall be clamped to the frame boundaries. If roi rect is not
+     * valid, that is left > right or top > bottom, then the parameter is ignored.
      * <p>
      * The scope of this key is throughout the encoding session until it is reconfigured during
      * running state.
