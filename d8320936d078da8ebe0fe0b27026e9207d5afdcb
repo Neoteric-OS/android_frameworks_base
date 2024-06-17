@@ -16,6 +16,24 @@
       "message": "nit: add `Flag: android.view.flags.find_view_by_id_nullable` to make the new Flag: stanza checker happy.",
       "revId": "d8320936d078da8ebe0fe0b27026e9207d5afdcb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4dab071_d81fb4d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-06-17T11:05:01Z",
+      "side": 1,
+      "message": "I could not see any lint or other check failures so I don\u0027t know what checker you are referring to but I updated as you requested.",
+      "parentUuid": "563226b4_7e3a23d0",
+      "revId": "d8320936d078da8ebe0fe0b27026e9207d5afdcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
