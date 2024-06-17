@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "563226b4_7e3a23d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2024-06-17T07:14:26Z",
+      "side": 1,
+      "message": "nit: add `Flag: android.view.flags.find_view_by_id_nullable` to make the new Flag: stanza checker happy.",
+      "revId": "d8320936d078da8ebe0fe0b27026e9207d5afdcb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
