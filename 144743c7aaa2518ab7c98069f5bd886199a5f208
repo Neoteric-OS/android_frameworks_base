@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f1af296_68dcab88",
+        "filename": "services/usage/java/com/android/server/usage/UsageStatsDatabase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2024-06-17T17:23:54Z",
+      "side": 1,
+      "message": "you\u0027ll need to import this: `import com.android.internal.annotations.GuardedBy;`",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 14
+      },
+      "revId": "144743c7aaa2518ab7c98069f5bd886199a5f208",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
