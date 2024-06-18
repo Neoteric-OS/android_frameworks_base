@@ -2077,6 +2077,11 @@ static void SpecializeCommon(JNIEnv* env, uid_t uid, gid_t gid, jintArray gids, 
     // applications.
     if (!(runtime_flags & RuntimeFlags::NATIVE_HEAP_ZERO_INIT_ENABLED)) {
         mallopt(M_BIONIC_ZERO_INIT, 0);
+        // Set an environment variable that should cause any forked process to
+        // use the same allocator values as the app.
+        if (setenv("MALLOC_USE_APP_DEFAULTS", "1", 1) == -1) {
+            ALOGE("Failed to set MALLOC_USE_APP_DEFAULTS environment variable.");
+        }
     }
 
     // Now that we've used the flag, clear it so that we don't pass unknown flags to the ART
