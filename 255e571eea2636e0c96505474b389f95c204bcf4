@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb4c95f0_df01bab4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2024-06-18T18:13:07Z",
+      "side": 1,
+      "message": "Is there a reason this change is being made in AOSP instead of internal Gerrit?",
+      "revId": "255e571eea2636e0c96505474b389f95c204bcf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
