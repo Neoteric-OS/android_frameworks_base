@@ -627,21 +627,22 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
         @Override
         public void onDisplayRemoved(int displayId) {
             synchronized (mLock) {
-                if (mLastWallpaper != null) {
-                    WallpaperData targetWallpaper = null;
-                    if (mLastWallpaper.connection.containsDisplay(displayId)) {
-                        targetWallpaper = mLastWallpaper;
-                    } else if (mFallbackWallpaper.connection.containsDisplay(displayId)) {
-                        targetWallpaper = mFallbackWallpaper;
-                    }
-                    if (targetWallpaper == null) return;
-                    DisplayConnector connector =
-                            targetWallpaper.connection.getDisplayConnectorOrCreate(displayId);
-                    if (connector == null) return;
-                    connector.disconnectLocked(targetWallpaper.connection);
-                    targetWallpaper.connection.removeDisplayConnector(displayId);
-                    mWallpaperDisplayHelper.removeDisplayData(displayId);
+                WallpaperData targetWallpaper = null;
+                if (mLastWallpaper != null && mLastWallpaper.connection != null &&
+                        mLastWallpaper.connection.containsDisplay(displayId)) {
+                    targetWallpaper = mLastWallpaper;
+                } else if (mFallbackWallpaper != null && mFallbackWallpaper.connection != null &&
+                        mFallbackWallpaper.connection.containsDisplay(displayId)) {
+                    targetWallpaper = mFallbackWallpaper;
                 }
+                if (targetWallpaper == null) return;
+                DisplayConnector connector =
+                        targetWallpaper.connection.getDisplayConnectorOrCreate(displayId);
+                if (connector == null) return;
+                connector.disconnectLocked(targetWallpaper.connection);
+                targetWallpaper.connection.removeDisplayConnector(displayId);
+                mWallpaperDisplayHelper.removeDisplayData(displayId);
+
                 for (int i = mColorsChangedListeners.size() - 1; i >= 0; i--) {
                     final SparseArray<RemoteCallbackList<IWallpaperManagerCallback>> callbacks =
                             mColorsChangedListeners.valueAt(i);
