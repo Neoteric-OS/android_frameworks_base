@@ -34,6 +34,24 @@
       "parentUuid": "850900a3_ad863e4a",
       "revId": "58abdb8aef6347602dd677b81ccbc7c2a45c3ac1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45a1dcdd_32c2dd6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-06-18T00:10:59Z",
+      "side": 1,
+      "message": "No. My view of that conversation was that the existence of `requireViewById(int)` meant that there was no longer any reason to pretend that `findViewById(int)` was not nullable as developers could just switch to use `requireViewById(int)` when they did not want to bother with dealing with nulls.\n\nSimilarly, adding `requireSystemService(...)` would allow `getSystemService(...)` to be correctly treated as `Nullable`.",
+      "parentUuid": "9df040d7_890e2189",
+      "revId": "58abdb8aef6347602dd677b81ccbc7c2a45c3ac1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
