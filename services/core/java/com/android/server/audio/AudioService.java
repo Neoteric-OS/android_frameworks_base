@@ -8858,7 +8858,7 @@ public class AudioService extends IAudioService.Stub
             }
             if (changed) {
                 // If associated to volume group, update group cache
-                updateVolumeGroupIndex(device, /* forceMuteState= */ false);
+                updateVolumeGroupIndex(device, /* forceMuteState= */ true);
 
                 oldIndex = (oldIndex + 5) / 10;
                 index = (index + 5) / 10;
