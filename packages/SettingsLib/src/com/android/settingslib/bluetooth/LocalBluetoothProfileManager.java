@@ -54,7 +54,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * LocalBluetoothProfileManager provides access to the LocalBluetoothProfile
@@ -112,6 +113,18 @@ public class LocalBluetoothProfileManager {
     private LocalBluetoothLeBroadcastAssistant mLeAudioBroadcastAssistant;
     private SapProfile mSapProfile;
     private VolumeControlProfile mVolumeControlProfile;
+
+     ///M: add for a2dp sink auto reconection because of the long distance disconnection. @{
+    private Timer mTimer;
+    private TimerTask mTimerTask;
+    private static final int CONNECT_TIME_DELAY = 30000;
+    private static final int MAX_CONNECT_COUNT = 2;
+    private final int LONG_DISTANCE_DISCONNECTION = 8;
+    private int mConnectCount = 0;
+    private boolean mTimerScheduled = false;
+    private boolean isReconnectedTimeOut = false;
+    private CachedBluetoothDevice mCachedDevice;
+    /// @}
 
     /**
      * Mapping from profile name, e.g. "HEADSET" to profile object.
@@ -402,6 +415,29 @@ public class LocalBluetoothProfileManager {
                     }
                 }
             }
+
+             ///M: get disconnected reason from BluetoothA2dpSink.ACTION_CONNECTION_STATE_CHANGED action extra @{
+            //and then do the reconnection
+            if (getA2dpSinkProfile() != null &&
+                mProfile instanceof A2dpSinkProfile){
+                mCachedDevice = cachedDevice;
+                int disconnectReason = intent.getIntExtra(BluetoothProfile.EXTRA_DISCONNECT_REASON, 0);
+
+                if ((newState == BluetoothProfile.STATE_CONNECTED)){
+                    stopTimer();
+                    Log.d(TAG, "onReceiveInternal: timer stop ");
+                } else if (newState == BluetoothProfile.STATE_DISCONNECTED &&
+                    (LONG_DISTANCE_DISCONNECTION == disconnectReason) && !isReconnectedTimeOut){
+                    startTimer();
+                    Log.d(TAG, "onReceiveInternal: timer start ");
+                    if ((mTimer != null) && (mTimerScheduled == false)){
+                        mTimer.schedule(mTimerTask, 0, CONNECT_TIME_DELAY);
+                        mTimerScheduled = true;
+                        Log.d(TAG, "onReceiveInternal: timer schedule ");
+                    }
+                }
+            }
+              /// @}
 
             cachedDevice.onProfileStateChanged(mProfile, newState);
             // Dispatch profile changed after device update
@@ -734,4 +770,59 @@ public class LocalBluetoothProfileManager {
             Log.d(TAG,"New Profiles" + profiles.toString());
         }
     }
+
+    /*
+    * M:add for a2dp sink auto reconection because of the long distance disconnection.
+    *  start a timer to do the reconnetion.
+    */
+    private void startTimer(){
+        Log.d(TAG, "startTimer");
+        if (mTimer == null){
+            mTimer = new Timer();
+        }
+        if (mTimerTask == null){
+            mTimerTask = new TimerTask(){
+                @Override
+                public void run() {
+                    try {
+                        Log.d(TAG, "TimerTask, run, mCachedDevice = " + mCachedDevice);
+                        if (mConnectCount >= MAX_CONNECT_COUNT){
+                            stopTimer();
+                            isReconnectedTimeOut = true;
+                            Log.d(TAG, "TimerTask, run, MAX stop timer");
+                            return;
+                        }
+                        if (mCachedDevice != null){
+                            mCachedDevice.connect();
+                            mConnectCount ++;
+                            Log.d(TAG, "TimerTask, run, do connecting..mConnectCount = " + mConnectCount);
+                        }
+                    } catch (Exception e){
+                        Log.d(TAG, "TimerTask, run, e = " + e);
+                    }
+                }
+            };
+        }
+        isReconnectedTimeOut = false;
+    }
+
+    /*
+        * M:add for a2dp sink auto reconection because of the long distance disconnection.
+        *  stop the timer.
+        */
+    private void stopTimer(){
+        if (mTimer != null){
+            mTimer.cancel();
+            mTimer = null;
+        }
+        if (mTimerTask != null){
+            mTimerTask.cancel();
+            mTimerTask = null;
+        }
+        mConnectCount = 0;
+        mTimerScheduled = false;
+        isReconnectedTimeOut = false;
+        Log.d(TAG, "stopTimer");
+    }
+
 }
