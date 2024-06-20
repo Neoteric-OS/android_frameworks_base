@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf0d15d_c007aced",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-06-20T18:27:20Z",
+      "side": 1,
+      "message": "This is a clean cherry-pick from internal main to AOSP main to avoid an auto-merger conflict in https://r.android.com/2922538.",
+      "revId": "057e0e1fb659ee8af5dacd17eb4026164e24822d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
