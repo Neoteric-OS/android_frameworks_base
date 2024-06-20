@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae74082f_3990bece",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-06-20T14:57:04Z",
+      "side": 1,
+      "message": "@smoreland@google.com Finally the ToT is clean enough to pass presubmits. PTAL",
+      "revId": "5c3612f757c151fa903dd5f11f8a98a74cdb3541",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
