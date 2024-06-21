@@ -2446,13 +2446,22 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             int rotation) {
         final DisplayPolicy.DecorInsets.Info info =
                 mDisplayPolicy.getDecorInsetsInfo(rotation, dw, dh);
+        final Rect nonDecorFrame;
+        final Rect configFrame;
+        if (mWmService.mFlags.mInsetsDecoupledConfiguration) {
+            nonDecorFrame = info.mOverrideNonDecorFrame;
+            configFrame = info.mOverrideConfigFrame;
+        } else {
+            nonDecorFrame = info.mNonDecorFrame;
+            configFrame = info.mConfigFrame;
+        }
         // AppBounds at the root level should mirror the app screen size.
-        outConfig.windowConfiguration.setAppBounds(info.mNonDecorFrame);
+        outConfig.windowConfiguration.setAppBounds(nonDecorFrame);
         outConfig.windowConfiguration.setRotation(rotation);
 
         final float density = mDisplayMetrics.density;
-        outConfig.screenWidthDp = (int) (info.mConfigFrame.width() / density + 0.5f);
-        outConfig.screenHeightDp = (int) (info.mConfigFrame.height() / density + 0.5f);
+        outConfig.screenWidthDp = (int) (configFrame.width() / density + 0.5f);
+        outConfig.screenHeightDp = (int) (configFrame.height() / density + 0.5f);
         outConfig.compatScreenWidthDp = (int) (outConfig.screenWidthDp / mCompatibleScreenScale);
         outConfig.compatScreenHeightDp = (int) (outConfig.screenHeightDp / mCompatibleScreenScale);
         outConfig.orientation = (outConfig.screenWidthDp <= outConfig.screenHeightDp)
