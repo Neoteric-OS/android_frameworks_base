@@ -30,6 +30,7 @@ import static java.lang.Math.min;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import android.annotation.Nullable;
+import android.annotation.NonNull;
 import android.location.GnssMeasurementRequest;
 import android.location.LocationRequest;
 import android.location.provider.ProviderRequest;
@@ -38,6 +39,7 @@ import android.os.PowerManager.LocationPowerSaveMode;
 import android.os.SystemClock;
 import android.util.ArrayMap;
 import android.util.TimeUtils;
+import android.content.Context;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
@@ -144,8 +146,8 @@ public class LocationEventLog extends LocalEventLog<Object> {
     }
 
     /** Logs a location enabled/disabled event. */
-    public void logLocationEnabled(int userId, boolean enabled) {
-        addLog(new LocationEnabledEvent(userId, enabled));
+    public void logLocationEnabled(int userId, boolean enabled, @NonNull int uid) {
+        addLog(new LocationEnabledEvent(userId, enabled, uid));
     }
 
     /** Logs a location enabled/disabled event. */
@@ -551,15 +553,17 @@ public class LocationEventLog extends LocalEventLog<Object> {
 
         private final int mUserId;
         private final boolean mEnabled;
+        private final int mUid;
 
-        LocationEnabledEvent(int userId, boolean enabled) {
+        LocationEnabledEvent(int userId, boolean enabled, int uid) {
             mUserId = userId;
             mEnabled = enabled;
+            mUid = uid;
         }
 
         @Override
         public String toString() {
-            return "location [u" + mUserId + "] " + (mEnabled ? "enabled" : "disabled");
+            return "location [u" + mUserId + "] " + (mEnabled ? "enabled" : "disabled") + " by uid " + mUid;
         }
     }
 
