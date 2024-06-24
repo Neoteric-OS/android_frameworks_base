@@ -30,6 +30,7 @@ import static java.lang.Math.min;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import android.annotation.Nullable;
+import android.annotation.NonNull;
 import android.location.GnssMeasurementRequest;
 import android.location.LocationRequest;
 import android.location.provider.ProviderRequest;
@@ -38,11 +39,15 @@ import android.os.PowerManager.LocationPowerSaveMode;
 import android.os.SystemClock;
 import android.util.ArrayMap;
 import android.util.TimeUtils;
+import android.content.Context;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
 
 import java.util.function.Consumer;
+import java.util.List;
 
 /** In memory event log for location events. */
 public class LocationEventLog extends LocalEventLog<Object> {
@@ -144,8 +149,8 @@ public class LocationEventLog extends LocalEventLog<Object> {
     }
 
     /** Logs a location enabled/disabled event. */
-    public void logLocationEnabled(int userId, boolean enabled) {
-        addLog(new LocationEnabledEvent(userId, enabled));
+    public void logLocationEnabled(int userId, boolean enabled, @NonNull int pid, @Nullable Context context) {
+        addLog(new LocationEnabledEvent(userId, enabled, pid, context));
     }
 
     /** Logs a location enabled/disabled event. */
@@ -551,15 +556,36 @@ public class LocationEventLog extends LocalEventLog<Object> {
 
         private final int mUserId;
         private final boolean mEnabled;
+        private final int mPid;
+        private final Context mContext;
 
-        LocationEnabledEvent(int userId, boolean enabled) {
+        LocationEnabledEvent(int userId, boolean enabled, int pid, Context context) {
             mUserId = userId;
             mEnabled = enabled;
+            mPid = pid;
+            mContext = context;
+        }
+
+        private String getCallerPackageByPid() {
+            if (mContext == null)
+                return null;
+            ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+            List<RunningAppProcessInfo> runningAppProcessInfos = activityManager.getRunningAppProcesses();
+            for (RunningAppProcessInfo runningAppProcessInfo : runningAppProcessInfos) {
+                if (runningAppProcessInfo.pid == mPid) {
+                    return runningAppProcessInfo.processName;
+                }
+            }
+            return null;
         }
 
         @Override
         public String toString() {
-            return "location [u" + mUserId + "] " + (mEnabled ? "enabled" : "disabled");
+            if (getCallerPackageByPid() == null) {
+                return "location [u" + mUserId + "] " + (mEnabled ? "enabled" : "disabled");
+            } else {
+                return "location [u" + mUserId + "] " + (mEnabled ? "enabled because " : "disabled because ") + getCallerPackageByPid();
+            }
         }
     }
 
