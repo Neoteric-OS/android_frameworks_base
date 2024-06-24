@@ -568,7 +568,7 @@ public class LocationManagerService extends ILocationManager.Stub implements
             Log.d(TAG, "[u" + userId + "] location enabled = " + enabled);
         }
 
-        EVENT_LOG.logLocationEnabled(userId, enabled);
+        EVENT_LOG.logLocationEnabled(userId, enabled, 0, null);
         logLocationEnabledState();
 
         Intent intent = new Intent(LocationManager.MODE_CHANGED_ACTION)
@@ -1300,6 +1300,7 @@ public class LocationManagerService extends ILocationManager.Stub implements
         userId = ActivityManager.handleIncomingUser(Binder.getCallingPid(), Binder.getCallingUid(),
                 userId, false, false, "setLocationEnabledForUser", null);
 
+        EVENT_LOG.logLocationEnabled(userId, enabled, Binder.getCallingPid(), mContext);
         mContext.enforceCallingOrSelfPermission(WRITE_SECURE_SETTINGS, null);
 
         LocationManager.invalidateLocalLocationEnabledCaches();
