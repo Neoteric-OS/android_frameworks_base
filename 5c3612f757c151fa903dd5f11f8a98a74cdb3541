@@ -16,6 +16,29 @@
       "message": "@smoreland@google.com Finally the ToT is clean enough to pass presubmits. PTAL",
       "revId": "5c3612f757c151fa903dd5f11f8a98a74cdb3541",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eab2d27a_f69d4173",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-06-25T23:59:44Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 60
+      },
+      "revId": "5c3612f757c151fa903dd5f11f8a98a74cdb3541",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
