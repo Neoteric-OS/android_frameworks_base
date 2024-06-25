@@ -1597,7 +1597,7 @@ public class SystemConfig {
                         } else {
                             mPackageToSharedUidAllowList.put(pkgName, sharedUid);
                         }
-                    }
+                    } break;
                     case "asl-file": {
                         String packageName = parser.getAttributeValue(null, "package");
                         String path = parser.getAttributeValue(null, "path");
