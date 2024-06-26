@@ -141,6 +141,7 @@ public class BackupManagerService extends IBackupManager.Stub {
     private final Set<ComponentName> mTransportWhitelist;
 
     /** Keeps track of all unlocked users registered with this service. Indexed by user id. */
+    @GuardedBy("mUserServices")
     private final SparseArray<UserBackupManagerService> mUserServices;
 
     private final BroadcastReceiver mUserRemovedReceiver = new BroadcastReceiver() {
@@ -313,7 +314,7 @@ public class BackupManagerService extends IBackupManager.Stub {
     @Override
     public boolean isUserReadyForBackup(int userId) {
         enforceCallingPermissionOnUserId(userId, "isUserReadyForBackup()");
-        return mUserServices.get(userId) != null;
+        return getUserService(userId) != null;
     }
 
     /**
@@ -379,7 +380,7 @@ public class BackupManagerService extends IBackupManager.Stub {
             Slog.i(TAG, "Backup not activated for user " + userId);
             return;
         }
-        if (mUserServices.get(userId) != null) {
+        if (getUserService(userId) != null) {
             Slog.i(TAG, "userId " + userId + " already started, so not starting again");
             return;
         }
@@ -396,7 +397,9 @@ public class BackupManagerService extends IBackupManager.Stub {
      */
     @VisibleForTesting
     void startServiceForUser(int userId, UserBackupManagerService userBackupManagerService) {
-        mUserServices.put(userId, userBackupManagerService);
+        synchronized (mUserServices) {
+            mUserServices.put(userId, userBackupManagerService);
+        }
 
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "backup enable");
         userBackupManagerService.initializeBackupEnableState();
@@ -406,7 +409,10 @@ public class BackupManagerService extends IBackupManager.Stub {
     /** Stops the backup service for user {@code userId} when the user is stopped. */
     @VisibleForTesting
     protected void stopServiceForUser(int userId) {
-        UserBackupManagerService userBackupManagerService = mUserServices.removeReturnOld(userId);
+        UserBackupManagerService userBackupManagerService = null;
+        synchronized (mUserServices) {
+            userBackupManagerService = mUserServices.removeReturnOld(userId);
+        }
 
         if (userBackupManagerService != null) {
             userBackupManagerService.tearDownService();
@@ -426,7 +432,9 @@ public class BackupManagerService extends IBackupManager.Stub {
      */
     @VisibleForTesting
     SparseArray<UserBackupManagerService> getUserServices() {
-        return mUserServices;
+        synchronized (mUserServices) {
+            return mUserServices;
+        }
     }
 
     /**
@@ -446,7 +454,9 @@ public class BackupManagerService extends IBackupManager.Stub {
     /** Returns {@link UserBackupManagerService} for user {@code userId}. */
     @Nullable
     public UserBackupManagerService getUserService(int userId) {
-        return mUserServices.get(userId);
+        synchronized (mUserServices) {
+            return mUserServices.get(userId);
+        }
     }
 
     /**
@@ -1473,7 +1483,7 @@ public class BackupManagerService extends IBackupManager.Stub {
         }
 
         for (int userId : userIds) {
-            UserBackupManagerService userBackupManagerService = mUserServices.get(userId);
+            UserBackupManagerService userBackupManagerService = getUserService(userId);
             if (userBackupManagerService != null) {
                 if (userBackupManagerService.getAncestralSerialNumber() == ancestralSerialNumber) {
                     return UserHandle.of(userId);
@@ -1534,20 +1544,23 @@ public class BackupManagerService extends IBackupManager.Stub {
                     return;
                 } else if ("users".equals(arg.toLowerCase())) {
                     pw.print(DUMP_RUNNING_USERS_MESSAGE);
-                    for (int i = 0; i < mUserServices.size(); i++) {
-                        pw.print(" " + mUserServices.keyAt(i));
+                    synchronized (mUserServices) {
+                        for (int i = 0; i < mUserServices.size(); i++) {
+                            pw.print(" " + mUserServices.keyAt(i));
+                        }
                     }
                     pw.println();
                     return;
                 }
             }
         }
-
-        for (int i = 0; i < mUserServices.size(); i++) {
-            UserBackupManagerService userBackupManagerService =
-                    getServiceForUserIfCallerHasPermission(mUserServices.keyAt(i), "dump()");
-            if (userBackupManagerService != null) {
-                userBackupManagerService.dump(fd, pw, args);
+        synchronized (mUserServices) {
+            for (int i = 0; i < mUserServices.size(); i++) {
+                UserBackupManagerService userBackupManagerService =
+                        getServiceForUserIfCallerHasPermission(mUserServices.keyAt(i), "dump()");
+                if (userBackupManagerService != null) {
+                    userBackupManagerService.dump(fd, pw, args);
+                }
             }
         }
     }
@@ -1646,7 +1659,7 @@ public class BackupManagerService extends IBackupManager.Stub {
     UserBackupManagerService getServiceForUserIfCallerHasPermission(
             @UserIdInt int userId, String caller) {
         enforceCallingPermissionOnUserId(userId, caller);
-        UserBackupManagerService userBackupManagerService = mUserServices.get(userId);
+        UserBackupManagerService userBackupManagerService = getUserService(userId);
         if (userBackupManagerService == null) {
             Slog.w(TAG, "Called " + caller + " for unknown user: " + userId);
         }
