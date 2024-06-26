@@ -718,6 +718,11 @@ class AppWidgetServiceImpl extends IAppWidgetService.Stub implements WidgetBacku
             throw new IllegalStateException(
                     "Profile " + userId + " must have unlocked parent");
         }
+        if (!enforceUserUnlockingOrUnlocked) {
+            if (!isUserRunningAndUnlocked(userId)) {
+                return;
+            }
+        }
         final int[] profileIds = mSecurityPolicy.getEnabledGroupProfileIds(userId);
 
         IntArray newIds = new IntArray(1);
