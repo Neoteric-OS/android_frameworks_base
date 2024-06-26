@@ -17,6 +17,8 @@
 package android.os;
 
 import android.Manifest;
+import android.annotation.FlaggedApi;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -38,6 +40,8 @@ import android.view.View;
 
 import dalvik.system.VMRuntime;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -1252,6 +1256,61 @@ public class Build {
 
     /** A string that uniquely identifies this build.  Do not attempt to parse this value. */
     public static final String FINGERPRINT = deriveFingerprint();
+
+    /** The status of the known issue on this device is not known. */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static final int BACKPORTED_FIX_STATUS_UNKNOWN = 0;
+    /** The known issue is fixed on this device. */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static final int BACKPORTED_FIX_STATUS_FIXED = 1;
+    /**
+     * The known issue is not applicable to this device.
+     *
+     * <p>For example if the issue only affects a specific brand, devices
+     * from other brands would report not applicable.
+     */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static final int BACKPORTED_FIX_STATUS_NOT_APPLICABLE = 2;
+    /** The known issue is not fixed on this device. */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static final int BACKPORTED_FIX_STATUS_NOT_FIXED = 3;
+
+    /**
+     * The status of the backported fix for a known issue on this device.
+     *
+     * @hide
+     */
+    @IntDef(
+            prefix = {"BACKPORTED_FIX_STATUS_"},
+            value = {
+                    BACKPORTED_FIX_STATUS_UNKNOWN,
+                    BACKPORTED_FIX_STATUS_FIXED,
+                    BACKPORTED_FIX_STATUS_NOT_APPLICABLE,
+                    BACKPORTED_FIX_STATUS_NOT_FIXED,
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface BackportedFixStatus {
+    }
+
+    /**
+     * The status of the backported fix for a known issue on this device.
+     *
+     * @param id The id of the known issue to check.
+     * @return {@link #BACKPORTED_FIX_STATUS_FIXED} if the known issue is
+     * fixed on this device,
+     * {@link #BACKPORTED_FIX_STATUS_NOT_FIXED} if the known issue is not
+     * fixed on this device,
+     * {@link #BACKPORTED_FIX_STATUS_NOT_APPLICABLE} if the known issue is
+     * is not applicable on this device,
+     * otherwise {@link #BACKPORTED_FIX_STATUS_UNKNOWN}.
+     */
+
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static @BackportedFixStatus int getBackportedFixStatus(long id) {
+        // TODO: b/308461809 - query aliases from system prop
+        // TODO: b/372518979 - use backported fix datastore.
+        return BACKPORTED_FIX_STATUS_UNKNOWN;
+    }
 
     /**
      * Some devices split the fingerprint components between multiple
