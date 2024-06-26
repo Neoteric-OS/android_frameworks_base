@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d92ffa1a_458c68c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-06-26T16:20:36Z",
+      "side": 1,
+      "message": "Cherry-picking this to simplify aosp-side changes that might want to reference these annotations in system server.",
+      "revId": "06fcabde6a3625f4080ac6b71fce894948eee955",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
