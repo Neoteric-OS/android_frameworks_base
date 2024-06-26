@@ -17,6 +17,8 @@
 package android.os;
 
 import android.Manifest;
+import android.annotation.FlaggedApi;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -38,6 +40,8 @@ import android.view.View;
 
 import dalvik.system.VMRuntime;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -1252,6 +1256,59 @@ public class Build {
 
     /** A string that uniquely identifies this build.  Do not attempt to parse this value. */
     public static final String FINGERPRINT = deriveFingerprint();
+
+    /** The status of the critical issue  on this device is not known. */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static final int CRITICAL_ISSUE_STATUS_UNKNOWN = 0;
+    /** The critical issue is fixed on this device. */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static final int CRITICAL_ISSUE_STATUS_FIXED = 1;
+    /** The critical issue is not applicable to this device. */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static final int CRITICAL_ISSUE_STATUS_NOT_APPLICABLE = 2;
+    /** The critical issue is not fixed on this device. */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static final int CRITICAL_ISSUE_STATUS_NOT_FIXED = 3;
+
+    /**
+     * Result codes for {@link #getCriticalIssueStatus(long)}.
+     *
+     * @hide
+     */
+    @IntDef(
+            prefix = {"CRITICAL_ISSUE_STATUS_"},
+            value = {
+                    CRITICAL_ISSUE_STATUS_UNKNOWN,
+                    CRITICAL_ISSUE_STATUS_FIXED,
+                    CRITICAL_ISSUE_STATUS_NOT_APPLICABLE,
+                    CRITICAL_ISSUE_STATUS_NOT_FIXED,
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public @interface CriticalIssueStatus {
+    }
+
+    /**
+     * The status of this critical issue on this device.
+     *
+     * <p>
+     * Returns {@link #CRITICAL_ISSUE_STATUS_FIXED} if the critical issue is fixed on this device,
+     * otherwise returns {@link #CRITICAL_ISSUE_STATUS_UNKNOWN}.
+     *
+     * <p>
+     * The list of critical issues are at <a
+     * href="https://issues.googletracker.com/hotlist/TBD"
+     * >https://issues.googletracker.com/hotlist/TBD</a>
+     *
+     * See TBD link to public docs
+     *
+     * @param id The id of the issue to check.
+     */
+    @FlaggedApi(android.os.Flags.FLAG_API_FOR_BACKPORTED_FIXES)
+    public static @CriticalIssueStatus int getCriticalIssueStatus(long id) {
+        // TODO b/372518979 - use critical issue datastore.
+        return CRITICAL_ISSUE_STATUS_UNKNOWN;
+    }
 
     /**
      * Some devices split the fingerprint components between multiple
