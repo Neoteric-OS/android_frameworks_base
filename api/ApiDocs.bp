@@ -318,6 +318,20 @@ droiddoc {
 }
 
 droiddoc {
+    name: "ds-docs-dackka",
+    srcs: [
+        ":framework-doc-stubs{.exportable}",
+    ],
+    flags: [
+        "-noJdkLink",
+        "-links https://kotlinlang.org/api/latest/jvm/stdlib/^external/dokka/package-list",
+        "-noStdlibLink",
+    ],
+    proofread_file: "ds-dokka-proofread.txt",
+    dackka_enabled: true,
+}
+
+droiddoc {
     name: "ds-docs-kt",
     srcs: [
         ":framework-doc-stubs{.exportable}",
