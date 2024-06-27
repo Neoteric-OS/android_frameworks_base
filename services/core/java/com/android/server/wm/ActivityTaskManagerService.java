@@ -4844,7 +4844,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         boolean focusedAppChanged = false;
         if (!getTransitionController().isTransientCollect(r)) {
             focusedAppChanged = r.mDisplayContent.setFocusedApp(r);
-            if (focusedAppChanged) {
+            if (focusedAppChanged || r.isNeedForceUpdateOnce()) {
                 mWindowManager.updateFocusedWindowLocked(UPDATE_FOCUS_NORMAL,
                         true /*updateInputWindows*/);
             }

@@ -309,6 +309,8 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
 
     private boolean mIsFocusable = true;
 
+    private boolean mNeedForceUpdateFocusOnce = false;
+
     /**
      * This indicates whether this window is visible by policy. This can precede physical
      * visibility ({@link #isVisible} - whether it has a surface showing on the screen) in
@@ -1272,10 +1274,26 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
         return mVisibleRequested;
     }
 
+    /**
+     * Only valid for once.
+     * True indicates this has already focused activity but not visible yet.
+     */
+    public boolean isNeedForceUpdateOnce() {
+        boolean needForceUpdateFocus = mNeedForceUpdateFocusOnce;
+        mNeedForceUpdateFocusOnce = false;
+        return needForceUpdateFocus;
+    }
+
     /** @return `true` if visibleRequested changed. */
     @VisibleForTesting(visibility = VisibleForTesting.Visibility.PROTECTED)
     boolean setVisibleRequested(boolean visible) {
         if (mVisibleRequested == visible) return false;
+
+        // Invisible will not update focus.
+        // If current app has already focused, and becomes visible from invisible,
+        // we should update focus later.
+        mNeedForceUpdateFocusOnce = visible && mDisplayContent != null && mDisplayContent.mFocusedApp == this;
+
         mVisibleRequested = visible;
         final WindowContainer parent = getParent();
         if (parent != null) {
