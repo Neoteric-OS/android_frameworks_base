@@ -1773,6 +1773,27 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
     }
 
+    private void enforceCallerSystem() {
+        int callingUid = mInjector.binderGetCallingUid();
+        if (callingUid != Process.SYSTEM_UID && callingUid != Process.ROOT_UID) {
+            throw new SecurityException("Caller must be system");
+        }
+    }
+
+    @Override
+    public boolean writeRepairModeCredential(int userId) {
+        enforceCallerSystem();
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            synchronized (mSpManager) {
+                long protectorId = getCurrentLskfBasedProtectorId(userId);
+                return mSpManager.writeRepairModeCredentialLocked(protectorId, userId);
+            }
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
+    }
+
     /**
      * @param savedCredential if the user is a profile with
      * {@link UserManager#isCredentialSharableWithParent()} with unified challenge and

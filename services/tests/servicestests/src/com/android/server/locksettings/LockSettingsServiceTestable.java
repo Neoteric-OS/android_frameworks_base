@@ -60,6 +60,7 @@ public class LockSettingsServiceTestable extends LockSettingsService {
 
         public boolean mIsHeadlessSystemUserMode = false;
         public boolean mIsMainUserPermanentAdmin = false;
+        public int mCallingUid = Process.SYSTEM_UID;
 
         public MockInjector(Context context, LockSettingsStorage storage,
                 IActivityManager activityManager, IStorageManager storageManager,
@@ -124,7 +125,7 @@ public class LockSettingsServiceTestable extends LockSettingsService {
 
         @Override
         public int binderGetCallingUid() {
-            return Process.SYSTEM_UID;
+            return mCallingUid;
         }
 
         @Override
