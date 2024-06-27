@@ -114,11 +114,14 @@ cc_library_shared {
         "-Wunused",
         "-Wunreachable-code",
     ],
+<<<<<<< HEAD   (e34b1b Merge "Expose requestModemActivityInfo")
 
     // Workaround Clang LTO crash.
     lto: {
         never: true,
     },
+=======
+>>>>>>> CHANGE (b6782b Revert "Revert "Revert "Revert "Revert "Workaround build bre)
 }
 
 cc_library_shared {
