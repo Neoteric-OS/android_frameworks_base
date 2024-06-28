@@ -883,16 +883,7 @@ public class RingtoneManager {
         if (setting == null) return null;
         final String uriString = Settings.System.getStringForUser(context.getContentResolver(),
                 setting, context.getUserId());
-        Uri ringtoneUri = uriString != null ? Uri.parse(uriString) : null;
-
-        // If this doesn't verify, the user id must be kept in the uri to ensure it resolves in the
-        // correct user storage
-        if (ringtoneUri != null
-                && ContentProvider.getUserIdFromUri(ringtoneUri) == context.getUserId()) {
-            ringtoneUri = ContentProvider.getUriWithoutUserId(ringtoneUri);
-        }
-
-        return ringtoneUri;
+        return uriString != null ? Uri.parse(uriString) : null;
     }
     
     /**
