@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a967f951_444a0f16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-06-28T17:08:34Z",
+      "side": 1,
+      "message": "I vaguely recall there being a reason why this was tied to credential verification before -- does anyone remember?",
+      "revId": "36380e09c7f580d399c9b184f11478dd370b023d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40780ba8_12b26b89",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-06-28T17:08:34Z",
+      "side": 1,
+      "message": "Why not check for the ACCESS_KEYGUARD_SECURE_STORAGE permission instead, like what most other methods in this service do?",
+      "range": {
+        "startLine": 1785,
+        "startChar": 0,
+        "endLine": 1785,
+        "endChar": 30
+      },
+      "revId": "36380e09c7f580d399c9b184f11478dd370b023d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
