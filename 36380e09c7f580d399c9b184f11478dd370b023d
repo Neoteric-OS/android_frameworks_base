@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1ddbd304_09088c5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1371409
+      },
+      "writtenOn": "2024-07-01T06:13:03Z",
+      "side": 1,
+      "message": "We tied it to credential verification because the original flow requires users to authenticate themselves before accessing repair mode. Chun-Wei is introducing another flow for repair mode. That\u0027s why we need this change.",
+      "parentUuid": "a967f951_444a0f16",
+      "revId": "36380e09c7f580d399c9b184f11478dd370b023d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40780ba8_12b26b89",
         "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
         "patchSetId": 1
