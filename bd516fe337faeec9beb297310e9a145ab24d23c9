@@ -16,6 +16,23 @@
       "message": "Posting the split lock version so that we have all 3 versions in this patch. We can revert to any previous one if the final decision to use another version.",
       "revId": "bd516fe337faeec9beb297310e9a145ab24d23c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9906414_177a62ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-07-02T22:18:46Z",
+      "side": 1,
+      "message": "IMO The close of the socket is pretty rare. And I honestly don\u0027t think we\u0027re going to have the FD reuse problem here in practice. This socket is managed by the init. We\u0027re adding unnecessary locks here...",
+      "revId": "bd516fe337faeec9beb297310e9a145ab24d23c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
