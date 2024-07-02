@@ -214,6 +214,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92118b7e_1a0de1a2",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-07-02T17:29:57Z",
+      "side": 1,
+      "message": "Ok, I implemented 2 locks but Jing has an idea about removing these locks completely. Let me post what I think his proposal is.",
+      "parentUuid": "77c9a231_49a67884",
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90a6a07f_1c2d0799",
         "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
         "patchSetId": 2
