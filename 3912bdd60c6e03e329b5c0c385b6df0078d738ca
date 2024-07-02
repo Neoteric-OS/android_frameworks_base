@@ -84,6 +84,24 @@
       "message": "Hi Sudheer \u0026 Amith - Shikha recommended I add you to this CL to review Amazon\u0027s proposed changes.",
       "revId": "3912bdd60c6e03e329b5c0c385b6df0078d738ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6e7a9db_16955d0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2034333
+      },
+      "writtenOn": "2024-07-02T05:38:14Z",
+      "side": 1,
+      "message": "Hi Sudheer \u0026 Amith,\n\nDo you have any update on this ?",
+      "parentUuid": "562d1027_30ec8414",
+      "revId": "3912bdd60c6e03e329b5c0c385b6df0078d738ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
