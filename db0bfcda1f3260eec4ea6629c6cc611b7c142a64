@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90a6a07f_1c2d0799",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-02T16:56:53Z",
+      "side": 1,
+      "message": "should use try-finally, like so:\n\n```\n            mLmkdSocketRWLock.writeLock().lock();\n            try {\n                mLmkdSocket \u003d socket;\n                mLmkdOutputStream \u003d ostream;\n                mLmkdInputStream \u003d istream;\n            } finally {\n                mLmkdSocketRWLock.writeLock().unlock();\n            }\n```",
+      "fixSuggestions": [
+        {
+          "fixId": "64e7c8c8_7ae7cc20",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 157,
+                "startChar": 0,
+                "endLine": 161,
+                "endChar": 0
+              },
+              "replacement": "            try {\n                mLmkdSocket \u003d socket;\n                mLmkdOutputStream \u003d ostream;\n                mLmkdInputStream \u003d istream;\n            } finally {\n                mLmkdSocketRWLock.writeLock().unlock();\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cdbb994_f70c1eb3",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-02T16:56:53Z",
+      "side": 1,
+      "message": "Hmm this seems racy, even before this CL. Looks like both mLmkdOutputStream and mLmkdInputStream can be set to null. Don\u0027t you need a null-check here?",
+      "fixSuggestions": [
+        {
+          "fixId": "bd24a335_00e27f09",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 280,
+                "startChar": 0,
+                "endLine": 281,
+                "endChar": 0
+              },
+              "replacement": "            if (mLmkdOutputStream !\u003d null) {\n                mLmkdOutputStream.write(buf.array(), 0, buf.position());\n            }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 293,
+                "startChar": 0,
+                "endLine": 294,
+                "endChar": 0
+              },
+              "replacement": "            if (mLmkdInputStream !\u003d null) {\n                result \u003d mLmkdInputStream.read(buf.array(), 0, buf.array().length);\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
