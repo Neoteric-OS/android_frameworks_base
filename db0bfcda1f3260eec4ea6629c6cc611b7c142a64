@@ -268,6 +268,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8e9b2af0_d952a782",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-07-02T21:17:13Z",
+      "side": 1,
+      "message": "Unfortunately I\u0027m not an expert in this are, so will rely on your knowledge. I have a version with two locks implemented and ready. If that\u0027s the way we should go I can post that one instead.",
+      "parentUuid": "5cc85235_399a16be",
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90a6a07f_1c2d0799",
         "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
         "patchSetId": 2
