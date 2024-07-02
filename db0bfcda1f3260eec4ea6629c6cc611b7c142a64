@@ -286,6 +286,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "153d6532_18034cba",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2024-07-02T21:54:59Z",
+      "side": 1,
+      "message": "yep, I would recommend the two lock approach Makoto suggested as well.",
+      "parentUuid": "8e9b2af0_d952a782",
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90a6a07f_1c2d0799",
         "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
         "patchSetId": 2
