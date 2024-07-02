@@ -421,8 +421,9 @@ final class DeletePackageHelper {
             final boolean deleteAllUsers =
                     user == null || user.getIdentifier() == UserHandle.USER_ALL;
             if ((!deleteSystem || deleteAllUsers) && disabledPs == null) {
-                Slog.w(TAG, "Attempt to delete unknown system package "
-                        + ps.getPkg().getPackageName());
+                final String packageName =
+                        (ps.getPkg() != null) ? ps.getPkg().getPackageName() : null;
+                Slog.w(TAG, "Attempt to delete unknown system package " + packageName);
                 return null;
             }
             // Confirmed if the system package has been updated
