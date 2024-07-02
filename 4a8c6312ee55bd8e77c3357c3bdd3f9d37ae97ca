@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb67ceba_b44ef714",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328424
+      },
+      "writtenOn": "2024-07-02T14:32:18Z",
+      "side": 1,
+      "message": "This is TV TIF specific for Amlogic, which could be limited TV reviewer first. (but I cannot remove Android Reviewers already added)",
+      "revId": "4a8c6312ee55bd8e77c3357c3bdd3f9d37ae97ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
