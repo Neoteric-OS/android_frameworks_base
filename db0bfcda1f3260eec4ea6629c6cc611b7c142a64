@@ -250,6 +250,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5cc85235_399a16be",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2024-07-02T21:15:25Z",
+      "side": 1,
+      "message": "The lockless approach makes me a little nervous.  \nFrom what I can tell in the LocalSocketImpl, closing the FD is not guarded by the same lock as the SocketInput/OutputStream read/write.\nThe `close` man page warned against closing an in use FD, since they can be reused (unless there is exists some quirk of Android, we are relying on)\nhttps://man7.org/linux/man-pages/man2/close.2.html",
+      "parentUuid": "92118b7e_1a0de1a2",
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90a6a07f_1c2d0799",
         "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
         "patchSetId": 2
