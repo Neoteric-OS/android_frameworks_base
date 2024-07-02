@@ -344,6 +344,24 @@
       "parentUuid": "6cdbb994_f70c1eb3",
       "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "827deeee_4c7b57d8",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-02T20:44:27Z",
+      "side": 1,
+      "message": "\u003e write/read is not called when these strams are NULL?\nJava does\u0027t ignore nulls like that. (that\u0027s why we get NPEs all the time...) It\u0027ll just cause an NPE. I\u0027m guessing it\u0027s just rare.",
+      "parentUuid": "4705db45_210a026f",
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

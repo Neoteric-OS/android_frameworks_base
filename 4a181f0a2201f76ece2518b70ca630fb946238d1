@@ -16,6 +16,41 @@
       "message": "Implemented Jing\u0027s suggestion. I\u0027m not sure about memory ordering guarantees in Java but hope this is safe.",
       "revId": "4a181f0a2201f76ece2518b70ca630fb946238d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d131e0c1_c78655ee",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-02T20:44:27Z",
+      "side": 1,
+      "message": "Let\u0027s make them both `volatile` then. Otherwise there\u0027s a chance the write/read refer to stale values (null) and won\u0027t do anything.",
+      "fixSuggestions": [
+        {
+          "fixId": "497bf367_ad368f35",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 95,
+                "startChar": 0,
+                "endLine": 97,
+                "endChar": 0
+              },
+              "replacement": "    private volatile OutputStream mLmkdOutputStream \u003d null;\n    private volatile InputStream mLmkdInputStream \u003d null;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4a181f0a2201f76ece2518b70ca630fb946238d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
