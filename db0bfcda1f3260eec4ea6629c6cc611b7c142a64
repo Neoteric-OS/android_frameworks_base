@@ -302,6 +302,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18c506c2_7b4fe2e4",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-07-02T22:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "153d6532_18034cba",
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90a6a07f_1c2d0799",

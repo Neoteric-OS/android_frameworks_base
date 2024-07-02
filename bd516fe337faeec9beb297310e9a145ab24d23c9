@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8650593d_fe854a63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-07-02T22:12:42Z",
+      "side": 1,
+      "message": "Posting the split lock version so that we have all 3 versions in this patch. We can revert to any previous one if the final decision to use another version.",
+      "revId": "bd516fe337faeec9beb297310e9a145ab24d23c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
