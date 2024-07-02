@@ -13,3 +13,5 @@ nmusgrave@google.com
 pbdr@google.com
 tkachenkoi@google.com
 mpodolian@google.com
+
+per-file unittest/src/com/android/wm/shell/shared/desktopmode/** = file:/libs/WindowManager/Shell/src/com/android/wm/shell/desktopmode/OWNERS
