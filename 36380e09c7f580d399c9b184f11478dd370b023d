@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a5256e3_347f990d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1566802
+      },
+      "writtenOn": "2024-07-02T23:35:48Z",
+      "side": 1,
+      "message": "Yes. The password data is saved before entering and used for verification when exiting Repair Mode.",
+      "parentUuid": "1924aac1_991a4f5a",
+      "revId": "36380e09c7f580d399c9b184f11478dd370b023d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40780ba8_12b26b89",
