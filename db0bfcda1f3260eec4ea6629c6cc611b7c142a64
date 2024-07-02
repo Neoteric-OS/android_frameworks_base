@@ -3,6 +3,181 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f07eaf51_c155090f",
+        "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-02T17:01:20Z",
+      "side": 1,
+      "message": "RW lock is known to be expensive. Have you considered just using two different locks on mLmkdOutputStream and mLmkdInputStream? (And you can just lock both in the write cases.)",
+      "fixSuggestions": [
+        {
+          "fixId": "4e2376b8_14eb4dad",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 41,
+                "startChar": 0,
+                "endLine": 43,
+                "endChar": 0
+              },
+              "replacement": "import java.util.concurrent.locks.ReentrantLock;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 92,
+                "startChar": 0,
+                "endLine": 94,
+                "endChar": 0
+              },
+              "replacement": "    // lock to synchronize socket read\n    private final ReentrantLock mLmkdSocketReadLock \u003d new ReentrantLock();\n\n    // lock to synchronize socket write\n    private final ReentrantLock mLmkdSocketWriteLock \u003d new ReentrantLock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 100,
+                "startChar": 0,
+                "endLine": 101,
+                "endChar": 0
+              },
+              "replacement": "    @GuardedBy(\"mLmkdSocketWriteLock\")\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 102,
+                "startChar": 0,
+                "endLine": 103,
+                "endChar": 0
+              },
+              "replacement": "    @GuardedBy(\"mLmkdSocketReadLock\")\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 156,
+                "startChar": 0,
+                "endLine": 157,
+                "endChar": 0
+              },
+              "replacement": "            mLmkdSocketWriteLock.lock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 159,
+                "startChar": 0,
+                "endLine": 159,
+                "endChar": 0
+              },
+              "replacement": "            mLmkdSocketWriteLock.unlock();\n            mLmkdSocketReadLock.lock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 160,
+                "startChar": 0,
+                "endLine": 161,
+                "endChar": 0
+              },
+              "replacement": "            mLmkdSocketReadLock.unlock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 187,
+                "startChar": 0,
+                "endLine": 188,
+                "endChar": 0
+              },
+              "replacement": "                mLmkdSocketWriteLock.lock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 189,
+                "startChar": 0,
+                "endLine": 189,
+                "endChar": 0
+              },
+              "replacement": "                mLmkdSocketWriteLock.unlock();\n                mLmkdSocketReadLock.lock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 190,
+                "startChar": 0,
+                "endLine": 190,
+                "endChar": 0
+              },
+              "replacement": "                mLmkdSocketReadLock.unlock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 191,
+                "startChar": 0,
+                "endLine": 192,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 278,
+                "startChar": 0,
+                "endLine": 279,
+                "endChar": 0
+              },
+              "replacement": "        mLmkdSocketWriteLock.lock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 284,
+                "startChar": 0,
+                "endLine": 285,
+                "endChar": 0
+              },
+              "replacement": "        mLmkdSocketWriteLock.unlock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 291,
+                "startChar": 0,
+                "endLine": 292,
+                "endChar": 0
+              },
+              "replacement": "        mLmkdSocketReadLock.lock();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/LmkdConnection.java",
+              "range": {
+                "startLine": 297,
+                "startChar": 0,
+                "endLine": 298,
+                "endChar": 0
+              },
+              "replacement": "        mLmkdSocketReadLock.unlock();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "db0bfcda1f3260eec4ea6629c6cc611b7c142a64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90a6a07f_1c2d0799",
         "filename": "services/core/java/com/android/server/am/LmkdConnection.java",
         "patchSetId": 2
