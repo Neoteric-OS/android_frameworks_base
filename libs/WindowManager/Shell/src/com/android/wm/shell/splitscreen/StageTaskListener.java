@@ -55,6 +55,7 @@ import com.android.wm.shell.splitscreen.SplitScreen.StageType;
 import com.android.wm.shell.windowdecor.WindowDecorViewModel;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -107,6 +108,7 @@ public class StageTaskListener implements ShellTaskOrganizer.TaskListener {
     protected SurfaceControl mRootLeash;
     protected SurfaceControl mDimLayer;
     protected SparseArray<ActivityManager.RunningTaskInfo> mChildrenTaskInfo = new SparseArray<>();
+    protected ArrayList<Integer> mChildrenTasksInZOrder = new ArrayList<>();
     private final SparseArray<SurfaceControl> mChildrenLeashes = new SparseArray<>();
     // TODO(b/204308910): Extracts SplitDecorManager related code to common package.
     private SplitDecorManager mSplitDecorManager;
@@ -146,7 +148,7 @@ public class StageTaskListener implements ShellTaskOrganizer.TaskListener {
     int getTopVisibleChildTaskId() {
         // TODO(b/378601156): This doesn't get the top task (translucent tasks are also
         //  visible-requested)
-        final ActivityManager.RunningTaskInfo taskInfo = getChildTaskInfo(t -> t.isVisible
+        final ActivityManager.RunningTaskInfo taskInfo = getTopChildTaskInfo(t -> t.isVisible
                 && t.isVisibleRequested);
         return taskInfo != null ? taskInfo.taskId : INVALID_TASK_ID;
     }
@@ -157,7 +159,7 @@ public class StageTaskListener implements ShellTaskOrganizer.TaskListener {
     int getTopChildTaskUid() {
         // TODO(b/378601156): This doesn't get the top task
         final ActivityManager.RunningTaskInfo taskInfo =
-                getChildTaskInfo(t -> t.topActivityInfo != null);
+                getTopChildTaskInfo(t -> t.topActivityInfo != null);
         return taskInfo != null ? taskInfo.topActivityInfo.applicationInfo.uid : 0;
     }
 
@@ -203,6 +205,19 @@ public class StageTaskListener implements ShellTaskOrganizer.TaskListener {
         return null;
     }
 
+    @Nullable
+    private ActivityManager.RunningTaskInfo getTopChildTaskInfo(
+            @NonNull Predicate<ActivityManager.RunningTaskInfo> predicate) {
+        for (int i = mChildrenTasksInZOrder.size() - 1; i >= 0; --i) {
+            final int taskId = mChildrenTasksInZOrder.get(i);
+            final ActivityManager.RunningTaskInfo taskInfo = mChildrenTaskInfo.get(taskId);
+            if (taskInfo != null && predicate.test(taskInfo)) {
+                return taskInfo;
+            }
+        }
+        return null;
+    }
+
     @Override
     @CallSuper
     public void onTaskAppeared(ActivityManager.RunningTaskInfo taskInfo, SurfaceControl leash) {
@@ -229,7 +244,15 @@ public class StageTaskListener implements ShellTaskOrganizer.TaskListener {
             final int taskId = taskInfo.taskId;
             mChildrenLeashes.put(taskId, leash);
             mChildrenTaskInfo.put(taskId, taskInfo);
+<<<<<<< PATCH SET (24df00 Split pair is broken in recents when launch translucent task)
+            mChildrenTasksInZOrder.remove(Integer.valueOf(taskId));
+            mChildrenTasksInZOrder.add(taskId);
+            mCallbacks.onChildTaskStatusChanged(taskId, true /* present */,
+||||||| BASE
+            mCallbacks.onChildTaskStatusChanged(taskId, true /* present */,
+=======
             mCallbacks.onChildTaskStatusChanged(this, taskId, true /* present */,
+>>>>>>> BASE      (1cdfff Merge "Remove Redundant Variable for getStatusBarHeightForRo)
                     taskInfo.isVisible && taskInfo.isVisibleRequested);
         } else {
             throw new IllegalArgumentException(this + "\n Unknown task: " + taskInfo
@@ -247,6 +270,7 @@ public class StageTaskListener implements ShellTaskOrganizer.TaskListener {
         if (mRootTaskInfo.taskId == taskInfo.taskId) {
             mRootTaskInfo = taskInfo;
         } else if (taskInfo.parentTaskId == mRootTaskInfo.taskId) {
+            final int taskId = taskInfo.taskId;
             if (!taskInfo.supportsMultiWindow
                     || !ArrayUtils.contains(CONTROLLED_ACTIVITY_TYPES, taskInfo.getActivityType())
                     || !ArrayUtils.contains(CONTROLLED_WINDOWING_MODES_WHEN_ACTIVE,
@@ -259,7 +283,11 @@ public class StageTaskListener implements ShellTaskOrganizer.TaskListener {
                 mCallbacks.onNoLongerSupportMultiWindow(this, taskInfo);
                 return;
             }
-            mChildrenTaskInfo.put(taskInfo.taskId, taskInfo);
+            mChildrenTaskInfo.put(taskId, taskInfo);
+            if (taskInfo.isFocused) {
+                mChildrenTasksInZOrder.remove(Integer.valueOf(taskId));
+                mChildrenTasksInZOrder.add(taskId);
+            }
             mCallbacks.onChildTaskStatusChanged(this, taskInfo.taskId, true /* present */,
                     taskInfo.isVisible && taskInfo.isVisibleRequested);
         } else {
@@ -288,6 +316,7 @@ public class StageTaskListener implements ShellTaskOrganizer.TaskListener {
             });
         } else if (mChildrenTaskInfo.contains(taskId)) {
             mChildrenTaskInfo.remove(taskId);
+            mChildrenTasksInZOrder.remove(taskId);
             mChildrenLeashes.remove(taskId);
             mCallbacks.onChildTaskStatusChanged(this, taskId, false /* present */,
                     taskInfo.isVisible);
