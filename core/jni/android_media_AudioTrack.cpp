@@ -243,7 +243,8 @@ sp<AudioTrack> android_media_AudioTrack_getAudioTrack(JNIEnv* env, jobject audio
 static jint android_media_AudioTrack_setup(JNIEnv *env, jobject thiz, jobject weak_this,
                                            jobject jaa, jintArray jSampleRate,
                                            jint channelPositionMask, jint channelIndexMask,
-                                           jint audioFormat, jint buffSizeInBytes, jint memoryMode,
+                                           jint audioFormat, jint sourceAudioFormat,
+                                           jint buffSizeInBytes, jint memoryMode,
                                            jintArray jSession, jobject jAttributionSource,
                                            jlong nativeAudioTrack, jboolean offload,
                                            jint encapsulationMode, jobject tunerConfiguration,
@@ -312,6 +313,8 @@ static jint android_media_AudioTrack_setup(JNIEnv *env, jobject thiz, jobject we
             return (jint) AUDIOTRACK_ERROR_SETUP_INVALIDFORMAT;
         }
 
+        audio_format_t sourceFormat = audioFormatToNative(sourceAudioFormat);
+
         // compute the frame count
         size_t frameCount;
         if (audio_has_proportional_frames(format)) {
@@ -369,6 +372,7 @@ static jint android_media_AudioTrack_setup(JNIEnv *env, jobject thiz, jobject we
                                                         // in paa (last argument)
                                   sampleRateInHertz,
                                   format, // word length, PCM
+                                  sourceFormat,
                                   nativeChannelMask, offload ? 0 : frameCount,
                                   offload ? AUDIO_OUTPUT_FLAG_COMPRESS_OFFLOAD
                                           : AUDIO_OUTPUT_FLAG_NONE,
@@ -398,6 +402,7 @@ static jint android_media_AudioTrack_setup(JNIEnv *env, jobject thiz, jobject we
                                                         // in paa (last argument)
                                   sampleRateInHertz,
                                   format, // word length, PCM
+                                  sourceFormat,
                                   nativeChannelMask, frameCount, AUDIO_OUTPUT_FLAG_NONE,
                                   lpJniStorage,
                                   0,    // notificationFrames == 0 since not using EVENT_MORE_DATA

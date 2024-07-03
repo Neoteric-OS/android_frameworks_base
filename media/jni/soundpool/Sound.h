@@ -67,6 +67,7 @@ public:
     int32_t getChannelCount() const { return mChannelCount; }
     uint32_t getSampleRate() const { return mSampleRate; }
     audio_format_t getFormat() const { return mFormat; }
+    audio_format_t getSourceFormat() const { return mSourceFormat; }
     audio_channel_mask_t getChannelMask() const { return mChannelMask; }
     size_t getSizeInBytes() const { return mSizeInBytes; }
     sound_state getState() const { return mState; }
@@ -82,6 +83,7 @@ private:
     std::atomic<sound_state> mState = LOADING; // used as synchronization point
     int32_t              mChannelCount = 0;
     audio_format_t       mFormat = AUDIO_FORMAT_INVALID;
+    audio_format_t       mSourceFormat = AUDIO_FORMAT_INVALID;
     audio_channel_mask_t mChannelMask = AUDIO_CHANNEL_NONE;
     base::unique_fd      mFd;     // initialized in constructor, reset to -1 after loading
     const int64_t        mOffset; // int64_t to match java long, see off64_t

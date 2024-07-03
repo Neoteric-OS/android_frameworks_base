@@ -21972,6 +21972,7 @@ package android.media {
     method @NonNull public android.media.AudioTrack.Builder setOffloadedPlayback(boolean);
     method @NonNull public android.media.AudioTrack.Builder setPerformanceMode(int);
     method @NonNull public android.media.AudioTrack.Builder setSessionId(@IntRange(from=1) int) throws java.lang.IllegalArgumentException;
+    method @FlaggedApi("android.webkit.update_service_ipc_wrapper") @NonNull public android.media.AudioTrack.Builder setSourceAudioFormat(@NonNull android.media.AudioFormat);
     method @NonNull public android.media.AudioTrack.Builder setTransferMode(int) throws java.lang.IllegalArgumentException;
   }
 

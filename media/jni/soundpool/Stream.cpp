@@ -327,6 +327,7 @@ void Stream::play_l(const std::shared_ptr<Sound>& sound, int32_t nextStreamID,
         mCallback =  sp<StreamCallback>::make(this, toggle),
         // TODO b/182469354 make consistent with AudioRecord, add util for native source
         mAudioTrack = new AudioTrack(AUDIO_STREAM_DEFAULT, sampleRate, sound->getFormat(),
+                sound->getSourceFormat(),
                 channelMask, sound->getIMemory(), AUDIO_OUTPUT_FLAG_NONE,
                 mCallback,
                 0 /*default notification frames*/, AUDIO_SESSION_ALLOCATE,

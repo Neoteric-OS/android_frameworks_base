@@ -19,6 +19,7 @@ package android.media;
 import static android.media.AudioManager.AUDIO_SESSION_ID_GENERATE;
 
 import android.annotation.CallbackExecutor;
+import android.annotation.FlaggedApi;
 import android.annotation.FloatRange;
 import android.annotation.IntDef;
 import android.annotation.IntRange;
@@ -37,6 +38,7 @@ import android.media.audiopolicy.AudioPolicy;
 import android.media.metrics.LogSessionId;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Flags;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -588,6 +590,11 @@ public class AudioTrack extends PlayerBase
      */
     private int mAudioFormat;   // initialized by all constructors via audioParamCheck()
     /**
+     * The encoding of the audio samples prior to transformation to the current audio encoding.
+     * @see AudioFormat#ENCODING_E_AC3_JOC
+     */
+    private int mSourceAudioFormat;   // initialized by all constructors via audioParamCheck()
+    /**
      * The AudioAttributes used in configuration.
      */
     private AudioAttributes mConfiguredAudioAttributes;
@@ -798,13 +805,14 @@ public class AudioTrack extends PlayerBase
     public AudioTrack(AudioAttributes attributes, AudioFormat format, int bufferSizeInBytes,
             int mode, int sessionId)
                     throws IllegalArgumentException {
-        this(null /* context */, attributes, format, bufferSizeInBytes, mode, sessionId,
-                false /*offload*/, ENCAPSULATION_MODE_NONE, null /* tunerConfiguration */);
+        this(null /* context */, attributes, format, null /* sourceFormat */, bufferSizeInBytes,
+                mode, sessionId, false /*offload*/, ENCAPSULATION_MODE_NONE,
+                null /* tunerConfiguration */);
     }
 
     private AudioTrack(@Nullable Context context, AudioAttributes attributes, AudioFormat format,
-            int bufferSizeInBytes, int mode, int sessionId, boolean offload, int encapsulationMode,
-            @Nullable TunerConfiguration tunerConfiguration)
+            @Nullable AudioFormat sourceFormat, int bufferSizeInBytes, int mode, int sessionId,
+            boolean offload, int encapsulationMode, @Nullable TunerConfiguration tunerConfiguration)
                     throws IllegalArgumentException {
         super(attributes, AudioPlaybackConfiguration.PLAYER_TYPE_JAM_AUDIOTRACK);
         // mState already == STATE_UNINITIALIZED
@@ -852,7 +860,12 @@ public class AudioTrack extends PlayerBase
         if ((format.getPropertySetMask() & AudioFormat.AUDIO_FORMAT_HAS_PROPERTY_ENCODING) != 0) {
             encoding = format.getEncoding();
         }
-        audioParamCheck(rate, channelMask, channelIndexMask, encoding, mode);
+        int sourceEncoding = AudioFormat.ENCODING_DEFAULT;
+        if (sourceFormat != null && (sourceFormat.getPropertySetMask()
+                & AudioFormat.AUDIO_FORMAT_HAS_PROPERTY_ENCODING) != 0) {
+            sourceEncoding = sourceFormat.getEncoding();
+        }
+        audioParamCheck(rate, channelMask, channelIndexMask, encoding, sourceEncoding, mode);
         mOffloaded = offload;
         mStreamType = AudioSystem.STREAM_DEFAULT;
 
@@ -874,7 +887,7 @@ public class AudioTrack extends PlayerBase
         // native initialization
         try (ScopedParcelState attributionSourceState = attributionSource.asScopedParcelState()) {
             int initResult = native_setup(new WeakReference<AudioTrack>(this), mAttributes,
-                    sampleRate, mChannelMask, mChannelIndexMask, mAudioFormat,
+                    sampleRate, mChannelMask, mChannelIndexMask, mAudioFormat, mSourceAudioFormat,
                     mNativeBufferSizeInBytes, mDataLoadMode, session,
                     attributionSourceState.getParcel(), 0 /*nativeTrackInJavaObj*/, offload,
                     encapsulationMode, tunerConfiguration, getCurrentOpPackageName());
@@ -961,6 +974,7 @@ public class AudioTrack extends PlayerBase
                         0 /*mChannelMask - NA*/,
                         0 /*mChannelIndexMask - NA*/,
                         0 /*mAudioFormat - NA*/,
+                        0 /*mSourceAudioFormat - NA*/,
                         0 /*mNativeBufferSizeInBytes - NA*/,
                         0 /*mDataLoadMode - NA*/,
                         session,
@@ -1090,6 +1104,7 @@ public class AudioTrack extends PlayerBase
         private Context mContext;
         private AudioAttributes mAttributes;
         private AudioFormat mFormat;
+        private AudioFormat mSourceFormat;
         private int mBufferSizeInBytes;
         private int mEncapsulationMode = ENCAPSULATION_MODE_NONE;
         private int mSessionId = AUDIO_SESSION_ID_GENERATE;
@@ -1150,6 +1165,26 @@ public class AudioTrack extends PlayerBase
             }
             // keep reference, we only copy the data when building
             mFormat = format;
+            return this;
+        }
+
+        /**
+         * Sets the original encoding/format of the audio data prior to its decoding.
+         * This method informs the AudioTrack about the source format of the audio data before it
+         * was decoded into the format specified by {@link AudioTrack#setAudioFormat()}.
+         * See {@link AudioFormat.Builder} for configuring the audio format parameters such
+         * as encoding, channel mask and sample rate.
+         * @param format a non-null {@link AudioFormat} instance.
+         * @return the same Builder instance.
+         * @throws IllegalArgumentException
+         */
+        @FlaggedApi(android.webkit.Flags.FLAG_UPDATE_SERVICE_IPC_WRAPPER)
+        public @NonNull Builder setSourceAudioFormat(@NonNull AudioFormat format) {
+            if (format == null) {
+                throw new IllegalArgumentException("Illegal null AudioFormat argument");
+            }
+            // keep reference, we only copy the data when building
+            mSourceFormat = format;
             return this;
         }
 
@@ -1409,6 +1444,14 @@ public class AudioTrack extends PlayerBase
                         .build();
             }
 
+            if (mSourceFormat == null) {
+                mSourceFormat = new AudioFormat.Builder()
+                        .setChannelMask(AudioFormat.CHANNEL_OUT_DEFAULT)
+                        //.setSampleRate(AudioFormat.SAMPLE_RATE_UNSPECIFIED)
+                        .setEncoding(AudioFormat.ENCODING_DEFAULT)
+                        .build();
+            }
+
             if (mCallRedirectionMode == AudioManager.CALL_REDIRECT_VOIP) {
                 return buildCallInjectionTrack();
             } else if (mCallRedirectionMode == AudioManager.CALL_REDIRECT_PSTN) {
@@ -1448,8 +1491,8 @@ public class AudioTrack extends PlayerBase
 
             try {
                 final AudioTrack track = new AudioTrack(
-                        mContext, mAttributes, mFormat, mBufferSizeInBytes, mMode, mSessionId,
-                        mOffload, mEncapsulationMode, mTunerConfiguration);
+                        mContext, mAttributes, mFormat, mSourceFormat, mBufferSizeInBytes, mMode,
+                        mSessionId, mOffload, mEncapsulationMode, mTunerConfiguration);
                 if (track.getState() == STATE_UNINITIALIZED) {
                     // release is not necessary
                     throw new UnsupportedOperationException("Cannot create AudioTrack");
@@ -1843,7 +1886,7 @@ public class AudioTrack extends PlayerBase
     //    mSampleRate is valid
     //    mDataLoadMode is valid
     private void audioParamCheck(int sampleRateInHz, int channelConfig, int channelIndexMask,
-                                 int audioFormat, int mode) {
+                                 int audioFormat, int sourceAudioFormat, int mode) {
         //--------------
         // sample rate, note these values are subject to change
         if ((sampleRateInHz < AudioFormat.SAMPLE_RATE_HZ_MIN ||
@@ -1921,6 +1964,12 @@ public class AudioTrack extends PlayerBase
             throw new IllegalArgumentException("Unsupported audio encoding.");
         }
         mAudioFormat = audioFormat;
+
+        if (!AudioFormat.isPublicEncoding(sourceAudioFormat)) {
+            Log.w(TAG, "Unsupported source audio encoding.");
+        } else {
+            mSourceAudioFormat = sourceAudioFormat;
+        }
 
         //--------------
         // audio load mode
@@ -4425,7 +4474,7 @@ public class AudioTrack extends PlayerBase
     //     AudioAttributes.USAGE_MEDIA will map to AudioManager.STREAM_MUSIC
     private native final int native_setup(Object /*WeakReference<AudioTrack>*/ audiotrack_this,
             Object /*AudioAttributes*/ attributes,
-            int[] sampleRate, int channelMask, int channelIndexMask, int audioFormat,
+            int[] sampleRate, int channelMask, int channelIndexMask, int audioFormat, int sourceAudioFormat,
             int buffSizeInBytes, int mode, int[] sessionId, @NonNull Parcel attributionSource,
             long nativeAudioTrack, boolean offload, int encapsulationMode,
             Object tunerConfiguration, @NonNull String opPackageName);

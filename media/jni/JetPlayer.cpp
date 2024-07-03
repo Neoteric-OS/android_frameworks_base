@@ -88,6 +88,7 @@ int JetPlayer::init()
     status_t status = mAudioTrack->set(AUDIO_STREAM_MUSIC,  //TODO parameterize this
             pLibConfig->sampleRate,
             AUDIO_FORMAT_PCM_16_BIT,
+            AUDIO_FORMAT_DEFAULT,
             audio_channel_out_mask_from_count(pLibConfig->numChannels),
             (size_t) mTrackBufferSize,
             AUDIO_OUTPUT_FLAG_NONE);

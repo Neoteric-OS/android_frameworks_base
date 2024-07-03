@@ -7,3 +7,10 @@ flag {
   description: "Change MediaMetadataRetriever to use RGBA8888 for bitmap handling by default."
   bug: "298965955"
 }
+
+flag {
+  name: "audiotrack_source_format"
+  namespace: "media_audio"
+  description: "Add source format to AudioTrack"
+  bug: "298965955"
+}

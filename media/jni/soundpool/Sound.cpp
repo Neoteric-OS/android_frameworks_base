@@ -78,6 +78,8 @@ static status_t decode(int fd, int64_t offset, int64_t length,
                     || AMediaExtractor_selectTrack(ex.get(), i) != AMEDIA_OK) {
                 return UNKNOWN_ERROR;
             }
+            audio_format_t sourceFormat = AUDIO_FORMAT_DEFAULT;
+            //mapMimeToAudioFormat(sourceFormat, mime);
 
             bool sawInputEOS = false;
             bool sawOutputEOS = false;
