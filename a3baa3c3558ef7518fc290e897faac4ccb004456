@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "450880ea_c990a0a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-07-03T00:16:52Z",
+      "side": 1,
+      "message": "voting a +1 since owner has +2\u0027ed the change. not sure if the test is meant to verify the performance of packages code alone, or including permission code as well.",
+      "revId": "a3baa3c3558ef7518fc290e897faac4ccb004456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
