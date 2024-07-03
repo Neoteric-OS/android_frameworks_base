@@ -33,6 +33,24 @@
       "message": "IMO The close of the socket is pretty rare. And I honestly don\u0027t think we\u0027re going to have the FD reuse problem here in practice. This socket is managed by the init. We\u0027re adding unnecessary locks here...",
       "revId": "bd516fe337faeec9beb297310e9a145ab24d23c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73cfb58a_659dd676",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2024-07-03T19:00:39Z",
+      "side": 1,
+      "message": "I agree the scenario should be rare but I still believe it is technically possible and we should guard against it.\nIE. \nThread 1: prepares to write LMKD, which involves getting a reference to the FD.\nThread 2: some bizarre error occurs resulting in the EVENT_ERROR being sent to LmkdConnection and closing mLmkdSocket and releasing the FD.\nThread 3: Somewhere else in the system process Os.socket() is called and the same FD from before is reused but pointing to a different socket (which can and will happen based on https://man7.org/linux/man-pages/man2/socket.2.html) \nBack to Thread 1: starts writing to the FD which is now pointing to the wrong socket.",
+      "parentUuid": "e9906414_177a62ad",
+      "revId": "bd516fe337faeec9beb297310e9a145ab24d23c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
