@@ -309,7 +309,7 @@ public final class AudioFormat implements Parcelable {
     public static final int ENCODING_AAC_ELD = 15;
     /** Audio data format: AAC xHE compressed */
     public static final int ENCODING_AAC_XHE = 16;
-    /** Audio data format: AC-4 sync frame transport format */
+    /** Audio data format: AC-4 (levels 0-3) sync frame transport format */
     public static final int ENCODING_AC4 = 17;
     /** Audio data format: E-AC-3-JOC compressed
      * E-AC-3-JOC streams can be decoded by downstream devices supporting {@link #ENCODING_E_AC3}.
@@ -375,6 +375,8 @@ public final class AudioFormat implements Parcelable {
     public static final int ENCODING_DTS_UHD_P2 = 30;
     /** Audio data format: Direct Stream Digital */
     public static final int ENCODING_DSD = 31;
+    /** Audio data format: AC-4 level 4 sync frame transport format */
+    public static final int ENCODING_AC4_L4 = 32;
 
     /** @hide */
     public static String toLogFriendlyEncoding(int enc) {
@@ -413,6 +415,8 @@ public final class AudioFormat implements Parcelable {
                 return "ENCODING_AAC_XHE";
             case ENCODING_AC4:
                 return "ENCODING_AC4";
+            case ENCODING_AC4_L4:
+                return "ENCODING_AC4_L4";
             case ENCODING_E_AC3_JOC:
                 return "ENCODING_E_AC3_JOC";
             case ENCODING_DOLBY_MAT:
@@ -823,6 +827,7 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_AAC_ELD:
             case ENCODING_AAC_XHE:
             case ENCODING_AC4:
+            case ENCODING_AC4_L4:
             case ENCODING_E_AC3_JOC:
             case ENCODING_DOLBY_MAT:
             case ENCODING_OPUS:
@@ -863,6 +868,7 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_AAC_ELD:
             case ENCODING_AAC_XHE:
             case ENCODING_AC4:
+            case ENCODING_AC4_L4:
             case ENCODING_E_AC3_JOC:
             case ENCODING_DOLBY_MAT:
             case ENCODING_OPUS:
@@ -908,6 +914,7 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_AAC_ELD:
             case ENCODING_AAC_XHE:
             case ENCODING_AC4:
+            case ENCODING_AC4_L4:
             case ENCODING_E_AC3_JOC:
             case ENCODING_DOLBY_MAT:
             case ENCODING_OPUS:
@@ -950,6 +957,7 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_AAC_ELD:
             case ENCODING_AAC_XHE:
             case ENCODING_AC4:
+            case ENCODING_AC4_L4:
             case ENCODING_E_AC3_JOC:
             case ENCODING_DOLBY_MAT:
             case ENCODING_OPUS:
@@ -1238,6 +1246,7 @@ public final class AudioFormat implements Parcelable {
                 case ENCODING_AAC_ELD:
                 case ENCODING_AAC_XHE:
                 case ENCODING_AC4:
+                case ENCODING_AC4_L4:
                 case ENCODING_E_AC3_JOC:
                 case ENCODING_DOLBY_MAT:
                 case ENCODING_OPUS:
@@ -1468,6 +1477,7 @@ public final class AudioFormat implements Parcelable {
         ENCODING_AAC_ELD,
         ENCODING_AAC_XHE,
         ENCODING_AC4,
+        ENCODING_AC4_L4,
         ENCODING_E_AC3_JOC,
         ENCODING_DOLBY_MAT,
         ENCODING_OPUS,
@@ -1506,6 +1516,7 @@ public final class AudioFormat implements Parcelable {
             ENCODING_AAC_ELD,
             ENCODING_AAC_XHE,
             ENCODING_AC4,
+            ENCODING_AC4_L4,
             ENCODING_E_AC3_JOC,
             ENCODING_DOLBY_MAT,
             ENCODING_OPUS,
@@ -1533,6 +1544,7 @@ public final class AudioFormat implements Parcelable {
             ENCODING_AAC_LC,
             ENCODING_DOLBY_TRUEHD,
             ENCODING_AC4,
+            ENCODING_AC4_L4,
             ENCODING_E_AC3_JOC,
             ENCODING_DOLBY_MAT,
             ENCODING_MPEGH_BL_L3,
@@ -1554,6 +1566,7 @@ public final class AudioFormat implements Parcelable {
             ENCODING_AAC_LC,
             ENCODING_DOLBY_TRUEHD,
             ENCODING_AC4,
+            ENCODING_AC4_L4,
             ENCODING_E_AC3_JOC,
             ENCODING_DOLBY_MAT,
             ENCODING_MPEGH_BL_L3,
@@ -1592,7 +1605,9 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_DOLBY_TRUEHD:
                 return "Dolby TrueHD";
             case ENCODING_AC4:
-                return "Dolby AC-4";
+                return "Dolby AC-4 levels 0-3";
+            case ENCODING_AC4_L4:
+                return "Dolby AC-4 level 4";
             case ENCODING_E_AC3_JOC:
                 return "Dolby Atmos in Dolby Digital Plus";
             case ENCODING_DOLBY_MAT:
