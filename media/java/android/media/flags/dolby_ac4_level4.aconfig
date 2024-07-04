@@ -1,0 +1,10 @@
+package: "com.android.media.dolbyac4level4.flags"
+container: "system"
+
+flag {
+    name: "dolby_ac4_level4_encoding_api"
+    namespace: "dolby"
+    description: "Feature flag for Dolby AC-4 level 4 AudioFormat encoding."
+    is_fixed_read_only: true
+    bug: "266537650"
+}

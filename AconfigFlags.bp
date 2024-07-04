@@ -80,6 +80,7 @@ aconfig_declarations_group {
         "com.android.internal.foldables.flags-aconfig-java",
         "com.android.internal.pm.pkg.component.flags-aconfig-java",
         "com.android.media.flags.bettertogether-aconfig-java",
+        "com.android.media.flags.dolbyac4level4-aconfig-java",
         "com.android.media.flags.editing-aconfig-java",
         "com.android.media.flags.projection-aconfig-java",
         "com.android.net.thread.platform.flags-aconfig-java",
@@ -525,6 +526,20 @@ java_aconfig_library {
     name: "com.android.media.flags.bettertogether-aconfig-java-host",
     aconfig_declarations: "com.android.media.flags.bettertogether-aconfig",
     host_supported: true,
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// AudioFormat
+aconfig_declarations {
+    name: "com.android.media.flags.dolbyac4level4-aconfig",
+    package: "com.android.media.dolbyac4level4.flags",
+    container: "system",
+    srcs: ["media/java/android/media/flags/dolby_ac4_level4.aconfig"],
+}
+
+java_aconfig_library {
+    name: "com.android.media.flags.dolbyac4level4-aconfig-java",
+    aconfig_declarations: "com.android.media.flags.dolbyac4level4-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 
