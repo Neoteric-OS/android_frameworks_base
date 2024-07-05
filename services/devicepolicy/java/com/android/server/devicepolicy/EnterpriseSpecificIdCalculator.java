@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.pm.VerifierDeviceIdentity;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.SystemProperties;
 import android.security.identity.Util;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -66,13 +67,14 @@ class EnterpriseSpecificIdCalculator {
         mMeid = meid;
         mSerialNumber = Build.getSerial();
         WifiManager wifiManager = context.getSystemService(WifiManager.class);
-        Preconditions.checkState(wifiManager != null, "Unable to access WiFi service");
-        final String[] macAddresses = wifiManager.getFactoryMacAddresses();
-        if (macAddresses == null || macAddresses.length == 0) {
-            mMacAddress = "";
-        } else {
-            mMacAddress = macAddresses[0];
+        if (SystemProperties.getBoolean("ro.wifi.enable", false)) {
+            final String[] macAddresses = wifiManager.getFactoryMacAddresses();
+            if (macAddresses != null && macAddresses.length > 0) {
+                mMacAddress = macAddresses[0];
+                return;
+            }
         }
+        mMacAddress = "";
     }
 
     private static String getPaddedTruncatedString(String input, int maxLength) {
