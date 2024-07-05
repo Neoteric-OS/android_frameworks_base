@@ -956,7 +956,7 @@ public class SpannableStringBuilder implements CharSequence, GetChars, Spannable
                         insertionOrder, count, sort);
             }
         }
-        if (i >= mSpanCount) return count;
+        if (i >= mSpanCount || count >= ret.length) return count;
         int spanStart = mSpanStarts[i];
         if (spanStart > mGapStart) {
             spanStart -= mGapLength;
