@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6437d80d_109bab18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1090594
+      },
+      "writtenOn": "2024-07-07T08:31:59Z",
+      "side": 1,
+      "message": "Alternatively, I could do this:\n\n```diff\ndiff --git a/core/java/android/view/PointerIcon.java b/core/java/android/view/PointerIcon.java\nindex 782ac93549a0..9099f9855eab 100644\n--- a/core/java/android/view/PointerIcon.java\n+++ b/core/java/android/view/PointerIcon.java\n@@ -532,10 +532,10 @@ public final class PointerIcon implements Parcelable {\n     }\n \n     private static void validateHotSpot(Bitmap bitmap, float hotSpotX, float hotSpotY) {\n-        if (hotSpotX \u003c 0 || hotSpotX \u003e bitmap.getWidth()) {\n+        if (hotSpotX \u003c 0 || hotSpotX \u003e\u003d bitmap.getWidth()) {\n             throw new IllegalArgumentException(\"x hotspot lies outside of the bitmap area\");\n         }\n-        if (hotSpotY \u003c 0 || hotSpotY \u003e bitmap.getHeight()) {\n+        if (hotSpotY \u003c 0 || hotSpotY \u003e\u003d bitmap.getHeight()) {\n             throw new IllegalArgumentException(\"y hotspot lies outside of the bitmap area\");\n         }\n     }\n```\n\nbut I have no idea if it\u0027s better than just lowering hotSpotY value.",
+      "revId": "a7cd55bee3c4df50904e475134b10ddb88e569b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
