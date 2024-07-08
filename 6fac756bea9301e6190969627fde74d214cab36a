@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dccd1784_e4f93f29",
+        "filename": "media/java/android/media/AudioTrack.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2024-07-08T06:58:32Z",
+      "side": 1,
+      "message": "This is not the correct flag. I tried adding a new flag for this feature addition using aconfig, but I wasn\u0027t able to make it work. So, to make the patch buildable for testing, I used an existing flag.",
+      "range": {
+        "startLine": 1181,
+        "startChar": 20,
+        "endLine": 1181,
+        "endChar": 72
+      },
+      "revId": "6fac756bea9301e6190969627fde74d214cab36a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
