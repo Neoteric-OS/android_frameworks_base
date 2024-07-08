@@ -70,6 +70,7 @@ import java.io.ObjectOutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -149,6 +150,15 @@ public class PackageWatchdog {
             "persist.device_config.configuration.major_user_impact_level_threshold";
     private static final int DEFAULT_MAJOR_USER_IMPACT_LEVEL_THRESHOLD =
             PackageHealthObserverImpact.USER_IMPACT_LEVEL_71;
+
+    // Comma separated list of all packages exempt from user impact level threshold. If a package
+    // in the list is crash looping, all the mitigations including factory reset will be performed.
+    private static final String PACKAGES_EXEMPT_FROM_IMPACT_LEVEL_THRESHOLD =
+            "persist.device_config.configuration.packages_exempt_from_impact_level_threshold";
+
+    // Comma separated list of default packages exempt from user impact level threshold.
+    private static final String DEFAULT_PACKAGES_EXEMPT_FROM_IMPACT_LEVEL_THRESHOLD =
+            "com.android.systemui";
 
     private long mNumberOfNativeCrashPollsRemaining;
 
@@ -518,7 +528,9 @@ public class PackageWatchdog {
                               @FailureReasons int failureReason,
                               int currentObserverImpact,
                               int mitigationCount) {
-        if (currentObserverImpact < getUserImpactLevelLimit()) {
+        if (currentObserverImpact < getUserImpactLevelLimit()
+                || getPackagesExemptFromImpactLevelThreshold().contains(
+                        versionedPackage.getPackageName())) {
             synchronized (mLock) {
                 mLastMitigation = mSystemClock.uptimeMillis();
             }
@@ -655,6 +667,12 @@ public class PackageWatchdog {
     private int getUserImpactLevelLimit() {
         return SystemProperties.getInt(MAJOR_USER_IMPACT_LEVEL_THRESHOLD,
                 DEFAULT_MAJOR_USER_IMPACT_LEVEL_THRESHOLD);
+    }
+
+    private List<String> getPackagesExemptFromImpactLevelThreshold() {
+        String packageNames = SystemProperties.get(PACKAGES_EXEMPT_FROM_IMPACT_LEVEL_THRESHOLD,
+                DEFAULT_PACKAGES_EXEMPT_FROM_IMPACT_LEVEL_THRESHOLD);
+        return Arrays.asList(packageNames.split("\\s*,\\s*"));
     }
 
     /** Possible severity values of the user impact of a {@link PackageHealthObserver#execute}. */
