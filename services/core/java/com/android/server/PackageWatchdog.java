@@ -70,6 +70,7 @@ import java.io.ObjectOutputStream;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -149,6 +150,9 @@ public class PackageWatchdog {
             "persist.device_config.configuration.major_user_impact_level_threshold";
     private static final int DEFAULT_MAJOR_USER_IMPACT_LEVEL_THRESHOLD =
             PackageHealthObserverImpact.USER_IMPACT_LEVEL_71;
+
+    private static final List<String> DEFAULT_PACKAGE_EXCEPTION_FOR_IMPACT_LEVEL_THRESHOLD =
+            Arrays.asList("com.android.systemui");
 
     private long mNumberOfNativeCrashPollsRemaining;
 
@@ -518,7 +522,9 @@ public class PackageWatchdog {
                               @FailureReasons int failureReason,
                               int currentObserverImpact,
                               int mitigationCount) {
-        if (currentObserverImpact < getUserImpactLevelLimit()) {
+        if (currentObserverImpact < getUserImpactLevelLimit()
+                || DEFAULT_PACKAGE_EXCEPTION_FOR_IMPACT_LEVEL_THRESHOLD.contains(
+                        versionedPackage.getPackageName())) {
             synchronized (mLock) {
                 mLastMitigation = mSystemClock.uptimeMillis();
             }
