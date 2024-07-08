@@ -3664,6 +3664,22 @@ public final class DisplayManagerService extends SystemService {
         }
 
         public void addDisplayEvent(int displayId, int event) {
+            if (event != DisplayManagerGlobal.EVENT_DISPLAY_ADDED
+                && event != DisplayManagerGlobal.EVENT_DISPLAY_REMOVED) {
+                for (int i = 0; i < mDisplayEvents.size(); i++) {
+                    Pair<Integer, Integer> last = mDisplayEvents.get(i);
+                    if (last.first == displayId && last.second == event) {
+                        Slog.d("TAG",
+                                "Remove previously redundant display event " + displayId + "/" + event
+                                        + " to " + mCallbackRecord.mUid + "/" + mCallbackRecord.mPid);
+                        mDisplayEvents.remove(i);
+                        break;
+                    }
+                }
+                mDisplayEvents.add(new Pair<>(displayId, event));
+                return;
+            }
+
             // Ignore redundant events. Further optimization is possible by merging adjacent events.
             Pair<Integer, Integer> last = mDisplayEvents.get(mDisplayEvents.size() - 1);
             if (last.first == displayId && last.second == event) {
