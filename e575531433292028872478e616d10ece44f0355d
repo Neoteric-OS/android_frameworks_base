@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "174a939d_8d75c0e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1929300
+      },
+      "writtenOn": "2024-07-08T12:48:14Z",
+      "side": 1,
+      "message": "Flag definition to enable/disable the CertificateTransparencyLogInstallReceiver",
+      "revId": "e575531433292028872478e616d10ece44f0355d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
