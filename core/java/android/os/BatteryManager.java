@@ -141,6 +141,7 @@ public class BatteryManager {
     /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
      * integer containing the charge counter present in the battery.
+     * It shows the available battery power in uAh
      * {@hide}
      */
      @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
@@ -164,6 +165,22 @@ public class BatteryManager {
      * Int value representing the battery charging status.
      */
     public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery capacity level which reflects the
+     * battery demand that can be satisfied by the current adapter:
+     * UNSUPPORTED(-1): the implementation is unsupported
+     * UNKNOWN(0): battery is not present/unknown/uninitialized
+     * CRITICAL(1): battery exhausted and the Android framework has been notified to schedule
+     * a shutdown
+     * LOW(2): Android framework may limit the performance when low
+     * NORMAL(3): battery is normal
+     * HIGH(4): when battery demand can be satisfied by the current adapter
+     * FULL(5): battery full and battery level is 100
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final String EXTRA_CAPACITY_LEVEL = "android.os.extra.CAPACITY_LEVEL";
 
     /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_LEVEL_CHANGED}:
