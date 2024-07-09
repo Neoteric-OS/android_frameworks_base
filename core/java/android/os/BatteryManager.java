@@ -141,6 +141,7 @@ public class BatteryManager {
     /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
      * integer containing the charge counter present in the battery.
+     * It shows the available battery power in µAh
      * {@hide}
      */
      @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
@@ -164,6 +165,74 @@ public class BatteryManager {
      * Int value representing the battery charging status.
      */
     public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";
+
+    /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery capacity level which reflects the
+     * battery demand that can be satisfied by the current adapter:
+     * {@link #BATTERY_CAPACITY_LEVEL_UNSUPPORTED}: the implementation is unsupported
+     * {@link #BATTERY_CAPACITY_LEVEL_UNKNOWN}: battery is not present/unknown/uninitialized
+     * {@link #BATTERY_CAPACITY_LEVEL_CRITICAL}: battery exhausted and the Android framework
+     * has been notified to schedule a shutdown
+     * {@link #BATTERY_CAPACITY_LEVEL_LOW}: Android framework may limit background jobs when
+     * low to avoid impacting charging speed (when charging)
+     * {@link #BATTERY_CAPACITY_LEVEL_NORMAL}: battery is normal
+     * {@link #BATTERY_CAPACITY_LEVEL_HIGH}: when battery demand can be satisfied by the
+     * current adapter. Application should run background jobs when capacity level is HIGH
+     * {@link #BATTERY_CAPACITY_LEVEL_FULL}: battery full and battery level is 100
+     */
+
+    /**
+     * Battery capacity level is unsupported.
+     * @hide
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_CAPACITY_LEVEL_UNSUPPORTED = -1;
+
+    /**
+     * Battery capacity level is unknown.
+     * @hide
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_CAPACITY_LEVEL_UNKNOWN = 0;
+
+    /**
+     * Battery capacity level is critical.
+     * @hide
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_CAPACITY_LEVEL_CRITICAL = 1;
+
+    /**
+     * Battery capacity level is low.
+     * @hide
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_CAPACITY_LEVEL_LOW = 2;
+
+    /**
+     * Battery capacity level is normal.
+     * @hide
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_CAPACITY_LEVEL_NORMAL = 3;
+
+    /**
+     * Battery capacity level is high.
+     * @hide
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_CAPACITY_LEVEL_HIGH = 4;
+
+    /**
+     * Battery capacity level is full.
+     * @hide
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final int BATTERY_CAPACITY_LEVEL_FULL = 5;
+
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final String EXTRA_CAPACITY_LEVEL = "android.os.extra.CAPACITY_LEVEL";
 
     /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_LEVEL_CHANGED}:
