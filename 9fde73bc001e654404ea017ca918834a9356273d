@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a702e96_4b2bd0f3",
+        "filename": "core/java/android/hardware/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2024-07-09T16:58:15Z",
+      "side": 1,
+      "message": "we should point this to the same file as everything else, something like my suggestion (https://android-review.googlesource.com/plugins/code-owners/Documentation/backend-find-owners.html#syntax)\n\n\n```suggestion\nper-file *Camera*\u003dfile:platform/frameworks/av:/camera/OWNERS\n```",
+      "revId": "9fde73bc001e654404ea017ca918834a9356273d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
