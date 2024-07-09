@@ -33,6 +33,24 @@
       "message": "Since this is related to CertificateTransparencyLogInstallReceiver, I think the declaration should be in the same package: frameworks/base/services/core/java/com/android/server/updates/.\n\nThere are other examples of similar aconfig files in frameworks/base/services/core/java/com/android/server. Thanks",
       "revId": "e575531433292028872478e616d10ece44f0355d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e3b3f48_718b2c2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1929300
+      },
+      "writtenOn": "2024-07-09T13:42:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f364cd_f37ef965",
+      "revId": "e575531433292028872478e616d10ece44f0355d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
