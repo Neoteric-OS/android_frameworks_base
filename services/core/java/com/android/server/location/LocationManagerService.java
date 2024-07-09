@@ -1422,6 +1422,9 @@ public class LocationManagerService extends ILocationManager.Stub implements
         }
 
         final LocationProviderManager manager = getOrAddLocationProviderManager(provider);
+        if (D) {
+            Log.d(TAG, packageName + " added mock provider override for " + provider);
+        }
         manager.setMockProvider(new MockLocationProvider(properties, identity,
                 new ArraySet<>(extraAttributionTags)));
     }
@@ -1440,6 +1443,9 @@ public class LocationManagerService extends ILocationManager.Stub implements
                 return;
             }
 
+            if (D) {
+                Log.d(TAG, packageName + " removed mock provider override for " + provider);
+            }
             manager.setMockProvider(null);
             if (!manager.hasProvider()) {
                 removeLocationProviderManager(manager);
@@ -1465,6 +1471,10 @@ public class LocationManagerService extends ILocationManager.Stub implements
             throw new IllegalArgumentException("provider doesn't exist: " + provider);
         }
 
+        if (D) {
+            Log.d(TAG, packageName + " set mock location [" + String.valueOf(location.getLatitude()) + ", "
+                    + String.valueOf(location.getLongitude()) + "] for " + provider + " provider");
+        }
         manager.setMockProviderLocation(location);
     }
 
