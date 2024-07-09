@@ -166,6 +166,13 @@ public class BatteryManager {
     public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";
 
     /**
+     * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
+     * Int value representing the battery capacity level.
+     */
+    @FlaggedApi(FLAG_BATTERY_PART_STATUS_API)
+    public static final String EXTRA_CAPACITY_LEVEL = "android.os.extra.CAPACITY_LEVEL";
+
+    /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_LEVEL_CHANGED}:
      * Contains list of Bundles representing battery events
      * @hide
