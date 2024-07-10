@@ -16,7 +16,6 @@
 
 package com.android.server.locksettings;
 
-import static android.security.Flags.reportPrimaryAuthAttempts;
 import static android.Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE;
 import static android.Manifest.permission.CONFIGURE_FACTORY_RESET_PROTECTION;
 import static android.Manifest.permission.MANAGE_BIOMETRIC;
@@ -32,6 +31,7 @@ import static android.content.Intent.ACTION_MAIN_USER_LOCKSCREEN_KNOWLEDGE_FACTO
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.os.UserHandle.USER_ALL;
 import static android.os.UserHandle.USER_SYSTEM;
+import static android.security.Flags.reportPrimaryAuthAttempts;
 
 import static com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_NONE;
 import static com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_PASSWORD_OR_PIN;
@@ -2999,6 +2999,9 @@ public class LockSettingsService extends ILockSettings.Stub {
             if (!mSpManager.hasSidForUser(userId)) {
                 mSpManager.newSidForUser(getGateKeeperService(), sp, userId);
                 mSpManager.verifyChallenge(getGateKeeperService(), sp, 0L, userId);
+                if (android.security.Flags.resetStrongAuthOnAddAndClearPrimaryCredential()) {
+                    mStrongAuth.reportUnlock(userId);
+                }
             }
         } else {
             // Cache all profile password if they use unified challenge. This will later be used to
@@ -3011,6 +3014,9 @@ public class LockSettingsService extends ILockSettings.Stub {
             unlockKeystore(userId, sp);
             AndroidKeyStoreMaintenance.onUserLskfRemoved(userId);
             removeBiometricsForUser(userId);
+            if (android.security.Flags.resetStrongAuthOnAddAndClearPrimaryCredential()) {
+                mStrongAuth.removeUser(userId);
+            }
         }
         setCurrentLskfBasedProtectorId(newProtectorId, userId);
         LockPatternUtils.invalidateCredentialTypeCache();
