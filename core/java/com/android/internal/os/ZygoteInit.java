@@ -54,6 +54,7 @@ import android.view.WindowManager;
 import android.webkit.WebViewFactory;
 import android.widget.TextView;
 
+import com.android.internal.os.logging.MetricsLoggerWrapper;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.Preconditions;
 
@@ -838,6 +839,13 @@ public class ZygoteInit {
             bootTimingsTraceLog.traceBegin("PostZygoteInitGC");
             gcAndFinalize();
             bootTimingsTraceLog.traceEnd(); // PostZygoteInitGC
+
+            VMRuntime.setPostCleanupRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    MetricsLoggerWrapper.logPostGcMemorySnapshot();
+                }
+            });
 
             bootTimingsTraceLog.traceEnd(); // ZygoteInit
 

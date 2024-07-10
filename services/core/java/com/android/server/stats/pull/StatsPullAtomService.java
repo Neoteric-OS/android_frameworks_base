@@ -62,9 +62,9 @@ import static com.android.server.am.MemoryStatUtil.readMemoryStatFromFilesystem;
 import static com.android.server.stats.Flags.addMobileBytesTransferByProcStatePuller;
 import static com.android.server.stats.pull.IonMemoryUtil.readProcessSystemIonHeapSizesFromDebugfs;
 import static com.android.server.stats.pull.IonMemoryUtil.readSystemIonHeapSizeFromDebugfs;
-import static com.android.server.stats.pull.ProcfsMemoryUtil.getProcessCmdlines;
-import static com.android.server.stats.pull.ProcfsMemoryUtil.readCmdlineFromProcfs;
-import static com.android.server.stats.pull.ProcfsMemoryUtil.readMemorySnapshotFromProcfs;
+import static com.android.internal.os.ProcfsMemoryUtil.getProcessCmdlines;
+import static com.android.internal.os.ProcfsMemoryUtil.readCmdlineFromProcfs;
+import static com.android.internal.os.ProcfsMemoryUtil.readMemorySnapshotFromProcfs;
 
 import static libcore.io.IoUtils.closeQuietly;
 
@@ -199,6 +199,8 @@ import com.android.internal.os.KernelSingleProcessCpuThreadReader.ProcessCpuUsag
 import com.android.internal.os.LooperStats;
 import com.android.internal.os.PowerProfile;
 import com.android.internal.os.ProcessCpuTracker;
+import com.android.internal.os.ProcfsMemoryUtil;
+import com.android.internal.os.ProcfsMemoryUtil.MemorySnapshot;
 import com.android.internal.os.SelectedProcessCpuThreadReader;
 import com.android.internal.os.StoragedUidIoStatsReader;
 import com.android.internal.util.CollectionUtils;
@@ -220,7 +222,6 @@ import com.android.server.power.stats.KernelWakelockReader;
 import com.android.server.power.stats.KernelWakelockStats;
 import com.android.server.power.stats.SystemServerCpuThreadReader.SystemServiceCpuThreadTimes;
 import com.android.server.stats.pull.IonMemoryUtil.IonAllocations;
-import com.android.server.stats.pull.ProcfsMemoryUtil.MemorySnapshot;
 import com.android.server.stats.pull.netstats.NetworkStatsExt;
 import com.android.server.stats.pull.netstats.SubInfo;
 import com.android.server.storage.DiskStatsFileLogger;
@@ -2424,7 +2425,7 @@ public class StatsPullAtomService extends SystemService {
                 LocalServices.getService(ActivityManagerInternal.class)
                         .getMemoryStateForProcesses();
         for (ProcessMemoryState managedProcess : managedProcessList) {
-            final MemorySnapshot snapshot = readMemorySnapshotFromProcfs(managedProcess.pid);
+            final ProcfsMemoryUtil.MemorySnapshot snapshot = readMemorySnapshotFromProcfs(managedProcess.pid);
             if (snapshot == null) {
                 continue;
             }
@@ -2439,7 +2440,7 @@ public class StatsPullAtomService extends SystemService {
         managedProcessList.forEach(managedProcess -> processCmdlines.delete(managedProcess.pid));
         int size = processCmdlines.size();
         for (int i = 0; i < size; ++i) {
-            final MemorySnapshot snapshot = readMemorySnapshotFromProcfs(processCmdlines.keyAt(i));
+            final ProcfsMemoryUtil.MemorySnapshot snapshot = readMemorySnapshotFromProcfs(processCmdlines.keyAt(i));
             if (snapshot == null) {
                 continue;
             }
@@ -2475,7 +2476,7 @@ public class StatsPullAtomService extends SystemService {
             gpuMemPerPid.put(processGpuMem.pid, processGpuMem.gpuMemoryKb);
         }
         for (ProcessMemoryState managedProcess : managedProcessList) {
-            final MemorySnapshot snapshot = readMemorySnapshotFromProcfs(managedProcess.pid);
+            final ProcfsMemoryUtil.MemorySnapshot snapshot = readMemorySnapshotFromProcfs(managedProcess.pid);
             if (snapshot == null) {
                 continue;
             }
@@ -2495,7 +2496,7 @@ public class StatsPullAtomService extends SystemService {
         int size = processCmdlines.size();
         for (int i = 0; i < size; ++i) {
             int pid = processCmdlines.keyAt(i);
-            final MemorySnapshot snapshot = readMemorySnapshotFromProcfs(pid);
+            final ProcfsMemoryUtil.MemorySnapshot snapshot = readMemorySnapshotFromProcfs(pid);
             if (snapshot == null) {
                 continue;
             }
