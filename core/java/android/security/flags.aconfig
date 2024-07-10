@@ -83,3 +83,10 @@ flag {
     description: "Add a dump capability for attestation_verification service"
     bug: "335498868"
 }
+
+flag {
+    name: "reset_strong_auth_on_add_and_clear_primary_credential"
+    namespace: "biometrics"
+    description: "Clear StrongAuth on add credential, reset StrongAuth on clear credential"
+    bug: "320817991"
+}
