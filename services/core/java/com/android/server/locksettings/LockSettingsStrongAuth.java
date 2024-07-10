@@ -55,7 +55,7 @@ public class LockSettingsStrongAuth {
     private static final int MSG_REQUIRE_STRONG_AUTH = 1;
     private static final int MSG_REGISTER_TRACKER = 2;
     private static final int MSG_UNREGISTER_TRACKER = 3;
-    private static final int MSG_REMOVE_USER = 4;
+    private static final int MSG_CLEAR_USER_STATE = 4;
     private static final int MSG_SCHEDULE_STRONG_AUTH_TIMEOUT = 5;
     private static final int MSG_NO_LONGER_REQUIRE_STRONG_AUTH = 6;
     private static final int MSG_SCHEDULE_NON_STRONG_BIOMETRIC_TIMEOUT = 7;
@@ -229,7 +229,7 @@ public class LockSettingsStrongAuth {
         }
     }
 
-    private void handleRemoveUser(int userId) {
+    private void handleClearUserState(int userId) {
         int index = mStrongAuthForUser.indexOfKey(userId);
         if (index >= 0) {
             mStrongAuthForUser.removeAt(index);
@@ -450,9 +450,13 @@ public class LockSettingsStrongAuth {
         mHandler.obtainMessage(MSG_UNREGISTER_TRACKER, tracker).sendToTarget();
     }
 
-    public void removeUser(int userId) {
+    /**
+     * Clears the strong auth state for the {@param userId}. All registered
+     * {@link IStrongAuthTracker}s will receive the default strong auth value for the user.
+     */
+    public void clearUserState(int userId) {
         final int argNotUsed = 0;
-        mHandler.obtainMessage(MSG_REMOVE_USER, userId, argNotUsed).sendToTarget();
+        mHandler.obtainMessage(MSG_CLEAR_USER_STATE, userId, argNotUsed).sendToTarget();
     }
 
     public void requireStrongAuth(int strongAuthReason, int userId) {
@@ -609,8 +613,8 @@ public class LockSettingsStrongAuth {
                 case MSG_REQUIRE_STRONG_AUTH:
                     handleRequireStrongAuth(msg.arg1, msg.arg2);
                     break;
-                case MSG_REMOVE_USER:
-                    handleRemoveUser(msg.arg1);
+                case MSG_CLEAR_USER_STATE:
+                    handleClearUserState(msg.arg1);
                     break;
                 case MSG_SCHEDULE_STRONG_AUTH_TIMEOUT:
                     handleScheduleStrongAuthTimeout(msg.arg1);
