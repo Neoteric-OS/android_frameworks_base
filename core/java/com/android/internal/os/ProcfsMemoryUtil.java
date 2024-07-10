@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.server.stats.pull;
+package com.android.internal.os;
 
 import static android.os.Process.PROC_OUT_STRING;
 
@@ -109,7 +109,7 @@ public final class ProcfsMemoryUtil {
 
     /** Reads and parses selected entries of /proc/vmstat. */
     @Nullable
-    static VmStat readVmStat() {
+    public static VmStat readVmStat() {
         long[] vmstat = new long[VMSTAT_KEYS.length];
         vmstat[0] = -1;
         Process.readProcLines("/proc/vmstat", VMSTAT_KEYS, vmstat);
@@ -121,7 +121,7 @@ public final class ProcfsMemoryUtil {
         return result;
     }
 
-    static final class VmStat {
+    public static final class VmStat {
         public int oomKillCount;
     }
 }
