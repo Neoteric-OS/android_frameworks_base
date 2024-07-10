@@ -459,7 +459,15 @@ public final class AutoFillUI {
 
                         @Override
                         public void onShown() {
+<<<<<<< HEAD   (e6eaac [coastguard skipped] Merge sparse cherrypicks from sparse-12)
                             callback.onShown(UI_TYPE_DIALOG);
+||||||| BASE
+                            mCallback.onShown(UI_TYPE_DIALOG, response.getDatasets().size());
+=======
+                            if (mCallback != null) {
+                                mCallback.onShown(UI_TYPE_DIALOG, response.getDatasets().size());
+                            }
+>>>>>>> CHANGE (1969fb Add null check for mCallback in AutoFillUI)
                         }
 
                         @Override
@@ -502,7 +510,9 @@ public final class AutoFillUI {
 
                         @Override
                         public void startIntentSender(IntentSender intentSender) {
-                            mCallback.startIntentSenderAndFinishSession(intentSender);
+                            if (mCallback != null) {
+                                mCallback.startIntentSenderAndFinishSession(intentSender);
+                            }
                         }
 
                         private void log(int type) {
