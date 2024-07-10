@@ -16,7 +16,6 @@
 
 package com.android.server.locksettings;
 
-import static android.security.Flags.reportPrimaryAuthAttempts;
 import static android.Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE;
 import static android.Manifest.permission.CONFIGURE_FACTORY_RESET_PROTECTION;
 import static android.Manifest.permission.MANAGE_BIOMETRIC;
@@ -32,6 +31,7 @@ import static android.content.Intent.ACTION_MAIN_USER_LOCKSCREEN_KNOWLEDGE_FACTO
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.os.UserHandle.USER_ALL;
 import static android.os.UserHandle.USER_SYSTEM;
+import static android.security.Flags.reportPrimaryAuthAttempts;
 
 import static com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_NONE;
 import static com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_PASSWORD_OR_PIN;
@@ -450,7 +450,8 @@ public class LockSettingsService extends ILockSettings.Stub {
         // as its parent.
         if (!isUserSecure(parent.id) && !profileUserPassword.isNone()) {
             Slogf.i(TAG, "Clearing password for profile user %d to match parent", profileUserId);
-            setLockCredentialInternal(LockscreenCredential.createNone(), profileUserPassword,
+            setLockCredentialWithSavedCredential(LockscreenCredential.createNone(),
+                    profileUserPassword,
                     profileUserId, /* isLockTiedToParent= */ true);
             return;
         }
@@ -468,7 +469,8 @@ public class LockSettingsService extends ILockSettings.Stub {
             return;
         }
         try (LockscreenCredential unifiedProfilePassword = generateRandomProfilePassword()) {
-            setLockCredentialInternal(unifiedProfilePassword, profileUserPassword, profileUserId,
+            setLockCredentialWithSavedCredential(unifiedProfilePassword, profileUserPassword,
+                    profileUserId,
                     /* isLockTiedToParent= */ true);
             tieProfileLockToParent(profileUserId, parent.id, unifiedProfilePassword);
             mUnifiedProfilePasswordCache.storePassword(profileUserId, unifiedProfilePassword,
@@ -1595,7 +1597,8 @@ public class LockSettingsService extends ILockSettings.Stub {
      * changing password for profiles requires existing password, and existing passwords can only be
      * computed before the parent user's password is cleared.
      *
-     * Strictly this is a recursive function, since setLockCredentialInternal ends up calling this
+     * Strictly this is a recursive function, since setLockCredentialWithSavedCredential ends up
+     * calling this
      * method again on profiles. However the recursion is guaranteed to terminate as this method
      * terminates when the user is a profile that shares lock credentials with parent.
      * (e.g. managed and clone profile).
@@ -1623,7 +1626,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                     // credential, otherwise they get lost
                     if (profilePasswordMap != null
                             && profilePasswordMap.containsKey(profileUserId)) {
-                        setLockCredentialInternal(LockscreenCredential.createNone(),
+                        setLockCredentialWithSavedCredential(LockscreenCredential.createNone(),
                                 profilePasswordMap.get(profileUserId),
                                 profileUserId,
                                 /* isLockTiedToParent= */ true);
@@ -1710,7 +1713,7 @@ public class LockSettingsService extends ILockSettings.Stub {
     }
 
     // This method should be called by LockPatternUtil only, all internal methods in this class
-    // should call setLockCredentialInternal.
+    // should call setLockCredentialWithSavedCredential.
     @Override
     public boolean setLockCredential(LockscreenCredential credential,
             LockscreenCredential savedCredential, int userId) {
@@ -1736,7 +1739,8 @@ public class LockSettingsService extends ILockSettings.Stub {
             enforceFrpResolved();
             // When changing credential for profiles with unified challenge, some callers
             // will pass in empty credential while others will pass in the credential of
-            // the parent user. setLockCredentialInternal() handles the formal case (empty
+            // the parent user. setLockCredentialWithSavedCredential() handles the formal case
+            // (empty
             // credential) correctly but not the latter. As a stopgap fix, convert the latter
             // case to the formal. The long-term fix would be fixing LSS such that it should
             // accept only the parent user credential on its public API interfaces, swap it
@@ -1745,14 +1749,14 @@ public class LockSettingsService extends ILockSettings.Stub {
             if (!savedCredential.isNone() && isProfileWithUnifiedLock(userId)) {
                 // Verify the parent credential again, to make sure we have a fresh enough
                 // auth token such that getDecryptedPasswordForTiedProfile() inside
-                // setLockCredentialInternal() can function correctly.
+                // setLockCredentialWithSavedCredential() can function correctly.
                 verifyCredential(savedCredential, mUserManager.getProfileParent(userId).id,
                         0 /* flags */);
                 savedCredential.zeroize();
                 savedCredential = LockscreenCredential.createNone();
             }
             synchronized (mSeparateChallengeLock) {
-                if (!setLockCredentialInternal(credential, savedCredential,
+                if (!setLockCredentialWithSavedCredential(credential, savedCredential,
                         userId, /* isLockTiedToParent= */ false)) {
                     scheduleGc();
                     return false;
@@ -1788,6 +1792,12 @@ public class LockSettingsService extends ILockSettings.Stub {
     }
 
     /**
+     * Set a new LSKF for the given user/profile. Only succeeds if the synthetic password for the
+     * user is protected by the given {@param savedCredential}.
+     *
+     * When {@link android.security.Flags#clearStrongAuthOnAddPrimaryCredential()} is enabled,
+     * also updates the strong state for {@param userId} to <tt>STRONG_AUTH_NOT_REQUIRED</tt>.
+     *
      * @param savedCredential if the user is a profile with
      * {@link UserManager#isCredentialSharableWithParent()} with unified challenge and
      *   savedCredential is empty, LSS will try to re-derive the profile password internally.
@@ -1795,7 +1805,7 @@ public class LockSettingsService extends ILockSettings.Stub {
      * @param isLockTiedToParent is {@code true} if {@code userId} is a profile and its new
      *     credentials are being tied to its parent's credentials.
      */
-    private boolean setLockCredentialInternal(LockscreenCredential credential,
+    private boolean setLockCredentialWithSavedCredential(LockscreenCredential credential,
             LockscreenCredential savedCredential, int userId, boolean isLockTiedToParent) {
         Objects.requireNonNull(credential);
         Objects.requireNonNull(savedCredential);
@@ -1836,6 +1846,12 @@ public class LockSettingsService extends ILockSettings.Stub {
 
             onSyntheticPasswordUnlocked(userId, sp);
             setLockCredentialWithSpLocked(credential, sp, userId);
+            if (android.security.Flags.clearStrongAuthOnAddPrimaryCredential()
+                    && savedCredential.isNone() && !credential.isNone()) {
+                // Clear the strong auth value, since the LSKF has just been entered and set,
+                // but only when the previous credential was None.
+                mStrongAuth.reportUnlock(userId);
+            }
             sendCredentialsOnChangeIfRequired(credential, userId, isLockTiedToParent);
             return true;
         }
