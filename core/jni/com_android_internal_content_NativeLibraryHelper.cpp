@@ -17,6 +17,7 @@
 #define LOG_TAG "NativeLibraryHelper"
 //#define LOG_NDEBUG 0
 
+#include <android-base/properties.h>
 #include <androidfw/ApkParsing.h>
 #include <androidfw/ZipFileRO.h>
 #include <androidfw/ZipUtils.h>
@@ -124,6 +125,11 @@ sumFiles(JNIEnv*, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntry, const char
     *total += static_cast<size_t>(uncompLen);
 
     return INSTALL_SUCCEEDED;
+}
+
+static bool linker4kBCompatEnabled() {
+  // TODO: Read configuration
+  return true;
 }
 
 static inline install_status_t extractNativeFileFromApk(const std::string nativeLibPath, const char *fileName,
@@ -299,7 +305,13 @@ copyFileIfChanged(JNIEnv *env, void* arg, ZipFileRO* zipFile, ZipEntryRO zipEntr
         if (offset % kPageSize != 0) {
             ALOGE("Library '%s' is not PAGE(%zu)-aligned - will not be able to open it directly "
                   "from apk.\n", fileName, kPageSize);
-            return  INSTALL_FAILED_INVALID_APK;
+            if (linker4kBCompatEnabled()) {
+                // Fallback to extracting the native libraries from the apk
+                return extractNativeFileFromApk(nativeLibPath.c_str(), fileName, when, uncompLen,
+                                                crc, zipFile, zipEntry);
+            } else {
+                return  INSTALL_FAILED_INVALID_APK;
+            }
         }
 
 #ifdef ENABLE_PUNCH_HOLES
