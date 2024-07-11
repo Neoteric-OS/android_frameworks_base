@@ -3547,24 +3547,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 Slog.wtf(TAG, "KEYCODE_VOICE_ASSIST should be handled in"
                         + " interceptKeyBeforeQueueing");
                 return true;
-            case KeyEvent.KEYCODE_VIDEO_APP_1:
-            case KeyEvent.KEYCODE_VIDEO_APP_2:
-            case KeyEvent.KEYCODE_VIDEO_APP_3:
-            case KeyEvent.KEYCODE_VIDEO_APP_4:
-            case KeyEvent.KEYCODE_VIDEO_APP_5:
-            case KeyEvent.KEYCODE_VIDEO_APP_6:
-            case KeyEvent.KEYCODE_VIDEO_APP_7:
-            case KeyEvent.KEYCODE_VIDEO_APP_8:
-            case KeyEvent.KEYCODE_FEATURED_APP_1:
-            case KeyEvent.KEYCODE_FEATURED_APP_2:
-            case KeyEvent.KEYCODE_FEATURED_APP_3:
-            case KeyEvent.KEYCODE_FEATURED_APP_4:
-            case KeyEvent.KEYCODE_DEMO_APP_1:
-            case KeyEvent.KEYCODE_DEMO_APP_2:
-            case KeyEvent.KEYCODE_DEMO_APP_3:
-            case KeyEvent.KEYCODE_DEMO_APP_4:
-                Slog.wtf(TAG, "KEYCODE_APP_X should be handled in interceptKeyBeforeQueueing");
-                return true;
             case KeyEvent.KEYCODE_BRIGHTNESS_UP:
             case KeyEvent.KEYCODE_BRIGHTNESS_DOWN:
                 if (down) {
@@ -3794,8 +3776,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (isValidGlobalKey(keyCode)
                 && mGlobalKeyManager.handleGlobalKey(mContext, keyCode, event)) {
             return true;
+        } else if (isValidDirectKey(keyCode)) {
+            Slog.wtf(TAG, "KEYCODE_APP_X should not be sent to apps.");
+            return true;
         }
-
         // Reserve all the META modifier combos for system behavior
         return (metaState & KeyEvent.META_META_ON) != 0;
     }
@@ -5182,6 +5166,34 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 return false;
             default:
                 return true;
+        }
+    }
+
+    /**
+     * Returns true if the key is system direct keycode .
+     * Prevent the below keycode from being sent to the apps.
+     */
+    private static boolean isValidDirectKey(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VIDEO_APP_1:
+            case KeyEvent.KEYCODE_VIDEO_APP_2:
+            case KeyEvent.KEYCODE_VIDEO_APP_3:
+            case KeyEvent.KEYCODE_VIDEO_APP_4:
+            case KeyEvent.KEYCODE_VIDEO_APP_5:
+            case KeyEvent.KEYCODE_VIDEO_APP_6:
+            case KeyEvent.KEYCODE_VIDEO_APP_7:
+            case KeyEvent.KEYCODE_VIDEO_APP_8:
+            case KeyEvent.KEYCODE_FEATURED_APP_1:
+            case KeyEvent.KEYCODE_FEATURED_APP_2:
+            case KeyEvent.KEYCODE_FEATURED_APP_3:
+            case KeyEvent.KEYCODE_FEATURED_APP_4:
+            case KeyEvent.KEYCODE_DEMO_APP_1:
+            case KeyEvent.KEYCODE_DEMO_APP_2:
+            case KeyEvent.KEYCODE_DEMO_APP_3:
+            case KeyEvent.KEYCODE_DEMO_APP_4:
+                return true;
+            default:
+                return false;
         }
     }
 
