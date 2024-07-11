@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7f0731e_705235f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-07-11T11:53:40Z",
+      "side": 1,
+      "message": "Michael, can you take a look at this and use your global approval powers? I promise it is for good. I assigned it to Nandana as she is the only one with ownership on the new file I created but I forgot she is OOO.",
+      "revId": "6021e89dfb9ef56881a188bfb2fb8abef801b53b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
