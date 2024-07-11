@@ -17,6 +17,7 @@
 package com.android.server.locksettings;
 
 import static android.Manifest.permission.CONFIGURE_FACTORY_RESET_PROTECTION;
+import static android.security.Flags.FLAG_CLEAR_STRONG_AUTH_ON_SUCCESSFUL_CREDENTIAL_VERIFICATION;
 import static android.security.Flags.FLAG_REPORT_PRIMARY_AUTH_ATTEMPTS;
 import static android.security.Flags.FLAG_RESET_STRONG_AUTH_ON_ADD_AND_CLEAR_PRIMARY_CREDENTIAL;
 
@@ -34,6 +35,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
@@ -65,6 +67,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 
 /**
  * atest FrameworksServicesTests:LockSettingsServiceTests
@@ -432,6 +435,30 @@ public class LockSettingsServiceTests extends BaseLockSettingsServiceTests {
     }
 
     @Test
+    @RequiresFlagsEnabled(FLAG_CLEAR_STRONG_AUTH_ON_SUCCESSFUL_CREDENTIAL_VERIFICATION)
+    public void verifyCredential_forPrimaryUser_clearsStrongAuthWhenFlagIsOn() throws Exception {
+        final LockscreenCredential password = newPassword("password");
+        setCredential(PRIMARY_USER_ID, password);
+        reset(mStrongAuth);
+
+        mService.verifyCredential(password, PRIMARY_USER_ID, 0 /* flags */);
+
+        verify(mStrongAuth).reportUnlock(PRIMARY_USER_ID);
+    }
+
+    @Test
+    @RequiresFlagsDisabled(FLAG_CLEAR_STRONG_AUTH_ON_SUCCESSFUL_CREDENTIAL_VERIFICATION)
+    public void verifyCredential_forPrimaryUser_leavesStrongAuthWhenFlagIsOff() throws Exception {
+        final LockscreenCredential password = newPassword("password");
+        setCredential(PRIMARY_USER_ID, password);
+        reset(mStrongAuth);
+
+        mService.verifyCredential(password, PRIMARY_USER_ID, 0 /* flags */);
+
+        verify(mStrongAuth, never()).reportUnlock(PRIMARY_USER_ID);
+    }
+
+    @Test
     public void testVerifyCredential_forProfileWithSeparateChallenge_sendsCredentials()
             throws Exception {
         final LockscreenCredential pattern = newPattern("12345");
@@ -443,6 +470,32 @@ public class LockSettingsServiceTests extends BaseLockSettingsServiceTests {
         verify(mRecoverableKeyStoreManager)
                 .lockScreenSecretAvailable(
                         CREDENTIAL_TYPE_PATTERN, pattern.getCredential(), MANAGED_PROFILE_USER_ID);
+    }
+
+    @Test
+    @RequiresFlagsEnabled(FLAG_CLEAR_STRONG_AUTH_ON_SUCCESSFUL_CREDENTIAL_VERIFICATION)
+    public void verifyCredential_forProfileWithSeparateChallenge_clearsStrongAuthWhenFlagIsOn()
+            throws Exception {
+        final LockscreenCredential pattern = newPattern("12345");
+        setCredential(MANAGED_PROFILE_USER_ID, pattern);
+        reset(mStrongAuth);
+
+        mService.verifyCredential(pattern, MANAGED_PROFILE_USER_ID, 0 /* flags */);
+
+        verify(mStrongAuth).reportUnlock(MANAGED_PROFILE_USER_ID);
+    }
+
+    @Test
+    @RequiresFlagsDisabled(FLAG_CLEAR_STRONG_AUTH_ON_SUCCESSFUL_CREDENTIAL_VERIFICATION)
+    public void verifyCredential_forProfileWithSeparateChallenge_leavesStrongAuthWhenFlagIsOff()
+            throws Exception {
+        final LockscreenCredential pattern = newPattern("12345");
+        setCredential(MANAGED_PROFILE_USER_ID, pattern);
+        reset(mStrongAuth);
+
+        mService.verifyCredential(pattern, MANAGED_PROFILE_USER_ID, 0 /* flags */);
+
+        verify(mStrongAuth, never()).reportUnlock(MANAGED_PROFILE_USER_ID);
     }
 
     @Test
@@ -466,6 +519,38 @@ public class LockSettingsServiceTests extends BaseLockSettingsServiceTests {
         verify(mRecoverableKeyStoreManager, never())
                 .lockScreenSecretAvailable(
                         eq(CREDENTIAL_TYPE_PASSWORD), any(), eq(MANAGED_PROFILE_USER_ID));
+    }
+
+    @Test
+    @RequiresFlagsEnabled(FLAG_CLEAR_STRONG_AUTH_ON_SUCCESSFUL_CREDENTIAL_VERIFICATION)
+    public void verifyCredential_primaryUserWithUnifiedProfile_clearsStrongAuthWhenFlagIsOn()
+            throws Exception {
+        final LockscreenCredential pattern = newPattern("12345");
+        setCredential(PRIMARY_USER_ID, pattern);
+        mService.setSeparateProfileChallengeEnabled(MANAGED_PROFILE_USER_ID, false, null);
+        reset(mStrongAuth);
+
+        mService.verifyCredential(pattern, PRIMARY_USER_ID, 0 /* flags */);
+
+        InOrder inOrder = inOrder(mStrongAuth);
+        inOrder.verify(mStrongAuth).reportUnlock(MANAGED_PROFILE_USER_ID);
+        inOrder.verify(mStrongAuth).reportUnlock(PRIMARY_USER_ID);
+        inOrder.verify(mStrongAuth, never()).reportUnlock(anyInt());
+    }
+
+    @Test
+    @RequiresFlagsDisabled(FLAG_CLEAR_STRONG_AUTH_ON_SUCCESSFUL_CREDENTIAL_VERIFICATION)
+    public void verifyCredential_primaryUserWithUnifiedProfile_mixedStrongAuthWhenFlagIsOff()
+            throws Exception {
+        final LockscreenCredential pattern = newPattern("12345");
+        setCredential(PRIMARY_USER_ID, pattern);
+        mService.setSeparateProfileChallengeEnabled(MANAGED_PROFILE_USER_ID, false, null);
+        reset(mStrongAuth);
+
+        mService.verifyCredential(pattern, PRIMARY_USER_ID, 0 /* flags */);
+
+        verify(mStrongAuth, never()).reportUnlock(PRIMARY_USER_ID);
+        verify(mStrongAuth).reportUnlock(MANAGED_PROFILE_USER_ID);
     }
 
     @Test

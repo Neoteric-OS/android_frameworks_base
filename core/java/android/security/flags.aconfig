@@ -90,3 +90,10 @@ flag {
     description: "Clear StrongAuth on add credential, reset StrongAuth on clear credential"
     bug: "320817991"
 }
+
+flag {
+    name: "clear_strong_auth_on_successful_credential_verification"
+    namespace: "biometrics"
+    description: "Clear StrongAuth on successful doVerifyCredential"
+    bug: "352573681"
+}
