@@ -4340,7 +4340,10 @@ public class AudioService extends IAudioService.Stub
     private final AudioVolumeChangeHandler mAudioVolumeChangeHandler;
 
     /** @see AudioManager#registerVolumeGroupCallback(executor, callback) */
+    @android.annotation.EnforcePermission(
+            android.Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED)
     public void registerAudioVolumeCallback(IAudioVolumeChangeDispatcher callback) {
+        super.registerAudioVolumeCallback_enforcePermission();
         synchronized (mAudioVolumeChangeHandlerLock) {
             mAudioVolumeChangeHandler.init();
             mAudioVolumeChangeHandler.registerListener(callback);
@@ -4348,7 +4351,10 @@ public class AudioService extends IAudioService.Stub
     }
 
     /** @see AudioManager#unregisterVolumeGroupCallback(callback) */
+    @android.annotation.EnforcePermission(
+            android.Manifest.permission.MODIFY_AUDIO_SETTINGS_PRIVILEGED)
     public void unregisterAudioVolumeCallback(IAudioVolumeChangeDispatcher callback) {
+        super.unregisterAudioVolumeCallback_enforcePermission();
         synchronized (mAudioVolumeChangeHandlerLock) {
             mAudioVolumeChangeHandler.unregisterListener(callback);
         }
