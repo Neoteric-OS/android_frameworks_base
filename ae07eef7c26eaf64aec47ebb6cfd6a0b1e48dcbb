@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3b9ac34_22e09978",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950366
+      },
+      "writtenOn": "2024-07-11T18:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6d3d1e6_98a0063a",
+      "revId": "ae07eef7c26eaf64aec47ebb6cfd6a0b1e48dcbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9faf0863_7ffbec6e",
@@ -41,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67ca37a8_e2693bdf",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/trust/TrustManagerServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1950366
+      },
+      "writtenOn": "2024-07-11T18:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9faf0863_7ffbec6e",
+      "range": {
+        "startLine": 618,
+        "startChar": 35,
+        "endLine": 618,
+        "endChar": 73
+      },
+      "revId": "ae07eef7c26eaf64aec47ebb6cfd6a0b1e48dcbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b434e994_3aa18b7f",
@@ -54,6 +96,30 @@
       "writtenOn": "2024-07-11T17:56:57Z",
       "side": 1,
       "message": "can we simplify by importing?",
+      "range": {
+        "startLine": 630,
+        "startChar": 35,
+        "endLine": 630,
+        "endChar": 73
+      },
+      "revId": "ae07eef7c26eaf64aec47ebb6cfd6a0b1e48dcbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8d3b62e_cb6a4ff4",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/trust/TrustManagerServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1950366
+      },
+      "writtenOn": "2024-07-11T18:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b434e994_3aa18b7f",
       "range": {
         "startLine": 630,
         "startChar": 35,
