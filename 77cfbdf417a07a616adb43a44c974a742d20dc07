@@ -16,6 +16,24 @@
       "message": "I have no clue about the code here. Can you find owners that have reviewed these files before?",
       "revId": "77cfbdf417a07a616adb43a44c974a742d20dc07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43ef6b24_0ba67465",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2024-07-12T00:56:24Z",
+      "side": 1,
+      "message": "Jeff is the only reviewer \u0026 maintainer and he is out up to end of August.\n\nSorry, there is no other one as the other suggested reviewer are more manager than technical.\n\n---\n\nI am pretty confident on the change because I did use it locally to verify and enforce Bluetooth intent, and it allows me to detect some errors.\nI am just not so familiar with this code neither and try to be the least intrusif as possible.",
+      "parentUuid": "6a4aff68_be6c013d",
+      "revId": "77cfbdf417a07a616adb43a44c974a742d20dc07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
