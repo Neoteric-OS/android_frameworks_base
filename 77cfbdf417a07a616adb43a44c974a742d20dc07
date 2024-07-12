@@ -34,6 +34,24 @@
       "parentUuid": "6a4aff68_be6c013d",
       "revId": "77cfbdf417a07a616adb43a44c974a742d20dc07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d624e1_6b9806cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944206
+      },
+      "writtenOn": "2024-07-12T19:45:57Z",
+      "side": 1,
+      "message": "As long as the tests still pass and you have added new tests for your use case, I guess I am fine with it, so +1 from me, though I also have no clue about this code (or errorprone). Can this absolutely not wait until he\u0027s back?\n\nSeparately, it would appear Jeff the only reviewer/maintainer for the entirety of [errorprone](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/errorprone/OWNERS). @smoreland@google.com - how concerning is this to you? We have 16 errorprone checks...I\u0027m not sure any team is jumping up and down to migrate them all to Android Lint...but that seems to be the best path going forward.  If all of these checks were lint checks then at least we have the entire Android Lint team from Studio that could lend a hand when bugs like this crop up over time.\n\nThoughts?",
+      "parentUuid": "43ef6b24_0ba67465",
+      "revId": "77cfbdf417a07a616adb43a44c974a742d20dc07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
