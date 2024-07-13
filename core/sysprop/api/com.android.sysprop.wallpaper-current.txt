@@ -1,0 +1,21 @@
+props {
+  module: "android.sysprop.WallpaperProperties"
+  prop {
+    api_name: "live_wallpaper_component"
+    type: String
+    prop_name: "wallpaper.config.live.component"
+    legacy_prop_name: "ro.config.wallpaper_component"
+  }
+  prop {
+    api_name: "lock_wallpaper_path"
+    type: String
+    prop_name: "wallpaper.config.lock.path"
+    legacy_prop_name: "ro.config.lock_wallpaper"
+  }
+  prop {
+    api_name: "wallpaper_path"
+    type: String
+    prop_name: "wallpaper.config.default.path"
+    legacy_prop_name: "ro.config.wallpaper"
+  }
+}

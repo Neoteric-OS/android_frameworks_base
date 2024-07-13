@@ -255,6 +255,7 @@ java_library {
         "ImmutabilityAnnotation",
 
         "com.android.sysprop.localization",
+        "com.android.sysprop.wallpaper",
         "PlatformProperties",
     ],
     sdk_version: "core_platform",

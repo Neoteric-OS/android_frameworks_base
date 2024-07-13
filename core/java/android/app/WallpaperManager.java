@@ -82,6 +82,7 @@ import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.sysprop.WallpaperProperties;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -151,12 +152,6 @@ public class WallpaperManager {
     private static final @NonNull RectF LOCAL_COLOR_BOUNDS =
             new RectF(0, 0, 1, 1);
 
-    /** {@hide} */
-    private static final String PROP_WALLPAPER = "ro.config.wallpaper";
-    /** {@hide} */
-    private static final String PROP_LOCK_WALLPAPER = "ro.config.lock_wallpaper";
-    /** {@hide} */
-    private static final String PROP_WALLPAPER_COMPONENT = "ro.config.wallpaper_component";
     /** {@hide} */
     private static final String VALUE_CMF_COLOR =
             android.os.SystemProperties.get("ro.boot.hardware.color");
@@ -3140,15 +3135,14 @@ public class WallpaperManager {
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static InputStream openDefaultWallpaper(Context context, @SetWallpaperFlags int which) {
-        final String whichProp;
-        final int defaultResId;
         /* Factory-default lock wallpapers are not yet supported.
-        whichProp = which == FLAG_LOCK ? PROP_LOCK_WALLPAPER : PROP_WALLPAPER;
-        defaultResId = which == FLAG_LOCK ? R.drawable.default_lock_wallpaper :  ....
+        final int defaultResId = which == FLAG_LOCK ? R.drawable.default_lock_wallpaper :  ....
+        final String path = (which == FLAG_LOCK)
+            ? WallpaperProperties.lock_wallpaper_path().orElse("")
+            : WallpaperProperties.wallpaper_path().orElse("");
         */
-        whichProp = PROP_WALLPAPER;
-        defaultResId = R.drawable.default_wallpaper;
-        final String path = SystemProperties.get(whichProp);
+        final int defaultResId = R.drawable.default_wallpaper;
+        final String path = WallpaperProperties.wallpaper_path().orElse("");
         final InputStream wallpaperInputStream = getWallpaperInputStream(path);
         if (wallpaperInputStream != null) {
             return wallpaperInputStream;
@@ -3203,7 +3197,7 @@ public class WallpaperManager {
      * if the file exists for the first path of this list, the first path should be used.
      */
     private static List<String> getDefaultSystemWallpaperPaths() {
-        return List.of(SystemProperties.get(PROP_WALLPAPER), getCmfWallpaperPath());
+        return List.of(WallpaperProperties.wallpaper_path().orElse(""), getCmfWallpaperPath());
     }
 
     private static String getCmfWallpaperPath() {
@@ -3220,7 +3214,7 @@ public class WallpaperManager {
     public static ComponentName getDefaultWallpaperComponent(Context context) {
         ComponentName cn = null;
 
-        String flat = SystemProperties.get(PROP_WALLPAPER_COMPONENT);
+        String flat = WallpaperProperties.live_wallpaper_component().orElse("");
         if (!TextUtils.isEmpty(flat)) {
             cn = ComponentName.unflattenFromString(flat);
         }
