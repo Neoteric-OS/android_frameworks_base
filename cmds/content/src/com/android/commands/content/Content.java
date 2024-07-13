@@ -600,6 +600,11 @@ public class Content {
                     resolveCallingPackage(), null), mUri.getAuthority(), mMethod, mArg, mExtras);
             if (result != null) {
                 result.size(); // unpack
+                // force individual values to be unpacked (to address the lazy values)
+                Object obj = null;
+                for (String key : result.keySet()) {
+                    obj = result.get(key);
+                }
             }
             System.out.println("Result: " + result);
         }
