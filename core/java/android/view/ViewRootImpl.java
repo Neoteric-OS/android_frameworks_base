@@ -11250,6 +11250,17 @@ public final class ViewRootImpl implements ViewParent,
 
         // Compute the area on screen covered by the window
         Rect boundsOnScreen = new Rect();
+
+        if (mView == null) {
+            response.setDescription("Decorview == null return..");
+            try {
+                listener.onScrollCaptureResponse(response.build());
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to send scroll capture search result", e);
+            }
+            return;
+        }
+
         mView.getLocationOnScreen(mAttachInfo.mTmpLocation);
         boundsOnScreen.set(0, 0, mView.getWidth(), mView.getHeight());
         boundsOnScreen.offset(mAttachInfo.mTmpLocation[0], mAttachInfo.mTmpLocation[1]);
