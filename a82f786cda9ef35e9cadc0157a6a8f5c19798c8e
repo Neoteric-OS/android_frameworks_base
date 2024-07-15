@@ -16,6 +16,24 @@
       "message": "Thanks for making the change.\n\nI realized that while this change reduces memory overhead for native processes, it might increase memory usage for Zygote processes since the lazy initialization might cause each Zygote process to have its own copies of the tables. Do you happen to know how common it is for multiple Zygote processes to need these data tables?",
       "revId": "a82f786cda9ef35e9cadc0157a6a8f5c19798c8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "138e9fed_caaf051c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-07-15T15:22:34Z",
+      "side": 1,
+      "message": "I don\u0027t know, but I think that the data is commonly used when `AssetManager` and `Resources` API are called. How many zygote process on Android ? I think that we can force the initialization of the tables in `zygote64` and `zygote32` for example.",
+      "parentUuid": "e272f020_ddf26d27",
+      "revId": "a82f786cda9ef35e9cadc0157a6a8f5c19798c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
