@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e272f020_ddf26d27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1952023
+      },
+      "writtenOn": "2024-07-15T07:02:09Z",
+      "side": 1,
+      "message": "Thanks for making the change.\n\nI realized that while this change reduces memory overhead for native processes, it might increase memory usage for Zygote processes since the lazy initialization might cause each Zygote process to have its own copies of the tables. Do you happen to know how common it is for multiple Zygote processes to need these data tables?",
+      "revId": "a82f786cda9ef35e9cadc0157a6a8f5c19798c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
