@@ -5492,6 +5492,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
 
     private void setVisibility(boolean visible, boolean deferHidingClient) {
         final AppTransition appTransition = getDisplayContent().mAppTransition;
+        final boolean usingShellTransitions = mTransitionController.isShellTransitionsEnabled();
 
         // Don't set visibility to false if we were already not visible. This prevents WM from
         // adding the app to the closing app list which doesn't make sense for something that is
@@ -5519,7 +5520,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         // Before setting mVisibleRequested so we can track changes.
         boolean isCollecting = false;
         boolean inFinishingTransition = false;
-        if (mTransitionController.isShellTransitionsEnabled()) {
+        if (usingShellTransitions) {
             isCollecting = mTransitionController.isCollecting();
             if (isCollecting) {
                 mTransitionController.collect(this);
@@ -5573,7 +5574,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                 clearAllDrawn();
                 // Reset the draw state in order to prevent the starting window to be immediately
                 // dismissed when the app still has the surface.
-                if (!isVisible() && !isClientVisible()) {
+                if (!isVisible() && (!isClientVisible()
+                        || (usingShellTransitions && isState(RESUMED, STOPPING)))) {
                     forAllWindows(w -> {
                         if (w.mWinAnimator.mDrawState == HAS_DRAWN) {
                             w.mWinAnimator.resetDrawState();
