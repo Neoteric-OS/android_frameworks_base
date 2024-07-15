@@ -16,6 +16,24 @@
       "message": "I don\u0027t think we can merge this... There seem to be some other conflicts downstream. I have merged it internally.",
       "revId": "53fd994d82f0ed863aea3a377b08cf34b43094a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67286157_4db2bae2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-07-15T08:20:07Z",
+      "side": 1,
+      "message": "I understand, thanks for your help with the merge @kozynski@google.com, I will abandon this.\nBRs\nMattias",
+      "parentUuid": "5fbbdd16_d0c9f6c5",
+      "revId": "53fd994d82f0ed863aea3a377b08cf34b43094a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
