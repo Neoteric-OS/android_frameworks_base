@@ -50,6 +50,24 @@
       "message": "Prabir has some recent changes around this code that in some situations also allows for the height to be passed in when the bitmap is scaled.\nWhy did we not do this generically at the time? Do you think this would be resolved with your change?",
       "revId": "a7cd55bee3c4df50904e475134b10ddb88e569b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b94b777_e41d31b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1407716
+      },
+      "writtenOn": "2024-07-15T14:25:35Z",
+      "side": 1,
+      "message": "Yup, these issues have been fixed internally. I have also cherry-picked the fix to AOSP. The old scaling logic did not handle these edge cases very well, and the issue only showed up after introducing the Handwriting icon, which has a hotspot that\u0027s close to the bottom edge of the image.\n\n@priv.luk@gmail.com, please check if the following CL addresses your issue:\nhttps://android-review.git.corp.google.com/c/platform/frameworks/base/+/3171499",
+      "parentUuid": "5b14f10a_6f3446f0",
+      "revId": "a7cd55bee3c4df50904e475134b10ddb88e569b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
