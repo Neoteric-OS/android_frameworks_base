@@ -1014,7 +1014,8 @@ public final class CardEmulation {
       * with all parameters set to null.
       * @param activity The Activity that requests NFC controller routing table to be changed.
       * @param protocol ISO-DEP route destination, which can be "DH" or "UICC" or "ESE".
-      * @param technology Tech-A, Tech-B route destination, which can be "DH" or "UICC" or "ESE".
+      * @param technology Tech-A, Tech-B and Tech-F route destination, which can be "DH" or "UICC"
+      * or "ESE".
       * @return true if operation is successful and false otherwise
       *
       * This is a high risk API and only included to support mainline effort
