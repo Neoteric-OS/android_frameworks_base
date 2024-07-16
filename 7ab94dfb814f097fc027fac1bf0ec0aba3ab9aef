@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "797a082a_dc3c426b",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-07-16T03:01:59Z",
+      "side": 1,
+      "message": "May I understand where this number is from?",
+      "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
