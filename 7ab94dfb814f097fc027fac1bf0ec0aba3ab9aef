@@ -16,6 +16,24 @@
       "message": "May I understand where this number is from?",
       "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a649e7d3_b6423b55",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-07-16T04:42:23Z",
+      "side": 1,
+      "message": "This is the 10 MiB mentioned at the end of the commit message. It used to be `std::numeric_limits\u003cssize_t\u003e::max() / 2` \u003d\u003d 1G. I can put this in a subsequent commit if you\u0027re worried about the value change. The largest maps file on procfs I found on Android was 1/2 MiB for system_server, so this is an order of magnitude larger than that.",
+      "parentUuid": "797a082a_dc3c426b",
+      "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
