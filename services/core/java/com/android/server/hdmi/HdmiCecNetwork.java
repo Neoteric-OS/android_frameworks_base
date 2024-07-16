@@ -725,7 +725,8 @@ public class HdmiCecNetwork {
         HdmiDeviceInfo updatedDeviceInfo = deviceInfo.toBuilder()
                 .setDisplayName(osdName)
                 .build();
-        updateCecDevice(updatedDeviceInfo);
+
+        addCecDevice(updatedDeviceInfo);
     }
 
     @ServiceThreadOnly

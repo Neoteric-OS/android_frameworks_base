@@ -1744,6 +1744,7 @@ public class HdmiControlService extends SystemService {
 
         @Constants.HandleMessageResult int handleMessageResult =
                 dispatchMessageToLocalDevice(message);
+
         // mAddressAllocated is false during address allocation, meaning there is no device to
         // handle the message, so it should be buffered, if possible.
         if (!mAddressAllocated
