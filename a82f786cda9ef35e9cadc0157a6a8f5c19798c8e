@@ -34,6 +34,24 @@
       "parentUuid": "e272f020_ddf26d27",
       "revId": "a82f786cda9ef35e9cadc0157a6a8f5c19798c8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26c9e648_d0c41815",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1952023
+      },
+      "writtenOn": "2024-07-16T02:09:56Z",
+      "side": 1,
+      "message": "+1 to forcing initialization for Zygote.",
+      "parentUuid": "138e9fed_caaf051c",
+      "revId": "a82f786cda9ef35e9cadc0157a6a8f5c19798c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
