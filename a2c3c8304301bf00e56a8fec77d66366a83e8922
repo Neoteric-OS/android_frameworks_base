@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d93ae75_b5f92c2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2024-07-16T18:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35085360_245bca33",
+      "range": {
+        "startLine": 12,
+        "startChar": 18,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f5c539a2_841d7a7c",
@@ -191,6 +215,24 @@
       "side": 1,
       "message": "Yeah. I\u0027ll resume the discussion on the bug again.",
       "parentUuid": "04f12753_e6f7e84a",
+      "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97255565_a49eeb4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937166
+      },
+      "writtenOn": "2024-07-16T18:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a2c375_0a501ea0",
       "revId": "a2c3c8304301bf00e56a8fec77d66366a83e8922",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
