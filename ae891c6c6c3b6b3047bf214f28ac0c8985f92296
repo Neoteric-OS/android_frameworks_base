@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cb1306ea_c2bf517e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-07-17T10:01:56Z",
+      "side": 1,
+      "message": "The path should be already inside WindowManagerGlobalLock. Could you share the callstack that shows it is not locked?",
+      "revId": "ae891c6c6c3b6b3047bf214f28ac0c8985f92296",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2586176d_62a43fd9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
