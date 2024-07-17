@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2586176d_62a43fd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-07-17T09:33:44Z",
+      "side": 1,
+      "message": "Could you create a bug and added to the commit message?",
+      "revId": "ae891c6c6c3b6b3047bf214f28ac0c8985f92296",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aba1fc4_0282ca8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-07-17T09:33:44Z",
+      "side": 1,
+      "message": "The callers to these methods should already have the lock guarded. Could you help explain the call path that is not guarded by the lock and",
+      "revId": "ae891c6c6c3b6b3047bf214f28ac0c8985f92296",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
