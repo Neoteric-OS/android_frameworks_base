@@ -34,6 +34,24 @@
       "parentUuid": "797a082a_dc3c426b",
       "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdf6c8b6_50d3c20d",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2024-07-17T01:02:19Z",
+      "side": 1,
+      "message": "Okay. Hopefully we won\u0027t be hitting that limit (I assume you\u0027ve checked /proc/\u003cpid\u003e/smaps for larger apps like games ?)",
+      "parentUuid": "a649e7d3_b6423b55",
+      "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
