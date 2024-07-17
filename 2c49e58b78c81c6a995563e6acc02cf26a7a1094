@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "005d9646_c22a3615",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-07-17T00:55:45Z",
+      "side": 1,
+      "message": "@achim@google.com, how about also adding the BAL team to the file owner?",
+      "revId": "2c49e58b78c81c6a995563e6acc02cf26a7a1094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
