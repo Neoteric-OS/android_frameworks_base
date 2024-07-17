@@ -16,6 +16,24 @@
       "message": "@achim@google.com, how about also adding the BAL team to the file owner?",
       "revId": "2c49e58b78c81c6a995563e6acc02cf26a7a1094",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c8bf481_38074d56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1960899
+      },
+      "writtenOn": "2024-07-17T17:43:00Z",
+      "side": 1,
+      "message": "Maybe in a separate CL - let\u0027s discuss on chat first.",
+      "parentUuid": "005d9646_c22a3615",
+      "revId": "2c49e58b78c81c6a995563e6acc02cf26a7a1094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
