@@ -88,6 +88,76 @@
       "parentUuid": "77a18926_1a4408d3",
       "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13a43395_00ac121b",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-07-18T01:48:15Z",
+      "side": 1,
+      "message": "Can you name this MAX_READABLE_PROCFILE_SIZE rather than TEN_MEGS? That way you can change the value in the future without changing the variable name.",
+      "fixSuggestions": [
+        {
+          "fixId": "23d03d4b_667de194",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/android_util_Process.cpp",
+              "range": {
+                "startLine": 1097,
+                "startChar": 0,
+                "endLine": 1099,
+                "endChar": 0
+              },
+              "replacement": "                constexpr size_t MAX_READABLE_PROCFILE_SIZE \u003d 10 \u003c\u003c 20;\n                if (heapBuf.size() \u003e\u003d MAX_READABLE_PROCFILE_SIZE) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8741f371_1015838f",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-07-18T01:48:15Z",
+      "side": 1,
+      "message": "Maybe also print out the size?",
+      "fixSuggestions": [
+        {
+          "fixId": "77ac5fac_a446a350",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/android_util_Process.cpp",
+              "range": {
+                "startLine": 1099,
+                "startChar": 0,
+                "endLine": 1100,
+                "endChar": 0
+              },
+              "replacement": "                    if (kDebugProc) ALOGW(\"Proc file too big: %s fd\u003d%d size\u003d%zu\\n\", file8.get(), fd.get(), heapBuf.size());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
