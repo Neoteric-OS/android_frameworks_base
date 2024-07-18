@@ -56,6 +56,69 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1c6e51ab_0ba10a1d",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-07-18T15:44:57Z",
+      "side": 1,
+      "message": "\u003eTechnically this isn\u0027t in Mainline yet anyway, right?\n\nYeah, not yet. But I\u0027m in the middle of moving it to mainline.\n\n\u003e if we want to keep this configurable when the code does become a Mainline module, we\u0027d need some way of doing that in future.\n\nI agree, creating SystemApis (with possibility of modifying few values by OEMs) could be one way of doing it.\n\n\u003eWe alternatively can have OEMs tell us what to add to the list and change the value in Phenotype, but that seems not ideal.\n\nNot very sure but I think it won\u0027t be feasible to have customised phenotype values for different OEMs.",
+      "parentUuid": "041628e2_c4607e3a",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d58f02b8_e2792c87",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-07-18T15:44:57Z",
+      "side": 1,
+      "message": "I think it would be cleaner to have these in a different method something like `allowHighImpactMitigations`.",
+      "fixSuggestions": [
+        {
+          "fixId": "f50575a7_645ab76c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/PackageWatchdog.java",
+              "range": {
+                "startLine": 531,
+                "startChar": 0,
+                "endLine": 534,
+                "endChar": 0
+              },
+              "replacement": "        if (allowHighImpactMitigations(versionedPackage)) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/PackageWatchdog.java",
+              "range": {
+                "startLine": 677,
+                "startChar": 0,
+                "endLine": 677,
+                "endChar": 0
+              },
+              "replacement": "\n    private boolean allowHighImpactMitigations(VersionedPackage versionedPackage) {\n        return currentObserverImpact \u003c getUserImpactLevelLimit()\n                || getPackagesExemptFromImpactLevelThreshold().contains(\n                        versionedPackage.getPackageName());\n    }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "310db3a2_76ba0e3b",
         "filename": "services/core/java/com/android/server/PackageWatchdog.java",
         "patchSetId": 4
@@ -67,6 +130,58 @@
       "writtenOn": "2024-07-18T15:20:06Z",
       "side": 1,
       "message": "Seems like we could cache the result of parsing this such that we only do it once?",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e924aa4_a1c12a27",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-07-18T15:44:57Z",
+      "side": 1,
+      "message": "+1 we could also include the splitting part while caching itself.",
+      "parentUuid": "310db3a2_76ba0e3b",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca370228_833c4500",
+        "filename": "tests/PackageWatchdog/src/com/android/server/CrashRecoveryTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-07-18T15:44:57Z",
+      "side": 1,
+      "message": "Could you please also add a test where this flag is enabled? This flag is soon going to be enabled everywhere.",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7c4ed32_756649aa",
+        "filename": "tests/PackageWatchdog/src/com/android/server/CrashRecoveryTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-07-18T15:44:57Z",
+      "side": 1,
+      "message": "I think these needs to be removed? and below as well.",
       "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
