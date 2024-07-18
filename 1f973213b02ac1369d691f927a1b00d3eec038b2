@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "041628e2_c4607e3a",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1060436
+      },
+      "writtenOn": "2024-07-18T15:35:01Z",
+      "side": 1,
+      "message": "Technically this isn\u0027t in Mainline yet anyway, right?\n\nIt\u0027s also true that an OEM can just change the constant if they want to in the code, so maybe it doesn\u0027t matter for now. But if we want to keep this configurable when the code does become a Mainline module, we\u0027d need some way of doing that in future.\n\nWe alternatively can have OEMs tell us what to add to the list and change the value in Phenotype, but that seems not ideal.",
+      "parentUuid": "7801a254_a9d96f94",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "310db3a2_76ba0e3b",
         "filename": "services/core/java/com/android/server/PackageWatchdog.java",
         "patchSetId": 4
