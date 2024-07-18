@@ -125,6 +125,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e3d96e9_4afebfe7",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-07-18T21:10:44Z",
+      "side": 1,
+      "message": "Sure np. Let me move this to another patch as well.",
+      "parentUuid": "13a43395_00ac121b",
+      "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8741f371_1015838f",
@@ -156,6 +174,24 @@
           ]
         }
       ],
+      "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd5df99a_b58d5149",
+        "filename": "core/jni/android_util_Process.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1930620
+      },
+      "writtenOn": "2024-07-18T21:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8741f371_1015838f",
       "revId": "7ab94dfb814f097fc027fac1bf0ec0aba3ab9aef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
