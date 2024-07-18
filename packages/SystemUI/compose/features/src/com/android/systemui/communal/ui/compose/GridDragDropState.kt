@@ -264,7 +264,7 @@ fun LazyGridItemScope.DraggableItem(
                 alpha = itemAlpha
             }
         } else {
-            Modifier.animateItem()
+            Modifier.animateItemPlacement()
         }
 
     Box(modifier) {
