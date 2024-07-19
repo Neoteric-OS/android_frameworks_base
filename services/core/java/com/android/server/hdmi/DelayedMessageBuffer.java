@@ -83,6 +83,15 @@ final class DelayedMessageBuffer {
         return false;
     }
 
+    HdmiCecMessage getBufferedMessage(int opcode) {
+        for (HdmiCecMessage message : mBuffer) {
+            if (message.getOpcode() == opcode) {
+                return message;
+            }
+        }
+        return null;
+    }
+
     void processAllMessages() {
         // Use the copied buffer.
         ArrayList<HdmiCecMessage> copiedBuffer = new ArrayList<>(mBuffer);

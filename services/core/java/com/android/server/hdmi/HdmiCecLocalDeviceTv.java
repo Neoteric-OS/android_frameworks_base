@@ -220,6 +220,8 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                     }
                 }
             }));
+        } else {
+            notifyBufferedActiveSourceDevice();
         }
     }
 
@@ -760,6 +762,29 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                     }
                 });
         addAndStartAction(action);
+    }
+
+    /**
+     * To accept Active Source in the buffer earlier,
+     * inform physical address in the Active Source's parameter.
+     */
+    @ServiceThreadOnly
+    private void notifyBufferedActiveSourceDevice() {
+        assertRunOnServiceThread();
+        HdmiCecMessage message = getBufferedActiveSource();
+        if (message != null) {
+            int sourceAddress = message.getSource();
+            int physicalAddress = HdmiUtils.twoBytesToInt(message.getParams());
+            List<Integer> deviceTypes = HdmiUtils.getTypeFromAddress(sourceAddress);
+            HdmiDeviceInfo newDevice = HdmiDeviceInfo.cecDeviceBuilder()
+                    .setLogicalAddress(sourceAddress)
+                    .setPhysicalAddress(physicalAddress)
+                    .setDisplayName(HdmiUtils.getDefaultDeviceName(sourceAddress))
+                    .setDeviceType(deviceTypes.get(0))
+                    .setVendorId(Constants.VENDOR_ID_UNKNOWN)
+                    .build();
+            mService.getHdmiCecNetwork().addCecDevice(newDevice);
+        }
     }
 
     @ServiceThreadOnly
@@ -1722,6 +1747,11 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     void processDelayedActiveSource(int address) {
         assertRunOnServiceThread();
         mDelayedMessageBuffer.processActiveSource(address);
+    }
+
+    @ServiceThreadOnly
+    HdmiCecMessage getBufferedActiveSource() {
+        return mDelayedMessageBuffer.getBufferedMessage(Constants.MESSAGE_ACTIVE_SOURCE);
     }
 
     @Override
