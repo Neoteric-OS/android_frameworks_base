@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b39cd9d9_ce09801f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-19T21:13:25Z",
+      "side": 1,
+      "message": "CleanSpec.mk also needs an owner+2...",
+      "revId": "12a7a31b677f186265a08df1e924cb6f14d11cd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
