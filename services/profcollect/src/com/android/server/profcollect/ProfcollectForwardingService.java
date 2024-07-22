@@ -404,7 +404,8 @@ public final class ProfcollectForwardingService extends SystemService {
                 String traceTag = traceInitialization ? "camera_init" : "camera";
                 BackgroundThread.get().getThreadHandler().postDelayed(() -> {
                     try {
-                        mIProfcollect.trace_process(traceTag, "android.hardware.camera.provider");
+                        mIProfcollect.trace_process(traceTag, "android.hardware.camera.provider",
+                                5000);
                     } catch (RemoteException e) {
                         Log.e(LOG_TAG, "Failed to initiate trace: " + e.getMessage());
                     }
