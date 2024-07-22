@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77bca4bc_bf50af17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2024-07-22T17:20:36Z",
+      "side": 1,
+      "message": "How about this?\n\n```\nBug: 296466613\nFix: 333670354\nFix: 324375857\nTest: Manual\n```\n\nI think we can safely say that this CL fixes bug 333670354 and bug 324375857 so using `Fix` (or `Fixes`) would make more sense.\n\nFor bug 296466613, it\u0027s exit criteria has already been satisfied so I htink just mentioning it with `Bug:` would make more sense.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 78
+      },
+      "revId": "7bfb4b7340b5837b16e67dbc0527bc65e9944a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
