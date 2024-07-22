@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c0f4823_4b4fccec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2024-07-22T17:24:22Z",
+      "side": 1,
+      "message": "For other reviewers.\n\nI (yukawa@) will follow up on creating a regression test in internal main.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 12
+      },
+      "revId": "7bfb4b7340b5837b16e67dbc0527bc65e9944a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77bca4bc_bf50af17",
