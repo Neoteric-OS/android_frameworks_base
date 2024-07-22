@@ -22,6 +22,30 @@
       },
       "revId": "7bfb4b7340b5837b16e67dbc0527bc65e9944a38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19a61739_f1dfae98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1870730
+      },
+      "writtenOn": "2024-07-22T17:23:23Z",
+      "side": 1,
+      "message": "I\u0027ve never used `Fix:` like that.  Is it a known tag?\n\nUsually all Buganizer reports go after `Bug` and `Fixes:` denotes the breaking commit.\n\nEither way, let\u0027s see pre-submit through before making any changes an invalidating the run.",
+      "parentUuid": "77bca4bc_bf50af17",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 78
+      },
+      "revId": "7bfb4b7340b5837b16e67dbc0527bc65e9944a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
