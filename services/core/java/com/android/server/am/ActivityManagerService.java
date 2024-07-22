@@ -5652,9 +5652,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             for (int i=0; i<intents.length; i++) {
                 Intent intent = intents[i];
                 if (intent != null) {
-                    if (intent.hasFileDescriptors()) {
-                        throw new IllegalArgumentException("File descriptors passed in Intent");
-                    }
+                    intent.prepareToEnterSystemServer();
                     if (type == ActivityManager.INTENT_SENDER_BROADCAST &&
                             (intent.getFlags()&Intent.FLAG_RECEIVER_BOOT_UPGRADE) != 0) {
                         throw new IllegalArgumentException(
@@ -5687,7 +5685,6 @@ public class ActivityManagerService extends IActivityManager.Stub
                         }
                     }
                     intents[i] = new Intent(intent);
-                    intents[i].removeExtendedFlags(Intent.EXTENDED_FLAG_FILTER_MISMATCH);
                 }
             }
             if (resolvedTypes != null && resolvedTypes.length != intents.length) {
@@ -14085,12 +14082,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         enforceNotIsolatedCaller("startService");
         enforceAllowedToStartOrBindServiceIfSdkSandbox(service);
         if (service != null) {
-            // Refuse possible leaked file descriptors
-            if (service.hasFileDescriptors()) {
-                throw new IllegalArgumentException("File descriptors passed in Intent");
-            }
-            // Remove existing mismatch flag so it can be properly updated later
-            service.removeExtendedFlags(Intent.EXTENDED_FLAG_FILTER_MISMATCH);
+            service.prepareToEnterSystemServer();
         }
 
         if (callingPackage == null) {
@@ -14327,12 +14319,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         enforceAllowedToStartOrBindServiceIfSdkSandbox(service);
 
         if (service != null) {
-            // Refuse possible leaked file descriptors
-            if (service.hasFileDescriptors()) {
-                throw new IllegalArgumentException("File descriptors passed in Intent");
-            }
-            // Remove existing mismatch flag so it can be properly updated later
-            service.removeExtendedFlags(Intent.EXTENDED_FLAG_FILTER_MISMATCH);
+            service.prepareToEnterSystemServer();
         }
 
         if (callingPackage == null) {
@@ -16366,12 +16353,7 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     final Intent verifyBroadcastLocked(Intent intent) {
         if (intent != null) {
-            // Refuse possible leaked file descriptors
-            if (intent.hasFileDescriptors()) {
-                throw new IllegalArgumentException("File descriptors passed in Intent");
-            }
-            // Remove existing mismatch flag so it can be properly updated later
-            intent.removeExtendedFlags(Intent.EXTENDED_FLAG_FILTER_MISMATCH);
+            intent.prepareToEnterSystemServer();
         }
 
         int flags = intent.getFlags();
