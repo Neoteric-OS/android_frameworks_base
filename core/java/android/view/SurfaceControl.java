@@ -4511,6 +4511,10 @@ public final class SurfaceControl implements Parcelable {
                 Log.w(TAG, "addTransactionCompletedListener was called but flag is disabled");
                 return this;
             }
+            if (SurfaceControlRegistry.sCallStackDebuggingEnabled) {
+                SurfaceControlRegistry.getProcessInstance().checkCallStackDebugging(
+                        "setFrameTimeline", this, null, "vsyncId=" + vsyncId);
+            }
             nativeSetFrameTimelineVsync(mNativeObject, vsyncId);
             return this;
         }
@@ -4518,6 +4522,11 @@ public final class SurfaceControl implements Parcelable {
         /** @hide */
         @NonNull
         public Transaction setFrameTimelineVsync(long frameTimelineVsyncId) {
+            if (SurfaceControlRegistry.sCallStackDebuggingEnabled) {
+                SurfaceControlRegistry.getProcessInstance().checkCallStackDebugging(
+                        "setFrameTimelineVsync", this, null, "frameTimelineVsyncId="
+                                + frameTimelineVsyncId);
+            }
             nativeSetFrameTimelineVsync(mNativeObject, frameTimelineVsyncId);
             return this;
         }
