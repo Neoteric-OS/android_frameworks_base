@@ -3804,6 +3804,10 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
     }
 
     private void notifyDefaultDisplayCallbacks(boolean showing) {
+        if (SceneContainerFlag.isEnabled()) {
+            return;
+        }
+
         // TODO(b/140053364)
         whitelistIpcs(() -> {
             int size = mKeyguardStateCallbacks.size();
