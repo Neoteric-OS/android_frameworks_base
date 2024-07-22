@@ -16,6 +16,23 @@
       "message": "+1 for Android.bp",
       "revId": "bbb0a570e660a7ca9508c0cb4512c7242b2e325f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb0b162d_76b36440",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2024-07-22T21:28:00Z",
+      "side": 1,
+      "message": "WallpaperManager changes LGTM (not too familiar with sysprop though, would prefer someone else to +2)",
+      "revId": "bbb0a570e660a7ca9508c0cb4512c7242b2e325f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
