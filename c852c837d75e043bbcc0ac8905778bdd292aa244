@@ -104,6 +104,24 @@
       ],
       "revId": "c852c837d75e043bbcc0ac8905778bdd292aa244",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9a2ffb4_dac656df",
+        "filename": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1707594
+      },
+      "writtenOn": "2024-07-23T09:01:12Z",
+      "side": 1,
+      "message": "Hi @mengtingtsai@google.com,\n\nIn hardware/interfaces/soundtrigger, the SoundModel struct is defined in hardware interface 2_1 and 2_0, not 2_3. So we cannot change the interface to 2_3. Thanks.\n\n$ hardware/interfaces/soundtrigger$ grep \"struct SoundModel\"\n2.1/ISoundTriggerHw.hal:35:    struct SoundModel {\n2.0/ISoundTriggerHw.hal:69:    struct SoundModel {",
+      "parentUuid": "86d12666_fd17e138",
+      "revId": "c852c837d75e043bbcc0ac8905778bdd292aa244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
