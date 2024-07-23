@@ -90,6 +90,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13732538_1c6b6ac5",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-07-23T13:05:59Z",
+      "side": 1,
+      "message": "I\u0027m fine with this approach.",
+      "parentUuid": "fc1618d5_b0be9b42",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d58f02b8_e2792c87",
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "d58f02b8_e2792c87",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "071ee219_1da067f7",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-07-23T13:05:59Z",
+      "side": 1,
+      "message": "Sorry I somehow missed this earlier. Checking again, it is actually doing all types of mitigations. So could you please rename it to `allowMitigations` instead.",
+      "parentUuid": "63cc53cd_3a96f13d",
       "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
