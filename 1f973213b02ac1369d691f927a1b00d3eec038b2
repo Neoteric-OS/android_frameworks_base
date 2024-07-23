@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fc1618d5_b0be9b42",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-07-23T00:03:56Z",
+      "side": 1,
+      "message": "chatted with Dan offline and he was Ok with keeping it as system property. @harshitmahajan@google.com do you have a preference on how this should be configurable?",
+      "parentUuid": "1c6e51ab_0ba10a1d",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d58f02b8_e2792c87",
         "filename": "services/core/java/com/android/server/PackageWatchdog.java",
         "patchSetId": 4
@@ -117,6 +135,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63cc53cd_3a96f13d",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-07-23T00:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d58f02b8_e2792c87",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "310db3a2_76ba0e3b",
@@ -152,6 +188,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa263bd5_fa81f054",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-07-23T00:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e924aa4_a1c12a27",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca370228_833c4500",
@@ -169,6 +223,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da0e6808_cde5074b",
+        "filename": "tests/PackageWatchdog/src/com/android/server/CrashRecoveryTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-07-23T00:03:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca370228_833c4500",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7c4ed32_756649aa",
@@ -182,6 +254,24 @@
       "writtenOn": "2024-07-18T15:44:57Z",
       "side": 1,
       "message": "I think these needs to be removed? and below as well.",
+      "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98877560_90cab5fe",
+        "filename": "tests/PackageWatchdog/src/com/android/server/CrashRecoveryTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1977615
+      },
+      "writtenOn": "2024-07-23T00:03:56Z",
+      "side": 1,
+      "message": "You are right.. I totally missed it.",
+      "parentUuid": "b7c4ed32_756649aa",
       "revId": "1f973213b02ac1369d691f927a1b00d3eec038b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
