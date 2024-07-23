@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e85188df_a196277c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2024-07-23T04:06:08Z",
+      "side": 1,
+      "message": "Can you also add `Fix: 324504911` as follows?\n\n```\nBug: 296466613\nFix: 333670354\nFix: 324375857\nFix: 324504911\n```",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 14
+      },
+      "revId": "6a11c745002639dbfd2721aa5f30acdaabe00ed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99a030c9_7070f793",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2024-07-23T04:06:08Z",
+      "side": 1,
+      "message": "With Iefeb63b1652051be92024c5da19e735430183b43, you can now make it clear that there is indeed a regression test.\n\n```\nTest: atest CtsInputMethodTestCases:TimePickerImeSupportTest\n```",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "6a11c745002639dbfd2721aa5f30acdaabe00ed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2085eaa6_46d48863",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2024-07-23T04:06:08Z",
+      "side": 1,
+      "message": "Let\u0027s remove this line.  At least under `frameworks/base`, `Fixes:` is expected to be followed by a bug ID, not a natural language nor commit hash like \"2a757ef4aea5...\".",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 78
+      },
+      "revId": "6a11c745002639dbfd2721aa5f30acdaabe00ed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
