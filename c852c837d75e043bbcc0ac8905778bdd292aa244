@@ -1,0 +1,109 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86d12666_fd17e138",
+        "filename": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1963225
+      },
+      "writtenOn": "2024-07-23T08:25:08Z",
+      "side": 1,
+      "message": "Can you add the missing field to V2.3 instead of changing version to V2.1?",
+      "fixSuggestions": [
+        {
+          "fixId": "bf07020f_554a66b8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+              "range": {
+                "startLine": 215,
+                "startChar": 0,
+                "endLine": 216,
+                "endChar": 0
+              },
+              "replacement": "        android.hardware.soundtrigger.V2_3.ISoundTriggerHw.SoundModel hidlModel \u003d\n"
+            },
+            {
+              "path": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+              "range": {
+                "startLine": 221,
+                "startChar": 0,
+                "endLine": 222,
+                "endChar": 0
+              },
+              "replacement": "                as2_3().loadSoundModel_2_3(hidlModel, new ModelCallbackWrapper(callback),\n"
+            },
+            {
+              "path": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+              "range": {
+                "startLine": 227,
+                "startChar": 0,
+                "endLine": 228,
+                "endChar": 0
+              },
+              "replacement": "                handleHalStatus(retval.get(), \"loadSoundModel_2_3\");\n"
+            },
+            {
+              "path": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+              "range": {
+                "startLine": 251,
+                "startChar": 0,
+                "endLine": 252,
+                "endChar": 0
+              },
+              "replacement": "        android.hardware.soundtrigger.V2_3.ISoundTriggerHw.PhraseSoundModel hidlModel \u003d\n"
+            },
+            {
+              "path": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+              "range": {
+                "startLine": 257,
+                "startChar": 0,
+                "endLine": 258,
+                "endChar": 0
+              },
+              "replacement": "                as2_3().loadPhraseSoundModel_2_3(hidlModel, new ModelCallbackWrapper(callback),\n"
+            },
+            {
+              "path": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+              "range": {
+                "startLine": 263,
+                "startChar": 0,
+                "endLine": 264,
+                "endChar": 0
+              },
+              "replacement": "                handleHalStatus(retval.get(), \"loadPhraseSoundModel_2_3\");\n"
+            },
+            {
+              "path": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+              "range": {
+                "startLine": 447,
+                "startChar": 0,
+                "endLine": 448,
+                "endChar": 0
+              },
+              "replacement": "            android.hardware.soundtrigger.V2_3.ISoundTriggerHw.SoundModel soundModel,\n"
+            },
+            {
+              "path": "services/voiceinteraction/java/com/android/server/soundtrigger_middleware/SoundTriggerHw2Compat.java",
+              "range": {
+                "startLine": 466,
+                "startChar": 0,
+                "endLine": 467,
+                "endChar": 0
+              },
+              "replacement": "            android.hardware.soundtrigger.V2_3.ISoundTriggerHw.PhraseSoundModel soundModel,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c852c837d75e043bbcc0ac8905778bdd292aa244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
