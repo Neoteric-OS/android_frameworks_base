@@ -68,6 +68,23 @@
       },
       "revId": "6a11c745002639dbfd2721aa5f30acdaabe00ed3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f82c4980_c7859cfe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2024-07-23T04:09:27Z",
+      "side": 1,
+      "message": "If possible, can you also set `yukawa-b324504911` to the topic name of this CL?",
+      "revId": "6a11c745002639dbfd2721aa5f30acdaabe00ed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
