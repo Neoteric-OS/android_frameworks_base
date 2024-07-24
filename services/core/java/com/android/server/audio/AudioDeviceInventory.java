@@ -116,6 +116,9 @@ public class AudioDeviceInventory {
     //Audio Analytics ids.
     private static final String mMetricsId = "audio.device.";
 
+    // HDMI ARC device attributes.
+    private static AudioDeviceAttributes mHdmiArcAttributes;
+
     private final Object mDeviceInventoryLock = new Object();
 
     @GuardedBy("mDeviceInventoryLock")
@@ -1175,27 +1178,33 @@ public class AudioDeviceInventory {
     }
 
     /*package*/ void onToggleHdmi() {
-        MediaMetrics.Item mmi = new MediaMetrics.Item(mMetricsId + "onToggleHdmi")
-                .set(MediaMetrics.Property.DEVICE,
-                        AudioSystem.getDeviceName(AudioSystem.DEVICE_OUT_HDMI));
-        synchronized (mDevicesLock) {
-            // Is HDMI connected?
-            final String key = DeviceInfo.makeDeviceListKey(AudioSystem.DEVICE_OUT_HDMI, "");
-            final DeviceInfo di = mConnectedDevices.get(key);
-            if (di == null) {
-                Log.e(TAG, "invalid null DeviceInfo in onToggleHdmi");
-                mmi.set(MediaMetrics.Property.EARLY_RETURN, "invalid null DeviceInfo").record();
-                return;
+        int[] hdmiDevices = { AudioSystem.DEVICE_OUT_HDMI,
+                AudioSystem.DEVICE_OUT_HDMI_ARC, AudioSystem.DEVICE_OUT_HDMI_EARC };
+        for (int i = 0; i < hdmiDevices.length; i++) {
+            synchronized (mDevicesLock) {
+                // Is HDMI connected?
+                final String key = DeviceInfo.makeDeviceListKey(hdmiDevices[i], "");
+                final DeviceInfo di = mConnectedDevices.get(key);
+                if (di == null) {
+                    continue;
+                }
+                MediaMetrics.Item mmi = new MediaMetrics.Item(mMetricsId + "onToggleHdmi")
+                        .set(MediaMetrics.Property.DEVICE,
+                                AudioSystem.getDeviceName(hdmiDevices[i]));
+                AudioDeviceAttributes audioDeviceAttributes =
+                    new AudioDeviceAttributes(hdmiDevices[i], "");
+                // Toggle HDMI to retrigger broadcast with proper formats.
+                setWiredDeviceConnectionState(audioDeviceAttributes,
+                        AudioSystem.DEVICE_STATE_UNAVAILABLE, "onToggleHdmi"); // disconnect
+                if (hdmiDevices[i] == AudioSystem.DEVICE_OUT_HDMI_ARC ||
+                    hdmiDevices[i] == AudioSystem.DEVICE_OUT_HDMI_EARC) {
+                    audioDeviceAttributes = mHdmiArcAttributes;
+                }
+                setWiredDeviceConnectionState(audioDeviceAttributes,
+                        AudioSystem.DEVICE_STATE_AVAILABLE, "onToggleHdmi"); // reconnect
+                mmi.record();
             }
-            // Toggle HDMI to retrigger broadcast with proper formats.
-            setWiredDeviceConnectionState(
-                    new AudioDeviceAttributes(AudioSystem.DEVICE_OUT_HDMI, ""),
-                    AudioSystem.DEVICE_STATE_UNAVAILABLE, "android"); // disconnect
-            setWiredDeviceConnectionState(
-                    new AudioDeviceAttributes(AudioSystem.DEVICE_OUT_HDMI, ""),
-                    AudioSystem.DEVICE_STATE_AVAILABLE, "android"); // reconnect
         }
-        mmi.record();
     }
 
     /*package*/ void onSaveSetPreferredDevices(int strategy,
@@ -2023,6 +2032,11 @@ public class AudioDeviceInventory {
         synchronized (mDevicesLock) {
             int delay = checkSendBecomingNoisyIntentInt(
                     attributes.getInternalType(), state, AudioSystem.DEVICE_NONE);
+            if ((attributes.getInternalType() == AudioSystem.DEVICE_OUT_HDMI_ARC ||
+                attributes.getInternalType() == AudioSystem.DEVICE_OUT_HDMI_EARC) &&
+                state == AudioSystem.DEVICE_STATE_AVAILABLE) {
+                mHdmiArcAttributes = attributes;
+            }
             mDeviceBroker.postSetWiredDeviceConnectionState(
                     new WiredDeviceConnectionState(attributes, state, caller), delay);
             return delay;
