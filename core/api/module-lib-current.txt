@@ -202,7 +202,9 @@ package android.media {
     method public boolean isLeOutput();
     method public boolean isSuppressNoisyIntent();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.media.BluetoothProfileConnectionInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class MediaMetadataRetriever implements java.lang.AutoCloseable {
@@ -388,6 +390,7 @@ package android.os {
     method public static void invalidateCache(@NonNull String, @NonNull String);
     method @Nullable public Result query(@NonNull Query);
     field public static final String MODULE_BLUETOOTH = "bluetooth";
+    field public static final String MODULE_TELEPHONY = "telephony";
   }
 
   public abstract static class IpcDataCache.QueryHandler<Q, R> {
@@ -518,6 +521,10 @@ package android.provider {
     method @RequiresPermission(android.Manifest.permission.WRITE_DEVICE_CONFIG) public static boolean setStrings(@NonNull String, @NonNull java.util.Map<java.lang.String,java.lang.String>) throws android.provider.DeviceConfig.BadConfigException;
     method @RequiresPermission(android.Manifest.permission.WRITE_DEVICE_CONFIG) public static void setSyncDisabledMode(int);
     method public static void unregisterContentObserver(@NonNull android.database.ContentObserver);
+    field public static final String NAME = "name";
+    field public static final String VALUE = "value";
+    field public static final String _COUNT = "_count";
+    field public static final String _ID = "_id";
   }
 
   public static final class Settings.Global extends android.provider.Settings.NameValueTable {
@@ -650,7 +657,9 @@ package android.webkit {
     ctor public WebViewProviderResponse(@Nullable android.content.pm.PackageInfo, int);
     method public int describeContents();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.webkit.WebViewProviderResponse> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public static final int STATUS_FAILED_LISTING_WEBVIEW_PACKAGES = 4; // 0x4
     field public static final int STATUS_FAILED_WAITING_FOR_RELRO = 3; // 0x3
     field public static final int STATUS_SUCCESS = 0; // 0x0

@@ -207,7 +207,9 @@ package android.app {
     ctor public ActivityOptions.LaunchCookie();
     method public int describeContents();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.app.ActivityOptions.LaunchCookie> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static interface ActivityOptions.OnAnimationFinishedListener {
@@ -242,6 +244,25 @@ package android.app {
 
   public class AppDetailsActivity extends android.app.Activity {
     ctor public AppDetailsActivity();
+    field public static final int DEFAULT_KEYS_DIALER = 1; // 0x1
+    field public static final int DEFAULT_KEYS_DISABLE = 0; // 0x0
+    field public static final int DEFAULT_KEYS_SEARCH_GLOBAL = 4; // 0x4
+    field public static final int DEFAULT_KEYS_SEARCH_LOCAL = 3; // 0x3
+    field public static final int DEFAULT_KEYS_SHORTCUT = 2; // 0x2
+    field public static final int FULLSCREEN_MODE_REQUEST_ENTER = 1; // 0x1
+    field public static final int FULLSCREEN_MODE_REQUEST_EXIT = 0; // 0x0
+    field public static final int OVERRIDE_TRANSITION_CLOSE = 1; // 0x1
+    field public static final int OVERRIDE_TRANSITION_OPEN = 0; // 0x0
+    field public static final int RESULT_CANCELED = 0; // 0x0
+    field public static final int RESULT_FIRST_USER = 1; // 0x1
+    field public static final int RESULT_OK = -1; // 0xffffffff
+    field public static final int TRIM_MEMORY_BACKGROUND = 40; // 0x28
+    field public static final int TRIM_MEMORY_COMPLETE = 80; // 0x50
+    field public static final int TRIM_MEMORY_MODERATE = 60; // 0x3c
+    field public static final int TRIM_MEMORY_RUNNING_CRITICAL = 15; // 0xf
+    field public static final int TRIM_MEMORY_RUNNING_LOW = 10; // 0xa
+    field public static final int TRIM_MEMORY_RUNNING_MODERATE = 5; // 0x5
+    field public static final int TRIM_MEMORY_UI_HIDDEN = 20; // 0x14
   }
 
   public class AppOpsManager {
@@ -550,6 +571,8 @@ package android.app {
     field public static final int ACTIVITY_TYPE_RECENTS = 3; // 0x3
     field public static final int ACTIVITY_TYPE_STANDARD = 1; // 0x1
     field public static final int ACTIVITY_TYPE_UNDEFINED = 0; // 0x0
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public static final int ROTATION_UNDEFINED = -1; // 0xffffffff
     field public static final int WINDOWING_MODE_FREEFORM = 5; // 0x5
     field public static final int WINDOWING_MODE_FULLSCREEN = 1; // 0x1
@@ -665,8 +688,10 @@ package android.app.admin {
   public final class FlagUnion extends android.app.admin.ResolutionMechanism<java.lang.Integer> {
     method public int describeContents();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.app.admin.FlagUnion> CREATOR;
     field @NonNull public static final android.app.admin.FlagUnion FLAG_UNION;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class IntentFilterPolicyKey extends android.app.admin.PolicyKey {
@@ -677,15 +702,19 @@ package android.app.admin {
     ctor public MostRecent();
     method public int describeContents();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.app.admin.MostRecent<?>> CREATOR;
     field @NonNull public static final android.app.admin.MostRecent<?> MOST_RECENT;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class MostRestrictive<V> extends android.app.admin.ResolutionMechanism<V> {
     method public int describeContents();
     method @NonNull public java.util.List<V> getMostToLeastRestrictiveValues();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.app.admin.MostRestrictive<?>> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class PackagePermissionPolicyKey extends android.app.admin.PolicyKey {
@@ -708,6 +737,8 @@ package android.app.admin {
   }
 
   public abstract class ResolutionMechanism<V> implements android.os.Parcelable {
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class SecurityLog.SecurityEvent implements android.os.Parcelable {
@@ -718,7 +749,9 @@ package android.app.admin {
     ctor public StringSetUnion();
     method public int describeContents();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.app.admin.StringSetUnion> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field @NonNull public static final android.app.admin.StringSetUnion STRING_SET_UNION;
   }
 
@@ -733,7 +766,9 @@ package android.app.admin {
     method public int describeContents();
     method @NonNull public java.util.List<android.app.admin.Authority> getHighestToLowestPriorityAuthorities();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.app.admin.TopPriority<?>> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class UnknownAuthority extends android.app.admin.Authority {
@@ -759,7 +794,9 @@ package android.app.assist {
     method public int getTaskId();
     method @Nullable public android.os.IBinder getToken();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.app.assist.ActivityId> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
 }
@@ -779,7 +816,9 @@ package android.app.blob {
     method public long getExpiryTimeMillis();
     method @NonNull public String getPackageName();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.app.blob.LeaseInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
 }
@@ -819,7 +858,9 @@ package android.app.pinner {
     method @FlaggedApi("android.app.pinner_service_client_api") @NonNull public String getFilename();
     method @FlaggedApi("android.app.pinner_service_client_api") @NonNull public String getGroupName();
     method @FlaggedApi("android.app.pinner_service_client_api") public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @FlaggedApi("android.app.pinner_service_client_api") @NonNull public static final android.os.Parcelable.Creator<android.app.pinner.PinnedFileStat> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   @FlaggedApi("android.app.pinner_service_client_api") public class PinnerServiceClient {
@@ -967,7 +1008,9 @@ package android.content {
     method public static android.content.AutofillOptions forWhitelistingItself();
     method public boolean isAugmentedAutofillEnabled(@NonNull android.content.Context);
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.content.AutofillOptions> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public long appDisabledExpiration;
     field public boolean augmentedAutofillEnabled;
     field public final boolean compatModeEnabled;
@@ -986,7 +1029,9 @@ package android.content {
     method public int describeContents();
     method public static android.content.ContentCaptureOptions forWhitelistingItself();
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.content.ContentCaptureOptions> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public final int idleFlushingFrequencyMs;
     field public final boolean lite;
     field public final int logHistorySize;
@@ -1137,7 +1182,9 @@ package android.content.pm {
     method @NonNull public static android.content.pm.ProviderInfoList fromList(@NonNull java.util.List<android.content.pm.ProviderInfo>);
     method @NonNull public java.util.List<android.content.pm.ProviderInfo> getList();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.content.pm.ProviderInfoList> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class SharedLibraryInfo implements android.os.Parcelable {
@@ -1182,6 +1229,7 @@ package android.content.pm {
     method public boolean supportsSwitchTo();
     method @Deprecated public boolean supportsSwitchToByUser();
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.content.pm.UserInfo> CREATOR;
     field public static final int FLAG_ADMIN = 2; // 0x2
     field @Deprecated public static final int FLAG_DEMO = 512; // 0x200
@@ -1198,6 +1246,7 @@ package android.content.pm {
     field @Deprecated public static final int FLAG_RESTRICTED = 8; // 0x8
     field public static final int FLAG_SYSTEM = 2048; // 0x800
     field public static final int NO_PROFILE_GROUP_ID = -10000; // 0xffffd8f0
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public boolean convertedFromPreCreated;
     field public long creationTime;
     field public int flags;
@@ -1289,7 +1338,9 @@ package android.credentials {
     method public boolean isPrimary();
     method public boolean isSystemProvider();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.credentials.CredentialProviderInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class CredentialProviderInfo.Builder {
@@ -1313,7 +1364,9 @@ package android.credentials.selection {
     method @Nullable public static android.credentials.selection.BaseDialogResult fromResultData(@NonNull android.os.Bundle);
     method @Deprecated @Nullable public android.os.IBinder getRequestToken();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.credentials.selection.BaseDialogResult> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public static final int RESULT_CODE_CANCELED_AND_LAUNCHED_SETTINGS = 1; // 0x1
     field public static final int RESULT_CODE_DATA_PARSING_FAILURE = 3; // 0x3
     field public static final int RESULT_CODE_DIALOG_COMPLETE_WITH_SELECTION = 2; // 0x2
@@ -1324,7 +1377,9 @@ package android.credentials.selection {
     ctor public CreateCredentialProviderData(@NonNull String, @NonNull java.util.List<android.credentials.selection.Entry>, @Nullable android.credentials.selection.Entry);
     method @Nullable public android.credentials.selection.Entry getRemoteEntry();
     method @NonNull public java.util.List<android.credentials.selection.Entry> getSaveEntries();
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.credentials.selection.CreateCredentialProviderData> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   @FlaggedApi("android.credentials.flags.configurable_selector_ui_enabled") public static final class CreateCredentialProviderData.Builder {
@@ -1336,7 +1391,9 @@ package android.credentials.selection {
 
   @FlaggedApi("android.credentials.flags.configurable_selector_ui_enabled") public final class DisabledProviderData extends android.credentials.selection.ProviderData implements android.os.Parcelable {
     ctor public DisabledProviderData(@NonNull String);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.credentials.selection.DisabledProviderData> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   @FlaggedApi("android.credentials.flags.configurable_selector_ui_enabled") public final class FailureDialogResult extends android.credentials.selection.BaseDialogResult implements android.os.Parcelable {
@@ -1344,7 +1401,9 @@ package android.credentials.selection {
     method public static void addToBundle(@NonNull android.credentials.selection.FailureDialogResult, @NonNull android.os.Bundle);
     method @Nullable public static android.credentials.selection.FailureDialogResult fromResultData(@NonNull android.os.Bundle);
     method @Nullable public String getErrorMessage();
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.credentials.selection.FailureDialogResult> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   @FlaggedApi("android.credentials.flags.configurable_selector_ui_enabled") public final class GetCredentialProviderData extends android.credentials.selection.ProviderData implements android.os.Parcelable {
@@ -1353,7 +1412,9 @@ package android.credentials.selection {
     method @NonNull public java.util.List<android.credentials.selection.AuthenticationEntry> getAuthenticationEntries();
     method @NonNull public java.util.List<android.credentials.selection.Entry> getCredentialEntries();
     method @Nullable public android.credentials.selection.Entry getRemoteEntry();
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.credentials.selection.GetCredentialProviderData> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   @FlaggedApi("android.credentials.flags.configurable_selector_ui_enabled") public static final class GetCredentialProviderData.Builder {
@@ -1376,8 +1437,10 @@ package android.credentials.selection {
     method public int describeContents();
     method @NonNull public String getProviderFlattenedComponentName();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field public static final String EXTRA_DISABLED_PROVIDER_DATA_LIST = "android.credentials.selection.extra.DISABLED_PROVIDER_DATA_LIST";
     field public static final String EXTRA_ENABLED_PROVIDER_DATA_LIST = "android.credentials.selection.extra.ENABLED_PROVIDER_DATA_LIST";
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   @FlaggedApi("android.credentials.flags.configurable_selector_ui_enabled") public final class RequestInfo implements android.os.Parcelable {
@@ -1398,7 +1461,9 @@ package android.credentials.selection {
     method @NonNull public String getEntrySubkey();
     method @Nullable public android.credentials.selection.ProviderPendingIntentResponse getPendingIntentProviderResponse();
     method @NonNull public String getProviderId();
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.credentials.selection.UserSelectionDialogResult> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
 }
@@ -1739,7 +1804,9 @@ package android.hardware.input {
     method public int getProductId();
     method public int getVendorId();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.hardware.input.InputDeviceIdentifier> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class InputManager {
@@ -1813,7 +1880,9 @@ package android.hardware.soundtrigger {
     method public boolean supportsLocale(@Nullable java.util.Locale);
     method public boolean supportsPhrase(@Nullable String);
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.hardware.soundtrigger.KeyphraseMetadata> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class SoundTrigger {
@@ -1838,7 +1907,9 @@ package android.hardware.soundtrigger {
     ctor public SoundTrigger.RecognitionConfig(boolean, boolean, @Nullable android.hardware.soundtrigger.SoundTrigger.KeyphraseRecognitionExtra[], @Nullable byte[]);
     method public int describeContents();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.hardware.soundtrigger.SoundTrigger.RecognitionConfig> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public final boolean allowMultipleTriggers;
     field public final int audioCapabilities;
     field public final boolean captureRequested;
@@ -1909,6 +1980,7 @@ package android.media {
     field @NonNull public static final android.media.AudioHalVersionInfo AIDL_1_0;
     field public static final int AUDIO_HAL_TYPE_AIDL = 1; // 0x1
     field public static final int AUDIO_HAL_TYPE_HIDL = 0; // 0x0
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.media.AudioHalVersionInfo> CREATOR;
     field @NonNull public static final android.media.AudioHalVersionInfo HIDL_2_0;
     field @NonNull public static final android.media.AudioHalVersionInfo HIDL_4_0;
@@ -1916,6 +1988,7 @@ package android.media {
     field @NonNull public static final android.media.AudioHalVersionInfo HIDL_6_0;
     field @NonNull public static final android.media.AudioHalVersionInfo HIDL_7_0;
     field @NonNull public static final android.media.AudioHalVersionInfo HIDL_7_1;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field @NonNull public static final java.util.List<android.media.AudioHalVersionInfo> VERSIONS;
   }
 
@@ -2283,7 +2356,9 @@ package android.os {
     method public long getDuration();
     method @NonNull public android.os.VibrationEffect getEffect();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.CombinedVibration.Mono> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class CombinedVibration.Sequential extends android.os.CombinedVibration {
@@ -2291,7 +2366,9 @@ package android.os {
     method public long getDuration();
     method @NonNull public java.util.List<android.os.CombinedVibration> getEffects();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.CombinedVibration.Sequential> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class CombinedVibration.SequentialCombination {
@@ -2306,7 +2383,9 @@ package android.os {
     method public long getDuration();
     method @NonNull public android.util.SparseArray<android.os.VibrationEffect> getEffects();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.CombinedVibration.Stereo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class DeviceIdleManager {
@@ -2354,7 +2433,9 @@ package android.os {
     method public boolean includes(@NonNull String);
     method public boolean isEmpty();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.PackageTagsList> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class PackageTagsList.Builder {
@@ -2427,7 +2508,9 @@ package android.os {
     method public Class<? extends android.os.strictmode.Violation> getViolationClass();
     method public String getViolationDetails();
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.StrictMode.ViolationInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public String broadcastIntentAction;
     field public int durationMillis;
     field public int numAnimationsRunning;
@@ -2503,7 +2586,14 @@ package android.os {
     method public int getRepeatIndex();
     method @NonNull public java.util.List<android.os.vibrator.VibrationEffectSegment> getSegments();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.VibrationEffect.Composed> CREATOR;
+    field public static final int DEFAULT_AMPLITUDE = -1; // 0xffffffff
+    field public static final int EFFECT_CLICK = 0; // 0x0
+    field public static final int EFFECT_DOUBLE_CLICK = 1; // 0x1
+    field public static final int EFFECT_HEAVY_CLICK = 5; // 0x5
+    field public static final int EFFECT_TICK = 2; // 0x2
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class VibrationEffect.Composition {
@@ -2605,7 +2695,9 @@ package android.os.health {
     method public int describeContents();
     method public android.os.health.HealthStats getHealthStats();
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.health.HealthStatsParceler> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class HealthStatsWriter {
@@ -2630,7 +2722,9 @@ package android.os.storage {
     method public long getExpirationMillis();
     method @NonNull public CharSequence getLabel();
     method public void writeToParcel(@Nullable android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.storage.CrateInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class StorageManager {
@@ -2669,7 +2763,9 @@ package android.os.vibrator {
     method public int getEffectStrength();
     method public boolean shouldFallback();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.vibrator.PrebakedSegment> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class PrimitiveSegment extends android.os.vibrator.VibrationEffectSegment {
@@ -2679,7 +2775,9 @@ package android.os.vibrator {
     method public int getPrimitiveId();
     method public float getScale();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.vibrator.PrimitiveSegment> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class RampSegment extends android.os.vibrator.VibrationEffectSegment {
@@ -2690,7 +2788,9 @@ package android.os.vibrator {
     method public float getStartAmplitude();
     method public float getStartFrequencyHz();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.vibrator.RampSegment> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class StepSegment extends android.os.vibrator.VibrationEffectSegment {
@@ -2699,12 +2799,16 @@ package android.os.vibrator {
     method public long getDuration();
     method public float getFrequencyHz();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.vibrator.StepSegment> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public abstract class VibrationEffectSegment implements android.os.Parcelable {
     method public abstract long getDuration();
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.os.vibrator.VibrationEffectSegment> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class VibratorFrequencyProfile {
@@ -2927,7 +3031,9 @@ package android.service.autofill {
     method public android.util.ArrayMap<java.lang.String,android.os.Bundle> getFieldClassificationArgs();
     method public String[] getValues();
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.service.autofill.CompositeUserData> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class CustomDescription implements android.os.Parcelable {
@@ -2957,7 +3063,9 @@ package android.service.autofill {
     method public int describeContents();
     method @Nullable public java.util.regex.Pattern getPattern();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.service.autofill.Dataset.DatasetFieldFilter> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class DateTransformation extends android.service.autofill.InternalTransformation implements android.os.Parcelable android.service.autofill.Transformation {
@@ -2980,21 +3088,29 @@ package android.service.autofill {
   public abstract class InternalOnClickAction implements android.service.autofill.OnClickAction android.os.Parcelable {
     ctor public InternalOnClickAction();
     method public abstract void onClick(@NonNull android.view.ViewGroup);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public abstract class InternalSanitizer implements android.os.Parcelable android.service.autofill.Sanitizer {
     ctor public InternalSanitizer();
     method @Nullable public abstract android.view.autofill.AutofillValue sanitize(@NonNull android.view.autofill.AutofillValue);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public abstract class InternalTransformation implements android.os.Parcelable android.service.autofill.Transformation {
     ctor public InternalTransformation();
     method public static boolean batchApply(@NonNull android.service.autofill.ValueFinder, @NonNull android.widget.RemoteViews, @NonNull java.util.ArrayList<android.util.Pair<java.lang.Integer,android.service.autofill.InternalTransformation>>);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public abstract class InternalValidator implements android.os.Parcelable android.service.autofill.Validator {
     ctor public InternalValidator();
     method public abstract boolean isValid(@NonNull android.service.autofill.ValueFinder);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class LuhnChecksumValidator extends android.service.autofill.InternalValidator implements android.os.Parcelable android.service.autofill.Validator {
@@ -3055,6 +3171,23 @@ package android.service.dreams {
     method public abstract void onStartDream(@NonNull android.view.WindowManager.LayoutParams);
     method public final void requestExit();
     method public final boolean shouldShowComplications();
+    field public static final int START_CONTINUATION_MASK = 15; // 0xf
+    field public static final int START_FLAG_REDELIVERY = 1; // 0x1
+    field public static final int START_FLAG_RETRY = 2; // 0x2
+    field public static final int START_NOT_STICKY = 2; // 0x2
+    field public static final int START_REDELIVER_INTENT = 3; // 0x3
+    field public static final int START_STICKY = 1; // 0x1
+    field public static final int START_STICKY_COMPATIBILITY = 0; // 0x0
+    field public static final int STOP_FOREGROUND_DETACH = 2; // 0x2
+    field @Deprecated public static final int STOP_FOREGROUND_LEGACY = 0; // 0x0
+    field public static final int STOP_FOREGROUND_REMOVE = 1; // 0x1
+    field public static final int TRIM_MEMORY_BACKGROUND = 40; // 0x28
+    field public static final int TRIM_MEMORY_COMPLETE = 80; // 0x50
+    field public static final int TRIM_MEMORY_MODERATE = 60; // 0x3c
+    field public static final int TRIM_MEMORY_RUNNING_CRITICAL = 15; // 0xf
+    field public static final int TRIM_MEMORY_RUNNING_LOW = 10; // 0xa
+    field public static final int TRIM_MEMORY_RUNNING_MODERATE = 5; // 0x5
+    field public static final int TRIM_MEMORY_UI_HIDDEN = 20; // 0x14
   }
 
   public class DreamService extends android.app.Service implements android.view.Window.Callback {
@@ -3370,7 +3503,9 @@ package android.text {
     method public long getLastModifiedTimeMillis();
     method @NonNull public java.util.List<android.text.FontConfig.NamedFamilyList> getNamedFamilyLists();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.text.FontConfig> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class FontConfig.Alias implements android.os.Parcelable {
@@ -3379,7 +3514,9 @@ package android.text {
     method @NonNull public String getOriginal();
     method @IntRange(from=0, to=1000) public int getWeight();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.text.FontConfig.Alias> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class FontConfig.Font implements android.os.Parcelable {
@@ -3391,7 +3528,9 @@ package android.text {
     method @NonNull public android.graphics.fonts.FontStyle getStyle();
     method public int getTtcIndex();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.text.FontConfig.Font> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class FontConfig.FontFamily implements android.os.Parcelable {
@@ -3401,7 +3540,9 @@ package android.text {
     method @Deprecated @Nullable public String getName();
     method public int getVariant();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.text.FontConfig.FontFamily> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public static final int VARIANT_COMPACT = 1; // 0x1
     field public static final int VARIANT_DEFAULT = 0; // 0x0
     field public static final int VARIANT_ELEGANT = 2; // 0x2
@@ -3412,7 +3553,9 @@ package android.text {
     method @NonNull public java.util.List<android.text.FontConfig.FontFamily> getFamilies();
     method @NonNull public String getName();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.text.FontConfig.NamedFamilyList> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class MeasuredParagraph {
@@ -3899,6 +4042,8 @@ package android.view.inputmethod {
   public abstract class CancellableHandwritingGesture extends android.view.inputmethod.HandwritingGesture {
     ctor public CancellableHandwritingGesture();
     method public void setCancellationSignal(@NonNull android.os.CancellationSignal);
+    field public static final int GRANULARITY_CHARACTER = 2; // 0x2
+    field public static final int GRANULARITY_WORD = 1; // 0x1
   }
 
   public abstract class HandwritingGesture {
@@ -4089,8 +4234,10 @@ package android.window {
     method public int describeContents();
     method @NonNull public static String typeToString(int);
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.BackNavigationInfo> CREATOR;
     field public static final String KEY_TRIGGER_BACK = "TriggerBack";
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public static final int TYPE_CALLBACK = 4; // 0x4
     field public static final int TYPE_CROSS_ACTIVITY = 2; // 0x2
     field public static final int TYPE_CROSS_TASK = 3; // 0x3
@@ -4105,14 +4252,18 @@ package android.window {
     method @NonNull public android.window.DisplayAreaInfo getDisplayAreaInfo();
     method @NonNull public android.view.SurfaceControl getLeash();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.DisplayAreaAppearedInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class DisplayAreaInfo implements android.os.Parcelable {
     ctor public DisplayAreaInfo(@NonNull android.window.WindowContainerToken, int, int);
     method public int describeContents();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.DisplayAreaInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field @NonNull public final android.content.res.Configuration configuration;
     field public final int displayId;
     field public final int featureId;
@@ -4145,7 +4296,9 @@ package android.window {
     method @NonNull public android.view.SurfaceControl getLeash();
     method @NonNull public android.app.ActivityManager.RunningTaskInfo getTaskInfo();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskAppearedInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class TaskFragmentCreationParams implements android.os.Parcelable {
@@ -4156,7 +4309,9 @@ package android.window {
     method @NonNull public android.os.IBinder getOwnerToken();
     method public int getWindowingMode();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentCreationParams> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class TaskFragmentCreationParams.Builder {
@@ -4182,7 +4337,9 @@ package android.window {
     method public boolean isTaskClearedForReuse();
     method public boolean isVisible();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentInfo> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class TaskFragmentOrganizer extends android.window.WindowOrganizer {
@@ -4206,7 +4363,9 @@ package android.window {
   public final class TaskFragmentOrganizerToken implements android.os.Parcelable {
     method public int describeContents();
     method public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentOrganizerToken> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class TaskFragmentTransaction implements android.os.Parcelable {
@@ -4217,7 +4376,9 @@ package android.window {
     method @NonNull public android.os.IBinder getTransactionToken();
     method public boolean isEmpty();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentTransaction> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public static final int TYPE_ACTIVITY_REPARENTED_TO_TASK = 6; // 0x6
     field public static final int TYPE_TASK_FRAGMENT_APPEARED = 1; // 0x1
     field public static final int TYPE_TASK_FRAGMENT_ERROR = 5; // 0x5
@@ -4247,7 +4408,9 @@ package android.window {
     method @NonNull public android.window.TaskFragmentTransaction.Change setTaskFragmentToken(@NonNull android.os.IBinder);
     method @NonNull public android.window.TaskFragmentTransaction.Change setTaskId(int);
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TaskFragmentTransaction.Change> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class TaskOrganizer extends android.window.WindowOrganizer {
@@ -4271,7 +4434,9 @@ package android.window {
   public final class WindowContainerToken implements android.os.Parcelable {
     method public int describeContents();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.WindowContainerToken> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public final class WindowContainerTransaction implements android.os.Parcelable {
@@ -4306,7 +4471,9 @@ package android.window {
     method @NonNull public android.window.WindowContainerTransaction setWindowingMode(@NonNull android.window.WindowContainerToken, int);
     method @NonNull public android.window.WindowContainerTransaction startActivityInTaskFragment(@NonNull android.os.IBinder, @NonNull android.os.IBinder, @NonNull android.content.Intent, @Nullable android.os.Bundle);
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.window.WindowContainerTransaction> CREATOR;
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static class WindowContainerTransaction.TaskFragmentAdjacentParams {
@@ -4356,6 +4523,23 @@ package android.window {
     method @NonNull public int getInitialDisplayId();
     method @CallSuper @Nullable public android.os.Bundle getWindowContextOptions();
     method public abstract int getWindowType();
+    field public static final int START_CONTINUATION_MASK = 15; // 0xf
+    field public static final int START_FLAG_REDELIVERY = 1; // 0x1
+    field public static final int START_FLAG_RETRY = 2; // 0x2
+    field public static final int START_NOT_STICKY = 2; // 0x2
+    field public static final int START_REDELIVER_INTENT = 3; // 0x3
+    field public static final int START_STICKY = 1; // 0x1
+    field public static final int START_STICKY_COMPATIBILITY = 0; // 0x0
+    field public static final int STOP_FOREGROUND_DETACH = 2; // 0x2
+    field @Deprecated public static final int STOP_FOREGROUND_LEGACY = 0; // 0x0
+    field public static final int STOP_FOREGROUND_REMOVE = 1; // 0x1
+    field public static final int TRIM_MEMORY_BACKGROUND = 40; // 0x28
+    field public static final int TRIM_MEMORY_COMPLETE = 80; // 0x50
+    field public static final int TRIM_MEMORY_MODERATE = 60; // 0x3c
+    field public static final int TRIM_MEMORY_RUNNING_CRITICAL = 15; // 0xf
+    field public static final int TRIM_MEMORY_RUNNING_LOW = 10; // 0xa
+    field public static final int TRIM_MEMORY_RUNNING_MODERATE = 5; // 0x5
+    field public static final int TRIM_MEMORY_UI_HIDDEN = 20; // 0x14
   }
 
 }

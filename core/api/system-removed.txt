@@ -269,6 +269,7 @@ package android.telephony.ims {
     method @Nullable public String getString(@NonNull String);
     method public long getVersion();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.ims.SipDelegateImsConfiguration> CREATOR;
     field public static final String IPTYPE_IPV4 = "IPV4";
     field public static final String IPTYPE_IPV6 = "IPV6";
@@ -308,6 +309,9 @@ package android.telephony.ims {
     field public static final String KEY_SIP_CONFIG_UE_PUBLIC_USER_ID_STRING = "sip_config_ue_public_user_id_string";
     field public static final String KEY_SIP_CONFIG_URI_USER_PART_STRING = "sip_config_uri_user_part_string";
     field public static final String KEY_SIP_CONFIG_USER_AGENT_HEADER_STRING = "sip_config_sip_user_agent_header_string";
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field public static final String SIP_TRANSPORT_TCP = "TCP";
     field public static final String SIP_TRANSPORT_UDP = "UDP";
   }

@@ -13,7 +13,11 @@ package android.location {
     method @FloatRange(from=0.0f) public double getSamplingStartMeters();
     method @FloatRange(from=0.0f, fromInclusive=false) public double getSamplingWidthMeters();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.CorrelationVector> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class CorrelationVector.Builder {
@@ -31,11 +35,15 @@ package android.location {
     method @NonNull public String getCountryCode();
     method public int getSource();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field public static final int COUNTRY_SOURCE_LOCALE = 3; // 0x3
     field public static final int COUNTRY_SOURCE_LOCATION = 1; // 0x1
     field public static final int COUNTRY_SOURCE_NETWORK = 0; // 0x0
     field public static final int COUNTRY_SOURCE_SIM = 2; // 0x2
     field @NonNull public static final android.os.Parcelable.Creator<android.location.Country> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public class CountryDetector {
@@ -60,7 +68,11 @@ package android.location {
     method public boolean hasExcessPathLengthUncertainty();
     method public boolean hasReflectingPlane();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.GnssExcessPathInfo> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class GnssExcessPathInfo.Builder {
@@ -95,7 +107,11 @@ package android.location {
     method @FloatRange(from=0.0f) public double getVerticalPositionUncertaintyMeters();
     method public boolean hasEnvironmentBearing();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field public static final android.os.Parcelable.Creator<android.location.GnssMeasurementCorrections> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class GnssMeasurementCorrections.Builder {
@@ -129,7 +145,11 @@ package android.location {
     method @FloatRange(from=-90.0F, to=90.0f) public double getLatitudeDegrees();
     method @FloatRange(from=-180.0F, to=180.0f) public double getLongitudeDegrees();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field public static final android.os.Parcelable.Creator<android.location.GnssReflectingPlane> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class GnssReflectingPlane.Builder {
@@ -145,7 +165,11 @@ package android.location {
     method public int describeContents();
     method public boolean isFullTracking();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.GnssRequest> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class GnssRequest.Builder {
@@ -172,7 +196,11 @@ package android.location {
     method @Deprecated public boolean hasReflectingPlane();
     method public boolean hasValidSatelliteLineOfSight();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field public static final android.os.Parcelable.Creator<android.location.GnssSingleSatCorrection> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class GnssSingleSatCorrection.Builder {
@@ -230,7 +258,11 @@ package android.location {
     method @Deprecated public void setTimeUncertaintyInNs(double);
     method @Deprecated public void setType(byte);
     method @Deprecated public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @Deprecated @NonNull public static final android.os.Parcelable.Creator<android.location.GpsClock> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field @Deprecated public static final byte TYPE_GPS_TIME = 2; // 0x2
     field @Deprecated public static final byte TYPE_LOCAL_HW_TIME = 1; // 0x1
     field @Deprecated public static final byte TYPE_UNKNOWN = 0; // 0x0
@@ -342,6 +374,7 @@ package android.location {
     field @Deprecated public static final short ADR_STATE_RESET = 2; // 0x2
     field @Deprecated public static final short ADR_STATE_UNKNOWN = 0; // 0x0
     field @Deprecated public static final short ADR_STATE_VALID = 1; // 0x1
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @Deprecated @NonNull public static final android.os.Parcelable.Creator<android.location.GpsMeasurement> CREATOR;
     field @Deprecated public static final byte LOSS_OF_LOCK_CYCLE_SLIP = 2; // 0x2
     field @Deprecated public static final byte LOSS_OF_LOCK_OK = 1; // 0x1
@@ -349,6 +382,9 @@ package android.location {
     field @Deprecated public static final byte MULTIPATH_INDICATOR_DETECTED = 1; // 0x1
     field @Deprecated public static final byte MULTIPATH_INDICATOR_NOT_USED = 2; // 0x2
     field @Deprecated public static final byte MULTIPATH_INDICATOR_UNKNOWN = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field @Deprecated public static final short STATE_BIT_SYNC = 2; // 0x2
     field @Deprecated public static final short STATE_CODE_LOCK = 1; // 0x1
     field @Deprecated public static final short STATE_MSEC_AMBIGUOUS = 16; // 0x10
@@ -363,7 +399,11 @@ package android.location {
     method @Deprecated @NonNull public android.location.GpsClock getClock();
     method @Deprecated @NonNull public java.util.Collection<android.location.GpsMeasurement> getMeasurements();
     method @Deprecated public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @Deprecated @NonNull public static final android.os.Parcelable.Creator<android.location.GpsMeasurementsEvent> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field @Deprecated public static final int STATUS_GPS_LOCATION_DISABLED = 2; // 0x2
     field @Deprecated public static final int STATUS_NOT_SUPPORTED = 0; // 0x0
     field @Deprecated public static final int STATUS_READY = 1; // 0x1
@@ -391,7 +431,11 @@ package android.location {
     method @Deprecated public void setSubmessageId(short);
     method @Deprecated public void setType(byte);
     method @Deprecated public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @Deprecated @NonNull public static final android.os.Parcelable.Creator<android.location.GpsNavigationMessage> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field @Deprecated public static final short STATUS_PARITY_PASSED = 1; // 0x1
     field @Deprecated public static final short STATUS_PARITY_REBUILT = 2; // 0x2
     field @Deprecated public static final short STATUS_UNKNOWN = 0; // 0x0
@@ -407,7 +451,11 @@ package android.location {
     method @Deprecated public int describeContents();
     method @Deprecated @NonNull public android.location.GpsNavigationMessage getNavigationMessage();
     method @Deprecated public void writeToParcel(android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @Deprecated @NonNull public static final android.os.Parcelable.Creator<android.location.GpsNavigationMessageEvent> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
     field @Deprecated public static int STATUS_GPS_LOCATION_DISABLED;
     field @Deprecated public static int STATUS_NOT_SUPPORTED;
     field @Deprecated public static int STATUS_READY;
@@ -424,7 +472,11 @@ package android.location {
     method public boolean isHiddenFromAppOps();
     method public boolean isLocationSettingsIgnored();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.LastLocationRequest> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class LastLocationRequest.Builder {
@@ -533,11 +585,15 @@ package android.location {
     method public boolean hasTimeOfEphemerisSeconds();
     method public boolean hasTropo();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.SatellitePvt> CREATOR;
     field public static final int EPHEMERIS_SOURCE_DEMODULATED = 0; // 0x0
     field public static final int EPHEMERIS_SOURCE_OTHER = 3; // 0x3
     field public static final int EPHEMERIS_SOURCE_SERVER_LONG_TERM = 2; // 0x2
     field public static final int EPHEMERIS_SOURCE_SERVER_NORMAL = 1; // 0x1
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class SatellitePvt.Builder {
@@ -562,7 +618,11 @@ package android.location {
     method @FloatRange public double getHardwareCodeBiasMeters();
     method @FloatRange public double getTimeCorrectionMeters();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.SatellitePvt.ClockInfo> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class SatellitePvt.PositionEcef implements android.os.Parcelable {
@@ -573,7 +633,11 @@ package android.location {
     method @FloatRange public double getYMeters();
     method @FloatRange public double getZMeters();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.SatellitePvt.PositionEcef> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class SatellitePvt.VelocityEcef implements android.os.Parcelable {
@@ -584,7 +648,11 @@ package android.location {
     method @FloatRange public double getYMetersPerSecond();
     method @FloatRange public double getZMetersPerSecond();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.SatellitePvt.VelocityEcef> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
 }
@@ -604,7 +672,11 @@ package android.location.provider {
     method @FloatRange(from=-90.0, to=90.0) public double getUpperRightLatitude();
     method @FloatRange(from=-180.0, to=180.0) public double getUpperRightLongitude();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.provider.ForwardGeocodeRequest> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class ForwardGeocodeRequest.Builder {
@@ -652,9 +724,13 @@ package android.location.provider {
     method public boolean isLocationSettingsIgnored();
     method public boolean isLowPower();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.provider.ProviderRequest> CREATOR;
     field @NonNull public static final android.location.provider.ProviderRequest EMPTY_REQUEST;
     field public static final long INTERVAL_DISABLED = 9223372036854775807L; // 0x7fffffffffffffffL
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class ProviderRequest.Builder {
@@ -682,7 +758,11 @@ package android.location.provider {
     method @FloatRange(from=-180.0, to=180.0) public double getLongitude();
     method @IntRange(from=1) public int getMaxResults();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field public static final int CONTENTS_FILE_DESCRIPTOR = 1; // 0x1
     field @NonNull public static final android.os.Parcelable.Creator<android.location.provider.ReverseGeocodeRequest> CREATOR;
+    field public static final int PARCELABLE_STABILITY_LOCAL = 0; // 0x0
+    field public static final int PARCELABLE_STABILITY_VINTF = 1; // 0x1
+    field public static final int PARCELABLE_WRITE_RETURN_VALUE = 1; // 0x1
   }
 
   public static final class ReverseGeocodeRequest.Builder {
