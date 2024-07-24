@@ -82,7 +82,7 @@ import java.util.Vector;
 public final class MediaCodecInfo {
     private static final String TAG = "MediaCodecInfo";
 
-    private static final boolean FLAG = false;
+    private static final boolean FLAG = true;
 
     private static final int FLAG_IS_ENCODER = (1 << 0);
     private static final int FLAG_IS_VENDOR = (1 << 1);
@@ -247,6 +247,8 @@ public final class MediaCodecInfo {
     public static final class CodecCapabilities {
         public CodecCapabilities() {
         }
+
+        private long mNativeContext; // accessed by native methods
 
         // CLASSIFICATION
         private String mMime;
@@ -1436,7 +1438,7 @@ public final class MediaCodecInfo {
          *
          * The Java CodecCapabilities object keeps these subobjects to avoid recontructing.
          */
-        private CodecCapabilities(CodecProfileLevel[] profLevs, int[] colFmts,
+        /* package private */ CodecCapabilities(CodecProfileLevel[] profLevs, int[] colFmts,
                 MediaFormat defaultFormat, AudioCapabilities audioCaps,
                 VideoCapabilities videoCaps, EncoderCapabilities encoderCaps) {
             profileLevels = profLevs;
@@ -1446,6 +1448,13 @@ public final class MediaCodecInfo {
             mVideoCaps = videoCaps;
             mEncoderCaps = encoderCaps;
         }
+
+        private static native void native_init();
+
+        static {
+            System.loadLibrary("media_jni");
+            native_init();
+        }
     }
 
     /**
@@ -1453,6 +1462,9 @@ public final class MediaCodecInfo {
      */
     public static final class AudioCapabilities {
         private static final String TAG = "AudioCapabilities";
+
+        private long mNativeContext; // accessed by native methods
+
         private CodecCapabilities mParent;
         private Range<Integer> mBitrateRange;
 
@@ -1913,6 +1925,13 @@ public final class MediaCodecInfo {
             // KEY_IS_ADTS:      required feature for all AAC decoders
             return true;
         }
+
+        private static native void native_init();
+
+        static {
+            System.loadLibrary("media_jni");
+            native_init();
+        }
     }
 
     /** @hide */
@@ -1969,6 +1988,9 @@ public final class MediaCodecInfo {
      */
     public static final class VideoCapabilities {
         private static final String TAG = "VideoCapabilities";
+
+        private long mNativeContext; // accessed by native methods
+
         private CodecCapabilities mParent;
         private Range<Integer> mBitrateRange;
 
@@ -2300,6 +2322,8 @@ public final class MediaCodecInfo {
          * rate.
          */
         public static final class PerformancePoint {
+            private long mNativeContext; // accessed by native methods
+
             private Size mBlockSize; // codec block size in macroblocks
             private int mWidth; // width in macroblocks
             private int mHeight; // height in macroblocks
@@ -2677,6 +2701,13 @@ public final class MediaCodecInfo {
             /** 2160p 240fps */
             @NonNull
             public static final PerformancePoint UHD_240 = new PerformancePoint(3840, 2160, 240);
+
+            private static native void native_init();
+
+            static {
+                System.loadLibrary("media_jni");
+                native_init();
+            }
         }
 
         /**
@@ -4022,6 +4053,13 @@ public final class MediaCodecInfo {
             mBitrateRange = Range.create(1, maxBps);
             mParent.mError |= errors;
         }
+
+        private static native void native_init();
+
+        static {
+            System.loadLibrary("media_jni");
+            native_init();
+        }
     }
 
     /**
@@ -4092,6 +4130,8 @@ public final class MediaCodecInfo {
         }
 
         /* package private */ static native boolean native_isBitrateModeSupported(int mode);
+
+        private long mNativeContext; // accessed by native methods
 
         private Range<Integer> mQualityRange;
         private Range<Integer> mComplexityRange;
@@ -4253,6 +4293,13 @@ public final class MediaCodecInfo {
             Integer quality = (Integer)map.get(MediaFormat.KEY_QUALITY);
 
             return supports(complexity, quality, profile);
+        }
+
+        private static native void native_init();
+
+        static {
+            System.loadLibrary("media_jni");
+            native_init();
         }
     };
 
@@ -4764,5 +4811,20 @@ public final class MediaCodecInfo {
         return new MediaCodecInfo(
                 mName, mCanonicalName, mFlags,
                 caps.toArray(new CodecCapabilities[caps.size()]));
+    }
+
+    /* package private */ class GenericHelper {
+        /* package private */ static Range<Integer> getIntegerRange(Integer lower, Integer upper) {
+            return Range.create(lower, upper);
+        }
+
+        /* package private */ static Range<Double> getDoubleRange(Double lower, Double upper) {
+            return Range.create(lower, upper);
+        }
+
+        /* package private */ static List<VideoCapabilities.PerformancePoint>
+                convertPerformancePointArrayToList(VideoCapabilities.PerformancePoint[] array) {
+            return Arrays.asList(array);
+        }
     }
 }
