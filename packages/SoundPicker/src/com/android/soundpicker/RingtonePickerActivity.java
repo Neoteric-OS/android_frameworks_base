@@ -256,7 +256,7 @@ public final class RingtonePickerActivity extends AlertActivity implements
             }
         } else {
             // Make sure intents don't inject HTML elements.
-            p.mTitle = Html.escapeHtml(p.mTitle.toString());
+            p.mTitle = Html.fromHtml(p.mTitle.toString());
         }
 
         setupAlert();
