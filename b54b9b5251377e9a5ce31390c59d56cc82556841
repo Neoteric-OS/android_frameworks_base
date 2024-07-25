@@ -22,6 +22,30 @@
       },
       "revId": "b54b9b5251377e9a5ce31390c59d56cc82556841",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e745f8c8_ddc5f698",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3550,
+      "author": {
+        "id": 1905361
+      },
+      "writtenOn": "2024-07-25T10:01:16Z",
+      "side": 0,
+      "message": "interceptKeyBeforeQueueing does not dispatch the global key. If the global key is not in global_keys.xml it will block these keys, but if the key is it simply passes for interceptSystemKeysAndShortcuts (this code) to handle it https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/policy/PhoneWindowManager.java;l\u003d4668\n\nHowever, since interceptSystemkeysAndShortcuts does not dispatch global keys till after this wtf check, effectively adding keys to global_keys.xml simply causes them to trigger this wtf rather than actually dispatch to apps.\n\nThe dispatching is happening here: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/policy/PhoneWindowManager.java;l\u003d3794 ,the bottom of the method doing this switch statement (right above where we moved this WTF check down too)",
+      "parentUuid": "da974cd3_74ea0dce",
+      "range": {
+        "startLine": 3550,
+        "startChar": 12,
+        "endLine": 3550,
+        "endChar": 46
+      },
+      "revId": "b54b9b5251377e9a5ce31390c59d56cc82556841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
