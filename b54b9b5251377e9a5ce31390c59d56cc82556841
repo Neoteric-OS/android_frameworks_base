@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da974cd3_74ea0dce",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3550,
+      "author": {
+        "id": 1941445
+      },
+      "writtenOn": "2024-07-25T00:54:06Z",
+      "side": 0,
+      "message": "do you mean these key codes are not handled? Please double check the overlay file `res/xml/global_keys.xml` which is used by `GlobalKeyManager` at `interceptKeyBeforeQueueing`",
+      "range": {
+        "startLine": 3550,
+        "startChar": 12,
+        "endLine": 3550,
+        "endChar": 46
+      },
+      "revId": "b54b9b5251377e9a5ce31390c59d56cc82556841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
