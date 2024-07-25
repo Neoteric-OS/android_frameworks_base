@@ -24,9 +24,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -97,22 +94,15 @@ public final class ServerSocketPerfTest {
         }
     }
 
-    public Collection getParams() {
-        final List<Object[]> params = new ArrayList<>();
-        for (EndpointFactory endpointFactory : EndpointFactory.values()) {
-            for (ChannelType channelType : ChannelType.values()) {
-                params.add(new Object[] {new Config(endpointFactory,
-                    endpointFactory, 64,
-                    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", channelType)});
-                params.add(new Object[] {new Config(endpointFactory,
-                    endpointFactory, 512,
-                    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", channelType)});
-                params.add(new Object[] {new Config(endpointFactory,
-                    endpointFactory, 4096,
-                    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", channelType)});
-            }
-        }
-        return params;
+    private Object[] getParams() {
+        return new Object[][] {
+            new Object[] {new Config(
+                              EndpointFactory.CONSCRYPT,
+                              EndpointFactory.CONSCRYPT,
+                              64,
+                              "AES128-GCM",
+                              ChannelType.CHANNEL)},
+        };
     }
 
     private ClientEndpoint client;
@@ -131,8 +121,7 @@ public final class ServerSocketPerfTest {
         final ChannelType channelType = config.channelType();
 
         server = config.serverFactory().newServer(
-            channelType, config.messageSize(),
-            new String[] {"TLSv1.3", "TLSv1.2"}, ciphers(config));
+            channelType, config.messageSize(), getCommonProtocolSuites(), ciphers(config));
         server.setMessageProcessor(new MessageProcessor() {
             @Override
             public void processMessage(byte[] inMessage, int numBytes, OutputStream os) {
@@ -156,8 +145,7 @@ public final class ServerSocketPerfTest {
 
         // Always use the same client for consistency across the benchmarks.
         client = config.clientFactory().newClient(
-                ChannelType.CHANNEL, server.port(),
-                new String[] {"TLSv1.3", "TLSv1.2"}, ciphers(config));
+                ChannelType.CHANNEL, server.port(), getCommonProtocolSuites(), ciphers(config));
         client.start();
 
         // Wait for the initial connection to complete.
