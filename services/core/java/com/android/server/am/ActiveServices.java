@@ -127,6 +127,7 @@ import static com.android.server.am.ActivityManagerDebugConfig.POSTFIX_SERVICE_E
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_AM;
 import static com.android.server.am.ActivityManagerDebugConfig.TAG_WITH_CLASS_NAME;
 
+
 import android.Manifest;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
@@ -5687,6 +5688,10 @@ public final class ActiveServices {
                 Slog.w(TAG, msg);
                 bringDownServiceLocked(r, enqueueOomAdj);
                 return msg;
+            }
+            if ((r.appInfo.flags & ApplicationInfo.FLAG_PERSISTENT) != 0
+                    && !TextUtils.equals(procName, r.appInfo.processName)) {
+                app.setPersistent(true);
             }
             mAm.mProcessList.getAppStartInfoTracker().handleProcessServiceStart(startTimeNs, app, r,
                     true);
