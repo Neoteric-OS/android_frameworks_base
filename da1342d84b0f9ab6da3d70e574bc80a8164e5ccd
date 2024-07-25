@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbe9ba6b_15622278",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-07-25T20:46:57Z",
+      "side": 1,
+      "message": "We are working on this internally in parallel. Bob will upload his CL to AOSP soon.",
+      "revId": "da1342d84b0f9ab6da3d70e574bc80a8164e5ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
