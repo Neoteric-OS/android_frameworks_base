@@ -146,7 +146,6 @@ public class BtHelper {
     private static final int SCO_MODE_MAX = 2;
 
     private static final int BT_HEARING_AID_GAIN_MIN = -128;
-    private static final int BT_LE_AUDIO_MIN_VOL = 0;
     private static final int BT_LE_AUDIO_MAX_VOL = 255;
 
     // BtDevice constants currently rolling out under flag protection. Use own
@@ -229,8 +228,7 @@ public class BtHelper {
     //----------------------------------------------------------------------
     // Interface for AudioDeviceBroker
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     /*package*/ synchronized void onSystemReady() {
         mScoConnectionState = android.media.AudioManager.SCO_AUDIO_STATE_ERROR;
         if (AudioService.DEBUG_SCO) {
@@ -505,8 +503,7 @@ public class BtHelper {
         return codecAndChanged;
     }
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     /*package*/ synchronized void onReceiveBtEvent(Intent intent) {
         final String action = intent.getAction();
 
@@ -543,11 +540,11 @@ public class BtHelper {
     }
 
     /**
-     * Exclusively called from AudioDeviceBroker when handling MSG_L_RECEIVED_BT_EVENT
+     * Exclusively called from AudioDeviceBroker (with mSetModeLock held)
+     * when handling MSG_L_RECEIVED_BT_EVENT in {@link #onReceiveBtEvent(Intent)}
      * as part of the serialization of the communication route selection
      */
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    @GuardedBy("BtHelper.this")
     private void onScoAudioStateChanged(int state) {
         boolean broadcast = false;
         int scoAudioState = AudioManager.SCO_AUDIO_STATE_ERROR;
@@ -640,16 +637,14 @@ public class BtHelper {
               || mScoAudioState == SCO_STATE_ACTIVATE_REQ;
     }
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     /*package*/ synchronized boolean startBluetoothSco(int scoAudioMode,
                 @NonNull String eventSource) {
         AudioService.sDeviceLogger.enqueue(new EventLogger.StringEvent(eventSource));
         return requestScoState(BluetoothHeadset.STATE_AUDIO_CONNECTED, scoAudioMode);
     }
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     /*package*/ synchronized boolean stopBluetoothSco(@NonNull String eventSource) {
         AudioService.sDeviceLogger.enqueue(new EventLogger.StringEvent(eventSource));
         return requestScoState(BluetoothHeadset.STATE_AUDIO_DISCONNECTED, SCO_MODE_VIRTUAL_CALL);
@@ -721,8 +716,7 @@ public class BtHelper {
         mScoConnectionState = state;
     }
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     /*package*/ synchronized void resetBluetoothSco() {
         if (AudioService.DEBUG_SCO) {
             Log.i(TAG, "In resetBluetoothSco(), calling clearAllScoClients()");
@@ -735,8 +729,7 @@ public class BtHelper {
         mDeviceBroker.setBluetoothScoOn(false, "resetBluetoothSco");
     }
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     /*package*/ synchronized void onBtProfileDisconnected(int profile) {
         AudioService.sDeviceLogger.enqueue(new EventLogger.StringEvent(
                 "BT profile " + BluetoothProfile.getProfileName(profile)
@@ -800,8 +793,7 @@ public class BtHelper {
 
     MyLeAudioCallback mLeAudioCallback = null;
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     /*package*/ synchronized void onBtProfileConnected(int profile, BluetoothProfile proxy) {
         AudioService.sDeviceLogger.enqueue(new EventLogger.StringEvent(
                 "BT profile " + BluetoothProfile.getProfileName(profile) + " connected to proxy "
@@ -938,8 +930,7 @@ public class BtHelper {
         }
     }
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     private void onHeadsetProfileConnected(@NonNull BluetoothHeadset headset) {
         // Discard timeout message
         mDeviceBroker.handleCancelFailureToConnectToBtHeadsetService();
@@ -1098,8 +1089,7 @@ public class BtHelper {
         return btDevice == null ? "(null)" : btDevice.getAnonymizedAddress();
     }
 
-    // @GuardedBy("mDeviceBroker.mSetModeLock")
-    @GuardedBy("AudioDeviceBroker.this.mDeviceStateLock")
+    // Called locked by ADeviceBroker.mSetModeLock -> AudioDeviceBroker.mDeviceStateLock
     /*package */ synchronized void onSetBtScoActiveDevice(BluetoothDevice btDevice) {
         Log.i(TAG, "onSetBtScoActiveDevice: " + getAnonymizedAddress(mBluetoothHeadsetDevice)
                 + " -> " + getAnonymizedAddress(btDevice));
@@ -1324,6 +1314,9 @@ public class BtHelper {
 
     //-----------------------------------------------------
     // Utilities
+
+    // suppress warning due to generic Intent passed as param
+    @SuppressWarnings("AndroidFrameworkRequiresPermission")
     private void sendStickyBroadcastToAll(Intent intent) {
         intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
         final long ident = Binder.clearCallingIdentity();
