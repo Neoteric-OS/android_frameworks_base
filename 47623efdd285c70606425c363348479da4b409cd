@@ -16,6 +16,23 @@
       "message": "Three of these need",
       "revId": "47623efdd285c70606425c363348479da4b409cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07b34d37_dcd7c153",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-07-26T17:38:10Z",
+      "side": 1,
+      "message": "Lorenzo, can you add approval for the top level TOP_MAPPING and the networking one? They need extra permissions which you have, thanks.\n\nThis is just restructuring the TEST_MAPPING files so the options are defined in Android.bp (and given a new module name)",
+      "revId": "47623efdd285c70606425c363348479da4b409cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
