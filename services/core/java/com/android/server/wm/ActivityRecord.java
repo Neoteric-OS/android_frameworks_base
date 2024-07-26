@@ -4610,9 +4610,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         if (!delayed) {
             updateReportedVisibilityLocked();
         }
-
-        // Reset the last saved PiP snap fraction on removal.
-        mDisplayContent.mPinnedTaskController.onActivityHidden(mActivityComponent);
         mDisplayContent.onRunningActivityChanged();
         mRemovingFromDisplay = false;
     }
@@ -6864,8 +6861,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         if (task.mLastRecentsAnimationTransaction != null) {
             task.clearLastRecentsAnimationTransaction(true /* forceRemoveOverlay */);
         }
-        // Reset the last saved PiP snap fraction on app stop.
-        mDisplayContent.mPinnedTaskController.onActivityHidden(mActivityComponent);
         if (isClientVisible()) {
             // Though this is usually unlikely to happen, still make sure the client is invisible.
             setClientVisible(false);
