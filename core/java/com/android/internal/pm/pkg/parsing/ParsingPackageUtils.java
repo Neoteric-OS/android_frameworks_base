@@ -243,6 +243,11 @@ public class ParsingPackageUtils {
     public static final int PARSE_IGNORE_OVERLAY_REQUIRED_SYSTEM_PROPERTY = 1 << 7;
     public static final int PARSE_APK_IN_APEX = 1 << 9;
 
+    /**
+     * This flag is applied to skip  manifest attr length and tag count checks
+     */
+    public static final int PARSE_SKIP_TAG_VALIDATOR = 1 << 10;
+
     public static final int PARSE_CHATTY = 1 << 31;
 
     @IntDef(flag = true, prefix = { "PARSE_" }, value = {
@@ -583,7 +588,7 @@ public class ParsingPackageUtils {
         }
 
         try (XmlResourceParser parser = assets.openXmlResourceParser(cookie,
-                ANDROID_MANIFEST_FILENAME)) {
+                ANDROID_MANIFEST_FILENAME, ((flags & PARSE_SKIP_TAG_VALIDATOR) != 0))) {
             final Resources res = new Resources(assets, mDisplayMetrics, null);
 
             ParseResult<ParsingPackage> result = parseBaseApk(input, apkPath, codePath, res,
@@ -668,7 +673,7 @@ public class ParsingPackageUtils {
                     "Failed adding asset path: " + apkPath);
         }
         try (XmlResourceParser parser = assets.openXmlResourceParser(cookie,
-                ANDROID_MANIFEST_FILENAME)) {
+                ANDROID_MANIFEST_FILENAME, ((flags & PARSE_SKIP_TAG_VALIDATOR) != 0))) {
             Resources res = new Resources(assets, mDisplayMetrics, null);
             ParseResult<ParsingPackage> parseResult = parseSplitApk(input, pkg, res,
                     parser, flags, splitIndex);

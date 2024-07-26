@@ -13738,6 +13738,7 @@ package android.content.res {
     method @NonNull public android.content.res.AssetFileDescriptor openNonAssetFd(int, @NonNull String) throws java.io.IOException;
     method @NonNull public android.content.res.XmlResourceParser openXmlResourceParser(@NonNull String) throws java.io.IOException;
     method @NonNull public android.content.res.XmlResourceParser openXmlResourceParser(int, @NonNull String) throws java.io.IOException;
+    method @FlaggedApi("android.content.res.manifest_flagging") @NonNull public android.content.res.XmlResourceParser openXmlResourceParser(int, @NonNull String, boolean) throws java.io.IOException;
     field public static final int ACCESS_BUFFER = 3; // 0x3
     field public static final int ACCESS_RANDOM = 1; // 0x1
     field public static final int ACCESS_STREAMING = 2; // 0x2

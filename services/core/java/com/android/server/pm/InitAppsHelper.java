@@ -258,7 +258,7 @@ final class InitAppsHelper {
             fixInstalledAppDirMode();
         }
 
-        scanDirTracedLI(mPm.getAppInstallDir(), 0,
+        scanDirTracedLI(mPm.getAppInstallDir(), ParsingPackageUtils.PARSE_SKIP_TAG_VALIDATOR,
                 mScanFlags | SCAN_REQUIRE_KNOWN, packageParser, mExecutorService, null);
 
         List<Runnable> unfinishedTasks = mExecutorService.shutdownNow();
