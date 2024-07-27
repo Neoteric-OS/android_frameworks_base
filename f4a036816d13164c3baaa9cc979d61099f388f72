@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f97a89ee_1a63c446",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-07-27T13:39:03Z",
+      "side": 1,
+      "message": "Sorry, there was a problem with the last CL that I didn\u0027t catch during presubmit or during my atest runs or during my presubmit runs with the updated TEST_MAPPING files.  I fixed the test_suite attributes and retested the failed test with abtd.\nIt should be okay now.",
+      "revId": "f4a036816d13164c3baaa9cc979d61099f388f72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
