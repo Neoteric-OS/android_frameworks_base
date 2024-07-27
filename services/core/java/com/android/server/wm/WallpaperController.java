@@ -53,6 +53,7 @@ import android.util.SparseArray;
 import android.view.Display;
 import android.view.DisplayInfo;
 import android.view.SurfaceControl;
+import android.view.View;
 import android.view.WindowManager;
 import android.window.ScreenCapture;
 
@@ -198,7 +199,9 @@ class WallpaperController {
             // as a launcher can satisfy criteria for a wallpaper target. In this case, we should
             // chose the normal activity, otherwise wallpaper becomes invisible when a new animation
             // starts before the keyguard going away animation finishes.
-            if (w.mActivityRecord == null && mDisplayContent.isKeyguardGoingAway()) {
+            if (w.mActivityRecord == null && (mDisplayContent.isKeyguardGoingAway()
+                    || (mService.mPolicy.isKeyguardHostWindow(w.mAttrs)
+                    && w.mViewVisibility != View.VISIBLE))) {
                 return false;
             }
             return true;
