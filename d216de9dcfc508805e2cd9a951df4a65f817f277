@@ -51,6 +51,110 @@
       "message": "Added @brup@google.com as a reviewer.",
       "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c225fc6_fb2e5fba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2024-07-29T12:45:04Z",
+      "side": 1,
+      "message": "Dropped in some comments for the changes pertaining to PowerManagerService.",
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6715d5d_b5679fb9",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2024-07-29T12:45:04Z",
+      "side": 1,
+      "message": "I dont see this getting user anywhere.",
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a05534f_fded98bc",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3734,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2024-07-29T12:45:04Z",
+      "side": 1,
+      "message": "Can you also add a log if we keep suspend blocker wakelock because of this new flag? Something like\n\nif (mKeepAdbConnectionSetting \u0026\u0026 needWakeLockSuspendBlocker) {\n  // log\n}",
+      "fixSuggestions": [
+        {
+          "fixId": "2c2f612d_9d78e38d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/power/PowerManagerService.java",
+              "range": {
+                "startLine": 3736,
+                "startChar": 0,
+                "endLine": 3736,
+                "endChar": 0
+              },
+              "replacement": "         if (mKeepAdbConnectionSetting !\u003d 0) {\n             Slog.i(TAG, \"Keep suspend blocker for adb connection\");\n         }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f141281_f568be26",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3735,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2024-07-29T12:45:04Z",
+      "side": 1,
+      "message": "Lets also add some tests for this change. Check PowerManagerServiceTest::testInattentiveSleep_hideWarningIfStayOnIsEnabledAndPluggedIn where a different setting is changed and tested",
+      "fixSuggestions": [
+        {
+          "fixId": "cc2ce24c_d083723b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/power/PowerManagerService.java",
+              "range": {
+                "startLine": 3734,
+                "startChar": 0,
+                "endLine": 3734,
+                "endChar": 0
+              },
+              "replacement": "        final boolean needWakeLockSuspendBlocker \u003d\n                (((mWakeLockSummary \u0026 WAKE_LOCK_CPU) !\u003d 0) || (mKeepAdbConnectionSetting !\u003d 0));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
