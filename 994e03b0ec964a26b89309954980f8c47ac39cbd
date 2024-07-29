@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c9cdd6d_89ccd062",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2024-07-29T01:33:41Z",
+      "side": 1,
+      "message": "It looks like this is triggering a merge conflict internally. Aurélien, could you review the cherry-pick at ag/28525048? Thanks",
+      "revId": "994e03b0ec964a26b89309954980f8c47ac39cbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
