@@ -239,7 +239,18 @@ public class UpdateEngine {
         /**
          * Update status code: update engine is in disabled state.
          */
-        public static final int DISABLED = 9;
+        public static final int DISABLED = 9,
+
+        /**
+         * Update status code: update aborted because user preferences do not
+         * allow updates, e.g. over cellular network.
+         */
+        NEED_PERMISSION_TO_UPDATE = 10,
+
+        /**
+         * Update status code: update engine is cleaning a previous update
+         */
+        CLEANUP_PREVIOUS_UPDATE = 11;
     }
 
     private final IUpdateEngine mUpdateEngine;
