@@ -16,6 +16,23 @@
       "message": "+Evan for `SensorPrivacyService`, +Vishnu for `ActivityRecord`, and +Yu-Han for `GpsNetInitiatedHandler`. Thanks!",
       "revId": "1a7211b45a611dd181c58d406c5b9bfda5c97d69",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c4f451f_ec411556",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2024-07-30T16:16:59Z",
+      "side": 1,
+      "message": "Thanks for working on this! We filed b/201337737 but unfortunately it hasn\u0027t been addressed for years.",
+      "revId": "1a7211b45a611dd181c58d406c5b9bfda5c97d69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
