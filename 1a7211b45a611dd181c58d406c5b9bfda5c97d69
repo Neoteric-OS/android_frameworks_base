@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "336c7a23_6635ebf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-07-30T15:18:06Z",
+      "side": 1,
+      "message": "+Evan for `SensorPrivacyService`, +Vishnu for `ActivityRecord`, and +Yu-Han for `GpsNetInitiatedHandler`. Thanks!",
+      "revId": "1a7211b45a611dd181c58d406c5b9bfda5c97d69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
