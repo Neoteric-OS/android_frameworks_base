@@ -22,4 +22,18 @@ import android.nfc.Tag;
  */
 interface INfcOemExtensionCallback {
    void onTagConnected(boolean connected, in Tag tag);
+   void onStateUpdated(int state);
+   boolean onApplyRouting();
+   boolean onNdefRead();
+   boolean onEnable();
+   boolean onDisable();
+   void onBootStarted();
+   void onEnableStarted();
+   void onDisableStarted();
+   void onBootFinished(boolean result);
+   void onEnableFinished(boolean result);
+   void onDisableFinished(boolean result);
+   boolean onTagDispatch();
+   void onRoutingChanged();
+   void onHceEventReceived(int action);
 }

@@ -18,6 +18,7 @@ package android.nfc;
 
 import android.annotation.CallbackExecutor;
 import android.annotation.FlaggedApi;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
@@ -26,7 +27,18 @@ import android.os.Binder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Used for OEM extension APIs.
@@ -47,6 +59,22 @@ public final class NfcOemExtension {
     private Callback mCallback = null;
     private final Object mLock = new Object();
 
+    public static final int HCE_ACTIVATE = 1;
+    public static final int HCE_DATA_TRANSFERRED = 2;
+    public static final int HCE_DEACTIVATED = 3;
+    /**
+     * Possible actions from {@link Callback#onHceEventReceived}.
+     *
+     * @hide
+     */
+    @IntDef(value = {
+            HCE_ACTIVATE,
+            HCE_DATA_TRANSFERRED,
+            HCE_DEACTIVATED
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface HostCardEmulationAction {}
+
     /**
      * Interface for Oem extensions for NFC.
      */
@@ -59,21 +87,105 @@ public final class NfcOemExtension {
          * @param tag Tag details
          */
         void onTagConnected(boolean connected, @NonNull Tag tag);
+
+        /**
+         * Update the Nfc Adapter State
+         * @param state new state that need to be updated
+         */
+        void onStateUpdated(@NfcAdapter.AdapterState int state);
+        /**
+         * Check if NfcService apply routing method need to be skipped for
+         * some feature.
+         * @return true if apply routing should be skipped otherwise it will return false
+         */
+        boolean onApplyRouting();
+        /**
+         * Check if NfcService ndefRead method need to be skipped To skip
+         * and start checking for presence of tag
+         * @return true if ndefRead should be skipped or otherwise it will return false
+         */
+        boolean onNdefRead();
+        /**
+         * Method to check if Nfc is allowed to be enabled by OEMs.
+         * @return true if OEM is allowed to enable NFC, otherwise it will return false
+         */
+        boolean onEnable();
+        /**
+         * Method to check if Nfc is allowed to be disabled by OEMs.
+         * @return true if OEM is allowed to disable NFC, otherwise it will return false
+         */
+        boolean onDisable();
+
+        /**
+         * Callback to indicate that Nfc starts to boot.
+         */
+        void onBootStarted();
+
+        /**
+         * Callback to indicate that Nfc starts to enable.
+         */
+        void onEnableStarted();
+
+        /**
+         * Callback to indicate that Nfc starts to enable.
+         */
+        void onDisableStarted();
+
+        /**
+         * Callback to indicate if NFC boots successfully or not.
+         * @param result true if NFC boots successfully, false otherwise
+         */
+        void onBootFinished(boolean result);
+
+        /**
+         * Callback to indicate if NFC is successfully enabled.
+         * @param result true if NFC is enabled successfully, false otherwise
+         */
+        void onEnableFinished(boolean result);
+
+        /**
+         * Callback to indicate if NFC is successfully disabled.
+         * @param result true if NFC is disabled successfully, false otherwise
+         */
+        void onDisableFinished(boolean result);
+
+        /**
+         * Check if NfcService tag dispatch need to be skipped.
+         * @return true if tag dispatch need to be skipped, otherwise it will return false
+         */
+        boolean onTagDispatch();
+
+        /**
+         * Notifies routing configuration is changed.
+         */
+        void onRoutingChanged();
+
+        /**
+         * API to activate start stop cpu boost on hce event.
+         *
+         * <p>At the time of calling
+         * {@link com.android.nfc.cardemulation.CardEmulationManager#onHostCardEmulationActivated},
+         * {@link com.android.nfc.cardemulation.CardEmulationManager#onHostCardEmulationData},
+         * {@link com.android.nfc.cardemulation.CardEmulationManager#onHostCardEmulationDeactivated}
+         * must call this method to activate, start and stop cpu boost respectively.
+         * completes.
+         * @param action Flag indicating actions to activate, start and stop cpu boost.
+         */
+        void onHceEventReceived(@HostCardEmulationAction int action);
     }
 
 
     /**
      * Constructor to be used only by {@link NfcAdapter}.
-     * @hide
      */
-    public NfcOemExtension(@NonNull Context context, @NonNull NfcAdapter adapter) {
+    NfcOemExtension(@NonNull Context context, @NonNull NfcAdapter adapter) {
         mContext = context;
         mAdapter = adapter;
         mOemNfcExtensionCallback = new NfcOemExtensionCallback();
     }
 
     /**
-     * Register an {@link Callback} to listen for UWB oem extension callbacks
+     * Register an {@link Callback} to listen for NFC oem extension callbacks
      * <p>The provided callback will be invoked by the given {@link Executor}.
      *
      * @param executor an {@link Executor} to execute given callback
@@ -182,6 +294,145 @@ public final class NfcOemExtension {
                 } finally {
                     Binder.restoreCallingIdentity(identity);
                 }
+            }
+        }
+        @Override
+        public void onStateUpdated(int state) throws RemoteException {
+            handleVoidCallback(state, mCallback::onStateUpdated);
+        }
+        @Override
+        public boolean onApplyRouting() throws RemoteException {
+            return handleNonVoidCallbackWithoutInput(
+                    false, mCallback::onApplyRouting);
+        }
+        @Override
+        public boolean onNdefRead() throws RemoteException {
+            return handleNonVoidCallbackWithoutInput(
+                    false, mCallback::onNdefRead);
+        }
+        @Override
+        public boolean onEnable() throws RemoteException {
+            return handleNonVoidCallbackWithoutInput(
+                    false, mCallback::onEnable);
+        }
+        @Override
+        public boolean onDisable() throws RemoteException {
+            return handleNonVoidCallbackWithoutInput(
+                    false, mCallback::onDisable);
+        }
+        @Override
+        public void onBootStarted() throws RemoteException {
+            handleVoidCallback(null, (Object input) -> mCallback.onBootStarted());
+        }
+        @Override
+        public void onEnableStarted() throws RemoteException {
+            handleVoidCallback(null, (Object input) -> mCallback.onEnableStarted());
+        }
+        @Override
+        public void onDisableStarted() throws RemoteException {
+            handleVoidCallback(null, (Object input) -> mCallback.onDisableStarted());
+        }
+        @Override
+        public void onBootFinished(boolean result) throws RemoteException {
+            handleVoidCallback(result, mCallback::onBootFinished);
+        }
+        @Override
+        public void onEnableFinished(boolean result) throws RemoteException {
+            handleVoidCallback(result, mCallback::onEnableFinished);
+        }
+        @Override
+        public void onDisableFinished(boolean result) throws RemoteException {
+            handleVoidCallback(result, mCallback::onDisableFinished);
+        }
+        @Override
+        public boolean onTagDispatch() throws RemoteException {
+            return handleNonVoidCallbackWithoutInput(
+                    false, mCallback::onTagDispatch);
+        }
+        @Override
+        public void onRoutingChanged() throws RemoteException {
+            handleVoidCallback(null, (Object input) -> mCallback.onRoutingChanged());
+        }
+        @Override
+        public void onHceEventReceived(int action) throws RemoteException {
+            handleVoidCallback(action, mCallback::onHceEventReceived);
+        }
+
+        private <T> void handleVoidCallback(T input, Consumer<T> callbackMethod) {
+            synchronized (mLock) {
+                if (mCallback == null || mExecutor == null) {
+                    return;
+                }
+                final long identity = Binder.clearCallingIdentity();
+                try {
+                    mExecutor.execute(() -> callbackMethod.accept(input));
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+            }
+        }
+
+        private <S, T> S handleNonVoidCallbackWithInput(
+                S defaultValue, T input, Function<T, S> callbackMethod) throws RemoteException {
+            synchronized (mLock) {
+                if (mCallback == null) {
+                    return defaultValue;
+                }
+                final long identity = Binder.clearCallingIdentity();
+                S result = defaultValue;
+                try {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    FutureTask<S> futureTask = new FutureTask<>(
+                            () -> callbackMethod.apply(input)
+                    );
+                    executor.submit(futureTask);
+                    try {
+                        result = futureTask.get(
+                                OEM_EXTENSION_RESPONSE_THRESHOLD_MS, TimeUnit.MILLISECONDS);
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        Log.w(TAG, "Callback timed out: " + callbackMethod);
+                        e.printStackTrace();
+                    } finally {
+                        executor.shutdown();
+                    }
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+                return result;
+            }
+        }
+
+        private <T> T handleNonVoidCallbackWithoutInput(T defaultValue, Supplier<T> callbackMethod)
+                throws RemoteException {
+            synchronized (mLock) {
+                if (mCallback == null) {
+                    return defaultValue;
+                }
+                final long identity = Binder.clearCallingIdentity();
+                T result = defaultValue;
+                try {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    FutureTask<T> futureTask = new FutureTask<>(
+                            callbackMethod::get
+                    );
+                    executor.submit(futureTask);
+                    try {
+                        result = futureTask.get(
+                                OEM_EXTENSION_RESPONSE_THRESHOLD_MS, TimeUnit.MILLISECONDS);
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (TimeoutException e) {
+                        Log.w(TAG, "Callback timed out: " + callbackMethod);
+                        e.printStackTrace();
+                    } finally {
+                        executor.shutdown();
+                    }
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+                return result;
             }
         }
     }
