@@ -16,6 +16,80 @@
       "message": "Sorry, there was a problem with the last CL that I didn\u0027t catch during presubmit or during my atest runs or during my presubmit runs with the updated TEST_MAPPING files.  I fixed the test_suite attributes and retested the failed test with abtd.\nIt should be okay now.",
       "revId": "f4a036816d13164c3baaa9cc979d61099f388f72",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5c62a6b_2d741b74",
+        "filename": "core/tests/coretests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-30T16:36:08Z",
+      "side": 1,
+      "message": "FLAKY_OR_IGNORED?",
+      "revId": "f4a036816d13164c3baaa9cc979d61099f388f72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a2ebbc6_869aecfb",
+        "filename": "core/tests/coretests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-30T16:36:08Z",
+      "side": 1,
+      "message": "FLAKY_OR_IGNORED?",
+      "revId": "f4a036816d13164c3baaa9cc979d61099f388f72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b9fc966_7e3db66c",
+        "filename": "core/tests/coretests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-30T16:36:08Z",
+      "side": 1,
+      "message": "Why not FLAKY_OR_IGNORED?",
+      "revId": "f4a036816d13164c3baaa9cc979d61099f388f72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7900c7d1_997d265e",
+        "filename": "core/tests/coretests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-07-30T16:36:08Z",
+      "side": 1,
+      "message": "Why do some of them have a trailing period but others don\u0027t?",
+      "range": {
+        "startLine": 458,
+        "startChar": 47,
+        "endLine": 458,
+        "endChar": 48
+      },
+      "revId": "f4a036816d13164c3baaa9cc979d61099f388f72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
