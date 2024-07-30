@@ -11162,10 +11162,12 @@ package android.os {
     ctor public UpdateEngine.UpdateStatusConstants();
     field public static final int ATTEMPTING_ROLLBACK = 8; // 0x8
     field public static final int CHECKING_FOR_UPDATE = 1; // 0x1
+    field public static final int CLEANUP_PREVIOUS_UPDATE = 11; // 0xb
     field public static final int DISABLED = 9; // 0x9
     field public static final int DOWNLOADING = 3; // 0x3
     field public static final int FINALIZING = 5; // 0x5
     field public static final int IDLE = 0; // 0x0
+    field public static final int NEED_PERMISSION_TO_UPDATE = 10; // 0xa
     field public static final int REPORTING_ERROR_EVENT = 7; // 0x7
     field public static final int UPDATED_NEED_REBOOT = 6; // 0x6
     field public static final int UPDATE_AVAILABLE = 2; // 0x2
