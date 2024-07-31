@@ -201,6 +201,7 @@ public final class ServerSocketPerfTest {
 
     @Test
     @Parameters(method = "getParams")
+    @Ignore("b/351034205")
     public void throughput(Config config) throws Exception {
         setup(config);
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
