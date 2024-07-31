@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e6cc4ce_03ae3933",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1951215
+      },
+      "writtenOn": "2024-07-31T12:52:23Z",
+      "side": 1,
+      "message": "I see a change in the preloaded-classes denylist rather than \"Update the preloaded-classes denylist",
+      "revId": "495380e0693f589c064927d379ca294e012f4697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
