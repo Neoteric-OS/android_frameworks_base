@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48acaf91_5e536183",
+        "filename": "services/core/java/com/android/server/wm/WallpaperController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-08-01T02:52:26Z",
+      "side": 1,
+      "message": "Could you try to only change this to `(hasWallpaper \u0026\u0026 w.isReadyForDisplay())` ?",
+      "range": {
+        "startLine": 187,
+        "startChar": 19,
+        "endLine": 188,
+        "endChar": 66
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "047e9261_6a9d11a4",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/wm/WallpaperController.java",
+              "range": {
+                "startLine": 187,
+                "startChar": 0,
+                "endLine": 189,
+                "endChar": 0
+              },
+              "replacement": "        } else if (hasWallpaper \u0026\u0026 w.isReadyForDisplay()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a5fccd04fb3b07c6c4e086392fe141b171c77004",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
