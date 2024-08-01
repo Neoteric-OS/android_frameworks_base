@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Copyright 2024 Sony Corporation
+ * NOTE: This file has been modified by Sony Corporation
+ * Modifications are licensed under the License.
+ */
 
 package com.android.server.wallpaper;
 
@@ -535,9 +540,9 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
         }
 
         synchronized (mLock) {
-            // Not having a wallpaperComponent means it's a lock screen wallpaper.
+            // If it is not the defaultComponent means it's a lock screen wallpaper.
             final boolean imageWallpaper = mImageWallpaper.equals(wallpaper.wallpaperComponent)
-                    || wallpaper.wallpaperComponent == null;
+                    || isDefaultComponent(wallpaper.wallpaperComponent);
             if (imageWallpaper && wallpaper.getCropFile().exists()) {
                 cropFile = wallpaper.getCropFile().getAbsolutePath();
             } else if (imageWallpaper && !wallpaper.cropExists() && !wallpaper.sourceExists()) {
