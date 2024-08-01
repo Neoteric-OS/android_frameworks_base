@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df3a3a48_32fb72a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1336478
+      },
+      "writtenOn": "2024-08-01T17:07:21Z",
+      "side": 1,
+      "message": "+tyanh for DrNo (Hi Professor :D)",
+      "revId": "813c317eb92879212dcb79ac25dbdadf18bcf4f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
