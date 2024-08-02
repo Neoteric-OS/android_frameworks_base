@@ -961,6 +961,11 @@ public class AudioDeviceInventory {
         }
     }
 
+    /*package*/ void onMakeHearingAidDeviceUnavailableNow(String address) {
+        synchronized (mDevicesLock) {
+            makeHearingAidDeviceUnavailableNow(address);
+        }
+    }
 
     /**
      * Goes over all connected LE Audio devices in the provided group ID and
@@ -1805,8 +1810,7 @@ public class AudioDeviceInventory {
                 final int delay = checkSendBecomingNoisyIntentInt(DEVICE_OUT_HEARING_AID,
                         AudioService.CONNECTION_STATE_DISCONNECTED, AudioSystem.DEVICE_NONE);
                 toRemove.stream().forEach(deviceAddress ->
-                        // TODO delay not used?
-                        makeHearingAidDeviceUnavailable(deviceAddress /*, delay*/)
+                        makeHearingAidDeviceUnavailableLater(deviceAddress, delay)
                 );
             }
         }
@@ -2383,6 +2387,15 @@ public class AudioDeviceInventory {
                         AudioSystem.getDeviceName(DEVICE_OUT_HEARING_AID))
                 .record();
         mDeviceBroker.postCheckCommunicationDeviceRemoval(ada);
+    }
+
+    @GuardedBy("mDevicesLock")
+    private void makeHearingAidDeviceUnavailableLater(
+            String address, int delayMs) {
+        // the device will be made unavailable later, so consider it disconnected right away
+        mConnectedDevices.remove(DeviceInfo.makeDeviceListKey(device, address));
+        // send the delayed message to make the device unavailable later
+        mDeviceBroker.setHearingAidTimeout(address, delayMs);
     }
 
     /**
