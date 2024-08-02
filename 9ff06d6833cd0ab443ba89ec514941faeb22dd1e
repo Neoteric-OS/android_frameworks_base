@@ -16,6 +16,47 @@
       "message": "Can you help me to review? thank you!",
       "revId": "9ff06d6833cd0ab443ba89ec514941faeb22dd1e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d45a186b_d6660479",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1463,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-08-02T09:06:44Z",
+      "side": 1,
+      "message": "SENDMSG_QUEUE: two consecutive intents may contain different information.",
+      "range": {
+        "startLine": 1463,
+        "startChar": 16,
+        "endLine": 1463,
+        "endChar": 31
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bce7eaeb_fe0c4305",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+              "range": {
+                "startLine": 1463,
+                "startChar": 0,
+                "endLine": 1464,
+                "endChar": 0
+              },
+              "replacement": "                SENDMSG_QUEUE, intent);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9ff06d6833cd0ab443ba89ec514941faeb22dd1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
