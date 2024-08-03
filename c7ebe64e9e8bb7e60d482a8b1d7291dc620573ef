@@ -16,6 +16,23 @@
       "message": "ماسنجر",
       "revId": "c7ebe64e9e8bb7e60d482a8b1d7291dc620573ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "589b2cb0_b522203f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2024-08-03T14:59:14Z",
+      "side": 1,
+      "message": "Hi @arteiro, I updated it with latest npm fix result. PTAL. Thanks.",
+      "revId": "c7ebe64e9e8bb7e60d482a8b1d7291dc620573ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
