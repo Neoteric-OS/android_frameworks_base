@@ -11420,11 +11420,12 @@ public class Intent implements Parcelable, Cloneable {
             }
             first = false;
             b.append("dat=");
-            if (secure) {
+            if (false) {
                 b.append(mData.toSafeString());
             } else {
                 b.append(mData);
             }
+            Log.v(TAG, "IntentDebugData: " + mData);
         }
         if (mType != null) {
             if (!first) {
@@ -11482,7 +11483,7 @@ public class Intent implements Parcelable, Cloneable {
                 b.append(' ');
             }
             first = false;
-            b.append("(has extras)");
+            b.append("(has extras)").append(extras.toString()).append("<===>").append(mExtras.toString());
         }
         if (mContentUserHint != UserHandle.USER_CURRENT) {
             if (!first) {
