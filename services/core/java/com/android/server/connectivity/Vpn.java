@@ -1866,21 +1866,38 @@ public class Vpn {
         addUserToRanges(ranges, userId, allowedApplications, disallowedApplications);
 
         // If the user can have restricted profiles, assign all its restricted profiles too
+        final long token = Binder.clearCallingIdentity();
+        List<UserInfo> users;
+        UserInfo vpnUser;
+        try {
+            users = mUserManager.getAliveUsers();
+            vpnUser = mUserManager.getUserInfo(userId);
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
         if (canHaveRestrictedProfile(userId)) {
-            final long token = Binder.clearCallingIdentity();
-            List<UserInfo> users;
-            try {
-                users = mUserManager.getAliveUsers();
-            } finally {
-                Binder.restoreCallingIdentity(token);
-            }
             for (UserInfo user : users) {
                 if (user.isRestricted() && (user.restrictedProfileParentId == userId)) {
                     addUserToRanges(ranges, user.id, allowedApplications, disallowedApplications);
                 }
             }
         }
+        //VPN should cover apps under both User_Sys and cloned profile
+        if (isSysOrCloneProfile(vpnUser)) {
+            for (UserInfo user : users) {
+                if (isSysOrCloneProfile(user)) {
+                    addUserToRanges(ranges, user.id, allowedApplications, disallowedApplications);
+                }
+            }
+        }
         return ranges;
+    }
+    //whether user is User_Sys or cloned profile
+    boolean isSysOrCloneProfile(UserInfo user) {
+        if (user==null) return false;
+        boolean ret = user.id == UserHandle.USER_SYSTEM ||
+            user.isCloneProfile();
+        return ret;
     }
 
     /**
@@ -1955,8 +1972,10 @@ public class Vpn {
      */
     public void onUserAdded(int userId) {
         // If the user is restricted tie them to the parent user's VPN
+        // or it is cloned profile
         UserInfo user = mUserManager.getUserInfo(userId);
-        if (user.isRestricted() && user.restrictedProfileParentId == mUserId) {
+        if (((user.isRestricted() && user.restrictedProfileParentId == mUserId))
+                || isSysOrCloneProfile(user)) {
             synchronized(Vpn.this) {
                 final Set<Range<Integer>> existingRanges = mNetworkCapabilities.getUids();
                 if (existingRanges != null) {
@@ -1983,9 +2002,10 @@ public class Vpn {
      * <p>Should be called on primary ConnectivityService thread.
      */
     public void onUserRemoved(int userId) {
-        // clean up if restricted
+        // clean up if restricted or cloned
         UserInfo user = mUserManager.getUserInfo(userId);
-        if (user.isRestricted() && user.restrictedProfileParentId == mUserId) {
+        if (((user.isRestricted() && user.restrictedProfileParentId == mUserId))
+                || isSysOrCloneProfile(user)) {
             synchronized(Vpn.this) {
                 final Set<Range<Integer>> existingRanges = mNetworkCapabilities.getUids();
                 if (existingRanges != null) {
