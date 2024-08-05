@@ -92,6 +92,16 @@ class ServiceManagerProxy implements IServiceManager {
         throw new RemoteException();
     }
 
+    public void internalRegisterForNotifications(String name, IInternalServiceCallback cb)
+            throws RemoteException {
+        throw new RemoteException();
+    }
+
+    public void internalUnregisterForNotifications(String name, IInternalServiceCallback cb)
+            throws RemoteException {
+        throw new RemoteException();
+    }
+
     public boolean isDeclared(String name) throws RemoteException {
         return mServiceManager.isDeclared(name);
     }
