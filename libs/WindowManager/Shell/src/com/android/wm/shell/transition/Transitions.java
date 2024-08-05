@@ -78,6 +78,7 @@ import androidx.annotation.BinderThread;
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.protolog.ProtoLog;
+import com.android.window.flags.Flags;
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.common.DisplayController;
@@ -242,13 +243,6 @@ public class Transitions implements RemoteCallable<Transitions>,
 
         /** Ordered list of transitions which have been merged into this one. */
         private ArrayList<ActiveTransition> mMerged;
-
-        /**
-         * @deprecated DO NOT USE THIS unless absolutely necessary. It will be removed once
-         * everything migrates off finishWCT.
-         */
-        @java.lang.Deprecated
-        SurfaceControl.Transaction mAfterMergeFinishT;
 
         ActiveTransition(IBinder token) {
             mToken = token;
@@ -587,6 +581,14 @@ public class Transitions implements RemoteCallable<Transitions>,
         final boolean isOpening = isOpeningType(transitType);
         final boolean isClosing = isClosingType(transitType);
         final int mode = change.getMode();
+        // Ensure wallpapers stay in the back
+        if (change.hasFlags(FLAG_IS_WALLPAPER) && Flags.ensureWallpaperInTransitions()) {
+            if (mode == TRANSIT_OPEN || mode == TRANSIT_TO_FRONT) {
+                return -zSplitLine + numChanges - i;
+            } else {
+                return -zSplitLine - i;
+            }
+        }
         // Put all the OPEN/SHOW on top
         if ((change.getFlags() & FLAG_IS_WALLPAPER) != 0) {
             // Wallpaper is always at the bottom, opening wallpaper on top of closing one.
@@ -1042,20 +1044,6 @@ public class Transitions implements RemoteCallable<Transitions>,
         return null;
     }
 
-    /** @deprecated */
-    @java.lang.Deprecated
-    public void setAfterMergeFinishTransaction(IBinder transition,
-            SurfaceControl.Transaction afterMergeFinishT) {
-        final ActiveTransition at = mKnownTransitions.get(transition);
-        if (at == null) return;
-        if (at.mAfterMergeFinishT != null) {
-            Log.e(TAG, "Setting after-merge-t >1 time on transition: " + at.mInfo.getDebugId());
-            at.mAfterMergeFinishT.merge(afterMergeFinishT);
-            return;
-        }
-        at.mAfterMergeFinishT = afterMergeFinishT;
-    }
-
     /** Aborts a transition. This will still queue it up to maintain order. */
     private void onAbort(ActiveTransition transition) {
         final Track track = mTracks.get(transition.getTrack());
@@ -1116,7 +1104,6 @@ public class Transitions implements RemoteCallable<Transitions>,
         }
         // Merge all associated transactions together
         SurfaceControl.Transaction fullFinish = active.mFinishT;
-        SurfaceControl.Transaction afterMergeFinish = active.mAfterMergeFinishT;
         if (active.mMerged != null) {
             for (int iM = 0; iM < active.mMerged.size(); ++iM) {
                 final ActiveTransition toMerge = active.mMerged.get(iM);
@@ -1136,21 +1123,6 @@ public class Transitions implements RemoteCallable<Transitions>,
                         fullFinish.merge(toMerge.mFinishT);
                     }
                 }
-                if (toMerge.mAfterMergeFinishT != null) {
-                    if (afterMergeFinish == null) {
-                        afterMergeFinish = toMerge.mAfterMergeFinishT;
-                    } else {
-                        afterMergeFinish.merge(toMerge.mAfterMergeFinishT);
-                    }
-                    toMerge.mAfterMergeFinishT = null;
-                }
-            }
-        }
-        if (afterMergeFinish != null) {
-            if (fullFinish == null) {
-                fullFinish = afterMergeFinish;
-            } else {
-                fullFinish.merge(afterMergeFinish);
             }
         }
         if (fullFinish != null) {
