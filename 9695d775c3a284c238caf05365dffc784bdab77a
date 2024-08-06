@@ -93,6 +93,30 @@
       },
       "revId": "9695d775c3a284c238caf05365dffc784bdab77a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c42206d_8185f661",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-06T21:22:45Z",
+      "side": 1,
+      "message": "Thanks, adding package manager team for review.",
+      "parentUuid": "50dadc3e_f51f876f",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "9695d775c3a284c238caf05365dffc784bdab77a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
