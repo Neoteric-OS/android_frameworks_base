@@ -9,6 +9,10 @@
     {
       "name": "CtsUtilTestCasesRavenwood",
       "host": true
+    },
+    {
+      "name": "RavenwoodBivalentTest",
+      "host": true
     }
   ]
 }

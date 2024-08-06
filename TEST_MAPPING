@@ -146,6 +146,16 @@
       ]
     }
   ],
+  "ravenwood-presubmit": [
+    {
+      "name": "CtsUtilTestCasesRavenwood",
+      "host": true
+    },
+    {
+      "name": "RavenwoodBivalentTest",
+      "host": true
+    }
+  ],
   "postsubmit-managedprofile-stress": [
     {
       "name": "ManagedProfileLifecycleStressTest"
