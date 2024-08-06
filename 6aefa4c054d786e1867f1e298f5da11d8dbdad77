@@ -22,6 +22,30 @@
       },
       "revId": "6aefa4c054d786e1867f1e298f5da11d8dbdad77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "013dca20_e7c80b92",
+        "filename": "tools/systemfeatures/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-08-06T22:48:11Z",
+      "side": 1,
+      "message": "+1 Is the plan to move the [package manager logic](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/pm/PackageManagerService.java;drc\u003dab191a8212855c0c408e120bf4e643925a3ce41a;l\u003d2089) here in this directory?",
+      "parentUuid": "921c66a7_f413c7b4",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "6aefa4c054d786e1867f1e298f5da11d8dbdad77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
