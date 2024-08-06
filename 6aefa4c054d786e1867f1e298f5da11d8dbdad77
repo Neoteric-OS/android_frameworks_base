@@ -46,6 +46,30 @@
       },
       "revId": "6aefa4c054d786e1867f1e298f5da11d8dbdad77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19032e1e_5574673e",
+        "filename": "tools/systemfeatures/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-08-06T23:12:06Z",
+      "side": 1,
+      "message": "A small subset of that logic, this tool will auto-generate some wrapper code for querying readonly/fixed system features, and  `PackageManagerService`/`ApplicationPackageManager` will call into that. See go/aperf-build-features-opt. For the time being, there will be very minimal changes to SystemConfig/ApplicationPackageManager outside of a few small hooks that we add.",
+      "parentUuid": "013dca20_e7c80b92",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "6aefa4c054d786e1867f1e298f5da11d8dbdad77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
