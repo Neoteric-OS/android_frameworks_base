@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "921c66a7_f413c7b4",
+        "filename": "tools/systemfeatures/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-06T21:23:27Z",
+      "side": 1,
+      "message": "hey btw, this is a good direction, libvintf supports similar. I\u0027m wondering, how will you keep this logic and package manager logic in sync?",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "6aefa4c054d786e1867f1e298f5da11d8dbdad77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
