@@ -17,7 +17,6 @@
 package android.os;
 
 import android.compat.annotation.UnsupportedAppUsage;
-
 /**
  * Native implementation of the service manager.  Most clients will only
  * care about asInterface().
@@ -61,7 +60,7 @@ class ServiceManagerProxy implements IServiceManager {
     @UnsupportedAppUsage
     public IBinder getService(String name) throws RemoteException {
         // Same as checkService (old versions of servicemanager had both methods).
-        return checkService(name).getBinder();
+        return checkService(name).getServiceWithCacheInfo().service;
     }
 
     public Service getService2(String name) throws RemoteException {
