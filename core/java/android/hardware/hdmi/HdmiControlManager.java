@@ -211,7 +211,7 @@ public final class HdmiControlManager {
     /** No recording – Not allowed to copy source. Source is “copy never”. */
     public static final int ONE_TOUCH_RECORD_DISALLOW_TO_COPY = 0x0D;
     /** No recording – No further copies allowed */
-    public static final int ONE_TOUCH_RECORD_DISALLOW_TO_FUTHER_COPIES = 0x0E;
+    public static final int ONE_TOUCH_RECORD_DISALLOW_TO_FURTHER_COPIES = 0x0E;
     /** No recording – No media */
     public static final int ONE_TOUCH_RECORD_NO_MEDIA = 0x10;
     /** No recording – playing */
