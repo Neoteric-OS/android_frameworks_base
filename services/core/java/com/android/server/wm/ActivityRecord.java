@@ -2465,7 +2465,14 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                 windowDisableStarting);
         // If this activity is launched from system surface, ignore windowDisableStarting
         if (windowIsTranslucent || windowIsFloating) {
-            return false;
+            Task task = getTask();
+            WindowState topFullscreenMainWindow = null;
+            if (task != null) {
+                topFullscreenMainWindow = task.getTopFullscreenMainWindow(false);
+            }
+            if (topFullscreenMainWindow == null) {
+                return false;
+            }
         }
         if (windowShowWallpaper
                 && getDisplayContent().mWallpaperController.getWallpaperTarget() != null) {
