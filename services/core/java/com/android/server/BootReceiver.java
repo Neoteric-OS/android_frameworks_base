@@ -470,6 +470,10 @@ public class BootReceiver extends BroadcastReceiver {
         }
 
         String fileContents = FileUtils.readTextFile(file, maxSize, TAG_TRUNCATED);
+        Slog.i(TAG, "Lastk debug fileContents size " + fileContents.length() + "maxSize " + maxSize);
+        // truncate again , should add TAG_TRUNCATED??
+        if (fileContents.length() + maxSize > 0)
+            fileContents = fileContents.substring(fileContents.length() + maxSize);
         String text = headers + fileContents + footers;
         // Create an additional report for system server native crashes, with a special tag.
         if (tag.equals(TAG_TOMBSTONE) && fileContents.contains(">>> system_server <<<")) {
