@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7d22e31_17084690",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-08-08T11:59:34Z",
+      "side": 1,
+      "message": "FlickerLibTests should be fixed now - b/356614910 - so hopefully presubmit will pass this time.",
+      "revId": "44799a803235ead57970c539acbc2364108de1c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
