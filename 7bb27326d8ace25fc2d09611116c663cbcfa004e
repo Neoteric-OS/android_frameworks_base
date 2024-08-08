@@ -16,6 +16,23 @@
       "message": "@mpietal@google.com , is there anyone else that can take a look?",
       "revId": "7bb27326d8ace25fc2d09611116c663cbcfa004e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55fe3729_7d6b5a90",
+        "filename": "packages/SystemUI/res-keyguard/layout/keyguard_pattern_view_landscape.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2024-08-08T13:55:23Z",
+      "side": 1,
+      "message": "Curious why this file isn\u0027t in the `layout-land` directory and used directly?",
+      "revId": "7bb27326d8ace25fc2d09611116c663cbcfa004e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
