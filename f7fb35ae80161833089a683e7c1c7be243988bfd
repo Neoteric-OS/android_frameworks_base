@@ -16,6 +16,64 @@
       "message": "@lsandrade@google.com , any reason this would not be ok?",
       "revId": "f7fb35ae80161833089a683e7c1c7be243988bfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4a86c10_0e72da77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-08-08T14:49:30Z",
+      "side": 1,
+      "message": "This seems ok to me, but I\u0027m not very familiar with this component to give the final approval on the permission/sepolicy changes.\n\nMaybe @santoscordon@google.com can help with that?",
+      "parentUuid": "6544a9e8_6ecc0b32",
+      "revId": "f7fb35ae80161833089a683e7c1c7be243988bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97b197bf_9460d74f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-08-08T14:49:30Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "f7fb35ae80161833089a683e7c1c7be243988bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26cb2da0_0cd61055",
+        "filename": "services/core/java/com/android/server/power/ShutdownCheckPoints.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-08-08T14:49:30Z",
+      "side": 1,
+      "message": "Is there a reason why this folder needs to have this permission?",
+      "range": {
+        "startLine": 367,
+        "startChar": 25,
+        "endLine": 367,
+        "endChar": 38
+      },
+      "revId": "f7fb35ae80161833089a683e7c1c7be243988bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
