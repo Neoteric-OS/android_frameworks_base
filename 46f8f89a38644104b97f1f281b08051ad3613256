@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc6824fb_79b141a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-08-08T14:35:20Z",
+      "side": 1,
+      "message": "please have a look, if ok can you also please trigger Treehugger and set auto submit ?",
+      "revId": "46f8f89a38644104b97f1f281b08051ad3613256",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
