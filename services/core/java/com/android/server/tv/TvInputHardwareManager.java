@@ -946,7 +946,9 @@ class TvInputHardwareManager implements TvInputHal.Callback {
 
             @Override
             public void onAudioPatchListUpdate(AudioPatch[] patchList) {
-                // No-op
+                synchronized (mImplLock) {
+                    updateAudioConfigLocked();
+                }
             }
 
             @Override
