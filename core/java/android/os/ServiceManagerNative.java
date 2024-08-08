@@ -77,6 +77,12 @@ class ServiceManagerProxy implements IServiceManager {
         mServiceManager.addService(name, service, allowIsolated, dumpPriority);
     }
 
+    public void addService2(String name, IBinder service, boolean allowIsolated, int dumpPriority,
+            boolean enableClientSideCache) throws RemoteException {
+        mServiceManager.addService2(
+                name, service, allowIsolated, dumpPriority, enableClientSideCache);
+    }
+
     public String[] listServices(int dumpPriority) throws RemoteException {
         return mServiceManager.listServices(dumpPriority);
     }
