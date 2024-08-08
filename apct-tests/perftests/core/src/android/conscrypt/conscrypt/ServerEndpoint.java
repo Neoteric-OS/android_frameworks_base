@@ -80,7 +80,7 @@ final class ServerEndpoint {
     ServerEndpoint(SSLSocketFactory socketFactory, SSLServerSocketFactory serverSocketFactory,
             ChannelType channelType, int messageSize, String[] protocols,
             String[] cipherSuites) throws IOException {
-        this.serverSocket = channelType.newServerSocket(serverSocketFactory);
+        this.serverSocket = serverSocketFactory.createServerSocket();
         this.socketFactory = socketFactory;
         this.channelType = channelType;
         this.messageSize = messageSize;
