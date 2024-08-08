@@ -256,6 +256,29 @@ public final class ServiceManager {
         }
     }
 
+    /**
+     * Place a new @a service called @a name into the service
+     * manager.
+     *
+     * @param name the name of the new service
+     * @param service the service object
+     * @param allowIsolated set to true to allow isolated sandboxed processes
+     * @param dumpPriority supported dump priority levels as a bitmask
+     * @param enableClientSideCache set to true to allow clients to cache the IBinder of the service
+     * to access this service
+     * @hide
+     */
+    @android.ravenwood.annotation.RavenwoodReplace
+    public static void addService2(String name, IBinder service, boolean allowIsolated,
+            int dumpPriority, boolean enableClientSideCache) {
+        try {
+            getIServiceManager().addService2(
+                    name, service, allowIsolated, dumpPriority, enableClientSideCache);
+        } catch (RemoteException e) {
+            Log.e(TAG, "error in addService", e);
+        }
+    }
+
     /** @hide */
     public static void addService$ravenwood(String name, IBinder service, boolean allowIsolated,
             int dumpPriority) {
