@@ -33,6 +33,24 @@
       "message": "Curious why this file isn\u0027t in the `layout-land` directory and used directly?",
       "revId": "7bb27326d8ace25fc2d09611116c663cbcfa004e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45e4456b_ba88e913",
+        "filename": "packages/SystemUI/res-keyguard/layout/keyguard_pattern_view_landscape.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-08-08T15:14:31Z",
+      "side": 1,
+      "message": "Thanks for the comment, I followed the pattern that already existed when I did this change, there was a packages/SystemUI/res-keyguard/layout/keyguard_pin_view_landscape.xml here before. I now see that it has been removed in a refactor.\n\n I can update this change",
+      "parentUuid": "55fe3729_7d6b5a90",
+      "revId": "7bb27326d8ace25fc2d09611116c663cbcfa004e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
