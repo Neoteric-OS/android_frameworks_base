@@ -1401,7 +1401,7 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
 
             if (!(uidState.hasPermissionState(permName)
                     || pkg.getRequestedPermissions().contains(permName))) {
-                throw new SecurityException("Package " + pkg.getPackageName()
+                Slog.e(TAG, "Package " + pkg.getPackageName()
                         + " has not requested permission " + permName);
             }
 
@@ -1590,7 +1590,7 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
 
             if (!(uidState.hasPermissionState(permName)
                     || pkg.getRequestedPermissions().contains(permName))) {
-                throw new SecurityException("Package " + pkg.getPackageName()
+                Slog.e(TAG, "Package " + pkg.getPackageName()
                         + " has not requested permission " + permName);
             }
 
