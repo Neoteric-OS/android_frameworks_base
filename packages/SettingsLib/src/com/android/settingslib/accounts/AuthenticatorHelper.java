@@ -112,6 +112,7 @@ final public class AuthenticatorHelper extends BroadcastReceiver {
                     mAccTypeIconCache.put(accountType, icon);
                 }
             } catch (PackageManager.NameNotFoundException|Resources.NotFoundException e) {
+                Log.e(TAG, "No icon for account type " + accountType, e);
                 // Ignore
             }
         }
