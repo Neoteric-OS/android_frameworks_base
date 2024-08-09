@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b72059c_89c44638",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2654,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2024-08-09T11:01:53Z",
+      "side": 1,
+      "message": "why do we need `PackageManager.MATCH_SYSTEM_ONLY` when  `PackageManager.MATCH_ANY_USER` is in place?",
+      "revId": "77ff25af48310191695d63036fc428f1381cd6d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
