@@ -16,6 +16,23 @@
       "message": "I think this change is okay. Matt, do you have any concerns?",
       "revId": "fc243791660aa1277d92c898075d2da6cdaf8eb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb507b01_c955a522",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956262
+      },
+      "writtenOn": "2024-08-09T06:34:58Z",
+      "side": 1,
+      "message": "Hi @mpietal@google.com, could you please help review and bypass the presubmit-verified.",
+      "revId": "fc243791660aa1277d92c898075d2da6cdaf8eb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
