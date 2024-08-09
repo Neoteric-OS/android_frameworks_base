@@ -16,6 +16,24 @@
       "message": "why do we need `PackageManager.MATCH_SYSTEM_ONLY` when  `PackageManager.MATCH_ANY_USER` is in place?",
       "revId": "77ff25af48310191695d63036fc428f1381cd6d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "279c273a_e321fe05",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2654,
+      "author": {
+        "id": 1791160
+      },
+      "writtenOn": "2024-08-09T19:04:48Z",
+      "side": 1,
+      "message": "If you look at the history of changes in patch set 1, 2, 3 and updated based on reviewer comments.  I agree if MATCH_ANY_USER is there it might not.  Ideally patch 1 or 2 is best case to apply for only system apps.\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/2800354/1/apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/2800354/2/apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/2800354/3/apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java#b2634\n\nIf not this patch then you can submit the changes on this gerrit behalf.  Problem is MATCH_SYSTEM_ONLY does get only system privileged apps. if you see the bugreport https://partnerissuetracker.corp.google.com/issues/307334623",
+      "parentUuid": "1b72059c_89c44638",
+      "revId": "77ff25af48310191695d63036fc428f1381cd6d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
