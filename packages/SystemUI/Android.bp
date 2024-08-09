@@ -794,7 +794,11 @@ android_library {
         "ims-common",
         "extphonelib",
     ],
-    kotlincflags: ["-Xjvm-default=all"],
+    kotlincflags: [
+        "-Xjvm-default=all",
+        // TODO(b/352363800): Why do we need this?
+        "-J-Xmx8192M",
+    ],
     aaptflags: [
         "--extra-packages",
         "com.android.systemui",
