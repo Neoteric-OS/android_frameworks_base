@@ -22,6 +22,30 @@
       },
       "revId": "78617c3f894828a205cc7a15a3024029f86cf258",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64d16eb5_225ed55c",
+        "filename": "services/core/java/com/android/server/tracing/TracingServiceProxy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1757736
+      },
+      "writtenOn": "2024-08-09T23:45:04Z",
+      "side": 1,
+      "message": "I think it would be okay to go through the normal trace flow for either value of sessionStolen, because sessionStolen is just an FYI from perfetto to Traceur to account for Traceur (previously) needing to differentiate its behavior based on the stopped+attached trace.",
+      "parentUuid": "0fb7883c_2f84f990",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "78617c3f894828a205cc7a15a3024029f86cf258",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
