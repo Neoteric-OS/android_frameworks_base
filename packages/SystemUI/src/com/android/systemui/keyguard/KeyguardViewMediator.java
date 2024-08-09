@@ -2838,6 +2838,14 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
      */
     private void handleShow(Bundle options) {
         Trace.beginSection("KeyguardViewMediator#handleShow");
+        try {
+            handleShowInner(options);
+        } finally {
+            Trace.endSection();
+        }
+    }
+
+    private void handleShowInner(Bundle options) {
         final boolean showUnlocked = options != null
                 && options.getBoolean(OPTION_SHOW_DISMISSIBLE, false);
         final int currentUser = mSelectedUserInteractor.getSelectedUserId();
@@ -2889,8 +2897,6 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
         mKeyguardDisplayManager.show();
 
         scheduleNonStrongBiometricIdleTimeout();
-
-        Trace.endSection();
     }
 
     /**
@@ -3069,6 +3075,17 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
             RemoteAnimationTarget[] apps, RemoteAnimationTarget[] wallpapers,
             RemoteAnimationTarget[] nonApps, IRemoteAnimationFinishedCallback finishedCallback) {
         Trace.beginSection("KeyguardViewMediator#handleStartKeyguardExitAnimation");
+        try {
+            handleStartKeyguardExitAnimationInner(startTime, fadeoutDuration, apps, wallpapers,
+                    nonApps, finishedCallback);
+        } finally {
+            Trace.endSection();
+        }
+    }
+
+    private void handleStartKeyguardExitAnimationInner(long startTime, long fadeoutDuration,
+            RemoteAnimationTarget[] apps, RemoteAnimationTarget[] wallpapers,
+            RemoteAnimationTarget[] nonApps, IRemoteAnimationFinishedCallback finishedCallback) {
         Log.d(TAG, "handleStartKeyguardExitAnimation startTime=" + startTime
                 + " fadeoutDuration=" + fadeoutDuration);
         synchronized (KeyguardViewMediator.this) {
@@ -3257,8 +3274,6 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
                 onKeyguardExitFinished();
             }
         }
-
-        Trace.endSection();
     }
 
     private void onKeyguardExitFinished() {

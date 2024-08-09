@@ -187,7 +187,6 @@ import com.android.internal.pm.pkg.component.ParsedInstrumentation;
 import com.android.internal.pm.pkg.component.ParsedMainComponent;
 import com.android.internal.pm.pkg.parsing.ParsingPackageUtils;
 import com.android.internal.telephony.CarrierAppUtils;
-import com.android.internal.telephony.TelephonyPermissions;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.CollectionUtils;
 import com.android.internal.util.ConcurrentUtils;
@@ -4521,7 +4520,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
     void setSystemAppHiddenUntilInstalled(@NonNull Computer snapshot, String packageName,
             boolean hidden) {
         final int callingUid = Binder.getCallingUid();
-        final boolean calledFromSystemOrPhone = TelephonyPermissions.isSystemOrPhone(callingUid);
+        final boolean calledFromSystemOrPhone = isSystemOrPhone(callingUid);
         if (!calledFromSystemOrPhone) {
             mContext.enforceCallingOrSelfPermission(Manifest.permission.SUSPEND_APPS,
                     "setSystemAppHiddenUntilInstalled");
@@ -4546,8 +4545,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
     boolean setSystemAppInstallState(@NonNull Computer snapshot, String packageName,
             boolean installed, int userId) {
         final int callingUid = Binder.getCallingUid();
-        final boolean calledFromSystemOrPhone = callingUid == Process.PHONE_UID
-                || callingUid == Process.SYSTEM_UID;
+        final boolean calledFromSystemOrPhone = isSystemOrPhone(callingUid);
         if (!calledFromSystemOrPhone) {
             mContext.enforceCallingOrSelfPermission(Manifest.permission.SUSPEND_APPS,
                     "setSystemAppHiddenUntilInstalled");
@@ -8150,5 +8148,10 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         return mDeletePackageHelper.deletePackageX(packageName,
                 PackageManager.VERSION_CODE_HIGHEST, UserHandle.USER_SYSTEM,
                 PackageManager.DELETE_ALL_USERS, true /*removedBySystem*/);
+    }
+
+    private static boolean isSystemOrPhone(int uid) {
+        return UserHandle.isSameApp(uid, Process.SYSTEM_UID)
+                || UserHandle.isSameApp(uid, Process.PHONE_UID);
     }
 }

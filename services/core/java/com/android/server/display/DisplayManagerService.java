@@ -5260,7 +5260,7 @@ public final class DisplayManagerService extends SystemService {
                 mHandler.sendMessage(msg);
 
                 mLogicalDisplayMapper
-                        .setDeviceStateLocked(deviceState.getIdentifier());
+                        .setDeviceStateLocked(deviceState);
             }
         }
     };

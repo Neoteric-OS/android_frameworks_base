@@ -721,6 +721,8 @@
     <!-- QuickSettings: Do not disturb - Priority only [CHAR LIMIT=NONE] -->
     <!-- QuickSettings: Do not disturb - Alarms only [CHAR LIMIT=NONE] -->
     <!-- QuickSettings: Do not disturb - Total silence [CHAR LIMIT=NONE] -->
+    <!-- QuickSettings: Priority modes [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_modes_label">Priority modes</string>
     <!-- QuickSettings: Bluetooth [CHAR LIMIT=NONE] -->
     <string name="quick_settings_bluetooth_label">Bluetooth</string>
     <!-- QuickSettings: Bluetooth (Multiple) [CHAR LIMIT=NONE] -->
@@ -1876,7 +1878,7 @@
     <string name="notification_channel_summary_low">No sound or vibration</string>
 
     <!-- [CHAR LIMIT=150] Notification Importance title: low importance level summary -->
-    <string name="notification_conversation_summary_low">No sound or vibration and appears lower in conversation section</string>
+    <string name="notification_conversation_summary_low">No sound or vibration but still appears in the conversation section</string>
 
     <!-- [CHAR LIMIT=150] Notification Importance title: normal importance level summary -->
     <string name="notification_channel_summary_default">May ring or vibrate based on device settings</string>
@@ -3672,4 +3674,6 @@
     <string name="home_controls_dream_label">Home Controls</string>
     <!-- Description for home control panel [CHAR LIMIT=67] -->
     <string name="home_controls_dream_description">Quickly access your home controls as a screensaver</string>
+    <!-- Label for volume undo action [CHAR LIMIT=NONE] -->
+    <string name="volume_undo_action">Undo</string>
 </resources>
