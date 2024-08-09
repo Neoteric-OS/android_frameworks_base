@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cb401ad_a561788a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2024-08-09T02:41:46Z",
+      "side": 1,
+      "message": "Friendly ping, not a serious bug, but still hoping for a gold plating.",
+      "revId": "70100165148194a029c4b8e558ed3da108b7ef0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
