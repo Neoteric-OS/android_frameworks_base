@@ -983,6 +983,8 @@ public final class CameraManager {
         clientAttribution.uid = USE_CALLING_UID;
         clientAttribution.pid = USE_CALLING_PID;
         clientAttribution.deviceId = contextAttribution.deviceId;
+        clientAttribution.packageName = mContext.getOpPackageName();
+        clientAttribution.attributionTag = mContext.getAttributionTag();
         clientAttribution.next = new AttributionSourceState[0];
         return clientAttribution;
     }
@@ -1044,8 +1046,6 @@ public final class CameraManager {
                         cameraService.connectDevice(
                                 callbacks,
                                 cameraId,
-                                mContext.getOpPackageName(),
-                                mContext.getAttributionTag(),
                                 oomScoreOffset,
                                 mContext.getApplicationInfo().targetSdkVersion,
                                 rotationOverride,

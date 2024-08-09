@@ -498,6 +498,12 @@ class Task extends TaskFragment {
      */
     boolean mReparentLeafTaskIfRelaunch;
 
+    /**
+     * Set to affect whether recents should be able to trim this task or not. It's set to true by
+     * default.
+     */
+    boolean mIsTrimmableFromRecents;
+
     private final AnimatingActivityRegistry mAnimatingActivityRegistry =
             new AnimatingActivityRegistry();
 
@@ -672,6 +678,7 @@ class Task extends TaskFragment {
         mLaunchCookie = _launchCookie;
         mDeferTaskAppear = _deferTaskAppear;
         mRemoveWithTaskOrganizer = _removeWithTaskOrganizer;
+        mIsTrimmableFromRecents = true;
         EventLogTags.writeWmTaskCreated(mTaskId);
     }
 
@@ -3873,6 +3880,7 @@ class Task extends TaskFragment {
         pw.print(" isResizeable="); pw.println(isResizeable());
         pw.print(prefix); pw.print("lastActiveTime="); pw.print(lastActiveTime);
         pw.println(" (inactive for " + (getInactiveDuration() / 1000) + "s)");
+        pw.print(prefix); pw.println(" isTrimmable=" + mIsTrimmableFromRecents);
     }
 
     @Override
@@ -6325,6 +6333,10 @@ class Task extends TaskFragment {
         if (isOrganized()) {
             mReparentLeafTaskIfRelaunch = reparentLeafTaskIfRelaunch;
         }
+    }
+
+    void setTrimmableFromRecents(boolean isTrimmable) {
+        mIsTrimmableFromRecents = isTrimmable;
     }
 
     /**
