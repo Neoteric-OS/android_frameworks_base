@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fb7883c_2f84f990",
+        "filename": "services/core/java/com/android/server/tracing/TracingServiceProxy.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1170070
+      },
+      "writtenOn": "2024-08-09T23:20:07Z",
+      "side": 1,
+      "message": "Do you think we should do something (or, i guess, do nothing instead of something and not notify Traceur) if we do get sessionStolen\u003dtrue for some reason? I can\u0027t imagine why that would happen, but if it did, which would be the more seamless way to handle it?",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "78617c3f894828a205cc7a15a3024029f86cf258",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
