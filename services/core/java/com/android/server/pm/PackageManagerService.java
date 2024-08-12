@@ -5357,15 +5357,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         @Override
         public @NonNull ParceledListSlice<FeatureInfo> getSystemAvailableFeatures() {
             // allow instant applications
-            ArrayList<FeatureInfo> res;
-            res = new ArrayList<>(mAvailableFeatures.size() + 1);
-            res.addAll(mAvailableFeatures.values());
-            final FeatureInfo fi = new FeatureInfo();
-            fi.reqGlEsVersion = SystemProperties.getInt("ro.opengles.version",
-                    FeatureInfo.GL_ES_VERSION_UNDEFINED);
-            res.add(fi);
-
-            return new ParceledListSlice<>(res);
+            return new ParceledListSlice<>(mAvailableFeatures.values());
         }
 
         @Override

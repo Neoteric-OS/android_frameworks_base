@@ -1701,6 +1701,13 @@ public class SystemConfig {
         for (String featureName : mUnavailableFeatures) {
             removeFeature(featureName);
         }
+
+        // A null name for FeatureInfo always corresponds to the OpenGL ES version feature.
+        // Note that we add this last to preserve API semantics.
+        final FeatureInfo glEsFeatureInfo = new FeatureInfo();
+        glEsFeatureInfo.reqGlEsVersion =
+                SystemProperties.getInt("ro.opengles.version", FeatureInfo.GL_ES_VERSION_UNDEFINED);
+        mAvailableFeatures.put(null, glEsFeatureInfo);
     }
 
     private @Nullable SignedPackage parseEnhancedConfirmationTrustedPackage(XmlPullParser parser,
