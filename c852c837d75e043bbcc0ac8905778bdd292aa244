@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "536d39a1_9e6a1aec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1707594
+      },
+      "writtenOn": "2024-08-12T08:08:57Z",
+      "side": 1,
+      "message": "We find it will go through the loadPhraseSoundModel when use katniss load module. But if we use framwork test app (https://cs.android.com/android/platform/superproject/+/android14-qpr3-release:frameworks/base/tests/SoundTriggerTestApp/ ), it will go through this loadSoundModel, and will cause runtime error.",
+      "parentUuid": "b6100ed9_08fc2555",
+      "revId": "c852c837d75e043bbcc0ac8905778bdd292aa244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86d12666_fd17e138",
