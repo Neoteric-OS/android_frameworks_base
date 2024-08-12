@@ -48,10 +48,7 @@
             ]
         },
         {
-            "name": "CtsStatsdAtomHostTestCases",
-            "options": [
-                {"include-filter": "android.cts.statsdatom.jobscheduler"}
-            ]
+            "name": "CtsStatsdAtomHostTestCases_com_android_server_job"
         }
     ]
 }

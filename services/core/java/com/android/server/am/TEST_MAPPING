@@ -1,6 +1,9 @@
 {
   "presubmit": [
     {
+      "name": "CtsStatsdAtomHostTestCases_android_server_am"
+    },
+    {
       "name": "CtsAppTestCases",
       "options": [
         { "include-filter": "android.app.cts.TaskDescriptionTest" },
@@ -148,13 +151,7 @@
       ]
     },
     {
-      "name": "CtsStatsdAtomHostTestCases",
-      "options": [
-        { "include-filter": "android.cts.statsdatom.appexit.AppExitHostTest" },
-        { "exclude-annotation": "androidx.test.filters.LargeTest" },
-        { "exclude-annotation": "androidx.test.filters.FlakyTest" },
-        { "exclude-annotation": "org.junit.Ignore" }
-      ]
+      "name": "CtsStatsdAtomHostTestCases_android_server_am"
     },
     {
       "name": "CtsContentTestCases",
