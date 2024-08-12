@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a75eb680_18ab316f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-08-12T14:50:39Z",
+      "side": 1,
+      "message": "Adding other owners to help review this change.\n\n@petsjonkin@google.com @brup@google.com Could you please review this request to the power manager component? The feature request seems to be assigned to the display team pool.",
+      "parentUuid": "90799784_92ac894f",
+      "revId": "f7fb35ae80161833089a683e7c1c7be243988bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26cb2da0_0cd61055",
