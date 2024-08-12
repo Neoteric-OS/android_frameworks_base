@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b791947_ac352b08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-08-12T12:22:20Z",
+      "side": 1,
+      "message": "the layout looks as it should, although when pressing the rotation button the layouts gets corrupted both ways, launch in landscape and press to portrait it gets cuppouted and launch in portrait and press the button, landscape gets minimized ..",
+      "revId": "0f1c1abc508d886724a91171b8a729d6ffb70009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
