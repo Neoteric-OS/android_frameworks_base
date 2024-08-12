@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "90799784_92ac894f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-08-12T12:27:32Z",
+      "side": 1,
+      "message": "Thanks @lsandrade@google.com , the sepolicy change need review, guess \"someone\" from Google may need to coordinate this to get them all in, perhaps it is you 😊.\nhttps://android-review.googlesource.com/q/topic:%22shutdown_checkpoints_platformapp%22",
+      "parentUuid": "a4a86c10_0e72da77",
+      "revId": "f7fb35ae80161833089a683e7c1c7be243988bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "26cb2da0_0cd61055",
         "filename": "services/core/java/com/android/server/power/ShutdownCheckPoints.java",
         "patchSetId": 6
