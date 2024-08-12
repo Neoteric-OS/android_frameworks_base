@@ -92,6 +92,30 @@
       },
       "revId": "f7fb35ae80161833089a683e7c1c7be243988bfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "954cbff2_47ef88b4",
+        "filename": "services/core/java/com/android/server/power/ShutdownCheckPoints.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 2059627
+      },
+      "writtenOn": "2024-08-12T12:44:25Z",
+      "side": 1,
+      "message": "The execute bit on a directory allows you to access items that are inside the directory, even if you cannot list the directories contents.",
+      "parentUuid": "26cb2da0_0cd61055",
+      "range": {
+        "startLine": 367,
+        "startChar": 25,
+        "endLine": 367,
+        "endChar": 38
+      },
+      "revId": "f7fb35ae80161833089a683e7c1c7be243988bfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
