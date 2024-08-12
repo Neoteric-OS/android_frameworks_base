@@ -34,6 +34,24 @@
       "parentUuid": "1b72059c_89c44638",
       "revId": "77ff25af48310191695d63036fc428f1381cd6d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "220fc774_9fa5adb8",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2654,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2024-08-12T08:44:19Z",
+      "side": 1,
+      "message": "If the intention here is to filter system apps installed on ANY user, then it makes sense to have both `MATCH_ANY_USER` to search the package pre installed on any user and `MATCH_SYSTEM_ONLY` to filter out only the SYSTEM packages.",
+      "parentUuid": "279c273a_e321fe05",
+      "revId": "77ff25af48310191695d63036fc428f1381cd6d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
