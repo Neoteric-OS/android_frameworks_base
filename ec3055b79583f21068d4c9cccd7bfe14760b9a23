@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "791fa336_c608f380",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-08-12T16:22:44Z",
+      "side": 1,
+      "message": "The new APIs LGTM",
+      "revId": "ec3055b79583f21068d4c9cccd7bfe14760b9a23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99e02223_58b2c2f6",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-08-12T16:22:44Z",
+      "side": 1,
+      "message": "I suppose at asome point we can implement `addService()` as a call to `addService2()`?",
+      "fixSuggestions": [
+        {
+          "fixId": "1e678a4f_33eaebb0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/ServiceManagerNative.java",
+              "range": {
+                "startLine": 75,
+                "startChar": 0,
+                "endLine": 75,
+                "endChar": 0
+              },
+              "replacement": "    // TODO(b/355394904): This function has been deprecated, please use addService2 instead.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ec3055b79583f21068d4c9cccd7bfe14760b9a23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
