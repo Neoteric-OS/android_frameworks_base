@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e34427ea_ea85fcc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2024-08-12T17:41:47Z",
+      "side": 1,
+      "message": "+1 for OWNERS on Android.bp but please get framweork team review too.",
+      "revId": "6e6677e3c991b0d594c7b45f2202a46037974010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
