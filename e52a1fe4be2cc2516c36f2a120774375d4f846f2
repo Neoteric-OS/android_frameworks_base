@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de0f4d69_33036a58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1590836
+      },
+      "writtenOn": "2024-08-13T05:15:12Z",
+      "side": 1,
+      "message": "These pre-submit failures are on a file which is not present in AOSP.\nAdded changes needed to the file in 24Q4 branch, these should get cleanly cherry-picked on git_main.\nhttps://partner-android-review.googlesource.com/q/topic:%22refactorResourceHandler%22",
+      "revId": "e52a1fe4be2cc2516c36f2a120774375d4f846f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
