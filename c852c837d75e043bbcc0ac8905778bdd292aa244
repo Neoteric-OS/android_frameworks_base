@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef8cac6f_71b5061b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1707594
+      },
+      "writtenOn": "2024-08-13T06:53:06Z",
+      "side": 1,
+      "message": "Hi Atneya, after we update framework code, it can pass with 2.3 interface. So please ignore this patch. Thanks a lot!",
+      "parentUuid": "3b164f12_33115ddb",
+      "revId": "c852c837d75e043bbcc0ac8905778bdd292aa244",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86d12666_fd17e138",
