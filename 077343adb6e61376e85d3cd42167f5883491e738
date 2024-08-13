@@ -16,6 +16,29 @@
       "message": "(noting internal +2)",
       "revId": "077343adb6e61376e85d3cd42167f5883491e738",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4252d5fc_0667ee5c",
+        "filename": "services/core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-13T20:58:13Z",
+      "side": 1,
+      "message": "I wonder if we should have guarded it by this. 3P apps cannot set this, right?",
+      "range": {
+        "startLine": 827,
+        "startChar": 0,
+        "endLine": 827,
+        "endChar": 95
+      },
+      "revId": "077343adb6e61376e85d3cd42167f5883491e738",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
