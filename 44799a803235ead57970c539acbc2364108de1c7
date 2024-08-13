@@ -33,6 +33,24 @@
       "message": "Looks like it will cause swipe-up to be unable to collect wallpaper in time (need isAnimationRunningSelfOrParent), which causes test (TransitionFilters.QUICK_SWITCH_TRANSITION_FILTER) to fail.\nMaybe try:\n```\n    } else if (hasWallpaper\n            \u0026\u0026 (w.mActivityRecord !\u003d null ? w.isOnScreen() : w.isReadyForDisplay())) {\n```",
       "revId": "44799a803235ead57970c539acbc2364108de1c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c78fea71_d54b85c4",
+        "filename": "services/core/java/com/android/server/wm/WallpaperController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1905196
+      },
+      "writtenOn": "2024-08-13T02:04:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f451934_aae57974",
+      "revId": "44799a803235ead57970c539acbc2364108de1c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
