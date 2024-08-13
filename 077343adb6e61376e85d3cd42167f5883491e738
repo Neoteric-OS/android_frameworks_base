@@ -39,6 +39,30 @@
       },
       "revId": "077343adb6e61376e85d3cd42167f5883491e738",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31e6a16f_7124046c",
+        "filename": "services/core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-08-13T22:41:49Z",
+      "side": 1,
+      "message": "Hmm, by default `readPermissions` only loads from read-only partitions. I think if a 3P app wants to (somehow, with reflection or something) call this `readPermissions` method to load from some read-write directory to override some system config values, they will have to do it at the very early stage in the boot (before PackageManagerService is even started), which seems impossible for a 3P app to do. Please let me know if this answers your question.",
+      "parentUuid": "4252d5fc_0667ee5c",
+      "range": {
+        "startLine": 827,
+        "startChar": 0,
+        "endLine": 827,
+        "endChar": 95
+      },
+      "revId": "077343adb6e61376e85d3cd42167f5883491e738",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
