@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f860ab62_9093aca9",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2024-08-13T17:21:44Z",
+      "side": 1,
+      "message": "If we just expand this defaults, we wouldn\u0027t have any frameworks/base dependency and could move this exported flags lib into the ART sources. A benefit of that is that we\u0027d only need external visibility on the exported flags lib. But I guess it\u0027s not worth the duplication of this defaults, so it\u0027s fine as-is.\n\n(Ideally though the defaults would be in a place like packages/modules/common/build instead, but I\u0027m not familiar that familiar with it and why it\u0027s in frameworks/base.)",
+      "range": {
+        "startLine": 135,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 58
+      },
+      "revId": "b1ca29c6526b79e2b8147e6cae14aadd78178f4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
