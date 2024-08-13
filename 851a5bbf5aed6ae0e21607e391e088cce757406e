@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ede0f9a7_46b8f76a",
+        "filename": "nfc/api/system-lint-baseline.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-13T01:16:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c5c9ca_e7684350",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 82
+      },
+      "revId": "851a5bbf5aed6ae0e21607e391e088cce757406e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "190bc8b5_ac6c9912",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-08-07T17:30:32Z",
       "side": 1,
       "message": "This isn\u0027t how `@StringDef`s are defined; these constants need to be documented APIs so that the developer knows what the expected values are and they\u0027re codified in the API surface.\n\nE.g. [see here](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/core/java/android/content/Context.java;l\u003d4172) for an example.",
+      "range": {
+        "startLine": 871,
+        "startChar": 4,
+        "endLine": 882,
+        "endChar": 5
+      },
+      "revId": "851a5bbf5aed6ae0e21607e391e088cce757406e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f39f1403_b775629e",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-13T01:16:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "190bc8b5_ac6c9912",
       "range": {
         "startLine": 871,
         "startChar": 4,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e996ca1_dc8d4eae",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-13T01:16:56Z",
+      "side": 1,
+      "message": "It should be ok. It will call the implementation in NfcService and return.",
+      "parentUuid": "1b6a4a32_a0e012fe",
+      "range": {
+        "startLine": 890,
+        "startChar": 8,
+        "endLine": 894,
+        "endChar": 15
+      },
+      "revId": "851a5bbf5aed6ae0e21607e391e088cce757406e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55e2fd8a_7c942bb3",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-08-07T17:30:32Z",
       "side": 1,
       "message": "Wouldn\u0027t they just call `recoverRoutingTable` below?\n\nOr, to make this less prone to developer error, could this API [ActivityManager#registerActivityLifecycleCallbacks](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/core/java/android/app/Activity.java;bpv\u003d1;bpt\u003d1;l\u003d1484?q\u003dActivity.java\u0026sq\u003dgit:googleplex-android%2Fplatform%2Fsuperproject%2Fmain@main\u0026gsn\u003dregisterActivityLifecycleCallbacks\u0026gs\u003dKYTHE%3A%2F%2Fkythe%3A%2F%2Fgoogleplex-android.googlesource.com%2Fplatform%2Fsuperproject%2Fmain%2F%2Fmain%3Flang%3Djava%3Fpath%3Dandroid.app.Activity%231d3336411541f7e1cb3d06369ba50ae4958233a51c02eccb424f93f9c1fe85e2) so that it can remove the override on behalf of the caller automatically?",
+      "range": {
+        "startLine": 896,
+        "startChar": 7,
+        "endLine": 897,
+        "endChar": 40
+      },
+      "revId": "851a5bbf5aed6ae0e21607e391e088cce757406e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ee98904_f39efdae",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-13T01:16:56Z",
+      "side": 1,
+      "message": "Changed to `recoverRoutingTable`. In implementation, a [callback](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:packages/apps/Nfc/src/com/android/nfc/cardemulation/CardEmulationManager.java;l\u003d862;drc\u003dab191a8212855c0c408e120bf4e643925a3ce41a?q\u003dcardemulationmanager\u0026sq\u003dgit:googleplex-android%2Fplatform%2Fsuperproject%2Fmain@main) is registered when override the routing table to remove the override when the activity moves to background.",
+      "parentUuid": "55e2fd8a_7c942bb3",
       "range": {
         "startLine": 896,
         "startChar": 7,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf216f62_e0b14ea1",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-13T01:16:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f1fa64e_36d6a3f5",
+      "range": {
+        "startLine": 901,
+        "startChar": 18,
+        "endLine": 901,
+        "endChar": 67
+      },
+      "revId": "851a5bbf5aed6ae0e21607e391e088cce757406e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "637fbd00_e695b764",
@@ -129,6 +249,30 @@
       "writtenOn": "2024-08-07T17:30:32Z",
       "side": 1,
       "message": "go/android-api-guidelines#return-error",
+      "range": {
+        "startLine": 905,
+        "startChar": 7,
+        "endLine": 905,
+        "endChar": 67
+      },
+      "revId": "851a5bbf5aed6ae0e21607e391e088cce757406e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "551e2cbe_bf2c2715",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-13T01:16:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "637fbd00_e695b764",
       "range": {
         "startLine": 905,
         "startChar": 7,
@@ -164,6 +308,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ce739d4a_493156af",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-13T01:16:56Z",
+      "side": 1,
+      "message": "In our implementation, these strings are mapped to int representing the target of a routing entry. `technology` is only for NfcA and NfcB. Our oem need to keep `technology` entry to set RF parameters. https://b.corp.google.com/issues/300351519#comment9",
+      "parentUuid": "0b4485bb_5b06ebdf",
+      "range": {
+        "startLine": 913,
+        "startChar": 40,
+        "endLine": 914,
+        "endChar": 57
+      },
+      "revId": "851a5bbf5aed6ae0e21607e391e088cce757406e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "667001b0_b3d35014",
         "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 3
@@ -175,6 +343,30 @@
       "writtenOn": "2024-08-07T17:30:32Z",
       "side": 1,
       "message": "go/android-api-guidelines#return-error",
+      "range": {
+        "startLine": 938,
+        "startChar": 11,
+        "endLine": 938,
+        "endChar": 18
+      },
+      "revId": "851a5bbf5aed6ae0e21607e391e088cce757406e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce0705ae_e47a6260",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-13T01:16:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "667001b0_b3d35014",
       "range": {
         "startLine": 938,
         "startChar": 11,
