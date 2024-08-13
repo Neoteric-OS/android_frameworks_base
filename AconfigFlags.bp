@@ -822,6 +822,7 @@ java_aconfig_library {
 // Networking
 aconfig_declarations {
     name: "android.net.platform.flags-aconfig",
+    exportable: true,
     package: "android.net.platform.flags",
     container: "system",
     srcs: ["core/java/android/net/flags.aconfig"],
@@ -841,6 +842,23 @@ java_aconfig_library {
     aconfig_declarations: "android.net.platform.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
     visibility: [":__subpackages__"],
+}
+
+cc_aconfig_library {
+    name: "android.net.platform.flags-aconfig-cc",
+    aconfig_declarations: "android.net.platform.flags-aconfig",
+}
+
+java_aconfig_library {
+    name: "android.net.platform.flags-aconfig-exported-java",
+    aconfig_declarations: "android.net.platform.flags-aconfig",
+    apex_available: [
+        "com.android.tethering",
+    ],
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+    visibility: ["//packages/modules/Connectivity:__subpackages__"],
+    mode: "exported",
+    min_sdk_version: "30",
 }
 
 java_aconfig_library {
