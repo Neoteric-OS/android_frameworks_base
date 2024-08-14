@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4bdb50d_e248b5b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-14T18:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7ec77d6_91b2995a",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "97ebea29933a51879816cbed2d1782709ba08be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4bc2889c_0e31b677",
@@ -108,6 +132,30 @@
       "writtenOn": "2024-08-14T17:09:25Z",
       "side": 1,
       "message": "Sorry, still not clear why these need to be nullable?",
+      "range": {
+        "startLine": 926,
+        "startChar": 40,
+        "endLine": 927,
+        "endChar": 68
+      },
+      "revId": "97ebea29933a51879816cbed2d1782709ba08be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77efb434_2cac235a",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-08-14T18:17:09Z",
+      "side": 1,
+      "message": "Protocol Route is for ISO-DEP protocol and Tech route is for Tech-A and Tech-B protocol, they can be set to different values. In some case our oem want to set only tech route and keep protocol route as default.",
+      "parentUuid": "d0f5866a_91380f0d",
       "range": {
         "startLine": 926,
         "startChar": 40,
