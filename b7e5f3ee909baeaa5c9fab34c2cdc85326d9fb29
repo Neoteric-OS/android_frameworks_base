@@ -70,6 +70,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63c77009_ea8ca512",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-14T04:12:30Z",
+      "side": 1,
+      "message": "Probably, I forgot I could add lists, I was thinking I would have to do [ FLAKY, IGNORE].\nI still think it is strange/wrong that some places have Ignore and some don\u0027t.\nI think people just add it as needed.",
+      "parentUuid": "131a1e38_52574e1d",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d66c2e1b_fac39855",
@@ -105,6 +123,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c4b2228_34d779ae",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-14T04:12:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "af009e63_dd8c3fa2",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f87b9742_989ffb0c",
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "I\u0027m looking forward to simplifying it all when we get to test suites.\nThe annotation isn\u0027t that common.",
       "parentUuid": "f87b9742_989ffb0c",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b410bfad_02eb2334",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-14T04:12:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "71061d5b_859e082b",
       "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
