@@ -164,6 +164,30 @@
       },
       "revId": "97ebea29933a51879816cbed2d1782709ba08be5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "104760c9_7bb76c12",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-08-14T18:30:25Z",
+      "side": 1,
+      "message": "Okay, the docs should specify that one or the other is required and that passing in NULL means that this particular parameter is not being overidden -- IllegalArgumentException would be reasonable to throw if both are null.",
+      "parentUuid": "77efb434_2cac235a",
+      "range": {
+        "startLine": 926,
+        "startChar": 40,
+        "endLine": 927,
+        "endChar": 68
+      },
+      "revId": "97ebea29933a51879816cbed2d1782709ba08be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
