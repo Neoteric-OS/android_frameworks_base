@@ -207,12 +207,15 @@ final class DreamController {
             intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
             intent.putExtra(DreamService.EXTRA_DREAM_OVERLAY_COMPONENT, overlayComponentName);
             try {
+                Slog.i(TAG,"Dream bindServiceAsUser start");
                 if (!mContext.bindServiceAsUser(intent, mCurrentDream,
                         Context.BIND_AUTO_CREATE | Context.BIND_FOREGROUND_SERVICE,
                         new UserHandle(userId))) {
                     Slog.e(TAG, "Unable to bind dream service: " + intent);
                     stopDream(true /*immediate*/, "bindService failed");
                     return;
+                } else {
+                    Slog.i(TAG,"Dream bindServiceAsUser end");
                 }
             } catch (SecurityException ex) {
                 Slog.e(TAG, "Unable to bind dream service: " + intent, ex);
@@ -485,6 +488,7 @@ final class DreamController {
         // May be called on any thread.
         @Override
         public void onServiceConnected(ComponentName name, final IBinder service) {
+            Slog.i(TAG,"Dream onServiceConnected");
             mHandler.post(() -> {
                 mConnected = true;
                 if (mCurrentDream == DreamRecord.this && mService == null) {

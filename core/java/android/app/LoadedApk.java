@@ -105,7 +105,7 @@ final class ServiceConnectionLeaked extends AndroidRuntimeException {
  */
 public final class LoadedApk {
     static final String TAG = "LoadedApk";
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     @UnsupportedAppUsage
     private final ActivityThread mActivityThread;
@@ -2041,6 +2041,7 @@ public final class LoadedApk {
 
             public void connected(ComponentName name, IBinder service, boolean dead)
                     throws RemoteException {
+                Slog.d(TAG,"InnerConnection connected");
                 LoadedApk.ServiceDispatcher sd = mDispatcher.get();
                 if (sd != null) {
                     sd.connected(name, service, dead);
@@ -2134,11 +2135,15 @@ public final class LoadedApk {
         }
 
         public void connected(ComponentName name, IBinder service, boolean dead) {
+            Slog.d(TAG,"ServiceDispatcher connected");
             if (mActivityExecutor != null) {
+                Slog.d(TAG,"mActivityExecutor connected");
                 mActivityExecutor.execute(new RunConnection(name, service, 0, dead));
             } else if (mActivityThread != null) {
+                Slog.d(TAG,"post connected " + mActivityThread.getLooper().getThread().getId());
                 mActivityThread.post(new RunConnection(name, service, 0, dead));
             } else {
+                Slog.d(TAG,"doConnected");
                 doConnected(name, service, dead);
             }
         }
@@ -2156,16 +2161,18 @@ public final class LoadedApk {
         public void doConnected(ComponentName name, IBinder service, boolean dead) {
             ServiceDispatcher.ConnectionInfo old;
             ServiceDispatcher.ConnectionInfo info;
-
+            Slog.d(TAG,"run doConnected");
             synchronized (this) {
                 if (mForgotten) {
                     // We unbound before receiving the connection; ignore
                     // any connection received.
+                    Slog.d(TAG,"mForgotten");
                     return;
                 }
                 old = mActiveConnections.get(name);
                 if (old != null && old.binder == service) {
                     // Huh, already have this one.  Oh well!
+                    Slog.d(TAG,"old connect");
                     return;
                 }
 
@@ -2203,9 +2210,11 @@ public final class LoadedApk {
             } else {
                 // If there is a new viable service, it is now connected.
                 if (service != null) {
+                    Slog.d(TAG,"call onServiceConnected");
                     mConnection.onServiceConnected(name, service);
                 } else {
                     // The binding machinery worked, but the remote returned null from onBind().
+                    Slog.d(TAG,"call onNullBinding");
                     mConnection.onNullBinding(name);
                 }
             }
