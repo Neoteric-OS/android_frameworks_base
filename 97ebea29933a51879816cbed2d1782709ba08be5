@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29bc6289_07d2fe4c",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-08-14T17:57:02Z",
+      "side": 1,
+      "message": "I\u0027m fine with them being as they are; I was just curious.",
+      "parentUuid": "ff2aca04_04da5099",
+      "range": {
+        "startLine": 154,
+        "startChar": 3,
+        "endLine": 168,
+        "endChar": 45
+      },
+      "revId": "97ebea29933a51879816cbed2d1782709ba08be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0f5866a_91380f0d",
