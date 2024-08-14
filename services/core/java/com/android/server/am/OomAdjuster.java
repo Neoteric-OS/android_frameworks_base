@@ -1731,8 +1731,7 @@ public class OomAdjuster {
             new ComputeOomAdjWindowCallback();
 
     /** These methods are called inline during computeOomAdjLSP(), on the same thread */
-    final class ComputeOomAdjWindowCallback
-            implements WindowProcessController.ComputeOomAdjCallback {
+    final class ComputeOomAdjWindowCallback {
 
         ProcessRecord app;
         int adj;
@@ -1762,8 +1761,7 @@ public class OomAdjuster {
             this.mState = app.mState;
         }
 
-        @Override
-        public void onVisibleActivity() {
+        void onVisibleActivity(int flags) {
             // App has a visible activity; only upgrade adjustment.
             if (adj > VISIBLE_APP_ADJ) {
                 adj = VISIBLE_APP_ADJ;
@@ -1783,12 +1781,22 @@ public class OomAdjuster {
             if (schedGroup < SCHED_GROUP_DEFAULT) {
                 schedGroup = SCHED_GROUP_DEFAULT;
             }
+            if ((flags & WindowProcessController.ACTIVITY_STATE_FLAG_RESUMED_SPLIT_SCREEN) != 0) {
+                // Another side of split should be the current global top. Use the same top
+                // priority for this non-top split.
+                schedGroup = SCHED_GROUP_TOP_APP;
+                mAdjType = "resumed-split-screen-activity";
+            } else if ((flags
+                    & WindowProcessController.ACTIVITY_STATE_FLAG_PERCEPTIBLE_FREEFORM) != 0) {
+                // The recently used non-top visible freeform app.
+                schedGroup = SCHED_GROUP_TOP_APP;
+                mAdjType = "perceptible-freeform-activity";
+            }
             foregroundActivities = true;
             mHasVisibleActivities = true;
         }
 
-        @Override
-        public void onPausedActivity() {
+        void onPausedActivity() {
             if (adj > PERCEPTIBLE_APP_ADJ) {
                 adj = PERCEPTIBLE_APP_ADJ;
                 mAdjType = "pause-activity";
@@ -1811,8 +1819,7 @@ public class OomAdjuster {
             mHasVisibleActivities = false;
         }
 
-        @Override
-        public void onStoppingActivity(boolean finishing) {
+        void onStoppingActivity(boolean finishing) {
             if (adj > PERCEPTIBLE_APP_ADJ) {
                 adj = PERCEPTIBLE_APP_ADJ;
                 mAdjType = "stop-activity";
@@ -1842,8 +1849,7 @@ public class OomAdjuster {
             mHasVisibleActivities = false;
         }
 
-        @Override
-        public void onOtherActivity() {
+        void onOtherActivity() {
             if (procState > PROCESS_STATE_CACHED_ACTIVITY) {
                 procState = PROCESS_STATE_CACHED_ACTIVITY;
                 mAdjType = "cch-act";

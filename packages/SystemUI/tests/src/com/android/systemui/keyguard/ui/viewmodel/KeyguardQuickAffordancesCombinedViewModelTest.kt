@@ -195,7 +195,6 @@ class KeyguardQuickAffordancesCombinedViewModelTest : SysuiTestCase() {
         val featureFlags =
             FakeFeatureFlags().apply {
                 set(Flags.LOCK_SCREEN_LONG_PRESS_ENABLED, false)
-                set(Flags.LOCK_SCREEN_LONG_PRESS_DIRECT_TO_WPP, false)
             }
 
         val withDeps = KeyguardInteractorFactory.create(featureFlags = featureFlags)
@@ -221,7 +220,6 @@ class KeyguardQuickAffordancesCombinedViewModelTest : SysuiTestCase() {
                             .thenReturn(FakeSharedPreferences())
                     },
                 userTracker = userTracker,
-                systemSettings = FakeSettings(),
                 broadcastDispatcher = fakeBroadcastDispatcher,
             )
         val remoteUserSelectionManager =

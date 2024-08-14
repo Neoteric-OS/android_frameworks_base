@@ -26,8 +26,10 @@ import android.view.WindowInsets
 import androidx.activity.BackEventCompat
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.view.updatePadding
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.android.compose.theme.PlatformTheme
@@ -78,7 +80,9 @@ constructor(
         requireViewById<ComposeView>(R.id.shortcut_helper_compose_container).apply {
             setContent {
                 PlatformTheme {
+                    val shortcutsUiState by viewModel.shortcutsUiState.collectAsStateWithLifecycle()
                     ShortcutHelper(
+                        shortcutsUiState = shortcutsUiState,
                         onKeyboardSettingsClicked = ::onKeyboardSettingsClicked,
                     )
                 }

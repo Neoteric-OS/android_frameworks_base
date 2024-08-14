@@ -25,6 +25,7 @@ import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import com.android.internal.logging.UiEventLogger
 import com.android.systemui.Flags.enableWidgetPickerSizeFilter
+import com.android.systemui.communal.data.model.CommunalWidgetCategories
 import com.android.systemui.communal.domain.interactor.CommunalInteractor
 import com.android.systemui.communal.domain.interactor.CommunalPrefsInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor
@@ -42,6 +43,7 @@ import com.android.systemui.log.dagger.CommunalLog
 import com.android.systemui.media.controls.ui.view.MediaHost
 import com.android.systemui.media.dagger.MediaModule
 import com.android.systemui.res.R
+import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.util.kotlin.BooleanFlowOperators.allOf
 import com.android.systemui.util.kotlin.BooleanFlowOperators.not
 import javax.inject.Inject
@@ -80,10 +82,10 @@ constructor(
         communalSceneInteractor.editModeState.map { it == EditModeState.SHOWING }
 
     val showDisclaimer: Flow<Boolean> =
-        allOf(isCommunalContentVisible, not(communalPrefsInteractor.isDisclaimerDismissed))
+        allOf(isCommunalContentVisible, not(communalInteractor.isDisclaimerDismissed))
 
     fun onDisclaimerDismissed() {
-        communalPrefsInteractor.setDisclaimerDismissed()
+        communalInteractor.setDisclaimerDismissed()
     }
 
     /**
@@ -92,7 +94,10 @@ constructor(
      */
     val canShowEditMode =
         allOf(
-                keyguardTransitionInteractor.isFinishedInState(KeyguardState.GONE),
+                keyguardTransitionInteractor.isFinishedIn(
+                    scene = Scenes.Gone,
+                    stateWithoutSceneContainer = KeyguardState.GONE
+                ),
                 communalInteractor.editModeOpen
             )
             .filter { it }
@@ -183,9 +188,18 @@ constructor(
             }
             putExtra(
                 AppWidgetManager.EXTRA_CATEGORY_FILTER,
-                communalSettingsInteractor.communalWidgetCategories.value
+                CommunalWidgetCategories.defaultCategories
             )
+
+            communalSettingsInteractor.workProfileUserDisallowedByDevicePolicy.value?.let {
+                putExtra(EXTRA_USER_ID_FILTER, arrayListOf(it.id))
+            }
             putExtra(EXTRA_UI_SURFACE_KEY, EXTRA_UI_SURFACE_VALUE)
+            putExtra(EXTRA_PICKER_TITLE, resources.getString(R.string.communal_widget_picker_title))
+            putExtra(
+                EXTRA_PICKER_DESCRIPTION,
+                resources.getString(R.string.communal_widget_picker_description)
+            )
             putParcelableArrayListExtra(EXTRA_ADDED_APP_WIDGETS_KEY, excludeList)
         }
     }
@@ -203,9 +217,20 @@ constructor(
     /** Sets whether edit mode is currently open */
     fun setEditModeOpen(isOpen: Boolean) = communalInteractor.setEditModeOpen(isOpen)
 
+    /**
+     * Sets whether the edit mode activity is currently showing.
+     *
+     * See [CommunalInteractor.editActivityShowing] for more info.
+     */
+    fun setEditActivityShowing(showing: Boolean) =
+        communalInteractor.setEditActivityShowing(showing)
+
     /** Called when exiting the edit mode, before transitioning back to the communal scene. */
     fun cleanupEditModeState() {
         communalSceneInteractor.setEditModeState(null)
+
+        // Set the scroll position of the glanceable hub to match where we are now.
+        persistScrollPosition()
     }
 
     companion object {
@@ -213,8 +238,11 @@ constructor(
 
         private const val EXTRA_DESIRED_WIDGET_WIDTH = "desired_widget_width"
         private const val EXTRA_DESIRED_WIDGET_HEIGHT = "desired_widget_height"
+        private const val EXTRA_PICKER_TITLE = "picker_title"
+        private const val EXTRA_PICKER_DESCRIPTION = "picker_description"
         private const val EXTRA_UI_SURFACE_KEY = "ui_surface"
         private const val EXTRA_UI_SURFACE_VALUE = "widgets_hub"
+        private const val EXTRA_USER_ID_FILTER = "filtered_user_ids"
         const val EXTRA_ADDED_APP_WIDGETS_KEY = "added_app_widgets"
     }
 }

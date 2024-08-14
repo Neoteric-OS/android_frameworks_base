@@ -16,17 +16,7 @@
 
 package com.android.server.wm;
 
-import static android.app.CameraCompatTaskInfo.CAMERA_COMPAT_FREEFORM_NONE;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
-import static android.content.pm.ActivityInfo.isFixedOrientationLandscape;
-import static android.content.pm.PackageManager.USER_MIN_ASPECT_RATIO_16_9;
-import static android.content.pm.PackageManager.USER_MIN_ASPECT_RATIO_3_2;
-import static android.content.pm.PackageManager.USER_MIN_ASPECT_RATIO_4_3;
-import static android.content.pm.PackageManager.USER_MIN_ASPECT_RATIO_APP_DEFAULT;
-import static android.content.pm.PackageManager.USER_MIN_ASPECT_RATIO_DISPLAY_SIZE;
-import static android.content.pm.PackageManager.USER_MIN_ASPECT_RATIO_FULLSCREEN;
-import static android.content.pm.PackageManager.USER_MIN_ASPECT_RATIO_SPLIT_SCREEN;
-import static android.content.pm.PackageManager.USER_MIN_ASPECT_RATIO_UNSET;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION_STARTING;
 import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
@@ -45,34 +35,27 @@ import static com.android.internal.util.FrameworkStatsLog.LETTERBOX_POSITION_CHA
 import static com.android.internal.util.FrameworkStatsLog.LETTERBOX_POSITION_CHANGED__POSITION_CHANGE__LEFT_TO_CENTER;
 import static com.android.internal.util.FrameworkStatsLog.LETTERBOX_POSITION_CHANGED__POSITION_CHANGE__RIGHT_TO_CENTER;
 import static com.android.internal.util.FrameworkStatsLog.LETTERBOX_POSITION_CHANGED__POSITION_CHANGE__TOP_TO_CENTER;
-import static com.android.server.wm.ActivityRecord.computeAspectRatio;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.TAG_ATM;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.TAG_WITH_CLASS_NAME;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND_FLOATING;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_BACKGROUND_SOLID_COLOR;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_BACKGROUND_WALLPAPER;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_CENTER;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_LEFT;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_RIGHT;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_POSITION_MULTIPLIER_CENTER;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_VERTICAL_REACHABILITY_POSITION_BOTTOM;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_VERTICAL_REACHABILITY_POSITION_CENTER;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_VERTICAL_REACHABILITY_POSITION_TOP;
-import static com.android.server.wm.LetterboxConfiguration.MIN_FIXED_ORIENTATION_LETTERBOX_ASPECT_RATIO;
-import static com.android.server.wm.LetterboxConfiguration.letterboxBackgroundTypeToString;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND_FLOATING;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_BACKGROUND_SOLID_COLOR;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_BACKGROUND_WALLPAPER;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_CENTER;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_LEFT;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_RIGHT;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_VERTICAL_REACHABILITY_POSITION_BOTTOM;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_VERTICAL_REACHABILITY_POSITION_CENTER;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_VERTICAL_REACHABILITY_POSITION_TOP;
+import static com.android.server.wm.AppCompatConfiguration.letterboxBackgroundTypeToString;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager.TaskDescription;
-import android.app.CameraCompatTaskInfo.FreeformCameraCompatMode;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.os.RemoteException;
 import android.util.Slog;
 import android.view.InsetsSource;
 import android.view.InsetsState;
@@ -82,10 +65,9 @@ import android.view.SurfaceControl.Transaction;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 
-import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.statusbar.LetterboxDetails;
-import com.android.server.wm.LetterboxConfiguration.LetterboxBackgroundType;
+import com.android.server.wm.AppCompatConfiguration.LetterboxBackgroundType;
 import com.android.window.flags.Flags;
 
 import java.io.PrintWriter;
@@ -99,37 +81,21 @@ final class LetterboxUiController {
 
     private final Point mTmpPoint = new Point();
 
-    private final LetterboxConfiguration mLetterboxConfiguration;
+    private final AppCompatConfiguration mAppCompatConfiguration;
 
     private final ActivityRecord mActivityRecord;
 
-    // TODO(b/265576778): Cache other overrides as well.
-
-
     private boolean mShowWallpaperForLetterboxBackground;
-
-    // TODO(b/315140179): Make mUserAspectRatio final
-    // The min aspect ratio override set by user
-    @PackageManager.UserMinAspectRatio
-    private int mUserAspectRatio = USER_MIN_ASPECT_RATIO_UNSET;
 
     @Nullable
     private Letterbox mLetterbox;
-
-    // Whether activity "refresh" was requested but not finished in
-    // ActivityRecord#activityResumedLocked following the camera compat force rotation in
-    // DisplayRotationCompatPolicy.
-    private boolean mIsRefreshRequested;
 
     private boolean mLastShouldShowLetterboxUi;
 
     private boolean mDoubleTapEvent;
 
-    @FreeformCameraCompatMode
-    private int mFreeformCameraCompatMode = CAMERA_COMPAT_FREEFORM_NONE;
-
     LetterboxUiController(WindowManagerService wmService, ActivityRecord activityRecord) {
-        mLetterboxConfiguration = wmService.mLetterboxConfiguration;
+        mAppCompatConfiguration = wmService.mAppCompatConfiguration;
         // Given activityRecord may not be fully constructed since LetterboxUiController
         // is created in its constructor. It shouldn't be used in this constructor but it's safe
         // to use it after since controller is only used in ActivityRecord.
@@ -150,13 +116,6 @@ final class LetterboxUiController {
         }
     }
 
-
-    @VisibleForTesting
-    int getSetOrientationRequestCounter() {
-        return getAppCompatCapability().getAppCompatOrientationCapability()
-                .getSetOrientationRequestCounter();
-    }
-
     /**
      * Whether sending compat fake focus for split screen resumed activities is enabled. Needed
      * because some game engines wait to get focus before drawing the content of the app which isn't
@@ -170,40 +129,7 @@ final class LetterboxUiController {
      * </ul>
      */
     boolean shouldSendFakeFocus() {
-        return getAppCompatCapability().shouldSendFakeFocus();
-    }
-
-    /**
-     * Whether we should apply the min aspect ratio per-app override. When this override is applied
-     * the min aspect ratio given in the app's manifest will be overridden to the largest enabled
-     * aspect ratio treatment unless the app's manifest value is higher. The treatment will also
-     * apply if no value is provided in the manifest.
-     *
-     * <p>This method returns {@code true} when the following conditions are met:
-     * <ul>
-     *     <li>Opt-out component property isn't enabled
-     *     <li>Per-app override is enabled
-     * </ul>
-     */
-    boolean shouldOverrideMinAspectRatio() {
-        return getAppCompatCapability().shouldOverrideMinAspectRatio();
-    }
-
-    /**
-     * Whether we should apply the min aspect ratio per-app override only when an app is connected
-     * to the camera.
-     * When this override is applied the min aspect ratio given in the app's manifest will be
-     * overridden to the largest enabled aspect ratio treatment unless the app's manifest value
-     * is higher. The treatment will also apply if no value is provided in the manifest.
-     *
-     * <p>This method returns {@code true} when the following conditions are met:
-     * <ul>
-     *     <li>Opt-out component property isn't enabled
-     *     <li>Per-app override is enabled
-     * </ul>
-     */
-    boolean shouldOverrideMinAspectRatioForCamera() {
-        return getAppCompatCapability().shouldOverrideMinAspectRatioForCamera();
+        return getAppCompatOverrides().shouldSendFakeFocus();
     }
 
     /**
@@ -219,7 +145,7 @@ final class LetterboxUiController {
      * </ul>
      */
     boolean shouldOverrideForceResizeApp() {
-        return getAppCompatCapability().shouldOverrideForceResizeApp();
+        return getAppCompatOverrides().shouldOverrideForceResizeApp();
     }
 
     /**
@@ -233,7 +159,7 @@ final class LetterboxUiController {
      * </ul>
      */
     boolean shouldOverrideForceNonResizeApp() {
-        return getAppCompatCapability().shouldOverrideForceNonResizeApp();
+        return getAppCompatOverrides().shouldOverrideForceNonResizeApp();
     }
 
     /**
@@ -241,23 +167,13 @@ final class LetterboxUiController {
      * android.app.Activity#setRequestedOrientation}.
      */
     void setRelaunchingAfterRequestedOrientationChanged(boolean isRelaunching) {
-        getAppCompatCapability().getAppCompatOrientationCapability()
+        getAppCompatOverrides().getAppCompatOrientationOverrides()
                 .setRelaunchingAfterRequestedOrientationChanged(isRelaunching);
     }
 
-    /**
-     * Whether activity "refresh" was requested but not finished in {@link #activityResumedLocked}.
-     */
-    boolean isRefreshRequested() {
-        return mIsRefreshRequested;
-    }
-
-    void setIsRefreshRequested(boolean isRequested) {
-        mIsRefreshRequested = isRequested;
-    }
 
     boolean isOverrideRespectRequestedOrientationEnabled() {
-        return getAppCompatCapability().isOverrideRespectRequestedOrientationEnabled();
+        return getAppCompatOverrides().isOverrideRespectRequestedOrientationEnabled();
     }
 
     /**
@@ -274,90 +190,7 @@ final class LetterboxUiController {
      * </ul>
      */
     boolean shouldUseDisplayLandscapeNaturalOrientation() {
-        return getAppCompatCapability().shouldUseDisplayLandscapeNaturalOrientation();
-    }
-
-    boolean isOverrideOrientationOnlyForCameraEnabled() {
-        return getAppCompatCapability().isOverrideOrientationOnlyForCameraEnabled();
-    }
-
-    /**
-     * Whether activity is eligible for activity "refresh" after camera compat force rotation
-     * treatment. See {@link DisplayRotationCompatPolicy} for context.
-     *
-     * <p>This treatment is enabled when the following conditions are met:
-     * <ul>
-     *     <li>Flag gating the camera compat treatment is enabled.
-     *     <li>Activity isn't opted out by the device manufacturer with override or by the app
-     *     developers with the component property.
-     * </ul>
-     */
-    boolean shouldRefreshActivityForCameraCompat() {
-        return getAppCompatCapability().shouldRefreshActivityForCameraCompat();
-    }
-
-    /**
-     * Whether activity should be "refreshed" after the camera compat force rotation treatment
-     * using the "resumed -> paused -> resumed" cycle rather than the "resumed -> ... -> stopped
-     * -> ... -> resumed" cycle. See {@link DisplayRotationCompatPolicy} for context.
-     *
-     * <p>This treatment is enabled when the following conditions are met:
-     * <ul>
-     *     <li>Flag gating the camera compat treatment is enabled.
-     *     <li>Activity "refresh" via "resumed -> paused -> resumed" cycle isn't disabled with the
-     *     component property by the app developers.
-     *     <li>Activity "refresh" via "resumed -> paused -> resumed" cycle is enabled by the device
-     *     manufacturer with override / by the app developers with the component property.
-     * </ul>
-     */
-    boolean shouldRefreshActivityViaPauseForCameraCompat() {
-        return getAppCompatCapability().shouldRefreshActivityViaPauseForCameraCompat();
-    }
-
-    /**
-     * Whether activity is eligible for camera compat force rotation treatment. See {@link
-     * DisplayRotationCompatPolicy} for context.
-     *
-     * <p>This treatment is enabled when the following conditions are met:
-     * <ul>
-     *     <li>Flag gating the camera compat treatment is enabled.
-     *     <li>Activity isn't opted out by the device manufacturer with override or by the app
-     *     developers with the component property.
-     * </ul>
-     */
-    boolean shouldForceRotateForCameraCompat() {
-        return getAppCompatCapability().shouldForceRotateForCameraCompat();
-    }
-
-    /**
-     * Whether activity is eligible for camera compatibility free-form treatment.
-     *
-     * <p>The treatment is applied to a fixed-orientation camera activity in free-form windowing
-     * mode. The treatment letterboxes or pillarboxes the activity to the expected orientation and
-     * provides changes to the camera and display orientation signals to match those expected on a
-     * portrait device in that orientation (for example, on a standard phone).
-     *
-     * <p>The treatment is enabled when the following conditions are met:
-     * <ul>
-     * <li>Property gating the camera compatibility free-form treatment is enabled.
-     * <li>Activity isn't opted out by the device manufacturer with override.
-     * </ul>
-     */
-    boolean shouldApplyFreeformTreatmentForCameraCompat() {
-        return getAppCompatCapability().shouldApplyFreeformTreatmentForCameraCompat();
-    }
-
-    @FreeformCameraCompatMode
-    int getFreeformCameraCompatMode() {
-        return mFreeformCameraCompatMode;
-    }
-
-    void setFreeformCameraCompatMode(@FreeformCameraCompatMode int freeformCameraCompatMode) {
-        mFreeformCameraCompatMode = freeformCameraCompatMode;
-    }
-
-    private boolean isCompatChangeEnabled(long overrideChangeId) {
-        return mActivityRecord.info.isChangeEnabled(overrideChangeId);
+        return getAppCompatOverrides().shouldUseDisplayLandscapeNaturalOrientation();
     }
 
     boolean hasWallpaperBackgroundForLetterbox() {
@@ -512,7 +345,7 @@ final class LetterboxUiController {
     private boolean shouldLetterboxHaveRoundedCorners() {
         // TODO(b/214030873): remove once background is drawn for transparent activities
         // Letterbox shouldn't have rounded corners if the activity is transparent
-        return mLetterboxConfiguration.isLetterboxActivityCornersRounded()
+        return mAppCompatConfiguration.isLetterboxActivityCornersRounded()
                 && mActivityRecord.fillsParent();
     }
 
@@ -521,7 +354,7 @@ final class LetterboxUiController {
     // be a TaskFragment, and its windowing mode is always MULTI_WINDOW, even if the task is
     // actually fullscreen. If display is still in transition e.g. unfolding, don't return true
     // for HALF_FOLDED state or app will flicker.
-    private boolean isDisplayFullScreenAndInPosture(boolean isTabletop) {
+    boolean isDisplayFullScreenAndInPosture(boolean isTabletop) {
         Task task = mActivityRecord.getTask();
         return mActivityRecord.mDisplayContent != null && task != null
                 && mActivityRecord.mDisplayContent.getDisplayRotation().isDeviceInPosture(
@@ -549,13 +382,13 @@ final class LetterboxUiController {
         return isHorizontalReachabilityEnabled(parentConfiguration)
                 // Using the last global dynamic position to avoid "jumps" when moving
                 // between apps or activities.
-                ? mLetterboxConfiguration.getHorizontalMultiplierForReachability(bookModeEnabled)
-                : mLetterboxConfiguration.getLetterboxHorizontalPositionMultiplier(bookModeEnabled);
+                ? mAppCompatConfiguration.getHorizontalMultiplierForReachability(bookModeEnabled)
+                : mAppCompatConfiguration.getLetterboxHorizontalPositionMultiplier(bookModeEnabled);
     }
 
     private boolean isFullScreenAndBookModeEnabled() {
         return isDisplayFullScreenAndInPosture(/* isTabletop */ false)
-                && mLetterboxConfiguration.getIsAutomaticReachabilityInBookModeEnabled();
+                && mAppCompatConfiguration.getIsAutomaticReachabilityInBookModeEnabled();
     }
 
     float getVerticalPositionMultiplier(Configuration parentConfiguration) {
@@ -565,70 +398,24 @@ final class LetterboxUiController {
         return isVerticalReachabilityEnabled(parentConfiguration)
                 // Using the last global dynamic position to avoid "jumps" when moving
                 // between apps or activities.
-                ? mLetterboxConfiguration.getVerticalMultiplierForReachability(tabletopMode)
-                : mLetterboxConfiguration.getLetterboxVerticalPositionMultiplier(tabletopMode);
+                ? mAppCompatConfiguration.getVerticalMultiplierForReachability(tabletopMode)
+                : mAppCompatConfiguration.getLetterboxVerticalPositionMultiplier(tabletopMode);
     }
 
     float getFixedOrientationLetterboxAspectRatio(@NonNull Configuration parentConfiguration) {
-        return shouldUseSplitScreenAspectRatio(parentConfiguration)
-                ? getSplitScreenAspectRatio()
-                : mActivityRecord.shouldCreateCompatDisplayInsets()
-                        ? getDefaultMinAspectRatioForUnresizableApps()
-                        : getDefaultMinAspectRatio();
-    }
-
-    void recomputeConfigurationForCameraCompatIfNeeded() {
-        if (isOverrideOrientationOnlyForCameraEnabled()
-                || isCameraCompatSplitScreenAspectRatioAllowed()
-                || shouldOverrideMinAspectRatioForCamera()) {
-            mActivityRecord.recomputeConfiguration();
-        }
+        return mActivityRecord.mAppCompatController.getAppCompatAspectRatioOverrides()
+                .getFixedOrientationLetterboxAspectRatio(parentConfiguration);
     }
 
     boolean isLetterboxEducationEnabled() {
-        return mLetterboxConfiguration.getIsEducationEnabled();
-    }
-
-    /**
-     * Whether we use split screen aspect ratio for the activity when camera compat treatment
-     * is active because the corresponding config is enabled and activity supports resizing.
-     */
-    boolean isCameraCompatSplitScreenAspectRatioAllowed() {
-        return mLetterboxConfiguration.isCameraCompatSplitScreenAspectRatioEnabled()
-                && !mActivityRecord.shouldCreateCompatDisplayInsets();
-    }
-
-    private boolean shouldUseSplitScreenAspectRatio(@NonNull Configuration parentConfiguration) {
-        final boolean isBookMode = isDisplayFullScreenAndInPosture(/* isTabletop */ false);
-        final boolean isNotCenteredHorizontally = getHorizontalPositionMultiplier(
-                parentConfiguration) != LETTERBOX_POSITION_MULTIPLIER_CENTER;
-        final boolean isTabletopMode = isDisplayFullScreenAndInPosture(/* isTabletop */ true);
-        final boolean isLandscape = isFixedOrientationLandscape(
-                mActivityRecord.getOverrideOrientation());
-
-        // Don't resize to split screen size when in book mode if letterbox position is centered
-        return (isBookMode && isNotCenteredHorizontally || isTabletopMode && isLandscape)
-                    || isCameraCompatSplitScreenAspectRatioAllowed()
-                        && getAppCompatCapability().isCameraCompatTreatmentActive();
-    }
-
-    private float getDefaultMinAspectRatioForUnresizableApps() {
-        if (!mLetterboxConfiguration.getIsSplitScreenAspectRatioForUnresizableAppsEnabled()
-                || mActivityRecord.getDisplayArea() == null) {
-            return mLetterboxConfiguration.getDefaultMinAspectRatioForUnresizableApps()
-                    > MIN_FIXED_ORIENTATION_LETTERBOX_ASPECT_RATIO
-                            ? mLetterboxConfiguration.getDefaultMinAspectRatioForUnresizableApps()
-                            : getDefaultMinAspectRatio();
-        }
-
-        return getSplitScreenAspectRatio();
+        return mAppCompatConfiguration.getIsEducationEnabled();
     }
 
     /**
      * @return {@value true} if the resulting app is letterboxed in a way defined as thin.
      */
     boolean isVerticalThinLetterboxed() {
-        final int thinHeight = mLetterboxConfiguration.getThinLetterboxHeightPx();
+        final int thinHeight = mAppCompatConfiguration.getThinLetterboxHeightPx();
         if (thinHeight < 0) {
             return false;
         }
@@ -645,7 +432,7 @@ final class LetterboxUiController {
      * @return {@value true} if the resulting app is pillarboxed in a way defined as thin.
      */
     boolean isHorizontalThinLetterboxed() {
-        final int thinWidth = mLetterboxConfiguration.getThinLetterboxWidthPx();
+        final int thinWidth = mAppCompatConfiguration.getThinLetterboxWidthPx();
         if (thinWidth < 0) {
             return false;
         }
@@ -685,136 +472,22 @@ final class LetterboxUiController {
         return !isHorizontalThinLetterboxed();
     }
 
-    float getSplitScreenAspectRatio() {
-        // Getting the same aspect ratio that apps get in split screen.
-        final DisplayArea displayArea = mActivityRecord.getDisplayArea();
-        if (displayArea == null) {
-            return getDefaultMinAspectRatioForUnresizableApps();
-        }
-        int dividerWindowWidth =
-                getResources().getDimensionPixelSize(R.dimen.docked_stack_divider_thickness);
-        int dividerInsets =
-                getResources().getDimensionPixelSize(R.dimen.docked_stack_divider_insets);
-        int dividerSize = dividerWindowWidth - dividerInsets * 2;
-        final Rect bounds = new Rect(displayArea.getWindowConfiguration().getAppBounds());
-        if (bounds.width() >= bounds.height()) {
-            bounds.inset(/* dx */ dividerSize / 2, /* dy */ 0);
-            bounds.right = bounds.centerX();
-        } else {
-            bounds.inset(/* dx */ 0, /* dy */ dividerSize / 2);
-            bounds.bottom = bounds.centerY();
-        }
-        return computeAspectRatio(bounds);
+    boolean shouldOverrideMinAspectRatio() {
+        return mActivityRecord.mAppCompatController.getAppCompatAspectRatioOverrides()
+                .shouldOverrideMinAspectRatio();
     }
 
-    /**
-     * Whether we should enable users to resize the current app.
-     */
-    boolean shouldEnableUserAspectRatioSettings() {
-        return getAppCompatCapability().shouldEnableUserAspectRatioSettings();
-    }
-
-    /**
-     * Whether we should apply the user aspect ratio override to the min aspect ratio for the
-     * current app.
-     */
-    boolean shouldApplyUserMinAspectRatioOverride() {
-        if (!shouldEnableUserAspectRatioSettings()) {
-            return false;
-        }
-
-        mUserAspectRatio = getUserMinAspectRatioOverrideCode();
-
-        return mUserAspectRatio != USER_MIN_ASPECT_RATIO_UNSET
-                && mUserAspectRatio != USER_MIN_ASPECT_RATIO_APP_DEFAULT
-                && mUserAspectRatio != USER_MIN_ASPECT_RATIO_FULLSCREEN;
-    }
-
-    boolean shouldApplyUserFullscreenOverride() {
-        if (isUserFullscreenOverrideEnabled()) {
-            mUserAspectRatio = getUserMinAspectRatioOverrideCode();
-
-            return mUserAspectRatio == USER_MIN_ASPECT_RATIO_FULLSCREEN;
-        }
-
-        return false;
-    }
-
-    boolean isUserFullscreenOverrideEnabled() {
-        return getAppCompatCapability().isUserFullscreenOverrideEnabled();
-    }
-
-    boolean isSystemOverrideToFullscreenEnabled() {
-        return getAppCompatCapability().isSystemOverrideToFullscreenEnabled(mUserAspectRatio);
-    }
-
-    boolean hasFullscreenOverride() {
-        // `mUserAspectRatio` is always initialized first in `shouldApplyUserFullscreenOverride()`.
-        return shouldApplyUserFullscreenOverride() || isSystemOverrideToFullscreenEnabled();
-    }
-
-    float getUserMinAspectRatio() {
-        switch (mUserAspectRatio) {
-            case USER_MIN_ASPECT_RATIO_DISPLAY_SIZE:
-                return getDisplaySizeMinAspectRatio();
-            case USER_MIN_ASPECT_RATIO_SPLIT_SCREEN:
-                return getSplitScreenAspectRatio();
-            case USER_MIN_ASPECT_RATIO_16_9:
-                return 16 / 9f;
-            case USER_MIN_ASPECT_RATIO_4_3:
-                return 4 / 3f;
-            case USER_MIN_ASPECT_RATIO_3_2:
-                return 3 / 2f;
-            default:
-                throw new AssertionError("Unexpected user min aspect ratio override: "
-                        + mUserAspectRatio);
-        }
-    }
-
-    @VisibleForTesting
-    int getUserMinAspectRatioOverrideCode() {
-        try {
-            return mActivityRecord.mAtmService.getPackageManager()
-                    .getUserMinAspectRatio(mActivityRecord.packageName, mActivityRecord.mUserId);
-        } catch (RemoteException e) {
-            Slog.w(TAG, "Exception thrown retrieving aspect ratio user override " + this, e);
-        }
-        return mUserAspectRatio;
-    }
-
-    private float getDisplaySizeMinAspectRatio() {
-        final DisplayArea displayArea = mActivityRecord.getDisplayArea();
-        if (displayArea == null) {
-            return mActivityRecord.info.getMinAspectRatio();
-        }
-        final Rect bounds = new Rect(displayArea.getWindowConfiguration().getAppBounds());
-        return computeAspectRatio(bounds);
-    }
-
-    private float getDefaultMinAspectRatio() {
-        if (mActivityRecord.getDisplayArea() == null
-                || !mLetterboxConfiguration
-                    .getIsDisplayAspectRatioEnabledForFixedOrientationLetterbox()) {
-            return mLetterboxConfiguration.getFixedOrientationLetterboxAspectRatio();
-        }
-        return getDisplaySizeMinAspectRatio();
-    }
-
-    Resources getResources() {
-        return mActivityRecord.mWmService.mContext.getResources();
-    }
-
-    @LetterboxConfiguration.LetterboxVerticalReachabilityPosition
+    @AppCompatConfiguration.LetterboxVerticalReachabilityPosition
     int getLetterboxPositionForVerticalReachability() {
         final boolean isInFullScreenTabletopMode = isDisplayFullScreenAndSeparatingHinge();
-        return mLetterboxConfiguration.getLetterboxPositionForVerticalReachability(
+        return mAppCompatConfiguration.getLetterboxPositionForVerticalReachability(
                 isInFullScreenTabletopMode);
     }
 
-    @LetterboxConfiguration.LetterboxHorizontalReachabilityPosition
+    @AppCompatConfiguration.LetterboxHorizontalReachabilityPosition
     int getLetterboxPositionForHorizontalReachability() {
         final boolean isInFullScreenBookMode = isFullScreenAndBookModeEnabled();
-        return mLetterboxConfiguration.getLetterboxPositionForHorizontalReachability(
+        return mAppCompatConfiguration.getLetterboxPositionForHorizontalReachability(
                 isInFullScreenBookMode);
     }
 
@@ -830,12 +503,12 @@ final class LetterboxUiController {
         }
 
         boolean isInFullScreenBookMode = isDisplayFullScreenAndSeparatingHinge()
-                && mLetterboxConfiguration.getIsAutomaticReachabilityInBookModeEnabled();
-        int letterboxPositionForHorizontalReachability = mLetterboxConfiguration
+                && mAppCompatConfiguration.getIsAutomaticReachabilityInBookModeEnabled();
+        int letterboxPositionForHorizontalReachability = mAppCompatConfiguration
                 .getLetterboxPositionForHorizontalReachability(isInFullScreenBookMode);
         if (mLetterbox.getInnerFrame().left > x) {
             // Moving to the next stop on the left side of the app window: right > center > left.
-            mLetterboxConfiguration.movePositionForHorizontalReachabilityToNextLeftStop(
+            mAppCompatConfiguration.movePositionForHorizontalReachabilityToNextLeftStop(
                     isInFullScreenBookMode);
             int changeToLog =
                     letterboxPositionForHorizontalReachability
@@ -846,7 +519,7 @@ final class LetterboxUiController {
             mDoubleTapEvent = true;
         } else if (mLetterbox.getInnerFrame().right < x) {
             // Moving to the next stop on the right side of the app window: left > center > right.
-            mLetterboxConfiguration.movePositionForHorizontalReachabilityToNextRightStop(
+            mAppCompatConfiguration.movePositionForHorizontalReachabilityToNextRightStop(
                     isInFullScreenBookMode);
             int changeToLog =
                     letterboxPositionForHorizontalReachability
@@ -871,11 +544,11 @@ final class LetterboxUiController {
             return;
         }
         boolean isInFullScreenTabletopMode = isDisplayFullScreenAndSeparatingHinge();
-        int letterboxPositionForVerticalReachability = mLetterboxConfiguration
+        int letterboxPositionForVerticalReachability = mAppCompatConfiguration
                 .getLetterboxPositionForVerticalReachability(isInFullScreenTabletopMode);
         if (mLetterbox.getInnerFrame().top > y) {
             // Moving to the next stop on the top side of the app window: bottom > center > top.
-            mLetterboxConfiguration.movePositionForVerticalReachabilityToNextTopStop(
+            mAppCompatConfiguration.movePositionForVerticalReachabilityToNextTopStop(
                     isInFullScreenTabletopMode);
             int changeToLog =
                     letterboxPositionForVerticalReachability
@@ -886,7 +559,7 @@ final class LetterboxUiController {
             mDoubleTapEvent = true;
         } else if (mLetterbox.getInnerFrame().bottom < y) {
             // Moving to the next stop on the bottom side of the app window: top > center > bottom.
-            mLetterboxConfiguration.movePositionForVerticalReachabilityToNextBottomStop(
+            mAppCompatConfiguration.movePositionForVerticalReachabilityToNextBottomStop(
                     isInFullScreenTabletopMode);
             int changeToLog =
                     letterboxPositionForVerticalReachability
@@ -923,7 +596,7 @@ final class LetterboxUiController {
                 .getTransparentPolicy().getFirstOpaqueActivity()
                 .map(ActivityRecord::getScreenResolvedBounds)
                 .orElse(mActivityRecord.getScreenResolvedBounds());
-        return mLetterboxConfiguration.getIsHorizontalReachabilityEnabled()
+        return mAppCompatConfiguration.getIsHorizontalReachabilityEnabled()
                 && parentConfiguration.windowConfiguration.getWindowingMode()
                         == WINDOWING_MODE_FULLSCREEN
                 // Check whether the activity fills the parent vertically.
@@ -941,8 +614,8 @@ final class LetterboxUiController {
     }
 
     // TODO(b/346264992): Remove after AppCompatController refactoring
-    private AppCompatCapability getAppCompatCapability() {
-        return mActivityRecord.mAppCompatController.getAppCompatCapability();
+    private AppCompatOverrides getAppCompatOverrides() {
+        return mActivityRecord.mAppCompatController.getAppCompatOverrides();
     }
 
     /**
@@ -968,7 +641,7 @@ final class LetterboxUiController {
                 .getTransparentPolicy().getFirstOpaqueActivity()
                 .map(ActivityRecord::getScreenResolvedBounds)
                 .orElse(mActivityRecord.getScreenResolvedBounds());
-        return mLetterboxConfiguration.getIsVerticalReachabilityEnabled()
+        return mAppCompatConfiguration.getIsVerticalReachabilityEnabled()
                 && parentConfiguration.windowConfiguration.getWindowingMode()
                         == WINDOWING_MODE_FULLSCREEN
                 // Check whether the activity fills the parent horizontally.
@@ -983,7 +656,7 @@ final class LetterboxUiController {
 
     @VisibleForTesting
     boolean shouldShowLetterboxUi(WindowState mainWindow) {
-        if (getAppCompatCapability().getAppCompatOrientationCapability()
+        if (getAppCompatOverrides().getAppCompatOrientationOverrides()
                 .getIsRelaunchingAfterRequestedOrientationChanged()) {
             return mLastShouldShowLetterboxUi;
         }
@@ -1008,7 +681,7 @@ final class LetterboxUiController {
             return Color.valueOf(Color.BLACK);
         }
         @LetterboxBackgroundType int letterboxBackgroundType =
-                mLetterboxConfiguration.getLetterboxBackgroundType();
+                mAppCompatConfiguration.getLetterboxBackgroundType();
         TaskDescription taskDescription = mActivityRecord.taskDescription;
         switch (letterboxBackgroundType) {
             case LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND_FLOATING:
@@ -1024,7 +697,7 @@ final class LetterboxUiController {
             case LETTERBOX_BACKGROUND_WALLPAPER:
                 if (hasWallpaperBackgroundForLetterbox()) {
                     // Color is used for translucent scrim that dims wallpaper.
-                    return mLetterboxConfiguration.getLetterboxBackgroundColor();
+                    return mAppCompatConfiguration.getLetterboxBackgroundColor();
                 }
                 Slog.w(TAG, "Wallpaper option is selected for letterbox background but "
                         + "blur is not supported by a device or not supported in the current "
@@ -1032,14 +705,14 @@ final class LetterboxUiController {
                         + "provided so using solid color background");
                 break;
             case LETTERBOX_BACKGROUND_SOLID_COLOR:
-                return mLetterboxConfiguration.getLetterboxBackgroundColor();
+                return mAppCompatConfiguration.getLetterboxBackgroundColor();
             default:
                 throw new AssertionError(
                     "Unexpected letterbox background type: " + letterboxBackgroundType);
         }
         // If picked option configured incorrectly or not supported then default to a solid color
         // background.
-        return mLetterboxConfiguration.getLetterboxBackgroundColor();
+        return mAppCompatConfiguration.getLetterboxBackgroundColor();
     }
 
     private void updateRoundedCornersIfNeeded(final WindowState mainWindow) {
@@ -1098,7 +771,7 @@ final class LetterboxUiController {
 
     private boolean requiresRoundedCorners(final WindowState mainWindow) {
         return isLetterboxedNotForDisplayCutout(mainWindow)
-                && mLetterboxConfiguration.isLetterboxActivityCornersRounded();
+                && mAppCompatConfiguration.isLetterboxActivityCornersRounded();
     }
 
     // Returns rounded corners radius the letterboxed activity should have based on override in
@@ -1112,8 +785,8 @@ final class LetterboxUiController {
         }
 
         final int radius;
-        if (mLetterboxConfiguration.getLetterboxActivityCornersRadius() >= 0) {
-            radius = mLetterboxConfiguration.getLetterboxActivityCornersRadius();
+        if (mAppCompatConfiguration.getLetterboxActivityCornersRadius() >= 0) {
+            radius = mAppCompatConfiguration.getLetterboxActivityCornersRadius();
         } else {
             final InsetsState insetsState = mainWindow.getInsetsState();
             radius = Math.min(
@@ -1144,7 +817,7 @@ final class LetterboxUiController {
     }
 
     boolean getIsRelaunchingAfterRequestedOrientationChanged() {
-        return getAppCompatCapability().getAppCompatOrientationCapability()
+        return getAppCompatOverrides().getAppCompatOrientationOverrides()
                 .getIsRelaunchingAfterRequestedOrientationChanged();
     }
 
@@ -1177,7 +850,7 @@ final class LetterboxUiController {
 
     private void updateWallpaperForLetterbox(WindowState mainWindow) {
         @LetterboxBackgroundType int letterboxBackgroundType =
-                mLetterboxConfiguration.getLetterboxBackgroundType();
+                mAppCompatConfiguration.getLetterboxBackgroundType();
         boolean wallpaperShouldBeShown =
                 letterboxBackgroundType == LETTERBOX_BACKGROUND_WALLPAPER
                         // Don't use wallpaper as a background if letterboxed for display cutout.
@@ -1195,18 +868,18 @@ final class LetterboxUiController {
     }
 
     private int getLetterboxWallpaperBlurRadiusPx() {
-        int blurRadius = mLetterboxConfiguration.getLetterboxBackgroundWallpaperBlurRadiusPx();
+        int blurRadius = mAppCompatConfiguration.getLetterboxBackgroundWallpaperBlurRadiusPx();
         return Math.max(blurRadius, 0);
     }
 
     private float getLetterboxWallpaperDarkScrimAlpha() {
-        float alpha = mLetterboxConfiguration.getLetterboxBackgroundWallpaperDarkScrimAlpha();
+        float alpha = mAppCompatConfiguration.getLetterboxBackgroundWallpaperDarkScrimAlpha();
         // No scrim by default.
         return (alpha < 0 || alpha >= 1) ? 0.0f : alpha;
     }
 
     private boolean isLetterboxWallpaperBlurSupported() {
-        return mLetterboxConfiguration.mContext.getSystemService(WindowManager.class)
+        return mAppCompatConfiguration.mContext.getSystemService(WindowManager.class)
                 .isCrossWindowBlurEnabled();
     }
 
@@ -1224,7 +897,7 @@ final class LetterboxUiController {
 
         pw.println(prefix + "  letterboxReason=" + getLetterboxReasonString(mainWin));
         pw.println(prefix + "  activityAspectRatio="
-                + mActivityRecord.computeAspectRatio(mActivityRecord.getBounds()));
+                + AppCompatUtils.computeAspectRatio(mActivityRecord.getBounds()));
 
         boolean shouldShowLetterboxUi = shouldShowLetterboxUi(mainWin);
         pw.println(prefix + "shouldShowLetterboxUi=" + shouldShowLetterboxUi);
@@ -1238,10 +911,10 @@ final class LetterboxUiController {
                 getLetterboxBackgroundColor().toArgb()));
         pw.println(prefix + "  letterboxBackgroundType="
                 + letterboxBackgroundTypeToString(
-                        mLetterboxConfiguration.getLetterboxBackgroundType()));
+                        mAppCompatConfiguration.getLetterboxBackgroundType()));
         pw.println(prefix + "  letterboxCornerRadius="
                 + getRoundedCornersRadius(mainWin));
-        if (mLetterboxConfiguration.getLetterboxBackgroundType()
+        if (mAppCompatConfiguration.getLetterboxBackgroundType()
                 == LETTERBOX_BACKGROUND_WALLPAPER) {
             pw.println(prefix + "  isLetterboxWallpaperBlurSupported="
                     + isLetterboxWallpaperBlurSupported());
@@ -1259,19 +932,19 @@ final class LetterboxUiController {
         pw.println(prefix + "  letterboxVerticalPositionMultiplier="
                 + getVerticalPositionMultiplier(mActivityRecord.getParent().getConfiguration()));
         pw.println(prefix + "  letterboxPositionForHorizontalReachability="
-                + LetterboxConfiguration.letterboxHorizontalReachabilityPositionToString(
-                mLetterboxConfiguration.getLetterboxPositionForHorizontalReachability(false)));
+                + AppCompatConfiguration.letterboxHorizontalReachabilityPositionToString(
+                mAppCompatConfiguration.getLetterboxPositionForHorizontalReachability(false)));
         pw.println(prefix + "  letterboxPositionForVerticalReachability="
-                + LetterboxConfiguration.letterboxVerticalReachabilityPositionToString(
-                mLetterboxConfiguration.getLetterboxPositionForVerticalReachability(false)));
+                + AppCompatConfiguration.letterboxVerticalReachabilityPositionToString(
+                mAppCompatConfiguration.getLetterboxPositionForVerticalReachability(false)));
         pw.println(prefix + "  fixedOrientationLetterboxAspectRatio="
-                + mLetterboxConfiguration.getFixedOrientationLetterboxAspectRatio());
+                + mAppCompatConfiguration.getFixedOrientationLetterboxAspectRatio());
         pw.println(prefix + "  defaultMinAspectRatioForUnresizableApps="
-                + mLetterboxConfiguration.getDefaultMinAspectRatioForUnresizableApps());
+                + mAppCompatConfiguration.getDefaultMinAspectRatioForUnresizableApps());
         pw.println(prefix + "  isSplitScreenAspectRatioForUnresizableAppsEnabled="
-                + mLetterboxConfiguration.getIsSplitScreenAspectRatioForUnresizableAppsEnabled());
+                + mAppCompatConfiguration.getIsSplitScreenAspectRatioForUnresizableAppsEnabled());
         pw.println(prefix + "  isDisplayAspectRatioEnabledForFixedOrientationLetterbox="
-                + mLetterboxConfiguration
+                + mAppCompatConfiguration
                 .getIsDisplayAspectRatioEnabledForFixedOrientationLetterbox());
     }
 
@@ -1283,20 +956,22 @@ final class LetterboxUiController {
         if (mActivityRecord.inSizeCompatMode()) {
             return "SIZE_COMPAT_MODE";
         }
-        if (mActivityRecord.isLetterboxedForFixedOrientationAndAspectRatio()) {
+        if (mActivityRecord.mAppCompatController.getAppCompatAspectRatioPolicy()
+                .isLetterboxedForFixedOrientationAndAspectRatio()) {
             return "FIXED_ORIENTATION";
         }
         if (mainWin.isLetterboxedForDisplayCutout()) {
             return "DISPLAY_CUTOUT";
         }
-        if (mActivityRecord.isLetterboxedForAspectRatioOnly()) {
+        if (mActivityRecord.mAppCompatController.getAppCompatAspectRatioPolicy()
+                .isLetterboxedForAspectRatioOnly()) {
             return "ASPECT_RATIO";
         }
         return "UNKNOWN_REASON";
     }
 
     private int letterboxHorizontalReachabilityPositionToLetterboxPosition(
-            @LetterboxConfiguration.LetterboxHorizontalReachabilityPosition int position) {
+            @AppCompatConfiguration.LetterboxHorizontalReachabilityPosition int position) {
         switch (position) {
             case LETTERBOX_HORIZONTAL_REACHABILITY_POSITION_LEFT:
                 return APP_COMPAT_STATE_CHANGED__LETTERBOX_POSITION__LEFT;
@@ -1312,7 +987,7 @@ final class LetterboxUiController {
     }
 
     private int letterboxVerticalReachabilityPositionToLetterboxPosition(
-            @LetterboxConfiguration.LetterboxVerticalReachabilityPosition int position) {
+            @AppCompatConfiguration.LetterboxVerticalReachabilityPosition int position) {
         switch (position) {
             case LETTERBOX_VERTICAL_REACHABILITY_POSITION_TOP:
                 return APP_COMPAT_STATE_CHANGED__LETTERBOX_POSITION__TOP;
@@ -1330,13 +1005,13 @@ final class LetterboxUiController {
     int getLetterboxPositionForLogging() {
         int positionToLog = APP_COMPAT_STATE_CHANGED__LETTERBOX_POSITION__UNKNOWN_POSITION;
         if (isHorizontalReachabilityEnabled()) {
-            int letterboxPositionForHorizontalReachability = mLetterboxConfiguration
+            int letterboxPositionForHorizontalReachability = mAppCompatConfiguration
                     .getLetterboxPositionForHorizontalReachability(
                             isDisplayFullScreenAndInPosture(/* isTabletop */ false));
             positionToLog = letterboxHorizontalReachabilityPositionToLetterboxPosition(
                     letterboxPositionForHorizontalReachability);
         } else if (isVerticalReachabilityEnabled()) {
-            int letterboxPositionForVerticalReachability = mLetterboxConfiguration
+            int letterboxPositionForVerticalReachability = mAppCompatConfiguration
                     .getLetterboxPositionForVerticalReachability(
                             isDisplayFullScreenAndInPosture(/* isTabletop */ true));
             positionToLog = letterboxVerticalReachabilityPositionToLetterboxPosition(

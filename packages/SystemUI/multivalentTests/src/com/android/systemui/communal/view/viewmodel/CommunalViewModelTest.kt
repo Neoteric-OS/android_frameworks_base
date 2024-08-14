@@ -16,7 +16,6 @@
 
 package com.android.systemui.communal.view.viewmodel
 
-import android.app.smartspace.SmartspaceTarget
 import android.appwidget.AppWidgetProviderInfo
 import android.content.pm.UserInfo
 import android.os.UserHandle
@@ -27,14 +26,18 @@ import androidx.test.filters.SmallTest
 import com.android.compose.animation.scene.ObservableTransitionState
 import com.android.systemui.Flags.FLAG_COMMUNAL_HUB
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.communal.data.model.CommunalSmartspaceTimer
 import com.android.systemui.communal.data.repository.FakeCommunalMediaRepository
 import com.android.systemui.communal.data.repository.FakeCommunalSceneRepository
+import com.android.systemui.communal.data.repository.FakeCommunalSmartspaceRepository
 import com.android.systemui.communal.data.repository.FakeCommunalTutorialRepository
 import com.android.systemui.communal.data.repository.FakeCommunalWidgetRepository
 import com.android.systemui.communal.data.repository.fakeCommunalMediaRepository
 import com.android.systemui.communal.data.repository.fakeCommunalSceneRepository
+import com.android.systemui.communal.data.repository.fakeCommunalSmartspaceRepository
 import com.android.systemui.communal.data.repository.fakeCommunalTutorialRepository
 import com.android.systemui.communal.data.repository.fakeCommunalWidgetRepository
+import com.android.systemui.communal.domain.interactor.CommunalInteractor
 import com.android.systemui.communal.domain.interactor.communalInteractor
 import com.android.systemui.communal.domain.interactor.communalSceneInteractor
 import com.android.systemui.communal.domain.interactor.communalSettingsInteractor
@@ -69,12 +72,15 @@ import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager
 import com.android.systemui.media.controls.ui.view.MediaHost
 import com.android.systemui.power.domain.interactor.PowerInteractor.Companion.setAwakeForTest
 import com.android.systemui.power.domain.interactor.powerInteractor
+import com.android.systemui.scene.data.repository.Idle
+import com.android.systemui.scene.data.repository.Transition
+import com.android.systemui.scene.data.repository.setTransition
+import com.android.systemui.scene.shared.flag.SceneContainerFlag
+import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.settings.fakeUserTracker
 import com.android.systemui.shade.ShadeTestUtil
 import com.android.systemui.shade.domain.interactor.shadeInteractor
 import com.android.systemui.shade.shadeTestUtil
-import com.android.systemui.smartspace.data.repository.FakeSmartspaceRepository
-import com.android.systemui.smartspace.data.repository.fakeSmartspaceRepository
 import com.android.systemui.statusbar.KeyguardIndicationController
 import com.android.systemui.testKosmos
 import com.android.systemui.user.data.repository.FakeUserRepository
@@ -92,7 +98,9 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.spy
 import org.mockito.kotlin.whenever
 import platform.test.runner.parameterized.ParameterizedAndroidJunit4
 import platform.test.runner.parameterized.Parameters
@@ -110,12 +118,13 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
     private lateinit var keyguardRepository: FakeKeyguardRepository
     private lateinit var tutorialRepository: FakeCommunalTutorialRepository
     private lateinit var widgetRepository: FakeCommunalWidgetRepository
-    private lateinit var smartspaceRepository: FakeSmartspaceRepository
+    private lateinit var smartspaceRepository: FakeCommunalSmartspaceRepository
     private lateinit var mediaRepository: FakeCommunalMediaRepository
     private lateinit var userRepository: FakeUserRepository
     private lateinit var shadeTestUtil: ShadeTestUtil
     private lateinit var keyguardTransitionRepository: FakeKeyguardTransitionRepository
     private lateinit var communalRepository: FakeCommunalSceneRepository
+    private lateinit var communalInteractor: CommunalInteractor
 
     private lateinit var underTest: CommunalViewModel
 
@@ -131,7 +140,7 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
         keyguardTransitionRepository = kosmos.fakeKeyguardTransitionRepository
         tutorialRepository = kosmos.fakeCommunalTutorialRepository
         widgetRepository = kosmos.fakeCommunalWidgetRepository
-        smartspaceRepository = kosmos.fakeSmartspaceRepository
+        smartspaceRepository = kosmos.fakeCommunalSmartspaceRepository
         mediaRepository = kosmos.fakeCommunalMediaRepository
         userRepository = kosmos.fakeUserRepository
         shadeTestUtil = kosmos.shadeTestUtil
@@ -149,16 +158,19 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
 
         kosmos.powerInteractor.setAwakeForTest()
 
+        communalInteractor = spy(kosmos.communalInteractor)
+
         underTest =
             CommunalViewModel(
                 kosmos.testDispatcher,
                 testScope,
+                kosmos.testScope.backgroundScope,
                 context.resources,
                 kosmos.keyguardTransitionInteractor,
                 kosmos.keyguardInteractor,
                 mock<KeyguardIndicationController>(),
                 kosmos.communalSceneInteractor,
-                kosmos.communalInteractor,
+                communalInteractor,
                 kosmos.communalSettingsInteractor,
                 kosmos.communalTutorialInteractor,
                 kosmos.shadeInteractor,
@@ -216,11 +228,15 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             widgetRepository.setCommunalWidgets(widgets)
 
             // Smartspace available.
-            val target = Mockito.mock(SmartspaceTarget::class.java)
-            whenever(target.smartspaceTargetId).thenReturn("target")
-            whenever(target.featureType).thenReturn(SmartspaceTarget.FEATURE_TIMER)
-            whenever(target.remoteViews).thenReturn(Mockito.mock(RemoteViews::class.java))
-            smartspaceRepository.setCommunalSmartspaceTargets(listOf(target))
+            smartspaceRepository.setTimers(
+                listOf(
+                    CommunalSmartspaceTimer(
+                        smartspaceTargetId = "target",
+                        createdTimestampMillis = 0L,
+                        remoteViews = Mockito.mock(RemoteViews::class.java),
+                    )
+                )
+            )
 
             // Media playing.
             mediaRepository.mediaActive()
@@ -287,7 +303,7 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             widgetRepository.setCommunalWidgets(emptyList())
             // UMO playing
             mediaRepository.mediaActive()
-            smartspaceRepository.setCommunalSmartspaceTargets(emptyList())
+            smartspaceRepository.setTimers(emptyList())
 
             val isEmptyState by collectLastValue(underTest.isEmptyState)
             assertThat(isEmptyState).isTrue()
@@ -308,7 +324,7 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
                 ),
             )
             mediaRepository.mediaInactive()
-            smartspaceRepository.setCommunalSmartspaceTargets(emptyList())
+            smartspaceRepository.setTimers(emptyList())
 
             val isEmptyState by collectLastValue(underTest.isEmptyState)
             assertThat(isEmptyState).isFalse()
@@ -491,13 +507,16 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
                 flowOf(ObservableTransitionState.Idle(CommunalScenes.Communal))
             )
             // Transitioned to Glanceable hub.
-            keyguardTransitionRepository.sendTransitionSteps(
-                from = KeyguardState.LOCKSCREEN,
-                to = KeyguardState.GLANCEABLE_HUB,
-                testScope = testScope,
+            kosmos.setTransition(
+                sceneTransition = Idle(Scenes.Communal),
+                stateTransition =
+                    TransitionStep(
+                        from = KeyguardState.LOCKSCREEN,
+                        to = KeyguardState.GLANCEABLE_HUB,
+                    )
             )
             // Shade not expanded.
-            shadeTestUtil.setLockscreenShadeExpansion(0f)
+            if (!SceneContainerFlag.isEnabled) shadeTestUtil.setLockscreenShadeExpansion(0f)
 
             assertThat(isFocusable).isEqualTo(true)
         }
@@ -540,10 +559,13 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             keyguardRepository.setKeyguardOccluded(true)
 
             // And on hub
-            keyguardTransitionRepository.sendTransitionSteps(
-                from = KeyguardState.DREAMING,
-                to = KeyguardState.GLANCEABLE_HUB,
-                testScope = testScope,
+            kosmos.setTransition(
+                sceneTransition = Idle(Scenes.Communal),
+                stateTransition =
+                    TransitionStep(
+                        from = KeyguardState.DREAMING,
+                        to = KeyguardState.GLANCEABLE_HUB,
+                    )
             )
 
             // Then flow is not frozen
@@ -557,10 +579,13 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             assertThat(isCommunalContentFlowFrozen).isEqualTo(true)
 
             // 3. When transitioned to OCCLUDED and activity shows
-            keyguardTransitionRepository.sendTransitionSteps(
-                from = KeyguardState.GLANCEABLE_HUB,
-                to = KeyguardState.OCCLUDED,
-                testScope = testScope,
+            kosmos.setTransition(
+                sceneTransition = Idle(Scenes.Lockscreen),
+                stateTransition =
+                    TransitionStep(
+                        from = KeyguardState.GLANCEABLE_HUB,
+                        to = KeyguardState.OCCLUDED,
+                    )
             )
 
             // Then flow is not frozen
@@ -578,10 +603,13 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             keyguardRepository.setKeyguardOccluded(false)
 
             // And transitioned to hub
-            keyguardTransitionRepository.sendTransitionSteps(
-                from = KeyguardState.LOCKSCREEN,
-                to = KeyguardState.GLANCEABLE_HUB,
-                testScope = testScope,
+            kosmos.setTransition(
+                sceneTransition = Idle(Scenes.Communal),
+                stateTransition =
+                    TransitionStep(
+                        from = KeyguardState.LOCKSCREEN,
+                        to = KeyguardState.GLANCEABLE_HUB,
+                    )
             )
 
             // Then flow is not frozen
@@ -592,30 +620,30 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             runCurrent()
 
             // And transitioning to occluded
-            keyguardTransitionRepository.sendTransitionStep(
-                TransitionStep(
-                    from = KeyguardState.GLANCEABLE_HUB,
-                    to = KeyguardState.OCCLUDED,
-                    transitionState = TransitionState.STARTED,
-                )
-            )
-
-            keyguardTransitionRepository.sendTransitionStep(
-                from = KeyguardState.GLANCEABLE_HUB,
-                to = KeyguardState.OCCLUDED,
-                transitionState = TransitionState.RUNNING,
-                value = 0.5f,
+            kosmos.setTransition(
+                sceneTransition = Transition(from = Scenes.Communal, to = Scenes.Lockscreen),
+                stateTransition =
+                    TransitionStep(
+                        from = KeyguardState.GLANCEABLE_HUB,
+                        to = KeyguardState.OCCLUDED,
+                        transitionState = TransitionState.STARTED,
+                        value = 0f,
+                    )
             )
 
             // Then flow is frozen
             assertThat(isCommunalContentFlowFrozen).isEqualTo(true)
 
             // 3. When transition is finished
-            keyguardTransitionRepository.sendTransitionStep(
-                from = KeyguardState.GLANCEABLE_HUB,
-                to = KeyguardState.OCCLUDED,
-                transitionState = TransitionState.FINISHED,
-                value = 1f,
+            kosmos.setTransition(
+                sceneTransition = Idle(Scenes.Lockscreen),
+                stateTransition =
+                    TransitionStep(
+                        from = KeyguardState.GLANCEABLE_HUB,
+                        to = KeyguardState.OCCLUDED,
+                        transitionState = TransitionState.FINISHED,
+                        value = 1f,
+                    )
             )
 
             // Then flow is not frozen
@@ -638,10 +666,13 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             keyguardRepository.setKeyguardOccluded(true)
 
             // And transitioned to hub
-            keyguardTransitionRepository.sendTransitionSteps(
-                from = KeyguardState.DREAMING,
-                to = KeyguardState.GLANCEABLE_HUB,
-                testScope = testScope,
+            kosmos.setTransition(
+                sceneTransition = Idle(Scenes.Communal),
+                stateTransition =
+                    TransitionStep(
+                        from = KeyguardState.DREAMING,
+                        to = KeyguardState.GLANCEABLE_HUB,
+                    )
             )
 
             // Widgets available
@@ -668,11 +699,15 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             advanceTimeBy(60L)
 
             // New timer available
-            val target = Mockito.mock(SmartspaceTarget::class.java)
-            whenever<String?>(target.smartspaceTargetId).thenReturn("target")
-            whenever(target.featureType).thenReturn(SmartspaceTarget.FEATURE_TIMER)
-            whenever(target.remoteViews).thenReturn(Mockito.mock(RemoteViews::class.java))
-            smartspaceRepository.setCommunalSmartspaceTargets(listOf(target))
+            smartspaceRepository.setTimers(
+                listOf(
+                    CommunalSmartspaceTimer(
+                        smartspaceTargetId = "target",
+                        createdTimestampMillis = 0L,
+                        remoteViews = Mockito.mock(RemoteViews::class.java),
+                    )
+                )
+            )
             runCurrent()
 
             // Still only emits widgets and the CTA tile
@@ -727,11 +762,15 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             assertThat(communalContent).hasSize(3)
 
             // When new timer available
-            val target = Mockito.mock(SmartspaceTarget::class.java)
-            whenever(target.smartspaceTargetId).thenReturn("target")
-            whenever(target.featureType).thenReturn(SmartspaceTarget.FEATURE_TIMER)
-            whenever(target.remoteViews).thenReturn(Mockito.mock(RemoteViews::class.java))
-            smartspaceRepository.setCommunalSmartspaceTargets(listOf(target))
+            smartspaceRepository.setTimers(
+                listOf(
+                    CommunalSmartspaceTimer(
+                        smartspaceTargetId = "target",
+                        createdTimestampMillis = 0L,
+                        remoteViews = Mockito.mock(RemoteViews::class.java),
+                    )
+                )
+            )
             runCurrent()
 
             // Then emits timer, widgets and the CTA tile
@@ -745,6 +784,16 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             assertThat(communalContent?.get(3))
                 .isInstanceOf(CommunalContentModel.CtaTileInViewMode::class.java)
         }
+
+    @Test
+    fun scrollPosition_persistedOnEditEntry() {
+        val index = 2
+        val offset = 30
+        underTest.onScrollPositionUpdated(index, offset)
+        underTest.onOpenWidgetEditor(false)
+
+        verify(communalInteractor).setScrollPosition(eq(index), eq(offset))
+    }
 
     private suspend fun setIsMainUser(isMainUser: Boolean) {
         val user = if (isMainUser) MAIN_USER_INFO else SECONDARY_USER_INFO

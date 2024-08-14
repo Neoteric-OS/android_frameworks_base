@@ -33,6 +33,7 @@ import android.content.ClipData;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.HardwareRenderer;
 import android.graphics.RecordingCanvas;
@@ -54,6 +55,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.log.DebugLogger;
 import com.android.systemui.screenshot.AssistContentRequester;
 import com.android.systemui.screenshot.ImageExporter;
 
@@ -92,7 +94,7 @@ final class AppClipsViewModel extends ViewModel {
     private final MutableLiveData<Bitmap> mScreenshotLiveData;
     private final MutableLiveData<Uri> mResultLiveData;
     private final MutableLiveData<Integer> mErrorLiveData;
-    private final MutableLiveData<ClipData> mBacklinksLiveData;
+    private final MutableLiveData<InternalBacklinksData> mBacklinksLiveData;
 
     private AppClipsViewModel(AppClipsCrossProcessHelper appClipsCrossProcessHelper,
             ImageExporter imageExporter, IActivityTaskManager atmService,
@@ -143,11 +145,13 @@ final class AppClipsViewModel extends ViewModel {
      * @param displayId       id of the display to query tasks for Backlinks data
      */
     void triggerBacklinks(Set<Integer> taskIdsToIgnore, int displayId) {
+        DebugLogger.INSTANCE.logcatMessage(this, () -> "Backlinks triggered");
         mBgExecutor.execute(() -> {
-            ListenableFuture<ClipData> backlinksData = getBacklinksData(taskIdsToIgnore, displayId);
+            ListenableFuture<InternalBacklinksData> backlinksData = getBacklinksData(
+                    taskIdsToIgnore, displayId);
             Futures.addCallback(backlinksData, new FutureCallback<>() {
                 @Override
-                public void onSuccess(@Nullable ClipData result) {
+                public void onSuccess(@Nullable InternalBacklinksData result) {
                     if (result != null) {
                         mBacklinksLiveData.setValue(result);
                     }
@@ -180,8 +184,8 @@ final class AppClipsViewModel extends ViewModel {
         return mErrorLiveData;
     }
 
-    /** Returns a {@link LiveData} that holds the Backlinks data in {@link ClipData}. */
-    LiveData<ClipData> getBacklinksLiveData() {
+    /** Returns a {@link LiveData} that holds Backlinks data in {@link InternalBacklinksData}. */
+    LiveData<InternalBacklinksData> getBacklinksLiveData() {
         return mBacklinksLiveData;
     }
 
@@ -226,7 +230,7 @@ final class AppClipsViewModel extends ViewModel {
         return HardwareRenderer.createHardwareBitmap(output, bounds.width(), bounds.height());
     }
 
-    private ListenableFuture<ClipData> getBacklinksData(Set<Integer> taskIdsToIgnore,
+    private ListenableFuture<InternalBacklinksData> getBacklinksData(Set<Integer> taskIdsToIgnore,
             int displayId) {
         return getAllRootTaskInfosOnDisplay(displayId)
                 .stream()
@@ -246,6 +250,10 @@ final class AppClipsViewModel extends ViewModel {
     }
 
     private boolean shouldIncludeTask(RootTaskInfo taskInfo, Set<Integer> taskIdsToIgnore) {
+        DebugLogger.INSTANCE.logcatMessage(this,
+                () -> String.format("shouldIncludeTask taskId %d; topActivity %s", taskInfo.taskId,
+                        taskInfo.topActivity));
+
         // Only consider tasks that shouldn't be ignored, are visible, running, and have a launcher
         // icon. Furthermore, types such as launcher/home/dock/assistant are ignored.
         return !taskIdsToIgnore.contains(taskInfo.taskId)
@@ -260,12 +268,19 @@ final class AppClipsViewModel extends ViewModel {
     }
 
     private boolean canAppStartThroughLauncher(String packageName) {
+        // Use Intent.resolveActivity API to check if the intent resolves as that is what Android
+        // uses internally when apps use Context.startActivity.
         return getMainLauncherIntentForPackage(packageName).resolveActivity(mPackageManager)
                 != null;
     }
 
-    private ListenableFuture<ClipData> getBacklinksDataForTaskId(RootTaskInfo taskInfo) {
-        SettableFuture<ClipData> backlinksData = SettableFuture.create();
+    private ListenableFuture<InternalBacklinksData> getBacklinksDataForTaskId(
+            RootTaskInfo taskInfo) {
+        DebugLogger.INSTANCE.logcatMessage(this,
+                () -> String.format("getBacklinksDataForTaskId for taskId %d; topActivity %s",
+                        taskInfo.taskId, taskInfo.topActivity));
+
+        SettableFuture<InternalBacklinksData> backlinksData = SettableFuture.create();
         int taskId = taskInfo.taskId;
         mAssistContentRequester.requestAssistContent(taskId, assistContent ->
                 backlinksData.set(getBacklinksDataFromAssistContent(taskInfo, assistContent)));
@@ -273,7 +288,7 @@ final class AppClipsViewModel extends ViewModel {
     }
 
     /**
-     * A utility method to get {@link ClipData} to use for Backlinks functionality from
+     * A utility method to get {@link InternalBacklinksData} to use for Backlinks functionality from
      * {@link AssistContent} received from the app whose screenshot is taken.
      *
      * <p>There are multiple ways an app can provide deep-linkable data via {@link AssistContent}
@@ -289,35 +304,54 @@ final class AppClipsViewModel extends ViewModel {
      *
      * @param taskInfo {@link RootTaskInfo} of the task which provided the {@link AssistContent}.
      * @param content the {@link AssistContent} to map into Backlinks {@link ClipData}.
-     * @return {@link ClipData} that represents the Backlinks data.
+     * @return {@link InternalBacklinksData} that represents the Backlinks data along with app icon.
      */
-    private ClipData getBacklinksDataFromAssistContent(RootTaskInfo taskInfo,
+    private InternalBacklinksData getBacklinksDataFromAssistContent(RootTaskInfo taskInfo,
             @Nullable AssistContent content) {
+        DebugLogger.INSTANCE.logcatMessage(this,
+                () -> String.format("getBacklinksDataFromAssistContent taskId %d; topActivity %s",
+                        taskInfo.taskId, taskInfo.topActivity));
+
         String appName = getAppNameOfTask(taskInfo);
         String packageName = taskInfo.topActivity.getPackageName();
-        ClipData fallback = ClipData.newIntent(appName,
+        Drawable appIcon = taskInfo.topActivityInfo.loadIcon(mPackageManager);
+        ClipData mainLauncherIntent = ClipData.newIntent(appName,
                 getMainLauncherIntentForPackage(packageName));
+        InternalBacklinksData fallback = new InternalBacklinksData(mainLauncherIntent, appIcon);
         if (content == null) {
             return fallback;
         }
 
         // First preference is given to app provided uri.
         if (content.isAppProvidedWebUri()) {
+            DebugLogger.INSTANCE.logcatMessage(this,
+                    () -> "getBacklinksDataFromAssistContent: app has provided a uri");
+
             Uri uri = content.getWebUri();
             Intent backlinksIntent = new Intent(ACTION_VIEW).setData(uri);
             if (doesIntentResolveToSamePackage(backlinksIntent, packageName)) {
-                return ClipData.newRawUri(appName, uri);
+                DebugLogger.INSTANCE.logcatMessage(this,
+                        () -> "getBacklinksDataFromAssistContent: using app provided uri");
+                return new InternalBacklinksData(ClipData.newRawUri(appName, uri), appIcon);
             }
         }
 
         // Second preference is given to app provided, hopefully deep-linking, intent.
         if (content.isAppProvidedIntent()) {
+            DebugLogger.INSTANCE.logcatMessage(this,
+                    () -> "getBacklinksDataFromAssistContent: app has provided an intent");
+
             Intent backlinksIntent = content.getIntent();
             if (doesIntentResolveToSamePackage(backlinksIntent, packageName)) {
-                return ClipData.newIntent(appName, backlinksIntent);
+                DebugLogger.INSTANCE.logcatMessage(this,
+                        () -> "getBacklinksDataFromAssistContent: using app provided intent");
+                return new InternalBacklinksData(ClipData.newIntent(appName, backlinksIntent),
+                        appIcon);
             }
         }
 
+        DebugLogger.INSTANCE.logcatMessage(this,
+                () -> "getBacklinksDataFromAssistContent: using fallback");
         return fallback;
     }
 
@@ -335,10 +369,19 @@ final class AppClipsViewModel extends ViewModel {
         return taskInfo.topActivityInfo.loadLabel(mPackageManager).toString();
     }
 
-    private Intent getMainLauncherIntentForPackage(String packageName) {
-        return new Intent(ACTION_MAIN)
-                .addCategory(CATEGORY_LAUNCHER)
-                .setPackage(packageName);
+    private Intent getMainLauncherIntentForPackage(String pkgName) {
+        Intent intent = new Intent(ACTION_MAIN).addCategory(CATEGORY_LAUNCHER).setPackage(pkgName);
+
+        // Not all apps use DEFAULT_CATEGORY for their main launcher activity so the exact component
+        // needs to be queried and set on the Intent in order for note-taking apps to be able to
+        // start this intent. When starting an activity with an implicit intent, Android adds the
+        // DEFAULT_CATEGORY flag otherwise it fails to resolve the intent.
+        ResolveInfo resolvedActivity = mPackageManager.resolveActivity(intent, /* flags= */ 0);
+        if (resolvedActivity != null) {
+            intent.setComponent(resolvedActivity.getComponentInfo().getComponentName());
+        }
+
+        return intent;
     }
 
     /** Helper factory to help with injecting {@link AppClipsViewModel}. */

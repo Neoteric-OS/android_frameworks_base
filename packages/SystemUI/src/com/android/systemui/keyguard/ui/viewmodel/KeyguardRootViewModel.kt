@@ -91,8 +91,9 @@ constructor(
     private val dozingToGoneTransitionViewModel: DozingToGoneTransitionViewModel,
     private val dozingToLockscreenTransitionViewModel: DozingToLockscreenTransitionViewModel,
     private val dozingToOccludedTransitionViewModel: DozingToOccludedTransitionViewModel,
-    private val dreamingToLockscreenTransitionViewModel: DreamingToLockscreenTransitionViewModel,
+    private val dreamingToAodTransitionViewModel: DreamingToAodTransitionViewModel,
     private val dreamingToGoneTransitionViewModel: DreamingToGoneTransitionViewModel,
+    private val dreamingToLockscreenTransitionViewModel: DreamingToLockscreenTransitionViewModel,
     private val glanceableHubToLockscreenTransitionViewModel:
         GlanceableHubToLockscreenTransitionViewModel,
     private val goneToAodTransitionViewModel: GoneToAodTransitionViewModel,
@@ -143,7 +144,7 @@ constructor(
 
     private val isOnLockscreen: Flow<Boolean> =
         combine(
-                keyguardTransitionInteractor.isFinishedInState(LOCKSCREEN).onStart { emit(false) },
+                keyguardTransitionInteractor.isFinishedIn(LOCKSCREEN).onStart { emit(false) },
                 anyOf(
                     keyguardTransitionInteractor.isInTransition(Edge.create(to = LOCKSCREEN)),
                     keyguardTransitionInteractor.isInTransition(Edge.create(from = LOCKSCREEN)),
@@ -160,7 +161,7 @@ constructor(
                     edgeWithoutSceneContainer = Edge.create(from = LOCKSCREEN, to = GONE),
                 ),
                 keyguardTransitionInteractor.isInTransition(
-                    edge = Edge.create(from = PRIMARY_BOUNCER, to = Scenes.Lockscreen),
+                    edge = Edge.create(from = Scenes.Bouncer, to = LOCKSCREEN),
                     edgeWithoutSceneContainer =
                         Edge.create(from = PRIMARY_BOUNCER, to = LOCKSCREEN),
                 ),
@@ -243,6 +244,7 @@ constructor(
                         dozingToGoneTransitionViewModel.lockscreenAlpha(viewState),
                         dozingToLockscreenTransitionViewModel.lockscreenAlpha,
                         dozingToOccludedTransitionViewModel.lockscreenAlpha(viewState),
+                        dreamingToAodTransitionViewModel.lockscreenAlpha,
                         dreamingToGoneTransitionViewModel.lockscreenAlpha,
                         dreamingToLockscreenTransitionViewModel.lockscreenAlpha,
                         glanceableHubToLockscreenTransitionViewModel.keyguardAlpha,

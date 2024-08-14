@@ -15,12 +15,14 @@
  */
 package com.android.systemui.statusbar.policy
 
+import android.os.Handler
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import com.android.internal.logging.UiEvent
 import com.android.internal.logging.UiEventLogger
 import com.android.systemui.Dumpable
 import com.android.systemui.dagger.SysUISingleton
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.statusbar.notification.shared.NotificationThrottleHun
 import com.android.systemui.statusbar.policy.BaseHeadsUpManager.HeadsUpEntry
@@ -35,11 +37,27 @@ import javax.inject.Inject
 @SysUISingleton
 class AvalancheController
 @Inject
-constructor(dumpManager: DumpManager, private val uiEventLogger: UiEventLogger) : Dumpable {
+constructor(
+    dumpManager: DumpManager,
+    private val uiEventLogger: UiEventLogger,
+    @Background private val bgHandler: Handler
+) : Dumpable {
 
     private val tag = "AvalancheController"
     private val debug = Compile.IS_DEBUG && Log.isLoggable(tag, Log.DEBUG)
     var enableAtRuntime = true
+        set(value) {
+            if (!value) {
+                // Waiting HUNs in AvalancheController are shown in the HUN section in open shade.
+                // Clear them so we don't show them again when the shade closes and reordering is
+                // allowed again.
+                logDroppedHunsInBackground(getWaitingKeys().size)
+                clearNext()
+            }
+            if (field != value) {
+                field = value
+            }
+        }
 
     // HUN showing right now, in the floating state where full shade is hidden, on launcher or AOD
     @VisibleForTesting var headsUpEntryShowing: HeadsUpEntry? = null
@@ -82,16 +100,20 @@ constructor(dumpManager: DumpManager, private val uiEventLogger: UiEventLogger) 
         dumpManager.registerNormalDumpable(tag, /* module */ this)
     }
 
-    fun isEnabled() : Boolean {
-        return NotificationThrottleHun.isEnabled && enableAtRuntime
-    }
-
     fun getShowingHunKey(): String {
         return getKey(headsUpEntryShowing)
     }
 
+    fun isEnabled(): Boolean {
+        return NotificationThrottleHun.isEnabled && enableAtRuntime
+    }
+
     /** Run or delay Runnable for given HeadsUpEntry */
-    fun update(entry: HeadsUpEntry?, runnable: Runnable, label: String) {
+    fun update(entry: HeadsUpEntry?, runnable: Runnable?, label: String) {
+        if (runnable == null) {
+            log { "Runnable is NULL, stop update." }
+            return
+        }
         if (!isEnabled()) {
             runnable.run()
             return
@@ -147,7 +169,11 @@ constructor(dumpManager: DumpManager, private val uiEventLogger: UiEventLogger) 
      * Run or ignore Runnable for given HeadsUpEntry. If entry was never shown, ignore and delete
      * all Runnables associated with that entry.
      */
-    fun delete(entry: HeadsUpEntry?, runnable: Runnable, label: String) {
+    fun delete(entry: HeadsUpEntry?, runnable: Runnable?, label: String) {
+        if (runnable == null) {
+            log { "Runnable is NULL, stop delete." }
+            return
+        }
         if (!isEnabled()) {
             runnable.run()
             return
@@ -177,7 +203,8 @@ constructor(dumpManager: DumpManager, private val uiEventLogger: UiEventLogger) 
             showNext()
             runnable.run()
         } else {
-            log { "$fn => removing untracked ${getKey(entry)}" }
+            log { "$fn => run runnable for untracked shown ${getKey(entry)}" }
+            runnable.run()
         }
         logState("after $fn")
     }
@@ -315,7 +342,7 @@ constructor(dumpManager: DumpManager, private val uiEventLogger: UiEventLogger) 
 
         // Remove runnable labels for dropped huns
         val listToDrop = nextList.subList(1, nextList.size)
-        logDroppedHuns(listToDrop.size)
+        logDroppedHunsInBackground(listToDrop.size)
 
         if (debug) {
             // Clear runnable labels
@@ -332,10 +359,15 @@ constructor(dumpManager: DumpManager, private val uiEventLogger: UiEventLogger) 
         showNow(headsUpEntryShowing!!, headsUpEntryShowingRunnableList)
     }
 
-    fun logDroppedHuns(numDropped: Int) {
-        for (n in 1..numDropped) {
-            uiEventLogger.log(ThrottleEvent.AVALANCHE_THROTTLING_HUN_DROPPED)
-        }
+    private fun logDroppedHunsInBackground(numDropped: Int) {
+        bgHandler.post(
+            Runnable {
+                // Do this in the background to avoid missing frames when closing the shade
+                for (n in 1..numDropped) {
+                    uiEventLogger.log(ThrottleEvent.AVALANCHE_THROTTLING_HUN_DROPPED)
+                }
+            }
+        )
     }
 
     fun clearNext() {
@@ -356,7 +388,8 @@ constructor(dumpManager: DumpManager, private val uiEventLogger: UiEventLogger) 
             "\nPREVIOUS: [$previousHunKey]" +
             "\nNEXT LIST: $nextListStr" +
             "\nNEXT MAP: $nextMapStr" +
-            "\nDROPPED: $dropSetStr"
+            "\nDROPPED: $dropSetStr" +
+            "\nENABLED: $enableAtRuntime"
     }
 
     private fun logState(reason: String) {

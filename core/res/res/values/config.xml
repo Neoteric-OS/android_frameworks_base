@@ -533,6 +533,9 @@
     <!-- If this is true, key chords can be used to take a screenshot on the device. -->
     <bool name="config_enableScreenshotChord">true</bool>
 
+    <!-- If this is true, accessibility events on notifications are sent. -->
+    <bool name="config_enableNotificationAccessibilityEvents">true</bool>
+
     <!-- If this is true, allow wake from theater mode when plugged in or unplugged. -->
     <bool name="config_allowTheaterModeWakeFromUnplug">false</bool>
     <!-- If this is true, allow wake from theater mode from gesture. -->
@@ -4139,8 +4142,8 @@
          and should depend on the touch feedback intensity user setting -->
     <item name="config_keyboardHapticFeedbackFixedAmplitude" format="float" type="dimen">-1</item>
 
-    <!-- The default value for keyboard vibration toggle in settings. -->
-    <bool name="config_defaultKeyboardVibrationEnabled">true</bool>
+    <!-- Indicating if keyboard vibration settings supported or not. -->
+    <bool name="config_keyboardVibrationSettingsSupported">false</bool>
 
     <!-- If the device should still vibrate even in low power mode, for certain priority vibrations
      (e.g. accessibility, alarms). This is mainly for Wear devices that don't have speakers. -->
@@ -7111,4 +7114,7 @@
     <!-- Whether to show GAIA education screen during account login of private space setup.
          OEM/Partner can explicitly opt to disable the screen. -->
     <bool name="config_enableGaiaEducationInPrivateSpace">true</bool>
+
+    <!-- Whether to enable usb state update via udc sysfs. -->
+    <bool name="config_enableUdcSysfsUsbStateUpdate">false</bool>
 </resources>

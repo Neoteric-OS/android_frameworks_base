@@ -120,10 +120,10 @@ import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_W
 import static com.android.server.wm.ActivityTaskManagerService.POWER_MODE_REASON_CHANGE_DISPLAY;
 import static com.android.server.wm.DisplayContent.IME_TARGET_CONTROL;
 import static com.android.server.wm.DisplayContent.IME_TARGET_LAYERING;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND_FLOATING;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_BACKGROUND_SOLID_COLOR;
-import static com.android.server.wm.LetterboxConfiguration.LETTERBOX_BACKGROUND_WALLPAPER;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND_FLOATING;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_BACKGROUND_SOLID_COLOR;
+import static com.android.server.wm.AppCompatConfiguration.LETTERBOX_BACKGROUND_WALLPAPER;
 import static com.android.server.wm.RootWindowContainer.MATCH_ATTACHED_TASK_OR_RECENT_TASKS;
 import static com.android.server.wm.SensitiveContentPackages.PackageInfo;
 import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_ALL;
@@ -284,6 +284,7 @@ import android.view.InsetsFrameProvider;
 import android.view.InsetsSourceControl;
 import android.view.InsetsState;
 import android.view.KeyEvent;
+import android.view.KeyboardShortcutGroup;
 import android.view.MagnificationSpec;
 import android.view.RemoteAnimationAdapter;
 import android.view.ScrollCaptureResponse;
@@ -335,8 +336,8 @@ import com.android.internal.policy.IKeyguardLockedStateListener;
 import com.android.internal.policy.IShortcutService;
 import com.android.internal.policy.KeyInterceptionInfo;
 import com.android.internal.protolog.LegacyProtoLogImpl;
+import com.android.internal.protolog.ProtoLog;
 import com.android.internal.protolog.ProtoLogGroup;
-import com.android.internal.protolog.common.ProtoLog;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FastPrintWriter;
 import com.android.internal.util.FrameworkStatsLog;
@@ -738,6 +739,13 @@ public class WindowManagerService extends IWindowManager.Stub
     final DisplayWindowListenerController mDisplayNotificationController;
     final TaskSystemBarsListenerController mTaskSystemBarsListenerController;
 
+    /** Amount of time (in milliseconds) to delay the pointer down outside focus handling */
+    private static final int POINTER_DOWN_OUTSIDE_FOCUS_TIMEOUT_MS = 50;
+
+    /** A runnable to handle pointer down outside focus event. */
+    @Nullable
+    private Runnable mPointerDownOutsideFocusRunnable;
+
     boolean mDisplayFrozen = false;
     long mDisplayFreezeTime = 0;
     int mLastDisplayFreezeDuration = 0;
@@ -1052,7 +1060,7 @@ public class WindowManagerService extends IWindowManager.Stub
     private boolean mAnimationsDisabled = false;
     boolean mPointerLocationEnabled = false;
 
-    final LetterboxConfiguration mLetterboxConfiguration;
+    final AppCompatConfiguration mAppCompatConfiguration;
 
     private boolean mIsIgnoreOrientationRequestDisabled;
 
@@ -1292,7 +1300,7 @@ public class WindowManagerService extends IWindowManager.Stub
                     | WindowInsets.Type.navigationBars();
         }
 
-        mLetterboxConfiguration = new LetterboxConfiguration(
+        mAppCompatConfiguration = new AppCompatConfiguration(
                 // Using SysUI context to have access to Material colors extracted from Wallpaper.
                 ActivityThread.currentActivityThread().getSystemUiContext());
 
@@ -2569,7 +2577,7 @@ public class WindowManagerService extends IWindowManager.Stub
                         // surface, let the client use that, but don't create new surface at this
                         // point.
                         Trace.traceBegin(TRACE_TAG_WINDOW_MANAGER, "relayoutWindow: getSurface");
-                        winAnimator.mSurfaceController.getSurfaceControl(outSurfaceControl);
+                        winAnimator.getSurfaceControl(outSurfaceControl);
                         Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);
                     } else {
                         if (DEBUG_VISIBILITY) Slog.i(TAG_WM, "Releasing surface in: " + win);
@@ -2765,15 +2773,15 @@ public class WindowManagerService extends IWindowManager.Stub
             result |= RELAYOUT_RES_SURFACE_CHANGED;
         }
 
-        WindowSurfaceController surfaceController;
+        SurfaceControl surfaceControl;
         try {
             Trace.traceBegin(TRACE_TAG_WINDOW_MANAGER, "createSurfaceControl");
-            surfaceController = winAnimator.createSurfaceLocked();
+            surfaceControl = winAnimator.createSurfaceLocked();
         } finally {
             Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);
         }
-        if (surfaceController != null) {
-            surfaceController.getSurfaceControl(outSurfaceControl);
+        if (surfaceControl != null) {
+            winAnimator.getSurfaceControl(outSurfaceControl);
             ProtoLog.i(WM_SHOW_TRANSACTIONS, "OUT SURFACE %s: copied", outSurfaceControl);
 
         } else {
@@ -3772,6 +3780,8 @@ public class WindowManagerService extends IWindowManager.Stub
                         null /* trigger */, null /* remote */, null /* disp */);
             }
             mCurrentUserId = newUserId;
+            mDisplayWindowSettingsProvider.setOverrideSettingsForUser(newUserId);
+            mDisplayWindowSettingsProvider.removeStaleDisplaySettings(mRoot);
             mPolicy.setCurrentUserLw(newUserId);
             mKeyguardDisableHandler.setCurrentUser(newUserId);
 
@@ -3825,7 +3835,7 @@ public class WindowManagerService extends IWindowManager.Stub
             hideBootMessagesLocked();
             // If the screen still doesn't come up after 30 seconds, give
             // up and turn it on.
-            mH.sendEmptyMessageDelayed(H.BOOT_TIMEOUT, 30 * 1000);
+            mH.sendEmptyMessageDelayed(H.BOOT_TIMEOUT, 30 * 1000 * Build.HW_TIMEOUT_MULTIPLIER);
         }
 
         mPolicy.systemBooted();
@@ -4460,7 +4470,7 @@ public class WindowManagerService extends IWindowManager.Stub
      */
     boolean isIgnoreOrientationRequestDisabled() {
         return mIsIgnoreOrientationRequestDisabled
-                || !mLetterboxConfiguration.isIgnoreOrientationRequestAllowed();
+                || !mAppCompatConfiguration.isIgnoreOrientationRequestAllowed();
     }
 
     @Override
@@ -5508,6 +5518,9 @@ public class WindowManagerService extends IWindowManager.Stub
             // DisplayWindowSettings are applied. In addition, wide-color/hdr/isTouchDevice also
             // affect the Configuration.
             mRoot.forAllDisplays(DisplayContent::reconfigureDisplayLocked);
+            // Per-user display settings may leave outdated settings after user switches, especially
+            // during reboots starting with the default user without setCurrentUser called.
+            mDisplayWindowSettingsProvider.removeStaleDisplaySettings(mRoot);
         }
     }
 
@@ -5920,7 +5933,8 @@ public class WindowManagerService extends IWindowManager.Stub
                 case ON_POINTER_DOWN_OUTSIDE_FOCUS: {
                     synchronized (mGlobalLock) {
                         final IBinder touchedToken = (IBinder) msg.obj;
-                        onPointerDownOutsideFocusLocked(getInputTargetFromToken(touchedToken));
+                        onPointerDownOutsideFocusLocked(getInputTargetFromToken(touchedToken),
+                                true /* fromHandler */);
                     }
                     break;
                 }
@@ -6797,11 +6811,11 @@ public class WindowManagerService extends IWindowManager.Stub
             if (windowState == null) {
                 return false;
             }
-            WindowSurfaceController surfaceController = windowState.mWinAnimator.mSurfaceController;
-            if (surfaceController == null) {
+            final SurfaceControl surfaceControl = windowState.mWinAnimator.mSurfaceControl;
+            if (surfaceControl == null) {
                 return false;
             }
-            return surfaceController.clearWindowContentFrameStats();
+            return surfaceControl.clearContentFrameStats();
         }
     }
 
@@ -6816,15 +6830,15 @@ public class WindowManagerService extends IWindowManager.Stub
             if (windowState == null) {
                 return null;
             }
-            WindowSurfaceController surfaceController = windowState.mWinAnimator.mSurfaceController;
-            if (surfaceController == null) {
+            final SurfaceControl surfaceControl = windowState.mWinAnimator.mSurfaceControl;
+            if (surfaceControl == null) {
                 return null;
             }
             if (mTempWindowRenderStats == null) {
                 mTempWindowRenderStats = new WindowContentFrameStats();
             }
             WindowContentFrameStats stats = mTempWindowRenderStats;
-            if (!surfaceController.getWindowContentFrameStats(stats)) {
+            if (!surfaceControl.getContentFrameStats(stats)) {
                 return null;
             }
             return stats;
@@ -7465,6 +7479,16 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     @Override
+    public KeyboardShortcutGroup getApplicationLaunchKeyboardShortcuts(int deviceId) {
+        long token = Binder.clearCallingIdentity();
+        try {
+            return mPolicy.getApplicationLaunchKeyboardShortcuts(deviceId);
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
+    }
+
+    @Override
     public void requestAppKeyboardShortcuts(IResultReceiver receiver, int deviceId) {
         enforceRegisterWindowManagerListenersPermission("requestAppKeyboardShortcuts");
 
@@ -7955,7 +7979,8 @@ public class WindowManagerService extends IWindowManager.Stub
             synchronized (mGlobalLock) {
                 final InputTarget inputTarget =
                         WindowManagerService.this.getInputTargetFromWindowTokenLocked(windowToken);
-                WindowManagerService.this.onPointerDownOutsideFocusLocked(inputTarget);
+                WindowManagerService.this.onPointerDownOutsideFocusLocked(inputTarget,
+                        false /* fromHandler */);
             }
         }
 
@@ -8391,6 +8416,26 @@ public class WindowManagerService extends IWindowManager.Stub
         public Context getTopFocusedDisplayUiContext() {
             synchronized (mGlobalLock) {
                 return mRoot.getTopFocusedDisplayContent().getDisplayUiContext();
+            }
+        }
+
+        @Override
+        public void setNonDefaultDisplayRotation(int displayId, @Surface.Rotation int rotation,
+                @NonNull String caller) {
+            if (displayId == Display.DEFAULT_DISPLAY || displayId == Display.INVALID_DISPLAY) {
+                Slog.w(TAG, "Cannot set rotation for display with id: " + displayId);
+                return;
+            }
+            synchronized (mGlobalLock) {
+                final DisplayContent displayContent = mRoot.getDisplayContent(displayId);
+                if (displayContent == null) {
+                    Slog.w(TAG, "Cannot set rotation for display " + displayId
+                            + " due to missing DisplayContent");
+                    return;
+                }
+                displayContent.getDisplayRotation().setUserRotation(
+                        displayContent.getDisplayRotation().getUserRotationMode(), rotation,
+                        caller);
             }
         }
 
@@ -9010,39 +9055,78 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }
 
-    private void onPointerDownOutsideFocusLocked(InputTarget t) {
+    void clearPointerDownOutsideFocusRunnable() {
+        if (mPointerDownOutsideFocusRunnable == null) return;
+
+        mH.removeCallbacks(mPointerDownOutsideFocusRunnable);
+        mPointerDownOutsideFocusRunnable = null;
+    }
+
+    private void onPointerDownOutsideFocusLocked(InputTarget t, boolean fromHandler) {
         if (t == null || !t.receiveFocusFromTapOutside()) {
             // If the window that received the input event cannot receive keys, don't move the
             // display it's on to the top since that window won't be able to get focus anyway.
             return;
         }
-        if (mRecentsAnimationController != null
-            && mRecentsAnimationController.getTargetAppMainWindow() == t) {
-            // If there is an active recents animation and touched window is the target, then ignore
-            // the touch. The target already handles touches using its own input monitor and we
-            // don't want to trigger any lifecycle changes from focusing another window.
-            // TODO(b/186770026): We should remove this once we support multiple resumed activities
-            //                    while in overview
-            return;
-        }
+        clearPointerDownOutsideFocusRunnable();
+
+        // For embedded activity that is showing side-by-side with another activity, delay
+        // handling the touch-outside event to prevent focus rapid changes back-n-forth.
+        // Otherwise, handle the touch-outside event directly.
         final WindowState w = t.getWindowState();
-        if (w != null) {
-            final Task task = w.getTask();
-            if (task != null && w.mTransitionController.isTransientHide(task)) {
-                // Don't disturb transient animation by accident touch.
+        final ActivityRecord activity = w != null ? w.getActivityRecord() : null;
+        if (activity != null && activity.isEmbedded()
+                && activity.getTaskFragment().getAdjacentTaskFragment() != null) {
+            mPointerDownOutsideFocusRunnable = () -> handlePointerDownOutsideFocus(t);
+            mH.postDelayed(mPointerDownOutsideFocusRunnable, POINTER_DOWN_OUTSIDE_FOCUS_TIMEOUT_MS);
+        } else if (!fromHandler) {
+            // Still post the runnable to handler thread in case there is already a runnable
+            // in execution, but still waiting to hold the wm lock.
+            mPointerDownOutsideFocusRunnable = () -> handlePointerDownOutsideFocus(t);
+            mH.post(mPointerDownOutsideFocusRunnable);
+        } else {
+            handlePointerDownOutsideFocus(t);
+        }
+    }
+
+    private void handlePointerDownOutsideFocus(InputTarget t) {
+        synchronized (mGlobalLock) {
+            if (mPointerDownOutsideFocusRunnable != null
+                    && mH.hasCallbacks(mPointerDownOutsideFocusRunnable)) {
+                // Skip if there's another pending pointer-down-outside-focus event.
                 return;
             }
-        }
+            clearPointerDownOutsideFocusRunnable();
 
-        ProtoLog.i(WM_DEBUG_FOCUS_LIGHT, "onPointerDownOutsideFocusLocked called on %s",
-                t);
-        if (mFocusedInputTarget != t && mFocusedInputTarget != null) {
-            mFocusedInputTarget.handleTapOutsideFocusOutsideSelf();
+            if (mRecentsAnimationController != null
+                    && mRecentsAnimationController.getTargetAppMainWindow() == t) {
+                // If there is an active recents animation and touched window is the target,
+                // then ignore the touch. The target already handles touches using its own
+                // input monitor and we don't want to trigger any lifecycle changes from
+                // focusing another window.
+                // TODO(b/186770026): We should remove this once we support multiple resumed
+                //  activities while in overview
+                return;
+            }
+
+            final WindowState w = t.getWindowState();
+            if (w != null) {
+                final Task task = w.getTask();
+                if (task != null && w.mTransitionController.isTransientHide(task)) {
+                    // Don't disturb transient animation by accident touch.
+                    return;
+                }
+            }
+
+            ProtoLog.i(WM_DEBUG_FOCUS_LIGHT, "onPointerDownOutsideFocusLocked called on %s", t);
+            if (mFocusedInputTarget != t && mFocusedInputTarget != null) {
+                mFocusedInputTarget.handleTapOutsideFocusOutsideSelf();
+            }
+            // Trigger Activity#onUserLeaveHint() if the order change of task pauses any activities.
+            mAtmService.mTaskSupervisor.mUserLeaving = true;
+            t.handleTapOutsideFocusInsideSelf();
+            mAtmService.mTaskSupervisor.mUserLeaving = false;
         }
-        // Trigger Activity#onUserLeaveHint() if the order change of task pauses any activities.
-        mAtmService.mTaskSupervisor.mUserLeaving = true;
-        t.handleTapOutsideFocusInsideSelf();
-        mAtmService.mTaskSupervisor.mUserLeaving = false;
     }
 
     @VisibleForTesting
@@ -9264,7 +9348,8 @@ public class WindowManagerService extends IWindowManager.Stub
                 isTrustedOverlay);
 
         final int sanitizedLpFlags =
-                (flags & (FLAG_NOT_TOUCHABLE | FLAG_SLIPPERY | LayoutParams.FLAG_NOT_FOCUSABLE))
+                (flags & (FLAG_NOT_TOUCHABLE | FLAG_SLIPPERY | LayoutParams.FLAG_NOT_FOCUSABLE
+                    | LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH))
                 | LayoutParams.FLAG_NOT_TOUCH_MODAL;
         h.layoutParamsType = type;
         h.layoutParamsFlags = sanitizedLpFlags;
@@ -9945,7 +10030,7 @@ public class WindowManagerService extends IWindowManager.Stub
      */
     @Override
     public int getLetterboxBackgroundColorInArgb() {
-        return mLetterboxConfiguration.getLetterboxBackgroundColor().toArgb();
+        return mAppCompatConfiguration.getLetterboxBackgroundColor().toArgb();
     }
 
     /**
@@ -9953,8 +10038,8 @@ public class WindowManagerService extends IWindowManager.Stub
      */
     @Override
     public boolean isLetterboxBackgroundMultiColored() {
-        @LetterboxConfiguration.LetterboxBackgroundType int letterboxBackgroundType =
-                mLetterboxConfiguration.getLetterboxBackgroundType();
+        @AppCompatConfiguration.LetterboxBackgroundType int letterboxBackgroundType =
+                mAppCompatConfiguration.getLetterboxBackgroundType();
         switch (letterboxBackgroundType) {
             case LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND_FLOATING:
             case LETTERBOX_BACKGROUND_APP_COLOR_BACKGROUND:

@@ -25,8 +25,6 @@ import static android.platform.test.flag.junit.SetFlagsRule.DefaultInitValueType
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.Display.INVALID_DISPLAY;
 
-import static com.android.window.flags.Flags.FLAG_ACTIVITY_WINDOW_INFO_FLAG;
-
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assert.assertEquals;
@@ -92,7 +90,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,6 +118,9 @@ public class ActivityThreadTest {
     // few sequence numbers the framework used to launch the test activity.
     private static final int BASE_SEQ = 10000000;
 
+    @Rule
+    public final MockitoRule mocks = MockitoJUnit.rule();
+
     @Rule(order = 0)
     public final ActivityTestRule<TestActivity> mActivityTestRule =
             new ActivityTestRule<>(TestActivity.class, true /* initialTouchMode */,
@@ -135,8 +137,6 @@ public class ActivityThreadTest {
 
     @Before
     public void setup() {
-        MockitoAnnotations.initMocks(this);
-
         // Keep track of the original controller, so that it can be used to restore in tearDown()
         // when there is override in some test cases.
         mOriginalWindowTokenClientController = WindowTokenClientController.getInstance();
@@ -810,7 +810,6 @@ public class ActivityThreadTest {
 
     @Test
     public void testActivityWindowInfoChanged_activityLaunch() {
-        mSetFlagsRule.enableFlags(FLAG_ACTIVITY_WINDOW_INFO_FLAG);
         ClientTransactionListenerController.getInstance().registerActivityWindowInfoChangedListener(
                 mActivityWindowInfoListener);
 
@@ -825,7 +824,6 @@ public class ActivityThreadTest {
 
     @Test
     public void testActivityWindowInfoChanged_activityRelaunch() {
-        mSetFlagsRule.enableFlags(FLAG_ACTIVITY_WINDOW_INFO_FLAG);
         ClientTransactionListenerController.getInstance().registerActivityWindowInfoChangedListener(
                 mActivityWindowInfoListener);
 
@@ -866,7 +864,6 @@ public class ActivityThreadTest {
 
     @Test
     public void testActivityWindowInfoChanged_activityConfigurationChanged() {
-        mSetFlagsRule.enableFlags(FLAG_ACTIVITY_WINDOW_INFO_FLAG);
         ClientTransactionListenerController.getInstance().registerActivityWindowInfoChangedListener(
                 mActivityWindowInfoListener);
 

@@ -1068,7 +1068,10 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         final boolean isInstallDpcPackagesPermissionGranted = (snapshot.checkUidPermission(
                 android.Manifest.permission.INSTALL_DPC_PACKAGES, mInstallerUid)
                 == PackageManager.PERMISSION_GRANTED);
-        final int targetPackageUid = snapshot.getPackageUid(packageName, 0, userId);
+        // Also query the package uid for archived packages, so that the user confirmation
+        // dialog can be displayed for updating archived apps.
+        final int targetPackageUid = snapshot.getPackageUid(packageName,
+                PackageManager.MATCH_ARCHIVED_PACKAGES, userId);
         final boolean isUpdate = targetPackageUid != -1 || isApexSession();
         final InstallSourceInfo existingInstallSourceInfo = isUpdate
                 ? snapshot.getInstallSourceInfo(packageName, userId)
@@ -5074,8 +5077,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         try {
             final BroadcastOptions options = BroadcastOptions.makeBasic();
             options.setPendingIntentBackgroundActivityLaunchAllowed(false);
-            target.sendIntent(mContext, 0 /* code */, intent, null /* onFinished */,
-                    null /* handler */, null /* requiredPermission */, options.toBundle());
+            target.sendIntent(mContext, 0 /* code */, intent,
+                    null /* requiredPermission */, options.toBundle(),
+                    null /* executor */, null /* onFinished*/);
         } catch (IntentSender.SendIntentException ignored) {
         }
     }
@@ -5468,8 +5472,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         try {
             final BroadcastOptions options = BroadcastOptions.makeBasic();
             options.setPendingIntentBackgroundActivityLaunchAllowed(false);
-            target.sendIntent(context, 0, fillIn, null /* onFinished */,
-                    null /* handler */, null /* requiredPermission */, options.toBundle());
+            target.sendIntent(context, 0, fillIn,
+                    null /* requiredPermission */, options.toBundle(),
+                    null /* executor */, null /* onFinished*/);
         } catch (IntentSender.SendIntentException ignored) {
         }
     }
@@ -5517,8 +5522,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         try {
             final BroadcastOptions options = BroadcastOptions.makeBasic();
             options.setPendingIntentBackgroundActivityLaunchAllowed(false);
-            target.sendIntent(context, 0, fillIn, null /* onFinished */,
-                    null /* handler */, null /* requiredPermission */, options.toBundle());
+            target.sendIntent(context, 0, fillIn,
+                    null /* requiredPermission */, options.toBundle(),
+                    null /* executor */, null /* onFinished*/);
         } catch (IntentSender.SendIntentException ignored) {
         }
     }
@@ -5554,8 +5560,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         try {
             final BroadcastOptions options = BroadcastOptions.makeBasic();
             options.setPendingIntentBackgroundActivityLaunchAllowed(false);
-            target.sendIntent(context, 0, intent, null /* onFinished */,
-                    null /* handler */, null /* requiredPermission */, options.toBundle());
+            target.sendIntent(context, 0, intent,
+                    null /* requiredPermission */, options.toBundle(),
+                    null /* executor */, null /* onFinished*/);
         } catch (IntentSender.SendIntentException ignored) {
         }
     }

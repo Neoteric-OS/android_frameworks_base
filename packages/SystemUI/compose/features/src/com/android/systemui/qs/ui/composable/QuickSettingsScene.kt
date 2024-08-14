@@ -185,7 +185,11 @@ private fun SceneScope.QuickSettingsScene(
 
     BrightnessMirror(
         viewModel = viewModel.brightnessMirrorViewModel,
-        qsSceneAdapter = viewModel.qsSceneAdapter
+        qsSceneAdapter = viewModel.qsSceneAdapter,
+        modifier =
+            Modifier.thenIf(cutoutLocation != CutoutLocation.CENTER) {
+                Modifier.displayCutoutPadding()
+            }
     )
 
     val shouldPunchHoleBehindScrim =
@@ -301,8 +305,7 @@ private fun SceneScope.QuickSettingsScene(
                     if (isCustomizerShowing) {
                         Modifier.fillMaxHeight().align(Alignment.TopCenter)
                     } else {
-                        Modifier.verticalNestedScrollToScene()
-                            .verticalScroll(
+                        Modifier.verticalScroll(
                                 scrollState,
                                 enabled = isScrollable,
                             )
@@ -404,7 +407,7 @@ private fun SceneScope.QuickSettingsScene(
         HeadsUpNotificationSpace(
             stackScrollView = notificationStackScrollView,
             viewModel = notificationsPlaceholderViewModel,
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter).navigationBarsPadding(),
             isPeekFromBottom = true,
         )
         NotificationScrollingStack(

@@ -22,6 +22,7 @@ import com.android.compose.animation.scene.TransitionKey
 import com.android.systemui.CoreStartable
 import com.android.systemui.communal.domain.interactor.CommunalInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor
+import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor
 import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.communal.shared.model.CommunalTransitionKeys
 import com.android.systemui.dagger.SysUISingleton
@@ -29,6 +30,7 @@ import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.dock.DockManager
+import com.android.systemui.flags.FeatureFlagsClassic
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardTransitionInteractor
 import com.android.systemui.keyguard.shared.model.KeyguardState
@@ -69,12 +71,14 @@ class CommunalSceneStartable
 constructor(
     private val dockManager: DockManager,
     private val communalInteractor: CommunalInteractor,
+    private val communalSettingsInteractor: CommunalSettingsInteractor,
     private val communalSceneInteractor: CommunalSceneInteractor,
     private val keyguardTransitionInteractor: KeyguardTransitionInteractor,
     private val keyguardInteractor: KeyguardInteractor,
     private val systemSettings: SystemSettings,
     centralSurfacesOpt: Optional<CentralSurfaces>,
     private val notificationShadeWindowController: NotificationShadeWindowController,
+    private val featureFlagsClassic: FeatureFlagsClassic,
     @Application private val applicationScope: CoroutineScope,
     @Background private val bgScope: CoroutineScope,
     @Main private val mainDispatcher: CoroutineDispatcher,
@@ -88,12 +92,22 @@ constructor(
     private val centralSurfaces: CentralSurfaces? by centralSurfacesOpt
 
     override fun start() {
+        if (!communalSettingsInteractor.isCommunalFlagEnabled()) {
+            return
+        }
+
         // Handle automatically switching based on keyguard state.
         keyguardTransitionInteractor.startedKeyguardTransitionStep
             .mapLatest(::determineSceneAfterTransition)
             .filterNotNull()
             .onEach { (nextScene, nextTransition) ->
-                communalSceneInteractor.changeScene(nextScene, nextTransition)
+                if (!communalSceneInteractor.isLaunchingWidget.value) {
+                    // When launching a widget, we don't want to animate the scene change or the
+                    // Communal Hub will reveal the wallpaper even though it shouldn't. Instead we
+                    // snap to the new scene as part of the launch animation, once the activity
+                    // launch is done, so we don't change scene here.
+                    communalSceneInteractor.changeScene(nextScene, nextTransition)
+                }
             }
             .launchIn(applicationScope)
 

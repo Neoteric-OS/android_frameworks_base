@@ -27,6 +27,7 @@ import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor
 import com.android.systemui.communal.domain.model.CommunalContentModel
 import com.android.systemui.communal.shared.model.EditModeState
 import com.android.systemui.communal.widgets.WidgetConfigurator
+import com.android.systemui.keyguard.shared.model.KeyguardState
 import com.android.systemui.media.controls.ui.view.MediaHost
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,12 +60,32 @@ abstract class BaseCommunalViewModel(
     /** Accessibility delegate to be set on CommunalAppWidgetHostView. */
     open val widgetAccessibilityDelegate: View.AccessibilityDelegate? = null
 
+    /**
+     * The up-to-date value of the grid scroll offset. persisted to interactor on
+     * {@link #persistScrollPosition}
+     */
+    private var currentScrollOffset = 0
+
+    /**
+     * The up-to-date value of the grid scroll index. persisted to interactor on
+     * {@link #persistScrollPosition}
+     */
+    private var currentScrollIndex = 0
+
     fun signalUserInteraction() {
         communalInteractor.signalUserInteraction()
     }
 
-    fun changeScene(scene: SceneKey, transitionKey: TransitionKey? = null) {
-        communalSceneInteractor.changeScene(scene, transitionKey)
+    /**
+     * Asks for an asynchronous scene witch to [newScene], which will use the corresponding
+     * installed transition or the one specified by [transitionKey], if provided.
+     */
+    fun changeScene(
+        scene: SceneKey,
+        transitionKey: TransitionKey? = null,
+        keyguardState: KeyguardState? = null
+    ) {
+        communalSceneInteractor.changeScene(scene, transitionKey, keyguardState)
     }
 
     fun setEditModeState(state: EditModeState?) = communalSceneInteractor.setEditModeState(state)
@@ -146,6 +167,28 @@ abstract class BaseCommunalViewModel(
 
     /** Called as the user request to show the customize widget button. */
     open fun onLongClick() {}
+
+    /** Called when the grid scroll position has been updated. */
+    open fun onScrollPositionUpdated(firstVisibleItemIndex: Int, firstVisibleItemScroll: Int) {
+        currentScrollIndex = firstVisibleItemIndex
+        currentScrollOffset = firstVisibleItemScroll
+    }
+
+    /** Stores scroll values to interactor. */
+    protected fun persistScrollPosition() {
+        communalInteractor.setScrollPosition(currentScrollIndex, currentScrollOffset)
+    }
+
+    /** Invoked after scroll values are used to initialize grid position. */
+    open fun clearPersistedScrollPosition() {
+        communalInteractor.setScrollPosition(0, 0)
+    }
+
+    val savedFirstScrollIndex: Int
+        get() = communalInteractor.firstVisibleItemIndex
+
+    val savedFirstScrollOffset: Int
+        get() = communalInteractor.firstVisibleItemOffset
 
     /** Set the key of the currently selected item */
     fun setSelectedKey(key: String?) {

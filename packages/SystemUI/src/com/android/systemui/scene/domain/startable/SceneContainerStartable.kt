@@ -38,8 +38,10 @@ import com.android.systemui.deviceentry.domain.interactor.DeviceEntryFaceAuthInt
 import com.android.systemui.deviceentry.domain.interactor.DeviceEntryInteractor
 import com.android.systemui.deviceentry.domain.interactor.DeviceUnlockedInteractor
 import com.android.systemui.deviceentry.shared.model.DeviceUnlockSource
+import com.android.systemui.keyguard.DismissCallbackRegistry
 import com.android.systemui.keyguard.domain.interactor.KeyguardEnabledInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
+import com.android.systemui.keyguard.domain.interactor.KeyguardTransitionInteractor
 import com.android.systemui.keyguard.domain.interactor.WindowManagerLockscreenVisibilityInteractor
 import com.android.systemui.model.SceneContainerPlugin
 import com.android.systemui.model.SysUiState
@@ -106,6 +108,7 @@ constructor(
     private val deviceUnlockedInteractor: DeviceUnlockedInteractor,
     private val bouncerInteractor: BouncerInteractor,
     private val keyguardInteractor: KeyguardInteractor,
+    private val keyguardTransitionInteractor: KeyguardTransitionInteractor,
     private val sysUiState: SysUiState,
     @DisplayId private val displayId: Int,
     private val sceneLogger: SceneLogger,
@@ -126,6 +129,7 @@ constructor(
     private val shadeSessionStorage: SessionStorage,
     private val windowMgrLockscreenVisInteractor: WindowManagerLockscreenVisibilityInteractor,
     private val keyguardEnabledInteractor: KeyguardEnabledInteractor,
+    private val dismissCallbackRegistry: DismissCallbackRegistry,
 ) : CoreStartable {
     private val centralSurfaces: CentralSurfaces?
         get() = centralSurfacesOptLazy.get().getOrNull()
@@ -144,6 +148,8 @@ constructor(
             hydrateBackStack()
             resetShadeSessions()
             handleKeyguardEnabledness()
+            notifyKeyguardDismissCallbacks()
+            refreshLockscreenEnabled()
         } else {
             sceneLogger.logFrameworkEnabled(
                 isEnabled = false,
@@ -181,7 +187,6 @@ constructor(
         applicationScope.launch {
             // TODO(b/296114544): Combine with some global hun state to make it visible!
             deviceProvisioningInteractor.isDeviceProvisioned
-                .distinctUntilChanged()
                 .flatMapLatest { isAllowedToBeVisible ->
                     if (isAllowedToBeVisible) {
                         combine(
@@ -417,9 +422,9 @@ constructor(
             powerInteractor.isAsleep.collect { isAsleep ->
                 if (isAsleep) {
                     switchToScene(
-                        // TODO(b/336581871): add sceneState?
                         targetSceneKey = Scenes.Lockscreen,
                         loggingReason = "device is starting to sleep",
+                        sceneState = keyguardTransitionInteractor.asleepKeyguardState.value,
                     )
                 } else {
                     val canSwipeToEnter = deviceEntryInteractor.canSwipeToEnter.value
@@ -660,7 +665,7 @@ constructor(
             keyguardEnabledInteractor.isKeyguardEnabled
                 .sample(
                     combine(
-                        deviceEntryInteractor.isInLockdown,
+                        deviceUnlockedInteractor.isInLockdown,
                         deviceEntryInteractor.isDeviceEntered,
                         ::Pair,
                     )
@@ -699,10 +704,15 @@ constructor(
         }
     }
 
-    private fun switchToScene(targetSceneKey: SceneKey, loggingReason: String) {
+    private fun switchToScene(
+        targetSceneKey: SceneKey,
+        loggingReason: String,
+        sceneState: Any? = null
+    ) {
         sceneInteractor.changeScene(
             toScene = targetSceneKey,
             loggingReason = loggingReason,
+            sceneState = sceneState,
         )
     }
 
@@ -711,6 +721,36 @@ constructor(
             sceneInteractor.currentScene.pairwise().collect { (from, to) ->
                 sceneBackInteractor.onSceneChange(from = from, to = to)
             }
+        }
+    }
+
+    private fun notifyKeyguardDismissCallbacks() {
+        applicationScope.launch {
+            sceneInteractor.currentScene.pairwise().collect { (from, to) ->
+                when {
+                    from != Scenes.Bouncer -> Unit
+                    to == Scenes.Gone -> dismissCallbackRegistry.notifyDismissSucceeded()
+                    else -> dismissCallbackRegistry.notifyDismissCancelled()
+                }
+            }
+        }
+    }
+
+    /**
+     * Keeps the value of [DeviceEntryInteractor.isLockscreenEnabled] fresh.
+     *
+     * This is needed because that value is sourced from a non-observable data source
+     * (`LockPatternUtils`, which doesn't expose a listener or callback for this value). Therefore,
+     * every time a transition to the `Lockscreen` scene is started, the value is re-fetched and
+     * cached.
+     */
+    private fun refreshLockscreenEnabled() {
+        applicationScope.launch {
+            sceneInteractor.transitionState
+                .map { it.isTransitioning(to = Scenes.Lockscreen) }
+                .distinctUntilChanged()
+                .filter { it }
+                .collectLatest { deviceEntryInteractor.refreshLockscreenEnabled() }
         }
     }
 }

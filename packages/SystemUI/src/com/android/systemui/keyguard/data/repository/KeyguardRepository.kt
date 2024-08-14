@@ -17,6 +17,7 @@
 package com.android.systemui.keyguard.data.repository
 
 import android.graphics.Point
+import com.android.internal.widget.LockPatternUtils
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.keyguard.KeyguardUpdateMonitorCallback
 import com.android.systemui.biometrics.AuthController
@@ -61,6 +62,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 /** Defines interface for classes that encapsulate application state for the keyguard. */
 interface KeyguardRepository {
@@ -124,6 +126,30 @@ interface KeyguardRepository {
      * locked when it was disabled.
      */
     val isKeyguardEnabled: StateFlow<Boolean>
+
+    /**
+     * Whether we can transition directly back to GONE from AOD/DOZING without any authentication
+     * events (such as a fingerprint wake and unlock), even though authentication would normally be
+     * required. This means that if you tap the screen or press the power button, you'll return
+     * directly to the unlocked app content without seeing the lockscreen, even if a secure
+     * authentication method (PIN/password/biometrics) is set.
+     *
+     * This is true in these cases:
+     * - The screen timed out, but the "lock after screen timeout" duration (default 5 seconds) has
+     *   not yet elapsed.
+     * - The power button was pressed, but "power button instantly locks" is not enabled, and the
+     *   "lock after screen timeout" duration has not elapsed.
+     *
+     * Note that this value specifically tells us if we can *ignore* authentication that would
+     * otherwise be required to transition from AOD/DOZING -> GONE. AOD/DOZING -> GONE is also
+     * possible if keyguard is disabled, either from an app request or because security is set to
+     * "none", but in that case, auth is not required so this boolean is not relevant.
+     *
+     * See [KeyguardWakeToGoneInteractor].
+     */
+    val canIgnoreAuthAndReturnToGone: StateFlow<Boolean>
+
+    fun setCanIgnoreAuthAndReturnToGone(canWake: Boolean)
 
     /** Is the always-on display available to be used? */
     val isAodAvailable: StateFlow<Boolean>
@@ -321,6 +347,7 @@ constructor(
     private val systemClock: SystemClock,
     facePropertyRepository: FacePropertyRepository,
     private val userTracker: UserTracker,
+    lockPatternUtils: LockPatternUtils,
 ) : KeyguardRepository {
     private val _dismissAction: MutableStateFlow<DismissAction> =
         MutableStateFlow(DismissAction.None)
@@ -360,30 +387,8 @@ constructor(
 
     override val topClippingBounds = MutableStateFlow<Int?>(null)
 
-    override val isKeyguardShowing: Flow<Boolean> =
-        conflatedCallbackFlow {
-                val callback =
-                    object : KeyguardStateController.Callback {
-                        override fun onKeyguardShowingChanged() {
-                            trySendWithFailureLogging(
-                                keyguardStateController.isShowing,
-                                TAG,
-                                "updated isKeyguardShowing"
-                            )
-                        }
-                    }
-
-                keyguardStateController.addCallback(callback)
-                // Adding the callback does not send an initial update.
-                trySendWithFailureLogging(
-                    keyguardStateController.isShowing,
-                    TAG,
-                    "initial isKeyguardShowing"
-                )
-
-                awaitClose { keyguardStateController.removeCallback(callback) }
-            }
-            .distinctUntilChanged()
+    override val isKeyguardShowing: MutableStateFlow<Boolean> =
+        MutableStateFlow(keyguardStateController.isShowing)
 
     private val _isAodAvailable = MutableStateFlow(false)
     override val isAodAvailable: StateFlow<Boolean> = _isAodAvailable.asStateFlow()
@@ -392,94 +397,25 @@ constructor(
         _isAodAvailable.value = value
     }
 
-    override val isKeyguardOccluded: Flow<Boolean> =
-        conflatedCallbackFlow {
-                val callback =
-                    object : KeyguardStateController.Callback {
-                        override fun onKeyguardShowingChanged() {
-                            trySendWithFailureLogging(
-                                keyguardStateController.isOccluded,
-                                TAG,
-                                "updated isKeyguardOccluded"
-                            )
-                        }
-                    }
+    override val isKeyguardOccluded: MutableStateFlow<Boolean> =
+        MutableStateFlow(keyguardStateController.isOccluded)
 
-                keyguardStateController.addCallback(callback)
-                // Adding the callback does not send an initial update.
-                trySendWithFailureLogging(
-                    keyguardStateController.isOccluded,
-                    TAG,
-                    "initial isKeyguardOccluded"
-                )
+    override val isKeyguardDismissible: MutableStateFlow<Boolean> =
+        MutableStateFlow(keyguardStateController.isUnlocked)
 
-                awaitClose { keyguardStateController.removeCallback(callback) }
-            }
-            .distinctUntilChanged()
+    override val isKeyguardGoingAway: MutableStateFlow<Boolean> =
+        MutableStateFlow(keyguardStateController.isKeyguardGoingAway)
 
-    override val isKeyguardDismissible: StateFlow<Boolean> =
-        conflatedCallbackFlow {
-                val callback =
-                    object : KeyguardStateController.Callback {
-                        override fun onUnlockedChanged() {
-                            trySendWithFailureLogging(
-                                keyguardStateController.isUnlocked,
-                                TAG,
-                                "updated isKeyguardDismissible due to onUnlockedChanged"
-                            )
-                        }
-
-                        override fun onKeyguardShowingChanged() {
-                            trySendWithFailureLogging(
-                                keyguardStateController.isUnlocked,
-                                TAG,
-                                "updated isKeyguardDismissible due to onKeyguardShowingChanged"
-                            )
-                        }
-                    }
-
-                keyguardStateController.addCallback(callback)
-                // Adding the callback does not send an initial update.
-                trySendWithFailureLogging(
-                    keyguardStateController.isUnlocked,
-                    TAG,
-                    "initial isKeyguardUnlocked"
-                )
-
-                awaitClose { keyguardStateController.removeCallback(callback) }
-            }
-            .distinctUntilChanged()
-            .stateIn(
-                scope,
-                SharingStarted.Eagerly,
-                initialValue = false,
-            )
-
-    override val isKeyguardGoingAway: Flow<Boolean> = conflatedCallbackFlow {
-        val callback =
-            object : KeyguardStateController.Callback {
-                override fun onKeyguardGoingAwayChanged() {
-                    trySendWithFailureLogging(
-                        keyguardStateController.isKeyguardGoingAway,
-                        TAG,
-                        "updated isKeyguardGoingAway"
-                    )
-                }
-            }
-
-        keyguardStateController.addCallback(callback)
-        // Adding the callback does not send an initial update.
-        trySendWithFailureLogging(
-            keyguardStateController.isKeyguardGoingAway,
-            TAG,
-            "initial isKeyguardGoingAway"
-        )
-
-        awaitClose { keyguardStateController.removeCallback(callback) }
-    }
-
-    private val _isKeyguardEnabled = MutableStateFlow(true)
+    private val _isKeyguardEnabled =
+        MutableStateFlow(!lockPatternUtils.isLockScreenDisabled(userTracker.userId))
     override val isKeyguardEnabled: StateFlow<Boolean> = _isKeyguardEnabled.asStateFlow()
+
+    private val _canIgnoreAuthAndReturnToGone = MutableStateFlow(false)
+    override val canIgnoreAuthAndReturnToGone = _canIgnoreAuthAndReturnToGone.asStateFlow()
+
+    override fun setCanIgnoreAuthAndReturnToGone(canWakeToGone: Boolean) {
+        _canIgnoreAuthAndReturnToGone.value = canWakeToGone
+    }
 
     private val _isDozing = MutableStateFlow(statusBarStateController.isDozing)
     override val isDozing: StateFlow<Boolean> = _isDozing.asStateFlow()
@@ -665,6 +601,35 @@ constructor(
 
     private val _isActiveDreamLockscreenHosted = MutableStateFlow(false)
     override val isActiveDreamLockscreenHosted = _isActiveDreamLockscreenHosted.asStateFlow()
+
+    init {
+        val callback =
+            object : KeyguardStateController.Callback {
+                override fun onKeyguardShowingChanged() {
+                    isKeyguardShowing.value = keyguardStateController.isShowing
+                    isKeyguardOccluded.value = keyguardStateController.isOccluded
+                    isKeyguardDismissible.value = keyguardStateController.isUnlocked
+                }
+
+                override fun onUnlockedChanged() {
+                    isKeyguardDismissible.value = keyguardStateController.isUnlocked
+                }
+
+                override fun onKeyguardGoingAwayChanged() {
+                    isKeyguardGoingAway.value = keyguardStateController.isKeyguardGoingAway
+                }
+            }
+
+        keyguardStateController.addCallback(callback)
+
+        scope
+            .launch {
+                isKeyguardShowing.collect {
+                    // no-op to allow for callback removal
+                }
+            }
+            .invokeOnCompletion { keyguardStateController.removeCallback(callback) }
+    }
 
     override fun setAnimateDozingTransitions(animate: Boolean) {
         _animateBottomAreaDozingTransitions.value = animate

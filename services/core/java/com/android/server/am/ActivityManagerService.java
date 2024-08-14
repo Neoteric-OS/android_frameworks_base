@@ -72,6 +72,7 @@ import static android.content.pm.PackageManager.MATCH_SYSTEM_ONLY;
 import static android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.SIGNATURE_NO_MATCH;
+import static android.crashrecovery.flags.Flags.refactorCrashrecovery;
 import static android.net.ConnectivityManager.BLOCKED_REASON_NONE;
 import static android.os.FactoryTest.FACTORY_TEST_OFF;
 import static android.os.IServiceManager.DUMP_FLAG_PRIORITY_CRITICAL;
@@ -432,7 +433,7 @@ import com.android.internal.os.TransferPipe;
 import com.android.internal.os.Zygote;
 import com.android.internal.pm.pkg.parsing.ParsingPackageUtils;
 import com.android.internal.policy.AttributeCache;
-import com.android.internal.protolog.common.ProtoLog;
+import com.android.internal.protolog.ProtoLog;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FastPrintWriter;
 import com.android.internal.util.FrameworkStatsLog;
@@ -2106,7 +2107,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                 app.setPersistent(true);
                 app.setPid(MY_PID);
                 app.mState.setMaxAdj(ProcessList.SYSTEM_ADJ);
-                app.makeActive(mSystemThread.getApplicationThread(), mProcessStats);
+                app.makeActive(new ApplicationThreadDeferred(mSystemThread.getApplicationThread()),
+                        mProcessStats);
                 app.mProfile.addHostingComponentType(HOSTING_COMPONENT_TYPE_SYSTEM);
                 addPidLocked(app);
                 updateLruProcessLocked(app, false, null);
@@ -2353,7 +2355,9 @@ public class ActivityManagerService extends IActivityManager.Stub
             } else if (phase == PHASE_ACTIVITY_MANAGER_READY) {
                 mService.startBroadcastObservers();
             } else if (phase == PHASE_THIRD_PARTY_APPS_CAN_START) {
-                mService.mPackageWatchdog.onPackagesReady();
+                if (!refactorCrashrecovery()) {
+                    mService.mPackageWatchdog.onPackagesReady();
+                }
                 mService.scheduleHomeTimeout();
             }
         }
@@ -4967,7 +4971,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             // Make app active after binding application or client may be running requests (e.g
             // starting activities) before it is ready.
             synchronized (mProcLock) {
-                app.makeActive(thread, mProcessStats);
+                app.makeActive(new ApplicationThreadDeferred(thread), mProcessStats);
                 checkTime(startTime, "attachApplicationLocked: immediately after bindApplication");
             }
             app.setPendingFinishAttach(true);
@@ -5583,8 +5587,13 @@ public class ActivityManagerService extends IActivityManager.Stub
     private boolean isHomeLaunchDelayable() {
         // This feature is disabled on Auto since it seems to add an unacceptably long boot delay
         // without even solving the underlying issue (it merely hits the timeout).
-        return enableHomeDelay() &&
-                !mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE);
+        // This feature is disabled on TV since the ThemeOverlayController is currently not present
+        // and therefore we do not want to wait unnecessarily.
+        // This feature is currently disabled in WearOS to avoid extreme boot regressions
+        return enableHomeDelay()
+                && !mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE)
+                && !mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+                && !mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WATCH);
     }
 
     final void ensureBootCompleted() {
@@ -10338,6 +10347,19 @@ public class ActivityManagerService extends IActivityManager.Stub
                 ALLOW_NON_FULL, "addStartInfoTimestamp", null);
 
         addStartInfoTimestampInternal(key, timestampNs, userId, callingUid);
+    }
+
+    @Override
+    public void reportStartInfoViewTimestamps(long renderThreadDrawStartTimeNs,
+            long framePresentedTimeNs) {
+        int callingUid = Binder.getCallingUid();
+        int userId = UserHandle.getUserId(callingUid);
+        addStartInfoTimestampInternal(
+                ApplicationStartInfo.START_TIMESTAMP_INITIAL_RENDERTHREAD_FRAME,
+                renderThreadDrawStartTimeNs, userId, callingUid);
+        addStartInfoTimestampInternal(
+                ApplicationStartInfo.START_TIMESTAMP_SURFACEFLINGER_COMPOSITION_COMPLETE,
+                framePresentedTimeNs, userId, callingUid);
     }
 
     private void addStartInfoTimestampInternal(int key, long timestampNs, int userId, int uid) {

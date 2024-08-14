@@ -39,12 +39,12 @@ import android.window.TransitionRequestInfo;
 import android.window.WindowContainerToken;
 import android.window.WindowContainerTransaction;
 
-import com.android.internal.protolog.common.ProtoLog;
+import com.android.internal.protolog.ProtoLog;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.activityembedding.ActivityEmbeddingController;
 import com.android.wm.shell.common.split.SplitScreenUtils;
 import com.android.wm.shell.desktopmode.DesktopTasksController;
-import com.android.wm.shell.shared.DesktopModeStatus;
+import com.android.wm.shell.shared.desktopmode.DesktopModeStatus;
 import com.android.wm.shell.keyguard.KeyguardTransitionHandler;
 import com.android.wm.shell.pip.PipTransitionController;
 import com.android.wm.shell.protolog.ShellProtoLogGroup;
@@ -354,7 +354,7 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
                 return this::setRecentsTransitionDuringKeyguard;
             } else if (mDesktopTasksController != null
                     // Check on the default display. Recents/gesture nav is only available there
-                    && mDesktopTasksController.getVisibleTaskCount(DEFAULT_DISPLAY) > 0) {
+                    && mDesktopTasksController.visibleTaskCount(DEFAULT_DISPLAY) > 0) {
                 return this::setRecentsTransitionDuringDesktop;
             }
         }

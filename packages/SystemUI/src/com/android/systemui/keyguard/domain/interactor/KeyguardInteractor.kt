@@ -23,9 +23,10 @@ import android.app.StatusBarManager
 import android.graphics.Point
 import android.util.MathUtils
 import com.android.app.animation.Interpolators
+import com.android.app.tracing.FlowTracing.tracedAwaitClose
+import com.android.app.tracing.FlowTracing.tracedConflatedCallbackFlow
 import com.android.systemui.bouncer.data.repository.KeyguardBouncerRepository
 import com.android.systemui.common.coroutine.ChannelExt.trySendWithFailureLogging
-import com.android.systemui.common.coroutine.ConflatedCallbackFlow.conflatedCallbackFlow
 import com.android.systemui.common.shared.model.NotificationContainerBounds
 import com.android.systemui.common.ui.domain.interactor.ConfigurationInteractor
 import com.android.systemui.dagger.SysUISingleton
@@ -51,14 +52,12 @@ import com.android.systemui.statusbar.CommandQueue
 import com.android.systemui.statusbar.notification.NotificationUtils.interpolate
 import com.android.systemui.statusbar.notification.stack.domain.interactor.SharedNotificationContainerInteractor
 import com.android.systemui.util.kotlin.Utils.Companion.sample as sampleCombine
-import com.android.systemui.util.kotlin.Utils.Companion.sampleFilter
 import com.android.systemui.util.kotlin.pairwise
 import com.android.systemui.util.kotlin.sample
 import javax.inject.Inject
 import javax.inject.Provider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -189,7 +188,7 @@ constructor(
      * Whether the system is dreaming. [isDreaming] will be always be true when [isDozing] is true,
      * but not vice-versa.
      */
-    val isDreaming: Flow<Boolean> = repository.isDreaming
+    val isDreaming: StateFlow<Boolean> = repository.isDreaming
 
     /** Whether the system is dreaming with an overlay active */
     val isDreamingWithOverlay: Flow<Boolean> = repository.isDreamingWithOverlay
@@ -198,22 +197,23 @@ constructor(
     val isActiveDreamLockscreenHosted: StateFlow<Boolean> = repository.isActiveDreamLockscreenHosted
 
     /** Event for when the camera gesture is detected */
-    val onCameraLaunchDetected: Flow<CameraLaunchSourceModel> = conflatedCallbackFlow {
-        val callback =
-            object : CommandQueue.Callbacks {
-                override fun onCameraLaunchGestureDetected(source: Int) {
-                    trySendWithFailureLogging(
-                        cameraLaunchSourceIntToModel(source),
-                        TAG,
-                        "updated onCameraLaunchGestureDetected"
-                    )
+    val onCameraLaunchDetected: Flow<CameraLaunchSourceModel> =
+        tracedConflatedCallbackFlow("KeyguardInteractor#onCameraLaunchDetected") {
+            val callback =
+                object : CommandQueue.Callbacks {
+                    override fun onCameraLaunchGestureDetected(source: Int) {
+                        trySendWithFailureLogging(
+                            cameraLaunchSourceIntToModel(source),
+                            TAG,
+                            "updated onCameraLaunchGestureDetected"
+                        )
+                    }
                 }
-            }
 
-        commandQueue.addCallback(callback)
+            commandQueue.addCallback(callback)
 
-        awaitClose { commandQueue.removeCallback(callback) }
-    }
+            tracedAwaitClose("onCameraLaunchDetected") { commandQueue.removeCallback(callback) }
+        }
 
     /**
      * Dozing and dreaming have overlapping events. If the doze state remains in FINISH, it means
@@ -251,13 +251,17 @@ constructor(
 
     /** Keyguard can be clipped at the top as the shade is dragged */
     val topClippingBounds: Flow<Int?> by lazy {
-        repository.topClippingBounds
-            .sampleFilter(
+        combineTransform(
                 keyguardTransitionInteractor
                     .transitionValue(scene = Scenes.Gone, stateWithoutSceneContainer = GONE)
-                    .onStart { emit(0f) }
-            ) { goneValue ->
-                goneValue != 1f
+                    .map { it == 1f }
+                    .onStart { emit(false) }
+                    .distinctUntilChanged(),
+                repository.topClippingBounds
+            ) { isGone, topClippingBounds ->
+                if (!isGone) {
+                    emit(topClippingBounds)
+                }
             }
             .distinctUntilChanged()
     }

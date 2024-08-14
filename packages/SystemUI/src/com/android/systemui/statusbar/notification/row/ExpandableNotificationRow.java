@@ -104,6 +104,7 @@ import com.android.systemui.statusbar.notification.row.shared.AsyncGroupHeaderVi
 import com.android.systemui.statusbar.notification.row.wrapper.NotificationCompactMessagingTemplateViewWrapper;
 import com.android.systemui.statusbar.notification.row.wrapper.NotificationViewWrapper;
 import com.android.systemui.statusbar.notification.shared.NotificationContentAlphaOptimization;
+import com.android.systemui.statusbar.notification.shared.TransparentHeaderFix;
 import com.android.systemui.statusbar.notification.stack.AmbientState;
 import com.android.systemui.statusbar.notification.stack.AnimationProperties;
 import com.android.systemui.statusbar.notification.stack.ExpandableViewState;
@@ -111,6 +112,7 @@ import com.android.systemui.statusbar.notification.stack.NotificationChildrenCon
 import com.android.systemui.statusbar.notification.stack.NotificationChildrenContainerLogger;
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.notification.stack.SwipeableView;
+import com.android.systemui.statusbar.phone.ExpandHeadsUpOnInlineReply;
 import com.android.systemui.statusbar.phone.KeyguardBypassController;
 import com.android.systemui.statusbar.policy.HeadsUpManager;
 import com.android.systemui.statusbar.policy.InflatedSmartReplyState;
@@ -328,38 +330,55 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
     private OnClickListener mExpandClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!shouldShowPublic() && (!mIsMinimized || isExpanded())
-                    && mGroupMembershipManager.isGroupSummary(mEntry)) {
-                mGroupExpansionChanging = true;
-                final boolean wasExpanded = mGroupExpansionManager.isGroupExpanded(mEntry);
-                boolean nowExpanded = mGroupExpansionManager.toggleGroupExpansion(mEntry);
-                mOnExpandClickListener.onExpandClicked(mEntry, v, nowExpanded);
+            toggleExpansionState(v, /* shouldLogExpandClickMetric = */true);
+        }
+    };
+
+    /**
+     * Toggles expansion state.
+     */
+    public void toggleExpansionState() {
+        toggleExpansionState(this, /*shouldLogExpandClickMetric*/ false);
+    }
+
+    private void toggleExpansionState(View v, boolean shouldLogExpandClickMetric) {
+        if (!shouldShowPublic() && (!mIsMinimized || isExpanded())
+                && mGroupMembershipManager.isGroupSummary(mEntry)) {
+            mGroupExpansionChanging = true;
+            final boolean wasExpanded = mGroupExpansionManager.isGroupExpanded(mEntry);
+            boolean nowExpanded = mGroupExpansionManager.toggleGroupExpansion(mEntry);
+            mOnExpandClickListener.onExpandClicked(mEntry, v, nowExpanded);
+            if (shouldLogExpandClickMetric) {
                 mMetricsLogger.action(MetricsEvent.ACTION_NOTIFICATION_GROUP_EXPANDER, nowExpanded);
-                onExpansionChanged(true /* userAction */, wasExpanded);
-            } else if (mEnableNonGroupedNotificationExpand) {
-                if (v.isAccessibilityFocused()) {
-                    mPrivateLayout.setFocusOnVisibilityChange();
+            }
+            onExpansionChanged(true /* userAction */, wasExpanded);
+        } else if (mEnableNonGroupedNotificationExpand) {
+            if (v.isAccessibilityFocused()) {
+                mPrivateLayout.setFocusOnVisibilityChange();
+            }
+            boolean nowExpanded;
+            if (isPinned()) {
+                nowExpanded = !mExpandedWhenPinned;
+                mExpandedWhenPinned = nowExpanded;
+                // Also notify any expansion changed listeners. This is necessary since the
+                // expansion doesn't actually change (it's already system expanded) but it
+                // changes visually
+                if (mExpansionChangedListener != null) {
+                    mExpansionChangedListener.onExpansionChanged(nowExpanded);
                 }
-                boolean nowExpanded;
-                if (isPinned()) {
-                    nowExpanded = !mExpandedWhenPinned;
-                    mExpandedWhenPinned = nowExpanded;
-                    // Also notify any expansion changed listeners. This is necessary since the
-                    // expansion doesn't actually change (it's already system expanded) but it
-                    // changes visually
-                    if (mExpansionChangedListener != null) {
-                        mExpansionChangedListener.onExpansionChanged(nowExpanded);
-                    }
-                } else {
-                    nowExpanded = !isExpanded();
-                    setUserExpanded(nowExpanded);
-                }
-                notifyHeightChanged(/* needsAnimation= */ true);
-                mOnExpandClickListener.onExpandClicked(mEntry, v, nowExpanded);
+            } else {
+                nowExpanded = !isExpanded();
+                setUserExpanded(nowExpanded);
+            }
+
+            notifyHeightChanged(/* needsAnimation= */ true);
+            mOnExpandClickListener.onExpandClicked(mEntry, v, nowExpanded);
+            if (shouldLogExpandClickMetric) {
                 mMetricsLogger.action(MetricsEvent.ACTION_NOTIFICATION_EXPANDER, nowExpanded);
             }
         }
-    };
+    }
+
     private boolean mKeepInParentForDismissAnimation;
     private boolean mRemoved;
     public static final FloatProperty<ExpandableNotificationRow> TRANSLATE_CONTENT =
@@ -840,8 +859,8 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
     }
 
     @Override
-    public void setHeadsUpIsVisible() {
-        super.setHeadsUpIsVisible();
+    public void markHeadsUpSeen() {
+        super.markHeadsUpSeen();
         mMustStayOnScreen = false;
     }
 
@@ -1560,6 +1579,9 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
                 /* headerView= */ headerView,
                 /* onClickListener= */ mExpandClickListener
         );
+        if (TransparentHeaderFix.isEnabled()) {
+            updateBackgroundForGroupState();
+        }
     }
 
     /**
@@ -2845,9 +2867,18 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
     }
 
     public boolean isExpanded(boolean allowOnKeyguard) {
+        final boolean isHeadsUpState = ExpandHeadsUpOnInlineReply.isEnabled()
+                && canShowHeadsUp() && isHeadsUpState();
+        // System expanded should be ignored in pinned heads up state
+        final boolean isPinned = isHeadsUpState && isPinned();
+        // Heads Up Notification can be expanded when it is pinned.
+        final boolean isPinnedAndExpanded =
+                isHeadsUpState && isPinnedAndExpanded();
+
         return (!shouldShowPublic()) && (!mOnKeyguard || allowOnKeyguard)
-                && (!hasUserChangedExpansion() && (isSystemExpanded() || isSystemChildExpanded())
-                || isUserExpanded());
+                && (!hasUserChangedExpansion() && !isPinned
+                && (isSystemExpanded() || isSystemChildExpanded())
+                || isUserExpanded() || isPinnedAndExpanded);
     }
 
     private boolean isSystemChildExpanded() {

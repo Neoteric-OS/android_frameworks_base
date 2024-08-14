@@ -100,10 +100,11 @@ constructor(
         DefaultEditTileGrid(
             tiles = tiles,
             isIconOnly = iconTilesViewModel::isIconTile,
-            columns = GridCells.Fixed(columns),
+            columns = columns,
             modifier = modifier,
             onAddTile = onAddTile,
             onRemoveTile = onRemoveTile,
+            onResize = iconTilesViewModel::resize,
         )
     }
 

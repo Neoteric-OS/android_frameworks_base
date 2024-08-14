@@ -202,7 +202,8 @@ public class SystemServicesTestRule implements TestRule {
                 .mockStatic(DisplayControl.class, mockStubOnly)
                 .mockStatic(LockGuard.class, mockStubOnly)
                 .mockStatic(Watchdog.class, mockStubOnly)
-                .spyStatic(DesktopModeLaunchParamsModifier.class)
+                .spyStatic(DesktopModeHelper.class)
+                .spyStatic(DesktopModeBoundsCalculator.class)
                 .strictness(Strictness.LENIENT)
                 .startMocking();
 
@@ -442,15 +443,7 @@ public class SystemServicesTestRule implements TestRule {
                 dc.getDisplayPolicy().release();
                 // Unregister SensorEventListener (foldable device may register for hinge angle).
                 dc.getDisplayRotation().onDisplayRemoved();
-                if (dc.mDisplayRotationCompatPolicy != null) {
-                    dc.mDisplayRotationCompatPolicy.dispose();
-                }
-                if (dc.mCameraCompatFreeformPolicy != null) {
-                    dc.mCameraCompatFreeformPolicy.dispose();
-                }
-                if (dc.mCameraStateMonitor != null) {
-                    dc.mCameraStateMonitor.dispose();
-                }
+                dc.mAppCompatCameraPolicy.dispose();
             }
         }
 

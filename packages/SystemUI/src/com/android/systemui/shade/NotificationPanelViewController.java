@@ -150,7 +150,7 @@ import com.android.systemui.keyguard.ui.viewmodel.DreamingToLockscreenTransition
 import com.android.systemui.keyguard.ui.viewmodel.GoneToDreamingLockscreenHostedTransitionViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.GoneToDreamingTransitionViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.KeyguardBottomAreaViewModel;
-import com.android.systemui.keyguard.ui.viewmodel.KeyguardLongPressViewModel;
+import com.android.systemui.keyguard.ui.viewmodel.KeyguardTouchHandlingViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.LockscreenToDreamingTransitionViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.LockscreenToOccludedTransitionViewModel;
 import com.android.systemui.keyguard.ui.viewmodel.OccludedToLockscreenTransitionViewModel;
@@ -160,8 +160,8 @@ import com.android.systemui.media.controls.ui.controller.KeyguardMediaController
 import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager;
 import com.android.systemui.model.SysUiState;
 import com.android.systemui.navigationbar.NavigationBarController;
-import com.android.systemui.navigationbar.NavigationBarView;
 import com.android.systemui.navigationbar.NavigationModeController;
+import com.android.systemui.navigationbar.views.NavigationBarView;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.FalsingManager.FalsingTapListener;
@@ -781,7 +781,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             @Main CoroutineDispatcher mainDispatcher,
             KeyguardTransitionInteractor keyguardTransitionInteractor,
             DumpManager dumpManager,
-            KeyguardLongPressViewModel keyguardLongPressViewModel,
+            KeyguardTouchHandlingViewModel keyguardTouchHandlingViewModel,
             KeyguardInteractor keyguardInteractor,
             ActivityStarter activityStarter,
             SharedNotificationContainerInteractor sharedNotificationContainerInteractor,
@@ -978,7 +978,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         mKeyguardClockInteractor = keyguardClockInteractor;
         KeyguardLongPressViewBinder.bind(
                 mView.requireViewById(R.id.keyguard_long_press),
-                keyguardLongPressViewModel,
+                keyguardTouchHandlingViewModel,
                 () -> {
                     onEmptySpaceClick();
                     return Unit.INSTANCE;
@@ -1103,7 +1103,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         initBottomArea();
 
         mWakeUpCoordinator.setStackScroller(mNotificationStackScrollLayoutController);
-        mPulseExpansionHandler.setUp(mNotificationStackScrollLayoutController);
         mWakeUpCoordinator.addListener(new NotificationWakeUpCoordinator.WakeUpListener() {
             @Override
             public void onFullyHiddenChanged(boolean isFullyHidden) {
@@ -1787,8 +1786,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         // the small clock here
         // With migrateClocksToBlueprint, weather clock will have behaviors similar to other clocks
         if (!MigrateClocksToBlueprint.isEnabled()) {
+            boolean bypassEnabled = mKeyguardBypassController.getBypassEnabled();
             if (mKeyguardStatusViewController.isLargeClockBlockingNotificationShelf()
-                    && hasVisibleNotifications() && isOnAod()) {
+                    && hasVisibleNotifications() && (isOnAod() || bypassEnabled)) {
                 return SMALL;
             }
         }
@@ -3063,7 +3063,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
                     if (mDeviceEntryFaceAuthInteractor.canFaceAuthRun()) {
                         mUpdateMonitor.requestActiveUnlock(
-                                ActiveUnlockConfig.ActiveUnlockRequestOrigin.UNLOCK_INTENT,
+                                ActiveUnlockConfig.ActiveUnlockRequestOrigin.UNLOCK_INTENT_LEGACY,
                                 "lockScreenEmptySpaceTap");
                     } else {
                         mLockscreenGestureLogger.write(MetricsEvent.ACTION_LS_HINT,
