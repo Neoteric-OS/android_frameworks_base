@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97d41378_2e73424c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1076194
+      },
+      "writtenOn": "2024-08-14T02:20:51Z",
+      "side": 1,
+      "message": "Optional nits.",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "131a1e38_52574e1d",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1076194
+      },
+      "writtenOn": "2024-08-14T02:20:51Z",
+      "side": 1,
+      "message": "Rather than FLAKY_AND_IGNORED would it just make sense to use FLAKY + IGNORED everywhere?",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d66c2e1b_fac39855",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1076194
+      },
+      "writtenOn": "2024-08-14T02:20:51Z",
+      "side": 1,
+      "message": "Could use FLAKY + here.",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f87b9742_989ffb0c",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1076194
+      },
+      "writtenOn": "2024-08-14T02:20:51Z",
+      "side": 1,
+      "message": "PRESUBMIT seems like a common pattern.",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
