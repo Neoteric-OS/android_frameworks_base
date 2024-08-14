@@ -18,6 +18,41 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20dbf1d3_f8f1402d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-14T04:10:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "97d41378_2e73424c",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5963aaf7_30a3834c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-14T04:10:43Z",
+      "side": 1,
+      "message": "Thanks, I\u0027m not planning to finesse the strings that I hope to eliminate with test suites.",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "131a1e38_52574e1d",
@@ -54,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "af009e63_dd8c3fa2",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-14T04:10:43Z",
+      "side": 1,
+      "message": "Ack, slightly annoying because each is a list, but I guess I can add lists.",
+      "parentUuid": "d66c2e1b_fac39855",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f87b9742_989ffb0c",
         "filename": "services/tests/servicestests/Android.bp",
         "patchSetId": 2
@@ -65,6 +118,24 @@
       "writtenOn": "2024-08-14T02:20:51Z",
       "side": 1,
       "message": "PRESUBMIT seems like a common pattern.",
+      "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71061d5b_859e082b",
+        "filename": "services/tests/servicestests/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-08-14T04:10:43Z",
+      "side": 1,
+      "message": "I\u0027m looking forward to simplifying it all when we get to test suites.\nThe annotation isn\u0027t that common.",
+      "parentUuid": "f87b9742_989ffb0c",
       "revId": "b7e5f3ee909baeaa5c9fab34c2cdc85326d9fb29",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
