@@ -1362,6 +1362,9 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 if (connected) {
                     if (mArcEstablished) {
                         enableAudioReturnChannel(true);
+                    } else {
+                        HdmiLogger.debug("Restart ARC again");
+                        onNewAvrAdded(getAvrDeviceInfo());
                     }
                 } else {
                     enableAudioReturnChannel(false);
