@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a43f9cc_913f273c",
+        "filename": "services/core/java/com/android/server/wm/RootWindowContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-08-15T02:24:43Z",
+      "side": 1,
+      "message": "Because reportResized is also used for dispatch insets change, the prepareSurfaces could be redundant for the cases without window frame change.\n\nWould it work by changing here?\n```\nfinal WindowState w \u003d frameChangingWindows.get(i);\nw.updateLastFrames();\nw.updateSurfacePosition(getSyncTransaction());\n```",
+      "range": {
+        "startLine": 1011,
+        "startChar": 12,
+        "endLine": 1011,
+        "endChar": 59
+      },
+      "revId": "f0f7792d28325bfc796297b61c015aacf9dd0326",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
