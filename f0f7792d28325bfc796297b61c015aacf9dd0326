@@ -70,6 +70,30 @@
       },
       "revId": "f0f7792d28325bfc796297b61c015aacf9dd0326",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac272200_b58fcde9",
+        "filename": "services/core/java/com/android/server/wm/RootWindowContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-08-15T07:15:53Z",
+      "side": 1,
+      "message": "Yeah sorry. WS#updateSurfacePosition -\u003e applyWithNextDraw needs to be called before reportResized to sync buffer.\n\nReplied on bug. Still update on the same line #999, but only need to call updateSurfacePosition when the position of mRelFrame is changed.",
+      "parentUuid": "51bdf852_2ee8b2ad",
+      "range": {
+        "startLine": 1011,
+        "startChar": 12,
+        "endLine": 1011,
+        "endChar": 59
+      },
+      "revId": "f0f7792d28325bfc796297b61c015aacf9dd0326",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
