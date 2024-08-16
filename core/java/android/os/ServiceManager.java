@@ -22,6 +22,7 @@ import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.os.Trace;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.BinderInternal;
@@ -167,24 +168,35 @@ public final class ServiceManager {
     @UnsupportedAppUsage
     @android.ravenwood.annotation.RavenwoodReplace
     public static IBinder getService(String name) {
+        Trace.traceBegin(Trace.TRACE_TAG_APP, "getService "+ name);
         try {
             IBinder service = sCache.get(name);
             if (service != null) {
+                Trace.traceEnd(Trace.TRACE_TAG_APP);
                 return service;
             } else {
-                return Binder.allowBlocking(rawGetService(name));
+                Trace.traceBegin(Trace.TRACE_TAG_APP, "getService_rawGetService "+ name);
+                IBinder out = Binder.allowBlocking(rawGetService(name));
+                Trace.traceEnd(Trace.TRACE_TAG_APP);
+                Trace.traceEnd(Trace.TRACE_TAG_APP);
+                return out;
             }
         } catch (RemoteException e) {
             Log.e(TAG, "error in getService", e);
         }
+        Trace.traceEnd(Trace.TRACE_TAG_APP);
+
         return null;
     }
 
     /** @hide */
     public static IBinder getService$ravenwood(String name) {
+        Trace.traceBegin(Trace.TRACE_TAG_APP, "getService$ravenwood "+ name);
         synchronized (ServiceManager.class) {
             // Ravenwood is a single-process environment, so it only needs to store locally
-            return Preconditions.requireNonNullViaRavenwoodRule(sCache$ravenwood).get(name);
+            IBinder out = Preconditions.requireNonNullViaRavenwoodRule(sCache$ravenwood).get(name);
+            Trace.traceEnd(Trace.TRACE_TAG_APP);
+            return out;
         }
     }
 
