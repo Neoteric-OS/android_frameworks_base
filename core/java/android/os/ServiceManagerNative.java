@@ -17,6 +17,7 @@
 package android.os;
 
 import android.compat.annotation.UnsupportedAppUsage;
+import android.util.Log;
 
 /**
  * Native implementation of the service manager.  Most clients will only
@@ -60,8 +61,12 @@ class ServiceManagerProxy implements IServiceManager {
     // TODO(b/355394904): This function has been deprecated, please use getService2 instead.
     @UnsupportedAppUsage
     public IBinder getService(String name) throws RemoteException {
+        Trace.traceBegin(Trace.TRACE_TAG_APP, "ServiceManagerProxy getService "+ name);
+        Log.e("ServiceManagerNative", "ServiceManagerProxy getService "+ name);
+        IBinder out = checkService(name).getBinder();
+        Trace.traceEnd(Trace.TRACE_TAG_APP);
         // Same as checkService (old versions of servicemanager had both methods).
-        return checkService(name).getBinder();
+        return out;
     }
 
     public Service getService2(String name) throws RemoteException {
@@ -70,7 +75,11 @@ class ServiceManagerProxy implements IServiceManager {
     }
 
     public Service checkService(String name) throws RemoteException {
-        return mServiceManager.checkService(name);
+        Trace.traceBegin(Trace.TRACE_TAG_APP, "ServiceManagerProxy checkService "+ name);
+        Log.e("ServiceManagerNative", "ServiceManagerProxy checkService "+ name);
+        Service out = mServiceManager.checkService(name);
+        Trace.traceEnd(Trace.TRACE_TAG_APP);
+        return out;
     }
 
     public void addService(String name, IBinder service, boolean allowIsolated, int dumpPriority)
