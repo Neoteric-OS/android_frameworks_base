@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd5ba34d_a9f9f030",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-08-16T17:58:53Z",
+      "side": 1,
+      "message": "Need to clarify whether the intention was to modify ownership of JobScheduler only.\nIf so, then we need to add an OWNERS file at frameworks/base/apex/jobscheduler/service/java/com/android/server/job/\n\napex/jobscheduler is just a placeholder name for this whole jar.",
+      "revId": "36d46ca083eb270049be03d1324f20b61fa93a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8426d67e_f6ee7356",
