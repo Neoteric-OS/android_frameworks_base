@@ -51,6 +51,7 @@ import android.telephony.ims.MediaQualityStatus;
 import android.telephony.ims.RcsUceAdapter;
 import android.telephony.ims.feature.MmTelFeature;
 import android.telephony.ims.feature.RcsFeature;
+import android.os.Trace;
 
 import com.android.internal.telephony.ICarrierConfigLoader;
 import com.android.internal.telephony.flags.Flags;
@@ -11125,14 +11126,19 @@ public class CarrierConfigManager {
     @Deprecated
     public PersistableBundle getConfigForSubId(int subId) {
         try {
+            Trace.traceBegin(Trace.TRACE_TAG_APP, "getConfigForSubId1");
             ICarrierConfigLoader loader = getICarrierConfigLoader();
+            Trace.traceEnd(Trace.TRACE_TAG_APP);
+            Trace.traceBegin(Trace.TRACE_TAG_APP, "getConfigForSubId2");
             if (loader == null) {
                 Rlog.w(TAG, "Error getting config for subId " + subId
                         + " ICarrierConfigLoader is null");
                 return null;
             }
-            return loader.getConfigForSubIdWithFeature(subId, mContext.getOpPackageName(),
+            PersistableBundle out = loader.getConfigForSubIdWithFeature(subId, mContext.getOpPackageName(),
                     mContext.getAttributionTag());
+            Trace.traceEnd(Trace.TRACE_TAG_APP);
+            return out;
         } catch (RemoteException ex) {
             Rlog.e(TAG, "Error getting config for subId " + subId + ": " + ex);
         }

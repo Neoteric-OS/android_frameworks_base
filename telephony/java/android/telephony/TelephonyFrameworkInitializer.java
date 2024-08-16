@@ -28,6 +28,8 @@ import android.telephony.satellite.SatelliteManager;
 
 import com.android.internal.telephony.flags.Flags;
 import com.android.internal.util.Preconditions;
+import android.util.Log;
+import android.os.Trace;
 
 
 /**
@@ -83,8 +85,14 @@ public class TelephonyFrameworkInitializer {
         SystemServiceRegistry.registerContextAwareService(
                 Context.CARRIER_CONFIG_SERVICE,
                 CarrierConfigManager.class,
-                context -> hasSystemFeature(context, PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION)
-                        ? new CarrierConfigManager(context) : null
+                context -> {
+                        Trace.traceBegin(Trace.TRACE_TAG_APP, "CarrierConfigManager");
+                        Log.d("TelephonyFrameworkInitializer","carrier_config registration2 !!! "  + context.getClass().getName() + " " + Log.getStackTraceString(new Exception()));
+                        CarrierConfigManager out = hasSystemFeature(context, PackageManager.FEATURE_TELEPHONY_SUBSCRIPTION)
+                        ? new CarrierConfigManager(context) : null;
+                        Trace.traceEnd(Trace.TRACE_TAG_APP);
+                        return out;
+                }
         );
         SystemServiceRegistry.registerContextAwareService(
                 Context.EUICC_SERVICE,

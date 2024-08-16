@@ -252,6 +252,7 @@ import android.view.translation.ITranslationManager;
 import android.view.translation.TranslationManager;
 import android.view.translation.UiTranslationManager;
 import android.webkit.WebViewBootstrapFrameworkInitializer;
+import android.os.Trace;
 
 import com.android.internal.R;
 import com.android.internal.app.IAppOpsService;
@@ -1715,6 +1716,10 @@ public final class SystemServiceRegistry {
         if (fetcher == null) {
             return null;
         }
+        if (name == "carrier_config") {
+            Log.d(TAG,"get carrier_config !!! "  + fetcher.getClass().getName() + " " + Log.getStackTraceString(new Exception()));
+        }
+
 
         final Object ret = fetcher.getService(ctx);
         if (sEnableServiceNotFoundWtf && ret == null) {
@@ -1770,6 +1775,9 @@ public final class SystemServiceRegistry {
             return null;
         }
         final String serviceName = SYSTEM_SERVICE_NAMES.get(serviceClass);
+        if (serviceName == "carrier_config") {
+            Log.d(TAG,"carrier_config !!!" + Log.getStackTraceString(new Exception()));
+        }
         if (sEnableServiceNotFoundWtf && serviceName == null) {
             // This should be a caller bug.
             Slog.wtf(TAG, "Unknown manager requested: " + serviceClass.getCanonicalName());
@@ -1783,6 +1791,9 @@ public final class SystemServiceRegistry {
      */
     private static <T> void registerService(@NonNull String serviceName,
             @NonNull Class<T> serviceClass, @NonNull ServiceFetcher<T> serviceFetcher) {
+        if (serviceName == "carrier_config") {
+                Log.d(TAG,"carrier_config registration !!!" + Log.getStackTraceString(new Exception()));
+        }
         SYSTEM_SERVICE_NAMES.put(serviceClass, serviceName);
         SYSTEM_SERVICE_FETCHERS.put(serviceName, serviceFetcher);
         SYSTEM_SERVICE_CLASS_NAMES.put(serviceName, serviceClass.getSimpleName());
@@ -2079,6 +2090,7 @@ public final class SystemServiceRegistry {
         @Override
         @SuppressWarnings("unchecked")
         public final T getService(ContextImpl ctx) {
+            Trace.traceBegin(Trace.TRACE_TAG_APP, "CachedServiceFetcher_getService_1");
             final Object[] cache = ctx.mServiceCache;
             final int[] gates = ctx.mServiceInitializationStateArray;
             boolean interrupted = false;
@@ -2163,6 +2175,7 @@ public final class SystemServiceRegistry {
             if (interrupted) {
                 Thread.currentThread().interrupt();
             }
+            Trace.traceEnd(Trace.TRACE_TAG_APP);
             return ret;
         }
 
