@@ -113,5 +113,4 @@ interface INfcAdapter
     void clearPreference();
     void setScreenState();
     void checkFirmware();
-    List<String> fetchActiveNfceeList();
 }
