@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8426d67e_f6ee7356",
+        "filename": "apex/jobscheduler/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-08-16T17:55:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we should add this.\nThis is for the whole apex, which contains classes from different components.\n\nFrom [cs](https://source.corp.google.com/search?q\u003df:OWNERS%20%22apex%2Fjobscheduler%2FOWNERS%22\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20b:main), the main ones are:\n- AppStateTracker\n- DeviceIdleController\n- AlarmManager\n- JobScheduler\n\nand their tests.",
+      "revId": "36d46ca083eb270049be03d1324f20b61fa93a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
