@@ -2837,4 +2837,9 @@ public class AudioDeviceBroker {
     void clearDeviceInventory() {
         mDeviceInventory.clearDeviceInventory();
     }
+
+    @GuardedBy("mDeviceBroker.mSetModeLock")
+    AudioModeInfo getModeOwnerInfo(){
+        return mAudioModeOwner;
+    }
 }

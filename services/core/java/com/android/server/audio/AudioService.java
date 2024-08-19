@@ -6115,6 +6115,7 @@ public class AudioService extends IAudioService.Stub
         int uid = 0;
         int pid = 0;
         SetModeDeathHandler currentModeHandler = getAudioModeOwnerHandler();
+        AudioDeviceBroker.AudioModeInfo audioModeInfo = mDeviceBroker.getModeOwnerInfo();
         if (currentModeHandler != null) {
             mode = currentModeHandler.getMode();
             uid = currentModeHandler.getUid();
@@ -6170,6 +6171,12 @@ public class AudioService extends IAudioService.Stub
             } else {
                 Log.w(TAG, "onUpdateAudioMode: failed to set audio mode to: " + mode);
             }
+        }
+        if (mode != mMode.get() || force || (mode != AudioSystem.MODE_NORMAL
+                     && mode == mMode.get() && audioModeInfo.mUid != uid)) {
+            // when entering RINGTONE, IN_CALL or IN_COMMUNICATION mode, clear all SCO
+            // connections not started by the application changing the mode when pid changes
+            mDeviceBroker.postSetModeOwner(mode, pid, uid);
         }
     }
 
