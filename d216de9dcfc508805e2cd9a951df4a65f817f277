@@ -89,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8dec4f8_5271fbfc",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2024-08-19T08:18:30Z",
+      "side": 1,
+      "message": "@brup@google.com\nThank you for your comment.\n\nThis string is being used in settings and please refer the other commit.\n2300543: Add keep_adb_connection on TvSettings | https://android-review.googlesource.com/c/platform/packages/apps/TvSettings/+/2300543",
+      "parentUuid": "e6715d5d_b5679fb9",
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a05534f_fded98bc",
         "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
         "patchSetId": 7
@@ -124,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "33a01bac_7d302ae0",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3734,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2024-08-19T08:18:30Z",
+      "side": 1,
+      "message": "No problem with adding log as you suggested. is it OK without DEBUG flag?",
+      "parentUuid": "7a05534f_fded98bc",
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f141281_f568be26",
         "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
         "patchSetId": 7
@@ -153,6 +189,24 @@
           ]
         }
       ],
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd8e518c_481af6fc",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3735,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2024-08-19T08:18:30Z",
+      "side": 1,
+      "message": "Let me check and update test side later.",
+      "parentUuid": "4f141281_f568be26",
       "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
