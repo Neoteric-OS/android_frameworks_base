@@ -16,6 +16,23 @@
       "message": "Can you help me to review? thank you!",
       "revId": "29a7ea475709c8c57720894b4c1dfc7f44223f45",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d285e54a_6798e8b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2024-08-19T17:22:10Z",
+      "side": 1,
+      "message": "I am not sure this is the right policy. The SCO route is already ignored if no SCO device is connected. We do not do this for other device categories like LE or wired headsets.",
+      "revId": "29a7ea475709c8c57720894b4c1dfc7f44223f45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
