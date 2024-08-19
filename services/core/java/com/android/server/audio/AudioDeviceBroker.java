@@ -2787,4 +2787,12 @@ public class AudioDeviceBroker {
         mDeviceInventory.clearDeviceInventory();
     }
 
+<<<<<<< PATCH SET (692c6f Update the Owner according to the conditions when mode chang)
+    @GuardedBy("mDeviceBroker.mSetModeLock")
+    AudioModeInfo getModeOwnerInfo(){
+        return mAudioModeOwner;
+    }
+||||||| BASE
+=======
+>>>>>>> BASE      (60ad43 Merge "Do not call getStagedApexInfos repeatedly" into main)
 }
