@@ -1219,6 +1219,20 @@ public class AudioDeviceBroker {
         }
     }
 
+    /*package*/ void clearScoCommunicationRouteClients(String eventSource) {
+        synchronized (mDeviceStateLock) {
+            for (CommunicationRouteClient cl : mCommunicationRouteClients) {
+                if (cl.mDevice != null
+                        && cl.mDevice.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_SCO) {
+                    Log.i(TAG, "clearScoCommunicationRouteClients: " + cl + " " + eventSource);
+                    cl.unregisterDeathRecipient();
+                    removeMsgForCheckClientState(cl.getUid());
+                    mCommunicationRouteClients.remove(cl);
+                }
+            }
+        }
+    }
+
     /*package*/ AudioRoutesInfo startWatchingRoutes(IAudioRoutesObserver observer) {
         synchronized (mDeviceStateLock) {
             return mDeviceInventory.startWatchingRoutes(observer);
