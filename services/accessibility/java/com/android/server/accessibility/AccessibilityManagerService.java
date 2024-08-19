@@ -51,6 +51,7 @@ import static com.android.internal.accessibility.util.AccessibilityStatsLogUtils
 import static com.android.internal.util.FunctionalUtils.ignoreRemoteException;
 import static com.android.internal.util.function.pooled.PooledLambda.obtainMessage;
 import static com.android.server.accessibility.AccessibilityUserState.doesShortcutTargetsStringContain;
+import static com.android.server.pm.UserManagerService.enforceCurrentUserIfVisibleBackgroundEnabled;
 import static com.android.settingslib.RestrictedLockUtils.EnforcedAdmin;
 
 import android.accessibilityservice.AccessibilityGestureEvent;
@@ -296,6 +297,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
 
     private final PowerManager mPowerManager;
 
+    private final UserManager mUserManager;
+
     private final WindowManagerInternal mWindowManagerService;
 
     private final AccessibilitySecurityPolicy mSecurityPolicy;
@@ -494,6 +497,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         super(permissionEnforcer);
         mContext = context;
         mPowerManager =  (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        mUserManager = mContext.getSystemService(UserManager.class);
         mWindowManagerService = LocalServices.getService(WindowManagerInternal.class);
         mTraceManager = AccessibilityTraceManager.getInstance(
                 mWindowManagerService.getAccessibilityController(), this, mLock);
@@ -529,6 +533,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         super(PermissionEnforcer.fromContext(context));
         mContext = context;
         mPowerManager = context.getSystemService(PowerManager.class);
+        mUserManager = context.getSystemService(UserManager.class);
         mWindowManagerService = LocalServices.getService(WindowManagerInternal.class);
         mTraceManager = AccessibilityTraceManager.getInstance(
                 mWindowManagerService.getAccessibilityController(), this, mLock);
@@ -1258,6 +1263,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     @EnforcePermission(MANAGE_ACCESSIBILITY)
     public void registerSystemAction(RemoteAction action, int actionId) {
         registerSystemAction_enforcePermission();
+        int currentUserId;
+        synchronized (mLock) {
+            currentUserId = mCurrentUserId;
+        }
+        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
         if (mTraceManager.isA11yTracingEnabledForTypes(FLAGS_ACCESSIBILITY_MANAGER)) {
             mTraceManager.logTrace(LOG_TAG + ".registerSystemAction",
                     FLAGS_ACCESSIBILITY_MANAGER, "action=" + action + ";actionId=" + actionId);
@@ -1274,6 +1284,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     @EnforcePermission(MANAGE_ACCESSIBILITY)
     public void unregisterSystemAction(int actionId) {
         unregisterSystemAction_enforcePermission();
+        int currentUserId;
+        synchronized (mLock) {
+            currentUserId = mCurrentUserId;
+        }
+        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
         if (mTraceManager.isA11yTracingEnabledForTypes(FLAGS_ACCESSIBILITY_MANAGER)) {
             mTraceManager.logTrace(LOG_TAG + ".unregisterSystemAction",
                     FLAGS_ACCESSIBILITY_MANAGER, "actionId=" + actionId);
@@ -1601,6 +1616,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     @EnforcePermission(STATUS_BAR_SERVICE)
     public void notifyAccessibilityButtonClicked(int displayId, String targetName) {
         notifyAccessibilityButtonClicked_enforcePermission();
+        int currentUserId;
+        synchronized (mLock) {
+            currentUserId = mCurrentUserId;
+        }
+        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
         if (mTraceManager.isA11yTracingEnabledForTypes(FLAGS_ACCESSIBILITY_MANAGER)) {
             mTraceManager.logTrace(LOG_TAG + ".notifyAccessibilityButtonClicked",
                     FLAGS_ACCESSIBILITY_MANAGER,
@@ -1629,6 +1649,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     @EnforcePermission(STATUS_BAR_SERVICE)
     public void notifyAccessibilityButtonVisibilityChanged(boolean shown) {
         notifyAccessibilityButtonVisibilityChanged_enforcePermission();
+        int currentUserId;
+        synchronized (mLock) {
+            currentUserId = mCurrentUserId;
+        }
+        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
         if (mTraceManager.isA11yTracingEnabledForTypes(FLAGS_ACCESSIBILITY_MANAGER)) {
             mTraceManager.logTrace(LOG_TAG + ".notifyAccessibilityButtonVisibilityChanged",
                     FLAGS_ACCESSIBILITY_MANAGER, "shown=" + shown);
@@ -1969,9 +1994,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                         this, 0, oldUserState.mUserId));
             }
 
-            // Announce user changes only if more that one exist.
-            UserManager userManager = (UserManager) mContext.getSystemService(Context.USER_SERVICE);
-            final boolean announceNewUser = userManager.getUsers().size() > 1;
+            // Announce user changes only if more than one exist.
+            final boolean announceNewUser = mUserManager.getUsers().size() > 1;
 
             // The user changed.
             mCurrentUserId = userId;
@@ -2009,10 +2033,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         synchronized (mLock) {
             AccessibilityUserState userState = getCurrentUserStateLocked();
             if (userState.isHandlingAccessibilityEventsLocked()) {
-                UserManager userManager = (UserManager) mContext.getSystemService(
-                        Context.USER_SERVICE);
                 String message = mContext.getString(R.string.user_switched,
-                        userManager.getUserInfo(mCurrentUserId).name);
+                        mUserManager.getUserInfo(mCurrentUserId).name);
                 AccessibilityEvent event = AccessibilityEvent.obtain(
                         AccessibilityEvent.TYPE_ANNOUNCEMENT);
                 event.getText().add(message);
@@ -3135,6 +3157,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         }
     }
 
+    @GuardedBy("mLock")
     private void updateWindowsForAccessibilityCallbackLocked(AccessibilityUserState userState) {
         // We observe windows for accessibility only if there is at least
         // one bound service that can retrieve window content that specified
@@ -3161,6 +3184,14 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         for (int i = 0; i < displays.size(); i++) {
             final Display display = displays.get(i);
             if (display != null) {
+                // When supporting visible background users, only track windows on the display
+                // assigned to the current user. The proxy displays are registered only to the
+                // current user.
+                if (UserManager.isVisibleBackgroundUsersEnabled()
+                        && !mProxyManager.isProxyedDisplay(display.getDisplayId())
+                        && !mUmi.isUserVisible(mCurrentUserId, display.getDisplayId())) {
+                    continue;
+                }
                 if (observingWindows) {
                     mA11yWindowManager.startTrackingWindows(display.getDisplayId(),
                             mProxyManager.isProxyedDisplay(display.getDisplayId()));
@@ -4788,6 +4819,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             throws RemoteException {
         registerProxyForDisplay_enforcePermission();
         mSecurityPolicy.checkForAccessibilityPermissionOrRole();
+        int currentUserId;
+        synchronized (mLock) {
+            currentUserId = mCurrentUserId;
+        }
+        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
         if (client == null) {
             return false;
         }
