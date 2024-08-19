@@ -1081,6 +1081,10 @@ public class BackgroundActivityStartController {
             // Allow if callingUid is top of stack.
             bas = checkTopActivityForAsm(targetTask, callingUid,
                     /*sourceRecord*/null, bas);
+            if (!bas.mTopActivityMatchesSource && isHomeApp(realCallingUid, null)
+                    && targetTask.getTopMostActivity() == null) {
+                bas.matchesSource();
+            }
         } else {
             // We're launching from a non-visible activity. Has any visible app opted in?
             TaskDisplayArea displayArea = targetTask != null && targetTask.getDisplayArea() != null
