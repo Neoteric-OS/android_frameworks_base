@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ed004fd_2f2e2684",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2024-08-20T20:40:12Z",
+      "side": 1,
+      "message": "Is there an associated bug?\nHow this functionality is tested?",
+      "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0a383b22_2ea48c05",
@@ -99,6 +116,75 @@
       "writtenOn": "2024-08-20T01:26:54Z",
       "side": 1,
       "message": "Hi AOSP team, can you help me to review? thank you!",
+      "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13cd62f8_80702287",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2024-08-20T20:40:12Z",
+      "side": 1,
+      "message": "I would suggest naming this `BT_HEARING_AID` for better readability.",
+      "range": {
+        "startLine": 2177,
+        "startChar": 36,
+        "endLine": 2177,
+        "endChar": 48
+      },
+      "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "594fea5c_39e9d1cb",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2024-08-20T20:40:12Z",
+      "side": 1,
+      "message": "Where is this method defined?",
+      "range": {
+        "startLine": 966,
+        "startChar": 12,
+        "endLine": 966,
+        "endChar": 46
+      },
+      "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87fab7d4_eac56af5",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2024-08-20T20:40:12Z",
+      "side": 1,
+      "message": "What is \u0027device\u0027 here?",
+      "range": {
+        "startLine": 2396,
+        "startChar": 62,
+        "endLine": 2396,
+        "endChar": 68
+      },
       "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
