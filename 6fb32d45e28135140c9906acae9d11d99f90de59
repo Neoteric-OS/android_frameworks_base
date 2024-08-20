@@ -33,6 +33,24 @@
       "message": "Please help to check the reason of PV-1,thanks!",
       "revId": "6fb32d45e28135140c9906acae9d11d99f90de59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3537599c_40bfb874",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2024-08-20T06:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "799bf498_33fa2434",
+      "revId": "6fb32d45e28135140c9906acae9d11d99f90de59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
