@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e794e68d_8a50eba8",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1958248
+      },
+      "writtenOn": "2024-08-21T19:52:27Z",
+      "side": 1,
+      "message": "@pomini@google.com can you take a look at this? I\u0027m not sure why it works, since this change sets `imageWallpaper` to true if the default component is a live wallpaper and then proceeds with color extraction that is designed to work with image wallpapers only.",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 541,
+        "endChar": 0
+      },
+      "revId": "1c9cce20536cef5fd4b0b5ee25c1ef1a0b6a1f8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
