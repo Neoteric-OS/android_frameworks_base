@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f17f219_829f33a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1970830
+      },
+      "writtenOn": "2024-08-21T02:32:26Z",
+      "side": 1,
+      "message": "Dear Eric Laurent and Mikhail Naganov, I have updated the code, problem description, bug connections and test items. Please review again. Thank you.",
+      "revId": "2e17fb956a774cd41a42f677f7c20f6f875bfd2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

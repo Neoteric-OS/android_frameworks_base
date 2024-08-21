@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6432f3c0_6cf1fa6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1970830
+      },
+      "writtenOn": "2024-08-21T02:32:26Z",
+      "side": 1,
+      "message": "This problem has been reproduced internally by Xiaomi. When a hearing aid is connected to play music, the sound comes out of the speaker briefly after turning off Bluetooth.\n        // app start play music\n        行 633046: 07-25 15:02:37.304 10273 24247 29371 I AudioTrack: start(125): prior state:STATE_PAUSED packageName: com.miui.player\n        行 633472: 07-25 15:02:37.352  1041 17439 17504 D APM_AudioPolicyManager: startOutput() output 165, stream 3, session 58065 appname com.miui.player\n        // bt profile disconnect \n        行 673599: 07-25 15:02:45.236  1000  3651  8104 I AS.BtHelper: BT profile HEARING_AID disconnected\n        // HEARING_AID disconnect no delay\n        行 673693: 07-25 15:02:45.237  1041 17439 17627 D MiAudioPolicyManager: setDeviceConnectionStateInt() device: 0x8000000, state 0, address 7E:55:4C:97:9A:96 name 苏\u0027的助听器 format 0x0\n        // broadcast after 50ms\n        行 676095: 07-25 15:02:45.288  1000  3651  8104 I AS.AudioDeviceBroker: broadcast ACTION_AUDIO_BECOMING_NOISY\n\n        // output change from bt hal to audio hal, and device change to speaker\n        行 676365: 07-25 15:02:45.300  1041 17439 17504 D APM_AudioPolicyManager: startOutput() output 21, stream 3, session 58065 appname com.miui.player\n        行 677070: 07-25 15:02:45.306  1041 17439 17504 D APM_AudioPolicyManager: setOutputDevices caller startSource[[portId:6][io:21, deep_buffer_out]]  output 21 device {AUDIO_DEVICE_OUT_SPEAKER, @:} delayMs 0\n\n        // app stop play music \n        行 678329: 07-25 15:02:45.779 10273 24247 29371 I AudioTrack: pause(sessionID\u003d58065) pause(127): prior state:STATE_ACTIVE packageName: com.miui.player\n        行 678481: 07-25 15:02:45.981  1041 17439 17504 D APM_AudioPolicyManager: stopOutput portId 127\n        行 678482: 07-25 15:02:45.982  1041 17439 17504 D APM_AudioPolicyManager: stopOutput() output 21, stream 3, session 58065",
+      "parentUuid": "9ed004fd_2f2e2684",
+      "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0a383b22_2ea48c05",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -143,6 +161,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7886c91c_f25fbd76",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2177,
+      "author": {
+        "id": 1970830
+      },
+      "writtenOn": "2024-08-21T02:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13cd62f8_80702287",
+      "range": {
+        "startLine": 2177,
+        "startChar": 36,
+        "endLine": 2177,
+        "endChar": 48
+      },
+      "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "594fea5c_39e9d1cb",
@@ -166,6 +208,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2901df8c_161ff07c",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1970830
+      },
+      "writtenOn": "2024-08-21T02:32:26Z",
+      "side": 1,
+      "message": "The function name is wrong, sorry.",
+      "parentUuid": "594fea5c_39e9d1cb",
+      "range": {
+        "startLine": 966,
+        "startChar": 12,
+        "endLine": 966,
+        "endChar": 46
+      },
+      "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87fab7d4_eac56af5",
@@ -179,6 +245,30 @@
       "writtenOn": "2024-08-20T20:40:12Z",
       "side": 1,
       "message": "What is \u0027device\u0027 here?",
+      "range": {
+        "startLine": 2396,
+        "startChar": 62,
+        "endLine": 2396,
+        "endChar": 68
+      },
+      "revId": "2612745d21f961d391d2c03ab1a0b85dcd73797f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc35b554_7837bf8d",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1970830
+      },
+      "writtenOn": "2024-08-21T02:32:26Z",
+      "side": 1,
+      "message": "The version integrated internally by Xiaomi did not add mConnectedDevices.remove. In order to keep it consistent with makeA2dpDeviceUnavailableLater/ makeLeAudioDeviceUnavailableLater, this was added, but I added it wrong, sorry.",
+      "parentUuid": "87fab7d4_eac56af5",
       "range": {
         "startLine": 2396,
         "startChar": 62,
