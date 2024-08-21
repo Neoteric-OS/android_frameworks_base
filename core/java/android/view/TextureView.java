@@ -509,7 +509,16 @@ public class TextureView extends View {
     @Override
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
+        updateStatus(visibility);
+    }
 
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+        updateStatus(visibility);
+    }
+
+    private void updateStatus(int visibility) {
         if (mSurface != null) {
             // When the view becomes invisible, stop updating it, it's a waste of CPU
             // To cancel updates, the easiest thing to do is simply to remove the
