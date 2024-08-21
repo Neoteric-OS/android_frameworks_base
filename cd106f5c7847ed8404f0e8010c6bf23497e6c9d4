@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b529ca5a_0d3cd3ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2024-08-21T21:08:27Z",
+      "side": 1,
+      "message": "Jean-Michel, could you please review/approve this CL? I had to rebase it on top of the cherry-picks from internal, and then amend.",
+      "revId": "cd106f5c7847ed8404f0e8010c6bf23497e6c9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
