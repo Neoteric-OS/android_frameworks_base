@@ -86,6 +86,24 @@
       "parentUuid": "8c3c9653_2600c977",
       "revId": "6fb32d45e28135140c9906acae9d11d99f90de59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7b9a8a8_502c008d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2024-08-21T14:29:29Z",
+      "side": 1,
+      "message": "We have also found other scene issues, such as split screen exiting and dark theme switching, as detailed in the issue. This fixed change can also solve the above issues, which we have verified in our built version, please help to check it, thanks!",
+      "parentUuid": "20cda121_89872466",
+      "revId": "6fb32d45e28135140c9906acae9d11d99f90de59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
