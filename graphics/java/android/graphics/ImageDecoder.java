@@ -895,6 +895,7 @@ public final class ImageDecoder implements AutoCloseable {
     public static boolean isMimeTypeSupported(@NonNull String mimeType) {
         Objects.requireNonNull(mimeType);
         switch (mimeType.toLowerCase(Locale.US)) {
+            case "image/ktx":
             case "image/png":
             case "image/jpeg":
             case "image/webp":
@@ -1622,6 +1623,20 @@ public final class ImageDecoder implements AutoCloseable {
         }
 
         checkSubset(mDesiredWidth, mDesiredHeight, mCropRect);
+
+        // Some limitations apply to KTX Bitmaps because they are loaded directly
+        // to hardware buffers.
+        if (getMimeType().equals("image/ktx")) {
+            if (animated) {
+                throw new IllegalStateException("Cannot make animated KTX Bitmap!");
+            }
+            if (mMutable) {
+                throw new IllegalStateException("Cannot make mutable KTX Bitmap!");
+            }
+            if (mPostProcessor != null) {
+                throw new IllegalStateException("Cannot post-process KTX Bitmap!");
+            }
+        }
 
         // animated ignores the allocator, so no need to check for incompatible
         // fields.

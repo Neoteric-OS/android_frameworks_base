@@ -85,6 +85,8 @@ const char* getMimeType(SkEncodedImageFormat format) {
             return "image/vnd.wap.wbmp";
         case SkEncodedImageFormat::kDNG:
             return "image/x-adobe-dng";
+        case SkEncodedImageFormat::kKTX:
+            return "image/ktx";
         default:
             return nullptr;
     }
