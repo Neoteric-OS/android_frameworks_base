@@ -68,6 +68,24 @@
       "message": "Does this change affect the appearance of other transitions capturing screenshots of HDR, like Recents?",
       "revId": "6fb32d45e28135140c9906acae9d11d99f90de59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20cda121_89872466",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-08-21T02:03:30Z",
+      "side": 1,
+      "message": "Recents task snapshot is handled by [another method](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/wm/AbsAppSnapshotController.java;l\u003d276;drc\u003dfb5f9153d89df28e89e48b2d92f09eee249ea5b3).",
+      "parentUuid": "8c3c9653_2600c977",
+      "revId": "6fb32d45e28135140c9906acae9d11d99f90de59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
