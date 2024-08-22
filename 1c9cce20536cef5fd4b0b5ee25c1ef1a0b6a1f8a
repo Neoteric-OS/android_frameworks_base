@@ -46,6 +46,30 @@
       },
       "revId": "1c9cce20536cef5fd4b0b5ee25c1ef1a0b6a1f8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97024e58_5a368ee3",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2024-08-22T11:41:38Z",
+      "side": 1,
+      "message": "Actually, in this case the system will think that we\u0027re trying to extract the colors of the default ImageWallpaper, so it will go and try to find the default bitmap (see WallpaperManager#openDefaultWallpaper). So unless the default wallpaper bitmap has the same colors as the default live wallpaper, this may give inconsistent results.",
+      "parentUuid": "d131d860_ded53770",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 541,
+        "endChar": 0
+      },
+      "revId": "1c9cce20536cef5fd4b0b5ee25c1ef1a0b6a1f8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
