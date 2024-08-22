@@ -22,6 +22,30 @@
       },
       "revId": "1c9cce20536cef5fd4b0b5ee25c1ef1a0b6a1f8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d131d860_ded53770",
+        "filename": "services/core/java/com/android/server/wallpaper/WallpaperManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1963740
+      },
+      "writtenOn": "2024-08-22T11:37:30Z",
+      "side": 1,
+      "message": "@mattias.nilsson is this CL fixing your issue? If the wallpaper is a default component but not image wallpaper, the check `wallpaper.getCropFile().exists()` is not supposed to pass; if there were a crop file that would be an unexpected bitmap from a previous ImageWallpaper",
+      "parentUuid": "e794e68d_8a50eba8",
+      "range": {
+        "startLine": 539,
+        "startChar": 0,
+        "endLine": 541,
+        "endChar": 0
+      },
+      "revId": "1c9cce20536cef5fd4b0b5ee25c1ef1a0b6a1f8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
