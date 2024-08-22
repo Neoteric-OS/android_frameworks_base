@@ -50,6 +50,46 @@
       "message": "Friendly ping.",
       "revId": "70100165148194a029c4b8e558ed3da108b7ef0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4241baf0_b50dd914",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-08-22T21:25:05Z",
+      "side": 1,
+      "message": "Seems like a fine change overall. I\u0027m just wondering about the getThemeAttr call",
+      "revId": "70100165148194a029c4b8e558ed3da108b7ef0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a2f829c_47582655",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardStatusBarView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-08-22T21:25:05Z",
+      "side": 1,
+      "message": "Does this need to use the `Utils.getThemeAttr` here as well? I\u0027m wondering why the fallbackTheme uses it but this one doesn\u0027t",
+      "range": {
+        "startLine": 434,
+        "startChar": 37,
+        "endLine": 434,
+        "endChar": 44
+      },
+      "revId": "70100165148194a029c4b8e558ed3da108b7ef0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
