@@ -16,6 +16,24 @@
       "message": "This looks correct to me. Is there a way to move the random GC triggering out of the constructor to avoid thre repeated lock acquisition? My vague recollection is that the \"call constructor\" path is fairly frequent?\n\nI don\u0027t think the actual GC triggering call even needs Java heap access. since it just enqueues a request for later. But having frameworks call ART except through Java seems somewhat hard.",
       "revId": "0186839fe0b15c0ce705ffba6a7bfbf5df627646",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b55b31f2_8bea16e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-22T00:12:12Z",
+      "side": 1,
+      "message": "I agree with you (and what you said on the bug) that we probably want to remove this GC path. Though, I think you also added it? I\u0027m looking at http://r.android.com/3127477 with Yu-Ting to try to avoid relying on the GC to delete binder objects, so that may be able to help later. Though, yeah, there are a few follow-up changes we should do.\n\nAs for the double-lock, it\u0027s true that it\u0027s a frequent path, but this is a fine granularity lock specific to the binder, and it will only be contended if the same binder is sent out from a process on two threads at the same time, which is very rare. After that, while the binder has remote refs, this will only use one lock take.",
+      "parentUuid": "86816ff6_579e1172",
+      "revId": "0186839fe0b15c0ce705ffba6a7bfbf5df627646",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
