@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86816ff6_579e1172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-08-22T00:02:39Z",
+      "side": 1,
+      "message": "This looks correct to me. Is there a way to move the random GC triggering out of the constructor to avoid thre repeated lock acquisition? My vague recollection is that the \"call constructor\" path is fairly frequent?\n\nI don\u0027t think the actual GC triggering call even needs Java heap access. since it just enqueues a request for later. But having frameworks call ART except through Java seems somewhat hard.",
+      "revId": "0186839fe0b15c0ce705ffba6a7bfbf5df627646",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
