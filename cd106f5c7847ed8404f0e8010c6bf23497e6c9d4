@@ -16,6 +16,23 @@
       "message": "Jean-Michel, could you please review/approve this CL? I had to rebase it on top of the cherry-picks from internal, and then amend.",
       "revId": "cd106f5c7847ed8404f0e8010c6bf23497e6c9d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95c16dd6_d9b3fd13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2024-08-22T17:58:10Z",
+      "side": 1,
+      "message": "Eric or JM, could you please re-approve?",
+      "revId": "cd106f5c7847ed8404f0e8010c6bf23497e6c9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
