@@ -51,6 +51,24 @@
       ],
       "revId": "ec3055b79583f21068d4c9cccd7bfe14760b9a23",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12a9f10f_c166b374",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-08-22T15:40:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "99e02223_58b2c2f6",
+      "revId": "ec3055b79583f21068d4c9cccd7bfe14760b9a23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
