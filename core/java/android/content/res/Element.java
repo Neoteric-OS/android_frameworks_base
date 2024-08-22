@@ -322,7 +322,7 @@ public class Element {
                 break;
             case TAG_APPLICATION:
                 initializeCounter(TAG_PROFILEABLE, 100);
-                initializeCounter(TAG_USES_NATIVE_LIBRARY, 100);
+                initializeCounter(TAG_USES_NATIVE_LIBRARY, 500);
                 initializeCounter(TAG_RECEIVER, 1000);
                 initializeCounter(TAG_SERVICE, 1000);
                 initializeCounter(TAG_META_DATA, 1000);
