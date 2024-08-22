@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "33098e2d_3fc41853",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-08-22T20:41:56Z",
+      "side": 1,
+      "message": "Resetting the -2 to unblock once the issues are addressed.",
+      "revId": "36d46ca083eb270049be03d1324f20b61fa93a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8426d67e_f6ee7356",
         "filename": "apex/jobscheduler/OWNERS",
         "patchSetId": 1
@@ -49,6 +66,24 @@
       "side": 1,
       "message": "Understood. Thanks for helping to identify the additional components that live in this directory. I\u0027m in the process of making this OWNERS file more component-aware but am currently blocked on uploading the change due to: b/360353525",
       "parentUuid": "8426d67e_f6ee7356",
+      "revId": "36d46ca083eb270049be03d1324f20b61fa93a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09e968c5_f0bf2268",
+        "filename": "apex/jobscheduler/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-08-22T20:41:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "45798849_2d86daa2",
       "revId": "36d46ca083eb270049be03d1324f20b61fa93a0f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
