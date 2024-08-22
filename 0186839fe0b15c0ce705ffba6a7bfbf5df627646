@@ -34,6 +34,24 @@
       "parentUuid": "86816ff6_579e1172",
       "revId": "0186839fe0b15c0ce705ffba6a7bfbf5df627646",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0b02088_6ae2e5d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-08-22T00:32:23Z",
+      "side": 1,
+      "message": "I think I did add this particular path a long time ago, though it replaced another more frequent GC invocation. I\u0027m not sure whether that had the same ordering issue. It may be that @FastNative additions elsewhere actually enabled the reverse lock order. In any case, I have no objection to this fix for now.",
+      "parentUuid": "b55b31f2_8bea16e4",
+      "revId": "0186839fe0b15c0ce705ffba6a7bfbf5df627646",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
