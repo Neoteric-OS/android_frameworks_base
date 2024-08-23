@@ -2426,7 +2426,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     PowerManager.GO_TO_SLEEP_REASON_TIMEOUT);
         }
 
-        mWindowManagerInternal.registerAppTransitionListener(new AppTransitionListener() {
+        final var transitionListener = new AppTransitionListener(DEFAULT_DISPLAY) {
             @Override
             public int onAppTransitionStartingLocked(long statusBarAnimationStartTime,
                     long statusBarAnimationDuration) {
@@ -2460,7 +2460,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mLockAfterDreamingTransitionFinished = false;
                 }
             }
-        });
+        };
+        mWindowManagerInternal.registerAppTransitionListener(transitionListener);
 
         mKeyguardDrawnTimeout = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_keyguardDrawnTimeout);
