@@ -502,7 +502,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     final String launchedFromPackage; // always the package who started the activity.
     @Nullable
     final String launchedFromFeatureId; // always the feature in launchedFromPackage
-    private final int mLaunchSourceType; // original launch source type
+    int mLaunchSourceType; // latest launch source type
     final Intent intent;    // the original intent that generated us
     final String shortComponentName; // the short component name of the intent
     final String resolvedType; // as per original caller;
@@ -2473,6 +2473,10 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         return mLaunchSourceType == type;
     }
 
+    void updateLaunchSourceType(int launchFromUid, WindowProcessController caller) {
+        mLaunchSourceType = determineLaunchSourceType(launchFromUid, caller);
+    }
+
     private int determineLaunchSourceType(int launchFromUid, WindowProcessController caller) {
         if (launchFromUid == Process.SYSTEM_UID || launchFromUid == Process.ROOT_UID) {
             return LAUNCH_SOURCE_TYPE_SYSTEM;
@@ -4322,7 +4326,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     void finishRelaunching() {
-        mLetterboxUiController.setRelaunchingAfterRequestedOrientationChanged(false);
+        mAppCompatController.getAppCompatOrientationOverrides()
+                .setRelaunchingAfterRequestedOrientationChanged(false);
         mTaskSupervisor.getActivityMetricsLogger().notifyActivityRelaunched(this);
 
         if (mPendingRelaunchCount > 0) {
@@ -8358,7 +8363,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 mLastReportedConfiguration.getMergedConfiguration())) {
             ensureActivityConfiguration(false /* ignoreVisibility */);
             if (mPendingRelaunchCount > originalRelaunchingCount) {
-                mLetterboxUiController.setRelaunchingAfterRequestedOrientationChanged(true);
+                mAppCompatController.getAppCompatOrientationOverrides()
+                        .setRelaunchingAfterRequestedOrientationChanged(true);
             }
             if (mTransitionController.inPlayingTransition(this)) {
                 mTransitionController.mValidateActivityCompat.add(this);
@@ -8574,7 +8580,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
      */
     @ActivityInfo.SizeChangesSupportMode
     private int supportsSizeChanges() {
-        if (mLetterboxUiController.shouldOverrideForceNonResizeApp()) {
+        if (mAppCompatController.getAppCompatResizeOverrides()
+                .shouldOverrideForceNonResizeApp()) {
             return SIZE_CHANGES_UNSUPPORTED_OVERRIDE;
         }
 
@@ -8582,7 +8589,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             return SIZE_CHANGES_SUPPORTED_METADATA;
         }
 
-        if (mLetterboxUiController.shouldOverrideForceResizeApp()) {
+        if (mAppCompatController.getAppCompatResizeOverrides()
+                .shouldOverrideForceResizeApp()) {
             return SIZE_CHANGES_SUPPORTED_OVERRIDE;
         }
 
@@ -10667,7 +10675,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 mAppCompatController.getAppCompatOrientationOverrides()
                         .shouldIgnoreOrientationRequestLoop());
         proto.write(SHOULD_OVERRIDE_FORCE_RESIZE_APP,
-                mLetterboxUiController.shouldOverrideForceResizeApp());
+                mAppCompatController.getAppCompatResizeOverrides().shouldOverrideForceResizeApp());
         proto.write(SHOULD_ENABLE_USER_ASPECT_RATIO_SETTINGS,
                 mAppCompatController.getAppCompatAspectRatioOverrides()
                         .shouldEnableUserAspectRatioSettings());
