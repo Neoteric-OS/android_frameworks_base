@@ -90,6 +90,30 @@
       },
       "revId": "70100165148194a029c4b8e558ed3da108b7ef0e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07189738_a1684283",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/KeyguardStatusBarView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1275415
+      },
+      "writtenOn": "2024-08-23T02:03:27Z",
+      "side": 1,
+      "message": "I had thought there were some compatibility or OEM customization considerations here. In that case I think it makes sense to migrate to the latest theme.",
+      "parentUuid": "6a2f829c_47582655",
+      "range": {
+        "startLine": 434,
+        "startChar": 37,
+        "endLine": 434,
+        "endChar": 44
+      },
+      "revId": "70100165148194a029c4b8e558ed3da108b7ef0e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
