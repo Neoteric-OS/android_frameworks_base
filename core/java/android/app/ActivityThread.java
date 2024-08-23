@@ -2637,13 +2637,6 @@ public final class ActivityThread extends ClientTransactionHandler
                     } finally {
                         controller.onClientTransactionFinished();
                     }
-                    if (isSystem()) {
-                        // Client transactions inside system process are recycled on the client side
-                        // instead of ClientLifecycleManager to avoid being cleared before this
-                        // message is handled.
-                        transaction.recycle();
-                    }
-                    // TODO(lifecycler): Recycle locally scheduled transactions.
                     break;
                 case RELAUNCH_ACTIVITY:
                     handleRelaunchActivityLocally((IBinder) msg.obj);
@@ -3825,7 +3818,7 @@ public final class ActivityThread extends ClientTransactionHandler
                 + " req=" + requestCode + " res=" + resultCode + " data=" + data);
         final ArrayList<ResultInfo> list = new ArrayList<>();
         list.add(new ResultInfo(id, requestCode, resultCode, data, activityToken));
-        final ClientTransaction clientTransaction = ClientTransaction.obtain(mAppThread);
+        final ClientTransaction clientTransaction = new ClientTransaction(mAppThread);
         final ActivityResultItem activityResultItem = ActivityResultItem.obtain(
                 activityToken, list);
         clientTransaction.addTransactionItem(activityResultItem);
@@ -4621,7 +4614,7 @@ public final class ActivityThread extends ClientTransactionHandler
     }
 
     private void schedulePauseWithUserLeavingHint(ActivityClientRecord r) {
-        final ClientTransaction transaction = ClientTransaction.obtain(mAppThread);
+        final ClientTransaction transaction = new ClientTransaction(mAppThread);
         final PauseActivityItem pauseActivityItem = PauseActivityItem.obtain(r.token,
                 r.activity.isFinishing(), /* userLeaving */ true,
                 /* dontReport */ false, /* autoEnteringPip */ false);
@@ -4630,7 +4623,7 @@ public final class ActivityThread extends ClientTransactionHandler
     }
 
     private void scheduleResume(ActivityClientRecord r) {
-        final ClientTransaction transaction = ClientTransaction.obtain(mAppThread);
+        final ClientTransaction transaction = new ClientTransaction(mAppThread);
         final ResumeActivityItem resumeActivityItem = ResumeActivityItem.obtain(r.token,
                 /* isForward */ false, /* shouldSendCompatFakeFocus */ false);
         transaction.addTransactionItem(resumeActivityItem);
@@ -6255,7 +6248,7 @@ public final class ActivityThread extends ClientTransactionHandler
         final ActivityLifecycleItem lifecycleRequest =
                 TransactionExecutorHelper.getLifecycleRequestForCurrentState(r);
         // Schedule the transaction.
-        final ClientTransaction transaction = ClientTransaction.obtain(mAppThread);
+        final ClientTransaction transaction = new ClientTransaction(mAppThread);
         transaction.addTransactionItem(activityRelaunchItem);
         transaction.addTransactionItem(lifecycleRequest);
         executeTransaction(transaction);
