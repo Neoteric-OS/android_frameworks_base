@@ -16,6 +16,7 @@
 package android.nfc;
 
 import android.nfc.Tag;
+import android.os.PersistableBundle;
 import android.os.ResultReceiver;
 
 /**
@@ -37,4 +38,5 @@ interface INfcOemExtensionCallback {
    void onTagDispatch(in ResultReceiver isSkipped);
    void onRoutingChanged();
    void onHceEventReceived(int action);
+   void onLogEventNotified(PersistableBundle item);
 }

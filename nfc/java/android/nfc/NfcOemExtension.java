@@ -215,6 +215,8 @@ public final class NfcOemExtension {
          * @param action Flag indicating actions to activate, start and stop cpu boost.
          */
         void onHceEventReceived(@HostCardEmulationAction int action);
+
+        void onLogEventNotified(PersistableBundle item);
     }
 
 
@@ -397,6 +399,11 @@ public final class NfcOemExtension {
         public void onHceEventReceived(int action) throws RemoteException {
             handleVoidCallback(action, mCallback::onHceEventReceived);
         }
+
+        @Override
+        public void onLogEventNotified(PersistableBundle item) {
+            handleVoidCallback(item, mCallback::onLogEventNotified);
+    }
 
         private <T> void handleVoidCallback(T input, Consumer<T> callbackMethod) {
             synchronized (mLock) {
