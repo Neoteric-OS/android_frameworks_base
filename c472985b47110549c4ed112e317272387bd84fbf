@@ -16,6 +16,24 @@
       "message": "Hi Brandon, friendly ping, are you the right person to review this?",
       "revId": "c472985b47110549c4ed112e317272387bd84fbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "213c4e48_e345a964",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1959843
+      },
+      "writtenOn": "2024-08-26T04:24:48Z",
+      "side": 1,
+      "message": "Hi Mark,\n\nSorry for the late reply, I moved on from Android Framework and also have little knowledge about the impact of this change, can you ask someone else for review?",
+      "parentUuid": "ea5bc321_b76f5c01",
+      "revId": "c472985b47110549c4ed112e317272387bd84fbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
