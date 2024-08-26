@@ -542,11 +542,13 @@ public final class CardEmulation {
 
         List<String> validSE = adapter.getSupportedOffHostSecureElements();
         if ((offHostSecureElement.startsWith("eSE") && !validSE.contains("eSE"))
-                || (offHostSecureElement.startsWith("SIM") && !validSE.contains("SIM"))) {
+                || (offHostSecureElement.startsWith("SIM") && !validSE.contains("SIM"))
+                || (offHostSecureElement.startsWith("eSIM") && !validSE.contains("eSIM"))) {
             return false;
         }
 
-        if (!offHostSecureElement.startsWith("eSE") && !offHostSecureElement.startsWith("SIM")) {
+        if (!offHostSecureElement.startsWith("eSE") && !offHostSecureElement.startsWith("SIM")
+                && !(Flags.enableCardEmulationEuicc() && offHostSecureElement.startsWith("eSIM"))) {
             return false;
         }
 
@@ -554,6 +556,8 @@ public final class CardEmulation {
             offHostSecureElement = "eSE1";
         } else if (offHostSecureElement.equals("SIM")) {
             offHostSecureElement = "SIM1";
+        } else if (Flags.enableCardEmulationEuicc() && offHostSecureElement.equals("eSIM")) {
+            offHostSecureElement = "eSIM1";
         }
         final String offHostSecureElementV = new String(offHostSecureElement);
         return callServiceReturn(() ->

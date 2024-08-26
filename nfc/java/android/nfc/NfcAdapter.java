@@ -741,6 +741,10 @@ public final class NfcAdapter {
         if (pm.hasSystemFeature(PackageManager.FEATURE_NFC_OFF_HOST_CARD_EMULATION_ESE)) {
             offHostSE.add("eSE");
         }
+        if (Flags.enableCardEmulationEuicc()
+                && pm.hasSystemFeature(PackageManager.FEATURE_NFC_OFF_HOST_CARD_EMULATION_UICC)) {
+            offHostSE.add("eSIM");
+        }
         return offHostSE;
     }
 
