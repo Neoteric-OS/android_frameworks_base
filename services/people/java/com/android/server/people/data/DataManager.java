@@ -72,7 +72,6 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.ChooserActivity;
 import com.android.internal.content.PackageMonitor;
-import com.android.internal.os.BackgroundThread;
 import com.android.internal.telephony.SmsApplication;
 import com.android.server.LocalServices;
 import com.android.server.notification.NotificationManagerInternal;
@@ -139,7 +138,7 @@ public class DataManager {
     private ConversationStatusExpirationBroadcastReceiver mStatusExpReceiver;
 
     public DataManager(Context context) {
-        this(context, new Injector(), BackgroundThread.get().getLooper());
+        this(context, new Injector(), DataManagerHandlerThread.get().getLooper());
     }
 
     DataManager(Context context, Injector injector, Looper looper) {
@@ -630,7 +629,7 @@ public class DataManager {
             }
 
             ContentObserver contactsContentObserver = new ContactsContentObserver(
-                    BackgroundThread.getHandler());
+                    DataManagerHandlerThread.getHandler());
             mContactsContentObservers.put(userId, contactsContentObserver);
             mContext.getContentResolver().registerContentObserver(
                     Contacts.CONTENT_URI, /* notifyForDescendants= */ true,
@@ -658,12 +657,14 @@ public class DataManager {
             if (userId == UserHandle.USER_SYSTEM) {
                 // The call log and MMS/SMS messages are shared across user profiles. So only need
                 // to register the content observers once for the primary user.
-                mCallLogContentObserver = new CallLogContentObserver(BackgroundThread.getHandler());
+                mCallLogContentObserver = new CallLogContentObserver(
+                        DataManagerHandlerThread.getHandler());
                 mContext.getContentResolver().registerContentObserver(
                         CallLog.CONTENT_URI, /* notifyForDescendants= */ true,
                         mCallLogContentObserver, UserHandle.USER_SYSTEM);
 
-                mMmsSmsContentObserver = new MmsSmsContentObserver(BackgroundThread.getHandler());
+                mMmsSmsContentObserver = new MmsSmsContentObserver(
+                        DataManagerHandlerThread.getHandler());
                 mContext.getContentResolver().registerContentObserver(
                         MmsSms.CONTENT_URI, /* notifyForDescendants= */ false,
                         mMmsSmsContentObserver, UserHandle.USER_SYSTEM);
@@ -1442,7 +1443,7 @@ public class DataManager {
         }
 
         Executor getBackgroundExecutor() {
-            return BackgroundThread.getExecutor();
+            return DataManagerHandlerThread.getExecutor();
         }
 
         ContactsQueryHelper createContactsQueryHelper(Context context) {
