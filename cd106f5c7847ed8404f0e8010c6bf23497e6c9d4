@@ -50,6 +50,24 @@
       "message": "Dear Eric Laurent and Mikhail Naganov,  can you help me to review? thank you!",
       "revId": "cd106f5c7847ed8404f0e8010c6bf23497e6c9d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe504e1f_f07437e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2024-08-26T15:27:40Z",
+      "side": 1,
+      "message": "I\u0027ve already approved it. But we need another approval from Eric or Jean-Michel.\nelaurent@ jmtrivi@ Could you please help with an approval.",
+      "parentUuid": "328959b5_b5faaf9a",
+      "revId": "cd106f5c7847ed8404f0e8010c6bf23497e6c9d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
