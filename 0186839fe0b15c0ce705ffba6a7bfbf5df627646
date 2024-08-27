@@ -70,6 +70,24 @@
       "parentUuid": "f0b02088_6ae2e5d0",
       "revId": "0186839fe0b15c0ce705ffba6a7bfbf5df627646",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b121420c_006717d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-08-27T07:44:00Z",
+      "side": 1,
+      "message": "This change looks fine to me. As for moving the GC out of the constructor, it depends on where else we will do the GC? Since http://r.android.com/3127477 is opt-in (right?), it will probably only have a small impact initially.",
+      "parentUuid": "b3320513_22971e94",
+      "revId": "0186839fe0b15c0ce705ffba6a7bfbf5df627646",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
