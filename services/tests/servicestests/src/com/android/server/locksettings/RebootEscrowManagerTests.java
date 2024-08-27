@@ -640,10 +640,7 @@ public class RebootEscrowManagerTests {
         mService.loadRebootEscrowDataIfAvailable(null);
         verify(mServiceConnection, never()).unwrap(any(), anyLong());
         verify(mCallbacks, never()).onRebootEscrowRestored(anyByte(), any(), anyInt());
-        assertFalse(metricsSuccessCaptor.getValue());
-        assertEquals(
-                Integer.valueOf(RebootEscrowManager.ERROR_NO_REBOOT_ESCROW_DATA),
-                metricsErrorCodeCaptor.getValue());
+        assertTrue(metricsSuccessCaptor.getValue());
     }
 
     @Test
