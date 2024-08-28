@@ -16,6 +16,29 @@
       "message": "Bump, this is still pending",
       "revId": "229a16adc57162400bbcf3c13697ffc56b8b25d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcfc049c_9aba6da4",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/fragment/CollapsedStatusBarFragmentTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1146169
+      },
+      "writtenOn": "2024-08-28T17:07:15Z",
+      "side": 1,
+      "message": "Looks like this is failing in presubmit:\n\n```\njava.lang.NullPointerException: Attempt to invoke virtual method \u0027int android.view.View.getVisibility()\u0027 on a null object reference\n\tat com.android.systemui.statusbar.phone.fragment.CollapsedStatusBarFragmentTest.testDisableSystemInfo_operatorName_doesHide(CollapsedStatusBarFragmentTest.java:916)\n```\n\nAre you able to run the test locally and address this?",
+      "range": {
+        "startLine": 665,
+        "startChar": 16,
+        "endLine": 665,
+        "endChar": 59
+      },
+      "revId": "229a16adc57162400bbcf3c13697ffc56b8b25d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
