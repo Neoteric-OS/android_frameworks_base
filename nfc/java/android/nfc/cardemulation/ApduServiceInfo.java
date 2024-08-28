@@ -226,7 +226,7 @@ public final class ApduServiceInfo implements Parcelable {
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
     public ApduServiceInfo(@NonNull PackageManager pm, @NonNull ResolveInfo info, boolean onHost)
-            throws XmlPullParserException, IOException {
+            throws XmlPullParserException, IOException, OutOfMemoryError {
         ServiceInfo si = info.serviceInfo;
         XmlResourceParser parser = null;
         try {
