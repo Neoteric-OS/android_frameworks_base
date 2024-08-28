@@ -223,10 +223,11 @@ public final class ApduServiceInfo implements Parcelable {
      * @param onHost whether service is on host or not (secure element)
      * @throws XmlPullParserException If an error occurs parsing the element.
      * @throws IOException If an error occurs reading the element.
+     * @throws OutOfMemoryError If an error occurs getting resources for application.
      */
     @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
     public ApduServiceInfo(@NonNull PackageManager pm, @NonNull ResolveInfo info, boolean onHost)
-            throws XmlPullParserException, IOException {
+            throws XmlPullParserException, IOException, OutOfMemoryError {
         ServiceInfo si = info.serviceInfo;
         XmlResourceParser parser = null;
         try {
