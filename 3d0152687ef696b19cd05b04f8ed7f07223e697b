@@ -16,6 +16,24 @@
       "message": "My initial concern here is whether this is subtly changing the API - that is, are there users out there who actually expect or depend on  `android.os.Handler#removeMessages(0)`\n removing all Runnables from the queue.",
       "revId": "3d0152687ef696b19cd05b04f8ed7f07223e697b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "402afa55_a76e7a87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965080
+      },
+      "writtenOn": "2024-08-28T18:11:21Z",
+      "side": 1,
+      "message": ".",
+      "parentUuid": "e3c5b3f4_662838e8",
+      "revId": "3d0152687ef696b19cd05b04f8ed7f07223e697b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
