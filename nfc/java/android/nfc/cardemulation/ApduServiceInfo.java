@@ -438,6 +438,9 @@ public final class ApduServiceInfo implements Parcelable {
             }
         } catch (NameNotFoundException e) {
             throw new XmlPullParserException("Unable to create context for: " + si.packageName);
+        } catch (OutOfMemoryError e) {
+            // throws OutOfMemoryError If an error occurs getting resources for application.
+            throw new OutOfMemoryError("Unable to get resources for: " + si.packageName);
         } finally {
             if (parser != null) parser.close();
         }
