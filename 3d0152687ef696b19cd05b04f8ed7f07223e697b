@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8052513_b478240d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-08-29T16:18:09Z",
+      "side": 1,
+      "message": "Linnan, thank you for sending the change and for sharing your thoughts with us.\n\nI think the highlighted part is the root of the problem.\nThe default value for `Message#what` is 0. When `what` is unspecified, such as when creating a `Message` to wrap a `Runnable`, it is 0.\nIf an app calls `Handler#removeMessages(0)` then I\u0027d say the behavior is not well-defined. This leads to the issues that you\u0027re seeing.\n\nSince `Message`, `Handler`, etc existed since API 1, we are very careful about making any behavior changes, even if they\u0027re not changes affecting a strictly defined contract.\n\nCould I propose adding documentation cautioning users about this issue as a possible alternative?\n\nhttps://android-review.git.corp.google.com/c/platform/frameworks/base/+/3250153",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "3d0152687ef696b19cd05b04f8ed7f07223e697b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e3c5b3f4_662838e8",
