@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99e16db2_2ef2103e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2024-08-29T13:30:27Z",
+      "side": 1,
+      "message": "Hi,\n\nDo you have any bug id (tracker) we can link to this patch? Thank you!",
+      "revId": "e0f03555e3dbbc0c62c42adaeeb71bd8d877f6fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
