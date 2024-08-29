@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b76791e_8043e7b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-08-29T16:36:15Z",
+      "side": 1,
+      "message": "I apologize. Please try this link:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/3250153",
+      "parentUuid": "77cd1f68_9bbdfdf1",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "3d0152687ef696b19cd05b04f8ed7f07223e697b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e3c5b3f4_662838e8",
