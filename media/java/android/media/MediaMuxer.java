@@ -198,7 +198,7 @@ import java.util.Map;
     <td>&#9675;</td>
     <td>&#9675;</td>
     <td>&#9675;</td>
-    <td>&#8277;</td>
+    <td>&#9675;</td>
     <td>&#8277;</td>
     <td>&#8277;</td>
    </tr>
