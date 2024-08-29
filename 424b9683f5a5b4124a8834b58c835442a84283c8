@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45c89ca7_85a8882c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-08-29T22:06:37Z",
+      "side": 1,
+      "message": "I meant to say \"4kb zip aligned apps\" since those won\u0027t normally work on 16k devices and need the app compat mode.\n\nUpdated the descriptions",
+      "parentUuid": "6683e1f6_c268ad76",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 3
+      },
+      "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5a3159d_0fb3148d",
@@ -81,6 +105,30 @@
           ]
         }
       ],
+      "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2f48d30_a0933999",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-08-29T22:06:37Z",
+      "side": 1,
+      "message": "Initially i had something similar, but the plan is to allow developer to decide to flip this on/off to test their app/install, so we couldn\u0027t cache it.\n\nMoved it so that it is only read once per apk (only in 16kb devices, 4kb devices don\u0027t read the prop)",
+      "parentUuid": "d5a3159d_0fb3148d",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 41
+      },
       "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -146,6 +194,30 @@
       "side": 1,
       "message": "+1, if embedded libs are not 4kB aligned, the installation should fail according to the existing behavior.",
       "parentUuid": "fe040ed4_8c5f1108",
+      "range": {
+        "startLine": 309,
+        "startChar": 16,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a556829_fc96cc82",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-08-29T22:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aa01916_437b2f0c",
       "range": {
         "startLine": 309,
         "startChar": 16,
