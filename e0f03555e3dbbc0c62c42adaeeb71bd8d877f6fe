@@ -16,6 +16,24 @@
       "message": "Hi,\n\nDo you have any bug id (tracker) we can link to this patch? Thank you!",
       "revId": "e0f03555e3dbbc0c62c42adaeeb71bd8d877f6fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8df8f567_ac427d17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1888886
+      },
+      "writtenOn": "2024-08-29T13:38:17Z",
+      "side": 1,
+      "message": "hi Paul, this is b/360768278.",
+      "parentUuid": "99e16db2_2ef2103e",
+      "revId": "e0f03555e3dbbc0c62c42adaeeb71bd8d877f6fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
