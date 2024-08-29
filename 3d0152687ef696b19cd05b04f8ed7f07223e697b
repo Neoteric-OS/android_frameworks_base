@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "77cd1f68_9bbdfdf1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2024-08-29T16:34:53Z",
+      "side": 1,
+      "message": "As you mentioned, I think noting this in the document comments may help reduce the likelihood of this undesirable behavior occurring unintentionally to some extent, which might be the best approach for now. However, I am unable to open the link you provided.",
+      "parentUuid": "a8052513_b478240d",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "3d0152687ef696b19cd05b04f8ed7f07223e697b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e3c5b3f4_662838e8",
