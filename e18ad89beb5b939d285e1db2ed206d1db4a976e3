@@ -16,6 +16,24 @@
       "message": "is `MediaMuxer`\u0027s B-frames support device-dependent?\n\nAre B-frames completely not supported on all API 24 devices?",
       "revId": "e18ad89beb5b939d285e1db2ed206d1db4a976e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fd45fb6_74b87f4d",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 2003661
+      },
+      "writtenOn": "2024-08-29T13:47:14Z",
+      "side": 1,
+      "message": "The support was added in this CL https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/av/+/1223889\n\nwhich was part of `nyc-mr1` release. This was Android 7.1 (API 25)\nhttps://developer.android.com/reference/android/os/Build.VERSION_CODES#N_MR1",
+      "parentUuid": "a2c53ef7_54fbdd8b",
+      "revId": "e18ad89beb5b939d285e1db2ed206d1db4a976e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
