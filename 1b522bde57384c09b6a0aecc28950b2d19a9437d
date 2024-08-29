@@ -33,6 +33,24 @@
       "message": "I don\u0027t think KTX decoding is wired up at all: https://cs.android.com/android/platform/superproject/main/+/main:external/skia/src/codec/SkAndroidCodec.cpp;l\u003d242;drc\u003d9334913e878d64842aa752009f57fec5acf080dc\n\nCan you describe the use-case + need for supporting KTX bitmaps?",
       "revId": "1b522bde57384c09b6a0aecc28950b2d19a9437d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b786df0_cd89c9fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-08-29T09:35:36Z",
+      "side": 1,
+      "message": "Hey @alecmouri@google.com, regarding our use case \u0026 need for supporting KTX bitmaps see below:\n\nKTX bitmaps are needed for using ASTC-compressed resources. As of right now from our testing we found out AOSP is not the most efficient when it comes to memory usage on that front, and that it is massively wasteful of memory and performance to use anything other than compressed resources for rendering.",
+      "parentUuid": "564845ed_87ec2d66",
+      "revId": "1b522bde57384c09b6a0aecc28950b2d19a9437d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
