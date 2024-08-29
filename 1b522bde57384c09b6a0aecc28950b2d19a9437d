@@ -51,6 +51,24 @@
       "parentUuid": "564845ed_87ec2d66",
       "revId": "1b522bde57384c09b6a0aecc28950b2d19a9437d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9902d1e3_0c77facd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2024-08-29T15:03:52Z",
+      "side": 1,
+      "message": "What sort of applications are you imagining using ASTC resources?",
+      "parentUuid": "4b786df0_cd89c9fd",
+      "revId": "1b522bde57384c09b6a0aecc28950b2d19a9437d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
