@@ -3,6 +3,90 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6683e1f6_c268ad76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-08-29T20:39:26Z",
+      "side": 1,
+      "message": "Do you mean 16kB here?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 3
+      },
+      "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5a3159d_0fb3148d",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-08-29T20:39:26Z",
+      "side": 1,
+      "message": "If this is a read-only property, can we save it to a `static const` variable? We probably don\u0027t want to repeatedly read it for each lib entry of an apk file",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9ba218d3_487781be",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+              "range": {
+                "startLine": 130,
+                "startChar": 0,
+                "endLine": 131,
+                "endChar": 0
+              },
+              "replacement": "static const bool app_compat_16kb_enabled() {\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+              "range": {
+                "startLine": 132,
+                "startChar": 0,
+                "endLine": 132,
+                "endChar": 0
+              },
+              "replacement": "    static const bool kEnabled \u003d\n        android::base::GetBoolProperty(\"bionic.linker.16kb.app_compat.enabled\", false);\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+              "range": {
+                "startLine": 134,
+                "startChar": 0,
+                "endLine": 139,
+                "endChar": 0
+              },
+              "replacement": "    return kEnabled \u0026\u0026 kPageSize \u003d\u003d 0x4000;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bdc4c4d5_ab31f281",
         "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
         "patchSetId": 2
@@ -38,6 +122,30 @@
       "side": 1,
       "message": "Right, we can add a check like `offset % 0x1000` to not attempt those",
       "parentUuid": "bdc4c4d5_ab31f281",
+      "range": {
+        "startLine": 309,
+        "startChar": 16,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4aa01916_437b2f0c",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-08-29T20:39:26Z",
+      "side": 1,
+      "message": "+1, if embedded libs are not 4kB aligned, the installation should fail according to the existing behavior.",
+      "parentUuid": "fe040ed4_8c5f1108",
       "range": {
         "startLine": 309,
         "startChar": 16,
