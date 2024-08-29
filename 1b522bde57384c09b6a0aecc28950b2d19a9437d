@@ -69,6 +69,24 @@
       "parentUuid": "4b786df0_cd89c9fd",
       "revId": "1b522bde57384c09b6a0aecc28950b2d19a9437d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e5bacef_5b2f8df6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-08-29T17:06:18Z",
+      "side": 1,
+      "message": "Pretty much all of them if not as many as we can. The reasoning for using KTX bitmaps and ASTC-compressed resources is that the memory usage by uncompressed resources is too high to justify. Even if a single PNG or JPG file may be relatively small, the resource used by composition is full size and 32 bpp, which can add up quickly. By using KTX resources you only keep one copy (the hardware one) and its compressed resource, resulting in smaller resident size in memory and higher performance when compositing. While this may increase the APK size, it is a trade-off worth making for the benefits in memory usage and performance.",
+      "parentUuid": "9902d1e3_0c77facd",
+      "revId": "1b522bde57384c09b6a0aecc28950b2d19a9437d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
