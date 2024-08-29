@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dde4e02_4ecfda67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-08-29T08:33:15Z",
+      "side": 1,
+      "message": "Hi,\n\nWe think it should be possible to control this via a setting, so adding a KL and mark keys as WAKE is not going to work. This solution hooks into the isWakeKey flow and sets any internal key as wake key if the setting is enabled. Thanks!",
+      "revId": "caf408998a31fad8b9e7f32374198e3adbdd4869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
