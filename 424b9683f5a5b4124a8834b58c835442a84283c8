@@ -22,6 +22,30 @@
       },
       "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe040ed4_8c5f1108",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-08-29T17:10:20Z",
+      "side": 1,
+      "message": "Right, we can add a check like `offset % 0x1000` to not attempt those",
+      "parentUuid": "bdc4c4d5_ab31f281",
+      "range": {
+        "startLine": 309,
+        "startChar": 16,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "424b9683f5a5b4124a8834b58c835442a84283c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
