@@ -16,6 +16,23 @@
       "message": "Rebased",
       "revId": "2c5f7a2a5dc54f5c79f3cee6776b144acbb25d85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4941847_57362569",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-08-29T08:19:09Z",
+      "side": 1,
+      "message": "Hi, please take a look. With this CL we are playing the screenshot sound if the camera sound is forced and the camera preview is active.",
+      "revId": "2c5f7a2a5dc54f5c79f3cee6776b144acbb25d85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
