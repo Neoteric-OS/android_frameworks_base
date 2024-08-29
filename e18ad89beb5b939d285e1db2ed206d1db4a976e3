@@ -20,6 +20,64 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fdd36fad_415f4749",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-08-29T15:06:39Z",
+      "side": 1,
+      "message": "This CL is on the deprecated/stale `master` branch not `main`, so I can\u0027t +2 it\n\nYou will probably need to re-make the change on `main` in order to be able to submit it",
+      "revId": "e18ad89beb5b939d285e1db2ed206d1db4a976e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afbf63a8_518f363b",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1643005
+      },
+      "writtenOn": "2024-08-29T15:06:39Z",
+      "side": 1,
+      "message": "This line also seems imprecise, because I think it should be Android Nougat MR1 or whatever the right public name is (i.e. API 25 not API 24)",
+      "range": {
+        "startLine": 37,
+        "startChar": 31,
+        "endLine": 37,
+        "endChar": 91
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3767d717_1e7a1ae6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/MediaMuxer.java",
+              "range": {
+                "startLine": 37,
+                "startChar": 0,
+                "endLine": 38,
+                "endChar": 0
+              },
+              "replacement": " * and 3GP file as the output. It also supports muxing B-frames in MP4 since Android Nougat MR1.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e18ad89beb5b939d285e1db2ed206d1db4a976e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2c53ef7_54fbdd8b",
         "filename": "media/java/android/media/MediaMuxer.java",
         "patchSetId": 2
