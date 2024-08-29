@@ -34,6 +34,24 @@
       "parentUuid": "e3c5b3f4_662838e8",
       "revId": "3d0152687ef696b19cd05b04f8ed7f07223e697b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e621815_c94a1d0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2024-08-29T02:21:24Z",
+      "side": 1,
+      "message": "I believe this issue will not occur at all. Once developers realize that removeMessages(0) will remove all callbacks, they are likely to avoid setting the \"what\" field of messages to 0 rather than using this feature(bug). This is because we also provide the removeCallbacks method to remove callbacks. Using removeMessages(0) to implicitly remove all callbacks would significantly reduce the readability of the code. Therefore, I understand that this should not have any impact.",
+      "parentUuid": "402afa55_a76e7a87",
+      "revId": "3d0152687ef696b19cd05b04f8ed7f07223e697b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
