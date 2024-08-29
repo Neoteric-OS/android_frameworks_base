@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe8e1b6e_86823e0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-08-29T08:39:43Z",
+      "side": 1,
+      "message": "Hi. It is already possible to specify config_doublePressOnPowerTargetActivity and launch the target activity on power button double tap. This change adds a Setting so the target activity can be changed dynamically, for example via a Settings page.",
+      "revId": "9153e4299561d24ac1dc2d77a6fa9edf24457680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
