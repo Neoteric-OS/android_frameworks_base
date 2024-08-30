@@ -33,6 +33,24 @@
       "message": "this layout actually looks better, the Nav bar is white in landscape on the current one .",
       "revId": "47098177b79c0e7c1880c7c3d81a26897816f688",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2e5a914_14fd07d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-08-30T15:25:09Z",
+      "side": 1,
+      "message": "sorry, forget what I said, I had some weird combo on device, I have now removed this change and then landscape pattern is totally broken",
+      "parentUuid": "6dd5caf7_6575bdb2",
+      "revId": "47098177b79c0e7c1880c7c3d81a26897816f688",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
