@@ -1333,24 +1333,6 @@ final class DefaultPermissionGrantPolicy {
         }
 
         final int numRequestedPermissions = requestedPermissions.length;
-
-        // Sort requested permissions so that all permissions that are a foreground permission (i.e.
-        // permissions that have a background permission) are before their background permissions.
-        final String[] sortedRequestedPermissions = new String[numRequestedPermissions];
-        int numForeground = 0;
-        int numOther = 0;
-        for (int i = 0; i < numRequestedPermissions; i++) {
-            String permission = requestedPermissions[i];
-            if (pm.getBackgroundPermission(permission) != null) {
-                sortedRequestedPermissions[numForeground] = permission;
-                numForeground++;
-            } else {
-                sortedRequestedPermissions[numRequestedPermissions - 1 - numOther] =
-                        permission;
-                numOther++;
-            }
-        }
-
         for (int requestedPermissionNum = 0; requestedPermissionNum < numRequestedPermissions;
                 requestedPermissionNum++) {
             String permission = requestedPermissions[requestedPermissionNum];
