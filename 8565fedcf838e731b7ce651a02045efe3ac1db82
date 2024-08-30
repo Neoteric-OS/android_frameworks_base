@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28410de5_297594b6",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-30T18:45:17Z",
+      "side": 1,
+      "message": "We need more work to enable this. We need to highlight to developers with a dialog that this will increase device storage. We cannot land this in a release until we have that dialog.\n\nOtherwise, developers will think 16 KB mode works, but it will be inefficicent, and they have more work to do. We need to communicate that, and it\u0027s better to crash than to fail to communicate that.",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bf6878a8_4e402770",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+              "range": {
+                "startLine": 301,
+                "startChar": 0,
+                "endLine": 302,
+                "endChar": 0
+              },
+              "replacement": "            if (offset % 0x1000 \u003d\u003d 0 \u0026\u0026 app_compat_16kb \u0026\u0026\n                android::base::GetBoolProperty(\"bionic.linker.16kb.app_compat.enabled\", false)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8565fedcf838e731b7ce651a02045efe3ac1db82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
