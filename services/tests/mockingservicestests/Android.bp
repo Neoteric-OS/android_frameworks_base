@@ -79,9 +79,9 @@ android_test {
     ],
 
     libs: [
-        "android.test.mock",
-        "android.test.base",
-        "android.test.runner",
+        "android.test.mock.stubs.system",
+        "android.test.base.stubs.system",
+        "android.test.runner.stubs.system",
         "servicestests-core-utils",
     ],
 
@@ -124,7 +124,7 @@ java_library {
 android_ravenwood_test {
     name: "FrameworksMockingServicesTestsRavenwood",
     libs: [
-        "android.test.mock",
+        "android.test.mock.stubs.system",
     ],
     static_libs: [
         "androidx.annotation_annotation",
