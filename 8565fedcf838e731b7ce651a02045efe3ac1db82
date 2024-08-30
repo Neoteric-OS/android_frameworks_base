@@ -112,6 +112,30 @@
       },
       "revId": "8565fedcf838e731b7ce651a02045efe3ac1db82",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca703c85_8aa7c98b",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-08-30T22:42:23Z",
+      "side": 1,
+      "message": "Hi Steven,\n\nThe plan is to land the core logic behind this global prop (default off). \n\nThat will allow others to work on the UI side of things: b/363338964",
+      "parentUuid": "cd81d2f7_cf879334",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 13
+      },
+      "revId": "8565fedcf838e731b7ce651a02045efe3ac1db82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
