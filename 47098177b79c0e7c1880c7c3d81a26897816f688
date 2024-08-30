@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dd5caf7_6575bdb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-08-30T12:49:04Z",
+      "side": 1,
+      "message": "@mpietal@google.com , checked enabling the com.android.systemui.lockscreen.enable_landscape , this is not needed, it actually works with latest code",
+      "revId": "47098177b79c0e7c1880c7c3d81a26897816f688",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
