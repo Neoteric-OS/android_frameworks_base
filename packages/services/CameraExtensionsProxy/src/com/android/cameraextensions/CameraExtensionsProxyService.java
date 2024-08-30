@@ -2461,6 +2461,19 @@ public class CameraExtensionsProxyService extends Service {
         }
 
         @Override
+        public SyncFence getFence() {
+            if (mParcelImage.fence != null) {
+                try {
+                    return SyncFence.create(mParcelImage.fence.dup());
+                } catch (IOException e) {
+                    Log.e(TAG, "Failed to parcel buffer fence!");
+                }
+            }
+
+            return SyncFence.createEmpty();
+        }
+
+        @Override
         protected final void finalize() throws Throwable {
             try {
                 close();
