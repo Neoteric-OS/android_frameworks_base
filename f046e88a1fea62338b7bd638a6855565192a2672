@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b34fb47c_a2eab919",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-30T19:06:31Z",
+      "side": 1,
+      "message": "why? many ro props are not?\n\nCould we set them there? Or do you actually want to change them multiple times? ro properties might be frowned on a bit, but if they shouldn\u0027t change, why allow it?",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4572d3c8_e206340b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-30T19:06:31Z",
+      "side": 1,
+      "message": "It sounds like it might not be possible, but this could be changed as well? otherwise there is a backwards compatibility concern here, because the properties are removed.",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2c04c5a_19fdffe9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-30T19:06:31Z",
+      "side": 1,
+      "message": "Is this because \u0027config\u0027 is generic or because they are \u0027ro\u0027 properties?",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed0a2c8d_fdae74e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-30T19:06:31Z",
+      "side": 1,
+      "message": "are?",
+      "range": {
+        "startLine": 16,
+        "startChar": 42,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c281bb0_97799c70",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-08-30T19:06:31Z",
+      "side": 1,
+      "message": "are now a part of vendor API ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 3
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
