@@ -16,6 +16,23 @@
       "message": "@mpietal@google.com , checked enabling the com.android.systemui.lockscreen.enable_landscape , this is not needed, it actually works with latest code",
       "revId": "47098177b79c0e7c1880c7c3d81a26897816f688",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e1b8f69_fe8e108f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-08-30T15:15:32Z",
+      "side": 1,
+      "message": "this layout actually looks better, the Nav bar is white in landscape on the current one .",
+      "revId": "47098177b79c0e7c1880c7c3d81a26897816f688",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
