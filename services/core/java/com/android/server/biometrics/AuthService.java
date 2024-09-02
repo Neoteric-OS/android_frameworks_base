@@ -855,9 +855,21 @@ public class AuthService extends SystemService {
     private static void registerFaceSensors(final String[] faceAidlInstances,
             final String[] hidlConfigStrings, final Context context,
             final IFaceService faceService) {
+        boolean resetLockoutRequiresChallenge = false;
+
+        if (hidlConfigStrings != null && hidlConfigStrings.length > 0) {
+            for (String configString : hidlConfigStrings) {
+                Slog.d(TAG, "Processing hidlConfigString: " + configString);
+                int configId = Integer.parseInt(configString.split(":")[0]);
+                if (configId == 4) {
+                    resetLockoutRequiresChallenge = true;
+                    break;
+                }
+            }
+        }
+
         final FaceSensorConfigurations mFaceSensorConfigurations =
-                new FaceSensorConfigurations(hidlConfigStrings != null
-                        && hidlConfigStrings.length > 0);
+                new FaceSensorConfigurations(resetLockoutRequiresChallenge);
 
         if (hidlConfigStrings != null && hidlConfigStrings.length > 0) {
             mFaceSensorConfigurations.addHidlConfigs(hidlConfigStrings, context);
