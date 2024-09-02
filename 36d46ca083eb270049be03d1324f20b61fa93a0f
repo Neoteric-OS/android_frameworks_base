@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b415a425_9b2a6459",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060888
+      },
+      "writtenOn": "2024-09-02T22:13:44Z",
+      "side": 1,
+      "message": "Thank you. That vote reset allowed me to upload a new patch set. PTAL?",
+      "parentUuid": "33098e2d_3fc41853",
+      "revId": "36d46ca083eb270049be03d1324f20b61fa93a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8426d67e_f6ee7356",
