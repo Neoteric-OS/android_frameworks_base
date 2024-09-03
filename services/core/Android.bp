@@ -232,9 +232,13 @@ java_library_static {
         "stats_flags_lib",
         "core_os_flags_lib",
         "connectivity_flags_lib",
+<<<<<<< HEAD   (f17c2a Merge "Clean up allow_disable_ipsec_loss_detector flag" into)
         "dreams_flags_lib",
         "aconfig_new_storage_flags_lib",
         "powerstats_flags_lib",
+=======
+        "locksettings_flags_lib",
+>>>>>>> CHANGE (7f7f45 Flag guard network change using aconfig flags.)
     ],
     javac_shard_size: 50,
     javacflags: [
