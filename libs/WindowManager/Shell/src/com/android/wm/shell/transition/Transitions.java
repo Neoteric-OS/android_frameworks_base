@@ -39,7 +39,6 @@ import static android.window.TransitionInfo.FLAG_NO_ANIMATION;
 import static android.window.TransitionInfo.FLAG_STARTING_WINDOW_TRANSFER_RECIPIENT;
 import static android.window.TransitionInfo.FLAG_IS_WALLPAPER;
 
-import static com.android.window.flags.Flags.enforceShellThreadModel;
 import static com.android.window.flags.Flags.ensureWallpaperInTransitions;
 import static com.android.systemui.shared.Flags.returnAnimationFrameworkLibrary;
 import static com.android.wm.shell.shared.TransitionUtil.isClosingType;
@@ -944,9 +943,7 @@ public class Transitions implements RemoteCallable<Transitions>,
     }
 
     private void onMerged(@NonNull IBinder playingToken, @NonNull IBinder mergedToken) {
-        if (enforceShellThreadModel()) {
-            mMainExecutor.assertCurrentThread();
-        }
+        mMainExecutor.assertCurrentThread();
 
         ActiveTransition playing = mKnownTransitions.get(playingToken);
         if (playing == null) {
@@ -1095,9 +1092,7 @@ public class Transitions implements RemoteCallable<Transitions>,
     }
 
     private void onFinish(IBinder token, @Nullable WindowContainerTransaction wct) {
-        if (enforceShellThreadModel()) {
-            mMainExecutor.assertCurrentThread();
-        }
+        mMainExecutor.assertCurrentThread();
 
         final ActiveTransition active = mKnownTransitions.get(token);
         if (active == null) {
