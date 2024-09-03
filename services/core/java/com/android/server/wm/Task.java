@@ -1138,6 +1138,9 @@ class Task extends TaskFragment {
             final Task oldParentTask = oldParent.asTask();
             if (oldParentTask != null) {
                 forAllActivities(oldParentTask::cleanUpActivityReferences);
+
+                // Update the task description of the previous parent as well
+                oldParentTask.updateTaskDescription();
             }
 
             if (newParent == null || !newParent.inPinnedWindowingMode()) {
@@ -1169,6 +1172,9 @@ class Task extends TaskFragment {
                 } catch (RemoteException e) {
                 }
             }
+
+            // Update the ancestor tasks' task description after reparenting
+            updateTaskDescription();
         }
 
         // First time we are adding the task to the system.
@@ -2298,7 +2304,7 @@ class Task extends TaskFragment {
         // Apply crop to root tasks only and clear the crops of the descendant tasks.
         int width = 0;
         int height = 0;
-        if (isRootTask()) {
+        if (isRootTask() && !mTransitionController.mIsWaitingForDisplayEnabled) {
             final Rect taskBounds = getBounds();
             width = taskBounds.width();
             height = taskBounds.height();
@@ -3370,7 +3376,7 @@ class Task extends TaskFragment {
 
         //TODO (AM refactor): Just use local once updateEffectiveIntent is run during all child
         //                    order changes.
-        final Task topTask = top != null ? top.getTask() : this;
+        final Task topTask = top != null && top.getTask() != null ? top.getTask() : this;
         info.resizeMode = topTask.mResizeMode;
         info.topActivityType = topTask.getActivityType();
         info.displayCutoutInsets = topTask.getDisplayCutoutInsets();
@@ -3424,6 +3430,7 @@ class Task extends TaskFragment {
         info.isSleeping = shouldSleepActivities();
         info.isTopActivityTransparent = top != null && !top.fillsParent();
         info.isTopActivityStyleFloating = top != null && top.isStyleFloating();
+        info.lastNonFullscreenBounds = topTask.mLastNonFullscreenBounds;
         appCompatTaskInfo.topActivityLetterboxVerticalPosition = TaskInfo.PROPERTY_VALUE_UNSET;
         appCompatTaskInfo.topActivityLetterboxHorizontalPosition = TaskInfo.PROPERTY_VALUE_UNSET;
         appCompatTaskInfo.topActivityLetterboxWidth = TaskInfo.PROPERTY_VALUE_UNSET;
@@ -6162,9 +6169,8 @@ class Task extends TaskFragment {
 
     @Override
     void onChildPositionChanged(WindowContainer child) {
-        dispatchTaskInfoChangedIfNeeded(false /* force */);
-
         if (!mChildren.contains(child)) {
+            dispatchTaskInfoChangedIfNeeded(false /* force */);
             return;
         }
         if (child.asTask() != null) {
@@ -6176,6 +6182,10 @@ class Task extends TaskFragment {
             // Send for TaskFragmentParentInfo#hasDirectActivity change.
             sendTaskFragmentParentInfoChangedIfNeeded();
         }
+
+        // Update the ancestor tasks' task description after any children have reparented
+        updateTaskDescription();
+        dispatchTaskInfoChangedIfNeeded(false /* force */);
     }
 
     void reparent(TaskDisplayArea newParent, boolean onTop) {
