@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07137531_724f3e77",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2024-09-04T16:06:42Z",
+      "side": 1,
+      "message": "should this be @GuardedBy(\"mSpManager\") then?",
+      "range": {
+        "startLine": 430,
+        "startChar": 17,
+        "endLine": 430,
+        "endChar": 42
+      },
+      "revId": "c62669b11c3cb0b65c6390d80ff290c5b86204e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
