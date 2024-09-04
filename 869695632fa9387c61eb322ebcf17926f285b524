@@ -16,6 +16,23 @@
       "message": "After a closer look, I think calling assignDerivedFields2() in hideAsParsed() is a more proper fix, but I am not sure how it will affect current code.",
       "revId": "869695632fa9387c61eb322ebcf17926f285b524",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e78a2174_4f64516f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-09-04T16:53:24Z",
+      "side": 1,
+      "message": "Thanks for the fix! Current CL looks good. The assignDerivedFields2 method is not supposed to be called directly.",
+      "revId": "869695632fa9387c61eb322ebcf17926f285b524",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
