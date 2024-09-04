@@ -20,20 +20,10 @@
   ],
   "postsubmit": [
     {
-      "name": "CtsUsageStatsTestCases",
-      "options": [
-        {
-          "include-filter": "android.app.usage.cts.UsageStatsTest"
-        }
-      ]
+      "name": "CtsUsageStatsTestCases_cts_usagestatstest_ExcludeMediumAndLarge"
     },
     {
-      "name": "CtsShortcutManagerTestCases",
-      "options": [
-        {
-          "include-filter": "android.content.pm.cts.shortcutmanager.ShortcutManagerUsageTest"
-        }
-      ]
+      "name": "CtsShortcutManagerTestCases_shortcutmanager_shortcutmanagerusagetest"
     }
   ]
 }

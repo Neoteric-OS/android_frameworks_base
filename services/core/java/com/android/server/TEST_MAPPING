@@ -53,7 +53,12 @@
             "file_patterns": ["StorageManagerService\\.java"]
         },
         {
-            "name": "FrameworksMockingServicesTests_sensorprivacy",
+            "name": "FrameworksMockingServicesTests",
+            "options": [
+                {
+                    "include-filter": "com.android.server.sensorprivacy"
+                }
+            ],
             "file_patterns": ["SensorPrivacyService\\.java"]
         },
         {

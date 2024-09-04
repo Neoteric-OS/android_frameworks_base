@@ -1,18 +1,7 @@
 {
   "presubmit-large": [
     {
-      "name": "FrameworksServicesTests",
-      "options": [
-        {
-          "include-annotation": "android.platform.test.annotations.Presubmit"
-        },
-        {
-          "exclude-annotation": "androidx.test.filters.FlakyTest"
-        },
-        {
-          "exclude-annotation": "org.junit.Ignore"
-        }
-      ]
+      "name": "FrameworksServicesTests_presubmit"
     }
   ],
   "presubmit-pm": [
@@ -89,18 +78,7 @@
       ]
     },
     {
-      "name": "FrameworksCoreTests",
-      "options": [
-        {
-          "include-annotation": "android.platform.test.annotations.Presubmit"
-        },
-        {
-          "exclude-annotation": "androidx.test.filters.FlakyTest"
-        },
-        {
-          "exclude-annotation": "org.junit.Ignore"
-        }
-      ]
+      "name": "FrameworksCoreTests_Presubmit"
     },
     {
       "name": "FrameworkPermissionTests",
@@ -191,32 +169,10 @@
      ]
    },
    {
-     "name": "FrameworksCoreTests",
-     "options": [
-       {
-         "include-annotation": "android.platform.test.annotations.Presubmit"
-       },
-       {
-         "exclude-annotation": "androidx.test.filters.FlakyTest"
-       },
-       {
-         "exclude-annotation": "org.junit.Ignore"
-       }
-     ]
+     "name": "FrameworksCoreTests_Presubmit"
    },
    {
-     "name": "FrameworksServicesTests",
-     "options": [
-       {
-         "include-annotation": "android.platform.test.annotations.Presubmit"
-       },
-       {
-         "exclude-annotation": "androidx.test.filters.FlakyTest"
-       },
-       {
-         "exclude-annotation": "org.junit.Ignore"
-       }
-     ]
+     "name": "FrameworksServicesTests_presubmit"
    },
    {
      "name": "PackageManagerServiceServerTests",

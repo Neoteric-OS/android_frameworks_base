@@ -1,32 +1,18 @@
 {
     "presubmit": [
         {
-            "name": "FrameworksMockingServicesTests",
-            "options": [
-                {"include-filter": "com.android.server.tare"},
-                {"exclude-annotation": "androidx.test.filters.FlakyTest"}
-            ]
+            "name": "FrameworksMockingServicesTests_com_android_server_tare_Presubmit"
         },
         {
-            "name": "FrameworksServicesTests",
-            "options": [
-                {"include-filter": "com.android.server.tare"},
-                {"exclude-annotation": "androidx.test.filters.FlakyTest"}
-            ]
+            "name": "FrameworksServicesTests_com_android_server_tare_Presubmit"
         }
     ],
     "postsubmit": [
         {
-            "name": "FrameworksMockingServicesTests",
-            "options": [
-                {"include-filter": "com.android.server.tare"}
-            ]
+            "name": "FrameworksMockingServicesTests_com_android_server_tare"
         },
         {
-            "name": "FrameworksServicesTests",
-            "options": [
-                {"include-filter": "com.android.server.tare"}
-            ]
+            "name": "FrameworksServicesTests_com_android_server_tare"
         }
     ]
 }

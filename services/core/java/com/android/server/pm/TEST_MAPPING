@@ -84,12 +84,7 @@
       ]
     },
     {
-      "name": "CtsSharedUserMigrationTestCases",
-      "options": [
-        {
-          "include-filter": "android.uidmigration.cts"
-        }
-      ]
+      "name": "CtsSharedUserMigrationTestCases_uidmigration_cts"
     },
     {
       "name": "CtsInstantAppsHostTestCases",
