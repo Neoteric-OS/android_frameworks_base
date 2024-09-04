@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eba61f6_41c2b5f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2024-09-04T16:12:53Z",
+      "side": 1,
+      "message": "After a closer look, I think calling assignDerivedFields2() in hideAsParsed() is a more proper fix, but I am not sure how it will affect current code.",
+      "revId": "869695632fa9387c61eb322ebcf17926f285b524",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
