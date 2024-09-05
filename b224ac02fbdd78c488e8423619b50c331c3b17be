@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72e6278e_e1f76896",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-09-05T10:27:59Z",
+      "side": 1,
+      "message": "just rebased on Android 15, please discuss furher if this should be allowed etc",
+      "revId": "b224ac02fbdd78c488e8423619b50c331c3b17be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
