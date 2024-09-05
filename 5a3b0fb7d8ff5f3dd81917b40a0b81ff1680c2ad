@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df8c426c_0d6d436f",
+        "filename": "services/core/java/com/android/server/wm/TaskLaunchParamsModifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-09-05T04:54:45Z",
+      "side": 1,
+      "message": "Looks like in this case, the windowing mode is inherited from the source (i.e. Launcher).  Should this be updated instead of making changes in `shouldUpdateExistingTaskWindowingMode`?",
+      "revId": "5a3b0fb7d8ff5f3dd81917b40a0b81ff1680c2ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "34d11206_dc29fbf4",
         "filename": "services/core/java/com/android/server/wm/TaskLaunchParamsModifier.java",
         "patchSetId": 1
