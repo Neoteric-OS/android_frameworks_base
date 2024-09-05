@@ -16,6 +16,23 @@
       "message": "Looks OK to me, but adding a few pairs of eyes in case I missed anything.",
       "revId": "5a3b0fb7d8ff5f3dd81917b40a0b81ff1680c2ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34d11206_dc29fbf4",
+        "filename": "services/core/java/com/android/server/wm/TaskLaunchParamsModifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1501231
+      },
+      "writtenOn": "2024-09-05T04:23:14Z",
+      "side": 1,
+      "message": "Last time I discussed this with Louis (i.e. whether changing the windowing mode of an existing app should be allowed or not), his answer was \"in general these APIs (ActivityOption#setWindowingMode()) should both work on new tasks and existing tasks, unless there\u0027s a strong reason not to.\".\n\nFor Googlers:\nhttps://googleplex-android-review.git.corp.google.com/c/platform/cts/+/25946218/comment/3966416b_06545f53/\n\nIn fact, WindowMetricsActivityTests changes the windowing mode of an existing task (from fullscreen to freeform), so I assume the opposite should also work too?, which means we shouldn\u0027t disallow changing freeform to something else here.\n\nIn the case of Android apps on ChromeOS, this doesn\u0027t happen because the default freeform mode is freeform. In some other freeform systems, Shell overrides the windowing mode calculated by LaunchParams to freeform IIRC. But both of these don\u0027t seem to be what they want?\n\nIn that case, I wonder if we can just change this function so we will allow updating the windowing mode of the existing task only when the windowing mode is explicitly set by ActivityOption#setWindowingMode()?\n\nWDYT?",
+      "revId": "5a3b0fb7d8ff5f3dd81917b40a0b81ff1680c2ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
