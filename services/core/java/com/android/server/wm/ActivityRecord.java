@@ -5495,6 +5495,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             }
         }
 
+        mAtmService.mBackNavigationController.onAppVisibilityChanged(this, visible);
         onChildVisibilityRequested(visible);
 
         final DisplayContent displayContent = getDisplayContent();
