@@ -179,6 +179,14 @@ public final class CardEmulation {
     @FlaggedApi(Flags.FLAG_NFC_OVERRIDE_RECOVER_ROUTING_TABLE)
     public static final int PROTOCOL_AND_TECHNOLOGY_ROUTE_UNSET = -1;
 
+    /**
+     * Property name used to mark a service as eligible to share the same
+     * priority as the Wallet role holder if they have matching signatures.
+     */
+    @FlaggedApi(Flags.FLAG_NFC_ASSOCIATED_ROLE_SERVICES)
+    public static final String PROPERTY_SHARE_ROLE_PRIORITY =
+            "android.nfc.cardemulation.PROPERTY_WALLET_SHARE_ROLE_PRIORITY";
+
     static boolean sIsInitialized = false;
     static HashMap<Context, CardEmulation> sCardEmus = new HashMap<Context, CardEmulation>();
     static INfcCardEmulation sService;
