@@ -14,11 +14,22 @@
  * limitations under the License.
  */
 
-package com.android.systemui.shade.ui.viewmodel
+#pragma once
 
-import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.notifications.ui.viewmodel.NotificationsShadeSceneViewModel
-import com.android.systemui.shade.domain.interactor.shadeInteractor
+#include "android-base/macros.h"
+#include "process/IResourceTableConsumer.h"
 
-val Kosmos.notificationsShadeSceneViewModel: NotificationsShadeSceneViewModel by
-    Kosmos.Fixture { NotificationsShadeSceneViewModel(shadeInteractor) }
+namespace aapt {
+
+// Removes any resource that are behind disabled flags.
+class FlagDisabledResourceRemover : public IResourceTableConsumer {
+ public:
+  FlagDisabledResourceRemover() = default;
+
+  bool Consume(IAaptContext* context, ResourceTable* table) override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(FlagDisabledResourceRemover);
+};
+
+}  // namespace aapt
