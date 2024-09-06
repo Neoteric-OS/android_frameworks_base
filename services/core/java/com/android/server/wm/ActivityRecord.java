@@ -2004,8 +2004,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         // Don't move below setOrientation(info.screenOrientation) since it triggers
         // getOverrideOrientation that requires having mLetterboxUiController
         // initialised.
-        mLetterboxUiController = new LetterboxUiController(mWmService, this);
         mAppCompatController = new AppCompatController(mWmService, this);
+        mLetterboxUiController = new LetterboxUiController(mWmService, this);
         mResolveConfigHint = new TaskFragment.ConfigOverrideHint();
         if (mWmService.mFlags.mInsetsDecoupledConfiguration) {
             // When the stable configuration is the default behavior, override for the legacy apps
