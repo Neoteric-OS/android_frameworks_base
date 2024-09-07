@@ -2118,16 +2118,19 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                     Slog.w(TAG, "removeTask: No task remove with id=" + taskId);
                     return false;
                 }
-
-                if (task.isLeafTask()) {
-                    mTaskSupervisor.removeTask(task, true, REMOVE_FROM_RECENTS, "remove-task");
-                } else {
-                    mTaskSupervisor.removeRootTask(task);
-                }
+                removeTask(task);
                 return true;
             } finally {
                 Binder.restoreCallingIdentity(ident);
             }
+        }
+    }
+
+    void removeTask(@NonNull Task task) {
+        if (task.isLeafTask()) {
+            mTaskSupervisor.removeTask(task, true, REMOVE_FROM_RECENTS, "remove-task");
+        } else {
+            mTaskSupervisor.removeRootTask(task);
         }
     }
 
@@ -2940,7 +2943,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                             }
                             getTransitionController().requestStartTransition(transition, task,
                                     null /* remoteTransition */, null /* displayChange */);
-                            getTransitionController().collect(task);
+                            transition.collect(task);
                             task.resize(bounds, resizeMode, preserveWindow);
                             transition.setReady(task, true);
                         });
@@ -3770,6 +3773,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             // Shell calls back into Core with the entry bounds to be applied with startWCT.
             final Transition enterPipTransition = new Transition(TRANSIT_PIP,
                     0 /* flags */, getTransitionController(), mWindowManager.mSyncEngine);
+            r.setPictureInPictureParams(params);
             enterPipTransition.setPipActivity(r);
             r.mAutoEnteringPip = isAutoEnter;
             getTransitionController().startCollectOrQueue(enterPipTransition, (deferred) -> {

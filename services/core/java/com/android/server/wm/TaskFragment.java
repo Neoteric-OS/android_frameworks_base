@@ -1972,7 +1972,7 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                     prev.setState(STOPPING, "completePausedLocked");
                 } else if (!prev.isVisibleRequested() || shouldSleepOrShutDownActivities()) {
                     // Clear out any deferred client hide we might currently have.
-                    prev.setDeferHidingClient(false);
+                    prev.clearDeferHidingClient();
                     // If we were visible then resumeTopActivities will release resources before
                     // stopping.
                     prev.addToStopping(true /* scheduleIdle */, false /* idleDelayed */,
@@ -1993,8 +1993,7 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         if (resumeNext) {
             final Task topRootTask = mRootWindowContainer.getTopDisplayFocusedRootTask();
             if (topRootTask != null && !topRootTask.shouldSleepOrShutDownActivities()) {
-                mRootWindowContainer.resumeFocusedTasksTopActivities(topRootTask, prev,
-                        null /* targetOptions */);
+                mRootWindowContainer.resumeFocusedTasksTopActivities(topRootTask, prev);
             } else {
                 // checkReadyForSleep();
                 final ActivityRecord top =
