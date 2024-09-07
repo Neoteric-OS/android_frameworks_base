@@ -1850,33 +1850,36 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             }
         }
 
-        mLetterboxUiController.onMovedToDisplay(mDisplayContent.getDisplayId());
+        mAppCompatController.getAppCompatLetterboxPolicy()
+                .onMovedToDisplay(mDisplayContent.getDisplayId());
     }
 
     void layoutLetterboxIfNeeded(WindowState winHint) {
-        mLetterboxUiController.layoutLetterboxIfNeeded(winHint);
+        mAppCompatController.getAppCompatLetterboxPolicy().start(winHint);
     }
 
     boolean hasWallpaperBackgroundForLetterbox() {
-        return mLetterboxUiController.hasWallpaperBackgroundForLetterbox();
+        return mAppCompatController.getAppCompatLetterboxOverrides()
+                .hasWallpaperBackgroundForLetterbox();
     }
 
     void updateLetterboxSurfaceIfNeeded(WindowState winHint, Transaction t) {
-        mLetterboxUiController.updateLetterboxSurfaceIfNeeded(winHint, t, getPendingTransaction());
+        mAppCompatController.getAppCompatLetterboxPolicy()
+                .updateLetterboxSurfaceIfNeeded(winHint, t, getPendingTransaction());
     }
 
     void updateLetterboxSurfaceIfNeeded(WindowState winHint) {
-        mLetterboxUiController.updateLetterboxSurfaceIfNeeded(winHint);
+        mAppCompatController.getAppCompatLetterboxPolicy().updateLetterboxSurfaceIfNeeded(winHint);
     }
 
     /** Gets the letterbox insets. The insets will be empty if there is no letterbox. */
     Rect getLetterboxInsets() {
-        return mLetterboxUiController.getLetterboxInsets();
+        return mAppCompatController.getAppCompatLetterboxPolicy().getLetterboxInsets();
     }
 
     /** Gets the inner bounds of letterbox. The bounds will be empty if there is no letterbox. */
     void getLetterboxInnerBounds(Rect outBounds) {
-        mLetterboxUiController.getLetterboxInnerBounds(outBounds);
+        mAppCompatController.getAppCompatLetterboxPolicy().getLetterboxInnerBounds(outBounds);
     }
 
     /**
@@ -1884,7 +1887,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
      *     when the current activity is displayed.
      */
     boolean isFullyTransparentBarAllowed(Rect rect) {
-        return mLetterboxUiController.isFullyTransparentBarAllowed(rect);
+        return mAppCompatController.getAppCompatLetterboxPolicy()
+                .isFullyTransparentBarAllowed(rect);
     }
 
     private static class Token extends Binder {
@@ -4400,7 +4404,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
 
         mTaskSupervisor.getActivityMetricsLogger().notifyActivityRemoved(this);
         mTaskSupervisor.mStoppingActivities.remove(this);
-        mLetterboxUiController.destroy();
+
+        mAppCompatController.getAppCompatLetterboxPolicy().stop();
         mAppCompatController.getTransparentPolicy().stop();
 
         // Defer removal of this activity when either a child is animating, or app transition is on
@@ -7865,7 +7870,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             t.setLayer(mAnimationBoundsLayer, getLastLayer());
 
             if (mNeedsLetterboxedAnimation) {
-                final int cornerRadius = mLetterboxUiController
+                final int cornerRadius = mAppCompatController.getAppCompatLetterboxPolicy()
                         .getRoundedCornersRadius(findMainWindow());
 
                 final Rect letterboxInnerBounds = new Rect();
@@ -8751,7 +8756,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
      * Returns whether activity bounds are letterboxed.
      *
      * <p>Note that letterbox UI may not be shown even when this returns {@code true}. See {@link
-     * LetterboxUiController#shouldShowLetterboxUi} for more context.
+     * AppCompatLetterboxOverrides#shouldShowLetterboxUi} for more context.
      */
     boolean areBoundsLetterboxed() {
         return getAppCompatState(/* ignoreVisibility= */ true)
