@@ -3315,6 +3315,12 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             return false;
         }
 
+        // Check if this activity is the top activity of its task - this prevents any trampolines
+        // followed by enterPictureInPictureMode() calls by an activity from below in its stack.
+        if (getTask().getTopMostActivity() != this) {
+            return false;
+        }
+
         // Check to see if PiP is supported for the display this container is on.
         if (mDisplayContent != null && !mDisplayContent.mDwpcHelper.isEnteringPipAllowed(
                 getUid())) {
