@@ -1154,10 +1154,10 @@ public class AudioDeviceBroker {
             String[] kvpairs = keyValuePairs.split(";");
             for (String pair : kvpairs) {
                 String[] kv = pair.split("=");
-                if (kv[0] == "bt_lc3_swb") {
-                    mHasSwbLc3Enabled = ((kv[1] == "on") ? true : false);
-                } else if (kv[0] == "bt_swb") {
-                    mHasSwbAptXEnabled = ((kv[1] == "0") ? true : false);
+                if (kv[0].equals("bt_lc3_swb")) {
+                    mHasSwbLc3Enabled = ((kv[1].equals("on")) ? true : false);
+                } else if (kv[0].equals("bt_swb")) {
+                    mHasSwbAptXEnabled = ((kv[1].equals("0")) ? true : false);
                 }
             }
         }
@@ -2861,6 +2861,10 @@ public class AudioDeviceBroker {
             return;
         }
         final SettingsAdapter settingsAdapter = mAudioService.getSettings();
+        if (settingsAdapter == null) {
+            Log.e(TAG, "No settings adapter when saving AdiDeviceState: " + deviceSettings);
+            return;
+        }
         try {
             boolean res = settingsAdapter.putSecureStringForUser(mAudioService.getContentResolver(),
                     Settings.Secure.AUDIO_DEVICE_INVENTORY,
@@ -2876,6 +2880,12 @@ public class AudioDeviceBroker {
     private String readDeviceSettings() {
         final SettingsAdapter settingsAdapter = mAudioService.getSettings();
         final ContentResolver contentResolver = mAudioService.getContentResolver();
+        if (settingsAdapter == null || contentResolver == null) {
+            // should not happen, throw Exception for stack trace
+            Log.e(TAG, "No settings adapter or content resolver to read device settings",
+                    new Exception("readDeviceSettings_NPE"));
+            return "";
+        }
         return settingsAdapter.getSecureStringForUser(contentResolver,
                 Settings.Secure.AUDIO_DEVICE_INVENTORY, UserHandle.USER_CURRENT);
     }

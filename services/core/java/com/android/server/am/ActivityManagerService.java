@@ -372,7 +372,6 @@ import android.os.storage.StorageManager;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.server.ServerProtoEnums;
-import android.sysprop.InitProperties;
 import android.system.Os;
 import android.system.OsConstants;
 import android.telephony.TelephonyManager;
@@ -454,7 +453,6 @@ import com.android.server.SystemConfig;
 import com.android.server.SystemService;
 import com.android.server.SystemServiceManager;
 import com.android.server.ThreadPriorityBooster;
-import com.android.server.UserspaceRebootLogger;
 import com.android.server.Watchdog;
 import com.android.server.am.ComponentAliasResolver.Resolution;
 import com.android.server.am.LowMemDetector.MemFactor;
@@ -1002,7 +1000,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         final int pid = app.getPid();
         synchronized (mPidsSelfLocked) {
             mPidsSelfLocked.doAddInternal(pid, app);
-            ProcessFreezerManager freezer = ProcessFreezerManager.getInstance();
+            ProcessFreezerManager freezer = ProcessFreezerManager.getInstance(this);
             if (freezer != null && freezer.useFreezerManager()) {
                 freezer.addPidLocked(app);
             }
@@ -1031,7 +1029,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         final boolean removed;
         synchronized (mPidsSelfLocked) {
             removed = mPidsSelfLocked.doRemoveInternal(pid, app);
-            ProcessFreezerManager freezer = ProcessFreezerManager.getInstance();
+            ProcessFreezerManager freezer = ProcessFreezerManager.getInstance(this);
             if (freezer != null && freezer.useFreezerManager()) {
                 freezer.removePidLocked(pid, app);
                 freezer.startUnfreeze(app.processName, ProcessFreezerManager.REMOVE_PROCESS_UNFREEZE);
@@ -1747,6 +1745,12 @@ public class ActivityManagerService extends IActivityManager.Stub
      */
     @Nullable volatile ContentCaptureManagerInternal mContentCaptureService;
 
+    /**
+     * The interface to the freezer.
+     */
+    @NonNull
+    private final Freezer mFreezer;
+
     /*
      * The default duration for the binder heavy hitter auto sampler
      */
@@ -2385,20 +2389,6 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
-    private void maybeLogUserspaceRebootEvent() {
-        if (!UserspaceRebootLogger.shouldLogUserspaceRebootEvent()) {
-            return;
-        }
-        final int userId = mUserController.getCurrentUserId();
-        if (userId != UserHandle.USER_SYSTEM) {
-            // Only log for user0.
-            return;
-        }
-        // TODO(b/148767783): should we check all profiles under user0?
-        UserspaceRebootLogger.logEventAsync(StorageManager.isCeStorageUnlocked(userId),
-                BackgroundThread.getExecutor());
-    }
-
     /**
      * Encapsulates global settings related to hidden API enforcement behaviour, including tracking
      * the latest value via a content observer.
@@ -2537,6 +2527,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             @Nullable UserController userController) {
         mInjector = injector;
         mContext = mInjector.getContext();
+        mFreezer = injector.getFreezer();
         mUiContext = null;
         mAppErrors = injector.getAppErrors();
         mPackageWatchdog = null;
@@ -2586,6 +2577,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         LockGuard.installLock(this, LockGuard.INDEX_ACTIVITY);
         mInjector = new Injector(systemContext);
         mContext = systemContext;
+        mFreezer = mInjector.getFreezer();
 
         mFactoryTest = FactoryTest.getMode();
         mSystemThread = ActivityThread.currentActivityThread();
@@ -4451,6 +4443,16 @@ public class ActivityManagerService extends IActivityManager.Stub
     }
 
     @GuardedBy("this")
+    final boolean forceStopUserPackagesLocked(int userId, String reasonString,
+            boolean evenImportantServices) {
+        int minOomAdj = evenImportantServices ? ProcessList.INVALID_ADJ
+                : ProcessList.FOREGROUND_APP_ADJ;
+        return forceStopPackageInternalLocked(null, -1, false, false,
+                true, false, false, false, userId, reasonString,
+                ApplicationExitInfo.REASON_USER_STOPPED, minOomAdj);
+    }
+
+    @GuardedBy("this")
     final boolean forceStopPackageLocked(String packageName, int appId,
             boolean callerWillRestart, boolean purgeCache, boolean doit,
             boolean evenPersistent, boolean uninstalling, boolean packageStateStopped,
@@ -4459,7 +4461,6 @@ public class ActivityManagerService extends IActivityManager.Stub
                 : ApplicationExitInfo.REASON_USER_REQUESTED;
         return forceStopPackageLocked(packageName, appId, callerWillRestart, purgeCache, doit,
                 evenPersistent, uninstalling, packageStateStopped, userId, reasonString, reason);
-
     }
 
     @GuardedBy("this")
@@ -4467,6 +4468,16 @@ public class ActivityManagerService extends IActivityManager.Stub
             boolean callerWillRestart, boolean purgeCache, boolean doit,
             boolean evenPersistent, boolean uninstalling, boolean packageStateStopped,
             int userId, String reasonString, int reason) {
+        return forceStopPackageInternalLocked(packageName, appId, callerWillRestart, purgeCache,
+                doit, evenPersistent, uninstalling, packageStateStopped, userId, reasonString,
+                reason, ProcessList.INVALID_ADJ);
+    }
+
+    @GuardedBy("this")
+    private boolean forceStopPackageInternalLocked(String packageName, int appId,
+            boolean callerWillRestart, boolean purgeCache, boolean doit,
+            boolean evenPersistent, boolean uninstalling, boolean packageStateStopped,
+            int userId, String reasonString, int reason, int minOomAdj) {
         int i;
 
         if (userId == UserHandle.USER_ALL && packageName == null) {
@@ -4506,7 +4517,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
 
             didSomething |= mProcessList.killPackageProcessesLSP(packageName, appId, userId,
-                    ProcessList.INVALID_ADJ, callerWillRestart, false /* allowRestart */, doit,
+                    minOomAdj, callerWillRestart, false /* allowRestart */, doit,
                     evenPersistent, true /* setRemoved */, uninstalling,
                     reason,
                     subReason,
@@ -4515,7 +4526,8 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
 
         if (mServices.bringDownDisabledPackageServicesLocked(
-                packageName, null /* filterByClasses */, userId, evenPersistent, true, doit)) {
+                packageName, null /* filterByClasses */, userId, evenPersistent,
+                true, doit, minOomAdj)) {
             if (!doit) {
                 return true;
             }
@@ -5391,12 +5403,6 @@ public class ActivityManagerService extends IActivityManager.Stub
             // Start looking for apps that are abusing wake locks.
             Message nmsg = mHandler.obtainMessage(CHECK_EXCESSIVE_POWER_USE_MSG);
             mHandler.sendMessageDelayed(nmsg, mConstants.POWER_CHECK_INTERVAL);
-            // Check if we are performing userspace reboot before setting sys.boot_completed to
-            // avoid race with init reseting sys.init.userspace_reboot.in_progress once sys
-            // .boot_completed is 1.
-            if (InitProperties.userspace_reboot_in_progress().orElse(false)) {
-                UserspaceRebootLogger.noteUserspaceRebootSuccess();
-            }
             // Tell anyone interested that we are done booting!
             SystemProperties.set("sys.boot_completed", "1");
             SystemProperties.set("dev.bootcomplete", "1");
@@ -5426,7 +5432,6 @@ public class ActivityManagerService extends IActivityManager.Stub
                             }, mConstants.FULL_PSS_MIN_INTERVAL);
                         }
                     });
-            maybeLogUserspaceRebootEvent();
             mUserController.scheduleStartProfiles();
         }
         // UART is on if init's console service is running, send a warning notification.
@@ -18560,6 +18565,23 @@ public class ActivityManagerService extends IActivityManager.Stub
             implements ActivityManagerLocal {
 
         @Override
+        public void addFrozenProcessListener(int pid, @NonNull Executor executor,
+                @NonNull FrozenProcessListener listener) {
+            Objects.requireNonNull(executor);
+            Objects.requireNonNull(listener);
+            synchronized (mProcLock) {
+                final ProcessRecord app;
+                synchronized (mPidsSelfLocked) {
+                    app = mPidsSelfLocked.get(pid);
+                }
+                if (app != null) {
+                    mOomAdjuster.mCachedAppOptimizer.addFrozenProcessListener(app, executor,
+                            listener);
+                }
+            }
+        }
+
+        @Override
         public List<PendingIntentStats> getPendingIntentStats() {
             return mPendingIntentController.dumpPendingIntentStatsForStatsd();
         }
@@ -19976,6 +19998,11 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
 
         @Override
+        public boolean isEarlyPackageKillEnabledForUserSwitch(int fromUserId, int toUserId) {
+            return mUserController.isEarlyPackageKillEnabledForUserSwitch(fromUserId, toUserId);
+        }
+
+        @Override
         public void setStopUserOnSwitch(int value) {
             ActivityManagerService.this.setStopUserOnSwitch(value);
         }
@@ -21048,6 +21075,11 @@ public class ActivityManagerService extends IActivityManager.Stub
         public IntentFirewall getIntentFirewall() {
             return null;
         }
+
+        /** @return the default Freezer. */
+        public Freezer getFreezer() {
+            return new Freezer();
+        }
     }
 
     @Override
@@ -21151,7 +21183,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         final long token = Binder.clearCallingIdentity();
 
         try {
-            return CachedAppOptimizer.isFreezerSupported();
+            return mFreezer.isFreezerSupported();
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -21305,5 +21337,10 @@ public class ActivityManagerService extends IActivityManager.Stub
     @GuardedBy("this")
     void clearPendingTopAppLocked() {
         mPendingStartActivityUids.clear();
+    }
+
+    @NonNull
+    Freezer getFreezer() {
+        return mFreezer;
     }
 }

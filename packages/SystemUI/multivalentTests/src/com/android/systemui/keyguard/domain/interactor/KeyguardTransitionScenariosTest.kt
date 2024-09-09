@@ -16,7 +16,7 @@
 
 package com.android.systemui.keyguard.domain.interactor
 
-import android.app.StatusBarManager
+import android.app.StatusBarManager.CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP
 import android.platform.test.annotations.DisableFlags
 import android.platform.test.annotations.EnableFlags
 import android.platform.test.flag.junit.FlagsParameterization
@@ -42,7 +42,6 @@ import com.android.systemui.flags.Flags.COMMUNAL_SERVICE_ENABLED
 import com.android.systemui.flags.andSceneContainer
 import com.android.systemui.flags.fakeFeatureFlagsClassic
 import com.android.systemui.keyguard.data.repository.FakeKeyguardTransitionRepository
-import com.android.systemui.keyguard.data.repository.fakeCommandQueue
 import com.android.systemui.keyguard.data.repository.fakeKeyguardRepository
 import com.android.systemui.keyguard.data.repository.fakeKeyguardTransitionRepository
 import com.android.systemui.keyguard.shared.model.BiometricUnlockMode
@@ -59,7 +58,6 @@ import com.android.systemui.power.domain.interactor.PowerInteractor.Companion.se
 import com.android.systemui.power.domain.interactor.powerInteractor
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.shade.shadeTestUtil
-import com.android.systemui.statusbar.commandQueue
 import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -93,13 +91,12 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     private val kosmos =
         testKosmos().apply {
             fakeKeyguardTransitionRepository = spy(FakeKeyguardTransitionRepository())
-            this.commandQueue = fakeCommandQueue
         }
     private val testScope = kosmos.testScope
 
     private val keyguardRepository by lazy { kosmos.fakeKeyguardRepository }
+    private val keyguardInteractor by lazy { kosmos.keyguardInteractor }
     private val bouncerRepository by lazy { kosmos.fakeKeyguardBouncerRepository }
-    private var commandQueue = kosmos.fakeCommandQueue
     private val shadeTestUtil by lazy { kosmos.shadeTestUtil }
     private val transitionRepository by lazy { kosmos.fakeKeyguardTransitionRepository }
     private lateinit var featureFlags: FakeFeatureFlags
@@ -261,7 +258,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
             keyguardRepository.setDozeTransitionModel(
                 DozeTransitionModel(from = DozeStateModel.DOZE, to = DozeStateModel.FINISH)
             )
-            runCurrent()
+            advanceTimeBy(600L)
 
             // GIVEN a prior transition has run to LOCKSCREEN
             runTransitionAndSetWakefulness(KeyguardState.GONE, KeyguardState.LOCKSCREEN)
@@ -290,7 +287,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
             keyguardRepository.setDozeTransitionModel(
                 DozeTransitionModel(from = DozeStateModel.DOZE, to = DozeStateModel.FINISH)
             )
-            runCurrent()
+            advanceTimeBy(600L)
 
             // GIVEN a prior transition has run to LOCKSCREEN
             runTransitionAndSetWakefulness(KeyguardState.GONE, KeyguardState.LOCKSCREEN)
@@ -628,6 +625,9 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     @DisableSceneContainer
     fun dreamingToGoneWithKeyguardNotShowing() =
         testScope.runTest {
+            // Setup - Move past initial delay with [KeyguardInteractor#isAbleToDream]
+            advanceTimeBy(600L)
+
             // GIVEN a prior transition has run to DREAMING
             keyguardRepository.setDreamingWithOverlay(true)
             runTransitionAndSetWakefulness(KeyguardState.LOCKSCREEN, KeyguardState.DREAMING)
@@ -757,15 +757,35 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
         }
 
     @Test
+    @BrokenWithSceneContainer(339465026)
+    fun goneToOccluded() =
+        testScope.runTest {
+            // GIVEN a prior transition has run to GONE
+            runTransitionAndSetWakefulness(KeyguardState.LOCKSCREEN, KeyguardState.GONE)
+
+            // WHEN an occluding app is running and showDismissibleKeyguard is called
+            keyguardRepository.setKeyguardOccluded(true)
+            keyguardRepository.showDismissibleKeyguard()
+            runCurrent()
+
+            assertThat(transitionRepository)
+                .startedTransition(
+                    from = KeyguardState.GONE,
+                    to = KeyguardState.OCCLUDED,
+                    ownerName =
+                        "FromGoneTransitionInteractor" + "(Dismissible keyguard with occlusion)",
+                    animatorAssertion = { it.isNotNull() }
+                )
+
+            coroutineContext.cancelChildren()
+        }
+
+    @Test
     @DisableSceneContainer
     fun goneToDreaming() =
         testScope.runTest {
-            // GIVEN a device that is not dreaming or dozing
-            keyguardRepository.setDreamingWithOverlay(false)
-            keyguardRepository.setDozeTransitionModel(
-                DozeTransitionModel(from = DozeStateModel.DOZE, to = DozeStateModel.FINISH)
-            )
-            runCurrent()
+            // Setup - Move past initial delay with [KeyguardInteractor#isAbleToDream]
+            advanceTimeBy(600L)
 
             // GIVEN a prior transition has run to GONE
             runTransitionAndSetWakefulness(KeyguardState.LOCKSCREEN, KeyguardState.GONE)
@@ -825,7 +845,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
             runTransitionAndSetWakefulness(KeyguardState.LOCKSCREEN, KeyguardState.GONE)
 
             // WHEN the glanceable hub is shown
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
 
             assertThat(transitionRepository)
@@ -984,7 +1004,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     fun alternateBouncerToGlanceableHub() =
         testScope.runTest {
             // GIVEN the device is idle on the glanceable hub
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
             clearInvocations(transitionRepository)
 
@@ -1103,7 +1123,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     fun primaryBouncerToGlanceableHub() =
         testScope.runTest {
             // GIVEN the device is idle on the glanceable hub
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
 
             // GIVEN a prior transition has run to PRIMARY_BOUNCER
@@ -1133,8 +1153,11 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     @DisableSceneContainer
     fun primaryBouncerToGlanceableHubWhileDreaming() =
         testScope.runTest {
+            // Setup - Move past initial delay with [KeyguardInteractor#isAbleToDream]
+            advanceTimeBy(600L)
+
             // GIVEN the device is idle on the glanceable hub
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
 
             // GIVEN a prior transition has run to PRIMARY_BOUNCER
@@ -1147,6 +1170,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
             // GIVEN that we are dreaming and occluded
             keyguardRepository.setDreaming(true)
             keyguardRepository.setKeyguardOccluded(true)
+            advanceTimeBy(60L)
 
             // WHEN the primaryBouncer stops showing
             bouncerRepository.setPrimaryShow(false)
@@ -1724,11 +1748,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
             reset(transitionRepository)
 
             // ...AND WHEN the camera gesture is detected quickly afterwards
-            commandQueue.doForEachCallback {
-                it.onCameraLaunchGestureDetected(
-                    StatusBarManager.CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP
-                )
-            }
+            keyguardInteractor.onCameraLaunchDetected(CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP)
             runCurrent()
 
             // THEN a transition from DOZING => OCCLUDED should occur
@@ -1951,7 +1971,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     fun glanceableHubToLockscreen_communalKtfRefactor() =
         testScope.runTest {
             // GIVEN a prior transition has run to GLANCEABLE_HUB
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
             clearInvocations(transitionRepository)
 
@@ -2015,7 +2035,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     fun glanceableHubToDozing_communalKtfRefactor() =
         testScope.runTest {
             // GIVEN a prior transition has run to GLANCEABLE_HUB
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
             clearInvocations(transitionRepository)
 
@@ -2116,7 +2136,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     fun glanceableHubToOccluded_communalKtfRefactor() =
         testScope.runTest {
             // GIVEN a prior transition has run to GLANCEABLE_HUB
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
             clearInvocations(transitionRepository)
 
@@ -2164,7 +2184,7 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     fun glanceableHubToGone_communalKtfRefactor() =
         testScope.runTest {
             // GIVEN a prior transition has run to GLANCEABLE_HUB
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
             clearInvocations(transitionRepository)
 
@@ -2188,12 +2208,14 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
     @DisableFlags(FLAG_COMMUNAL_SCENE_KTF_REFACTOR)
     fun glanceableHubToDreaming() =
         testScope.runTest {
+            runCurrent()
+
             // GIVEN that we are dreaming and not dozing
             keyguardRepository.setDreaming(true)
             keyguardRepository.setDozeTransitionModel(
                 DozeTransitionModel(from = DozeStateModel.DOZE, to = DozeStateModel.FINISH)
             )
-            runCurrent()
+            advanceTimeBy(600L)
 
             // GIVEN a prior transition has run to GLANCEABLE_HUB
             runTransitionAndSetWakefulness(KeyguardState.DREAMING, KeyguardState.GLANCEABLE_HUB)
@@ -2240,10 +2262,10 @@ class KeyguardTransitionScenariosTest(flags: FlagsParameterization?) : SysuiTest
             keyguardRepository.setDozeTransitionModel(
                 DozeTransitionModel(from = DozeStateModel.DOZE, to = DozeStateModel.FINISH)
             )
-            advanceTimeBy(100L)
+            advanceTimeBy(600L)
 
             // GIVEN a prior transition has run to GLANCEABLE_HUB
-            communalSceneInteractor.changeScene(CommunalScenes.Communal)
+            communalSceneInteractor.changeScene(CommunalScenes.Communal, "test")
             runCurrent()
             clearInvocations(transitionRepository)
 

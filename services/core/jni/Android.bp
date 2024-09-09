@@ -80,6 +80,7 @@ cc_library_static {
         "com_android_server_activityTriggerService.cpp",
         "onload.cpp",
         ":lib_cachedAppOptimizer_native",
+        ":lib_freezer_native",
         ":lib_gameManagerService_native",
         ":lib_oomConnection_native",
         ":lib_anrTimer_native",
@@ -211,7 +212,6 @@ cc_defaults {
         "android.system.suspend-V1-ndk",
         "server_configurable_flags",
         "service.incremental",
-        "android.companion.virtualdevice.flags-aconfig-cc",
     ],
 
     static_libs: [
@@ -238,6 +238,13 @@ filegroup {
     name: "lib_cachedAppOptimizer_native",
     srcs: [
         "com_android_server_am_CachedAppOptimizer.cpp",
+    ],
+}
+
+filegroup {
+    name: "lib_freezer_native",
+    srcs: [
+        "com_android_server_am_Freezer.cpp",
     ],
 }
 

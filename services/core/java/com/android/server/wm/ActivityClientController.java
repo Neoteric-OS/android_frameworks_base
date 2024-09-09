@@ -68,7 +68,6 @@ import android.app.ActivityManager;
 import android.app.ActivityTaskManager;
 import android.app.FullscreenRequestHandler;
 import android.app.IActivityClientController;
-import android.app.ICompatCameraControlCallback;
 import android.app.IRequestFinishCallback;
 import android.app.PictureInPictureParams;
 import android.app.PictureInPictureUiState;
@@ -1009,22 +1008,6 @@ class ActivityClientController extends IActivityClientController.Stub {
         Binder.restoreCallingIdentity(origId);
     }
 
-    @Override
-    public void requestCompatCameraControl(IBinder token, boolean showControl,
-            boolean transformationApplied, ICompatCameraControlCallback callback) {
-        final long origId = Binder.clearCallingIdentity();
-        try {
-            synchronized (mGlobalLock) {
-                final ActivityRecord r = ActivityRecord.isInRootTaskLocked(token);
-                if (r != null) {
-                    r.updateCameraCompatState(showControl, transformationApplied, callback);
-                }
-            }
-        } finally {
-            Binder.restoreCallingIdentity(origId);
-        }
-    }
-
     /**
      * Initialize the {@link #mSetPipAspectRatioQuotaTracker} if applicable, which should happen
      * out of {@link #mGlobalLock} to avoid deadlock (AM lock is used in QuotaTrack ctor).
@@ -1174,7 +1157,7 @@ class ActivityClientController extends IActivityClientController.Stub {
                 }
 
                 if (rootTask.inFreeformWindowingMode()) {
-                    rootTask.setWindowingMode(WINDOWING_MODE_FULLSCREEN);
+                    rootTask.setRootTaskWindowingMode(WINDOWING_MODE_FULLSCREEN);
                     rootTask.setBounds(null);
                 } else if (!r.supportsFreeform()) {
                     throw new IllegalStateException(
@@ -1183,9 +1166,9 @@ class ActivityClientController extends IActivityClientController.Stub {
                     // If the window is on a freeform display, set it to undefined. It will be
                     // resolved to freeform and it can adjust windowing mode when the display mode
                     // changes in runtime.
-                    rootTask.setWindowingMode(WINDOWING_MODE_UNDEFINED);
+                    rootTask.setRootTaskWindowingMode(WINDOWING_MODE_UNDEFINED);
                 } else {
-                    rootTask.setWindowingMode(WINDOWING_MODE_FREEFORM);
+                    rootTask.setRootTaskWindowingMode(WINDOWING_MODE_FREEFORM);
                 }
             }
         } finally {
@@ -1296,7 +1279,7 @@ class ActivityClientController extends IActivityClientController.Stub {
         if (fullscreenRequest == FULLSCREEN_MODE_REQUEST_ENTER) {
             final int restoreWindowingMode = requester.getRequestedOverrideWindowingMode();
             targetWindowingMode = WINDOWING_MODE_FULLSCREEN;
-            requester.setWindowingMode(targetWindowingMode);
+            requester.setRootTaskWindowingMode(targetWindowingMode);
             // The restore windowing mode must be set after the windowing mode is set since
             // Task#setWindowingMode resets the restore windowing mode to WINDOWING_MODE_INVALID.
             requester.mMultiWindowRestoreWindowingMode = restoreWindowingMode;
@@ -1315,9 +1298,8 @@ class ActivityClientController extends IActivityClientController.Stub {
     public void startLockTaskModeByToken(IBinder token) {
         synchronized (mGlobalLock) {
             final ActivityRecord r = ActivityRecord.forTokenLocked(token);
-            if (r != null) {
-                mService.startLockTaskMode(r.getTask(), false /* isSystemCaller */);
-            }
+            if (r == null) return;
+            mService.startLockTaskMode(r.getTask(), false /* isSystemCaller */);
         }
     }
 

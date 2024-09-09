@@ -1105,14 +1105,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             }
 
             @Override
-            public void onPulseExpansionAmountChanged(boolean expandingChanged) {
-                if (mKeyguardBypassController.getBypassEnabled()) {
-                    // Position the notifications while dragging down while pulsing
-                    requestScrollerTopPaddingUpdate(false /* animate */);
-                }
-            }
-
-            @Override
             public void onDelayedDozeAmountAnimationRunning(boolean running) {
                 // On running OR finished, the animation is no longer waiting to play
                 setWillPlayDelayedDozeAmountAnimation(false);
@@ -1313,10 +1305,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     /** Updates the StatusBarViewController and updates any that depend on it. */
     public void updateStatusViewController() {
         // Re-associate the KeyguardStatusViewController
-        if (mKeyguardStatusViewController != null) {
-            mKeyguardStatusViewController.onDestroy();
-        }
-
         if (MigrateClocksToBlueprint.isEnabled()) {
             // Need a shared controller until mKeyguardStatusViewController can be removed from
             // here, due to important state being set in that controller. Rebind in order to pick
@@ -1359,6 +1347,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 "NotificationPanelViewController.updateResources");
 
         if (splitShadeChanged) {
+            if (isPanelVisibleBecauseOfHeadsUp()) {
+                // workaround for b/324642496, because HUNs set state to OPENING
+                onPanelStateChanged(STATE_CLOSED);
+            }
             onSplitShadeEnabledChanged();
         }
 

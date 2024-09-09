@@ -6954,9 +6954,10 @@ public final class ActiveServices {
 
             // If unbound while waiting to start and there is no connection left in this service,
             // remove the pending service
-            if (s.getConnections().isEmpty()) {
+            if (s.getConnections().isEmpty() && !s.startRequested) {
                 mPendingServices.remove(s);
                 mPendingBringups.remove(s);
+                if (DEBUG_SERVICE) Slog.v(TAG_SERVICE, "Removed pending service: " + s);
             }
 
             if (c.hasFlag(Context.BIND_AUTO_CREATE)) {
@@ -7262,7 +7263,8 @@ public final class ActiveServices {
     }
 
     private boolean collectPackageServicesLocked(String packageName, Set<String> filterByClasses,
-            boolean evenPersistent, boolean doit, ArrayMap<ComponentName, ServiceRecord> services) {
+            boolean evenPersistent, boolean doit, int minOomAdj,
+            ArrayMap<ComponentName, ServiceRecord> services) {
         boolean didSomething = false;
         for (int i = services.size() - 1; i >= 0; i--) {
             ServiceRecord service = services.valueAt(i);
@@ -7270,6 +7272,11 @@ public final class ActiveServices {
                     || (service.packageName.equals(packageName)
                         && (filterByClasses == null
                             || filterByClasses.contains(service.name.getClassName())));
+            if (service.app != null && service.app.mState.getCurAdj() < minOomAdj) {
+                Slog.i(TAG, "Skip force stopping service " + service
+                            + ": below minimum oom adj level");
+                continue;
+            }
             if (sameComponent
                     && (service.app == null || evenPersistent || !service.app.isPersistent())) {
                 if (!doit) {
@@ -7293,6 +7300,12 @@ public final class ActiveServices {
 
     boolean bringDownDisabledPackageServicesLocked(String packageName, Set<String> filterByClasses,
             int userId, boolean evenPersistent, boolean fullStop, boolean doit) {
+        return bringDownDisabledPackageServicesLocked(packageName, filterByClasses, userId,
+                evenPersistent, fullStop, doit, ProcessList.INVALID_ADJ);
+    }
+
+    boolean bringDownDisabledPackageServicesLocked(String packageName, Set<String> filterByClasses,
+            int userId, boolean evenPersistent, boolean fullStop, boolean doit, int minOomAdj) {
         boolean didSomething = false;
 
         if (mTmpCollectionResults != null) {
@@ -7302,7 +7315,8 @@ public final class ActiveServices {
         if (userId == UserHandle.USER_ALL) {
             for (int i = mServiceMap.size() - 1; i >= 0; i--) {
                 didSomething |= collectPackageServicesLocked(packageName, filterByClasses,
-                        evenPersistent, doit, mServiceMap.valueAt(i).mServicesByInstanceName);
+                        evenPersistent, doit, minOomAdj,
+                        mServiceMap.valueAt(i).mServicesByInstanceName);
                 if (!doit && didSomething) {
                     return true;
                 }
@@ -7315,7 +7329,7 @@ public final class ActiveServices {
             if (smap != null) {
                 ArrayMap<ComponentName, ServiceRecord> items = smap.mServicesByInstanceName;
                 didSomething = collectPackageServicesLocked(packageName, filterByClasses,
-                        evenPersistent, doit, items);
+                        evenPersistent, doit, minOomAdj, items);
             }
             if (doit && filterByClasses == null) {
                 forceStopPackageLocked(packageName, userId);

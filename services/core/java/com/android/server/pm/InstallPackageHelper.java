@@ -502,9 +502,9 @@ final class InstallPackageHelper {
             mPm.setUpCustomResolverActivity(pkg, pkgSetting);
         }
 
-        // When upgrading a package, pkgSetting is copied from oldPkgSetting. Clear the app
-        // metadata file path for the new package.
-        if (oldPkgSetting != null) {
+        // When upgrading a package, clear the app metadata file path for the new package.
+        if (oldPkgSetting != null
+                && oldPkgSetting.getLastUpdateTime() < pkgSetting.getLastUpdateTime()) {
             pkgSetting.setAppMetadataFilePath(null);
             pkgSetting.setAppMetadataSource(APP_METADATA_SOURCE_UNKNOWN);
         }
@@ -687,6 +687,9 @@ final class InstallPackageHelper {
                     (installFlags & PackageManager.INSTALL_INSTANT_APP) != 0;
             final boolean fullApp =
                     (installFlags & PackageManager.INSTALL_FULL_APP) != 0;
+            final boolean isPackageDeviceAdmin = mPm.isPackageDeviceAdmin(packageName, userId);
+            final boolean isProtectedPackage = mPm.mProtectedPackages != null
+                    && mPm.mProtectedPackages.isPackageStateProtected(userId, packageName);
 
             // writer
             synchronized (mPm.mLock) {
@@ -695,7 +698,8 @@ final class InstallPackageHelper {
                 if (pkgSetting == null || pkgSetting.getPkg() == null) {
                     return Pair.create(PackageManager.INSTALL_FAILED_INVALID_URI, intentSender);
                 }
-                if (instantApp && (pkgSetting.isSystem() || pkgSetting.isUpdatedSystemApp())) {
+                if (instantApp && (pkgSetting.isSystem() || pkgSetting.isUpdatedSystemApp()
+                        || isPackageDeviceAdmin || isProtectedPackage)) {
                     return Pair.create(PackageManager.INSTALL_FAILED_INVALID_URI, intentSender);
                 }
                 if (!snapshot.canViewInstantApps(callingUid, UserHandle.getUserId(callingUid))) {
@@ -1812,26 +1816,37 @@ final class InstallPackageHelper {
                                 oldPackageState.getRestrictUpdateHash());
                     }
 
-                    if (oldPackage != null) {
-                        // APK should not change its sharedUserId declarations
-                        final var oldSharedUid = oldPackage.getSharedUserId() != null
-                                ? oldPackage.getSharedUserId() : "<nothing>";
-                        final var newSharedUid = parsedPackage.getSharedUserId() != null
-                                ? parsedPackage.getSharedUserId() : "<nothing>";
-                        if (!oldSharedUid.equals(newSharedUid)) {
-                            throw new PrepareFailure(INSTALL_FAILED_UID_CHANGED,
-                                    "Package " + parsedPackage.getPackageName()
-                                            + " shared user changed from "
-                                            + oldSharedUid + " to " + newSharedUid);
+                    // APK should not change its sharedUserId declarations
+                    final String oldSharedUid;
+                    if (mPm.mSettings.getSharedUserSettingLPr(oldPackageState) != null) {
+                        oldSharedUid = mPm.mSettings.getSharedUserSettingLPr(oldPackageState).name;
+                    } else {
+                        oldSharedUid = "<nothing>";
+                    }
+                    String newSharedUid = parsedPackage.getSharedUserId() != null
+                            ? parsedPackage.getSharedUserId() : "<nothing>";
+                    // If the previously installed app version doesn't have sharedUserSetting,
+                    // check that the new apk either doesn't have sharedUserId or it is leaving one.
+                    // If it contains sharedUserId but it is also leaving it, it's ok to proceed.
+                    if (oldSharedUid.equals("<nothing>")) {
+                        if (parsedPackage.isLeavingSharedUser()) {
+                            newSharedUid = "<nothing>";
                         }
+                    }
 
-                        // APK should not re-join shared UID
-                        if (oldPackage.isLeavingSharedUser()
-                                && !parsedPackage.isLeavingSharedUser()) {
-                            throw new PrepareFailure(INSTALL_FAILED_UID_CHANGED,
-                                    "Package " + parsedPackage.getPackageName()
-                                            + " attempting to rejoin " + newSharedUid);
-                        }
+                    if (!oldSharedUid.equals(newSharedUid)) {
+                        throw new PrepareFailure(INSTALL_FAILED_UID_CHANGED,
+                                "Package " + parsedPackage.getPackageName()
+                                        + " shared user changed from "
+                                        + oldSharedUid + " to " + newSharedUid);
+                    }
+
+                    // APK should not re-join shared UID
+                    if (oldPackageState.isLeavingSharedUser()
+                            && !parsedPackage.isLeavingSharedUser()) {
+                        throw new PrepareFailure(INSTALL_FAILED_UID_CHANGED,
+                                "Package " + parsedPackage.getPackageName()
+                                        + " attempting to rejoin " + newSharedUid);
                     }
 
                     // In case of rollback, remember per-user/profile install state
@@ -3286,6 +3301,7 @@ final class InstallPackageHelper {
     /**
      * Tries to restore the disabled system package after an update has been deleted.
      */
+    @GuardedBy("mPm.mInstallLock")
     public void restoreDisabledSystemPackageLIF(DeletePackageAction action,
             @NonNull int[] allUserHandles, boolean writeSettings) throws SystemDeleteException {
         final PackageSetting deletedPs = action.mDeletingPs;
@@ -3304,10 +3320,21 @@ final class InstallPackageHelper {
         }
         // Install the system package
         if (DEBUG_REMOVE) Slog.d(TAG, "Re-installing system package: " + disabledPs);
-        try (PackageManagerTracedLock installLock = mPm.mInstallLock.acquireLock()) {
+        try {
             final int[] origUsers = outInfo == null ? null : outInfo.mOrigUsers;
-            installPackageFromSystemLIF(disabledPs.getPathString(), allUserHandles,
-                    origUsers, writeSettings);
+            try (PackageManagerTracedLock installLock = mPm.mInstallLock.acquireLock()) {
+                installPackageFromSystemLIF(disabledPs.getPathString(), allUserHandles,
+                        origUsers, writeSettings);
+            }
+            if (origUsers != null) {
+                mPm.commitPackageStateMutation(null, mutator -> {
+                    for (int userId : origUsers) {
+                        mutator.forPackage(disabledPs.getPackageName())
+                                .userState(userId)
+                                .setOverlayPaths(deletedPs.getOverlayPaths(userId));
+                    }
+                });
+            }
         } catch (PackageManagerException e) {
             Slog.w(TAG, "Failed to restore system package:" + deletedPs.getPackageName() + ": "
                     + e.getMessage());
@@ -3835,13 +3862,13 @@ final class InstallPackageHelper {
                 // This also has the (beneficial) side effect where if a package disappears from an
                 // APEX, leaving only a /data copy, it will lose its apexModuleName.
                 //
-                // This must be done before scanSystemPackageLI as that will throw in the case of a
+                // This must be done before scanPackageForInitLI as that will throw in the case of a
                 // system -> data package.
                 disabledPkgSetting.setApexModuleName(activeApexInfo.apexModuleName);
             }
         }
 
-        final Pair<ScanResult, Boolean> scanResultPair = scanSystemPackageLI(
+        final Pair<ScanResult, Boolean> scanResultPair = scanPackageForInitLI(
                 parsedPackage, parseFlags, scanFlags, user);
         final ScanResult scanResult = scanResultPair.first;
         boolean shouldHideSystemApp = scanResultPair.second;
@@ -4076,7 +4103,7 @@ final class InstallPackageHelper {
         }
     }
 
-    private Pair<ScanResult, Boolean> scanSystemPackageLI(ParsedPackage parsedPackage,
+    private Pair<ScanResult, Boolean> scanPackageForInitLI(ParsedPackage parsedPackage,
             @ParsingPackageUtils.ParseFlags int parseFlags,
             @PackageManagerService.ScanFlags int scanFlags,
             @Nullable UserHandle user) throws PackageManagerException {
@@ -4189,7 +4216,7 @@ final class InstallPackageHelper {
                         ParsingPackageUtils.getSigningDetails(input, parsedPackage,
                                 false /*skipVerify*/);
                 if (result.isError()) {
-                    throw new PrepareFailure("Failed collect during scanSystemPackageLI",
+                    throw new PrepareFailure("Failed collect during scanPackageForInitLI",
                             result.getException());
                 }
                 disabledPkgSetting.setSigningDetails(result.getResult());

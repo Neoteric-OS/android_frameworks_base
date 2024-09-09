@@ -23,9 +23,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.animation.ActivityTransitionAnimator
-import com.android.systemui.classifier.falsingManager
 import com.android.systemui.haptics.vibratorHelper
 import com.android.systemui.kosmos.testScope
+import com.android.systemui.log.core.FakeLogBuffer
 import com.android.systemui.qs.qsTileFactory
 import com.android.systemui.statusbar.policy.keyguardStateController
 import com.android.systemui.testKosmos
@@ -73,7 +73,7 @@ class QSLongPressEffectTest : SysuiTestCase() {
             QSLongPressEffect(
                 vibratorHelper,
                 kosmos.keyguardStateController,
-                kosmos.falsingManager,
+                FakeLogBuffer.Factory.create(),
             )
         longPressEffect.callback = callback
         longPressEffect.qsTile = qsTile
@@ -110,6 +110,26 @@ class QSLongPressEffectTest : SysuiTestCase() {
         // THEN the effect moves to the TIMEOUT_WAIT state
         assertThat(longPressEffect.state).isEqualTo(QSLongPressEffect.State.TIMEOUT_WAIT)
     }
+
+    @Test
+    fun onActionDown_whileClicked_startsWait() =
+        testWhileInState(QSLongPressEffect.State.CLICKED) {
+            // GIVEN an action down event occurs
+            longPressEffect.handleActionDown()
+
+            // THEN the effect moves to the TIMEOUT_WAIT state
+            assertThat(longPressEffect.state).isEqualTo(QSLongPressEffect.State.TIMEOUT_WAIT)
+        }
+
+    @Test
+    fun onActionDown_whileLongClicked_startsWait() =
+        testWhileInState(QSLongPressEffect.State.LONG_CLICKED) {
+            // GIVEN an action down event occurs
+            longPressEffect.handleActionDown()
+
+            // THEN the effect moves to the TIMEOUT_WAIT state
+            assertThat(longPressEffect.state).isEqualTo(QSLongPressEffect.State.TIMEOUT_WAIT)
+        }
 
     @Test
     fun onActionCancel_whileWaiting_goesIdle() =
@@ -304,13 +324,12 @@ class QSLongPressEffectTest : SysuiTestCase() {
     }
 
     @Test
-    fun getStateForClick_withFalseTapWhenLocked_returnsIdle() {
+    fun getStateForClick_whenKeyguardsIsShowing_returnsIdle() {
         // GIVEN an active tile
         qsTile.state?.state = Tile.STATE_ACTIVE
 
-        // GIVEN that the device is locked and a false tap is detected
-        whenever(kosmos.keyguardStateController.isUnlocked).thenReturn(false)
-        kosmos.falsingManager.setFalseTap(true)
+        // GIVEN that the keyguard is showing
+        whenever(kosmos.keyguardStateController.isShowing).thenReturn(true)
 
         // WHEN determining the state of a click action
         val clickState = longPressEffect.getStateForClick()
@@ -324,9 +343,8 @@ class QSLongPressEffectTest : SysuiTestCase() {
         // GIVEN an active tile
         qsTile.state?.state = Tile.STATE_ACTIVE
 
-        // GIVEN that the device is locked and a false tap is not detected
-        whenever(kosmos.keyguardStateController.isUnlocked).thenReturn(false)
-        kosmos.falsingManager.setFalseTap(false)
+        // GIVEN that the keyguard is not showing
+        whenever(kosmos.keyguardStateController.isShowing).thenReturn(false)
 
         // WHEN determining the state of a click action
         val clickState = longPressEffect.getStateForClick()
@@ -340,9 +358,8 @@ class QSLongPressEffectTest : SysuiTestCase() {
         // GIVEN that the tile is null
         longPressEffect.qsTile = null
 
-        // GIVEN that the device is locked and a false tap is not detected
-        whenever(kosmos.keyguardStateController.isUnlocked).thenReturn(false)
-        kosmos.falsingManager.setFalseTap(false)
+        // GIVEN that the keyguard is not showing
+        whenever(kosmos.keyguardStateController.isShowing).thenReturn(false)
 
         // WHEN determining the state of a click action
         val clickState = longPressEffect.getStateForClick()

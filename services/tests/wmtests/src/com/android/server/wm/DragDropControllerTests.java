@@ -156,7 +156,6 @@ public class DragDropControllerTests extends WindowTestsBase {
         window.openInputChannel(channel);
         window.mHasSurface = true;
         mWm.mWindowMap.put(window.mClient.asBinder(), window);
-        mWm.mInputToWindowMap.put(window.mInputChannelToken, window);
         return window;
     }
 
@@ -179,7 +178,7 @@ public class DragDropControllerTests extends WindowTestsBase {
         mWindow = createDropTargetWindow("Drag test window", 0);
         doReturn(mWindow).when(mDisplayContent).getTouchableWinAtPointLocked(0, 0);
         when(mWm.mInputManager.startDragAndDrop(any(IBinder.class),
-                any(InputChannel.class))).thenReturn(true);
+                any(IBinder.class))).thenReturn(true);
 
         mWm.mWindowMap.put(mWindow.mClient.asBinder(), mWindow);
     }
@@ -216,16 +215,6 @@ public class DragDropControllerTests extends WindowTestsBase {
     @Test
     public void testPerformDrag_NullDataWithGrantUri() {
         doDragAndDrop(View.DRAG_FLAG_GLOBAL | View.DRAG_FLAG_GLOBAL_URI_READ, null, 0, 0);
-    }
-
-    @Test
-    public void testPerformDrag_NullDataToOtherUser() {
-        final WindowState otherUsersWindow =
-                createDropTargetWindow("Other user's window", 1 * UserHandle.PER_USER_RANGE);
-        doReturn(otherUsersWindow).when(mDisplayContent).getTouchableWinAtPointLocked(10, 10);
-
-        doDragAndDrop(View.DRAG_FLAG_GLOBAL | View.DRAG_FLAG_GLOBAL_URI_READ, null, 10, 10);
-        mToken = otherUsersWindow.mClient.asBinder();
     }
 
     @Test
@@ -707,7 +696,7 @@ public class DragDropControllerTests extends WindowTestsBase {
                     .setFormat(PixelFormat.TRANSLUCENT)
                     .build();
 
-            assertTrue(mWm.mInputManager.startDragAndDrop(new Binder(), new InputChannel()));
+            assertTrue(mWm.mInputManager.startDragAndDrop(new Binder(), new Binder()));
             mToken = mTarget.performDrag(TEST_PID, 0, mWindow.mClient,
                     flag, surface, 0, 0, 0, 0, 0, 0, 0, data);
             assertNotNull(mToken);

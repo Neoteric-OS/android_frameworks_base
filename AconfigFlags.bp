@@ -21,6 +21,7 @@ aconfig_declarations_group {
         // !!! KEEP THIS LIST ALPHABETICAL !!!
         "aconfig_mediacodec_flags_java_lib",
         "android.adaptiveauth.flags-aconfig-java",
+        "android.app.appfunctions.flags-aconfig-java",
         "android.app.contextualsearch.flags-aconfig-java",
         "android.app.flags-aconfig-java",
         "android.app.ondeviceintelligence-aconfig-java",
@@ -99,6 +100,7 @@ aconfig_declarations_group {
         "framework_graphics_flags_java_lib",
         "hwui_flags_java_lib",
         "libcore_exported_aconfig_flags_lib",
+        "libgui_flags_java_lib",
         "power_flags_lib",
         "sdk_sandbox_flags_lib",
         "surfaceflinger_flags_java_lib",
@@ -171,6 +173,7 @@ cc_aconfig_library {
 // Window
 aconfig_declarations {
     name: "com.android.window.flags.window-aconfig",
+    exportable: true,
     package: "com.android.window.flags",
     container: "system",
     srcs: ["core/java/android/window/flags/*.aconfig"],
@@ -475,6 +478,13 @@ java_aconfig_library {
     name: "android.os.vibrator.flags-aconfig-java",
     aconfig_declarations: "android.os.vibrator.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+cc_aconfig_library {
+    name: "android.os.vibrator.flags-aconfig-cc",
+    aconfig_declarations: "android.os.vibrator.flags-aconfig",
+    host_supported: true,
+    vendor_available: true,
 }
 
 // View
@@ -1100,6 +1110,7 @@ cc_aconfig_library {
 // Chooser / "Sharesheet"
 aconfig_declarations {
     name: "android.service.chooser.flags-aconfig",
+    exportable: true,
     package: "android.service.chooser",
     container: "system",
     srcs: ["core/java/android/service/chooser/flags.aconfig"],
@@ -1205,6 +1216,12 @@ java_aconfig_library {
 java_aconfig_library {
     name: "surfaceflinger_flags_java_lib",
     aconfig_declarations: "surfaceflinger_flags",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+java_aconfig_library {
+    name: "libgui_flags_java_lib",
+    aconfig_declarations: "libgui_flags",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 
@@ -1364,6 +1381,21 @@ aconfig_declarations {
 java_aconfig_library {
     name: "android.content.flags-aconfig-java",
     aconfig_declarations: "android.content.flags-aconfig",
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// AppFunctions
+aconfig_declarations {
+    name: "android.app.appfunctions.flags-aconfig",
+    exportable: true,
+    package: "android.app.appfunctions.flags",
+    container: "system",
+    srcs: ["core/java/android/app/appfunctions/flags/flags.aconfig"],
+}
+
+java_aconfig_library {
+    name: "android.app.appfunctions.flags-aconfig-java",
+    aconfig_declarations: "android.app.appfunctions.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 
