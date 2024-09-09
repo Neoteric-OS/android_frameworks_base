@@ -16,6 +16,23 @@
       "message": "Hi, as part of my `test_module_config` work, I\u0027m migrating a bunch of options from Android.bp -\u003e TEST_MAPPING.  I had started before I saw that you exclude @Flaky in test-mapping.gcl now (Thanks!).  So I\u0027m cleaning up some occurrences that I wrote.  I have another large change as part of the migration where I get rid of a lot more of the Flaky options ,but I wanted to pull this one out first.",
       "revId": "2cbc7e02820ef45c2055c2b454899240629ee446",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b18746a8_920f366f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-09-09T17:36:17Z",
+      "side": 1,
+      "message": "Small cl for global approval for hard-to-get directories.",
+      "revId": "2cbc7e02820ef45c2055c2b454899240629ee446",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
