@@ -16,6 +16,23 @@
       "message": "Hi, please review this small improvement. Thanks!",
       "revId": "66ead385e1d31dc98d7e93b2b8f16dc613a37811",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e674e2a5_eabf7fb1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112028
+      },
+      "writtenOn": "2024-09-09T15:00:53Z",
+      "side": 1,
+      "message": "Hi Isak, thanks for the change. This is a UX change that we\u0027re not sure we want to have enabled by default in AOSP. OEMs should be able to customize this on their own forks though.",
+      "revId": "66ead385e1d31dc98d7e93b2b8f16dc613a37811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
