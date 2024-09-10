@@ -51,6 +51,24 @@
       "parentUuid": "e674e2a5_eabf7fb1",
       "revId": "66ead385e1d31dc98d7e93b2b8f16dc613a37811",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9a06844_331e8f88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112028
+      },
+      "writtenOn": "2024-09-10T21:35:41Z",
+      "side": 1,
+      "message": "Yes, the latter.\n\nRelayoutParams is already a sufficiently simple configuration for an OEM to maintain if they wish to enable rounded corners. This might change in the future to be enabled by default in aosp, but for now we want to keep it this way.",
+      "parentUuid": "3712f979_e9cf5a23",
+      "revId": "66ead385e1d31dc98d7e93b2b8f16dc613a37811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
