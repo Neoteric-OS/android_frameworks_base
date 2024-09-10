@@ -22,6 +22,30 @@
       },
       "revId": "952d16a946806b182c530b22717819453dd71908",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "157005fe_efeaa1e6",
+        "filename": "services/core/java/com/android/server/logcat/TEST_MAPPING",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-09-10T17:17:52Z",
+      "side": 0,
+      "message": "Thanks! I\u0027ll look into it.\nThese `test_module_config` entries were not intended to be used in gcl, only test_mapping.   They are redundant with the base module in the gcl which already runs all the tests.  I\u0027ll fix that gcl.",
+      "parentUuid": "e136d6d2_8ba4d973",
+      "range": {
+        "startLine": 4,
+        "startChar": 15,
+        "endLine": 4,
+        "endChar": 70
+      },
+      "revId": "952d16a946806b182c530b22717819453dd71908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
