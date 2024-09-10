@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e136d6d2_8ba4d973",
+        "filename": "services/core/java/com/android/server/logcat/TEST_MAPPING",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-09-10T17:07:23Z",
+      "side": 0,
+      "message": "Accessibility team seems to be using this in a config at http://google3/wireless/android/busytown/ath_config/configs/prod/accessibility/config.gcl;l\u003d122;rcl\u003d671563879. Does it need to be modified first? or is the config going to be unaffected even if this doesn\u0027t exist?",
+      "range": {
+        "startLine": 4,
+        "startChar": 15,
+        "endLine": 4,
+        "endChar": 70
+      },
+      "revId": "952d16a946806b182c530b22717819453dd71908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
