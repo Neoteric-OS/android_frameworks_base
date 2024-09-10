@@ -33,6 +33,24 @@
       "message": "Hi Isak, thanks for the change. This is a UX change that we\u0027re not sure we want to have enabled by default in AOSP. OEMs should be able to customize this on their own forks though.",
       "revId": "66ead385e1d31dc98d7e93b2b8f16dc613a37811",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3712f979_e9cf5a23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815205
+      },
+      "writtenOn": "2024-09-10T07:15:49Z",
+      "side": 1,
+      "message": "Hi Jorge, thanks for your feedback. My thinking was that since the value returned by getWindowCornerRadius is customizable via overlaying the rounded corner radius resources such as rounded_corner_radius this change would simply make the freeform windows look the same as other UI elements if the OEM chooses to customize these values. But I assume that you mean that there should either be a separate configuration to control whether freeform windows should be able to have rounded corners or that this patch is so small that any OEM could simply maintain it internally? If the latter then I will abandon this change, thanks!",
+      "parentUuid": "e674e2a5_eabf7fb1",
+      "revId": "66ead385e1d31dc98d7e93b2b8f16dc613a37811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
