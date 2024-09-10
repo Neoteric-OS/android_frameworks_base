@@ -33,6 +33,23 @@
       "message": "Small cl for global approval for hard-to-get directories.",
       "revId": "2cbc7e02820ef45c2055c2b454899240629ee446",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40257744_0edb37e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-09-10T16:50:04Z",
+      "side": 1,
+      "message": "Hi, I\u0027m looking for someone who can +2 these Android.bp file changes.\nWe simplified things by moving Flaky to all presubmit runs here:\ncr/654080474",
+      "revId": "2cbc7e02820ef45c2055c2b454899240629ee446",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
