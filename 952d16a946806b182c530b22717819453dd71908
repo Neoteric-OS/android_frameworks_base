@@ -46,6 +46,30 @@
       },
       "revId": "952d16a946806b182c530b22717819453dd71908",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28e73689_b850d98a",
+        "filename": "services/core/java/com/android/server/logcat/TEST_MAPPING",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1982145
+      },
+      "writtenOn": "2024-09-10T17:29:12Z",
+      "side": 0,
+      "message": "Okay, I think it will be safe to submit this first as the query is doing an OR and if the module doesn\u0027t exist, it should be fine.  That should work for before and after this change gets rolled out and builds happen.\nThe intent of `test_module_config` was to split the large tests for dealing with problems when one \"part\" of the test had errors and let the other parts still run.  However, we thought all test cases will still belong to the base module.  It appears something is parsing this out.  So the gcl is probably correct as is but the NO_FLAKES module can be removed in the future from the query.\nWe shouldn\u0027t have different names for the same test cases depending on if it was run with \"ignore flakes\" or not.",
+      "parentUuid": "157005fe_efeaa1e6",
+      "range": {
+        "startLine": 4,
+        "startChar": 15,
+        "endLine": 4,
+        "endChar": 70
+      },
+      "revId": "952d16a946806b182c530b22717819453dd71908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
