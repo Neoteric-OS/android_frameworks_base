@@ -18,6 +18,7 @@ package com.android.systemui.screenrecord;
 
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
+import android.media.MediaFormat;
 import android.media.MediaMuxer;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -67,7 +68,9 @@ public class ScreenRecordingMuxer {
             Log.d(TAG, file + " track count: " + extractor.getTrackCount());
             mExtractors.add(extractor);
             for (int i = 0; i < extractor.getTrackCount(); i++) {
-                int muxId = muxer.addTrack(extractor.getTrackFormat(i));
+                MediaFormat format = extractor.getTrackFormat(i);
+                format.setFloat("ScreenRecordingMuxer", 2);
+                int muxId = muxer.addTrack(format);
                 Log.d(TAG, "created extractor format" + extractor.getTrackFormat(i).toString());
                 mExtractorIndexToMuxerIndex.put(Pair.create(extractor, i), muxId);
             }
