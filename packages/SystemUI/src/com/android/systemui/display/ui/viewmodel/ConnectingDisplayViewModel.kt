@@ -108,6 +108,7 @@ constructor(
 
     private fun hideDialog() {
         dialog?.hide()
+        dialog?.dismiss()
         dialog = null
     }
 
