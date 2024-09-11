@@ -234,6 +234,8 @@ import com.android.server.webkit.WebViewUpdateService;
 import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
+import com.android.server.security.IntegrityService;
+import com.android.server.security.IntegrityProviderService;
 
 import dalvik.system.VMRuntime;
 
@@ -1457,6 +1459,17 @@ public final class SystemServer implements Dumpable {
         // Handles system process requests for remotely provisioned keys & data.
         t.traceBegin("StartRemoteProvisioningService");
         mSystemServiceManager.startService(RemoteProvisioningService.class);
+        t.traceEnd();
+
+
+        // IntegrityService responds to requests from apps.
+        t.traceBegin("StartIntegrityService");
+        mSystemServiceManager.startService(IntegrityService.class);
+        t.traceEnd();
+
+        // IntegrityService responds to requests from apps.
+        t.traceBegin("StartIntegrityProviderService");
+        mSystemServiceManager.startService(IntegrityProviderService.class);
         t.traceEnd();
 
         // TODO(b/277600174): Start CpuMonitorService on all builds and not just on debuggable
