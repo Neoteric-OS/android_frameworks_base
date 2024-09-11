@@ -88,6 +88,7 @@ combined_apis {
         "framework-permission-s",
         "framework-profiling",
         "framework-photopicker",
+        "framework-ranging",
         "framework-scheduling",
         "framework-sdkextensions",
         "framework-statsd",
