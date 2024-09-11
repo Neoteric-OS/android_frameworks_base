@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c362d75_afe90f75",
+        "filename": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1523749
+      },
+      "writtenOn": "2024-09-11T14:28:07Z",
+      "side": 1,
+      "message": "could you rename this to `dismissDialog` now?",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "db58f5b0_a10d450b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+              "range": {
+                "startLine": 82,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "                    dismissDialog()\n"
+            },
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+              "range": {
+                "startLine": 91,
+                "startChar": 0,
+                "endLine": 92,
+                "endChar": 0
+              },
+              "replacement": "        dismissDialog()\n"
+            },
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+              "range": {
+                "startLine": 97,
+                "startChar": 0,
+                "endLine": 98,
+                "endChar": 0
+              },
+              "replacement": "                        dismissDialog()\n"
+            },
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+              "range": {
+                "startLine": 101,
+                "startChar": 0,
+                "endLine": 102,
+                "endChar": 0
+              },
+              "replacement": "                        dismissDialog()\n"
+            },
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+              "range": {
+                "startLine": 109,
+                "startChar": 0,
+                "endLine": 110,
+                "endChar": 0
+              },
+              "replacement": "    private fun dismissDialog() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b769dfa41cdf5dd46198cc7dd0392139d8ed124e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dda1080_04c96a84",
+        "filename": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1523749
+      },
+      "writtenOn": "2024-09-11T14:28:07Z",
+      "side": 1,
+      "message": "Probably just dismiss is enough?",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 25
+      },
+      "revId": "b769dfa41cdf5dd46198cc7dd0392139d8ed124e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
