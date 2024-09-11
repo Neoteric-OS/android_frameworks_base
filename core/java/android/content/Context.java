@@ -6627,6 +6627,9 @@ public abstract class Context {
     @SuppressLint("ServiceName")
     public static final String WEBVIEW_UPDATE_SERVICE = "webviewupdate";
 
+    public static final String INTEGRITY_SERVICE = "integrity";
+    public static final String INTEGRITY_PROVIDER_SERVICE = "integrityprovider";
+
     /**
      * Determine whether the given permission is allowed for a particular
      * process and user ID running in the system.
