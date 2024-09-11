@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9495cdf_0a82a2c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2016711
+      },
+      "writtenOn": "2024-09-11T11:37:02Z",
+      "side": 1,
+      "message": "ag/29284340 was partially applied",
+      "revId": "b9714e8990d4e63b2bb55a8e373ac5daacc37d9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
