@@ -219,6 +219,9 @@ import android.security.FileIntegrityManager;
 import android.security.IFileIntegrityService;
 import android.security.attestationverification.AttestationVerificationManager;
 import android.security.attestationverification.IAttestationVerificationManagerService;
+import android.security.IntegrityManager;
+import android.security.IIntegrityService;
+import android.security.IIntegrityProviderService;
 import android.service.oemlock.IOemLockService;
 import android.service.oemlock.OemLockManager;
 import android.service.persistentdata.IPersistentDataBlockService;
@@ -1618,6 +1621,27 @@ public final class SystemServiceRegistry {
                                     "ContactKeysManager is not supported");
                         }
                         return new E2eeContactKeysManager(ctx);
+                    }});
+
+        registerService(Context.INTEGRITY_SERVICE, IntegrityManager.class,
+                new CachedServiceFetcher<IntegrityManager>() {
+                    @Override
+                    public IntegrityManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        IBinder b = ServiceManager.getServiceOrThrow(
+                                Context.INTEGRITY_SERVICE);
+                        return new IntegrityManager(ctx.getOuterContext(),
+                                IIntegrityService.Stub.asInterface(b));
+                    }});
+        registerService(Context.INTEGRITY_PROVIDER_SERVICE, IntegrityProviderManager.class,
+                new CachedServiceFetcher<IntegrityProviderManager>() {
+                    @Override
+                    public IntegrityManager createService(ContextImpl ctx)
+                            throws ServiceNotFoundException {
+                        IBinder b = ServiceManager.getServiceOrThrow(
+                                Context.INTEGRITY_PROVIDER_SERVICE);
+                        return new IntegrityProviderManager(ctx.getOuterContext(),
+                                IIntegrityProviderService.Stub.asInterface(b));
                     }});
 
         // DO NOT do a flag check like this unless the flag is read-only.
