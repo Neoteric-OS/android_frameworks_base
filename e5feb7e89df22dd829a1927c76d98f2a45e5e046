@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa7de4ed_e3a52469",
+        "filename": "services/core/java/com/android/server/policy/KeyCombinationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1938970
+      },
+      "writtenOn": "2024-09-12T22:10:46Z",
+      "side": 1,
+      "message": "Yes, good call. Agreed that it\u0027s not needed!",
+      "parentUuid": "d6372fbc_c5dd0593",
+      "range": {
+        "startLine": 242,
+        "startChar": 29,
+        "endLine": 242,
+        "endChar": 43
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "039dcf65_50402655",
