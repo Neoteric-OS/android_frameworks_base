@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1c6c0dd_f61ab016",
+        "filename": "api/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-12T23:30:02Z",
+      "side": 1,
+      "message": "you probably need to flag this also like `crashrecovery` below in line 101.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "5d7b65d8b4145dec307daf8ddbc7c6e5871e6d1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
