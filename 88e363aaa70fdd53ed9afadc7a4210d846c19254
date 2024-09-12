@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18024c01_f9af5c25",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-09-12T17:52:53Z",
+      "side": 1,
+      "message": "I would structure this as:\n\n* create `interface AudioCapsIntf` with all public APIs\n* create `class AudioCapsLegacyImpl implements AudioCapsIntf` and copy all the existing implementations\n* create `class AudioCapsNativeImpl implements AudioCapsIntf` with native context and calls to JNI.\n* `AudioCapabilities` has a field of type `AudioCapsIntf` and depending on the flag create either Legacy or Native impl.",
+      "revId": "88e363aaa70fdd53ed9afadc7a4210d846c19254",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
