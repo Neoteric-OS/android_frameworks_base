@@ -82,6 +82,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7006429_3ed20749",
+        "filename": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1831622
+      },
+      "writtenOn": "2024-09-12T03:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c362d75_afe90f75",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 26
+      },
+      "revId": "b769dfa41cdf5dd46198cc7dd0392139d8ed124e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6dda1080_04c96a84",
@@ -95,6 +119,30 @@
       "writtenOn": "2024-09-11T14:28:07Z",
       "side": 1,
       "message": "Probably just dismiss is enough?",
+      "range": {
+        "startLine": 110,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 25
+      },
+      "revId": "b769dfa41cdf5dd46198cc7dd0392139d8ed124e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "445ae8b0_5a438e65",
+        "filename": "packages/SystemUI/src/com/android/systemui/display/ui/viewmodel/ConnectingDisplayViewModel.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1831622
+      },
+      "writtenOn": "2024-09-12T03:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dda1080_04c96a84",
       "range": {
         "startLine": 110,
         "startChar": 8,
