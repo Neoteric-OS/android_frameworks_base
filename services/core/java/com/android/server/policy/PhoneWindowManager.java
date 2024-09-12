@@ -342,7 +342,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int LONG_PRESS_HOME_ALL_APPS = 1;
     static final int LONG_PRESS_HOME_ASSIST = 2;
     static final int LONG_PRESS_HOME_NOTIFICATION_PANEL = 3;
-    static final int LAST_LONG_PRESS_HOME_BEHAVIOR = LONG_PRESS_HOME_NOTIFICATION_PANEL;
+    static final int LONG_PRESS_HOME_LAUNCH_TARGET_ACTIVITY = 4;
+    static final int LAST_LONG_PRESS_HOME_BEHAVIOR = LONG_PRESS_HOME_LAUNCH_TARGET_ACTIVITY;
 
     // must match: config_doubleTapOnHomeBehavior in config.xml
     static final int DOUBLE_TAP_HOME_NOTHING = 0;
@@ -653,6 +654,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     // What we do when the user long presses on home
     int mLongPressOnHomeBehavior;
+    ComponentName mHomeLongPressTargetActivity;
 
     // What we do when the user double-taps on home
     int mDoubleTapOnHomeBehavior;
@@ -1351,18 +1353,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mPowerManager.boostScreenBrightness(eventTime);
                 break;
             case MULTI_PRESS_POWER_LAUNCH_TARGET_ACTIVITY:
-                launchTargetActivityOnMultiPressPower();
+                if (DEBUG_INPUT) {
+                    Slog.d(TAG, "Executing the double press power action.");
+                }
+                launchTargetActivity(mPowerDoublePressTargetActivity, true);
                 break;
         }
     }
 
-    private void launchTargetActivityOnMultiPressPower() {
-        if (DEBUG_INPUT) {
-            Slog.d(TAG, "Executing the double press power action.");
-        }
-        if (mPowerDoublePressTargetActivity != null) {
+    private void launchTargetActivity(ComponentName componentName, boolean needToDismissKeyguard) {
+        if (componentName != null) {
             Intent intent = new Intent();
-            intent.setComponent(mPowerDoublePressTargetActivity);
+            intent.setComponent(componentName);
             ResolveInfo resolveInfo = mContext.getPackageManager().resolveActivity(
                     intent, /* flags= */0);
             if (resolveInfo != null) {
@@ -1370,14 +1372,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                         mKeyguardDelegate != null && mKeyguardDelegate.isShowing();
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                         | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                if (!keyguardActive) {
-                    startActivityAsUser(intent, UserHandle.CURRENT_OR_SELF);
-                } else {
+                if (needToDismissKeyguard && keyguardActive) {
                     mKeyguardDelegate.dismissKeyguardToLaunch(intent);
+                } else {
+                    startActivityAsUser(intent, UserHandle.CURRENT_OR_SELF);
                 }
             } else {
                 Slog.e(TAG, "Could not resolve activity with : "
-                        + mPowerDoublePressTargetActivity.flattenToString()
+                        + componentName.flattenToString()
                         + " name.");
             }
         }
@@ -2152,6 +2154,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                             KeyGestureEvent.KEY_GESTURE_TYPE_TOGGLE_NOTIFICATION_PANEL);
                     toggleNotificationPanel();
                     break;
+                case LONG_PRESS_HOME_LAUNCH_TARGET_ACTIVITY:
+                    if (DEBUG_INPUT) {
+                        Slog.d(TAG, "Executing the long press home action.");
+                    }
+                    launchTargetActivity(mHomeLongPressTargetActivity, false);
+                    break;
                 default:
                     Log.w(TAG, "Undefined long press on home behavior: "
                             + mLongPressOnHomeBehavior);
@@ -2406,6 +2414,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mSearchKeyTargetActivity = ComponentName.unflattenFromString(
             mContext.getResources().getString(
                 com.android.internal.R.string.config_searchKeyTargetActivity));
+
+        mHomeLongPressTargetActivity = ComponentName.unflattenFromString(
+            mContext.getResources().getString(
+                com.android.internal.R.string.config_longPressOnHomeTargetActivity));
+
         readConfigurationDependentBehaviors();
 
         mDisplayFoldController = DisplayFoldController.create(mContext, DEFAULT_DISPLAY);
@@ -7324,6 +7337,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 return "LONG_PRESS_HOME_ASSIST";
             case LONG_PRESS_HOME_NOTIFICATION_PANEL:
                 return "LONG_PRESS_HOME_NOTIFICATION_PANEL";
+            case LONG_PRESS_HOME_LAUNCH_TARGET_ACTIVITY:
+                return "LONG_PRESS_HOME_LAUNCH_TARGET_ACTIVITY";
             default:
                 return Integer.toString(behavior);
         }
