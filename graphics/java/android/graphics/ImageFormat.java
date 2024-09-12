@@ -16,6 +16,7 @@
 
 package android.graphics;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 
 import java.lang.annotation.Retention;
@@ -204,6 +205,26 @@ public class ImageFormat {
      *
      */
     public static final int YCBCR_P010 = 0x36;
+
+    /**
+     * <p>Android YUV P210 format.</p>
+     *
+     * P210 is a 4:2:2 YCbCr semiplanar format comprised of a WxH Y plane
+     * followed by a WxH CbCr plane. Each sample is represented by a 16-bit
+     * little-endian value, with the lower 6 bits set to zero.
+     *
+     * <p>For example, the {@link android.media.Image} object can provide data
+     * in this format from a {@link android.hardware.camera2.CameraDevice}
+     * through a {@link android.media.ImageReader} object if this format is
+     * supported by {@link android.hardware.camera2.CameraDevice}.</p>
+     *
+     * @see android.media.Image
+     * @see android.media.ImageReader
+     * @see android.hardware.camera2.CameraDevice
+     *
+     */
+    @FlaggedApi(android.media.codec.Flags.FLAG_P210_FORMAT_SUPPORT)
+    public static final int YCBCR_P210 = 0x3c;
 
     /**
      * YCbCr format, used for video.
@@ -849,6 +870,8 @@ public class ImageFormat {
                 return 16;
             case YCBCR_P010:
                 return 24;
+            case YCBCR_P210:
+                return 32;
             case RAW_DEPTH10:
             case RAW10:
                 return 10;
