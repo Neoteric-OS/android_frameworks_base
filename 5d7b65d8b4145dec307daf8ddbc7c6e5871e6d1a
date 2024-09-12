@@ -22,6 +22,30 @@
       },
       "revId": "5d7b65d8b4145dec307daf8ddbc7c6e5871e6d1a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3051b46f_0c531c59",
+        "filename": "api/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1583551
+      },
+      "writtenOn": "2024-09-12T23:34:59Z",
+      "side": 1,
+      "message": "`select(release_flag(\"RELEASE_RANGING_STACK\"), { ...` would be a better approach.  No need to add yet another soong config variable.",
+      "parentUuid": "e1c6c0dd_f61ab016",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "5d7b65d8b4145dec307daf8ddbc7c6e5871e6d1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
