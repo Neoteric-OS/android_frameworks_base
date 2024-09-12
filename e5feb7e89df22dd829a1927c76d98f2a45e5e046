@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6289131a_32717138",
+        "filename": "services/core/java/com/android/server/policy/KeyCombinationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1938970
+      },
+      "writtenOn": "2024-09-12T21:43:30Z",
+      "side": 1,
+      "message": "Nit: You can combine this into a single if/else statement with the code above:\n\n```\nif (mActiveRules.isEmpty()) {\n  return false;\n} else {\n  ...\n}\n\n```",
+      "range": {
+        "startLine": 178,
+        "startChar": 16,
+        "endLine": 180,
+        "endChar": 17
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41588e4a_43790f9d",
+        "filename": "services/core/java/com/android/server/policy/KeyCombinationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1938970
+      },
+      "writtenOn": "2024-09-12T21:43:30Z",
+      "side": 1,
+      "message": "To minimize deviation from the old code, I wonder if it makes more sense to initially set this value to be `COMBINE_KEY_DELAY_MILLIS`. My main concern is that if `combineMs` isn\u0027t updated within the if statement below, the value assigned to `delayMs` will never be updated by line 250. \n\nNot sure if that messes up your new assigning logic in the for loop though. Otherwise, maybe we can add a check before line 250 that says:\n\n```\ncombineMs \u003d (combineMs \u003d\u003d Long.MAX_VALUE) ? COMBINE_KEY_DELAY_MILLIS : combineMs;\n```\n\nWhat do you think?",
+      "range": {
+        "startLine": 242,
+        "startChar": 29,
+        "endLine": 242,
+        "endChar": 43
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "039dcf65_50402655",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 1938970
+      },
+      "writtenOn": "2024-09-12T21:43:30Z",
+      "side": 1,
+      "message": "Optional: It might be more readable to have this be `while (element !\u003d null)`",
+      "range": {
+        "startLine": 2629,
+        "startChar": 12,
+        "endLine": 2629,
+        "endChar": 26
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "328c3e25_4ce381a5",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2712,
+      "author": {
+        "id": 1938970
+      },
+      "writtenOn": "2024-09-12T21:43:30Z",
+      "side": 1,
+      "message": "Optional: There\u0027s a lot of logic going on in this one method. I wonder if this should be moved out to its own class.",
+      "range": {
+        "startLine": 2691,
+        "startChar": 24,
+        "endLine": 2712,
+        "endChar": 25
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
