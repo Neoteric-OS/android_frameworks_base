@@ -2565,7 +2565,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         }
 
         final WindowState mainWin = findMainWindow(false /* includeStartingApp */);
-        if (mainWin != null && mainWin.isDrawn()) {
+        // we also want a starting window if activity is stopping.
+        if (mainWin != null && mainWin.isDrawn() && getState() != STOPPING) {
             // App already has a visible window...why would you want a starting window?
             return false;
         }
