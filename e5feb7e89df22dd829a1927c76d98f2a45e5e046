@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a38bff5_03bf802d",
+        "filename": "services/core/java/com/android/server/policy/KeyCombinationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 3336621
+      },
+      "writtenOn": "2024-09-12T22:08:04Z",
+      "side": 1,
+      "message": "This needs to be a separate if statement because mActiveRules can become empty on line 174",
+      "parentUuid": "6289131a_32717138",
+      "range": {
+        "startLine": 178,
+        "startChar": 16,
+        "endLine": 180,
+        "endChar": 17
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41588e4a_43790f9d",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-09-12T21:43:30Z",
       "side": 1,
       "message": "To minimize deviation from the old code, I wonder if it makes more sense to initially set this value to be `COMBINE_KEY_DELAY_MILLIS`. My main concern is that if `combineMs` isn\u0027t updated within the if statement below, the value assigned to `delayMs` will never be updated by line 250. \n\nNot sure if that messes up your new assigning logic in the for loop though. Otherwise, maybe we can add a check before line 250 that says:\n\n```\ncombineMs \u003d (combineMs \u003d\u003d Long.MAX_VALUE) ? COMBINE_KEY_DELAY_MILLIS : combineMs;\n```\n\nWhat do you think?",
+      "range": {
+        "startLine": 242,
+        "startChar": 29,
+        "endLine": 242,
+        "endChar": 43
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6372fbc_c5dd0593",
+        "filename": "services/core/java/com/android/server/policy/KeyCombinationManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3336621
+      },
+      "writtenOn": "2024-09-12T22:08:04Z",
+      "side": 1,
+      "message": "I can\u0027t set this to `COMBINE_KEY_DELAY_MILLIS` initially because we need to account for combine delays that are larger than that.\n\nIf combineMs hasn\u0027t been updated by line 250, then delayMs will also remain 0, and the final delayMs will be 0, which is consistent with previous behavior.\n\nI think that the check you provided would work, but I don\u0027t think it\u0027s needed based on my previous line",
+      "parentUuid": "41588e4a_43790f9d",
       "range": {
         "startLine": 242,
         "startChar": 29,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27a2a6a5_1d0d0445",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 3336621
+      },
+      "writtenOn": "2024-09-12T22:08:04Z",
+      "side": 1,
+      "message": "Good idea.",
+      "parentUuid": "039dcf65_50402655",
+      "range": {
+        "startLine": 2629,
+        "startChar": 12,
+        "endLine": 2629,
+        "endChar": 26
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "328c3e25_4ce381a5",
         "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
         "patchSetId": 2
@@ -83,6 +155,30 @@
       "writtenOn": "2024-09-12T21:43:30Z",
       "side": 1,
       "message": "Optional: There\u0027s a lot of logic going on in this one method. I wonder if this should be moved out to its own class.",
+      "range": {
+        "startLine": 2691,
+        "startChar": 24,
+        "endLine": 2712,
+        "endChar": 25
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b4388c7_e7bc9471",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2712,
+      "author": {
+        "id": 3336621
+      },
+      "writtenOn": "2024-09-12T22:08:04Z",
+      "side": 1,
+      "message": "That makes sense.  I modeled this method off of GlobalKeyManager.loadGlobalKeys().  I should separate this out into a KeyShortcutManager class.  I will make that change after getting more comments indicating that I should proceed with this change from the file owners\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/policy/GlobalKeyManager.java;l\u003d123?q\u003dGlobalKeyIntent\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain",
+      "parentUuid": "328c3e25_4ce381a5",
       "range": {
         "startLine": 2691,
         "startChar": 24,
