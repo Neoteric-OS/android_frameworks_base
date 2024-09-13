@@ -213,7 +213,7 @@ final class BulkCursorProxy implements IBulkCursor {
         try {
             data.writeInterfaceToken(IBulkCursor.descriptor);
 
-            mRemote.transact(CLOSE_TRANSACTION, data, reply, 0);
+            mRemote.transact(CLOSE_TRANSACTION, data, reply, IBinder.FLAG_ONEWAY);
             DatabaseUtils.readExceptionFromParcel(reply);
         } finally {
             data.recycle();
