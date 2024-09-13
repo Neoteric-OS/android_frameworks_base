@@ -198,7 +198,7 @@ public class BinderFrozenStateChangeNotificationTest {
         final IBinder binder = mBfsccTestAppCmdService.asBinder();
         final LinkedBlockingQueue<IBinder> results = new LinkedBlockingQueue<>();
         IBinder.IFrozenStateChangeCallback callback =
-                (IBinder who, IBinder.IFrozenStateChangeCallback.State state) -> results.offer(who);
+                (IBinder who, int state) -> results.offer(who);
         try {
             binder.addFrozenStateChangeCallback(callback);
         } catch (UnsupportedOperationException e) {
@@ -225,8 +225,8 @@ public class BinderFrozenStateChangeNotificationTest {
             throws RemoteException {
         try {
             final IBinder.IFrozenStateChangeCallback callback =
-                    (IBinder who, IBinder.IFrozenStateChangeCallback.State state) ->
-                            queue.offer(state == IBinder.IFrozenStateChangeCallback.State.FROZEN);
+                    (IBinder who, int state) ->
+                            queue.offer(state == IBinder.IFrozenStateChangeCallback.STATE_FROZEN);
             binder.addFrozenStateChangeCallback(callback);
             return callback;
         } catch (UnsupportedOperationException e) {

@@ -16,11 +16,15 @@
 
 package android.os;
 
+import android.annotation.FlaggedApi;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import java.io.FileDescriptor;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Base interface for a remotable object, the core part of a lightweight
@@ -377,9 +381,21 @@ public interface IBinder {
      */
     public boolean unlinkToDeath(@NonNull DeathRecipient recipient, int flags);
 
-    /** @hide */
+    @FlaggedApi(Flags.FLAG_BINDER_FROZEN_STATE_CHANGE_CALLBACK)
     interface IFrozenStateChangeCallback {
-        enum State {FROZEN, UNFROZEN};
+        /**
+         * @hide
+         */
+        @IntDef(prefix = {"STATE_"}, value = {
+                STATE_FROZEN,
+                STATE_UNFROZEN,
+        })
+        @Retention(RetentionPolicy.SOURCE)
+        @interface State {
+        }
+
+        int STATE_FROZEN = 0;
+        int STATE_UNFROZEN = 1;
 
         /**
          * Interface for receiving a callback when the process hosting an IBinder
@@ -387,7 +403,7 @@ public interface IBinder {
          * @param who The IBinder whose hosting process has changed state.
          * @param state The latest state.
          */
-        void onFrozenStateChanged(@NonNull IBinder who, State state);
+        void onFrozenStateChanged(@NonNull IBinder who, @State int state);
     }
 
     /**
@@ -410,8 +426,8 @@ public interface IBinder {
      *
      * <p>@throws {@link UnsupportedOperationException} if the kernel binder driver does not support
      * this feature.
-     * @hide
      */
+    @FlaggedApi(Flags.FLAG_BINDER_FROZEN_STATE_CHANGE_CALLBACK)
     default void addFrozenStateChangeCallback(@NonNull IFrozenStateChangeCallback callback)
             throws RemoteException {
         throw new UnsupportedOperationException();
@@ -420,8 +436,8 @@ public interface IBinder {
     /**
      * Unregister a {@link IFrozenStateChangeCallback}. The callback will no longer be invoked when
      * the hosting process changes its frozen state.
-     * @hide
      */
+    @FlaggedApi(Flags.FLAG_BINDER_FROZEN_STATE_CHANGE_CALLBACK)
     default boolean removeFrozenStateChangeCallback(@NonNull IFrozenStateChangeCallback callback) {
         throw new UnsupportedOperationException();
     }
