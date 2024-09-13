@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6469afee_174114f9",
+        "filename": "tools/lint/global/checks/src/main/java/com/google/android/lint/aidl/SimpleRequiresNoPermissionDetector.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1879319
+      },
+      "writtenOn": "2024-09-13T14:46:06Z",
+      "side": 1,
+      "message": "Let\u0027s add the name of the method to make the message explicit and follow Lint\u0027s guidelines on reporting issues from https://googlesamples.github.io/android-custom-lint-rules/api-guide/basics.md.html#writingalintcheck:basics/concepts.",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "7f28bad71abe73b60c67ef617b4433531deeb984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "419ff121_71f3ab47",
+        "filename": "tools/lint/global/checks/src/main/java/com/google/android/lint/aidl/SimpleRequiresNoPermissionDetector.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1879319
+      },
+      "writtenOn": "2024-09-13T14:46:06Z",
+      "side": 1,
+      "message": "`UCallExpression`s have a field called [`kind`](https://github.com/JetBrains/intellij-community/blob/master/uast/uast-common/src/org/jetbrains/uast/expressions/UCallExpression.kt#L20), which is of type [`UastCallKind`](https://github.com/JetBrains/intellij-community/blob/master/uast/uast-common/src/org/jetbrains/uast/kinds/UastCallKind.kt). Should we maybe only consider `METHOD_CALL` kind here?",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 34
+      },
+      "revId": "7f28bad71abe73b60c67ef617b4433531deeb984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a57e4a68_805ac473",
+        "filename": "tools/lint/global/checks/src/test/java/com/google/android/lint/aidl/Stubs.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1879319
+      },
+      "writtenOn": "2024-09-13T14:46:06Z",
+      "side": 1,
+      "message": "Please add a new line at the end of the file.",
+      "range": {
+        "startLine": 130,
+        "startChar": 11,
+        "endLine": 130,
+        "endChar": 12
+      },
+      "revId": "7f28bad71abe73b60c67ef617b4433531deeb984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
