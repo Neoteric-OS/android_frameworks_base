@@ -1029,6 +1029,9 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
             final SurfaceControl targetLeash = getLeashSurface(target, null /* t */);
             final SurfaceControl origParent = getOrigParentSurface(target);
             // Ensure surfaceControls are re-parented back into the hierarchy.
+            if (target.asActivityRecord() != null) {
+                target.asActivityRecord().setOnReparentListener(targetLeash, origParent);
+            }
             t.reparent(targetLeash, origParent);
             t.setLayer(targetLeash, target.getLastLayer());
             t.setCornerRadius(targetLeash, 0);
@@ -1187,7 +1190,20 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
         // apply them due to a remote failure. Since we don't need to apply them anymore, free them
         // immediately.
         if (mStartTransaction != null) mStartTransaction.close();
-        if (mFinishTransaction != null) mFinishTransaction.close();
+        if (mFinishTransaction != null) {
+            for (int i = 0; i < mParticipants.size(); ++i) {
+                 final Task tr = mParticipants.valueAt(i).asTask();
+                 if (tr != null && tr.isFocused()) {
+                     final ActivityRecord arTop =  tr.getTopNonFinishingActivity();
+                     if (arTop != null && arTop.mReparentedOrderMess) {
+                         mFinishTransaction.reparent(arTop.mSurfaceControl, tr.mSurfaceControl);
+                         mFinishTransaction.apply();
+                         break;
+                     }
+                 }
+            }
+            mFinishTransaction.close();
+        }
         mStartTransaction = mFinishTransaction = null;
         if (mCleanupTransaction != null) {
             mCleanupTransaction.apply();
