@@ -10,10 +10,25 @@ package android.nfc {
     field @NonNull public static final android.os.Parcelable.Creator<android.nfc.AvailableNfcAntenna> CREATOR;
   }
 
+  public final class NdefCcFileInfo implements android.os.Parcelable {
+    ctor public NdefCcFileInfo(int, int, int, int, int, int, int, int);
+    method public int describeContents();
+    method public int getCclen();
+    method public int getMaxLc();
+    method public int getMaxLe();
+    method public int getNdefFileId();
+    method public int getNdefMaxFileSize();
+    method public int getNdefReadAccess();
+    method public int getNdefWriteAccess();
+    method public int getVersion();
+    method public void writeToParcel(android.os.Parcel, int);
+  }
+
   public class FormatException extends java.lang.Exception {
     ctor public FormatException();
     ctor public FormatException(String);
     ctor public FormatException(String, Throwable);
+    field @NonNull public static final android.os.Parcelable.Creator<android.nfc.NdefCcFileInfo> CREATOR;
   }
 
   public final class NdefMessage implements android.os.Parcelable {

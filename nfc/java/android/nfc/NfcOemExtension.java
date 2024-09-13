@@ -467,6 +467,24 @@ public final class NfcOemExtension {
     }
 
     /**
+     * Get an instance of {@link NdefNfcee} for the Ndef Nfcee.
+     * It is a singleton object which shall be used by application
+     * to do Ndef Nfcee specific operations.
+     *
+     * <p>Returns {@link NdefNfcee}
+     * <p>Does not cause any RF activity and does not block.
+     *
+     * @return NFC Data Exchange Format (NDEF) NFC Execution Environment (NFCEE) object
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public NdefNfcee getNdefNfcee() {
+        return NdefNfcee.getInstance();
+    }
+
+    /**
      * Register an {@link Callback} to listen for NFC oem extension callbacks
      * Multiple clients can register and callbacks will be invoked asynchronously.
      *
