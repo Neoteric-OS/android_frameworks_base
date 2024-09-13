@@ -1625,6 +1625,20 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         return task != null && !task.isDragResizing() && super.canStartChangeTransition();
     }
 
+    public boolean mReparentedOrderMess = false;
+    private SurfaceControl mOriginParent = null;
+
+    public void setOnReparentListener(SurfaceControl mSc, SurfaceControl originParent) {
+               mOriginParent = originParent;
+               mSc.addOnReparentListener(new SurfaceControl.OnReparentListener() {
+                 @Override
+                 public void onReparent(SurfaceControl.Transaction transaction,
+                        SurfaceControl parent) {
+                    mReparentedOrderMess = (parent != mOriginParent);
+                 }
+               });
+    }
+
     @Override
     void onParentChanged(ConfigurationContainer rawNewParent, ConfigurationContainer rawOldParent) {
         final TaskFragment oldParent = (TaskFragment) rawOldParent;
