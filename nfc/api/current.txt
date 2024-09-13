@@ -28,6 +28,10 @@ package android.nfc {
     field @NonNull public static final android.os.Parcelable.Creator<android.nfc.NdefMessage> CREATOR;
   }
 
+  @FlaggedApi("android.nfc.nfc_oem_extension") public final class NdefNfcee {
+    ctor protected NdefNfcee(@NonNull android.nfc.NfcAdapter);
+  }
+
   public final class NdefRecord implements android.os.Parcelable {
     ctor public NdefRecord(short, byte[], byte[], byte[]);
     ctor @Deprecated public NdefRecord(byte[]) throws android.nfc.FormatException;

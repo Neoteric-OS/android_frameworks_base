@@ -385,6 +385,19 @@ public final class NfcOemExtension {
     }
 
     /**
+     * Get NdefNfcee Object to write or read data from Ndef Nfcee
+     *
+     * @return NdefNfcee
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public NdefNfcee getNdefNfcee() {
+        return NdefNfcee.getInstance(mAdapter);
+    }
+
+    /**
      * Register an {@link Callback} to listen for NFC oem extension callbacks
      * Multiple clients can register and callbacks will be invoked asynchronously.
      *

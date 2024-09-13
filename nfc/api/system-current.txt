@@ -1,6 +1,15 @@
 // Signature format: 2.0
 package android.nfc {
 
+  @FlaggedApi("android.nfc.nfc_oem_extension") public final class NdefNfcee {
+    method public boolean doClearNdefData();
+    method @NonNull public byte[] doReadData(@NonNull byte[]);
+    method @NonNull public int doWriteData(@NonNull byte[], @NonNull byte[]);
+    method @NonNull public static android.nfc.NdefNfcee getInstance(@NonNull android.nfc.NfcAdapter);
+    method public boolean getNdefNfceeStatus();
+    method public boolean isNdefNfceeEmulationSupported();
+  }
+
   public final class NfcAdapter {
     method @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public boolean addNfcUnlockHandler(android.nfc.NfcAdapter.NfcUnlockHandler, String[]);
     method @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public boolean disable(boolean);
@@ -62,6 +71,7 @@ package android.nfc {
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public boolean hasUserEnabledNfc();
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public boolean isAutoChangeEnabled();
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public boolean isTagPresent();
+    method @FlaggedApi("android.nfc.nfc_oem_extension") @NonNull public android.nfc.NdefNfcee getNdefNfcee();
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public void maybeTriggerFirmwareUpdate();
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public void overwriteRoutingTable(int, int, int, int);
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public void pausePolling(int);
