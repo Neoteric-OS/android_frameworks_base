@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06d2b3b0_8aad194b",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 3336621
+      },
+      "writtenOn": "2024-09-13T22:00:08Z",
+      "side": 1,
+      "message": "Hey Gina, I\u0027m going to leave this as-is for now.  To check `while (element !\u003d null)`, we would need to add a duplicate set of `XmlUtils.nextElement(parser);` and `element \u003d parser.getName();` calls at the end of the while loop, where someone may miss them.",
+      "parentUuid": "27a2a6a5_1d0d0445",
+      "range": {
+        "startLine": 2629,
+        "startChar": 12,
+        "endLine": 2629,
+        "endChar": 26
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "328c3e25_4ce381a5",
@@ -203,6 +227,30 @@
       "side": 1,
       "message": "That makes sense.  I modeled this method off of GlobalKeyManager.loadGlobalKeys().  I should separate this out into a KeyShortcutManager class.  I will make that change after getting more comments indicating that I should proceed with this change from the file owners\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/policy/GlobalKeyManager.java;l\u003d123?q\u003dGlobalKeyIntent\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain",
       "parentUuid": "328c3e25_4ce381a5",
+      "range": {
+        "startLine": 2691,
+        "startChar": 24,
+        "endLine": 2712,
+        "endChar": 25
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfc6345b_385e498f",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2712,
+      "author": {
+        "id": 3336621
+      },
+      "writtenOn": "2024-09-13T22:00:08Z",
+      "side": 1,
+      "message": "Hey Gina, after looking at this a bit more, I think it makes sense to leave this here.\n\nThe other KeyCombinationManager combos and functionality are handled in this class, and loaded above this method in `initKeyCombinationRules()`.  I think it makes sense for these key combos to be handled in the same class.\n\nThere is extra xml logic in this method which could be moved to its own class.  But, then in the Overridden `execute()` and `cancel()` methods, we\u0027d have to call package private methods (`sendDelayedIntentMessage()` and  `cancelDelayedIntentMessage()`) in PhoneWindowManager.  I think it makes more sense for those methods to be private, and therefore the initialization to be done here.",
+      "parentUuid": "6b4388c7_e7bc9471",
       "range": {
         "startLine": 2691,
         "startChar": 24,
