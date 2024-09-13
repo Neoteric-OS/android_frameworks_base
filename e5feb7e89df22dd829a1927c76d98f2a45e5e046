@@ -190,6 +190,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d0939e5_84864ec4",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2629,
+      "author": {
+        "id": 1938970
+      },
+      "writtenOn": "2024-09-13T22:32:42Z",
+      "side": 1,
+      "message": "Acknowledged.",
+      "parentUuid": "06d2b3b0_8aad194b",
+      "range": {
+        "startLine": 2629,
+        "startChar": 12,
+        "endLine": 2629,
+        "endChar": 26
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "328c3e25_4ce381a5",
@@ -251,6 +275,30 @@
       "side": 1,
       "message": "Hey Gina, after looking at this a bit more, I think it makes sense to leave this here.\n\nThe other KeyCombinationManager combos and functionality are handled in this class, and loaded above this method in `initKeyCombinationRules()`.  I think it makes sense for these key combos to be handled in the same class.\n\nThere is extra xml logic in this method which could be moved to its own class.  But, then in the Overridden `execute()` and `cancel()` methods, we\u0027d have to call package private methods (`sendDelayedIntentMessage()` and  `cancelDelayedIntentMessage()`) in PhoneWindowManager.  I think it makes more sense for those methods to be private, and therefore the initialization to be done here.",
       "parentUuid": "6b4388c7_e7bc9471",
+      "range": {
+        "startLine": 2691,
+        "startChar": 24,
+        "endLine": 2712,
+        "endChar": 25
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be143e61_9cd4d754",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2712,
+      "author": {
+        "id": 1938970
+      },
+      "writtenOn": "2024-09-13T22:32:42Z",
+      "side": 1,
+      "message": "Acknowledged.",
+      "parentUuid": "dfc6345b_385e498f",
       "range": {
         "startLine": 2691,
         "startChar": 24,
