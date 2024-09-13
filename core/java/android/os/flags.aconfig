@@ -209,3 +209,10 @@ flag {
      description: "Tracing using Perfetto SDK."
      bug: "303199244"
 }
+
+flag {
+    name: "binder_frozen_state_change_callback"
+    namespace: "system_performance"
+    description: "Guards the frozen state change callback API."
+    bug: "361157077"
+}

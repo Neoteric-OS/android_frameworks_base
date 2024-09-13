@@ -764,8 +764,7 @@ public final class BinderProxy implements IBinder {
     private static void invokeFrozenStateChangeCallback(
             IFrozenStateChangeCallback callback, IBinder binderProxy, int stateIndex) {
         try {
-            callback.onFrozenStateChanged(binderProxy,
-                    IFrozenStateChangeCallback.State.values()[stateIndex]);
+            callback.onFrozenStateChanged(binderProxy, stateIndex);
         } catch (RuntimeException exc) {
             Log.w("BinderNative", "Uncaught exception from frozen state change callback",
                     exc);
