@@ -35,7 +35,6 @@ import android.os.PersistableBundle;
 import android.util.ArraySet;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.Preconditions;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
@@ -434,7 +433,7 @@ public final class VcnGatewayConnectionConfig {
     @NonNull
     public int[] getExposedCapabilities() {
         // Sorted set guarantees ordering
-        return ArrayUtils.convertToIntArray(new ArrayList<>(mExposedCapabilities));
+        return mExposedCapabilities.stream().mapToInt(i -> i).toArray();
     }
 
     /**
