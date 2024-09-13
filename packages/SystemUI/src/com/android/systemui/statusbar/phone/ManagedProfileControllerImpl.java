@@ -133,10 +133,12 @@ public class ManagedProfileControllerImpl implements ManagedProfileController {
 
             final IntentFilter filter = new IntentFilter();
             filter.addAction(Intent.ACTION_USER_SWITCHED);
+            filter.addAction(Intent.ACTION_USER_INFO_CHANGED);
             filter.addAction(Intent.ACTION_MANAGED_PROFILE_ADDED);
             filter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
             filter.addAction(Intent.ACTION_MANAGED_PROFILE_AVAILABLE);
             filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE);
+            filter.addAction(Intent.ACTION_MANAGED_PROFILE_UNLOCKED);
             mBroadcastDispatcher.registerReceiver(
                     mReceiver, filter, null /* handler */, UserHandle.ALL);
         } else {
