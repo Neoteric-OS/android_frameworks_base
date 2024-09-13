@@ -31,6 +31,7 @@ import android.nfc.INfcCardEmulation;
 import android.nfc.INfcFCardEmulation;
 import android.nfc.INfcOemExtensionCallback;
 import android.nfc.INfcUnlockHandler;
+import android.nfc.INdefNfcee;
 import android.nfc.ITagRemovedCallback;
 import android.nfc.INfcDta;
 import android.nfc.INfcWlcStateListener;
@@ -120,4 +121,5 @@ interface INfcAdapter
     boolean isTagPresent();
     List<Entry> getRoutingTableEntryList();
     void indicateDataMigration(boolean inProgress, String pkg);
+    INdefNfcee getNdefNfceeInterface();
 }
