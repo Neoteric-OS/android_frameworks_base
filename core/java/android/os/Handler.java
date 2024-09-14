@@ -16,8 +16,10 @@
 
 package android.os;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.util.Log;
 import android.util.Printer;
@@ -820,15 +822,17 @@ public class Handler {
 
     /**
      * Remove any pending posts of messages with code 'what' and whose obj is
-     * 'object' that are in the message queue.  If <var>object</var> is null,
+     * 'object' that are in the message queue. If <var>object</var> is null,
      * all messages will be removed.
      * <p>
      * Similar to {@link #removeMessages(int, Object)} but uses object equality
      * ({@link Object#equals(Object)}) instead of reference equality (==) in
      * determining whether object is the message's obj'.
      *
-     *@hide
+     * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @FlaggedApi(android.os.Flags.FLAG_MAINLINE_VCN_PLATFORM_API)
     public final void removeEqualMessages(int what, @Nullable Object object) {
         mQueue.removeEqualMessages(this, what, disallowNullArgumentIfShared(object));
     }
@@ -844,11 +848,13 @@ public class Handler {
 
     /**
      * Remove any pending posts of callbacks and sent messages whose
-     * <var>obj</var> is <var>token</var>.  If <var>token</var> is null,
+     * <var>obj</var> is <var>token</var>. If <var>token</var> is null,
      * all callbacks and messages will be removed.
      *
-     *@hide
+     * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @FlaggedApi(android.os.Flags.FLAG_MAINLINE_VCN_PLATFORM_API)
     public final void removeCallbacksAndEqualMessages(@Nullable Object token) {
         mQueue.removeCallbacksAndEqualMessages(this, disallowNullArgumentIfShared(token));
     }
@@ -862,8 +868,11 @@ public class Handler {
 
     /**
      * Return whether there are any messages or callbacks currently scheduled on this handler.
+     *
      * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @FlaggedApi(android.os.Flags.FLAG_MAINLINE_VCN_PLATFORM_API)
     public final boolean hasMessagesOrCallbacks() {
         return mQueue.hasMessages(this);
     }
