@@ -106,6 +106,11 @@ public class MenuViewTest extends SysuiTestCase {
                 (InstantInsetLayerDrawable) mMenuView.getBackground();
         final boolean areInsetsMatched = insetLayerDrawable.getLayerInsetLeft(INDEX_MENU_ITEM) != 0
                 && insetLayerDrawable.getLayerInsetRight(INDEX_MENU_ITEM) == 0;
+        for(int i = 0; i < insetLayerDrawable.getNumberOfLayers(); i++) {
+            System.out.println("insetLayerDrawable layerInsetLeft layer: " + i + " = " + insetLayerDrawable.getLayerInsetLeft(i));
+            System.out.println("insetLayerDrawable layerInsetRight layer: " + i + " = " + insetLayerDrawable.getLayerInsetRight(i));
+        }
+        System.out.print("isMenuOnLeft? " + mStubMenuViewAppearance.isMenuOnLeftSide());
 
         assertThat(areInsetsMatched).isTrue();
     }

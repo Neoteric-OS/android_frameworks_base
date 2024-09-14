@@ -132,6 +132,11 @@ class MenuViewAppearance {
     }
 
     void setPercentagePosition(Position percentagePosition) {
+        System.out.println("MenuViewAppearance#setPrecentagePosition: " + percentagePosition);
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (int i = 1; i < stackTrace.length; i++) { // Skip the first element which is this method itself
+            System.out.println(stackTrace[i]);
+        }
         mPercentagePosition.update(percentagePosition);
 
         mRadii = createRadii(isMenuOnLeftSide(), getMenuRadius(mTargetFeaturesSize));
