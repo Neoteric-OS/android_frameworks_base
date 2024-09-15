@@ -23,10 +23,6 @@ import android.app.appfunctions.IAppFunctionManager;
 import android.app.appfunctions.IAppFunctionService;
 import android.app.appfunctions.IExecuteAppFunctionCallback;
 import android.app.appfunctions.SafeOneTimeExecuteAppFunctionCallback;
-import android.app.appfunctions.ServiceCallHelper;
-import android.app.appfunctions.ServiceCallHelper.RunServiceCallCallback;
-import android.app.appfunctions.ServiceCallHelper.ServiceUsageCompleteListener;
-import android.app.appfunctions.ServiceCallHelperImpl;
 import android.content.Context;
 import android.content.Intent;
 import android.os.UserHandle;
@@ -34,6 +30,8 @@ import android.text.TextUtils;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.server.appfunctions.RemoteServiceCaller.RunServiceCallCallback;
+import com.android.server.appfunctions.RemoteServiceCaller.ServiceUsageCompleteListener;
 
 import java.util.Objects;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -45,12 +43,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class AppFunctionManagerServiceImpl extends IAppFunctionManager.Stub {
     private static final String TAG = AppFunctionManagerServiceImpl.class.getSimpleName();
-    private final ServiceCallHelper<IAppFunctionService> mExternalServiceCallHelper;
+
+    private final RemoteServiceCaller<IAppFunctionService> mRemoteServiceCaller;
     private final CallerValidator mCallerValidator;
     private final ServiceHelper mInternalServiceHelper;
+    private final ServiceConfig mServiceConfig;
+
 
     public AppFunctionManagerServiceImpl(@NonNull Context context) {
-        this(new ServiceCallHelperImpl<>(
+        this(new RemoteServiceCallerImpl<>(
                         context,
                         IAppFunctionService.Stub::asInterface, new ThreadPoolExecutor(
                         /*corePoolSize=*/ Runtime.getRuntime().availableProcessors(),
@@ -59,17 +60,20 @@ public class AppFunctionManagerServiceImpl extends IAppFunctionManager.Stub {
                         /*unit=*/ TimeUnit.SECONDS,
                         /*workQueue=*/ new LinkedBlockingQueue<>())),
                 new CallerValidatorImpl(context),
-                new ServiceHelperImpl(context));
+                new ServiceHelperImpl(context),
+                new ServiceConfigImpl());
     }
 
     @VisibleForTesting
-    AppFunctionManagerServiceImpl(ServiceCallHelper<IAppFunctionService> serviceCallHelper,
-                                  CallerValidator apiValidator,
-                                  ServiceHelper appFunctionInternalServiceHelper) {
-        mExternalServiceCallHelper = Objects.requireNonNull(serviceCallHelper);
-        mCallerValidator = Objects.requireNonNull(apiValidator);
+    AppFunctionManagerServiceImpl(RemoteServiceCaller<IAppFunctionService> remoteServiceCaller,
+                                  CallerValidator callerValidator,
+                                  ServiceHelper appFunctionInternalServiceHelper,
+                                  ServiceConfig serviceConfig) {
+        mRemoteServiceCaller = Objects.requireNonNull(remoteServiceCaller);
+        mCallerValidator = Objects.requireNonNull(callerValidator);
         mInternalServiceHelper =
                 Objects.requireNonNull(appFunctionInternalServiceHelper);
+        mServiceConfig = serviceConfig;
     }
 
     @Override
@@ -133,13 +137,10 @@ public class AppFunctionManagerServiceImpl extends IAppFunctionManager.Stub {
             ).build());
             return;
         }
-
-        // TODO(b/357551503): Offload call to async executor.
         bindAppFunctionServiceUnchecked(requestInternal, serviceIntent, targetUser,
                 safeExecuteAppFunctionCallback,
                 /*bindFlags=*/ Context.BIND_AUTO_CREATE,
-                // TODO(b/357551503): Make timeout configurable.
-                /*timeoutInMillis=*/ 30_000L);
+                /*timeoutInMillis=*/ mServiceConfig.getExecuteAppFunctionTimeoutMillis());
     }
 
     private void bindAppFunctionServiceUnchecked(
@@ -148,12 +149,12 @@ public class AppFunctionManagerServiceImpl extends IAppFunctionManager.Stub {
             @NonNull SafeOneTimeExecuteAppFunctionCallback
                     safeExecuteAppFunctionCallback,
             int bindFlags, long timeoutInMillis) {
-        boolean bindServiceResult = mExternalServiceCallHelper.runServiceCall(
+        boolean bindServiceResult = mRemoteServiceCaller.runServiceCall(
                 serviceIntent,
                 bindFlags,
                 timeoutInMillis,
                 targetUser,
-                /*timeOutCallback=*/ new RunServiceCallCallback<IAppFunctionService>() {
+                new RunServiceCallCallback<IAppFunctionService>() {
                     @Override
                     public void onServiceConnected(@NonNull IAppFunctionService service,
                                                    @NonNull ServiceUsageCompleteListener

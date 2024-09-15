@@ -8744,7 +8744,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 resolvedConfig,
                 mOptOutEdgeToEdge,
                 hasFixedRotationTransform(),
-                getCompatDisplayInsets() != null);
+                getCompatDisplayInsets() != null,
+                task);
         mResolveConfigHint.resetTmpOverrides();
 
         logAppCompatState();

@@ -58,6 +58,7 @@ import com.android.systemui.qs.ui.adapter.fakeQSSceneAdapter
 import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.domain.resolver.homeSceneFamilyResolver
 import com.android.systemui.scene.domain.startable.sceneContainerStartable
+import com.android.systemui.scene.shared.logger.sceneLogger
 import com.android.systemui.scene.shared.model.SceneFamilies
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.scene.shared.model.fakeSceneDataSource
@@ -133,6 +134,7 @@ class SceneFrameworkIntegrationTest : SysuiTestCase() {
                 sceneInteractor = sceneInteractor,
                 falsingInteractor = kosmos.falsingInteractor,
                 powerInteractor = kosmos.powerInteractor,
+                logger = kosmos.sceneLogger,
                 motionEventHandlerReceiver = {},
             )
             .apply { setTransitionState(transitionState) }
@@ -206,7 +208,7 @@ class SceneFrameworkIntegrationTest : SysuiTestCase() {
             .that(sceneContainerViewModel.currentScene.value)
             .isEqualTo(sceneContainerConfig.initialSceneKey)
         assertWithMessage("Initial scene container visibility mismatch!")
-            .that(sceneContainerViewModel.isVisible.value)
+            .that(sceneContainerViewModel.isVisible)
             .isTrue()
     }
 
@@ -536,7 +538,6 @@ class SceneFrameworkIntegrationTest : SysuiTestCase() {
     private fun TestScope.emulatePendingTransitionProgress(
         expectedVisible: Boolean = true,
     ) {
-        val isVisible by collectLastValue(sceneContainerViewModel.isVisible)
         assertWithMessage("The FakeSceneDataSource has to be paused for this to do anything.")
             .that(fakeSceneDataSource.isPaused)
             .isTrue()
@@ -574,7 +575,7 @@ class SceneFrameworkIntegrationTest : SysuiTestCase() {
         runCurrent()
 
         assertWithMessage("Visibility mismatch after scene transition from $from to $to!")
-            .that(isVisible)
+            .that(sceneContainerViewModel.isVisible)
             .isEqualTo(expectedVisible)
         assertThat(sceneContainerViewModel.currentScene.value).isEqualTo(to)
 

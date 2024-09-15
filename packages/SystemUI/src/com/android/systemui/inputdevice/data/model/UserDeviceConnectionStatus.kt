@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright 2024 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-package android.widget;
+package com.android.systemui.inputdevice.data.model
 
-import android.app.Activity;
-import android.os.Bundle;
-
-import com.android.frameworks.coretests.R;
-
-public class TextViewContextMenuActivity extends Activity {
-    @Override
-    public void onCreate(Bundle savedBundleInstance) {
-        super.onCreate(savedBundleInstance);
-        setContentView(R.layout.textview_contextmenu);
-    }
-}
+data class UserDeviceConnectionStatus(val isConnected: Boolean, val userId: Int)
