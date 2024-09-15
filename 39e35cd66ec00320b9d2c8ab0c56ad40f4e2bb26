@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "604623ce_6b41aaa5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3636617
+      },
+      "writtenOn": "2024-09-15T00:41:25Z",
+      "side": 1,
+      "message": "Trying to follow https://source.android.com/docs/setup/contribute/submit-patches, hope I\u0027m doing this correctly?! :-)\nRandomly adding two people from frameworks/base/packages/SettingsLib/OWNERS.",
+      "revId": "39e35cd66ec00320b9d2c8ab0c56ad40f4e2bb26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
