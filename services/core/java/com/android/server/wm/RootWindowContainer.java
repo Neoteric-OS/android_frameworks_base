@@ -813,12 +813,6 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
 
         checkAppTransitionReady(surfacePlacer);
 
-        // Defer starting the recents animation until the wallpaper has drawn
-        final RecentsAnimationController recentsAnimationController =
-                mWmService.getRecentsAnimationController();
-        if (recentsAnimationController != null) {
-            recentsAnimationController.checkAnimationReady(defaultDisplay.mWallpaperController);
-        }
         mWmService.mAtmService.mBackNavigationController
                 .checkAnimationReady(defaultDisplay.mWallpaperController);
 
@@ -1480,9 +1474,6 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         // Updates the extra information of the intent.
         if (fromHomeKey) {
             homeIntent.putExtra(WindowManagerPolicy.EXTRA_FROM_HOME_KEY, true);
-            if (mWindowManager.getRecentsAnimationController() != null) {
-                mWindowManager.getRecentsAnimationController().cancelAnimationForHomeStart();
-            }
         }
         homeIntent.putExtra(WindowManagerPolicy.EXTRA_START_REASON, reason);
 
