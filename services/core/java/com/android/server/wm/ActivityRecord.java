@@ -234,7 +234,6 @@ import static com.android.server.wm.StartingData.AFTER_TRANSACTION_COPY_TO_CLIEN
 import static com.android.server.wm.StartingData.AFTER_TRANSACTION_REMOVE_DIRECTLY;
 import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_APP_TRANSITION;
 import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_PREDICT_BACK;
-import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_RECENTS;
 import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_WINDOW_ANIMATION;
 import static com.android.server.wm.TaskFragment.TASK_FRAGMENT_VISIBILITY_VISIBLE;
 import static com.android.server.wm.TaskPersister.DEBUG;
@@ -4974,9 +4973,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         newIntents.add(intent);
     }
 
-    final boolean isSleeping() {
-        final Task rootTask = getRootTask();
-        return rootTask != null ? rootTask.shouldSleepActivities() : mAtmService.isSleepingLocked();
+    boolean isSleeping() {
+        return task != null ? task.shouldSleepActivities() : mAtmService.isSleepingLocked();
     }
 
     /**
@@ -5000,7 +4998,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         final ReferrerIntent rintent = new ReferrerIntent(intent, getFilteredReferrer(referrer),
                 callerToken);
         boolean unsent = true;
-        final boolean isTopActivityWhileSleeping = isTopRunningActivity() && isSleeping();
+        final boolean isTopActivityWhileSleeping = isSleeping() && isTopRunningActivity();
 
         // We want to immediately deliver the intent to the activity if:
         // - It is currently resumed or paused. i.e. it is currently visible to the user and we want
@@ -5575,10 +5573,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             return false;
         }
         if (!mDisplayContent.mAppTransition.isTransitionSet()) {
-            // Defer committing visibility for non-home app which is animating by recents.
-            if (isActivityTypeHome() || !isAnimating(PARENTS, ANIMATION_TYPE_RECENTS)) {
-                return false;
-            }
+            return false;
         }
         if (mWaitForEnteringPinnedMode && mVisible == visible) {
             // If the visibility is not changed during enter PIP, we don't want to include it in
@@ -5732,8 +5727,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     private void postApplyAnimation(boolean visible, boolean fromTransition) {
         final boolean usingShellTransitions = mTransitionController.isShellTransitionsEnabled();
         final boolean delayed = !usingShellTransitions && isAnimating(PARENTS | CHILDREN,
-                ANIMATION_TYPE_APP_TRANSITION | ANIMATION_TYPE_WINDOW_ANIMATION
-                        | ANIMATION_TYPE_RECENTS);
+                ANIMATION_TYPE_APP_TRANSITION | ANIMATION_TYPE_WINDOW_ANIMATION);
         if (!delayed && !usingShellTransitions) {
             // We aren't delayed anything, but exiting windows rely on the animation finished
             // callback being called in case the ActivityRecord was pretending to be delayed,
@@ -5755,7 +5749,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         // animation and aren't in RESUMED state. Otherwise, we'll update client visibility in
         // onAnimationFinished or activityStopped.
         if (visible || (mState != RESUMED && (usingShellTransitions || !isAnimating(
-                PARENTS, ANIMATION_TYPE_APP_TRANSITION | ANIMATION_TYPE_RECENTS)))) {
+                PARENTS, ANIMATION_TYPE_APP_TRANSITION)))) {
             setClientVisible(visible);
         }
 
@@ -5867,7 +5861,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
 
     void setState(State state, String reason) {
         ProtoLog.v(WM_DEBUG_STATES, "State movement: %s from:%s to:%s reason:%s",
-                this, getState(), state, reason);
+                this, mState, state, reason);
 
         if (state == mState) {
             // No need to do anything if state doesn't change.
@@ -6267,7 +6261,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         // Now for any activities that aren't visible to the user, make sure they no longer are
         // keeping the screen frozen.
         if (DEBUG_VISIBILITY) {
-            Slog.v(TAG_VISIBILITY, "Making invisible: " + this + ", state=" + getState());
+            Slog.v(TAG_VISIBILITY, "Making invisible: " + this + ", state=" + mState);
         }
         try {
             final boolean canEnterPictureInPicture = checkEnterPictureInPictureState(
@@ -6283,7 +6277,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             }
             setVisibility(false);
 
-            switch (getState()) {
+            switch (mState) {
                 case STOPPING:
                 case STOPPED:
                     // Reset the flag indicating that an app can enter picture-in-picture once the
@@ -7878,7 +7872,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 // Ensure that the activity content is hidden when the decor surface is boosted to
                 // prevent UI redressing attack.
                 && !isDecorSurfaceBoosted)
-                || isAnimating(PARENTS, ANIMATION_TYPE_APP_TRANSITION | ANIMATION_TYPE_RECENTS
+                || isAnimating(PARENTS, ANIMATION_TYPE_APP_TRANSITION
                         | ANIMATION_TYPE_PREDICT_BACK);
 
         if (mSurfaceControl != null) {
