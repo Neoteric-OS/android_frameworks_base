@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5362352d_316778ee",
+        "filename": "tools/lint/global/checks/src/main/java/com/google/android/lint/aidl/SimpleRequiresNoPermissionDetector.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1879319
+      },
+      "writtenOn": "2024-09-16T12:52:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "621df7cf_b5085b7a",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 34
+      },
+      "revId": "7f28bad71abe73b60c67ef617b4433531deeb984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a57e4a68_805ac473",
