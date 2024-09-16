@@ -16,6 +16,24 @@
       "message": "Im not the dev merger",
       "revId": "7eec295d4b2c9b4f8794764f829982daa1ec7442",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "309d627d_2a02949d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1952023
+      },
+      "writtenOn": "2024-09-16T16:23:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f9cce9cf_d5502673",
+      "revId": "7eec295d4b2c9b4f8794764f829982daa1ec7442",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
