@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae73bc50_45f2afcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-09-16T11:12:15Z",
+      "side": 1,
+      "message": "Nit: we normally indent the wrapped lines for `Test:`, and add a second `Test:` for the different types of testing\n\n```suggestion\nTest: Verified via local build that they key shortcuts were read\n      and registered, and that the associated intercept, combine,\n      and timeout values were respected.\n      Verified the system was able to send the given intents with\n      all three given startTypes.\n\nTest: atest KeyCombinationManagerTests\n```",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "489c65b6_55fa43f2",
+        "filename": "core/res/res/xml/key_shortcuts.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-09-16T11:12:15Z",
+      "side": 1,
+      "message": "Nit: typo",
+      "range": {
+        "startLine": 50,
+        "startChar": 61,
+        "endLine": 50,
+        "endChar": 67
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6289131a_32717138",
         "filename": "services/core/java/com/android/server/policy/KeyCombinationManager.java",
         "patchSetId": 2
@@ -114,6 +160,29 @@
         "startChar": 29,
         "endLine": 242,
         "endChar": 43
+      },
+      "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4eb4bc3_fd4666c3",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-09-16T11:12:15Z",
+      "side": 1,
+      "message": "Could we add a suffix to these XML names which states the unit? (i.e. either `Millis` or `Ms` — `Millis` is generally more common in the codebase as a whole, so I\u0027d prefer it, but I see that `KeyCombinationManager` uses `Ms` quite widely too)\n\n```suggestion\n    private static final String ATTR_KEY_INTERCEPT_DELAY_MILLIS \u003d \"keyInterceptDelayMillis\";\n    private static final String ATTR_KEY_COMBINE_DELAY_MILLIS \u003d \"keyCombineDelayMillis\";\n    private static final String ATTR_MINIMUM_PRESS_TIME_MILLIS \u003d \"minimumComboPressTimeMillis\";\n```",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 82
       },
       "revId": "e5feb7e89df22dd829a1927c76d98f2a45e5e046",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
