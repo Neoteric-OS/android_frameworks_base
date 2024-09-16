@@ -16,6 +16,23 @@
       "message": "Trying to follow https://source.android.com/docs/setup/contribute/submit-patches, hope I\u0027m doing this correctly?! :-)\nRandomly adding two people from frameworks/base/packages/SettingsLib/OWNERS.",
       "revId": "39e35cd66ec00320b9d2c8ab0c56ad40f4e2bb26",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cdf3d9b_005d4f2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2024-09-16T16:32:57Z",
+      "side": 1,
+      "message": "These files are no manually maintained; they are created automatically from our translation tool. If something is translated incorrectly please just create a bug so it can be fixed in the source of truth system",
+      "revId": "39e35cd66ec00320b9d2c8ab0c56ad40f4e2bb26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
