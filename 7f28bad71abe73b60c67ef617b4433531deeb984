@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12ad2a7e_c0c7b62a",
+        "filename": "tools/lint/global/checks/src/main/java/com/google/android/lint/aidl/SimpleRequiresNoPermissionDetector.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3524059
+      },
+      "writtenOn": "2024-09-16T12:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6469afee_174114f9",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "7f28bad71abe73b60c67ef617b4433531deeb984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "419ff121_71f3ab47",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "621df7cf_b5085b7a",
+        "filename": "tools/lint/global/checks/src/main/java/com/google/android/lint/aidl/SimpleRequiresNoPermissionDetector.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 3524059
+      },
+      "writtenOn": "2024-09-16T12:25:44Z",
+      "side": 1,
+      "message": "I think you are correct. I have changed `UCallExpressionVisitor` to only track `method_calls`. I have also added a test where the only function call is a constructor call, to document this behaviour.",
+      "parentUuid": "419ff121_71f3ab47",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 34
+      },
+      "revId": "7f28bad71abe73b60c67ef617b4433531deeb984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a57e4a68_805ac473",
         "filename": "tools/lint/global/checks/src/test/java/com/google/android/lint/aidl/Stubs.kt",
         "patchSetId": 1
@@ -60,6 +108,30 @@
       "writtenOn": "2024-09-13T14:46:06Z",
       "side": 1,
       "message": "Please add a new line at the end of the file.",
+      "range": {
+        "startLine": 130,
+        "startChar": 11,
+        "endLine": 130,
+        "endChar": 12
+      },
+      "revId": "7f28bad71abe73b60c67ef617b4433531deeb984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f7aedfe_97cc1a15",
+        "filename": "tools/lint/global/checks/src/test/java/com/google/android/lint/aidl/Stubs.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3524059
+      },
+      "writtenOn": "2024-09-16T12:25:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a57e4a68_805ac473",
       "range": {
         "startLine": 130,
         "startChar": 11,
