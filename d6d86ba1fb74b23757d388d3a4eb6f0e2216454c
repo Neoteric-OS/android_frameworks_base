@@ -16,6 +16,23 @@
       "message": "Thanks! Will let Josep, Vaibhav and Siarhei approve",
       "revId": "d6d86ba1fb74b23757d388d3a4eb6f0e2216454c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d18190ad_54a72c2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947830
+      },
+      "writtenOn": "2024-09-17T15:06:49Z",
+      "side": 1,
+      "message": "Currently, we don\u0027t have a good way to properly define key combination shortcuts or any shortcut using config files, since the business logic is not always as simple as launching an intent.\n\nThe logic added here will be limited to launching an intent, and since none of AOSP key combinations can be migrated to this logic, I am not sure about adding it to AOSP.\n\nMaybe this should an FR for Android?",
+      "revId": "d6d86ba1fb74b23757d388d3a4eb6f0e2216454c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
