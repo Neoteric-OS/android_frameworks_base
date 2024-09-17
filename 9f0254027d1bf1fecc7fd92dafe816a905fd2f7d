@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd57b7d3_1a0bd410",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-09-17T12:25:35Z",
+      "side": 1,
+      "message": "Resubmit as https://android-review.googlesource.com/c/platform/frameworks/base/+/3267703",
+      "revId": "9f0254027d1bf1fecc7fd92dafe816a905fd2f7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27231d5a_6b594e38",
