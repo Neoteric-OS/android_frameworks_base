@@ -56,6 +56,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91a73650_867ca4a0",
+        "filename": "core/java/android/os/IBinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1952023
+      },
+      "writtenOn": "2024-09-17T22:23:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04abf48e_c3b0e446",
+      "revId": "9c2063f1b1fc61b7ce849defe272bafa1aab1ef1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbe17384_d4711914",
@@ -69,6 +87,24 @@
       "writtenOn": "2024-09-17T21:00:41Z",
       "side": 1,
       "message": "Weird to link to itself. Did you mean to link to FrozenStateChangeCallback?",
+      "revId": "9c2063f1b1fc61b7ce849defe272bafa1aab1ef1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9927d043_196e2367",
+        "filename": "core/java/android/os/IBinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1952023
+      },
+      "writtenOn": "2024-09-17T22:23:53Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "cbe17384_d4711914",
       "revId": "9c2063f1b1fc61b7ce849defe272bafa1aab1ef1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
