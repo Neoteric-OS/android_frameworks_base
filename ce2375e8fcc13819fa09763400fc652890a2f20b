@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a02b3e94_ac1abe1f",
+        "filename": "core/java/android/os/BinderProxy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1952023
+      },
+      "writtenOn": "2024-09-17T01:32:17Z",
+      "side": 1,
+      "message": "I am not aware of an annotation for this off the top of my head.",
+      "parentUuid": "49d64bca_18919793",
+      "revId": "ce2375e8fcc13819fa09763400fc652890a2f20b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e5954e0_2824dbb4",
@@ -48,6 +66,24 @@
       "writtenOn": "2024-09-17T00:05:50Z",
       "side": 1,
       "message": "These get executed on binder threads so there\u0027s no sense in passing an executor in callback registration, same as we don\u0027t in `linkToDeath`. Correct?",
+      "revId": "ce2375e8fcc13819fa09763400fc652890a2f20b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28d29ede_d276682e",
+        "filename": "core/java/android/os/IBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1952023
+      },
+      "writtenOn": "2024-09-17T01:32:17Z",
+      "side": 1,
+      "message": "That\u0027s correct.",
+      "parentUuid": "2e5954e0_2824dbb4",
       "revId": "ce2375e8fcc13819fa09763400fc652890a2f20b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
