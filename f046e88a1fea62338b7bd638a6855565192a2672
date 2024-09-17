@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54e20b1b_875b828e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3368412
+      },
+      "writtenOn": "2024-09-17T15:29:50Z",
+      "side": 1,
+      "message": "I mean that \u0027ro.config.wallpaper*\u0027 is a part of vendor-specific configurations. You add them to PRODUCT_VENDOR_PROPERTIES somewhere in device.mk, and eventually it will be included to the build.prop file. And the vendor_init process will set them on boot.\n\n\u003e Or do you actually want to change them multiple times? ro properties might be frowned on a bit, but if they shouldn\u0027t change, why allow it?\n\nNo, I don\u0027t expect these properties to be changed multiple times. I only want them to be set only once during boot. That\u0027s why these properties are protected by selinux, and only vendor_init can write them (to initialize them at boot time).\nPerhaps without ro prefix they can be overwritten from rc file (I\u0027m not sure), but to be honest, I don\u0027t see strong reasons to prohibit that ether.",
+      "parentUuid": "b34fb47c_a2eab919",
+      "range": {
+        "startLine": 9,
+        "startChar": 23,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4572d3c8_e206340b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -37,6 +61,30 @@
       "writtenOn": "2024-08-30T19:06:31Z",
       "side": 1,
       "message": "It sounds like it might not be possible, but this could be changed as well? otherwise there is a backwards compatibility concern here, because the properties are removed.",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86df6b1f_7c1fce92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3368412
+      },
+      "writtenOn": "2024-09-17T15:29:50Z",
+      "side": 1,
+      "message": "\u003e It sounds like it might not be possible\n\nIf I\u0027m wrong and the old properties are not broken in the current codebase, it would be even better. It would mean that this patch is simply modernizing the code a little.\n\n\n\u003e there is a backwards compatibility concern here\n\nAs far as I understand, not really.\nBecause the sepolicy for the \u0027ro.config.wallpaper*\u0027 properties has been broken since approximately AOSP 12, we have only three types of vendors:\n 1. vendor who use AOSP 11 or earlier\n 2. vendor who define their own vendor-specific selinux rules for \u0027ro.config.wallpaper\u0027 to make it work\n 3. vendor who don\u0027t use \u0027ro.config.wallpaper\u0027 at all\n\nThe only compatibility problem I see may be in the first situation, if someone decides to upgrade firmware for some device from AOSP11 to AOSP15+. But in this case, it looks like it will not be a problem for vendors to start using new property names.\n\n\n\u003e the properties are removed\n\nThe old properties are still used as \u0027legacy_prop_name\u0027 (as a fallback).",
+      "parentUuid": "4572d3c8_e206340b",
       "range": {
         "startLine": 10,
         "startChar": 8,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ad1f941_c9c735c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 3368412
+      },
+      "writtenOn": "2024-09-17T15:29:50Z",
+      "side": 1,
+      "message": "This is because \u0027config\u0027 is generic and because they are \u0027ro\u0027 properties.",
+      "parentUuid": "a2c04c5a_19fdffe9",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed0a2c8d_fdae74e4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -83,6 +155,30 @@
       "writtenOn": "2024-08-30T19:06:31Z",
       "side": 1,
       "message": "are?",
+      "range": {
+        "startLine": 16,
+        "startChar": 42,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2c420e6_fcfb182f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3368412
+      },
+      "writtenOn": "2024-09-17T15:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed0a2c8d_fdae74e4",
       "range": {
         "startLine": 16,
         "startChar": 42,
@@ -106,6 +202,30 @@
       "writtenOn": "2024-08-30T19:06:31Z",
       "side": 1,
       "message": "are now a part of vendor API ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 3
+      },
+      "revId": "f046e88a1fea62338b7bd638a6855565192a2672",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ac154b3_9470b594",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3368412
+      },
+      "writtenOn": "2024-09-17T15:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c281bb0_97799c70",
       "range": {
         "startLine": 17,
         "startChar": 14,
