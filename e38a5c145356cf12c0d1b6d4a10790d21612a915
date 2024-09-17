@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "602ab9ed_943e474b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1973455
+      },
+      "writtenOn": "2024-09-17T23:00:29Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.",
+      "range": {
+        "startLine": 9,
+        "startChar": 69,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "e38a5c145356cf12c0d1b6d4a10790d21612a915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
