@@ -93,6 +93,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/notifications/TaDa.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/TaDa.ogg \
     $(LOCAL_PATH)/notifications/ogg/Talitha.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Talitha.ogg \
     $(LOCAL_PATH)/notifications/ogg/Tejat.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Tejat.ogg \
+    $(LOCAL_PATH)/notifications/ogg/Tethys.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Tethys.ogg \
     $(LOCAL_PATH)/notifications/ogg/Thallium.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Thallium.ogg \
     $(LOCAL_PATH)/notifications/Tinkerbell.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Tinkerbell.ogg \
     $(LOCAL_PATH)/notifications/ogg/Upsilon.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Upsilon.ogg \
