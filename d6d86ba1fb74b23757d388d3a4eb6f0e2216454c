@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c897f0a_dd2f5e83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2024-09-17T09:58:15Z",
+      "side": 1,
+      "message": "Thanks! Will let Josep, Vaibhav and Siarhei approve",
+      "revId": "d6d86ba1fb74b23757d388d3a4eb6f0e2216454c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
