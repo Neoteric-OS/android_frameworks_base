@@ -16,6 +16,40 @@
       "message": "+Shai for API review",
       "revId": "ce2375e8fcc13819fa09763400fc652890a2f20b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49d64bca_18919793",
+        "filename": "core/java/android/os/BinderProxy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-09-17T00:05:50Z",
+      "side": 1,
+      "message": "This is only ever called from native, correct?\nIs there some annotation to mark these? I only know of annotations for fields accessed by native.\nIf you don\u0027t know, feel free to resolve. No need to go too deep into this.",
+      "revId": "ce2375e8fcc13819fa09763400fc652890a2f20b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e5954e0_2824dbb4",
+        "filename": "core/java/android/os/IBinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-09-17T00:05:50Z",
+      "side": 1,
+      "message": "These get executed on binder threads so there\u0027s no sense in passing an executor in callback registration, same as we don\u0027t in `linkToDeath`. Correct?",
+      "revId": "ce2375e8fcc13819fa09763400fc652890a2f20b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
