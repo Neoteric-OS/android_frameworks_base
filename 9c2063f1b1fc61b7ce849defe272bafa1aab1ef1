@@ -1,0 +1,76 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04abf48e_c3b0e446",
+        "filename": "core/java/android/os/IBinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-09-17T21:00:41Z",
+      "side": 1,
+      "message": "Drop the I. That prefix is typically used for IBinder subclasses.\n\nAdd some minimal javadoc here for the interface.",
+      "fixSuggestions": [
+        {
+          "fixId": "1ffe4029_d34322c8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/IBinder.java",
+              "range": {
+                "startLine": 385,
+                "startChar": 0,
+                "endLine": 386,
+                "endChar": 0
+              },
+              "replacement": "    /**\n     * Interface for receiving a callback when the process hosting an IBinder\n     * has changed its frozen state.\n     */\n    interface FrozenStateChangeCallback {\n"
+            },
+            {
+              "path": "core/java/android/os/IBinder.java",
+              "range": {
+                "startLine": 431,
+                "startChar": 0,
+                "endLine": 432,
+                "endChar": 0
+              },
+              "replacement": "    default void addFrozenStateChangeCallback(@NonNull FrozenStateChangeCallback callback)\n"
+            },
+            {
+              "path": "core/java/android/os/IBinder.java",
+              "range": {
+                "startLine": 441,
+                "startChar": 0,
+                "endLine": 442,
+                "endChar": 0
+              },
+              "replacement": "    default boolean removeFrozenStateChangeCallback(@NonNull FrozenStateChangeCallback callback) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9c2063f1b1fc61b7ce849defe272bafa1aab1ef1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbe17384_d4711914",
+        "filename": "core/java/android/os/IBinder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2024-09-17T21:00:41Z",
+      "side": 1,
+      "message": "Weird to link to itself. Did you mean to link to FrozenStateChangeCallback?",
+      "revId": "9c2063f1b1fc61b7ce849defe272bafa1aab1ef1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
