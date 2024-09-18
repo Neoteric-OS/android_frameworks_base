@@ -75,8 +75,8 @@ public class YuvImage {
     /**
      * Array listing all supported ImageFormat that are supported by this class
      */
-    private final static String[] sSupportedFormats =
-            {"NV21", "YUY2", "YCBCR_P010", "YUV_420_888"};
+    private final static String[] sSupportedFormats = {
+            "NV21", "YUY2", "YCBCR_P010", "YUV_420_888", "YCBCR_P210"};
 
     private static String printSupportedFormats() {
         StringBuilder sb = new StringBuilder();
@@ -166,10 +166,9 @@ public class YuvImage {
      */
     public YuvImage(@NonNull byte[] yuv, int format, int width, int height,
             @Nullable int[] strides, @NonNull ColorSpace colorSpace) {
-        if (format != ImageFormat.NV21 &&
-                format != ImageFormat.YUY2 &&
-                format != ImageFormat.YCBCR_P010 &&
-                format != ImageFormat.YUV_420_888) {
+        if (format != ImageFormat.NV21 && format != ImageFormat.YUY2
+                && format != ImageFormat.YCBCR_P010 && format != ImageFormat.YUV_420_888
+                && format != ImageFormat.YCBCR_P210) {
             throw new IllegalArgumentException(
                     "only supports the following ImageFormat:" + printSupportedFormats());
         }
@@ -257,7 +256,7 @@ public class YuvImage {
    *     ColorSpace.Named.SRGB,
    *     ColorSpace.Named.DISPLAY_P3
    *
-   * For the HDR image, only YCBCR_P010 image format is supported, and the following
+   * For the HDR image, only YCBCR_P010/YCBCR_P210 image formats are supported, and the following
    * color spaces are supported:
    *     ColorSpace.Named.BT2020_HLG,
    *     ColorSpace.Named.BT2020_PQ
@@ -287,7 +286,7 @@ public class YuvImage {
      *     ColorSpace.Named.SRGB,
      *     ColorSpace.Named.DISPLAY_P3
      *
-     * For the HDR image, only YCBCR_P010 image format is supported, and the following
+     * For the HDR image, only YCBCR_P010/YCBCR_P210 image formats are supported, and the following
      * color spaces are supported:
      *     ColorSpace.Named.BT2020_HLG,
      *     ColorSpace.Named.BT2020_PQ
@@ -312,9 +311,11 @@ public class YuvImage {
             throw new IllegalArgumentException("Input images cannot be empty");
         }
 
-        if (mFormat != ImageFormat.YCBCR_P010 || sdr.getYuvFormat() != ImageFormat.YUV_420_888) {
+        if ((mFormat != ImageFormat.YCBCR_P010 && mFormat != ImageFormat.YCBCR_P210)
+                || sdr.getYuvFormat() != ImageFormat.YUV_420_888) {
             throw new IllegalArgumentException(
-                "only support ImageFormat.YCBCR_P010 and ImageFormat.YUV_420_888");
+                    "only support ImageFormat.YCBCR_P010, ImageFormat.YCBCR_P210 and" +
+                    "ImageFormat.YUV_420_888");
         }
 
         if (sdr.getWidth() != mWidth || sdr.getHeight() != mHeight) {
@@ -409,6 +410,7 @@ public class YuvImage {
             strides = new int[] {width, width};
             return strides;
           case ImageFormat.YCBCR_P010:
+          case ImageFormat.YCBCR_P210:
             strides = new int[] {width * 2, width * 2};
             return strides;
           case ImageFormat.YUV_420_888:
