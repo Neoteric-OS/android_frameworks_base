@@ -52,6 +52,24 @@
       "parentUuid": "d4a6642c_f024c192",
       "revId": "6a722ea7981790bd869be32562da399a1c5ae8ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7de1fa4_5a98813f",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-09-18T20:04:23Z",
+      "side": 1,
+      "message": "No it won\u0027t compile because it returns Integer[] but we want int[]\n\n```\nframeworks/base/core/java/android/net/vcn/VcnGatewayConnectionConfig.java:437: error: incompatible types: inference variable T has incompatible bounds\n        return mExposedCapabilities.toArray(new Integer[0]);\n                                           ^\n    upper bounds: int,Object\n    lower bounds: Integer\n```",
+      "parentUuid": "b6a48a8f_88aae0d8",
+      "revId": "6a722ea7981790bd869be32562da399a1c5ae8ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
