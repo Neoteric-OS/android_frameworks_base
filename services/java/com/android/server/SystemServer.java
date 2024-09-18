@@ -428,6 +428,10 @@ public final class SystemServer implements Dumpable {
     private static final String PROFILING_SERVICE_JAR_PATH =
             "/apex/com.android.profiling/javalib/service-profiling.jar";
 
+    private static final String RANGING_APEX_SERVICE_JAR_PATH =
+            "/apex/com.android.uwb/javalib/service-ranging.jar";
+    private static final String RANGING_SERVICE_CLASS = "com.android.server.ranging.RangingService";
+
     private static final String TETHERING_CONNECTOR_CLASS = "android.net.ITetheringConnector";
 
     private static final String PERSISTENT_DATA_BLOCK_PROP = "ro.frp.pst";
@@ -2960,6 +2964,15 @@ public final class SystemServer implements Dumpable {
             mSystemServiceManager.startServiceFromJar(UWB_SERVICE_CLASS, UWB_APEX_SERVICE_JAR_PATH);
             t.traceEnd();
         }
+
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_UWB)
+                || context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI_RTT)) {
+            t.traceBegin("RangingService");
+            mSystemServiceManager.startServiceFromJar(RANGING_SERVICE_CLASS,
+                    RANGING_APEX_SERVICE_JAR_PATH);
+            t.traceEnd();
+        }
+
 
         t.traceBegin("StartBootPhaseDeviceSpecificServicesReady");
         mSystemServiceManager.startBootPhase(t, SystemService.PHASE_DEVICE_SPECIFIC_SERVICES_READY);
