@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bf20399_94578c68",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2024-09-18T19:09:41Z",
+      "side": 1,
+      "message": "Can we call Set.toArray() instead? Stream API is not recommended in framework.",
+      "revId": "6a722ea7981790bd869be32562da399a1c5ae8ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
