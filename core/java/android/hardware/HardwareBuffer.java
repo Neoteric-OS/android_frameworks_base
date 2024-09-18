@@ -70,6 +70,7 @@ public final class HardwareBuffer implements Parcelable, AutoCloseable {
             R_16,
             RG_1616,
             RGBA_10101010,
+            YCBCR_P210,
     })
     public @interface Format {
     }
@@ -131,6 +132,14 @@ public final class HardwareBuffer implements Parcelable, AutoCloseable {
     /** Format: 10 bits each red, green, blue, alpha */
     @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_REQUESTED_FORMATS_V)
     public static final int RGBA_10101010 = 0x3b;
+    /**
+     * <p>Android YUV P210 format.</p>
+     *
+     * P210 is a 4:2:2 YCbCr semiplanar format comprised of a WxH Y plane
+     * followed by a WxH CbCr plane. Each sample is represented by a 16-bit
+     * little-endian value, with the lower 6 bits set to zero.
+     */
+    public static final int YCBCR_P210    = 0x3c;
 
     // Note: do not rename, this field is used by native code
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)

@@ -61,7 +61,8 @@ public class ImageFormat {
              RAW_DEPTH10,
              PRIVATE,
              HEIC,
-             JPEG_R
+             JPEG_R,
+             YCBCR_P210
      })
      public @interface Format {
      }
@@ -808,6 +809,24 @@ public class ImageFormat {
      * Format as described in ISO/IEC 23008-12.</p>
      */
     public static final int HEIC = 0x48454946;
+    /**
+     * <p>Android YUV P210 format.</p>
+     *
+     * P210 is a 4:2:2 YCbCr semiplanar format comprised of a WxH Y plane
+     * followed by a WxH CbCr plane. Each sample is represented by a 16-bit
+     * little-endian value, with the lower 6 bits set to zero.
+     *
+     * <p>For example, the {@link android.media.Image} object can provide data
+     * in this format from a {@link android.hardware.camera2.CameraDevice}
+     * through a {@link android.media.ImageReader} object if this format is
+     * supported by {@link android.hardware.camera2.CameraDevice}.</p>
+     *
+     * @see android.media.Image
+     * @see android.media.ImageReader
+     * @see android.hardware.camera2.CameraDevice
+     *
+     */
+    public static final int YCBCR_P210 = 0x3c;
 
     /**
      * Use this function to retrieve the number of bits per pixel of an
@@ -848,6 +867,7 @@ public class ImageFormat {
             case RAW_SENSOR:
                 return 16;
             case YCBCR_P010:
+            case YCBCR_P210:
                 return 24;
             case RAW_DEPTH10:
             case RAW10:
@@ -897,6 +917,7 @@ public class ImageFormat {
             case DEPTH_JPEG:
             case HEIC:
             case JPEG_R:
+            case YCBCR_P210:
                 return true;
         }
 
