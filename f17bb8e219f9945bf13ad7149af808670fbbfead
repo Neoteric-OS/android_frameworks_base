@@ -16,6 +16,24 @@
       "message": "Hi Rambo, can you +2 it? 😊",
       "revId": "f17bb8e219f9945bf13ad7149af808670fbbfead",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20fde783_053e93ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2024-09-18T18:59:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "fa6af893_ffb45e39",
+      "revId": "f17bb8e219f9945bf13ad7149af808670fbbfead",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
