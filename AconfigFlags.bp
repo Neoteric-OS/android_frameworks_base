@@ -83,6 +83,7 @@ aconfig_declarations_group {
         "com.android.media.flags.editing-aconfig-java",
         "com.android.media.flags.projection-aconfig-java",
         "com.android.net.thread.platform.flags-aconfig-java",
+        "com.android.ranging.flags.ranging-aconfig-java",
         "com.android.server.flags.services-aconfig-java",
         "com.android.text.flags-aconfig-java",
         "com.android.window.flags.window-aconfig-java",
@@ -1245,6 +1246,13 @@ java_aconfig_library {
     name: "com.android.internal.pm.pkg.component.flags-aconfig-java-host",
     aconfig_declarations: "com.android.internal.pm.pkg.component.flags-aconfig",
     host_supported: true,
+    defaults: ["framework-minus-apex-aconfig-java-defaults"],
+}
+
+// Ranging
+java_aconfig_library {
+    name: "com.android.ranging.flags.ranging-aconfig-java",
+    aconfig_declarations: "ranging_aconfig_flags",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 
