@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc219672_8c30ef93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1879319
+      },
+      "writtenOn": "2024-09-18T13:06:05Z",
+      "side": 1,
+      "message": "Optional nit: no need to add a dot in the commit title.",
+      "range": {
+        "startLine": 7,
+        "startChar": 70,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "dcfd8bccc7c6404373f0901a8ed456047b17629a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
