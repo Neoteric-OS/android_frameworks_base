@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "725bf967_4e204a39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625740
+      },
+      "writtenOn": "2024-09-19T08:58:07Z",
+      "side": 1,
+      "message": "Please review the change\n\nProblem:\nIn the GrowingArrayUtils.java class, the insert methods do not handle cases where currentSize is set to -1. This can lead to exceptions, such as ArrayIndexOutOfBoundsException, during operations like array insertion or copying. The lack of validation for currentSize \u003d\u003d -1 across the class can cause system instability or crashes during array operations.\n\nSolution\nTo prevent such crashes, it is necessary to ensure that currentSize never reaches an invalid state like -1. Proper validations should be added wherever currentSize is modified or incremented.\n\nBug Id - https://partnerissuetracker.corp.google.com/u/3/issues/367976403",
+      "revId": "578019f67064f1af0b2ae98e5c947a6edbf38c55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
