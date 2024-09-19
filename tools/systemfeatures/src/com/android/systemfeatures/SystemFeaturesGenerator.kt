@@ -22,8 +22,6 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
-import java.util.HashMap
-import java.util.Map
 import javax.lang.model.element.Modifier
 
 /*
@@ -63,6 +61,7 @@ object SystemFeaturesGenerator {
     private val PACKAGEMANAGER_CLASS = ClassName.get("android.content.pm", "PackageManager")
     private val CONTEXT_CLASS = ClassName.get("android.content", "Context")
     private val FEATUREINFO_CLASS = ClassName.get("android.content.pm", "FeatureInfo")
+    private val ARRAYMAP_CLASS = ClassName.get("android.util", "ArrayMap")
     private val ASSUME_TRUE_CLASS =
         ClassName.get("com.android.aconfig.annotations", "AssumeTrueForR8")
     private val ASSUME_FALSE_CLASS =
@@ -297,13 +296,13 @@ object SystemFeaturesGenerator {
                 .addJavadoc("Gets features marked as available at compile-time, keyed by name." +
                         "\n\n@hide")
                 .returns(ParameterizedTypeName.get(
-                        ClassName.get(Map::class.java),
+                        ARRAYMAP_CLASS,
                         ClassName.get(String::class.java),
                         FEATUREINFO_CLASS))
 
         val availableFeatures = features.filter { it.readonly && it.version != null }
-        methodBuilder.addStatement("Map<String, FeatureInfo> features = new \$T<>(\$L)",
-                HashMap::class.java, availableFeatures.size)
+        methodBuilder.addStatement("\$T<String, FeatureInfo> features = new \$T<>(\$L)",
+                ARRAYMAP_CLASS, ARRAYMAP_CLASS, availableFeatures.size)
         if (!availableFeatures.isEmpty()) {
             methodBuilder.addStatement("FeatureInfo fi = new FeatureInfo()")
         }
