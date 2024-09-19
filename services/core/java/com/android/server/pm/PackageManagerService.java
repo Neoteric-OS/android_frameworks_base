@@ -3017,6 +3017,9 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
 
     public void updatePackagesIfNeeded() {
         mDexOptHelper.performPackageDexOptUpgradeIfNeeded();
+        DisplayManager displayManager =
+                (DisplayManager) mContext.getSystemService(Context.DISPLAY_SERVICE);
+        displayManager.getDisplay(Display.DEFAULT_DISPLAY).getMetrics(mMetrics);
     }
 
     private void notifyPackageUseInternal(String packageName, int reason) {
