@@ -46,6 +46,7 @@ import android.util.TimingsTraceLog;
 import android.util.Xml;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.pm.RoSystemFeatures;
 import com.android.internal.util.XmlUtils;
 import com.android.modules.utils.build.UnboundedSdkLevel;
 import com.android.server.pm.permission.PermissionAllowlist;
@@ -211,6 +212,30 @@ public class SystemConfig {
                             && !isAtLeastSdkLevel(this.onBootclasspathBefore));
         }
     }
+
+    /**
+     * Utility class for testing interaction with compile-time defined system features.
+     * @hide
+    */
+    @VisibleForTesting
+    public static class Injector {
+        /** Whether a system feature is defined as available at compile-time. */
+        public boolean isCompileTimeAvailableFeature(String featureName, int version) {
+            return Boolean.TRUE.equals(RoSystemFeatures.maybeHasFeature(featureName, version));
+        }
+
+        /** Whether a system feature is defined as unavailable at compile-time. */
+        public boolean isCompileTimeUnavailableFeature(String featureName, int version) {
+            return Boolean.FALSE.equals(RoSystemFeatures.maybeHasFeature(featureName, version));
+        }
+
+        /** The full set of system features defined as compile-time available. */
+        public Map<String, FeatureInfo> getCompileTimeAvailableFeatures() {
+            return RoSystemFeatures.getCompileTimeAvailableFeatures();
+        }
+    }
+
+    private final Injector mInjector;
 
     // These are the built-in shared libraries that were read from the
     // system configuration files. Keys are the library names; values are
@@ -602,12 +627,26 @@ public class SystemConfig {
     public ArrayMap<String, Integer> getOemDefinedUids() {
         return mOemDefinedUids;
     }
+
     /**
      * Only use for testing. Do NOT use in production code.
      * @param readPermissions false to create an empty SystemConfig; true to read the permissions.
      */
     @VisibleForTesting
     public SystemConfig(boolean readPermissions) {
+        this(readPermissions, new Injector());
+    }
+
+    /**
+     * Only use for testing. Do NOT use in production code.
+     * @param readPermissions false to create an empty SystemConfig; true to read the permissions.
+     * @param injector Additional dependency injection for testing.
+     */
+    @VisibleForTesting
+    public SystemConfig(boolean readPermissions, Injector injector) {
+        mInjector = injector;
+        mAvailableFeatures.putAll(mInjector.getCompileTimeAvailableFeatures());
+
         if (readPermissions) {
             Slog.w(TAG, "Constructing a test SystemConfig");
             readAllPermissions();
@@ -617,6 +656,9 @@ public class SystemConfig {
     }
 
     SystemConfig() {
+        mInjector = new Injector();
+        mAvailableFeatures.putAll(mInjector.getCompileTimeAvailableFeatures());
+
         TimingsTraceLog log = new TimingsTraceLog(TAG, Trace.TRACE_TAG_SYSTEM_SERVER);
         log.traceBegin("readAllPermissions");
         try {
@@ -1777,6 +1819,10 @@ public class SystemConfig {
     }
 
     private void addFeature(String name, int version) {
+        if (mInjector.isCompileTimeUnavailableFeature(name, version)) {
+            Slog.w(TAG, "Skipping feature addition for compile-time disabled feature: " + name);
+            return;
+        }
         FeatureInfo fi = mAvailableFeatures.get(name);
         if (fi == null) {
             fi = new FeatureInfo();
@@ -1789,6 +1835,10 @@ public class SystemConfig {
     }
 
     private void removeFeature(String name) {
+        if (mInjector.isCompileTimeAvailableFeature(name, /*version=*/0)) {
+            Slog.w(TAG, "Skipping feature removal for compile-time enabled feature: " + name);
+            return;
+        }
         if (mAvailableFeatures.remove(name) != null) {
             Slog.d(TAG, "Removed unavailable feature " + name);
         }
