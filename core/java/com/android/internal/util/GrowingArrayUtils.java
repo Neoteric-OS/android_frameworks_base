@@ -152,7 +152,7 @@ public final class GrowingArrayUtils {
     public static int[] insert(int[] array, int currentSize, int index, int element) {
         assert currentSize <= array.length;
 
-        if (currentSize + 1 <= array.length) {
+        if (currentSize > 0 && currentSize + 1 <= array.length) {
             System.arraycopy(array, index, array, index + 1, currentSize - index);
             array[index] = element;
             return array;
