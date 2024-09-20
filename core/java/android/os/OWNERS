@@ -115,3 +115,6 @@ per-file OomKillRecord.java = file:/MEMORY_OWNERS
 # MessageQueue
 per-file MessageQueue.java = mfasheh@google.com, shayba@google.com
 per-file Message.java = mfasheh@google.com, shayba@google.com
+
+# Dropbox
+per-file DropBoxManager* = mwachens@google.com
