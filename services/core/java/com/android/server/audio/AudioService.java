@@ -801,6 +801,7 @@ public class AudioService extends IAudioService.Stub
     private final BroadcastReceiver mReceiver = new AudioServiceBroadcastReceiver();
 
     private final Executor mAudioServerLifecycleExecutor;
+    private long mSysPropListenerNativeHandle;
     private final List<Future> mScheduledPermissionTasks = new ArrayList();
 
     private IMediaProjectionManager mProjectionService; // to validate projection token
@@ -10725,7 +10726,7 @@ public class AudioService extends IAudioService.Stub
                     }, UPDATE_DELAY_MS, TimeUnit.MILLISECONDS));
                 }
             };
-            mAudioSystem.listenForSystemPropertyChange(
+            mSysPropListenerNativeHandle = mAudioSystem.listenForSystemPropertyChange(
                     PermissionManager.CACHE_KEY_PACKAGE_INFO,
                     task);
         } else {
@@ -14810,6 +14811,7 @@ public class AudioService extends IAudioService.Stub
     @Override
     /** @see AudioManager#permissionUpdateBarrier() */
     public void permissionUpdateBarrier() {
+        mAudioSystem.triggerSystemPropertyUpdate(mSysPropListenerNativeHandle);
         List<Future> snapshot;
         synchronized (mScheduledPermissionTasks) {
             snapshot = List.copyOf(mScheduledPermissionTasks);
