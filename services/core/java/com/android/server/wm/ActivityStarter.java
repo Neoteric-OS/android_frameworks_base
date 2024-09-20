@@ -1947,7 +1947,7 @@ class ActivityStarter {
                 && sourceRecord != null && sourceRecord.getTask() == mStartActivity.getTask()
                 && balVerdict.allows()) {
             mRootWindowContainer.moveActivityToPinnedRootTask(mStartActivity,
-                    sourceRecord, "launch-into-pip");
+                    sourceRecord, "launch-into-pip", null /* bounds */);
         }
 
         mSupervisor.getBackgroundActivityLaunchController()

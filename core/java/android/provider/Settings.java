@@ -19697,6 +19697,8 @@ public final class Settings {
             public static final int PAIRED_DEVICE_OS_TYPE_ANDROID = 1;
             /** @hide */
             public static final int PAIRED_DEVICE_OS_TYPE_IOS = 2;
+            /** @hide */
+            public static final int PAIRED_DEVICE_OS_TYPE_NONE = 3;
 
             /**
              * The bluetooth settings selected BLE role for the companion.
