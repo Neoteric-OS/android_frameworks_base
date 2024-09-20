@@ -231,6 +231,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0b145509_1d3cc9d9",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-20T23:12:52Z",
+      "side": 1,
+      "message": "They listed both API in the bug. Let me ask them for more details.",
+      "parentUuid": "3be1991a_ce448aa2",
+      "range": {
+        "startLine": 499,
+        "startChar": 1,
+        "endLine": 509,
+        "endChar": 0
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c221eee2_5ce229a1",
         "filename": "nfc/java/android/nfc/NfcOemExtension.java",
         "patchSetId": 1
