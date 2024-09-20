@@ -16,6 +16,29 @@
       "message": "Hi Nataniel,\n\nDo you know how to verify this?",
       "revId": "5a49f322952e854d0df578d785f8f591b9f2cac2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b53d030b_3a56c982",
+        "filename": "tests/FlickerTests/ActivityEmbedding/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1436778
+      },
+      "writtenOn": "2024-09-20T12:09:46Z",
+      "side": 1,
+      "message": "not needed, it inherits from the parent dir.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 34
+      },
+      "revId": "5a49f322952e854d0df578d785f8f591b9f2cac2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
