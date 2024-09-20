@@ -1057,6 +1057,7 @@ public class GnssLocationProvider extends AbstractLocationProvider implements
                                 /* preferredTime= */ 0,
                                 mProviderRequest.isLowPower());
                         if (!positionMode.equals(mLastPositionMode)) {
+                            if (DEBUG) Log.d(TAG, "positionMode has changed, restart Navigating");
                             stopNavigating();
                             startNavigating();
                         }
