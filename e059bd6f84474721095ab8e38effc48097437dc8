@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46811251_8563978c",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-20T22:49:28Z",
+      "side": 1,
+      "message": "nit: Add more notes. \n\n```\nIf OEM extension is registered (indicated via `enable_oem_extension` NFC overlay), the NFC stack initialization at bootup is delayed until the OEM extension app triggers the initialization via this call.\n```",
+      "range": {
+        "startLine": 471,
+        "startChar": 35,
+        "endLine": 472,
+        "endChar": 7
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "39f03627_321f6005",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 472,
+                "startChar": 0,
+                "endLine": 472,
+                "endChar": 0
+              },
+              "replacement": "     * If OEM extension is registered (indicated via `enable_oem_extension` NFC\n     * overlay), the NFC stack initialization at bootup is delayed until the OEM\n     * extension app triggers the initialization.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfdde31d_659c2cea",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-20T22:49:28Z",
+      "side": 1,
+      "message": "nit: rename to `triggerInitialization`",
+      "range": {
+        "startLine": 475,
+        "startChar": 16,
+        "endLine": 475,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4e1124f7_0a45d203",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 475,
+                "startChar": 0,
+                "endLine": 476,
+                "endChar": 0
+              },
+              "replacement": "    public void triggerInitialization() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "846691bb_b63c2a67",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-20T22:49:28Z",
+      "side": 1,
+      "message": "Gets the last user toggle status.",
+      "range": {
+        "startLine": 480,
+        "startChar": 6,
+        "endLine": 480,
+        "endChar": 30
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c086937_15e0092b",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-20T22:49:28Z",
+      "side": 1,
+      "message": "nit: rename to `hasUserEnabledNfc()`",
+      "range": {
+        "startLine": 485,
+        "startChar": 19,
+        "endLine": 485,
+        "endChar": 35
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5fe7df04_f5ed7136",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 485,
+                "startChar": 0,
+                "endLine": 486,
+                "endChar": 0
+              },
+              "replacement": "    public boolean hasUserEnabledNfc() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "371f2ef8_365d716e",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-20T22:49:28Z",
+      "side": 1,
+      "message": "I don\u0027t understand the usage of this. Can we ask Samsung for more details?",
+      "range": {
+        "startLine": 488,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e75075ac_440d8dbc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 488,
+                "startChar": 0,
+                "endLine": 498,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3be1991a_ce448aa2",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-20T22:49:28Z",
+      "side": 1,
+      "message": "Do we need this? Is this the same as the `getRoutingStatus` being added in aosp/3231022?",
+      "range": {
+        "startLine": 499,
+        "startChar": 1,
+        "endLine": 509,
+        "endChar": 0
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4a115170_50a12510",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 498,
+                "startChar": 0,
+                "endLine": 509,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c221eee2_5ce229a1",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-20T22:49:28Z",
+      "side": 1,
+      "message": "nit: `NFC tag reader mode polling`",
+      "range": {
+        "startLine": 511,
+        "startChar": 14,
+        "endLine": 511,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "703347e1_b0e0c33c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 511,
+                "startChar": 0,
+                "endLine": 513,
+                "endChar": 0
+              },
+              "replacement": "     * Pauses NFC tag reader mode polling for a {@code timeoutInMs} millisecond. If polling must be\n     * resumed before timeout, use {@link #resumePolling()}.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be32f5a5_66d8c0e0",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-20T22:49:28Z",
+      "side": 1,
+      "message": "nit: `NFC tag reader mode polling`",
+      "range": {
+        "startLine": 522,
+        "startChar": 15,
+        "endLine": 522,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f532c78d_11281456",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 522,
+                "startChar": 0,
+                "endLine": 524,
+                "endChar": 0
+              },
+              "replacement": "     * Resumes default NFC tag reader mode polling for the current device state if polling is\n     * paused. Calling this while polling is not paused is a no-op.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
