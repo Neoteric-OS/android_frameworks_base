@@ -2642,7 +2642,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 || mStartingWindow == null
                 || mTransferringSplashScreenState == TRANSFER_SPLASH_SCREEN_FINISH
                 // skip copy splash screen to client if it was resized
-                || (mStartingData != null && mStartingData.mResizedFromTransfer)) {
+                || (mStartingData != null && mStartingData.mResizedFromTransfer)
+                || isRelaunching()) {
             return false;
         }
         if (isTransferringSplashScreen()) {
