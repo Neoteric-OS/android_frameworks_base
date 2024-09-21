@@ -237,6 +237,7 @@ java_library {
         "services.wifi",
         "service-blobstore",
         "service-jobscheduler",
+        "service-vcn",
         "android.hidl.base-V1.0-java",
     ],
 
