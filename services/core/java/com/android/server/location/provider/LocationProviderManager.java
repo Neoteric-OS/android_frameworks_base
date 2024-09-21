@@ -420,15 +420,14 @@ public class LocationProviderManager extends
         @GuardedBy("mMultiplexerLock")
         @Override
         protected void onRegister() {
-            super.onRegister();
+            EVENT_LOG.logProviderClientRegistered(mName, getIdentity(), mBaseRequest);
 
             if (D) {
                 Log.d(TAG, mName + " provider added registration from " + getIdentity() + " -> "
                         + getRequest());
             }
 
-            EVENT_LOG.logProviderClientRegistered(mName, getIdentity(), mBaseRequest);
-
+            super.onRegister();
             // initialization order is important as there are ordering dependencies
             onLocationPermissionsChanged();
             onBypassLocationPermissionsChanged(mEmergencyHelper.isInEmergency(0));
