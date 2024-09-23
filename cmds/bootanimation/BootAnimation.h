@@ -235,6 +235,7 @@ private:
     bool        mTimeFormat12Hour;
     bool        mShuttingDown;
     bool        mDynamicColorsApplied = false;
+    bool        mEarlyDeleteEnabled = false;
     String8     mZipFileName;
     SortedVector<String8> mLoadedFiles;
     sp<TimeCheckThread> mTimeCheckThread = nullptr;

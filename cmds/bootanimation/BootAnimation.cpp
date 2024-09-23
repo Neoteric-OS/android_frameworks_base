@@ -108,6 +108,7 @@ static const char EXIT_PROP_NAME[] = "service.bootanim.exit";
 static const char PROGRESS_PROP_NAME[] = "service.bootanim.progress";
 static const char DISPLAYS_PROP_NAME[] = "persist.service.bootanim.displays";
 static const char CLOCK_ENABLED_PROP_NAME[] = "persist.sys.bootanim.clock.enabled";
+static const char EARLY_DELETE_ENABLED_PROP_NAME[] = "persist.service.bootanim.textures.early_delete";
 static const int ANIM_ENTRY_NAME_MAX = ANIM_PATH_MAX + 1;
 static const int MAX_CHECK_EXIT_INTERVAL_US = 50000;
 static constexpr size_t TEXT_POS_LEN_MAX = 16;
@@ -1434,6 +1435,8 @@ bool BootAnimation::movie() {
         mClockEnabled = false;
     }
 
+    mEarlyDeleteEnabled = android::base::GetBoolProperty(EARLY_DELETE_ENABLED_PROP_NAME, false);
+
     // Check if npot textures are supported
     mUseNpotTextures = false;
     String8 gl_extensions;
@@ -1755,12 +1758,8 @@ bool BootAnimation::playAnimation(const Animation& animation) {
                 break; // exit the infinite non-fading part when it has been played at least once
             }
         }
-    }
-
-    // Free textures created for looping parts now that the animation is done.
-    for (const Animation::Part& part : animation.parts) {
-        if (part.count != 1) {
-            const size_t fcount = part.frames.size();
+        if (mEarlyDeleteEnabled) {
+            // The textures used for this part will be freed once it is complete.
             for (size_t j = 0; j < fcount; j++) {
                 const Animation::Frame& frame(part.frames[j]);
                 glDeleteTextures(1, &frame.tid);
@@ -1768,6 +1767,18 @@ bool BootAnimation::playAnimation(const Animation& animation) {
         }
     }
 
+    if (!mEarlyDeleteEnabled) {
+        // Free textures created for looping parts now that the animation is done.
+        for (const Animation::Part& part : animation.parts) {
+            if (part.count != 1) {
+                const size_t fcount = part.frames.size();
+                for (size_t j = 0; j < fcount; j++) {
+                    const Animation::Frame& frame(part.frames[j]);
+                    glDeleteTextures(1, &frame.tid);
+                }
+            }
+        }
+    }
     ALOGD("%sAnimationShownTiming End time: %" PRId64 "ms", mShuttingDown ? "Shutdown" : "Boot",
             elapsedRealtime());
 
