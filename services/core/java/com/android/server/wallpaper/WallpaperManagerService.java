@@ -686,7 +686,10 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
                     options.inJustDecodeBounds = false;
 
                     final Rect estimateCrop = new Rect(cropHint);
-                    estimateCrop.scale(1f / options.inSampleSize);
+                    estimateCrop.left = (int) Math.ceil((float)estimateCrop.left / options.inSampleSize);
+                    estimateCrop.top = (int) Math.ceil((float)estimateCrop.top / options.inSampleSize);
+                    estimateCrop.right = (int) Math.floor((float)estimateCrop.right / options.inSampleSize);
+                    estimateCrop.bottom = (int) Math.floor((float)estimateCrop.bottom / options.inSampleSize);
                     final float hRatio = (float) wpData.mHeight / estimateCrop.height();
                     final int destHeight = (int) (estimateCrop.height() * hRatio);
                     final int destWidth = (int) (estimateCrop.width() * hRatio);
