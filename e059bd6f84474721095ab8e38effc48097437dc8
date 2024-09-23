@@ -308,6 +308,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1935b9d9_342901c5",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-23T18:27:55Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8cc30d20_5773bc8e",
+      "range": {
+        "startLine": 488,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 5
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3be1991a_ce448aa2",
@@ -387,6 +411,30 @@
       "side": 1,
       "message": "The `getRoutingStatus` is used to get the route preference in NfcService, `getRoutingTable` is to get the configured value by in the current controller by calling [`getRoutingTable()`](https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Nfc/src/com/android/nfc/DeviceHost.java;l\u003d211;drc\u003dd262a68a1e0c3b640274b094a7f1e3a5b75563e9;bpv\u003d1;bpt\u003d1)",
       "parentUuid": "0b145509_1d3cc9d9",
+      "range": {
+        "startLine": 499,
+        "startChar": 1,
+        "endLine": 509,
+        "endChar": 0
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e13e3fd6_0780e470",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-09-23T18:27:55Z",
+      "side": 1,
+      "message": "Asked more questions to Samsung on the bug, let\u0027s wait for their response for this one. Maybe add that in a follow up CL and proceed with the rest of it now?",
+      "parentUuid": "6fd182bc_17e8fc06",
       "range": {
         "startLine": 499,
         "startChar": 1,
