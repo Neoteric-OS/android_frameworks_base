@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a20ec076_0e051ee0",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-23T18:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46811251_8563978c",
+      "range": {
+        "startLine": 471,
+        "startChar": 35,
+        "endLine": 472,
+        "endChar": 7
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfdde31d_659c2cea",
@@ -83,6 +107,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afb230eb_f569f63a",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-23T18:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfdde31d_659c2cea",
+      "range": {
+        "startLine": 475,
+        "startChar": 16,
+        "endLine": 475,
+        "endChar": 27
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "846691bb_b63c2a67",
@@ -96,6 +144,30 @@
       "writtenOn": "2024-09-20T22:49:28Z",
       "side": 1,
       "message": "Gets the last user toggle status.",
+      "range": {
+        "startLine": 480,
+        "startChar": 6,
+        "endLine": 480,
+        "endChar": 30
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "155c391b_95af8f1b",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-23T18:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "846691bb_b63c2a67",
       "range": {
         "startLine": 480,
         "startChar": 6,
@@ -147,6 +219,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7eee316d_8690c9aa",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-23T18:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c086937_15e0092b",
+      "range": {
+        "startLine": 485,
+        "startChar": 19,
+        "endLine": 485,
+        "endChar": 35
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "371f2ef8_365d716e",
@@ -184,6 +280,30 @@
           ]
         }
       ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cc30d20_5773bc8e",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-23T18:14:24Z",
+      "side": 1,
+      "message": "Samsung has replied in the bug. They want to use it to check the tag presence which may block the accessory operations.",
+      "parentUuid": "371f2ef8_365d716e",
+      "range": {
+        "startLine": 488,
+        "startChar": 0,
+        "endLine": 497,
+        "endChar": 5
+      },
       "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -255,6 +375,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6fd182bc_17e8fc06",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-23T18:14:24Z",
+      "side": 1,
+      "message": "The `getRoutingStatus` is used to get the route preference in NfcService, `getRoutingTable` is to get the configured value by in the current controller by calling [`getRoutingTable()`](https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Nfc/src/com/android/nfc/DeviceHost.java;l\u003d211;drc\u003dd262a68a1e0c3b640274b094a7f1e3a5b75563e9;bpv\u003d1;bpt\u003d1)",
+      "parentUuid": "0b145509_1d3cc9d9",
+      "range": {
+        "startLine": 499,
+        "startChar": 1,
+        "endLine": 509,
+        "endChar": 0
+      },
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c221eee2_5ce229a1",
         "filename": "nfc/java/android/nfc/NfcOemExtension.java",
         "patchSetId": 1
@@ -290,6 +434,30 @@
           ]
         }
       ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ea2e740_b855e363",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-23T18:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c221eee2_5ce229a1",
+      "range": {
+        "startLine": 511,
+        "startChar": 14,
+        "endLine": 511,
+        "endChar": 21
+      },
       "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -331,6 +499,30 @@
           ]
         }
       ],
+      "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fefeae25_37600572",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-09-23T18:14:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be32f5a5_66d8c0e0",
+      "range": {
+        "startLine": 522,
+        "startChar": 15,
+        "endLine": 522,
+        "endChar": 30
+      },
       "revId": "e059bd6f84474721095ab8e38effc48097437dc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
