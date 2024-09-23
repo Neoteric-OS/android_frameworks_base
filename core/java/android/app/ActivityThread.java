@@ -248,6 +248,7 @@ import dalvik.system.AppSpecializationHooks;
 import dalvik.system.CloseGuard;
 import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
+import dalvik.system.WtfLogger;
 import dalvik.system.ZipPathValidator;
 
 import libcore.io.ForwardingOs;
@@ -7215,6 +7216,8 @@ public final class ActivityThread extends ClientTransactionHandler
         // checks work accordingly.
         initZipPathValidatorCallback();
 
+        intiWtfLogger();
+
         mBoundApplication = data;
         mConfigurationController.setConfiguration(data.config);
         mConfigurationController.setCompatConfiguration(data.config);
@@ -7617,6 +7620,12 @@ public final class ActivityThread extends ClientTransactionHandler
             ZipPathValidator.setCallback(new SafeZipPathValidatorCallback());
         } else {
             ZipPathValidator.clearCallback();
+        }
+    }
+
+    private void intiWtfLogger() {
+        if (com.android.libcore.Flags.readOnlyDynamicCodeLoad()) {
+            WtfLogger.setInstance(string -> Slog.wtf("libcore", string));
         }
     }
 
