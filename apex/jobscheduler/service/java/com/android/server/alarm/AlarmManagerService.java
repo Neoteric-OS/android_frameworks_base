@@ -4935,6 +4935,7 @@ public class AlarmManagerService extends SystemService {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (intent == null || intent.getAction() == null) return;
             final int uid = intent.getIntExtra(Intent.EXTRA_UID, -1);
             synchronized (mLock) {
                 String pkgList[] = null;
