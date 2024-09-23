@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d1c00d0_78293340",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965996
+      },
+      "writtenOn": "2024-09-23T10:13:11Z",
+      "side": 1,
+      "message": "I guess this change has nothing to do with the build error at https://android-build.corp.google.com/build_explorer/artifacts_list/12401594/test_all/latest/view/logs%2Fbuild_error.log, no?",
+      "revId": "bc286ea7a11dce846ee66c44f132f13eb34ac269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
