@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47c529c7_6ad677bc",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2024-09-24T17:32:29Z",
+      "side": 1,
+      "message": "If the flags are used in multiple containers (system image and the adbd apex), I think you need to have two libraries, with one of them using the exported mode.\n\nPlease see https://g3doc.corp.google.com/company/teams/android-core-experiments/trunk-stable/flag-containers.md?cl\u003dhead#sharing-flags-across-containers",
+      "revId": "79c7e0ac2b52ee6633684c23b90564bc370b7067",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
