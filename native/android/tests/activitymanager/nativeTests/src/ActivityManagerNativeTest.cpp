@@ -137,3 +137,29 @@ TEST_F(ActivityManagerNativeTest, testUidImportance) {
     AActivityManager_removeUidImportanceListener(mUidObserver);
     mUidObserver = nullptr;
 }
+
+TEST_F(ActivityManagerNativeTest, testLocateJavaMethod) {
+    AActivityManager_TargetProcessInfo* targetProcess =
+            AActivityManager_TargetProcessInfo_create(-1, -1, "system_server");
+
+    const char* params[] = {"com.android.server.am.ProcessRecord", "boolean",
+                            "com.android.server.am.ProcessRecord"};
+
+    AActivityManager_MethodDescriptor* methodDescriptor =
+            AActivityManager_MethodDescriptor_create("com.android.server.am.ActivityManagerService",
+                                                     "updateLruProcessLocked", params, 3);
+
+    AActivityManager_JavaMethodLocation* location =
+            AActivityManager_locateJavaMethod(*targetProcess, *methodDescriptor);
+
+    auto odexPath = std::string(AActivityManager_JavaMethodLocation_getOdexPath(location));
+    auto odexOffset = AActivityManager_JavaMethodLocation_getOdexOffset(location);
+    auto methodOffset = AActivityManager_JavaMethodLocation_getMethodOffset(location);
+
+    ALOGE("locateJavaMethod odexPath: %s, odexOffset: %d, methodOffset: %d", odexPath.c_str(),
+          odexOffset, methodOffset);
+
+    ASSERT_TRUE(odexPath.ends_with("services.odex"));
+    ASSERT_GE(0, odexOffset);
+    ASSERT_GE(0, methodOffset);
+}

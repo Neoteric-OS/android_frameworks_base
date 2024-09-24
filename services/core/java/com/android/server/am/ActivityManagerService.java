@@ -26,6 +26,7 @@ import static android.Manifest.permission.MANAGE_USERS;
 import static android.Manifest.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND;
 import static android.Manifest.permission.START_ACTIVITIES_FROM_BACKGROUND;
 import static android.Manifest.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND;
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 import static android.app.ActivityManager.INSTR_FLAG_ALWAYS_CHECK_SIGNATURE;
 import static android.app.ActivityManager.INSTR_FLAG_DISABLE_HIDDEN_API_CHECKS;
 import static android.app.ActivityManager.INSTR_FLAG_DISABLE_ISOLATED_STORAGE;
@@ -199,6 +200,7 @@ import android.annotation.Nullable;
 import android.annotation.PermissionMethod;
 import android.annotation.PermissionName;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.UserIdInt;
 import android.app.Activity;
 import android.app.ActivityClient;
@@ -247,6 +249,8 @@ import android.app.IUidObserver;
 import android.app.IUnsafeIntentStrictModeCallback;
 import android.app.IUserSwitchObserver;
 import android.app.Instrumentation;
+import android.app.JavaMethodLocation;
+import android.app.MethodDescriptor;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -254,6 +258,7 @@ import android.app.PendingIntentStats;
 import android.app.ProcessMemoryState;
 import android.app.ProfilerInfo;
 import android.app.ServiceStartNotAllowedException;
+import android.app.TargetProcessInfo;
 import android.app.WaitResult;
 import android.app.assist.ActivityId;
 import android.app.backup.BackupAnnotations.BackupDestination;
@@ -490,6 +495,7 @@ import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowProcessController;
 
 import dalvik.annotation.optimization.NeverCompile;
+import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
 
 import libcore.util.EmptyArray;
@@ -2817,6 +2823,37 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     void updateCpuStatsNow() {
         mAppProfiler.updateCpuStatsNow();
+    }
+
+    @Override
+    @SystemApi(client = MODULE_LIBRARIES)
+    public JavaMethodLocation locateJavaMethod(
+            TargetProcessInfo targetProcess, MethodDescriptor methodDescriptor) {
+        if (!targetProcess.processName.equals("system_server")) {
+            throw new RuntimeException("system_server is the only supported target process");
+        }
+
+        ClassLoader classLoader = this.getClass().getClassLoader();
+
+        VMDebug.JavaMethodLocation location = VMDebug.locateJavaMethod(
+                classLoader,
+                methodDescriptor.fullyQualifiedClassName,
+                methodDescriptor.methodName,
+                methodDescriptor.fullyQualifiedParameters);
+
+        if (location == null) {
+            throw new RuntimeException(
+                    "could not locate method "
+                            + methodDescriptor.fullyQualifiedClassName + "."
+                            + methodDescriptor.methodName);
+        }
+
+        JavaMethodLocation ret = new JavaMethodLocation();
+        ret.odexPath = location.odexPath;
+        ret.odexOffset = location.odexOffset;
+        ret.methodOffset = location.methodOffset;
+
+        return ret;
     }
 
     @Override

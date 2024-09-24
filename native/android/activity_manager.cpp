@@ -16,10 +16,12 @@
 
 #define LOG_NDEBUG 0
 #define LOG_TAG "AActivityManager"
-#include <utils/Log.h>
-
 #include <android/activity_manager.h>
+#include <android/app/JavaMethodLocation.h>
+#include <android/app/MethodDescriptor.h>
+#include <android/app/TargetProcessInfo.h>
 #include <binder/ActivityManager.h>
+#include <utils/Log.h>
 
 namespace android {
 namespace activitymanager {
@@ -227,3 +229,86 @@ int32_t AActivityManager_getUidImportance(uid_t uid) {
     return UidObserver::procStateToImportance(gAm.getUidProcessState(uid, getTag()));
 }
 
+struct AActivityManager_TargetProcessInfo {
+    uid_t uid;
+    uid_t pid;
+    std::string processName;
+
+    AActivityManager_TargetProcessInfo(const uid_t& uid, const uid_t& pid, const char* processName)
+          : uid(uid), pid(pid), processName(processName) {}
+};
+
+AActivityManager_TargetProcessInfo* AActivityManager_TargetProcessInfo_create(
+        const uid_t& uid, const pid_t& pid, const char* processName) {
+    return new AActivityManager_TargetProcessInfo(uid, pid, processName);
+}
+
+struct AActivityManager_MethodDescriptor {
+    std::string fqcn;
+    std::string methodName;
+    std::vector<std::string> fqParameters;
+
+    AActivityManager_MethodDescriptor(const char* fqcn, const char* methodName,
+                                      const char* fullyQualifiedParameters[],
+                                      unsigned int numParameters)
+          : fqcn(fqcn), methodName(methodName) {
+        std::vector<std::string> fqParameters;
+        fqParameters.reserve(numParameters);
+        std::copy_n(fullyQualifiedParameters, numParameters, std::back_inserter(fqParameters));
+        this->fqParameters = fqParameters;
+    }
+};
+
+AActivityManager_MethodDescriptor* AActivityManager_MethodDescriptor_create(
+        const char* fullyQualifiedClassName, const char* methodName,
+        const char* fullyQualifiedParameters[], unsigned int numParameters) {
+    return new AActivityManager_MethodDescriptor(fullyQualifiedClassName, methodName,
+                                                 fullyQualifiedParameters, numParameters);
+}
+
+struct AActivityManager_JavaMethodLocation {
+    std::string odexPath{};
+    unsigned int odexOffset{};
+    unsigned int methodOffset{};
+
+    AActivityManager_JavaMethodLocation(const std::string& odexPath, unsigned int odexOffset,
+                                        unsigned int methodOffset)
+          : odexPath(odexPath), odexOffset(odexOffset), methodOffset(methodOffset) {}
+};
+
+const char* AActivityManager_JavaMethodLocation_getOdexPath(
+        AActivityManager_JavaMethodLocation* instance) {
+    return instance->odexPath.c_str();
+}
+
+unsigned int AActivityManager_JavaMethodLocation_getOdexOffset(
+        AActivityManager_JavaMethodLocation* instance) {
+    return instance->odexOffset;
+}
+
+unsigned int AActivityManager_JavaMethodLocation_getMethodOffset(
+        AActivityManager_JavaMethodLocation* instance) {
+    return instance->methodOffset;
+}
+
+void AActivityManager_JavaMethodLocation_destroy(AActivityManager_JavaMethodLocation* instance) {
+    free(instance);
+}
+
+AActivityManager_JavaMethodLocation* AActivityManager_locateJavaMethod(
+        const AActivityManager_TargetProcessInfo& targetProcess,
+        const AActivityManager_MethodDescriptor& methodDescriptor) {
+    android::app::TargetProcessInfo targetProcessParcel;
+    targetProcessParcel.uid = targetProcess.uid;
+    targetProcessParcel.pid = targetProcess.pid;
+    targetProcessParcel.processName = targetProcess.processName;
+    android::app::MethodDescriptor methodDescriptorParcel;
+    methodDescriptorParcel.fullyQualifiedClassName = methodDescriptor.fqcn;
+    methodDescriptorParcel.methodName = methodDescriptor.methodName;
+    methodDescriptorParcel.fullyQualifiedParameters = methodDescriptor.fqParameters;
+    android::app::JavaMethodLocation javaMethodLocationParcel;
+    gAm.locateJavaMethod(targetProcessParcel, methodDescriptorParcel, &javaMethodLocationParcel);
+    return new AActivityManager_JavaMethodLocation(javaMethodLocationParcel.odexPath,
+                                                   javaMethodLocationParcel.odexOffset,
+                                                   javaMethodLocationParcel.methodOffset);
+}
