@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0fcbd4b_314f3f67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2024-09-24T13:20:00Z",
+      "side": 1,
+      "message": "It seems that we cannot merge this, we\u0027ll be disabling the test for Android13.",
+      "revId": "fda12d1a91190101a2bb8bb2994b95b6817ea22a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
