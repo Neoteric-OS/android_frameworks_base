@@ -34,6 +34,24 @@
       "parentUuid": "47c529c7_6ad677bc",
       "revId": "79c7e0ac2b52ee6633684c23b90564bc370b7067",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eca5bd4e_5f589182",
+        "filename": "AconfigFlags.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1544,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2024-09-24T17:47:39Z",
+      "side": 1,
+      "message": "Ah, because it\u0027s is_fixed_read_only\u003dtrue.  Good point, I missed that.",
+      "parentUuid": "96d9f8d4_ba49f0a4",
+      "revId": "79c7e0ac2b52ee6633684c23b90564bc370b7067",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
