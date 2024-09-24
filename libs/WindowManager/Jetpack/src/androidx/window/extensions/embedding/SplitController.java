@@ -18,6 +18,7 @@ package androidx.window.extensions.embedding;
 
 import static android.app.ActivityManager.START_SUCCESS;
 import static android.app.ActivityOptions.KEY_LAUNCH_TASK_FRAGMENT_TOKEN;
+import static android.app.ActivityTaskManager.INVALID_TASK_ID;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
 import static android.view.Display.DEFAULT_DISPLAY;
@@ -1746,7 +1747,7 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
                     ? taskContainer.getTopNonFinishingActivity(true /* includeOverlay */)
                     : null;
         }
-        if (activityInTask == null) {
+        if (activityInTask == null || taskId == INVALID_TASK_ID) {
             // Can't find any activity in the Task that we can use as the owner activity.
             return null;
         }
