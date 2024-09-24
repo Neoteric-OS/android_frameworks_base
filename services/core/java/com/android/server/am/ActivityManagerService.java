@@ -19,6 +19,7 @@ package com.android.server.am;
 import static android.Manifest.permission.CHANGE_CONFIGURATION;
 import static android.Manifest.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST;
 import static android.Manifest.permission.FILTER_EVENTS;
+import static android.Manifest.permission.GET_JAVA_METHOD_EXECUTABLE_OFFSET;
 import static android.Manifest.permission.INTERACT_ACROSS_USERS;
 import static android.Manifest.permission.INTERACT_ACROSS_USERS_FULL;
 import static android.Manifest.permission.MANAGE_ACTIVITY_TASKS;
@@ -26,6 +27,7 @@ import static android.Manifest.permission.MANAGE_USERS;
 import static android.Manifest.permission.REQUEST_COMPANION_RUN_IN_BACKGROUND;
 import static android.Manifest.permission.START_ACTIVITIES_FROM_BACKGROUND;
 import static android.Manifest.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND;
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 import static android.app.ActivityManager.INSTR_FLAG_ALWAYS_CHECK_SIGNATURE;
 import static android.app.ActivityManager.INSTR_FLAG_DISABLE_HIDDEN_API_CHECKS;
 import static android.app.ActivityManager.INSTR_FLAG_DISABLE_ISOLATED_STORAGE;
@@ -194,11 +196,14 @@ import static com.android.systemui.shared.Flags.enableHomeDelay;
 
 import android.Manifest;
 import android.Manifest.permission;
+import android.annotation.EnforcePermission;
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.PermissionMethod;
 import android.annotation.PermissionName;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.UserIdInt;
 import android.app.Activity;
 import android.app.ActivityClient;
@@ -247,6 +252,8 @@ import android.app.IUidObserver;
 import android.app.IUnsafeIntentStrictModeCallback;
 import android.app.IUserSwitchObserver;
 import android.app.Instrumentation;
+import android.app.JavaMethodExecutableOffset;
+import android.app.MethodDescriptor;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -254,6 +261,7 @@ import android.app.PendingIntentStats;
 import android.app.ProcessMemoryState;
 import android.app.ProfilerInfo;
 import android.app.ServiceStartNotAllowedException;
+import android.app.TargetProcess;
 import android.app.WaitResult;
 import android.app.assist.ActivityId;
 import android.app.backup.BackupAnnotations.BackupDestination;
@@ -490,6 +498,7 @@ import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowProcessController;
 
 import dalvik.annotation.optimization.NeverCompile;
+import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
 
 import libcore.util.EmptyArray;
@@ -501,6 +510,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -2817,6 +2827,82 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     void updateCpuStatsNow() {
         mAppProfiler.updateCpuStatsNow();
+    }
+
+    @Override
+    @SystemApi(client = MODULE_LIBRARIES)
+    @FlaggedApi(com.android.art.flags.Flags.FLAG_JAVA_METHOD_EXECUTABLE_OFFSET_API)
+    @EnforcePermission(GET_JAVA_METHOD_EXECUTABLE_OFFSET)
+    public @Nullable JavaMethodExecutableOffset getJavaMethodExecutableOffset(
+            TargetProcess targetProcess, MethodDescriptor methodDescriptor) {
+        getJavaMethodExecutableOffset_enforcePermission();
+
+        Log.e("##HB##", String.valueOf(Binder.getCallingUidOrThrow()));
+
+        if (!targetProcess.processName.equals("system_server")) {
+            throw new IllegalArgumentException(
+                    "system_server is the only supported target process");
+        }
+
+        Method method = parseMethodDescriptor(this.getClass().getClassLoader(), methodDescriptor);
+        VMDebug.JavaMethodExecutableOffset location = VMDebug.getJavaMethodExecutableOffset(method);
+        if (location == null) {
+            return null;
+        }
+
+        JavaMethodExecutableOffset ret = new JavaMethodExecutableOffset();
+        ret.containerPath = location.containerPath;
+        ret.containerOffset = location.containerOffset;
+        ret.methodOffset = location.methodOffset;
+        return ret;
+    }
+
+    private static Method parseMethodDescriptor(
+            ClassLoader classLoader, MethodDescriptor descriptor) {
+        try {
+            Class<?> javaClass = classLoader.loadClass(descriptor.fullyQualifiedClassName);
+            Class<?>[] parameters = new Class[descriptor.fullyQualifiedParameters.length];
+            for (int i = 0; i < descriptor.fullyQualifiedParameters.length; i++) {
+                String typeName = descriptor.fullyQualifiedParameters[i];
+                switch (typeName) {
+                    case "boolean":
+                        parameters[i] = boolean.class;
+                        break;
+                    case "byte":
+                        parameters[i] = byte.class;
+                        break;
+                    case "char":
+                        parameters[i] = char.class;
+                        break;
+                    case "short":
+                        parameters[i] = short.class;
+                        break;
+                    case "int":
+                        parameters[i] = int.class;
+                        break;
+                    case "long":
+                        parameters[i] = long.class;
+                        break;
+                    case "float":
+                        parameters[i] = float.class;
+                        break;
+                    case "double":
+                        parameters[i] = double.class;
+                        break;
+                    case "void":
+                        parameters[i] = void.class;
+                        break;
+                    default:
+                        parameters[i] = classLoader.loadClass(typeName);
+                }
+            }
+
+            return javaClass.getMethod(descriptor.methodName, parameters);
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
+            throw new IllegalArgumentException(
+                    "The specified method cannot be found. Is this descriptor valid? " + descriptor,
+                    e);
+        }
     }
 
     @Override

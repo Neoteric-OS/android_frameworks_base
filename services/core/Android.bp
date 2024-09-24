@@ -157,6 +157,7 @@ java_library_static {
         "android.hardware.gnss-V2-java",
         "android.hardware.vibrator-V2-java",
         "app-compat-annotations",
+        "art_exported_aconfig_flags_lib",
         "framework-tethering.stubs.module_lib",
         "keepanno-annotations",
         "service-art.stubs.system_server",
@@ -164,6 +165,7 @@ java_library_static {
         "service-rkp.stubs.system_server",
         "service-sdksandbox.stubs.system_server",
         "device_policy_aconfig_flags_lib",
+
     ],
     plugins: ["ImmutabilityAnnotationProcessor"],
 
