@@ -1,0 +1,81 @@
+From ac08585dc5199cf4b30a368541d5b0973b68fbd8 Mon Sep 17 00:00:00 2001
+From: Robin Vinterbladh <robin.rasmussenvinterbladh@sony.com>
+Date: Tue, 24 Sep 2024 16:50:04 +0200
+Subject: [PATCH] Screenshot preview changes for 3 button navigation in landscape
+
+For 3 button navigation the screenshot preview's touch regions in
+seascape and landscape covered the navigation bar, so when you took a
+screenshot you could no longer interact with the navigation bar until
+the preview was dismissed.
+
+The padding of the preview was also incorrect for seascape and landscape
+if the device did not have a cutout.  This was fixed so that the preview
+no longer covers the navigation bar in seascape.
+
+Flag: NA
+Bug: 352512326
+Test: manual, take screenshot in different orientations and interact
+    with navigation buttons, check that padding is correct in landscape
+    and seascape
+Change-Id: I48f11243a0dbc10d2f6b11bd1e4ae0aa3605447e
+---
+
+diff --git a/packages/SystemUI/src/com/android/systemui/screenshot/ui/ScreenshotShelfView.kt b/packages/SystemUI/src/com/android/systemui/screenshot/ui/ScreenshotShelfView.kt
+index 969cf48..37df893 100644
+--- a/packages/SystemUI/src/com/android/systemui/screenshot/ui/ScreenshotShelfView.kt
++++ b/packages/SystemUI/src/com/android/systemui/screenshot/ui/ScreenshotShelfView.kt
+@@ -28,6 +28,7 @@
+ import android.view.View
+ import android.view.ViewGroup
+ import android.view.WindowInsets
++import android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL
+ import android.widget.FrameLayout
+ import android.widget.ImageView
+ import com.android.systemui.res.R
+@@ -105,11 +106,21 @@
+ 
+     fun getTouchRegion(gestureInsets: Insets): Region {
+         val region = getSwipeRegion()
++        val navBarInteractionMode: Int =
++            context.resources.getInteger(
++                com.android.internal.R.integer.config_navBarInteractionMode
++            )
++        val operand: Region.Op = if (navBarInteractionMode == NAV_BAR_MODE_GESTURAL) {
++            // Receive touches in gesture insets so they don't cause TOUCH_OUTSIDE
++            Region.Op.UNION
++        } else {
++            // Do not receive touches in gesture insets that would block 3-button navigation
++            Region.Op.DIFFERENCE
++        }
+ 
+-        // Receive touches in gesture insets so they don't cause TOUCH_OUTSIDE
+         // left edge gesture region
+         val insetRect = Rect(0, 0, gestureInsets.left, displayMetrics.heightPixels)
+-        region.op(insetRect, Region.Op.UNION)
++        region.op(insetRect, operand)
+         // right edge gesture region
+         insetRect.set(
+             displayMetrics.widthPixels - gestureInsets.right,
+@@ -117,7 +128,7 @@
+             displayMetrics.widthPixels,
+             displayMetrics.heightPixels
+         )
+-        region.op(insetRect, Region.Op.UNION)
++        region.op(insetRect, operand)
+ 
+         return region
+     }
+@@ -140,7 +151,12 @@
+             )
+ 
+         if (cutout == null) {
+-            screenshotStatic.setPadding(0, 0, 0, navBarInsets.bottom)
++            screenshotStatic.setPadding(
++                navBarInsets.left,
++                navBarInsets.top,
++                navBarInsets.right,
++                max(navBarInsets.bottom + verticalPadding, minimumBottomPadding)
++            )
+         } else {
+             val waterfall = cutout.waterfallInsets
+             if (inPortrait) {
