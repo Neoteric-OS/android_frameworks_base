@@ -389,6 +389,38 @@ public class ActivityManager {
     }
 
     /**
+     * Purely for testing
+     * {@link IActivityManager#getExecutableMethodFileOffsets(TargetProcess, MethodDescriptor)}.
+     *
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.EXECUTABLE_METHOD_FILE_OFFSETS)
+    @FlaggedApi(com.android.art.flags.Flags.FLAG_EXECUTABLE_METHOD_FILE_OFFSETS)
+    @TestApi
+    public @NonNull Bundle getExecutableMethodFileOffsets(@NonNull Bundle bundle) {
+        TargetProcess targetProcess = new TargetProcess();
+        targetProcess.processName = bundle.getString("processName");
+        MethodDescriptor methodDescriptor = new MethodDescriptor();
+        methodDescriptor.fullyQualifiedClassName = bundle.getString("fqcn");
+        methodDescriptor.methodName = bundle.getString("methodName");
+        methodDescriptor.fullyQualifiedParameters = bundle.getStringArray("fqParameters");
+        try {
+            ExecutableMethodFileOffsets offset =
+                    getService().getExecutableMethodFileOffsets(targetProcess, methodDescriptor);
+            Bundle ret = new Bundle();
+            if (offset == null) {
+                return ret;
+            }
+            ret.putString("containerPath", offset.containerPath);
+            ret.putLong("containerOffset", offset.containerOffset);
+            ret.putLong("methodOffset", offset.methodOffset);
+            return ret;
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * <a href="{@docRoot}guide/topics/manifest/meta-data-element.html">{@code
      * <meta-data>}</a> name for a 'home' Activity that declares a package that is to be
      * uninstalled in lieu of the declaring one.  The package named here must be
