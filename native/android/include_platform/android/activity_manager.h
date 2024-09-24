@@ -167,6 +167,36 @@ bool AActivityManager_isUidActive(uid_t uid) __INTRODUCED_IN(31);
  */
 int32_t AActivityManager_getUidImportance(uid_t uid) __INTRODUCED_IN(31);
 
+struct AActivityManager_JavaMethodExecutableOffset;
+typedef struct AActivityManager_JavaMethodExecutableOffset
+        AActivityManager_JavaMethodExecutableOffset;
+
+struct AActivityManager_MethodDescriptor;
+typedef struct AActivityManager_MethodDescriptor AActivityManager_MethodDescriptor;
+
+struct AActivityManager_TargetProcess;
+typedef struct AActivityManager_TargetProcess AActivityManager_TargetProcess;
+
+AActivityManager_TargetProcess* AActivityManager_TargetProcess_create(const uid_t& uid,
+                                                                      const pid_t& pid,
+                                                                      const char* processName);
+
+AActivityManager_MethodDescriptor* AActivityManager_MethodDescriptor_create(
+        const char* fullyQualifiedClassName, const char* methodName,
+        const char* fullyQualifiedParameters[], unsigned int numParameters);
+
+AActivityManager_JavaMethodExecutableOffset* AActivityManager_getJavaMethodExecutableOffset(
+        const AActivityManager_TargetProcess& targetProcess,
+        const AActivityManager_MethodDescriptor& methodDescriptor);
+const char* AActivityManager_JavaMethodExecutableOffset_getContainerPath(
+        AActivityManager_JavaMethodExecutableOffset* instance);
+unsigned int AActivityManager_JavaMethodExecutableOffset_getContainerOffset(
+        AActivityManager_JavaMethodExecutableOffset* instance);
+unsigned int AActivityManager_JavaMethodExecutableOffset_getMethodOffset(
+        AActivityManager_JavaMethodExecutableOffset* instance);
+void AActivityManager_JavaMethodExecutableOffset_destroy(
+        AActivityManager_JavaMethodExecutableOffset* instance);
+
 __END_DECLS
 
 #endif  // __AACTIVITYMANAGER_H__
