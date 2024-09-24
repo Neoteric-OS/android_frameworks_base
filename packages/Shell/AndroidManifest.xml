@@ -944,6 +944,9 @@
     <!-- Permission required for CTS test - CtsNfcTestCases -->
     <uses-permission android:name="android.permission.NFC_SET_CONTROLLER_ALWAYS_ON" />
 
+    <!-- Permission required for ActivityManagerExecutableMethodFileOffsetsTest -->
+    <uses-permission android:name="android.permission.EXECUTABLE_METHOD_FILE_OFFSETS" />
+
     <application
         android:label="@string/app_label"
         android:theme="@android:style/Theme.DeviceDefault.DayNight"

@@ -17,10 +17,12 @@
 #define LOG_TAG "ActivityManagerNativeTest"
 
 #include <android-base/logging.h>
+#include <android-base/scopeguard.h>
 #include <android/activity_manager.h>
 #include <binder/PermissionController.h>
 #include <binder/ProcessState.h>
 #include <gtest/gtest.h>
+#include <utils/Errors.h>
 
 constexpr const char* kTestPackage = "com.android.tests.UidImportanceHelper";
 constexpr const char* kTestActivity = "com.android.tests.UidImportanceHelper.MainActivity";
@@ -136,4 +138,115 @@ TEST_F(ActivityManagerNativeTest, testUidImportance) {
 
     AActivityManager_removeUidImportanceListener(mUidObserver);
     mUidObserver = nullptr;
+}
+
+TEST_F(ActivityManagerNativeTest, testGetExecutableMethodFileOffsets_aotCompiled) {
+    AActivityManager_TargetProcess* targetProcess =
+            AActivityManager_TargetProcess_create(0, 0, "system_server");
+
+    const char* params[] = {"com.android.server.am.ProcessRecord", "boolean",
+                            "com.android.server.am.ProcessRecord"};
+
+    AActivityManager_MethodDescriptor* methodDescriptor =
+            AActivityManager_MethodDescriptor_create("com.android.server.am.ActivityManagerService",
+                                                     "updateLruProcessLocked", params, 3);
+
+    AActivityManager_ExecutableMethodFileOffsets* offsets =
+            AActivityManager_ExecutableMethodFileOffsets_create();
+
+    auto guard = android::base::make_scope_guard([&]() {
+        AActivityManager_ExecutableMethodFileOffsets_destroy(offsets);
+        AActivityManager_MethodDescriptor_destroy(methodDescriptor);
+        AActivityManager_TargetProcess_destroy(targetProcess);
+    });
+
+    android::status_t result =
+            AActivityManager_getExecutableMethodFileOffsets(*targetProcess, *methodDescriptor,
+                                                            offsets);
+    ASSERT_EQ(result, android::OK);
+
+    auto containerPath =
+            std::string(AActivityManager_ExecutableMethodFileOffsets_getContainerPath(offsets));
+    auto containerOffset = AActivityManager_ExecutableMethodFileOffsets_getContainerOffset(offsets);
+    auto methodOffset = AActivityManager_ExecutableMethodFileOffsets_getMethodOffset(offsets);
+
+    ALOGE("getExecutableMethodFileOffsets containerPath: %s, containerOffset: %lu, methodOffset: "
+          "%lu",
+          containerPath.c_str(), containerOffset, methodOffset);
+
+    ASSERT_TRUE(containerPath.ends_with("services.odex"));
+    ASSERT_GE(containerOffset, 0);
+    ASSERT_GE(methodOffset, 0);
+}
+
+TEST_F(ActivityManagerNativeTest, testGetExecutableMethodFileOffsets_jitCompiled_error) {
+    AActivityManager_TargetProcess* targetProcess =
+            AActivityManager_TargetProcess_create(0, 0, "system_server");
+
+    AActivityManager_MethodDescriptor* methodDescriptor =
+            AActivityManager_MethodDescriptor_create("com.android.server.am.ActivityManagerService",
+                                                     "waitForBroadcastIdle", {}, 0);
+
+    AActivityManager_ExecutableMethodFileOffsets* offsets =
+            AActivityManager_ExecutableMethodFileOffsets_create();
+
+    auto guard = android::base::make_scope_guard([&]() {
+        AActivityManager_ExecutableMethodFileOffsets_destroy(offsets);
+        AActivityManager_MethodDescriptor_destroy(methodDescriptor);
+        AActivityManager_TargetProcess_destroy(targetProcess);
+    });
+
+    android::status_t result =
+            AActivityManager_getExecutableMethodFileOffsets(*targetProcess, *methodDescriptor,
+                                                            offsets);
+    ASSERT_EQ(result, android::UNEXPECTED_NULL);
+}
+
+TEST_F(ActivityManagerNativeTest, testGetExecutableMethodFileOffsets_notFound_error) {
+    AActivityManager_TargetProcess* targetProcess =
+            AActivityManager_TargetProcess_create(0, 0, "system_server");
+
+    AActivityManager_MethodDescriptor* methodDescriptor =
+            AActivityManager_MethodDescriptor_create("", "", {}, 0);
+
+    AActivityManager_ExecutableMethodFileOffsets* offsets =
+            AActivityManager_ExecutableMethodFileOffsets_create();
+
+    auto guard = android::base::make_scope_guard([&]() {
+        AActivityManager_ExecutableMethodFileOffsets_destroy(offsets);
+        AActivityManager_MethodDescriptor_destroy(methodDescriptor);
+        AActivityManager_TargetProcess_destroy(targetProcess);
+    });
+
+    android::status_t result =
+            AActivityManager_getExecutableMethodFileOffsets(*targetProcess, *methodDescriptor,
+                                                            offsets);
+    // TODO: which constant?
+    ASSERT_EQ(result, android::ERSCH);
+}
+
+TEST_F(ActivityManagerNativeTest, testGetExecutableMethodFileOffsets_notSystemServer_error) {
+    AActivityManager_TargetProcess* targetProcess = AActivityManager_TargetProcess_create(0, 0, "");
+
+    const char* params[] = {"com.android.server.am.ProcessRecord", "boolean",
+                            "com.android.server.am.ProcessRecord"};
+
+    AActivityManager_MethodDescriptor* methodDescriptor =
+            AActivityManager_MethodDescriptor_create("com.android.server.am.ActivityManagerService",
+                                                     "updateLruProcessLocked", params, 3);
+
+    AActivityManager_ExecutableMethodFileOffsets* offsets =
+            AActivityManager_ExecutableMethodFileOffsets_create();
+    android::status_t result =
+            AActivityManager_getExecutableMethodFileOffsets(*targetProcess, *methodDescriptor,
+                                                            offsets);
+
+    auto guard = android::base::make_scope_guard([&]() {
+        AActivityManager_ExecutableMethodFileOffsets_destroy(offsets);
+        AActivityManager_MethodDescriptor_destroy(methodDescriptor);
+        AActivityManager_TargetProcess_destroy(targetProcess);
+    });
+
+    // TODO: which constant?
+    ASSERT_EQ(result, -3);
 }
