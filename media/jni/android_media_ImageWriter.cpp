@@ -1022,6 +1022,7 @@ static void Image_getLockedImage(JNIEnv* env, jobject thiz, LockedImage *image) 
                 "Image is not initialized");
         return;
     }
+    PixelFormat format = buffer->getPixelFormat();
 
     // ImageWriter doesn't use crop by itself, app sets it, use the no crop version.
     const Rect noCrop(buffer->width, buffer->height);
@@ -1030,9 +1031,9 @@ static void Image_getLockedImage(JNIEnv* env, jobject thiz, LockedImage *image) 
     // Clear the fenceFd as it is already consumed by lock call.
     Image_setFenceFd(env, thiz, /*fenceFd*/-1);
     if (res != OK) {
+        ALOGV("%s: lock buffer failed for format 0x%x", __FUNCTION__, format);
         jniThrowExceptionFmt(env, "java/lang/RuntimeException",
-                "lock buffer failed for format 0x%x",
-                buffer->getPixelFormat());
+                "lock buffer failed for format 0x%x", format);
         return;
     }
 
