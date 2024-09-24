@@ -37,10 +37,13 @@ import android.app.IUiAutomationConnection;
 import android.app.IUidFrozenStateChangedCallback;
 import android.app.IUidObserver;
 import android.app.IUserSwitchObserver;
+import android.app.JavaMethodLocation;
+import android.app.MethodDescriptor;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.PictureInPictureParams;
 import android.app.ProfilerInfo;
+import android.app.TargetProcessInfo;
 import android.app.WaitResult;
 import android.app.assist.AssistContent;
 import android.app.assist.AssistStructure;
@@ -1026,4 +1029,6 @@ interface IActivityManager {
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.DEVICE_POWER)")
     void noteAppRestrictionEnabled(in String packageName, int uid, int restrictionType,
             boolean enabled, int reason, in String subReason, int source, long threshold);
+
+    JavaMethodLocation locateJavaMethod(in TargetProcessInfo targetProcess, in MethodDescriptor methodDescriptor);
 }

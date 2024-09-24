@@ -247,6 +247,8 @@ import android.app.IUidObserver;
 import android.app.IUnsafeIntentStrictModeCallback;
 import android.app.IUserSwitchObserver;
 import android.app.Instrumentation;
+import android.app.JavaMethodLocation;
+import android.app.MethodDescriptor;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -254,6 +256,7 @@ import android.app.PendingIntentStats;
 import android.app.ProcessMemoryState;
 import android.app.ProfilerInfo;
 import android.app.ServiceStartNotAllowedException;
+import android.app.TargetProcessInfo;
 import android.app.WaitResult;
 import android.app.assist.ActivityId;
 import android.app.backup.BackupAnnotations.BackupDestination;
@@ -490,6 +493,7 @@ import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowProcessController;
 
 import dalvik.annotation.optimization.NeverCompile;
+import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
 
 import libcore.util.EmptyArray;
@@ -2817,6 +2821,36 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     void updateCpuStatsNow() {
         mAppProfiler.updateCpuStatsNow();
+    }
+
+    private static final String TAG_HB = "##HB##";
+
+    @Override
+    public JavaMethodLocation locateJavaMethod(
+            TargetProcessInfo targetProcess, MethodDescriptor methodDescriptor) {
+        if (!targetProcess.processName.equals("system_server")) {
+            throw new RuntimeException("system_server is the only supported target process");
+        }
+
+        ClassLoader classLoader = this.getClass().getClassLoader();
+
+        VMDebug.JavaMethodLocation location = VMDebug.locateJavaMethod(
+                classLoader,
+                methodDescriptor.fullyQualifiedClassName,
+                methodDescriptor.methodName,
+                methodDescriptor.fullyQualifiedParameters);
+
+        if (location == null) {
+            throw new RuntimeException(
+                    "could not locate method "
+                            + methodDescriptor.fullyQualifiedClassName + "."
+                            + methodDescriptor.methodName);
+        }
+
+        return new JavaMethodLocation(
+            location.odexPath,
+            location.odexOffset,
+            location.methodOffset);
     }
 
     @Override

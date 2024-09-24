@@ -82,6 +82,7 @@ import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.util.Singleton;
 import android.util.Size;
+import android.util.Slog;
 import android.view.WindowInsetsController.Appearance;
 import android.window.TaskSnapshot;
 
@@ -383,6 +384,20 @@ public class ActivityManager {
             int[] getUidFrozenState(@NonNull int[] uids) {
         try {
             return getService().getUidFrozenState(uids);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * locate a precompiled java method
+     */
+    @FlaggedApi(android.security.Flags.FLAG_CONTENT_URI_PERMISSION_APIS)
+    public @Nullable JavaMethodLocation locateJavaMethod(
+        @NonNull TargetProcessInfo targetProcess, @NonNull MethodDescriptor methodDescriptor) {
+        Slog.w("##HB##", "calling it");
+        try {
+            return getService().locateJavaMethod(targetProcess, methodDescriptor);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
