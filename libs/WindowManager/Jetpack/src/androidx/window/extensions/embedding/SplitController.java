@@ -18,6 +18,7 @@ package androidx.window.extensions.embedding;
 
 import static android.app.ActivityManager.START_SUCCESS;
 import static android.app.ActivityOptions.KEY_LAUNCH_TASK_FRAGMENT_TOKEN;
+import static android.app.ActivityTaskManager.INVALID_TASK_ID;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
 import static android.view.Display.DEFAULT_DISPLAY;
@@ -3035,7 +3036,11 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
                 if (launchingActivity != null) {
                     final int taskId = getTaskId(launchingActivity);
                     final String overlayTag = options.getString(KEY_OVERLAY_TAG);
-                    if (Flags.activityEmbeddingOverlayPresentationFlag()
+                    if (taskId == INVALID_TASK_ID) {
+                        Log.w(TAG, "No task found for launching activity=" + launchingActivity);
+                        launchedInTaskFragment =
+                                resolveStartActivityIntentFromNonActivityContext(wct, intent);
+                    } else if (Flags.activityEmbeddingOverlayPresentationFlag()
                             && overlayTag != null) {
                         launchedInTaskFragment = createOrUpdateOverlayTaskFragmentIfNeeded(wct,
                                 options, intent, launchingActivity);
