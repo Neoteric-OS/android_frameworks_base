@@ -28,6 +28,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
+import android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.android.systemui.res.R
@@ -59,17 +60,17 @@ class ScreenshotShelfView(context: Context, attrs: AttributeSet? = null) :
                     ev1: MotionEvent?,
                     ev2: MotionEvent,
                     distanceX: Float,
-                    distanceY: Float
+                    distanceY: Float,
                 ): Boolean {
                     actionsContainer.getBoundsOnScreen(tmpRect)
                     val touchedInActionsContainer =
                         tmpRect.contains(ev2.rawX.toInt(), ev2.rawY.toInt())
                     val canHandleInternallyByScrolling =
-                        touchedInActionsContainer
-                        && actionsContainer.canScrollHorizontally(distanceX.toInt())
+                        touchedInActionsContainer &&
+                            actionsContainer.canScrollHorizontally(distanceX.toInt())
                     return !canHandleInternallyByScrolling
                 }
-            }
+            },
         )
 
     init {
@@ -105,19 +106,30 @@ class ScreenshotShelfView(context: Context, attrs: AttributeSet? = null) :
 
     fun getTouchRegion(gestureInsets: Insets): Region {
         val region = getSwipeRegion()
+        val navBarInteractionMode: Int =
+            context.resources.getInteger(
+                com.android.internal.R.integer.config_navBarInteractionMode
+            )
+        val operand: Region.Op =
+            if (navBarInteractionMode == NAV_BAR_MODE_GESTURAL) {
+                // Receive touches in gesture insets so they don't cause TOUCH_OUTSIDE
+                Region.Op.UNION
+            } else {
+                // Do not receive touches in gesture insets that would block 3-button navigation
+                Region.Op.DIFFERENCE
+            }
 
-        // Receive touches in gesture insets so they don't cause TOUCH_OUTSIDE
         // left edge gesture region
         val insetRect = Rect(0, 0, gestureInsets.left, displayMetrics.heightPixels)
-        region.op(insetRect, Region.Op.UNION)
+        region.op(insetRect, operand)
         // right edge gesture region
         insetRect.set(
             displayMetrics.widthPixels - gestureInsets.right,
             0,
             displayMetrics.widthPixels,
-            displayMetrics.heightPixels
+            displayMetrics.heightPixels,
         )
-        region.op(insetRect, Region.Op.UNION)
+        region.op(insetRect, operand)
 
         return region
     }
@@ -140,7 +152,12 @@ class ScreenshotShelfView(context: Context, attrs: AttributeSet? = null) :
             )
 
         if (cutout == null) {
-            screenshotStatic.setPadding(0, 0, 0, navBarInsets.bottom)
+            screenshotStatic.setPadding(
+                navBarInsets.left,
+                navBarInsets.top,
+                navBarInsets.right,
+                max(navBarInsets.bottom + verticalPadding, minimumBottomPadding),
+            )
         } else {
             val waterfall = cutout.waterfallInsets
             if (inPortrait) {
@@ -153,7 +170,7 @@ class ScreenshotShelfView(context: Context, attrs: AttributeSet? = null) :
                         cutout.safeInsetBottom + verticalPadding,
                         waterfall.bottom + verticalPadding,
                         minimumBottomPadding,
-                    )
+                    ),
                 )
             } else {
                 screenshotStatic.setPadding(
@@ -164,7 +181,7 @@ class ScreenshotShelfView(context: Context, attrs: AttributeSet? = null) :
                         navBarInsets.bottom + verticalPadding,
                         waterfall.bottom + verticalPadding,
                         minimumBottomPadding,
-                    )
+                    ),
                 )
             }
         }
