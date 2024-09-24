@@ -16,10 +16,12 @@
 
 #define LOG_NDEBUG 0
 #define LOG_TAG "AActivityManager"
-#include <utils/Log.h>
-
 #include <android/activity_manager.h>
+#include <android/app/JavaMethodExecutableOffset.h>
+#include <android/app/MethodDescriptor.h>
+#include <android/app/TargetProcessInfo.h>
 #include <binder/ActivityManager.h>
+#include <utils/Log.h>
 
 namespace android {
 namespace activitymanager {
@@ -227,3 +229,94 @@ int32_t AActivityManager_getUidImportance(uid_t uid) {
     return UidObserver::procStateToImportance(gAm.getUidProcessState(uid, getTag()));
 }
 
+struct AActivityManager_TargetProcessInfo {
+    uid_t uid;
+    uid_t pid;
+    std::string processName;
+
+    AActivityManager_TargetProcessInfo(const uid_t& uid, const uid_t& pid, const char* processName)
+          : uid(uid), pid(pid), processName(processName) {}
+};
+
+AActivityManager_TargetProcessInfo* AActivityManager_TargetProcessInfo_create(
+        const uid_t& uid, const pid_t& pid, const char* processName) {
+    return new AActivityManager_TargetProcessInfo(uid, pid, processName);
+}
+
+struct AActivityManager_MethodDescriptor {
+    std::string fqcn;
+    std::string methodName;
+    std::vector<std::string> fqParameters;
+
+    AActivityManager_MethodDescriptor(const char* fqcn, const char* methodName,
+                                      const char* fullyQualifiedParameters[],
+                                      unsigned int numParameters)
+          : fqcn(fqcn), methodName(methodName) {
+        std::vector<std::string> fqParameters;
+        fqParameters.reserve(numParameters);
+        std::copy_n(fullyQualifiedParameters, numParameters, std::back_inserter(fqParameters));
+        this->fqParameters = fqParameters;
+    }
+};
+
+AActivityManager_MethodDescriptor* AActivityManager_MethodDescriptor_create(
+        const char* fullyQualifiedClassName, const char* methodName,
+        const char* fullyQualifiedParameters[], unsigned int numParameters) {
+    return new AActivityManager_MethodDescriptor(fullyQualifiedClassName, methodName,
+                                                 fullyQualifiedParameters, numParameters);
+}
+
+struct AActivityManager_JavaMethodExecutableOffset {
+    std::string containerPath{};
+    unsigned int containerOffset{};
+    unsigned int methodOffset{};
+
+    AActivityManager_JavaMethodExecutableOffset(const std::string& containerPath,
+                                                unsigned int containerOffset,
+                                                unsigned int methodOffset)
+          : containerPath(containerPath),
+            containerOffset(containerOffset),
+            methodOffset(methodOffset) {}
+};
+
+const char* AActivityManager_JavaMethodExecutableOffset_getContainerPath(
+        AActivityManager_JavaMethodExecutableOffset* instance) {
+    return instance->containerPath.c_str();
+}
+
+unsigned int AActivityManager_JavaMethodExecutableOffset_getContainerOffset(
+        AActivityManager_JavaMethodExecutableOffset* instance) {
+    return instance->containerOffset;
+}
+
+unsigned int AActivityManager_JavaMethodExecutableOffset_getMethodOffset(
+        AActivityManager_JavaMethodExecutableOffset* instance) {
+    return instance->methodOffset;
+}
+
+void AActivityManager_JavaMethodExecutableOffset_destroy(
+        AActivityManager_JavaMethodExecutableOffset* instance) {
+    free(instance);
+}
+
+AActivityManager_JavaMethodExecutableOffset* AActivityManager_getJavaMethodExecutableOffset(
+        const AActivityManager_TargetProcessInfo& targetProcess,
+        const AActivityManager_MethodDescriptor& methodDescriptor) {
+    android::app::TargetProcessInfo targetProcessParcel;
+    targetProcessParcel.uid = targetProcess.uid;
+    targetProcessParcel.pid = targetProcess.pid;
+    targetProcessParcel.processName = targetProcess.processName;
+    android::app::MethodDescriptor methodDescriptorParcel;
+    methodDescriptorParcel.fullyQualifiedClassName = methodDescriptor.fqcn;
+    methodDescriptorParcel.methodName = methodDescriptor.methodName;
+    methodDescriptorParcel.fullyQualifiedParameters = methodDescriptor.fqParameters;
+    android::app::JavaMethodExecutableOffset javaMethodExecutableOffsetParcel;
+    gAm.getJavaMethodExecutableOffset(targetProcessParcel, methodDescriptorParcel,
+                                      &javaMethodExecutableOffsetParcel);
+    return new AActivityManager_JavaMethodExecutableOffset(javaMethodExecutableOffsetParcel
+                                                                   .containerPath,
+                                                           javaMethodExecutableOffsetParcel
+                                                                   .containerOffset,
+                                                           javaMethodExecutableOffsetParcel
+                                                                   .methodOffset);
+}
