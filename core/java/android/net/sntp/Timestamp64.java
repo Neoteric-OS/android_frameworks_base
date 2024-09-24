@@ -49,6 +49,16 @@ public final class Timestamp64 {
 
     static final int NANOS_PER_SECOND = 1_000_000_000;
 
+    /**
+     * baseline NTP time if bit-0=0: 7-Feb-2036 @ 06:28:16 UTC
+     */
+    protected static final long msb0baseTime = 2085978496L;
+
+    /**
+     *  baseline NTP time if bit-0=1: 1-Jan-1900 @ 01:00:00 UTC
+     */
+    protected static final long msb1baseTime = -2208988800L;
+
     /** Creates a {@link Timestamp64} from the seconds and fraction components. */
     public static Timestamp64 fromComponents(long eraSeconds, int fractionBits) {
         return new Timestamp64(eraSeconds, fractionBits);
@@ -112,6 +122,29 @@ public final class Timestamp64 {
     public int getFractionBits() {
         return mFractionBits;
     }
+
+    /**
+     * the most significant bit (MSB) on the seconds field is set we use
+     * a different time base. The following text is a quote from RFC-2030 (SNTP v4):
+     * If bit 0 is set, the UTC time is in the range 1968-2036 and UTC time
+     * is reckoned from 0h 0m 0s UTC on 1 January 1900. If bit 0 is not set,
+     * the time is in the range 2036-2104 and UTC time is reckoned from
+     * 6h 28m 16s UTC on 7 February 2036.
+     * */
+    public long getTimeMillis()
+    {
+        long seconds = mEraSeconds;
+        long fraction = mFractionBits & 0xffffffffL;
+        fraction = 1000 * fraction / 0x100000000L;
+
+        long msb = seconds & 0x80000000L;
+        if (msb == 0) {
+            return msb0baseTime + (seconds * 1000) + fraction;
+        } else {
+            return msb1baseTime + (seconds * 1000) + fraction;
+        }
+    }
+
 
     @Override
     public String toString() {

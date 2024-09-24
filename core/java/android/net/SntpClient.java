@@ -27,6 +27,7 @@ import android.util.Slog;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.TrafficStatsConstants;
 
+import java.math.BigInteger;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -192,9 +193,8 @@ public class SntpClient {
                     Duration64.between(receiveTimestamp, transmitTimestamp).toDuration().toMillis();
             long roundTripTimeMillis = totalTransactionDurationMillis - serverDurationMillis;
 
-            Duration clockOffsetDuration = calculateClockOffset(requestTimestamp,
+            long clockOffsetMillis = calculateNtpOffset(requestTimestamp,
                     receiveTimestamp, transmitTimestamp, responseTimestamp);
-            long clockOffsetMillis = clockOffsetDuration.toMillis();
 
             EventLogTags.writeNtpSuccess(
                     address.toString(), roundTripTimeMillis, clockOffsetMillis);
@@ -206,7 +206,7 @@ public class SntpClient {
             // save our results - use the times on this side of the network latency
             // (response rather than request time)
             mClockOffset = clockOffsetMillis;
-            mNtpTime = responseTime.plus(clockOffsetDuration).toEpochMilli();
+            mNtpTime = responseTime.plusMillis(clockOffsetMillis).toEpochMilli();
             mNtpTimeReference = responseTicks;
             mRoundTripTime = roundTripTimeMillis;
             mServerSocketAddress = new InetSocketAddress(address, port);
@@ -244,6 +244,32 @@ public class SntpClient {
         return Duration64.between(clientRequestTimestamp, serverReceiveTimestamp)
                 .plus(Duration64.between(clientResponseTimestamp, serverTransmitTimestamp))
                 .dividedBy(2);
+    }
+
+    private BigInteger ntpBetween(Timestamp64 startInclusive, Timestamp64 endExclusive) {
+        return BigInteger.valueOf(endExclusive.getTimeMillis() - startInclusive.getTimeMillis());
+    }
+
+    /** Performs the NTP clock offset calculation. */
+    @VisibleForTesting
+    public static long calculateNtpOffset(Timestamp64 clientRequestTimestamp,
+            Timestamp64 serverReceiveTimestamp, Timestamp64 serverTransmitTimestamp,
+            Timestamp64 clientResponseTimestamp) {
+        // According to RFC4330:
+        // t is the system clock offset (the adjustment we are trying to find)
+        // t = ((T2 - T1) + (T3 - T4)) / 2
+        //
+        // Which is:
+        // t = (([server]receiveTimestamp - [client]requestTimestamp)
+        //       + ([server]transmitTimestamp - [client]responseTimestamp)) / 2
+        //
+        // See the NTP spec and tests: the numeric types used are deliberate:
+        // + Duration64.between() uses 64-bit arithmetic (32-bit for the seconds).
+        // + plus() / dividedBy() use Duration, which isn't the double precision floating point
+        //   used in NTPv4, but is good enough.
+        return ntpBetween(clientRequestTimestamp, serverReceiveTimestamp)
+                .add(ntpBetween(clientResponseTimestamp, serverTransmitTimestamp))
+                .divide(BigInteger.valueOf(2)).longValue();
     }
 
     @Deprecated
