@@ -67,6 +67,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Helper class for {@link ActivityManagerService} responsible for managing pending intents.
@@ -172,7 +173,7 @@ public class PendingIntentController {
 
             PendingIntentRecord.Key key = new PendingIntentRecord.Key(type, packageName, featureId,
                     token, resultWho, requestCode, intents, resolvedTypes, flags,
-                    new SafeActivityOptions(opts), userId);
+                    new SafeActivityOptions(opts), callingUid, userId);
             WeakReference<PendingIntentRecord> ref;
             ref = mIntentSenderRecords.get(key);
             PendingIntentRecord rec = ref != null ? ref.get() : null;
@@ -221,17 +222,26 @@ public class PendingIntentController {
                 return false;
             }
 
-            Iterator<WeakReference<PendingIntentRecord>> it
-                    = mIntentSenderRecords.values().iterator();
+            Iterator<Map.Entry<PendingIntentRecord.Key, WeakReference<PendingIntentRecord>>> it
+                    = mIntentSenderRecords.entrySet().iterator();
             while (it.hasNext()) {
-                WeakReference<PendingIntentRecord> wpir = it.next();
+                Map.Entry<PendingIntentRecord.Key, WeakReference<PendingIntentRecord>> entry
+                        = it.next();
+                PendingIntentRecord.Key pirKey = entry.getKey();
+                WeakReference<PendingIntentRecord> wpir = entry.getValue();
                 if (wpir == null) {
                     it.remove();
+                    if (pirKey != null) {
+                        decrementUidLocked(pirKey.callingUid);
+                    }
                     continue;
                 }
                 PendingIntentRecord pir = wpir.get();
                 if (pir == null) {
                     it.remove();
+                    if (pirKey != null) {
+                        decrementUidLocked(pirKey.callingUid);
+                    }
                     continue;
                 }
                 if (packageName == null) {
@@ -559,6 +569,14 @@ public class PendingIntentController {
     @GuardedBy("mLock")
     void decrementUidStatLocked(final PendingIntentRecord pir) {
         final int uid = pir.uid;
+        decrementUidLocked(uid);
+    }
+
+    /**
+     * Decrement the number of the mIntentsPerUid for the given uid.
+     */
+    @GuardedBy("mLock")
+    void decrementUidLocked(final int uid) {
         final int idx = mIntentsPerUid.indexOfKey(uid);
         if (idx >= 0) {
             final int newCount = mIntentsPerUid.valueAt(idx) - 1;
