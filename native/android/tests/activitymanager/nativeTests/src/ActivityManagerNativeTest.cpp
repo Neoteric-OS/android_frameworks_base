@@ -137,3 +137,20 @@ TEST_F(ActivityManagerNativeTest, testUidImportance) {
     AActivityManager_removeUidImportanceListener(mUidObserver);
     mUidObserver = nullptr;
 }
+
+TEST_F(ActivityManagerNativeTest, testLocateJavaMethod) {
+    AActivityManager_TargetProcessInfo* targetProcess =
+            AActivityManager_TargetProcessInfo_create(-1, -1, "system_server");
+
+    const char* params[] = {"foo", "bar"};
+
+    AActivityManager_MethodDescriptor* methodDescriptor =
+            AActivityManager_MethodDescriptor_create("foo", "bar", params, 2);
+
+    AActivityManager_JavaMethodLocation* location =
+            AActivityManager_locateJavaMethod(*targetProcess, *methodDescriptor);
+
+    auto odexPath = std::string(AActivityManager_JavaMethodLocation_getOdexPath(location));
+
+    ASSERT_EQ(odexPath, "/system/framework/oat/arm64/services.odex");
+}

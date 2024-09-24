@@ -167,6 +167,33 @@ bool AActivityManager_isUidActive(uid_t uid) __INTRODUCED_IN(31);
  */
 int32_t AActivityManager_getUidImportance(uid_t uid) __INTRODUCED_IN(31);
 
+struct AActivityManager_JavaMethodLocation;
+typedef struct AActivityManager_JavaMethodLocation AActivityManager_JavaMethodLocation;
+
+struct AActivityManager_MethodDescriptor;
+typedef struct AActivityManager_MethodDescriptor AActivityManager_MethodDescriptor;
+
+struct AActivityManager_TargetProcessInfo;
+typedef struct AActivityManager_TargetProcessInfo AActivityManager_TargetProcessInfo;
+
+AActivityManager_TargetProcessInfo* AActivityManager_TargetProcessInfo_create(
+        const uid_t& uid, const pid_t& pid, const char* processName);
+
+AActivityManager_MethodDescriptor* AActivityManager_MethodDescriptor_create(
+        const char* fullyQualifiedClassName, const char* methodName,
+        const char* fullyQualifiedParameters[], unsigned int numParameters);
+
+AActivityManager_JavaMethodLocation* AActivityManager_locateJavaMethod(
+        const AActivityManager_TargetProcessInfo& targetProcess,
+        const AActivityManager_MethodDescriptor& methodDescriptor);
+const char* AActivityManager_JavaMethodLocation_getOdexPath(
+        AActivityManager_JavaMethodLocation* instance);
+unsigned int AActivityManager_JavaMethodLocation_getOdexOffset(
+        AActivityManager_JavaMethodLocation* instance);
+unsigned int AActivityManager_JavaMethodLocation_getMethodOffset(
+        AActivityManager_JavaMethodLocation* instance);
+void AActivityManager_JavaMethodLocation_destroy(AActivityManager_JavaMethodLocation* instance);
+
 __END_DECLS
 
 #endif  // __AACTIVITYMANAGER_H__
