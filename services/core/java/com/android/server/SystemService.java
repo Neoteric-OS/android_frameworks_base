@@ -31,6 +31,7 @@ import android.os.IBinder;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.pm.UserManagerService;
@@ -605,6 +606,7 @@ public abstract class SystemService {
      */
     protected final void publishBinderService(String name, IBinder service,
             boolean allowIsolated, int dumpPriority) {
+        Log.i("TAG", "***Nea-"+name+" service published");
         ServiceManager.addService(name, service, allowIsolated, dumpPriority);
     }
 

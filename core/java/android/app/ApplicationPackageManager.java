@@ -112,6 +112,7 @@ import android.os.storage.VolumeInfo;
 import android.permission.PermissionControllerManager;
 import android.permission.PermissionManager;
 import android.provider.Settings;
+import android.security.IntegrityManager;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
@@ -183,6 +184,7 @@ public class ApplicationPackageManager extends PackageManager {
 
     private volatile UserManager mUserManager;
     private volatile PermissionManager mPermissionManager;
+    private volatile IntegrityManager mIntegrityManager;
     private volatile PackageInstaller mInstaller;
     private volatile ArtManager mArtManager;
     private volatile DevicePolicyManager mDevicePolicyManager;
@@ -224,6 +226,12 @@ public class ApplicationPackageManager extends PackageManager {
     @Override
     public PackageInfo getPackageInfo(String packageName, int flags)
             throws NameNotFoundException {
+        if (mIntegrityManager == null) {
+            mIntegrityManager = mContext.getSystemService(IntegrityManager.class);
+        }
+        else {
+            Log.i(TAG, "***Nea-integrity service response= "+ mIntegrityManager.generateToken("request sent to manager"));
+        }
         return getPackageInfo(packageName, PackageInfoFlags.of(flags));
     }
 

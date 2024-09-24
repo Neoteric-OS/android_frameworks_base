@@ -252,7 +252,7 @@ public final class ServiceManager {
         try {
             getIServiceManager().addService(name, service, allowIsolated, dumpPriority);
         } catch (RemoteException e) {
-            Log.e(TAG, "error in addService", e);
+            Log.e(TAG, "***Nea-"+name+" error in addService", e);
         }
     }
 

@@ -10735,6 +10735,8 @@ package android.content {
     field public static final String HEALTHCONNECT_SERVICE = "healthconnect";
     field public static final String INPUT_METHOD_SERVICE = "input_method";
     field public static final String INPUT_SERVICE = "input";
+    field public static final String INTEGRITY_PROVIDER_SERVICE = "integrity_provider";
+    field public static final String INTEGRITY_SERVICE = "integrity";
     field public static final String IPSEC_SERVICE = "ipsec";
     field public static final String JOB_SCHEDULER_SERVICE = "jobscheduler";
     field public static final String KEYGUARD_SERVICE = "keyguard";
@@ -39398,6 +39400,14 @@ package android.security {
   public final class FileIntegrityManager {
     method public boolean isApkVeritySupported();
     method @Deprecated @RequiresPermission(anyOf={android.Manifest.permission.INSTALL_PACKAGES, android.Manifest.permission.REQUEST_INSTALL_PACKAGES}) public boolean isAppSourceCertificateTrusted(@NonNull java.security.cert.X509Certificate) throws java.security.cert.CertificateEncodingException;
+  }
+
+  public class IntegrityManager {
+    method @NonNull public String generateToken(@NonNull String);
+  }
+
+  public class IntegrityProviderManager {
+    method @NonNull public String requestToken(@NonNull String);
   }
 
   public final class KeyChain {

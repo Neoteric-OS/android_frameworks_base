@@ -6347,6 +6347,15 @@ public abstract class Context {
      */
     public static final String FILE_INTEGRITY_SERVICE = "file_integrity";
 
+    @SuppressLint("UnflaggedApi")
+    public static final String INTEGRITY_SERVICE = "integrity";
+
+    @SuppressLint("UnflaggedApi")
+    /**
+     * @hide
+     */
+    public static final String INTEGRITY_PROVIDER_SERVICE = "integrity_provider";
+
     /**
      * Binder service for remote key provisioning.
      *

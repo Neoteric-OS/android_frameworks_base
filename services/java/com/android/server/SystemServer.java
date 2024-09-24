@@ -236,6 +236,8 @@ import com.android.server.search.SearchManagerService;
 import com.android.server.searchui.SearchUiManagerService;
 import com.android.server.security.AttestationVerificationManagerService;
 import com.android.server.security.FileIntegrityService;
+import com.android.server.security.IntegrityService;
+import com.android.server.security.IntegrityProviderService;
 import com.android.server.security.KeyAttestationApplicationIdProviderService;
 import com.android.server.security.KeyChainSystemService;
 import com.android.server.security.rkp.RemoteProvisioningService;
@@ -1346,6 +1348,16 @@ public final class SystemServer implements Dumpable {
         mSystemServiceManager.startService(SensorService.class);
         t.traceEnd();
         t.traceEnd(); // startBootstrapServices
+
+        // IntegrityService responds to requests from apps and the system.
+        t.traceBegin("StartIntegrityService");
+        mSystemServiceManager.startService(IntegrityService.class);
+        t.traceEnd();
+
+        // IntegrityProviderService is implemented by OEM integrity providers.
+        t.traceBegin("StartIntegrityProviderService");
+        mSystemServiceManager.startService(IntegrityProviderService.class);
+        t.traceEnd();
     }
 
     /**
