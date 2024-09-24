@@ -37,10 +37,13 @@ import android.app.IUiAutomationConnection;
 import android.app.IUidFrozenStateChangedCallback;
 import android.app.IUidObserver;
 import android.app.IUserSwitchObserver;
+import android.app.ExecutableMethodFileOffsets;
+import android.app.MethodDescriptor;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.PictureInPictureParams;
 import android.app.ProfilerInfo;
+import android.app.TargetProcess;
 import android.app.WaitResult;
 import android.app.assist.AssistContent;
 import android.app.assist.AssistStructure;
@@ -154,6 +157,9 @@ interface IActivityManager {
 
     /** Logs API state change to associate with an FGS, used for FGS Type Metrics */
     oneway void logFgsApiStateChanged(int apiType, int state, int appUid, int appPid);
+    /** Provides ART metadata about the described java method within the target process */
+    @EnforcePermission("EXECUTABLE_METHOD_FILE_OFFSETS")
+    ExecutableMethodFileOffsets getExecutableMethodFileOffsets(in TargetProcess targetProcess, in MethodDescriptor methodDescriptor);
     // =============== End of transactions used on native side as well ============================
 
     // Special low-level communication with activity manager.

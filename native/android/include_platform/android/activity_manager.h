@@ -19,6 +19,7 @@
 
 #include <sys/cdefs.h>
 #include <sys/types.h>
+#include <utils/Errors.h>
 
 __BEGIN_DECLS
 
@@ -166,6 +167,41 @@ bool AActivityManager_isUidActive(uid_t uid) __INTRODUCED_IN(31);
  * @return the current uid importance value for uid.
  */
 int32_t AActivityManager_getUidImportance(uid_t uid) __INTRODUCED_IN(31);
+
+struct AActivityManager_MethodDescriptor;
+typedef struct AActivityManager_MethodDescriptor AActivityManager_MethodDescriptor;
+
+struct AActivityManager_TargetProcess;
+typedef struct AActivityManager_TargetProcess AActivityManager_TargetProcess;
+
+struct AActivityManager_ExecutableMethodFileOffsets;
+typedef struct AActivityManager_ExecutableMethodFileOffsets
+        AActivityManager_ExecutableMethodFileOffsets;
+
+AActivityManager_TargetProcess* AActivityManager_TargetProcess_create(const uid_t& uid,
+                                                                      const pid_t& pid,
+                                                                      const char* processName);
+void AActivityManager_TargetProcess_destroy(AActivityManager_TargetProcess* instance);
+
+AActivityManager_MethodDescriptor* AActivityManager_MethodDescriptor_create(
+        const char* fullyQualifiedClassName, const char* methodName,
+        const char* fullyQualifiedParameters[], unsigned int numParameters);
+void AActivityManager_MethodDescriptor_destroy(AActivityManager_MethodDescriptor* instance);
+
+AActivityManager_ExecutableMethodFileOffsets* AActivityManager_ExecutableMethodFileOffsets_create();
+const char* AActivityManager_ExecutableMethodFileOffsets_getContainerPath(
+        AActivityManager_ExecutableMethodFileOffsets* instance);
+unsigned long AActivityManager_ExecutableMethodFileOffsets_getContainerOffset(
+        AActivityManager_ExecutableMethodFileOffsets* instance);
+unsigned long AActivityManager_ExecutableMethodFileOffsets_getMethodOffset(
+        AActivityManager_ExecutableMethodFileOffsets* instance);
+void AActivityManager_ExecutableMethodFileOffsets_destroy(
+        AActivityManager_ExecutableMethodFileOffsets* instance);
+
+android::status_t AActivityManager_getExecutableMethodFileOffsets(
+        const AActivityManager_TargetProcess& targetProcess,
+        const AActivityManager_MethodDescriptor& methodDescriptor,
+        AActivityManager_ExecutableMethodFileOffsets* out);
 
 __END_DECLS
 
