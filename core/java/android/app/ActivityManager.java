@@ -82,6 +82,7 @@ import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.util.Singleton;
 import android.util.Size;
+import android.util.Slog;
 import android.view.WindowInsetsController.Appearance;
 import android.window.TaskSnapshot;
 
@@ -383,6 +384,51 @@ public class ActivityManager {
             int[] getUidFrozenState(@NonNull int[] uids) {
         try {
             return getService().getUidFrozenState(uids);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @hide
+     */
+    @TestApi
+    @FlaggedApi(android.security.Flags.FLAG_CONTENT_URI_PERMISSION_APIS)
+    public static class JavaMethodLocation {
+        public final @NonNull String odexPath;
+        public final int odexOffset;
+        public final int methodOffset;
+
+        public JavaMethodLocation(@NonNull String odexPath, int odexOffset, int methodOffset) {
+            this.odexPath = odexPath;
+            this.odexOffset = odexOffset;
+            this.methodOffset = methodOffset;
+        }
+    }
+
+    /**
+     * locate a precompiled java method
+     * @hide
+     */
+    @TestApi
+    @FlaggedApi(android.security.Flags.FLAG_CONTENT_URI_PERMISSION_APIS)
+    public @Nullable JavaMethodLocation locateJavaMethod(
+            @NonNull String targetProcessName,
+            @NonNull String fqcn,
+            @NonNull String methodName,
+            @NonNull String[] fqpns) {
+        Slog.w("##HB##", "calling it");
+        try {
+            android.app.TargetProcessInfo targetProcess = new android.app.TargetProcessInfo();
+            targetProcess.processName = targetProcessName;
+            android.app.MethodDescriptor methodDescriptor = new android.app.MethodDescriptor();
+            methodDescriptor.fullyQualifiedClassName = fqcn;
+            methodDescriptor.methodName = methodName;
+            methodDescriptor.fullyQualifiedParameters = fqpns;
+            android.app.JavaMethodLocation location =
+                    getService().locateJavaMethod(targetProcess, methodDescriptor);
+            return new JavaMethodLocation(
+                    location.odexPath, location.odexOffset, location.methodOffset);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
