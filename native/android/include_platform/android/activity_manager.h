@@ -167,6 +167,38 @@ bool AActivityManager_isUidActive(uid_t uid) __INTRODUCED_IN(31);
  */
 int32_t AActivityManager_getUidImportance(uid_t uid) __INTRODUCED_IN(31);
 
+struct AActivityManager_ExecutableMethodFileOffsets;
+typedef struct AActivityManager_ExecutableMethodFileOffsets
+        AActivityManager_ExecutableMethodFileOffsets;
+
+struct AActivityManager_MethodDescriptor;
+typedef struct AActivityManager_MethodDescriptor AActivityManager_MethodDescriptor;
+
+struct AActivityManager_TargetProcess;
+typedef struct AActivityManager_TargetProcess AActivityManager_TargetProcess;
+
+AActivityManager_TargetProcess* AActivityManager_TargetProcess_create(const uid_t& uid,
+                                                                      const pid_t& pid,
+                                                                      const char* processName);
+void AActivityManager_TargetProcess_destroy(AActivityManager_TargetProcess* instance);
+
+AActivityManager_MethodDescriptor* AActivityManager_MethodDescriptor_create(
+        const char* fullyQualifiedClassName, const char* methodName,
+        const char* fullyQualifiedParameters[], unsigned int numParameters);
+void AActivityManager_MethodDescriptor_destroy(AActivityManager_MethodDescriptor* instance);
+
+AActivityManager_ExecutableMethodFileOffsets* AActivityManager_getExecutableMethodFileOffsets(
+        const AActivityManager_TargetProcess& targetProcess,
+        const AActivityManager_MethodDescriptor& methodDescriptor);
+const char* AActivityManager_ExecutableMethodFileOffsets_getContainerPath(
+        AActivityManager_ExecutableMethodFileOffsets* instance);
+unsigned long AActivityManager_ExecutableMethodFileOffsets_getContainerOffset(
+        AActivityManager_ExecutableMethodFileOffsets* instance);
+unsigned long AActivityManager_ExecutableMethodFileOffsets_getMethodOffset(
+        AActivityManager_ExecutableMethodFileOffsets* instance);
+void AActivityManager_ExecutableMethodFileOffsets_destroy(
+        AActivityManager_ExecutableMethodFileOffsets* instance);
+
 __END_DECLS
 
 #endif  // __AACTIVITYMANAGER_H__

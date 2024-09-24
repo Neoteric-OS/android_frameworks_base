@@ -137,3 +137,32 @@ TEST_F(ActivityManagerNativeTest, testUidImportance) {
     AActivityManager_removeUidImportanceListener(mUidObserver);
     mUidObserver = nullptr;
 }
+
+TEST_F(ActivityManagerNativeTest, testGetExecutableMethodFileOffsets) {
+    AActivityManager_TargetProcess* targetProcess =
+            AActivityManager_TargetProcess_create(-1, -1, "system_server");
+
+    const char* params[] = {"com.android.server.am.ProcessRecord", "boolean",
+                            "com.android.server.am.ProcessRecord"};
+
+    AActivityManager_MethodDescriptor* methodDescriptor =
+            AActivityManager_MethodDescriptor_create("com.android.server.am.ActivityManagerService",
+                                                     "updateLruProcessLocked", params, 3);
+
+    AActivityManager_ExecutableMethodFileOffsets* location =
+            AActivityManager_getExecutableMethodFileOffsets(*targetProcess, *methodDescriptor);
+
+    auto containerPath =
+            std::string(AActivityManager_ExecutableMethodFileOffsets_getContainerPath(location));
+    auto containerOffset =
+            AActivityManager_ExecutableMethodFileOffsets_getContainerOffset(location);
+    auto methodOffset = AActivityManager_ExecutableMethodFileOffsets_getMethodOffset(location);
+
+    ALOGE("getExecutableMethodFileOffsets containerPath: %s, containerOffset: %lu, methodOffset: "
+          "%lu",
+          containerPath.c_str(), containerOffset, methodOffset);
+
+    ASSERT_TRUE(containerPath.ends_with("services.odex"));
+    ASSERT_GE(containerOffset, 0);
+    ASSERT_GE(methodOffset, 0);
+}

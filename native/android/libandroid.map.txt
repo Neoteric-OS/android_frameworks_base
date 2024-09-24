@@ -4,6 +4,15 @@ LIBANDROID {
     AActivityManager_removeUidImportanceListener; # systemapi introduced=31
     AActivityManager_isUidActive; # systemapi introduced=31
     AActivityManager_getUidImportance; # systemapi introduced=31
+    AActivityManager_TargetProcess_create; # systemapi introduced=35
+    AActivityManager_TargetProcess_destroy; # systemapi introduced=35
+    AActivityManager_MethodDescriptor_create; # systemapi introduced=35
+    AActivityManager_MethodDescriptor_destroy; # systemapi introduced=35
+    AActivityManager_getExecutableMethodFileOffsets; #systemapi introduced=35
+    AActivityManager_ExecutableMethodFileOffsets_getContainerPath; # systemapi introduced=35
+    AActivityManager_ExecutableMethodFileOffsets_getContainerOffset; # systemapi introduced=35
+    AActivityManager_ExecutableMethodFileOffsets_getMethodOffset; # systemapi introduced=35
+    AActivityManager_ExecutableMethodFileOffsets_destroy; # systemapi introduced=35
     AAssetDir_close;
     AAssetDir_getNextFileName;
     AAssetDir_rewind;
