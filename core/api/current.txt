@@ -6196,6 +6196,17 @@ package android.app {
     field @NonNull public static final android.os.Parcelable.Creator<android.app.InvalidForegroundServiceTypeException> CREATOR;
   }
 
+  public final class JavaMethodLocation implements android.os.Parcelable {
+    ctor @FlaggedApi("android.security.content_uri_permission_apis") public JavaMethodLocation(String, int, int);
+    ctor @FlaggedApi("android.security.content_uri_permission_apis") public JavaMethodLocation(@NonNull VMDebug.JavaMethodLocation);
+    method @FlaggedApi("android.security.content_uri_permission_apis") public int describeContents();
+    method @FlaggedApi("android.security.content_uri_permission_apis") public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @FlaggedApi("android.security.content_uri_permission_apis") @NonNull public static final android.os.Parcelable.Creator<android.app.JavaMethodLocation> CREATOR;
+    field public final int methodOffset;
+    field public final int odexOffset;
+    field public final String odexPath;
+  }
+
   public class KeyguardManager {
     method @RequiresPermission(android.Manifest.permission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE) public void addKeyguardLockedStateListener(@NonNull java.util.concurrent.Executor, @NonNull android.app.KeyguardManager.KeyguardLockedStateListener);
     method @Deprecated public android.content.Intent createConfirmDeviceCredentialIntent(CharSequence, CharSequence);
@@ -7534,6 +7545,16 @@ package android.app {
     method @Deprecated public android.widget.TabWidget getTabWidget();
     method @Deprecated public void setDefaultTab(String);
     method @Deprecated public void setDefaultTab(int);
+  }
+
+  public final class TargetProcessInfo implements android.os.Parcelable {
+    ctor @FlaggedApi("android.security.content_uri_permission_apis") public TargetProcessInfo(int, int, @NonNull String);
+    method @FlaggedApi("android.security.content_uri_permission_apis") public int describeContents();
+    method @FlaggedApi("android.security.content_uri_permission_apis") public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @FlaggedApi("android.security.content_uri_permission_apis") @NonNull public static final android.os.Parcelable.Creator<android.app.TargetProcessInfo> CREATOR;
+    field public final int pid;
+    field public final String processName;
+    field public final int uid;
   }
 
   public class TaskInfo {
