@@ -389,6 +389,15 @@ public class ActivityManager {
     }
 
     /**
+     * locate a precompiled java method
+     */
+    @FlaggedApi(Flags.FLAG_APP_START_INFO)
+    public @Nullable JavaMethodLocation locateJavaMethod(
+        @NonNull TargetProcessInfo targetProcess, @NonNull String methodDescriptor) {
+        return getService().locateJavaMethod(targetProcess, methodDescriptor);
+    }
+
+    /**
      * <a href="{@docRoot}guide/topics/manifest/meta-data-element.html">{@code
      * <meta-data>}</a> name for a 'home' Activity that declares a package that is to be
      * uninstalled in lieu of the declaring one.  The package named here must be
