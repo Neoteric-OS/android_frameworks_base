@@ -582,6 +582,8 @@ applications that come with the platform
         <permission name="android.permission.SETUP_FSVERITY" />
         <!-- Permission required for CTS test - CtsNfcTestCases -->
         <permission name="android.permission.NFC_SET_CONTROLLER_ALWAYS_ON" />
+        <!-- Permission required for ActivityManagerServiceTest -->
+        <permission name="android.permission.GET_JAVA_METHOD_EXECUTABLE_OFFSET" />
     </privapp-permissions>
 
     <privapp-permissions package="com.android.statementservice">

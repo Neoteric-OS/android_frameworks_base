@@ -144,6 +144,7 @@ package android.app {
     method @RequiresPermission(android.Manifest.permission.SET_ACTIVITY_WATCHER) public void addHomeVisibilityListener(@NonNull java.util.concurrent.Executor, @NonNull android.app.HomeVisibilityListener);
     method public void alwaysShowUnsupportedCompileSdkWarning(android.content.ComponentName);
     method @Nullable @RequiresPermission(anyOf={android.Manifest.permission.MANAGE_USERS, android.Manifest.permission.INTERACT_ACROSS_USERS}) public int[] getDisplayIdsForStartingVisibleBackgroundUsers();
+    method @FlaggedApi("com.android.art.flags.java_method_executable_offset_api") @NonNull @RequiresPermission(android.Manifest.permission.GET_JAVA_METHOD_EXECUTABLE_OFFSET) public android.os.Bundle getJavaMethodExecutableOffset(@NonNull android.os.Bundle);
     method public long getTotalRam();
     method @NonNull @RequiresPermission(android.Manifest.permission.PACKAGE_USAGE_STATS) public int[] getUidFrozenState(@NonNull int[]);
     method @RequiresPermission(allOf={android.Manifest.permission.PACKAGE_USAGE_STATS, android.Manifest.permission.INTERACT_ACROSS_USERS_FULL}, conditional=true) public int getUidProcessCapabilities(int);
