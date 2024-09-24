@@ -225,3 +225,11 @@ flag {
      is_exported: true
      bug: "366598445"
 }
+
+flag {
+    name: "get_last_sleep_reason_api"
+    is_exported: true
+    namespace: "backstage_power"
+    description: "Get last sleep reason."
+    bug: "327644045"
+}

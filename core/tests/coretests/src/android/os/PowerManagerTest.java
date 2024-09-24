@@ -508,4 +508,17 @@ public class PowerManagerTest {
 
         assertFalse(pm.isBatterySaverSupported());
     }
+
+    @Test
+    @RequiresFlagsEnabled(Flags.FLAG_GET_LAST_SLEEP_REASON_API)
+    public void testGetLastSleepReason() throws RemoteException {
+        IPowerManager powerManager = mock(IPowerManager.class);
+        PowerManager pm = new PowerManager(mContext, powerManager,
+                mock(IThermalService.class),
+                Handler.createAsync(Looper.getMainLooper()));
+        when(powerManager.getLastSleepReason()).thenReturn(
+                PowerManager.GO_TO_SLEEP_REASON_LID_SWITCH);
+
+        assertTrue(pm.getLastSleepReason() == PowerManager.GO_TO_SLEEP_REASON_LID_SWITCH);
+    }
 }
