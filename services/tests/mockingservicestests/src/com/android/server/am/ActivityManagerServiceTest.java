@@ -86,9 +86,12 @@ import android.app.BroadcastOptions;
 import android.app.ForegroundServiceDelegationOptions;
 import android.app.IApplicationThread;
 import android.app.IUidObserver;
+import android.app.JavaMethodExecutableOffset;
+import android.app.MethodDescriptor;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.SyncNotedAppOp;
+import android.app.TargetProcess;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -281,8 +284,9 @@ public class ActivityManagerServiceTest {
         InstrumentationRegistry.getInstrumentation()
                 .getUiAutomation()
                 .adoptShellPermissionIdentity(
-                Manifest.permission.READ_DEVICE_CONFIG,
-                Manifest.permission.WRITE_DEVICE_CONFIG);
+                    Manifest.permission.READ_DEVICE_CONFIG,
+                    Manifest.permission.WRITE_DEVICE_CONFIG,
+                    Manifest.permission.GET_JAVA_METHOD_EXECUTABLE_OFFSET);
         sProcessListSettingsListener = mAms.mProcessList.getProcessListSettingsListener();
         assertThat(sProcessListSettingsListener).isNotNull();
     }
@@ -506,6 +510,68 @@ public class ActivityManagerServiceTest {
         } finally {
             mockitoSession.finishMocking();
         }
+    }
+
+    @SmallTest
+    @Test
+    @RequiresFlagsEnabled(com.android.art.flags.Flags.FLAG_JAVA_METHOD_EXECUTABLE_OFFSET_API)
+    public void getJavaMethodExecutableOffset_noPermission_securityException() throws Exception {
+        TargetProcess targetProcess = new TargetProcess();
+        targetProcess.processName = "system_server";
+        MethodDescriptor methodDescriptor = new MethodDescriptor();
+        methodDescriptor.fullyQualifiedClassName = "com.android.server.am.ActivityManagerService";
+        methodDescriptor.methodName = "updateLruProcessLocked";
+        methodDescriptor.fullyQualifiedParameters = new String[]{
+                "com.android.server.am.ProcessRecord",
+                "boolean",
+                "com.android.server.am.ProcessRecord"};
+        assertThrows(SecurityException.class, () ->
+                mAms.getJavaMethodExecutableOffset(targetProcess, methodDescriptor));
+    }
+
+    @SmallTest
+    @Test
+    @RequiresFlagsEnabled(com.android.art.flags.Flags.FLAG_JAVA_METHOD_EXECUTABLE_OFFSET_API)
+    public void getJavaMethodExecutableOffset_notTargetingSystemServer_illegalArgumentException()
+            throws Exception {
+        InstrumentationRegistry.getInstrumentation()
+                .getUiAutomation()
+                .adoptShellPermissionIdentity(
+                        Manifest.permission.GET_JAVA_METHOD_EXECUTABLE_OFFSET);
+        TargetProcess targetProcess = new TargetProcess();
+        targetProcess.processName = "";
+        MethodDescriptor methodDescriptor = new MethodDescriptor();
+        methodDescriptor.fullyQualifiedClassName = "com.android.server.am.ActivityManagerService";
+        methodDescriptor.methodName = "updateLruProcessLocked";
+        methodDescriptor.fullyQualifiedParameters = new String[]{
+                "com.android.server.am.ProcessRecord",
+                "boolean",
+                "com.android.server.am.ProcessRecord"};
+        assertThrows(IllegalArgumentException.class, () ->
+                mAms.getJavaMethodExecutableOffset(targetProcess, methodDescriptor));
+    }
+
+    @SmallTest
+    @Test
+    @RequiresFlagsEnabled(com.android.art.flags.Flags.FLAG_JAVA_METHOD_EXECUTABLE_OFFSET_API)
+    public void getJavaMethodExecutableOffset_aotCompiled() {
+        InstrumentationRegistry.getInstrumentation()
+                .getUiAutomation()
+                .adoptShellPermissionIdentity(
+                        Manifest.permission.GET_JAVA_METHOD_EXECUTABLE_OFFSET);
+        TargetProcess targetProcess = new TargetProcess();
+        targetProcess.processName = "system_server";
+        MethodDescriptor methodDescriptor = new MethodDescriptor();
+        methodDescriptor.fullyQualifiedClassName = "com.android.server.am.ActivityManagerService";
+        methodDescriptor.methodName = "updateLruProcessLocked";
+        methodDescriptor.fullyQualifiedParameters = new String[]{
+                "com.android.server.am.ProcessRecord",
+                "boolean",
+                "com.android.server.am.ProcessRecord"};
+        JavaMethodExecutableOffset javaMethodExecutableOffset =
+                mAms.getJavaMethodExecutableOffset(targetProcess, methodDescriptor);
+        assertThat(javaMethodExecutableOffset).isNotNull();
+        assertThat(javaMethodExecutableOffset.containerPath).endsWith("services.odex");
     }
 
     @SuppressWarnings("GuardedBy")

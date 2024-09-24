@@ -47,6 +47,9 @@
     <!-- needed by GameManagerServiceTest because GameManager creates a UidObserver -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
 
+    <!-- needed by ActivityManagerServiceTest to access getJavaMethodExecutableOffset API -->
+    <uses-permission android:name="android.permission.GET_JAVA_METHOD_EXECUTABLE_OFFSET" />
+
     <application android:testOnly="true"
                  android:debuggable="true">
         <uses-library android:name="android.test.runner" />

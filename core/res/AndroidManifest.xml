@@ -8367,6 +8367,15 @@
     <permission android:name="android.permission.SETUP_FSVERITY"
                 android:protectionLevel="signature|privileged"/>
 
+    <!-- @SystemApi
+        @FlaggedApi("com.android.art.flags.java_method_executable_offset_api")
+        Allows caller to read offset information about ART compiled java methods.
+        <p>Protection level: internal
+        @hide
+    -->
+    <permission android:name="android.permission.GET_JAVA_METHOD_EXECUTABLE_OFFSET"
+                android:protectionLevel="signature|preinstalled" />
+
     <!--
         @TestApi
         Signature permission reserved for testing. This should never be used to
