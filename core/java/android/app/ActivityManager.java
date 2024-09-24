@@ -389,6 +389,19 @@ public class ActivityManager {
     }
 
     /**
+     * locate a precompiled java method
+     */
+    @FlaggedApi(android.security.Flags.FLAG_CONTENT_URI_PERMISSION_APIS)
+    public @Nullable JavaMethodLocation locateJavaMethod(
+        @NonNull TargetProcessInfo targetProcess, @NonNull String methodDescriptor) {
+        try {
+            return getService().locateJavaMethod(targetProcess, methodDescriptor);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * <a href="{@docRoot}guide/topics/manifest/meta-data-element.html">{@code
      * <meta-data>}</a> name for a 'home' Activity that declares a package that is to be
      * uninstalled in lieu of the declaring one.  The package named here must be
