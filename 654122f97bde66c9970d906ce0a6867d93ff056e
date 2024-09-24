@@ -16,6 +16,24 @@
       "message": "Nit: I would add the newlines at the end of all files in this change for consistency.",
       "revId": "654122f97bde66c9970d906ce0a6867d93ff056e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1a3e9f7_b13edff0",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/biometrics/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1060413
+      },
+      "writtenOn": "2024-09-24T16:15:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "febcfed8_0c667e62",
+      "revId": "654122f97bde66c9970d906ce0a6867d93ff056e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
