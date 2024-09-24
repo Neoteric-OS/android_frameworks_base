@@ -268,6 +268,8 @@ public final class DisplayManagerService extends SystemService {
     private static final HdrConversionMode HDR_CONVERSION_MODE_UNSUPPORTED = new HdrConversionMode(
             HDR_CONVERSION_UNSUPPORTED);
 
+    private static final long DUMP_DISPLAY_POWER_CONTROLLER_TIMEOUT = 30 * 1000;
+
     private final Context mContext;
     private final DisplayManagerHandler mHandler;
     private final Handler mUiHandler;
@@ -3347,7 +3349,16 @@ public final class DisplayManagerService extends SystemService {
             final int displayPowerControllerCount = mDisplayPowerControllers.size();
             pw.println();
             pw.println("Display Power Controllers: size=" + displayPowerControllerCount);
+            final long startDumpTime = SystemClock.uptimeMillis();
             for (int i = 0; i < displayPowerControllerCount; i++) {
+                // Sometimes, the large size of mDisplayPowerControllers can
+                // cause the current thread to block, ultimately leading to swt.
+                // A 30-second timeout is set here to avoid this issue.
+                final long dumpTime = SystemClock.uptimeMillis();
+                if (dumpTime - startDumpTime > DUMP_DISPLAY_POWER_CONTROLLER_TIMEOUT) {
+                    pw.println("Display Power Controllers dump may failed, please try again!");
+                    break;
+                }
                 mDisplayPowerControllers.valueAt(i).dump(pw);
             }
             pw.println();
