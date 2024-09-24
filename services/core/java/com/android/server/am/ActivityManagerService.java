@@ -18,6 +18,7 @@ package com.android.server.am;
 
 import static android.Manifest.permission.CHANGE_CONFIGURATION;
 import static android.Manifest.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST;
+import static android.Manifest.permission.EXECUTABLE_METHOD_FILE_OFFSETS;
 import static android.Manifest.permission.FILTER_EVENTS;
 import static android.Manifest.permission.INTERACT_ACROSS_USERS;
 import static android.Manifest.permission.INTERACT_ACROSS_USERS_FULL;
@@ -194,6 +195,7 @@ import static com.android.systemui.shared.Flags.enableHomeDelay;
 
 import android.Manifest;
 import android.Manifest.permission;
+import android.annotation.EnforcePermission;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.PermissionMethod;
@@ -229,6 +231,7 @@ import android.app.ApplicationThreadConstants;
 import android.app.BackgroundStartPrivileges;
 import android.app.BroadcastOptions;
 import android.app.ContentProviderHolder;
+import android.app.ExecutableMethodFileOffsets;
 import android.app.ForegroundServiceDelegationOptions;
 import android.app.IActivityController;
 import android.app.IActivityManager;
@@ -247,6 +250,7 @@ import android.app.IUidObserver;
 import android.app.IUnsafeIntentStrictModeCallback;
 import android.app.IUserSwitchObserver;
 import android.app.Instrumentation;
+import android.app.MethodDescriptor;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -254,6 +258,7 @@ import android.app.PendingIntentStats;
 import android.app.ProcessMemoryState;
 import android.app.ProfilerInfo;
 import android.app.ServiceStartNotAllowedException;
+import android.app.TargetProcess;
 import android.app.WaitResult;
 import android.app.assist.ActivityId;
 import android.app.backup.BackupAnnotations.BackupDestination;
@@ -490,6 +495,7 @@ import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowProcessController;
 
 import dalvik.annotation.optimization.NeverCompile;
+import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
 
 import libcore.util.EmptyArray;
@@ -501,6 +507,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -2817,6 +2824,80 @@ public class ActivityManagerService extends IActivityManager.Stub
 
     void updateCpuStatsNow() {
         mAppProfiler.updateCpuStatsNow();
+    }
+
+    @Override
+    @EnforcePermission(EXECUTABLE_METHOD_FILE_OFFSETS)
+    public ExecutableMethodFileOffsets getExecutableMethodFileOffsets(
+            @NonNull TargetProcess targetProcess, @NonNull MethodDescriptor methodDescriptor) {
+        getExecutableMethodFileOffsets_enforcePermission();
+        if (!com.android.art.flags.Flags.executableMethodFileOffsets()) {
+            throw new UnsupportedOperationException();
+        }
+
+        if (targetProcess.processName == null
+                || !targetProcess.processName.equals("system_server")) {
+            throw new UnsupportedOperationException(
+                    "system_server is the only supported target process");
+        }
+
+        Method method = parseMethodDescriptor(this.getClass().getClassLoader(), methodDescriptor);
+        VMDebug.ExecutableMethodFileOffsets location =
+                VMDebug.getExecutableMethodFileOffsets(method);
+
+        ExecutableMethodFileOffsets ret = new ExecutableMethodFileOffsets();
+        ret.containerPath = location == null ? "" : location.getContainerPath();
+        ret.containerOffset = location == null ? -1 : location.getContainerOffset();
+        ret.methodOffset = location == null ? -1 : location.getMethodOffset();
+        return ret;
+    }
+
+    private static Method parseMethodDescriptor(
+            ClassLoader classLoader, MethodDescriptor descriptor) {
+        try {
+            Class<?> javaClass = classLoader.loadClass(descriptor.fullyQualifiedClassName);
+            Class<?>[] parameters = new Class[descriptor.fullyQualifiedParameters.length];
+            for (int i = 0; i < descriptor.fullyQualifiedParameters.length; i++) {
+                String typeName = descriptor.fullyQualifiedParameters[i];
+                switch (typeName) {
+                    case "boolean":
+                        parameters[i] = boolean.class;
+                        break;
+                    case "byte":
+                        parameters[i] = byte.class;
+                        break;
+                    case "char":
+                        parameters[i] = char.class;
+                        break;
+                    case "short":
+                        parameters[i] = short.class;
+                        break;
+                    case "int":
+                        parameters[i] = int.class;
+                        break;
+                    case "long":
+                        parameters[i] = long.class;
+                        break;
+                    case "float":
+                        parameters[i] = float.class;
+                        break;
+                    case "double":
+                        parameters[i] = double.class;
+                        break;
+                    case "void":
+                        parameters[i] = void.class;
+                        break;
+                    default:
+                        parameters[i] = classLoader.loadClass(typeName);
+                }
+            }
+
+            return javaClass.getMethod(descriptor.methodName, parameters);
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
+            throw new IllegalArgumentException(
+                    "The specified method cannot be found. Is this descriptor valid? " + descriptor,
+                    e);
+        }
     }
 
     @Override
