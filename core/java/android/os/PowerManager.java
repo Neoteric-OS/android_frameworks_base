@@ -454,6 +454,9 @@ public final class PowerManager {
      * Go to sleep reason code: Going to sleep due to the lid switch being closed.
      * @hide
      */
+    @FlaggedApi(android.os.Flags.FLAG_GET_LAST_SLEEP_REASON_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @TestApi
     public static final int GO_TO_SLEEP_REASON_LID_SWITCH = 3;
 
     /**
@@ -3008,6 +3011,9 @@ public final class PowerManager {
      *
      * @hide
      */
+    @FlaggedApi(android.os.Flags.FLAG_GET_LAST_SLEEP_REASON_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @TestApi
     @GoToSleepReason
     public int getLastSleepReason() {
         try {

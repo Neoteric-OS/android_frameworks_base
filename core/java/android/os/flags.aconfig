@@ -203,6 +203,14 @@ flag {
 }
 
 flag {
+    name: "get_last_sleep_reason_api"
+    is_exported: true
+    namespace: "backstage_power"
+    description: "Get last sleep reason."
+    bug: "327644045"
+}
+
+flag {
      namespace: "system_performance"
      name: "telemetry_apis_framework_initialization"
      is_exported: true

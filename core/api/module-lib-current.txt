@@ -402,6 +402,11 @@ package android.os {
     method public boolean shouldBypassCache(@NonNull Q);
   }
 
+  public final class PowerManager {
+    method @FlaggedApi("android.os.get_last_sleep_reason_api") public int getLastSleepReason();
+    field @FlaggedApi("android.os.get_last_sleep_reason_api") public static final int GO_TO_SLEEP_REASON_LID_SWITCH = 3; // 0x3
+  }
+
   public class Process {
     method public static final int toSdkSandboxUid(int);
     field public static final int NFC_UID = 1027; // 0x403
