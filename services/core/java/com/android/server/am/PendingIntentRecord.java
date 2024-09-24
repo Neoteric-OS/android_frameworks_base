@@ -141,12 +141,14 @@ public final class PendingIntentRecord extends IIntentSender.Stub {
         String[] allResolvedTypes;
         final int flags;
         final int hashCode;
+        final int callingUid;
         final int userId;
 
         private static final int ODD_PRIME_NUMBER = 37;
 
         Key(int _t, String _p, @Nullable String _featureId, IBinder _a, String _w,
-                int _r, Intent[] _i, String[] _it, int _f, SafeActivityOptions _o, int _userId) {
+                int _r, Intent[] _i, String[] _it, int _f, SafeActivityOptions _o,
+                int _callingUid, int _userId) {
             type = _t;
             packageName = _p;
             featureId = _featureId;
@@ -159,6 +161,7 @@ public final class PendingIntentRecord extends IIntentSender.Stub {
             allResolvedTypes = _it;
             flags = _f;
             options = _o;
+            callingUid = _callingUid;
             userId = _userId;
 
             int hash = 23;

@@ -5637,7 +5637,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         originalKey.packageName, originalKey.featureId, originalKey.activity,
                         originalKey.who, originalKey.requestCode, originalKey.allIntents,
                         originalKey.allResolvedTypes, originalKey.flags, originalKey.options,
-                        callingUserId);
+                        originalKey.callingUid, callingUserId);
 
                 final PendingIntentRecord newRecord = new PendingIntentRecord(
                         originalRecord.controller, key, originalRecord.uid);
