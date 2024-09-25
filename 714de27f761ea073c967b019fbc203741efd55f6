@@ -22,6 +22,30 @@
       },
       "revId": "714de27f761ea073c967b019fbc203741efd55f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a85d7c8b_10b13de9",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3521,
+      "author": {
+        "id": 1894608
+      },
+      "writtenOn": "2024-09-25T07:45:43Z",
+      "side": 1,
+      "message": "There should be problems if --mReadyTrackerOld.mDeferReadyDepth is not executed.",
+      "parentUuid": "b9f060f6_07316f86",
+      "range": {
+        "startLine": 3521,
+        "startChar": 12,
+        "endLine": 3521,
+        "endChar": 24
+      },
+      "revId": "714de27f761ea073c967b019fbc203741efd55f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
