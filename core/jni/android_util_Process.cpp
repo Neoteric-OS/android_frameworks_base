@@ -484,13 +484,13 @@ jintArray android_os_Process_getExclusiveCores(JNIEnv* env, jobject clazz) {
     return cpus;
 }
 
-static void android_os_Process_setCanSelfBackground(JNIEnv* env, jobject clazz, jboolean bgOk) {
+static void android_os_Process_setCanSelfBackground(jboolean bgOk) {
     // Establishes the calling thread as illegal to put into the background.
     // Typically used only for the system process's main looper.
 #if GUARD_THREAD_PRIORITY
     ALOGV("Process.setCanSelfBackground(%d) : tid=%d", bgOk, gettid());
     {
-        Mutex::Autolock _l(gKeyCreateMutex);
+        Mutex::Autolock _l(gKeyCreateMutex); // Acquired nowhere else.
         if (gBgKey == -1) {
             pthread_key_create(&gBgKey, NULL);
         }
@@ -499,6 +499,18 @@ static void android_os_Process_setCanSelfBackground(JNIEnv* env, jobject clazz, 
     // inverted:  not-okay, we set a sentinel value
     pthread_setspecific(gBgKey, (void*)(bgOk ? 0 : 0xbaad));
 #endif
+}
+
+static jboolean android_os_Process_getCanSelfBackground(JNIEnv* env, jclass clazz) {
+    // Establishes the calling thread as illegal to put into the background.
+    // Typically used only for the system process's main looper.
+#if GUARD_THREAD_PRIORITY
+    void* bgOk = pthread_getspecific(gBgKey);
+    if (bgOk == ((void*)0xbaad)) {
+        return false;
+    }
+#endif
+    return true;
 }
 
 jint android_os_Process_getThreadScheduler(JNIEnv* env, jclass clazz,
@@ -563,12 +575,6 @@ void android_os_Process_setThreadPriority(JNIEnv* env, jobject clazz,
 
     //ALOGI("Setting priority of %" PRId32 ": %" PRId32 ", getpriority returns %d\n",
     //     pid, pri, getpriority(PRIO_PROCESS, pid));
-}
-
-void android_os_Process_setCallingThreadPriority(JNIEnv* env, jobject clazz,
-                                                        jint pri)
-{
-    android_os_Process_setThreadPriority(env, clazz, gettid(), pri);
 }
 
 jint android_os_Process_getThreadPriority(JNIEnv* env, jobject clazz,
@@ -1380,7 +1386,7 @@ static const JNINativeMethod methods[] = {
         {"setThreadPriority", "(II)V", (void*)android_os_Process_setThreadPriority},
         {"setThreadScheduler", "(III)V", (void*)android_os_Process_setThreadScheduler},
         {"setCanSelfBackground", "(Z)V", (void*)android_os_Process_setCanSelfBackground},
-        {"setThreadPriority", "(I)V", (void*)android_os_Process_setCallingThreadPriority},
+        {"getCanSelfBackground", "()Z", (void*)android_os_Process_getCanSelfBackground},
         {"getThreadPriority", "(I)I", (void*)android_os_Process_getThreadPriority},
         {"getThreadScheduler", "(I)I", (void*)android_os_Process_getThreadScheduler},
         {"setThreadGroup", "(II)V", (void*)android_os_Process_setThreadGroup},
