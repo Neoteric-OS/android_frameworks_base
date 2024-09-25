@@ -773,7 +773,7 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                 mService.mWindowManager.mWindowPlacerLocked.requestTraversal();
             }
         } finally {
-            if (deferTransitionReady) {
+            if (deferTransitionReady && transition.isCollecting()) {
                 transition.continueTransitionReady();
             }
             mService.mTaskSupervisor.setDeferRootVisibilityUpdate(false /* deferUpdate */);
