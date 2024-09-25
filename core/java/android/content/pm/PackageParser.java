@@ -1501,7 +1501,7 @@ public class PackageParser {
                         : ApkAssets.loadFromPath(apkPath);
             } catch (IOException e) {
                 throw new PackageParserException(INSTALL_PARSE_FAILED_NOT_APK,
-                        "Failed to parse " + apkPath);
+                        "Failed to parse " + apkPath, e);
             }
 
             parser = apkAssets.openXml(ANDROID_MANIFEST_FILENAME);
