@@ -62,7 +62,10 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
     }
 
     public void preDispatchKeyEvent(KeyEvent event) {
-        getAudioManager().preDispatchKeyEvent(event, AudioManager.USE_DEFAULT_STREAM_TYPE);
+        AudioManager audioManager = getAudioManager();
+        if (audioManager != null) {
+            audioManager.preDispatchKeyEvent(event, AudioManager.USE_DEFAULT_STREAM_TYPE);
+        }
     }
 
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -327,4 +330,3 @@ public class PhoneFallbackEventHandler implements FallbackEventHandler {
                 Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
     }
 }
-
