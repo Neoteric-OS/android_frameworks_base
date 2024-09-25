@@ -33,6 +33,24 @@
       "message": "Currently, we don\u0027t have a good way to properly define key combination shortcuts or any shortcut using config files, since the business logic is not always as simple as launching an intent.\n\nThe logic added here will be limited to launching an intent, and since none of AOSP key combinations can be migrated to this logic, I am not sure about adding it to AOSP.\n\nMaybe this should an FR for Android?",
       "revId": "d6d86ba1fb74b23757d388d3a4eb6f0e2216454c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70e4660c_f99e49e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3336621
+      },
+      "writtenOn": "2024-09-25T16:51:10Z",
+      "side": 1,
+      "message": "Hey @vdevmurari@google.com thanks for the comment.  I\u0027d like to confirm that FR is an internal Google tool, and that this is an action item for Android, not me.",
+      "parentUuid": "d18190ad_54a72c2d",
+      "revId": "d6d86ba1fb74b23757d388d3a4eb6f0e2216454c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
