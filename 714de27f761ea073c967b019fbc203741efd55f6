@@ -70,6 +70,30 @@
       },
       "revId": "714de27f761ea073c967b019fbc203741efd55f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2b1cfed_6a43980b",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3521,
+      "author": {
+        "id": 1894608
+      },
+      "writtenOn": "2024-09-25T08:15:19Z",
+      "side": 1,
+      "message": "Yes, we will modify it, thanks",
+      "parentUuid": "c2af360b_fa2ce2fc",
+      "range": {
+        "startLine": 3521,
+        "startChar": 12,
+        "endLine": 3521,
+        "endChar": 24
+      },
+      "revId": "714de27f761ea073c967b019fbc203741efd55f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
