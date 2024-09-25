@@ -46,6 +46,30 @@
       },
       "revId": "714de27f761ea073c967b019fbc203741efd55f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2af360b_fa2ce2fc",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3521,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-09-25T08:11:36Z",
+      "side": 1,
+      "message": "For my education, what problem will there be if the transition has been played after timeout?",
+      "parentUuid": "a85d7c8b_10b13de9",
+      "range": {
+        "startLine": 3521,
+        "startChar": 12,
+        "endLine": 3521,
+        "endChar": 24
+      },
+      "revId": "714de27f761ea073c967b019fbc203741efd55f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
