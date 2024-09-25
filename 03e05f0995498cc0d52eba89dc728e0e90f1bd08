@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "134a4ba8_64604355",
+        "filename": "services/core/java/com/android/server/wm/WindowOrganizerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-09-25T21:15:15Z",
+      "side": 1,
+      "message": "Could you have it log a wtf or something when this is needed? IMO if this is hit, it indicates something went wrong somewhere.",
+      "range": {
+        "startLine": 776,
+        "startChar": 36,
+        "endLine": 776,
+        "endChar": 68
+      },
+      "revId": "03e05f0995498cc0d52eba89dc728e0e90f1bd08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
