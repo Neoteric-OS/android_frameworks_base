@@ -493,6 +493,15 @@ public final class BinderProxy implements IBinder {
     public native boolean pingBinder();
 
     /**
+     * Check to see if the process that the binder is in is still alive.
+     *
+     * Note that if this proxy object is not register death notification by
+     * {@link IBinder#unlinkToDeath} and the proxy object is not do transaction after
+     * the process died, this check will still return true even though the process
+     * have died, so if the binder alive check is critical, use the {@link IBinder#unlinkToDeath}
+     * to ensure ensure this check will return the right state, and  at the same time can do some
+     * death clean work in the {@link DeathRecipient#binderDied}.
+     *
      * @return false if the hosting process is gone
      */
     public native boolean isBinderAlive();
