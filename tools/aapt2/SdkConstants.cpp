@@ -29,7 +29,8 @@ namespace aapt {
 
 static constexpr ApiVersion sDevelopmentSdkLevel = 10000;
 static constexpr StringPiece sDevelopmentSdkCodeNames[] = {
-    "Q"sv, "R"sv, "S"sv, "Sv2"sv, "Tiramisu"sv, "UpsideDownCake"sv, "VanillaIceCream"sv};
+    "Q"sv,      "R"sv, "S"sv, "Sv2"sv, "Tiramisu"sv, "UpsideDownCake"sv, "VanillaIceCream"sv,
+    "Baklava"sv};
 
 static constexpr auto sPrivacySandboxSuffix = "PrivacySandbox"sv;
 
