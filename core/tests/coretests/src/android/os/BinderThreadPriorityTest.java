@@ -137,6 +137,7 @@ public class BinderThreadPriorityTest {
 
             // Local
             assertEquals(prio, Process.getThreadPriority(Process.myTid()));
+            assertEquals(prio, Thread.currentThread().getNiceness());
             assertEquals(expectedSchedulerGroup(prio), getSchedulerGroup());
 
             // Remote

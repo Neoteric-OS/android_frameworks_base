@@ -57,6 +57,13 @@ public class Process_ravenwood {
     }
 
     /**
+     * Called by {@link Process#getCanSelfBackground(boolean)}
+     */
+    public static void getCanSelfBackground() {
+        return sThreadPriority.get().second();
+    }
+
+    /**
      * Called by {@link Process#getThreadPriority(int)}
      */
     public static int getThreadPriority(int tid) {

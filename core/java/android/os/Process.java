@@ -17,6 +17,7 @@
 package android.os;
 
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+import static android.system.OsConstants.EACCES;
 
 import android.annotation.ElapsedRealtimeLong;
 import android.annotation.FlaggedApi;
@@ -33,7 +34,6 @@ import android.ravenwood.annotation.RavenwoodKeep;
 import android.ravenwood.annotation.RavenwoodKeepPartialClass;
 import android.ravenwood.annotation.RavenwoodRedirect;
 import android.ravenwood.annotation.RavenwoodRedirectionClass;
-import android.ravenwood.annotation.RavenwoodReplace;
 import android.sysprop.MemoryProperties;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -1083,10 +1083,13 @@ public class Process {
     }
 
     /**
-     * Set the priority of a thread, based on Linux priorities.
+     * Set the priority of a thread, based on Linux priorities. Does not affect the value
+     * cached for use by Thread.getPriority(). If this is used with a non-negative priority
+     * (really Linux niceness), the priority may, on rare occasion, be reset by the runtime
+     * to its cached value.
      *
      * @param tid The identifier of the thread/process to change.
-     * @param priority A Linux priority level, from -20 for highest scheduling
+     * @param priority A Linux priority a.k.a. "niceness" level, from -20 for highest scheduling
      * priority to 19 for lowest scheduling priority.
      *
      * @throws IllegalArgumentException Throws IllegalArgumentException if
@@ -1100,15 +1103,21 @@ public class Process {
             @IntRange(from = -20, to = THREAD_PRIORITY_LOWEST) int priority)
             throws IllegalArgumentException, SecurityException;
 
+    // TODO: Is the following functionality actually worth supporting?
     /**
      * Call with 'false' to cause future calls to {@link #setThreadPriority(int)} to
      * throw an exception if passed a background-level thread priority.  This is only
      * effective if the JNI layer is built with GUARD_THREAD_PRIORITY defined to 1.
+     * This does not prevent a thread from backgrounding itself via other means, such
+     * as a call to Thread.setPriority() or a native setpriority() call.
      *
      * @hide
      */
     @RavenwoodRedirect
     public static final native void setCanSelfBackground(boolean backgroundOk);
+
+    @RavenwoodRedirect
+    private static native boolean getCanSelfBackground();
 
     /**
      * Sets the scheduling group for a thread.
@@ -1237,18 +1246,29 @@ public class Process {
      * priority.
      *
      * @see #setThreadPriority(int, int)
+     * But, unlike the two argument version, this affects the Thread.getPriority()
+     * cached value.
      */
-    @RavenwoodReplace
-    public static final native void setThreadPriority(
+    public static final void setThreadPriority(
             @IntRange(from = -20, to = THREAD_PRIORITY_LOWEST) int priority)
-            throws IllegalArgumentException, SecurityException;
-
-    private static void setThreadPriority$ravenwood(int priority) {
-        setThreadPriority(myTid(), priority);
+            throws IllegalArgumentException, SecurityException {
+        if (priority >= THREAD_PRIORITY_BACKGROUND && !getCanSelfBackground()) {
+            throw new IllegalArgumentException(
+                "Priority " + priority + " blocked by setCanSelfBackground()");
+        }
+        int errno = Thread.currentThread().setNiceness(priority);
+        if (errno != 0) {
+            if (errno == EACCES) {
+                throw new SecurityException("Cannot set priority to " + priority);
+            } else {
+                throw new RuntimeException("Unexpected error setting priority to: " + priority);
+            }
+        }
     }
 
     /**
      * Return the current priority of a thread, based on Linux priorities.
+     * Ignores the Thread,getPriority() cached priority.
      *
      * @param tid The identifier of the thread/process. If tid equals zero, the priority of the
      * calling process/thread will be returned.
