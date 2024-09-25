@@ -1,0 +1,114 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "648e2c9a_84eaa024",
+        "filename": "core/java/android/os/BinderProxy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-09-25T22:39:12Z",
+      "side": 1,
+      "message": "does",
+      "range": {
+        "startLine": 498,
+        "startChar": 38,
+        "endLine": 498,
+        "endChar": 40
+      },
+      "revId": "8b89e91ebaf90c255fd4e22250ff71a07ce1cae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70b9b242_a9afe1b5",
+        "filename": "core/java/android/os/BinderProxy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-09-25T22:39:12Z",
+      "side": 1,
+      "message": "does",
+      "range": {
+        "startLine": 499,
+        "startChar": 58,
+        "endLine": 499,
+        "endChar": 60
+      },
+      "revId": "8b89e91ebaf90c255fd4e22250ff71a07ce1cae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "512187ee_80e8e377",
+        "filename": "core/java/android/os/BinderProxy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-09-25T22:39:12Z",
+      "side": 1,
+      "message": "has",
+      "range": {
+        "startLine": 501,
+        "startChar": 7,
+        "endLine": 501,
+        "endChar": 11
+      },
+      "revId": "8b89e91ebaf90c255fd4e22250ff71a07ce1cae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05494770_3e9d9984",
+        "filename": "core/java/android/os/BinderProxy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-09-25T22:39:12Z",
+      "side": 1,
+      "message": "rather than explaining all the cases that it doesn\u0027t happen, what do you think of phrasing it in the positive:\n\n\"Note, this only reflects the last known death state, if the object is linked to death or has made a transactions since the death occurs.\"",
+      "range": {
+        "startLine": 498,
+        "startChar": 7,
+        "endLine": 504,
+        "endChar": 6
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d4bfb7a3_e2d3a24f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/BinderProxy.java",
+              "range": {
+                "startLine": 498,
+                "startChar": 0,
+                "endLine": 504,
+                "endChar": 0
+              },
+              "replacement": "     * Note, this only reflects the last known death state, if the object is\n     * linked to death or do transaction after the process died, this check will\n     * return false.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8b89e91ebaf90c255fd4e22250ff71a07ce1cae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
