@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06667c3b_bbd81f5e",
+        "filename": "services/core/java/com/android/server/location/provider/LocationProviderManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2024-09-25T16:56:59Z",
+      "side": 1,
+      "message": "registration toString() already includes this information, so you can simply output the registration itself.",
+      "range": {
+        "startLine": 2589,
+        "startChar": 38,
+        "endLine": 2590,
+        "endChar": 63
+      },
+      "revId": "da82791ec7ff621c4dc926e7ef30ce182ea83f16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
