@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "446c7b29_55fa119b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-09-26T22:55:46Z",
+      "side": 1,
+      "message": "Limit the commit message headline \u003c 65 chars. In this case `Ignore null action in AlarmManagerService$UninstallReceiver` would work.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 83
+      },
+      "revId": "d750f34c3fcae78e63c31fc5728e5f522828b135",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
