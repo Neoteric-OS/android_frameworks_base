@@ -115,6 +115,7 @@ import java.util.concurrent.TimeoutException;
  * to write tests that cover use cases spanning over multiple applications. For
  * example, going to the settings application to change a setting and then
  * interacting with another application whose behavior depends on that setting.
+ * Try add something
  * </p>
  */
 public final class UiAutomation {
