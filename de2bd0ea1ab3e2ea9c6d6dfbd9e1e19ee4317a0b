@@ -22,6 +22,30 @@
       },
       "revId": "de2bd0ea1ab3e2ea9c6d6dfbd9e1e19ee4317a0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a84e65d_c3c3d200",
+        "filename": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4938,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-09-26T00:22:06Z",
+      "side": 1,
+      "message": "This is resolved in the latest patch set.",
+      "parentUuid": "24a7e940_1fc5815c",
+      "range": {
+        "startLine": 4938,
+        "startChar": 16,
+        "endLine": 4938,
+        "endChar": 34
+      },
+      "revId": "de2bd0ea1ab3e2ea9c6d6dfbd9e1e19ee4317a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
