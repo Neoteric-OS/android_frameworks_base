@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3437130e_ed15d85f",
+        "filename": "services/tests/servicestests/src/com/android/server/locksettings/RebootEscrowManagerTests.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-09-26T19:33:52Z",
+      "side": 0,
+      "message": "These two removed test methods are no longer applicable?",
+      "revId": "61b8dd11e7b61f133a0a26b947a8bca35fe12fb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
