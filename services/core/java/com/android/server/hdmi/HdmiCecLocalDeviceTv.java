@@ -75,9 +75,16 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
     @ServiceThreadOnly
     private boolean mArcEstablished = false;
 
+    private boolean mAtmosSupported = false;
+    
     // Stores whether ARC feature is enabled per port.
     // True by default for all the ARC-enabled ports.
     private final SparseBooleanArray mArcFeatureEnabled = new SparseBooleanArray();
+
+    @GuardedBy("mLock")
+    protected List<Byte> mAvrSupportedFormats = new ArrayList<Byte>();
+
+    private final List<Integer> mCecCodecsToQuery = new ArrayList<>();
 
     // Whether the System Audio Control feature is enabled or not. True by default.
     @GuardedBy("mLock")
@@ -729,6 +736,109 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         return Constants.HANDLED;
     }
 
+    void notifySadSupported(boolean supported) {
+        // The format of values to AudioManager().setParameters() is
+        // avr_capability= [SAD_byte, byte of SADB+VSADB, Port_number, ARC Mode(0)]
+        //                 [SAD raw data][SADB+VSADB]
+        String keyValue = Constants.AUDIO_PARAMETER_AVR_CAPS;
+        byte[] buf = new byte[4];
+        synchronized (mLock) {
+            String sadList = "[" + TextUtils.join(" ", mAvrSupportedFormats) + "][]";
+
+            if (getAvrDeviceInfo() == null) {
+                Slog.w(TAG, "Failed to notify SAD: No AVR device.");
+                return;
+            }
+            if (!supported || mAvrSupportedFormats == null || mAvrSupportedFormats.size() == 0) {
+                buf[0] = (byte) 0x00;
+                buf[1] = (byte) 0x00;
+                buf[2] = (byte) 0x00;
+                buf[3] = (byte) 0x00;
+                keyValue += Arrays.toString(buf);
+                keyValue += "[][]";
+            } else {
+                buf[0] = (byte) mAvrSupportedFormats.size();
+                buf[1] = (byte) 0x00;
+                buf[2] = (byte) (getAvrDeviceInfo().getPortId());
+                buf[3] = (byte) 0x00;
+                keyValue += Arrays.toString(buf);
+                keyValue += sadList;
+            }
+            Slog.w(TAG,"keyValue:" + keyValue);
+            mService.getAudioManager().setParameters(keyValue);
+        }
+    }
+
+    @Override
+    @ServiceThreadOnly
+    protected int handleReportShortAudioDescriptor(HdmiCecMessage message) {
+            assertRunOnServiceThread();
+            Slog.w(TAG, "handleReportShortAudioDescriptor");
+            if (mService.getEarcMode() != Constants.HDMI_EARC_NOT_ENABLED) {
+                Slog.w(TAG, "System is in eARC mode, do not handle SAD by CEC command.");
+                return Constants.NOT_HANDLED;
+            }
+           // Even if TV not asked, still deal with <Report SAD> on Received
+
+           byte params[] = message.getParams();
+           setShortAudioDescriptor(params);
+           return Constants.HANDLED;
+    }
+
+    void setShortAudioDescriptor(byte[] params) {
+        Slog.w(TAG, "setShortAudioDescriptor");
+        if (params == null) {
+            Slog.e(TAG, "Failed to setShortAudioDescriptor, params is null");
+            notifySadSupported(false);
+            return;
+        }
+        int size = params.length;
+        int num = size / 3;
+        if (num < 1 || (params.length % 3) != 0 ) {
+            notifySadSupported(false);
+            return;
+        }
+
+        synchronized (mLock) {
+            for (int i = 0; i < size; i++ ) {
+                Slog.i(TAG, "SAD[" + i + "]:" + params[i]);
+                mAvrSupportedFormats.add(params[i]);
+                if( i % 3 == 0 ) {
+                    switch (params[i] & Constants.AUDIO_FORMAT_MASK) {
+                        case Constants.AUDIO_FORMAT_DDP:
+                            Slog.i(TAG, "AVR supports DDP");
+                            setAtmosSupported(params[i + 2] % 2);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        notifySadSupported(true);
+    }
+
+    private void setAtmosSupported(int atmosBit) {
+        assertRunOnServiceThread();
+        if (atmosBit != 0) {
+            Slog.w(TAG, "AVR supports ATMOS");
+            mAtmosSupported = true;
+        } else {
+            mAtmosSupported = false;
+        }
+        notifyAtmosSupported(mAtmosSupported);
+    }
+
+    boolean isAtmosSupported() {
+        synchronized (mLock) {
+            return mAtmosSupported;
+        }
+    }
+
+    private void notifyAtmosSupported(boolean atmosEnable) {
+        mService.notifyAtmosSupported(atmosEnable);
+    }
+
     @Override
     @ServiceThreadOnly
     @Constants.HandleMessageResult
@@ -831,6 +941,136 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 new SystemAudioActionFromTv(this, avr.getLogicalAddress(), enabled, callback));
     }
 
+    private void sendRequestShortAudioDescriptor() {
+        synchronized (mLock) {
+            mAvrSupportedFormats.clear();
+        }
+        @AudioCodec int[] codecToAsk;
+        HdmiCecConfig hdmiCecConfig = mService.getHdmiCecConfig();
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_LPCM)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_LPCM);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_DD)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_DD);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_MPEG1)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_MPEG1);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_MP3)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_MP3);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_MPEG2)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_MPEG2);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_AAC)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_AAC);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_DTS)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_DTS);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_ATRAC)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_ATRAC);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_ONEBITAUDIO)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_ONEBITAUDIO);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_DDP)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_DDP);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_DTSHD)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_DTSHD);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_TRUEHD)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_TRUEHD);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_DST)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_DST);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_WMAPRO)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_WMAPRO);
+        }
+        if (hdmiCecConfig.getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_QUERY_SAD_MAX)
+                == HdmiControlManager.QUERY_SAD_ENABLED) {
+            mCecCodecsToQuery.add(Constants.AUDIO_CODEC_MAX);
+        }
+        codecToAsk = mCecCodecsToQuery.stream().mapToInt(i -> i).toArray();
+        HdmiDeviceInfo avr = getAvrDeviceInfo();
+        if (avr != null) {
+            if (mCecCodecsToQuery.size() >=0 && mCecCodecsToQuery.size() <= 4) {
+                mService.sendCecCommand(
+                        HdmiCecMessageBuilder.buildRequestShortAudioDescriptor(getDeviceInfo().getLogicalAddress(),
+                            getAvrDeviceInfo().getLogicalAddress(), codecToAsk),
+                        new HdmiControlService.SendMessageCallback() {
+                            @Override
+                            public void onSendCompleted(int error) {
+                                if (error != SendMessageResult.SUCCESS) {
+                                    HdmiLogger.debug("Failed to send "
+                                            + "<Request Short Audio Descriptor>:" + error);
+                                }
+                            }
+                        });
+            } else if (mCecCodecsToQuery.size() > 4) {
+                    for (int i = 0; i < mCecCodecsToQuery.size(); i += 4 ){
+                        int[] chunkCodecToAsk =
+                            Arrays.copyOfRange(mCecCodecsToQuery, i, Math.min(mCecCodecsToQuery.length, i+4));
+
+                        mService.sendCecCommand(
+                                HdmiCecMessageBuilder.buildRequestShortAudioDescriptor(getDeviceInfo().getLogicalAddress(),
+                                    getAvrDeviceInfo().getLogicalAddress(), chunkCodecToAsk),
+                                new HdmiControlService.SendMessageCallback() {
+                                    @Override
+                                    public void onSendCompleted(int error) {
+                                        if (error != SendMessageResult.SUCCESS) {
+                                            HdmiLogger.debug("Failed to send "
+                                                    + "<Request Short Audio Descriptor>:" + error);
+                                        }
+                                    }
+                                });
+                    }
+            }
+        }
+    }
+
+    void clearSad() {
+        Slog.w(TAG, "clearsad.");
+        synchronized (mLock) {
+            mAvrSupportedFormats.clear();
+        }
+        notifySadSupported(false);
+        if (isAtmosSupported()) {
+            setAtmosSupported(0);
+        }
+    }
+
     // # Seq 25
     void setSystemAudioMode(boolean on) {
         if (!isSystemAudioControlFeatureEnabled() && on) {
@@ -891,6 +1131,9 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         enableAudioReturnChannel(true);
         notifyArcStatusToAudioService(true, supportedSads);
         mArcEstablished = true;
+
+        HdmiLogger.debug("Send Request Short Audio Descriptor.");
+        sendRequestShortAudioDescriptor();
     }
 
     @ServiceThreadOnly
@@ -901,6 +1144,7 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         enableAudioReturnChannel(false);
         notifyArcStatusToAudioService(false, new ArrayList<>());
         mArcEstablished = false;
+        clearSad();
     }
 
     /**
