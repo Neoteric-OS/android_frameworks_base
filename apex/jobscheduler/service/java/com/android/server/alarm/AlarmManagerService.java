@@ -96,6 +96,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
 import android.content.pm.UserPackage;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.BatteryStatsInternal;
@@ -228,6 +229,9 @@ public class AlarmManagerService extends SystemService {
     static final int NEVER_INDEX = 4;
 
     private static final long TEMPORARY_QUOTA_DURATION = INTERVAL_DAY;
+
+    private static final boolean USE_BUILD_TIME = Resources.getSystem().getBoolean(
+            com.android.internal.R.bool.config_useBuildTimeAsFallback);
 
     private final Intent mBackgroundIntent
             = new Intent().addFlags(Intent.FLAG_FROM_BACKGROUND);
@@ -1847,8 +1851,10 @@ public class AlarmManagerService extends SystemService {
 
             mNextWakeup = mNextNonWakeup = 0;
 
-            // Ensure that we're booting with a halfway sensible current time.
-            mInjector.initializeTimeIfRequired();
+            if (USE_BUILD_TIME) {
+                // Ensure that we're booting with a halfway sensible current time.
+                mInjector.initializeTimeIfRequired();
+            }
 
             mPackageManagerInternal = LocalServices.getService(PackageManagerInternal.class);
             // Determine SysUI's uid
