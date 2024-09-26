@@ -22,6 +22,30 @@
       },
       "revId": "da82791ec7ff621c4dc926e7ef30ce182ea83f16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72c0d01e_c46ed274",
+        "filename": "services/core/java/com/android/server/location/provider/LocationProviderManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1896715
+      },
+      "writtenOn": "2024-09-26T02:10:00Z",
+      "side": 1,
+      "message": "Hi Soonil\n\nThank you for your guidance. I have changed it to toString(). Please help review it.\n\nThanks a lot.",
+      "parentUuid": "06667c3b_bbd81f5e",
+      "range": {
+        "startLine": 2589,
+        "startChar": 38,
+        "endLine": 2590,
+        "endChar": 63
+      },
+      "revId": "da82791ec7ff621c4dc926e7ef30ce182ea83f16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
