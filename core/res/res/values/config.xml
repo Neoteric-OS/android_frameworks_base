@@ -2003,6 +2003,10 @@
         <item>telephony</item>
     </string-array>
 
+     <!-- Whether to use the build time as a fallback time source if the system's current time is
+          invalid or not set (e.g., it's set to the Unix epoch or a clearly incorrect value). -->
+    <bool name="config_useBuildTimeAsFallback">true</bool>
+
     <!-- The difference in millis that has to exist between a time suggestion under
          consideration by the time_detector and the system clock before the system clock will be
          changed. -->
