@@ -205,6 +205,30 @@
       },
       "revId": "8b89e91ebaf90c255fd4e22250ff71a07ce1cae9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "227a2881_8ece13b6",
+        "filename": "core/java/android/os/BinderProxy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1075873
+      },
+      "writtenOn": "2024-09-26T00:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "610c7d87_6beb88ed",
+      "range": {
+        "startLine": 498,
+        "startChar": 7,
+        "endLine": 504,
+        "endChar": 6
+      },
+      "revId": "8b89e91ebaf90c255fd4e22250ff71a07ce1cae9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
