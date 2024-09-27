@@ -16,6 +16,29 @@
       "message": "Hi\n\nWe encountered the following error\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: *** FATAL EXCEPTION IN SYSTEM PROCESS: android.fg\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: java.lang.IllegalStateException\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.internal.util.Preconditions.checkState(Preconditions.java:222)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.internal.util.Preconditions.checkState(Preconditions.java:207)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.eventlog.LocationEventLog$AggregateStats.markRequestRemoved(LocationEventLog.java:699)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.eventlog.LocationEventLog.logProviderClientUnregistered(LocationEventLog.java:176)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.provider.LocationProviderManager$Registration.onUnregister(LocationProviderManager.java:468)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.provider.LocationProviderManager$LocationRegistration.onUnregister(LocationProviderManager.java:892)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.provider.LocationProviderManager$LocationListenerRegistration.onUnregister(LocationProviderManager.java:1148)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.listeners.ListenerMultiplexer.removeRegistration(ListenerMultiplexer.java:405)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.listeners.ListenerMultiplexer.removeRegistration(ListenerMultiplexer.java:384)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.listeners.ListenerMultiplexer$ReentrancyGuard.close(ListenerMultiplexer.java:746)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.listeners.ListenerMultiplexer.updateRegistrations(ListenerMultiplexer.java:529)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.provider.LocationProviderManager.onPackageReset(LocationProviderManager.java:2657)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.provider.LocationProviderManager.-$$Nest$monPackageReset(Unknown Source:0)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.provider.LocationProviderManager$2.onPackageReset(LocationProviderManager.java:1539)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.injector.PackageResetHelper.notifyPackageReset(PackageResetHelper.java:88)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.injector.SystemPackageResetHelper$Receiver.lambda$onReceive$1(SystemPackageResetHelper.java:137)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.injector.SystemPackageResetHelper$Receiver.$r8$lambda$nQjWM_LpqGA0LL_igYwAYJnsylE(Unknown Source:0)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.location.injector.SystemPackageResetHelper$Receiver$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat android.os.Handler.handleCallback(Handler.java:959)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat android.os.Handler.dispatchMessage(Handler.java:100)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat android.os.Looper.loopOnce(Looper.java:249)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat android.os.Looper.loop(Looper.java:337)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat android.os.HandlerThread.run(HandlerThread.java:85)\n09-17 08:52:42.874  3492  3562 E AndroidRuntime: \tat com.android.server.ServiceThread.run(ServiceThread.java:46)\n\nSo, we want to keep the code style consistent with onUnregister\n\nPls help to review it.\nThanks a lot",
       "revId": "2a4b7e6b5459320e10c6ba908f9e32dd5261b2fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88fe046d_f074af5e",
+        "filename": "services/core/java/com/android/server/location/provider/LocationProviderManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2024-09-27T19:58:14Z",
+      "side": 1,
+      "message": "This change is inconsistent with onUnregister() and I\u0027m not immediately understanding the motivation for the change?\n\nOrder of operations is important here - when registering we want to ensure super class registration logic is generally run BEFORE the subclass registration logic. The opposite for unregistration.\n\nThis is the same as how class construction works in Java - when an object is constructed, the super class is constructed before the subclass. When an object is destroyed, the subclass is destroyed before the superclass. These ordering guarantees are very important, as they mean that the subclass never sees the super class in a non-constructed state...",
+      "range": {
+        "startLine": 423,
+        "startChar": 12,
+        "endLine": 430,
+        "endChar": 31
+      },
+      "revId": "2a4b7e6b5459320e10c6ba908f9e32dd5261b2fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
