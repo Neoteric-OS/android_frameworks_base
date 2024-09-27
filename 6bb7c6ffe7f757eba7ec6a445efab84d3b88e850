@@ -16,6 +16,23 @@
       "message": "Hi,Zimuzo Ezeozue\n     The link below is a description of the problem\n     https://partnerissuetracker.corp.google.com/issues/294190887\nThanks",
       "revId": "6bb7c6ffe7f757eba7ec6a445efab84d3b88e850",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f4b5416_9be94e02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2024-09-27T15:45:19Z",
+      "side": 1,
+      "message": "Can you please provide a CTS test that fails without this change and passes with your fix. Thanks",
+      "revId": "6bb7c6ffe7f757eba7ec6a445efab84d3b88e850",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
