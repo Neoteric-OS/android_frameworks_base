@@ -2965,7 +2965,7 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
 
         @Override
         public void execute(@NonNull Runnable r) {
-            mHandler.post(r);
+            mHandler.postAtFrontOfQueue(r);
         }
     }
 
