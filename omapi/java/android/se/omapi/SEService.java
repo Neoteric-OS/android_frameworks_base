@@ -153,6 +153,16 @@ public final class SEService {
      */
     private final HashMap<String, Reader> mReaders = new HashMap<String, Reader>();
 
+
+
+    private void printSEServiceObj(String label) {
+        if (mSecureElementService != null) {
+            Log.i(TAG, label + " SEServiceObj is " + mSecureElementService.toString());
+        } else {
+            Log.i(TAG, label + " SEServiceObj is NULL");
+        }
+    }
+
     /**
      * Establishes a new connection that can be used to connect to all the
      * Secure Elements available in the system. The connection process can be
@@ -186,16 +196,20 @@ public final class SEService {
             public synchronized void onServiceConnected(
                     ComponentName className, IBinder service) {
 
+                printSEServiceObj("Before running onServiceConnected -");
                 mSecureElementService = ISecureElementService.Stub.asInterface(service);
+                printSEServiceObj("After running onServiceConnected -");
+
                 if (mSEListener != null) {
+                    Log.i(TAG, "Call Listener.onConnected");
                     mSEListener.onConnected();
                 }
-                Log.i(TAG, "Service onServiceConnected");
             }
 
             public void onServiceDisconnected(ComponentName className) {
+                printSEServiceObj("Before running onServiceDisconnected -");
                 mSecureElementService = null;
-                Log.i(TAG, "Service onServiceDisconnected");
+                printSEServiceObj("After running onServiceDisconnected -w");
             }
         };
 
@@ -215,6 +229,7 @@ public final class SEService {
      * @return <code>true</code> if the service is connected.
      */
     public boolean isConnected() {
+        printSEServiceObj("isConnected? Now");
         return mSecureElementService != null;
     }
 
@@ -267,6 +282,7 @@ public final class SEService {
      */
     public void shutdown() {
         synchronized (mLock) {
+            printSEServiceObj("Before running shutdown -");
             if (mSecureElementService != null) {
                 for (Reader reader : mReaders.values()) {
                     try {
@@ -279,8 +295,10 @@ public final class SEService {
             } catch (IllegalArgumentException e) {
                 // Do nothing and fail silently since an error here indicates
                 // that binding never succeeded in the first place.
+                printSEServiceObj("shutdown - IllegalArgumentException");
             }
             mSecureElementService = null;
+            printSEServiceObj("After running shutdown -");
         }
     }
 
