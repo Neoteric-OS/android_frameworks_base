@@ -49,6 +49,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CancellationSignal;
@@ -1201,9 +1202,13 @@ public abstract class ContentResolver implements ContentInterface {
             @Nullable String[] projection, @Nullable Bundle queryArgs,
             @Nullable CancellationSignal cancellationSignal) {
         Objects.requireNonNull(uri, "uri");
-
+        Log.i("TestLog",
+                "------------------------ContentResolver:query : START "
+                        + "----------------------------------");
+        Log.i("TestLog", " Caller Package = " + getCurrentPackageName(mContext));
         try {
             if (mWrapped != null) {
+                Log.i("TestLog", "ContentResolver:query : calling query on mWrapped : " + mWrapped);
                 return mWrapped.query(uri, projection, queryArgs, cancellationSignal);
             }
         } catch (RemoteException e) {
@@ -1226,19 +1231,27 @@ public abstract class ContentResolver implements ContentInterface {
                 cancellationSignal.setRemote(remoteCancellationSignal);
             }
             try {
+                Log.i("TestLog", "unstableProvider.query start");
                 qCursor = unstableProvider.query(mContext.getAttributionSource(), uri, projection,
                         queryArgs, remoteCancellationSignal);
+                Log.i("TestLog", "unstableProvider.query end qCursor size = " + ((qCursor != null)
+                        ? qCursor.getCount() : null));
             } catch (DeadObjectException e) {
                 // The remote process has died...  but we only hold an unstable
                 // reference though, so we might recover!!!  Let's try!!!!
                 // This is exciting!!1!!1!!!!1
+                Log.i("TestLog", "unstableProvider.query exp = " + e.getMessage());
                 unstableProviderDied(unstableProvider);
                 stableProvider = acquireProvider(uri);
                 if (stableProvider == null) {
                     return null;
                 }
+                Log.i("TestLog", "stableProvider.query START ");
                 qCursor = stableProvider.query(mContext.getAttributionSource(), uri, projection,
                         queryArgs, remoteCancellationSignal);
+                Log.i("TestLog",
+                        "stableProvider.query size = " + ((qCursor != null) ? qCursor.getCount()
+                                : null));
             }
             if (qCursor == null) {
                 return null;
@@ -1252,7 +1265,12 @@ public abstract class ContentResolver implements ContentInterface {
             // Wrap the cursor object into CursorWrapperInner object.
             final IContentProvider provider = (stableProvider != null) ? stableProvider
                     : acquireProvider(uri);
+            Log.i("TestLog", "new CursorWrapperInner START ");
             final CursorWrapperInner wrapper = new CursorWrapperInner(qCursor, provider);
+            Log.i("TestLog", "new CursorWrapperInner  END wrapper = " + wrapper.getCount());
+            Log.i("TestLog",
+                    "==================== ContentResolver:query : END    ====================");
+            Log.i("TestLog", "");
             stableProvider = null;
             qCursor = null;
             return wrapper;
@@ -1274,6 +1292,16 @@ public abstract class ContentResolver implements ContentInterface {
                 releaseProvider(stableProvider);
             }
         }
+    }
+
+    private @Nullable
+    static String getCurrentPackageName(Context context) {
+        PackageManager pm = context.createContextAsUser(
+                Binder.getCallingUserHandle(), 0).getPackageManager();
+        if (pm == null) return null;
+        String[] callingUids = pm.getPackagesForUid(Binder.getCallingUid());
+        return (callingUids == null) ? null : callingUids[0];
+
     }
 
     /** {@hide} */

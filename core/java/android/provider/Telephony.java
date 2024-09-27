@@ -20,6 +20,7 @@ import android.Manifest;
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
@@ -33,10 +34,12 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.sqlite.SqliteWrapper;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.CarrierConfigManager;
@@ -47,6 +50,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.telephony.UiccAccessRule;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.android.internal.telephony.SmsApplication;
@@ -2209,6 +2213,12 @@ public final class Telephony {
          */
         public static long getOrCreateThreadId(
                 Context context, Set<String> recipients) {
+            Log.i("TestLog",
+                    "******************** getOrCreateThreadId : START    ******************** ");
+            Log.i("Tele TestLog",
+                    "getOrCreateThreadId callerName = " + getCurrentPackageName(context)
+                            + "receipients = " + ((recipients != null)
+                            ? recipients.stream().toArray() : null));
             Uri.Builder uriBuilder = THREAD_ID_CONTENT_URI.buildUpon();
 
             for (String recipient : recipients) {
@@ -2220,26 +2230,37 @@ public final class Telephony {
             }
 
             Uri uri = uriBuilder.build();
-            //if (DEBUG) Rlog.v(TAG, "getOrCreateThreadId uri: " + uri);
+            Log.i("Tele TestLog", "getOrCreateThreadId uri: " + uri);
 
             Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
                     uri, ID_PROJECTION, null, null, null);
             if (cursor != null) {
                 try {
                     if (cursor.moveToFirst()) {
+                        Log.i("TestLog", ".");
                         return cursor.getLong(0);
                     } else {
-                        Rlog.e(TAG, "getOrCreateThreadId returned no rows!");
+                        Log.e("Tele TestLog", "getOrCreateThreadId returned no rows!" + '\n');
                     }
                 } finally {
                     cursor.close();
                 }
             }
-
-            Rlog.e(TAG, "getOrCreateThreadId failed with " + recipients.size() + " recipients");
+            Log.e("Tele TestLog",
+                    "getOrCreateThreadId failed with " + recipients.size() + " recipients" + '\n');
             throw new IllegalArgumentException("Unable to find or allocate a thread ID.");
         }
     }
+
+        private @Nullable
+        static String getCurrentPackageName(Context context) {
+            PackageManager pm = context.createContextAsUser(
+                    Binder.getCallingUserHandle(), 0).getPackageManager();
+            if (pm == null) return null;
+            String[] callingUids = pm.getPackagesForUid(Binder.getCallingUid());
+            return (callingUids == null) ? null : callingUids[0];
+
+        }
 
     /**
      * Contains all MMS messages.
