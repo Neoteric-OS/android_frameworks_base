@@ -46,6 +46,30 @@
       },
       "revId": "da82791ec7ff621c4dc926e7ef30ce182ea83f16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85b4a75b_210f4401",
+        "filename": "services/core/java/com/android/server/location/provider/LocationProviderManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2024-09-27T19:55:30Z",
+      "side": 1,
+      "message": "toString() is unnecessary with String concatentation - you can simply use \u0027registration\u0027.",
+      "parentUuid": "72c0d01e_c46ed274",
+      "range": {
+        "startLine": 2589,
+        "startChar": 38,
+        "endLine": 2590,
+        "endChar": 63
+      },
+      "revId": "da82791ec7ff621c4dc926e7ef30ce182ea83f16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
