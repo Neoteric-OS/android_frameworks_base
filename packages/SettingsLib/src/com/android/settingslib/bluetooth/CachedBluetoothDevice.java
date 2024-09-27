@@ -1112,8 +1112,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     // Migrates data from old data store (in Settings app's shared preferences) to new (in Bluetooth
     // app's shared preferences).
     private void migratePhonebookPermissionChoice() {
-        SharedPreferences preferences = mContext.getSharedPreferences(
-                "bluetooth_phonebook_permission", Context.MODE_PRIVATE);
+        SharedPreferences preferences = mContext.createDeviceProtectedStorageContext()
+                .getSharedPreferences("bluetooth_phonebook_permission", Context.MODE_PRIVATE);
         if (!preferences.contains(mDevice.getAddress())) {
             return;
         }
@@ -1136,8 +1136,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     // Migrates data from old data store (in Settings app's shared preferences) to new (in Bluetooth
     // app's shared preferences).
     private void migrateMessagePermissionChoice() {
-        SharedPreferences preferences = mContext.getSharedPreferences(
-                "bluetooth_message_permission", Context.MODE_PRIVATE);
+        SharedPreferences preferences = mContext.createDeviceProtectedStorageContext()
+                .getSharedPreferences("bluetooth_message_permission", Context.MODE_PRIVATE);
         if (!preferences.contains(mDevice.getAddress())) {
             return;
         }
