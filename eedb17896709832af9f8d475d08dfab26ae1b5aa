@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c0b1da6_7b3a513e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-09-27T05:51:32Z",
+      "side": 1,
+      "message": "There is a merge conflict, please add the following, and I will merge it internally first.\n\n```\nMerged-In: Ie81fafbb368357121bf0c2d7d40ac556ac7a9c6e\n```",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 1
+      },
+      "revId": "eedb17896709832af9f8d475d08dfab26ae1b5aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
