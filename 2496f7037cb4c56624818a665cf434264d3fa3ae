@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "711bf25d_d43bb5bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2034140
+      },
+      "writtenOn": "2024-09-28T01:19:47Z",
+      "side": 1,
+      "message": "Upstream from Meta!. Thanks in advance for reviewing 😊",
+      "revId": "2496f7037cb4c56624818a665cf434264d3fa3ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
