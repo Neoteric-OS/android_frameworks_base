@@ -124,6 +124,7 @@ import android.hardware.SensorPrivacyManagerInternal;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.DeadObjectException;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
@@ -984,6 +985,13 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
                     }
                 }
 
+            } catch (DeadObjectException e) {
+                // On a DOE, we know the underlying process is dead and all client transations will
+                // fail continuously (or did fail multiple times before reaching us); in this case
+                // we just want to restart and retry, ignoring a previous double-fail.
+                r.launchFailed = true;
+                proc.removeActivity(r, true);
+                throw e;
             } catch (RemoteException e) {
                 if (r.launchFailed) {
                     // This is the second time we failed -- finish activity and give up.
