@@ -12798,11 +12798,6 @@ public class AudioService extends IAudioService.Stub
             if (mController == null)
                 return;
             try {
-                // TODO: remove this when deprecating STREAM_BLUETOOTH_SCO
-                if (isStreamBluetoothSco(streamType)) {
-                    // TODO: notify both sco and voice_call about volume changes
-                    streamType = AudioSystem.STREAM_BLUETOOTH_SCO;
-                }
                 mController.volumeChanged(streamType, flags);
             } catch (RemoteException e) {
                 Log.w(TAG, "Error calling volumeChanged", e);
@@ -14824,6 +14819,7 @@ public class AudioService extends IAudioService.Stub
     @Override
     /** @see AudioManager#permissionUpdateBarrier() */
     public void permissionUpdateBarrier() {
+        if (!audioserverPermissions()) return;
         mAudioSystem.triggerSystemPropertyUpdate(mSysPropListenerNativeHandle);
         List<Future> snapshot;
         synchronized (mScheduledPermissionTasks) {

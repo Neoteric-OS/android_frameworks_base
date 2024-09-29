@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.platform.test.ravenwood.nativesubstitution;
+package com.android.internal.ravenwood;
 
+import android.os.SystemProperties_host;
 import android.platform.test.ravenwood.RavenwoodSystemProperties;
 import android.util.Log;
 
-import com.android.internal.ravenwood.RavenwoodEnvironment;
 import com.android.ravenwood.common.JvmWorkaround;
 import com.android.ravenwood.common.RavenwoodCommonUtils;
 
@@ -36,7 +36,7 @@ public class RavenwoodEnvironment_host {
     /**
      * Called from {@link RavenwoodEnvironment#ensureRavenwoodInitialized()}.
      */
-    public static void nativeEnsureRavenwoodInitialized() {
+    public static void ensureRavenwoodInitialized() {
 
         // TODO Unify it with the initialization code in RavenwoodAwareTestRunnerHook.
 
@@ -63,14 +63,14 @@ public class RavenwoodEnvironment_host {
     /**
      * Called from {@link RavenwoodEnvironment#getRavenwoodRuntimePath()}.
      */
-    public static String nativeGetRavenwoodRuntimePath(RavenwoodEnvironment env) {
+    public static String getRavenwoodRuntimePath(RavenwoodEnvironment env) {
         return RavenwoodCommonUtils.getRavenwoodRuntimePath();
     }
 
     /**
      * Called from {@link RavenwoodEnvironment#fromAddress(long)}.
      */
-    public static <T> T nativeFromAddress(RavenwoodEnvironment env, long address) {
+    public static <T> T fromAddress(RavenwoodEnvironment env, long address) {
         return JvmWorkaround.getInstance().fromAddress(address);
     }
 }
