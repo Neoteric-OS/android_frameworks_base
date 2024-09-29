@@ -39,6 +39,30 @@
       },
       "revId": "2a4b7e6b5459320e10c6ba908f9e32dd5261b2fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71872293_ec262fbe",
+        "filename": "services/core/java/com/android/server/location/provider/LocationProviderManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1896715
+      },
+      "writtenOn": "2024-09-29T03:09:20Z",
+      "side": 1,
+      "message": "Hi Soonil\n\nThank you for your patient review. My motivation for modifying this is that we encountered a problem. We saw that the code in the super class was executed in logcat, but EVENT_LOG.logProviderClientRegistered did not see the execution log. Then when onPackageReset, it went to onUnregister and executed EVENT_LOG.logProviderClientUnregistered, which led to the problem we encountered in https://partnerissuetracker.corp.google.com/issues/369508236.\nBut after seeing your explanation, I understand the principles of your design here, and I think you are right.\n\nThanks a lot\nZhengxiang Sun",
+      "parentUuid": "88fe046d_f074af5e",
+      "range": {
+        "startLine": 423,
+        "startChar": 12,
+        "endLine": 430,
+        "endChar": 31
+      },
+      "revId": "2a4b7e6b5459320e10c6ba908f9e32dd5261b2fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
