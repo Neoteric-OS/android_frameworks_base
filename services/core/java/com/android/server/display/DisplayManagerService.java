@@ -134,6 +134,7 @@ import android.util.ArraySet;
 import android.util.EventLog;
 import android.util.IndentingPrintWriter;
 import android.util.IntArray;
+import android.util.MathUtils;
 import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -1284,6 +1285,9 @@ public final class DisplayManagerService extends SystemService {
                         || isUidPresentOnDisplayInternal(callingUid, displayId)) {
                     return info;
                 }
+            } else if (displayId == Display.DEFAULT_DISPLAY) {
+                Slog.e(TAG, "Default display is null for info request from uid "
+                        + callingUid);
             }
             return null;
         }
@@ -2232,10 +2236,11 @@ public final class DisplayManagerService extends SystemService {
             if (display.isValidLocked()) {
                 applyDisplayChangedLocked(display);
             }
-            return;
+        } else {
+            releaseDisplayAndEmitEvent(display, DisplayManagerGlobal.EVENT_DISPLAY_REMOVED);
         }
 
-        releaseDisplayAndEmitEvent(display, DisplayManagerGlobal.EVENT_DISPLAY_REMOVED);
+        Slog.i(TAG, "Logical display removed: " + display.getDisplayIdLocked());
     }
 
     private void releaseDisplayAndEmitEvent(LogicalDisplay display, int event) {
@@ -3107,6 +3112,7 @@ public final class DisplayManagerService extends SystemService {
 
     /**
      * Get internal or external viewport. Create it if does not currently exist.
+     *
      * @param viewportType - either INTERNAL or EXTERNAL
      * @return the viewport with the requested type
      */
@@ -4433,7 +4439,6 @@ public final class DisplayManagerService extends SystemService {
         }
 
 
-
         @Override // Binder call
         public BrightnessConfiguration getBrightnessConfigurationForUser(int userId) {
             final String uniqueId;
@@ -4512,10 +4517,12 @@ public final class DisplayManagerService extends SystemService {
         @Override // Binder call
         public void setBrightness(int displayId, float brightness) {
             setBrightness_enforcePermission();
-            if (!isValidBrightness(brightness)) {
-                Slog.w(TAG, "Attempted to set invalid brightness" + brightness);
+            if (Float.isNaN(brightness)) {
+                Slog.w(TAG, "Attempted to set invalid brightness: " + brightness);
                 return;
             }
+            MathUtils.constrain(brightness, PowerManager.BRIGHTNESS_MIN,
+                    PowerManager.BRIGHTNESS_MAX);
             final long token = Binder.clearCallingIdentity();
             try {
                 synchronized (mSyncRoot) {
@@ -4809,12 +4816,6 @@ public final class DisplayManagerService extends SystemService {
             }
             return ddc.getDefaultDozeBrightness();
         }
-    }
-
-    private static boolean isValidBrightness(float brightness) {
-        return !Float.isNaN(brightness)
-                && (brightness >= PowerManager.BRIGHTNESS_MIN)
-                && (brightness <= PowerManager.BRIGHTNESS_MAX);
     }
 
     @VisibleForTesting
