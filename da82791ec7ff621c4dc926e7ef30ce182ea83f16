@@ -70,6 +70,30 @@
       },
       "revId": "da82791ec7ff621c4dc926e7ef30ce182ea83f16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4b944fa_7d20f625",
+        "filename": "services/core/java/com/android/server/location/provider/LocationProviderManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1896715
+      },
+      "writtenOn": "2024-09-29T12:00:10Z",
+      "side": 1,
+      "message": "Hi Soonil\n\nThank you for your guidance. I have removed toString. Please help merge it. This submission is very meaningful to me. Thank you.\n\nBest regards",
+      "parentUuid": "85b4a75b_210f4401",
+      "range": {
+        "startLine": 2589,
+        "startChar": 38,
+        "endLine": 2590,
+        "endChar": 63
+      },
+      "revId": "da82791ec7ff621c4dc926e7ef30ce182ea83f16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
