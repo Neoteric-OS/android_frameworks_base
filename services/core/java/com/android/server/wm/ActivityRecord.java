@@ -356,7 +356,6 @@ import android.window.SplashScreen;
 import android.window.SplashScreenView;
 import android.window.SplashScreenView.SplashScreenViewParcelable;
 import android.window.TaskSnapshot;
-import android.window.TransitionInfo;
 import android.window.TransitionInfo.AnimationOptions;
 import android.window.WindowContainerToken;
 import android.window.WindowOnBackInvokedDispatcher;
@@ -5081,8 +5080,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 // controller but don't clear the animation information from the options since they
                 // need to be sent to the animating activity.
                 mTransitionController.setOverrideAnimation(
-                        TransitionInfo.AnimationOptions.makeSceneTransitionAnimOptions(), this,
-                        null, null);
+                        AnimationOptions.makeSceneTransitionAnimOptions(), null, null);
                 return;
             }
             applyOptionsAnimation(mPendingOptions, intent);
@@ -5205,8 +5203,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         }
 
         if (options != null) {
-            mTransitionController.setOverrideAnimation(options, this, startCallback,
-                    finishCallback);
+            mTransitionController.setOverrideAnimation(options, startCallback, finishCallback);
         }
     }
 
