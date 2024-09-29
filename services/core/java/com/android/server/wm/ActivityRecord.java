@@ -8326,7 +8326,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
      */
     @Override
     protected int getOverrideOrientation() {
-        if (mWmService.mConstants.mIgnoreActivityOrientationRequest) {
+        if (mWmService.mConstants.mIgnoreActivityOrientationRequest
+                && info.applicationInfo.category != ApplicationInfo.CATEGORY_GAME) {
             return ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
         return mAppCompatController.getOrientationPolicy()
