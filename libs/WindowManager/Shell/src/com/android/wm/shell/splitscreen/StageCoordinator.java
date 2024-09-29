@@ -3489,9 +3489,14 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             if (op.getType() == HIERARCHY_OP_TYPE_REORDER && op.getToTop()
                     && (mMainStage.containsContainer(container)
                     || mSideStage.containsContainer(container))) {
+                final SurfaceControl leash = mSplitLayout.getDividerLeash();
+                if (leash == null || !leash.isValid()) {
+                    Slog.w(TAG, "divider leash was released or not be created!");
+                    return;
+                }
                 updateSurfaceBounds(mSplitLayout, finishT,
                         false /* applyResizingOffset */);
-                finishT.reparent(mSplitLayout.getDividerLeash(), mRootTaskLeash);
+                finishT.reparent(leash, mRootTaskLeash);
                 setDividerVisibility(true, finishT);
                 return;
             }
