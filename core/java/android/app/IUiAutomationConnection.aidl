@@ -53,6 +53,8 @@ interface IUiAutomationConnection {
     WindowAnimationFrameStats getWindowAnimationFrameStats();
     void executeShellCommand(String command, in ParcelFileDescriptor sink,
             in ParcelFileDescriptor source);
+    void executeShellCommandArray(in String[] command, in ParcelFileDescriptor sink,
+            in ParcelFileDescriptor source);
     void grantRuntimePermission(String packageName, String permission, int userId);
     void revokeRuntimePermission(String packageName, String permission, int userId);
     void adoptShellPermissionIdentity(int uid, in String[] permissions);
@@ -60,6 +62,8 @@ interface IUiAutomationConnection {
     // Called from the system process.
     oneway void shutdown();
     void executeShellCommandWithStderr(String command, in ParcelFileDescriptor sink,
+                in ParcelFileDescriptor source, in ParcelFileDescriptor stderrSink);
+    void executeShellCommandArrayWithStderr(in String[] command, in ParcelFileDescriptor sink,
                 in ParcelFileDescriptor source, in ParcelFileDescriptor stderrSink);
     List<String> getAdoptedShellPermissions();
     void addOverridePermissionState(int uid, String permission, int result);
