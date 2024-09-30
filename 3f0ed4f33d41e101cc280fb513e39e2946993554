@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95ee1b18_590cd3e4",
+        "filename": "services/core/java/com/android/server/media/RemoteDisplayProviderProxy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2024-09-30T10:18:24Z",
+      "side": 1,
+      "message": "Thanks for sending this pull request our way.\n\nI don\u0027t think, as it is, this patch will fix the issue, as `this` is not being used to protect the problematic field anywhere else. \n\n\nI believe the right fix is to post all cost to disconnect to handler (except when disconnect is already called on the handler thread). We are planning on pushing a fix for this soon, so you can wait for that.\n\nRef: Internal tracking bug for this is b/355356980#comment4.",
+      "range": {
+        "startLine": 283,
+        "startChar": 4,
+        "endLine": 283,
+        "endChar": 40
+      },
+      "revId": "3f0ed4f33d41e101cc280fb513e39e2946993554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
