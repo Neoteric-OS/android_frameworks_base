@@ -16,6 +16,24 @@
       "message": "And `GAME_MANAGER_OWNERS`?",
       "revId": "896825baf20104cf36aa02fed997df86ebc2de59",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a442878b_b86c718e",
+        "filename": "OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1336478
+      },
+      "writtenOn": "2024-09-30T21:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4614af19_6d48c126",
+      "revId": "896825baf20104cf36aa02fed997df86ebc2de59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
