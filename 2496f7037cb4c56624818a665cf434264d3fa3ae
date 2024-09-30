@@ -16,6 +16,23 @@
       "message": "Upstream from Meta!. Thanks in advance for reviewing 😊",
       "revId": "2496f7037cb4c56624818a665cf434264d3fa3ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b559aa5d_74fb3008",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-09-30T10:23:28Z",
+      "side": 1,
+      "message": "Multiple DeadObjectExceptions in a row can also indicate something wrong. This change could allow the system to get stuck in a loop where it never gives up trying to start a process.\n\nIs there a situation you\u0027re commonly encountering where this DeadObjectException on restart is happening? I wonder if it would be a case where backing off more before trying again would make sense.",
+      "revId": "2496f7037cb4c56624818a665cf434264d3fa3ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
