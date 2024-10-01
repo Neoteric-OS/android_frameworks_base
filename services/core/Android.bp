@@ -134,6 +134,7 @@ java_library_static {
         ":statslog-contexthub-java-gen",
         ":services.core-aidl-sources",
         ":services.core-sources",
+        ":framework-vcn-util-sources",
         ":services.core.protologsrc",
         ":platform-compat-config",
         ":platform-compat-overrides",
