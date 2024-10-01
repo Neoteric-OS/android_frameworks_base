@@ -29454,6 +29454,7 @@ package android.net.vcn {
     method @IntRange(from=0x500) public int getMaxMtu();
     method public int getMinUdpPort4500NatTimeoutSeconds();
     method @NonNull public long[] getRetryIntervalsMillis();
+    method @FlaggedApi("android.net.vcn.mainline_vcn_module_api") @NonNull public android.net.ipsec.ike.IkeTunnelConnectionParams getTunnelConnectionParams();
     method @NonNull public java.util.List<android.net.vcn.VcnUnderlyingNetworkTemplate> getVcnUnderlyingNetworkPriorities();
     method public boolean hasGatewayOption(int);
     method @FlaggedApi("android.net.vcn.safe_mode_config") public boolean isSafeModeEnabled();
