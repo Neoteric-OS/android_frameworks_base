@@ -24,9 +24,12 @@ import android.util.Log;
 
 import com.android.internal.os.BackgroundThread;
 
+import java.time.Instant;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class Utils {
+
+    private static Instant lastTraceTime = Instant.Epoch;
 
     public static boolean withFrequency(String configName, int defaultFrequency) {
         int threshold = DeviceConfig.getInt(
