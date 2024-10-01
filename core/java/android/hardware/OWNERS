@@ -19,3 +19,6 @@ per-file DataSpace* = file:/graphics/java/android/graphics/OWNERS
 
 # OverlayProperties
 per-file OverlayProperties* = file:/graphics/java/android/graphics/OWNERS
+
+# LutProperties
+per-file LutProperties* = file:/graphics/java/android/graphics/OWNERS
