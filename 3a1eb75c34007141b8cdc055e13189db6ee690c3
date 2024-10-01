@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c0f67fe_26d9851b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-10-01T07:28:23Z",
+      "side": 1,
+      "message": "The ultimate goal is to add a overload to `UiAutomation#executeShellCommand` so that it can take command array with args allowed to have spaces in it, which we had problem with while writing tests.\n\n\u003e it would be better to land it internally to run more tests before rolling it out.\n\n\nThanks for suggestion. Are you meaning use some experiment flag to guard or something like that?",
+      "parentUuid": "4c571f9d_fc8bf86a",
+      "revId": "3a1eb75c34007141b8cdc055e13189db6ee690c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51ac87f1_9b89cc23",
