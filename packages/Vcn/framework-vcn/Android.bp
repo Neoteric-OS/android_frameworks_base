@@ -20,13 +20,35 @@ package {
 }
 
 filegroup {
+    name: "vcn-aidl-export-sources",
+    path: "aidl-export",
+    srcs: [
+        "aidl-export/**/*.aidl",
+    ],
+}
+
+filegroup {
     name: "framework-vcn-updatable-sources",
+    defaults: ["framework-sources-module-defaults"],
     srcs: [
         "src/**/*.java",
+        ":vcn-aidl-export-sources",
+        ":framework-vcn-util-sources", // PersistableBundlerUtil
     ],
 
     visibility: [
         "//frameworks/base/packages/Vcn:__subpackages__",
+    ],
+}
+
+filegroup {
+    name: "ike-params-parser-sources",
+    srcs: [
+        "src/android/net/vcn/persistablebundleutils/**/*.java",
+    ],
+    path: "src",
+    visibility: [
+        "//frameworks/base", // For usage in Vpn.java
     ],
 }
 
@@ -39,6 +61,22 @@ java_defaults {
     srcs: [
         ":framework-vcn-updatable-sources",
     ],
+
+    libs: [
+        "android.net.ipsec.ike.stubs.module_lib",
+        "app-compat-annotations",
+        "framework-wifi.stubs.module_lib",
+        "unsupportedappusage",
+    ],
+    static_libs: [
+        "android.net.vcn.flags-aconfig-java",
+    ],
+    aidl: {
+        include_dirs: [
+            // For connectivity-framework classes such as Network.aidl, NetworkCapabilities.aidl
+            "packages/modules/Connectivity/framework/aidl-export",
+        ],
+    },
 }
 
 java_sdk_library {
@@ -47,11 +85,34 @@ java_sdk_library {
         "framework-vcn-defaults",
     ],
 
+    jarjar_rules: ":framework-connectivity-jarjar-rules",
+
     permitted_packages: [
+        "android.net.vcn",
+        "android.net.connectivity.android.net.vcn",
+        "android.net.connectivity.com.android.server.vcn.util",
+
+    ],
+    api_packages: [
         "android.net.vcn",
     ],
 
-    visibility: [
-        "//frameworks/base",
+    // Allow VCN APIs to reference APIs in IKE and Connectivity
+    stub_only_libs: [
+        "android.net.ipsec.ike.stubs.module_lib",
+        "framework-connectivity.stubs.module_lib",
+    ],
+
+    // To use non-jarjard names of utilities such as android.util.IndentingPrintWriter
+    impl_only_libs: [
+        "framework-connectivity-pre-jarjar",
+    ],
+}
+
+java_library {
+    name: "framework-vcn-pre-jarjar",
+    defaults: ["framework-vcn-defaults"],
+    libs: [
+        "framework-connectivity-pre-jarjar",
     ],
 }

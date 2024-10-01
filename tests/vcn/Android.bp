@@ -12,24 +12,25 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
-android_test {
-    name: "FrameworksVcnTests",
+java_defaults {
+    name: "FrameworksVcnTestsDefaults",
     srcs: [
         "java/**/*.java",
         "java/**/*.kt",
     ],
     platform_apis: true,
-    defaults: ["framework-connectivity-test-defaults"],
+    defaults: ["framework-connectivity-internal-test-defaults"],
     test_suites: ["device-tests"],
     certificate: "platform",
     static_libs: [
+        "android.net.vcn.flags-aconfig-java",
         "androidx.test.rules",
         "frameworks-base-testutils",
         "framework-protos",
         "mockito-target-minus-junit4",
         "net-tests-utils",
         "platform-test-annotations",
-        "services.core",
+        "service-vcn-pre-jarjar",
         "service-connectivity-tiramisu-pre-jarjar",
         "flag-junit",
     ],
@@ -37,5 +38,25 @@ android_test {
         "android.test.runner.stubs",
         "android.test.base.stubs",
         "android.test.mock.stubs",
+    ],
+}
+
+// Library for generating frameworks-net-tests-jarjar-rules
+android_library {
+    name: "FrameworksVcnTestsLib",
+    defaults: [
+        "FrameworksVcnTestsDefaults",
+    ],
+}
+
+android_test {
+    name: "FrameworksVcnTests",
+    defaults: [
+        "FrameworksVcnTestsDefaults",
+    ],
+    jarjar_rules: ":frameworks-net-tests-jarjar-rules",
+    test_suites: ["device-tests"],
+    static_libs: [
+        "services.core",
     ],
 }
