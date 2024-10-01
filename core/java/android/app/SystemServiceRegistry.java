@@ -227,6 +227,7 @@ import android.security.FileIntegrityManager;
 import android.security.IFileIntegrityService;
 import android.security.attestationverification.AttestationVerificationManager;
 import android.security.attestationverification.IAttestationVerificationManagerService;
+import android.security.keystore.KeyStoreManager;
 import android.service.oemlock.IOemLockService;
 import android.service.oemlock.OemLockManager;
 import android.service.persistentdata.IPersistentDataBlockService;
@@ -698,6 +699,13 @@ public final class SystemServiceRegistry {
                     @Override
                     public SensorPrivacyManager createService(ContextImpl ctx) {
                         return SensorPrivacyManager.getInstance(ctx);
+                    }});
+
+        registerService(Context.KEYSTORE_SERVICE, KeyStoreManager.class,
+                new CachedServiceFetcher<KeyStoreManager>() {
+                    @Override
+                    public KeyStoreManager createService(ContextImpl ctx) {
+                        return KeyStoreManager.getInstance();
                     }});
 
         registerService(Context.STATUS_BAR_SERVICE, StatusBarManager.class,
