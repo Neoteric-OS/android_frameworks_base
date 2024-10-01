@@ -15,8 +15,11 @@
  */
 package android.net.vcn;
 
+import static android.net.vcn.Flags.FLAG_MAINLINE_VCN_MODULE_API;
+
 import static java.util.Objects.requireNonNull;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -225,6 +228,21 @@ public class VcnManager {
     public VcnManager(@NonNull Context ctx, @NonNull IVcnManagementService service) {
         mContext = requireNonNull(ctx, "missing context");
         mService = requireNonNull(service, "missing service");
+    }
+
+    /**
+     * System ready
+     *
+     * @hide
+     */
+    @FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public void systemReady() {
+        try {
+            mService.systemReady();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**

@@ -16,7 +16,11 @@
 
 package android.net.vcn;
 
+import static android.net.vcn.Flags.FLAG_MAINLINE_VCN_MODULE_API;
+
+import android.annotation.FlaggedApi;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.app.SystemServiceRegistry;
 import android.compat.Compatibility;
 import android.compat.annotation.ChangeId;
@@ -34,6 +38,8 @@ import android.os.SystemProperties;
  *     SystemServiceRegistry}
  * @hide
  */
+@FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public final class VcnFrameworkInitializer {
     /**
      * Starting with {@link VANILLA_ICE_CREAM}, Telephony feature flags (e.g. {@link
@@ -45,7 +51,7 @@ public final class VcnFrameworkInitializer {
      */
     @ChangeId
     @EnabledSince(targetSdkVersion = Build.VERSION_CODES.VANILLA_ICE_CREAM)
-    static final long ENABLE_CHECKING_TELEPHONY_FEATURES_FOR_VCN = 330902016;
+    private static final long ENABLE_CHECKING_TELEPHONY_FEATURES_FOR_VCN = 330902016;
 
     /**
      * The corresponding vendor API for Android V
@@ -89,7 +95,10 @@ public final class VcnFrameworkInitializer {
      *
      * @throws IllegalStateException if this is called anywhere besides {@link
      *     SystemServiceRegistry}.
+     * @hide
      */
+    @FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static void registerServiceWrappers() {
         android.util.Log.i("TEST", "VcnFrameworkInitializer#registerServiceWrappers");
         SystemServiceRegistry.registerContextAwareService(
