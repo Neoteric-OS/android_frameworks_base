@@ -15,8 +15,13 @@
  */
 package android.net.vcn;
 
+import static android.net.vcn.Flags.FLAG_MAINLINE_VCN_MODULE_API;
+
+import static com.android.internal.annotations.VisibleForTesting.Visibility;
+
 import static java.util.Objects.requireNonNull;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -233,7 +238,8 @@ public class VcnManager {
      * @throws SecurityException if this is not called by system uid
      * @hide
      */
-    // TODO: Expose it as @SystemApi
+    @FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public void systemReady() {
         try {
             mService.systemReady();
