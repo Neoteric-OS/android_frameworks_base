@@ -1,0 +1,1 @@
+rule android.net.vcn.persistablebundleutils.** android.net.vcn.module.persistablebundleutils.@1
