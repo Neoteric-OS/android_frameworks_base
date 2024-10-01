@@ -27,7 +27,7 @@ import android.util.Log;
 // TODO: b/366598445 Move this file to frameworks/base/packages/Vcn/
 // TODO: After VCN modularization is released, merge this class with ConnectivityServiceInitializer
 public final class ConnectivityServiceInitializerB extends SystemService {
-    private static final String TAG = VcnServiceInitializer.class.getSimpleName();
+    private static final String TAG = ConnectivityServiceInitializerB.class.getSimpleName();
     private final VcnManagementService mVcnManagementService;
 
     public ConnectivityServiceInitializerB(Context context) {
