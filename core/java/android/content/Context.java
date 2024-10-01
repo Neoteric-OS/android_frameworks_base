@@ -4752,6 +4752,18 @@ public abstract class Context {
     public static final String SENSOR_PRIVACY_SERVICE = "sensor_privacy";
 
     /**
+     * Use with {@link #getSystemService(String)} to retrive a {@link
+     * android.security.keystore.KeyStoreManager} for accessing
+     * <a href="/privacy-and-security/keystore">Android Keystore</a>
+     * functions.
+     *
+     * @see #getSystemService(String)
+     * @see android.security.keystore.KeyStoreManager
+     */
+    @FlaggedApi(android.security.Flags.FLAG_KEYSTORE_GRANT_API)
+    public static final String KEYSTORE_SERVICE = "keystore";
+
+    /**
      * Use with {@link #getSystemService(String)} to retrieve a {@link
      * android.os.storage.StorageManager} for accessing system storage
      * functions.
