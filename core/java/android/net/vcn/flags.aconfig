@@ -56,3 +56,11 @@ flag{
       purpose: PURPOSE_BUGFIX
     }
 }
+
+flag {
+    name: "mainline_vcn_module_api"
+    is_exported: true
+    namespace: "vcn"
+    description: "Enable module dependencies to mainline VCN"
+    bug: "276358140"
+}
