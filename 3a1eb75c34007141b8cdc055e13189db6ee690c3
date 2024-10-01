@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "970f1ac7_70caccf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2024-10-01T19:34:17Z",
+      "side": 1,
+      "message": "Hi Chuwei, I\u0027d like this file to be owned by *some* Platform Testing Infra team. Various parts of UiAutomation\u0027s logic do act as an unofficial consumer of accessibility APIs, but other parts rely on other subsystems, and app testing frameworks are not something that falls under the Accessibility team\u0027s scope. I\u0027ve added a comment to http://b/293132368#comment11 if you can find another Platform Testing team who can own this file.",
+      "parentUuid": "077f9857_564186e7",
+      "revId": "3a1eb75c34007141b8cdc055e13189db6ee690c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51ac87f1_9b89cc23",
