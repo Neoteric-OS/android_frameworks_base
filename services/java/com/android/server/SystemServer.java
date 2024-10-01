@@ -434,6 +434,9 @@ public final class SystemServer implements Dumpable {
 
     private static final String TETHERING_CONNECTOR_CLASS = "android.net.ITetheringConnector";
 
+    private static final String VCN_SERVICE_INITIALIZER_CLASS =
+            "com.android.server.VcnServiceInitializer";
+
     private static final String PERSISTENT_DATA_BLOCK_PROP = "ro.frp.pst";
 
     private static final String UNCRYPT_PACKAGE_FILE = "/cache/recovery/uncrypt_file";
@@ -3030,10 +3033,10 @@ public final class SystemServer implements Dumpable {
         final MediaRouterService mediaRouterF = mediaRouter;
         final MmsServiceBroker mmsServiceF = mmsService;
         final VpnManagerService vpnManagerF = vpnManager;
-        final VcnManagementService vcnManagementF = vcnManagement;
         final WindowManagerService windowManagerF = wm;
         final ConnectivityManager connectivityF = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final VcnManagementService vcnManagementF = vcnManagement;
 
         // We now tell the activity manager it is okay to run third party
         // code.  It will call back into us once it has gotten to the state

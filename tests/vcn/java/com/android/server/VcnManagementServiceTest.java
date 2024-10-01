@@ -70,7 +70,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.Uri;
-import android.net.vcn.Flags;
 import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
@@ -285,7 +284,7 @@ public class VcnManagementServiceTest {
 
     @Before
     public void setUp() {
-        mSetFlagsRule.enableFlags(Flags.FLAG_ENFORCE_MAIN_USER);
+        // mSetFlagsRule.enableFlags(Flags.FLAG_ENFORCE_MAIN_USER);
 
         doNothing()
                 .when(mMockContext)

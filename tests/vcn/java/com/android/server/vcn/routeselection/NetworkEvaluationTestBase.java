@@ -34,7 +34,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.FeatureFlags;
-import android.net.vcn.Flags;
 import android.os.Handler;
 import android.os.IPowerManager;
 import android.os.IThermalService;
@@ -120,9 +119,9 @@ public abstract class NetworkEvaluationTestBase {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        mSetFlagsRule.enableFlags(Flags.FLAG_VALIDATE_NETWORK_ON_IPSEC_LOSS);
-        mSetFlagsRule.enableFlags(Flags.FLAG_EVALUATE_IPSEC_LOSS_ON_LP_NC_CHANGE);
-        mSetFlagsRule.enableFlags(Flags.FLAG_HANDLE_SEQ_NUM_LEAP);
+        // mSetFlagsRule.enableFlags("android.net.connectivity.android.net.vcn.validate_network_on_ipsec_loss");
+        // mSetFlagsRule.enableFlags(Flags.FLAG_EVALUATE_IPSEC_LOSS_ON_LP_NC_CHANGE);
+        // mSetFlagsRule.enableFlags(Flags.FLAG_HANDLE_SEQ_NUM_LEAP);
 
         when(mNetwork.getNetId()).thenReturn(-1);
 

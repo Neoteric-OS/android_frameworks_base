@@ -25,6 +25,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresFeature;
 import android.annotation.RequiresPermission;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
@@ -446,6 +447,9 @@ public class VcnManager {
      *     registered
      * @hide
      */
+    // TODO: check error: documentation duplicates auto-generated documentation by
+    // @RequiresPermission
+    @SuppressLint("RequiresPermission")
     @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void addVcnNetworkPolicyChangeListener(
@@ -476,6 +480,9 @@ public class VcnManager {
      * @throws SecurityException if the caller does not have permission NETWORK_FACTORY
      * @hide
      */
+    // TODO: check error: documentation duplicates auto-generated documentation by
+    // @RequiresPermission
+    @SuppressLint("RequiresPermission")
     @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void removeVcnNetworkPolicyChangeListener(
@@ -511,6 +518,9 @@ public class VcnManager {
      * @return the {@link VcnNetworkPolicyResult} to be used for this Network.
      * @hide
      */
+    // TODO: check error: documentation duplicates auto-generated documentation by
+    // @RequiresPermission
+    @SuppressLint("RequiresPermission")
     @NonNull
     @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)

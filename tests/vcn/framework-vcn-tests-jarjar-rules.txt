@@ -1,0 +1,6 @@
+
+rule android.net.vcn.** android.net.vcn.test.@1
+rule com.android.server.vcn.** com.android.server.vcn.test.@1
+rule com.android.net.module.util.** com.android.vcn.test.util.@1
+rule com.android.modules.utils.** com.android.vcn.test.util.@1
+rule com.android.internal.util.** com.android.vcn.test.util.@1
