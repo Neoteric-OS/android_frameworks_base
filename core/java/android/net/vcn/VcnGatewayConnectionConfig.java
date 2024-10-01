@@ -16,6 +16,7 @@
 package android.net.vcn;
 
 import static android.net.ipsec.ike.IkeSessionParams.IKE_OPTION_MOBIKE;
+import static android.net.vcn.Flags.FLAG_MAINLINE_VCN_MODULE_API;
 import static android.net.vcn.Flags.FLAG_SAFE_MODE_CONFIG;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_REQUIRED;
 
@@ -27,6 +28,7 @@ import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
+import android.annotation.SystemApi;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.ipsec.ike.IkeTunnelConnectionParams;
@@ -82,7 +84,18 @@ import java.util.concurrent.TimeUnit;
  * </ul>
  */
 public final class VcnGatewayConnectionConfig {
-    /** @hide */
+    /**
+     * Minimum NAT timeout not set.
+     *
+     * <p>When the timeout is not set, the device will automatically choose a keepalive interval and
+     * may reduce the keepalive frequency for power-optimization.
+     *
+     * @hide
+     */
+    @FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    // This constant does not represent a minimum value. It indicates the value is not configured.
+    @SuppressLint("MinMaxConstant")
     public static final int MIN_UDP_PORT_4500_NAT_TIMEOUT_UNSET = -1;
 
     /** @hide */
