@@ -16,7 +16,11 @@
 
 package android.net.vcn;
 
+import static android.net.vcn.Flags.FLAG_MAINLINE_VCN_MODULE_API;
+
+import android.annotation.FlaggedApi;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.app.SystemServiceRegistry;
 import android.compat.Compatibility;
 import android.compat.annotation.ChangeId;
@@ -31,7 +35,8 @@ import android.os.SystemProperties;
  *
  * @hide
  */
-// TODO: Expose it as @SystemApi(client = MODULE_LIBRARIES)
+@FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public final class VcnFrameworkInitializer {
     /**
      * Starting with {@link VANILLA_ICE_CREAM}, Telephony feature flags (e.g. {@link
@@ -86,7 +91,10 @@ public final class VcnFrameworkInitializer {
      *
      * @throws IllegalStateException if this is called anywhere besides {@link
      *     SystemServiceRegistry}.
+     * @hide
      */
+    @FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static void registerServiceWrappers() {
         SystemServiceRegistry.registerContextAwareService(
                 VcnManager.VCN_MANAGEMENT_SERVICE_STRING,
