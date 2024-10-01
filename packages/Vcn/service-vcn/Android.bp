@@ -24,7 +24,17 @@ filegroup {
     srcs: [
         "src/**/*.java",
     ],
+    path: "src",
+    visibility: ["//frameworks/base/packages/Vcn:__subpackages__"],
+}
+
+filegroup {
+    name: "framework-vcn-util-sources",
+    srcs: ["src/com/android/server/vcn/util/**/*.java"],
+    path: "src",
     visibility: [
+        "//frameworks/base",
+        "//frameworks/base/services/core",
         "//frameworks/base/packages/Vcn:__subpackages__",
     ],
 }
@@ -37,6 +47,23 @@ java_defaults {
 
     srcs: [
         ":service-vcn-updatable-sources",
+        // VCN AIDL sources
+        ":vcn-aidl-export-sources",
+    ],
+
+    libs: [
+        "android.net.ipsec.ike.stubs.module_lib",
+        "framework-annotations-lib",
+        "framework-connectivity-pre-jarjar",
+        "framework-connectivity-t-pre-jarjar",
+        "framework-vcn-pre-jarjar",
+        "framework-wifi.stubs.module_lib",
+        "service-connectivity-pre-jarjar",
+    ],
+
+    static_libs: [
+        "net-utils-device-common", // HandlerUtils
+        "modules-utils-handlerexecutor", // HandlerExecutor
     ],
 }
 
