@@ -1990,7 +1990,7 @@ public class AppProfiler {
     }
 
     @GuardedBy("mProfilerLock")
-    private void stopProfilerLPf(ProcessRecord proc, int profileType) {
+    private void stopProfilerLPf(ProcessRecord proc, ProfilerInfo profilerInfo, int profileType) {
         if (proc == null || proc == mProfileData.getProfileProc()) {
             proc = mProfileData.getProfileProc();
             profileType = mProfileType;
@@ -2004,7 +2004,7 @@ public class AppProfiler {
             return;
         }
         try {
-            thread.profilerControl(false, null, profileType);
+            thread.profilerControl(false, profilerInfo, profileType);
         } catch (RemoteException e) {
             throw new IllegalStateException("Process disappeared");
         }
@@ -2038,10 +2038,10 @@ public class AppProfiler {
     boolean profileControlLPf(ProcessRecord proc, boolean start,
             ProfilerInfo profilerInfo, int profileType) {
         try {
-            if (start) {
-                stopProfilerLPf(null, 0);
+            if (start && profileType == 0) {
+                stopProfilerLPf(null, null, 0);
                 mService.setProfileApp(proc.info, proc.processName, profilerInfo,
-                        proc.isSdkSandbox ? proc.getClientInfoForSdkSandbox() : null);
+                        proc.isSdkSandbox ? proc.getClientInfoForSdkSandbox() : null, profileType);
                 mProfileData.setProfileProc(proc);
                 mProfileType = profileType;
                 ParcelFileDescriptor fd = profilerInfo.profileFd;
@@ -2066,14 +2066,31 @@ public class AppProfiler {
                     //       whole ProfilerInfo instance is passed down!
                     profilerInfo = null;
                 }
-            } else {
-                stopProfilerLPf(proc, profileType);
+            } else if (!start && profileType == 0) {
+                stopProfilerLPf(proc, null, profileType);
                 if (profilerInfo != null && profilerInfo.profileFd != null) {
                     try {
                         profilerInfo.profileFd.close();
                     } catch (IOException e) {
                     }
                 }
+            } else if (start && profileType == 1) {
+                mService.setProfileApp(proc.info, proc.processName, profilerInfo,
+                        proc.isSdkSandbox ? proc.getClientInfoForSdkSandbox() : null, profileType);
+                mProfileData.setProfileProc(proc);
+                mProfileType = profileType;
+                proc.mProfile.getThread().profilerControl(start, profilerInfo, profileType);
+            } else {
+                if (profilerInfo != null && profilerInfo.profileFd != null) {
+                    ParcelFileDescriptor fd = profilerInfo.profileFd;
+                    try {
+                        fd = fd.dup();
+                    } catch (IOException e) {
+                        fd = null;
+                    }
+                    profilerInfo.profileFd = fd;
+                }
+                stopProfilerLPf(proc, profilerInfo, profileType);
             }
 
             return true;
@@ -2090,7 +2107,7 @@ public class AppProfiler {
     }
 
     @GuardedBy("mProfilerLock")
-    void setProfileAppLPf(String processName, ProfilerInfo profilerInfo) {
+    void setProfileAppLPf(String processName, ProfilerInfo profilerInfo, int profileType) {
         mProfileData.setProfileApp(processName);
 
         if (mProfileData.getProfilerInfo() != null) {
@@ -2101,8 +2118,10 @@ public class AppProfiler {
                 }
             }
         }
-        mProfileData.setProfilerInfo(new ProfilerInfo(profilerInfo));
-        mProfileType = 0;
+        if (profilerInfo != null) {
+            mProfileData.setProfilerInfo(new ProfilerInfo(profilerInfo));
+        }
+        mProfileType = profileType;
     }
 
     @GuardedBy("mProfilerLock")
