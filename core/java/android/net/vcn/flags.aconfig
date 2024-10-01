@@ -2,6 +2,14 @@ package: "android.net.vcn"
 container: "system"
 
 flag {
+    name: "mainline_vcn_module_api"
+    is_exported: true
+    namespace: "vcn"
+    description: "Enable module dependencies to mainline VCN"
+    bug: "366598445"
+}
+
+flag {
     name: "safe_mode_config"
     is_exported: true
     namespace: "vcn"
