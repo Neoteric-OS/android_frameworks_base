@@ -49,7 +49,6 @@ aconfig_declarations_group {
         "android.media.tv.flags-aconfig-java",
         "android.multiuser.flags-aconfig-java",
         "android.net.platform.flags-aconfig-java",
-        "android.net.vcn.flags-aconfig-java",
         "android.net.wifi.flags-aconfig-java",
         "android.nfc.flags-aconfig-java",
         "android.os.flags-aconfig-java",
@@ -1057,20 +1056,6 @@ cc_aconfig_library {
 java_aconfig_library {
     name: "android.media.playback.flags-aconfig-java",
     aconfig_declarations: "android.media.playback.flags-aconfig",
-    defaults: ["framework-minus-apex-aconfig-java-defaults"],
-}
-
-// VCN
-aconfig_declarations {
-    name: "android.net.vcn.flags-aconfig",
-    package: "android.net.vcn",
-    container: "system",
-    srcs: ["core/java/android/net/vcn/*.aconfig"],
-}
-
-java_aconfig_library {
-    name: "android.net.vcn.flags-aconfig-java",
-    aconfig_declarations: "android.net.vcn.flags-aconfig",
     defaults: ["framework-minus-apex-aconfig-java-defaults"],
 }
 

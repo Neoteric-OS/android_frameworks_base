@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.vcn.VcnManager;
 import android.os.Handler;
-import android.os.HandlerExecutor;
 import android.os.ParcelUuid;
 import android.os.PersistableBundle;
 import android.telephony.CarrierConfigManager;
@@ -45,6 +44,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.modules.utils.HandlerExecutor;
 import com.android.server.vcn.util.PersistableBundleUtils.PersistableBundleWrapper;
 
 import java.util.ArrayList;

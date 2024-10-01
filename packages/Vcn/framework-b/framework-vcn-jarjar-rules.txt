@@ -1,0 +1,2 @@
+rule android.net.vcn.persistablebundleutils.** android.net.vcn.module.repackaged.persistablebundleutils.@1
+rule com.android.server.vcn.util.** android.net.vcn.module.repackaged.util.@1

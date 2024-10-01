@@ -85,6 +85,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.net.module.util.BinderUtils;
+import com.android.net.module.util.HandlerUtils;
 import com.android.net.module.util.LocationPermissionChecker;
 import com.android.net.module.util.PermissionUtils;
 import com.android.server.vcn.TelephonySubscriptionTracker;
@@ -1348,7 +1349,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "| ");
 
         // Post to handler thread to prevent ConcurrentModificationExceptions, and avoid lock-hell.
-        mHandler.runWithScissors(() -> {
+        HandlerUtils.runWithScissorsForDump(mHandler, () -> {
             mNetworkProvider.dump(pw);
             pw.println();
 

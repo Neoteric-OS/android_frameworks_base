@@ -19,6 +19,17 @@ package {
     default_applicable_licenses: ["Android-Apache-2.0"],
 }
 
+filegroup {
+    name: "ike-params-parser-sources",
+    srcs: [
+        "src/android/net/vcn/persistablebundleutils/**/*.java",
+    ],
+    path: "src",
+    visibility: [
+        "//frameworks/base", // For VpnProfile.java
+    ],
+}
+
 java_defaults {
     name: "framework-connectivity-b-defaults",
     sdk_version: "module_current",
@@ -27,7 +38,25 @@ java_defaults {
 
     srcs: [
         "src/**/*.java",
+        "src/**/*.aidl",
+        ":framework-vcn-util-sources", // PersistableBundlerUtil
     ],
+
+    libs: [
+        "android.net.ipsec.ike.stubs.module_lib",
+        "app-compat-annotations",
+        "framework-wifi.stubs.module_lib",
+        "unsupportedappusage",
+    ],
+    static_libs: [
+        "android.net.vcn.flags-aconfig-java",
+    ],
+    aidl: {
+        include_dirs: [
+            // For connectivity-framework classes such as Network.aidl, NetworkCapabilities.aidl
+            "packages/modules/Connectivity/framework/aidl-export",
+        ],
+    },
 }
 
 java_sdk_library {
@@ -36,9 +65,59 @@ java_sdk_library {
         "framework-connectivity-b-defaults",
     ],
 
+    jarjar_rules: "framework-vcn-jarjar-rules.txt",
+
     permitted_packages: [
+        "android.net.vcn",
+        "com.android.server.vcn.util",
+
+    ],
+    api_packages: [
         "android.net.vcn",
     ],
 
-    // TODO: b/375213246 Expose this library to Tethering module
+    // Allow VCN APIs to reference APIs in IKE and Connectivity
+    stub_only_libs: [
+        "android.net.ipsec.ike.stubs.module_lib",
+        "framework-connectivity.stubs.module_lib",
+    ],
+
+    // To use non-jarjard names of utilities such as android.util.IndentingPrintWriter
+    impl_only_libs: [
+        "framework-connectivity-pre-jarjar",
+    ],
+
+    aconfig_declarations: [
+        "android.net.vcn.flags-aconfig-java",
+    ],
+
+    impl_library_visibility: [
+        // Using for test only
+        "//cts/tests/netlegacy22.api",
+        "//external/sl4a:__subpackages__",
+        "//frameworks/base/core/tests/bandwidthtests",
+        "//frameworks/base/core/tests/benchmarks",
+        "//frameworks/base/core/tests/utillib",
+        "//frameworks/base/services/tests/VpnTests",
+        "//frameworks/base/tests/vcn",
+        "//frameworks/opt/telephony/tests/telephonytests",
+        "//packages/modules/CaptivePortalLogin/tests",
+        "//packages/modules/Connectivity/staticlibs/testutils",
+        "//packages/modules/Connectivity/staticlibs/tests:__subpackages__",
+        "//packages/modules/Connectivity/Tethering/tests:__subpackages__",
+        "//packages/modules/Connectivity/tests:__subpackages__",
+        "//packages/modules/Connectivity/thread/tests:__subpackages__",
+        "//packages/modules/IPsec/tests/iketests",
+        "//packages/modules/NetworkStack",
+        "//packages/modules/NetworkStack/tests:__subpackages__",
+        "//packages/modules/Wifi/service/tests/wifitests",
+    ],
+}
+
+java_library {
+    name: "framework-connectivity-b-pre-jarjar",
+    defaults: ["framework-connectivity-b-defaults"],
+    libs: [
+        "framework-connectivity-pre-jarjar",
+    ],
 }
