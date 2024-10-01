@@ -1,0 +1,6 @@
+
+rule android.net.vcn.persistablebundleutils.** android.net.vcn.module.internal.persistablebundleutils.@1
+rule com.android.server.vcn.util.** android.net.vcn.module.internal.util.@1
+rule com.android.net.module.util.** android.net.vcn.module.internal.util.@1
+rule com.android.modules.utils.** android.net.vcn.module.internal.util.@1
+rule com.android.internal.util.** android.net.vcn.module.internal.util.@1

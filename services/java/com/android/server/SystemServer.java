@@ -57,6 +57,7 @@ import android.hardware.display.DisplayManagerInternal;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityModuleConnector;
 import android.net.NetworkStackClient;
+import android.net.vcn.VcnManager;
 import android.os.ArtModuleServiceManager;
 import android.os.BaseBundle;
 import android.os.Binder;
@@ -433,6 +434,9 @@ public final class SystemServer implements Dumpable {
     private static final String RANGING_SERVICE_CLASS = "com.android.server.ranging.RangingService";
 
     private static final String TETHERING_CONNECTOR_CLASS = "android.net.ITetheringConnector";
+
+    private static final String VCN_SERVICE_INITIALIZER_CLASS =
+            "com.android.server.VcnServiceInitializer";
 
     private static final String PERSISTENT_DATA_BLOCK_PROP = "ro.frp.pst";
 
@@ -2145,8 +2149,7 @@ public final class SystemServer implements Dumpable {
 
             t.traceBegin("StartVcnManagementService");
             try {
-                vcnManagement = VcnManagementService.create(context);
-                ServiceManager.addService(Context.VCN_MANAGEMENT_SERVICE, vcnManagement);
+                mSystemServiceManager.startService(VCN_SERVICE_INITIALIZER_CLASS);
             } catch (Throwable e) {
                 reportWtf("starting VCN Management Service", e);
             }
@@ -3030,10 +3033,10 @@ public final class SystemServer implements Dumpable {
         final MediaRouterService mediaRouterF = mediaRouter;
         final MmsServiceBroker mmsServiceF = mmsService;
         final VpnManagerService vpnManagerF = vpnManager;
-        final VcnManagementService vcnManagementF = vcnManagement;
         final WindowManagerService windowManagerF = wm;
         final ConnectivityManager connectivityF = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final VcnManager vcnManagementF = (VcnManager) context.getSystemService(VcnManager.class);
 
         // We now tell the activity manager it is okay to run third party
         // code.  It will call back into us once it has gotten to the state

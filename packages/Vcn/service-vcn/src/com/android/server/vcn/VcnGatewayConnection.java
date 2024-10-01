@@ -35,6 +35,7 @@ import static com.android.server.VcnManagementService.LOCAL_LOG;
 import static com.android.server.VcnManagementService.VDBG;
 import static com.android.server.vcn.util.PersistableBundleUtils.PersistableBundleWrapper;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
@@ -59,7 +60,6 @@ import android.net.NetworkScore;
 import android.net.RouteInfo;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.Uri;
-import android.net.annotations.PolicyDirection;
 import android.net.ipsec.ike.ChildSaProposal;
 import android.net.ipsec.ike.ChildSessionCallback;
 import android.net.ipsec.ike.ChildSessionConfiguration;
@@ -80,7 +80,6 @@ import android.net.vcn.VcnManager;
 import android.net.vcn.VcnTransportInfo;
 import android.net.wifi.WifiInfo;
 import android.os.Handler;
-import android.os.HandlerExecutor;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.os.PowerManager;
@@ -98,6 +97,7 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.WakeupMessage;
+import com.android.modules.utils.HandlerExecutor;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.Vcn.VcnGatewayStatusCallback;
 import com.android.server.vcn.routeselection.UnderlyingNetworkController;
@@ -108,6 +108,8 @@ import com.android.server.vcn.util.MtuUtils;
 import com.android.server.vcn.util.OneWayBoolean;
 
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -173,6 +175,15 @@ import java.util.function.Consumer;
  */
 public class VcnGatewayConnection extends StateMachine {
     private static final String TAG = VcnGatewayConnection.class.getSimpleName();
+
+    /**
+     * IPsec traffic direction.
+     *
+     * @hide
+     */
+    @IntDef(value = {IpSecManager.DIRECTION_IN, IpSecManager.DIRECTION_OUT})
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface PolicyDirection {}
 
     /** Default number of parallel SAs requested */
     static final int TUNNEL_AGGREGATION_SA_COUNT_MAX_DEFAULT = 1;

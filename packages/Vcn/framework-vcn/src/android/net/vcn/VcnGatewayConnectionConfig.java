@@ -89,6 +89,7 @@ public final class VcnGatewayConnectionConfig {
     /** NAT timeout not set @hide */
     @FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @SuppressLint("MinMaxConstant")
     public static final int MIN_UDP_PORT_4500_NAT_TIMEOUT_UNSET = -1;
 
     /** @hide */
