@@ -18,14 +18,17 @@ package android.net.vcn;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.net.vcn.Flags.FLAG_MAINLINE_VCN_MODULE_API;
 
 import static com.android.internal.annotations.VisibleForTesting.Visibility;
 import static com.android.server.vcn.util.PersistableBundleUtils.INTEGER_DESERIALIZER;
 import static com.android.server.vcn.util.PersistableBundleUtils.INTEGER_SERIALIZER;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.content.Context;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
@@ -196,7 +199,8 @@ public final class VcnConfig implements Parcelable {
      *
      * @hide
      */
-    // TODO: Expose it as SystemApi
+    @FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public boolean isTestMode() {
         return mIsTestModeProfile;
     }
@@ -374,7 +378,8 @@ public final class VcnConfig implements Parcelable {
          * @return this {@link Builder} instance, for chaining
          * @hide
          */
-        // TODO: Expose it as SystemApi
+        @FlaggedApi(FLAG_MAINLINE_VCN_MODULE_API)
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
         @NonNull
         public Builder setIsTestMode(boolean isTestMode) {
             mIsTestModeProfile = isTestMode;
