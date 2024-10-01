@@ -15,6 +15,8 @@
  */
 package android.net.vcn;
 
+import static com.android.internal.annotations.VisibleForTesting.Visibility;
+
 import static java.util.Objects.requireNonNull;
 
 import android.annotation.IntDef;
