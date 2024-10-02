@@ -116,6 +116,30 @@
       },
       "revId": "3a1eb75c34007141b8cdc055e13189db6ee690c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8777555e_cb2b27a4",
+        "filename": "core/java/android/app/UiAutomationConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1472174
+      },
+      "writtenOn": "2024-10-02T02:59:39Z",
+      "side": 1,
+      "message": "In my understanding, developers would assume all the argument is non-null, so adding this annotation could help them using this api easier. I think it\u0027s ok to not to add it for consistency. The API council might also review the argument because from the guildline, using non-null parameter is better\nhttps://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#prefer-nonnull-arguments",
+      "parentUuid": "77d181a0_2c8660de",
+      "range": {
+        "startLine": 632,
+        "startChar": 11,
+        "endLine": 632,
+        "endChar": 17
+      },
+      "revId": "3a1eb75c34007141b8cdc055e13189db6ee690c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
