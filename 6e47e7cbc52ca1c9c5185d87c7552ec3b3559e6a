@@ -1,0 +1,68 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ffd34cb_507c482f",
+        "filename": "core/java/android/net/vcn/VcnUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-10-02T00:13:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s better, but you could do:\n\ntry {\n return (WifiInfo) underlyingCaps.getTransportInfo()\n} (catch ClassCastException) {\n return null;\n}\n\nYour call.",
+      "range": {
+        "startLine": 50,
+        "startChar": 54,
+        "endLine": 50,
+        "endChar": 88
+      },
+      "revId": "6e47e7cbc52ca1c9c5185d87c7552ec3b3559e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "678a8dc2_ab71b83e",
+        "filename": "core/java/android/net/vcn/VcnUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-10-02T00:13:29Z",
+      "side": 1,
+      "message": "Is this allowed in public?",
+      "range": {
+        "startLine": 87,
+        "startChar": 25,
+        "endLine": 87,
+        "endChar": 32
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f9dcf93a_662ad226",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/net/vcn/VcnUtils.java",
+              "range": {
+                "startLine": 87,
+                "startChar": 0,
+                "endLine": 90,
+                "endChar": 0
+              },
+              "replacement": "        // As of Android Baklava, VCN has one underlying network, and only one.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6e47e7cbc52ca1c9c5185d87c7552ec3b3559e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
