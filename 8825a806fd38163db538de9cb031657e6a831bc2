@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a55ba5d_8da5b2a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-02T14:59:32Z",
+      "side": 1,
+      "message": "Hey Nate, I\u0027m not super sure about how to word this change. Is it ok to just say \"later WebView versions\" or should we only change documentation when the WebView version supporting this change (M122) becomes the default WebView version for an Android release?\n\nI\u0027m also not sure if using \"no-op\" is acceptable. Should be be explicit about the fact that we still call the `callback` with `true`?",
+      "revId": "8825a806fd38163db538de9cb031657e6a831bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
