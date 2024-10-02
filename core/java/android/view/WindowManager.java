@@ -1447,7 +1447,7 @@ public interface WindowManager extends ViewManager {
      * @hide
      */
     @ChangeId
-    @EnabledSince(targetSdkVersion = Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    @EnabledSince(targetSdkVersion = Build.VERSION_CODES.TIRAMISU)
     long ENABLE_ACTIVITY_EMBEDDING_FOR_ANDROID_15 = 306666082L;
 
     /**
