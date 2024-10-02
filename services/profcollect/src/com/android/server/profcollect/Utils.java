@@ -25,9 +25,13 @@ import android.util.Log;
 
 import com.android.internal.os.BackgroundThread;
 
+import java.time.Instant;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class Utils {
+
+    private static Instant lastTraceTime = Instant.EPOCH;
+    private static final int TRACE_COOLDOWN_SECONDS = 30;
 
     public static boolean withFrequency(String configName, int defaultFrequency) {
         int threshold = DeviceConfig.getInt(
@@ -38,6 +42,9 @@ public final class Utils {
 
     public static boolean traceSystem(IProfCollectd mIProfcollect, String eventName) {
         if (mIProfcollect == null) {
+            return false;
+        }
+        if (isInCooldownOrReset()) {
             return false;
         }
         BackgroundThread.get().getThreadHandler().post(() -> {
@@ -52,6 +59,9 @@ public final class Utils {
 
     public static boolean traceSystem(IProfCollectd mIProfcollect, String eventName, int delayMs) {
         if (mIProfcollect == null) {
+            return false;
+        }
+        if (isInCooldownOrReset()) {
             return false;
         }
         BackgroundThread.get().getThreadHandler().postDelayed(() -> {
@@ -69,6 +79,9 @@ public final class Utils {
         if (mIProfcollect == null) {
             return false;
         }
+        if (isInCooldownOrReset()) {
+            return false;
+        }
         BackgroundThread.get().getThreadHandler().post(() -> {
             try {
                 mIProfcollect.trace_process(eventName,
@@ -78,6 +91,14 @@ public final class Utils {
                 Log.e(LOG_TAG, "Failed to initiate trace: " + e.getMessage());
             }
         });
+        return true;
+    }
+
+    private static boolean isInCooldownOrReset() {
+        if (!Instant.now().isBefore(lastTraceTime.plusSeconds(TRACE_COOLDOWN_SECONDS))) {
+            lastTraceTime = Instant.now();
+            return false;
+        }
         return true;
     }
 }
