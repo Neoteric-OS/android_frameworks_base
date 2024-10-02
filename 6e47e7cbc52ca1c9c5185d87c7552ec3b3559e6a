@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d43e900_64d26b68",
+        "filename": "core/java/android/net/vcn/VcnUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-10-02T00:29:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7ffd34cb_507c482f",
+      "range": {
+        "startLine": 50,
+        "startChar": 54,
+        "endLine": 50,
+        "endChar": 88
+      },
+      "revId": "6e47e7cbc52ca1c9c5185d87c7552ec3b3559e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "678a8dc2_ab71b83e",
@@ -61,6 +85,30 @@
           ]
         }
       ],
+      "revId": "6e47e7cbc52ca1c9c5185d87c7552ec3b3559e6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9525d849_1b267b8e",
+        "filename": "core/java/android/net/vcn/VcnUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-10-02T00:29:45Z",
+      "side": 1,
+      "message": "Hmm I\u0027m not sure",
+      "parentUuid": "678a8dc2_ab71b83e",
+      "range": {
+        "startLine": 87,
+        "startChar": 25,
+        "endLine": 87,
+        "endChar": 32
+      },
       "revId": "6e47e7cbc52ca1c9c5185d87c7552ec3b3559e6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
