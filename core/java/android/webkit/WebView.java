@@ -1480,7 +1480,8 @@ public class WebView extends AbsoluteLayout
     }
 
     /**
-     * Starts Safe Browsing initialization.
+     * Starts Safe Browsing initialization. In later versions of WebView, this
+     * is a no-op.
      * <p>
      * URL loads are not guaranteed to be protected by Safe Browsing until after {@code callback} is
      * invoked with {@code true}. Safe Browsing is not fully supported on all devices. For those
