@@ -55,6 +55,7 @@ import android.view.WindowManagerGlobal;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.policy.IKeyguardLockedStateListener;
+import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.Preconditions;
 import com.android.internal.widget.IWeakEscrowTokenActivatedListener;
 import com.android.internal.widget.IWeakEscrowTokenRemovedListener;
@@ -67,7 +68,6 @@ import com.android.internal.widget.VerifyCredentialResponse;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -1041,7 +1041,7 @@ public class KeyguardManager {
             Log.e(TAG, "Save lock exception", e);
             success = false;
         } finally {
-            Arrays.fill(password, (byte) 0);
+            ArrayUtils.zeroize(password);
         }
         return success;
     }
