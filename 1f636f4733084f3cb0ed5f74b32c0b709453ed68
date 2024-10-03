@@ -34,6 +34,52 @@
       "parentUuid": "63232c39_69613e8f",
       "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc44c00b_777164ed",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2024-10-03T16:39:59Z",
+      "side": 1,
+      "message": "I suggest moving this toward the bottom and labeling this sentence as the `@deprecated` message. I think we can deprecate the API since it\u0027s a NOOP now.",
+      "range": {
+        "startLine": 1488,
+        "startChar": 7,
+        "endLine": 1489,
+        "endChar": 24
+      },
+      "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe5c5426_ab883cc1",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2024-10-03T16:39:59Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 1489,
+        "startChar": 0,
+        "endLine": 1489,
+        "endChar": 101
+      },
+      "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
