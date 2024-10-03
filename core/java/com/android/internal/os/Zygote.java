@@ -367,7 +367,7 @@ public final class Zygote {
             int[] fdsToIgnore, boolean startChildZygote, String instructionSet, String appDataDir,
             boolean isTopApp, String[] pkgDataInfoList, String[] allowlistedDataInfoList,
             boolean bindMountAppDataDirs, boolean bindMountAppStorageDirs,
-            boolean bindMountSyspropOverrides) {
+            boolean bindMountSyspropOverrides, int targetSdkVersion) {
         ZygoteHooks.preFork();
 
         int pid = nativeForkAndSpecialize(
@@ -376,6 +376,7 @@ public final class Zygote {
                 pkgDataInfoList, allowlistedDataInfoList, bindMountAppDataDirs,
                 bindMountAppStorageDirs, bindMountSyspropOverrides);
         if (pid == 0) {
+            Zygote.disableExecuteOnly(targetSdkVersion);
             // Note that this event ends at the end of handleChildProc,
             Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "PostFork");
 
@@ -879,6 +880,8 @@ public final class Zygote {
                                  args.mBindMountAppDataDirs, args.mBindMountAppStorageDirs,
                                  args.mBindMountSyspropOverrides);
 
+            disableExecuteOnly(args.mTargetSdkVersion);
+
             // While `specializeAppProcess` sets the thread name on the process's main thread, this
             // is distinct from the app process name which appears in stack traces, as the latter is
             // sourced from the argument buffer of the Process class. Set the app process name here.
@@ -962,6 +965,18 @@ public final class Zygote {
         }
     }
 
+    /**
+     * Mark execute-only segments of libraries read+execute for apps with targetSdkVersion < V.
+     * @param targetSdkVersion SDK version of the process
+     */
+    protected static void disableExecuteOnly(int targetSdkVersion) {
+        if ((targetSdkVersion < Build.VERSION_CODES.VANILLA_ICE_CREAM)
+                && !nativeDisableExecuteOnly()) {
+            Log.e("Zygote", "Failed to set libraries to read+execute.");
+        }
+    }
+
+    private static native boolean nativeDisableExecuteOnly();
     /**
      * @return  Raw file descriptors for the read-end of USAP reporting pipes.
      */
