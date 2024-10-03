@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66e68708_5b1d0529",
+        "filename": "media/jni/android_media_ImageReader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1874728
+      },
+      "writtenOn": "2024-10-03T23:16:49Z",
+      "side": 1,
+      "message": "Does this mean that normally BufferItem \u003d\u003d nullptr should not happen (so it\u0027s an exception)? Then why did we see it in our crashes? Are there any known causes that can lead to this invalid state?",
+      "range": {
+        "startLine": 961,
+        "startChar": 0,
+        "endLine": 965,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f492c35d_6ba3080d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/jni/android_media_ImageReader.cpp",
+              "range": {
+                "startLine": 962,
+                "startChar": 0,
+                "endLine": 962,
+                "endChar": 0
+              },
+              "replacement": "        // This should not happen, but we have seen this in the wild.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b910649e09238938255ca3c67653c100791ef616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
