@@ -108,7 +108,7 @@ import com.android.internal.os.BinderInternal;
 import com.android.internal.os.RuntimeInit;
 import com.android.internal.policy.AttributeCache;
 import com.android.internal.protolog.ProtoLog;
-import com.android.internal.protolog.ProtoLogConfigurationService;
+import com.android.internal.protolog.ProtoLogConfigurationServiceImpl;
 import com.android.internal.protolog.ProtoLogGroup;
 import com.android.internal.util.ConcurrentUtils;
 import com.android.internal.util.EmergencyAffordanceManager;
@@ -1101,7 +1101,7 @@ public final class SystemServer implements Dumpable {
         if (android.tracing.Flags.clientSideProtoLogging()) {
             t.traceBegin("StartProtoLogConfigurationService");
             ServiceManager.addService(
-                    Context.PROTOLOG_CONFIGURATION_SERVICE, new ProtoLogConfigurationService());
+                    Context.PROTOLOG_CONFIGURATION_SERVICE, new ProtoLogConfigurationServiceImpl());
             t.traceEnd();
         }
 
