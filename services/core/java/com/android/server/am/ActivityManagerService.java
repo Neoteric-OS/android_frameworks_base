@@ -13143,6 +13143,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             final long lostRAM = memInfo.getTotalSizeKb()
                     - (ss[INDEX_TOTAL_PSS] - ss[INDEX_TOTAL_SWAP_PSS])
                     - memInfo.getFreeSizeKb() - memInfo.getCachedSizeKb()
+                    - memInfo.getShmemSizeKb() // NR_SHMEM is accounted twice (kernelUsed and NR_FILE)
                     - kernelUsed - memInfo.getZramTotalSizeKb();
             if (!opts.isCompact) {
                 pw.print(" Used RAM: "); pw.print(stringifyKBSize(ss[INDEX_TOTAL_PSS] - cachedPss
@@ -13656,6 +13657,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             long lostRAM = memInfo.getTotalSizeKb()
                     - (ss[INDEX_TOTAL_PSS] - ss[INDEX_TOTAL_SWAP_PSS])
                     - memInfo.getFreeSizeKb() - memInfo.getCachedSizeKb()
+                    - memInfo.getShmemSizeKb() // NR_SHMEM is already included in NR_FILE
                     - memInfo.getKernelUsedSizeKb() - memInfo.getZramTotalSizeKb();
             proto.write(MemInfoDumpProto.USED_PSS_KB, ss[INDEX_TOTAL_PSS] - cachedPss);
             proto.write(MemInfoDumpProto.USED_KERNEL_KB, memInfo.getKernelUsedSizeKb());
