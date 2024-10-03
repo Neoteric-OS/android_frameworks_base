@@ -496,4 +496,38 @@ public class ArrayUtilsTest {
             // expected
         }
     }
+
+    @Test
+    @SmallTest
+    public void testZeroizeByteArray() {
+        final int length = 10;
+
+        byte[] array = ArrayUtils.newNonMovableByteArray(length);
+        assertArrayEquals(array, new byte[length]);
+        Arrays.fill(array, (byte) 0xff);
+        ArrayUtils.zeroize(array);
+        assertArrayEquals(array, new byte[length]);
+
+        array = new byte[length];
+        Arrays.fill(array, (byte) 0xff);
+        ArrayUtils.zeroize(array);
+        assertArrayEquals(array, new byte[length]);
+    }
+
+    @Test
+    @SmallTest
+    public void testZeroizeCharArray() {
+        final int length = 10;
+
+        char[] array = ArrayUtils.newNonMovableCharArray(length);
+        assertArrayEquals(array, new char[length]);
+        Arrays.fill(array, (char) 0xff);
+        ArrayUtils.zeroize(array);
+        assertArrayEquals(array, new char[length]);
+
+        array = new char[length];
+        Arrays.fill(array, (char) 0xff);
+        ArrayUtils.zeroize(array);
+        assertArrayEquals(array, new char[length]);
+    }
 }
