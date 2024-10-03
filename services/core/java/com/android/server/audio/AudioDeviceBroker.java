@@ -539,7 +539,8 @@ public class AudioDeviceBroker {
             AudioDeviceInfo.TYPE_BLE_SPEAKER,
             AudioDeviceInfo.TYPE_LINE_ANALOG,
             AudioDeviceInfo.TYPE_HDMI,
-            AudioDeviceInfo.TYPE_AUX_LINE
+            AudioDeviceInfo.TYPE_AUX_LINE,
+            AudioDeviceInfo.TYPE_BUS
     };
 
     /*package */ static boolean isValidCommunicationDevice(@NonNull AudioDeviceInfo device) {
