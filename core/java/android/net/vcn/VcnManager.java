@@ -28,13 +28,13 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
-import android.os.Binder;
 import android.os.ParcelUuid;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.net.module.util.BinderUtils;
 
 import java.io.IOException;
 import java.lang.annotation.Retention;
@@ -707,7 +707,7 @@ public class VcnManager {
 
         @Override
         public void onPolicyChanged() {
-            Binder.withCleanCallingIdentity(
+            BinderUtils.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> mListener.onPolicyChanged()));
         }
     }
@@ -730,7 +730,7 @@ public class VcnManager {
 
         @Override
         public void onVcnStatusChanged(@VcnStatusCode int statusCode) {
-            Binder.withCleanCallingIdentity(
+            BinderUtils.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> mCallback.onStatusChanged(statusCode)));
         }
 
@@ -743,7 +743,7 @@ public class VcnManager {
                 @Nullable String exceptionMessage) {
             final Throwable cause = createThrowableByClassName(exceptionClass, exceptionMessage);
 
-            Binder.withCleanCallingIdentity(
+            BinderUtils.withCleanCallingIdentity(
                     () ->
                             mExecutor.execute(
                                     () ->

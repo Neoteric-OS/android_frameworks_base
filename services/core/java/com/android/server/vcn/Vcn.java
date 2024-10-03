@@ -39,7 +39,6 @@ import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnManager.VcnErrorCode;
 import android.os.Handler;
-import android.os.HandlerExecutor;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.provider.Settings;

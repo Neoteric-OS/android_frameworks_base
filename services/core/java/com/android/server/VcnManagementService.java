@@ -86,6 +86,7 @@ import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.net.module.util.LocationPermissionChecker;
 import com.android.net.module.util.PermissionUtils;
+import com.android.net.module.util.BinderUtils;
 import com.android.server.vcn.TelephonySubscriptionTracker;
 import com.android.server.vcn.Vcn;
 import com.android.server.vcn.VcnContext;
@@ -448,7 +449,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         if (Flags.enforceMainUser()) {
             final UserManager userManager = mContext.getSystemService(UserManager.class);
 
-            Binder.withCleanCallingIdentity(
+            BinderUtils.withCleanCallingIdentity(
                     () -> {
                         if (!Objects.equals(userManager.getMainUser(), userHandle)) {
                             throw new SecurityException(
@@ -472,7 +473,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         // TODO (b/172619301): Check based on events propagated from CarrierPrivilegesTracker
         final SubscriptionManager subMgr = mContext.getSystemService(SubscriptionManager.class);
         final List<SubscriptionInfo> subscriptionInfos = new ArrayList<>();
-        Binder.withCleanCallingIdentity(
+        BinderUtils.withCleanCallingIdentity(
                 () -> {
                     List<SubscriptionInfo> subsInGroup =
                             subMgr.getSubscriptionsInGroup(subscriptionGroup);
@@ -704,7 +705,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @GuardedBy("mLock")
     private void notifyAllPolicyListenersLocked() {
         for (final PolicyListenerBinderDeath policyListener : mRegisteredPolicyListeners.values()) {
-            Binder.withCleanCallingIdentity(() -> {
+            BinderUtils.withCleanCallingIdentity(() -> {
                 try {
                     policyListener.mListener.onPolicyChanged();
                 } catch (RemoteException e) {
@@ -719,7 +720,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             @NonNull ParcelUuid subGroup, @VcnStatusCode int statusCode) {
         for (final VcnStatusCallbackInfo cbInfo : mRegisteredStatusCallbacks.values()) {
             if (isCallbackPermissioned(cbInfo, subGroup)) {
-                Binder.withCleanCallingIdentity(() -> {
+                BinderUtils.withCleanCallingIdentity(() -> {
                     try {
                         cbInfo.mCallback.onVcnStatusChanged(statusCode);
                     } catch (RemoteException e) {
@@ -799,7 +800,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         enforceManageTestNetworksForTestMode(config);
         enforceCallingUserAndCarrierPrivilege(subscriptionGroup, opPkgName);
 
-        Binder.withCleanCallingIdentity(() -> {
+        BinderUtils.withCleanCallingIdentity(() -> {
             synchronized (mLock) {
                 mConfigs.put(subscriptionGroup, config);
                 startOrUpdateVcnLocked(subscriptionGroup, config);
@@ -857,7 +858,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 .checkPackage(mDeps.getBinderCallingUid(), opPkgName);
         enforceCarrierPrivilegeOrProvisioningPackage(subscriptionGroup, opPkgName);
 
-        Binder.withCleanCallingIdentity(() -> {
+        BinderUtils.withCleanCallingIdentity(() -> {
             synchronized (mLock) {
                 stopAndClearVcnConfigInternalLocked(subscriptionGroup);
                 writeConfigsToDiskLocked();
@@ -995,7 +996,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 android.Manifest.permission.NETWORK_FACTORY,
                 android.Manifest.permission.MANAGE_TEST_NETWORKS);
 
-        Binder.withCleanCallingIdentity(() -> {
+        BinderUtils.withCleanCallingIdentity(() -> {
             PolicyListenerBinderDeath listenerBinderDeath = new PolicyListenerBinderDeath(listener);
 
             synchronized (mLock) {
@@ -1022,7 +1023,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 android.Manifest.permission.NETWORK_FACTORY,
                 android.Manifest.permission.MANAGE_TEST_NETWORKS);
 
-        Binder.withCleanCallingIdentity(() -> {
+        BinderUtils.withCleanCallingIdentity(() -> {
             synchronized (mLock) {
                 PolicyListenerBinderDeath listenerBinderDeath =
                         mRegisteredPolicyListeners.remove(listener.asBinder());
@@ -1086,7 +1087,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                             + " MANAGE_TEST_NETWORKS");
         }
 
-        return Binder.withCleanCallingIdentity(() -> {
+        return BinderUtils.withCleanCallingIdentity(() -> {
             // Defensive copy in case this call is in-process and the given NetworkCapabilities
             // mutates
             final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
@@ -1525,7 +1526,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 // Notify all registered StatusCallbacks for this subGroup
                 for (VcnStatusCallbackInfo cbInfo : mRegisteredStatusCallbacks.values()) {
                     if (isCallbackPermissioned(cbInfo, mSubGroup)) {
-                        Binder.withCleanCallingIdentity(() -> {
+                        BinderUtils.withCleanCallingIdentity(() -> {
                             try {
                                 cbInfo.mCallback.onGatewayConnectionError(
                                         gatewayConnectionName,
