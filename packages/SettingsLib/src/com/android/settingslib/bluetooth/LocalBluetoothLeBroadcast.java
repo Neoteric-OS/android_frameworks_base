@@ -381,9 +381,9 @@ public class LocalBluetoothLeBroadcast implements LocalBluetoothProfile {
                                         + ", state = "
                                         + state);
                     }
-                    if (BluetoothUtils.isConnected(state)) {
-                        updateFallbackActiveDeviceIfNeeded();
-                    }
+                    //if (BluetoothUtils.isConnected(state)) {
+                    //    updateFallbackActiveDeviceIfNeeded();
+                    //}
                 }
             };
 
