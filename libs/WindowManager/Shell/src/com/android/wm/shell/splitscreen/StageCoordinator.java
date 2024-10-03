@@ -1176,6 +1176,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         mSplitTransitions.startDismissTransition(wct, this, mLastActiveStage, reason);
         setSplitsVisible(false);
         mBreakOnNextWake = false;
+        logExit(reason);
     }
 
     void exitSplitScreenOnHide(boolean exitSplitScreenOnHide) {
@@ -1266,6 +1267,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         final WindowContainerTransaction wct = new WindowContainerTransaction();
         prepareExitSplitScreen(stage, wct);
         mSplitTransitions.startDismissTransition(wct, this, stage, exitReason);
+        logExit(exitReason);
     }
 
     /**
@@ -1362,6 +1364,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             mMainStage.doForAllChildTasks(taskId -> recentTasks.removeSplitPair(taskId));
             mSideStage.doForAllChildTasks(taskId -> recentTasks.removeSplitPair(taskId));
         });
+        logExit(exitReason);
     }
 
     /**
@@ -1580,7 +1583,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         if (stage == STAGE_TYPE_MAIN) {
             mLogger.logMainStageAppChange(getMainStagePosition(), mMainStage.getTopChildTaskUid(),
                     mSplitLayout.isLeftRightSplit());
-        } else {
+        } else if (stage == STAGE_TYPE_SIDE) {
             mLogger.logSideStageAppChange(getSideStagePosition(), mSideStage.getTopChildTaskUid(),
                     mSplitLayout.isLeftRightSplit());
         }
@@ -2276,6 +2279,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         if (isOpening && inFullscreen) {
             // One task is opening into fullscreen mode, remove the corresponding split record.
             mRecentTasks.ifPresent(recentTasks -> recentTasks.removeSplitPair(triggerTask.taskId));
+            logExit(EXIT_REASON_FULLSCREEN_REQUEST);
         }
 
         if (isSplitActive()) {
@@ -2403,6 +2407,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             if (triggerTask != null) {
                 mRecentTasks.ifPresent(
                         recentTasks -> recentTasks.removeSplitPair(triggerTask.taskId));
+                logExit(EXIT_REASON_CHILD_TASK_ENTER_PIP);
             }
             @StageType int topStage = STAGE_TYPE_UNDEFINED;
             if (isSplitScreenVisible()) {
@@ -2744,7 +2749,10 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                 final int dismissTop = mainChild != null ? STAGE_TYPE_MAIN :
                         (sideChild != null ? STAGE_TYPE_SIDE : STAGE_TYPE_UNDEFINED);
                 pendingEnter.cancel(
-                        (cancelWct, cancelT) -> prepareExitSplitScreen(dismissTop, cancelWct));
+                        (cancelWct, cancelT) -> {
+                            prepareExitSplitScreen(dismissTop, cancelWct);
+                            logExit(EXIT_REASON_UNKNOWN);
+                        });
                 Log.w(TAG, splitFailureMessage("startPendingEnterAnimation",
                         "launched 2 tasks in split, but didn't receive "
                         + "2 tasks in transition. Possibly one of them failed to launch"));

@@ -41,6 +41,8 @@ android_library {
         "SettingsLibIllustrationPreference",
         "SettingsLibLayoutPreference",
         "SettingsLibMainSwitchPreference",
+        "SettingsLibMetadata",
+        "SettingsLibPreference",
         "SettingsLibProfileSelector",
         "SettingsLibProgressBar",
         "SettingsLibRestrictedLockUtils",

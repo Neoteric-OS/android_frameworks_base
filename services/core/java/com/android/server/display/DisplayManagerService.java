@@ -2179,9 +2179,7 @@ public final class DisplayManagerService extends SystemService {
 
             HighBrightnessModeMetadata hbmMetadata =
                     mHighBrightnessModeMetadataMapper.getHighBrightnessModeMetadataLocked(display);
-            if (hbmMetadata != null) {
-                dpc.onDisplayChanged(hbmMetadata, leadDisplayId);
-            }
+            dpc.onDisplayChanged(hbmMetadata, leadDisplayId);
         }
     }
 
@@ -2300,9 +2298,7 @@ public final class DisplayManagerService extends SystemService {
 
             HighBrightnessModeMetadata hbmMetadata =
                     mHighBrightnessModeMetadataMapper.getHighBrightnessModeMetadataLocked(display);
-            if (hbmMetadata != null) {
-                dpc.onDisplayChanged(hbmMetadata, leadDisplayId);
-            }
+            dpc.onDisplayChanged(hbmMetadata, leadDisplayId);
         }
     }
 
@@ -3580,6 +3576,18 @@ public final class DisplayManagerService extends SystemService {
         DisplayManagerFlags getFlags() {
             return new DisplayManagerFlags();
         }
+
+        DisplayPowerController getDisplayPowerController(Context context,
+                DisplayPowerController.Injector injector,
+                DisplayManagerInternal.DisplayPowerCallbacks callbacks, Handler handler,
+                SensorManager sensorManager, DisplayBlanker blanker, LogicalDisplay logicalDisplay,
+                BrightnessTracker brightnessTracker, BrightnessSetting brightnessSetting,
+                Runnable onBrightnessChangeRunnable, HighBrightnessModeMetadata hbmMetadata,
+                boolean bootCompleted, DisplayManagerFlags flags) {
+            return new DisplayPowerController(context, injector, callbacks, handler, sensorManager,
+                    blanker, logicalDisplay, brightnessTracker, brightnessSetting,
+                    onBrightnessChangeRunnable, hbmMetadata, bootCompleted, flags);
+        }
     }
 
     @VisibleForTesting
@@ -3632,7 +3640,7 @@ public final class DisplayManagerService extends SystemService {
         // with the corresponding displaydevice.
         HighBrightnessModeMetadata hbmMetadata =
                 mHighBrightnessModeMetadataMapper.getHighBrightnessModeMetadataLocked(display);
-        displayPowerController = new DisplayPowerController(
+        displayPowerController = mInjector.getDisplayPowerController(
                 mContext, /* injector= */ null, mDisplayPowerCallbacks, mPowerHandler,
                 mSensorManager, mDisplayBlanker, display, mBrightnessTracker, brightnessSetting,
                 () -> handleBrightnessChange(display), hbmMetadata, mBootCompleted, mFlags);
