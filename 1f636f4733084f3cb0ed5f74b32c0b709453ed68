@@ -16,6 +16,24 @@
       "message": "@lus@google.com Are there any plans to introduce a `initSafeBrowsing` equivalent for the new SB client? If not, then we can mark this API as deprecated. If there are potential plans, then I\u0027ll refrain from doing that.",
       "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "154a366f_55dd8484",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1053813
+      },
+      "writtenOn": "2024-10-03T12:43:50Z",
+      "side": 1,
+      "message": "We don\u0027t plan on adding the api. \n\nChrome does a prewarming of SB by calling with an empty url. Webview will prewarm SB through the call to getSupportedThreatTypes. Both achives the same loading of the internal DBs to have them ready when the first call comes in, and even if there is any prewarming the new code path looks up the results from disks and gives the correct answer",
+      "parentUuid": "63232c39_69613e8f",
+      "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
