@@ -3,6 +3,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a25be2be_33da4a4f",
+        "filename": "media/jni/android_media_ImageReader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2024-10-03T23:33:28Z",
+      "side": 1,
+      "message": "Assuming the image is invalid, shouldn\u0027t the exception appear much earlier on java side: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/media/java/android/media/ImageReader.java;l\u003d1271;drc\u003d1b1eb1b13c701c39b380dcb8dc3205f6f99410a5?q\u003dImageReader.java\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain",
+      "range": {
+        "startLine": 961,
+        "startChar": 4,
+        "endLine": 961,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "27413538_515eac99",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/jni/android_media_ImageReader.cpp",
+              "range": {
+                "startLine": 961,
+                "startChar": 0,
+                "endLine": 966,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b910649e09238938255ca3c67653c100791ef616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "66e68708_5b1d0529",
         "filename": "media/jni/android_media_ImageReader.cpp",
         "patchSetId": 1
