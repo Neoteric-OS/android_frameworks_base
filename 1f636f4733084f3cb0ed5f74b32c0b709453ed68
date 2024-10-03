@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63232c39_69613e8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-03T09:43:02Z",
+      "side": 1,
+      "message": "@lus@google.com Are there any plans to introduce a `initSafeBrowsing` equivalent for the new SB client? If not, then we can mark this API as deprecated. If there are potential plans, then I\u0027ll refrain from doing that.",
+      "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
