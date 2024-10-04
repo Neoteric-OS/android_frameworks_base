@@ -1,0 +1,85 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35c31993_9f725dbb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2024-10-04T17:04:05Z",
+      "side": 1,
+      "message": "Can you file a buganizer ticket in https://b.corp.google.com/issues/new?component\u003d76427\u0026template\u003d26711 to track this API change? It\u0027s helpful to track API changes with a bug since this gives the API council a way to track the review.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5610c0e1_f52cfcab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2024-10-04T17:04:05Z",
+      "side": 1,
+      "message": "LGTM. Do you want to send a similar change for `WebViewCompat.java`?",
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24466105_a0febc6c",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2024-10-04T17:04:05Z",
+      "side": 1,
+      "message": "suggestion: let\u0027s rephrase this as \"newer WebView versions,\" to avoid misinterpretation as \"freshly instantiated WebViews\".",
+      "range": {
+        "startLine": 1498,
+        "startChar": 22,
+        "endLine": 1498,
+        "endChar": 36
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a97d425e_c118358e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/webkit/WebView.java",
+              "range": {
+                "startLine": 1498,
+                "startChar": 0,
+                "endLine": 1499,
+                "endChar": 0
+              },
+              "replacement": "      * @deprecated In newer WebView versions, this initialization is done automatically,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
