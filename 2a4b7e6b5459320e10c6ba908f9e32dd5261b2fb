@@ -63,6 +63,30 @@
       },
       "revId": "2a4b7e6b5459320e10c6ba908f9e32dd5261b2fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85912d85_586d238d",
+        "filename": "services/core/java/com/android/server/location/provider/LocationProviderManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2024-10-04T23:15:56Z",
+      "side": 1,
+      "message": "Hmm, is it possible something threw an exception in the super class onRegister()? I sympathize with the problem, but suspect there may be better potential ways of dealing with this. That bug is on my queue to look at but I haven\u0027t gotten to it yet unfortunately.",
+      "parentUuid": "71872293_ec262fbe",
+      "range": {
+        "startLine": 423,
+        "startChar": 12,
+        "endLine": 430,
+        "endChar": 31
+      },
+      "revId": "2a4b7e6b5459320e10c6ba908f9e32dd5261b2fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
