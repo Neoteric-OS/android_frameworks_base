@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4b1bbef1_ab32caf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-10-04T20:24:14Z",
+      "side": 1,
+      "message": "Hi Divya / Charan thanks for the patch. I found a similar but slightly different issue in the accounting. Could you open a bug for discussion. \n\n\nFor this patch:\n\nCould you help me understand where we end up including the shmem pages in cached?\n\nMy understanding is that shmem pages are swap backed\n\nhttps://github.com/torvalds/linux/blob/196145c606d0f816fd3926483cb1ff87e09c2c0b/fs/proc/task_mmu.c#L696-L697\n\n```c\n    else if (folio_test_swapbacked(folio))\n        mss-\u003epss_shmem +\u003d pss;\n```\n\ni.e. a page cannot be in the swap cache unless it is swap backed\n\nIf we had to allocate page in `shmem_read_folio_gfp()`\nhttps://github.com/torvalds/linux/blob/196145c606d0f816fd3926483cb1ff87e09c2c0b/mm/shmem.c#L5178-L5195\n\nthen we mark it swapbacked:\nhttps://github.com/torvalds/linux/blob/196145c606d0f816fd3926483cb1ff87e09c2c0b/mm/shmem.c#L1787-L1789\n\n```c\nallocated:\n\t__folio_set_locked(folio);\n\t__folio_set_swapbacked(folio);\n```\n\nFor the cached pages we already removed the swap cache pages.\n\n\nWe can move these into swap cache by `shmem_read_folio` or `do_swpa_page()`.\n\nThe cached accounting already removed the swap cache pages: \n\nhttps://github.com/torvalds/linux/blob/196145c606d0f816fd3926483cb1ff87e09c2c0b/fs/proc/meminfo.c#L48-L49\n\n```c\n\tcached \u003d global_node_page_state(NR_FILE_PAGES) -\n\t\t\ttotal_swapcache_pages() - i.bufferram;\n```\n\nSo I think there is a double accounting but not for all shmem pages just the portion -- `Total Swap Backed - Total Swap Cache`\n\n\nI\u0027d like to discuss further in bug since we have similar but slightly differnt issue we were investigating.\n\nThanks,  \nKalesh",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "c150cadcc79614218437152323d35685b5625380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a62f237_79f755be",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -80,6 +103,52 @@
         "id": 1157738
       },
       "writtenOn": "2024-10-04T20:04:01Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 13146,
+        "startChar": 0,
+        "endLine": 13146,
+        "endChar": 102
+      },
+      "revId": "c150cadcc79614218437152323d35685b5625380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e1202a6_14d2a168",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13146,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-10-04T20:24:14Z",
+      "side": 1,
+      "message": "Should this be added back once instead? IIUC we are double subtracting it? Once in kernel used and once in cached memory?",
+      "range": {
+        "startLine": 13146,
+        "startChar": 22,
+        "endLine": 13146,
+        "endChar": 44
+      },
+      "revId": "c150cadcc79614218437152323d35685b5625380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44954010_8e93e200",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13146,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-10-04T20:24:14Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
       "range": {
