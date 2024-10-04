@@ -80,6 +80,52 @@
       ],
       "revId": "79e67b822720650456ad7207bcd264395519f2b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db39723a_56ab3f2d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2024-10-04T17:09:45Z",
+      "side": 1,
+      "message": "IIUC, safe browsing is already initialized automatically (assuming it\u0027s not disabled) and this method just allowed you to await on it completing.",
+      "range": {
+        "startLine": 1498,
+        "startChar": 38,
+        "endLine": 1498,
+        "endChar": 79
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dca72936_ba88a416",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2024-10-04T17:09:45Z",
+      "side": 1,
+      "message": "Presumably, safe browsing still isn\u0027t available on all devices? True implies that safebrowsing is available immediately, so would it make sense to explicitly document that this no longer guarantees that it is actually available?\n\n(That\u0027s a soft breaking change though?)",
+      "range": {
+        "startLine": 1499,
+        "startChar": 45,
+        "endLine": 1500,
+        "endChar": 53
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
