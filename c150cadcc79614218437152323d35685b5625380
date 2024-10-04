@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "36704b9a_fac86555",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-10-04T20:26:50Z",
+      "side": 1,
+      "message": "I just found the bug tracker. Please update the commit with `Bug: 371518137`",
+      "parentUuid": "4b1bbef1_ab32caf5",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "c150cadcc79614218437152323d35685b5625380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a62f237_79f755be",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
