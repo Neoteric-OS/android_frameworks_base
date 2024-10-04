@@ -129,6 +129,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.Immutable;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.SomeArgs;
+import com.android.internal.pm.RoSystemFeatures;
 import com.android.internal.util.UserIcons;
 
 import dalvik.system.VMRuntime;
@@ -818,6 +819,13 @@ public class ApplicationPackageManager extends PackageManager {
                 @Override
                 public Boolean recompute(HasSystemFeatureQuery query) {
                     try {
+                        // As an optimization, check first to see if the feature was defined at
+                        // compile-time as either available or unavailable.
+                        Boolean maybeHasSystemFeature =
+                                RoSystemFeatures.maybeHasFeature(query.name, query.version);
+                        if (maybeHasSystemFeature != null) {
+                            return maybeHasSystemFeature.booleanValue();
+                        }
                         return ActivityThread.currentActivityThread().getPackageManager().
                             hasSystemFeature(query.name, query.version);
                     } catch (RemoteException e) {
