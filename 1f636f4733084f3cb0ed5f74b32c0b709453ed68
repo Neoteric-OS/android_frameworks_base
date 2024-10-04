@@ -80,6 +80,54 @@
       },
       "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94132daa_d90e5dc2",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-04T16:55:26Z",
+      "side": 1,
+      "message": "Agreed, I\u0027ve added a @deprecated tag.",
+      "parentUuid": "bc44c00b_777164ed",
+      "range": {
+        "startLine": 1488,
+        "startChar": 7,
+        "endLine": 1489,
+        "endChar": 24
+      },
+      "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87c167cf_e6288187",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-04T16:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe5c5426_ab883cc1",
+      "range": {
+        "startLine": 1489,
+        "startChar": 0,
+        "endLine": 1489,
+        "endChar": 101
+      },
+      "revId": "1f636f4733084f3cb0ed5f74b32c0b709453ed68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
