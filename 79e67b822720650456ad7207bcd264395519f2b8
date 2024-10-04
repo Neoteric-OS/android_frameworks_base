@@ -126,6 +126,30 @@
       },
       "revId": "79e67b822720650456ad7207bcd264395519f2b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37ad5d70_121c0615",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2024-10-04T17:21:43Z",
+      "side": 1,
+      "message": "Or does it correctly use false for (e.g.) AOSP builds? I see the default PlatformServiceBridge implementation in Chromium is to use false?",
+      "parentUuid": "dca72936_ba88a416",
+      "range": {
+        "startLine": 1499,
+        "startChar": 45,
+        "endLine": 1500,
+        "endChar": 53
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
