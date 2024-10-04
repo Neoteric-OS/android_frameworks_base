@@ -2403,7 +2403,8 @@ public final class ProcessList {
     private boolean needsStorageDataIsolation(StorageManagerInternal storageManagerInternal,
             ProcessRecord app) {
         final int mountMode = app.getMountMode();
-        return mVoldAppDataIsolationEnabled && UserHandle.isApp(app.uid)
+        return mVoldAppDataIsolationEnabled
+                && (UserHandle.isApp(app.uid) || UserHandle.isIsolated(app.uid) || app.isSdkSandbox)
                 && !storageManagerInternal.isExternalStorageService(app.uid)
                 // Special mounting mode doesn't need to have data isolation as they won't
                 // access /mnt/user anyway.
