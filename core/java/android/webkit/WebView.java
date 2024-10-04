@@ -1495,7 +1495,11 @@ public class WebView extends AbsoluteLayout
      * @param context Application Context.
      * @param callback will be called on the UI thread with {@code true} if initialization is
      * successful, {@code false} otherwise.
+     * @deprecated In newer WebViews, this initialization is done automatically,
+     * so there is no need to call this API. If called, this API will invoke the
+     * {@code callback} immediately with {@code true}.
      */
+    @Deprecated
     public static void startSafeBrowsing(@NonNull Context context,
             @Nullable ValueCallback<Boolean> callback) {
         getFactory().getStatics().initSafeBrowsing(context, callback);
