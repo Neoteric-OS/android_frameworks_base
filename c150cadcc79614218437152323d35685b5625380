@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a62f237_79f755be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-10-04T20:04:01Z",
+      "side": 1,
+      "message": "Please add `Bug: 371518137`",
+      "revId": "c150cadcc79614218437152323d35685b5625380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8437e8fa_9c0de7bc",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13146,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-10-04T20:04:01Z",
+      "side": 1,
+      "message": "I\u0027m confused. If NR_SHMEM is double-counted that means `lostRAM` is decreased more than it should be, right? If so then why are you subtracting `memInfo.getShmemSizeKb` here and not adding to compensate for this double-counting?",
+      "range": {
+        "startLine": 13146,
+        "startChar": 20,
+        "endLine": 13146,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "19fd7d9f_63f4004f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/ActivityManagerService.java",
+              "range": {
+                "startLine": 13153,
+                "startChar": 0,
+                "endLine": 13154,
+                "endChar": 0
+              },
+              "replacement": "                pw.print(stringifyKBSize(kernelUsed)); pw.print(\")\\n\");\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/ActivityManagerService.java",
+              "range": {
+                "startLine": 13156,
+                "startChar": 0,
+                "endLine": 13157,
+                "endChar": 0
+              },
+              "replacement": "                pw.print(\"lostram,\"); pw.print(lostRAM); pw.print(\",\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c150cadcc79614218437152323d35685b5625380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1f8cb99_cf7c12a0",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13146,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2024-10-04T20:04:01Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 13146,
+        "startChar": 0,
+        "endLine": 13146,
+        "endChar": 102
+      },
+      "revId": "c150cadcc79614218437152323d35685b5625380",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
