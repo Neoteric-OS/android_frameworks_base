@@ -411,7 +411,7 @@ class InsetsSourceProvider {
             changed = true;
         }
         if (changed) {
-            mStateController.notifyControlChanged(mControlTarget);
+            mStateController.notifyControlChanged(mControlTarget, this);
         }
     }
 
@@ -529,13 +529,27 @@ class InsetsSourceProvider {
             setClientVisible((WindowInsets.Type.defaultVisible() & mSource.getType()) != 0);
             return;
         }
+        boolean initiallyVisible = mClientVisible;
         final Point surfacePosition = getWindowFrameSurfacePosition();
         mAdapter = new ControlAdapter(surfacePosition);
         if (mSource.getType() == WindowInsets.Type.ime()) {
+            if (android.view.inputmethod.Flags.refactorInsetsController()) {
+                if (mClientVisible && mServerVisible) {
+                    WindowContainer imeParentWindow = mDisplayContent.getImeParentWindow();
+                    // If the IME is attached to an app window, only consider it initially visible
+                    // if the parent is visible and wasn't part of a transition.
+                    initiallyVisible =
+                            imeParentWindow != null && !imeParentWindow.inTransitionSelfOrParent()
+                                    && imeParentWindow.isVisible()
+                                    && imeParentWindow.isVisibleRequested();
+                } else {
+                    initiallyVisible = false;
+                }
+            }
             setClientVisible(target.isRequestedVisible(WindowInsets.Type.ime()));
         }
         final Transaction t = mWindowContainer.getSyncTransaction();
-        mWindowContainer.startAnimation(t, mAdapter, !mClientVisible /* hidden */,
+        mWindowContainer.startAnimation(t, mAdapter, !initiallyVisible /* hidden */,
                 ANIMATION_TYPE_INSETS_CONTROL);
 
         // The leash was just created. We cannot dispatch it until its surface transaction is
@@ -545,20 +559,48 @@ class InsetsSourceProvider {
         final SurfaceControl leash = mAdapter.mCapturedLeash;
         mControlTarget = target;
         updateVisibility();
-        boolean initiallyVisible = mClientVisible;
         if (mSource.getType() == WindowInsets.Type.ime()) {
-            // The IME cannot be initially visible, see ControlAdapter#startAnimation below.
-            // Also, the ImeInsetsSourceConsumer clears the client visibility upon losing control,
-            // but this won't have reached here yet by the time the new control is created.
-            // Note: The DisplayImeController needs the correct previous client's visibility, so we
-            // only override the initiallyVisible here.
-            initiallyVisible = false;
+            if (!android.view.inputmethod.Flags.refactorInsetsController()) {
+                // The IME cannot be initially visible, see ControlAdapter#startAnimation below.
+                // Also, the ImeInsetsSourceConsumer clears the client visibility upon losing
+                // control,  but this won't have reached here yet by the time the new control is
+                // created.
+                // Note: The DisplayImeController needs the correct previous client's visibility,
+                // so we only override the initiallyVisible here.
+                initiallyVisible = false;
+            }
         }
         mControl = new InsetsSourceControl(mSource.getId(), mSource.getType(), leash,
                 initiallyVisible, surfacePosition, getInsetsHint());
+        mStateController.notifySurfaceTransactionReady(this, getSurfaceTransactionId(leash), true);
 
         ProtoLog.d(WM_DEBUG_WINDOW_INSETS,
                 "InsetsSource Control %s for target %s", mControl, mControlTarget);
+    }
+
+    private long getSurfaceTransactionId(SurfaceControl leash) {
+        // Here returns mNativeObject (long) as the ID instead of the leash itself so that
+        // InsetsStateController won't keep referencing the leash unexpectedly.
+        return leash != null ? leash.mNativeObject : 0;
+    }
+
+    /**
+     * This is called when the surface transaction of the leash initialization has been committed.
+     *
+     * @param id Indicates which transaction is committed so that stale callbacks can be dropped.
+     */
+    void onSurfaceTransactionCommitted(long id) {
+        if (mIsLeashReadyForDispatching) {
+            return;
+        }
+        if (mControl == null) {
+            return;
+        }
+        if (id != getSurfaceTransactionId(mControl.getLeash())) {
+            return;
+        }
+        mIsLeashReadyForDispatching = true;
+        mStateController.notifySurfaceTransactionReady(this, 0, false);
     }
 
     void startSeamlessRotation() {
@@ -572,7 +614,7 @@ class InsetsSourceProvider {
         mSeamlessRotating = false;
     }
 
-    boolean updateClientVisibility(InsetsControlTarget caller,
+    boolean updateClientVisibility(InsetsTarget caller,
             @Nullable ImeTracker.Token statsToken) {
         final boolean requestedVisible = caller.isRequestedVisible(mSource.getType());
         if (caller != mControlTarget || requestedVisible == mClientVisible) {
@@ -580,10 +622,6 @@ class InsetsSourceProvider {
         }
         setClientVisible(requestedVisible);
         return true;
-    }
-
-    void onSurfaceTransactionApplied() {
-        mIsLeashReadyForDispatching = true;
     }
 
     void setClientVisible(boolean clientVisible) {
@@ -612,8 +650,9 @@ class InsetsSourceProvider {
                 mServerVisible, mClientVisible);
     }
 
-    protected boolean isLeashReadyForDispatching() {
-        return mIsLeashReadyForDispatching;
+    protected boolean isLeashReadyForDispatching(InsetsControlTarget target) {
+        // If the target is not the control target, we are ready for dispatching a null-leash to it.
+        return target != mControlTarget || mIsLeashReadyForDispatching;
     }
 
     /**
@@ -626,7 +665,7 @@ class InsetsSourceProvider {
     @Nullable
     InsetsSourceControl getControl(InsetsControlTarget target) {
         if (target == mControlTarget) {
-            if (!isLeashReadyForDispatching() && mControl != null) {
+            if (!isLeashReadyForDispatching(target) && mControl != null) {
                 // The surface transaction of preparing leash is not applied yet. We don't send it
                 // to the client in case that the client applies its transaction sooner than ours
                 // that we could unexpectedly overwrite the surface state.
@@ -776,7 +815,7 @@ class InsetsSourceProvider {
                 @AnimationType int type, @NonNull OnAnimationFinishedCallback finishCallback) {
             // TODO(b/166736352): Check if we still need to control the IME visibility here.
             if (mSource.getType() == WindowInsets.Type.ime()) {
-                if (!android.view.inputmethod.Flags.refactorInsetsController() || !mClientVisible) {
+                if (!android.view.inputmethod.Flags.refactorInsetsController()) {
                     // TODO: use 0 alpha and remove t.hide() once b/138459974 is fixed.
                     t.setAlpha(animationLeash, 1 /* alpha */);
                     t.hide(animationLeash);
@@ -799,6 +838,7 @@ class InsetsSourceProvider {
         public void onAnimationCancelled(SurfaceControl animationLeash) {
             if (mAdapter == this) {
                 mStateController.notifyControlRevoked(mControlTarget, InsetsSourceProvider.this);
+                mStateController.notifySurfaceTransactionReady(InsetsSourceProvider.this, 0, false);
                 mControl = null;
                 mControlTarget = null;
                 mAdapter = null;

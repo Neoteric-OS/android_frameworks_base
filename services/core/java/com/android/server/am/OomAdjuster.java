@@ -73,13 +73,13 @@ import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE;
 import static android.media.audio.Flags.roForegroundAudioControl;
 import static android.os.Process.THREAD_GROUP_BACKGROUND;
 import static android.os.Process.THREAD_GROUP_DEFAULT;
+import static android.os.Process.THREAD_GROUP_FOREGROUND_WINDOW;
 import static android.os.Process.THREAD_GROUP_RESTRICTED;
 import static android.os.Process.THREAD_GROUP_TOP_APP;
 import static android.os.Process.THREAD_PRIORITY_DISPLAY;
 import static android.os.Process.THREAD_PRIORITY_TOP_APP_BOOST;
 import static android.os.Process.setProcessGroup;
 import static android.os.Process.setCgroupProcsProcessGroup;
-import static android.os.Process.setThreadPriority;
 
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_ALL;
 import static com.android.server.am.ActivityManagerDebugConfig.DEBUG_BACKUP;
@@ -118,6 +118,7 @@ import static com.android.server.am.ProcessList.PERSISTENT_SERVICE_ADJ;
 import static com.android.server.am.ProcessList.PREVIOUS_APP_ADJ;
 import static com.android.server.am.ProcessList.SCHED_GROUP_BACKGROUND;
 import static com.android.server.am.ProcessList.SCHED_GROUP_DEFAULT;
+import static com.android.server.am.ProcessList.SCHED_GROUP_FOREGROUND_WINDOW;
 import static com.android.server.am.ProcessList.SCHED_GROUP_RESTRICTED;
 import static com.android.server.am.ProcessList.SCHED_GROUP_TOP_APP;
 import static com.android.server.am.ProcessList.SCHED_GROUP_TOP_APP_BOUND;
@@ -472,6 +473,19 @@ public class OomAdjuster {
         long getElapsedRealtimeMillis() {
             return SystemClock.elapsedRealtime();
         }
+
+        void batchSetOomAdj(ArrayList<ProcessRecord> procsToOomAdj) {
+            ProcessList.batchSetOomAdj(procsToOomAdj);
+        }
+
+        void setOomAdj(int pid, int uid, int adj) {
+            ProcessList.setOomAdj(pid, uid, adj);
+        }
+
+        void setThreadPriority(int tid, int priority) {
+            Process.setThreadPriority(tid, priority);
+        }
+
     }
 
     boolean isChangeEnabled(@CachedCompatChangeId int cachedCompatChangeId,
@@ -1505,7 +1519,7 @@ public class OomAdjuster {
         }
 
         if (!mProcsToOomAdj.isEmpty()) {
-            ProcessList.batchSetOomAdj(mProcsToOomAdj);
+            mInjector.batchSetOomAdj(mProcsToOomAdj);
             mProcsToOomAdj.clear();
         }
 
@@ -1797,6 +1811,11 @@ public class OomAdjuster {
                 // The recently used non-top visible freeform app.
                 schedGroup = SCHED_GROUP_TOP_APP;
                 mAdjType = "perceptible-freeform-activity";
+            } else if ((flags
+                    & WindowProcessController.ACTIVITY_STATE_FLAG_VISIBLE_MULTI_WINDOW_MODE) != 0) {
+                // Currently the only case is from freeform apps which are not close to top.
+                schedGroup = SCHED_GROUP_FOREGROUND_WINDOW;
+                mAdjType = "vis-multi-window-activity";
             }
             foregroundActivities = true;
             mHasVisibleActivities = true;
@@ -1989,7 +2008,6 @@ public class OomAdjuster {
         int procState;
         int capability = cycleReEval ? getInitialCapability(app) : 0;
 
-        boolean foregroundActivities = false;
         boolean hasVisibleActivities = false;
         if (app == topApp && PROCESS_STATE_CUR_TOP == PROCESS_STATE_TOP) {
             // The last app on the list is the foreground app.
@@ -2003,7 +2021,6 @@ public class OomAdjuster {
                 schedGroup = SCHED_GROUP_DEFAULT;
                 state.setAdjType("intermediate-top-activity");
             }
-            foregroundActivities = true;
             hasVisibleActivities = true;
             procState = PROCESS_STATE_TOP;
 
@@ -2088,7 +2105,6 @@ public class OomAdjuster {
             adj = FOREGROUND_APP_ADJ;
             schedGroup = SCHED_GROUP_BACKGROUND;
             state.setAdjType("top-sleeping");
-            foregroundActivities = true;
             procState = PROCESS_STATE_CUR_TOP;
             if (DEBUG_OOM_ADJ_REASON || logUid == appUid) {
                 reportOomAdjMessageLocked(TAG_OOM_ADJ, "Making top (sleeping): " + app);
@@ -2108,7 +2124,8 @@ public class OomAdjuster {
             }
         }
 
-        // Examine all activities if not already foreground.
+        // Examine all non-top activities.
+        boolean foregroundActivities = app == topApp;
         if (!foregroundActivities && state.getCachedHasActivities()) {
             state.computeOomAdjFromActivitiesIfNecessary(mTmpComputeOomAdjWindowCallback,
                     adj, foregroundActivities, hasVisibleActivities, procState, schedGroup,
@@ -2629,25 +2646,6 @@ public class OomAdjuster {
             }
             if (state.isServiceB()) {
                 adj = SERVICE_B_ADJ;
-            }
-        }
-
-        state.setCurRawAdj(adj);
-        adj = psr.modifyRawOomAdj(adj);
-        if (adj > state.getMaxAdj()) {
-            adj = state.getMaxAdj();
-            if (adj <= PERCEPTIBLE_LOW_APP_ADJ) {
-                schedGroup = SCHED_GROUP_DEFAULT;
-            }
-        }
-
-        // Put bound foreground services in a special sched group for additional
-        // restrictions on screen off
-        if (procState >= PROCESS_STATE_BOUND_FOREGROUND_SERVICE
-                && mService.mWakefulness.get() != PowerManagerInternal.WAKEFULNESS_AWAKE
-                && !state.shouldScheduleLikeTopApp()) {
-            if (schedGroup > SCHED_GROUP_RESTRICTED) {
-                schedGroup = SCHED_GROUP_RESTRICTED;
             }
         }
 
@@ -3561,7 +3559,7 @@ public class OomAdjuster {
             if (isBatchingOomAdj && mConstants.ENABLE_BATCHING_OOM_ADJ) {
                 mProcsToOomAdj.add(app);
             } else {
-                ProcessList.setOomAdj(app.getPid(), app.uid, app.mState.getCurAdj());
+                mInjector.setOomAdj(app.getPid(), app.uid, app.mState.getCurAdj());
             }
 
             if (DEBUG_SWITCH || DEBUG_OOM_ADJ || mService.mCurOomAdjUid == app.info.uid) {
@@ -3603,6 +3601,9 @@ public class OomAdjuster {
                 case SCHED_GROUP_RESTRICTED:
                     processGroup = THREAD_GROUP_RESTRICTED;
                     break;
+                case SCHED_GROUP_FOREGROUND_WINDOW:
+                    processGroup = THREAD_GROUP_FOREGROUND_WINDOW;
+                    break;
                 default:
                     processGroup = THREAD_GROUP_DEFAULT;
                     break;
@@ -3621,10 +3622,11 @@ public class OomAdjuster {
                             ActivityManagerService.setFifoPriority(app, true /* enable */);
                         } else {
                             // Boost priority for top app UI and render threads
-                            setThreadPriority(app.getPid(), THREAD_PRIORITY_TOP_APP_BOOST);
+                            mInjector.setThreadPriority(app.getPid(),
+                                    THREAD_PRIORITY_TOP_APP_BOOST);
                             if (renderThreadTid != 0) {
                                 try {
-                                    setThreadPriority(renderThreadTid,
+                                    mInjector.setThreadPriority(renderThreadTid,
                                             THREAD_PRIORITY_TOP_APP_BOOST);
                                 } catch (IllegalArgumentException e) {
                                     // thread died, ignore
@@ -3638,14 +3640,14 @@ public class OomAdjuster {
                     if (app.useFifoUiScheduling()) {
                         // Reset UI pipeline to SCHED_OTHER
                         ActivityManagerService.setFifoPriority(app, false /* enable */);
-                        setThreadPriority(app.getPid(), state.getSavedPriority());
+                        mInjector.setThreadPriority(app.getPid(), state.getSavedPriority());
                     } else {
                         // Reset priority for top app UI and render threads
-                        setThreadPriority(app.getPid(), 0);
+                        mInjector.setThreadPriority(app.getPid(), 0);
                     }
 
                     if (renderThreadTid != 0) {
-                        setThreadPriority(renderThreadTid, THREAD_PRIORITY_DISPLAY);
+                        mInjector.setThreadPriority(renderThreadTid, THREAD_PRIORITY_DISPLAY);
                     }
                 }
             } catch (Exception e) {
@@ -3835,7 +3837,7 @@ public class OomAdjuster {
                 if (app.useFifoUiScheduling()) {
                     mService.scheduleAsFifoPriority(app.getPid(), true);
                 } else {
-                    setThreadPriority(app.getPid(), THREAD_PRIORITY_TOP_APP_BOOST);
+                    mInjector.setThreadPriority(app.getPid(), THREAD_PRIORITY_TOP_APP_BOOST);
                 }
                 if (isScreenOnOrAnimatingLocked(state)) {
                     initialSchedGroup = SCHED_GROUP_TOP_APP;

@@ -1090,6 +1090,21 @@ public class UserManagerService extends IUserManager.Stub {
         mUser0Allocations = DBG_ALLOCATION ? new AtomicInteger() : null;
         mPrivateSpaceAutoLockSettingsObserver = new SettingsObserver(mHandler);
         emulateSystemUserModeIfNeeded();
+        initPropertyInvalidatedCaches();
+    }
+
+    /**
+     * This method is used to invalidate the caches at server statup,
+     * so that caches can start working.
+     */
+    private static final void initPropertyInvalidatedCaches() {
+        if (android.multiuser.Flags.cachesNotInvalidatedAtStartReadOnly()) {
+            UserManager.invalidateIsUserUnlockedCache();
+            UserManager.invalidateQuietModeEnabledCache();
+            UserManager.invalidateStaticUserProperties();
+            UserManager.invalidateUserPropertiesCache();
+            UserManager.invalidateUserSerialNumberCache();
+        }
     }
 
     private boolean doesDeviceHardwareSupportPrivateSpace() {
@@ -1194,11 +1209,11 @@ public class UserManagerService extends IUserManager.Stub {
             // Avoid marking pre-created users for removal.
             return;
         }
-        if (ui.lastLoggedInTime == 0) {
-            // Avoid marking a not-yet-logged-in ephemeral user for removal, since it doesn't have
-            // any personal data in it yet due to not being logged in.
-            // This will also avoid marking an auto-created not-yet-logged-in ephemeral guest user
-            // for removal, which would be recreated again later in the boot anyway.
+        if (ui.lastLoggedInTime == 0 && ui.isGuest() && Resources.getSystem().getBoolean(
+                com.android.internal.R.bool.config_guestUserAutoCreated)) {
+            // Avoid marking auto-created but not-yet-logged-in guest user for removal. Because a
+            // new one will be created anyway, and this one doesn't have any personal data in it yet
+            // due to not being logged in.
             return;
         }
         // Mark the user for removal.

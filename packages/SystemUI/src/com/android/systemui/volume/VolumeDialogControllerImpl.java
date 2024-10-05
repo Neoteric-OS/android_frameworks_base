@@ -391,11 +391,7 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
     }
 
     public void notifyVisible(boolean visible) {
-        if (Flags.useVolumeController()) {
-            mVolumeControllerAdapter.notifyVolumeControllerVisible(visible);
-        } else {
-            mWorker.obtainMessage(W.NOTIFY_VISIBLE, visible ? 1 : 0, 0).sendToTarget();
-        }
+        mWorker.obtainMessage(W.NOTIFY_VISIBLE, visible ? 1 : 0, 0).sendToTarget();
     }
 
     public void userActivity() {
@@ -457,7 +453,11 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
     }
 
     private void onNotifyVisibleW(boolean visible) {
-        mAudio.notifyVolumeControllerVisible(mVolumeController, visible);
+        if (Flags.useVolumeController()) {
+            mVolumeControllerAdapter.notifyVolumeControllerVisible(visible);
+        } else {
+            mAudio.notifyVolumeControllerVisible(mVolumeController, visible);
+        }
         if (!visible) {
             if (updateActiveStreamW(-1)) {
                 mCallbacks.onStateChanged(mState);
@@ -539,10 +539,12 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
                                     != 0;
             changed |= updateStreamRoutedToBluetoothW(stream, routedToBluetooth);
         } else if (stream == AudioManager.STREAM_VOICE_CALL) {
-            final boolean routedToBluetooth =
-                    (mAudio.getDevicesForStream(AudioManager.STREAM_VOICE_CALL)
-                            & AudioManager.DEVICE_OUT_BLE_HEADSET) != 0;
-            changed |= updateStreamRoutedToBluetoothW(stream, routedToBluetooth);
+            final int devices = mAudio.getDevicesForStream(AudioManager.STREAM_VOICE_CALL);
+            final int bluetoothDevicesMask = (AudioManager.DEVICE_OUT_BLE_HEADSET
+                    | AudioManager.DEVICE_OUT_BLUETOOTH_SCO_HEADSET
+                    | AudioManager.DEVICE_OUT_BLUETOOTH_SCO_CARKIT);
+            changed |= updateStreamRoutedToBluetoothW(stream,
+                    (devices & bluetoothDevicesMask) != 0);
         }
         return changed;
     }
@@ -1305,13 +1307,12 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
             if (action.equals(AudioManager.VOLUME_CHANGED_ACTION)) {
                 final int stream = intent.getIntExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE,
                         STREAM_UNKNOWN);
-                final int level = intent.getIntExtra(AudioManager.EXTRA_VOLUME_STREAM_VALUE, -1);
                 final int oldLevel = intent
                         .getIntExtra(AudioManager.EXTRA_PREV_VOLUME_STREAM_VALUE, -1);
                 if (D.BUG) Log.d(TAG, "onReceive VOLUME_CHANGED_ACTION stream=" + stream
-                        + " level=" + level + " oldLevel=" + oldLevel);
+                        + " oldLevel=" + oldLevel);
                 if (stream != STREAM_UNKNOWN) {
-                    changed = updateStreamLevelW(stream, level);
+                    changed |= onVolumeChangedW(stream, 0);
                 }
             } else if (action.equals(AudioManager.STREAM_DEVICES_CHANGED_ACTION)) {
                 final int stream = intent.getIntExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE,

@@ -4159,6 +4159,9 @@
     <!-- Indicating if keyboard vibration settings supported or not. -->
     <bool name="config_keyboardVibrationSettingsSupported">false</bool>
 
+    <!-- Indicating if ringtone vibration settings supported or not. -->
+    <bool name="config_ringtoneVibrationSettingsSupported">false</bool>
+
     <!-- If the device should still vibrate even in low power mode, for certain priority vibrations
      (e.g. accessibility, alarms). This is mainly for Wear devices that don't have speakers. -->
     <bool name="config_allowPriorityVibrationsInLowPowerMode">false</bool>
@@ -5850,6 +5853,13 @@
          should also be non-empty.-->
     <string name="config_rawContactsLocalAccountType" translatable="false"></string>
 
+    <!-- The array of account types that accounts in any of these can be set as the default account
+         for new raw contacts. -->
+    <string-array name="config_rawContactsEligibleDefaultAccountTypes" translatable="false">
+        <!-- Add account types here, example: -->
+        <!-- <item>com.google</item> -->
+    </string-array>
+
     <!-- Whether or not to use assistant stream volume separately from music volume -->
     <bool name="config_useAssistantVolume">false</bool>
 
@@ -7110,6 +7120,10 @@
     <!-- Maximum number of active tasks on a given Desktop Windowing session. Set to 0 for unlimited. -->
     <integer name="config_maxDesktopWindowingActiveTasks">0</integer>
 
+    <!-- Whether a display enters desktop mode by default when the windowing mode of the display's
+         root TaskDisplayArea is set to WINDOWING_MODE_FREEFORM. -->
+    <bool name="config_enterDesktopByDefaultOnFreeformDisplay">false</bool>
+
     <!-- Frame rate compatibility value for Wallpaper
          FRAME_RATE_COMPATIBILITY_MIN (102) is used by default for lower power consumption -->
     <integer name="config_wallpaperFrameRateCompatibility">102</integer>
@@ -7142,4 +7156,8 @@
     <!-- The maximum number of call log entries for each sim card that can be stored in the call log
          provider on the device. -->
     <integer name="config_maximumCallLogEntriesPerSim">500</integer>
+
+    <!-- Whether to enable scaling and fading animation to scrollviews while scrolling.
+         P.S this is a change only intended for wear devices. -->
+    <bool name="config_enableViewGroupScalingFading">false</bool>
 </resources>

@@ -56,16 +56,26 @@ public class AppFunctionRuntimeMetadata extends GenericDocument {
         super(genericDocument);
     }
 
-    /**
-     * Returns a per-app runtime metadata schema name, to store all functions for that package.
-     */
+    /** Returns a per-app runtime metadata schema name, to store all functions for that package. */
     public static String getRuntimeSchemaNameForPackage(@NonNull String pkg) {
         return RUNTIME_SCHEMA_TYPE + RUNTIME_SCHEMA_TYPE_SEPARATOR + Objects.requireNonNull(pkg);
     }
 
-    /**
-     * Returns the document id for an app function's runtime metadata.
-     */
+    /** Returns the package name from the runtime metadata schema name. */
+    @NonNull
+    public static String getPackageNameFromSchema(String metadataSchemaType) {
+        String[] split = metadataSchemaType.split(RUNTIME_SCHEMA_TYPE_SEPARATOR);
+        if (split.length > 2) {
+            throw new IllegalArgumentException(
+                    "Invalid schema type: " + metadataSchemaType + " for app function runtime");
+        }
+        if (split.length < 2) {
+            return APP_FUNCTION_INDEXER_PACKAGE;
+        }
+        return split[1];
+    }
+
+    /** Returns the document id for an app function's runtime metadata. */
     public static String getDocumentIdForAppFunction(
             @NonNull String pkg, @NonNull String functionId) {
         return pkg + "/" + functionId;
@@ -74,15 +84,34 @@ public class AppFunctionRuntimeMetadata extends GenericDocument {
     /**
      * Different packages have different visibility requirements. To allow for different visibility,
      * we need to have per-package app function schemas.
+     *
      * <p>This schema should be set visible to callers from the package owner itself and for callers
-     * with {@link android.permission.EXECUTE_APP_FUNCTIONS_TRUSTED} or {@link
-     * android.permission.EXECUTE_APP_FUNCTIONS} permissions.
+     * with {@link android.Manifest.permission#EXECUTE_APP_FUNCTIONS} or {@link
+     * android.Manifest.permission#EXECUTE_APP_FUNCTIONS_TRUSTED} permissions.
      *
      * @param packageName The package name to create a schema for.
      */
     @NonNull
     public static AppSearchSchema createAppFunctionRuntimeSchema(@NonNull String packageName) {
-        return new AppSearchSchema.Builder(getRuntimeSchemaNameForPackage(packageName))
+        return getAppFunctionRuntimeSchemaBuilder(getRuntimeSchemaNameForPackage(packageName))
+                .addParentType(RUNTIME_SCHEMA_TYPE)
+                .build();
+    }
+
+    /**
+     * Creates a parent schema for all app function runtime schemas.
+     *
+     * <p>This schema should be set visible to the owner itself and for callers with {@link
+     * android.permission.EXECUTE_APP_FUNCTIONS_TRUSTED} or {@link
+     * android.permission.EXECUTE_APP_FUNCTIONS} permissions.
+     */
+    public static AppSearchSchema createParentAppFunctionRuntimeSchema() {
+        return getAppFunctionRuntimeSchemaBuilder(RUNTIME_SCHEMA_TYPE).build();
+    }
+
+    private static AppSearchSchema.Builder getAppFunctionRuntimeSchemaBuilder(
+            @NonNull String schemaType) {
+        return new AppSearchSchema.Builder(schemaType)
                 .addProperty(
                         new AppSearchSchema.StringPropertyConfig.Builder(PROPERTY_FUNCTION_ID)
                                 .setCardinality(AppSearchSchema.PropertyConfig.CARDINALITY_OPTIONAL)
@@ -109,27 +138,21 @@ public class AppFunctionRuntimeMetadata extends GenericDocument {
                                 .build())
                 .addProperty(
                         new AppSearchSchema.StringPropertyConfig.Builder(
-                                PROPERTY_APP_FUNCTION_STATIC_METADATA_QUALIFIED_ID)
+                                        PROPERTY_APP_FUNCTION_STATIC_METADATA_QUALIFIED_ID)
                                 .setCardinality(AppSearchSchema.PropertyConfig.CARDINALITY_OPTIONAL)
                                 .setJoinableValueType(
                                         AppSearchSchema.StringPropertyConfig
                                                 .JOINABLE_VALUE_TYPE_QUALIFIED_ID)
-                                .build())
-                .addParentType(RUNTIME_SCHEMA_TYPE)
-                .build();
+                                .build());
     }
 
-    /**
-     * Returns the function id. This might look like "com.example.message#send_message".
-     */
+    /** Returns the function id. This might look like "com.example.message#send_message". */
     @NonNull
     public String getFunctionId() {
         return Objects.requireNonNull(getPropertyString(PROPERTY_FUNCTION_ID));
     }
 
-    /**
-     * Returns the package name of the package that owns this function.
-     */
+    /** Returns the package name of the package that owns this function. */
     @NonNull
     public String getPackageName() {
         return Objects.requireNonNull(getPropertyString(PROPERTY_PACKAGE_NAME));
@@ -144,9 +167,7 @@ public class AppFunctionRuntimeMetadata extends GenericDocument {
         return (Boolean) getProperty(PROPERTY_ENABLED);
     }
 
-    /**
-     * Returns the qualified id linking to the static metadata of the app function.
-     */
+    /** Returns the qualified id linking to the static metadata of the app function. */
     @Nullable
     @VisibleForTesting
     public String getAppFunctionStaticMetadataQualifiedId() {
@@ -157,15 +178,10 @@ public class AppFunctionRuntimeMetadata extends GenericDocument {
         /**
          * Creates a Builder for a {@link AppFunctionRuntimeMetadata}.
          *
-         * @param packageName               the name of the package that owns the function.
-         * @param functionId                the id of the function.
-         * @param staticMetadataQualifiedId the qualified static metadata id that this runtime
-         *                                  metadata refers to.
+         * @param packageName the name of the package that owns the function.
+         * @param functionId the id of the function.
          */
-        public Builder(
-                @NonNull String packageName,
-                @NonNull String functionId,
-                @NonNull String staticMetadataQualifiedId) {
+        public Builder(@NonNull String packageName, @NonNull String functionId) {
             super(
                     APP_FUNCTION_RUNTIME_NAMESPACE,
                     getDocumentIdForAppFunction(
@@ -178,9 +194,9 @@ public class AppFunctionRuntimeMetadata extends GenericDocument {
             // Set qualified id automatically
             setPropertyString(
                     PROPERTY_APP_FUNCTION_STATIC_METADATA_QUALIFIED_ID,
-                    staticMetadataQualifiedId);
+                    AppFunctionStaticMetadataHelper.getStaticMetadataQualifiedId(
+                            packageName, functionId));
         }
-
 
         /**
          * Sets an indicator specifying if the function is enabled or not. This would override the
@@ -193,9 +209,7 @@ public class AppFunctionRuntimeMetadata extends GenericDocument {
             return this;
         }
 
-        /**
-         * Creates the {@link AppFunctionRuntimeMetadata} GenericDocument.
-         */
+        /** Creates the {@link AppFunctionRuntimeMetadata} GenericDocument. */
         @NonNull
         public AppFunctionRuntimeMetadata build() {
             return new AppFunctionRuntimeMetadata(super.build());

@@ -24,18 +24,19 @@ import com.android.systemui.contextualeducation.GestureType.BACK
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.education.data.repository.contextualEducationRepository
 import com.android.systemui.education.data.repository.fakeEduClock
-import com.android.systemui.inputdevice.data.model.UserDeviceConnectionStatus
 import com.android.systemui.inputdevice.tutorial.data.repository.DeviceType
+import com.android.systemui.inputdevice.tutorial.tutorialSchedulerRepository
+import com.android.systemui.keyboard.data.repository.keyboardRepository
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.testKosmos
+import com.android.systemui.touchpad.data.repository.touchpadRepository
 import com.google.common.truth.Truth.assertThat
 import kotlin.time.Duration.Companion.seconds
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
+import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.any
-import org.mockito.kotlin.whenever
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
@@ -43,8 +44,11 @@ class KeyboardTouchpadStatsInteractorTest : SysuiTestCase() {
     private val kosmos = testKosmos()
     private val testScope = kosmos.testScope
     private val underTest = kosmos.keyboardTouchpadEduStatsInteractor
+    private val keyboardRepository = kosmos.keyboardRepository
+    private val touchpadRepository = kosmos.touchpadRepository
     private val repository = kosmos.contextualEducationRepository
     private val fakeClock = kosmos.fakeEduClock
+    private val tutorialSchedulerRepository = kosmos.tutorialSchedulerRepository
     private val initialDelayElapsedDuration =
         KeyboardTouchpadEduStatsInteractorImpl.initialDelayDuration + 1.seconds
 
@@ -52,8 +56,7 @@ class KeyboardTouchpadStatsInteractorTest : SysuiTestCase() {
     fun dataUpdatedOnIncrementSignalCountWhenTouchpadConnected() =
         testScope.runTest {
             setUpForInitialDelayElapse()
-            whenever(mockUserInputDeviceRepository.isAnyTouchpadConnectedForUser)
-                .thenReturn(flowOf(UserDeviceConnectionStatus(isConnected = true, userId = 0)))
+            touchpadRepository.setIsAnyTouchpadConnected(true)
 
             val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
             val originalValue = model!!.signalCount
@@ -66,8 +69,7 @@ class KeyboardTouchpadStatsInteractorTest : SysuiTestCase() {
     fun dataUnchangedOnIncrementSignalCountWhenTouchpadDisconnected() =
         testScope.runTest {
             setUpForInitialDelayElapse()
-            whenever(mockUserInputDeviceRepository.isAnyTouchpadConnectedForUser)
-                .thenReturn(flowOf(UserDeviceConnectionStatus(isConnected = false, userId = 0)))
+            touchpadRepository.setIsAnyTouchpadConnected(false)
 
             val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
             val originalValue = model!!.signalCount
@@ -80,8 +82,7 @@ class KeyboardTouchpadStatsInteractorTest : SysuiTestCase() {
     fun dataUpdatedOnIncrementSignalCountWhenKeyboardConnected() =
         testScope.runTest {
             setUpForInitialDelayElapse()
-            whenever(mockUserInputDeviceRepository.isAnyKeyboardConnectedForUser)
-                .thenReturn(flowOf(UserDeviceConnectionStatus(isConnected = true, userId = 0)))
+            keyboardRepository.setIsAnyKeyboardConnected(true)
 
             val model by collectLastValue(repository.readGestureEduModelFlow(ALL_APPS))
             val originalValue = model!!.signalCount
@@ -94,116 +95,11 @@ class KeyboardTouchpadStatsInteractorTest : SysuiTestCase() {
     fun dataUnchangedOnIncrementSignalCountWhenKeyboardDisconnected() =
         testScope.runTest {
             setUpForInitialDelayElapse()
-            whenever(mockUserInputDeviceRepository.isAnyKeyboardConnectedForUser)
-                .thenReturn(flowOf(UserDeviceConnectionStatus(isConnected = false, userId = 0)))
+            keyboardRepository.setIsAnyKeyboardConnected(false)
 
             val model by collectLastValue(repository.readGestureEduModelFlow(ALL_APPS))
             val originalValue = model!!.signalCount
             underTest.incrementSignalCount(ALL_APPS)
-
-            assertThat(model?.signalCount).isEqualTo(originalValue)
-        }
-
-    @Test
-    fun dataUpdatedOnIncrementSignalCountAfterOobeLaunchInitialDelay() =
-        testScope.runTest {
-            setUpForDeviceConnection()
-            whenever(mockTutorialSchedulerRepository.launchTime(any<DeviceType>()))
-                .thenReturn(fakeClock.instant())
-            fakeClock.offset(initialDelayElapsedDuration)
-
-            val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
-            val originalValue = model!!.signalCount
-            underTest.incrementSignalCount(BACK)
-
-            assertThat(model?.signalCount).isEqualTo(originalValue + 1)
-        }
-
-    @Test
-    fun dataUnchangedOnIncrementSignalCountBeforeOobeLaunchInitialDelay() =
-        testScope.runTest {
-            setUpForDeviceConnection()
-            whenever(mockTutorialSchedulerRepository.launchTime(any<DeviceType>()))
-                .thenReturn(fakeClock.instant())
-
-            val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
-            val originalValue = model!!.signalCount
-            underTest.incrementSignalCount(BACK)
-
-            assertThat(model?.signalCount).isEqualTo(originalValue)
-        }
-
-    @Test
-    fun dataUpdatedOnIncrementSignalCountAfterTouchpadConnectionInitialDelay() =
-        testScope.runTest {
-            setUpForDeviceConnection()
-            repository.updateEduDeviceConnectionTime { model ->
-                model.copy(touchpadFirstConnectionTime = fakeClock.instant())
-            }
-            fakeClock.offset(initialDelayElapsedDuration)
-
-            val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
-            val originalValue = model!!.signalCount
-            underTest.incrementSignalCount(BACK)
-
-            assertThat(model?.signalCount).isEqualTo(originalValue + 1)
-        }
-
-    @Test
-    fun dataUnchangedOnIncrementSignalCountBeforeTouchpadConnectionInitialDelay() =
-        testScope.runTest {
-            setUpForDeviceConnection()
-            repository.updateEduDeviceConnectionTime { model ->
-                model.copy(touchpadFirstConnectionTime = fakeClock.instant())
-            }
-
-            val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
-            val originalValue = model!!.signalCount
-            underTest.incrementSignalCount(BACK)
-
-            assertThat(model?.signalCount).isEqualTo(originalValue)
-        }
-
-    @Test
-    fun dataUpdatedOnIncrementSignalCountAfterKeyboardConnectionInitialDelay() =
-        testScope.runTest {
-            setUpForDeviceConnection()
-            repository.updateEduDeviceConnectionTime { model ->
-                model.copy(keyboardFirstConnectionTime = fakeClock.instant())
-            }
-            fakeClock.offset(initialDelayElapsedDuration)
-
-            val model by collectLastValue(repository.readGestureEduModelFlow(ALL_APPS))
-            val originalValue = model!!.signalCount
-            underTest.incrementSignalCount(ALL_APPS)
-
-            assertThat(model?.signalCount).isEqualTo(originalValue + 1)
-        }
-
-    @Test
-    fun dataUnchangedOnIncrementSignalCountBeforeKeyboardConnectionInitialDelay() =
-        testScope.runTest {
-            setUpForDeviceConnection()
-            repository.updateEduDeviceConnectionTime { model ->
-                model.copy(keyboardFirstConnectionTime = fakeClock.instant())
-            }
-
-            val model by collectLastValue(repository.readGestureEduModelFlow(ALL_APPS))
-            val originalValue = model!!.signalCount
-            underTest.incrementSignalCount(ALL_APPS)
-
-            assertThat(model?.signalCount).isEqualTo(originalValue)
-        }
-
-    @Test
-    fun dataUnchangedOnIncrementSignalCountWhenNoSetupTime() =
-        testScope.runTest {
-            whenever(mockUserInputDeviceRepository.isAnyTouchpadConnectedForUser)
-                .thenReturn(flowOf(UserDeviceConnectionStatus(isConnected = true, userId = 0)))
-
-            val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
-            val originalValue = model!!.signalCount
-            underTest.incrementSignalCount(BACK)
 
             assertThat(model?.signalCount).isEqualTo(originalValue)
         }
@@ -217,16 +113,60 @@ class KeyboardTouchpadStatsInteractorTest : SysuiTestCase() {
             assertThat(model?.lastShortcutTriggeredTime).isEqualTo(kosmos.fakeEduClock.instant())
         }
 
+    @Test
+    fun dataUpdatedOnIncrementSignalCountAfterInitialDelay() =
+        testScope.runTest {
+            setUpForDeviceConnection()
+            tutorialSchedulerRepository.updateLaunchTime(DeviceType.TOUCHPAD, fakeClock.instant())
+
+            fakeClock.offset(initialDelayElapsedDuration)
+            val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
+            val originalValue = model!!.signalCount
+            underTest.incrementSignalCount(BACK)
+
+            assertThat(model?.signalCount).isEqualTo(originalValue + 1)
+        }
+
+    @Test
+    fun dataUnchangedOnIncrementSignalCountBeforeInitialDelay() =
+        testScope.runTest {
+            setUpForDeviceConnection()
+            tutorialSchedulerRepository.updateLaunchTime(DeviceType.TOUCHPAD, fakeClock.instant())
+
+            // No offset to the clock to simulate update before initial delay
+            val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
+            val originalValue = model!!.signalCount
+            underTest.incrementSignalCount(BACK)
+
+            assertThat(model?.signalCount).isEqualTo(originalValue)
+        }
+
+    @Test
+    fun dataUnchangedOnIncrementSignalCountWithoutOobeLaunchTime() =
+        testScope.runTest {
+            // No update to OOBE launch time to simulate no OOBE is launched yet
+            setUpForDeviceConnection()
+
+            val model by collectLastValue(repository.readGestureEduModelFlow(BACK))
+            val originalValue = model!!.signalCount
+            underTest.incrementSignalCount(BACK)
+
+            assertThat(model?.signalCount).isEqualTo(originalValue)
+        }
+
     private suspend fun setUpForInitialDelayElapse() {
-        whenever(mockTutorialSchedulerRepository.launchTime(any<DeviceType>()))
-            .thenReturn(fakeClock.instant())
+        tutorialSchedulerRepository.updateLaunchTime(DeviceType.TOUCHPAD, fakeClock.instant())
+        tutorialSchedulerRepository.updateLaunchTime(DeviceType.KEYBOARD, fakeClock.instant())
         fakeClock.offset(initialDelayElapsedDuration)
     }
 
     private fun setUpForDeviceConnection() {
-        whenever(mockUserInputDeviceRepository.isAnyTouchpadConnectedForUser)
-            .thenReturn(flowOf(UserDeviceConnectionStatus(isConnected = true, userId = 0)))
-        whenever(mockUserInputDeviceRepository.isAnyKeyboardConnectedForUser)
-            .thenReturn(flowOf(UserDeviceConnectionStatus(isConnected = true, userId = 0)))
+        touchpadRepository.setIsAnyTouchpadConnected(true)
+        keyboardRepository.setIsAnyKeyboardConnected(true)
+    }
+
+    @After
+    fun clear() {
+        testScope.launch { tutorialSchedulerRepository.clearDataStore() }
     }
 }

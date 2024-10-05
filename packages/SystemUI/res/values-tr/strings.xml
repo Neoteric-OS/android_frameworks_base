@@ -104,6 +104,8 @@
     <string name="screenshot_detected_multiple_template" msgid="7644827792093819241">"<xliff:g id="APPNAME">%1$s</xliff:g> ve diğer açık uygulamalar bu ekran görüntüsünü algıladı."</string>
     <string name="app_clips_save_add_to_note" msgid="3460200751278069445">"Nota ekle"</string>
     <string name="backlinks_include_link" msgid="4562093591148248158">"Bağlantıyı dahil et"</string>
+    <string name="backlinks_duplicate_label_format" msgid="558445128952827926">"<xliff:g id="APPNAME">%1$s</xliff:g> <xliff:g id="FREQUENCYCOUNT">(%2$d)</xliff:g>"</string>
+    <string name="backlinks_cross_profile_error" msgid="1355798585727802282">"Başka profillerden bağlantı eklenemez"</string>
     <string name="screenrecord_title" msgid="4257171601439507792">"Ekran Kaydedicisi"</string>
     <string name="screenrecord_background_processing_label" msgid="7244617554884238898">"Ekran kaydı işleniyor"</string>
     <string name="screenrecord_channel_description" msgid="4147077128486138351">"Ekran kaydı oturumu için devam eden bildirim"</string>
@@ -291,7 +293,7 @@
     <string name="start_dreams" msgid="9131802557946276718">"Ekran koruyucu"</string>
     <string name="ethernet_label" msgid="2203544727007463351">"Ethernet"</string>
     <string name="quick_settings_dnd_label" msgid="7728690179108024338">"Rahatsız Etmeyin"</string>
-    <string name="quick_settings_modes_label" msgid="5407025818652750501">"Öncelik modları"</string>
+    <string name="quick_settings_modes_label" msgid="879156359479504244">"Modlar"</string>
     <string name="quick_settings_bluetooth_label" msgid="7018763367142041481">"Bluetooth"</string>
     <string name="quick_settings_bluetooth_detail_empty_text" msgid="5760239584390514322">"Kullanılabilir eşlenmiş cihaz yok"</string>
     <string name="quick_settings_bluetooth_tile_subtitle" msgid="212752719010829550">"Cihaz bağlamak veya cihazın bağlantısını kesmek için dokunun"</string>
@@ -300,8 +302,7 @@
     <string name="turn_on_bluetooth" msgid="5681370462180289071">"Bluetooth\'u kullan"</string>
     <string name="quick_settings_bluetooth_device_connected" msgid="7884777006729260996">"Bağlandı"</string>
     <string name="quick_settings_bluetooth_device_audio_sharing" msgid="1496358082943301670">"Ses Paylaşımı"</string>
-    <!-- no translation found for quick_settings_bluetooth_device_audio_sharing_or_switch_active (3227408556754456024) -->
-    <skip />
+    <string name="quick_settings_bluetooth_device_audio_sharing_or_switch_active" msgid="3227408556754456024">"Geçiş yapmak veya ses paylaşmak için dokunun"</string>
     <string name="quick_settings_bluetooth_device_saved" msgid="7549938728928069477">"Kaydedildi"</string>
     <string name="accessibility_quick_settings_bluetooth_device_tap_to_disconnect" msgid="415980329093277342">"bağlantıyı kes"</string>
     <string name="accessibility_quick_settings_bluetooth_device_tap_to_activate" msgid="3724301751036877403">"etkinleştir"</string>
@@ -433,7 +434,7 @@
     <string name="sensor_privacy_dialog_open_settings" msgid="5635865896053011859">"Ayarlar\'ı aç"</string>
     <string name="media_seamless_other_device" msgid="4654849800789196737">"Diğer cihaz"</string>
     <string name="quick_step_accessibility_toggle_overview" msgid="7908949976727578403">"Genel bakışı aç/kapat"</string>
-    <string name="zen_modes_dialog_title" msgid="4159138230418567383">"Öncelik modları"</string>
+    <string name="zen_modes_dialog_title" msgid="8854640808100096934">"Modlar"</string>
     <string name="zen_modes_dialog_done" msgid="6654130880256438950">"Bitti"</string>
     <string name="zen_modes_dialog_settings" msgid="2310248023728936697">"Ayarlar"</string>
     <string name="zen_mode_on" msgid="9085304934016242591">"Açık"</string>
@@ -534,8 +535,12 @@
     <string name="media_projection_sys_service_dialog_warning" msgid="2443872865267330320">"Bu işlevi sağlayan hizmet, ekranınızda görünen veya kayıt ya da yayın sırasında cihazınızdan oynatılan tüm bilgilere erişecektir. Bu bilgiler arasında şifreler, ödeme detayları, fotoğraflar, mesajlar ve çaldığınız sesler gibi bilgiler yer alır."</string>
     <string name="screen_share_generic_app_selector_title" msgid="8331515850599218288">"Uygulamayı paylaşın veya kaydedin"</string>
     <string name="media_projection_entry_app_permission_dialog_title" msgid="4613857256721708062">"Ekranınız <xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g> uygulamasıyla paylaşılsın mı?"</string>
-    <string name="media_projection_entry_app_permission_dialog_option_text_single_app" msgid="6314402084788062644">"Tek bir uygulamayı paylaş"</string>
-    <string name="media_projection_entry_app_permission_dialog_option_text_entire_screen" msgid="7381488112332599632">"Tüm ekranı paylaş"</string>
+    <string name="screen_share_permission_dialog_option_single_app" msgid="2974054871681567314">"Tek bir uygulamayı paylaş"</string>
+    <!-- no translation found for media_projection_entry_app_permission_dialog_option_text_single_app (2308901434964846084) -->
+    <skip />
+    <string name="screen_share_permission_dialog_option_entire_screen" msgid="4493174362775038997">"Tüm ekranı paylaş"</string>
+    <!-- no translation found for media_projection_entry_app_permission_dialog_option_text_entire_screen (5100078808078139706) -->
+    <skip />
     <string name="media_projection_entry_app_permission_dialog_warning_entire_screen" msgid="5504288438067851086">"<xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g>, tüm ekranınızı paylaştığınızda ekranınızdaki her şeyi görebilir. Bu nedenle şifre, ödeme ayrıntıları, mesaj, fotoğraf, ses ve video gibi öğeler konusunda dikkatli olun."</string>
     <string name="media_projection_entry_app_permission_dialog_warning_single_app" msgid="7094417930857938876">"<xliff:g id="APP_SEEKING_PERMISSION">%s</xliff:g>, bir uygulamayı paylaştığınızda o uygulamada gösterilen veya oynatılan her şeyi görebilir. Bu nedenle şifre, ödeme ayrıntıları, mesaj, fotoğraf, ses ve video gibi öğeler konusunda dikkatli olun."</string>
     <string name="media_projection_entry_app_permission_dialog_continue_entire_screen" msgid="1850848182344377579">"Ekranı paylaş"</string>
@@ -1284,6 +1289,8 @@
     <string name="add" msgid="81036585205287996">"Ekle"</string>
     <string name="manage_users" msgid="1823875311934643849">"Kullanıcıları yönet"</string>
     <string name="drag_split_not_supported" msgid="7173481676120546121">"Bu bildirim bölünmüş ekrana sürüklemeyi desteklemiyor"</string>
+    <!-- no translation found for dream_overlay_location_active (6484763493158166618) -->
+    <skip />
     <string name="dream_overlay_status_bar_wifi_off" msgid="4497069245055003582">"Kablosuz kullanılamıyor"</string>
     <string name="dream_overlay_status_bar_priority_mode" msgid="5428462123314728739">"Öncelik modu"</string>
     <string name="dream_overlay_status_bar_alarm_set" msgid="566707328356590886">"Alarm kuruldu"</string>
@@ -1340,6 +1347,8 @@
     <string name="lock_screen_settings" msgid="6152703934761402399">"Kilit ekranını özelleştir"</string>
     <string name="keyguard_unlock_to_customize_ls" msgid="2068542308086253819">"Kilit ekranını özelleştirmek için kilidi açın"</string>
     <string name="wifi_unavailable_dream_overlay_content_description" msgid="2024166212194640100">"Kablosuz bağlantı kullanılamıyor"</string>
+    <!-- no translation found for location_active_dream_overlay_content_description (6208885541020673916) -->
+    <skip />
     <string name="camera_blocked_dream_overlay_content_description" msgid="4074759493559418130">"Kamera engellendi"</string>
     <string name="camera_and_microphone_blocked_dream_overlay_content_description" msgid="7891078093416249764">"Kamera ve mikrofon engellendi"</string>
     <string name="microphone_blocked_dream_overlay_content_description" msgid="5466897982130007033">"Mikrofon engellendi"</string>
@@ -1387,9 +1396,16 @@
     <string name="shortcut_helper_content_description_collapse_icon" msgid="8028015738431664954">"Daralt simgesi"</string>
     <string name="shortcut_helper_content_description_expand_icon" msgid="1084435697860417390">"Genişlet simgesi"</string>
     <string name="shortcut_helper_key_combinations_or_separator" msgid="7082902112102125540">"veya"</string>
+    <string name="launch_keyboard_tutorial_notification_title" msgid="8849933155160522519">"Klavyenizi kullanarak gezinin"</string>
+    <string name="launch_keyboard_tutorial_notification_content" msgid="2880339951512757918">"Klavye kısayollarını öğrenin"</string>
+    <string name="launch_touchpad_tutorial_notification_title" msgid="2243780062772196901">"Dokunmatik alanınızı kullanarak gezinin"</string>
+    <string name="launch_touchpad_tutorial_notification_content" msgid="7931085031240753226">"Dokunmatik alan hareketlerini öğrenin"</string>
+    <string name="launch_keyboard_touchpad_tutorial_notification_title" msgid="1940023776496198762">"Klavyenizi ve dokunmatik alanınızı kullanarak gezinin"</string>
+    <string name="launch_keyboard_touchpad_tutorial_notification_content" msgid="1780725168171929365">"Dokunmatik alan hareketlerini, klavye kısayollarını ve daha fazlasını öğrenin"</string>
     <string name="touchpad_tutorial_back_gesture_button" msgid="2746834288077265946">"Geri hareketi"</string>
     <string name="touchpad_tutorial_home_gesture_button" msgid="7640544867625955304">"Ana sayfa hareketi"</string>
-    <string name="touchpad_tutorial_action_key_button" msgid="3220074511852927267">"Eylem tuşu"</string>
+    <!-- no translation found for touchpad_tutorial_recent_apps_gesture_button (8919227647650347359) -->
+    <skip />
     <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"Bitti"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"Geri dön"</string>
     <string name="touchpad_back_gesture_guidance" msgid="6263750214998421587">"Geri dönmek için dokunmatik alanın herhangi bir yerinde üç parmağınızla sola veya sağa kaydırın.\n\nDilerseniz işlem düğmesi + Esc klavye kısayolunu kullanarak da geri dönebilirsiniz."</string>
@@ -1399,6 +1415,14 @@
     <string name="touchpad_home_gesture_guidance" msgid="3043931356096731966">"İstediğiniz zaman ana ekrana gitmek için üç parmağınızla ekranınızın altından yukarı doğru kaydırın."</string>
     <string name="touchpad_home_gesture_success_title" msgid="3778407003948209795">"Güzel!"</string>
     <string name="touchpad_home_gesture_success_body" msgid="2404031094918807067">"Ana ekrana git hareketini tamamladınız."</string>
+    <!-- no translation found for touchpad_recent_apps_gesture_action_title (934906836867137906) -->
+    <skip />
+    <!-- no translation found for touchpad_recent_apps_gesture_guidance (6012057247259983871) -->
+    <skip />
+    <!-- no translation found for touchpad_recent_apps_gesture_success_title (8481920554139332593) -->
+    <skip />
+    <!-- no translation found for touchpad_recent_apps_gesture_success_body (4334263906697493273) -->
+    <skip />
     <string name="tutorial_action_key_title" msgid="2659466586996495447">"Eylem tuşu"</string>
     <string name="tutorial_action_key_guidance" msgid="5718948664616999196">"Uygulamalarınıza erişmek için klavyenizdeki eylem tuşuna basın."</string>
     <string name="tutorial_action_key_success_title" msgid="466467860120112933">"Tebrikler!"</string>
@@ -1422,8 +1446,19 @@
     <string name="overview_edu_notification_content" msgid="3578204677648432500">"Üç parmağınızla yukarı kaydırıp basılı tutun. Daha fazla hareket öğrenmek için dokunun."</string>
     <string name="all_apps_edu_notification_title" msgid="372262997265569063">"Tüm uygulamaları görüntülemek için klavyenizi kullanın"</string>
     <string name="all_apps_edu_notification_content" msgid="3255070575694025585">"İstediğiniz zaman eylem tuşuna basın. Daha fazla hareket öğrenmek için dokunun."</string>
-    <string name="accessibility_deprecate_extra_dim_dialog_title" msgid="4369307638184799742">"Ekstra loş özelliği, parlaklık çubuğuna eklendi"</string>
-    <string name="accessibility_deprecate_extra_dim_dialog_description" msgid="7513137763024327538">"Artık ekranınızın üst kısmından parlaklık seviyesini daha da düşürerek ekranı ekstra loş hale getirebilirsiniz.\n\nBu özellik, karanlık ortamdayken en iyi sonucu verir."</string>
-    <string name="accessibility_deprecate_extra_dim_dialog_button" msgid="1782147201534669800">"Ekstra loş kısayolunu kaldır"</string>
-    <string name="accessibility_deprecate_extra_dim_dialog_toast" msgid="4070696910424515757">"Ekstra loş kısayolu kaldırıldı. Parlaklık seviyesini düşürmek için normal parlaklık çubuğunu kullanın."</string>
+    <!-- no translation found for accessibility_deprecate_extra_dim_dialog_title (910988771011857460) -->
+    <skip />
+    <!-- no translation found for accessibility_deprecate_extra_dim_dialog_description (4453123359258743230) -->
+    <skip />
+    <!-- no translation found for accessibility_deprecate_extra_dim_dialog_button (3947537827396916005) -->
+    <skip />
+    <!-- no translation found for accessibility_deprecate_extra_dim_dialog_toast (165474092660941104) -->
+    <skip />
+    <string name="qs_edit_mode_category_connectivity" msgid="4559726936546032672">"Bağlantı"</string>
+    <string name="qs_edit_mode_category_accessibility" msgid="7969091385071475922">"Erişilebilirlik"</string>
+    <string name="qs_edit_mode_category_utilities" msgid="8123080090108420095">"Yardımcı programlar"</string>
+    <string name="qs_edit_mode_category_privacy" msgid="6577774443194551775">"Gizlilik"</string>
+    <string name="qs_edit_mode_category_providedByApps" msgid="8346112074897919019">"Uygulamalar tarafından sağlanır"</string>
+    <string name="qs_edit_mode_category_display" msgid="4749511439121053942">"Ekran"</string>
+    <string name="qs_edit_mode_category_unknown" msgid="509314252124053550">"Bilinmiyor"</string>
 </resources>

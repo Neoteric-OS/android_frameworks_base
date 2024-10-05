@@ -85,12 +85,10 @@ constructor(
     }
 
     private suspend fun isTargetDeviceConnected(deviceType: DeviceType): Boolean {
-        if (deviceType == KEYBOARD) {
-            return inputDeviceRepository.isAnyKeyboardConnectedForUser.first().isConnected
-        } else if (deviceType == TOUCHPAD) {
-            return inputDeviceRepository.isAnyTouchpadConnectedForUser.first().isConnected
+        return when (deviceType) {
+            KEYBOARD -> inputDeviceRepository.isAnyKeyboardConnectedForUser.first().isConnected
+            TOUCHPAD -> inputDeviceRepository.isAnyTouchpadConnectedForUser.first().isConnected
         }
-        return false
     }
 
     /**

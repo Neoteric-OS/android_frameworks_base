@@ -19,7 +19,9 @@ package com.android.systemui.communal.ui.compose
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.Icon
+import android.os.SystemClock
 import android.util.SizeF
+import android.view.MotionEvent
 import android.widget.FrameLayout
 import android.widget.RemoteViews
 import androidx.annotation.VisibleForTesting
@@ -40,6 +42,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -65,6 +68,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
@@ -104,6 +108,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -136,6 +142,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.paneTitle
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.style.TextAlign
@@ -174,6 +181,7 @@ import com.android.systemui.communal.widgets.SmartspaceAppWidgetHostView
 import com.android.systemui.communal.widgets.WidgetConfigurator
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.phone.SystemUIDialogFactory
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -196,7 +204,12 @@ fun CommunalHub(
 
     val gridState =
         rememberLazyGridState(viewModel.savedFirstScrollIndex, viewModel.savedFirstScrollOffset)
-    viewModel.clearPersistedScrollPosition()
+
+    LaunchedEffect(Unit) {
+        if (!viewModel.isEditMode) {
+            viewModel.clearPersistedScrollPosition()
+        }
+    }
 
     val contentListState = rememberContentListState(widgetConfigurator, communalContent, viewModel)
     val reorderingWidgets by viewModel.reorderingWidgets.collectAsStateWithLifecycle()
@@ -219,7 +232,6 @@ fun CommunalHub(
     val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(context)
     val screenWidth = windowMetrics.bounds.width()
     val layoutDirection = LocalLayoutDirection.current
-
     if (viewModel.isEditMode) {
         ObserveNewWidgetAddedEffect(communalContent, gridState, viewModel)
     } else {
@@ -236,10 +248,15 @@ fun CommunalHub(
         }
     }
 
+    val paneTitle = stringResource(R.string.accessibility_content_description_for_communal_hub)
+
     Box(
         modifier =
             modifier
-                .semantics { testTagsAsResourceId = true }
+                .semantics {
+                    testTagsAsResourceId = true
+                    this.paneTitle = paneTitle
+                }
                 .testTag(COMMUNAL_HUB_TEST_TAG)
                 .fillMaxSize()
                 // Observe taps for selecting items
@@ -543,7 +560,6 @@ private fun ScrollOnUpdatedLiveContentEffect(
     communalContent: List<CommunalContentModel>,
     gridState: LazyGridState,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val liveContentKeys = remember { mutableListOf<String>() }
     var communalContentPending by remember { mutableStateOf(true) }
 
@@ -687,21 +703,20 @@ private fun BoxScope.CommunalHubLazyGrid(
         horizontalArrangement = Arrangement.spacedBy(Dimensions.ItemSpacing),
         verticalArrangement = Arrangement.spacedBy(Dimensions.ItemSpacing),
     ) {
-        items(
-            count = list.size,
-            key = { index -> list[index].key },
-            contentType = { index -> list[index].key },
-            span = { index -> GridItemSpan(list[index].size.span) },
-        ) { index ->
+        itemsIndexed(
+            items = list,
+            key = { _, item -> item.key },
+            contentType = { _, item -> item.key },
+            span = { _, item -> GridItemSpan(item.size.span) },
+        ) { index, item ->
             val size =
                 SizeF(
                     Dimensions.CardWidth.value,
-                    list[index].size.dp().value,
+                    item.size.dp().value,
                 )
             val cardModifier = Modifier.requiredSize(width = size.width.dp, height = size.height.dp)
             if (viewModel.isEditMode && dragDropState != null) {
-                val selected by
-                    remember(index) { derivedStateOf { list[index].key == selectedKey.value } }
+                val selected = item.key == selectedKey.value
                 DraggableItem(
                     modifier =
                         if (dragDropState.draggingItemIndex == index) {
@@ -713,12 +728,12 @@ private fun BoxScope.CommunalHubLazyGrid(
                         },
                     dragDropState = dragDropState,
                     selected = selected,
-                    enabled = list[index].isWidgetContent(),
+                    enabled = item.isWidgetContent(),
                     index = index,
                 ) { isDragging ->
                     CommunalContent(
                         modifier = cardModifier,
-                        model = list[index],
+                        model = item,
                         viewModel = viewModel,
                         size = size,
                         selected = selected && !isDragging,
@@ -731,7 +746,7 @@ private fun BoxScope.CommunalHubLazyGrid(
                 }
             } else {
                 CommunalContent(
-                    model = list[index],
+                    model = item,
                     viewModel = viewModel,
                     size = size,
                     selected = false,
@@ -1143,6 +1158,15 @@ private fun WidgetContent(
     val selectedIndex =
         selectedKey?.let { key -> contentListState.list.indexOfFirst { it.key == key } }
 
+    val interactionSource = remember { MutableInteractionSource() }
+    val focusRequester = remember { FocusRequester() }
+    if (viewModel.isEditMode && selected) {
+        LaunchedEffect(Unit) {
+            delay(TransitionDuration.BETWEEN_HUB_AND_EDIT_MODE_MS.toLong())
+            focusRequester.requestFocus()
+        }
+    }
+
     val isSelected = selectedKey == model.key
 
     val selectableModifier =
@@ -1150,7 +1174,7 @@ private fun WidgetContent(
             Modifier.selectable(
                 selected = isSelected,
                 onClick = { viewModel.setSelectedKey(model.key) },
-                interactionSource = remember { MutableInteractionSource() },
+                interactionSource = interactionSource,
                 indication = null,
             )
         } else {
@@ -1160,6 +1184,8 @@ private fun WidgetContent(
     Box(
         modifier =
             modifier
+                .focusRequester(focusRequester)
+                .focusable(interactionSource = interactionSource)
                 .then(selectableModifier)
                 .thenIf(!viewModel.isEditMode && !model.inQuietMode) {
                     Modifier.pointerInput(Unit) {
@@ -1380,17 +1406,35 @@ private fun TutorialContent(modifier: Modifier = Modifier) {
 @Composable
 private fun Umo(viewModel: BaseCommunalViewModel, modifier: Modifier = Modifier) {
     AndroidView(
-        modifier = modifier,
-        factory = {
-            viewModel.mediaHost.hostView.layoutParams =
-                FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
-                )
+        modifier =
+            modifier.pointerInput(Unit) {
+                detectHorizontalDragGestures { change, _ ->
+                    change.consume()
+                    val upTime = SystemClock.uptimeMillis()
+                    val event =
+                        MotionEvent.obtain(
+                            upTime,
+                            upTime,
+                            MotionEvent.ACTION_MOVE,
+                            change.position.x,
+                            change.position.y,
+                            0
+                        )
+                    viewModel.mediaHost.hostView.dispatchTouchEvent(event)
+                    event.recycle()
+                }
+            },
+        factory = { _ ->
+            viewModel.mediaHost.hostView.apply {
+                layoutParams =
+                    FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT
+                    )
+            }
             viewModel.mediaHost.hostView
         },
-        // For reusing composition in lazy lists.
-        onReset = {},
+        onReset = {}
     )
 }
 

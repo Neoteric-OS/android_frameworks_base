@@ -70,6 +70,58 @@ public final class NfcOemExtension {
     private boolean mRfDiscoveryStarted = false;
 
     /**
+     * Mode Type for {@link #setControllerAlwaysOn(int)}.
+     * Enables the controller in default mode when NFC is disabled (existing API behavior).
+     * works same as {@link NfcAdapter#setControllerAlwaysOn(boolean)}.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public static final int ENABLE_DEFAULT = NfcAdapter.CONTROLLER_ALWAYS_ON_MODE_DEFAULT;
+
+    /**
+     * Mode Type for {@link #setControllerAlwaysOn(int)}.
+     * Enables the controller in transparent mode when NFC is disabled.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public static final int ENABLE_TRANSPARENT = 2;
+
+    /**
+     * Mode Type for {@link #setControllerAlwaysOn(int)}.
+     * Enables the controller and initializes and enables the EE subsystem when NFC is disabled.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public static final int ENABLE_EE = 3;
+
+    /**
+     * Mode Type for {@link #setControllerAlwaysOn(int)}.
+     * Disable the Controller Always On Mode.
+     * works same as {@link NfcAdapter#setControllerAlwaysOn(boolean)}.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public static final int DISABLE = NfcAdapter.CONTROLLER_ALWAYS_ON_DISABLE;
+
+    /**
+     * Possible controller modes for {@link #setControllerAlwaysOn(int)}.
+     *
+     * @hide
+     */
+    @IntDef(prefix = { "" }, value = {
+        ENABLE_DEFAULT,
+        ENABLE_TRANSPARENT,
+        ENABLE_EE,
+        DISABLE,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ControllerMode{}
+
+    /**
      * Event that Host Card Emulation is activated.
      */
     public static final int HCE_ACTIVATE = 1;
@@ -221,6 +273,13 @@ public final class NfcOemExtension {
          * @param action Flag indicating actions to activate, start and stop cpu boost.
          */
         void onHceEventReceived(@HostCardEmulationAction int action);
+
+        /**
+         * API to notify when reader option has been changed using
+         * {@link NfcAdapter#enableReaderOption(boolean)} by some app.
+         * @param enabled Flag indicating ReaderMode enabled/disabled
+         */
+        void onReaderOptionChanged(boolean enabled);
 
         /**
         * Notifies NFC is activated in listen mode.
@@ -382,6 +441,32 @@ public final class NfcOemExtension {
             NfcAdapter.sService.fetchActiveNfceeList(), new ArrayList<String>());
     }
 
+    /**
+     * Sets NFC controller always on feature.
+     * <p>This API is for the NFCC internal state management. It allows to discriminate
+     * the controller function from the NFC function by keeping the NFC controller on without
+     * any NFC RF enabled if necessary.
+     * <p>This call is asynchronous, register listener {@link NfcAdapter.ControllerAlwaysOnListener}
+     * by {@link NfcAdapter#registerControllerAlwaysOnListener} to find out when the operation is
+     * complete.
+     * @param mode one of {@link ControllerMode} modes
+     * @throws UnsupportedOperationException if
+     *   <li> if FEATURE_NFC, FEATURE_NFC_HOST_CARD_EMULATION, FEATURE_NFC_HOST_CARD_EMULATION_NFCF,
+     *   FEATURE_NFC_OFF_HOST_CARD_EMULATION_UICC and FEATURE_NFC_OFF_HOST_CARD_EMULATION_ESE
+     *   are unavailable </li>
+     *   <li> if the feature is unavailable @see NfcAdapter#isNfcControllerAlwaysOnSupported() </li>
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    @RequiresPermission(android.Manifest.permission.NFC_SET_CONTROLLER_ALWAYS_ON)
+    public void setControllerAlwaysOn(@ControllerMode int mode) {
+        if (!NfcAdapter.sHasNfcFeature && !NfcAdapter.sHasCeFeature) {
+            throw new UnsupportedOperationException();
+        }
+        NfcAdapter.callService(() -> NfcAdapter.sService.setControllerAlwaysOn(mode));
+    }
+
     private final class NfcOemExtensionCallback extends INfcOemExtensionCallback.Stub {
 
         @Override
@@ -486,6 +571,12 @@ public final class NfcOemExtension {
         public void onHceEventReceived(int action) throws RemoteException {
             mCallbackMap.forEach((cb, ex) ->
                     handleVoidCallback(action, cb::onHceEventReceived, ex));
+        }
+
+        @Override
+        public void onReaderOptionChanged(boolean enabled) throws RemoteException {
+            mCallbackMap.forEach((cb, ex) ->
+                    handleVoidCallback(enabled, cb::onReaderOptionChanged, ex));
         }
 
         private <T> void handleVoidCallback(

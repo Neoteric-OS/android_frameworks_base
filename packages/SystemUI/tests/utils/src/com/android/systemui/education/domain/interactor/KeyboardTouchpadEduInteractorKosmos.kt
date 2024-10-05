@@ -19,7 +19,7 @@ package com.android.systemui.education.domain.interactor
 import android.hardware.input.InputManager
 import com.android.systemui.education.data.repository.fakeEduClock
 import com.android.systemui.inputdevice.data.repository.UserInputDeviceRepository
-import com.android.systemui.inputdevice.tutorial.data.repository.TutorialSchedulerRepository
+import com.android.systemui.inputdevice.tutorial.tutorialSchedulerRepository
 import com.android.systemui.keyboard.data.repository.keyboardRepository
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.testDispatcher
@@ -40,8 +40,7 @@ var Kosmos.keyboardTouchpadEduInteractor by
                     touchpadRepository,
                     userRepository
                 ),
-            clock = fakeEduClock,
-            inputManager = mockEduInputManager
+            clock = fakeEduClock
         )
     }
 
@@ -52,11 +51,14 @@ var Kosmos.keyboardTouchpadEduStatsInteractor by
         KeyboardTouchpadEduStatsInteractorImpl(
             backgroundScope = testScope.backgroundScope,
             contextualEducationInteractor = contextualEducationInteractor,
-            inputDeviceRepository = mockUserInputDeviceRepository,
-            tutorialRepository = mockTutorialSchedulerRepository,
-            clock = fakeEduClock
+            inputDeviceRepository =
+                UserInputDeviceRepository(
+                    testDispatcher,
+                    keyboardRepository,
+                    touchpadRepository,
+                    userRepository
+                ),
+            tutorialSchedulerRepository,
+            fakeEduClock
         )
     }
-
-var mockUserInputDeviceRepository = mock<UserInputDeviceRepository>()
-var mockTutorialSchedulerRepository = mock<TutorialSchedulerRepository>()

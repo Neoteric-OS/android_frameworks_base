@@ -72,7 +72,7 @@ object AllElements : ElementMatcher {
     override fun matches(key: ElementKey, content: ContentKey) = true
 }
 
-private object TransitionDuration {
+object TransitionDuration {
     const val BETWEEN_HUB_AND_EDIT_MODE_MS = 1000
     const val EDIT_MODE_TO_HUB_CONTENT_MS = 167
     const val EDIT_MODE_TO_HUB_GRID_DELAY_MS = 167
@@ -216,7 +216,7 @@ fun CommunalContainer(
 
 /** Scene containing the glanceable hub UI. */
 @Composable
-private fun SceneScope.CommunalScene(
+fun SceneScope.CommunalScene(
     backgroundType: CommunalBackgroundType,
     colors: CommunalColors,
     content: CommunalContent,

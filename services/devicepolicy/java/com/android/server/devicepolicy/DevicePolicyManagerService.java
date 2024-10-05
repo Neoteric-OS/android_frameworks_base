@@ -10625,8 +10625,16 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 final DevicePolicyData policyData = getUserData(userId);
                 if (transitionCheckNeeded) {
                     // Optional state transition check for non-ADB case.
-                    checkUserProvisioningStateTransition(policyData.mUserProvisioningState,
-                            newState);
+                    try {
+                        checkUserProvisioningStateTransition(
+                                policyData.mUserProvisioningState,
+                                newState);
+
+                    } catch (IllegalStateException e) {
+                        Slogf.e(LOG_TAG,
+                                "Exception caught while changing provisioning state", e);
+                        throw e;
+                    }
                 }
                 policyData.mUserProvisioningState = newState;
                 saveSettingsLocked(userId);
@@ -10637,6 +10645,10 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     }
 
     private void checkUserProvisioningStateTransition(int currentState, int newState) {
+        if (Flags.userProvisioningSameState()) {
+            Preconditions.checkState(newState != currentState, "New state cannot"
+                    + " be the same as the current state: [" + newState + "]");
+        }
         // Valid transitions for normal use-cases.
         switch (currentState) {
             case DevicePolicyManager.STATE_USER_UNMANAGED:
@@ -14799,7 +14811,8 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     }
 
     @Override
-    public void setSecondaryLockscreenEnabled(ComponentName who, boolean enabled) {
+    public void setSecondaryLockscreenEnabled(ComponentName who, boolean enabled,
+            PersistableBundle options) {
         Objects.requireNonNull(who, "ComponentName is null");
 
         // Check can set secondary lockscreen enabled
@@ -18644,11 +18657,9 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
         toggleBackupServiceActive(caller.getUserId(), enabled);
 
-        if (Flags.backupServiceSecurityLogEventEnabled()) {
-            if (SecurityLog.isLoggingEnabled()) {
-                SecurityLog.writeEvent(SecurityLog.TAG_BACKUP_SERVICE_TOGGLED,
-                        caller.getPackageName(), caller.getUserId(), enabled ? 1 : 0);
-            }
+        if (SecurityLog.isLoggingEnabled()) {
+            SecurityLog.writeEvent(SecurityLog.TAG_BACKUP_SERVICE_TOGGLED,
+                    caller.getPackageName(), caller.getUserId(), enabled ? 1 : 0);
         }
     }
 
@@ -21867,18 +21878,15 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             return;
         }
 
-        if (Flags.copyAccountWithRetryEnabled()) {
-            boolean copySucceeded = false;
-            int retryAttemptsLeft = RETRY_COPY_ACCOUNT_ATTEMPTS;
-            while (!copySucceeded && (retryAttemptsLeft > 0)) {
-                Slogf.i(LOG_TAG, "Copying account. Attempts left : " + retryAttemptsLeft);
-                copySucceeded =
-                        copyAccount(targetUser, sourceUser, accountToMigrate, callerPackage);
-                retryAttemptsLeft--;
-            }
-        } else {
-            copyAccount(targetUser, sourceUser, accountToMigrate, callerPackage);
+        boolean copySucceeded = false;
+        int retryAttemptsLeft = RETRY_COPY_ACCOUNT_ATTEMPTS;
+        while (!copySucceeded && (retryAttemptsLeft > 0)) {
+            Slogf.i(LOG_TAG, "Copying account. Attempts left : " + retryAttemptsLeft);
+            copySucceeded =
+                    copyAccount(targetUser, sourceUser, accountToMigrate, callerPackage);
+            retryAttemptsLeft--;
         }
+
         if (!keepAccountMigrated) {
             removeAccount(accountToMigrate, sourceUserId);
         }

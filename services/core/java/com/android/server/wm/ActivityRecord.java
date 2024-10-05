@@ -356,7 +356,6 @@ import android.window.SplashScreen;
 import android.window.SplashScreenView;
 import android.window.SplashScreenView.SplashScreenViewParcelable;
 import android.window.TaskSnapshot;
-import android.window.TransitionInfo;
 import android.window.TransitionInfo.AnimationOptions;
 import android.window.WindowContainerToken;
 import android.window.WindowOnBackInvokedDispatcher;
@@ -2872,7 +2871,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         final boolean hasImeSurface;
         if (mStartingData != null) {
             if (mStartingData.mWaitForSyncTransactionCommit
-                    || mTransitionController.isCollecting(this)) {
+                    || mSyncState != SYNC_STATE_NONE) {
                 mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_REMOVE_DIRECTLY;
                 mStartingData.mPrepareRemoveAnimation = prepareAnimation;
                 return;
@@ -5081,8 +5080,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 // controller but don't clear the animation information from the options since they
                 // need to be sent to the animating activity.
                 mTransitionController.setOverrideAnimation(
-                        TransitionInfo.AnimationOptions.makeSceneTransitionAnimOptions(), this,
-                        null, null);
+                        AnimationOptions.makeSceneTransitionAnimOptions(), this, null, null);
                 return;
             }
             applyOptionsAnimation(mPendingOptions, intent);
@@ -6189,9 +6187,10 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             return false;
         }
 
-        // Check if the activity is on a sleeping display, canTurnScreenOn will also check
-        // keyguard visibility
-        if (mDisplayContent.isSleeping()) {
+        // Check if the activity is on a sleeping display and keyguard is not going away (to
+        // align with TaskFragment#shouldSleepActivities), canTurnScreenOn will also check keyguard
+        // visibility
+        if (mDisplayContent.isSleeping() && !mDisplayContent.isKeyguardGoingAway()) {
             return canTurnScreenOn();
         } else {
             return mTaskSupervisor.getKeyguardController().checkKeyguardVisibility(this);
@@ -8328,12 +8327,17 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
      * into account orientation per-app overrides applied by the device manufacturers.
      */
     @Override
+    @ActivityInfo.ScreenOrientation
     protected int getOverrideOrientation() {
-        if (mWmService.mConstants.mIgnoreActivityOrientationRequest) {
-            return ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+        final int candidateOrientation;
+        if (!mWmService.mConstants.mIgnoreActivityOrientationRequest
+                || info.applicationInfo.category == ApplicationInfo.CATEGORY_GAME) {
+            candidateOrientation = super.getOverrideOrientation();
+        } else {
+            candidateOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
         return mAppCompatController.getOrientationPolicy()
-                .overrideOrientationIfNeeded(super.getOverrideOrientation());
+                .overrideOrientationIfNeeded(candidateOrientation);
     }
 
     /**

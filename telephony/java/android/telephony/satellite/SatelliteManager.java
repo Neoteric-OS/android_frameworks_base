@@ -19,6 +19,7 @@ package android.telephony.satellite;
 import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.FlaggedApi;
+import android.annotation.Hide;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -412,6 +413,22 @@ public final class SatelliteManager {
     @FlaggedApi(Flags.FLAG_OEM_ENABLED_SATELLITE_FLAG)
     public static final int SATELLITE_RESULT_EMERGENCY_CALL_IN_PROGRESS = 27;
 
+    /**
+     * Disabling satellite is in progress.
+     *
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_OEM_ENABLED_SATELLITE_FLAG)
+    public static final int SATELLITE_RESULT_DISABLE_IN_PROGRESS = 28;
+
+    /**
+     * Enabling satellite is in progress.
+     *
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_OEM_ENABLED_SATELLITE_FLAG)
+    public static final int SATELLITE_RESULT_ENABLE_IN_PROGRESS = 29;
+
     /** @hide */
     @IntDef(prefix = {"SATELLITE_RESULT_"}, value = {
             SATELLITE_RESULT_SUCCESS,
@@ -441,7 +458,9 @@ public final class SatelliteManager {
             SATELLITE_RESULT_MODEM_TIMEOUT,
             SATELLITE_RESULT_LOCATION_DISABLED,
             SATELLITE_RESULT_LOCATION_NOT_AVAILABLE,
-            SATELLITE_RESULT_EMERGENCY_CALL_IN_PROGRESS
+            SATELLITE_RESULT_EMERGENCY_CALL_IN_PROGRESS,
+            SATELLITE_RESULT_DISABLE_IN_PROGRESS,
+            SATELLITE_RESULT_ENABLE_IN_PROGRESS
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface SatelliteResult {}
@@ -1202,6 +1221,12 @@ public final class SatelliteManager {
                                         () -> callback.onReceiveDatagramStateChanged(
                                                 state, receivePendingCount, errorCode)));
                             }
+
+                            @Override
+                            public void onSendDatagramRequested(int datagramType) {
+                                executor.execute(() -> Binder.withCleanCallingIdentity(
+                                        () -> callback.onSendDatagramRequested(datagramType)));
+                            }
                         };
                 sSatelliteTransmissionUpdateCallbackMap.put(callback, internalCallback);
                 telephony.startSatelliteTransmissionUpdates(errorCallback, internalCallback);
@@ -1554,6 +1579,13 @@ public final class SatelliteManager {
                     public void onEmergencyModeChanged(boolean isEmergency) {
                         executor.execute(() -> Binder.withCleanCallingIdentity(() ->
                                 callback.onEmergencyModeChanged(isEmergency)));
+                    }
+
+                    @Hide
+                    @Override
+                    public void onRegistrationFailure(int causeCode) {
+                        executor.execute(() -> Binder.withCleanCallingIdentity(() ->
+                                callback.onRegistrationFailure(causeCode)));
                     }
                 };
                 sSatelliteModemStateCallbackMap.put(callback, internalCallback);

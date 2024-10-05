@@ -22,6 +22,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Point
 import android.hardware.input.InputManager
+import android.os.Handler
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.SurfaceControl
 import android.view.View
@@ -29,6 +30,7 @@ import android.view.View.OnClickListener
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import android.view.WindowManager
 import android.widget.ImageButton
+import com.android.internal.policy.SystemBarUtils
 import com.android.window.flags.Flags
 import com.android.wm.shell.R
 import com.android.wm.shell.shared.animation.Interpolators
@@ -43,7 +45,8 @@ internal class AppHandleViewHolder(
     rootView: View,
     onCaptionTouchListener: View.OnTouchListener,
     onCaptionButtonClickListener: OnClickListener,
-    private val windowManagerWrapper: WindowManagerWrapper
+    private val windowManagerWrapper: WindowManagerWrapper,
+    private val handler: Handler
 ) : WindowDecorationViewHolder(rootView) {
 
     companion object {
@@ -53,6 +56,7 @@ internal class AppHandleViewHolder(
     private val captionView: View = rootView.requireViewById(R.id.desktop_mode_caption)
     private val captionHandle: ImageButton = rootView.requireViewById(R.id.caption_handle)
     private val inputManager = context.getSystemService(InputManager::class.java)
+    private var statusBarInputLayerExists = false
 
     // An invisible View that takes up the same coordinates as captionHandle but is layered
     // above the status bar. The purpose of this View is to receive input intended for
@@ -74,14 +78,21 @@ internal class AppHandleViewHolder(
     ) {
         captionHandle.imageTintList = ColorStateList.valueOf(getCaptionHandleBarColor(taskInfo))
         this.taskInfo = taskInfo
-        if (!isCaptionVisible && hasStatusBarInputLayer()) {
+        // If handle is not in status bar region(i.e., bottom stage in vertical split),
+        // do not create an input layer
+        if (position.y >= SystemBarUtils.getStatusBarHeight(context)) return
+        if (!isCaptionVisible && statusBarInputLayerExists) {
             disposeStatusBarInputLayer()
             return
         }
-        if (hasStatusBarInputLayer()) {
-            updateStatusBarInputLayer(position)
+        // Input layer view creation / modification takes a significant amount of time;
+        // post them so we don't hold up DesktopModeWindowDecoration#relayout.
+        if (statusBarInputLayerExists) {
+            handler.post { updateStatusBarInputLayer(position) }
         } else {
-            createStatusBarInputLayer(position, width, height)
+            // Input layer is created on a delay; prevent multiple from being created.
+            statusBarInputLayerExists = true
+            handler.post { createStatusBarInputLayer(position, width, height) }
         }
     }
 
@@ -96,12 +107,13 @@ internal class AppHandleViewHolder(
     private fun createStatusBarInputLayer(handlePosition: Point,
                                           handleWidth: Int,
                                           handleHeight: Int) {
-        if (!Flags.enableAdditionalWindowsAboveStatusBar()) return
+        if (!Flags.enableHandleInputFix()) return
         statusBarInputLayer = AdditionalSystemViewContainer(context, windowManagerWrapper,
             taskInfo.taskId, handlePosition.x, handlePosition.y, handleWidth, handleHeight,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        )
         val view = statusBarInputLayer?.view ?: error("Unable to find statusBarInputLayer View")
-        val lp = statusBarInputLayer?.lp ?: error("Unable to find statusBarInputLayer" +
+        val lp = statusBarInputLayer?.lp ?: error("Unable to find statusBarInputLayer " +
                 "LayoutParams")
         lp.title = "Handle Input Layer of task " + taskInfo.taskId
         lp.setTrustedOverlay()
@@ -120,18 +132,17 @@ internal class AppHandleViewHolder(
                 inputManager.pilferPointers(v.viewRootImpl.inputToken)
             }
             captionHandle.dispatchTouchEvent(event)
-            true
+            return@setOnTouchListener true
         }
         windowManagerWrapper.updateViewLayout(view, lp)
     }
 
     private fun updateStatusBarInputLayer(globalPosition: Point) {
-        statusBarInputLayer?.setPosition(SurfaceControl.Transaction(), globalPosition.x.toFloat(),
-            globalPosition.y.toFloat()) ?: return
-    }
-
-    private fun hasStatusBarInputLayer(): Boolean {
-        return statusBarInputLayer != null
+        statusBarInputLayer?.setPosition(
+            SurfaceControl.Transaction(),
+            globalPosition.x.toFloat(),
+            globalPosition.y.toFloat()
+        ) ?: return
     }
 
     /**
@@ -139,8 +150,11 @@ internal class AppHandleViewHolder(
      * is not visible.
      */
     fun disposeStatusBarInputLayer() {
-        statusBarInputLayer?.releaseView()
-        statusBarInputLayer = null
+        statusBarInputLayerExists = false
+        handler.post {
+            statusBarInputLayer?.releaseView()
+            statusBarInputLayer = null
+        }
     }
 
     private fun getCaptionHandleBarColor(taskInfo: RunningTaskInfo): Int {
