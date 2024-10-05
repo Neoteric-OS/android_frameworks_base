@@ -1350,9 +1350,7 @@ public final class PowerManager {
      * @see #ON_AFTER_RELEASE
      */
     public WakeLock newWakeLock(int levelAndFlags, String tag) {
-        validateWakeLockParameters(levelAndFlags, tag);
-        return new WakeLock(levelAndFlags, tag, mContext.getOpPackageName(),
-                Display.INVALID_DISPLAY);
+        return newWakeLock(levelAndFlags, tag, mContext.getDisplayId());
     }
 
     /**
@@ -1763,7 +1761,8 @@ public final class PowerManager {
      */
     public boolean isWakeLockLevelSupported(int level) {
         try {
-            return mService.isWakeLockLevelSupported(level);
+            return mService.isWakeLockLevelSupportedWithDisplayId(
+                    level, mContext.getDisplayId());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -1826,7 +1825,7 @@ public final class PowerManager {
      * @see android.content.Intent#ACTION_SCREEN_OFF
      */
     public boolean isInteractive() {
-        return mInteractiveCache.query(null);
+        return isInteractive(mContext.getDisplayId());
     }
 
     /**
