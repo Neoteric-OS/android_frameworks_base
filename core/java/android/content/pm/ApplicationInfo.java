@@ -2330,6 +2330,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      *
      * @hide
      */
+    @SystemApi
     public boolean isAudioPlaybackCaptureAllowed() {
         return (privateFlags & PRIVATE_FLAG_ALLOW_AUDIO_PLAYBACK_CAPTURE) != 0;
     }

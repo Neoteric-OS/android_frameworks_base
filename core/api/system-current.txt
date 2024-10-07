@@ -4010,6 +4010,7 @@ package android.content.pm {
 
   public class ApplicationInfo extends android.content.pm.PackageItemInfo implements android.os.Parcelable {
     method @RequiresPermission(android.Manifest.permission.DELETE_PACKAGES) public boolean hasFragileUserData();
+    method public boolean isAudioPlaybackCaptureAllowed();
     method public boolean isEncryptionAware();
     method public boolean isInstantApp();
     method public boolean isOem();
