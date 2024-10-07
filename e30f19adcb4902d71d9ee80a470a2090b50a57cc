@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29b058ec_815c8788",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-07T16:32:27Z",
+      "side": 1,
+      "message": "Add to the javadoc:\n\n```\n@param systemCode ...\n```",
+      "range": {
+        "startLine": 650,
+        "startChar": 6,
+        "endLine": 650,
+        "endChar": 7
+      },
+      "revId": "e30f19adcb4902d71d9ee80a470a2090b50a57cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
