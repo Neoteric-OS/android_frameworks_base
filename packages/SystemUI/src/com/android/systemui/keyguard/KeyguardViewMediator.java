@@ -3318,7 +3318,11 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
 
         setShowingLocked(false, "onKeyguardExitFinished: " + reason);
         mWakeAndUnlocking = false;
-        mDismissCallbackRegistry.notifyDismissSucceeded();
+
+        if (!KeyguardWmStateRefactor.isEnabled()) {
+            mDismissCallbackRegistry.notifyDismissSucceeded();
+        }
+
         resetKeyguardDonePendingLocked();
         mHideAnimationRun = false;
         adjustStatusBarLocked();

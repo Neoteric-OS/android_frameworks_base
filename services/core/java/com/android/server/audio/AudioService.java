@@ -71,6 +71,7 @@ import static com.android.media.audio.Flags.alarmMinVolumeZero;
 import static com.android.media.audio.Flags.asDeviceConnectionFailure;
 import static com.android.media.audio.Flags.audioserverPermissions;
 import static com.android.media.audio.Flags.disablePrescaleAbsoluteVolume;
+import static com.android.media.audio.Flags.equalScoLeaVcIndexRange;
 import static com.android.media.audio.Flags.replaceStreamBtSco;
 import static com.android.media.audio.Flags.ringerModeAffectsAlarm;
 import static com.android.media.audio.Flags.setStreamVolumeOrder;
@@ -481,7 +482,7 @@ public class AudioService extends IAudioService.Stub
     private static final int MSG_CONFIGURATION_CHANGED = 54;
     private static final int MSG_BROADCAST_MASTER_MUTE = 55;
     private static final int MSG_UPDATE_CONTEXTUAL_VOLUMES = 56;
-    private static final int MSG_SCO_DEVICE_ACTIVE_UPDATE = 57;
+    private static final int MSG_BT_COMM_DEVICE_ACTIVE_UPDATE = 57;
 
     /**
      * Messages handled by the {@link SoundDoseHelper}, do not exceed
@@ -777,7 +778,21 @@ public class AudioService extends IAudioService.Stub
      * @see System#MUTE_STREAMS_AFFECTED */
     private int mUserMutableStreams;
 
-    private final AtomicBoolean mScoDeviceActive = new AtomicBoolean(false);
+    /** The active bluetooth device type used for communication is sco. */
+    /*package*/ static final int BT_COMM_DEVICE_ACTIVE_SCO = 1;
+    /** The active bluetooth device type used for communication is ble headset. */
+    /*package*/ static final int BT_COMM_DEVICE_ACTIVE_BLE_HEADSET = 1 << 1;
+    /** The active bluetooth device type used for communication is ble speaker. */
+    /*package*/ static final int BT_COMM_DEVICE_ACTIVE_BLE_SPEAKER = 1 << 2;
+    @IntDef({
+            BT_COMM_DEVICE_ACTIVE_SCO, BT_COMM_DEVICE_ACTIVE_BLE_HEADSET,
+            BT_COMM_DEVICE_ACTIVE_BLE_SPEAKER
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface BtCommDeviceActiveType {
+    }
+
+    private final AtomicInteger mBtCommDeviceActive = new AtomicInteger(0);
 
     @NonNull
     private SoundEffectsHelper mSfxHelper;
@@ -2564,10 +2579,16 @@ public class AudioService extends IAudioService.Stub
                 // this should not happen, throwing exception
                 throw new IllegalArgumentException("STREAM_BLUETOOTH_SCO is deprecated");
             }
-            return streamType == AudioSystem.STREAM_VOICE_CALL && mScoDeviceActive.get();
+            return streamType == AudioSystem.STREAM_VOICE_CALL
+                    && mBtCommDeviceActive.get() == BT_COMM_DEVICE_ACTIVE_SCO;
         } else {
             return streamType == AudioSystem.STREAM_BLUETOOTH_SCO;
         }
+    }
+
+    private boolean isStreamBluetoothComm(int streamType) {
+        return (streamType == AudioSystem.STREAM_VOICE_CALL && mBtCommDeviceActive.get() != 0)
+                || streamType == AudioSystem.STREAM_BLUETOOTH_SCO;
     }
 
     private void dumpStreamStates(PrintWriter pw) {
@@ -4807,7 +4828,7 @@ public class AudioService extends IAudioService.Stub
                 + asDeviceConnectionFailure());
         pw.println("\tandroid.media.audio.autoPublicVolumeApiHardening:"
                 + autoPublicVolumeApiHardening());
-        pw.println("\tandroid.media.audio.Flags.automaticBtDeviceType:"
+        pw.println("\tandroid.media.audio.automaticBtDeviceType:"
                 + automaticBtDeviceType());
         pw.println("\tandroid.media.audio.featureSpatialAudioHeadtrackingLowLatency:"
                 + featureSpatialAudioHeadtrackingLowLatency());
@@ -4829,6 +4850,8 @@ public class AudioService extends IAudioService.Stub
                 + absVolumeIndexFix());
         pw.println("\tcom.android.media.audio.replaceStreamBtSco:"
                 + replaceStreamBtSco());
+        pw.println("\tcom.android.media.audio.equalScoLeaVcIndexRange:"
+                + equalScoLeaVcIndexRange());
     }
 
     private void dumpAudioMode(PrintWriter pw) {
@@ -4943,7 +4966,7 @@ public class AudioService extends IAudioService.Stub
         final VolumeStreamState streamState = getVssForStreamOrDefault(streamTypeAlias);
 
         if (!replaceStreamBtSco() && (streamType == AudioManager.STREAM_VOICE_CALL)
-                && isInCommunication() && mDeviceBroker.isBluetoothScoActive()) {
+                && isInCommunication() && mBtCommDeviceActive.get() == BT_COMM_DEVICE_ACTIVE_SCO) {
             Log.i(TAG, "setStreamVolume for STREAM_VOICE_CALL, switching to STREAM_BLUETOOTH_SCO");
             streamType = AudioManager.STREAM_BLUETOOTH_SCO;
         }
@@ -5994,10 +6017,10 @@ public class AudioService extends IAudioService.Stub
         final boolean ringerModeMute = ringerMode == AudioManager.RINGER_MODE_VIBRATE
                 || ringerMode == AudioManager.RINGER_MODE_SILENT;
         final boolean shouldRingSco = ringerMode == AudioManager.RINGER_MODE_VIBRATE
-                && mDeviceBroker.isBluetoothScoActive();
+                && mBtCommDeviceActive.get() == BT_COMM_DEVICE_ACTIVE_SCO;
         final boolean shouldRingBle = ringerMode == AudioManager.RINGER_MODE_VIBRATE
-                && (mDeviceBroker.isBluetoothBleHeadsetActive()
-                || mDeviceBroker.isBluetoothBleSpeakerActive());
+                && (mBtCommDeviceActive.get() == BT_COMM_DEVICE_ACTIVE_BLE_HEADSET
+                || mBtCommDeviceActive.get() == BT_COMM_DEVICE_ACTIVE_BLE_SPEAKER);
         // Ask audio policy engine to force use Bluetooth SCO/BLE channel if needed
         final String eventSource = "muteRingerModeStreams() from u/pid:" + Binder.getCallingUid()
                 + "/" + Binder.getCallingPid();
@@ -7483,7 +7506,8 @@ public class AudioService extends IAudioService.Stub
         case AudioSystem.PLATFORM_VOICE:
             if (isInCommunication()
                     || mAudioSystem.isStreamActive(AudioManager.STREAM_VOICE_CALL, 0)) {
-                if (!replaceStreamBtSco() && mDeviceBroker.isBluetoothScoActive()) {
+                if (!replaceStreamBtSco()
+                        && mBtCommDeviceActive.get() == BT_COMM_DEVICE_ACTIVE_SCO) {
                     if (DEBUG_VOL) {
                         Log.v(TAG, "getActiveStreamType: Forcing STREAM_BLUETOOTH_SCO...");
                     }
@@ -7527,7 +7551,8 @@ public class AudioService extends IAudioService.Stub
             }
         default:
             if (isInCommunication()) {
-                if (!replaceStreamBtSco() && mDeviceBroker.isBluetoothScoActive()) {
+                if (!replaceStreamBtSco()
+                        && mBtCommDeviceActive.get() == BT_COMM_DEVICE_ACTIVE_SCO) {
                     if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: Forcing STREAM_BLUETOOTH_SCO");
                     return AudioSystem.STREAM_BLUETOOTH_SCO;
                 } else {
@@ -7852,15 +7877,15 @@ public class AudioService extends IAudioService.Stub
                 0 /*delay*/);
     }
 
-    /*package*/ void postScoDeviceActive(boolean scoDeviceActive) {
+    /*package*/ void postBtCommDeviceActive(@BtCommDeviceActiveType int btCommDeviceActive) {
         sendMsg(mAudioHandler,
-                MSG_SCO_DEVICE_ACTIVE_UPDATE,
-                SENDMSG_QUEUE, scoDeviceActive ? 1 : 0 /*arg1*/, 0 /*arg2*/, null /*obj*/,
+                MSG_BT_COMM_DEVICE_ACTIVE_UPDATE,
+                SENDMSG_QUEUE, btCommDeviceActive /*arg1*/, 0 /*arg2*/, null /*obj*/,
                 0 /*delay*/);
     }
 
-    private void onUpdateScoDeviceActive(boolean scoDeviceActive) {
-        if (mScoDeviceActive.compareAndSet(!scoDeviceActive, scoDeviceActive)) {
+    private void onUpdateBtCommDeviceActive(@BtCommDeviceActiveType int btCommDeviceActive) {
+        if (mBtCommDeviceActive.getAndSet(btCommDeviceActive) != btCommDeviceActive) {
             getVssForStreamOrDefault(AudioSystem.STREAM_VOICE_CALL).updateIndexFactors();
         }
     }
@@ -9082,7 +9107,7 @@ public class AudioService extends IAudioService.Stub
         }
 
         public void updateIndexFactors() {
-            if (!replaceStreamBtSco()) {
+            if (!replaceStreamBtSco() && !equalScoLeaVcIndexRange()) {
                 return;
             }
 
@@ -9093,9 +9118,17 @@ public class AudioService extends IAudioService.Stub
                         mIndexMax = MAX_STREAM_VOLUME[AudioSystem.STREAM_BLUETOOTH_SCO] * 10;
                     }
 
-                    // SCO devices have a different min index
-                    if (isStreamBluetoothSco(mStreamType)) {
+                    if (!equalScoLeaVcIndexRange() && isStreamBluetoothSco(mStreamType)) {
+                        // SCO devices have a different min index
                         mIndexMin = MIN_STREAM_VOLUME[AudioSystem.STREAM_BLUETOOTH_SCO] * 10;
+                        mIndexStepFactor = 1.f;
+                    } else if (equalScoLeaVcIndexRange() && isStreamBluetoothComm(mStreamType)) {
+                        // For non SCO devices the stream state does not change the min index
+                        if (mBtCommDeviceActive.get() == BT_COMM_DEVICE_ACTIVE_SCO) {
+                            mIndexMin = MIN_STREAM_VOLUME[AudioSystem.STREAM_BLUETOOTH_SCO] * 10;
+                        } else {
+                            mIndexMin = MIN_STREAM_VOLUME[mStreamType] * 10;
+                        }
                         mIndexStepFactor = 1.f;
                     } else {
                         mIndexMin = MIN_STREAM_VOLUME[AudioSystem.STREAM_VOICE_CALL] * 10;
@@ -9292,7 +9325,7 @@ public class AudioService extends IAudioService.Stub
         private void setStreamVolumeIndex(int index, int device) {
             // Only set audio policy BT SCO stream volume to 0 when the stream is actually muted.
             // This allows RX path muting by the audio HAL only when explicitly muted but not when
-            // index is just set to 0 to repect BT requirements
+            // index is just set to 0 to respect BT requirements
             if (isStreamBluetoothSco(mStreamType) && index == 0 && !isFullyMuted()) {
                 index = 1;
             }
@@ -10302,8 +10335,8 @@ public class AudioService extends IAudioService.Stub
                     onUpdateContextualVolumes();
                     break;
 
-                case MSG_SCO_DEVICE_ACTIVE_UPDATE:
-                    onUpdateScoDeviceActive(msg.arg1 != 0);
+                case MSG_BT_COMM_DEVICE_ACTIVE_UPDATE:
+                    onUpdateBtCommDeviceActive(msg.arg1);
                     break;
 
                 case MusicFxHelper.MSG_EFFECT_CLIENT_GONE:

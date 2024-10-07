@@ -2664,9 +2664,15 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             return true;
         }
         // Only do transfer after transaction has done when starting window exist.
-        if (mStartingData != null && mStartingData.mWaitForSyncTransactionCommit) {
-            mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_COPY_TO_CLIENT;
-            return true;
+        if (mStartingData != null) {
+            final boolean isWaitingForSyncTransactionCommit =
+                    Flags.removeStartingWindowWaitForMultiTransitions()
+                            ? getSyncTransactionCommitCallbackDepth() > 0
+                            : mStartingData.mWaitForSyncTransactionCommit;
+            if (isWaitingForSyncTransactionCommit) {
+                mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_COPY_TO_CLIENT;
+                return true;
+            }
         }
         requestCopySplashScreen();
         return isTransferringSplashScreen();
@@ -2870,7 +2876,11 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         final boolean animate;
         final boolean hasImeSurface;
         if (mStartingData != null) {
-            if (mStartingData.mWaitForSyncTransactionCommit
+            final boolean isWaitingForSyncTransactionCommit =
+                    Flags.removeStartingWindowWaitForMultiTransitions()
+                            ? getSyncTransactionCommitCallbackDepth() > 0
+                            : mStartingData.mWaitForSyncTransactionCommit;
+            if (isWaitingForSyncTransactionCommit
                     || mSyncState != SYNC_STATE_NONE) {
                 mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_REMOVE_DIRECTLY;
                 mStartingData.mPrepareRemoveAnimation = prepareAnimation;
