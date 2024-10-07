@@ -246,6 +246,30 @@
       },
       "revId": "79e67b822720650456ad7207bcd264395519f2b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78864cda_e4b44163",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2024-10-07T18:45:04Z",
+      "side": 1,
+      "message": "(Note that \"turned off in the settings\" only affects live protection I think (v5), but v4 can be unavailable for other reasons.)",
+      "parentUuid": "88622349_c7b751b8",
+      "range": {
+        "startLine": 1499,
+        "startChar": 45,
+        "endLine": 1500,
+        "endChar": 53
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
