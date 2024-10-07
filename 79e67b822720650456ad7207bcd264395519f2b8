@@ -155,6 +155,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ebaf060b_a2f6b827",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2024-10-07T19:05:04Z",
+      "side": 1,
+      "message": "Yes and no. Safe Browsing warmup is a nuanced topic.\n\n* The way it used to work: Safe Browsing was enabled automatically, but not _warmed up_ automatically. Warm up has always been an optional requirement, and it only exists to give apps a way to protect the very first URL load. If the app does not explicitly do a warm up, then the first URL load is unprotected however it acts like an implicit warm up call so that subsequent URLs are protected.\n* The way it works now: Safe Browsing is still enabled automatically, but the concept of \"warming up\" is no longer relevant for applications. The GMS library we use now has the ability to look up a URL\u0027s safety without loading the full database into memory. So even if the first URL load is for `http://evil.com/`, we can still check this page for safety.\n\n\u003e If I load an older WebView, e.g. M113, and begin browsing in a WebView where I never called startSafeBrowsing, I do get protection. (Tested via https://testsafebrowsing.appspot.com/)\n\nSpeaking to this directly, I think there\u0027s two possible explanations:\n\n1. If you browsed first to https://testsafebrowsing.appspot.com/ and then manually clicked one of the page links, then you\u0027re testing the second page load not the first page load. See my comment above about how the first URL load implicitly warms up the database for the second URL load.\n2. If you launched the browser directly to `https://testsafebrowsing [DOT] appspot [DOT] com/s/malware.html` then you are testing the first page load. If this is the case, then you might be seeing the thing I mentioned above (\"GMS library we use now has the ability to look up a URL\u0027s safety without loading the full database into memory\"). This behavior is new in GMS Core, however I\u0027m not sure if it\u0027s tied to the new SafeBrowsingClient class (in which case it only affects WebView M122 and up) or if it\u0027s also provided in the SafetyNetClient class (in which case old WebView clients would automatically benefit when if GMS Core is up-to-date).",
+      "parentUuid": "1813b769_ebd4f8f2",
+      "range": {
+        "startLine": 1498,
+        "startChar": 38,
+        "endLine": 1498,
+        "endChar": 79
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dca72936_ba88a416",
         "filename": "core/java/android/webkit/WebView.java",
         "patchSetId": 6
