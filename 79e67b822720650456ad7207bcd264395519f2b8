@@ -131,6 +131,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1813b769_ebd4f8f2",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2024-10-07T18:39:29Z",
+      "side": 1,
+      "message": "\u003e No, in WebViews older than M122, initialization is not automatic\n\nIf I load an older WebView, e.g. M113, and begin browsing in a WebView where I never called startSafeBrowsing, I _do_ get protection. (Tested via https://testsafebrowsing.appspot.com/)\n\nThis is also somewhat implied by Chromium-side documentation that\u0027s much older than M122:\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:android_webview/browser/safe_browsing/README.md;l\u003d151-152;drc\u003d26ef6a446acfc262cd8b453506ec0bf757be6cb1",
+      "parentUuid": "094dc975_11cba229",
+      "range": {
+        "startLine": 1498,
+        "startChar": 38,
+        "endLine": 1498,
+        "endChar": 79
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dca72936_ba88a416",
         "filename": "core/java/android/webkit/WebView.java",
         "patchSetId": 6
@@ -190,6 +214,30 @@
       "side": 1,
       "message": "You\u0027re right, for AOSP devices, we use the default implementation, which is false. For GMS devices, we will return true immediately.",
       "parentUuid": "37ad5d70_121c0615",
+      "range": {
+        "startLine": 1499,
+        "startChar": 45,
+        "endLine": 1500,
+        "endChar": 53
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88622349_c7b751b8",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2024-10-07T18:39:29Z",
+      "side": 1,
+      "message": "Optional:\n\nUnsure if we want to mention, but true will also be returned for devices where Safe Browsing is supported _but turned off_ in the settings (or otherwise unavailable).\n\n```\nThe {@code callback} will be invoked immediately with a value indicating whether \nSafe Browsing is supported by the device. However, this does not strictly\nguarantee that Safe Browsing will be available.\n```",
+      "parentUuid": "687dcfaa_3cbba823",
       "range": {
         "startLine": 1499,
         "startChar": 45,
