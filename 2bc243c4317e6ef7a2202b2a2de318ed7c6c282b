@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e57593a_f980880a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2024-10-07T21:32:07Z",
+      "side": 1,
+      "message": "you also need the flag and test",
+      "revId": "2bc243c4317e6ef7a2202b2a2de318ed7c6c282b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "801a124b_244bbccc",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2024-10-07T21:32:07Z",
+      "side": 1,
+      "message": "as a system-API, you need to document which permission is going to protect accessing this information, or if this API is restricted to certain clients. See the exammple above for `hasFragileUserData`, or further down for `isPrivilegedApp` for permissions, or `getSharedLibraryInfos` for client restrictions in place.",
+      "range": {
+        "startLine": 2334,
+        "startChar": 4,
+        "endLine": 2334,
+        "endChar": 14
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "987bc66c_bf7fa5d3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/content/pm/ApplicationInfo.java",
+              "range": {
+                "startLine": 2333,
+                "startChar": 0,
+                "endLine": 2335,
+                "endChar": 0
+              },
+              "replacement": "    @FlaggedApi(Flags.FLAG_AUDIO_PLAYBACK_CAPTURE_ALLOW_ANCE)\n    @SystemApi(client \u003d SystemApi.Client.MODULE_LIBRARIES)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2bc243c4317e6ef7a2202b2a2de318ed7c6c282b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
