@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2feec97b_b53ab532",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-07T10:34:19Z",
+      "side": 1,
+      "message": "Friendly ping. If the appops xml can not be read or parsed as expected, the device will not be able to boot.",
+      "revId": "8496538485a3c1826e1e461e6e0d950233926be7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
