@@ -19,7 +19,6 @@ package android.app.admin;
 import static android.nfc.Flags.FLAG_NFC_STATE_CHANGE_SECURITY_LOG_EVENT_ENABLED;
 
 import android.Manifest;
-import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
