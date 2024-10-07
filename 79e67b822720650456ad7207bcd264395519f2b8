@@ -107,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "094dc975_11cba229",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-07T16:06:12Z",
+      "side": 1,
+      "message": "No, in WebViews older than M122, initialization is not automatic. This API calls into the old GMS library to initialize Safe Browsing and then sends back a response async. The new GMS library does not expose any initialization API, so we don\u0027t need to call it.",
+      "parentUuid": "db39723a_56ab3f2d",
+      "range": {
+        "startLine": 1498,
+        "startChar": 38,
+        "endLine": 1498,
+        "endChar": 79
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dca72936_ba88a416",
         "filename": "core/java/android/webkit/WebView.java",
         "patchSetId": 6
@@ -142,6 +166,30 @@
       "side": 1,
       "message": "Or does it correctly use false for (e.g.) AOSP builds? I see the default PlatformServiceBridge implementation in Chromium is to use false?",
       "parentUuid": "dca72936_ba88a416",
+      "range": {
+        "startLine": 1499,
+        "startChar": 45,
+        "endLine": 1500,
+        "endChar": 53
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "687dcfaa_3cbba823",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-07T16:06:12Z",
+      "side": 1,
+      "message": "You\u0027re right, for AOSP devices, we use the default implementation, which is false. For GMS devices, we will return true immediately.",
+      "parentUuid": "37ad5d70_121c0615",
       "range": {
         "startLine": 1499,
         "startChar": 45,
