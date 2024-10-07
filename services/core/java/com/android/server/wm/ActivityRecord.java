@@ -3197,14 +3197,23 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         return getWindowConfiguration().canReceiveKeys() && !mWaitForEnteringPinnedMode;
     }
 
-    boolean isResizeable() {
-        return isResizeable(/* checkPictureInPictureSupport */ true);
+    /**
+     * Returns {@code true} if the fixed orientation, aspect ratio, resizability of this activity
+     * will be ignored.
+     */
+    boolean isUniversalResizeable() {
+        return mWmService.mConstants.mIgnoreActivityOrientationRequest
+                && info.applicationInfo.category != ApplicationInfo.CATEGORY_GAME
+                // If the user preference respects aspect ratio, then it becomes non-resizable.
+                && !mAppCompatController.getAppCompatOverrides().getAppCompatAspectRatioOverrides()
+                        .shouldApplyUserMinAspectRatioOverride();
     }
 
-    boolean isResizeable(boolean checkPictureInPictureSupport) {
+    boolean isResizeable() {
         return mAtmService.mForceResizableActivities
                 || ActivityInfo.isResizeableMode(info.resizeMode)
-                || (info.supportsPictureInPicture() && checkPictureInPictureSupport)
+                || info.supportsPictureInPicture()
+                || isUniversalResizeable()
                 // If the activity can be embedded, it should inherit the bounds of task fragment.
                 || isEmbedded();
     }
@@ -6510,7 +6519,11 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             // and the token could be null.
             return;
         }
-        r.mDisplayContent.mAppCompatCameraPolicy.onActivityRefreshed(r);
+        final AppCompatCameraPolicy cameraPolicy = AppCompatCameraPolicy
+                .getAppCompatCameraPolicy(r);
+        if (cameraPolicy != null) {
+            cameraPolicy.onActivityRefreshed(r);
+        }
     }
 
     static void splashScreenAttachedLocked(IBinder token) {
@@ -8342,11 +8355,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     @Override
     @ActivityInfo.ScreenOrientation
     protected int getOverrideOrientation() {
-        final int candidateOrientation;
-        if (!mWmService.mConstants.mIgnoreActivityOrientationRequest
-                || info.applicationInfo.category == ApplicationInfo.CATEGORY_GAME) {
-            candidateOrientation = super.getOverrideOrientation();
-        } else {
+        int candidateOrientation = super.getOverrideOrientation();
+        if (isUniversalResizeable() && ActivityInfo.isFixedOrientation(candidateOrientation)) {
             candidateOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
         return mAppCompatController.getOrientationPolicy()
@@ -9622,8 +9632,12 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         if (!shouldBeResumed(/* activeActivity */ null)) {
             return;
         }
-        mDisplayContent.mAppCompatCameraPolicy.onActivityConfigurationChanging(
-                this, newConfig, lastReportedConfig);
+
+        final AppCompatCameraPolicy cameraPolicy = AppCompatCameraPolicy.getAppCompatCameraPolicy(
+                this);
+        if (cameraPolicy != null) {
+            cameraPolicy.onActivityConfigurationChanging(this, newConfig, lastReportedConfig);
+        }
     }
 
     /** Get process configuration, or global config if the process is not set. */
@@ -10207,7 +10221,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         }
         StringBuilder sb = new StringBuilder(128);
         sb.append("ActivityRecord{");
-        sb.append(Integer.toHexString(System.identityHashCode(this)));
+        sb.append(System.identityHashCode(this));
         sb.append(" u");
         sb.append(mUserId);
         sb.append(' ');

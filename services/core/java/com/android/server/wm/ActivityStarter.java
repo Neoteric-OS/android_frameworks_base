@@ -1030,6 +1030,7 @@ class ActivityStarter {
                 if (requestCode >= 0 && !sourceRecord.finishing) {
                     resultRecord = sourceRecord;
                 }
+                request.logMessage.append(" (sr=" + System.identityHashCode(sourceRecord) + ")");
             }
         }
 
