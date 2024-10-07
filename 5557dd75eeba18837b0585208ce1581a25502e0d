@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df83bd01_12fcb557",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2024-10-07T10:22:00Z",
+      "side": 1,
+      "message": "How were these chosen?",
+      "range": {
+        "startLine": 14,
+        "startChar": 65,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "5557dd75eeba18837b0585208ce1581a25502e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
