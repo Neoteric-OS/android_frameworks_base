@@ -18,6 +18,7 @@ package android.nfc.cardemulation;
 
 import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SuppressLint;
@@ -261,16 +262,24 @@ public abstract class HostApduService extends Service {
             "android.nfc.cardemulation.POLLING_FRAMES";
 
     /**
-     * Messenger interface to NfcService for sending responses.
-     * Only accessed on main thread by the message handler.
-     *
      * @hide
      */
-    Messenger mNfcService = null;
+    private MsgHandler mMsgHandler = new MsgHandler();
 
-    final Messenger mMessenger = new Messenger(new MsgHandler());
+    /**
+     * @hide
+     */
+    Messenger mMessenger = new Messenger(mMsgHandler);
 
-    final class MsgHandler extends Handler {
+    final static class MsgHandler extends Handler {
+        /**
+         * Messenger interface to NfcService for sending responses.
+         * Only accessed on main thread by the message handler.
+         *
+         * @hide
+         */
+        Messenger mNfcService = null;
+
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -362,6 +371,14 @@ public abstract class HostApduService extends Service {
     @Override
     public final IBinder onBind(Intent intent) {
         return mMessenger.getBinder();
+    }
+
+    @Override
+    public boolean onUnbind(@Nullable Intent intent) {
+        mMessenger = null;
+        mMsgHandler.removeCallbacksAndMessages(null);
+        mMsgHandler = null;
+        return false;
     }
 
     /**
