@@ -591,6 +591,7 @@ final public class MediaMuxer {
      *   </tr><tr>
      *    <th>{@linkplain OutputFormat#MUXER_OUTPUT_MPEG_4 MP4}</th>
      *    <th>{@linkplain OutputFormat#MUXER_OUTPUT_WEBM WEBM}</th>
+     *    <th>{@linkplain OutputFormat#MUXER_OUTPUT_OGG OGG}</th>
      *   </tr>
      *  </thead>
      *  <tbody>
@@ -603,6 +604,7 @@ final public class MediaMuxer {
      *        {@link MediaFormat#MIMETYPE_VIDEO_MPEG4 MPEG-4},<br>
      *        {@link MediaFormat#MIMETYPE_VIDEO_AVC AVC} (H.264)</td>
      *    <td rowspan=3>Not supported</td>
+     *    <td rowspan=3>{@link MediaFormat#MIMETYPE_AUDIO_OPUS OPUS}</td>
      *   </tr><tr>
      *    <td>{@link android.os.Build.VERSION_CODES#KITKAT}</td>
      *   </tr><tr>
@@ -610,15 +612,17 @@ final public class MediaMuxer {
      *   </tr><tr>
      *    <td>{@link android.os.Build.VERSION_CODES#LOLLIPOP}</td>
      *    <td rowspan=3>{@link MediaFormat#MIMETYPE_AUDIO_VORBIS Vorbis},<br>
-     *        {@link MediaFormat#MIMETYPE_VIDEO_VP8 VP8}</td>
+     *              {@link MediaFormat#MIMETYPE_AUDIO_OPUS OPUS},<br>
+     *              {@link MediaFormat#MIMETYPE_VIDEO_VP8 VP8}</td>
      *   </tr><tr>
      *    <td>{@link android.os.Build.VERSION_CODES#LOLLIPOP_MR1}</td>
      *   </tr><tr>
      *    <td>{@link android.os.Build.VERSION_CODES#M}</td>
      *   </tr><tr>
      *    <td>{@link android.os.Build.VERSION_CODES#N}</td>
-     *    <td>as above, plus<br>
-     *        {@link MediaFormat#MIMETYPE_VIDEO_HEVC HEVC} (H.265)</td>
+     *    <td>as above, plus<br>k
+     *        {@link MediaFormat#MIMETYPE_VIDEO_HEVC HEVC} (H.265) <br>
+     *         {@link MediaFormat#MIMETYPE_VIDEO_AV1 AV1} (AV1)</td>
      *    <td>as above, plus<br>
      *        {@link MediaFormat#MIMETYPE_VIDEO_VP9 VP9}</td>
      *   </tr>
