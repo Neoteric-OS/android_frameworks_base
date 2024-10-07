@@ -3394,9 +3394,17 @@ public final class DisplayManagerService extends SystemService {
 
         pw.println("DISPLAY MANAGER (dumpsys display)");
         BrightnessTracker brightnessTrackerLocal;
+        SparseArray<DisplayPowerController> displayPowerControllersLocal = new SparseArray<>();
+        int displayPowerControllerCount;
 
         synchronized (mSyncRoot) {
             brightnessTrackerLocal = mBrightnessTracker;
+
+            displayPowerControllerCount = mDisplayPowerControllers.size();
+            for (int i = 0; i < displayPowerControllerCount; i++) {
+                displayPowerControllersLocal.put(
+                        mDisplayPowerControllers.keyAt(i), mDisplayPowerControllers.valueAt(i));
+            }
 
             pw.println("  mSafeMode=" + mSafeMode);
             pw.println("  mPendingTraversal=" + mPendingTraversal);
@@ -3468,13 +3476,6 @@ public final class DisplayManagerService extends SystemService {
                         + ", mWifiDisplayScanRequested=" + callback.mWifiDisplayScanRequested);
             }
 
-            final int displayPowerControllerCount = mDisplayPowerControllers.size();
-            pw.println();
-            pw.println("Display Power Controllers: size=" + displayPowerControllerCount);
-            for (int i = 0; i < displayPowerControllerCount; i++) {
-                mDisplayPowerControllers.valueAt(i).dump(pw);
-            }
-
             pw.println();
             mPersistentDataStore.dump(pw);
 
@@ -3487,6 +3488,12 @@ public final class DisplayManagerService extends SystemService {
                 mDisplayWindowPolicyControllers.valueAt(i).second.dump("  ", pw);
             }
         }
+        pw.println();
+        pw.println("Display Power Controllers: size=" + displayPowerControllerCount);
+        for (int i = 0; i < displayPowerControllerCount; i++) {
+            displayPowerControllersLocal.valueAt(i).dump(pw);
+        }
+
         if (brightnessTrackerLocal != null) {
             pw.println();
             brightnessTrackerLocal.dump(pw);
