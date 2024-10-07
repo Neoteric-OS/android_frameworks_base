@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2a5bc21_5599b957",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3664807
+      },
+      "writtenOn": "2024-10-07T20:07:46Z",
+      "side": 1,
+      "message": "\neval \u0027set +o history\u0027 2\u003e/dev/null || setopt HIST_IGNORE_SPACE 2\u003e/dev/null\n touch ~/.gitcookies\n chmod 0600 ~/.gitcookies\n\n git config --global http.cookiefile ~/.gitcookies\n\n tr , \\\\t \u003c\u003c\\__END__ \u003e\u003e~/.gitcookies\n.googlesource.com,TRUE,/,TRUE,2147483647,o,git-a271851.uach.mx\u003d1//01CTvShJD_P6WCgYIARAAGAESNwF-L9IrAijKDvCEcR7BEduDmDOX4zIcZunWMvhZCMkKmJe0hA4arFCDgtUruztu9KI8vFOEqUE\n__END__\neval \u0027set -o history\u0027 2\u003e/dev/null || unsetopt HIST_IGNORE_SPACE 2\u003e/dev/null\n\n\nThis script",
+      "revId": "a52e5221a499a087fc7e2f51ab5cd9839df9b735",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
