@@ -3,6 +3,58 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3167d7a_5d4933ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-10-08T20:02:20Z",
+      "side": 1,
+      "message": "I welcome the opportunity to fix that! But to Charles\u0027s point, this means we lose exception information in cases where the cursor is closed explicitly (not in a finalizer).\nHow about if we added a new, package-private method here to close asynchronously like you\u0027re proposing, and called that from `AbstractCursor.finalize()`? We could name that method `finalize` or `closeNoThrow` or something like that.",
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73ea997a_5d5cad90",
+        "filename": "core/java/android/database/BulkCursorNative.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-10-08T20:02:20Z",
+      "side": 1,
+      "message": "Delete this line.\nOr, if you follow my other advice to add another method, then just don\u0027t `writeNoException()` in the new stub that you\u0027d add.",
+      "fixSuggestions": [
+        {
+          "fixId": "33baec86_45c4fb17",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/database/BulkCursorNative.java",
+              "range": {
+                "startLine": 86,
+                "startChar": 0,
+                "endLine": 87,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e09cb6a8_c8a4426a",
         "filename": "core/java/android/database/BulkCursorNative.java",
         "patchSetId": 3
