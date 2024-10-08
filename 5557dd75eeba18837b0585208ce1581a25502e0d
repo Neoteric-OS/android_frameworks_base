@@ -22,6 +22,30 @@
       },
       "revId": "5557dd75eeba18837b0585208ce1581a25502e0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f40f72c_cfe33199",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2024-10-08T01:47:30Z",
+      "side": 1,
+      "message": "Chose the methods that have \"throw `PackageManagerException`\" branch already.",
+      "parentUuid": "df83bd01_12fcb557",
+      "range": {
+        "startLine": 14,
+        "startChar": 65,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "5557dd75eeba18837b0585208ce1581a25502e0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
