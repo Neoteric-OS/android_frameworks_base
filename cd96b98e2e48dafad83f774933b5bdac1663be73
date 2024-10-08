@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c854aad_3b2795a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-10-08T20:03:43Z",
+      "side": 1,
+      "message": "Also, I don\u0027t know if there are other finalizers that close cursors, but if they exist then let\u0027s give them the same treatment.",
+      "parentUuid": "b3167d7a_5d4933ee",
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a05ceaf6_2893000c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-10-08T20:03:43Z",
+      "side": 1,
+      "message": "Interesting change. Thanks for sending this, Ming.",
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73ea997a_5d5cad90",
         "filename": "core/java/android/database/BulkCursorNative.java",
         "patchSetId": 3
