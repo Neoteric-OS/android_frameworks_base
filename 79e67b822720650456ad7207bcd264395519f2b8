@@ -179,6 +179,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "708a3974_9b9204ad",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1961735
+      },
+      "writtenOn": "2024-10-08T09:54:42Z",
+      "side": 1,
+      "message": "OK, that makes sense.\n\nOptional: Perhaps instead of \"automatically\", \"immediately\" would be a better word?",
+      "parentUuid": "ebaf060b_a2f6b827",
+      "range": {
+        "startLine": 1498,
+        "startChar": 38,
+        "endLine": 1498,
+        "endChar": 79
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dca72936_ba88a416",
         "filename": "core/java/android/webkit/WebView.java",
         "patchSetId": 6
