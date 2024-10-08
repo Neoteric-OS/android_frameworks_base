@@ -18,6 +18,7 @@ package android.nfc.cardemulation;
 
 import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.annotation.SuppressLint;
@@ -33,6 +34,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -252,18 +254,35 @@ public abstract class HostApduService extends Service {
             "android.nfc.cardemulation.POLLING_FRAMES";
 
     /**
-     * Messenger interface to NfcService for sending responses.
-     * Only accessed on main thread by the message handler.
-     *
      * @hide
      */
-    Messenger mNfcService = null;
+    private MsgHandler mMsgHandler;
 
-    final Messenger mMessenger = new Messenger(new MsgHandler());
+    /**
+     * @hide
+     */
+    private Messenger mMessenger;
 
-    final class MsgHandler extends Handler {
+    private final static class MsgHandler extends Handler {
+        private final WeakReference<HostApduService> mWeakRefService;
+
+        /**
+         * Messenger interface to NfcService for sending responses.
+         * Only accessed on main thread by the message handler.
+         */
+        private Messenger mNfcService = null;
+
+        private MsgHandler(HostApduService service) {
+            mWeakRefService = new WeakReference<>(service);
+        }
+
         @Override
         public void handleMessage(Message msg) {
+            HostApduService service = mWeakRefService.get();
+            if (service == null) {
+                return;
+            }
+
             switch (msg.what) {
             case MSG_COMMAND_APDU:
                 Bundle dataBundle = msg.getData();
@@ -274,8 +293,7 @@ public abstract class HostApduService extends Service {
 
                 byte[] apdu = dataBundle.getByteArray(KEY_DATA);
                 if (apdu != null) {
-                        HostApduService has = HostApduService.this;
-                    byte[] responseApdu = processCommandApdu(apdu, null);
+                    byte[] responseApdu = service.processCommandApdu(apdu, null);
                     if (responseApdu != null) {
                         if (mNfcService == null) {
                             Log.e(TAG, "Response not sent; service was deactivated.");
@@ -285,7 +303,7 @@ public abstract class HostApduService extends Service {
                         Bundle responseBundle = new Bundle();
                         responseBundle.putByteArray(KEY_DATA, responseApdu);
                         responseMsg.setData(responseBundle);
-                        responseMsg.replyTo = mMessenger;
+                        responseMsg.replyTo = service.mMessenger;
                         try {
                             mNfcService.send(responseMsg);
                         } catch (RemoteException e) {
@@ -303,7 +321,7 @@ public abstract class HostApduService extends Service {
                     return;
                 }
                 try {
-                    msg.replyTo = mMessenger;
+                    msg.replyTo = service.mMessenger;
                     mNfcService.send(msg);
                 } catch (RemoteException e) {
                     Log.e(TAG, "RemoteException calling into NfcService.");
@@ -312,7 +330,7 @@ public abstract class HostApduService extends Service {
             case MSG_DEACTIVATED:
                 // Make sure we won't call into NfcService again
                 mNfcService = null;
-                onDeactivated(msg.arg1);
+                service.onDeactivated(msg.arg1);
                 break;
             case MSG_UNHANDLED:
                 if (mNfcService == null) {
@@ -320,7 +338,7 @@ public abstract class HostApduService extends Service {
                     return;
                 }
                 try {
-                    msg.replyTo = mMessenger;
+                    msg.replyTo = service.mMessenger;
                     mNfcService.send(msg);
                 } catch (RemoteException e) {
                     Log.e(TAG, "RemoteException calling into NfcService.");
@@ -331,7 +349,7 @@ public abstract class HostApduService extends Service {
                         ArrayList<PollingFrame> pollingFrames =
                                 msg.getData().getParcelableArrayList(
                                     KEY_POLLING_LOOP_FRAMES_BUNDLE, PollingFrame.class);
-                        processPollingFrames(pollingFrames);
+                        service.processPollingFrames(pollingFrames);
                     }
                     break;
                 default:
@@ -342,7 +360,17 @@ public abstract class HostApduService extends Service {
 
     @Override
     public final IBinder onBind(Intent intent) {
+        mMsgHandler = new MsgHandler(this);
+        mMessenger = new Messenger(mMsgHandler);
         return mMessenger.getBinder();
+    }
+
+    @Override
+    public boolean onUnbind(@Nullable Intent intent) {
+        mMessenger = null;
+        mMsgHandler.removeCallbacksAndMessages(null);
+        mMsgHandler = null;
+        return false;
     }
 
     /**
