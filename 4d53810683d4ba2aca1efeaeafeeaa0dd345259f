@@ -34,6 +34,24 @@
       "parentUuid": "0a179630_aaf4656d",
       "revId": "4d53810683d4ba2aca1efeaeafeeaa0dd345259f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b12e0b1_bd5ba800",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1488178
+      },
+      "writtenOn": "2024-10-08T16:38:34Z",
+      "side": 1,
+      "message": "Simplified, removed both @hide (no System) and permission to match AudioAttributes. This is not considered a very sensitive information and improves the applications who is willing to do media capture and would like to avoid false-positive just based on the attributes.",
+      "parentUuid": "510a60ec_80d9e8fd",
+      "revId": "4d53810683d4ba2aca1efeaeafeeaa0dd345259f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
