@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e09cb6a8_c8a4426a",
+        "filename": "core/java/android/database/BulkCursorNative.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1059543
+      },
+      "writtenOn": "2024-10-08T16:37:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t this lose any exceptions previously thrown by the remote end? It could also cause a race when reading the exception from the reply parcel.",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 28
+      },
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
