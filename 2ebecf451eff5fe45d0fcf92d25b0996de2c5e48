@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af297db0_838a3d35",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1503,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2024-10-08T16:20:20Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Build Warnings: Changes from not deprecated to deprecated must be flagged with @FlaggedApi: method android.webkit.WebView.startSafeBrowsing(android.content.Context,android.webkit.ValueCallback\u003cjava.lang.Boolean\u003e) (ErrorWhenNew) [UnflaggedApi]\n\nAnalyzer Description: Reports warnings that originate from build.log in the build artifacts.\nOwner: farivar@google.com\n\n    Changes from not deprecated to deprecated must be flagged with @FlaggedApi: method android.webkit.WebView.startSafeBrowsing(android.content.Context,android.webkit.ValueCallback\u003cjava.lang.Boolean\u003e) (ErrorWhenNew) [UnflaggedApi]\n\nThis finding was found on https://android-build.googleplex.com/builds/build-details/P82311272/targets/cf_x86_64_phone-trunk_staging-userdebug, but may also be present on other builds.\n\nThis is a different branch than your cl originated on (it was automerged), and thus might better reflect the state of the code in the git_main branch.\n\n\n----\n\nIt might be better to add this on git_main (internal) instead. Let\u0027s chat with Torne to see what he advises.",
+      "range": {
+        "startLine": 1503,
+        "startChar": 0,
+        "endLine": 1503,
+        "endChar": 15
+      },
+      "revId": "2ebecf451eff5fe45d0fcf92d25b0996de2c5e48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
