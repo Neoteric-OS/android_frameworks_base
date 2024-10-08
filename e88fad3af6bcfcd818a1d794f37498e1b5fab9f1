@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4090ee13_05e7dd6c",
+        "filename": "nfc/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-08T18:38:47Z",
+      "side": 1,
+      "message": "Hey, these should be @SystemApi as well.",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 3
+      },
+      "revId": "e88fad3af6bcfcd818a1d794f37498e1b5fab9f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
