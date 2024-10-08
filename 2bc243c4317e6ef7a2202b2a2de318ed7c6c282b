@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd1cdb2f_b83d454e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1488178
+      },
+      "writtenOn": "2024-10-08T08:34:00Z",
+      "side": 1,
+      "message": "Done. JFYI, as as this not a new API (and already used from PmNative), I omitted the a need in testing / checking the presence of this API. Please let me know if it does or doesn\u0027t make sense.",
+      "parentUuid": "1e57593a_f980880a",
+      "revId": "2bc243c4317e6ef7a2202b2a2de318ed7c6c282b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "801a124b_244bbccc",
@@ -55,6 +73,30 @@
           ]
         }
       ],
+      "revId": "2bc243c4317e6ef7a2202b2a2de318ed7c6c282b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6acad95_ee356bf1",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1488178
+      },
+      "writtenOn": "2024-10-08T08:34:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "801a124b_244bbccc",
+      "range": {
+        "startLine": 2334,
+        "startChar": 4,
+        "endLine": 2334,
+        "endChar": 14
+      },
       "revId": "2bc243c4317e6ef7a2202b2a2de318ed7c6c282b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
