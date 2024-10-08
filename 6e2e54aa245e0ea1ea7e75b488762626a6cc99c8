@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "010c1073_31b4373c",
+        "filename": "nfc/java/android/nfc/RoutingTableAidEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-08T17:58:16Z",
+      "side": 1,
+      "message": "let\u0027s be rename this to `getAid()` to be more explicit.",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "784567f7_ee2f481e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/RoutingTableAidEntry.java",
+              "range": {
+                "startLine": 23,
+                "startChar": 0,
+                "endLine": 24,
+                "endChar": 0
+              },
+              "replacement": "    private final String mSystemCode;\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingTableAidEntry.java",
+              "range": {
+                "startLine": 26,
+                "startChar": 0,
+                "endLine": 27,
+                "endChar": 0
+              },
+              "replacement": "    public RoutingTableAidEntry(int nfceeId, String systemCode) {\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingTableAidEntry.java",
+              "range": {
+                "startLine": 28,
+                "startChar": 0,
+                "endLine": 29,
+                "endChar": 0
+              },
+              "replacement": "        this.mSystemCode \u003d systemCode;\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingTableAidEntry.java",
+              "range": {
+                "startLine": 32,
+                "startChar": 0,
+                "endLine": 33,
+                "endChar": 0
+              },
+              "replacement": "     * Gets system code.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingTableAidEntry.java",
+              "range": {
+                "startLine": 37,
+                "startChar": 0,
+                "endLine": 39,
+                "endChar": 0
+              },
+              "replacement": "    public String getSystemCode() {\n        return mSystemCode;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a8e2191_b5c0efb1",
+        "filename": "nfc/java/android/nfc/RoutingTableProtocolEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-08T17:58:16Z",
+      "side": 1,
+      "message": "let\u0027s be rename this to `getProtocol()` to be more explicit.",
+      "range": {
+        "startLine": 104,
+        "startChar": 15,
+        "endLine": 104,
+        "endChar": 23
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "62363037_619ffd4b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/RoutingTableProtocolEntry.java",
+              "range": {
+                "startLine": 104,
+                "startChar": 0,
+                "endLine": 105,
+                "endChar": 0
+              },
+              "replacement": "    public int getSystemCode() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1cba588_672ae3ae",
+        "filename": "nfc/java/android/nfc/RoutingTableSystemCodeEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-08T17:58:16Z",
+      "side": 1,
+      "message": "let\u0027s be rename this to `getSystemCode()` to be more explicit.",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "27ad80e3_54317148",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/RoutingTableSystemCodeEntry.java",
+              "range": {
+                "startLine": 23,
+                "startChar": 0,
+                "endLine": 24,
+                "endChar": 0
+              },
+              "replacement": "    private final String mTechnology;\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingTableSystemCodeEntry.java",
+              "range": {
+                "startLine": 26,
+                "startChar": 0,
+                "endLine": 27,
+                "endChar": 0
+              },
+              "replacement": "    public RoutingTableSystemCodeEntry(int nfceeId, String technology) {\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingTableSystemCodeEntry.java",
+              "range": {
+                "startLine": 28,
+                "startChar": 0,
+                "endLine": 29,
+                "endChar": 0
+              },
+              "replacement": "        this.mTechnology \u003d technology;\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingTableSystemCodeEntry.java",
+              "range": {
+                "startLine": 32,
+                "startChar": 0,
+                "endLine": 34,
+                "endChar": 0
+              },
+              "replacement": "     * Gets technology.\n     * @return String of technology\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/RoutingTableSystemCodeEntry.java",
+              "range": {
+                "startLine": 37,
+                "startChar": 0,
+                "endLine": 39,
+                "endChar": 0
+              },
+              "replacement": "    public String getTechnology() {\n        return mTechnology;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ffaf32f_8b832ef5",
+        "filename": "nfc/java/android/nfc/RoutingTableTechnologyEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-08T17:58:16Z",
+      "side": 1,
+      "message": "let\u0027s be rename this to `getTechnology()` to be more explicit.",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c43ec38d_100eb678",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/RoutingTableTechnologyEntry.java",
+              "range": {
+                "startLine": 80,
+                "startChar": 0,
+                "endLine": 81,
+                "endChar": 0
+              },
+              "replacement": "    public int getTechnologyValue() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
