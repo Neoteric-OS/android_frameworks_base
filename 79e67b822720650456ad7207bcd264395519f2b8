@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2612c72a_551a0e84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-08T12:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c31993_9f725dbb",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5610c0e1_f52cfcab",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
@@ -201,6 +225,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8abdc749_88c6034d",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-08T12:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24466105_a0febc6c",
+      "range": {
+        "startLine": 1498,
+        "startChar": 22,
+        "endLine": 1498,
+        "endChar": 36
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4b8cdbe_dba0d2f2",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-08T12:14:12Z",
+      "side": 1,
+      "message": "I will stick with automatically, as \"immediately\" sounds like something happens immediately after calling the API, then I\u0027d have to mention something like \"imeediately on WebView startup\", which I don\u0027t think is required.",
+      "parentUuid": "708a3974_9b9204ad",
+      "range": {
+        "startLine": 1498,
+        "startChar": 38,
+        "endLine": 1498,
+        "endChar": 79
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dca72936_ba88a416",
@@ -310,6 +382,30 @@
       "side": 1,
       "message": "(Note that \"turned off in the settings\" only affects live protection I think (v5), but v4 can be unavailable for other reasons.)",
       "parentUuid": "88622349_c7b751b8",
+      "range": {
+        "startLine": 1499,
+        "startChar": 45,
+        "endLine": 1500,
+        "endChar": 53
+      },
+      "revId": "79e67b822720650456ad7207bcd264395519f2b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdabfe8d_b8496a0e",
+        "filename": "core/java/android/webkit/WebView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1966761
+      },
+      "writtenOn": "2024-10-08T12:14:12Z",
+      "side": 1,
+      "message": "I\u0027ve added a \"given that Safe Browsing is enabled and supported on the device.\" at the end to make it clear.",
+      "parentUuid": "78864cda_e4b44163",
       "range": {
         "startLine": 1499,
         "startChar": 45,
