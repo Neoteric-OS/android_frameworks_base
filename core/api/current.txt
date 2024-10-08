@@ -8596,7 +8596,7 @@ package android.app.admin {
     field public static final int TAG_ADB_SHELL_CMD = 210002; // 0x33452
     field public static final int TAG_ADB_SHELL_INTERACTIVE = 210001; // 0x33451
     field public static final int TAG_APP_PROCESS_START = 210005; // 0x33455
-    field @FlaggedApi("android.app.admin.flags.backup_service_security_log_event_enabled") public static final int TAG_BACKUP_SERVICE_TOGGLED = 210044; // 0x3347c
+    field public static final int TAG_BACKUP_SERVICE_TOGGLED = 210044; // 0x3347c
     field public static final int TAG_BLUETOOTH_CONNECTION = 210039; // 0x33477
     field public static final int TAG_BLUETOOTH_DISCONNECTION = 210040; // 0x33478
     field public static final int TAG_CAMERA_POLICY_SET = 210034; // 0x33472
@@ -8619,6 +8619,8 @@ package android.app.admin {
     field public static final int TAG_MAX_SCREEN_LOCK_TIMEOUT_SET = 210019; // 0x33463
     field public static final int TAG_MEDIA_MOUNT = 210013; // 0x3345d
     field public static final int TAG_MEDIA_UNMOUNT = 210014; // 0x3345e
+    field @FlaggedApi("android.nfc.nfc_state_change_security_log_event_enabled") public static final int TAG_NFC_DISABLED = 210046; // 0x3347e
+    field @FlaggedApi("android.nfc.nfc_state_change_security_log_event_enabled") public static final int TAG_NFC_ENABLED = 210045; // 0x3347d
     field public static final int TAG_OS_SHUTDOWN = 210010; // 0x3345a
     field public static final int TAG_OS_STARTUP = 210009; // 0x33459
     field public static final int TAG_PACKAGE_INSTALLED = 210041; // 0x33479
@@ -21308,6 +21310,7 @@ package android.media {
     field public static final int ENCODING_AAC_XHE = 16; // 0x10
     field public static final int ENCODING_AC3 = 5; // 0x5
     field public static final int ENCODING_AC4 = 17; // 0x11
+    field @FlaggedApi("android.media.audio.dolby_ac4_level4_encoding_api") public static final int ENCODING_AC4_L4 = 32; // 0x20
     field public static final int ENCODING_DEFAULT = 1; // 0x1
     field public static final int ENCODING_DOLBY_MAT = 19; // 0x13
     field public static final int ENCODING_DOLBY_TRUEHD = 14; // 0xe
@@ -26811,7 +26814,6 @@ package android.media.session {
     field public static final int STATE_FAST_FORWARDING = 4; // 0x4
     field public static final int STATE_NONE = 0; // 0x0
     field public static final int STATE_PAUSED = 2; // 0x2
-    field @FlaggedApi("com.android.media.flags.enable_notifying_activity_manager_with_media_session_status_change") public static final int STATE_PLAYBACK_SUPPRESSED = 12; // 0xc
     field public static final int STATE_PLAYING = 3; // 0x3
     field public static final int STATE_REWINDING = 5; // 0x5
     field public static final int STATE_SKIPPING_TO_NEXT = 10; // 0xa

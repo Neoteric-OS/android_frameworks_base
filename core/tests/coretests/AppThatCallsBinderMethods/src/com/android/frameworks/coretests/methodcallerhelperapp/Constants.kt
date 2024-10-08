@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2024 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package android.ravenwood.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package com.android.frameworks.coretests.methodcallerhelperapp
 
-/**
- * THIS ANNOTATION IS EXPERIMENTAL. REACH OUT TO g/ravenwood BEFORE USING IT, OR YOU HAVE ANY
- * QUESTIONS ABOUT IT.
- *
- * TODO: Javadoc
- *
- * @hide
- */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.CLASS)
-public @interface RavenwoodKeepPartialClass {
-}
+const val PACKAGE_NAME = "com.android.frameworks.coretests.methodcallerhelperapp"
+const val RECEIVER_NAME = "CallMethodsReceiver"
+const val ACTION_CALL_METHOD = PACKAGE_NAME + ".ACTION_CALL_METHOD"
+const val EXTRA_METHOD_NAME = PACKAGE_NAME + ".EXTRA_METHOD_NAME"
+const val EXTRA_BINDER = PACKAGE_NAME + ".EXTRA_BINDER"

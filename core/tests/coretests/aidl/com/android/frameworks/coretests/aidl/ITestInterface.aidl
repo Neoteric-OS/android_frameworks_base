@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2024 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package android.ravenwood.annotation;
 
-import static java.lang.annotation.ElementType.TYPE;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package com.android.frameworks.coretests.aidl;
 
 /**
- * THIS ANNOTATION IS EXPERIMENTAL. REACH OUT TO g/ravenwood BEFORE USING IT, OR YOU HAVE ANY
- * QUESTIONS ABOUT IT.
- *
- * TODO: Javadoc
- *
- * @hide
+ * Just an interface with a oneway, void and non-oneway method.
  */
-@Target({TYPE})
-@Retention(RetentionPolicy.CLASS)
-public @interface RavenwoodRedirectionClass {
-    String value();
+interface ITestInterface {
+    // Method order matters, since we verify transaction codes
+    int foo(int a);
+    oneway void onewayFoo(int a);
+    void bar(int a);
 }

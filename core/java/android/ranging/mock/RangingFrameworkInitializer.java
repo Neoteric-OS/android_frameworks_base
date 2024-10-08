@@ -13,23 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package android.ravenwood.annotation;
 
-import static java.lang.annotation.ElementType.METHOD;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package android.ranging;
 
 /**
- * THIS ANNOTATION IS EXPERIMENTAL. REACH OUT TO g/ravenwood BEFORE USING IT, OR YOU HAVE ANY
- * QUESTIONS ABOUT IT.
- *
- * TODO: Javadoc
- *
- * @hide
- */
-@Target({METHOD})
-@Retention(RetentionPolicy.CLASS)
-public @interface RavenwoodRedirect {
+* Mock RangingFrameworkInitializer.
+*
+* @hide
+*/
+
+// TODO(b/331206299): Remove this after RANGING_STACK_ENABLED is ramped up to next.
+public final class RangingFrameworkInitializer {
+    private RangingFrameworkInitializer() {}
+    /**
+     * @hide
+     */
+    public static void registerServiceWrappers() {
+        // No-op.
+    }
 }
