@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13303b31_e21c785e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3425039
+      },
+      "writtenOn": "2024-10-08T21:55:02Z",
+      "side": 1,
+      "message": "Hey Lingbin. please check out the updated scanning package 😊",
+      "revId": "b9a3f093dcc157d51c3e6e97ed01576b562a6be9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
