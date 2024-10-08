@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a179630_aaf4656d",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2024-10-08T13:23:20Z",
+      "side": 1,
+      "message": "Why `@SystemApi` instead of public? There are [public APIs for audio capture](https://developer.android.com/reference/kotlin/android/media/AudioPlaybackCaptureConfiguration.html) and this isn\u0027t particularly sensitive so it seems like we should just expose this to everyone if we think it\u0027s useful.",
+      "revId": "4d53810683d4ba2aca1efeaeafeeaa0dd345259f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
