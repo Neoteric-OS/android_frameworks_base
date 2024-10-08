@@ -16,6 +16,24 @@
       "message": "Why `@SystemApi` instead of public? There are [public APIs for audio capture](https://developer.android.com/reference/kotlin/android/media/AudioPlaybackCaptureConfiguration.html) and this isn\u0027t particularly sensitive so it seems like we should just expose this to everyone if we think it\u0027s useful.",
       "revId": "4d53810683d4ba2aca1efeaeafeeaa0dd345259f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "510a60ec_80d9e8fd",
+        "filename": "core/java/android/content/pm/ApplicationInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2334,
+      "author": {
+        "id": 1488178
+      },
+      "writtenOn": "2024-10-08T13:52:57Z",
+      "side": 1,
+      "message": "Would be happy to make it public, with the reasons above. This is purely based on previous discussions where Public was not considered (I assume due to use of PRIVATE flags underneath). \n\nI\u0027d also omit permission need as well, as attributes expose it without and I don\u0027t see how this leads to a security issue. \n\nPlease confirm from Package Manager side what is your final thought as this is blocking work depending on it to avoid false-positive decisions about where to capture media and where not.",
+      "parentUuid": "0a179630_aaf4656d",
+      "revId": "4d53810683d4ba2aca1efeaeafeeaa0dd345259f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
