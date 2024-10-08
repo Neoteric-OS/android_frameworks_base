@@ -147,6 +147,10 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
+        if (!Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            return;
+        }
+
         // Log boot events in the background to avoid blocking the main thread with I/O
         new Thread() {
             @Override
@@ -212,6 +216,8 @@ public class BootReceiver extends BroadcastReceiver {
                 } catch (Exception e) {
                     Slog.wtf(TAG, "Error watching for trace events", e);
                     return 0;  // Unregister the handler.
+                } finally {
+                    IoUtils.closeQuietly(fd);
                 }
                 return OnFileDescriptorEventListener.EVENT_INPUT;
             }
