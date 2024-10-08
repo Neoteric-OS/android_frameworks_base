@@ -189,14 +189,14 @@ func createMergedTxt(ctx android.LoadHookContext, txt MergedTxtDefinition, stubs
 	if doDist {
 		props.Dists = []android.Dist{
 			{
-				Targets: []string{"droidcore"},
+				Targets: proptools.NewSimpleConfigurable([]string{"droidcore"}),
 				Dir:     proptools.StringPtr("api"),
-				Dest:    proptools.StringPtr(filename),
+				Dest:    proptools.NewSimpleConfigurable(filename),
 			},
 			{
-				Targets: []string{"api_txt", "sdk"},
+				Targets: proptools.NewSimpleConfigurable([]string{"api_txt", "sdk"}),
 				Dir:     proptools.StringPtr("apistubs/android/" + txt.Scope + "/api"),
-				Dest:    proptools.StringPtr(txt.DistFilename),
+				Dest:    proptools.NewSimpleConfigurable(txt.DistFilename),
 			},
 		}
 	}
