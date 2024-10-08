@@ -82,6 +82,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03638db6_e6947deb",
+        "filename": "nfc/java/android/nfc/RoutingTableAidEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-08T18:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010c1073_31b4373c",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a8e2191_b5c0efb1",
@@ -119,6 +143,30 @@
           ]
         }
       ],
+      "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "773dfa86_023adb5d",
+        "filename": "nfc/java/android/nfc/RoutingTableProtocolEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-08T18:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a8e2191_b5c0efb1",
+      "range": {
+        "startLine": 104,
+        "startChar": 15,
+        "endLine": 104,
+        "endChar": 23
+      },
       "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -204,6 +252,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59e8e11f_a8cada7a",
+        "filename": "nfc/java/android/nfc/RoutingTableSystemCodeEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-08T18:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1cba588_672ae3ae",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ffaf32f_8b832ef5",
@@ -241,6 +313,30 @@
           ]
         }
       ],
+      "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66a9cdf7_5e76bfd0",
+        "filename": "nfc/java/android/nfc/RoutingTableTechnologyEntry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-08T18:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ffaf32f_8b832ef5",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 23
+      },
       "revId": "6e2e54aa245e0ea1ea7e75b488762626a6cc99c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
