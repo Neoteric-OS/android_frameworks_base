@@ -22,6 +22,30 @@
       },
       "revId": "b34b709595c14c39749e184247f447fd232ae3e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "def5a018_2584ff14",
+        "filename": "nfc/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-09T19:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aac7e3e_b6acd507",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 184
+      },
+      "revId": "b34b709595c14c39749e184247f447fd232ae3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
