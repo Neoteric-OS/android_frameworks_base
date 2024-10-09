@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aac7e3e_b6acd507",
+        "filename": "nfc/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-09T19:09:15Z",
+      "side": 1,
+      "message": "Update the txt file with permission changes.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 184
+      },
+      "revId": "b34b709595c14c39749e184247f447fd232ae3e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
