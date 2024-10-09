@@ -2311,6 +2311,9 @@ public final class DisplayManagerService extends SystemService {
         updateLogicalDisplayState(display);
 
         mExternalDisplayPolicy.handleLogicalDisplayAddedLocked(display);
+        if (mDisplayTopologyCoordinator != null) {
+            mDisplayTopologyCoordinator.onDisplayAdded(display.getDisplayInfoLocked());
+        }
     }
 
     private void handleLogicalDisplayChangedLocked(@NonNull LogicalDisplay display) {
@@ -2397,6 +2400,9 @@ public final class DisplayManagerService extends SystemService {
             }
         } else {
             releaseDisplayAndEmitEvent(display, DisplayManagerGlobal.EVENT_DISPLAY_REMOVED);
+        }
+        if (mDisplayTopologyCoordinator != null) {
+            mDisplayTopologyCoordinator.onDisplayRemoved(display.getDisplayIdLocked());
         }
 
         Slog.i(TAG, "Logical display removed: " + display.getDisplayIdLocked());
