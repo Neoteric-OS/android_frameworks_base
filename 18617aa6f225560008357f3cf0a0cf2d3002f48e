@@ -16,6 +16,24 @@
       "message": "@kaleshsingh@google.com, @surenb@google.com, can you please continue to review the latest patch?",
       "revId": "18617aa6f225560008357f3cf0a0cf2d3002f48e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dbb1795_52d1e31e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1499410
+      },
+      "writtenOn": "2024-10-09T08:30:07Z",
+      "side": 1,
+      "message": "Hi Divya, \n\nSeems we are only really allowed to attempt the swap out of shmem if it was requested by reclaim, if managed to move to swapcache we decrement the number of NR_FILE and NR_SHMEM pages so: \n\nhttps://github.com/torvalds/linux/blob/196145c606d0f816fd3926483cb1ff87e09c2c0b/mm/shmem.c#L1527-L1537\n\nhttps://github.com/torvalds/linux/blob/196145c606d0f816fd3926483cb1ff87e09c2c0b/mm/swap_state.c#L125-L126\n\nhttps://github.com/torvalds/linux/blob/196145c606d0f816fd3926483cb1ff87e09c2c0b/mm/shmem.c#L1532\n\nhttps://github.com/torvalds/linux/blob/196145c606d0f816fd3926483cb1ff87e09c2c0b/mm/shmem.c#L842-L843\n\nIn my previous comment I missed this. So your patch looks good to me. \n\nThanks, \n\nKalesh",
+      "parentUuid": "d98577d7_ec25a6f7",
+      "revId": "18617aa6f225560008357f3cf0a0cf2d3002f48e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
