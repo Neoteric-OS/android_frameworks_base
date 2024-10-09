@@ -124,6 +124,7 @@ package android.nfc.cardemulation {
     method @FlaggedApi("android.nfc.enable_nfc_mainline") @NonNull public java.util.List<android.nfc.cardemulation.ApduServiceInfo> getServices(@NonNull String, int);
     method @FlaggedApi("android.nfc.nfc_override_recover_routing_table") public void overrideRoutingTable(@NonNull android.app.Activity, int, int);
     method @FlaggedApi("android.nfc.nfc_override_recover_routing_table") public void recoverRoutingTable(@NonNull android.app.Activity);
+    method @FlaggedApi("android.nfc.nfc_set_service_enabled_for_category_other") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public boolean setServiceEnabledForCategoryOther(@NonNull android.content.ComponentName, boolean);
   }
 
 }

@@ -877,22 +877,23 @@ public final class CardEmulation {
     }
 
     /**
-     * Allows to set or unset preferred service (category other) to avoid  AID Collision.
+     * Allows to set or unset preferred service (category other) to avoid AID Collision. The user
+     * should use corresponding context using {@link Context#createContextAsUser(UserHandle, int)}
      *
      * @param service The ComponentName of the service
      * @param status  true to enable, false to disable
-     * @param userId the user handle of the user whose information is being requested.
-     * @return set service for the category and true if service is already set return false.
+     * @return true if preferred service is successfully set or unset, otherwise return false.
      *
      * @hide
      */
-    public boolean setServiceEnabledForCategoryOther(ComponentName service, boolean status,
-                                                     int userId) {
-        if (service == null) {
-            throw new NullPointerException("activity or service or category is null");
-        }
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_SET_SERVICE_ENABLED_FOR_CATEGORY_OTHER)
+    @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+    public boolean setServiceEnabledForCategoryOther(@NonNull ComponentName service,
+            boolean status) {
         return callServiceReturn(() ->
-                sService.setServiceEnabledForCategoryOther(userId, service, status), false);
+                sService.setServiceEnabledForCategoryOther(mContext.getUser().getIdentifier(),
+                        service, status), false);
     }
 
     /** @hide */
