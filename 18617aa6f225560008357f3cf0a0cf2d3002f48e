@@ -52,6 +52,46 @@
       "parentUuid": "3dbb1795_52d1e31e",
       "revId": "18617aa6f225560008357f3cf0a0cf2d3002f48e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c4635d8_4338bcac",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 13147,
+      "author": {
+        "id": 1934715
+      },
+      "writtenOn": "2024-10-09T16:57:57Z",
+      "side": 1,
+      "message": "Isn\u0027t this still wrong? The `ss[INDEX_TOTAL_PSS]` includes shmem that is mapped to userspace, since it\u0027s read from `/proc/$pid/smaps[_rollup]`, and the pss value reported there includes shmem: https://cs.android.com/android/kernel/superproject/+/common-android-mainline:common/fs/proc/task_mmu.c;l\u003d677-684\n\nSo even with this change aren\u0027t we oversubtracting shmem?\n\nFurthermore, I don\u0027t think `getCachedSizeKb()` entirely includes shmem, since we do subtract `Mapped` from `/proc/meminfo`: https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/com/android/internal/util/MemInfoReader.java;l\u003d104?q\u003dgetCachedSizeKb\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain\n\nwhich includes both file backed mapped pages, and shmem mapped pages.\n\nI think we might want to re-write this as:\n\n```\nlostRAM \u003d memInfo.getTotalSizeKb() - meminfo.getAnonPagesKb() - memInfo.getFreeSizeKb() - memInfo.getKreclaimable() - NR_FILE_PAGES -\nmemInfo.getSlabUnreclaimable() - memInfo.getVmallocUsed - memInfo.getPageTablesKb() \n```\n\n`NR_FILE_PAGES` can be read from the `nr_file_pages` entry in `/proc/vmstat` and includes the file LRU pages (both active and inactive), buffer head pages, swapcache pages, all shmem pages (including ones allocated by kernel drivers), mapped and unmapped file pages.",
+      "range": {
+        "startLine": 13146,
+        "startChar": 20,
+        "endLine": 13147,
+        "endChar": 46
+      },
+      "revId": "18617aa6f225560008357f3cf0a0cf2d3002f48e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07f393fe_0a44b819",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 13662,
+      "author": {
+        "id": 1934715
+      },
+      "writtenOn": "2024-10-09T16:57:57Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "18617aa6f225560008357f3cf0a0cf2d3002f48e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
