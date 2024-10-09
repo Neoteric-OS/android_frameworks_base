@@ -109,8 +109,6 @@ class DraggableHandlerTest {
 
         val transitionInterceptionThreshold = 0.05f
 
-        var gestureFilter: (startedPosition: Offset) -> Boolean = DefaultGestureFilter
-
         private val layoutImpl =
             SceneTransitionLayoutImpl(
                     state = layoutState,
@@ -123,7 +121,6 @@ class DraggableHandlerTest {
                     // Use testScope and not backgroundScope here because backgroundScope does not
                     // work well with advanceUntilIdle(), which is used by some tests.
                     animationScope = testScope,
-                    gestureFilter = { startedPosition -> gestureFilter.invoke(startedPosition) },
                 )
                 .apply { setContentsAndLayoutTargetSizeForTest(LAYOUT_SIZE) }
 
@@ -352,13 +349,6 @@ class DraggableHandlerTest {
     }
 
     @Test
-    fun onDragStarted_doesNotStartTransition_whenGestureFiltered() = runGestureTest {
-        gestureFilter = { _ -> true }
-        onDragStarted(overSlop = down(fractionOfScreen = 0.1f), expectedConsumedOverSlop = 0f)
-        assertIdle(currentScene = SceneA)
-    }
-
-    @Test
     fun afterSceneTransitionIsStarted_interceptDragEvents() = runGestureTest {
         val dragController = onDragStarted(overSlop = down(fractionOfScreen = 0.1f))
         assertTransition(currentScene = SceneA)
@@ -513,6 +503,54 @@ class DraggableHandlerTest {
             fromScene = SceneC,
             toScene = SceneB,
             progress = 0.1f,
+        )
+    }
+
+    @Test
+    fun onDragWithActionsInBothDirections_dragToOppositeDirectionReplacesAction() = runGestureTest {
+        // We are on SceneA. UP -> B, DOWN-> C.
+        val dragController = onDragStarted(overSlop = up(fractionOfScreen = 0.2f))
+        assertTransition(
+            currentScene = SceneA,
+            fromScene = SceneA,
+            toScene = SceneB,
+            progress = 0.2f,
+        )
+
+        // Reverse drag direction, it will replace the previous transition
+        dragController.onDragDelta(pixels = down(fractionOfScreen = 0.5f))
+        assertTransition(
+            currentScene = SceneA,
+            fromScene = SceneA,
+            toScene = SceneC,
+            progress = 0.3f,
+        )
+    }
+
+    @Test
+    fun onDragWithActionsInBothDirections_dragToOppositeDirectionNotReplaceable() = runGestureTest {
+        // We are on SceneA. UP -> B, DOWN-> C. The up swipe is not replaceable though.
+        mutableUserActionsA =
+            mapOf(Swipe.Up to UserActionResult(SceneB, isIrreversible = true), Swipe.Down to SceneC)
+        val dragController =
+            onDragStarted(
+                startedPosition = Offset(SCREEN_SIZE * 0.5f, SCREEN_SIZE * 0.5f),
+                overSlop = up(fractionOfScreen = 0.2f),
+            )
+        assertTransition(
+            currentScene = SceneA,
+            fromScene = SceneA,
+            toScene = SceneB,
+            progress = 0.2f,
+        )
+
+        // Reverse drag direction, it cannot replace the previous transition
+        dragController.onDragDelta(pixels = down(fractionOfScreen = 0.5f))
+        assertTransition(
+            currentScene = SceneA,
+            fromScene = SceneA,
+            toScene = SceneB,
+            progress = -0.3f,
         )
     }
 
@@ -1251,7 +1289,8 @@ class DraggableHandlerTest {
     fun overscroll_releaseBetween0And100Percent_up() = runGestureTest {
         // Make scene B overscrollable.
         layoutState.transitions = transitions {
-            from(SceneA, to = SceneB) { spec = spring(dampingRatio = Spring.DampingRatioNoBouncy) }
+            defaultSwipeSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy)
+            from(SceneA, to = SceneB) {}
             overscroll(SceneB, Orientation.Vertical) { fade(TestElements.Foo) }
         }
 
@@ -1282,7 +1321,8 @@ class DraggableHandlerTest {
     fun overscroll_releaseBetween0And100Percent_down() = runGestureTest {
         // Make scene C overscrollable.
         layoutState.transitions = transitions {
-            from(SceneA, to = SceneC) { spec = spring(dampingRatio = Spring.DampingRatioNoBouncy) }
+            defaultSwipeSpec = spring(dampingRatio = Spring.DampingRatioNoBouncy)
+            from(SceneA, to = SceneC) {}
             overscroll(SceneC, Orientation.Vertical) { fade(TestElements.Foo) }
         }
 

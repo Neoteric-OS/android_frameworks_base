@@ -700,7 +700,7 @@ class TestPhoneWindowManager {
     void assertPowerWakeUp() {
         mTestLooper.dispatchAll();
         verify(mWindowWakeUpPolicy)
-                .wakeUpFromKey(anyLong(), eq(KeyEvent.KEYCODE_POWER), anyBoolean());
+                .wakeUpFromKey(anyInt(), anyLong(), eq(KeyEvent.KEYCODE_POWER), anyBoolean());
     }
 
     void assertNoPowerSleep() {
@@ -918,5 +918,10 @@ class TestPhoneWindowManager {
     void assertTalkBack(boolean expectEnabled) {
         mTestLooper.dispatchAll();
         Assert.assertEquals(expectEnabled, mIsTalkBackEnabled);
+    }
+
+    void assertKeyGestureEventSentToKeyGestureController(int gestureType) {
+        verify(mInputManagerInternal)
+                .handleKeyGestureInKeyGestureController(anyInt(), any(), anyInt(), eq(gestureType));
     }
 }

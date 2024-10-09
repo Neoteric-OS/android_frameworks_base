@@ -239,7 +239,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityInteractionClient;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
-import android.view.accessibility.AccessibilityManager.HighTextContrastChangeListener;
+import android.view.accessibility.AccessibilityManager.HighContrastTextStateChangeListener;
 import android.view.accessibility.AccessibilityNodeIdManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
@@ -1803,8 +1803,8 @@ public final class ViewRootImpl implements ViewParent,
         }
         mAccessibilityManager.addAccessibilityStateChangeListener(
                 mAccessibilityInteractionConnectionManager, mHandler);
-        mAccessibilityManager.addHighTextContrastStateChangeListener(
-                mHighContrastTextManager, mHandler);
+        mAccessibilityManager.addHighContrastTextStateChangeListener(
+                mExecutor, mHighContrastTextManager);
         DisplayManagerGlobal
                 .getInstance()
                 .registerDisplayListener(
@@ -1841,7 +1841,7 @@ public final class ViewRootImpl implements ViewParent,
     private void unregisterListeners() {
         mAccessibilityManager.removeAccessibilityStateChangeListener(
                 mAccessibilityInteractionConnectionManager);
-        mAccessibilityManager.removeHighTextContrastStateChangeListener(
+        mAccessibilityManager.removeHighContrastTextStateChangeListener(
                 mHighContrastTextManager);
         DisplayManagerGlobal
                 .getInstance()
@@ -11920,12 +11920,12 @@ public final class ViewRootImpl implements ViewParent,
         }
     }
 
-    final class HighContrastTextManager implements HighTextContrastChangeListener {
+    final class HighContrastTextManager implements HighContrastTextStateChangeListener {
         HighContrastTextManager() {
-            ThreadedRenderer.setHighContrastText(mAccessibilityManager.isHighTextContrastEnabled());
+            ThreadedRenderer.setHighContrastText(mAccessibilityManager.isHighContrastTextEnabled());
         }
         @Override
-        public void onHighTextContrastStateChanged(boolean enabled) {
+        public void onHighContrastTextStateChanged(boolean enabled) {
             ThreadedRenderer.setHighContrastText(enabled);
 
             destroyAndInvalidate();

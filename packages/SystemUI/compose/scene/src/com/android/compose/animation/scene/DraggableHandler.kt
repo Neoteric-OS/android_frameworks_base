@@ -124,10 +124,6 @@ internal class DraggableHandlerImpl(
         overSlop: Float,
         pointersDown: Int,
     ): DragController {
-        if (startedPosition != null && layoutImpl.gestureFilter(startedPosition)) {
-            return NoOpDragController
-        }
-
         if (overSlop == 0f) {
             val oldDragController = dragController
             check(oldDragController != null && oldDragController.isDrivingTransition) {
@@ -230,7 +226,6 @@ internal class DraggableHandlerImpl(
         val fromSource = resolveSwipeSource(startedPosition)
         val upOrLeft = resolveSwipe(pointersDown, fromSource, isUpOrLeft = true)
         val downOrRight = resolveSwipe(pointersDown, fromSource, isUpOrLeft = false)
-
         return if (fromSource == null) {
             Swipes(
                 upOrLeft = null,
@@ -370,10 +365,18 @@ private class DragControllerImpl(
             return 0f
         }
 
+        val currentTransitionIrreversible =
+            if (swipeAnimation.isUpOrLeft) {
+                swipes.upOrLeftResult?.isIrreversible ?: false
+            } else {
+                swipes.downOrRightResult?.isIrreversible ?: false
+            }
+
         val needNewTransition =
-            hasReachedToContent ||
-                result.toContent(layoutState.currentScene) != swipeAnimation.toContent ||
-                result.transitionKey != swipeAnimation.contentTransition.key
+            !currentTransitionIrreversible &&
+                (hasReachedToContent ||
+                    result.toContent(layoutState.currentScene) != swipeAnimation.toContent ||
+                    result.transitionKey != swipeAnimation.contentTransition.key)
 
         if (needNewTransition) {
             // Make sure the current transition will finish to the right current scene.

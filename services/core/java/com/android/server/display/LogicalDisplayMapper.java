@@ -357,8 +357,8 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
     public SparseArray<int[]> getDisplayIdsByGroupIdLocked() {
         SparseArray<int[]> displayIdsByGroupIds = new SparseArray<>();
         for (int i = 0; i < mDisplayGroups.size(); i++) {
-            int groupId = mDisplayGroups.get(i).getGroupId();
-            displayIdsByGroupIds.put(groupId, getDisplayIdsForGroupLocked(groupId));
+            final int displayGroupId = mDisplayGroups.keyAt(i);
+            displayIdsByGroupIds.put(displayGroupId, getDisplayIdsForGroupLocked(displayGroupId));
         }
         return displayIdsByGroupIds;
     }
