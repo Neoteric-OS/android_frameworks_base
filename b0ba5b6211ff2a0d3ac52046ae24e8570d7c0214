@@ -16,6 +16,23 @@
       "message": "Is it worth saying in the comments that the tests don\u0027t test the security properties?",
       "revId": "b0ba5b6211ff2a0d3ac52046ae24e8570d7c0214",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8212fd3_4180e68b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-10-09T20:34:52Z",
+      "side": 1,
+      "message": "I expect the @NeverInline is respected by R8, AppReduce, etc. if only because they can\u0027t inline frameworks code? But I\u0027m not an expert, and I think it\u0027s worth confirming that. If a code shrinker inlines this, then probably all bets are off.",
+      "revId": "b0ba5b6211ff2a0d3ac52046ae24e8570d7c0214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
