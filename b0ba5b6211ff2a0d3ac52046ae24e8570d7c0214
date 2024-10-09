@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "503ad800_672f73ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2024-10-09T04:05:41Z",
+      "side": 1,
+      "message": "Is it worth saying in the comments that the tests don\u0027t test the security properties?",
+      "revId": "b0ba5b6211ff2a0d3ac52046ae24e8570d7c0214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
