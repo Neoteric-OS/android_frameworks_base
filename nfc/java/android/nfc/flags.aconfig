@@ -165,3 +165,11 @@ flag {
     description: "Enabling security log for nfc state change"
     bug: "319934052"
 }
+
+flag {
+    name: "nfc_set_service_enabled_for_category_other"
+    is_exported: true
+    namespace: "nfc"
+    description: "Enable set service enabled for category other"
+    bug: "338157113"
+}
