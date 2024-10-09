@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb430569_f52dfb09",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-09T19:00:08Z",
+      "side": 1,
+      "message": "`@RequiresPermission`",
+      "range": {
+        "startLine": 890,
+        "startChar": 4,
+        "endLine": 890,
+        "endChar": 7
+      },
+      "revId": "f23bd055b8f277c15bc6ab2e89ec51a60bb59989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
