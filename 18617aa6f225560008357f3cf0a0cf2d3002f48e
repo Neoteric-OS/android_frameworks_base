@@ -101,6 +101,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "247198a2_ca4b7b26",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 13147,
+      "author": {
+        "id": 1934715
+      },
+      "writtenOn": "2024-10-09T20:19:21Z",
+      "side": 1,
+      "message": "Sorry for the noise; I didn\u0027t expand one of the terms correctly when looking at this. This looks fine.",
+      "parentUuid": "e55e9894_896c8d69",
+      "range": {
+        "startLine": 13146,
+        "startChar": 20,
+        "endLine": 13147,
+        "endChar": 46
+      },
+      "revId": "18617aa6f225560008357f3cf0a0cf2d3002f48e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07f393fe_0a44b819",
