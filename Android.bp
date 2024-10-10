@@ -106,7 +106,7 @@ filegroup {
         ":android.hardware.radio.data-V3-java-source",
         ":android.hardware.radio.network-V3-java-source",
         ":android.hardware.radio.voice-V3-java-source",
-        ":android.hardware.security.keymint-V3-java-source",
+        ":android.hardware.security.keymint-V4-java-source",
         ":android.hardware.security.secureclock-V1-java-source",
         ":android.hardware.thermal-V2-java-source",
         ":android.hardware.tv.tuner-V2-java-source",
