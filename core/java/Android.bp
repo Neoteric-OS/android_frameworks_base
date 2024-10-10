@@ -457,6 +457,10 @@ aidl_interface {
                 "//apex_available:platform",
                 "com.android.virt", // for virtualizationservice
             ],
+            gen_mockall: true,
+            additional_rustlibs: [
+                "libmockall",
+            ],
         },
     },
 }
