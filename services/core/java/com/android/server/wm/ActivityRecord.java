@@ -3005,6 +3005,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
         final boolean hasImeSurface;
         if (mStartingData != null) {
             if (mStartingData.mWaitForSyncTransactionCommit
+                    && mTransitionController.inPlayingTransition(this)
                     || mTransitionController.isCollecting(this)) {
                 mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_REMOVE_DIRECTLY;
                 mStartingData.mPrepareRemoveAnimation = prepareAnimation;
