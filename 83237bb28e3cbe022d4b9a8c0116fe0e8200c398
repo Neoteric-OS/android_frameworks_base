@@ -16,6 +16,23 @@
       "message": "Michael, PTAL. Thanks!",
       "revId": "83237bb28e3cbe022d4b9a8c0116fe0e8200c398",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c4e6c39_a7347a6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2024-10-10T08:26:17Z",
+      "side": 1,
+      "message": "Michael, friendly ping on this CL. Thanks!",
+      "revId": "83237bb28e3cbe022d4b9a8c0116fe0e8200c398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
