@@ -244,3 +244,8 @@ genrule { // This module exists to make the srcjar output available to Make.
 platform_systemserverclasspath {
     name: "platform-systemserverclasspath",
 }
+
+filegroup {
+    name: "preloaded-classes-denylist",
+    srcs: ["preloaded-classes-denylist"],
+}
