@@ -61,6 +61,7 @@ license {
 
 filegroup {
     name: "framework-non-updatable-sources",
+    defaults: ["attest_modules_flag_defaults"], // TODO(b/378796008): Remove in favor of a select statement
     device_common_srcs: [
         // Java/AIDL sources under frameworks/base
         ":framework-annotations",
@@ -105,7 +106,6 @@ filegroup {
         ":android.hardware.radio.data-V3-java-source",
         ":android.hardware.radio.network-V3-java-source",
         ":android.hardware.radio.voice-V3-java-source",
-        ":android.hardware.security.keymint-V3-java-source",
         ":android.hardware.security.secureclock-V1-java-source",
         ":android.hardware.thermal-V2-java-source",
         ":android.hardware.tv.tuner-V2-java-source",
@@ -114,7 +114,6 @@ filegroup {
         ":android.security.legacykeystore-java-source",
         ":android.security.maintenance-java-source",
         ":android.security.metrics-java-source",
-        ":android.system.keystore2-V4-java-source",
         ":android.hardware.cas-V1-java-source",
         ":credstore_aidl",
         ":dumpstate_aidl",
@@ -673,3 +672,31 @@ build = [
     "TestProtoLibraries.bp",
     "Ravenwood.bp",
 ]
+
+soong_config_module_type {
+    name: "filegroup_defaults_attest_modules_flag",
+    module_type: "filegroup_defaults",
+    config_namespace: "attest_modules",
+    bool_variables: [
+        "release_attest_modules",
+    ],
+    properties: [
+        "device_common_srcs",
+    ],
+}
+
+filegroup_defaults_attest_modules_flag {
+    name: "attest_modules_flag_defaults",
+    device_common_srcs: [
+        ":android.hardware.security.keymint-V3-java-source",
+        ":android.system.keystore2-V4-java-source",
+    ],
+    soong_config_variables: {
+        release_attest_modules: {
+            device_common_srcs: [
+                ":android.hardware.security.keymint-V4-java-source",
+                ":android.system.keystore2-V5-java-source",
+            ],
+        },
+    },
+}
