@@ -68,6 +68,11 @@ final class PackageManagerNative extends IPackageManagerNative.Stub {
     }
 
     @Override
+    public PackageInfo getPackageInfo(String packageName, int flags, int userId) {
+        return null;
+    }
+
+    @Override
     public int getPackageUid(String packageName, long flags, int userId) throws RemoteException {
         return mPm.snapshotComputer().getPackageUid(packageName, flags, userId);
     }
