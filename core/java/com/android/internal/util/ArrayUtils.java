@@ -23,6 +23,7 @@ import android.os.Build;
 import android.util.ArraySet;
 import android.util.EmptyArray;
 
+import dalvik.annotation.optimization.NeverInline;
 import dalvik.system.VMRuntime;
 
 import java.io.File;
@@ -82,6 +83,57 @@ public class ArrayUtils {
     @SuppressWarnings("unchecked")
     public static <T> T[] newUnpaddedArray(Class<T> clazz, int minLen) {
         return (T[])VMRuntime.getRuntime().newUnpaddedArray(clazz, minLen);
+    }
+
+    /**
+     * This is like <code>new byte[length]</code>, but it allocates the array as non-movable. This
+     * prevents copies of the data from being left on the Java heap as a result of heap compaction.
+     * Use this when the array will contain sensitive data such as a password or cryptographic key
+     * that needs to be wiped from memory when no longer needed. The owner of the array is still
+     * responsible for the zeroization; {@link #zeroize(byte[])} should be used to do so.
+     *
+     * @param length the length of the array to allocate
+     * @return the new array
+     */
+    public static byte[] newNonMovableByteArray(int length) {
+        return (byte[]) VMRuntime.getRuntime().newNonMovableArray(byte.class, length);
+    }
+
+    /**
+     * Like {@link #newNonMovableByteArray(int)}, but allocates a char array.
+     *
+     * @param length the length of the array to allocate
+     * @return the new array
+     */
+    public static char[] newNonMovableCharArray(int length) {
+        return (char[]) VMRuntime.getRuntime().newNonMovableArray(char.class, length);
+    }
+
+    /**
+     * Zeroizes a byte array in a way that is guaranteed to not be optimized out by the compiler.
+     * Use this when the array contains sensitive data such as a password or cryptographic key.
+     * <p>
+     * As per the ART team's recommendation, using <code>@NeverInline</code> in combination with
+     * <code>Arrays.fill()</code> achieves this. Just using <code>Arrays.fill()</code> by itself,
+     * without <code>@NeverInline</code>, does not necessarily achieve this because the compiler may
+     * see that there are no later reads from the array and optimize out the zeroization.
+     * <p>
+     * This works on any <code>byte[]</code>, but to ensure that copies of the array aren't left on
+     * the Java heap the array should have been allocated with {@link #newNonMovableByteArray(int)}.
+     *
+     * @param array the array to zeroize
+     */
+    @NeverInline
+    public static void zeroize(byte[] array) {
+        Arrays.fill(array, (byte) 0);
+    }
+
+    /**
+     * Like {@link #zeroize(byte[])}, but for char arrays.
+     */
+    @NeverInline
+    public static void zeroize(char[] array) {
+        Arrays.fill(array, (char) 0);
     }
 
     /**
