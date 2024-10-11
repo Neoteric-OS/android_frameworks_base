@@ -26,6 +26,7 @@ import static com.android.systemui.statusbar.phone.BiometricUnlockController.MOD
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.hardware.biometrics.BiometricSourceType;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -116,6 +117,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -334,6 +336,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private final KeyguardSecurityModel mKeyguardSecurityModel;
     private final SelectedUserInteractor mSelectedUserInteractor;
     @Nullable private OccludingAppBiometricUI mOccludingAppBiometricUI;
+    private Locale mLocale;
 
     @Nullable private TaskbarDelegate mTaskbarDelegate;
     private final KeyguardUpdateMonitorCallback mUpdateMonitorCallback =
@@ -430,6 +433,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         mJavaAdapter = javaAdapter;
         mSceneInteractorLazy = sceneInteractorLazy;
         mStatusBarKeyguardViewManagerInteractor = statusBarKeyguardViewManagerInteractor;
+        mLocale = mContext.getResources().getConfiguration().getLocales().get(0);
     }
 
     KeyguardTransitionInteractor mKeyguardTransitionInteractor;
@@ -1655,6 +1659,16 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     public void onFoldToAodAnimationChanged() {
         if (mFoldAodAnimationController != null) {
             mScreenOffAnimationPlaying = mFoldAodAnimationController.shouldPlayAnimation();
+        }
+    }
+
+    @Override
+    public void onConfigChanged(Configuration newConfig) {
+        // Check if we need to update Language for SimPin or SimPuk
+        Locale oldLocale = mLocale;
+        mLocale = newConfig.getLocales().get(0);
+        if (needsFullscreenBouncer() && !mLocale.equals(oldLocale)) {
+            reset(true);
         }
     }
 
