@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ff794a0_f5524b12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-10-11T23:18:18Z",
+      "side": 1,
+      "message": "Please add a test for this.\nIf a test is not possible then please detail the manual steps using a test apk or shell commands.",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "ad3a6821d7b8c1369d2e9a66c3706f5fe9da927b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
