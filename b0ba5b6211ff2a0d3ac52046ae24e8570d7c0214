@@ -33,6 +33,42 @@
       "message": "I expect the @NeverInline is respected by R8, AppReduce, etc. if only because they can\u0027t inline frameworks code? But I\u0027m not an expert, and I think it\u0027s worth confirming that. If a code shrinker inlines this, then probably all bets are off.",
       "revId": "b0ba5b6211ff2a0d3ac52046ae24e8570d7c0214",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73b35f7f_f4ac1fbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-10-11T00:28:38Z",
+      "side": 1,
+      "message": "From what I understand, these tools are whole-program optimizers, and they cannot inline library methods since those need to be loaded at runtime from the appropriate places e.g. to make updates to libraries work as intended.  `ArrayUtils` gets built into `framework.jar` which is a library (used by both system_server and apps), so that applies here.",
+      "parentUuid": "c8212fd3_4180e68b",
+      "revId": "b0ba5b6211ff2a0d3ac52046ae24e8570d7c0214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46f96d0c_e698ba3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-10-11T00:28:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "503ad800_672f73ac",
+      "revId": "b0ba5b6211ff2a0d3ac52046ae24e8570d7c0214",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
