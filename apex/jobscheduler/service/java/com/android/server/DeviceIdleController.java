@@ -3296,6 +3296,8 @@ public class DeviceIdleController extends SystemService
                 }
                 reportTempWhitelistChangedLocked(uid, true);
             } else {
+                // Another uid of this appId needs to set a timeout removal message to notify AMS
+                postTempActiveTimeoutMessage(uid, duration);
                 // The uid is already temp allowlisted, only need to update AMS for temp allowlist
                 // duration.
                 if (mLocalActivityManager != null) {
@@ -3354,7 +3356,12 @@ public class DeviceIdleController extends SystemService
             Pair<MutableLong, String> entry =
                     mTempWhitelistAppIdEndTimes.get(appId);
             if (entry == null) {
-                // Nothing to do
+                // In multi-user mode, AMS needs to be notified to update the temp white list
+                // of all users.
+                if (mLocalActivityManager != null) {
+                    mLocalActivityManager.updateDeviceIdleTempAllowlist(mTempWhitelistAppIdArray, 
+                            uid, false, 0, 0, REASON_UNKNOWN, null, INVALID_UID);
+                }
                 return;
             }
             if (timeNow >= entry.first.value) {
