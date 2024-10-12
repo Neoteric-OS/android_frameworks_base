@@ -5643,6 +5643,7 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                         }
                     }, true /* traverseTopToBottom */);
                 }
+                mReportedDrawn = false;
             }
 
             // In the case where we are making an app visible but holding off for a transition,

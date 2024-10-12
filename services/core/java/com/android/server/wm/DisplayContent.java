@@ -1873,7 +1873,8 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             // It has been set and not yet finished.
             return true;
         }
-        if (!r.occludesParent() || r.isReportedDrawn()) {
+        if (!r.occludesParent()
+                || r.isReportedDrawn() && r.mStartingWindow == null && r.mStartingData == null) {
             // While entering or leaving a translucent or floating activity (e.g. dialog style),
             // there is a visible activity in the background. Then it still needs rotation animation
             // to cover the activity configuration change.
