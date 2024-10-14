@@ -114,7 +114,7 @@ public class RuleEvaluationEngineTest {
                         .setInstallerCertificates(Collections.singletonList(INSTALLER_1_CERT))
                         .build();
         assertThat(mEngine.evaluate(appInstallMetadata2).getEffect())
-                .isEqualTo(IntegrityCheckResult.Effect.ALLOW);
+                .isEqualTo(IntegrityCheckResult.Effect.DENY);
 
         AppInstallMetadata appInstallMetadata3 =
                 getAppInstallMetadataBuilder()
@@ -123,7 +123,7 @@ public class RuleEvaluationEngineTest {
                         .setInstallerCertificates(Collections.singletonList(RANDOM_INSTALLER_CERT))
                         .build();
         assertThat(mEngine.evaluate(appInstallMetadata3).getEffect())
-                .isEqualTo(IntegrityCheckResult.Effect.ALLOW);
+                .isEqualTo(IntegrityCheckResult.Effect.DENY);
 
         AppInstallMetadata appInstallMetadata4 =
                 getAppInstallMetadataBuilder()
@@ -132,7 +132,7 @@ public class RuleEvaluationEngineTest {
                         .setInstallerCertificates(Collections.singletonList(RANDOM_INSTALLER_CERT))
                         .build();
         assertThat(mEngine.evaluate(appInstallMetadata4).getEffect())
-                .isEqualTo(IntegrityCheckResult.Effect.ALLOW);
+                .isEqualTo(IntegrityCheckResult.Effect.DENY);
     }
 
     @Test
@@ -166,7 +166,7 @@ public class RuleEvaluationEngineTest {
                         .setInstallerCertificates(Collections.singletonList(INSTALLER_2_CERT))
                         .build();
         assertThat(mEngine.evaluate(appInstallMetadata3).getEffect())
-                .isEqualTo(IntegrityCheckResult.Effect.ALLOW);
+                .isEqualTo(IntegrityCheckResult.Effect.DENY);
 
         AppInstallMetadata appInstallMetadata4 =
                 getAppInstallMetadataBuilder()
@@ -175,7 +175,7 @@ public class RuleEvaluationEngineTest {
                         .setInstallerCertificates(Collections.singletonList(INSTALLER_1_CERT))
                         .build();
         assertThat(mEngine.evaluate(appInstallMetadata4).getEffect())
-                .isEqualTo(IntegrityCheckResult.Effect.ALLOW);
+                .isEqualTo(IntegrityCheckResult.Effect.DENY);
     }
 
     /** Returns a builder with all fields filled with some placeholder data. */

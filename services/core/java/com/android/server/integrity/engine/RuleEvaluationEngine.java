@@ -66,7 +66,7 @@ public class RuleEvaluationEngine {
     public IntegrityCheckResult evaluate(
             AppInstallMetadata appInstallMetadata) {
         List<Rule> rules = loadRules(appInstallMetadata);
-        return IntegrityCheckResult.allow();
+        return RuleEvaluator.evaluateRules(rules, appInstallMetadata);
     }
 
     private List<Rule> loadRules(AppInstallMetadata appInstallMetadata) {
