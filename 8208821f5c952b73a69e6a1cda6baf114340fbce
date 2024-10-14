@@ -22,6 +22,30 @@
       },
       "revId": "8208821f5c952b73a69e6a1cda6baf114340fbce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f4f1a63_44de4f56",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-14T15:38:43Z",
+      "side": 1,
+      "message": "\u003e Although I would recommend just using the UserHandle from the calling context. The typical pattern of having the caller call Context#createContextAsUser; this avoids the need to pass in a userhandle.\n\nAll of the existing APIs in this class passes in a `UserHandle` explicitly, changing only this method to use the user handle from context might be confusing.",
+      "parentUuid": "d0a6b7d0_a48a5491",
+      "range": {
+        "startLine": 893,
+        "startChar": 28,
+        "endLine": 893,
+        "endChar": 39
+      },
+      "revId": "8208821f5c952b73a69e6a1cda6baf114340fbce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
