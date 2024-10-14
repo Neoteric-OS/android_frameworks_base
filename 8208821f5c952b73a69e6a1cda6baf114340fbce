@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0a6b7d0_a48a5491",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-10-14T15:23:45Z",
+      "side": 1,
+      "message": "First: go/android-api-guidelines#framework-userhandle  You\u0027d also need a permission like INTERACT_ACROSS_USERS.\n\nAlthough I would recommend just using the UserHandle from the calling context.  The typical pattern of having the caller call Context#createContextAsUser; this avoids the need to pass in a userhandle.",
+      "range": {
+        "startLine": 893,
+        "startChar": 28,
+        "endLine": 893,
+        "endChar": 39
+      },
+      "revId": "8208821f5c952b73a69e6a1cda6baf114340fbce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
