@@ -51,8 +51,4 @@ interface INfcCardEmulation
     void overrideRoutingTable(int userHandle, String protocol, String technology, in String pkg);
     void recoverRoutingTable(int userHandle);
     boolean isEuiccSupported();
-    void setAutoChangeStatus(boolean state);
-    boolean isAutoChangeEnabled();
-    List<String> getRoutingStatus();
-    void overwriteRoutingTable(int userHandle, String emptyAid, String protocol, String tech);
 }
