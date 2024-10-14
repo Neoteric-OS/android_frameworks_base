@@ -64,6 +64,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "40493a58_6a4dc3eb",
+        "filename": "nfc/java/android/nfc/RoutingTableProtocolEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-14T18:48:36Z",
+      "side": 1,
+      "message": "That\u0027s the name we get from dumpsys: https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Nfc/src/com/android/nfc/RoutingTableParser.java;l\u003d78;bpv\u003d1;bpt\u003d0. Maybe it\u0027s better to keep consistent.",
+      "parentUuid": "871bfd1b_1f50c906",
+      "range": {
+        "startLine": 61,
+        "startChar": 37,
+        "endLine": 61,
+        "endChar": 40
+      },
+      "revId": "9ad15342d59b563341fc55919d1b900abd8a9d7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be650c9b_f4e41cdf",
         "filename": "nfc/java/android/nfc/RoutingTableProtocolEntry.java",
         "patchSetId": 5
@@ -99,6 +123,30 @@
           ]
         }
       ],
+      "revId": "9ad15342d59b563341fc55919d1b900abd8a9d7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58dbea49_2817c828",
+        "filename": "nfc/java/android/nfc/RoutingTableProtocolEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-14T18:48:36Z",
+      "side": 1,
+      "message": "`UNDETERMINED` is one possible value predefined in the [parser]( https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Nfc/src/com/android/nfc/RoutingTableParser.java;l\u003d78;bpv\u003d1;bpt\u003d0), but `UNSUPPORTED` is for all the route not defined in the list: https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Nfc/src/com/android/nfc/RoutingTableParser.java;l\u003d82;bpv\u003d1;bpt\u003d0",
+      "parentUuid": "be650c9b_f4e41cdf",
+      "range": {
+        "startLine": 76,
+        "startChar": 28,
+        "endLine": 76,
+        "endChar": 48
+      },
       "revId": "9ad15342d59b563341fc55919d1b900abd8a9d7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -170,6 +218,30 @@
           ]
         }
       ],
+      "revId": "9ad15342d59b563341fc55919d1b900abd8a9d7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42bb99f3_1c30eee3",
+        "filename": "nfc/java/android/nfc/RoutingTableSystemCodeEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-10-14T18:48:36Z",
+      "side": 1,
+      "message": "The format is `SYSTEMCODE_` + hex code of the byte array, see https://cs.android.com/android/platform/superproject/main/+/main:packages/apps/Nfc/src/com/android/nfc/RoutingTableParser.java;l\u003d101;bpv\u003d1;bpt\u003d0. I didn\u0027t find a good way to represent this since it\u0027s not a finite set.",
+      "parentUuid": "6d8f805a_eb604583",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 43,
+        "endChar": 31
+      },
       "revId": "9ad15342d59b563341fc55919d1b900abd8a9d7c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
