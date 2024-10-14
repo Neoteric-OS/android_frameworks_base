@@ -46,6 +46,30 @@
       },
       "revId": "8208821f5c952b73a69e6a1cda6baf114340fbce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2058b20_1a3293f8",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-10-14T15:46:34Z",
+      "side": 1,
+      "message": "It is just `getServices` and that users a userId int, not a `UserHandle`.  \n\nYou\u0027d need `android.permission.INTERACT_ACROSS_USERS` as a prerequisite for calling this API then; otherwise you\u0027re violating the permission model for cross-user interactions (e.g. see [here](https://source.android.com/docs/devices/admin/multiuser-apps#interacting_with_users)).",
+      "parentUuid": "6f4f1a63_44de4f56",
+      "range": {
+        "startLine": 893,
+        "startChar": 28,
+        "endLine": 893,
+        "endChar": 39
+      },
+      "revId": "8208821f5c952b73a69e6a1cda6baf114340fbce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
