@@ -14,4 +14,7 @@ flag {
   namespace: "media_solutions"
   description: "Enable B frames for Stagefright recorder."
   bug: "341121900"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
 }
