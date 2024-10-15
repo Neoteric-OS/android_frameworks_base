@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c606b64_448786cb",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskSupervisor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2866,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2024-10-15T03:46:32Z",
+      "side": 1,
+      "message": "Riddle, you might be more familiar with this part of the code -- do you think this should just skip all tasks that don\u0027t fill their parent?",
+      "range": {
+        "startLine": 2866,
+        "startChar": 39,
+        "endLine": 2866,
+        "endChar": 74
+      },
+      "revId": "a609e8ee3df5895456b742df27fbbbe8dab7343a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
