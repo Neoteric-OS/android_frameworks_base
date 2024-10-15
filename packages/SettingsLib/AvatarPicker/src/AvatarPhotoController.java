@@ -168,14 +168,31 @@ class AvatarPhotoController {
     private void copyAndCropPhoto(final Uri pictureUri, boolean delayBeforeCrop) {
         ListenableFuture<Uri> future = ThreadUtils.getBackgroundExecutor().submit(() -> {
             final ContentResolver cr = mContextInjector.getContentResolver();
+            InputStream in = null;
+            OutputStream out = null;
             try {
-                InputStream in = cr.openInputStream(pictureUri);
-                OutputStream out = cr.openOutputStream(mPreCropPictureUri);
+                in = cr.openInputStream(pictureUri);
+                out = cr.openOutputStream(mPreCropPictureUri);
                 Streams.copy(in, out);
                 return mPreCropPictureUri;
             } catch (IOException e) {
                 Log.w(TAG, "Failed to copy photo", e);
                 return null;
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
         Futures.addCallback(future, new FutureCallback<>() {
