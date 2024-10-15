@@ -46,6 +46,30 @@
       },
       "revId": "e5fd47c3631001152d161aa60c8a0a14166b9c7a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afb069a0_a9fec12b",
+        "filename": "tools/aapt2/SdkConstants.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2024-10-15T14:27:45Z",
+      "side": 1,
+      "message": "I\u0027m disabling clang-format around this part specifically.",
+      "parentUuid": "3cf936e4_3faa9331",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "e5fd47c3631001152d161aa60c8a0a14166b9c7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
