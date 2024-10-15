@@ -70,6 +70,30 @@
       },
       "revId": "a609e8ee3df5895456b742df27fbbbe8dab7343a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45a3e4ea_62661d26",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskSupervisor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2866,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-10-15T04:21:14Z",
+      "side": 1,
+      "message": "A safer condition: (in case the helper is used for a pip/freeform task)\n```\n@@ -2879,25 +2879,28 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {\n     /** The helper to get the top opaque activity of a container. */\n     static class OpaqueActivityHelper implements Predicate\u003cActivityRecord\u003e {\n         private ActivityRecord mStarting;\n         private boolean mIncludeInvisibleAndFinishing;\n         private boolean mIgnoringKeyguard;\n+        private int mContainerWindowingMode;\n \n         ActivityRecord getOpaqueActivity(\n                 @NonNull WindowContainer\u003c?\u003e container, boolean ignoringKeyguard) {\n             mIncludeInvisibleAndFinishing \u003d true;\n             mIgnoringKeyguard \u003d ignoringKeyguard;\n+            mContainerWindowingMode \u003d container.getWindowingMode();\n             return container.getActivity(this,\n                     true /* traverseTopToBottom */, null /* boundary */);\n         }\n \n         ActivityRecord getVisibleOpaqueActivity(\n                 @NonNull WindowContainer\u003c?\u003e container, @Nullable ActivityRecord starting,\n                 boolean ignoringKeyguard) {\n             mStarting \u003d starting;\n             mIncludeInvisibleAndFinishing \u003d false;\n             mIgnoringKeyguard \u003d ignoringKeyguard;\n+            mContainerWindowingMode \u003d container.getWindowingMode();\n             final ActivityRecord opaque \u003d container.getActivity(this,\n                     true /* traverseTopToBottom */, null /* boundary */);\n             mStarting \u003d null;\n             return opaque;\n         }\n@@ -2909,10 +2912,14 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {\n                     || (!mIgnoringKeyguard \u0026\u0026 !r.isVisible()))) {\n                 // Ignore invisible activities that are not the currently starting activity\n                 // (about to be visible).\n                 return false;\n             }\n+            if (mContainerWindowingMode !\u003d r.getWindowingMode()\n+                    \u0026\u0026 r.getWindowConfiguration().tasksAreFloating()) {\n+                return false;\n+            }\n             return r.occludesParent(mIncludeInvisibleAndFinishing /* includingFinishing */);\n         }\n     }\n \n     /**\n```",
+      "parentUuid": "82ae6be6_70157907",
+      "range": {
+        "startLine": 2866,
+        "startChar": 39,
+        "endLine": 2866,
+        "endChar": 74
+      },
+      "revId": "a609e8ee3df5895456b742df27fbbbe8dab7343a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
