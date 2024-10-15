@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60c2532a_0674dba7",
+        "filename": "tools/aapt2/SdkConstants.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2024-10-15T14:07:47Z",
+      "side": 1,
+      "message": "nit: accidental space?",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "e5fd47c3631001152d161aa60c8a0a14166b9c7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
