@@ -22,6 +22,30 @@
       },
       "revId": "a609e8ee3df5895456b742df27fbbbe8dab7343a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0bc8c3f_83d417f2",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskSupervisor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2866,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-10-15T03:58:47Z",
+      "side": 1,
+      "message": "`occludesParent` should also indicate fillParent.\nTo be general, maybe:\n```\n    if (r.getWindowConfiguration().tasksAreFloating()) {\n        return false;\n    }\n```",
+      "parentUuid": "2c606b64_448786cb",
+      "range": {
+        "startLine": 2866,
+        "startChar": 39,
+        "endLine": 2866,
+        "endChar": 74
+      },
+      "revId": "a609e8ee3df5895456b742df27fbbbe8dab7343a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
