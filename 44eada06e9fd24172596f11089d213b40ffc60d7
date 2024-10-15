@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "869c6a65_bf23ea77",
+        "filename": "packages/Vcn/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-10-15T22:40:57Z",
+      "side": 1,
+      "message": "I wouldn\u0027t mind at all to have Lorenzo on here. I\u0027m also asking JPD. Obviously if this is someone as an emergency backup reviewer, I\u0027d like someone senior, knowledgeable, and skeptical. Right now the bench is a bit thin.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 6
+      },
+      "revId": "44eada06e9fd24172596f11089d213b40ffc60d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
