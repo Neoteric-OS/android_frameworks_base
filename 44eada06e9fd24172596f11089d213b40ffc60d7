@@ -46,6 +46,30 @@
       },
       "revId": "44eada06e9fd24172596f11089d213b40ffc60d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bba7f94_6fece448",
+        "filename": "packages/Vcn/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-10-15T23:16:18Z",
+      "side": 1,
+      "message": "Tag Ben and Ji with LAST_RESORT_SUGGESTION so they will not be suggested by the UI",
+      "parentUuid": "e3977139_9c3394bc",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 6
+      },
+      "revId": "44eada06e9fd24172596f11089d213b40ffc60d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
