@@ -46,6 +46,30 @@
       },
       "revId": "a609e8ee3df5895456b742df27fbbbe8dab7343a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82ae6be6_70157907",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskSupervisor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2866,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2024-10-15T04:09:34Z",
+      "side": 1,
+      "message": "Makes sense, thanks!",
+      "parentUuid": "f0bc8c3f_83d417f2",
+      "range": {
+        "startLine": 2866,
+        "startChar": 39,
+        "endLine": 2866,
+        "endChar": 74
+      },
+      "revId": "a609e8ee3df5895456b742df27fbbbe8dab7343a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
