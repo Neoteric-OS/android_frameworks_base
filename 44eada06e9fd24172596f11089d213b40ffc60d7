@@ -22,6 +22,30 @@
       },
       "revId": "44eada06e9fd24172596f11089d213b40ffc60d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3977139_9c3394bc",
+        "filename": "packages/Vcn/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-10-15T22:55:48Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "869c6a65_bf23ea77",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 6
+      },
+      "revId": "44eada06e9fd24172596f11089d213b40ffc60d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
