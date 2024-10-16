@@ -16,6 +16,24 @@
       "message": "Why is this `set noparent`? Please remove. This only removes the handful of root OWNERS, which is generally considered undesirable without specific reasons.",
       "revId": "e2964288ba71e65ff60eacc560ca357e1cdb3280",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de692efa_9257caaa",
+        "filename": "packages/Vcn/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-10-16T00:53:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a5fb93_0ef3c9c3",
+      "revId": "e2964288ba71e65ff60eacc560ca357e1cdb3280",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
