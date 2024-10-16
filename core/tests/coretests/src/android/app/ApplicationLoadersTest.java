@@ -42,6 +42,8 @@ public class ApplicationLoadersTest {
     private static final String LIB_DEP_A = "/system/framework/android.hidl.manager-V1.0-java.jar";
     // a commonly used, non-BCP, app-facing library installed onto the device
     private static final String LIB_APACHE_HTTP = "/system/framework/org.apache.http.legacy.jar";
+    // a commonly used, non-BCP, app-facing library installed onto the device
+    private static final String LIB_NONEXISTENT = "/system/framework/nonexistentlib.jar";
 
     private static SharedLibraryInfo createLib(String zip) {
         return new SharedLibraryInfo(
@@ -54,7 +56,18 @@ public class ApplicationLoadersTest {
     public void testGetNonExistantLib() {
         ApplicationLoaders loaders = new ApplicationLoaders();
         assertNull(loaders.getCachedNonBootclasspathSystemLib(
-                "/system/framework/nonexistantlib.jar", null, null, null));
+                LIB_NONEXISTENT, null, null, null));
+    }
+
+    @Test
+    public void testCacheNonExistantLib() {
+        ApplicationLoaders loaders = new ApplicationLoaders();
+        SharedLibraryInfo lib = createLib(LIB_NONEXISTENT);
+
+        loaders.createAndCacheNonBootclasspathSystemClassLoaders(Lists.newArrayList(lib));
+
+        assertNull(loaders.getCachedNonBootclasspathSystemLib(
+                LIB_NONEXISTENT, null, null, null));
     }
 
     @Test
