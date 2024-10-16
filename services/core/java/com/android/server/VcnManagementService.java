@@ -284,6 +284,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                         // Ensure no new configs are overwritten; a carrier app may have added a new
                         // config.
                         if (!mConfigs.containsKey(entry.getKey())) {
+                            android.util.Log.i("TEST", "VcnManagementService mConfigs.put " + entry.getKey());
                             mConfigs.put(entry.getKey(), entry.getValue());
                         }
                     }
@@ -697,6 +698,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
 
         vcnToTeardown.teardownAsynchronously();
+
+        android.util.Log.i("TEST", "stopVcnLocked mVcns.remove " + uuidToTeardown);
         mVcns.remove(uuidToTeardown);
 
         // Now that the VCN is removed, notify all registered listeners to refresh their
@@ -752,6 +755,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                         mContext, mLooper, mNetworkProvider, config.isTestModeProfile());
         final Vcn newInstance =
                 mDeps.newVcn(vcnContext, subscriptionGroup, config, mLastSnapshot, vcnCallback);
+        android.util.Log.i("TEST", "stopVcnLocked mVcns.put " + subscriptionGroup);
         mVcns.put(subscriptionGroup, newInstance);
 
         // Now that a new VCN has started, notify all registered listeners to refresh their
@@ -804,6 +808,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         Binder.withCleanCallingIdentity(() -> {
             synchronized (mLock) {
+                android.util.Log.i("TEST", "setVcnConfig mConfigs.put " + subscriptionGroup);
                 mConfigs.put(subscriptionGroup, config);
                 startOrUpdateVcnLocked(subscriptionGroup, config);
 
@@ -869,6 +874,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     }
 
     private void stopAndClearVcnConfigInternalLocked(@NonNull ParcelUuid subscriptionGroup) {
+        android.util.Log.i("TEST", "stopAndClearVcnConfigInternalLocked mConfigs.remove " + subscriptionGroup);
         mConfigs.remove(subscriptionGroup);
         final boolean vcnExists = mVcns.containsKey(subscriptionGroup);
 
