@@ -16,6 +16,23 @@
       "message": "(I don\u0027t have +2)",
       "revId": "dc1cd5a3da9721153f73fb491dcadd18d1a66c75",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89e6039b_543a213c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-10-16T16:04:00Z",
+      "side": 1,
+      "message": "Okay to revert.",
+      "revId": "dc1cd5a3da9721153f73fb491dcadd18d1a66c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
