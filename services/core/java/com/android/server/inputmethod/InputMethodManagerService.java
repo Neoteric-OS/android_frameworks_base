@@ -1366,6 +1366,7 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
         String selectedMethodId = getSelectedMethodIdLocked();
         final InputMethodSettings settings = InputMethodSettingsRepository.get(mCurrentUserId);
         if (selectedMethodId != null
+                && settings.getMethodMap().get(selectedMethodId) != null
                 && !settings.getMethodMap().get(selectedMethodId).isSystem()) {
             return;
         }
