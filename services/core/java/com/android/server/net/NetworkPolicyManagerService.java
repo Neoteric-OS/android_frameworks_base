@@ -536,6 +536,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
      */
     private boolean mNeverApplyRulesToCoreUids;
 
+    /**
+     * Whether or not background App restriction firewall to be supported on satellite network
+     */
+    private boolean mSatelliteBackgroundAppRestriction;
+
     // See main javadoc for instructions on how to use these locks.
     final Object mUidRulesFirstLock = new Object();
     final Object mNetworkPoliciesSecondLock = new Object();
@@ -791,6 +796,21 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     // TODO: migrate notifications to SystemUI
 
 
+    private ConnectivityManager mConnectivityManager;
+
+    boolean mSatelliteNetworkConnected;
+
+    boolean mSatelliteNetworkRegistered;
+
+    /** Keep record of current background uid array at satellite network*/
+    int[] mSatelliteNetworkBackgroundUidArray;
+
+    /** Firewall chain to support background app restriction in satellite network*/
+    // TODO: To remove on availability of api at connectivity module
+    public static final int FIREWALL_CHAIN_SATELLITE_BACKGROUND = 14;
+
+
+
     interface Stats {
         int UPDATE_NETWORK_ENABLED = 0;
         int IS_UID_NETWORKING_BLOCKED = 1;
@@ -830,6 +850,155 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             "updateNetworkEnabledNL()",
             "isUidNetworkingBlocked()",
     });
+
+    private final ConnectivityManager.NetworkCallback mNetworkCallback =
+            new ConnectivityManager.NetworkCallback() {
+                @Override
+                public void onAvailable(Network network) {
+                    Log.d(TAG, "On Available: " + network);
+                    if (network != null) {
+                        if (mConnectivityManager != null) {
+                            NetworkCapabilities capabilities =
+                                    mConnectivityManager.getNetworkCapabilities(network);
+                            if (capabilities != null) {
+                                mSatelliteNetworkConnected =
+                                        capabilities.hasTransport(
+                                                NetworkCapabilities.TRANSPORT_SATELLITE)
+                                                && !capabilities
+                                                .hasCapability(NetworkCapabilities
+                                                        .NET_CAPABILITY_NOT_BANDWIDTH_CONSTRAINED);
+                                if (mSatelliteNetworkConnected) {
+                                    Log.d(TAG, "Satellite Network connected");
+                                    enableBackgroundAppRestrictionOnSatelliteNetwork();
+                                } else {
+                                    resetBackgroundAppRestriction();
+                                }
+                            }
+                        }
+                    } else {
+                        Log.wtf(TAG, "network is null");
+                    }
+                }
+
+                @Override
+                public void onLost(Network network) {
+                    Log.d(TAG, "Network Lost");
+                    if (mSatelliteNetworkConnected) {
+                        mSatelliteNetworkConnected = false;
+                        resetBackgroundAppRestriction();
+                    }
+                }
+            };
+
+    private void enableBackgroundAppRestrictionOnSatelliteNetwork() {
+        int[] uids = new int[mUidState.size()];
+        int index = 0;
+        for (int i = mUidState.size() - 1; i >= 0; i--) {
+            if (mBackgroundTransitioningUids.indexOfKey(mUidState.keyAt(i)) >= 0
+                    || isProcStateAllowedNetworkWhileBackground(mUidState.valueAt(i))) {
+                uids[index++] = mUidState.keyAt(i);
+            }
+        }
+
+        if(index > 0) {
+            // Create array with the correct size
+            mSatelliteNetworkBackgroundUidArray = new int[index];
+            // Copy elements
+            System.arraycopy(uids, 0, mSatelliteNetworkBackgroundUidArray, 0, index);
+            Log.i(
+                    TAG,
+                    "firewall triggered at satellite Network for uids:"
+                            + Arrays.toString(mSatelliteNetworkBackgroundUidArray));
+
+            mConnectivityManager.setFirewallChainEnabled(
+                    FIREWALL_CHAIN_SATELLITE_BACKGROUND, true);
+
+            mConnectivityManager.replaceFirewallChain(
+                    FIREWALL_CHAIN_SATELLITE_BACKGROUND, mSatelliteNetworkBackgroundUidArray);
+        } else {
+            Log.i(TAG, "found no background uid");
+        }
+    }
+
+    private synchronized void updateBackgroundAppRestrictionStatusOnSatelliteNetwork(int uid) {
+        final UidState uidState = mUidState.get(uid);
+        boolean forceUpdate = false;
+        if (mSatelliteNetworkBackgroundUidArray != null) {
+            if (isSatelliteBackgroundAppRestrictedUid(mSatelliteNetworkBackgroundUidArray, uid)
+                    && isProcStateAllowedWhileOnRestrictBackground(uidState)) {
+                Log.i(TAG, "found new foreground uid to remove from restriction list: " + uid);
+                forceUpdate = true;
+                mSatelliteNetworkBackgroundUidArray =
+                        removeUidFromSatellteNetworkBackgroundAppRestrictionArray(
+                                mSatelliteNetworkBackgroundUidArray, uid);
+            } else if (!isSatelliteBackgroundAppRestrictedUid(mSatelliteNetworkBackgroundUidArray,
+                    uid)
+                    /* && isProcStateAllowedNetworkWhileBackground(uidState)*/
+                    && uidState != null && (uidState.procState == BACKGROUND_THRESHOLD_STATE
+                    || uidState.procState == 19 /*PROCESS_STATE_CACHED_EMPTY*/)) {
+                Log.i(TAG, "found new background uid to add to restriction list: " + uid);
+                forceUpdate = true;
+                mSatelliteNetworkBackgroundUidArray =
+                        addUidToSatellteNetworkBackgroundAppRestrictionArray(
+                                mSatelliteNetworkBackgroundUidArray, uid);
+            }
+
+            if (forceUpdate) {
+                Log.i(
+                        TAG,
+                        "updated firewall rules triggered at satellite Network for uids:"
+                                + Arrays.toString(mSatelliteNetworkBackgroundUidArray));
+
+                mConnectivityManager.replaceFirewallChain(
+                        FIREWALL_CHAIN_SATELLITE_BACKGROUND, mSatelliteNetworkBackgroundUidArray);
+            }
+        } else {
+            Log.i(TAG, "satellite network background uid array is null");
+        }
+    }
+
+    private boolean isSatelliteBackgroundAppRestrictedUid(int[] uids, int newUid) {
+        boolean found = false;
+        // Loop through the array to check if 8 exists
+        for (int number : uids) {
+            if (number == newUid) {
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+
+    private static int[] removeUidFromSatellteNetworkBackgroundAppRestrictionArray(
+            int[] array, int uidToRemove) {
+        int[] updatedSatelliteNetworkBackgroundUidArray = new int[array.length - 1];
+        int newIndex = 0;
+
+        for (int num : array) {
+            if (num != uidToRemove) {
+                updatedSatelliteNetworkBackgroundUidArray[newIndex++] = num;
+            }
+        }
+        return updatedSatelliteNetworkBackgroundUidArray;
+    }
+
+    private static int[] addUidToSatellteNetworkBackgroundAppRestrictionArray(
+            int[] array, int uidToAdd) {
+        int[] updatedSatelliteNetworkBackgroundUidArray
+                = Arrays.copyOf(array, array.length + 1);
+        updatedSatelliteNetworkBackgroundUidArray[
+                updatedSatelliteNetworkBackgroundUidArray.length - 1] =
+                uidToAdd;
+        return updatedSatelliteNetworkBackgroundUidArray;
+    }
+
+    private void resetBackgroundAppRestriction() {
+        if (mSatelliteNetworkBackgroundUidArray != null
+                && mSatelliteNetworkBackgroundUidArray.length > 0) {
+            mConnectivityManager.replaceFirewallChain(FIREWALL_CHAIN_SATELLITE_BACKGROUND,
+                    new int[0]);
+        }
+    }
 
     public NetworkPolicyManagerService(Context context, IActivityManager activityManager,
             INetworkManagementService networkManagement) {
@@ -1046,6 +1215,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             mUseMeteredFirewallChains = Flags.useMeteredFirewallChains();
             mUseDifferentDelaysForBackgroundChain = Flags.useDifferentDelaysForBackgroundChain();
             mNeverApplyRulesToCoreUids = Flags.neverApplyRulesToCoreUids();
+            mSatelliteBackgroundAppRestriction = Flags.satelliteBackgroundAppRestriction();
 
             synchronized (mUidRulesFirstLock) {
                 synchronized (mNetworkPoliciesSecondLock) {
@@ -1223,6 +1393,33 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             Process.setThreadPriority(oldPriority);
             Trace.traceEnd(Trace.TRACE_TAG_NETWORK);
         }
+
+        // monitor satellite network connection status, if available trigger background app
+        // restriction firewall in satellite network
+        if (mSatelliteBackgroundAppRestriction) {
+            registerForSatelliteNetwork(mContext);
+        }
+    }
+
+    public synchronized void registerForSatelliteNetwork(@NonNull Context context) {
+        if (!mSatelliteNetworkRegistered) {
+            mSatelliteNetworkRegistered = true;
+            mConnectivityManager
+                    = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkRequest.Builder builder = new NetworkRequest.Builder();
+            builder.addTransportType(
+                    NetworkCapabilities.TRANSPORT_SATELLITE);
+            builder.addTransportType(
+                    NetworkCapabilities.TRANSPORT_CELLULAR);
+            builder.addTransportType(
+                    NetworkCapabilities.TRANSPORT_WIFI);
+            NetworkRequest request = builder.build();
+            if (mConnectivityManager != null) {
+                mConnectivityManager.registerNetworkCallback(request, mNetworkCallback);
+            } else {
+                Log.wtf(TAG, "network callback not registered");
+            }
+        }
     }
 
     public CountDownLatch networkScoreAndNetworkManagementServiceReady() {
@@ -1308,6 +1505,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         @Override public void onUidStateChanged(int uid, int procState, long procStateSeq,
                 @ProcessCapability int capability) {
             synchronized (mUidStateCallbackInfos) {
+                if (mSatelliteNetworkConnected) {
+                    updateBackgroundAppRestrictionStatusOnSatelliteNetwork(uid);
+                }
                 UidStateCallbackInfo callbackInfo = mUidStateCallbackInfos.get(uid);
                 if (callbackInfo == null) {
                     callbackInfo = new UidStateCallbackInfo();

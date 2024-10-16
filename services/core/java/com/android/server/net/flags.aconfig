@@ -37,3 +37,13 @@ flag {
       purpose: PURPOSE_BUGFIX
     }
 }
+
+flag {
+    name: "satellite_background_app_restriction"
+    namespace: "backstage_power"
+    description: "Restrict Background Apps from accessing Satellite Network, when device is camped to satellite network"
+    bug: "373147447"
+    metadata {
+      purpose:
+    }
+}
