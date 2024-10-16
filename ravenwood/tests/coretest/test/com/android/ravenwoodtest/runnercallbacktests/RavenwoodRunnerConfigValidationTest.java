@@ -24,6 +24,8 @@ import android.platform.test.ravenwood.RavenwoodRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.android.ravenwoodtest.runnercallbacktests.RavenwoodRunnerTestBase.RavenwoodOnly;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -34,6 +36,7 @@ import org.junit.runner.RunWith;
  * Test for @Config field extraction and validation.
  */
 @NoRavenizer // This class shouldn't be executed with RavenwoodAwareTestRunner.
+@RavenwoodOnly
 public class RavenwoodRunnerConfigValidationTest extends RavenwoodRunnerTestBase {
     public abstract static class ConfigInBaseClass {
         static String PACKAGE_NAME = "com.ConfigInBaseClass";

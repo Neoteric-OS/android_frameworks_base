@@ -17,6 +17,8 @@ package com.android.ravenwoodtest.mockito;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.junit.Assert.assertThrows;
+
 import android.app.ActivityManager;
 import android.platform.test.ravenwood.RavenwoodRule;
 
@@ -34,5 +36,17 @@ public class RavenwoodMockitoRavenwoodOnlyTest {
             am.when(ActivityManager::isUserAMonkey).thenReturn(true);
             assertThat(ActivityManager.isUserAMonkey()).isEqualTo(true);
         }
+    }
+
+    @Test
+    public void testMockitClassesShouldNotExist() {
+        // DexMaker should not exist
+        assertThrows(
+                ClassNotFoundException.class,
+                () -> Class.forName("com.android.dx.DexMaker"));
+        // Mockito 2 should not exist
+        assertThrows(
+                ClassNotFoundException.class,
+                () -> Class.forName("org.mockito.Matchers"));
     }
 }

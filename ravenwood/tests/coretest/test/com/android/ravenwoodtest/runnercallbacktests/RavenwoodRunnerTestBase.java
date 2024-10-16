@@ -18,8 +18,11 @@ package com.android.ravenwoodtest.runnercallbacktests;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
+import static org.junit.Assume.assumeTrue;
+
 import android.platform.test.annotations.NoRavenizer;
 import android.platform.test.ravenwood.RavenwoodAwareTestRunner;
+import android.platform.test.ravenwood.RavenwoodConfig;
 import android.util.Log;
 
 import junitparams.JUnitParamsRunner;
@@ -74,6 +77,25 @@ public abstract class RavenwoodRunnerTestBase {
     }
 
     /**
+     * Annotation to specify the expected result for a class, but only on the device side.
+     * If a class doesn't have this annotation, we use the {@link Expected} result on the device
+     * side too.
+     */
+    @Target({ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface ExpectedOnDevice {
+        String value();
+    }
+
+    /**
+     * Annotate the test subclass should only be run on Ravenwood.
+     */
+    @Target({ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface RavenwoodOnly {
+    }
+
+    /**
      * Take a multiline string, strip all of them, remove empty lines, and return it.
      */
     private static String stripMultiLines(String resultString) {
@@ -91,17 +113,37 @@ public abstract class RavenwoodRunnerTestBase {
      * Extract the expected result from @Expected.
      */
     private String getExpectedResult(Class<?> testClazz) {
-        var expect = testClazz.getAnnotation(Expected.class);
-        return stripMultiLines(expect.value());
+        var expect = testClazz.getAnnotation(Expected.class).value();
+        if (!RavenwoodConfig.isOnRavenwood()) {
+            var altAnot = testClazz.getAnnotation(ExpectedOnDevice.class);
+            if (altAnot != null) {
+                expect = altAnot.value();
+            }
+        }
+        return stripMultiLines(expect);
     }
 
     /**
      * List all the nested classrs with an {@link Expected} annotation in a given class.
      */
     public Class<?>[] getTestClasses() {
+        if (this.getClass().getAnnotation(RavenwoodOnly.class) != null
+                && !RavenwoodConfig.isOnRavenwood()) {
+            return new Class[0];
+        }
+
         var thisClass = this.getClass();
+//        Log.w("XXX", "Looking for nest members...");
         var ret = Arrays.stream(thisClass.getNestMembers())
+//                .map(v -> {
+//                    Log.w("XXX", "Nest member: " + v);
+//                    return v;
+//                })
                 .filter((c) -> c.getAnnotation(Expected.class) != null)
+//                .map(v -> {
+//                    Log.w("XXX", "Filtered: " + v);
+//                    return v;
+//                })
                 .toArray(Class[]::new);
 
         assertThat(ret.length).isGreaterThan(0);

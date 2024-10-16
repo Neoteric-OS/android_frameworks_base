@@ -23,9 +23,38 @@ android_ravenwood_test {
     ],
     srcs: [
         "test/**/*.java",
+        "test/**/*.kt",
     ],
     ravenizer: {
         strip_mockito: true,
     },
     auto_gen_config: true,
+}
+
+android_test {
+    name: "RavenwoodCoreTest_device",
+
+    srcs: [
+        "test/**/*.java",
+        "test/**/*.kt",
+    ],
+    static_libs: [
+        "junit",
+        "truth",
+
+        "androidx.annotation_annotation",
+        "androidx.test.ext.junit",
+        "androidx.test.rules",
+
+        "junit-params",
+        "platform-parametric-runner-lib",
+
+        "ravenwood-junit",
+    ],
+    test_suites: [
+        "device-tests",
+    ],
+    optimize: {
+        enabled: false,
+    },
 }

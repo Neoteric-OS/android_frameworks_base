@@ -23,6 +23,8 @@ import android.platform.test.ravenwood.RavenwoodAwareTestRunner;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.android.ravenwoodtest.runnercallbacktests.RavenwoodRunnerTestBase.RavenwoodOnly;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -49,6 +51,7 @@ import platform.test.runner.parameterized.Parameters;
  * out of test method bodies.
  */
 @NoRavenizer // This class shouldn't be executed with RavenwoodAwareTestRunner.
+@RavenwoodOnly
 public class RavenwoodRunnerCallbackTest extends RavenwoodRunnerTestBase {
 
     /**
