@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca1aa56_66ddcf4c",
+        "filename": "core/java/android/view/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2024-10-17T22:50:34Z",
+      "side": 1,
+      "message": "I think this will only include wm owners.\n\nCan we add this line as well?\nper-file view_flags.aconfig \u003d file:/core/java/android/view/OWNERS",
+      "revId": "5f1160920f93905e483fa73b685f9ee582a7de66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
