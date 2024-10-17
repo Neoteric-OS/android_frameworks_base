@@ -16,6 +16,24 @@
       "message": "Should this be `OffHostApduService_settingsActivity`? do we have any tests for this?",
       "revId": "5ef0c82b30cd08c7e20eb0ffa906d5eabebae53b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86204c9d_b1052810",
+        "filename": "nfc/java/android/nfc/cardemulation/ApduServiceInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-17T02:29:07Z",
+      "side": 1,
+      "message": "Feel free to fix it as discussed offline.",
+      "parentUuid": "efc67bf2_b1046e21",
+      "revId": "5ef0c82b30cd08c7e20eb0ffa906d5eabebae53b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
