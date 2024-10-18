@@ -311,8 +311,17 @@ public class VcnManagementServiceTest {
     }
 
     @Test
-    public void testSystemReady() throws Exception {
-        mVcnMgmtSvc.systemReady();
+    public void testSystemReadyFromNonSystemUid() throws Exception {
+        try {
+            mVcnMgmtSvc.systemReady();
+            fail("Expected to fail because this is not called from the system uid");
+        } catch (SecurityException expected) {
+        }
+    }
+
+    @Test
+    public void testSystemReadyInternal() throws Exception {
+        mVcnMgmtSvc.systemReadyInternal();
 
         verify(mConnMgr).registerNetworkProvider(any(VcnNetworkProvider.class));
         verify(mSubscriptionTracker).register();
@@ -1026,7 +1035,7 @@ public class VcnManagementServiceTest {
 
     private void setupSubscriptionAndStartVcn(
             int subId, ParcelUuid subGrp, boolean isVcnActive, boolean hasCarrierPrivileges) {
-        mVcnMgmtSvc.systemReady();
+        mVcnMgmtSvc.systemReadyInternal();
         triggerSubscriptionTrackerCbAndGetSnapshot(
                 subGrp,
                 Collections.singleton(subGrp),
@@ -1283,7 +1292,7 @@ public class VcnManagementServiceTest {
     }
 
     private void setupTrackedNetwork(NetworkCapabilities caps, LinkProperties lp) {
-        mVcnMgmtSvc.systemReady();
+        mVcnMgmtSvc.systemReadyInternal();
 
         final ArgumentCaptor<NetworkCallback> captor =
                 ArgumentCaptor.forClass(NetworkCallback.class);
