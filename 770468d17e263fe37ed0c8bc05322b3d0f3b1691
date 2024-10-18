@@ -16,6 +16,24 @@
       "message": "Hello,google:\n\n Please help review this CL.\n \nThanks.",
       "revId": "770468d17e263fe37ed0c8bc05322b3d0f3b1691",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d61223c_ecc9e9c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1964555
+      },
+      "writtenOn": "2024-10-18T15:02:12Z",
+      "side": 1,
+      "message": "Hello Jilou,\n\nThank you for uploading this fix! We already have a patch being reviewed which also tracks this fix, available at https://android-review.googlesource.com/c/platform/frameworks/base/+/3284923",
+      "parentUuid": "5cbc2031_5410fad3",
+      "revId": "770468d17e263fe37ed0c8bc05322b3d0f3b1691",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
