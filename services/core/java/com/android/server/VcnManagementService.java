@@ -428,7 +428,16 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     }
 
     /** Notifies the VcnManagementService that external dependencies can be set up. */
+    @Override
     public void systemReady() {
+        if (mDeps.getBinderCallingUid() != Process.SYSTEM_UID) {
+            throw new SecurityException("Calling Uid is not system uid.");
+        }
+        systemReadyInternal();
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    void systemReadyInternal() {
         mNetworkProvider.register();
         mContext.getSystemService(ConnectivityManager.class)
                 .registerNetworkCallback(
