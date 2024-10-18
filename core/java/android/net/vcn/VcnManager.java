@@ -228,6 +228,21 @@ public class VcnManager {
     }
 
     /**
+     * Called by SystemServer to notify the VCN that the system is ready
+     *
+     * @throws SecurityException if this is not called by system uid
+     * @hide
+     */
+    // TODO: Expose it as @SystemApi
+    public void systemReady() {
+        try {
+            mService.systemReady();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Get all currently registered VcnNetworkPolicyChangeListeners for testing purposes.
      *
      * @hide
