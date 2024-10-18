@@ -781,6 +781,8 @@ public class SystemConfig {
             readPermissions(parser, Environment.buildPath(f, "etc", "permissions"),
                     apexPermissionFlag);
         }
+
+        readGlobalFeatures();
     }
 
     @VisibleForTesting
@@ -1732,7 +1734,13 @@ public class SystemConfig {
         } finally {
             IoUtils.closeQuietly(permReader);
         }
+    }
 
+    // Add features dependent on global system properties (as opposed to XML
+    // permission files), and remove features explicitly marked as unavailable.
+    // This only needs to be called once after all features have been parsed
+    // from various partition/apex sources.
+    private void readGlobalFeatuers() {
         // Some devices can be field-converted to FBE, so offer to splice in
         // those features if not already defined by the static config
         if (StorageManager.isFileEncrypted()) {
