@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48742d61_38e48107",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2024-10-18T19:31:22Z",
+      "side": 1,
+      "message": "What about the change to remove the flag from aconfig file?",
+      "revId": "e94d16e1296a6855593d750a42fe8c688f6f2348",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
