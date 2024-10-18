@@ -16,6 +16,24 @@
       "message": "I think this will only include wm owners.\n\nCan we add this line as well?\nper-file view_flags.aconfig \u003d file:/core/java/android/view/OWNERS",
       "revId": "5f1160920f93905e483fa73b685f9ee582a7de66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af3c0c5c_60ec2838",
+        "filename": "core/java/android/view/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1988065
+      },
+      "writtenOn": "2024-10-18T06:47:37Z",
+      "side": 1,
+      "message": "According to this guide, `per-file` is for additional owners. https://android-review.googlesource.com/plugins/code-owners/Documentation/backend-find-owners.html#perFile",
+      "parentUuid": "7ca1aa56_66ddcf4c",
+      "revId": "5f1160920f93905e483fa73b685f9ee582a7de66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
