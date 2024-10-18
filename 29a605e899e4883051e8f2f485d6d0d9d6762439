@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90bdb5c8_8cfeef00",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 2003661
+      },
+      "writtenOn": "2024-10-18T10:21:33Z",
+      "side": 1,
+      "message": "I am curious whether OGG does not support any video format?",
+      "range": {
+        "startLine": 592,
+        "startChar": 45,
+        "endLine": 592,
+        "endChar": 67
+      },
+      "revId": "29a605e899e4883051e8f2f485d6d0d9d6762439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12cd5451_3c050b22",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 2003661
+      },
+      "writtenOn": "2024-10-18T10:21:33Z",
+      "side": 1,
+      "message": "These build version names looks very long + verbose. Can we use the SDK version instead? Its already being used in one of the table above.",
+      "revId": "29a605e899e4883051e8f2f485d6d0d9d6762439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
