@@ -67,6 +67,46 @@
       "message": "Michael / Sudheer could you PTAL. If you are not the right owners could you please point me to the right owners for these? Thanks!",
       "revId": "83237bb28e3cbe022d4b9a8c0116fe0e8200c398",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b15dae2_ec18041f",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6863,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2024-10-18T01:40:19Z",
+      "side": 1,
+      "message": "Please create final static int constants to represent the different profile types (with accompanying documentation).",
+      "revId": "83237bb28e3cbe022d4b9a8c0116fe0e8200c398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47ebdb3c_d527eb8e",
+        "filename": "services/core/java/com/android/server/am/AppProfiler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2077,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2024-10-18T01:40:19Z",
+      "side": 1,
+      "message": "does the logic need to be separated per profileType?\nstopProfilerLPf and profilerControl take profileInfo and profileType, it seems overly complicated to create separate but very similar flows.",
+      "range": {
+        "startLine": 2077,
+        "startChar": 23,
+        "endLine": 2077,
+        "endChar": 49
+      },
+      "revId": "83237bb28e3cbe022d4b9a8c0116fe0e8200c398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
