@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fff2f141_10645663",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2024-10-18T14:31:27Z",
+      "side": 1,
+      "message": "Thanks Michael! PTAL. Thanks!",
+      "revId": "029853acbb8ed47e518f2d58369b104c578a32fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeace82c_4e2e8d16",
+        "filename": "core/java/android/app/ProfilerInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2024-10-18T14:31:27Z",
+      "side": 1,
+      "message": "Let me know if this isn\u0027t a good place to add these constants. I wasn\u0027t sure what\u0027s the right place.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 58
+      },
+      "revId": "029853acbb8ed47e518f2d58369b104c578a32fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

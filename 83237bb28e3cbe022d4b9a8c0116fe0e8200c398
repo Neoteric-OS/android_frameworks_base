@@ -86,6 +86,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67bc0b56_d9df5950",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6863,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2024-10-18T14:31:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b15dae2_ec18041f",
+      "revId": "83237bb28e3cbe022d4b9a8c0116fe0e8200c398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47ebdb3c_d527eb8e",
@@ -99,6 +117,30 @@
       "writtenOn": "2024-10-18T01:40:19Z",
       "side": 1,
       "message": "does the logic need to be separated per profileType?\nstopProfilerLPf and profilerControl take profileInfo and profileType, it seems overly complicated to create separate but very similar flows.",
+      "range": {
+        "startLine": 2077,
+        "startChar": 23,
+        "endLine": 2077,
+        "endChar": 49
+      },
+      "revId": "83237bb28e3cbe022d4b9a8c0116fe0e8200c398",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2e7c99_5b87023a",
+        "filename": "services/core/java/com/android/server/am/AppProfiler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2077,
+      "author": {
+        "id": 1894735
+      },
+      "writtenOn": "2024-10-18T14:31:27Z",
+      "side": 1,
+      "message": "Thanks! I tried to merge both paths which just special handling for files.",
+      "parentUuid": "47ebdb3c_d527eb8e",
       "range": {
         "startLine": 2077,
         "startChar": 23,
