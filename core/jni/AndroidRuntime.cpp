@@ -685,6 +685,16 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
     char dex2oat_isa_variant[sizeof("--instruction-set-variant=") -1 + PROPERTY_VALUE_MAX];
     char dex2oat_isa_features_key[PROPERTY_KEY_MAX];
     char dex2oat_isa_features[sizeof("--instruction-set-features=") -1 + PROPERTY_VALUE_MAX];
+    char dex2oat_inline_max_num_total_instructions[sizeof("--inline-max-num-total-instructions=") -
+                                                   1 + PROPERTY_VALUE_MAX];
+    char dex2oat_inline_max_num_small_method_instructions
+            [sizeof("--inline-max-num-small-method-instructions=") - 1 + PROPERTY_VALUE_MAX];
+    char dex2oat_inline_max_num_cumulated_dex_registers
+            [sizeof("--inline-max-num-cumulated-dex-registers=") - 1 + PROPERTY_VALUE_MAX];
+    char dex2oat_inline_max_num_recursive_calls[sizeof("--inline-max-num-recursive-calls=") - 1 +
+                                                PROPERTY_VALUE_MAX];
+    char dex2oat_inline_max_num_polymorphic_recursive_calls
+            [sizeof("--inline-max-num-polymorphic-recursive-calls=") - 1 + PROPERTY_VALUE_MAX];
     char dex2oatFlagsBuf[PROPERTY_VALUE_MAX];
     char dex2oatImageFlagsBuf[PROPERTY_VALUE_MAX];
     char extraOptsBuf[PROPERTY_VALUE_MAX];
@@ -1042,6 +1052,22 @@ int AndroidRuntime::startVm(JavaVM** pJavaVM, JNIEnv** pEnv, bool zygote, bool p
                         "--instruction-set-variant=", "-Ximage-compiler-option");
     parseCompilerOption(dex2oat_isa_features_key, dex2oat_isa_features,
                         "--instruction-set-features=", "-Ximage-compiler-option");
+
+    parseCompilerOption("dalvik.inliner.max_num_total_instructions",
+                        dex2oat_inline_max_num_total_instructions,
+                        "--inline-max-num-total-instructions=", "-Xcompiler-option");
+    parseCompilerOption("dalvik.inliner.max_num_instructions_for_small_method",
+                        dex2oat_inline_max_num_small_method_instructions,
+                        "--inline-max-num-small-method-instructions=", "-Xcompiler-option");
+    parseCompilerOption("dalvik.inliner.max_num_cumulated_dex_registers",
+                        dex2oat_inline_max_num_cumulated_dex_registers,
+                        "--inline-max-num-cumulated-dex-registers=", "-Xcompiler-option");
+    parseCompilerOption("dalvik.inliner.max_num_recursive_calls",
+                        dex2oat_inline_max_num_recursive_calls,
+                        "--inline-max-num-recursive-calls=", "-Xcompiler-option");
+    parseCompilerOption("dalvik.inliner.max_num_polymorphic_recursive_calls",
+                        dex2oat_inline_max_num_polymorphic_recursive_calls,
+                        "--inline-max-num-polymorphic-recursive-calls=", "-Xcompiler-option");
 
     if (generate_debug_info) {
         addOption("-Ximage-compiler-option");
