@@ -1497,3 +1497,23 @@ flag {
        purpose: PURPOSE_BUGFIX
    }
 }
+
+flag {
+  name: "secondary_user_widget_host"
+  namespace: "systemui"
+  description: "Host communal widgets in the current secondary user on HSUM."
+  bug: "373874416"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
+   name: "only_show_media_stream_slider_in_single_volume_mode"
+   namespace: "systemui"
+   description: "When the device is in single volume mode, only show media stream slider and hide all other stream (e.g. call, notification, alarm, etc) sliders in volume panel"
+   bug: "373729625"
+   metadata {
+       purpose: PURPOSE_BUGFIX
+   }
+}
