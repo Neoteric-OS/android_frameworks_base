@@ -429,9 +429,7 @@ public class ScreenshotController implements ScreenshotHandler {
         setWindowFocusable(true);
         mViewProxy.requestFocus();
 
-        if (screenshot.getType() != WindowManager.TAKE_SCREENSHOT_PROVIDED_IMAGE) {
-            enqueueScrollCaptureRequest(requestId, screenshot.getUserHandle());
-        }
+        enqueueScrollCaptureRequest(requestId, screenshot.getUserHandle());
 
         attachWindow();
 
