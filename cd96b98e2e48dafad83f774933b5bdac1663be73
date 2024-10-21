@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bdb9cf1_30288e10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-10-21T06:58:42Z",
+      "side": 1,
+      "message": "Nice idea.\n\nHowerver, in order to call the closeNoThrow inside AbstractCursor.finalize(), I\u0027ll have to change many places, e.g. \n1. add closeNoThrow() into AbstractCursor\n```diff\npublic class AbstractCursor{\n  @Override\n    public void close() {\n        mClosed \u003d true;\n        mContentObservable.unregisterAll();\n        onDeactivateOrClose();\n        if (mCloseGuard !\u003d null) {\n            mCloseGuard.close();\n        }\n    }\n\n    void closeNoThrow() {\n        try {\n            close();\n        } catch (Exception e) {\n            Log.w(TAG, \"Exception thrown during closeNoThrow\", e);\n        }\n    }\n}\n```\n2. override closeNoThrow() in subclasses of AbstractCursor, at least BulkCursorToCursorAdaptor.java\n```java\npublic class BulkCursorToCursorAdaptor {\n\n    @Override\n    void closeNoThrow() {\n        super.close();\n\n        if (mBulkCursor !\u003d null) {\n            try {\n                mBulkCursor.closeNoThrow();\n            } catch (RemoteException ex) {\n                Log.w(TAG, \"Remote process exception when closing\");\n            } finally {\n                mBulkCursor \u003d null;\n            }\n        }\n    }\n```\n\n3. add closeNoThrow() into IBulkCursor.java and implement it in BulkCursorNative.java\n```java\nclass IBulkCursor {\n    // Close the connection synchronously\n    public void close() throws RemoteException;\n\n    // Unlike the above one, we use oneway binder call, so the caller should not be blocked\n    public void closeNoThrow() throws RemoteException;\n}\n```\n\n```java\npublic abstract class BulkCursorNative... {\n\n    @Override\n    public boolean onTransact(int code, Parcel data, Parcel reply, int flags)\n            throws RemoteException {\n        try {\n            switch (code) {\n            ...\n                case CLOSE_TRANSACTION: {\n                    data.enforceInterface(IBulkCursor.descriptor);\n                    close();\n                    if ((flags \u0026 IBinder.FLAG_ONEWAY) \u003d\u003d 0) {\n                        reply.writeNoException();\n                    }\n                    return true;\n                }\n                ...\n   }\n\nfinal class BulkCursorProxy implements IBulkCursor {\n    public void closeNoThrow() throws RemoteException\n    {\n        Parcel data \u003d Parcel.obtain();\n        Parcel reply \u003d Parcel.obtain();\n        try {\n            data.writeInterfaceToken(IBulkCursor.descriptor);\n            mRemote.transact(CLOSE_TRANSACTION, data, reply, IBinder.FLAG_ONEWAY);\n        } finally {\n            data.recycle();\n            reply.recycle();\n        }\n    }\n}\n\n```\n\nYou\u0027ve pointed out, if there is other places close the cursor in a finalizer, we\u0027ll have to refactor them too.\n\n**To conclude, in practice it would be kind of cumbersome.**\n\n**As you suggested, developers should follow the best practice you mentioned in b/368221351 in the first place, but if they didn\u0027t, then could we just handle close a cursor from a finalizer sepecially?** e.g. \n\n```\n\nfinal class BulkCursorProxy implements IBulkCursor {\n    public void close() throws RemoteException\n    {\n        Parcel data \u003d Parcel.obtain();\n        Parcel reply \u003d Parcel.obtain();\n        try {\n            data.writeInterfaceToken(IBulkCursor.descriptor);\n            boolean fromFinalizer \u003d \"FinalizerDaemon\".equals(Thread.currentThread().getName());\n            mRemote.transact(CLOSE_TRANSACTION, data, reply, fromFinilizer ?  IBinder.FLAG_ONEWAY: 0);\n            if (!fromFinalizer) {\n                DatabaseUtils.readExceptionFromParcel(reply);\n            }\n        } finally {\n            data.recycle();\n            reply.recycle();\n        }\n    }\n}\n```",
+      "parentUuid": "9c854aad_3b2795a3",
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a05ceaf6_2893000c",
@@ -88,6 +106,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19554a9c_4a8f43bf",
+        "filename": "core/java/android/database/BulkCursorNative.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-10-21T06:58:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "73ea997a_5d5cad90",
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e09cb6a8_c8a4426a",
@@ -101,6 +137,30 @@
       "writtenOn": "2024-10-08T16:37:49Z",
       "side": 1,
       "message": "Doesn\u0027t this lose any exceptions previously thrown by the remote end? It could also cause a race when reading the exception from the reply parcel.",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 216,
+        "endChar": 28
+      },
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eb90116_0b8cfd1d",
+        "filename": "core/java/android/database/BulkCursorNative.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-10-21T06:58:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e09cb6a8_c8a4426a",
       "range": {
         "startLine": 216,
         "startChar": 0,
