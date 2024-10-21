@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a89368f_e6afbd1b",
+        "filename": "services/core/java/com/android/server/notification/NotificationAttentionHelper.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-10-21T06:35:24Z",
+      "side": 1,
+      "message": "Hello,@matiashe@google.com @juliacr@google.com:\n \n  I have fix the Lines longer than 100 characters problem,please help review again.\n\nThanks.",
+      "parentUuid": "e0f67b79_380e8977",
+      "range": {
+        "startLine": 1075,
+        "startChar": 0,
+        "endLine": 1075,
+        "endChar": 105
+      },
+      "revId": "b94a17236037404477b20eea484a45be6f9d6ded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5717d7f_3af3b213",
