@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4e0927a_21c7cbeb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-10-21T16:16:45Z",
+      "side": 1,
+      "message": "I see your point re: not being able to add a specialized path to `close()` from `finalize()` because of the many classes that use extension or composition around the cursor to be closed (synchronously or asynchronously). I agree with your conclusion that this approach is infeasible.\n\nI looked into the issue that you reported. In every case that `IBulkCursor#close` took too long to return, the root cause was that the call to close was issued shortly before the CPUs were suspended or the client app was frozen, and the result was delivered after resuming from suspend/freeze, thus causing a timeout in terms of wall time. This is unfortunately kind of inevitable in apps that rely on finalizers to do significant work (such as closing cursors). Changing the binder call from sync to async will significantly decrease exposure to this issue, but it will never fully eliminate it.\n\nTo address the root cause, we\u0027ve been making changes in the runtime to implement timeouts in terms of repeated timeouts of smaller values. This also mitigates the issue but doesn\u0027t hermetically solve it, though it should now be astronomically unlikely to encounter the problem in the wild. If you\u0027re curious, check the code for `FinalizerWatchdogDaemon#waitForProgress`.\n\nYour workaround for checking if the thread is named `\"FinalizerDaemon\"` is very clever!\nLet me discuss this within the team and get back to you.",
+      "parentUuid": "2bdb9cf1_30288e10",
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a05ceaf6_2893000c",
