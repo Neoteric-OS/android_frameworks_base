@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b54b1e8e_8f3efffd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2024-10-21T06:48:03Z",
+      "side": 1,
+      "message": "aosp/3311369 will resolve the test failures from the bug driving the revert. Can we fix forward with this CL as opposed to reverting these changes and restarting the flagging process? Thanks!",
+      "revId": "4b90cfdd87929c2b957f8704c6ca7978c5107d2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
