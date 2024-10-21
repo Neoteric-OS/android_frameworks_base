@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a598f95_dd6ad908",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-10-21T15:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32200284_3f4fda44",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 57
+      },
+      "revId": "df194c08f37c9ca7d1a8dee366b66534ad02ff98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46cdd72b_81b4fdcf",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-10-21T11:06:38Z",
       "side": 1,
       "message": "(Posting a comment here too)\nI\u0027d rather have this and r.android.com/3303268 are together in a topic",
+      "revId": "df194c08f37c9ca7d1a8dee366b66534ad02ff98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac05a036_da0d6c38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-10-21T15:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46cdd72b_81b4fdcf",
       "revId": "df194c08f37c9ca7d1a8dee366b66534ad02ff98",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
