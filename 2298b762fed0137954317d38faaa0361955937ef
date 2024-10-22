@@ -1,0 +1,145 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ab6f4a0_1d5a4010",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRunnerState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-22T23:07:36Z",
+      "side": 1,
+      "message": "If the test has a Rule, we still call init/reset() for each test method, right? Shouldn\u0027t we still call reset in exitRavenwoodRule() too?",
+      "fixSuggestions": [
+        {
+          "fixId": "f29b8717_1608a1ba",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRunnerState.java",
+              "range": {
+                "startLine": 123,
+                "startChar": 0,
+                "endLine": 123,
+                "endChar": 0
+              },
+              "replacement": "        RavenwoodRuntimeEnvironmentController.reset();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2298b762fed0137954317d38faaa0361955937ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "504b01a6_072f5f78",
+        "filename": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-22T23:07:36Z",
+      "side": 1,
+      "message": "So I believe you intentionally don\u0027t use instanceof?\n\nCould you add a comment why? e.g. `ParameterizedAndroidJunit4` is a known subclass of Suite. Let\u0027s explain why this one should be handled differently.\n\nI also wonder if we should explicitly throw when we detect an unknown subclass of Suite, so that we\u0027ll be forced to support each unknown subclass explicitly.",
+      "fixSuggestions": [
+        {
+          "fixId": "4f65b41a_3a3099af",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 256,
+                "startChar": 0,
+                "endLine": 257,
+                "endChar": 0
+              },
+              "replacement": "            if (realRunnerClass \u003d\u003d Suite.class || realRunnerClass \u003d\u003d org.junit.runners.Suite.class) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2298b762fed0137954317d38faaa0361955937ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2fa0538_89968c1a",
+        "filename": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-22T23:07:36Z",
+      "side": 1,
+      "message": "This seems like a misnomer -- the name doesn\u0027t really imply \"delayEnvSetup \u003d true\".\n\nLet\u0027s either rename it to `DelayEnvSetupRavenwoodAwareTestRunnerBuilder`, or rename it to `RavenwoodAwareTestRunnerBuilder` and take `delayEnvSetup` as a ctor parameter?",
+      "range": {
+        "startLine": 464,
+        "startChar": 25,
+        "endLine": 464,
+        "endChar": 57
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "0123b86e_cbd9a81f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 258,
+                "startChar": 0,
+                "endLine": 259,
+                "endChar": 0
+              },
+              "replacement": "                return constructor.newInstance(testClass,\n                        new RavenwoodAwareSuiteRunnerBuilder(true));\n"
+            },
+            {
+              "path": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 462,
+                "startChar": 0,
+                "endLine": 463,
+                "endChar": 0
+              },
+              "replacement": "     * A RunnerBuilder that always creates RavenwoodAwareTestRunner with delayEnvSetup \u003d\n     * delayEnvSetup.\n"
+            },
+            {
+              "path": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 465,
+                "startChar": 0,
+                "endLine": 465,
+                "endChar": 0
+              },
+              "replacement": "        private final boolean mDelayEnvSetup;\n\n        RavenwoodAwareSuiteRunnerBuilder(boolean delayEnvSetup) {\n            mDelayEnvSetup \u003d delayEnvSetup;\n        }\n"
+            },
+            {
+              "path": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+              "range": {
+                "startLine": 468,
+                "startChar": 0,
+                "endLine": 469,
+                "endChar": 0
+              },
+              "replacement": "            return new RavenwoodAwareTestRunner(testClass, mDelayEnvSetup);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2298b762fed0137954317d38faaa0361955937ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
