@@ -3,6 +3,234 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f35ba54f_b17d4aea",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-22T20:46:29Z",
+      "side": 1,
+      "message": "Please refer to the NFC forum specification section where this is defined.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "18869e0d_abf34fec",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 25,
+                "startChar": 0,
+                "endLine": 26,
+                "endChar": 0
+              },
+              "replacement": " * This class can be used to read/write T4T Ndef data.\n * Refer to the T4T specification for more details.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d6c7fa0_5fb8ab2d",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-22T20:46:29Z",
+      "side": 1,
+      "message": "This should be marked `@SystemApi` at the top of the class as well since we don\u0027t want this to be exposed to 3p apps.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f6e4b24d_6e1413c5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 28,
+                "startChar": 0,
+                "endLine": 29,
+                "endChar": 0
+              },
+              "replacement": "@FlaggedApi(OemApi.OemApi.FLAG_NFC_OEM_EXTENSION)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9131c855_fe915754",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-22T20:46:29Z",
+      "side": 1,
+      "message": "This should be `private`.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "85565140_eb8374f0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 36,
+                "startChar": 0,
+                "endLine": 37,
+                "endChar": 0
+              },
+              "replacement": "    private NdefNfcee(@NonNull NfcAdapter adapter) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c49c524_a8746e57",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-22T20:46:29Z",
+      "side": 1,
+      "message": "This does not need to be a SystemApi. Can be just @hide since it is only used internally inside `NfcOemExtension`",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "aaff38ca_b17c6318",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 48,
+                "startChar": 0,
+                "endLine": 49,
+                "endChar": 0
+              },
+              "replacement": "    @hide\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bdb6c89_a0470a51",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-22T20:46:29Z",
+      "side": 1,
+      "message": "Please refer to NCI specification section which explains what the format of the data is.\n\nRaw bytes in an API is not allowed unless the data itself is formatted in some standard specifications.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b9c87151_f61b6380",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 60,
+                "startChar": 0,
+                "endLine": 61,
+                "endChar": 0
+              },
+              "replacement": "     * @param fileId File Id to which to write.\n     *               Refer to NCI specification section 3.3.1.1 for format of the data.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d53791e7_d2b98738",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-22T20:46:29Z",
+      "side": 1,
+      "message": "Same as above. Please define the format of the data.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 59
+      },
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3155fde5_b28f3ed4",
         "filename": "nfc/java/android/nfc/NdefNfcee.java",
         "patchSetId": 1
