@@ -3,6 +3,29 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7e53b121_6b8e640b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-22T17:22:13Z",
+      "side": 1,
+      "message": "Note to anyone reviewing this: I think this is referring to the fact that `AppOpsService` is reading its files as part of `ActivityManagerService` start, which happens before rescue party is started. So unlike permission state which we may consider critical and can let the rescue party kick in, we may have to let the system proceed even if the main app op state can\u0027t be read.",
+      "range": {
+        "startLine": 10,
+        "startChar": 69,
+        "endLine": 12,
+        "endChar": 58
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7e169ea6_0b40648c",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 10
@@ -14,6 +37,132 @@
       "writtenOn": "2024-10-22T16:01:41Z",
       "side": 1,
       "message": "Hai, can you take a look at this? (To satisfy the 2 Googlers\u0027 review requirement)",
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dd51c55_aa8d8e80",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-22T17:22:13Z",
+      "side": 1,
+      "message": "```suggestion\n            SparseArray\u003cSparseIntArray\u003e parsedUidModes \u003d new SparseArray\u003c\u003e();\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8656e7a3_32ac342a",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-22T17:22:13Z",
+      "side": 1,
+      "message": "```suggestion\n            SparseArray\u003cArrayMap\u003cString, SparseIntArray\u003e\u003e parsedUserPackageModes \u003d new SparseArray\u003c\u003e();\n```",
+      "range": {
+        "startLine": 54,
+        "startChar": 58,
+        "endLine": 54,
+        "endChar": 77
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "117f0a52_e582f76f",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-22T17:22:13Z",
+      "side": 1,
+      "message": "```suggestion\n            final int parsedUidModesSize \u003d parsedUidModes.size()\n            for (int i \u003d 0; i \u003c parsedUidModesSize; i++) {\n```",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 26
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a979954_6464ce3d",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-22T17:22:13Z",
+      "side": 1,
+      "message": "Note: in the old code we would be merging the values (which are sparse arrays themselves) here, but in the new code we are simply replacing the values and discarding any existing entries in the old values. However I think that\u0027s fine because we actually start with the input sparse arrays being empty upon boot, whereas reading state after boot is only for testing. Maybe we can just always clear the input arrays before reading, but that\u0027s an even broader change.",
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6361562d_ce9d92e2",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-22T17:22:13Z",
+      "side": 1,
+      "message": "```suggestion\n            final int parsedUserPackageModesSize \u003d parsedUserPackageModes.size()\n            for (int i \u003d 0; i \u003c parsedUserPackageModesSize; i++) {\n```",
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34a21863_d7b4ab5c",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-10-22T17:22:13Z",
+      "side": 1,
+      "message": "Could you make this `wtf`? So that it still crashes on development devices whereas it\u0027s only a warning on consumer devices. The previous behavior was throwing so changing to `wtf` would be the closest.\n\n```suggestion\n            Slog.wtf(TAG, \"Failed parsing \" + e);\n```",
+      "range": {
+        "startLine": 108,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 18
+      },
       "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
