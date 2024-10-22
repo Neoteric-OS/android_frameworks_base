@@ -108,6 +108,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c9fbd3_2b2c79c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-10-22T14:50:40Z",
+      "side": 1,
+      "message": "Pending a more comprehensive fix per the last comment, I\u0027m going to implement the special-case handling for the FinalizerDaemon.  This will be flag-guarded.",
+      "parentUuid": "c288180d_a9709a28",
+      "revId": "cd96b98e2e48dafad83f774933b5bdac1663be73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a05ceaf6_2893000c",
