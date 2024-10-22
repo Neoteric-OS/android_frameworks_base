@@ -55,7 +55,7 @@ public class ScreenInternalAudioRecorder {
 
     public ScreenInternalAudioRecorder(String outFile, MediaProjection mp, boolean includeMicInput)
             throws IOException {
-        mMic = includeMicInput;
+        mMic = true;
         mMuxer = new MediaMuxer(outFile, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
         mMediaProjection = mp;
         Log.d(TAG, "creating audio file " + outFile);
@@ -164,9 +164,9 @@ public class ScreenInternalAudioRecorder {
                     if (readShortsMic < 0) {
                         readShortsMic = readShortsInternal;
                         offsetShortsMic = offsetShortsInternal;
-                        java.util.Arrays.fill(bufferMic, (short) 0);
                     }
 
+                    java.util.Arrays.fill(bufferMic, (short) 0);
                     // Add offset (previous unmixed values) to the buffer
                     readShortsInternal += offsetShortsInternal;
                     readShortsMic += offsetShortsMic;
