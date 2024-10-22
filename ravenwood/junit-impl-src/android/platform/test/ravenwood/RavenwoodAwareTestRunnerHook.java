@@ -62,6 +62,22 @@ public class RavenwoodAwareTestRunnerHook {
     }
 
     /**
+     * Called when the environment should be initialized.
+     */
+    public static void onEnvironmentSetup(RavenwoodAwareTestRunner runner) {
+        Log.i(TAG, "onEnvironmentSetup: runner=" + runner);
+        runner.mState.setupEnvironment();
+    }
+
+    /**
+     * Called when the environment should be reset.
+     */
+    public static void onEnvironmentReset(RavenwoodAwareTestRunner runner) {
+        Log.i(TAG, "onEnvironmentReset: runner=" + runner);
+        runner.mState.resetEnvironment();
+    }
+
+    /**
      * Called when a whole test class is skipped.
      */
     public static void onClassSkipped(Description description) {
@@ -73,10 +89,9 @@ public class RavenwoodAwareTestRunnerHook {
      * Called before the inner runner starts.
      */
     public static void onBeforeInnerRunnerStart(
-            RavenwoodAwareTestRunner runner, Description description) throws Throwable {
+            RavenwoodAwareTestRunner runner, Description description) {
         Log.v(TAG, "onBeforeInnerRunnerStart: description=" + description);
 
-        // Prepare the environment before the inner runner starts.
         runner.mState.enterTestClass(description);
     }
 
@@ -84,7 +99,7 @@ public class RavenwoodAwareTestRunnerHook {
      * Called after the inner runner finished.
      */
     public static void onAfterInnerRunnerFinished(
-            RavenwoodAwareTestRunner runner, Description description) throws Throwable {
+            RavenwoodAwareTestRunner runner, Description description) {
         Log.v(TAG, "onAfterInnerRunnerFinished: description=" + description);
 
         RavenwoodTestStats.getInstance().onClassFinished(description);

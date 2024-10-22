@@ -47,6 +47,18 @@ public class RavenwoodAwareTestRunnerHook {
     }
 
     /**
+     * Called when the environment should be initialized.
+     */
+    public static void onEnvironmentSetup(RavenwoodAwareTestRunner runner) {
+    }
+
+    /**
+     * Called when the environment should be reset.
+     */
+    public static void onEnvironmentReset(RavenwoodAwareTestRunner runner) {
+    }
+
+    /**
      * Called when a whole test class is skipped.
      */
     public static void onClassSkipped(Description description) {
@@ -56,14 +68,14 @@ public class RavenwoodAwareTestRunnerHook {
      * Called before the inner runner starts.
      */
     public static void onBeforeInnerRunnerStart(
-            RavenwoodAwareTestRunner runner, Description description) throws Throwable {
+            RavenwoodAwareTestRunner runner, Description description) {
     }
 
     /**
      * Called after the inner runner finished.
      */
     public static void onAfterInnerRunnerFinished(
-            RavenwoodAwareTestRunner runner, Description description) throws Throwable {
+            RavenwoodAwareTestRunner runner, Description description) {
     }
 
     /**

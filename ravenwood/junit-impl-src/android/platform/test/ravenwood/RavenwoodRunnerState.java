@@ -21,7 +21,6 @@ import static org.junit.Assert.fail;
 
 import android.annotation.Nullable;
 
-import com.android.internal.annotations.GuardedBy;
 import com.android.ravenwood.common.RavenwoodRuntimeException;
 
 import org.junit.ClassRule;
@@ -31,7 +30,6 @@ import org.junit.runner.Description;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.WeakHashMap;
 
 /**
  * Used to store various states associated with the current test runner that's inly needed
@@ -44,10 +42,6 @@ import java.util.WeakHashMap;
  */
 public final class RavenwoodRunnerState {
     private static final String TAG = "RavenwoodRunnerState";
-
-    @GuardedBy("sStates")
-    private static final WeakHashMap<RavenwoodAwareTestRunner, RavenwoodRunnerState> sStates =
-            new WeakHashMap<>();
 
     private final RavenwoodAwareTestRunner mRunner;
 
@@ -69,25 +63,30 @@ public final class RavenwoodRunnerState {
         return mClassDescription;
     }
 
-    public void enterTestClass(Description classDescription) throws IOException {
-        mClassDescription = classDescription;
-
-        mHasRavenwoodRule = hasRavenwoodRule(mRunner.getTestClass().getJavaClass());
-        mCurrentConfig = extractConfiguration(mRunner.getTestClass().getJavaClass());
+    public void setupEnvironment() {
+        mHasRavenwoodRule = hasRavenwoodRule(mRunner.mTestJavaClass);
+        mCurrentConfig = extractConfiguration(mRunner.mTestJavaClass);
 
         if (mCurrentConfig != null) {
             RavenwoodRuntimeEnvironmentController.init(mCurrentConfig);
         }
     }
 
-    public void exitTestClass() {
-        if (mCurrentConfig != null) {
-            try {
-                RavenwoodRuntimeEnvironmentController.reset();
-            } finally {
-                mClassDescription = null;
-            }
+    public void resetEnvironment() {
+        try {
+            RavenwoodRuntimeEnvironmentController.reset();
+        } finally {
+            mCurrentConfig = null;
+            mCurrentRule = null;
         }
+    }
+
+    public void enterTestClass(Description classDescription) {
+        mClassDescription = classDescription;
+    }
+
+    public void exitTestClass() {
+        mClassDescription = null;
     }
 
     public void enterTestMethod(Description description) {
@@ -120,11 +119,7 @@ public final class RavenwoodRunnerState {
             return; // This happens if the rule did _not_ take effect somehow.
         }
 
-        try {
-            RavenwoodRuntimeEnvironmentController.reset();
-        } finally {
-            mCurrentRule = null;
-        }
+        mCurrentRule = null;
     }
 
     /**

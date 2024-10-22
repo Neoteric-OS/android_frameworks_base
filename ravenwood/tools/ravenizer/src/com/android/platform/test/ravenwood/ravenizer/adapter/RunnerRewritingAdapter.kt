@@ -50,7 +50,7 @@ import org.objectweb.asm.tree.ClassNode
  * Class visitor to update the RunWith and inject some necessary rules.
  *
  * - Change the @RunWith(RavenwoodAwareTestRunner.class).
- * - If the original class has a @RunWith(...), then change it to an @OrigRunWith(...).
+ * - If the original class has a @RunWith(...), then change it to an @InnerRunner(...).
  * - Add RavenwoodAwareTestRunner's member rules as junit rules.
  * - Update the order of the existing JUnit rules to make sure they don't use the MIN or MAX.
  */
@@ -172,7 +172,7 @@ class RunnerRewritingAdapter private constructor(
                         + " in class ${classInternalName.toHumanReadableClassName()}")
             }
 
-            // Inject an @OrigRunWith.
+            // Inject an @InnerRunner.
             visitAnnotation(innerRunnerAnotType.desc, true)!!.let { av ->
                 av.visit("value", runWithClass)
                 av.visitEnd()
