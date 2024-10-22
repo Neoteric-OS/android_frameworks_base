@@ -25,3 +25,10 @@ flag {
      description: "Scan SQL comments by hand instead of with a regex"
      bug: "329118560"
 }
+
+flag {
+     name: "oneway_finalizer_close"
+     namespace: "system_performance"
+     description: "Make BuildCursorNative.close oneway if in the the finalizer"
+     bug: "368221351"
+}
