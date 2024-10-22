@@ -81,7 +81,10 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
 
 
     private File mTempVideoFile;
+    private File mTempVideoFileDuringRecording;
+    private File file;
     private File mTempAudioFile;
+    private File mTempAudioFileDuringRecording;
     private MediaProjection mMediaProjection;
     private Surface mInputSurface;
     private VirtualDisplay mVirtualDisplay;
@@ -126,8 +129,12 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
 
         File cacheDir = mContext.getCacheDir();
         cacheDir.mkdirs();
+        Log.e("Screenrecording video file is created at ", cacheDir.getAbsolutePath());
         mTempVideoFile = File.createTempFile("temp", ".mp4", cacheDir);
-
+        Log.e("Screenrecording mTempVideoFile video file is created at ", mTempVideoFile.getAbsolutePath());
+        mTempVideoFileDuringRecording = File.createTempFile("temp", ".mp4", cacheDir);
+        Log.e("Screenrecording mTempVideoFileDuringRecording video file is created at ", mTempVideoFileDuringRecording.getAbsolutePath());
+        
         // Set up media recorder
         mMediaRecorder = new MediaRecorder();
 
@@ -173,6 +180,11 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         mMediaRecorder.prepare();
         // Create surface
         mInputSurface = mMediaRecorder.getSurface();
+        Log.e("Screenrecording surface isSharedBufferModeEnabled ", String.valueOf(mInputSurface.isSharedBufferModeEnabled()));
+        Log.e("Screenrecording surface isAutoRefreshEnabled ", String.valueOf(mInputSurface.isAutoRefreshEnabled()));
+        mInputSurface.setSharedBufferModeEnabled(true);
+        mInputSurface.setAutoRefreshEnabled(true);
+
         mVirtualDisplay = mMediaProjection.createVirtualDisplay(
                 "Recording Display",
                 width,
@@ -193,6 +205,12 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
                 mAudioSource == MIC_AND_INTERNAL) {
             mTempAudioFile = File.createTempFile("temp", ".aac",
                     mContext.getCacheDir());
+            mTempAudioFileDuringRecording = File.createTempFile("temp", ".aac",
+                    mContext.getCacheDir());
+
+            Log.e("Screenrecording mTempAudioFile audio file created at ", mTempAudioFile.getAbsolutePath());
+
+            Log.e("Screenrecording mTempAudioFileDuringRecording audio file created at ", mTempAudioFileDuringRecording.getAbsolutePath());
             mAudio = new ScreenInternalAudioRecorder(mTempAudioFile.getAbsolutePath(),
                     mMediaProjection, mAudioSource == MIC_AND_INTERNAL);
         }
@@ -345,13 +363,17 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         if (mAudioSource == MIC_AND_INTERNAL || mAudioSource == INTERNAL) {
             try {
                 Log.d(TAG, "muxing recording");
-                File file = File.createTempFile("temp", ".mp4",
+                // File file = File.createTempFile("temp", ".mp4",
+                //         mContext.getCacheDir());
+                file = File.createTempFile("temp", ".mp4",
                         mContext.getCacheDir());
                 mMuxer = new ScreenRecordingMuxer(MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4,
                         file.getAbsolutePath(),
                         mTempVideoFile.getAbsolutePath(),
                         mTempAudioFile.getAbsolutePath());
                 mMuxer.mux();
+                mTempVideoFileDuringRecording = mTempVideoFile;
+                Log.e("Screenrecording muxer out file created at ", file.getAbsolutePath());
                 mTempVideoFile.delete();
                 mTempVideoFile = file;
             } catch (IOException e) {
@@ -362,11 +384,12 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
 
         // Add to the mediastore
         OutputStream os = resolver.openOutputStream(itemUri, "w");
-        Files.copy(mTempVideoFile.toPath(), os);
+        Files.copy(file.toPath(), os);
         os.close();
+        mTempAudioFileDuringRecording = mTempAudioFile;
         if (mTempAudioFile != null) mTempAudioFile.delete();
         SavedRecording recording = new SavedRecording(
-                itemUri, mTempVideoFile, getRequiredThumbnailSize());
+                itemUri, file, getRequiredThumbnailSize());
         mTempVideoFile.delete();
         return recording;
     }
