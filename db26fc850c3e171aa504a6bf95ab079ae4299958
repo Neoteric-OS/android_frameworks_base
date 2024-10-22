@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e28b7d64_4a3cbf55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-22T20:49:01Z",
+      "side": 1,
+      "message": "As discussed offline, move the flags to `packages/apps/Nfc/flags`",
+      "revId": "db26fc850c3e171aa504a6bf95ab079ae4299958",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
