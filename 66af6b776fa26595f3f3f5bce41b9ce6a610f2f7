@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b937109e_8a089a76",
+        "filename": "tools/fonts/fontchain_linter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2024-10-23T13:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc45f1cb_764d7b27",
+      "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f4abe082_ac591cce",
@@ -76,6 +94,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28055cf2_ef6f2b6a",
+        "filename": "tools/fonts/fontchain_linter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2024-10-23T13:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4abe082_ac591cce",
+      "range": {
+        "startLine": 535,
+        "startChar": 13,
+        "endLine": 535,
+        "endChar": 18
+      },
+      "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df4dba4d_6b341dec",
@@ -89,6 +131,30 @@
       "writtenOn": "2024-10-23T12:58:05Z",
       "side": 1,
       "message": "Why discard after the second part?  Should this be `split(\u0027;\u0027, maxsplit\u003d2)`?",
+      "range": {
+        "startLine": 584,
+        "startChar": 30,
+        "endLine": 584,
+        "endChar": 45
+      },
+      "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a863fe7b_e6009876",
+        "filename": "tools/fonts/fontchain_linter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2024-10-23T13:16:29Z",
+      "side": 1,
+      "message": "Oops, I copied from the old code without thinking much.\nActually just need the first token of the line, so just use slice of them.",
+      "parentUuid": "df4dba4d_6b341dec",
       "range": {
         "startLine": 584,
         "startChar": 30,
@@ -146,6 +212,30 @@
           ]
         }
       ],
+      "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b364e7f5_e87770c5",
+        "filename": "tools/fonts/fontchain_linter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2024-10-23T13:16:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "672f3af9_b6cbc16a",
+      "range": {
+        "startLine": 589,
+        "startChar": 12,
+        "endLine": 589,
+        "endChar": 19
+      },
       "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
