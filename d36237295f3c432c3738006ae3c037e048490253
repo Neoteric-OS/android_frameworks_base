@@ -52,6 +52,24 @@
       "parentUuid": "14e85d8e_04e67ae5",
       "revId": "d36237295f3c432c3738006ae3c037e048490253",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d1b83bf_c98bd036",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-23T22:12:22Z",
+      "side": 1,
+      "message": "\u003e Presumably this is just impacting droidfooders that may be on an older build? Can we ask folks on an older build to flash to a newer one?\n\nWe could, but this puts those devices on older builds into a bootloop which is not great. We wanted to add a safety check to avoid that in the future as we start ramping up these flags through the various stages.\n\n\u003e If not, please introduce a bug to track reverting this before the flag is promoted to nextfood.\n\nYeah, this is a temporary fix. We can add a TODO to remove this once the feature is in next.",
+      "parentUuid": "5799f3f4_91f59167",
+      "revId": "d36237295f3c432c3738006ae3c037e048490253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
