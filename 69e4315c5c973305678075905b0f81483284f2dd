@@ -16,6 +16,118 @@
       "message": "PTAL.",
       "revId": "69e4315c5c973305678075905b0f81483284f2dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34b7d834_5b289d1f",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 2003661
+      },
+      "writtenOn": "2024-10-23T11:52:37Z",
+      "side": 1,
+      "message": "supernit: Remove extra space",
+      "range": {
+        "startLine": 593,
+        "startChar": 43,
+        "endLine": 593,
+        "endChar": 44
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d5041477_8bd3f77a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/MediaMuxer.java",
+              "range": {
+                "startLine": 593,
+                "startChar": 0,
+                "endLine": 594,
+                "endChar": 0
+              },
+              "replacement": "     *       \u003cth\u003eSupported From SDK Version\u003c/th\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "69e4315c5c973305678075905b0f81483284f2dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75bfa32b_ed712e0a",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 2003661
+      },
+      "writtenOn": "2024-10-23T11:52:37Z",
+      "side": 1,
+      "message": "nit: I think these two items should be reversed to have ascending order on SDK version",
+      "range": {
+        "startLine": 674,
+        "startChar": 11,
+        "endLine": 686,
+        "endChar": 24
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "90fcdfed_b785f6d3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/MediaMuxer.java",
+              "range": {
+                "startLine": 675,
+                "startChar": 0,
+                "endLine": 676,
+                "endChar": 0
+              },
+              "replacement": "     *       \u003ctd\u003e{@link MediaFormat#MIMETYPE_VIDEO_DOLBY_VISION Dolby Vision}\u003c/td\u003e\n"
+            },
+            {
+              "path": "media/java/android/media/MediaMuxer.java",
+              "range": {
+                "startLine": 679,
+                "startChar": 0,
+                "endLine": 680,
+                "endChar": 0
+              },
+              "replacement": "     *       \u003ctd\u003e31\u003c/td\u003e\n"
+            },
+            {
+              "path": "media/java/android/media/MediaMuxer.java",
+              "range": {
+                "startLine": 682,
+                "startChar": 0,
+                "endLine": 683,
+                "endChar": 0
+              },
+              "replacement": "     *       \u003ctd\u003e{@link MediaFormat#MIMETYPE_VIDEO_AV1 AV1}\u003c/td\u003e\n"
+            },
+            {
+              "path": "media/java/android/media/MediaMuxer.java",
+              "range": {
+                "startLine": 686,
+                "startChar": 0,
+                "endLine": 687,
+                "endChar": 0
+              },
+              "replacement": "     *       \u003ctd\u003e32\u003c/td\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "69e4315c5c973305678075905b0f81483284f2dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
