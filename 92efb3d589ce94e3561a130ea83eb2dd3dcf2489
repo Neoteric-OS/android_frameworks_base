@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6abd8b6b_29a3dc11",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T19:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c4328e_c81d9c5c",
+      "range": {
+        "startLine": 94,
+        "startChar": 45,
+        "endLine": 94,
+        "endChar": 49
+      },
+      "revId": "92efb3d589ce94e3561a130ea83eb2dd3dcf2489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e8ca84f6_a19fcb0a",
@@ -55,6 +79,30 @@
       "writtenOn": "2024-10-23T18:53:02Z",
       "side": 1,
       "message": "nit:\n\n```suggestion\n                uidModes.put(parsedUidModes.keyAt(i), parsedUidModes.valueAt(i));\n```",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 56
+      },
+      "revId": "92efb3d589ce94e3561a130ea83eb2dd3dcf2489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a2d0cd6_0b892586",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T19:54:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8ca84f6_a19fcb0a",
       "range": {
         "startLine": 97,
         "startChar": 0,
