@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4a96124_edf9d223",
+        "filename": "core/java/android/database/BulkCursorNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-10-23T16:28:43Z",
+      "side": 1,
+      "message": "Import",
+      "range": {
+        "startLine": 218,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 49
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6d3620dc_07ecee76",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/database/BulkCursorNative.java",
+              "range": {
+                "startLine": 26,
+                "startChar": 0,
+                "endLine": 26,
+                "endChar": 0
+              },
+              "replacement": "import android.database.sqlite.Flags;\n"
+            },
+            {
+              "path": "core/java/android/database/BulkCursorNative.java",
+              "range": {
+                "startLine": 218,
+                "startChar": 0,
+                "endLine": 219,
+                "endChar": 0
+              },
+              "replacement": "                    Flags.onewayFinalizerClose()\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1739413aad881dc4d6473ae7a5f9363b7b83ab22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
