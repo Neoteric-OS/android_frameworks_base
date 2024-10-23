@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "576b67fb_8d8e39a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-10-23T16:31:06Z",
+      "side": 1,
+      "message": "Hi Yurii, can you take a look at this patch? Is it expected that some devices might have this file?",
+      "revId": "62670a40f53b99c98c1b098456828bc5e58e3b27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
