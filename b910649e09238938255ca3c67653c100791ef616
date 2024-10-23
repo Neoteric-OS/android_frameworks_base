@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "952fec44_092da9a0",
+        "filename": "media/jni/android_media_ImageReader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1141048
+      },
+      "writtenOn": "2024-10-23T18:08:29Z",
+      "side": 1,
+      "message": "I discussed this with Jen-yee and it appears that this is not considered as a complete fix but only there to avoid the potential native instability. The exception can be used by the client to further investigate a possible race condition.",
+      "parentUuid": "a25be2be_33da4a4f",
+      "range": {
+        "startLine": 961,
+        "startChar": 4,
+        "endLine": 961,
+        "endChar": 28
+      },
+      "revId": "b910649e09238938255ca3c67653c100791ef616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66e68708_5b1d0529",
