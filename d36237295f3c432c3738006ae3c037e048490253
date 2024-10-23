@@ -16,6 +16,24 @@
       "message": "Why wouldn\u0027t it be there? I don\u0027t think gracefully failing here seems appropriate. Shouldn\u0027t we ensure that the jar is there if the feature is enabled and the system features are available?",
       "revId": "d36237295f3c432c3738006ae3c037e048490253",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14e85d8e_04e67ae5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-23T17:39:19Z",
+      "side": 1,
+      "message": "See the problem we are trying to deal with here: https://b.corp.google.com/issues/374910637#comment15 (we have dependency with a build flag).\n\nOne other option we discussed is exposing [sLoadedPaths.get](https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/core/java/com/android/internal/os/SystemServerClassLoaderFactory.java;drc\u003da9bb50824b6fd23084e3e903bccd5507f728b5d5;l\u003d64) and check that here.",
+      "parentUuid": "16eefbbd_588127cf",
+      "revId": "d36237295f3c432c3738006ae3c037e048490253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
