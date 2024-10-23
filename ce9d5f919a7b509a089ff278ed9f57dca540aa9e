@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b034a0dd_96e2da38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1817772
+      },
+      "writtenOn": "2024-10-23T16:28:52Z",
+      "side": 1,
+      "message": "@sunnygoyal@google.com please review this patch, detail description in https://issuetracker.google.com/issues/375093288. thanks",
+      "revId": "ce9d5f919a7b509a089ff278ed9f57dca540aa9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
