@@ -77,9 +77,9 @@
 
                     <include
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/notification_progress_bar_height"
-                        layout="@layout/notification_template_progress"
                         android:layout_weight="1"
+                        android:layout_height="@dimen/notification_progress_tracker_height"
+                        layout="@layout/notification_template_notification_progress_bar"
                         />
 
                     <com.android.internal.widget.CachingIconView

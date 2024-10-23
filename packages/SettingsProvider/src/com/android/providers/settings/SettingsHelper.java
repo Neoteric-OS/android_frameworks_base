@@ -312,8 +312,8 @@ public class SettingsHelper {
             } else {
                 // If the ringtone/notification support the vibration, use the original value.
                 final int ringtoneType = getRingtoneType(name);
-                if ((Settings.System.RINGTONE.equals(name)
-                        || Settings.System.NOTIFICATION_SOUND.equals(name))
+                if ((ringtoneType == RingtoneManager.TYPE_RINGTONE
+                        || ringtoneType == RingtoneManager.TYPE_NOTIFICATION)
                         && hasVibrationSettings(value, ringtoneType)) {
                     return value;
                 }

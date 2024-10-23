@@ -16,6 +16,7 @@
 
 package com.android.wm.shell.dagger;
 
+import static android.window.DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_ENTER_TRANSITIONS;
 import static android.window.DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_EXIT_TRANSITIONS;
 import static android.window.DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_TASK_LIMIT;
 
@@ -264,7 +265,8 @@ public abstract class WMShellModule {
             Optional<DesktopTasksLimiter> desktopTasksLimiter,
             AppHandleEducationController appHandleEducationController,
             WindowDecorCaptionHandleRepository windowDecorCaptionHandleRepository,
-            Optional<DesktopActivityOrientationChangeHandler> desktopActivityOrientationHandler) {
+            Optional<DesktopActivityOrientationChangeHandler> desktopActivityOrientationHandler,
+            FocusTransitionObserver focusTransitionObserver) {
         if (DesktopModeStatus.canEnterDesktopMode(context)) {
             return new DesktopModeWindowDecorViewModel(
                     context,
@@ -291,7 +293,8 @@ public abstract class WMShellModule {
                     desktopTasksLimiter,
                     appHandleEducationController,
                     windowDecorCaptionHandleRepository,
-                    desktopActivityOrientationHandler);
+                    desktopActivityOrientationHandler,
+                    focusTransitionObserver);
         }
         return new CaptionWindowDecorViewModel(
                 context,
@@ -305,7 +308,8 @@ public abstract class WMShellModule {
                 displayController,
                 rootTaskDisplayAreaOrganizer,
                 syncQueue,
-                transitions);
+                transitions,
+                focusTransitionObserver);
     }
 
     @WMSingleton
@@ -695,10 +699,16 @@ public abstract class WMShellModule {
     static Optional<DesktopFullImmersiveTransitionHandler> provideDesktopImmersiveHandler(
             Context context,
             Transitions transitions,
-            @DynamicOverride DesktopRepository desktopRepository) {
+            @DynamicOverride DesktopRepository desktopRepository,
+            DisplayController displayController,
+            ShellTaskOrganizer shellTaskOrganizer) {
         if (DesktopModeStatus.canEnterDesktopMode(context)) {
             return Optional.of(
-                    new DesktopFullImmersiveTransitionHandler(transitions, desktopRepository));
+                    new DesktopFullImmersiveTransitionHandler(
+                            transitions,
+                            desktopRepository,
+                            displayController,
+                            shellTaskOrganizer));
         }
         return Optional.empty();
     }
@@ -718,7 +728,8 @@ public abstract class WMShellModule {
             Transitions transitions,
             RootTaskDisplayAreaOrganizer rootTaskDisplayAreaOrganizer,
             InteractionJankMonitor interactionJankMonitor) {
-        return Flags.enableDesktopWindowingTransitions()
+        return (Flags.enableDesktopWindowingTransitions() ||
+            ENABLE_DESKTOP_WINDOWING_ENTER_TRANSITIONS.isTrue())
                 ? new SpringDragToDesktopTransitionHandler(context, transitions,
                         rootTaskDisplayAreaOrganizer, interactionJankMonitor)
                 : new DefaultDragToDesktopTransitionHandler(context, transitions,

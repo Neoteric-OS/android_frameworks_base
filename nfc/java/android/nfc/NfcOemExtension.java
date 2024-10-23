@@ -569,8 +569,9 @@ public final class NfcOemExtension {
     }
 
     /**
-     * Pauses NFC tag reader mode polling for a {@code timeoutInMs} millisecond. If polling must be
-     * resumed before timeout, use {@link #resumePolling()}.
+     * Pauses NFC tag reader mode polling for a {@code timeoutInMs} millisecond.
+     * In case of {@code timeoutInMs} is zero or invalid polling will be stopped indefinitely
+     * use {@link #resumePolling() to resume the polling.
      * @param timeoutInMs the pause polling duration in millisecond
      */
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
@@ -581,7 +582,7 @@ public final class NfcOemExtension {
 
     /**
      * Resumes default NFC tag reader mode polling for the current device state if polling is
-     * paused. Calling this while polling is not paused is a no-op.
+     * paused. Calling this while already in polling is a no-op.
      */
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
@@ -647,24 +648,29 @@ public final class NfcOemExtension {
      *                   {@link ProtocolAndTechnologyRoute}
      * @param emptyAid Zero-length AID route destination, where the possible inputs are defined in
      *                 {@link ProtocolAndTechnologyRoute}
+     * @param systemCode System Code route destination, where the possible inputs are defined in
+     *                   {@link ProtocolAndTechnologyRoute}
      */
     @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
     public void overwriteRoutingTable(
             @CardEmulation.ProtocolAndTechnologyRoute int protocol,
             @CardEmulation.ProtocolAndTechnologyRoute int technology,
-            @CardEmulation.ProtocolAndTechnologyRoute int emptyAid) {
+            @CardEmulation.ProtocolAndTechnologyRoute int emptyAid,
+            @CardEmulation.ProtocolAndTechnologyRoute int systemCode) {
 
         String protocolRoute = routeIntToString(protocol);
         String technologyRoute = routeIntToString(technology);
         String emptyAidRoute = routeIntToString(emptyAid);
+        String systemCodeRoute = routeIntToString(systemCode);
 
         NfcAdapter.callService(() ->
                 NfcAdapter.sCardEmulationService.overwriteRoutingTable(
                         mContext.getUser().getIdentifier(),
                         emptyAidRoute,
                         protocolRoute,
-                        technologyRoute
+                        technologyRoute,
+                        systemCodeRoute
                 ));
     }
 

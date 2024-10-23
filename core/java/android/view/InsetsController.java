@@ -22,6 +22,7 @@ import static android.view.InsetsControllerProto.CONTROL;
 import static android.view.InsetsControllerProto.STATE;
 import static android.view.InsetsSource.ID_IME;
 import static android.view.InsetsSource.ID_IME_CAPTION_BAR;
+import static android.view.ViewProtoLogGroups.IME_INSETS_CONTROLLER;
 import static android.view.WindowInsets.Type.FIRST;
 import static android.view.WindowInsets.Type.LAST;
 import static android.view.WindowInsets.Type.all;
@@ -69,6 +70,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.inputmethod.ImeTracing;
 import com.android.internal.inputmethod.SoftInputShowHideReason;
+import com.android.internal.protolog.ProtoLog;
 import com.android.internal.util.function.TriFunction;
 
 import java.io.PrintWriter;
@@ -957,6 +959,7 @@ public class InsetsController implements WindowInsetsController, InsetsAnimation
         int consumedControlCount = 0;
         final @InsetsType int[] showTypes = new int[1];
         final @InsetsType int[] hideTypes = new int[1];
+        final @InsetsType int[] cancelTypes = new int[1];
         ImeTracker.Token statsToken = null;
 
         // Ensure to update all existing source consumers
@@ -982,7 +985,7 @@ public class InsetsController implements WindowInsetsController, InsetsAnimation
 
             // control may be null, but we still need to update the control to null if it got
             // revoked.
-            consumer.setControl(control, showTypes, hideTypes);
+            consumer.setControl(control, showTypes, hideTypes, cancelTypes);
         }
 
         // Ensure to create source consumers if not available yet.
@@ -990,7 +993,7 @@ public class InsetsController implements WindowInsetsController, InsetsAnimation
             for (int i = mTmpControlArray.size() - 1; i >= 0; i--) {
                 final InsetsSourceControl control = mTmpControlArray.valueAt(i);
                 getSourceConsumer(control.getId(), control.getType())
-                        .setControl(control, showTypes, hideTypes);
+                        .setControl(control, showTypes, hideTypes, cancelTypes);
             }
         }
 
@@ -1001,6 +1004,10 @@ public class InsetsController implements WindowInsetsController, InsetsAnimation
             }
         }
         mTmpControlArray.clear();
+
+        if (cancelTypes[0] != 0) {
+            cancelExistingControllers(cancelTypes[0]);
+        }
 
         // Do not override any animations that the app started in the OnControllableInsetsChanged
         // listeners.
@@ -1915,6 +1922,8 @@ public class InsetsController implements WindowInsetsController, InsetsAnimation
         final @InsetsType int requestedVisibleTypes =
                 (mRequestedVisibleTypes & ~mask) | (visibleTypes & mask);
         if (mRequestedVisibleTypes != requestedVisibleTypes) {
+            ProtoLog.d(IME_INSETS_CONTROLLER, "Setting requestedVisibleTypes to %d (was %d)",
+                    requestedVisibleTypes, mRequestedVisibleTypes);
             mRequestedVisibleTypes = requestedVisibleTypes;
         }
     }
@@ -2154,12 +2163,12 @@ public class InsetsController implements WindowInsetsController, InsetsAnimation
                         new InsetsSourceControl(ID_IME_CAPTION_BAR, captionBar(),
                                 null /* leash */, false /* initialVisible */,
                                 new Point(), Insets.NONE),
-                        new int[1], new int[1]);
+                        new int[1], new int[1], new int[1]);
             } else {
                 mState.removeSource(ID_IME_CAPTION_BAR);
                 InsetsSourceConsumer sourceConsumer = mSourceConsumers.get(ID_IME_CAPTION_BAR);
                 if (sourceConsumer != null) {
-                    sourceConsumer.setControl(null, new int[1], new int[1]);
+                    sourceConsumer.setControl(null, new int[1], new int[1], new int[1]);
                 }
             }
             mHost.notifyInsetsChanged();

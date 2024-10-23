@@ -1870,7 +1870,7 @@ public class PreferencesHelper implements RankingConfig {
 
     @Override
     public ParceledListSlice<NotificationChannel> getNotificationChannels(String pkg, int uid,
-            boolean includeDeleted) {
+            boolean includeDeleted, boolean includeBundles) {
         Objects.requireNonNull(pkg);
         List<NotificationChannel> channels = new ArrayList<>();
         synchronized (mLock) {
@@ -1882,7 +1882,9 @@ public class PreferencesHelper implements RankingConfig {
             for (int i = 0; i < N; i++) {
                 final NotificationChannel nc = r.channels.valueAt(i);
                 if (includeDeleted || !nc.isDeleted()) {
-                    channels.add(nc);
+                    if (includeBundles || !SYSTEM_RESERVED_IDS.contains(nc.getId())) {
+                        channels.add(nc);
+                    }
                 }
             }
             return new ParceledListSlice<>(channels);
@@ -1986,6 +1988,7 @@ public class PreferencesHelper implements RankingConfig {
      * bypassing DND. It should be called whenever a channel is created, updated, or deleted, or
      * when the current user (or its profiles) change.
      */
+    // TODO: b/368247671 - remove fromSystemOrSystemUi argument when modes_ui is inlined.
     private void updateCurrentUserHasChannelsBypassingDnd(int callingUid,
             boolean fromSystemOrSystemUi) {
         ArraySet<Pair<String, Integer>> candidatePkgs = new ArraySet<>();
@@ -2016,7 +2019,12 @@ public class PreferencesHelper implements RankingConfig {
         boolean haveBypassingApps = candidatePkgs.size() > 0;
         if (mCurrentUserHasChannelsBypassingDnd != haveBypassingApps) {
             mCurrentUserHasChannelsBypassingDnd = haveBypassingApps;
-            updateZenPolicy(mCurrentUserHasChannelsBypassingDnd, callingUid, fromSystemOrSystemUi);
+            if (android.app.Flags.modesUi()) {
+                mZenModeHelper.updateHasPriorityChannels(mCurrentUserHasChannelsBypassingDnd);
+            } else {
+                updateZenPolicy(mCurrentUserHasChannelsBypassingDnd, callingUid,
+                        fromSystemOrSystemUi);
+            }
         }
     }
 
@@ -2034,6 +2042,9 @@ public class PreferencesHelper implements RankingConfig {
         return true;
     }
 
+    // TODO: b/368247671 - delete this method when modes_ui is inlined, as
+    //                     updateCurrentUserHasChannelsBypassingDnd was the only caller and
+    //                     PreferencesHelper should otherwise not need to modify actual policy
     public void updateZenPolicy(boolean areChannelsBypassingDnd, int callingUid,
             boolean fromSystemOrSystemUi) {
         NotificationManager.Policy policy = mZenModeHelper.getNotificationPolicy();

@@ -205,7 +205,6 @@ import com.android.server.FgThread;
 import com.android.server.LocalManagerRegistry;
 import com.android.server.LocalServices;
 import com.android.server.LockGuard;
-import com.android.server.PackageWatchdog;
 import com.android.server.ServiceThread;
 import com.android.server.SystemConfig;
 import com.android.server.ThreadPriorityBooster;
@@ -215,6 +214,7 @@ import com.android.server.art.DexUseManagerLocal;
 import com.android.server.art.model.DeleteResult;
 import com.android.server.compat.CompatChange;
 import com.android.server.compat.PlatformCompat;
+import com.android.server.crashrecovery.CrashRecoveryAdaptor;
 import com.android.server.pm.Installer.InstallerException;
 import com.android.server.pm.Settings.VersionInfo;
 import com.android.server.pm.dex.ArtManagerService;
@@ -341,7 +341,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
     static final boolean DEBUG_UPGRADE = false;
     static final boolean DEBUG_DOMAIN_VERIFICATION = false;
     static final boolean DEBUG_BACKUP = false;
-    public static final boolean DEBUG_INSTALL = Build.IS_USERDEBUG;
+    public static final boolean DEBUG_INSTALL = false;
     public static final boolean DEBUG_REMOVE = false;
     static final boolean DEBUG_PACKAGE_INFO = false;
     static final boolean DEBUG_INTENT_MATCHING = false;
@@ -3075,7 +3075,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         mDexManager.writePackageDexUsageNow();
         mDynamicCodeLogger.writeNow();
         if (!refactorCrashrecovery()) {
-            PackageWatchdog.getInstance(mContext).writeNow();
+            CrashRecoveryAdaptor.packageWatchdogWriteNow(mContext);
         }
 
         synchronized (mLock) {
@@ -4737,10 +4737,11 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 extras.putLong(Intent.EXTRA_TIME, SystemClock.elapsedRealtime());
                 mHandler.post(() -> {
                     mBroadcastHelper.sendPackageBroadcast(Intent.ACTION_PACKAGE_UNSTOPPED,
-                            packageName, extras,
-                            Intent.FLAG_RECEIVER_REGISTERED_ONLY, null, null,
-                            userIds, null, broadcastAllowList, null,
-                            null);
+                            packageName, extras, Intent.FLAG_RECEIVER_REGISTERED_ONLY,
+                            null /* targetPkg */, null /* finishedReceiver */, userIds,
+                            null /* instantUserIds */, broadcastAllowList,
+                            null /* filterExtrasForReceiver */, null /* bOptions */,
+                            null /* requiredPermissions */);
                 });
                 mPackageMonitorCallbackHelper.notifyPackageMonitor(Intent.ACTION_PACKAGE_UNSTOPPED,
                         packageName, extras, userIds, null /* instantUserIds */,
@@ -7197,17 +7198,17 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 // Sent async using the PM handler, to maintain ordering with PACKAGE_UNSTOPPED
                 mHandler.post(() -> {
                     mBroadcastHelper.sendPackageBroadcast(Intent.ACTION_PACKAGE_RESTARTED,
-                            packageName, extras,
-                            flags, null, null,
-                            userIds, null, broadcastAllowList, null,
-                            null);
+                            packageName, extras, flags, null /* targetPkg */,
+                            null /* finishedReceiver */, userIds, null /* instantUserIds */,
+                            broadcastAllowList, null /* filterExtrasForReceiver */,
+                            null /* bOptions */, null /* requiredPermissions */);
                 });
             } else {
                 mBroadcastHelper.sendPackageBroadcast(Intent.ACTION_PACKAGE_RESTARTED,
-                        packageName, extras,
-                        flags, null, null,
-                        userIds, null, broadcastAllowList, null,
-                        null);
+                        packageName, extras, flags, null /* targetPkg */,
+                        null /* finishedReceiver */, userIds, null /* instantUserIds */,
+                        broadcastAllowList, null /* filterExtrasForReceiver */, null /* bOptions */,
+                        null /* requiredPermissions */);
             }
             mPackageMonitorCallbackHelper.notifyPackageMonitor(Intent.ACTION_PACKAGE_RESTARTED,
                     packageName, extras, userIds, null /* instantUserIds */,

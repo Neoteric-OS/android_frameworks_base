@@ -57,9 +57,11 @@ import com.android.internal.R;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -67,6 +69,7 @@ import org.mockito.MockitoAnnotations;
  * Tests for the SettingsHelperTest
  */
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SettingsHelperTest {
     private static final String SETTING_KEY = "setting_key";
     private static final String SETTING_VALUE = "setting_value";
