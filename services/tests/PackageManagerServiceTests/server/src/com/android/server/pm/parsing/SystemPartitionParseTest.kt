@@ -18,6 +18,7 @@ package com.android.server.pm.parsing
 
 import android.content.pm.PackageManager
 import android.platform.test.annotations.Postsubmit
+import com.android.internal.content.om.OverlayConfig
 import com.android.internal.pm.parsing.PackageParserException
 import com.android.internal.pm.pkg.parsing.ParsingPackageUtils
 import com.android.server.pm.PackageManagerService
@@ -52,6 +53,7 @@ class SystemPartitionParseTest {
                             ?.toList()
                             ?: emptyList()
                 }
+                .filterNot { OverlayConfig.PARTITION_ORDER_FILE_PATH.contains(it.name) }
                 .distinct()
                 .toMutableList()
 
