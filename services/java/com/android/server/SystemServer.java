@@ -2970,8 +2970,12 @@ public final class SystemServer implements Dumpable {
                     || context.getPackageManager().hasSystemFeature(
                             PackageManager.FEATURE_WIFI_RTT)) {
                 t.traceBegin("RangingService");
-                mSystemServiceManager.startServiceFromJar(RANGING_SERVICE_CLASS,
-                        RANGING_APEX_SERVICE_JAR_PATH);
+                try {
+                    mSystemServiceManager.startServiceFromJar(RANGING_SERVICE_CLASS,
+                            RANGING_APEX_SERVICE_JAR_PATH);
+                } catch (Throwable e) {
+                    Slog.d(TAG, "service-ranging.jar not found, not starting RangingService");
+                }
                 t.traceEnd();
             }
         }
