@@ -16,6 +16,138 @@
       "message": "PTAL",
       "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc45f1cb_764d7b27",
+        "filename": "tools/fonts/fontchain_linter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1014468
+      },
+      "writtenOn": "2024-10-23T12:58:05Z",
+      "side": 1,
+      "message": "Minor: It might be good to have a comment explaining when it\u0027s expected for a  fonts to lack style/weight (perhaps variable fonts?)",
+      "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4abe082_ac591cce",
+        "filename": "tools/fonts/fontchain_linter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1014468
+      },
+      "writtenOn": "2024-10-23T12:58:05Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 535,
+        "startChar": 13,
+        "endLine": 535,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "07f2ca29_ed3c1e11",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/fonts/fontchain_linter.py",
+              "range": {
+                "startLine": 535,
+                "startChar": 0,
+                "endLine": 536,
+                "endChar": 0
+              },
+              "replacement": "    else:  # single character\n"
+            }
+          ]
+        }
+      ],
+      "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df4dba4d_6b341dec",
+        "filename": "tools/fonts/fontchain_linter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1014468
+      },
+      "writtenOn": "2024-10-23T12:58:05Z",
+      "side": 1,
+      "message": "Why discard after the second part?  Should this be `split(\u0027;\u0027, maxsplit\u003d2)`?",
+      "range": {
+        "startLine": 584,
+        "startChar": 30,
+        "endLine": 584,
+        "endChar": 45
+      },
+      "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "672f3af9_b6cbc16a",
+        "filename": "tools/fonts/fontchain_linter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1014468
+      },
+      "writtenOn": "2024-10-23T12:58:05Z",
+      "side": 1,
+      "message": "nit: might `version` be a better name?",
+      "range": {
+        "startLine": 589,
+        "startChar": 12,
+        "endLine": 589,
+        "endChar": 19
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c2213664_d463ba42",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/fonts/fontchain_linter.py",
+              "range": {
+                "startLine": 589,
+                "startChar": 0,
+                "endLine": 590,
+                "endChar": 0
+              },
+              "replacement": "            version \u003d m.group(1)\n"
+            },
+            {
+              "path": "tools/fonts/fontchain_linter.py",
+              "range": {
+                "startLine": 595,
+                "startChar": 0,
+                "endLine": 596,
+                "endChar": 0
+              },
+              "replacement": "                output_dict[addition] \u003d version\n"
+            }
+          ]
+        }
+      ],
+      "revId": "66af6b776fa26595f3f3f5bce41b9ce6a610f2f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
