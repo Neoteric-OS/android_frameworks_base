@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16eefbbd_588127cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-10-23T17:28:21Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t it be there? I don\u0027t think gracefully failing here seems appropriate. Shouldn\u0027t we ensure that the jar is there if the feature is enabled and the system features are available?",
+      "revId": "d36237295f3c432c3738006ae3c037e048490253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
