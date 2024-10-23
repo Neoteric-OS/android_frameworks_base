@@ -45,7 +45,7 @@ public class AudioDevicePort extends AudioPort {
     // down the stack.
     @VisibleForTesting
     public static AudioDevicePort createForTesting(
-            int type, @NonNull String name, @NonNull String address) {
+            int type, @NonNull String name, @NonNull String address, int speakerChannelMask) {
         return new AudioDevicePort(
                 new AudioHandle(/* id= */ 0),
                 name,
@@ -56,19 +56,21 @@ public class AudioDevicePort extends AudioPort {
                 /* gains= */ null,
                 type,
                 address,
+                speakerChannelMask,
                 /* encapsulationModes= */ null,
                 /* encapsulationMetadataTypes= */ null);
     }
 
     private final int mType;
     private final String mAddress;
+    private final int mSpeakerChannelMask;
     private final int[] mEncapsulationModes;
     private final int[] mEncapsulationMetadataTypes;
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     AudioDevicePort(AudioHandle handle, String deviceName,
             int[] samplingRates, int[] channelMasks, int[] channelIndexMasks,
-            int[] formats, AudioGain[] gains, int type, String address, int[] encapsulationModes,
+            int[] formats, AudioGain[] gains, int type, String address, int speakerChannelMask, int[] encapsulationModes,
             @AudioTrack.EncapsulationMetadataType int[] encapsulationMetadataTypes) {
         super(handle,
              (AudioManager.isInputDevice(type) == true)  ?
@@ -76,12 +78,13 @@ public class AudioDevicePort extends AudioPort {
              deviceName, samplingRates, channelMasks, channelIndexMasks, formats, gains);
         mType = type;
         mAddress = address;
+        mSpeakerChannelMask = speakerChannelMask;
         mEncapsulationModes = encapsulationModes;
         mEncapsulationMetadataTypes = encapsulationMetadataTypes;
     }
 
     AudioDevicePort(AudioHandle handle, String deviceName, List<AudioProfile> profiles,
-            AudioGain[] gains, int type, String address, int[] encapsulationModes,
+            AudioGain[] gains, int type, String address, int speakerChannelMask, int[] encapsulationModes,
             @AudioTrack.EncapsulationMetadataType int[] encapsulationMetadataTypes,
             List<AudioDescriptor> descriptors) {
         super(handle,
@@ -89,6 +92,7 @@ public class AudioDevicePort extends AudioPort {
                 deviceName, profiles, gains, descriptors);
         mType = type;
         mAddress = address;
+        mSpeakerChannelMask = speakerChannelMask;
         mEncapsulationModes = encapsulationModes;
         mEncapsulationMetadataTypes = encapsulationMetadataTypes;
     }
@@ -117,6 +121,13 @@ public class AudioDevicePort extends AudioPort {
      */
     public String address() {
         return mAddress;
+    }
+
+    /**
+     * Get the physical output speaker layout of the device.
+     */
+    public int speakerChannelMask() {
+        return mSpeakerChannelMask;
     }
 
     /**
