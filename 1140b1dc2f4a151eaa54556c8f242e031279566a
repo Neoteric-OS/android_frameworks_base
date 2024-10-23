@@ -41,6 +41,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e853f33_57312f66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T10:10:14Z",
+      "side": 1,
+      "message": "Thank you for the review comments!",
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8dd51c55_aa8d8e80",
@@ -54,6 +71,54 @@
       "writtenOn": "2024-10-22T17:22:13Z",
       "side": 1,
       "message": "```suggestion\n            SparseArray\u003cSparseIntArray\u003e parsedUidModes \u003d new SparseArray\u003c\u003e();\n```",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81b114d2_3d86622d",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T10:10:14Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "8dd51c55_aa8d8e80",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5eddebb_cee38df4",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T10:10:14Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "8dd51c55_aa8d8e80",
       "range": {
         "startLine": 53,
         "startChar": 40,
@@ -87,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "303713f7_490fd3f4",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T10:10:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8656e7a3_32ac342a",
+      "range": {
+        "startLine": 54,
+        "startChar": 58,
+        "endLine": 54,
+        "endChar": 77
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "117f0a52_e582f76f",
@@ -100,6 +189,30 @@
       "writtenOn": "2024-10-22T17:22:13Z",
       "side": 1,
       "message": "```suggestion\n            final int parsedUidModesSize \u003d parsedUidModes.size()\n            for (int i \u003d 0; i \u003c parsedUidModesSize; i++) {\n```",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 26
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00ec35e6_801a86f2",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T10:10:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "117f0a52_e582f76f",
       "range": {
         "startLine": 94,
         "startChar": 21,
@@ -144,6 +257,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7de02fb6_8b438adc",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T10:10:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6361562d_ce9d92e2",
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34a21863_d7b4ab5c",
@@ -157,6 +288,30 @@
       "writtenOn": "2024-10-22T17:22:13Z",
       "side": 1,
       "message": "Could you make this `wtf`? So that it still crashes on development devices whereas it\u0027s only a warning on consumer devices. The previous behavior was throwing so changing to `wtf` would be the closest.\n\n```suggestion\n            Slog.wtf(TAG, \"Failed parsing \" + e);\n```",
+      "range": {
+        "startLine": 108,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 18
+      },
+      "revId": "1140b1dc2f4a151eaa54556c8f242e031279566a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "780d9ea7_a59baf48",
+        "filename": "services/core/java/com/android/server/appop/LegacyAppOpStateParser.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1246512
+      },
+      "writtenOn": "2024-10-23T10:10:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "34a21863_d7b4ab5c",
       "range": {
         "startLine": 108,
         "startChar": 17,
