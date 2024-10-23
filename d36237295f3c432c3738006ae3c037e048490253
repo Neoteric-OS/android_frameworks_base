@@ -34,6 +34,24 @@
       "parentUuid": "16eefbbd_588127cf",
       "revId": "d36237295f3c432c3738006ae3c037e048490253",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5799f3f4_91f59167",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-10-23T22:09:52Z",
+      "side": 1,
+      "message": "Presumably this is just impacting droidfooders that may be on an older build? Can we ask folks on an older build to flash to a newer one?\n\nIf not, please introduce a bug to track reverting this before the flag is promoted to nextfood.",
+      "parentUuid": "14e85d8e_04e67ae5",
+      "revId": "d36237295f3c432c3738006ae3c037e048490253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
