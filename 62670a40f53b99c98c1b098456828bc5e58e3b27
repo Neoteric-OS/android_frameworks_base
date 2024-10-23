@@ -16,6 +16,47 @@
       "message": "Hi Yurii, can you take a look at this patch? Is it expected that some devices might have this file?",
       "revId": "62670a40f53b99c98c1b098456828bc5e58e3b27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd2acf8b_1cfb1327",
+        "filename": "services/tests/PackageManagerServiceTests/server/src/com/android/server/pm/parsing/SystemPartitionParseTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2024-10-23T17:10:27Z",
+      "side": 1,
+      "message": "should we only include apks and apexes instead of adding one-off filters when something fails?",
+      "range": {
+        "startLine": 56,
+        "startChar": 17,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e8daa3bd_4b28837b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/tests/PackageManagerServiceTests/server/src/com/android/server/pm/parsing/SystemPartitionParseTest.kt",
+              "range": {
+                "startLine": 56,
+                "startChar": 0,
+                "endLine": 57,
+                "endChar": 0
+              },
+              "replacement": "                .filterNot { OverlayConfig.PARTITION_ORDER_FILE_PATH.contains(it.name) } // b/153111111\n"
+            }
+          ]
+        }
+      ],
+      "revId": "62670a40f53b99c98c1b098456828bc5e58e3b27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
