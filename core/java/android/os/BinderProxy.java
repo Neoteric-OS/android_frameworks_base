@@ -36,6 +36,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -651,28 +654,42 @@ public final class BinderProxy implements IBinder {
     private native boolean unlinkToDeathNative(DeathRecipient recipient, int flags);
 
     /**
+     * FIXME
      * This list is to hold strong reference to the frozen state callbacks. The callbacks are only
      * weakly referenced by JNI so the strong references here are needed to keep the callbacks
      * around until the proxy is GC'ed.
      */
-    private List<FrozenStateChangeCallback> mFrozenStateChangeCallbacks =
-            Collections.synchronizedList(new ArrayList<>());
+    private Map<FrozenStateChangeCallback, FrozenStateChangeCallback> mFrozenStateChangeCallbacks =
+            new ConcurrentHashMap<>();
+
+    /**
+     * See {@link IBinder#addFrozenStateChangeCallback(FrozenStateChangeCallback)}
+     */
+    public void addFrozenStateChangeCallback(Executor executor, FrozenStateChangeCallback callback)
+            throws RemoteException {
+        FrozenStateChangeCallback wrappedCallback = (who, state) ->
+                executor.execute(() -> callback.onFrozenStateChanged(who, state));
+        addFrozenStateChangeCallbackNative(wrappedCallback);
+        mFrozenStateChangeCallbacks.put(callback, wrappedCallback);
+    }
 
     /**
      * See {@link IBinder#addFrozenStateChangeCallback(FrozenStateChangeCallback)}
      */
     public void addFrozenStateChangeCallback(FrozenStateChangeCallback callback)
             throws RemoteException {
-        addFrozenStateChangeCallbackNative(callback);
-        mFrozenStateChangeCallbacks.add(callback);
+        addFrozenStateChangeCallback(new HandlerExecutor(Handler.getMain()), callback);
     }
 
     /**
      * See {@link IBinder#removeFrozenStateChangeCallback}
      */
     public boolean removeFrozenStateChangeCallback(FrozenStateChangeCallback callback) {
-        mFrozenStateChangeCallbacks.remove(callback);
-        return removeFrozenStateChangeCallbackNative(callback);
+        FrozenStateChangeCallback wrappedCallback = mFrozenStateChangeCallbacks.remove(callback);
+        if (wrappedCallback == null) {
+            throw new NoSuchElementException();
+        }
+        return removeFrozenStateChangeCallbackNative(wrappedCallback);
     }
 
     private native void addFrozenStateChangeCallbackNative(FrozenStateChangeCallback callback)

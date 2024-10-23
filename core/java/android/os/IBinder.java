@@ -16,6 +16,7 @@
 
 package android.os;
 
+import android.annotation.CallbackExecutor;
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
@@ -25,6 +26,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import java.io.FileDescriptor;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.concurrent.Executor;
 
 /**
  * Base interface for a remotable object, the core part of a lightweight
@@ -397,12 +399,34 @@ public interface IBinder {
         @interface State {
         }
 
+        /**
+         * Represents the frozen state of a binder object.
+         *
+         * In this state, the process receives zero CPU time and is not able to do any work at all.
+         * Any calls to the binder object will be buffered and delivered when the process is
+         * unfrozen.
+         *
+         * Buffered transactions may be stale by the time that the process is unfrozen and processes
+         * them. The buffer is finite, and if overflown would cause the recipient process to crash.
+         * To avoid overwhelming processes with stale events or overflowing their buffers, it's best
+         * to avoid sending binder transactions while their process is frozen.
+         */
         int STATE_FROZEN = 0;
+
+        /**
+         * Represents the unfrozen state of a binder object.
+         *
+         * In this state, the process hosting the object can execute and is not restricted
+         * by the freezer from using the CPU or responding to binder transactions.
+         */
         int STATE_UNFROZEN = 1;
 
         /**
          * Interface for receiving a callback when the process hosting an IBinder
          * has changed its frozen state.
+         *
+         * Called from a binder thread.
+         *
          * @param who The IBinder whose hosting process has changed state.
          * @param state The latest state.
          */
@@ -427,8 +451,24 @@ public interface IBinder {
      * <p>You will only receive state change notifications for remote binders, as local binders by
      * definition can't be frozen without you being frozen too.</p>
      *
+     * @param executor Executor on which to run the callback. If <code>null</code>
+     *     the callback is executed on the default executor running on the main thread.
+     * @param callback Callback used to deliver state change notifications.
+     *
      * <p>@throws {@link UnsupportedOperationException} if the kernel binder driver does not support
      * this feature.
+     */
+    @FlaggedApi(Flags.FLAG_BINDER_FROZEN_STATE_CHANGE_CALLBACK)
+    default void addFrozenStateChangeCallback(
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull FrozenStateChangeCallback callback)
+            throws RemoteException {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Same as {@link #addFrozenStateChangeCallback(Executor, FrozenStateChangeCallback)} except
+     * that callbacks are invoked on the main thread.
      */
     @FlaggedApi(Flags.FLAG_BINDER_FROZEN_STATE_CHANGE_CALLBACK)
     default void addFrozenStateChangeCallback(@NonNull FrozenStateChangeCallback callback)
