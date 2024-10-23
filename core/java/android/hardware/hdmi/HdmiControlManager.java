@@ -386,6 +386,30 @@ public final class HdmiControlManager {
     @Retention(RetentionPolicy.SOURCE)
     public @interface HdmiCecVersion {}
 
+    // -- Whether the One Touch Play feature is enabled or disabled.
+    /**
+     * One Touch Play feature enabled.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_TOUCH_PLAY
+     */
+    public static final int ONE_TOUCH_PLAY_ENABLED = 1;
+    /**
+     * One Touch Play feature disabled.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_TOUCH_PLAY
+     */
+    public static final int ONE_TOUCH_PLAY_DISABLED = 0;
+    /**
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_TOUCH_PLAY
+     * @hide
+     */
+    @IntDef(prefix = { "ONE_TOUCH_PLAY_" }, value = {
+            ONE_TOUCH_PLAY_ENABLED,
+            ONE_TOUCH_PLAY_DISABLED
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface OneTouchPlay {}
+
     // -- Whether the Routing Control feature is enabled or disabled.
     /**
      * Routing Control feature enabled.
@@ -850,6 +874,12 @@ public final class HdmiControlManager {
      */
     public static final String CEC_SETTING_NAME_HDMI_CEC_VERSION = "hdmi_cec_version";
     /**
+     * Name of a setting deciding whether the One Touch Play feature is enabled.
+     *
+     * @see HdmiControlManager#setOneTouchPlay(int)
+     */
+    public static final String CEC_SETTING_NAME_ONE_TOUCH_PLAY = "one_touch_play";
+    /**
      * Name of a setting deciding whether the Routing Control feature is enabled.
      *
      * @see HdmiControlManager#setRoutingControl(int)
@@ -1114,6 +1144,7 @@ public final class HdmiControlManager {
     @StringDef(value = {
         CEC_SETTING_NAME_HDMI_CEC_ENABLED,
         CEC_SETTING_NAME_HDMI_CEC_VERSION,
+        CEC_SETTING_NAME_ONE_TOUCH_PLAY,
         CEC_SETTING_NAME_ROUTING_CONTROL,
         CEC_SETTING_NAME_SOUNDBAR_MODE,
         CEC_SETTING_NAME_POWER_CONTROL_MODE,
@@ -2290,6 +2321,48 @@ public final class HdmiControlManager {
         }
         try {
             return mService.getCecSettingIntValue(CEC_SETTING_NAME_HDMI_CEC_VERSION);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Set the status of One Touch Play feature.
+     *
+     * <p>This allows to enable/disable One Touch Play on the device.
+     * Sets whether the device should broadcast the one touch play feature.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_TOUCH_PLAY
+     */
+    @RequiresPermission(android.Manifest.permission.HDMI_CEC)
+    public void setOneTouchPlay(@NonNull @OneTouchPlay int value) {
+        if (mService == null) {
+            Log.e(TAG, "setOneTouchPlay: HdmiControlService is not available");
+            throw new RuntimeException("HdmiControlService is not available");
+        }
+        try {
+            mService.setCecSettingIntValue(CEC_SETTING_NAME_ONE_TOUCH_PLAY, value);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get the status of One Touch Play feature.
+     *
+     * <p>This allows to enable/disable One Touch Play on the device.
+     * Reflects whether the device should broadcast the one touch play feature.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_TOUCH_PLAY
+     */
+    @RequiresPermission(android.Manifest.permission.HDMI_CEC)
+    public int getOneTouchPlay() {
+        if (mService == null) {
+            Log.e(TAG, "getOneTouchPlay: HdmiControlService is not available");
+            throw new RuntimeException("HdmiControlService is not available");
+        }
+        try {
+            return mService.getCecSettingIntValue(CEC_SETTING_NAME_ONE_TOUCH_PLAY);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

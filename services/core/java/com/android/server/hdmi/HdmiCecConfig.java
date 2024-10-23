@@ -308,6 +308,16 @@ public class HdmiCecConfig {
                 R.bool.config_cecHdmiCecVersion20_allowed,
                 R.bool.config_cecHdmiCecVersion20_default);
 
+        Setting oneTouchPlayControl = registerSetting(
+                HdmiControlManager.CEC_SETTING_NAME_ONE_TOUCH_PLAY,
+                R.bool.config_cecOneTouchPlay_userConfigurable);
+        oneTouchPlayControl.registerValue(HdmiControlManager.ONE_TOUCH_PLAY_ENABLED,
+                R.bool.config_cecOneTouchPlayEnabled_allowed,
+                R.bool.config_cecOneTouchPlayEnabled_default);
+        oneTouchPlayControl.registerValue(HdmiControlManager.ONE_TOUCH_PLAY_DISABLED,
+                R.bool.config_cecOneTouchPlayDisabled_allowed,
+                R.bool.config_cecOneTouchPlayDisabled_default);
+
         Setting routingControlControl = registerSetting(
                 HdmiControlManager.CEC_SETTING_NAME_ROUTING_CONTROL,
                 R.bool.config_cecRoutingControl_userConfigurable);
@@ -722,6 +732,8 @@ public class HdmiCecConfig {
                 return STORAGE_SHARED_PREFS;
             case HdmiControlManager.CEC_SETTING_NAME_HDMI_CEC_VERSION:
                 return STORAGE_SHARED_PREFS;
+            case HdmiControlManager.CEC_SETTING_NAME_ONE_TOUCH_PLAY:
+                return STORAGE_SHARED_PREFS;
             case HdmiControlManager.CEC_SETTING_NAME_ROUTING_CONTROL:
                 return STORAGE_SHARED_PREFS;
             case HdmiControlManager.CEC_SETTING_NAME_SOUNDBAR_MODE:
@@ -798,6 +810,8 @@ public class HdmiCecConfig {
             case HdmiControlManager.CEC_SETTING_NAME_HDMI_CEC_ENABLED:
                 return setting.getName();
             case HdmiControlManager.CEC_SETTING_NAME_HDMI_CEC_VERSION:
+                return setting.getName();
+            case HdmiControlManager.CEC_SETTING_NAME_ONE_TOUCH_PLAY:
                 return setting.getName();
             case HdmiControlManager.CEC_SETTING_NAME_ROUTING_CONTROL:
                 return setting.getName();

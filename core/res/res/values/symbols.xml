@@ -4827,6 +4827,12 @@
   <java-symbol type="bool" name="config_cecHdmiCecVersion20_allowed" />
   <java-symbol type="bool" name="config_cecHdmiCecVersion20_default" />
 
+  <java-symbol type="bool" name="config_cecOneTouchPlay_userConfigurable" />
+  <java-symbol type="bool" name="config_cecOneTouchPlayEnabled_allowed" />
+  <java-symbol type="bool" name="config_cecOneTouchPlayEnabled_default" />
+  <java-symbol type="bool" name="config_cecOneTouchPlayDisabled_allowed" />
+  <java-symbol type="bool" name="config_cecOneTouchPlayDisabled_default" />
+
   <java-symbol type="bool" name="config_cecRoutingControl_userConfigurable" />
   <java-symbol type="bool" name="config_cecRoutingControlEnabled_allowed" />
   <java-symbol type="bool" name="config_cecRoutingControlEnabled_default" />

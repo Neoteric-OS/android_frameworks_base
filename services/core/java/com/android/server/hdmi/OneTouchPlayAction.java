@@ -15,6 +15,7 @@
  */
 package com.android.server.hdmi;
 
+import android.content.Context;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiPlaybackClient.OneTouchPlayCallback;
@@ -59,9 +60,13 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
     private final int mTargetAddress;
     private final boolean mIsCec20;
 
+    private Context mContext;
+
     private int mPowerStatusCounter = 0;
 
     private HdmiCecLocalDeviceSource mSource;
+    private HdmiControlManager mHdmiControlManager;
+    private HdmiControlService mHdmiControlService;
 
     // Factory method. Ensures arguments are valid.
     static OneTouchPlayAction create(HdmiCecLocalDeviceSource source,
@@ -95,6 +100,9 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
         // Because only source device can create this action, it's safe to cast.
         mSource = source();
 
+        if (!canStartOneTouchPlay())
+            return false;
+
         if (!mSource.mService.getPowerManager().isInteractive()) {
             Slog.d(TAG, "PowerManager is not interactive. Delay the action to check if standby"
                     + " started!");
@@ -102,6 +110,27 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
             addTimer(mState, HdmiConfig.TIMEOUT_MS);
         } else {
             startAction();
+        }
+
+        return true;
+    }
+
+    private boolean canStartOneTouchPlay() {
+        mHdmiControlService = mSource.getService();
+        if (mHdmiControlService != null) {
+            mHdmiControlManager = (HdmiControlManager) mHdmiControlService.getContext().getSystemService(Context.HDMI_CONTROL_SERVICE);
+            if (mHdmiControlManager != null) {
+                if (mHdmiControlManager.getOneTouchPlay() == HdmiControlManager.ONE_TOUCH_PLAY_DISABLED) {
+                    Slog.d(TAG, "One Touch Play button is disabled.");
+                    return false;
+                }
+            } else {
+                Slog.d(TAG, "HdmiControlManager is not available.");
+                return false;
+            }
+        } else {
+            Slog.d(TAG, "HdmiControlService is not available.");
+            return false;
         }
 
         return true;

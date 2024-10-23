@@ -6238,6 +6238,12 @@
     <bool name="config_cecHdmiCecVersion20_allowed">true</bool>
     <bool name="config_cecHdmiCecVersion20_default">true</bool>
 
+    <bool name="config_cecOneTouchPlay_userConfigurable">true</bool>
+    <bool name="config_cecOneTouchPlayEnabled_allowed">true</bool>
+    <bool name="config_cecOneTouchPlayEnabled_default">true</bool>
+    <bool name="config_cecOneTouchPlayDisabled_allowed">true</bool>
+    <bool name="config_cecOneTouchPlayDisabled_default">false</bool>
+
     <bool name="config_cecRoutingControl_userConfigurable">true</bool>
     <bool name="config_cecRoutingControlEnabled_allowed">true</bool>
     <bool name="config_cecRoutingControlEnabled_default">false</bool>
