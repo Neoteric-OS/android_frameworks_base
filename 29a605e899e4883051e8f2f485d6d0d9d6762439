@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a30de7da_ef878969",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 3226358
+      },
+      "writtenOn": "2024-10-23T11:21:36Z",
+      "side": 1,
+      "message": "OGG supports Theora and Dirac video codec but they are not implemented in MediaMuxer.",
+      "parentUuid": "90bdb5c8_8cfeef00",
+      "range": {
+        "startLine": 592,
+        "startChar": 45,
+        "endLine": 592,
+        "endChar": 67
+      },
+      "revId": "29a605e899e4883051e8f2f485d6d0d9d6762439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12cd5451_3c050b22",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-10-18T10:21:33Z",
       "side": 1,
       "message": "These build version names looks very long + verbose. Can we use the SDK version instead? Its already being used in one of the table above.",
+      "revId": "29a605e899e4883051e8f2f485d6d0d9d6762439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "959422ab_b7fabb22",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 3226358
+      },
+      "writtenOn": "2024-10-23T11:21:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12cd5451_3c050b22",
       "revId": "29a605e899e4883051e8f2f485d6d0d9d6762439",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
