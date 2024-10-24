@@ -134,7 +134,6 @@ import static android.security.Flags.preventIntentRedirect;
 import static android.util.FeatureFlagUtils.SETTINGS_ENABLE_MONITOR_PHANTOM_PROCS;
 import static android.view.Display.INVALID_DISPLAY;
 
-import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_CONFIGURATION;
 import static com.android.internal.util.FrameworkStatsLog.UNSAFE_INTENT_EVENT_REPORTED__EVENT_TYPE__NEW_MUTABLE_IMPLICIT_PENDING_INTENT_RETRIEVED;
 import static com.android.sdksandbox.flags.Flags.sdkSandboxInstrumentationInfo;
 import static com.android.server.am.ActiveServices.FGS_SAW_RESTRICTIONS;
@@ -418,7 +417,6 @@ import com.android.internal.os.TransferPipe;
 import com.android.internal.os.Zygote;
 import com.android.internal.pm.pkg.parsing.ParsingPackageUtils;
 import com.android.internal.policy.AttributeCache;
-import com.android.internal.protolog.ProtoLog;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FastPrintWriter;
 import com.android.internal.util.FrameworkStatsLog;
@@ -2792,8 +2790,11 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (isolated) {
             if (mIsolatedAppBindArgs == null) {
                 mIsolatedAppBindArgs = new ArrayMap<>(1);
+                // See b/79378449 about the following exemption.
                 addServiceToMap(mIsolatedAppBindArgs, "package");
-                addServiceToMap(mIsolatedAppBindArgs, "permissionmgr");
+                if (!android.server.Flags.removeJavaServiceManagerCache()) {
+                    addServiceToMap(mIsolatedAppBindArgs, "permissionmgr");
+                }
             }
             return mIsolatedAppBindArgs;
         }
@@ -2804,27 +2805,33 @@ public class ActivityManagerService extends IActivityManager.Stub
             // Add common services.
             // IMPORTANT: Before adding services here, make sure ephemeral apps can access them too.
             // Enable the check in ApplicationThread.bindApplication() to make sure.
+            if (!android.server.Flags.removeJavaServiceManagerCache()) {
+                addServiceToMap(mAppBindArgs, "permissionmgr");
+                addServiceToMap(mAppBindArgs, Context.ALARM_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.DISPLAY_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.NETWORKMANAGEMENT_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.CONNECTIVITY_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.ACCESSIBILITY_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.INPUT_METHOD_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.INPUT_SERVICE);
+                addServiceToMap(mAppBindArgs, "graphicsstats");
+                addServiceToMap(mAppBindArgs, Context.APP_OPS_SERVICE);
+                addServiceToMap(mAppBindArgs, "content");
+                addServiceToMap(mAppBindArgs, Context.JOB_SCHEDULER_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.NOTIFICATION_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.VIBRATOR_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.ACCOUNT_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.POWER_SERVICE);
+                addServiceToMap(mAppBindArgs, Context.USER_SERVICE);
+                addServiceToMap(mAppBindArgs, "mount");
+                addServiceToMap(mAppBindArgs, Context.PLATFORM_COMPAT_SERVICE);
+            }
+            // See b/79378449
+            // Getting the window service and package service binder from servicemanager
+            // is blocked for Apps. However they are necessary for apps.
+            // TODO: remove exception
             addServiceToMap(mAppBindArgs, "package");
-            addServiceToMap(mAppBindArgs, "permissionmgr");
             addServiceToMap(mAppBindArgs, Context.WINDOW_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.ALARM_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.DISPLAY_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.NETWORKMANAGEMENT_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.CONNECTIVITY_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.ACCESSIBILITY_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.INPUT_METHOD_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.INPUT_SERVICE);
-            addServiceToMap(mAppBindArgs, "graphicsstats");
-            addServiceToMap(mAppBindArgs, Context.APP_OPS_SERVICE);
-            addServiceToMap(mAppBindArgs, "content");
-            addServiceToMap(mAppBindArgs, Context.JOB_SCHEDULER_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.NOTIFICATION_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.VIBRATOR_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.ACCOUNT_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.POWER_SERVICE);
-            addServiceToMap(mAppBindArgs, Context.USER_SERVICE);
-            addServiceToMap(mAppBindArgs, "mount");
-            addServiceToMap(mAppBindArgs, Context.PLATFORM_COMPAT_SERVICE);
         }
         return mAppBindArgs;
     }
@@ -4751,8 +4758,6 @@ public class ActivityManagerService extends IActivityManager.Stub
                 notifyPackageUse(instr.mClass.getPackageName(),
                                  PackageManager.NOTIFY_PACKAGE_USE_INSTRUMENTATION);
             }
-            ProtoLog.v(WM_DEBUG_CONFIGURATION, "Binding proc %s with config %s",
-                    processName, app.getWindowProcessController().getConfiguration());
             ApplicationInfo appInfo = instr != null ? instr.mTargetInfo : app.info;
 
             ProfilerInfo profilerInfo = mAppProfiler.setupProfilerInfoLocked(thread, app, instr);
