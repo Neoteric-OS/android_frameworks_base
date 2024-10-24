@@ -278,7 +278,18 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         Log.d(TAG, "start recording");
         prepare();
         mMediaRecorder.start();
+        checkScreenRefreshRate();
         recordInternalAudio();
+    }
+
+    void checkScreenRefreshRate() {
+        Log.e("ScreenRecorder surface isSharedBufferModeEnabled ", String.valueOf(mInputSurface.isSharedBufferModeEnabled()));
+        Log.e("Screenrecording surface isAutoRefreshEnabled ", String.valueOf(mInputSurface.isAutoRefreshEnabled()));
+        mInputSurface.setSharedBufferModeEnabled(true);
+        mInputSurface.setAutoRefreshEnabled(true);
+        Log.e("Setting boolean values", "as true");
+        Log.e("ScreenRecorder surface isSharedBufferModeEnabled ", String.valueOf(mInputSurface.isSharedBufferModeEnabled()));
+        Log.e("Screenrecording surface isAutoRefreshEnabled ", String.valueOf(mInputSurface.isAutoRefreshEnabled()));
     }
 
     /**
