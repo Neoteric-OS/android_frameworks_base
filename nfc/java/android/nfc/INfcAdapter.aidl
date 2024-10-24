@@ -90,6 +90,7 @@ interface INfcAdapter
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)")
     boolean enableReaderOption(boolean enable, in String pkg);
     boolean isObserveModeSupported();
+    boolean isObserveModeSupportedWithoutRfDeactivation();
     boolean isObserveModeEnabled();
     boolean setObserveMode(boolean enabled, String pkg);
 

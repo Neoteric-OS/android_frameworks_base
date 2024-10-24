@@ -1,0 +1,10 @@
+package: "android.nfc"
+container: "system"
+
+flag {
+    name: "feature_testing"
+    is_exported: true
+    namespace: "wallet_integration"
+    description: "Enable APIs to feature test for NFC improvements"
+    bug: "368655283"
+}

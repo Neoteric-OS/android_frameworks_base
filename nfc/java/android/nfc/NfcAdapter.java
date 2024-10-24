@@ -1210,6 +1210,13 @@ public final class NfcAdapter {
                 false);
     }
 
+    @FlaggedApi(Flags.FLAG_FEATURE_TESTING)
+    public boolean isObserveModeSupportedWithoutRfDeactivation() {
+        return callServiceReturn(() ->
+                sService.isObserveModeSupportedWithoutRfDeactivation(), false);
+
+    }
+
     /**
      * Resumes default NFC tag reader mode polling for the current device state if polling is
      * paused. Calling this while already in polling is a no-op.
