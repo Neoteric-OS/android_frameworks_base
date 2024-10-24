@@ -274,21 +274,21 @@ class AudioPlayerStateMonitor {
 
                 if (mActiveAudioUids.size() > 0
                         && !mActiveAudioUids.contains(mSortedAudioPlaybackClientUids.get(0))) {
-                    int firstActiveUid = -1;
-                    int firstActiveUidIndex = -1;
-                    for (int i = 1; i < mSortedAudioPlaybackClientUids.size(); ++i) {
-                        int uid = mSortedAudioPlaybackClientUids.get(i);
+                    // Create a list to hold active UIDs found in sorted audio playback client UIDs.
+                    // After this change, all active UIDs are at the head of the sorted list.
+                    final List<Integer> activeUidsInOrder = new ArrayList<>();
+                    // Iterate over sorted audio playback client UIDs and collect all active UIDs.
+                    final Iterator<Integer> iterator = mSortedAudioPlaybackClientUids.iterator();
+                    while (iterator.hasNext()) {
+                        final int uid = iterator.next();
                         if (mActiveAudioUids.contains(uid)) {
-                            firstActiveUidIndex = i;
-                            firstActiveUid = uid;
-                            break;
+                            activeUidsInOrder.add(uid);
+                            // Remove the active UID from the original list.
+                            iterator.remove();
                         }
                     }
-                    for (int i = firstActiveUidIndex; i > 0; --i) {
-                        mSortedAudioPlaybackClientUids.set(i,
-                                mSortedAudioPlaybackClientUids.get(i - 1));
-                    }
-                    mSortedAudioPlaybackClientUids.set(0, firstActiveUid);
+                    // Insert active UIDs at the beginning of sorted audio playback client UIDs.
+                    mSortedAudioPlaybackClientUids.addAll(0, activeUidsInOrder);
                 }
 
                 // Notify the active state change of audio players.
