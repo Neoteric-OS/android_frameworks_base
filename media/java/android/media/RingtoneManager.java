@@ -38,6 +38,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.FileUtils;
+import android.os.ParcelFileDescriptor;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -934,6 +935,22 @@ public class RingtoneManager {
 
         Settings.System.putStringForUser(resolver, setting,
                 ringtoneUri != null ? ringtoneUri.toString() : null, context.getUserId());
+
+        // Stream selected ringtone into cache so it's available for playback
+        // when CE storage is still locked
+        final String settedUriString = Settings.System.getStringForUser(resolver,
+                setting, context.getUserId());
+        final Uri settedUri = settedUriString != null ? Uri.parse(settedUriString) : null;
+
+        if (ringtoneUri != null && ringtoneUri.equals(settedUri)) {
+            final Uri cacheUri = getCacheForType(type, context.getUserId());
+            try (InputStream in = openRingtone(context, ringtoneUri);
+                    OutputStream out = resolver.openOutputStream(cacheUri, "wt")) {
+                FileUtils.copy(in, out);
+            } catch (IOException e) {
+                Log.w(TAG, "Failed to cache ringtone: " + e);
+            }
+        }
     }
 
     private static boolean isInternalRingtoneUri(Uri uri) {
@@ -1026,6 +1043,28 @@ public class RingtoneManager {
                 return Environment.DIRECTORY_ALARMS;
             default:
                 throw new IllegalArgumentException("Unsupported ringtone type: " + type);
+        }
+    }
+
+    /**
+     * Try opening the given ringtone locally first, but failover to
+     * {@link IRingtonePlayer} if we can't access it directly. Typically happens
+     * when process doesn't hold
+     * {@link android.Manifest.permission#READ_EXTERNAL_STORAGE}.
+     */
+    private static InputStream openRingtone(Context context, Uri uri) throws IOException {
+        final ContentResolver resolver = context.getContentResolver();
+        try {
+            return resolver.openInputStream(uri);
+        } catch (SecurityException | IOException e) {
+            Log.w(TAG, "Failed to open directly; attempting failover: " + e);
+            final IRingtonePlayer player = context.getSystemService(AudioManager.class)
+                    .getRingtonePlayer();
+            try {
+                return new ParcelFileDescriptor.AutoCloseInputStream(player.openRingtone(uri));
+            } catch (Exception e2) {
+                throw new IOException(e2);
+            }
         }
     }
 

@@ -17,6 +17,7 @@
 package com.android.systemui.media;
 
 import android.annotation.Nullable;
+import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -220,7 +221,13 @@ public class RingtonePlayer implements CoreStartable {
             // Only open the requested Uri if it's a well-known ringtone or
             // other sound from the platform media store, otherwise this opens
             // up arbitrary access to any file on external storage.
-            if (uri.toString().startsWith(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI.toString())) {
+            Uri uriWithoutUserId = ContentProvider.getUriWithoutUserId(uri);
+            if (uriWithoutUserId.toString().startsWith(
+                    MediaStore.Audio.Media.getContentUri(
+                            MediaStore.VOLUME_EXTERNAL).toString())
+                    || uriWithoutUserId.toString().startsWith(
+                            MediaStore.Audio.Media.getContentUri(
+                                    MediaStore.VOLUME_EXTERNAL_PRIMARY).toString())) {
                 try (Cursor c = resolver.query(uri, new String[] {
                         MediaStore.Audio.AudioColumns.IS_RINGTONE,
                         MediaStore.Audio.AudioColumns.IS_ALARM,

@@ -58,7 +58,6 @@ import android.compat.annotation.EnabledSince;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -77,7 +76,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.hardware.camera2.utils.ArrayUtils;
 import android.media.AudioManager;
-import android.media.IRingtonePlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -112,7 +110,6 @@ import android.provider.settings.validators.Validator;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
-import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -133,10 +130,7 @@ import libcore.util.HexEncoding;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.security.InvalidKeyException;
@@ -851,28 +845,6 @@ public class SettingsProvider extends ContentProvider {
         }
         final File cacheFile = new File(getRingtoneCacheDir(actualCacheOwner), cacheName);
         return cacheFile;
-    }
-
-
-    /**
-     * Try opening the given ringtone locally first, but failover to
-     * {@link IRingtonePlayer} if we can't access it directly. Typically, happens
-     * when process doesn't hold {@link android.Manifest.permission#READ_EXTERNAL_STORAGE}.
-     */
-    private static InputStream openRingtone(Context context, Uri uri) throws IOException {
-        final ContentResolver resolver = context.getContentResolver();
-        try {
-            return resolver.openInputStream(uri);
-        } catch (SecurityException | IOException e) {
-            Log.w(LOG_TAG, "Failed to open directly; attempting failover: " + e);
-            final IRingtonePlayer player = context.getSystemService(AudioManager.class)
-                    .getRingtonePlayer();
-            try {
-                return new ParcelFileDescriptor.AutoCloseInputStream(player.openRingtone(uri));
-            } catch (Exception e2) {
-                throw new IOException(e2);
-            }
-        }
     }
 
     private File getRingtoneCacheDir(int userId) {
@@ -2035,20 +2007,6 @@ public class SettingsProvider extends ContentProvider {
             cacheFile.delete();
         }
 
-        if ((operation == MUTATION_OPERATION_INSERT || operation == MUTATION_OPERATION_UPDATE)
-                && cacheFile != null && value != null) {
-            final Uri ringtoneUri = Uri.parse(value);
-            // Stream selected ringtone into cache, so it's available for playback
-            // when CE storage is still locked
-            Binder.withCleanCallingIdentity(() -> {
-                try (InputStream in = openRingtone(getContext(), ringtoneUri);
-                         OutputStream out = new FileOutputStream(cacheFile)) {
-                    FileUtils.copy(in, out);
-                } catch (IOException e) {
-                    Slog.w(LOG_TAG, "Failed to cache ringtone: " + e);
-                }
-            });
-        }
         return true;
     }
 
