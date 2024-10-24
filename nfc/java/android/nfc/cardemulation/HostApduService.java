@@ -252,6 +252,21 @@ public abstract class HostApduService extends Service {
     /**
      * @hide
      */
+    public static final int MSG_NFC_STATE_CHANGED = 7;
+
+    /**
+     * @hide
+     */
+    public static final int MSG_AID_CONFLICT_OCCURRED = 8;
+
+    /**
+     * @hide
+     */
+    public static final int MSG_NFC_ERROR_OCCURRED = 9;
+
+    /**
+     * @hide
+     */
     public static final String KEY_DATA = "data";
 
     /**
@@ -351,6 +366,22 @@ public abstract class HostApduService extends Service {
                 case MSG_PREFERRED_SERVICE_CHANGED:
                     if (android.nfc.Flags.nfcEventListener()) {
                         onPreferredServiceChanged(msg.arg1 == 1);
+                    }
+                    break;
+                case MSG_NFC_STATE_CHANGED:
+                    if (android.nfc.Flags.nfcEventListener()) {
+                        onNfcSystemEvent(new NfcSystemEvent.NfcStateChanged(msg.arg1));
+                    }
+                    break;
+                case MSG_AID_CONFLICT_OCCURRED:
+                    if (android.nfc.Flags.nfcEventListener()) {
+                        onNfcSystemEvent(new NfcSystemEvent.AidConflictOccurred(
+                                (byte[]) msg.obj));
+                    }
+                    break;
+                case MSG_NFC_ERROR_OCCURRED:
+                    if (android.nfc.Flags.nfcEventListener()) {
+                        onNfcSystemEvent(new NfcSystemEvent.NfcErrorOccurred(msg.arg1, msg.arg2));
                     }
                     break;
                 default:
@@ -464,7 +495,7 @@ public abstract class HostApduService extends Service {
 
 
     /**
-     * This method is called when this service is the preferred Nfc service and
+     * This method is called when this service is the preferred NFC service and
      * Observe mode has been enabled or disabled.
      *
      * @param isEnabled true if observe mode has been enabled, false if it has been disabled
@@ -475,12 +506,23 @@ public abstract class HostApduService extends Service {
     }
 
     /**
-     * This method is called when this service gains or loses preferred Nfc service status.
+     * This method is called when this service gains or loses preferred NFC service status.
      *
-     * @param isPreferred true is this service has become the preferred Nfc service,
+     * @param isPreferred true is this service has become the preferred NFC service,
      * false if it is no longer the preferred service
      */
     @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
     public void onPreferredServiceChanged(boolean isPreferred) {
+
+    }
+
+    /**
+     * This method is called when an NFC system event occurs.
+     *
+     * @param event the NFC system event
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public void onNfcSystemEvent(NfcSystemEvent event) {
+
     }
 }
