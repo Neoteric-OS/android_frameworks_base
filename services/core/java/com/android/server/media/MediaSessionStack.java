@@ -251,6 +251,10 @@ class MediaSessionStack {
      */
     private MediaSessionRecordImpl findMediaButtonSession(int uid) {
         MediaSessionRecordImpl mediaButtonSession = null;
+        // Track active playback session.
+        MediaSessionRecordImpl activePlaybackSession = null;
+        // Check if the audio playback is currently active for the given user id (uid).
+        boolean isPlaybackActive = mAudioPlayerStateMonitor.isPlaybackActive(uid);
         for (MediaSessionRecordImpl session : mSessions) {
             if (session instanceof MediaSession2Record) {
                 // TODO(jaewan): Make MediaSession2 to receive media key event
@@ -268,7 +272,21 @@ class MediaSessionStack {
                     // the audio playback state, pick the top priority.
                     mediaButtonSession = session;
                 }
+            // If there is currently active playback, try to find another session that is active
+            // as a fallback in case there are no sessions matching the current uid.
+            // This should prevent inactive media sessions from consuming button presses.
+            } else if (isPlaybackActive && activePlaybackSession == null
+                    && session.checkPlaybackActiveState(true)) {
+                activePlaybackSession = session;
+            } else {
+                if (DEBUG) {
+                    Log.d(TAG, "Skipping session for different uid=" + ession.getUid());
+                }
             }
+        }
+        // If no matching media button session was found, use the active playback session (if any).
+        if (mediaButtonSession == null) {
+            mediaButtonSession = activePlaybackSession;
         }
         return mediaButtonSession;
     }
