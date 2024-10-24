@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8f042dc_05c05768",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-10-24T19:44:12Z",
+      "side": 1,
+      "message": "Hi, was there any other test that was failing? \n\nI don\u0027t understand why removing things from cache should cause functional failure",
+      "revId": "09482c6328b4bd9ec6be2fda53b348412f26df62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
