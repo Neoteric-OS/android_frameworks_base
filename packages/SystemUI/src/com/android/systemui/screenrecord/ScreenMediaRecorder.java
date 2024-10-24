@@ -28,6 +28,8 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
@@ -37,6 +39,7 @@ import android.media.MediaFormat;
 import android.media.MediaMuxer;
 import android.media.MediaRecorder;
 import android.media.ThumbnailUtils;
+import android.graphics.PorterDuff;
 import android.media.projection.IMediaProjection;
 import android.media.projection.IMediaProjectionManager;
 import android.media.projection.MediaProjection;
@@ -44,6 +47,7 @@ import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.provider.MediaStore;
@@ -279,6 +283,83 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         prepare();
         mMediaRecorder.start();
         recordInternalAudio();
+        mHandler.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            redrawSurface();
+          }
+        }, 2000);
+    }
+
+    private void redrawSurface() {
+    if (mInputSurface == null || !mInputSurface.isValid()) {
+        Log.e(TAG, "Invalid surface for redraw");
+        return;
+    }
+
+    try {
+        Canvas canvas = mInputSurface.lockCanvas(null);
+        if (canvas != null) {
+            try {
+                // Clear the surface first
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                
+                // Redraw your content here if needed
+                // For example, if you need to copy the current screen content:
+                if (mVirtualDisplay != null) {
+                    // Force a new frame to be composed
+                    mVirtualDisplay.setSurface(mInputSurface);
+                }
+            } finally {
+                mInputSurface.unlockCanvasAndPost(canvas);
+            }
+        }
+
+        // Ensure the frame is sent to MediaRecorder
+        if (mMediaRecorder != null) {
+            // Force frame processing
+            mMediaRecorder.setOnInfoListener(new MediaRecorder.OnInfoListener() {
+                @Override
+                public void onInfo(MediaRecorder mr, int what, int extra) {
+                    Log.d(TAG, "MediaRecorder info: " + what + ", " + extra);
+                }
+            });
+        }
+    } catch (Exception e) {
+        Log.e(TAG, "Error during surface redraw", e);
+    }
+}
+
+    private void surfaceRedraw() {
+        if (mInputSurface != null && mInputSurface.isValid()) {
+            Log.e("Screenrecording ", "is not null");
+            try {
+                Canvas canvas = mInputSurface.lockHardwareCanvas();
+                mInputSurface.unlockCanvasAndPost(canvas);
+            } catch(Exception e) {
+                Log.e("Screenrecording ", e.toString());
+            }
+        }
+    }
+
+    private void redrawAndClear() {
+        Log.e(TAG, "redrawAndClear");
+        Log.e("Screenrecording surface isSharedBufferModeEnabled ",
+                    String.valueOf(mInputSurface.isSharedBufferModeEnabled()));
+        Log.e("Screenrecording surface isAutoRefreshEnabled ",
+                    String.valueOf(mInputSurface.isAutoRefreshEnabled()));
+        if (mInputSurface != null && mInputSurface.isValid()) {
+            Canvas canvas = mInputSurface.lockCanvas(null);
+            if (canvas != null) {
+                Log.e(TAG, "canvas is not null");
+                try {
+                    canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                    Log.e(TAG, "redraw successful");
+                } finally {
+                    mInputSurface.unlockCanvasAndPost(canvas);
+                }
+            }
+        }
     }
 
     /**
@@ -308,6 +389,9 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
     public void onStop() {
         Log.d(TAG, "The system notified about stopping the projection");
         mListener.onStopped();
+        if (mHandler != null) {
+        mHandler.removeCallbacksAndMessages(null);
+    }
     }
 
     private void stopInternalAudioRecording() {
