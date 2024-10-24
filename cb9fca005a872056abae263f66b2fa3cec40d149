@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08bd03a5_62b9f9a8",
+        "filename": "services/core/java/com/android/server/wm/DeferredDisplayUpdater.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1877210
+      },
+      "writtenOn": "2024-10-24T10:47:13Z",
+      "side": 1,
+      "message": "It looks like during \u0027normal\u0027 flow, this call should cause the transition to become \u0027ready\u0027 after performing \u0027remote display change\u0027. If we set ready earlier we might miss some updates.\n\nFrom what I remember the \u0027remote display change\u0027 flow was created to collect WCTs outside of the Shell transition (possibly for some legacy transitions or when we were not able to guarantee a separate transition for each display change). Possibly we can remove it but we need to check if there are any use cases where it is still required.\n\nFor now, maybe we could make sure that we do setReady only in situations where this ready call won\u0027t be invoked (e.g. on screen off or if the screen is already off?)",
+      "revId": "cb9fca005a872056abae263f66b2fa3cec40d149",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
