@@ -57,6 +57,7 @@ import android.hardware.display.DisplayManagerInternal;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityModuleConnector;
 import android.net.NetworkStackClient;
+import android.net.vcn.VcnManager;
 import android.os.ArtModuleServiceManager;
 import android.os.BaseBundle;
 import android.os.Binder;
@@ -2145,8 +2146,7 @@ public final class SystemServer implements Dumpable {
 
             t.traceBegin("StartVcnManagementService");
             try {
-                vcnManagement = VcnManagementService.create(context);
-                ServiceManager.addService(Context.VCN_MANAGEMENT_SERVICE, vcnManagement);
+                mSystemServiceManager.startService(ConnectivityServiceInitializerB.class);
             } catch (Throwable e) {
                 reportWtf("starting VCN Management Service", e);
             }
@@ -3035,10 +3035,10 @@ public final class SystemServer implements Dumpable {
         final MediaRouterService mediaRouterF = mediaRouter;
         final MmsServiceBroker mmsServiceF = mmsService;
         final VpnManagerService vpnManagerF = vpnManager;
-        final VcnManagementService vcnManagementF = vcnManagement;
         final WindowManagerService windowManagerF = wm;
         final ConnectivityManager connectivityF = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final VcnManager vcnManagementF = context.getSystemService(VcnManager.class);
 
         // We now tell the activity manager it is okay to run third party
         // code.  It will call back into us once it has gotten to the state
