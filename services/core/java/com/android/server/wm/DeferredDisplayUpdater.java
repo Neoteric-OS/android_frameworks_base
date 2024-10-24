@@ -191,6 +191,7 @@ public class DeferredDisplayUpdater implements DisplayUpdater {
         mDisplayContent.mAtmService.startPowerMode(POWER_MODE_REASON_CHANGE_DISPLAY);
 
         mDisplayContent.mTransitionController.startCollectOrQueue(transition, deferred -> {
+            transition.setReady(mDisplayContent, true);
             final Rect startBounds = new Rect(0, 0, mDisplayContent.mInitialDisplayWidth,
                     mDisplayContent.mInitialDisplayHeight);
             final int fromRotation = mDisplayContent.getRotation();
