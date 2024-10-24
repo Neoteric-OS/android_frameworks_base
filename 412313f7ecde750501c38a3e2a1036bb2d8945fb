@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "569d1af8_70680951",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1630008
+      },
+      "writtenOn": "2024-10-24T22:21:44Z",
+      "side": 1,
+      "message": "Thank you jijilou@xiaomi.corp-partner.google.com for this fix. Just as a FYI: this code was already changed in Google\u0027s internal main and should soon be refreshed here as well.",
+      "revId": "412313f7ecde750501c38a3e2a1036bb2d8945fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
