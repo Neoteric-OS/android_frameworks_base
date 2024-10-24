@@ -483,4 +483,14 @@ public abstract class HostApduService extends Service {
     @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
     public void onPreferredServiceChanged(boolean isPreferred) {
     }
+
+    /**
+     * This method is called when an NFC system event occurs.
+     *
+     * @param event the Nfc system event
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public void onNfcSystemEvent(NfcSystemEvent event) {
+
+    }
 }
