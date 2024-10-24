@@ -28,6 +28,8 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.VirtualDisplay;
@@ -37,6 +39,7 @@ import android.media.MediaFormat;
 import android.media.MediaMuxer;
 import android.media.MediaRecorder;
 import android.media.ThumbnailUtils;
+import android.graphics.PorterDuff;
 import android.media.projection.IMediaProjection;
 import android.media.projection.IMediaProjectionManager;
 import android.media.projection.MediaProjection;
@@ -279,6 +282,42 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         prepare();
         mMediaRecorder.start();
         recordInternalAudio();
+        int i = 5;
+        while (i-- >= 0) {
+            redrawAndClear();
+        }
+    }
+
+    private void surfaceRedraw() {
+        if (mInputSurface != null && mInputSurface.isValid()) {
+            Log.e("Screenrecording ", "is not null");
+            try {
+                Canvas canvas = mInputSurface.lockHardwareCanvas();
+                mInputSurface.unlockCanvasAndPost(canvas);
+            } catch(Exception e) {
+                Log.e("Screenrecording ", e.toString());
+            }
+        }
+    }
+
+    private void redrawAndClear() {
+        Log.e(TAG, "redrawAndClear");
+        Log.e("Screenrecording surface isSharedBufferModeEnabled ",
+                    String.valueOf(mInputSurface.isSharedBufferModeEnabled()));
+        Log.e("Screenrecording surface isAutoRefreshEnabled ",
+                    String.valueOf(mInputSurface.isAutoRefreshEnabled()));
+        if (mInputSurface != null && mInputSurface.isValid()) {
+            Canvas canvas = mInputSurface.lockCanvas(null);
+            if (canvas != null) {
+                Log.e(TAG, "canvas is not null");
+                try {
+                    canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                    Log.e(TAG, "redraw successful");
+                } finally {
+                    mInputSurface.unlockCanvasAndPost(canvas);
+                }
+            }
+        }
     }
 
     /**
