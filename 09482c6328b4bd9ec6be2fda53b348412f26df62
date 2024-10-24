@@ -16,6 +16,65 @@
       "message": "Hi, was there any other test that was failing? \n\nI don\u0027t understand why removing things from cache should cause functional failure",
       "revId": "09482c6328b4bd9ec6be2fda53b348412f26df62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdb72ad2_49e3344f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-24T20:56:35Z",
+      "side": 1,
+      "message": "\u003e Hi, was there any other test that was failing?\n\nSorry, was this question intended for me?\n\nLooking at the failure logs, the root cause seems to be the same as the one you fixed earlier. The service access is blocked by SELinux rules:\n```\n10-24 00:18:14.270     0     0 E SELinux : avc:  denied  { find } for pid\u003d3133 uid\u003d1000 name\u003dpermissionmgr scontext\u003du:r:carservice_app:s0 tcontext\u003du:object_r:permissionmgr_service:s0 tclass\u003dservice_manager permissive\u003d0\n```\n\nIt seems `carservice_app` is not configured to access the system services and was just relying on them through this cache. I\u0027d recommend just fixing the SELinux rules, because even if the tests are not failing, it seems this could cause real issues. In the mean time, perhaps you can check for the `FEATURE_AUTOMOTIVE` feature (in addition to the `removeJavaServiceManagerCache()` flag) to keep the cache as is for those devices for now.",
+      "parentUuid": "f8f042dc_05c05768",
+      "revId": "09482c6328b4bd9ec6be2fda53b348412f26df62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9cb56e4_93f6e009",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2899,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-24T20:56:35Z",
+      "side": 1,
+      "message": "This does not mean anything outside our ATP infra. I\u0027d just mention it is causing test failures on auto and include more details about the failures in the commit message.",
+      "range": {
+        "startLine": 2899,
+        "startChar": 45,
+        "endLine": 2899,
+        "endChar": 91
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "029bea69_15c39a38",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/ActivityManagerService.java",
+              "range": {
+                "startLine": 2899,
+                "startChar": 0,
+                "endLine": 2900,
+                "endChar": 0
+              },
+              "replacement": "            // Removing permissionmgr breaks test_mapping_presubmit_cloud_auto.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "09482c6328b4bd9ec6be2fda53b348412f26df62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
