@@ -296,8 +296,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         });
     }
 
-    // Package-visibility for SystemServer to create instances.
-    static VcnManagementService create(@NonNull Context context) {
+    /** Called by ConnectivityServiceInitializerB to create instances. */
+    // VcnManagementService will be jarjared but ConnectivityServiceInitializerB will not. Thus this
+    // method needs to be public for ConnectivityServiceInitializerB to access
+    public static VcnManagementService create(@NonNull Context context) {
         return new VcnManagementService(context, new Dependencies());
     }
 
