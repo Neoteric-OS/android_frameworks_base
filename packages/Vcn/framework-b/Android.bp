@@ -20,14 +20,43 @@ package {
 }
 
 java_defaults {
-    name: "framework-connectivity-b-defaults",
+    name: "framework-connectivity-b-defaults-base",
     sdk_version: "module_current",
-    min_sdk_version: "35", // TODO: Make it Android 25Q2 when this is included in mainline
+
     defaults: ["framework-module-defaults"], // This is a boot jar
 
     srcs: [
         "src/**/*.java",
     ],
+}
+
+soong_config_module_type {
+    name: "framework_connectivity_b_defaults_soong_config",
+    module_type: "java_defaults",
+    config_namespace: "ANDROID",
+    bool_variables: [
+        "is_vcn_in_mainline",
+    ],
+    properties: [
+        "min_sdk_version",
+    ],
+}
+
+framework_connectivity_b_defaults_soong_config {
+    name: "framework-connectivity-b-defaults",
+    defaults: [
+        "framework-connectivity-b-defaults-base",
+    ],
+    soong_config_variables: {
+        is_vcn_in_mainline: {
+            //TODO: b/380155299 Make it Baklava when aidl tool can understand it
+            min_sdk_version: "current",
+
+            conditions_default: {
+                min_sdk_version: "35",
+            },
+        },
+    },
 }
 
 java_sdk_library {
@@ -63,5 +92,10 @@ java_sdk_library {
         "//packages/modules/Wifi/service/tests/wifitests",
     ],
 
-    // TODO: b/375213246 Expose this library to Tethering module
+    visibility: ["//packages/modules/Connectivity:__subpackages__"],
+
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.tethering",
+    ],
 }
