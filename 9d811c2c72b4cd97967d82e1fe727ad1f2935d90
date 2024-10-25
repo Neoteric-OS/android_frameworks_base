@@ -16,6 +16,23 @@
       "message": "Yes, I judged that the screen was off before, but I made a mistake when I commit the code.   mDisplayContent.shouldSleep is this OK?",
       "revId": "9d811c2c72b4cd97967d82e1fe727ad1f2935d90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acdcb01b_0239b577",
+        "filename": "services/core/java/com/android/server/wm/DeferredDisplayUpdater.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1877210
+      },
+      "writtenOn": "2024-10-25T09:48:54Z",
+      "side": 1,
+      "message": "This might work when the display is off but I wonder if we could have problems when we turn off display right after we called this?\n\nDo you know which part of the flow exactly prevents `finishDisplayUpdate()` to be called? Maybe we can try to make sure that it doesn\u0027t get stuck there if the screen is off.\n\nAlso, I think we should ensure that we call ready only *after* we update the window hierarchy which happens in `onStartCollect.run()`\n\nAfaik the flow looks roughly like this:\n* DM sends onDisplayChanged event\n* DeferredDisplayUpdater#updateDisplayInfo() is called which calls `requestDisplayChangeTransition`\n* We start collect (or wait for the transition to be started collecting)\n* `onStartCollect.run()` call invokes the lambda that runs `mDisplayContent.onDisplayInfoUpdated` which applies the new display info (e.g. updated size) to all windows\n* We start remote display change with the new display info by sending it to WM Shell and receiving a WCT from it\n* We apply WCT\n* We set the transition as ready\n\nTransitions help us guarantee that changes between starting collecting and making the transition \u0027ready\u0027 are displayed before we continue",
+      "revId": "9d811c2c72b4cd97967d82e1fe727ad1f2935d90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
