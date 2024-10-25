@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb2d9678_a0b8e74e",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1439319
+      },
+      "writtenOn": "2024-10-25T12:33:30Z",
+      "side": 1,
+      "message": "This is the sentence that will be added by metalava automatically. Need Devrel approval for this structure.\n\nRestricted for \u003cfoo\u003e environment in API level \u003cbar\u003e",
+      "range": {
+        "startLine": 77,
+        "startChar": 3,
+        "endLine": 77,
+        "endChar": 59
+      },
+      "revId": "973126871ec3f0d532468de724c3637b718aa269",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
