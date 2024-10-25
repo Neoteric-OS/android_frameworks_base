@@ -372,6 +372,12 @@ public final class NfcOemExtension {
          * @param category the category of the service
          */
         void onLaunchHceTapAgainDialog(@NonNull ApduServiceInfo service, @NonNull String category);
+
+        /**
+         * Callback when OEM specified log event are notified.
+         * @param item the log items that contains log information of NFC event.
+         */
+        void onLogEventNotified(@NonNull OemLogItems item);
     }
 
 
@@ -837,6 +843,12 @@ public final class NfcOemExtension {
                 throws RemoteException {
             mCallbackMap.forEach((cb, ex) ->
                     handleVoid2ArgCallback(service, category, cb::onLaunchHceTapAgainDialog, ex));
+        }
+
+        @Override
+        public void onLogEventNotified(OemLogItems item) throws RemoteException  {
+            mCallbackMap.forEach((cb, ex) ->
+                    handleVoidCallback(item, cb::onLogEventNotified, ex));
         }
 
         private <T> void handleVoidCallback(
