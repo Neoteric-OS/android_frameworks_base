@@ -28,6 +28,7 @@ import static android.system.OsConstants.O_RDONLY;
 import static android.view.Display.DEFAULT_DISPLAY;
 
 import static com.android.server.utils.TimingsTraceAndSlog.SYSTEM_SERVER_TIMING_TAG;
+import static com.android.server.vcn.VcnLocation.IS_VCN_IN_MAINLINE;
 
 import android.annotation.NonNull;
 import android.annotation.StringRes;
@@ -2146,10 +2147,13 @@ public final class SystemServer implements Dumpable {
 
             t.traceBegin("StartVcnManagementService");
             try {
-                // TODO: b/375213246 When VCN is in mainline module, load it from the apex path.
-                // Whether VCN will be in apex or in the platform will be gated by a build system
-                // flag.
-                mSystemServiceManager.startService(CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS);
+                if (IS_VCN_IN_MAINLINE) {
+                    mSystemServiceManager.startServiceFromJar(
+                            CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS,
+                            CONNECTIVITY_SERVICE_APEX_PATH);
+                } else {
+                    mSystemServiceManager.startService(CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS);
+                }
             } catch (Throwable e) {
                 reportWtf("starting VCN Management Service", e);
             }
