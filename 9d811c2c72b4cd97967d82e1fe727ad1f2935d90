@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4e5e8d3_daad7b20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902396
+      },
+      "writtenOn": "2024-10-25T08:31:50Z",
+      "side": 1,
+      "message": "Yes, I judged that the screen was off before, but I made a mistake when I commit the code.   mDisplayContent.shouldSleep is this OK?",
+      "revId": "9d811c2c72b4cd97967d82e1fe727ad1f2935d90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
