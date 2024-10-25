@@ -232,6 +232,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58f8e3d7_e0543f96",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-25T16:04:36Z",
+      "side": 1,
+      "message": "Documentation update",
+      "parentUuid": "79909371_c67392c4",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d53791e7_d2b98738",
         "filename": "nfc/java/android/nfc/NdefNfcee.java",
         "patchSetId": 1
