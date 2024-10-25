@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f093ca10_d04789c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-10-25T10:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdb72ad2_49e3344f",
+      "revId": "09482c6328b4bd9ec6be2fda53b348412f26df62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c9cb56e4_93f6e009",
@@ -90,6 +108,30 @@
           ]
         }
       ],
+      "revId": "09482c6328b4bd9ec6be2fda53b348412f26df62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5858581e_525e9e66",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2899,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-10-25T10:54:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9cb56e4_93f6e009",
+      "range": {
+        "startLine": 2899,
+        "startChar": 45,
+        "endLine": 2899,
+        "endChar": 91
+      },
       "revId": "09482c6328b4bd9ec6be2fda53b348412f26df62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
