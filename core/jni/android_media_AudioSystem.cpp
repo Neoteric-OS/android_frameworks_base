@@ -1539,6 +1539,7 @@ static jint convertAudioPortFromNative(JNIEnv *env, ScopedLocalRef<jobject> *jAu
         jAudioPort->reset(env->NewObject(gAudioDevicePortClass, gAudioDevicePortCstor,
                                          jHandle.get(), jDeviceName.get(), jAudioProfiles.get(),
                                          jGains.get(), nAudioPort->ext.device.type, jAddress.get(),
+                                         nAudioPort->ext.device.speaker_layout_channel_mask,
                                          jEncapsulationModes.get(),
                                          jEncapsulationMetadataTypes.get(),
                                          jAudioDescriptors.get()));
