@@ -306,6 +306,9 @@ public class ImageWallpaper extends WallpaperService {
 
         @VisibleForTesting
         void drawFrameOnCanvas(Bitmap bitmap) {
+	    if (mSurfaceHolder == null) {
+                return;
+            }
             Trace.beginSection("ImageWallpaper.CanvasEngine#drawFrame");
             Surface surface = mSurfaceHolder.getSurface();
             Canvas canvas = null;
@@ -317,6 +320,10 @@ public class ImageWallpaper extends WallpaperService {
                 Log.w(TAG, "Unable to lock canvas", e);
             }
             if (canvas != null) {
+                if (mSurfaceHolder == null) {
+                    Trace.endSection();
+                    return;
+                }
                 Rect dest = mSurfaceHolder.getSurfaceFrame();
                 try {
                     canvas.drawBitmap(bitmap, null, dest, null);
