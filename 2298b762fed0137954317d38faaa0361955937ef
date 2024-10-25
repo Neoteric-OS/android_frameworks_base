@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db7f7627_12a28d20",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRunnerState.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-25T04:51:35Z",
+      "side": 1,
+      "message": "Discussed new approach offline",
+      "parentUuid": "2ab6f4a0_1d5a4010",
+      "revId": "2298b762fed0137954317d38faaa0361955937ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "504b01a6_072f5f78",
@@ -67,6 +85,24 @@
           ]
         }
       ],
+      "revId": "2298b762fed0137954317d38faaa0361955937ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "790a6424_91a40dc2",
+        "filename": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-25T04:51:35Z",
+      "side": 1,
+      "message": "Discussed new approach offline",
+      "parentUuid": "504b01a6_072f5f78",
       "revId": "2298b762fed0137954317d38faaa0361955937ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -138,6 +174,30 @@
           ]
         }
       ],
+      "revId": "2298b762fed0137954317d38faaa0361955937ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e53637f_501a164d",
+        "filename": "ravenwood/junit-src/android/platform/test/ravenwood/RavenwoodAwareTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-10-25T04:51:35Z",
+      "side": 1,
+      "message": "Discussed new approach offline",
+      "parentUuid": "b2fa0538_89968c1a",
+      "range": {
+        "startLine": 464,
+        "startChar": 25,
+        "endLine": 464,
+        "endChar": 57
+      },
       "revId": "2298b762fed0137954317d38faaa0361955937ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
