@@ -16,6 +16,24 @@
       "message": "OpenSource licensing is triggering due to mentions of the Setting\u0027s menu item called \"Third Party Licenses\" in the Test section of the commit. It\u0027s a false positive here as no licenses being altered.",
       "revId": "24427d6a397aa74cd53c2c096c71bd6eeae9db01",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fd4dce0_727037c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1889091
+      },
+      "writtenOn": "2024-10-25T15:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f6d68f_7496abe8",
+      "revId": "24427d6a397aa74cd53c2c096c71bd6eeae9db01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
