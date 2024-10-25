@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b29ba304_d0f96f22",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 3226358
+      },
+      "writtenOn": "2024-10-25T11:47:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee09c2f6_cf2a5155",
+      "range": {
+        "startLine": 593,
+        "startChar": 17,
+        "endLine": 593,
+        "endChar": 43
+      },
+      "revId": "20f6810adf0b197b3759f034445c31fec62c6f25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a1aeebb9_a824bd4c",
@@ -71,6 +95,30 @@
       "writtenOn": "2024-10-25T10:37:01Z",
       "side": 1,
       "message": "Shall we move this next to AVC to keep VP8 and VP9 together? Not sure if the current ordering is trying to do something else.",
+      "range": {
+        "startLine": 653,
+        "startChar": 0,
+        "endLine": 659,
+        "endChar": 16
+      },
+      "revId": "20f6810adf0b197b3759f034445c31fec62c6f25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e7f7600_2e71aa82",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 3226358
+      },
+      "writtenOn": "2024-10-25T11:47:13Z",
+      "side": 1,
+      "message": "Done. Just to keep sdk version in increase order moved HEVC toward OPUS.",
+      "parentUuid": "a1aeebb9_a824bd4c",
       "range": {
         "startLine": 653,
         "startChar": 0,
