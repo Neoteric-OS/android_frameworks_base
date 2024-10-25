@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fd16f38_582ff393",
+        "filename": "nfc/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-25T16:16:45Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this needs to be a public API.",
+      "range": {
+        "startLine": 1213,
+        "startChar": 0,
+        "endLine": 1218,
+        "endChar": 5
+      },
+      "revId": "b0ba8f7b457f858d98257e1e479a9172cab45ff8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
