@@ -31,15 +31,24 @@ filegroup {
     ],
 }
 
-java_defaults {
-    name: "framework-connectivity-b-defaults",
-    sdk_version: "module_current",
-    min_sdk_version: "35", // TODO: Make it Android 25Q2 when this is included in mainline
-    defaults: ["framework-module-defaults"], // This is a boot jar
-
+filegroup {
+    name: "framework-connectivity-b-sources",
     srcs: [
         "src/**/*.java",
         "src/**/*.aidl",
+    ],
+    path: "src",
+    visibility: ["//packages/modules/Connectivity/framework"],
+}
+
+java_defaults {
+    name: "framework-connectivity-b-defaults-base",
+    sdk_version: "module_current",
+
+    defaults: ["framework-module-defaults"], // This is a boot jar
+
+    srcs: [
+        ":framework-connectivity-b-sources",
     ],
 
     libs: [
@@ -48,10 +57,7 @@ java_defaults {
         "framework-wifi.stubs.module_lib",
         "unsupportedappusage",
     ],
-    static_libs: [
-        //TODO:375213246 Use a non-exported flag lib when VCN is in mainline
-        "android.net.vcn.flags-aconfig-java-export",
-    ],
+
     aidl: {
         include_dirs: [
             // For connectivity-framework classes such as Network.aidl, NetworkCapabilities.aidl
@@ -60,15 +66,73 @@ java_defaults {
     },
 }
 
+soong_config_module_type {
+    name: "framework_connectivity_b_defaults_soong_config",
+    module_type: "java_defaults",
+    config_namespace: "ANDROID",
+    bool_variables: [
+        "is_vcn_in_mainline",
+    ],
+    properties: [
+        "min_sdk_version",
+        "static_libs",
+        "apex_available",
+    ],
+}
+
+framework_connectivity_b_defaults_soong_config {
+    name: "framework-connectivity-b-defaults",
+    defaults: [
+        "framework-connectivity-b-defaults-base",
+    ],
+    soong_config_variables: {
+        is_vcn_in_mainline: {
+            //TODO: b/380155299 Make it Baklava when aidl tool can understand it
+            min_sdk_version: "current",
+            static_libs: ["android.net.vcn.flags-aconfig-java"],
+            apex_available: ["com.android.tethering"],
+
+            conditions_default: {
+                min_sdk_version: "35",
+                static_libs: ["android.net.vcn.flags-aconfig-java-export"],
+                apex_available: ["//apex_available:platform"],
+            },
+        },
+    },
+}
+
+soong_config_module_type {
+    name: "framework_connectivity_b_aconfig_defaults_soong_config",
+    module_type: "java_defaults",
+    config_namespace: "ANDROID",
+    bool_variables: [
+        "is_vcn_in_mainline",
+    ],
+    properties: [
+        "aconfig_declarations",
+    ],
+}
+
+framework_connectivity_b_aconfig_defaults_soong_config {
+    name: "framework-connectivity-b-aconfig-defaults",
+    soong_config_variables: {
+        is_vcn_in_mainline: {
+            aconfig_declarations: ["android.net.vcn.flags-aconfig-java"],
+            conditions_default: {
+                aconfig_declarations: ["android.net.vcn.flags-aconfig-java-export"],
+            },
+        },
+    },
+}
+
 java_sdk_library {
     name: "framework-connectivity-b",
     defaults: [
         "framework-connectivity-b-defaults",
+        "framework-connectivity-b-aconfig-defaults",
     ],
 
-    //TODO: b/375213246 Use "framework-connectivity-jarjar-rules" when VCN is
-    // in mainline
-    jarjar_rules: "framework-vcn-jarjar-rules.txt",
+    jarjar_rules: ":framework-connectivity-jarjar-rules",
 
     permitted_packages: [
         "android.net",
@@ -90,11 +154,6 @@ java_sdk_library {
     // To use non-jarjard names of utilities such as android.util.IndentingPrintWriter
     impl_only_libs: [
         "framework-connectivity-pre-jarjar",
-    ],
-
-    aconfig_declarations: [
-        //TODO:375213246 Use a non-exported flag lib when VCN is in mainline
-        "android.net.vcn.flags-aconfig-java-export",
     ],
 
     impl_library_visibility: [
@@ -120,12 +179,7 @@ java_sdk_library {
         "//packages/modules/Wifi/service/tests/wifitests",
     ],
 
-    apex_available: [
-        // TODO: b/374174952 Remove it when VCN modularization is released
-        "//apex_available:platform",
-
-        "com.android.tethering",
-    ],
+    visibility: ["//packages/modules/Connectivity:__subpackages__"],
 }
 
 java_library {

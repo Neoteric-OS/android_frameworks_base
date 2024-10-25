@@ -37,6 +37,7 @@ import static com.android.server.VcnManagementService.VDBG;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityDiagnosticsManager;
 import android.net.ConnectivityDiagnosticsManager.ConnectivityDiagnosticsCallback;
@@ -2945,6 +2946,10 @@ public class VcnGatewayConnection extends StateMachine {
          *
          * <p>Synchronize this action to minimize locking around WakeLock use.
          */
+        // WakelockTimeout suppressed because the time the wake lock is needed for is unknown. The
+        // wakelock is only acquired when a Message is sent to this state machine and will be
+        // released when the message is processed or the state machin quits
+        @SuppressLint("WakelockTimeout")
         public synchronized void acquire() {
             mImpl.acquire();
         }
