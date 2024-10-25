@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4d2ec75_5ef32ece",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-10-25T19:12:08Z",
+      "side": 1,
+      "message": "Okay now ravenwood_presubmit _should_ be enabled on AOSP too. (http://b/374770248 is fixed)\n\nSo let\u0027s run presbumit, and make sure ravenwood_presubmit passes on goog/main and aosp/main on the CI server too. Apparently even if run-ravenwood-tests.sh passes locally, it could still fail on the CI server.",
+      "revId": "a676bd453324c8c4e460f79423a91477a9e06e46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
