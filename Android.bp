@@ -558,8 +558,35 @@ java_library {
     apex_available: ["//apex_available:platform"],
 }
 
+soong_config_module_type {
+    name: "connectivity_b_platform_compat_defaults_soong_config",
+    module_type: "java_defaults",
+    config_namespace: "ANDROID",
+    bool_variables: [
+        "is_vcn_in_mainline",
+    ],
+    properties: [
+        "required",
+    ],
+}
+
+connectivity_b_platform_compat_defaults_soong_config {
+    name: "connectivity-b-platform-compat-defaults",
+    soong_config_variables: {
+        is_vcn_in_mainline: {
+            required: [],
+            conditions_default: {
+                required: ["connectivity-b-platform-compat-config"],
+            },
+        },
+    },
+}
+
 java_library {
     name: "framework-minus-apex-install-dependencies",
+    defaults: [
+        "connectivity-b-platform-compat-defaults",
+    ],
     required: [
         "framework-minus-apex",
         "framework-platform-compat-config",
