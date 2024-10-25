@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "501ac900_db589fcc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-10-25T22:50:01Z",
+      "side": 1,
+      "message": "Okay looking again, I don\u0027t think we should be doing this. Inseob to keep me honest. Something is not right here, but not sure which level.\n\n1. why does the wallpaper need to be set in hardware-specific partitions? Fundamentally, wallpaper is a framework thing, and it\u0027s not related to hardware. If you want to change the wallpaper, use the product or system_ext partition. Android could change how wallpapers are done, and we shouldn\u0027t have to support old vendor images in order to change this. So, there needs to be strong justification to expose this to vendor, when you can already change this on system/product.\n\n2. if we do need to export it, why don\u0027t we export these properties that already exist instead of creating new ones and having 2 of each forever?\n\n3. I know it\u0027s popular to get rid of ro properties, but actually this is just wrong. ro properties are great. People complain because something changes them, and then you can\u0027t set them, but that\u0027s the point. If you want to change them, go find the single thing that is setting it, and fix that to set it right. You say you don\u0027t see a strong reason to prohibit vendor_init setting it late, but it\u0027s impossible to manage sepolicy for dozens of different properties and set them later. The permissions may be opened up, someone may make an rc file change, and all the code that is assuming the property won\u0027t change may become inconsistent. So, yeah, there may be a small probability such a bug happens, but:\n- it can\u0027t happen today (woo!)\n- this CL makes it so it can happen\n- there is no reason to introduce such a possibility of an error\n\n4. this adds +81 LOC, and more classes memory, for 3 sysprops, which seems too much.\n\nAnd I am sorry if you are following along what other people are doing or this trend, as this might be more of a comment to other Android changes than about this specific change, but I am -2 for visibility and tagging in Inseob, because I don\u0027t think this particular type of change can scale. I hope (1) or (2) can work for you with much less code, thanks!",
+      "revId": "0d858e0ab61ab003bb2be519a51a857436b9b57d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
