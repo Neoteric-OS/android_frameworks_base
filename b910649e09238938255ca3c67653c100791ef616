@@ -105,6 +105,30 @@
       ],
       "revId": "b910649e09238938255ca3c67653c100791ef616",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3153fc4_4bfbbb3b",
+        "filename": "media/jni/android_media_ImageReader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-10-25T22:50:41Z",
+      "side": 1,
+      "message": "to avoid the potential native instability. Need further investigation.",
+      "parentUuid": "66e68708_5b1d0529",
+      "range": {
+        "startLine": 961,
+        "startChar": 0,
+        "endLine": 965,
+        "endChar": 5
+      },
+      "revId": "b910649e09238938255ca3c67653c100791ef616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
