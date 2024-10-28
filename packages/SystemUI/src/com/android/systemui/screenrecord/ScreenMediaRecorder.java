@@ -176,7 +176,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         mVirtualDisplay = mMediaProjection.createVirtualDisplay(
                 "Recording Display",
                 width,
-                height,
+                height + 1, // Temporary size change
                 metrics.densityDpi,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
                 mInputSurface,
@@ -187,6 +187,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
                     }
                 },
                 mHandler);
+        mInputSurface.setFrameRate(VIDEO_FRAME_RATE, Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE);
 
         mMediaRecorder.setOnInfoListener((mr, what, extra) -> mListener.onInfo(mr, what, extra));
         if (mAudioSource == INTERNAL ||
@@ -278,7 +279,18 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         Log.d(TAG, "start recording");
         prepare();
         mMediaRecorder.start();
+        mHandler.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            forceFrame();
+          }
+        }, 15);
         recordInternalAudio();
+    }
+
+    void forceFrame() throws IOException, RemoteException, RuntimeException {
+      Log.d(TAG, "forcing a frame");
+      mVirtualDisplay.resize(width, height, metrics.densityDpi);
     }
 
     /**
