@@ -100,50 +100,50 @@ filegroup {
 // Exportable stub artifacts
 filegroup {
     name: "non-updatable-exportable-current.txt",
-    device_common_srcs: [":api-stubs-docs-non-updatable{.exportable.api.txt}"],
+    srcs: [":api-stubs-docs-non-updatable{.exportable.api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-removed.txt",
-    device_common_srcs: [":api-stubs-docs-non-updatable{.exportable.removed-api.txt}"],
+    srcs: [":api-stubs-docs-non-updatable{.exportable.removed-api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-system-current.txt",
-    device_common_srcs: [":system-api-stubs-docs-non-updatable{.exportable.api.txt}"],
+    srcs: [":system-api-stubs-docs-non-updatable{.exportable.api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-system-removed.txt",
-    device_common_srcs: [":system-api-stubs-docs-non-updatable{.exportable.removed-api.txt}"],
+    srcs: [":system-api-stubs-docs-non-updatable{.exportable.removed-api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-module-lib-current.txt",
-    device_common_srcs: [":module-lib-api-stubs-docs-non-updatable{.exportable.api.txt}"],
+    srcs: [":module-lib-api-stubs-docs-non-updatable{.exportable.api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-module-lib-removed.txt",
-    device_common_srcs: [":module-lib-api-stubs-docs-non-updatable{.exportable.removed-api.txt}"],
+    srcs: [":module-lib-api-stubs-docs-non-updatable{.exportable.removed-api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-test-current.txt",
-    device_common_srcs: [":test-api-stubs-docs-non-updatable{.exportable.api.txt}"],
+    srcs: [":test-api-stubs-docs-non-updatable{.exportable.api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-test-removed.txt",
-    device_common_srcs: [":test-api-stubs-docs-non-updatable{.exportable.removed-api.txt}"],
+    srcs: [":test-api-stubs-docs-non-updatable{.exportable.removed-api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-system-server-current.txt",
-    device_common_srcs: [":services-non-updatable-stubs{.exportable.api.txt}"],
+    srcs: [":services-non-updatable-stubs{.exportable.api.txt}"],
 }
 
 filegroup {
     name: "non-updatable-exportable-system-server-removed.txt",
-    device_common_srcs: [":services-non-updatable-stubs{.exportable.removed-api.txt}"],
+    srcs: [":services-non-updatable-stubs{.exportable.removed-api.txt}"],
 }

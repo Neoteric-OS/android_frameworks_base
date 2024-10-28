@@ -50,7 +50,7 @@ java_library_static {
     ],
 }
 
-java_genrule {
+genrule {
     name: "services.core.protologsrc",
     srcs: [
         ":protolog-impl",
@@ -70,7 +70,7 @@ java_genrule {
     out: ["services.core.protolog.srcjar"],
 }
 
-java_genrule {
+genrule {
     name: "generate-protolog.json",
     srcs: [
         ":protolog-groups",
@@ -87,7 +87,7 @@ java_genrule {
     out: ["services.core.protolog.json"],
 }
 
-java_genrule {
+genrule {
     name: "gen-core.protolog.pb",
     srcs: [
         ":protolog-groups",
@@ -281,7 +281,7 @@ prebuilt_etc {
     src: "java/com/android/server/location/gnss/gps_debug.conf",
 }
 
-java_genrule {
+genrule {
     name: "services.core.json.gz",
     srcs: [":generate-protolog.json"],
     out: ["services.core.protolog.json.gz"],

@@ -20,6 +20,7 @@ import (
 	"github.com/google/blueprint/proptools"
 
 	"android/soong/android"
+	"android/soong/genrule"
 	"android/soong/java"
 )
 
@@ -137,10 +138,9 @@ type libraryProps struct {
 }
 
 type fgProps struct {
-	Name               *string
-	Srcs               proptools.Configurable[[]string]
-	Device_common_srcs proptools.Configurable[[]string]
-	Visibility         []string
+	Name       *string
+	Srcs       proptools.Configurable[[]string]
+	Visibility []string
 }
 
 type defaultsProps struct {
@@ -201,7 +201,7 @@ func createMergedTxt(ctx android.LoadHookContext, txt MergedTxtDefinition, stubs
 		}
 	}
 	props.Visibility = []string{"//visibility:public"}
-	ctx.CreateModule(java.GenRuleFactory, &props)
+	ctx.CreateModule(genrule.GenRuleFactory, &props)
 }
 
 func createMergedAnnotationsFilegroups(ctx android.LoadHookContext, modules, system_server_modules proptools.Configurable[[]string]) {
@@ -230,7 +230,7 @@ func createMergedAnnotationsFilegroups(ctx android.LoadHookContext, modules, sys
 	} {
 		props := fgProps{}
 		props.Name = proptools.StringPtr(i.name)
-		props.Device_common_srcs = createSrcs(i.modules, i.tag)
+		props.Srcs = createSrcs(i.modules, i.tag)
 		ctx.CreateModule(android.FileGroupFactory, &props)
 	}
 }
@@ -429,7 +429,7 @@ func createMergedFrameworkSystemServerExportableStubs(ctx android.LoadHookContex
 func createPublicStubsSourceFilegroup(ctx android.LoadHookContext, modules proptools.Configurable[[]string]) {
 	props := fgProps{}
 	props.Name = proptools.StringPtr("all-modules-public-stubs-source")
-	props.Device_common_srcs = createSrcs(modules, "{.public.stubs.source}")
+	props.Srcs = createSrcs(modules, "{.public.stubs.source}")
 	props.Visibility = []string{"//frameworks/base"}
 	ctx.CreateModule(android.FileGroupFactory, &props)
 }

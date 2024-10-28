@@ -19,7 +19,7 @@ filegroup {
     ],
 }
 
-java_genrule {
+genrule {
     name: "wmtests.protologsrc",
     srcs: [
         ":protolog-impl",

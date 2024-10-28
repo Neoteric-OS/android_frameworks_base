@@ -40,10 +40,8 @@ java_test_host {
     data: [
         ":androidx.annotation_annotation",
         ":dagger2",
-        ":kotlinx-coroutines-core",
-    ],
-    device_common_data: [
         ":framework",
+        ":kotlinx-coroutines-core",
     ],
     static_libs: [
         "SystemUILintChecker",

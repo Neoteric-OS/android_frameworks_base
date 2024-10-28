@@ -32,7 +32,7 @@ java_test_host {
     static_libs: [
         "truth",
     ],
-    device_common_data: [
+    data: [
         ":BinaryTransparencyTestApp",
         ":EasterEgg",
         ":FeatureSplitBase",
