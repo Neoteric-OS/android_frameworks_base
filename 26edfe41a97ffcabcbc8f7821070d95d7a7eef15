@@ -1,0 +1,178 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29eed22f_fd2e5242",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T16:30:36Z",
+      "side": 1,
+      "message": "Is this a random value or are there specific values that can be passed here?",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4c2b46d4_36ca7193",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 62,
+                "startChar": 0,
+                "endLine": 63,
+                "endChar": 0
+              },
+              "replacement": "     * @param fileId File Id to which to write.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9252af40_de8ea470",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T16:30:36Z",
+      "side": 1,
+      "message": "Add an @IntDef for these return codes. Use [this](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/nfc/java/android/nfc/NfcOemExtension.java;drc\u003de7571aefc501bd8415d28090b2d19148b190a218;l\u003d134) as reference",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "df90d2b4_098d9336",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 67,
+                "startChar": 0,
+                "endLine": 68,
+                "endChar": 0
+              },
+              "replacement": "     * -1  STATUS_FAILED\u003cbr/\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af966a4a_3ba147a1",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T16:30:36Z",
+      "side": 1,
+      "message": "Can we throw exceptions here instead of overloading the return values.\n\n\u003e          - Returns null if failed to read\n\n`@throws IllegalStateException if if failed to read`\n\n\u003e    - Returns 0xFF if file is empty.\n\nWhy? Can\u0027t it just return an empty array? Why does this need to be special cased?",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 47
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8dc7ecda_883e1f0c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 95,
+                "startChar": 0,
+                "endLine": 97,
+                "endChar": 0
+              },
+              "replacement": "     * @throws IllegalStateException if failed to read\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 107,
+                "startChar": 0,
+                "endLine": 108,
+                "endChar": 0
+              },
+              "replacement": "            throw new IllegalStateException(\"Failed to read Ndef data\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f80e13f9_fb8e0872",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T16:30:36Z",
+      "side": 1,
+      "message": "reword: `Returns the whether NDEF NFCEE operation is ongoing or not.`",
+      "range": {
+        "startLine": 131,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 66
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "fa20fdd7_1b3dfe9a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NdefNfcee.java",
+              "range": {
+                "startLine": 131,
+                "startChar": 0,
+                "endLine": 133,
+                "endChar": 0
+              },
+              "replacement": "     * Returns the whether NDEF NFCEE operation is ongoing or not.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
