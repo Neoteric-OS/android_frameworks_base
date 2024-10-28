@@ -79,6 +79,10 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
     private static final long MAX_FILESIZE_BYTES = 5000000000L;
     private static final String TAG = "ScreenMediaRecorder";
 
+    private int mWidth;
+    private int mHeight;
+    private int mDensityDpi;
+
 
     private File mTempVideoFile;
     private File mTempAudioFile;
@@ -168,7 +172,9 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
             mMediaRecorder.setAudioEncodingBitRate(AUDIO_BIT_RATE);
             mMediaRecorder.setAudioSamplingRate(AUDIO_SAMPLE_RATE);
         }
-
+        mWidth = width;
+        mHeight = height;
+        mDensityDpi = metrics.densityDpi;
         mMediaRecorder.setOutputFile(mTempVideoFile);
         mMediaRecorder.prepare();
         // Create surface
@@ -176,7 +182,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         mVirtualDisplay = mMediaProjection.createVirtualDisplay(
                 "Recording Display",
                 width,
-                height,
+                height + 1, // Temporary size change
                 metrics.densityDpi,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
                 mInputSurface,
@@ -187,7 +193,6 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
                     }
                 },
                 mHandler);
-
         mMediaRecorder.setOnInfoListener((mr, what, extra) -> mListener.onInfo(mr, what, extra));
         if (mAudioSource == INTERNAL ||
                 mAudioSource == MIC_AND_INTERNAL) {
@@ -278,7 +283,29 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         Log.d(TAG, "start recording");
         prepare();
         mMediaRecorder.start();
+        mHandler.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            try {
+                forceFrame();
+            } catch (IOException e) {
+                // Handle IOException specifically
+                Log.e(TAG, "Error forcing frame: " + e.getMessage());
+            } catch (RemoteException e) {
+                // Handle RuntimeException specifically
+                Log.e(TAG, "Runtime error: " + e.getMessage());
+            } catch (RuntimeException e) {
+                // Handle other unexpected exceptions
+                Log.e(TAG, "Unexpected error: " + e.getMessage());
+            }
+      }
+        }, 5);
         recordInternalAudio();
+    }
+
+    void forceFrame() throws IOException, RemoteException, RuntimeException {
+      Log.d(TAG, "forcing a frame");
+      mVirtualDisplay.resize(mWidth, mHeight, mDensityDpi);
     }
 
     /**
