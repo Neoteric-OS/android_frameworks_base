@@ -176,7 +176,7 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
         mVirtualDisplay = mMediaProjection.createVirtualDisplay(
                 "Recording Display",
                 width,
-                height,
+                height + 1, // Temporary size change
                 metrics.densityDpi,
                 DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
                 mInputSurface,
@@ -187,7 +187,8 @@ public class ScreenMediaRecorder extends MediaProjection.Callback {
                     }
                 },
                 mHandler);
-
+        mInputSurface.setFrameRate(VIDEO_FRAME_RATE, Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE);
+        mVirtualDisplay.resize(mWidth, mHeight, metrics.densityDpi);
         mMediaRecorder.setOnInfoListener((mr, what, extra) -> mListener.onInfo(mr, what, extra));
         if (mAudioSource == INTERNAL ||
                 mAudioSource == MIC_AND_INTERNAL) {
