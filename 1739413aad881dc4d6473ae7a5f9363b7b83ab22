@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c772220_808f0e64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-10-28T06:02:47Z",
+      "side": 1,
+      "message": "LGTM (I can only vote +1, no permission to +2)",
+      "parentUuid": "7f04bc37_910603e3",
+      "revId": "1739413aad881dc4d6473ae7a5f9363b7b83ab22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4a96124_edf9d223",
