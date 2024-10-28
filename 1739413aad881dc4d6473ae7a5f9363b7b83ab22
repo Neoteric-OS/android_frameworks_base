@@ -103,6 +103,30 @@
       ],
       "revId": "1739413aad881dc4d6473ae7a5f9363b7b83ab22",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ddd6fef_25612b80",
+        "filename": "core/java/android/database/BulkCursorNative.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-10-28T16:49:05Z",
+      "side": 1,
+      "message": "The flag code will be deleted once this makes it to a public release.",
+      "parentUuid": "a4a96124_edf9d223",
+      "range": {
+        "startLine": 218,
+        "startChar": 20,
+        "endLine": 218,
+        "endChar": 49
+      },
+      "revId": "1739413aad881dc4d6473ae7a5f9363b7b83ab22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
