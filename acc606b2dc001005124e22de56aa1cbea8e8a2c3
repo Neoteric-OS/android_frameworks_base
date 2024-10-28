@@ -1,0 +1,252 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53f80712_a542e6c3",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "`@LogEvent`",
+      "range": {
+        "startLine": 165,
+        "startChar": 50,
+        "endLine": 165,
+        "endChar": 51
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7160be1a_d41076ea",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "TimeMillis",
+      "range": {
+        "startLine": 183,
+        "startChar": 35,
+        "endLine": 183,
+        "endChar": 51
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41323901_c68f2352",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "TimeMillis",
+      "range": {
+        "startLine": 189,
+        "startChar": 35,
+        "endLine": 189,
+        "endChar": 50
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37abd5c4_0041a202",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "Add `{@link HostApduService#processCommandApdu(...)}`",
+      "range": {
+        "startLine": 240,
+        "startChar": 6,
+        "endLine": 240,
+        "endChar": 10
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ffc52859_94d82a3d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 250,
+                "startChar": 0,
+                "endLine": 250,
+                "endChar": 0
+              },
+              "replacement": "     * Return null if it\u0027s unset.\n     * Return null if it\u0027s unset.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5ffbfe0_6550b732",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "Remove `s` - `getCommandApdu`",
+      "range": {
+        "startLine": 243,
+        "startChar": 18,
+        "endLine": 243,
+        "endChar": 33
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c7368d5_53f349c0",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "Add `{@link HostApduService#sendResponseApdu((...)}`",
+      "range": {
+        "startLine": 249,
+        "startChar": 5,
+        "endLine": 249,
+        "endChar": 6
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb248a82_da53ff38",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "Remove `s` - `getResponseApdu`",
+      "range": {
+        "startLine": 252,
+        "startChar": 32,
+        "endLine": 252,
+        "endChar": 34
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd4f2603_c57c4f90",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "getRfFieldOnTimeMillis",
+      "range": {
+        "startLine": 260,
+        "startChar": 16,
+        "endLine": 260,
+        "endChar": 32
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d6ba1ee_016bd394",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "What time is this? Add `System.currentTimeMillis()` timestamp.",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 43
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd6960b8_ecc5cfde",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-28T20:43:52Z",
+      "side": 1,
+      "message": "getSimRouteTimeMillis",
+      "range": {
+        "startLine": 268,
+        "startChar": 16,
+        "endLine": 268,
+        "endChar": 31
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
