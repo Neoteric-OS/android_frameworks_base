@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8faac966_72cee786",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-28T17:33:18Z",
+      "side": 1,
+      "message": "IoUtils.closeQuietly(fd)",
+      "range": {
+        "startLine": 220,
+        "startChar": 20,
+        "endLine": 225,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c193574f_3ebcc36e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/BootReceiver.java",
+              "range": {
+                "startLine": 44,
+                "startChar": 0,
+                "endLine": 44,
+                "endChar": 0
+              },
+              "replacement": "import com.android.internal.annotations.VisibleForTesting;\nimport com.android.internal.logging.MetricsLogger;\nimport com.android.internal.util.FrameworkStatsLog;\nimport com.android.internal.util.XmlUtils;\nimport com.android.modules.utils.TypedXmlPullParser;\nimport com.android.modules.utils.TypedXmlSerializer;\nimport com.android.server.am.DropboxRateLimiter;\nimport com.android.server.IoUtils;\nimport android.system.ErrnoException;\nimport android.system.Os;\nimport android.system.OsConstants;\nimport android.text.TextUtils;\nimport android.util.AtomicFile;\nimport android.util.EventLog;\nimport android.util.Slog;\nimport android.util.Xml;\nimport android.util.proto.ProtoOutputStream;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/BootReceiver.java",
+              "range": {
+                "startLine": 220,
+                "startChar": 0,
+                "endLine": 226,
+                "endChar": 0
+              },
+              "replacement": "                    IoUtils.closeQuietly(fd);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ddff924365f19ebe61338989fae754d0c4b6a471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
