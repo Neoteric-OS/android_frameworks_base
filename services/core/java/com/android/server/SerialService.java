@@ -26,6 +26,7 @@ import android.os.PermissionEnforcer;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
+import com.android.server.utils.JniRegistrar;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,6 +42,10 @@ public class SerialService extends ISerialManager.Stub {
             new LinkedHashMap<>();
 
     private static final String PREFIX_VIRTUAL = "virtual:";
+
+    static {
+        JniRegistrar.registerSerialService();
+    }
 
     public SerialService(Context context) {
         super(PermissionEnforcer.fromContext(context));
