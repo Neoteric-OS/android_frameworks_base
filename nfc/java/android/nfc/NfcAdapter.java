@@ -49,6 +49,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import android.util.Log;
 
 import java.io.IOException;
@@ -2894,5 +2895,44 @@ public final class NfcAdapter {
             }
         }
         return mNfcOemExtension;
+    }
+
+    /**
+     * Activity action: ask the user to change allowlist of the TagIntentAppPreference.
+     *
+     * <p>This will direct user to the settings page shows a list that asks users whether
+     * they want to allow or disallow the package to start an activity when a tag is discovered.
+     *
+     */
+    @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
+    @FlaggedApi(Flags.FLAG_NFC_CHECK_TAG_INTENT_PREFERENCE)
+    public static final String ACTIOIN_CHANGE_TAG_INTENT_PREFERENCE =
+            "android.nfc.ACTIOIN_CHANGE_TAG_INTENT_PREFERENCE";
+
+    /**
+     * Checks whether the {@link getTagIntentAppPreferenceForUser} prohibits the caller from
+     * receiving tag intents.
+     *
+     * <p>This method checks whether the caller package name is either not present in the list
+     * {@link getTagIntentAppPreferenceForUser} or is added to the list with a flag value
+     * {@code true} or {@code false}.
+     *
+     * @return {@code true} if an app is either not present in the list or is added to the list
+     * with the flag set to {@code true}. Otherwise, it returns {@code false}.
+     * It also returns {@code true} if {@link isTagIntentAppPreferenceSupported} returns
+     * {@code false}.
+     *
+     * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
+     */
+    @FlaggedApi(Flags.FLAG_NFC_CHECK_TAG_INTENT_PREFERENCE)
+    public boolean isTagIntentAllowed() {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        if (!isTagIntentAppPreferenceSupported()) {
+            return true;
+        }
+        return callServiceReturn(() ->  sService.isTagIntentAllowed(mContext.getPackageName(),
+                UserHandle.myUserId()), false);
     }
 }
