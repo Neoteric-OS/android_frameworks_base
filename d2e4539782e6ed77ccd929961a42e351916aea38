@@ -412,6 +412,24 @@
       "message": "getNdefNfceeStatus() cannot return boolean, it should be something like isNdefNfceeListening()",
       "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd45db64_ebb1e8bf",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-10-28T11:40:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3155fde5_b28f3ed4",
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
