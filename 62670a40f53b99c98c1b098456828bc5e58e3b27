@@ -105,6 +105,30 @@
       },
       "revId": "62670a40f53b99c98c1b098456828bc5e58e3b27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73309d55_754fd311",
+        "filename": "services/tests/PackageManagerServiceTests/server/src/com/android/server/pm/parsing/SystemPartitionParseTest.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-10-28T16:34:54Z",
+      "side": 1,
+      "message": "The change doesn\u0027t cover apex but the original test seems to be targeting APKs only, so the change should be fine.",
+      "parentUuid": "5cf94123_9af0f836",
+      "range": {
+        "startLine": 56,
+        "startChar": 17,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "62670a40f53b99c98c1b098456828bc5e58e3b27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
