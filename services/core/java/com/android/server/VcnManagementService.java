@@ -48,6 +48,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.vcn.Flags;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
@@ -878,6 +879,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     private void garbageCollectAndWriteVcnConfigsLocked() {
         final SubscriptionManager subMgr = mContext.getSystemService(SubscriptionManager.class);
+        final Set<ParcelUuid> subGroups = mLastSnapshot.getAllSubscriptionGroups();
 
         boolean shouldWrite = false;
 
@@ -885,11 +887,20 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         while (configsIterator.hasNext()) {
             final ParcelUuid subGrp = configsIterator.next();
 
-            final List<SubscriptionInfo> subscriptions = subMgr.getSubscriptionsInGroup(subGrp);
-            if (subscriptions == null || subscriptions.isEmpty()) {
-                // Trim subGrps with no more subscriptions; must have moved to another subGrp
-                configsIterator.remove();
-                shouldWrite = true;
+            if (Flags.fixConfigGarbageCollection()) {
+                if (!subGroups.contains(subGrp)) {
+                    // Trim subGrps with no more subscriptions; must have moved to another subGrp
+                    logDbg("Garbage collect VcnConfig of " + subGrp);
+                    configsIterator.remove();
+                    shouldWrite = true;
+                }
+            } else {
+                final List<SubscriptionInfo> subscriptions = subMgr.getSubscriptionsInGroup(subGrp);
+                if (subscriptions == null || subscriptions.isEmpty()) {
+                    // Trim subGrps with no more subscriptions; must have moved to another subGrp
+                    configsIterator.remove();
+                    shouldWrite = true;
+                }
             }
         }
 
@@ -1083,70 +1094,76 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                             + " MANAGE_TEST_NETWORKS");
         }
 
-        return BinderUtils.withCleanCallingIdentity(() -> {
-            // Defensive copy in case this call is in-process and the given NetworkCapabilities
-            // mutates
-            final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
+        return BinderUtils.withCleanCallingIdentity(
+                () -> {
+                    // Defensive copy in case this call is in-process and the given
+                    // NetworkCapabilities
+                    // mutates
+                    final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
 
-            final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
-            boolean isVcnManagedNetwork = false;
-            boolean isRestricted = false;
-            synchronized (mLock) {
-                final Vcn vcn = mVcns.get(subGrp);
-                final VcnConfig vcnConfig = mConfigs.get(subGrp);
-                if (vcn != null) {
-                    if (vcnConfig == null) {
-                        // TODO: b/284381334 Investigate for the root cause of this issue
-                        // and handle it properly
-                        logWtf("Vcn instance exists but VcnConfig does not for " + subGrp);
-                    }
-
-                    if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
-                        isVcnManagedNetwork = true;
-                    }
-
-                    final Set<Integer> restrictedTransports = mDeps.getRestrictedTransports(
-                            subGrp, mLastSnapshot, vcnConfig);
-                    for (int restrictedTransport : restrictedTransports) {
-                        if (ncCopy.hasTransport(restrictedTransport)) {
-                            if (restrictedTransport == TRANSPORT_CELLULAR
-                                    || restrictedTransport == TRANSPORT_TEST) {
-                                // For cell or test network, only mark it as restricted when
-                                // the VCN is in active mode.
-                                isRestricted |= (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE);
-                            } else {
-                                isRestricted = true;
-                                break;
+                    final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
+                    boolean isVcnManagedNetwork = false;
+                    boolean isRestricted = false;
+                    synchronized (mLock) {
+                        final Vcn vcn = mVcns.get(subGrp);
+                        final VcnConfig vcnConfig = mConfigs.get(subGrp);
+                        if (vcn != null && vcnConfig != null) {
+                            if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
+                                isVcnManagedNetwork = true;
                             }
+
+                            final Set<Integer> restrictedTransports =
+                                    mDeps.getRestrictedTransports(subGrp, mLastSnapshot, vcnConfig);
+                            for (int restrictedTransport : restrictedTransports) {
+                                if (ncCopy.hasTransport(restrictedTransport)) {
+                                    if (restrictedTransport == TRANSPORT_CELLULAR
+                                            || restrictedTransport == TRANSPORT_TEST) {
+                                        // For cell or test network, only mark it as restricted when
+                                        // the VCN is in active mode.
+                                        isRestricted |= (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE);
+                                    } else {
+                                        isRestricted = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        } else if (vcn != null && vcnConfig == null) {
+                            logWtf("Vcn instance exists but VcnConfig does not for " + subGrp);
                         }
                     }
-                }
-            }
 
-            final NetworkCapabilities.Builder ncBuilder = new NetworkCapabilities.Builder(ncCopy);
+                    final NetworkCapabilities.Builder ncBuilder =
+                            new NetworkCapabilities.Builder(ncCopy);
 
-            if (isVcnManagedNetwork) {
-                ncBuilder.removeCapability(
-                        NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
-            } else {
-                ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
-            }
+                    if (isVcnManagedNetwork) {
+                        ncBuilder.removeCapability(
+                                NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+                    } else {
+                        ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+                    }
 
-            if (isRestricted) {
-                ncBuilder.removeCapability(
-                        NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
-            }
+                    if (isRestricted) {
+                        ncBuilder.removeCapability(
+                                NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+                    }
 
-            final NetworkCapabilities result = ncBuilder.build();
-            final VcnUnderlyingNetworkPolicy policy = new VcnUnderlyingNetworkPolicy(
-                    mTrackingNetworkCallback
-                            .requiresRestartForImmutableCapabilityChanges(result, linkProperties),
-                    result);
+                    final NetworkCapabilities result = ncBuilder.build();
+                    final VcnUnderlyingNetworkPolicy policy =
+                            new VcnUnderlyingNetworkPolicy(
+                                    mTrackingNetworkCallback
+                                            .requiresRestartForImmutableCapabilityChanges(
+                                                    result, linkProperties),
+                                    result);
 
-            logVdbg("getUnderlyingNetworkPolicy() called for caps: " + networkCapabilities
-                        + "; and lp: " + linkProperties + "; result = " + policy);
-            return policy;
-        });
+                    logVdbg(
+                            "getUnderlyingNetworkPolicy() called for caps: "
+                                    + networkCapabilities
+                                    + "; and lp: "
+                                    + linkProperties
+                                    + "; result = "
+                                    + policy);
+                    return policy;
+                });
     }
 
     /** Binder death recipient used to remove registered VcnStatusCallbacks. */
