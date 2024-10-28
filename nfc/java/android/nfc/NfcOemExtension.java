@@ -80,6 +80,7 @@ public final class NfcOemExtension {
     private boolean mCardEmulationActivated = false;
     private boolean mRfFieldActivated = false;
     private boolean mRfDiscoveryStarted = false;
+    private boolean mSeListenActivated = false;
 
     /**
      * Mode Type for {@link #setControllerAlwaysOnMode(int)}.
@@ -320,6 +321,13 @@ public final class NfcOemExtension {
         void onRfDiscoveryStarted(boolean isDiscoveryStarted);
 
         /**
+        * Notifies the NFC SE Listen status
+        *
+        * @param isActivated true, if SE Listen is ON, else SE Listen is OFF.
+        */
+        void onSeListenActivated(boolean isActivated);
+
+        /**
          * Gets the intent to find the OEM package in the OEM App market. If the consumer returns
          * {@code null} or a timeout occurs, the intent from the first available package will be
          * used instead.
@@ -430,6 +438,7 @@ public final class NfcOemExtension {
                 callback.onCardEmulationActivated(mCardEmulationActivated);
                 callback.onRfFieldActivated(mRfFieldActivated);
                 callback.onRfDiscoveryStarted(mRfDiscoveryStarted);
+                callback.onSeListenActivated(mSeListenActivated);
             });
         }
     }
@@ -701,6 +710,13 @@ public final class NfcOemExtension {
             mRfDiscoveryStarted = isDiscoveryStarted;
             mCallbackMap.forEach((cb, ex) ->
                     handleVoidCallback(isDiscoveryStarted, cb::onRfDiscoveryStarted, ex));
+        }
+
+        @Override
+        public void onSeListenActivated(boolean isActivated) throws RemoteException {
+            mSeListenActivated = isActivated;
+            mCallbackMap.forEach((cb, ex) ->
+                    handleVoidCallback(isActivated, cb::onSeListenActivated, ex));
         }
 
         @Override
