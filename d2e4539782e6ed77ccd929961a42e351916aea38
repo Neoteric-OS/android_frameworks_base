@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be412122_3aee301a",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-10-28T11:39:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f35ba54f_b17d4aea",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d6c7fa0_5fb8ab2d",
@@ -124,6 +148,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1352212a_eab70268",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-10-28T11:39:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9131c855_fe915754",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c49c524_a8746e57",
@@ -161,6 +209,30 @@
           ]
         }
       ],
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "feccf1b7_d088e329",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-10-28T11:39:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1c49c524_a8746e57",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 14
+      },
       "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -254,6 +326,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "355d9056_4641d4fb",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-10-28T11:39:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "58f8e3d7_e0543f96",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d53791e7_d2b98738",
@@ -267,6 +363,30 @@
       "writtenOn": "2024-10-22T20:46:29Z",
       "side": 1,
       "message": "Same as above. Please define the format of the data.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 59
+      },
+      "revId": "d2e4539782e6ed77ccd929961a42e351916aea38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dd95551_a1f3acb3",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3031218
+      },
+      "writtenOn": "2024-10-28T11:39:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d53791e7_d2b98738",
       "range": {
         "startLine": 89,
         "startChar": 0,
