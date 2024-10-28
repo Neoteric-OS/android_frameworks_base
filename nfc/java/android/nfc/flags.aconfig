@@ -173,3 +173,11 @@ flag {
     description: "Share wallet role routing priority with associated services"
     bug: "366243361"
 }
+
+flag {
+    name: "nfc_check_tag_intent_preference"
+    is_exported: true
+    namespace: "nfc"
+    description: "App can check its tag intent preference status"
+    bug: "335916336"
+}
