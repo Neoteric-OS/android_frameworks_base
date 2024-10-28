@@ -50,6 +50,30 @@
       ],
       "revId": "ddff924365f19ebe61338989fae754d0c4b6a471",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8963ee46_adf86a3f",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1950860
+      },
+      "writtenOn": "2024-10-28T23:47:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8faac966_72cee786",
+      "range": {
+        "startLine": 220,
+        "startChar": 20,
+        "endLine": 225,
+        "endChar": 21
+      },
+      "revId": "ddff924365f19ebe61338989fae754d0c4b6a471",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
