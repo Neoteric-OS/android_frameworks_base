@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "645c680d_222668bf",
+        "filename": "apex/jobscheduler/service/java/com/android/server/AppStateTrackerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-10-29T04:45:38Z",
+      "side": 1,
+      "message": "Same as https://r.android.com/3322497. It is unnecessary for all the services to log this. I\u0027d suggest removing this.",
+      "range": {
+        "startLine": 449,
+        "startChar": 16,
+        "endLine": 449,
+        "endChar": 54
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "09f63489_f35c7722",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apex/jobscheduler/service/java/com/android/server/AppStateTrackerImpl.java",
+              "range": {
+                "startLine": 449,
+                "startChar": 0,
+                "endLine": 450,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "e89a214b461bae639be3ad77792ae587bd62ca0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
