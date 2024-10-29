@@ -84,9 +84,14 @@ public final class BackgroundJobsController extends StateController {
     private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (action == null) {
+                Slog.e(TAG, "There are no actions in the intent");
+                return;
+            }
+
             final String pkgName = getPackageName(intent);
             final int pkgUid = intent.getIntExtra(Intent.EXTRA_UID, -1);
-            final String action = intent.getAction();
             if (pkgUid == -1) {
                 Slog.e(TAG, "Didn't get package UID in intent (" + action + ")");
                 return;
