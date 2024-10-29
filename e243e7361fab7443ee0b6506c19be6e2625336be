@@ -16,6 +16,23 @@
       "message": "Hello! Thanks for taking a look at this CR! \n\nWe noticed that the power presses could be consumed by the GestureLauncherService class before being given to the SingleKeyGestureDectector class. This prevents our triple press of the power button behavior from working, if the camera or emergency button (handled in GestureLauncherService) is enabled. Hence, in this CR, we also refactored some of the camera and emergency button handling from GestureLauncherService into SingleKeyGestureDetector. This refactor brings up two primary questions: \n\n\n1. What needs to be accounted for interactive versus non-interactive power keys? \n    a. Currently interactive power keys are consumed by SingleKeyGestureDetector only if GestureLauncherService does not, and non-interactive power keys are always consumed by both classes.\n    b. The proposed refactor makes it so that all power keys are only consumed once, by SingleKeyGestureDetector.\n\n2. Does Google have headless devices we need to account for? \n    a. With the proposed refactor, power keys would only be handled through SingleKeyGestureDetector (from PhoneWindowManager) instead of also GestureLauncherService. Hence, we need to assume that PhoneWindowManager always exists if GestureLauncherService exists. Initial investigation indicates this seems to be true, but is there a situation where this is not true (e.g. headless devices)?\n    \nThanks again! :)",
       "revId": "e243e7361fab7443ee0b6506c19be6e2625336be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "181522da_52788dec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3307287
+      },
+      "writtenOn": "2024-10-29T22:15:16Z",
+      "side": 1,
+      "message": "Hi! I was wondering if anyone has had a chance to take a look? I also have some open questions in my previous comment. Thanks in advance!",
+      "revId": "e243e7361fab7443ee0b6506c19be6e2625336be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
