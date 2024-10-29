@@ -17,6 +17,7 @@
 package android.nfc.cardemulation;
 
 import android.Manifest;
+import android.annotation.CallbackExecutor;
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
@@ -36,12 +37,14 @@ import android.content.pm.PackageManager;
 import android.nfc.Constants;
 import android.nfc.Flags;
 import android.nfc.INfcCardEmulation;
+import android.nfc.INfcEventListener;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import java.lang.annotation.Retention;
@@ -50,6 +53,8 @@ import java.util.HashMap;
 import java.util.HexFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
 
 /**
@@ -1075,5 +1080,117 @@ public final class CardEmulation {
             case PROTOCOL_AND_TECHNOLOGY_ROUTE_DEFAULT -> "default";
             default -> throw new IllegalStateException("Unexpected value: " + route);
         };
+    }
+
+    /** Listener for preferred service state changes. */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public interface NfcEventListener {
+        /**
+         * This method is called when this service gains or loses preferred Nfc service status,
+         * either the Default Wallet Role holder
+         * (see {@link android.app.role.RoleManager#ROLE_WALLET}) or the preferred
+         * service of the foreground activity  set with
+         * {@link #setPreferredService(Activity, ComponentName)}
+         *
+         * @param isPreferred true is this service has become the preferred Nfc service, false if it
+         *     is no longer the preferred service
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onPreferredServiceChanged(boolean isPreferred) {}
+
+        /**
+         * This method is called when this service is the preferred Nfc service and Observe mode has
+         * been enabled or disabled.
+         *
+         * @param isEnabled true if observe mode has been enabled, false if it has been disabled
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onObserveModeStateChanged(boolean isEnabled) {}
+    }
+
+    private final ArrayMap<NfcEventListener, Executor> mNfcEventListeners =
+            new ArrayMap<>();
+
+    final INfcEventListener mINfcEventListener =
+            new INfcEventListener.Stub() {
+                public void onPreferredServiceChanged(ComponentName componentName, int userId) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    boolean isPreferred =
+                            userId == mContext.getUser().getIdentifier()
+                                    && componentName != null
+                                    && Objects.equals(
+                                            mContext.getPackageName(),
+                                            componentName.getPackageName());
+                    synchronized (mNfcEventListeners) {
+                        mNfcEventListeners.forEach(
+                                (listener, executor) -> {
+                                    executor.execute(
+                                            () -> listener.onPreferredServiceChanged(isPreferred));
+                                });
+                    }
+                }
+
+                public void onObserveModeStateChanged(boolean isEnabled) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    synchronized (mNfcEventListeners) {
+                        mNfcEventListeners.forEach(
+                                (listener, executor) -> {
+                                    executor.execute(
+                                            () -> listener.onObserveModeStateChanged(isEnabled));
+                                });
+                    }
+                }
+            };
+
+    /**
+     * Register a listener for NFC Events.
+     *
+     * @param executor The Executor to run the call back with
+     * @param listener The listener to register
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public void registerNfcEventListener(
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull NfcEventListener listener) {
+        if (!android.nfc.Flags.nfcEventListener()) {
+            return;
+        }
+        synchronized (mNfcEventListeners) {
+            mNfcEventListeners.put(listener, executor);
+            if (mNfcEventListeners.size() == 1) {
+                callService(
+                        () ->
+                                sService.registerNfcEventListener(
+                                        mINfcEventListener));
+            }
+        }
+    }
+
+    /**
+     * Unregister a preferred service listener that was previously registered with
+     * {@link #registerNfcEventListener(Executor, NfcEventListener)}
+     *
+     * @param listener The previously registered listener to unregister
+     */
+
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public void unregisterNfcEventListener(
+            @NonNull NfcEventListener listener) {
+        if (!android.nfc.Flags.nfcEventListener()) {
+            return;
+        }
+        synchronized (mNfcEventListeners) {
+            mNfcEventListeners.remove(listener);
+            if (mNfcEventListeners.size() == 0) {
+                callService(
+                        () ->
+                                sService.unregisterNfcEventListener(
+                                        mINfcEventListener));
+            }
+        }
     }
 }
