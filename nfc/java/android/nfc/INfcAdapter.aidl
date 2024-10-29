@@ -51,8 +51,8 @@ interface INfcAdapter
     int getState();
     boolean disable(boolean saveState, in String pkg);
     boolean enable(in String pkg);
-    void pausePolling(int timeoutInMs);
-    void resumePolling();
+    boolean pausePolling(int timeoutInMs);
+    boolean resumePolling();
 
     void setForegroundDispatch(in PendingIntent intent,
             in IntentFilter[] filters, in TechListParcel techLists);

@@ -573,21 +573,23 @@ public final class NfcOemExtension {
      * In case of {@code timeoutInMs} is zero or invalid polling will be stopped indefinitely
      * use {@link #resumePolling() to resume the polling.
      * @param timeoutInMs the pause polling duration in millisecond
+     * @return true if operation is successful, false otherwise
      */
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
-    public void pausePolling(int timeoutInMs) {
-        NfcAdapter.callService(() -> NfcAdapter.sService.pausePolling(timeoutInMs));
+    public boolean pausePolling(int timeoutInMs) {
+        NfcAdapter.callServiceReturn(() -> NfcAdapter.sService.pausePolling(timeoutInMs));
     }
 
     /**
      * Resumes default NFC tag reader mode polling for the current device state if polling is
      * paused. Calling this while already in polling is a no-op.
+     * @return true if operation is successful, false otherwise
      */
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
     public void resumePolling() {
-        NfcAdapter.callService(() -> NfcAdapter.sService.resumePolling());
+        NfcAdapter.callServiceReturn(() -> NfcAdapter.sService.resumePolling());
     }
 
     /**
