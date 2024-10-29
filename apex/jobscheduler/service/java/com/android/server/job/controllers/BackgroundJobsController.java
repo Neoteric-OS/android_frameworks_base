@@ -87,6 +87,10 @@ public final class BackgroundJobsController extends StateController {
             final String pkgName = getPackageName(intent);
             final int pkgUid = intent.getIntExtra(Intent.EXTRA_UID, -1);
             final String action = intent.getAction();
+            if (action == null) {
+                Slog.e(TAG, "Intent broadcast does not contain action: " + intent);
+                return;
+            }
             if (pkgUid == -1) {
                 Slog.e(TAG, "Didn't get package UID in intent (" + action + ")");
                 return;
