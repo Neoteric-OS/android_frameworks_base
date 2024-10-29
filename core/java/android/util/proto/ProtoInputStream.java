@@ -593,6 +593,22 @@ public final class ProtoInputStream extends ProtoStream {
     }
 
     /**
+     * Reads a raw varint from the buffer.
+     *
+     * @param markSuccess If {@code true}, marks the field read as successful by clearing the
+     *                    {@code STATE_STARTED_FIELD_READ} flag in the internal state.
+     *                    If {@code false}, the internal state remains unchanged.
+     * @return the varint as a long
+     * @throws IOException If an I/O error occurs or if the end of the buffer is reached early.
+     */
+    public long readRawVarint(boolean markSuccess) throws IOException {
+        long value = readVarint();
+        if (markSuccess) {
+            mState &= ~STATE_STARTED_FIELD_READ;
+        }
+        return value;
+    }
+    /**
      * Read a varint from the buffer
      *
      * @return the varint as a long
@@ -629,6 +645,23 @@ public final class ProtoInputStream extends ProtoStream {
             // Hit the end of the buffer, do some incrementing and checking, then continue
             incOffset(fragment);
         }
+    }
+
+    /**
+     * Reads a raw 32-bit fixed-length integer from the buffer.
+     *
+     * @param markSuccess If {@code true}, marks the field read as successful by clearing the
+     *                    {@code STATE_STARTED_FIELD_READ} flag in the internal state.
+     *                    If {@code false}, the internal state remains unchanged.
+     * @return The read 32-bit fixed integer value.
+     * @throws IOException If an I/O error occurs or if the end of the buffer is reached early.
+     */
+    public int readRawFixed32(boolean markSuccess) throws IOException {
+        int value = readFixed32();
+        if (markSuccess) {
+            mState &= ~STATE_STARTED_FIELD_READ;
+        }
+        return value;
     }
 
     /**
@@ -669,6 +702,23 @@ public final class ProtoInputStream extends ProtoStream {
                 fragment--;
                 shift += 8;
             }
+        }
+        return value;
+    }
+
+    /**
+     * Reads a raw 64-bit fixed-length integer from the buffer.
+     *
+     * @param markSuccess If {@code true}, marks the field read as successful by clearing the
+     *                    {@code STATE_STARTED_FIELD_READ} flag in the internal state.
+     *                    If {@code false}, the internal state remains unchanged.
+     * @return The read 64-bit fixed integer value.
+     * @throws IOException If an I/O error occurs or if the end of the buffer is reached early.
+     */
+    public long readRawFixed64(boolean markSuccess) throws IOException {
+        long value = readFixed64();
+        if (markSuccess) {
+            mState &= ~STATE_STARTED_FIELD_READ;
         }
         return value;
     }
@@ -715,6 +765,25 @@ public final class ProtoInputStream extends ProtoStream {
                 fragment--;
                 shift += 8;
             }
+        }
+        return value;
+    }
+
+    /**
+     * Reads a raw sequence of bytes from the buffer.
+     *
+     * @param n           The number of bytes to read.
+     * @param markSuccess If {@code true}, marks the field read as successful by clearing the
+     *                    {@code STATE_STARTED_FIELD_READ} flag in the internal state.
+     *                    If {@code false}, the internal state remains unchanged.
+     * @return A byte array containing the read bytes.
+     * @throws IOException If an I/O error occurs, if the end of the buffer is reached early,
+     *                     or if the requested number of bytes is negative.
+     */
+    public byte[] readRawBytesWithMark(int n, boolean markSuccess) throws IOException {
+        byte[] value = readRawBytes(n);
+        if (markSuccess) {
+            mState &= ~STATE_STARTED_FIELD_READ;
         }
         return value;
     }
