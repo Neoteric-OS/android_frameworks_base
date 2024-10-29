@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17f8d89e_954090bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2024-10-29T00:54:43Z",
+      "side": 1,
+      "message": "@schfan@google.com Could you help me submit this CL, I have no permission to submit, thanks",
+      "revId": "a8eb88ba897ec0f9d839fbc0e32bcbfbc4166348",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
