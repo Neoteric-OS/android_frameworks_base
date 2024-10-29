@@ -1,0 +1,86 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00e079b5_21277c9b",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-10-29T18:30:53Z",
+      "side": 1,
+      "message": "Missing second argument",
+      "range": {
+        "startLine": 581,
+        "startChar": 8,
+        "endLine": 581,
+        "endChar": 88
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "93fa123d_8d339bb6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 581,
+                "startChar": 0,
+                "endLine": 582,
+                "endChar": 0
+              },
+              "replacement": "        return NfcAdapter.callServiceReturn(() -\u003e NfcAdapter.sService.pausePolling(timeoutInMs),\n                false);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "961ad558ded145d36d9f310b390f6e5212e9b616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79cdd4f_a69374c7",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1576846
+      },
+      "writtenOn": "2024-10-29T18:30:53Z",
+      "side": 1,
+      "message": "The documentation describes @return behavior, but the implementation is void. Which one is correct?",
+      "range": {
+        "startLine": 592,
+        "startChar": 8,
+        "endLine": 592,
+        "endChar": 80
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "090f84fc_e3238c03",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 587,
+                "startChar": 0,
+                "endLine": 588,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "961ad558ded145d36d9f310b390f6e5212e9b616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
