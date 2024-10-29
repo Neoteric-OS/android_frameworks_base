@@ -88,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2e8c00a_0ae370c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-10-29T06:26:58Z",
+      "side": 1,
+      "message": "Since we decided to add only `executeShellCommandRwe` as overload in doc, only `executeShellCommandArrayWithStderr` is needed, deleted `executeShellCommandArray` in the newest patch",
+      "parentUuid": "06d0f5bf_d0528793",
+      "revId": "3a1eb75c34007141b8cdc055e13189db6ee690c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51ac87f1_9b89cc23",
