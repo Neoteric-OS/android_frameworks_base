@@ -51,6 +51,24 @@
       "parentUuid": "181522da_52788dec",
       "revId": "e243e7361fab7443ee0b6506c19be6e2625336be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd9d410f_37b965ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2024-10-29T22:22:12Z",
+      "side": 1,
+      "message": "Hi Susan, I\u0027ll share this internally and collect thoughts.\n\nTo be clear though, adding even more accessibility shortcut options is not a high priority for Android Accessibility at the moment so I don\u0027t expect anyone here to pick it up soon. Even landing a feature with starter code already provided (like this change) isn\u0027t very straightforward because we need to ensure it has proper (and localized) UX in the Settings app, get legal/privacy/etc. approval, etc.",
+      "parentUuid": "181522da_52788dec",
+      "revId": "e243e7361fab7443ee0b6506c19be6e2625336be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
