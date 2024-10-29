@@ -40,6 +40,30 @@
       ],
       "revId": "e89a214b461bae639be3ad77792ae587bd62ca0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0846a9e_cec2bf21",
+        "filename": "apex/jobscheduler/service/java/com/android/server/AppStateTrackerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1950860
+      },
+      "writtenOn": "2024-10-29T04:54:11Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "645c680d_222668bf",
+      "range": {
+        "startLine": 449,
+        "startChar": 16,
+        "endLine": 449,
+        "endChar": 54
+      },
+      "revId": "e89a214b461bae639be3ad77792ae587bd62ca0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
