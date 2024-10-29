@@ -372,6 +372,11 @@ public final class NfcOemExtension {
          * @param category the category of the service
          */
         void onLaunchHceTapAgainDialog(@NonNull ApduServiceInfo service, @NonNull String category);
+        /**
+         * API which shows a popup when AID buffer is full
+         * case : User can remove some AID services to free buffer space.
+         * */
+        void onLaunchRoutingTableFullDialog();
     }
 
 
@@ -569,9 +574,8 @@ public final class NfcOemExtension {
     }
 
     /**
-     * Pauses NFC tag reader mode polling for a {@code timeoutInMs} millisecond.
-     * In case of {@code timeoutInMs} is zero or invalid polling will be stopped indefinitely
-     * use {@link #resumePolling() to resume the polling.
+     * Pauses NFC tag reader mode polling for a {@code timeoutInMs} millisecond. If polling must be
+     * resumed before timeout, use {@link #resumePolling()}.
      * @param timeoutInMs the pause polling duration in millisecond
      */
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
@@ -582,7 +586,7 @@ public final class NfcOemExtension {
 
     /**
      * Resumes default NFC tag reader mode polling for the current device state if polling is
-     * paused. Calling this while already in polling is a no-op.
+     * paused. Calling this while polling is not paused is a no-op.
      */
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
@@ -648,29 +652,24 @@ public final class NfcOemExtension {
      *                   {@link ProtocolAndTechnologyRoute}
      * @param emptyAid Zero-length AID route destination, where the possible inputs are defined in
      *                 {@link ProtocolAndTechnologyRoute}
-     * @param systemCode System Code route destination, where the possible inputs are defined in
-     *                   {@link ProtocolAndTechnologyRoute}
      */
     @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
     public void overwriteRoutingTable(
             @CardEmulation.ProtocolAndTechnologyRoute int protocol,
             @CardEmulation.ProtocolAndTechnologyRoute int technology,
-            @CardEmulation.ProtocolAndTechnologyRoute int emptyAid,
-            @CardEmulation.ProtocolAndTechnologyRoute int systemCode) {
+            @CardEmulation.ProtocolAndTechnologyRoute int emptyAid) {
 
         String protocolRoute = routeIntToString(protocol);
         String technologyRoute = routeIntToString(technology);
         String emptyAidRoute = routeIntToString(emptyAid);
-        String systemCodeRoute = routeIntToString(systemCode);
 
         NfcAdapter.callService(() ->
                 NfcAdapter.sCardEmulationService.overwriteRoutingTable(
                         mContext.getUser().getIdentifier(),
                         emptyAidRoute,
                         protocolRoute,
-                        technologyRoute,
-                        systemCodeRoute
+                        technologyRoute
                 ));
     }
 
@@ -784,6 +783,11 @@ public final class NfcOemExtension {
         public void onReaderOptionChanged(boolean enabled) throws RemoteException {
             mCallbackMap.forEach((cb, ex) ->
                     handleVoidCallback(enabled, cb::onReaderOptionChanged, ex));
+        }
+        @Override
+        public void onLaunchRoutingTableFullDialog() throws RemoteException {
+            mCallbackMap.forEach((cb, ex) ->
+                    handleVoidCallback(null, (Object input) -> cb.onLaunchRoutingTableFullDialog(), ex));
         }
 
         @Override
@@ -923,15 +927,12 @@ public final class NfcOemExtension {
     }
 
     private @CardEmulation.ProtocolAndTechnologyRoute int routeStringToInt(String route) {
-        if (route.equals("DH")) {
-            return PROTOCOL_AND_TECHNOLOGY_ROUTE_DH;
-        } else if (route.startsWith("eSE")) {
-            return PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE;
-        } else if (route.startsWith("SIM")) {
-            return PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC;
-        } else {
-            throw new IllegalStateException("Unexpected value: " + route);
-        }
+        return switch (route) {
+            case "DH" -> PROTOCOL_AND_TECHNOLOGY_ROUTE_DH;
+            case "eSE" -> PROTOCOL_AND_TECHNOLOGY_ROUTE_ESE;
+            case "SIM" -> PROTOCOL_AND_TECHNOLOGY_ROUTE_UICC;
+            default -> throw new IllegalStateException("Unexpected value: " + route);
+        };
     }
 
     private class ReceiverWrapper<T> implements Consumer<T> {
