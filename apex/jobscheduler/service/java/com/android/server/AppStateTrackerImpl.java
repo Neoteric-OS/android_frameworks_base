@@ -444,8 +444,14 @@ public class AppStateTrackerImpl implements AppStateTracker {
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (action == null) {
+                Slog.e(TAG, "Intent action was null");
+                return;
+            }
+
             final int userId = intent.getIntExtra(Intent.EXTRA_USER_HANDLE, -1);
-            switch (intent.getAction()) {
+            switch (action) {
                 case Intent.ACTION_USER_REMOVED:
                     if (userId > 0) {
                         mHandler.doUserRemoved(userId);
