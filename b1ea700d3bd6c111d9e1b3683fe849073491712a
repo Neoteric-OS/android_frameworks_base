@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a514ab2b_b114f0b3",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2024-10-29T19:16:57Z",
+      "side": 1,
+      "message": "libcore.io.",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f75e2172_7a3e9502",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/BootReceiver.java",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 52,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/BootReceiver.java",
+              "range": {
+                "startLine": 54,
+                "startChar": 0,
+                "endLine": 54,
+                "endChar": 0
+              },
+              "replacement": "import libcore.io.IoUtils;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b1ea700d3bd6c111d9e1b3683fe849073491712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
