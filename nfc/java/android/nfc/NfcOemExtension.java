@@ -372,6 +372,13 @@ public final class NfcOemExtension {
          * @param category the category of the service
          */
         void onLaunchHceTapAgainDialog(@NonNull ApduServiceInfo service, @NonNull String category);
+
+        /**
+         * Callback to indicate that routing table full dialog will be launched when
+         * routing table is full. In this case, user can remove some AID services to free
+         * buffer space.
+         */
+        void onLaunchRoutingTableFullDialog();
     }
 
 
@@ -784,6 +791,13 @@ public final class NfcOemExtension {
         public void onReaderOptionChanged(boolean enabled) throws RemoteException {
             mCallbackMap.forEach((cb, ex) ->
                     handleVoidCallback(enabled, cb::onReaderOptionChanged, ex));
+        }
+
+        @Override
+        public void onLaunchRoutingTableFullDialog() throws RemoteException {
+            mCallbackMap.forEach((cb, ex) ->
+                    handleVoidCallback(null,
+                            (Object input) -> cb.onLaunchRoutingTableFullDialog(), ex));
         }
 
         @Override
