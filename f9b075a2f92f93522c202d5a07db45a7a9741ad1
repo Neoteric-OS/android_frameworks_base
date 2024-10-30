@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03a20a34_c42dd585",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-10-30T23:05:59Z",
+      "side": 1,
+      "message": "For early feedbacks",
+      "revId": "f9b075a2f92f93522c202d5a07db45a7a9741ad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ada0145_ae2bb136",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-10-30T23:05:59Z",
+      "side": 1,
+      "message": "It follows the shape of [`ConnectivityManager#systemReady()`](https://osscs.corp.google.com/search?q\u003dSystemReady\u0026sq\u003d\u0026ss\u003dandroid%2Fplatform%2Fsuperproject:packages%2Fmodules%2FConnectivity%2Fframework%2Fsrc%2Fandroid%2Fnet%2F)",
+      "range": {
+        "startLine": 237,
+        "startChar": 16,
+        "endLine": 237,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1fa9e23d_9b28f209",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/net/vcn/VcnManager.java",
+              "range": {
+                "startLine": 236,
+                "startChar": 0,
+                "endLine": 237,
+                "endChar": 0
+              },
+              "replacement": "    // TODO: b/180537630: Expose it as @SystemApi\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f9b075a2f92f93522c202d5a07db45a7a9741ad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
