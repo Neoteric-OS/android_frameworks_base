@@ -371,7 +371,14 @@ public final class NfcOemExtension {
          * @param service {@link ApduServiceInfo} of the service triggering the dialog
          * @param category the category of the service
          */
+
         void onLaunchHceTapAgainDialog(@NonNull ApduServiceInfo service, @NonNull String category);
+        /**
+         * Callback to indicate that routing table is full and the OEM can optionally launch a
+         * dialog to request the user to remove some Card Emulation apps from the device to free
+         * routing table space.
+         */
+        void onLaunchRoutingTableFullDialog();
     }
 
 
@@ -784,6 +791,13 @@ public final class NfcOemExtension {
         public void onReaderOptionChanged(boolean enabled) throws RemoteException {
             mCallbackMap.forEach((cb, ex) ->
                     handleVoidCallback(enabled, cb::onReaderOptionChanged, ex));
+        }
+
+        @Override
+        public void onLaunchRoutingTableFullDialog() throws RemoteException {
+            mCallbackMap.forEach((cb, ex) ->
+                    handleVoidCallback(null,
+                            (Object input) -> cb.onLaunchRoutingTableFullDialog(), ex));
         }
 
         @Override
