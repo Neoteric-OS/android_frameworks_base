@@ -50,6 +50,30 @@
       ],
       "revId": "b1ea700d3bd6c111d9e1b3683fe849073491712a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b99b7dd5_d59514d7",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1950860
+      },
+      "writtenOn": "2024-10-30T00:13:28Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "a514ab2b_b114f0b3",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "b1ea700d3bd6c111d9e1b3683fe849073491712a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
