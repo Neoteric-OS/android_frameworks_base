@@ -94,6 +94,30 @@
       },
       "revId": "b54b9b5251377e9a5ce31390c59d56cc82556841",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28b8511c_b9764202",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3550,
+      "author": {
+        "id": 1905361
+      },
+      "writtenOn": "2024-10-30T09:09:28Z",
+      "side": 0,
+      "message": "No, there is no rush. We can patch it on our internal branch until it hits AOSP.  If this has already been handled, we can abandon this review.",
+      "parentUuid": "adf0e1aa_2d2306aa",
+      "range": {
+        "startLine": 3550,
+        "startChar": 12,
+        "endLine": 3550,
+        "endChar": 46
+      },
+      "revId": "b54b9b5251377e9a5ce31390c59d56cc82556841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
