@@ -372,6 +372,12 @@ public final class NfcOemExtension {
          * @param category the category of the service
          */
         void onLaunchHceTapAgainDialog(@NonNull ApduServiceInfo service, @NonNull String category);
+
+        /**
+         * API which shows a popup when AID buffer is full
+         * case : User can remove some AID services to free buffer space.
+         */
+        void onLaunchRoutingTableFullDialog();
     }
 
 
@@ -784,6 +790,13 @@ public final class NfcOemExtension {
         public void onReaderOptionChanged(boolean enabled) throws RemoteException {
             mCallbackMap.forEach((cb, ex) ->
                     handleVoidCallback(enabled, cb::onReaderOptionChanged, ex));
+        }
+
+        @Override
+        public void onLaunchRoutingTableFullDialog() throws RemoteException {
+            mCallbackMap.forEach((cb, ex) ->
+                    handleVoidCallback(null,
+                            (Object input) -> cb.onLaunchRoutingTableFullDialog(), ex));
         }
 
         @Override
