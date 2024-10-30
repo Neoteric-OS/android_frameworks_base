@@ -70,6 +70,30 @@
       },
       "revId": "b54b9b5251377e9a5ce31390c59d56cc82556841",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf0e1aa_2d2306aa",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3550,
+      "author": {
+        "id": 1947830
+      },
+      "writtenOn": "2024-10-30T08:18:45Z",
+      "side": 0,
+      "message": "I think this fix has already been done on our end, but hasn\u0027t reached AOSP. If you need I can raise a patch forward but otherwise it should be release in the next AOSP push in December",
+      "parentUuid": "6350b3c2_29f9991a",
+      "range": {
+        "startLine": 3550,
+        "startChar": 12,
+        "endLine": 3550,
+        "endChar": 46
+      },
+      "revId": "b54b9b5251377e9a5ce31390c59d56cc82556841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
