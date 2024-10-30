@@ -52,5 +52,10 @@ interface INfcOemExtensionCallback {
    void onNdefMessage(in Tag tag, in NdefMessage message, in ResultReceiver hasOemExecutableContent);
    void onLaunchHceAppChooserActivity(in String selectedAid, in List<ApduServiceInfo> services, in ComponentName failedComponent, in String category);
    void onLaunchHceTapAgainActivity(in ApduServiceInfo service, in String category);
+<<<<<<< PATCH SET (7e1333 [framework] Add onLaunchRoutingTableFull oem callback)
+   void onRoutingTableFull();
+||||||| BASE
+=======
    void onLogEventNotified(in OemLogItems item);
+>>>>>>> BASE      (df0bba Merge "Introduce a LazyJniRegistrar helper class for system )
 }
