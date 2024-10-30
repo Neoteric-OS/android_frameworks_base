@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b8793ad_01498917",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-30T16:28:00Z",
+      "side": 1,
+      "message": "I thought we agreed to make this a more generic `registerEventListener` callback? Otherwise, we need to track this on the NFC stack side and makes the invocation of these callbacks unpredictable from app\u0027s POV.\n\n[Ref doc](https://docs.google.com/document/d/11JQH5SlxNEVMHmJG0o5UMKRwQQN_FMr4j6Ni9HnWPAI/edit?tab\u003dt.0)",
+      "range": {
+        "startLine": 1132,
+        "startChar": 0,
+        "endLine": 1132,
+        "endChar": 54
+      },
+      "revId": "af8477877f54351b5bf8452568b9e72264de751d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
