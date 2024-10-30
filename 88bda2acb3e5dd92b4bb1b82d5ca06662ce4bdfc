@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a85b4d2b_91697a8a",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-10-30T19:39:15Z",
+      "side": 1,
+      "message": "go/android-api-guidelines#return-error\n\n```\nAll APIs should permit applications to react to errors. Returning false, -1, null, or other catch-all values of \"something went wrong\" do not tell a developer enough about the failure to set user expectations or accurately track reliability of their app in the field. When designing an API, imagine that you are building an application. If you encounter an error, does the API give you enough information to surface it to the user or react appropriately?\n```",
+      "range": {
+        "startLine": 580,
+        "startChar": 11,
+        "endLine": 580,
+        "endChar": 18
+      },
+      "revId": "88bda2acb3e5dd92b4bb1b82d5ca06662ce4bdfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8593645e_c858ae67",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-10-30T19:39:15Z",
+      "side": 1,
+      "message": "Same as prior.",
+      "range": {
+        "startLine": 592,
+        "startChar": 11,
+        "endLine": 592,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "62d2898c_d94de1ad",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 574,
+                "startChar": 0,
+                "endLine": 575,
+                "endChar": 0
+              },
+              "replacement": "     * use {@link #resumePolling()} to resume the polling.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 592,
+                "startChar": 0,
+                "endLine": 593,
+                "endChar": 0
+              },
+              "replacement": "    public boolean resumePolling() { // TODO(b/289159111): Rename to resumePolling()\n"
+            }
+          ]
+        }
+      ],
+      "revId": "88bda2acb3e5dd92b4bb1b82d5ca06662ce4bdfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
