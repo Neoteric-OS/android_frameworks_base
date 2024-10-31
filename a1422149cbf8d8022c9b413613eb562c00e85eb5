@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09b52dc7_4a3a3005",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1956242
+      },
+      "writtenOn": "2024-10-31T01:46:34Z",
+      "side": 1,
+      "message": "this is a clean cp of ag/30047713, thanks!",
+      "revId": "a1422149cbf8d8022c9b413613eb562c00e85eb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
