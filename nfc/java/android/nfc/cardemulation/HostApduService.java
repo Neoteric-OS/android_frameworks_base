@@ -443,4 +443,50 @@ public abstract class HostApduService extends Service {
      */
     public abstract void onDeactivated(int reason);
 
+<<<<<<< PATCH SET (ca94ec Add callbacks to NFC Event Listener)
+
+    /**
+     * This method is called when this service is the preferred NFC service and
+     * Observe mode has been enabled or disabled.
+     *
+     * @param isEnabled true if observe mode has been enabled, false if it has been disabled
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public void onObserveModeStateChanged(boolean isEnabled) {
+
+    }
+
+    /**
+     * This method is called when this service gains or loses preferred NFC service status.
+     *
+     * @param isPreferred true is this service has become the preferred NFC service,
+     * false if it is no longer the preferred service
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public void onPreferredServiceChanged(boolean isPreferred) {
+    }
+||||||| BASE
+
+    /**
+     * This method is called when this service is the preferred Nfc service and
+     * Observe mode has been enabled or disabled.
+     *
+     * @param isEnabled true if observe mode has been enabled, false if it has been disabled
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public void onObserveModeStateChanged(boolean isEnabled) {
+
+    }
+
+    /**
+     * This method is called when this service gains or loses preferred Nfc service status.
+     *
+     * @param isPreferred true is this service has become the preferred Nfc service,
+     * false if it is no longer the preferred service
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public void onPreferredServiceChanged(boolean isPreferred) {
+    }
+=======
+>>>>>>> BASE      (fcc2e1 Implement Observe Mode and Preferred Service event listeners)
 }
