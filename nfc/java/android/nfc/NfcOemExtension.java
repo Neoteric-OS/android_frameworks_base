@@ -159,6 +159,38 @@ public final class NfcOemExtension {
     public @interface HostCardEmulationAction {}
 
     /**
+     * Status code returned when the polling state change request succeeded.
+     * @see #pausePolling()
+     * @see #resumePolling()
+     */
+    public static final int POLLING_STATE_CHANGE_SUCCEEDED = 1;
+    /**
+     * Status code returned when the polling state change request failed.
+     * @see #pausePolling()
+     * @see #resumePolling()
+     */
+    public static final int POLLING_STATE_CHANGE_FAILED = 2;
+    /**
+     * Status code returned when the polling state change request is already in
+     * required state.
+     * @see #pausePolling()
+     * @see #resumePolling()
+     */
+    public static final int POLLING_STATE_CHANGE_ALREADY_IN_REQUIRED_STATE = 3;
+    /**
+     * Possible status codes for {@link #pausePolling()} and
+     * {@link #resumePolling()}.
+     * @hide
+     */
+    @IntDef(value = {
+            POLLING_STATE_CHANGE_SUCCEEDED,
+            POLLING_STATE_CHANGE_FAILED,
+            POLLING_STATE_CHANGE_ALREADY_IN_REQUIRED_STATE,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PollingStateChangeStatusCode {}
+
+    /**
      * Status OK
      */
     public static final int STATUS_OK = 0;
@@ -573,21 +605,24 @@ public final class NfcOemExtension {
      * In case of {@code timeoutInMs} is zero or invalid polling will be stopped indefinitely
      * use {@link #resumePolling() to resume the polling.
      * @param timeoutInMs the pause polling duration in millisecond
+     * @return true if operation is successful, false otherwise
      */
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
-    public void pausePolling(int timeoutInMs) {
-        NfcAdapter.callService(() -> NfcAdapter.sService.pausePolling(timeoutInMs));
+    public @PollingStateChangeStatusCode int pausePolling(int timeoutInMs) {
+        return NfcAdapter.callServiceReturn(() ->
+                NfcAdapter.sService.pausePolling(timeoutInMs), false);
     }
 
     /**
      * Resumes default NFC tag reader mode polling for the current device state if polling is
      * paused. Calling this while already in polling is a no-op.
+     * @return true if operation is successful, false otherwise
      */
     @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
     @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
-    public void resumePolling() {
-        NfcAdapter.callService(() -> NfcAdapter.sService.resumePolling());
+    public @PollingStateChangeStatusCode int resumePolling() {
+        return NfcAdapter.callServiceReturn(() -> NfcAdapter.sService.resumePolling(), false);
     }
 
     /**
