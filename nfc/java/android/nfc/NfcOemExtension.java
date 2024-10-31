@@ -188,9 +188,8 @@ public final class NfcOemExtension {
          * ex - if tag is connected  notify cover and Nfctest app if app is in testing mode
          *
          * @param connected status of the tag true if tag is connected otherwise false
-         * @param tag Tag details
          */
-        void onTagConnected(boolean connected, @NonNull Tag tag);
+        void onTagConnected(boolean connected);
 
         /**
          * Update the Nfc Adapter State
