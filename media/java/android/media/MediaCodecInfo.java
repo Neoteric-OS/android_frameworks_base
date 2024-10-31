@@ -2562,15 +2562,16 @@ public final class MediaCodecInfo {
         private boolean supports(Integer width, Integer height, Number rate) {
             boolean ok = true;
 
-            if (ok && width != null) {
+            if (ok && width != null && height != null) {
+                ok = (mWidthRange.contains(width) && (width % mWidthAlignment == 0))
+                        && (mHeightRange.contains(height) && (height % mHeightAlignment == 0));
+                if (!ok)
+                    ok = (mHeightRange.contains(width) && (width % mWidthAlignment == 0))
+                        && (mWidthRange.contains(height) && (height % mHeightAlignment == 0));
+            } else if (ok && width != null) {
                 ok = mWidthRange.contains(width)
                         && (width % mWidthAlignment == 0);
-            }
-            if (ok && height != null) {
-                ok = mHeightRange.contains(height)
-                        && (height % mHeightAlignment == 0);
-            }
-            if (ok && rate != null) {
+            } else if (ok && height != null) {
                 ok = mFrameRateRange.contains(Utils.intRangeFor(rate.doubleValue()));
             }
             if (ok && height != null && width != null) {
