@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9afb555_c32381cc",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2024-10-31T02:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f4ceeb2_bf603bab",
+      "range": {
+        "startLine": 1095,
+        "startChar": 4,
+        "endLine": 1096,
+        "endChar": 49
+      },
+      "revId": "6b734f3dd5b6e39db94507f8ddbe0950b82942cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d681221f_283a95df",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-31T02:12:24Z",
       "side": 1,
       "message": "same as above.",
+      "range": {
+        "startLine": 1102,
+        "startChar": 43,
+        "endLine": 1102,
+        "endChar": 50
+      },
+      "revId": "6b734f3dd5b6e39db94507f8ddbe0950b82942cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8a9e304_cf502fa6",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2024-10-31T02:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d681221f_283a95df",
       "range": {
         "startLine": 1102,
         "startChar": 43,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc5e9f5c_d84594ea",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2024-10-31T02:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0737864f_4fec3780",
+      "range": {
+        "startLine": 1166,
+        "startChar": 0,
+        "endLine": 1168,
+        "endChar": 59
+      },
+      "revId": "6b734f3dd5b6e39db94507f8ddbe0950b82942cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65fede5a_73253272",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-10-31T02:11:50Z",
       "side": 1,
       "message": "nit: This indentation looks odd.",
+      "range": {
+        "startLine": 1190,
+        "startChar": 0,
+        "endLine": 1192,
+        "endChar": 59
+      },
+      "revId": "6b734f3dd5b6e39db94507f8ddbe0950b82942cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92749d07_445607a4",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1978537
+      },
+      "writtenOn": "2024-10-31T02:27:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65fede5a_73253272",
       "range": {
         "startLine": 1190,
         "startChar": 0,
