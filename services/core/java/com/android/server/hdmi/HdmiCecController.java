@@ -999,7 +999,7 @@ final class HdmiCecController {
             try {
                 // Create an AIDL callback that can callback onHotplugEvent
                 mHdmiConnection.setCallback(new HdmiConnectionCallbackAidl(callback));
-            } catch (RemoteException e) {
+            } catch (RemoteException | NullPointerException e) {
                 HdmiLogger.error("Couldn't initialise tv.hdmi callback : ", e);
             }
         }
@@ -1132,7 +1132,7 @@ final class HdmiCecController {
                     i++;
                 }
                 return hdmiPortInfo;
-            } catch (RemoteException e) {
+            } catch (RemoteException | NullPointerException e) {
                 HdmiLogger.error("Failed to get port information : ", e);
                 return null;
             }
@@ -1142,7 +1142,7 @@ final class HdmiCecController {
         public boolean nativeIsConnected(int port) {
             try {
                 return mHdmiConnection.isConnected(port);
-            } catch (RemoteException e) {
+            } catch (RemoteException | NullPointerException e) {
                 HdmiLogger.error("Failed to get connection info : ", e);
                 return false;
             }
@@ -1156,7 +1156,7 @@ final class HdmiCecController {
                 HdmiLogger.error(
                         "Could not set HPD signal type for portId " + portId + " to " + signal
                                 + ". Error: ", sse.errorCode);
-            } catch (RemoteException e) {
+            } catch (RemoteException | NullPointerException e) {
                 HdmiLogger.error(
                         "Could not set HPD signal type for portId " + portId + " to " + signal
                                 + ". Exception: ", e);
@@ -1167,7 +1167,7 @@ final class HdmiCecController {
         public int nativeGetHpdSignalType(int portId) {
             try {
                 return mHdmiConnection.getHpdSignal(portId);
-            } catch (RemoteException e) {
+            } catch (RemoteException | NullPointerException e) {
                 HdmiLogger.error(
                         "Could not get HPD signal type for portId " + portId + ". Exception: ", e);
                 return Constants.HDMI_HPD_TYPE_PHYSICAL;
