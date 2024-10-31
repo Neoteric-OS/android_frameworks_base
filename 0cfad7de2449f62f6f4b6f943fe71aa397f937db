@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc7d7615_862c4e14",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2024-10-31T01:51:55Z",
+      "side": 1,
+      "message": "Why is this necessary? `checkTempAppWhitelistTimeout` will add a new message with the updated timeout.",
+      "range": {
+        "startLine": 3300,
+        "startChar": 0,
+        "endLine": 3300,
+        "endChar": 44
+      },
+      "revId": "0cfad7de2449f62f6f4b6f943fe71aa397f937db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
