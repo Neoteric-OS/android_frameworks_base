@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f4ceeb2_bf603bab",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-31T02:11:50Z",
+      "side": 1,
+      "message": "rename `service` with `package`. We have no mapping of this callback and the exact preferred service here. So, i would just mention that the package gained or lost preferred service.",
+      "range": {
+        "startLine": 1095,
+        "startChar": 4,
+        "endLine": 1096,
+        "endChar": 49
+      },
+      "revId": "6b734f3dd5b6e39db94507f8ddbe0950b82942cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0737864f_4fec3780",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-31T02:11:50Z",
+      "side": 1,
+      "message": "nit: This indentation looks odd.",
+      "range": {
+        "startLine": 1166,
+        "startChar": 0,
+        "endLine": 1168,
+        "endChar": 59
+      },
+      "revId": "6b734f3dd5b6e39db94507f8ddbe0950b82942cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65fede5a_73253272",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-10-31T02:11:50Z",
+      "side": 1,
+      "message": "nit: This indentation looks odd.",
+      "range": {
+        "startLine": 1190,
+        "startChar": 0,
+        "endLine": 1192,
+        "endChar": 59
+      },
+      "revId": "6b734f3dd5b6e39db94507f8ddbe0950b82942cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
