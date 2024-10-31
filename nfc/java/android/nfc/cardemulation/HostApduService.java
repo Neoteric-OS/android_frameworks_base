@@ -464,7 +464,7 @@ public abstract class HostApduService extends Service {
 
 
     /**
-     * This method is called when this service is the preferred Nfc service and
+     * This method is called when this service is the preferred NFC service and
      * Observe mode has been enabled or disabled.
      *
      * @param isEnabled true if observe mode has been enabled, false if it has been disabled
@@ -475,9 +475,9 @@ public abstract class HostApduService extends Service {
     }
 
     /**
-     * This method is called when this service gains or loses preferred Nfc service status.
+     * This method is called when this service gains or loses preferred NFC service status.
      *
-     * @param isPreferred true is this service has become the preferred Nfc service,
+     * @param isPreferred true is this service has become the preferred NFC service,
      * false if it is no longer the preferred service
      */
     @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)

@@ -1016,6 +1016,19 @@ public final class CardEmulation {
         return ComponentName.unflattenFromString(defaultPaymentComponent);
     }
 
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    @FunctionalInterface
+    public interface AidConflictListener {
+        /**
+         * This method is called when the NFC routing has multple services registered for the same
+         * AID and presents the user with a dialog to select their preferred service.
+         *
+         * @param conflictingAid The AID that triggered the disambiguation dialog.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        void onAidConflictOccurred(String conflictingAid);
+    }
+
     /** @hide */
     interface ServiceCall {
         void call() throws RemoteException;

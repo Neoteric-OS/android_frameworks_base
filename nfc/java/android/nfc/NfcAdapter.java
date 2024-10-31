@@ -639,6 +639,26 @@ public final class NfcAdapter {
         void onControllerAlwaysOnChanged(boolean isEnabled);
     }
 
+    public static final int ERROR_TYPE_COMMAND_TIMEOUT = 1;
+    public static final int ERROR_TYPE_ERROR_NOTIFICATION = 2;
+    public static final int ERROR_TYPE_AID_OVERFLOW = 3;
+    public static final int ERROR_TYPE_CRASH_RESET = 4;
+
+    @IntDef(prefix = { "ERROR_TYPE_" }, value = {
+        ERROR_TYPE_COMMAND_TIMEOUT,
+        ERROR_TYPE_ERROR_NOTIFICATION,
+        ERROR_TYPE_AID_OVERFLOW,
+        ERROR_TYPE_CRASH_RESET,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ErrorType{}
+
+    public interface SystemEventListener {
+        default void onSystemError(@ErrorType int errorType) {
+            // Do nothing.
+        }
+    }
+
     /**
      * A callback to be invoked when the system successfully delivers your {@link NdefMessage}
      * to another device.
