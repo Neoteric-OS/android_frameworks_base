@@ -16,6 +16,29 @@
       "message": "PTAL?",
       "revId": "0632c2c5112ed4b62697ccdfc22ea1109aec6001",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6eae3924_552f7497",
+        "filename": "ravenwood/runtime-jni/ravenwood_runtime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-11-01T17:21:33Z",
+      "side": 1,
+      "message": "These 2 closes are not required, and as a best practice should not be used. Check out the description of `dup2` here for more information: https://man7.org/linux/man-pages/man2/dup.2.html",
+      "range": {
+        "startLine": 190,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 13
+      },
+      "revId": "0632c2c5112ed4b62697ccdfc22ea1109aec6001",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
