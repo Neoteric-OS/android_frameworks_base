@@ -8,4 +8,10 @@ import android.nfc.ComponentNameAndUser;
 oneway interface INfcEventListener {
     void onPreferredServiceChanged(in ComponentNameAndUser ComponentNameAndUser);
     void onObserveModeStateChanged(boolean isEnabled);
+    void onAidConflictOccurred(in String aid);
+    void onNfcStateChanged(in int nfcState);
+    void onNfcCrashRestart();
+    void onHardwareErrorReported();
+    void onCommandTimeoutOccurred();
+    void onRemoteFieldChanged(boolean isActivated);
 }

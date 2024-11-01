@@ -1105,6 +1105,48 @@ public final class CardEmulation {
          */
         @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
         default void onObserveModeStateChanged(boolean isEnabled) {}
+
+        /**
+         * This method is called when an AID conflict is detected.
+         *
+         * @param aid The AID that is in conflict
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onAidConflictOccurred(@NonNull String aid) {}
+
+        /**
+         * This method is called when the NFC state changes.
+         *
+         * @param state The new NFC state
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onNfcStateChanged(int state) {}
+
+        /**
+         * This method is called when the NFC service crash and restarts.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onNfcCrashRestart() {}
+
+        /**
+         * This method is called when a hardware error is reported.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onHardwareErrorReported() {}
+
+        /**
+         * This method is called when an NCI command times out.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onCommandTimeoutOccurred() {}
+
+        /**
+         * This method is called when an NFC reader's field is either detected or lost.
+         *
+         * @param isActivated true if an NFC reader is detected, false if it is lost
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onRemoteFieldChanged(boolean isActivated) {}
     }
 
     private final ArrayMap<NfcEventListener, Executor> mNfcEventListeners = new ArrayMap<>();
@@ -1124,25 +1166,68 @@ public final class CardEmulation {
                                             mContext.getPackageName(),
                                             componentNameAndUser.getComponentName()
                                                     .getPackageName());
-                    synchronized (mNfcEventListeners) {
-                        mNfcEventListeners.forEach(
-                                (listener, executor) -> {
-                                    executor.execute(
-                                            () -> listener.onPreferredServiceChanged(isPreferred));
-                                });
-                    }
+                    callListeners(listener -> listener.onPreferredServiceChanged(isPreferred));
                 }
 
                 public void onObserveModeStateChanged(boolean isEnabled) {
                     if (!android.nfc.Flags.nfcEventListener()) {
                         return;
                     }
+                    callListeners(listener -> listener.onObserveModeStateChanged(isEnabled));
+                }
+
+                public void onAidConflictOccurred(String aid) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(listener -> listener.onAidConflictOccurred(aid));
+                }
+
+                public void onNfcStateChanged(int state) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(listener -> listener.onNfcStateChanged(state));
+                }
+
+                public void onNfcCrashRestart() {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(NfcEventListener::onNfcCrashRestart);
+                }
+
+                public void onHardwareErrorReported() {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(NfcEventListener::onHardwareErrorReported);
+                }
+
+                public void onCommandTimeoutOccurred() {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(NfcEventListener::onCommandTimeoutOccurred);
+                }
+
+                public void onRemoteFieldChanged(boolean isActivated) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(listener -> listener.onRemoteFieldChanged(isActivated));
+                }
+
+                interface ListenerCall {
+                    void invoke(NfcEventListener listener);
+                }
+
+                private void callListeners(ListenerCall listenerCall) {
                     synchronized (mNfcEventListeners) {
                         mNfcEventListeners.forEach(
-                                (listener, executor) -> {
-                                    executor.execute(
-                                            () -> listener.onObserveModeStateChanged(isEnabled));
-                                });
+                            (listener, executor) -> {
+                                executor.execute(() -> listenerCall.invoke(listener));
+                            });
                     }
                 }
             };
