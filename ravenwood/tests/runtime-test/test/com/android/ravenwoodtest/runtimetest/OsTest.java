@@ -24,9 +24,13 @@ import static android.system.OsConstants.S_ISREG;
 import static android.system.OsConstants.S_ISSOCK;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 
+import android.os.Process;
+import android.platform.test.ravenwood.RavenwoodConfig;
 import android.system.Os;
 import android.system.OsConstants;
 import android.system.StructStat;
@@ -51,10 +55,18 @@ import java.nio.file.attribute.PosixFileAttributes;
 import java.nio.file.attribute.PosixFilePermission;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
 public class OsTest {
+
+    @RavenwoodConfig.Config
+    public static final RavenwoodConfig sConfig =
+            new RavenwoodConfig.Builder()
+                    .setProcessApp()
+                    .build();
+
     public interface ConsumerWithThrow<T> {
         void accept(T var1) throws Exception;
     }
@@ -163,6 +175,40 @@ public class OsTest {
                 assertAttributesEqual(attr, stat);
             }
         });
+    }
+
+    @Test
+    public void testGetUid() {
+        assertEquals(Os.getuid(), Process.FIRST_APPLICATION_UID);
+    }
+
+    private static class TestThread extends Thread {
+
+        final CountDownLatch mLatch = new CountDownLatch(1);
+        int mTid;
+
+        TestThread() {
+            setDaemon(true);
+        }
+
+        @Override
+        public void run() {
+            mTid = Os.gettid();
+            mLatch.countDown();
+        }
+    }
+
+    @Test
+    public void testGetTid() throws InterruptedException {
+        var t1 = new TestThread();
+        var t2 = new TestThread();
+        t1.start();
+        t2.start();
+        // Wait for thread execution
+        assertTrue(t1.mLatch.await(1, TimeUnit.SECONDS));
+        assertTrue(t2.mLatch.await(1, TimeUnit.SECONDS));
+        // Make sure the tid is unique per-thread
+        assertNotEquals(t1.mTid, t2.mTid);
     }
 
     // Verify StructStat values from libcore against native JVM PosixFileAttributes
