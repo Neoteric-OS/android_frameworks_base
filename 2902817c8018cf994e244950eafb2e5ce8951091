@@ -64,6 +64,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0a689ea_797dd321",
+        "filename": "packages/SystemUI/src/com/android/systemui/dump/DumpManager.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-11-01T19:15:39Z",
+      "side": 1,
+      "message": "Happy to relax, though is there a reason not to use the name? For many classes, the name + canonicalName are often the same, but getName() is almost always cached and avoids new string creation (not that this is a bottleneck). canonicalName would be useful if this is used to declare the type as an import.\n\nEither way, happy to change, just curious though.",
+      "parentUuid": "c364b497_d5ba2a19",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 56
+      },
+      "revId": "2902817c8018cf994e244950eafb2e5ce8951091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "57664e1a_7932040f",
         "filename": "packages/SystemUI/tests/src/com/android/systemui/dump/DumpManagerTest.kt",
         "patchSetId": 2
@@ -99,6 +123,30 @@
           ]
         }
       ],
+      "revId": "2902817c8018cf994e244950eafb2e5ce8951091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ab7b3e0_40c50a3c",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/dump/DumpManagerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-11-01T19:15:39Z",
+      "side": 1,
+      "message": "This particular case, I don\u0027t know, but aren\u0027t there many instances where we never unregister the `Dumpable`? But even if you do unregister, it\u0027s easy to fall into the broken case today, especially as Dumpable is an interface, e.g.,\n\n```\nprivate final TypeThatImplementsDumpable foo \u003d new TypeThatImplementsDumpable() {\n    @Override void fooMethod() {}\n};\n...\nvoid start() {\n  registerDumpable(foo);  \u003c-- This breaks currently\n}\nvoid stop()\n  unregisterDumpable(foo.getName());\n}\n```",
+      "parentUuid": "57664e1a_7932040f",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 26
+      },
       "revId": "2902817c8018cf994e244950eafb2e5ce8951091",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
