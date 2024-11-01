@@ -307,8 +307,12 @@ public final class MessageQueue {
         }
 
         // Invoke the listener outside of the lock.
-        int newWatchedEvents = listener.onFileDescriptorEvents(
-                record.mDescriptor, events);
+        final int newWatchedEvents;
+        if (listener != null) {
+            newWatchedEvents = listener.onFileDescriptorEvents(record.mDescriptor, events);
+        } else {
+            return 0; // The file descriptor record has been removed,do nothing
+        }
         if (newWatchedEvents != 0) {
             newWatchedEvents |= OnFileDescriptorEventListener.EVENT_ERROR;
         }
