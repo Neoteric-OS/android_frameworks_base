@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.pm.PackageManager.Flags;
 import android.ravenwood.annotation.RavenwoodRedirect;
 import android.util.Log;
 import android.util.Printer;
@@ -30,6 +31,7 @@ import java.io.FileDescriptor;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 /**
  * Low-level class holding the list of messages to be dispatched by a
@@ -307,8 +309,14 @@ public final class MessageQueue {
         }
 
         // Invoke the listener outside of the lock.
-        int newWatchedEvents = listener.onFileDescriptorEvents(
+        final int newWatchedEvents;
+        if (listener != null) {
+            newWatchedEvents = listener.onFileDescriptorEvents(
                 record.mDescriptor, events);
+        } else {
+            // The file descriptor record has been removed due to without the lock,do nothing.
+            return 0;
+        }
         if (newWatchedEvents != 0) {
             newWatchedEvents |= OnFileDescriptorEventListener.EVENT_ERROR;
         }
