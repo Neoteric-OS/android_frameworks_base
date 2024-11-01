@@ -1105,6 +1105,52 @@ public final class CardEmulation {
          */
         @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
         default void onObserveModeStateChanged(boolean isEnabled) {}
+
+        /**
+         * This method is called when an AID conflict is detected.
+         *
+         * @param aid The AID that is in conflict
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onAidConflict(String aid) {}
+
+        /**
+         * This method is called when the NFC state changes.
+         *
+         * @param state The new NFC state
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onNfcStateChanged(int state) {}
+
+        /**
+         * This method is called when the NFC service crash and restarts.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onNfcCrashRestart() {}
+
+        /**
+         * This method is called when a hardware error is reported.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onHardwareErrorReported() {}
+
+        /**
+         * This method is called when an NCI command times out.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onCommandTimeout() {}
+
+        /**
+         * This method is called when an NFC reader is detected.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onRemoteFieldActivated() {}
+
+        /**
+         * This method is called when an NFC reader's field is lost.
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onRemoteFieldDeactivated() {}
     }
 
     private final ArrayMap<NfcEventListener, Executor> mNfcEventListeners = new ArrayMap<>();
