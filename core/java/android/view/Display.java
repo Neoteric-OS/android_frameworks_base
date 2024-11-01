@@ -856,7 +856,9 @@ public final class Display {
     public DisplayAdjustments getDisplayAdjustments() {
         if (mResources != null) {
             final DisplayAdjustments currentAdjustments = mResources.getDisplayAdjustments();
-            if (!mDisplayAdjustments.equals(currentAdjustments)) {
+            final Configuration currentDajConfig = currentAdjustments.getConfiguration();
+            if (!mDisplayAdjustments.equals(currentAdjustments) 
+                && !(Configuration.EMPTY.equals(currentDajConfig))) {
                 mDisplayAdjustments = new DisplayAdjustments(currentAdjustments);
             }
         }
