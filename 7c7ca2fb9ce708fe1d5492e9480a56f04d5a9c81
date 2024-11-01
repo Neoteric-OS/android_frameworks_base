@@ -39,6 +39,30 @@
       },
       "revId": "7c7ca2fb9ce708fe1d5492e9480a56f04d5a9c81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dbeb58f_28f38184",
+        "filename": "core/java/android/view/Display.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 2022644
+      },
+      "writtenOn": "2024-11-01T07:25:49Z",
+      "side": 1,
+      "message": "I have optimized the code format and comments.",
+      "parentUuid": "8abd8754_8a382119",
+      "range": {
+        "startLine": 860,
+        "startChar": 0,
+        "endLine": 860,
+        "endChar": 117
+      },
+      "revId": "7c7ca2fb9ce708fe1d5492e9480a56f04d5a9c81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
