@@ -16,6 +16,7 @@
 
 package android.media;
 
+import static android.media.codec.Flags.FLAG_CODEC_AVAILABILITY;
 import static android.media.codec.Flags.FLAG_NULL_OUTPUT_SURFACE;
 import static android.media.codec.Flags.FLAG_REGION_OF_INTEREST;
 
@@ -28,6 +29,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
@@ -1834,6 +1836,7 @@ final public class MediaCodec {
             + "both BUFFER_FLAG_END_OF_STREAM and BUFFER_FLAG_DECODE_ONLY flags";
     private static final int CB_CRYPTO_ERROR = 6;
     private static final int CB_LARGE_FRAME_OUTPUT_AVAILABLE = 7;
+    private static final int CB_REQUIRED_RESOURCES_CHANGE = 8;
 
     private class EventHandler extends Handler {
         private MediaCodec mCodec;
@@ -2004,6 +2007,11 @@ final public class MediaCodec {
                 {
                     mCallback.onOutputFormatChanged(mCodec,
                             new MediaFormat((Map<String, Object>) msg.obj));
+                    break;
+                }
+
+                case CB_REQUIRED_RESOURCES_CHANGE: {
+                    mCallback.onRequiredResourcesChanged(mCodec);
                     break;
                 }
 
@@ -2285,6 +2293,49 @@ final public class MediaCodec {
     }
 
     /**
+     * @hide
+     * Abstraction for the Global Codec resources.
+     * This encapsulates all the available codec resources on the device.
+     */
+    @FlaggedApi(FLAG_CODEC_AVAILABILITY)
+    @TestApi
+    public static final class GlobalResourceInfo {
+        /**
+         * Identifier for the Resource type.
+         */
+        long mId;
+        /**
+         * Total count/capacity of resources of this type.
+         */
+        long mCapacity;
+        /**
+         * Available count of this resource type.
+         */
+        long mAvailable;
+    };
+
+    /**
+     * @hide
+     * Get a list of globally available codec resources.
+     *
+     * This returns a {@link java.util.List} list of codec resources.
+     * For every {@link GlobalResourceInfo} in the list, it encapsulates the
+     * information about each resources available globaly on device.
+     *
+     * @return A list of available device codec resources; an empty list if no
+     *         device codec resources are available.
+     * @throws IllegalStateException if not implemented.
+     */
+    @FlaggedApi(FLAG_CODEC_AVAILABILITY)
+    @TestApi
+    public static @NonNull List<GlobalResourceInfo> getGloballyAvailableResources() {
+        return native_getGloballyAvailableResources();
+    }
+
+    @NonNull
+    private static native List<GlobalResourceInfo> native_getGloballyAvailableResources();
+
+    /**
      * Configures a component.
      *
      * @param format The format of the input data (decoder) or the desired
@@ -2424,6 +2475,52 @@ final public class MediaCodec {
             }
         }
     }
+
+    /**
+     * @hide
+     * Abstraction for the resources associated with a codec instance.
+     * This encapsulates the required codec resources for a configured codec instance.
+     */
+    @FlaggedApi(FLAG_CODEC_AVAILABILITY)
+    @TestApi
+    public static final class InstanceResourceInfo {
+        /**
+         * Identifier for the Resource type.
+         */
+        long mId;
+        /**
+         * Required resource count of this type.
+         */
+        long mStaticCount;
+        /**
+         * Per frame resource requirement of this resource type.
+         */
+        long mPerFrameCount;
+    };
+
+    /**
+     * @hide
+     * Get a list of required codec resources for this configuration.
+     *
+     * This returns a {@link java.util.List} list of codec resources.
+     * For every {@link GlobalResourceInfo} in the list, it encapsulates the
+     * information about each resources required for the current configuration.
+     *
+     * NOTE: This may only be called after {@link #configure}.
+     *
+     * @return A list of required device codec resources; an empty list if no
+     *         device codec resources are required.
+     * @throws IllegalStateException if the codec wasn't configured yet.
+     * @throws IllegalStateException if not implemented.
+     */
+    @FlaggedApi(FLAG_CODEC_AVAILABILITY)
+    @TestApi
+    public @NonNull List<InstanceResourceInfo> getRequiredResources() {
+        return native_getRequiredResources();
+    }
+
+    @NonNull
+    private native List<InstanceResourceInfo> native_getRequiredResources();
 
     /**
      *  Dynamically sets the output surface of a codec.
@@ -5692,6 +5789,25 @@ final public class MediaCodec {
          */
         public abstract void onOutputFormatChanged(
                 @NonNull MediaCodec codec, @NonNull MediaFormat format);
+
+        /**
+         * @hide
+         * Called when there is a change in the required resources for the codec.
+         *
+         * Upon receiving this notification, the resource requirement can be queried through
+         * through {@link #getRequiredResources}.
+         *
+         * @param codec The MediaCodec object.
+         */
+        @FlaggedApi(FLAG_CODEC_AVAILABILITY)
+        @TestApi
+        public void onRequiredResourcesChanged(@NonNull MediaCodec codec) {
+            /*
+             * A default implementation for backward compatibility.
+             * Since this is a TestApi, we are not enforcing the callback to be
+             * overridden.
+             */
+        }
     }
 
     private void postEventFromNative(
