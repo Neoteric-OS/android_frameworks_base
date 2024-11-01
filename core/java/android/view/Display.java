@@ -848,6 +848,7 @@ public final class Display {
 
     /**
      * Gets the compatibility info used by this display instance.
+     * Don't update mDisplayAdjustments when currentAdjustments is DEFAULT_DISPLAY_ADJUSTMENTS.
      *
      * @return The display adjustments holder, or null if none is required.
      * @hide
@@ -856,7 +857,8 @@ public final class Display {
     public DisplayAdjustments getDisplayAdjustments() {
         if (mResources != null) {
             final DisplayAdjustments currentAdjustments = mResources.getDisplayAdjustments();
-            if (!mDisplayAdjustments.equals(currentAdjustments)) {
+            if (!DisplayAdjustments.DEFAULT_DISPLAY_ADJUSTMENTS.equals(currentAdjustments)
+                  && !mDisplayAdjustments.equals(currentAdjustments)) {
                 mDisplayAdjustments = new DisplayAdjustments(currentAdjustments);
             }
         }
