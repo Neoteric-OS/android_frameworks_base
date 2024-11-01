@@ -103,6 +103,7 @@ static struct {
     // Valid only if an AudioDevicePort
     jfieldID    mType;
     jfieldID    mAddress;
+    jfieldID mSpeakerLayoutChannelMask;
     // other fields unused by JNI
 } gAudioPortFields;
 
@@ -1079,6 +1080,10 @@ static jint convertAudioPortConfigToNativeWithDevicePort(JNIEnv *env,
     strncpy(nAudioPortConfig->ext.device.address,
             nDeviceAddress, AUDIO_DEVICE_MAX_ADDRESS_LEN - 1);
     env->ReleaseStringUTFChars(jDeviceAddress, nDeviceAddress);
+
+    nAudioPortConfig->ext.device.speaker_layout_channel_mask =
+            env->GetIntField(jAudioDevicePort, gAudioPortFields.mSpeakerLayoutChannelMask);
+
     env->DeleteLocalRef(jDeviceAddress);
     env->DeleteLocalRef(jAudioDevicePort);
     return jStatus;
@@ -1536,12 +1541,13 @@ static jint convertAudioPortFromNative(JNIEnv *env, ScopedLocalRef<jobject> *jAu
                                                            .encapsulation_metadata_types));
         ALOGV("convertAudioPortFromNative is a device %08x", nAudioPort->ext.device.type);
         ScopedLocalRef<jstring> jAddress(env, env->NewStringUTF(nAudioPort->ext.device.address));
-        jAudioPort->reset(env->NewObject(gAudioDevicePortClass, gAudioDevicePortCstor,
-                                         jHandle.get(), jDeviceName.get(), jAudioProfiles.get(),
-                                         jGains.get(), nAudioPort->ext.device.type, jAddress.get(),
-                                         jEncapsulationModes.get(),
-                                         jEncapsulationMetadataTypes.get(),
-                                         jAudioDescriptors.get()));
+        jAudioPort->reset(
+                env->NewObject(gAudioDevicePortClass, gAudioDevicePortCstor, jHandle.get(),
+                               jDeviceName.get(), jAudioProfiles.get(), jGains.get(),
+                               nAudioPort->ext.device.type, jAddress.get(),
+                               nAudioPort->active_config.ext.device.speaker_layout_channel_mask,
+                               jEncapsulationModes.get(), jEncapsulationMetadataTypes.get(),
+                               jAudioDescriptors.get()));
     } else if (nAudioPort->type == AUDIO_PORT_TYPE_MIX) {
         ALOGV("convertAudioPortFromNative is a mix");
         jAudioPort->reset(env->NewObject(gAudioMixPortClass, gAudioMixPortCstor, jHandle.get(),
