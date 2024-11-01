@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c364b497_d5ba2a19",
+        "filename": "packages/SystemUI/src/com/android/systemui/dump/DumpManager.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1060062
+      },
+      "writtenOn": "2024-11-01T17:52:10Z",
+      "side": 1,
+      "message": "Can we fall back to the name iff the canonical name is present (see AI suggestion below)",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 56
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "01d4d73c_67dc70fc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/dump/DumpManager.kt",
+              "range": {
+                "startLine": 48,
+                "startChar": 0,
+                "endLine": 49,
+                "endChar": 0
+              },
+              "replacement": "        registerCriticalDumpable(module::class.java.canonicalName ?: module::class.java.name, module)\n"
+            },
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/dump/DumpManager.kt",
+              "range": {
+                "startLine": 65,
+                "startChar": 0,
+                "endLine": 66,
+                "endChar": 0
+              },
+              "replacement": "        registerNormalDumpable(module::class.java.canonicalName ?: module::class.java.name, module)\n"
+            },
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/dump/DumpManager.kt",
+              "range": {
+                "startLine": 110,
+                "startChar": 0,
+                "endLine": 111,
+                "endChar": 0
+              },
+              "replacement": "        registerDumpable(module::class.java.canonicalName ?: module::class.java.name, module)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2902817c8018cf994e244950eafb2e5ce8951091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57664e1a_7932040f",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/dump/DumpManagerTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1060062
+      },
+      "writtenOn": "2024-11-01T17:52:10Z",
+      "side": 1,
+      "message": "This behavior is somewhat of an antipattern, as the dumpable will be retained in memory forever. Are there situations where we\u0027re currently doing this?",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b9c9f116_d06aaf88",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/tests/src/com/android/systemui/dump/DumpManagerTest.kt",
+              "range": {
+                "startLine": 133,
+                "startChar": 0,
+                "endLine": 148,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "2902817c8018cf994e244950eafb2e5ce8951091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
