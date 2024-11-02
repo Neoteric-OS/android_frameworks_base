@@ -64,19 +64,19 @@ public class RavenwoodSystemServer {
     private static TimingsTraceAndSlog sTimings;
     private static SystemServiceManager sServiceManager;
 
-    public static void init(RavenwoodConfig config) {
+    public static void init(RavenwoodRunnerState state) {
         // Avoid overhead if no services required
-        if (config.mServicesRequired.isEmpty()) return;
+        if (state.getConfig().mServicesRequired.isEmpty()) return;
 
         sStartedServices = new ArraySet<>();
         sTimings = new TimingsTraceAndSlog();
-        sServiceManager = new SystemServiceManager(config.mState.mSystemServerContext);
+        sServiceManager = new SystemServiceManager(state.mSystemServerContext);
         sServiceManager.setStartInfo(false,
                 SystemClock.elapsedRealtime(),
                 SystemClock.uptimeMillis());
         LocalServices.addService(SystemServiceManager.class, sServiceManager);
 
-        startServices(config.mServicesRequired);
+        startServices(state.getConfig().mServicesRequired);
         sServiceManager.sealStartedServices();
 
         // TODO: expand to include additional boot phases when relevant
@@ -84,7 +84,7 @@ public class RavenwoodSystemServer {
         sServiceManager.startBootPhase(sTimings, SystemService.PHASE_BOOT_COMPLETED);
     }
 
-    public static void reset(RavenwoodConfig config) {
+    public static void reset() {
         // TODO: consider introducing shutdown boot phases
 
         LocalServices.removeServiceForTest(SystemServiceManager.class);

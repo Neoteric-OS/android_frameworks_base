@@ -132,22 +132,16 @@ public class RavenwoodContext extends RavenwoodBaseContext {
 
     @Override
     public Looper getMainLooper() {
-        Objects.requireNonNull(mMainThread,
-                "Test must request setProvideMainThread() via RavenwoodConfig");
         return mMainThread.getLooper();
     }
 
     @Override
     public Handler getMainThreadHandler() {
-        Objects.requireNonNull(mMainThread,
-                "Test must request setProvideMainThread() via RavenwoodConfig");
         return mMainThread.getThreadHandler();
     }
 
     @Override
     public Executor getMainExecutor() {
-        Objects.requireNonNull(mMainThread,
-                "Test must request setProvideMainThread() via RavenwoodConfig");
         return mMainThread.getThreadExecutor();
     }
 
