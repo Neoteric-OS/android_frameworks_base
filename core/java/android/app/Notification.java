@@ -11176,7 +11176,7 @@ public class Notification implements Parcelable
     }
 
     /**
-     * A Notification Style used to to define a notification whose expanded state includes
+     * A Notification Style used to define a notification whose expanded state includes
      * a highly customizable progress bar with segments, points, a custom tracker icon,
      * and custom icons at the start and end of the progress bar.
      *
@@ -11823,28 +11823,42 @@ public class Notification implements Parcelable
                         sanitizeProgressColor(indeterminateColor,
                                 backgroundColor, defaultProgressColor));
             } else {
-
                 // Ensure segment color contrasts.
                 final List<Segment> segments = new ArrayList<>();
+                int totalLength = 0;
                 for (Segment segment : mProgressSegments) {
-                    segments.add(sanitizeSegment(segment, backgroundColor,
-                            defaultProgressColor));
+                    final int length = segment.getLength();
+                    if (length <= 0) continue;
+
+                    try {
+                        totalLength += Math.addExact(totalLength, length);
+                        segments.add(sanitizeSegment(segment, backgroundColor,
+                                defaultProgressColor));
+                    } catch (ArithmeticException e) {
+                        totalLength = DEFAULT_PROGRESS_MAX;
+                        segments.clear();
+                        break;
+                    }
                 }
 
                 // Create default segment when no segments are provided.
                 if (segments.isEmpty()) {
-                    segments.add(sanitizeSegment(new Segment(100), backgroundColor,
+                    totalLength = DEFAULT_PROGRESS_MAX;
+                    segments.add(sanitizeSegment(new Segment(totalLength), backgroundColor,
                             defaultProgressColor));
                 }
 
                 // Ensure point color contrasts.
                 final List<Point> points = new ArrayList<>();
                 for (Point point : mProgressPoints) {
+                    final int position = point.getPosition();
+                    if (position < 0 || position > totalLength) continue;
+
                     points.add(sanitizePoint(point, backgroundColor, defaultProgressColor));
                 }
 
                 model = new NotificationProgressModel(segments, points,
-                        mProgress, mIsStyledByProgress);
+                        Math.clamp(mProgress, 0, totalLength), mIsStyledByProgress);
             }
             return model;
         }

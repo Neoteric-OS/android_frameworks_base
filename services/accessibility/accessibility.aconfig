@@ -175,10 +175,13 @@ flag {
 }
 
 flag {
-    name: "magnification_enlarge_pointer"
+    name: "magnification_enlarge_pointer_bugfix"
     namespace: "accessibility"
     description: "When fullscreen magnification is enabled, pointer icon is enlarged"
     bug: "355734856"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
 }
 
 flag {
@@ -186,6 +189,16 @@ flag {
     namespace: "accessibility"
     description: "Register receivers on background handler so they have more time to complete"
     bug: "333890389"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "package_monitor_dedicated_thread"
+    namespace: "accessibility"
+    description: "Runs the A11yManagerService PackageMonitor on a dedicated thread"
+    bug: "348138695"
     metadata {
         purpose: PURPOSE_BUGFIX
     }

@@ -30,20 +30,23 @@ import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.SystemClock;
 import android.os.SystemProperties;
-import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.os.ApplicationSharedMemory;
 import com.android.internal.os.BackgroundThread;
-import com.android.internal.util.FastPrintWriter;
+
+import dalvik.annotation.optimization.CriticalNative;
+import dalvik.annotation.optimization.FastNative;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -207,19 +210,14 @@ public class PropertyInvalidatedCache<Query, Result> {
     };
 
     /**
-     * Verify that the property name conforms to the standard.  Log a warning if this is not true.
-     * Note that this is done once in the cache constructor; it does not have to be very fast.
+     * Verify that the property name conforms to the standard and throw if this is not true.  Note
+     * that this is done only once for a given property name; it does not have to be very fast.
      */
-    private void validateCacheKey(String name) {
-        if (Build.IS_USER) {
-            // Do not bother checking keys in user builds.  The keys will have been tested in
-            // eng/userdebug builds already.
-            return;
-        }
+    private static void throwIfInvalidCacheKey(String name) {
         for (int i = 0; i < sValidKeyPrefix.length; i++) {
             if (name.startsWith(sValidKeyPrefix[i])) return;
         }
-        Log.w(TAG, "invalid cache name: " + name);
+        throw new IllegalArgumentException("invalid cache name: " + name);
     }
 
     /**
@@ -238,11 +236,12 @@ public class PropertyInvalidatedCache<Query, Result> {
      * reserved values cause the cache to be skipped.
      */
     // This is the initial value of all cache keys.  It is changed when a cache is invalidated.
-    private static final int NONCE_UNSET = 0;
+    @VisibleForTesting
+    static final int NONCE_UNSET = 0;
     // This value is used in two ways.  First, it is used internally to indicate that the cache is
-    // disabled for the current query.  Secondly, it is used to global disable the cache across the
-    // entire system.  Once a cache is disabled, there is no way to enable it again.  The global
-    // behavior is unused and will likely be removed in the future.
+    // disabled for the current query.  Secondly, it is used to globally disable the cache across
+    // the entire system.  Once a cache is disabled, there is no way to enable it again.  The
+    // global behavior is unused and will likely be removed in the future.
     private static final int NONCE_DISABLED = 1;
     // The cache is corked, which means that clients must act as though the cache is always
     // invalid.  This is used when the server is processing updates that continuously invalidate
@@ -264,9 +263,21 @@ public class PropertyInvalidatedCache<Query, Result> {
     private static final String[] sNonceName =
             new String[]{ "unset", "disabled", "corked", "bypass" };
 
+    // The standard tag for logging.
     private static final String TAG = "PropertyInvalidatedCache";
+
+    // Set this true to enable very chatty logging.  Never commit this true.
     private static final boolean DEBUG = false;
+
+    // Set this true to enable cache verification.  On every cache hit, the cache will compare the
+    // cached value to a value pulled directly from the source.  This completely negates any
+    // performance advantage of the cache.  Enable it only to test if a particular cache is not
+    // being properly invalidated.
     private static final boolean VERIFY = false;
+
+    // The test mode. This is only used to ensure that the test functions setTestMode() and
+    // testPropertyName() are used correctly.
+    private static boolean sTestMode = false;
 
     /**
      * The object-private lock.
@@ -410,12 +421,53 @@ public class PropertyInvalidatedCache<Query, Result> {
         @GuardedBy("mLock")
         private int mCorks = 0;
 
-        // The methods to get and set a nonce from whatever storage is being used.
-        abstract long getNonce();
-        abstract void setNonce(long value);
+        // True if this handler is in test mode.  If it is in test mode, then nonces are stored
+        // and retrieved from mTestNonce.
+        @GuardedBy("mLock")
+        private boolean mTestMode = false;
+
+        /**
+         * The local value of the handler, used during testing but also used directly by the
+         * NonceLocal handler.
+         */
+        @GuardedBy("mLock")
+        protected long mTestNonce = NONCE_UNSET;
+
+        /**
+         * The methods to get and set a nonce from whatever storage is being used.  mLock may be
+         * held when these methods are called.  Implementations that take locks must behave as
+         * though mLock could be held.
+         */
+        abstract long getNonceInternal();
+        abstract void setNonceInternal(long value);
 
         NonceHandler(@NonNull String name) {
             mName = name;
+        }
+
+        /**
+         * Get a nonce from storage.  If the handler is in test mode, the nonce is returned from
+         * the local mTestNonce.
+         */
+        long getNonce() {
+            synchronized (mLock) {
+                if (mTestMode) return mTestNonce;
+            }
+            return getNonceInternal();
+        }
+
+        /**
+         * Write a nonce to storage.  If the handler is in test mode, the nonce is written to the
+         * local mTestNonce and storage is not affected.
+         */
+        void setNonce(long val) {
+            synchronized (mLock) {
+                if (mTestMode) {
+                    mTestNonce = val;
+                    return;
+                }
+            }
+            setNonceInternal(val);
         }
 
         /**
@@ -528,6 +580,10 @@ public class PropertyInvalidatedCache<Query, Result> {
             }
         }
 
+        /**
+         * Globally (that is, system-wide) disable all caches that use this key.  There is no way
+         * to re-enable these caches.
+         */
         void disable() {
             if (!sEnabled) {
                 return;
@@ -537,6 +593,21 @@ public class PropertyInvalidatedCache<Query, Result> {
             }
         }
 
+        /**
+         * Put this handler in or out of test mode.  Regardless of the current and next mode, the
+         * test nonce variable is reset to UNSET.
+         */
+        void setTestMode(boolean mode) {
+            synchronized (mLock) {
+                mTestMode = mode;
+                mTestNonce = NONCE_UNSET;
+            }
+        }
+
+        /**
+         * Return the statistics associated with the key.  These statistics are not associated
+         * with any individual cache.
+         */
         record Stats(int invalidated, int corkedInvalidates) {}
         Stats getStats() {
             synchronized (mLock) {
@@ -556,21 +627,32 @@ public class PropertyInvalidatedCache<Query, Result> {
             super(name);
         }
 
+        /**
+         * Retrieve the nonce from the system property.  If the handle is null, this method
+         * attempts to create a handle.  If handle creation fails, the method returns UNSET.  If
+         * the handle is not null, the method returns a value read via the handle.  This read
+         * occurs outside any lock.
+         */
         @Override
-        long getNonce() {
+        long getNonceInternal() {
             if (mHandle == null) {
                 synchronized (mLock) {
-                    mHandle = SystemProperties.find(mName);
                     if (mHandle == null) {
-                        return NONCE_UNSET;
+                        mHandle = SystemProperties.find(mName);
+                        if (mHandle == null) {
+                            return NONCE_UNSET;
+                        }
                     }
                 }
             }
             return mHandle.getLong(NONCE_UNSET);
         }
 
+        /**
+         * Write a nonce to a system property.
+         */
         @Override
-        void setNonce(long value) {
+        void setNonceInternal(long value) {
             // Failing to set the nonce is a fatal error.  Failures setting a system property have
             // been reported; given that the failure is probably transient, this function includes
             // a retry.
@@ -606,43 +688,105 @@ public class PropertyInvalidatedCache<Query, Result> {
     }
 
     /**
-     * SystemProperties and shared storage are protected and cannot be written by random
-     * processes.  So, for testing purposes, the NonceTest handler stores the nonce locally.
+     * Manage nonces that are stored in shared memory.
      */
-    private static class NonceTest extends NonceHandler {
+    private static final class NonceSharedMem extends NonceHandler {
+        // The shared memory.
+        private volatile NonceStore mStore;
+
+        // The index of the nonce in shared memory.
+        private volatile int mHandle = NonceStore.INVALID_NONCE_INDEX;
+
+        // True if the string has been stored, ever.
+        private volatile boolean mRecorded = false;
+
+        // A short name that is saved in shared memory.  This is the portion of the property name
+        // that follows the prefix.
+        private final String mShortName;
+
+        NonceSharedMem(@NonNull String name, @Nullable String prefix) {
+            super(name);
+            if ((prefix != null) && name.startsWith(prefix)) {
+                mShortName = name.substring(prefix.length());
+            } else {
+                mShortName = name;
+            }
+        }
+
+        // Fetch the nonce from shared memory.  If the shared memory is not available, return
+        // UNSET.  If the shared memory is available but the nonce name is not known (it may not
+        // have been invalidated by the server yet), return UNSET.
+        @Override
+        long getNonceInternal() {
+            if (mHandle == NonceStore.INVALID_NONCE_INDEX) {
+                if (mStore == null) {
+                    mStore = NonceStore.getInstance();
+                    if (mStore == null) {
+                        return NONCE_UNSET;
+                    }
+                }
+                mHandle = mStore.getHandleForName(mShortName);
+                if (mHandle == NonceStore.INVALID_NONCE_INDEX) {
+                    return NONCE_UNSET;
+                }
+            }
+            return mStore.getNonce(mHandle);
+        }
+
+        // Set the nonce in shared mmory.  If the shared memory is not available, throw an
+        // exception.  Otherwise, if the nonce name has never been recorded, record it now and
+        // fetch the handle for the name.  If the handle cannot be created, throw an exception.
+        @Override
+        void setNonceInternal(long value) {
+            if (mHandle == NonceStore.INVALID_NONCE_INDEX || !mRecorded) {
+                if (mStore == null) {
+                    mStore = NonceStore.getInstance();
+                    if (mStore == null) {
+                        throw new IllegalStateException("setNonce: shared memory not ready");
+                    }
+                }
+                // Always store the name before fetching the handle.  storeName() is idempotent
+                // but does take a little time, so this code calls it just once.
+                mStore.storeName(mShortName);
+                mRecorded = true;
+                mHandle = mStore.getHandleForName(mShortName);
+                if (mHandle == NonceStore.INVALID_NONCE_INDEX) {
+                    throw new IllegalStateException("setNonce: shared memory store failed");
+                }
+            }
+            mStore.setNonce(mHandle, value);
+        }
+    }
+
+    /**
+     * SystemProperties and shared storage are protected and cannot be written by random
+     * processes.  So, for testing purposes, the NonceLocal handler stores the nonce locally.  The
+     * NonceLocal uses the mTestNonce in the superclass, regardless of test mode.
+     */
+    private static class NonceLocal extends NonceHandler {
         // The saved nonce.
         private long mValue;
 
-        // If this flag is false, the handler has been shutdown during a test.  Access to the
-        // handler in this state is an error.
-        private boolean mIsActive = true;
-
-        NonceTest(@NonNull String name) {
+        NonceLocal(@NonNull String name) {
             super(name);
         }
 
-        void shutdown() {
-            // The handler has been discarded as part of test cleanup.  Further access is an
-            // error.
-            mIsActive = false;
+        @Override
+        long getNonceInternal() {
+            return mTestNonce;
         }
 
         @Override
-        long getNonce() {
-            if (!mIsActive) {
-                throw new IllegalStateException("handler " + mName + " is shutdown");
-            }
-            return mValue;
-        }
-
-        @Override
-        void setNonce(long value) {
-            if (!mIsActive) {
-                throw new IllegalStateException("handler " + mName + " is shutdown");
-            }
-            mValue = value;
+        void setNonceInternal(long value) {
+            mTestNonce = value;
         }
     }
+
+    /**
+     * Complete key prefixes.
+     */
+    private static final String PREFIX_TEST = CACHE_KEY_PREFIX + "." + MODULE_TEST + ".";
+    private static final String PREFIX_SYSTEM = CACHE_KEY_PREFIX + "." + MODULE_SYSTEM + ".";
 
     /**
      * A static list of nonce handlers, indexed by name.  NonceHandlers can be safely shared by
@@ -653,17 +797,33 @@ public class PropertyInvalidatedCache<Query, Result> {
     private static final ConcurrentHashMap<String, NonceHandler> sHandlers
             = new ConcurrentHashMap<>();
 
+    // True if shared memory is flag-enabled, false otherwise.  Read the flags exactly once.
+    private static final boolean sSharedMemoryAvailable =
+            com.android.internal.os.Flags.applicationSharedMemoryEnabled()
+            && android.app.Flags.picUsesSharedMemory();
+
+    // Return true if this cache can use shared memory for its nonce.  Shared memory may be used
+    // if the module is the system.
+    private static boolean sharedMemoryOkay(@NonNull String name) {
+        return sSharedMemoryAvailable && name.startsWith(PREFIX_SYSTEM);
+    }
+
     /**
-     * Return the proper nonce handler, based on the property name.
+     * Return the proper nonce handler, based on the property name.  A handler is created if
+     * necessary.  Before a handler is created, the name is checked, and an exception is thrown if
+     * the name is not valid.
      */
     private static NonceHandler getNonceHandler(@NonNull String name) {
         NonceHandler h = sHandlers.get(name);
         if (h == null) {
             synchronized (sGlobalLock) {
+                throwIfInvalidCacheKey(name);
                 h = sHandlers.get(name);
                 if (h == null) {
-                    if (name.startsWith("cache_key.test.")) {
-                        h = new NonceTest(name);
+                    if (sharedMemoryOkay(name)) {
+                        h = new NonceSharedMem(name, PREFIX_SYSTEM);
+                    } else if (name.startsWith(PREFIX_TEST)) {
+                        h = new NonceLocal(name);
                     } else {
                         h = new NonceSysprop(name);
                     }
@@ -705,7 +865,6 @@ public class PropertyInvalidatedCache<Query, Result> {
     public PropertyInvalidatedCache(int maxEntries, @NonNull String propertyName,
             @NonNull String cacheName) {
         mPropertyName = propertyName;
-        validateCacheKey(mPropertyName);
         mCacheName = cacheName;
         mNonce = getNonceHandler(mPropertyName);
         mMaxEntries = maxEntries;
@@ -730,7 +889,6 @@ public class PropertyInvalidatedCache<Query, Result> {
     public PropertyInvalidatedCache(int maxEntries, @NonNull String module, @NonNull String api,
             @NonNull String cacheName, @NonNull QueryHandler<Query, Result> computer) {
         mPropertyName = createPropertyName(module, api);
-        validateCacheKey(mPropertyName);
         mCacheName = cacheName;
         mNonce = getNonceHandler(mPropertyName);
         mMaxEntries = maxEntries;
@@ -776,44 +934,55 @@ public class PropertyInvalidatedCache<Query, Result> {
     }
 
     /**
-     * Enable or disable testing.  At this time, no action is taken when testing begins.
+     * Enable or disable testing.  The protocol requires that the mode toggle: for instance, it is
+     * illegal to clear the test mode if the test mode is already off.  The purpose is solely to
+     * ensure that test clients do not forget to use the test mode properly, even though the
+     * current logic does not care.
      * @hide
      */
     @TestApi
     public static void setTestMode(boolean mode) {
-        if (mode) {
-            // No action when testing begins.
-        } else {
-            resetAfterTest();
+        synchronized (sGlobalLock) {
+            if (sTestMode == mode) {
+                throw new IllegalStateException("cannot set test mode redundantly: mode=" + mode);
+            }
+            sTestMode = mode;
+            if (mode) {
+                // No action when testing begins.
+            } else {
+                resetAfterTestLocked();
+            }
         }
     }
 
     /**
-     * Enable testing the specific cache key.  This is a legacy API that will be removed as part of
-     * b/360897450.
+     * Clean up when testing ends. All handlers are reset out of test mode.  NonceLocal handlers
+     * (MODULE_TEST) are reset to the NONCE_UNSET state.  This has no effect on any other handlers
+     * that were not originally in test mode.
+     */
+    @GuardedBy("sGlobalLock")
+    private static void resetAfterTestLocked() {
+        for (Iterator<String> e = sHandlers.keys().asIterator(); e.hasNext(); ) {
+            String s = e.next();
+            final NonceHandler h = sHandlers.get(s);
+            h.setTestMode(false);
+        }
+    }
+
+    /**
+     * Enable testing the specific cache key.  This API allows a test process to invalidate caches
+     * for which it would not otherwise have permission.  Caches in test mode do NOT write their
+     * values to the system properties.  The effect is local to the current process.  Test mode
+     * must be true when this method is called.
      * @hide
      */
     @TestApi
     public void testPropertyName() {
-    }
-
-    /**
-     * Clean up when testing ends. All NonceTest handlers are erased from the global list and are
-     * poisoned, just in case the test program has retained a handle to one of the associated
-     * caches.
-     * @hide
-     */
-    @VisibleForTesting
-    public static void resetAfterTest() {
         synchronized (sGlobalLock) {
-            for (Iterator<String> e = sHandlers.keys().asIterator(); e.hasNext(); ) {
-                String s = e.next();
-                final NonceHandler h = sHandlers.get(s);
-                if (h instanceof NonceTest t) {
-                    t.shutdown();
-                    sHandlers.remove(s);
-                }
+            if (sTestMode == false) {
+                throw new IllegalStateException("cannot test property name with test mode off");
             }
+            mNonce.setTestMode(true);
         }
     }
 
@@ -1119,8 +1288,9 @@ public class PropertyInvalidatedCache<Query, Result> {
     }
 
     /**
-     * Non-static convenience version of invalidateCache() for situations in which only a single
-     * PropertyInvalidatedCache is keyed on a particular property value.
+     * Non-static version of invalidateCache() for situations in which a cache instance is
+     * available.  This is slightly faster than than the static versions because it does not have
+     * to look up the NonceHandler for a given property name.
      * @hide
      */
     @TestApi
@@ -1409,6 +1579,7 @@ public class PropertyInvalidatedCache<Query, Result> {
     final static String NAME_LIKE = "-name-like=";
     final static String PROPERTY_CONTAINS = "-property-has=";
     final static String PROPERTY_LIKE = "-property-like=";
+    final static String BRIEF = "-brief";
 
     /**
      * Return true if any argument is a detailed specification switch.
@@ -1454,6 +1625,21 @@ public class PropertyInvalidatedCache<Query, Result> {
         return false;
     }
 
+    /**
+     * helper method to check if dump should be skipped due to zero values
+     * @param args takes command arguments to check if -brief is present
+     * @return True if dump should be skipped
+     */
+    private boolean skipDump(String[] args) {
+        for (String a : args) {
+            if (a.equals(BRIEF)) {
+                return (mSkips[NONCE_CORKED] + mSkips[NONCE_UNSET] + mSkips[NONCE_DISABLED]
+                      + mSkips[NONCE_BYPASS] + mHits + mMisses) == 0;
+            }
+        }
+        return false;
+    }
+
     private void dumpContents(PrintWriter pw, boolean detailed, String[] args) {
         // If the user has requested specific caches and this is not one of them, return
         // immediately.
@@ -1464,25 +1650,28 @@ public class PropertyInvalidatedCache<Query, Result> {
         NonceHandler.Stats stats = mNonce.getStats();
 
         synchronized (mLock) {
-            pw.println(formatSimple("  Cache Name: %s", cacheName()));
-            pw.println(formatSimple("    Property: %s", mPropertyName));
-            final long skips = mSkips[NONCE_CORKED] + mSkips[NONCE_UNSET] + mSkips[NONCE_DISABLED]
-                    + mSkips[NONCE_BYPASS];
-            pw.println(formatSimple(
-                    "    Hits: %d, Misses: %d, Skips: %d, Clears: %d",
-                    mHits, mMisses, skips, mClears));
-            pw.println(formatSimple(
-                    "    Skip-corked: %d, Skip-unset: %d, Skip-bypass: %d, Skip-other: %d",
-                    mSkips[NONCE_CORKED], mSkips[NONCE_UNSET],
-                    mSkips[NONCE_BYPASS], mSkips[NONCE_DISABLED]));
-            pw.println(formatSimple(
-                    "    Nonce: 0x%016x, Invalidates: %d, CorkedInvalidates: %d",
-                    mLastSeenNonce, stats.invalidated, stats.corkedInvalidates));
-            pw.println(formatSimple(
-                    "    Current Size: %d, Max Size: %d, HW Mark: %d, Overflows: %d",
-                    mCache.size(), mMaxEntries, mHighWaterMark, mMissOverflow));
-            pw.println(formatSimple("    Enabled: %s", mDisabled ? "false" : "true"));
-            pw.println("");
+            if (!skipDump(args)) {
+                pw.println(formatSimple("  Cache Name: %s", cacheName()));
+                pw.println(formatSimple("    Property: %s", mPropertyName));
+                final long skips =
+                        mSkips[NONCE_CORKED] + mSkips[NONCE_UNSET] + mSkips[NONCE_DISABLED]
+                                + mSkips[NONCE_BYPASS];
+                pw.println(formatSimple(
+                        "    Hits: %d, Misses: %d, Skips: %d, Clears: %d",
+                        mHits, mMisses, skips, mClears));
+                pw.println(formatSimple(
+                        "    Skip-corked: %d, Skip-unset: %d, Skip-bypass: %d, Skip-other: %d",
+                        mSkips[NONCE_CORKED], mSkips[NONCE_UNSET],
+                        mSkips[NONCE_BYPASS], mSkips[NONCE_DISABLED]));
+                pw.println(formatSimple(
+                        "    Nonce: 0x%016x, Invalidates: %d, CorkedInvalidates: %d",
+                        mLastSeenNonce, stats.invalidated, stats.corkedInvalidates));
+                pw.println(formatSimple(
+                        "    Current Size: %d, Max Size: %d, HW Mark: %d, Overflows: %d",
+                        mCache.size(), mMaxEntries, mHighWaterMark, mMissOverflow));
+                pw.println(formatSimple("    Enabled: %s", mDisabled ? "false" : "true"));
+                pw.println("");
+            }
 
             // No specific cache was requested.  This is the default, and no details
             // should be dumped.
@@ -1520,6 +1709,14 @@ public class PropertyInvalidatedCache<Query, Result> {
         // then only that cache is reported.
         boolean detail = anyDetailed(args);
 
+        if (sSharedMemoryAvailable) {
+            pw.println("  SharedMemory: enabled");
+            NonceStore.getInstance().dump(pw, "    ", detail);
+        } else {
+            pw.println("  SharedMemory: disabled");
+         }
+        pw.println();
+
         ArrayList<PropertyInvalidatedCache> activeCaches = getActiveCaches();
         for (int i = 0; i < activeCaches.size(); i++) {
             PropertyInvalidatedCache currentCache = activeCaches.get(i);
@@ -1554,4 +1751,363 @@ public class PropertyInvalidatedCache<Query, Result> {
             Log.e(TAG, "Failed to dump PropertyInvalidatedCache instances");
         }
     }
+
+    /**
+     * Nonces in shared memory are supported by a string block that acts as a table of contents
+     * for nonce names, and an array of nonce values.  There are two key design principles with
+     * respect to nonce maps:
+     *
+     * 1. It is always okay if a nonce value cannot be determined.  If the nonce is UNSET, the
+     * cache is bypassed, which is always functionally correct.  Clients do not take extraordinary
+     * measures to be current with the nonce map.  Clients must be current with the nonce itself;
+     * this is achieved through the shared memory.
+     *
+     * 2. Once a name is mapped to a nonce index, the mapping is fixed for the lifetime of the
+     * system.  It is only necessary to distinguish between the unmapped and mapped states.  Once
+     * a client has mapped a nonce, that mapping is known to be good for the lifetime of the
+     * system.
+     * @hide
+     */
+    @VisibleForTesting
+    public static class NonceStore {
+
+        // A lock for the store.
+        private final Object mLock = new Object();
+
+        // The native pointer.  This is not owned by this class.  It is owned by
+        // ApplicationSharedMemory, and it disappears when the owning instance is closed.
+        private final long mPtr;
+
+        // True if the memory is immutable.
+        private final boolean mMutable;
+
+        // The maximum length of a string in the string block.  The maximum length must fit in a
+        // byte, but a smaller value has been chosen to limit memory use.  Because strings are
+        // run-length encoded, a string consumes at most MAX_STRING_LENGTH+1 bytes in the string
+        // block.
+        private static final int MAX_STRING_LENGTH = 63;
+
+        // The raw byte block.  Strings are stored as run-length encoded byte arrays.  The first
+        // byte is the length of the following string.  It is an axiom of the system that the
+        // string block is initially all zeros and that it is write-once memory: new strings are
+        // appended to existing strings, so there is never a need to revisit strings that have
+        // already been pulled from the string block.
+        @GuardedBy("mLock")
+        private final byte[] mStringBlock;
+
+        // The expected hash code of the string block.  If the hash over the string block equals
+        // this value, then the string block is valid.  Otherwise, the block is not valid and
+        // should be re-read.  An invalid block generally means that a client has read the shared
+        // memory while the server was still writing it.
+        @GuardedBy("mLock")
+        private int mBlockHash = 0;
+
+        // The number of nonces that the native layer can hold.  This is maintained for debug and
+        // logging.
+        private final int mMaxNonce;
+
+        /** @hide */
+        @VisibleForTesting
+        public NonceStore(long ptr, boolean mutable) {
+            mPtr = ptr;
+            mMutable = mutable;
+            mStringBlock = new byte[nativeGetMaxByte(ptr)];
+            mMaxNonce = nativeGetMaxNonce(ptr);
+            refreshStringBlockLocked();
+        }
+
+        // The static lock for singleton acquisition.
+        private static Object sLock = new Object();
+
+        // NonceStore is supposed to be a singleton.
+        private static NonceStore sInstance;
+
+        // Return the singleton instance.
+        static NonceStore getInstance() {
+            synchronized (sLock) {
+                if (sInstance == null) {
+                    try {
+                        ApplicationSharedMemory shmem = ApplicationSharedMemory.getInstance();
+                        sInstance = (shmem == null)
+                                    ? null
+                                    : new NonceStore(shmem.getSystemNonceBlock(),
+                                            shmem.isMutable());
+                    } catch (IllegalStateException e) {
+                        // ApplicationSharedMemory.getInstance() throws if the shared memory is
+                        // not yet mapped.  Swallow the exception and leave sInstance null.
+                    }
+                }
+                return sInstance;
+            }
+        }
+
+        // The index value of an unmapped name.
+        public static final int INVALID_NONCE_INDEX = -1;
+
+        // The highest string index extracted from the string block.  -1 means no strings have
+        // been seen.  This is used to skip strings that have already been processed, when the
+        // string block is updated.
+        @GuardedBy("mLock")
+        private int mHighestIndex = -1;
+
+        // The number bytes of the string block that has been used.  This is a statistics.
+        @GuardedBy("mLock")
+        private int mStringBytes = 0;
+
+        // The number of partial reads on the string block.  This is a statistic.
+        @GuardedBy("mLock")
+        private int mPartialReads = 0;
+
+        // The number of times the string block was updated.  This is a statistic.
+        @GuardedBy("mLock")
+        private int mStringUpdated = 0;
+
+        // Map a string to a native index.
+        @GuardedBy("mLock")
+        private final ArrayMap<String, Integer> mStringHandle = new ArrayMap<>();
+
+        // Update the string map from the current string block.  The string block is not modified
+        // and the block hash is not checked.  The function skips past strings that have already
+        // been read, and then processes any new strings.
+        @GuardedBy("mLock")
+        private void updateStringMapLocked() {
+            int index = 0;
+            int offset = 0;
+            while (offset < mStringBlock.length && mStringBlock[offset] != 0) {
+                if (index > mHighestIndex) {
+                    // Only record the string if it has not been seen yet.
+                    final String s = new String(mStringBlock, offset+1, mStringBlock[offset]);
+                    mStringHandle.put(s, index);
+                    mHighestIndex = index;
+                }
+                offset += mStringBlock[offset] + 1;
+                index++;
+            }
+            mStringBytes = offset;
+        }
+
+        // Append a string to the string block and update the hash.  This does not write the block
+        // to shared memory.
+        @GuardedBy("mLock")
+        private void appendStringToMapLocked(@NonNull String str) {
+            int offset = 0;
+            while (offset < mStringBlock.length && mStringBlock[offset] != 0) {
+                offset += mStringBlock[offset] + 1;
+            }
+            final byte[] strBytes = str.getBytes();
+
+            if (offset + strBytes.length >= mStringBlock.length) {
+                // Overflow.  Do not add the string to the block; the string will remain undefined.
+                return;
+            }
+
+            mStringBlock[offset] = (byte) strBytes.length;
+            offset++;
+            for (int i = 0; i < strBytes.length; i++, offset++) {
+                mStringBlock[offset] = strBytes[i];
+            }
+            mBlockHash = Arrays.hashCode(mStringBlock);
+        }
+
+        // Possibly update the string block.  If the native shared memory has a new block hash,
+        // then read the new string block values from shared memory, as well as the new hash.
+        @GuardedBy("mLock")
+        private void refreshStringBlockLocked() {
+            if (mBlockHash == nativeGetByteBlockHash(mPtr)) {
+                // The fastest way to know that the shared memory string block has not changed.
+                return;
+            }
+            final int hash = nativeGetByteBlock(mPtr, mBlockHash, mStringBlock);
+            if (hash != Arrays.hashCode(mStringBlock)) {
+                // This is a partial read: ignore it.  The next time someone needs this string
+                // the memory will be read again and should succeed.  Set the local hash to
+                // zero to ensure that the next read attempt will actually read from shared
+                // memory.
+                mBlockHash = 0;
+                mPartialReads++;
+                return;
+            }
+            // The hash has changed.  Update the strings from the byte block.
+            mStringUpdated++;
+            mBlockHash = hash;
+            updateStringMapLocked();
+        }
+
+        // Throw an exception if the string cannot be stored in the string block.
+        private static void throwIfBadString(@NonNull String s) {
+            if (s.length() == 0) {
+                throw new IllegalArgumentException("cannot store an empty string");
+            }
+            if (s.length() > MAX_STRING_LENGTH) {
+                throw new IllegalArgumentException("cannot store a string longer than "
+                        + MAX_STRING_LENGTH);
+            }
+        }
+
+        // Throw an exception if the nonce handle is invalid.  The handle is bad if it is out of
+        // range of allocated handles.  Note that NONCE_HANDLE_INVALID will throw: this is
+        // important for setNonce().
+        @GuardedBy("mLock")
+        private void throwIfBadHandle(int handle) {
+            if (handle < 0 || handle > mHighestIndex) {
+                throw new IllegalArgumentException("invalid nonce handle: " + handle);
+            }
+        }
+
+        // Throw if the memory is immutable (the process does not have write permission).  The
+        // exception mimics the permission-denied exception thrown when a process writes to an
+        // unauthorized system property.
+        private void throwIfImmutable() {
+            if (!mMutable) {
+                throw new RuntimeException("write permission denied");
+            }
+        }
+
+        // Add a string to the local copy of the block and write the block to shared memory.
+        // Return the index of the new string.  If the string has already been recorded, the
+        // shared memory is not updated but the index of the existing string is returned.
+        public int storeName(@NonNull String str) {
+            synchronized (mLock) {
+                Integer handle = mStringHandle.get(str);
+                if (handle == null) {
+                    throwIfImmutable();
+                    throwIfBadString(str);
+                    appendStringToMapLocked(str);
+                    nativeSetByteBlock(mPtr, mBlockHash, mStringBlock);
+                    updateStringMapLocked();
+                    handle = mStringHandle.get(str);
+                }
+                return handle;
+            }
+        }
+
+        // Retrieve the handle for a string.  -1 is returned if the string is not found.
+        public int getHandleForName(@NonNull String str) {
+            synchronized (mLock) {
+                Integer handle = mStringHandle.get(str);
+                if (handle == null) {
+                    refreshStringBlockLocked();
+                    handle  = mStringHandle.get(str);
+                }
+                return (handle != null) ? handle : INVALID_NONCE_INDEX;
+            }
+        }
+
+        // Thin wrapper around the native method.
+        public boolean setNonce(int handle, long value) {
+            synchronized (mLock) {
+                throwIfBadHandle(handle);
+                throwIfImmutable();
+                return nativeSetNonce(mPtr, handle, value);
+            }
+        }
+
+        public long getNonce(int handle) {
+            synchronized (mLock) {
+                throwIfBadHandle(handle);
+                return nativeGetNonce(mPtr, handle);
+            }
+        }
+
+        /**
+         * Dump the nonce statistics
+         */
+        public void dump(@NonNull PrintWriter pw, @NonNull String prefix, boolean detailed) {
+            synchronized (mLock) {
+                pw.println(formatSimple(
+                    "%sStringsMapped: %d, BytesUsed: %d",
+                    prefix, mHighestIndex, mStringBytes));
+                pw.println(formatSimple(
+                    "%sPartialReads: %d, StringUpdates: %d",
+                    prefix, mPartialReads, mStringUpdated));
+
+                if (detailed) {
+                    for (String s: mStringHandle.keySet()) {
+                        int h = mStringHandle.get(s);
+                        pw.println(formatSimple(
+                            "%sHandle:%d Name:%s", prefix, h, s));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Return the maximum number of nonces supported in the native layer.
+     *
+     * @param mPtr the pointer to the native shared memory.
+     * @return the number of nonces supported by the shared memory.
+     */
+    private static native int nativeGetMaxNonce(long mPtr);
+
+    /**
+     * Return the maximum number of string bytes supported in the native layer.
+     *
+     * @param mPtr the pointer to the native shared memory.
+     * @return the number of string bytes supported by the shared memory.
+     */
+    private static native int nativeGetMaxByte(long mPtr);
+
+    /**
+     * Write the byte block and set the hash into shared memory.  The method is relatively
+     * forgiving, in that any non-null byte array will be stored without error.  The number of
+     * bytes will the lesser of the length of the block parameter and the size of the native
+     * array.  The native layer performs no checks on either byte block or the hash.
+     *
+     * @param mPtr the pointer to the native shared memory.
+     * @param hash a value to be stored in the native block hash.
+     * @param block the byte array to be store.
+     */
+    @FastNative
+    private static native void nativeSetByteBlock(long mPtr, int hash, @NonNull byte[] block);
+
+    /**
+     * Retrieve the string block into the array and return the hash value.  If the incoming hash
+     * value is the same as the hash in shared memory, the native function returns immediately
+     * without touching the block parameter.  Note that a zero hash value will always cause shared
+     * memory to be read.  The number of bytes read is the lesser of the length of the block
+     * parameter and the size of the native array.
+     *
+     * @param mPtr the pointer to the native shared memory.
+     * @param hash a value to be compared against the hash in the native layer.
+     * @param block an array to receive the bytes from the native layer.
+     * @return the hash from the native layer.
+     */
+    @FastNative
+    private static native int nativeGetByteBlock(long mPtr, int hash, @NonNull byte[] block);
+
+    /**
+     * Retrieve just the byte block hash from the native layer.  The function is CriticalNative
+     * and thus very fast.
+     *
+     * @param mPtr the pointer to the native shared memory.
+     * @return the current native hash value.
+     */
+    @CriticalNative
+    private static native int nativeGetByteBlockHash(long mPtr);
+
+    /**
+     * Set a nonce at the specified index.  The index is checked against the size of the native
+     * nonce array and the function returns true if the index is valid, and false.  The function
+     * is CriticalNative and thus very fast.
+     *
+     * @param mPtr the pointer to the native shared memory.
+     * @param index the index of the nonce to set.
+     * @param value the value to set for the nonce.
+     * @return true if the index is inside the nonce array and false otherwise.
+     */
+    @CriticalNative
+    private static native boolean nativeSetNonce(long mPtr, int index, long value);
+
+    /**
+     * Get the nonce from the specified index.  The index is checked against the size of the
+     * native nonce array; the function returns the nonce value if the index is valid, and 0
+     * otherwise.  The function is CriticalNative and thus very fast.
+     *
+     * @param mPtr the pointer to the native shared memory.
+     * @param index the index of the nonce to retrieve.
+     * @return the value of the specified nonce, of 0 if the index is out of bounds.
+     */
+    @CriticalNative
+    private static native long nativeGetNonce(long mPtr, int index);
 }

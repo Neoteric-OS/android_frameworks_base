@@ -16,7 +16,6 @@
 
 package com.android.systemui.shade;
 
-import static com.android.systemui.flags.Flags.LOCKSCREEN_WALLPAPER_DREAM_ENABLED;
 import static com.android.systemui.keyguard.shared.model.KeyguardState.DREAMING;
 import static com.android.systemui.keyguard.shared.model.KeyguardState.LOCKSCREEN;
 import static com.android.systemui.statusbar.StatusBarState.KEYGUARD;
@@ -58,6 +57,7 @@ import com.android.systemui.keyguard.shared.model.TransitionStep;
 import com.android.systemui.res.R;
 import com.android.systemui.scene.shared.flag.SceneContainerFlag;
 import com.android.systemui.shade.domain.interactor.PanelExpansionInteractor;
+import com.android.systemui.shade.shared.flag.ShadeWindowGoesAround;
 import com.android.systemui.shared.animation.DisableSubpixelTextTransitionListener;
 import com.android.systemui.statusbar.DragDownHelper;
 import com.android.systemui.statusbar.LockscreenShadeTransitionController;
@@ -70,6 +70,7 @@ import com.android.systemui.statusbar.notification.stack.AmbientState;
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout;
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController;
 import com.android.systemui.statusbar.phone.CentralSurfaces;
+import com.android.systemui.statusbar.phone.ConfigurationForwarder;
 import com.android.systemui.statusbar.phone.DozeScrimController;
 import com.android.systemui.statusbar.phone.DozeServiceHost;
 import com.android.systemui.statusbar.phone.PhoneStatusBarViewController;
@@ -103,7 +104,6 @@ public class NotificationShadeWindowViewController implements Dumpable {
     private final KeyguardUnlockAnimationController mKeyguardUnlockAnimationController;
     private final AmbientState mAmbientState;
     private final PulsingGestureListener mPulsingGestureListener;
-    private final LockscreenHostedDreamGestureListener mLockscreenHostedDreamGestureListener;
     private final NotificationInsetsController mNotificationInsetsController;
     private final FeatureFlagsClassic mFeatureFlagsClassic;
     private final SysUIKeyEventHandler mSysUIKeyEventHandler;
@@ -114,7 +114,6 @@ public class NotificationShadeWindowViewController implements Dumpable {
     private final GlanceableHubContainerController
             mGlanceableHubContainerController;
     private GestureDetector mPulsingWakeupGestureHandler;
-    private GestureDetector mDreamingWakeupGestureHandler;
     private View mBrightnessMirror;
     private boolean mTouchActive;
     private boolean mTouchCancelled;
@@ -182,7 +181,6 @@ public class NotificationShadeWindowViewController implements Dumpable {
             ShadeLogger shadeLogger,
             DumpManager dumpManager,
             PulsingGestureListener pulsingGestureListener,
-            LockscreenHostedDreamGestureListener lockscreenHostedDreamGestureListener,
             KeyguardTransitionInteractor keyguardTransitionInteractor,
             GlanceableHubContainerController glanceableHubContainerController,
             NotificationLaunchAnimationInteractor notificationLaunchAnimationInteractor,
@@ -192,7 +190,8 @@ public class NotificationShadeWindowViewController implements Dumpable {
             QuickSettingsController quickSettingsController,
             PrimaryBouncerInteractor primaryBouncerInteractor,
             AlternateBouncerInteractor alternateBouncerInteractor,
-            BouncerViewBinder bouncerViewBinder) {
+            BouncerViewBinder bouncerViewBinder,
+            @ShadeDisplayAware ConfigurationForwarder configurationForwarder) {
         mLockscreenShadeTransitionController = transitionController;
         mFalsingCollector = falsingCollector;
         mStatusBarStateController = statusBarStateController;
@@ -212,7 +211,6 @@ public class NotificationShadeWindowViewController implements Dumpable {
         mKeyguardUnlockAnimationController = keyguardUnlockAnimationController;
         mAmbientState = ambientState;
         mPulsingGestureListener = pulsingGestureListener;
-        mLockscreenHostedDreamGestureListener = lockscreenHostedDreamGestureListener;
         mNotificationInsetsController = notificationInsetsController;
         mKeyguardTransitionInteractor = keyguardTransitionInteractor;
         mGlanceableHubContainerController = glanceableHubContainerController;
@@ -250,6 +248,9 @@ public class NotificationShadeWindowViewController implements Dumpable {
                             mDisableSubpixelTextTransitionListener));
         }
 
+        if (ShadeWindowGoesAround.isEnabled()) {
+            mView.setConfigurationForwarder(configurationForwarder);
+        }
         dumpManager.registerDumpable(this);
     }
 
@@ -327,10 +328,6 @@ public class NotificationShadeWindowViewController implements Dumpable {
         mStackScrollLayout = mView.findViewById(R.id.notification_stack_scroller);
         mPulsingWakeupGestureHandler = new GestureDetector(mView.getContext(),
                 mPulsingGestureListener);
-        if (mFeatureFlagsClassic.isEnabled(LOCKSCREEN_WALLPAPER_DREAM_ENABLED)) {
-            mDreamingWakeupGestureHandler = new GestureDetector(mView.getContext(),
-                    mLockscreenHostedDreamGestureListener);
-        }
         mView.setLayoutInsetsController(mNotificationInsetsController);
         mView.setInteractionEventHandler(new NotificationShadeWindowView.InteractionEventHandler() {
             boolean mUseDragDownHelperForTouch = false;
@@ -401,10 +398,6 @@ public class NotificationShadeWindowViewController implements Dumpable {
                         && mGlanceableHubContainerController.onTouchEvent(ev)) {
                     // GlanceableHubContainerController is only used pre-flexiglass.
                     return logDownDispatch(ev, "dispatched to glanceable hub container", true);
-                }
-                if (mDreamingWakeupGestureHandler != null
-                        && mDreamingWakeupGestureHandler.onTouchEvent(ev)) {
-                    return logDownDispatch(ev, "dream wakeup gesture handled", true);
                 }
                 if (mBrightnessMirror != null
                         && mBrightnessMirror.getVisibility() == View.VISIBLE) {

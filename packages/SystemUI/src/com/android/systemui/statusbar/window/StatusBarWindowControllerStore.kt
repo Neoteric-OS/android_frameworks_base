@@ -27,6 +27,8 @@ import com.android.systemui.display.data.repository.PerDisplayStore
 import com.android.systemui.display.data.repository.PerDisplayStoreImpl
 import com.android.systemui.display.data.repository.SingleDisplayStore
 import com.android.systemui.statusbar.core.StatusBarConnectedDisplays
+import com.android.systemui.statusbar.data.repository.StatusBarConfigurationControllerStore
+import com.android.systemui.statusbar.data.repository.StatusBarContentInsetsProviderStore
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 
@@ -41,6 +43,8 @@ constructor(
     private val controllerFactory: StatusBarWindowController.Factory,
     private val displayWindowPropertiesRepository: DisplayWindowPropertiesRepository,
     private val viewCaptureAwareWindowManagerFactory: ViewCaptureAwareWindowManager.Factory,
+    private val statusBarConfigurationControllerStore: StatusBarConfigurationControllerStore,
+    private val statusBarContentInsetsProviderStore: StatusBarContentInsetsProviderStore,
     displayRepository: DisplayRepository,
 ) :
     StatusBarWindowControllerStore,
@@ -61,6 +65,8 @@ constructor(
         return controllerFactory.create(
             statusBarDisplayContext.context,
             viewCaptureAwareWindowManager,
+            statusBarConfigurationControllerStore.forDisplay(displayId),
+            statusBarContentInsetsProviderStore.forDisplay(displayId),
         )
     }
 
@@ -74,10 +80,17 @@ constructor(
     context: Context,
     viewCaptureAwareWindowManager: ViewCaptureAwareWindowManager,
     factory: StatusBarWindowControllerImpl.Factory,
+    statusBarConfigurationControllerStore: StatusBarConfigurationControllerStore,
+    statusBarContentInsetsProviderStore: StatusBarContentInsetsProviderStore,
 ) :
     StatusBarWindowControllerStore,
     PerDisplayStore<StatusBarWindowController> by SingleDisplayStore(
-        factory.create(context, viewCaptureAwareWindowManager)
+        factory.create(
+            context,
+            viewCaptureAwareWindowManager,
+            statusBarConfigurationControllerStore.defaultDisplay,
+            statusBarContentInsetsProviderStore.defaultDisplay,
+        )
     ) {
 
     init {

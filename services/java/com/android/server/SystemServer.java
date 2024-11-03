@@ -107,6 +107,7 @@ import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.os.ApplicationSharedMemory;
 import com.android.internal.os.BinderInternal;
 import com.android.internal.os.RuntimeInit;
+import com.android.internal.pm.RoSystemFeatures;
 import com.android.internal.policy.AttributeCache;
 import com.android.internal.protolog.ProtoLog;
 import com.android.internal.protolog.ProtoLogConfigurationServiceImpl;
@@ -1402,6 +1403,10 @@ public final class SystemServer implements Dumpable {
         mSystemServiceManager.startService(BatteryService.class);
         t.traceEnd();
 
+        t.traceBegin("StartTradeInModeService");
+        mSystemServiceManager.startService(TradeInModeService.class);
+        t.traceEnd();
+
         // Tracks application usage stats.
         t.traceBegin("StartUsageService");
         mSystemServiceManager.startService(UsageStatsService.class);
@@ -1503,14 +1508,15 @@ public final class SystemServer implements Dumpable {
 
         boolean enableWigig = SystemProperties.getBoolean("persist.vendor.wigig.enable", false);
 
-        boolean isWatch = context.getPackageManager().hasSystemFeature(
-                PackageManager.FEATURE_WATCH);
+        boolean isWatch = RoSystemFeatures.hasFeatureWatch(context);
 
         boolean isArc = context.getPackageManager().hasSystemFeature(
                 "org.chromium.arc");
 
         boolean isTv = context.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_LEANBACK);
+
+        boolean isAutomotive = RoSystemFeatures.hasFeatureAutomotive(context);
 
         boolean enableVrService = context.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_VR_MODE_HIGH_PERFORMANCE);
@@ -1770,7 +1776,8 @@ public final class SystemServer implements Dumpable {
                 t.traceEnd();
             }
 
-            if (android.security.Flags.aapmApi()) {
+            if (!isWatch && !isTv && !isAutomotive
+                    && android.security.Flags.aapmApi()) {
                 t.traceBegin("StartAdvancedProtectionService");
                 mSystemServiceManager.startService(AdvancedProtectionService.Lifecycle.class);
                 t.traceEnd();
@@ -2796,7 +2803,7 @@ public final class SystemServer implements Dumpable {
             t.traceEnd();
         }
 
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_EMBEDDED)) {
+        if (RoSystemFeatures.hasFeatureEmbedded(context)) {
             t.traceBegin("StartIoTSystemService");
             mSystemServiceManager.startService(IOT_SERVICE_CLASS);
             t.traceEnd();
@@ -3087,8 +3094,13 @@ public final class SystemServer implements Dumpable {
                     || context.getPackageManager().hasSystemFeature(
                             PackageManager.FEATURE_WIFI_RTT)) {
                 t.traceBegin("RangingService");
-                mSystemServiceManager.startServiceFromJar(RANGING_SERVICE_CLASS,
-                        RANGING_APEX_SERVICE_JAR_PATH);
+                // TODO: b/375264320 - Remove after RELEASE_RANGING_STACK is ramped to next.
+                try {
+                    mSystemServiceManager.startServiceFromJar(RANGING_SERVICE_CLASS,
+                            RANGING_APEX_SERVICE_JAR_PATH);
+                } catch (Throwable e) {
+                    Slog.d(TAG, "service-ranging.jar not found, not starting RangingService");
+                }
                 t.traceEnd();
             }
         }
@@ -3194,8 +3206,6 @@ public final class SystemServer implements Dumpable {
                 }, WEBVIEW_PREPARATION);
             }
 
-            boolean isAutomotive = mPackageManager
-                    .hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE);
             if (isAutomotive) {
                 t.traceBegin("StartCarServiceHelperService");
                 final SystemService cshs = mSystemServiceManager
