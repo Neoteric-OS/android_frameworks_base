@@ -565,7 +565,7 @@ public class OomAdjuster {
                     setCgroupProcsProcessGroup(app.info.uid, pid, group,
                             mProcessGroupCgroupFollowDex2oatOnly);
                 } else {
-                    setProcessGroup(pid, group);
+                    android.os.Process.setProcessGroup(pid, group);
                 }
             } catch (Exception e) {
                 if (DEBUG_ALL) {
@@ -582,6 +582,11 @@ public class OomAdjuster {
         mTmpQueue = new ArrayDeque<ProcessRecord>(mConstants.CUR_MAX_CACHED_PROCESSES << 1);
         mNumSlots = ((CACHED_APP_MAX_ADJ - CACHED_APP_MIN_ADJ + 1) >> 1)
                 / CACHED_APP_IMPORTANCE_LEVELS;
+    }
+
+    void setProcessGroup(int pid, int group, String processName) {
+        mProcessGroupHandler.sendMessage(mProcessGroupHandler.obtainMessage(
+                0 /* unused */, pid, group, processName));
     }
 
     void initSettings() {
@@ -3649,8 +3654,8 @@ public class OomAdjuster {
                     processGroup = THREAD_GROUP_DEFAULT;
                     break;
             }
-            mProcessGroupHandler.sendMessage(mProcessGroupHandler.obtainMessage(
-                    0 /* unused */, app.getPid(), processGroup, app));
+            setProcessGroup(app.getPid(), processGroup, app.processName);
+            mService.mPhantomProcessList.setProcessGroupForPhantomProcessOfApp(app, processGroup);
             try {
                 final int renderThreadTid = app.getRenderThreadTid();
                 if (curSchedGroup == SCHED_GROUP_TOP_APP) {
