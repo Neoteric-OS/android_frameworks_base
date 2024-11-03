@@ -674,7 +674,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     @Inject
     public NotificationPanelViewController(NotificationPanelView view,
             @Main Handler handler,
-            LayoutInflater layoutInflater,
+            @ShadeDisplayAware LayoutInflater layoutInflater,
             FeatureFlags featureFlags,
             NotificationWakeUpCoordinator coordinator,
             PulseExpansionHandler pulseExpansionHandler,
