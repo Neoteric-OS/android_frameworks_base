@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd0539c0_4e11e7f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-11-04T11:59:35Z",
+      "side": 1,
+      "message": "Harry or Josep, could you please help with owner\u0027s approval?",
+      "revId": "ccb6a9e8db13b7ee78eb34f42c86a3c72d14ba5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
