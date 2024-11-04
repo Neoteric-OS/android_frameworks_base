@@ -5745,9 +5745,6 @@ android.net.metrics.ValidationProbeEvent
 android.net.metrics.WakeupEvent
 android.net.metrics.WakeupStats
 android.net.rtp.AudioCodec
-android.net.rtp.AudioGroup
-android.net.rtp.AudioStream
-android.net.rtp.RtpStream
 android.net.sip.ISipService$Default
 android.net.sip.ISipService$Stub$Proxy
 android.net.sip.ISipService$Stub
