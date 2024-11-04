@@ -112,7 +112,7 @@ aconfig_declarations_group {
 
 filegroup {
     name: "framework-minus-apex-aconfig-srcjars",
-    device_common_srcs: [
+    srcs: [
         ":framework-minus-apex-aconfig-declarations{.srcjars}",
     ],
 }

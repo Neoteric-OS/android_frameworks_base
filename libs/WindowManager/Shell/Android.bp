@@ -79,7 +79,7 @@ filegroup {
     path: "src",
 }
 
-java_genrule {
+genrule {
     name: "wm_shell_protolog_src",
     srcs: [
         ":protolog-impl",
@@ -99,7 +99,7 @@ java_genrule {
     out: ["wm_shell_protolog.srcjar"],
 }
 
-java_genrule {
+genrule {
     name: "generate-wm_shell_protolog.json",
     srcs: [
         ":wm_shell_protolog-groups",
@@ -116,7 +116,7 @@ java_genrule {
     out: ["wm_shell_protolog.json"],
 }
 
-java_genrule {
+genrule {
     name: "gen-wmshell.protolog.pb",
     srcs: [
         ":wm_shell_protolog-groups",
@@ -133,7 +133,7 @@ java_genrule {
     out: ["wmshell.protolog.pb"],
 }
 
-java_genrule {
+genrule {
     name: "protolog.json.gz",
     srcs: [":generate-wm_shell_protolog.json"],
     out: ["wmshell.protolog.json.gz"],
