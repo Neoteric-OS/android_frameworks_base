@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96f2e71e_1fb3236e",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-04T18:52:42Z",
+      "side": 1,
+      "message": "This is an awkward semantic; why not just add a `isServiceEnabledForCategoryOther(@NonNull ComponentName service)` or `getServicesEanabledForCategoryOther()` getter to get the complete list?",
+      "range": {
+        "startLine": 885,
+        "startChar": 15,
+        "endLine": 885,
+        "endChar": 87
+      },
+      "revId": "d40c38aeb64ed6a065e555b283fa1c95401ccf6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa5a9aec_dd709e87",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-04T18:52:42Z",
+      "side": 1,
+      "message": "Not needed if they\u0027re using `createContextAsUser`",
+      "range": {
+        "startLine": 892,
+        "startChar": 12,
+        "endLine": 892,
+        "endChar": 62
+      },
+      "revId": "d40c38aeb64ed6a065e555b283fa1c95401ccf6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
