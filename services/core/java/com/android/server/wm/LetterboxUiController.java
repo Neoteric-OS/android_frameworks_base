@@ -1326,7 +1326,8 @@ final class LetterboxUiController {
 
     @VisibleForTesting
     boolean isHorizontalReachabilityEnabled() {
-        return isHorizontalReachabilityEnabled(mActivityRecord.getParent().getConfiguration());
+        final WindowContainer parent = mActivityRecord.getParent();
+        return parent != null ? isHorizontalReachabilityEnabled(parent.getConfiguration()) : false;
     }
 
     boolean isLetterboxDoubleTapEducationEnabled() {
@@ -1365,7 +1366,8 @@ final class LetterboxUiController {
 
     @VisibleForTesting
     boolean isVerticalReachabilityEnabled() {
-        return isVerticalReachabilityEnabled(mActivityRecord.getParent().getConfiguration());
+        final WindowContainer parent = mActivityRecord.getParent();
+        return parent != null ? isVerticalReachabilityEnabled(parent.getConfiguration()) : false;
     }
 
     @VisibleForTesting
