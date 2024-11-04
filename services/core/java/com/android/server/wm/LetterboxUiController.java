@@ -16,6 +16,7 @@
 
 package com.android.server.wm;
 
+import static android.app.AppOpsManager.parseHistoricalMode;
 import static android.app.CameraCompatTaskInfo.CAMERA_COMPAT_FREEFORM_NONE;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 import static android.content.pm.ActivityInfo.FORCE_NON_RESIZE_APP;
@@ -1326,7 +1327,8 @@ final class LetterboxUiController {
 
     @VisibleForTesting
     boolean isHorizontalReachabilityEnabled() {
-        return isHorizontalReachabilityEnabled(mActivityRecord.getParent().getConfiguration());
+        final WindowContainer parent = mActivityRecord.getParent();
+        return parent != null ? isHorizontalReachabilityEnabled(parent.getConfiguration()) : false;
     }
 
     boolean isLetterboxDoubleTapEducationEnabled() {
@@ -1365,7 +1367,8 @@ final class LetterboxUiController {
 
     @VisibleForTesting
     boolean isVerticalReachabilityEnabled() {
-        return isVerticalReachabilityEnabled(mActivityRecord.getParent().getConfiguration());
+        final WindowContainer parent = mActivityRecord.getParent();
+        return parent != null ? isVerticalReachabilityEnabled(parent.getConfiguration()) : false;
     }
 
     @VisibleForTesting
