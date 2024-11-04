@@ -28,7 +28,7 @@ java_test_host {
         "compatibility-tradefed",
         "compatibility-host-util",
     ],
-    device_common_data: [
+    data: [
         ":BackgroundInstallControlServiceTestApp",
         ":BackgroundInstallControlMockApp1",
         ":BackgroundInstallControlMockApp2",

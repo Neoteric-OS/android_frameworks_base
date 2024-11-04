@@ -36,7 +36,7 @@ python_test_host {
         unit_test: false,
         tags: ["mobly"],
     },
-    device_common_data: [
+    data: [
         ":cdm_snippet_legacy",
     ],
     version: {
