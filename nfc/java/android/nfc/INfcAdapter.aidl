@@ -117,4 +117,5 @@ interface INfcAdapter
     void triggerInitialization();
     boolean getSettingStatus();
     boolean isTagPresent();
+    int sendVendorNciParam(int paramId, in byte[] params);
 }
