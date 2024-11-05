@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "19f3d50c_bb121c43",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-05T18:31:33Z",
+      "side": 1,
+      "message": "Rephrased the description. This return value means whether setting/unsetting service is successful or not.",
+      "parentUuid": "96f2e71e_1fb3236e",
+      "range": {
+        "startLine": 885,
+        "startChar": 15,
+        "endLine": 885,
+        "endChar": 87
+      },
+      "revId": "d40c38aeb64ed6a065e555b283fa1c95401ccf6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fa5a9aec_dd709e87",
         "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 6
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-04T18:52:42Z",
       "side": 1,
       "message": "Not needed if they\u0027re using `createContextAsUser`",
+      "range": {
+        "startLine": 892,
+        "startChar": 12,
+        "endLine": 892,
+        "endChar": 62
+      },
+      "revId": "d40c38aeb64ed6a065e555b283fa1c95401ccf6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7212d76_034ed4a8",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-05T18:31:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa5a9aec_dd709e87",
       "range": {
         "startLine": 892,
         "startChar": 12,
