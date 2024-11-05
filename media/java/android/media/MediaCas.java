@@ -994,7 +994,10 @@ public final class MediaCas implements AutoCloseable {
     @FlaggedApi(FLAG_UPDATE_CLIENT_PROFILE_PRIORITY)
     public boolean updateResourcePriority(
             @IntRange(from = 0) int priority, @IntRange(from = 0) int niceValue) {
-        return mTunerResourceManager.updateClientPriority(mClientId, priority, niceValue);
+        if (mTunerResourceManager != null) {
+            return mTunerResourceManager.updateClientPriority(mClientId, priority, niceValue);
+        }
+        return false;
     }
 
     IHwBinder getBinder() {
