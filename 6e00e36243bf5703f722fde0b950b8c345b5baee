@@ -16,6 +16,24 @@
       "message": "nit: you inadvertently added a newline here",
       "revId": "6e00e36243bf5703f722fde0b950b8c345b5baee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69646631_1d5819b5",
+        "filename": "config/preloaded-classes-denylist",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1965996
+      },
+      "writtenOn": "2024-11-05T17:36:35Z",
+      "side": 1,
+      "message": "Thanks, yes I wanted to add a new line at the end since it is a good practice",
+      "parentUuid": "9867ca71_98c28287",
+      "revId": "6e00e36243bf5703f722fde0b950b8c345b5baee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
