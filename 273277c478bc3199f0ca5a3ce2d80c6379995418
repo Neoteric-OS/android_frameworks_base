@@ -3,6 +3,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ce81d5c1_b00fd83e",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T21:07:38Z",
+      "side": 1,
+      "message": "why do we need this? there is already a 3p broadcast for this.",
+      "range": {
+        "startLine": 1123,
+        "startChar": 21,
+        "endLine": 1123,
+        "endChar": 38
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b77deb0_955047dd",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T21:07:38Z",
+      "side": 1,
+      "message": "how are we going to report this if the NFC stack crashes? There is no way for us to report this if the NFC stack restarts.",
+      "range": {
+        "startLine": 1129,
+        "startChar": 21,
+        "endLine": 1129,
+        "endChar": 38
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bd15801_0e0f4f81",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T21:07:38Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a well defined to surface to even wallet app. What is wallet going to do with this info?",
+      "range": {
+        "startLine": 1131,
+        "startChar": 0,
+        "endLine": 1142,
+        "endChar": 0
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d611b3ca_9165010d",
         "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 21
