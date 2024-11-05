@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19f05d5e_a2d6ffbf",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T04:04:02Z",
+      "side": 1,
+      "message": "Rename to `LOG_ACTION_RF_FIELD_STATE_CHANGED`",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1a670756_9413824c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 41,
+                "startChar": 0,
+                "endLine": 42,
+                "endChar": 0
+              },
+              "replacement": "    public static final int LOG_ACTION_HOST_APDU_SEND \u003d 0X01;\r\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 63,
+                "startChar": 0,
+                "endLine": 64,
+                "endChar": 0
+              },
+              "replacement": "            LOG_ACTION_HOST_APDU_SEND,\r\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d235bb71bd9a0a9b7c24fb0f419a7b5729a9b8b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e8f861d_d5261245",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T04:04:02Z",
+      "side": 1,
+      "message": "Rename to `LOG_ACTION_NFC_TOGGLE`",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ca7e4d8d_26c06e5b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 45,
+                "startChar": 0,
+                "endLine": 46,
+                "endChar": 0
+              },
+              "replacement": "    public static final int LOG_ACTION_NFC_ENABLE \u003d 0x0201;\r\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 64,
+                "startChar": 0,
+                "endLine": 65,
+                "endChar": 0
+              },
+              "replacement": "            LOG_ACTION_NFC_ENABLE,\r\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d235bb71bd9a0a9b7c24fb0f419a7b5729a9b8b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93d14699_bbab687b",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T04:04:02Z",
+      "side": 1,
+      "message": "Rename to `LOG_ACTION_HCE_DATA`",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6de95647_ebf687f2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 49,
+                "startChar": 0,
+                "endLine": 50,
+                "endChar": 0
+              },
+              "replacement": "    public static final int LOG_ACTION_HOST \u003d 0x0204;\r\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 65,
+                "startChar": 0,
+                "endLine": 66,
+                "endChar": 0
+              },
+              "replacement": "            LOG_ACTION_HOST,\r\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d235bb71bd9a0a9b7c24fb0f419a7b5729a9b8b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4adac317_b6c4fc17",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T04:04:02Z",
+      "side": 1,
+      "message": "Rename to `LOG_ACTION_SCREEN_STATE_CHANGED`",
+      "range": {
+        "startLine": 53,
+        "startChar": 28,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bbc6f60f_c3e57d2c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 53,
+                "startChar": 0,
+                "endLine": 54,
+                "endChar": 0
+              },
+              "replacement": "    public static final int REPORT_SCREEN_STATE_CHANGE \u003d 0x0206;\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 66,
+                "startChar": 0,
+                "endLine": 67,
+                "endChar": 0
+              },
+              "replacement": "            REPORT_SCREEN_STATE_CHANGE,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d235bb71bd9a0a9b7c24fb0f419a7b5729a9b8b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abc5cbbf_93d1d6c8",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T04:04:02Z",
+      "side": 1,
+      "message": "Rename to `LOG_ACTION_TAG_DETECTED`",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 47
+      },
+      "revId": "d235bb71bd9a0a9b7c24fb0f419a7b5729a9b8b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8415ca73_08750845",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T04:04:02Z",
+      "side": 1,
+      "message": "As discussed in the other CL, let\u0027s mark this as `getRfFieldEventTimeMillis` to capture both on \u0026 off events.",
+      "range": {
+        "startLine": 255,
+        "startChar": 16,
+        "endLine": 255,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "20f2d1a7_a448fafc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/OemLogItems.java",
+              "range": {
+                "startLine": 255,
+                "startChar": 0,
+                "endLine": 255,
+                "endChar": 0
+              },
+              "replacement": "    @FlaggedApi(maxTargetSdk \u003d 33)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d235bb71bd9a0a9b7c24fb0f419a7b5729a9b8b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
