@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f5d9d4e_a5073a11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-11-05T16:52:44Z",
+      "side": 1,
+      "message": "can you describe the order of events with which transitions things are part of?\n\nthere shouldn\u0027t be any special treatment of \"desktop\" and I don\u0027t understand the \"quickly\" part. How quickly things happen shouldn\u0027t really impact the transitionInfo contents -- if it does, then we should probably fix that instead.",
+      "range": {
+        "startLine": 7,
+        "startChar": 139,
+        "endLine": 7,
+        "endChar": 358
+      },
+      "revId": "343088ec0ecc0cf5f282011b69a460f900a86242",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "171a9c13_c41b521b",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5669,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-11-05T16:52:44Z",
+      "side": 1,
+      "message": "this seems too specific? Home is just another activity, so the logic should handle them all the same.",
+      "range": {
+        "startLine": 5669,
+        "startChar": 80,
+        "endLine": 5669,
+        "endChar": 101
+      },
+      "revId": "343088ec0ecc0cf5f282011b69a460f900a86242",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
