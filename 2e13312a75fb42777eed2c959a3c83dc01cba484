@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2e48151_945e2b34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-11-05T11:07:08Z",
+      "side": 1,
+      "message": "As for exposing APIs for tests only - how many of these are for VCN CTS tests themselves? It seems better *not* to expose those, and instead to make the VCN CTS tests compile against the VCN framework impl jars. I think this is what we do in the tethering and networking CTS tests.",
+      "revId": "2e13312a75fb42777eed2c959a3c83dc01cba484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
