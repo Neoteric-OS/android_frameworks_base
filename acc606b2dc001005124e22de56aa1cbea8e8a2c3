@@ -442,6 +442,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc55a959_8694f333",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-05T01:04:05Z",
+      "side": 1,
+      "message": "Samsung said they don\u0027t need this anymore. Removed it.",
+      "parentUuid": "4167e71d_03429970",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 265,
+        "endChar": 43
+      },
+      "revId": "acc606b2dc001005124e22de56aa1cbea8e8a2c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd6960b8_ecc5cfde",
