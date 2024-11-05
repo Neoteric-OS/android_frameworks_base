@@ -22,6 +22,30 @@
       },
       "revId": "0cfad7de2449f62f6f4b6f943fe71aa397f937db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c48e1142_0bd1923f",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1345758
+      },
+      "writtenOn": "2024-11-05T08:29:49Z",
+      "side": 1,
+      "message": "When there are two users, we need two messages to notify AMS that the two uids are removed from the temp allowlist.\nWhen the first message is executed, onAppRemovedFromTempWhitelistLocked will be executed, and it will notify AMS to remove the first uid from the temp allowlist.\nWhen the second message is executed, AMS is notified to remove the second uid and the temp allowlist is removed by calling ‘LocalActivityManager.updateDeviceIdleTempAllowlist’",
+      "parentUuid": "bc7d7615_862c4e14",
+      "range": {
+        "startLine": 3300,
+        "startChar": 0,
+        "endLine": 3300,
+        "endChar": 44
+      },
+      "revId": "0cfad7de2449f62f6f4b6f943fe71aa397f937db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
