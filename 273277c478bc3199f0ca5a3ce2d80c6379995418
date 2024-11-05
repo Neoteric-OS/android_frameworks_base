@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d611b3ca_9165010d",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T17:29:17Z",
+      "side": 1,
+      "message": "Lot of these don\u0027t seem suitable for 3p apps. Should these be in the [NFC OEM extension callback](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/nfc/java/android/nfc/NfcOemExtension.java;drc\u003de2e3170c546b5011927135d4a610c848c5a3538d;l\u003d193) instead?",
+      "range": {
+        "startLine": 1108,
+        "startChar": 0,
+        "endLine": 1149,
+        "endChar": 65
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
