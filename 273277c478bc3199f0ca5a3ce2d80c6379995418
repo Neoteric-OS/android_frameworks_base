@@ -46,6 +46,30 @@
       },
       "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52250a82_7296d4a0",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-05T18:56:28Z",
+      "side": 1,
+      "message": "Gotcha, makes sense. I\u0027ll look into that approach.",
+      "parentUuid": "78640908_277334e3",
+      "range": {
+        "startLine": 1108,
+        "startChar": 0,
+        "endLine": 1149,
+        "endChar": 65
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
