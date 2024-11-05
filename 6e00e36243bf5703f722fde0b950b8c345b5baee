@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9867ca71_98c28287",
+        "filename": "config/preloaded-classes-denylist",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1004304
+      },
+      "writtenOn": "2024-11-05T16:55:55Z",
+      "side": 1,
+      "message": "nit: you inadvertently added a newline here",
+      "revId": "6e00e36243bf5703f722fde0b950b8c345b5baee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
