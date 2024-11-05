@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "711f68b3_f6d230dc",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-05T21:16:53Z",
+      "side": 1,
+      "message": "The idea is that the Event Listener API is a lighter-weight interface to important NFC-related events. Knowing that the NFC controller was turned off seems important and this keeps all the notifications in the same place. This also provides more accurate timing of this event, as one doesn\u0027t need to go through the whole Broadcast infrastructure for it.\n\nThat said, you\u0027re right: it exists already as a broadcast and we don\u0027t *need* it. It just feels like a nice-to-have for this new interface.",
+      "parentUuid": "ce81d5c1_b00fd83e",
+      "range": {
+        "startLine": 1123,
+        "startChar": 21,
+        "endLine": 1123,
+        "endChar": 38
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9b77deb0_955047dd",
         "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 21
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a6ead609_a67fda7b",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-05T21:16:53Z",
+      "side": 1,
+      "message": "Oddly enough there is. At least, for one case: when the Watchdog (OG one, not Brad\u0027s new one) triggers and restarts the stack. See the implementation in https://android-review.git.corp.google.com/c/platform/packages/apps/Nfc/+/3323874",
+      "parentUuid": "9b77deb0_955047dd",
+      "range": {
+        "startLine": 1129,
+        "startChar": 21,
+        "endLine": 1129,
+        "endChar": 38
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0bd15801_0e0f4f81",
         "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 21
@@ -60,6 +108,30 @@
       "writtenOn": "2024-11-05T21:07:38Z",
       "side": 1,
       "message": "I don\u0027t think this is a well defined to surface to even wallet app. What is wallet going to do with this info?",
+      "range": {
+        "startLine": 1131,
+        "startChar": 0,
+        "endLine": 1142,
+        "endChar": 0
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d9afaa9_856e9dba",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-05T21:16:53Z",
+      "side": 1,
+      "message": "Yeah, I agree it\u0027s not the clearest use case. I was expecting it to be used as a simple tally for metrics purposes. If a device is getting tons of command failed and NFC transactions aren\u0027t working (from Wallet\u0027s PoV), something NFC-related in probably broken. I noticed in our NFC metrics that we do see a lot of these errors, so it seemed important to surface.",
+      "parentUuid": "0bd15801_0e0f4f81",
       "range": {
         "startLine": 1131,
         "startChar": 0,
