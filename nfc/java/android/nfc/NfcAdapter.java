@@ -2886,4 +2886,31 @@ public final class NfcAdapter {
         }
         return mNfcOemExtension;
     }
+
+    /**
+     * Send Vendor specific (proprietary) NCI parameters .
+     *
+     * Identifiers for NCI proprietary parameters start with value 0xA0.
+     * Any call with a parameter id lower than that will return a error.
+     *
+     * @param paramId Identity of the proprietary parameter.
+     * @param params Values for the parameter, use nullptr to restore the values
+     * @return message send status
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_NFC_VENDOR_CMD)
+    @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+    public @SendVendorNciStatus int sendVendorNciParam(int paramId, @NonNull byte[] params) {
+        Objects.requireNonNull(params, "params must not be null");
+        if(paramId < 0xA0){
+            Log.e(TAG, "Erroneous NCI proprietary parameter Id");
+            return SEND_VENDOR_NCI_STATUS_REJECTED;
+        }
+        try {
+            return sService.sendVendorNciParam(paramId, params);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }
