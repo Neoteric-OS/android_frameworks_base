@@ -44,6 +44,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b46ae29e_0479e806",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-05T04:30:02Z",
+      "side": 1,
+      "message": "Maybe this needs to be integer? Add this in the javadoc: `Refer to NFCForum-TS-T4T-1.2.pdf, and section name 4.1 File System Structure`",
+      "parentUuid": "29eed22f_fd2e5242",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9252af40_de8ea470",
         "filename": "nfc/java/android/nfc/NdefNfcee.java",
         "patchSetId": 2
