@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab58f367_55aa0565",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1948975
+      },
+      "writtenOn": "2024-11-06T12:25:21Z",
+      "side": 1,
+      "message": "Please add an associated Bug: stanza to the cl description, so we have a description of the bug this change is attempting to address. \n\nIf a bug does not exist that describes the issue, please file one.",
+      "revId": "094821910044b01f5c98143be59af2835051840d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
