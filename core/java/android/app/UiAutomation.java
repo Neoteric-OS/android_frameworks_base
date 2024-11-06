@@ -1635,7 +1635,7 @@ public final class UiAutomation {
      * @see #adoptShellPermissionIdentity()
      */
     public ParcelFileDescriptor executeShellCommand(String command) {
-        warnIfBetterCommand(command);
+        warnIfBetterCommand(command.split(" "));
 
         ParcelFileDescriptor source = null;
         ParcelFileDescriptor sink = null;
@@ -1673,7 +1673,7 @@ public final class UiAutomation {
      */
     @SuppressLint("ArrayReturn") // For consistency with other APIs
     public @NonNull ParcelFileDescriptor[] executeShellCommandRw(@NonNull String command) {
-        return executeShellCommandInternal(command, false /* includeStderr */);
+        return executeShellCommandInternal(new String[]{command}, false /* includeStderr */);
     }
 
     /**
@@ -1692,7 +1692,36 @@ public final class UiAutomation {
      */
     @SuppressLint("ArrayReturn") // For consistency with other APIs
     public @NonNull ParcelFileDescriptor[] executeShellCommandRwe(@NonNull String command) {
-        return executeShellCommandInternal(command, true /* includeStderr */);
+        return executeShellCommandInternal(new String[]{command}, true /* includeStderr */);
+    }
+
+    /**
+     * <p>
+     * Executes a shell command with command and arguments are passed in separately.
+     * <p>
+     * This method returns three file descriptors, one that points to the standard output stream
+     * (element at index 0), one that points to the standard input stream (element at index 1), and
+     * one points to standard error stream (element at index 2). The command execution is similar
+     * to running "adb shell <command>" from a host connected to the device.
+     * <p>
+     * <strong>Note:</strong> It is your responsibility to close the returned file
+     * descriptors once you are done reading/writing.
+     *
+     * @param command The command to execute.
+     * @param args Arugument list of the command.
+     * @return File descriptors (out, in, err) to the standard output/input/error streams.
+     */
+    @SuppressLint({"UnflaggedApi", "ArrayReturn"})
+    public @NonNull ParcelFileDescriptor[] executeShellCommandRwe(@NonNull String command,
+            @NonNull String... args) {
+        if (command == null || args == null) {
+            throw new IllegalArgumentException("Command and arguments should be not be null");
+        }
+        // Create a command array that contains command and all arguments.
+        String[] cmdarray = new String[1 + args.length];
+        cmdarray[0] = command;
+        System.arraycopy(args, 0, cmdarray, 1, args.length);
+        return executeShellCommandInternal(cmdarray, true /* includeStderr */);
     }
 
     /**
@@ -1703,8 +1732,19 @@ public final class UiAutomation {
         return mDisplayId;
     }
 
+    /**
+     * If command line is passed in as a whole single string, we pass in as a string array with
+     * only one element, and process separately.
+     * Examples of two ways of passing in element:
+     * 1. [{"echo foo bar"}]
+     * 2. [{"echo", "foo", "bar"}]
+     */
     private ParcelFileDescriptor[] executeShellCommandInternal(
-            String command, boolean includeStderr) {
+            String[] command, boolean includeStderr) {
+        if (command.length == 1) {
+            String[] splitCmd = command[0].split(" ");
+            warnIfBetterCommand(splitCmd);
+        }
         warnIfBetterCommand(command);
 
         ParcelFileDescriptor source_read = null;
@@ -1732,8 +1772,13 @@ public final class UiAutomation {
             }
 
             // Calling out without a lock held.
-            mUiAutomationConnection.executeShellCommandWithStderr(
-                    command, sink_read, source_write, stderr_sink_read);
+            if (command.length == 1) {
+                mUiAutomationConnection.executeShellCommandWithStderr(
+                        command[0], sink_read, source_write, stderr_sink_read);
+            } else {
+                mUiAutomationConnection.executeShellCommandArrayWithStderr(
+                        command, sink_read, source_write, stderr_sink_read);
+            }
         } catch (IOException ioe) {
             Log.e(LOG_TAG, "Error executing shell command!", ioe);
         } catch (RemoteException re) {
@@ -1782,13 +1827,15 @@ public final class UiAutomation {
         }
     }
 
-    private void warnIfBetterCommand(String cmd) {
-        if (cmd.startsWith("pm grant ")) {
-            Log.w(LOG_TAG, "UiAutomation.grantRuntimePermission() "
-                    + "is more robust and should be used instead of 'pm grant'");
-        } else if (cmd.startsWith("pm revoke ")) {
-            Log.w(LOG_TAG, "UiAutomation.revokeRuntimePermission() "
-                    + "is more robust and should be used instead of 'pm revoke'");
+    private void warnIfBetterCommand(String[] cmd) {
+        if (cmd.length > 1 && cmd[0] != null && cmd[0].equals("pm")) {
+            if (cmd[1] != null && cmd[1].equals("grant")) {
+                Log.w(LOG_TAG, "UiAutomation.grantRuntimePermission() "
+                        + "is more robust and should be used instead of 'pm grant'");
+            } else if (cmd[1] != null && cmd[1].equals("revoke")) {
+                Log.w(LOG_TAG, "UiAutomation.revokeRuntimePermission() "
+                        + "is more robust and should be used instead of 'pm revoke'");
+            }
         }
     }
 
