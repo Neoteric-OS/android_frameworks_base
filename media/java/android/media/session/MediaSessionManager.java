@@ -592,6 +592,9 @@ public final class MediaSessionManager {
      */
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public void dispatchMediaKeyEvent(@NonNull KeyEvent keyEvent, boolean needWakeLock) {
+        Log.i(
+                TAG,
+                "dispatchMediaKeyEvent(@NonNull KeyEvent keyEvent, boolean needWakeLock) called");
         dispatchMediaKeyEventInternal(keyEvent, /*asSystemService=*/false, needWakeLock);
     }
 
@@ -607,12 +610,18 @@ public final class MediaSessionManager {
      */
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public void dispatchMediaKeyEventAsSystemService(@NonNull KeyEvent keyEvent) {
+        Log.i(TAG, "dispatchMediaKeyEventAsSystemService(@NonNull KeyEvent keyEvent) called");
         dispatchMediaKeyEventInternal(keyEvent, /*asSystemService=*/true, /*needWakeLock=*/true);
     }
 
     private void dispatchMediaKeyEventInternal(KeyEvent keyEvent, boolean asSystemService,
             boolean needWakeLock) {
         Objects.requireNonNull(keyEvent, "keyEvent shouldn't be null");
+        Log.i(
+                TAG,
+                "dispatchMediaKeyEventInternal(): dispatching "
+                        + keyEvent
+                        + " to service via ISessionManager");
         try {
             mService.dispatchMediaKeyEvent(mContext.getPackageName(), asSystemService, keyEvent,
                     needWakeLock);

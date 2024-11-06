@@ -116,7 +116,7 @@ import java.util.Set;
  */
 public class MediaSessionService extends SystemService implements Monitor {
     private static final String TAG = "MediaSessionService";
-    static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
+    static final boolean DEBUG = true; // Log.isLoggable(TAG, Log.DEBUG);
     // Leave log for key event always.
     static final boolean DEBUG_KEY_EVENT = true;
 
@@ -1764,7 +1764,6 @@ public class MediaSessionService extends SystemService implements Monitor {
                 Log.w(TAG, "Attempted to dispatch null or non-media key event.");
                 return;
             }
-
             final int pid = Binder.getCallingPid();
             final int uid = Binder.getCallingUid();
             final long token = Binder.clearCallingIdentity();
@@ -1808,9 +1807,11 @@ public class MediaSessionService extends SystemService implements Monitor {
                         }
                     }
                     if (isGlobalPriorityActive) {
+                        Log.d(TAG, "dispatching to global priority session");
                         dispatchMediaKeyEventLocked(packageName, pid, uid, asSystemService,
                                 keyEvent, needWakeLock);
                     } else {
+                        Log.d(TAG, "make mMediaKeyEventHandler handle the media key event ");
                         mMediaKeyEventHandler.handleMediaKeyEventLocked(packageName, pid, uid,
                                 asSystemService, keyEvent, needWakeLock);
                     }
@@ -2670,6 +2671,14 @@ public class MediaSessionService extends SystemService implements Monitor {
                     Log.w(TAG, "Failed to send callback", e);
                 }
             } else if (mediaButtonReceiverHolder != null) {
+                Log.i(
+                        TAG,
+                        "dispatchMediaKeyEventLocked(): dispatching to mediaButtonReceiverHolder "
+                                + mediaButtonReceiverHolder.getPackageName()
+                                + ": "
+                                + keyEvent
+                                + " from caller "
+                                + packageName);
                 if (needWakeLock) {
                     mKeyEventReceiver.acquireWakeLockLocked();
                 }
@@ -2692,6 +2701,13 @@ public class MediaSessionService extends SystemService implements Monitor {
                         }
                     }
                 }
+            } else {
+                Log.i(
+                        TAG,
+                        "dispatchMediaKeyEventLocked(): unhandled key event: "
+                                + keyEvent
+                                + " from caller "
+                                + packageName);
             }
         }
 
