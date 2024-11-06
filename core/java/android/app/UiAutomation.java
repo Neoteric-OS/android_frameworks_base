@@ -1696,6 +1696,31 @@ public final class UiAutomation {
     }
 
     /**
+     * Executes a shell command with command and arguments are passed in separately. This method
+     * returns three file descriptors, one that points to the standard output stream (element at
+     * index 0), one that points to the standard input stream (element at index 1), and one points
+     * to standard error stream (element at index 2). The command execution is similar to running
+     * "adb shell <command>" from a host connected to the device.
+     * <p>
+     * <strong>Note:</strong> It is your responsibility to close the returned file
+     * descriptors once you are done reading/writing.
+     * </p>
+     *
+     * @param command The command to execute.
+     * @param args Arugument list of the command.
+     * @return File descriptors (out, in, err) to the standard output/input/error streams.
+     */
+    @SuppressLint({"UnflaggedApi", "ArrayReturn"})
+    public @NonNull ParcelFileDescriptor[] executeShellCommandRwe(@NonNull String command,
+            @NonNull String... args) {
+        // Create a command array that contains command and all arguments.
+        String[] cmdarray = new String[1 + args.length];
+        cmdarray[0] = command;
+        System.arraycopy(args, 0, cmdarray, 1, args.length);
+        return executeShellCommandInternal(cmdarray, true /* includeStderr */);
+    }
+
+    /**
      * @hide
      */
     @VisibleForTesting
@@ -1753,6 +1778,56 @@ public final class UiAutomation {
         return result;
     }
 
+    private ParcelFileDescriptor[] executeShellCommandInternal(
+            String[] command, boolean includeStderr) {
+        warnIfBetterCommand(command);
+
+        ParcelFileDescriptor source_read = null;
+        ParcelFileDescriptor sink_read = null;
+
+        ParcelFileDescriptor source_write = null;
+        ParcelFileDescriptor sink_write = null;
+
+        ParcelFileDescriptor stderr_source_read = null;
+        ParcelFileDescriptor stderr_sink_read = null;
+
+        try {
+            ParcelFileDescriptor[] pipe_read = ParcelFileDescriptor.createPipe();
+            source_read = pipe_read[0];
+            sink_read = pipe_read[1];
+
+            ParcelFileDescriptor[] pipe_write = ParcelFileDescriptor.createPipe();
+            source_write = pipe_write[0];
+            sink_write = pipe_write[1];
+
+            if (includeStderr) {
+                ParcelFileDescriptor[] stderr_read = ParcelFileDescriptor.createPipe();
+                stderr_source_read = stderr_read[0];
+                stderr_sink_read = stderr_read[1];
+            }
+
+            // Calling out without a lock held.
+            mUiAutomationConnection.executeShellCommandArrayWithStderr(
+                    command, sink_read, source_write, stderr_sink_read);
+        } catch (IOException ioe) {
+            Log.e(LOG_TAG, "Error executing shell command!", ioe);
+        } catch (RemoteException re) {
+            Log.e(LOG_TAG, "Error executing shell command!", re);
+        } finally {
+            IoUtils.closeQuietly(sink_read);
+            IoUtils.closeQuietly(source_write);
+            IoUtils.closeQuietly(stderr_sink_read);
+        }
+
+        ParcelFileDescriptor[] result = new ParcelFileDescriptor[includeStderr ? 3 : 2];
+        result[0] = source_read;
+        result[1] = sink_write;
+        if (includeStderr) {
+            result[2] = stderr_source_read;
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder();
@@ -1789,6 +1864,18 @@ public final class UiAutomation {
         } else if (cmd.startsWith("pm revoke ")) {
             Log.w(LOG_TAG, "UiAutomation.revokeRuntimePermission() "
                     + "is more robust and should be used instead of 'pm revoke'");
+        }
+    }
+
+    private void warnIfBetterCommand(String[] cmd) {
+        if (cmd.length > 1 && cmd[0].equals("pm")) {
+            if (cmd[1].equals("grant")) {
+                Log.w(LOG_TAG, "UiAutomation.grantRuntimePermission() "
+                        + "is more robust and should be used instead of 'pm grant'");
+            } else if (cmd[1].equals("revoke")) {
+                Log.w(LOG_TAG, "UiAutomation.revokeRuntimePermission() "
+                        + "is more robust and should be used instead of 'pm revoke'");
+            }
         }
     }
 
