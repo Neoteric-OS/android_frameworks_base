@@ -227,6 +227,14 @@ flag {
 }
 
 flag {
+<<<<<<< PATCH SET (2ca5a9 Add support for arguments with spaces in executeShellCommand)
+     name: "execute_shell_cmd_varags"
+     namespace: "uiautomation"
+     description: "Allow execute shell command in separate varags."
+     bug: "293132368"
+}
+||||||| BASE
+=======
     name: "update_engine_api"
     namespace: "art_mainline"
     description: "Update Engine APIs for ART"
@@ -234,3 +242,4 @@ flag {
     is_fixed_read_only: true
     bug: "377557749"
 }
+>>>>>>> BASE      (8f4a29 Merge "Revert "Recommend writeTypedObject()"" into main)
