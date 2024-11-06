@@ -1442,6 +1442,80 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         }
     }
 
+    /**
+     * Initial value for mPageSizeAppCompatMode
+     * @hide
+     */
+    public static final int PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED = -1;
+
+    /**
+     * if set, extract libs forcefully for 16 KB device and show warning dialog.
+     * @hide
+     */
+    public static final int PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_NOT_ALIGNED = 0;
+
+    /**
+     * if set, load 4 KB aligned ELFs on 16 KB device in compat mode and show warning dialog.
+     * @hide
+     */
+    public static final int PAGE_SIZE_APP_COMPAT_MODE_ELF_NOT_ALIGNED = 1;
+
+    /**
+     * if set, extract libs forcefully for 16 KB device, Load 4 KB aligned ELFs on 16 KB device in
+     * compat mode and show warning dialog.
+     * @hide
+     */
+    public static final int PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_AND_ELF_NOT_ALIGNED = 2;
+
+    /**
+     * Run in 16 KB app compat mode. This flag will be set explicitly through settings.
+     * If set, 16 KB app compat warning dialogs will still show up.
+     * @hide
+     */
+    public static final int PAGE_SIZE_APP_COMPAT_MODE_SETTINGS_OVERRIDE_ENABLED = 3;
+
+    /**
+     * Disable 16 KB app compat mode through settings. It should only affect ELF loading as
+     * app is already installed.
+     * @hide
+     */
+    public static final int PAGE_SIZE_APP_COMPAT_MODE_SETTINGS_OVERRIDE_DISABLED = 4;
+
+    /**
+     * Run in 16 KB app compat mode. This flag will be set explicitly through manifest.
+     * If set, hide the 16 KB app compat warning dialogs. This has the highest priority to enable
+     * compat mode.
+     * @hide
+     */
+    public static final int PAGE_SIZE_APP_COMPAT_MODE_MANIFEST_OVERRIDE_ENABLED = 5;
+
+    /**
+     * Disable 16 KB app compat mode. This has the highest priority to disable compat mode.
+     * @hide
+     */
+    public static final int PAGE_SIZE_APP_COMPAT_MODE_MANIFEST_OVERRIDE_DISABLED = 6;
+
+    /**
+     * 16 KB app compat status for the app. App can have native shared libs which are not page
+     * aligned, LOAD segments inside the shared libs have to be page aligned.
+     * Apps can specify the override in manifest file as well.
+     */
+    private @PageSizeAppCompatMode int mPageSizeAppCompatMode = PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
+
+    /** {@hide} */
+    @IntDef(prefix = { "PAGE_SIZE_APP_COMPAT_MODE_" }, value = {
+            PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED,
+            PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_NOT_ALIGNED,
+            PAGE_SIZE_APP_COMPAT_MODE_ELF_NOT_ALIGNED,
+            PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_AND_ELF_NOT_ALIGNED,
+            PAGE_SIZE_APP_COMPAT_MODE_MANIFEST_OVERRIDE_ENABLED,
+            PAGE_SIZE_APP_COMPAT_MODE_MANIFEST_OVERRIDE_DISABLED,
+            PAGE_SIZE_APP_COMPAT_MODE_SETTINGS_OVERRIDE_ENABLED,
+            PAGE_SIZE_APP_COMPAT_MODE_SETTINGS_OVERRIDE_DISABLED,
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PageSizeAppCompatMode {}
+
     /** @hide */
     public String classLoaderName;
 
@@ -1770,7 +1844,9 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
             pw.println(prefix + "enableOnBackInvokedCallback=" + isOnBackInvokedCallbackEnabled());
             pw.println(prefix + "allowCrossUidActivitySwitchFromBelow="
                     + allowCrossUidActivitySwitchFromBelow);
-
+            if (mPageSizeAppCompatMode != PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED) {
+                pw.println(prefix + "mPageSizeAppCompatMode=" + mPageSizeAppCompatMode);
+            }
         }
         pw.println(prefix + "createTimestamp=" + createTimestamp);
         if (mKnownActivityEmbeddingCerts != null) {
@@ -1890,6 +1966,10 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
             }
             proto.write(ApplicationInfoProto.Detail.ALLOW_CROSS_UID_ACTIVITY_SWITCH_FROM_BELOW,
                     allowCrossUidActivitySwitchFromBelow);
+            if (mPageSizeAppCompatMode != PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED) {
+                proto.write(ApplicationInfoProto.Detail.ENABLE_PAGE_SIZE_APP_COMPAT_MODE,
+                        mPageSizeAppCompatMode);
+            }
             proto.end(detailToken);
         }
         if (!ArrayUtils.isEmpty(mKnownActivityEmbeddingCerts)) {
@@ -2017,6 +2097,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         localeConfigRes = orig.localeConfigRes;
         allowCrossUidActivitySwitchFromBelow = orig.allowCrossUidActivitySwitchFromBelow;
         createTimestamp = SystemClock.uptimeMillis();
+        mPageSizeAppCompatMode = orig.mPageSizeAppCompatMode;
     }
 
     public String toString() {
@@ -2121,6 +2202,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         }
         dest.writeInt(localeConfigRes);
         dest.writeInt(allowCrossUidActivitySwitchFromBelow ? 1 : 0);
+        dest.writeInt(mPageSizeAppCompatMode);
 
         sForStringSet.parcel(mKnownActivityEmbeddingCerts, dest, flags);
     }
@@ -2221,6 +2303,7 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         }
         localeConfigRes = source.readInt();
         allowCrossUidActivitySwitchFromBelow = source.readInt() != 0;
+        mPageSizeAppCompatMode = source.readInt();
 
         mKnownActivityEmbeddingCerts = sForStringSet.unparcel(source);
         if (mKnownActivityEmbeddingCerts.isEmpty()) {
@@ -2740,6 +2823,11 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
     /** {@hide} */
     public void setRequestRawExternalStorageAccess(@Nullable Boolean value) {
         requestRawExternalStorageAccess = value;
+    }
+
+    /** {@hide} */
+    public void setPageSizeAppCompatMode(@PageSizeAppCompatMode int value) {
+        mPageSizeAppCompatMode = value;
     }
 
     /**

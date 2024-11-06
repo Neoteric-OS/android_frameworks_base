@@ -848,4 +848,10 @@ interface IPackageManager {
     int getAppMetadataSource(String packageName, int userId);
 
     ComponentName getDomainVerificationAgent(int userId);
+
+    void setPageSizeAppCompatModeOverride(in String packageName, boolean enablePageSizeCompat);
+
+    boolean isPageSizeCompatModeEnabled(in String packageName);
+
+    String getPageSizeCompatWarningDialog(in String packageName);
 }

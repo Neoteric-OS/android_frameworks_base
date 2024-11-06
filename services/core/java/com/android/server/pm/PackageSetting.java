@@ -27,6 +27,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.SharedLibraryInfo;
@@ -215,6 +216,8 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
 
     /** @see PackageState#getCategoryOverride() */
     private int categoryOverride = ApplicationInfo.CATEGORY_UNDEFINED;
+
+    private int mPageSizeAppCompatMode = ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_UNDEFINED;
 
     @NonNull
     private final PackageStateUnserialized pkgState = new PackageStateUnserialized(this);
@@ -753,6 +756,8 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
         }
 
         copyMimeGroups(other.mimeGroups);
+        mPageSizeAppCompatMode = other.mPageSizeAppCompatMode;
+
         pkgState.updateFrom(other.pkgState);
         onChanged();
     }
@@ -1522,6 +1527,15 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
         return this;
     }
 
+    /**
+     * @see Set 16lb App compat mode.
+     */
+    public PackageSetting setPageSizeAppCompatMode(int mode) {
+        this.mPageSizeAppCompatMode = mode;
+        onChanged();
+        return this;
+    }
+
     public PackageSetting setLegacyNativeLibraryPath(
             String legacyNativeLibraryPathString) {
         this.legacyNativeLibraryPath = legacyNativeLibraryPathString;
@@ -1857,6 +1871,40 @@ public class PackageSetting extends SettingBase implements PackageStateInternal 
     @Deprecated
     private void __metadata() {}
 
+    /**
+     * Returns true if ELF files will be loaded in Page size compatibility mode
+     *
+     */
+    @Override
+    public boolean isPageSizeAppCompatModeEnabled() {
+        if (mPageSizeAppCompatMode == ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_ELF_NOT_ALIGNED ||
+        mPageSizeAppCompatMode == ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_AND_ELF_NOT_ALIGNED ||
+        mPageSizeAppCompatMode == ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_MANIFEST_OVERRIDE_ENABLED ||
+        mPageSizeAppCompatMode == ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_SETTINGS_OVERRIDE_ENABLED) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns dialog string based on alignment of uncompressed shared libs inside the APK and ELF
+     * alignment.
+     *
+     */
+    @Override
+    public String getPageSizeCompatWarningDialog(Context context) {
+        switch (mPageSizeAppCompatMode) {
+            case ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_NOT_ALIGNED:
+                return context.getText(com.android.internal.R.string.page_size_compat_apk_warning).toString();
+            case ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_ELF_NOT_ALIGNED:
+                return context.getText(com.android.internal.R.string.page_size_compat_elf_warning).toString();
+            case ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_UNCOMPRESSED_LIBS_AND_ELF_NOT_ALIGNED:
+                return context.getText(com.android.internal.R.string.page_size_compat_apk_and_elf_warning).toString();
+            default:
+                return null;
+        }
+    }
 
     //@formatter:on
     // End of generated code

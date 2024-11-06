@@ -277,6 +277,11 @@ public interface ParsingPackage {
     ParsingPackage setNativeHeapZeroInitialized(
             @ApplicationInfo.NativeHeapZeroInitialized int nativeHeapZeroInitialized);
 
+    /**
+     * Manifest option runWith16kbAppCompatMode will populate this field
+     */
+    ParsingPackage setPageSizeAppCompatMode(@ApplicationInfo.PageSizeAppCompatMode int value);
+
     ParsingPackage setRequestRawExternalStorageAccess(
             @Nullable Boolean requestRawExternalStorageAccess);
 

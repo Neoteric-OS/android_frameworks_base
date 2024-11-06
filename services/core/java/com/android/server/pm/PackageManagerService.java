@@ -5848,6 +5848,70 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                     userId, callingPackage);
         }
 
+        @Override
+        public void setPageSizeAppCompatModeOverride(String packageName, boolean mode) {
+            final int callingUid = Binder.getCallingUid();
+            final int callingAppId = UserHandle.getAppId(callingUid);
+            final int userId = UserHandle.getCallingUserId();
+            final Computer snapshot = snapshotComputer();
+
+            snapshot.enforceCrossUserPermission(callingUid, userId, true /*requireFullPermission*/,
+                    true /*checkShell*/, "setPageSizeAppCompatModeOverride");
+
+            if (!PackageManagerServiceUtils.isSystemOrRoot(callingAppId)) {
+                throw new SecurityException("Caller must be the system app.");
+            }
+
+            PackageStateMutator.Result result = commitPackageStateMutation(null, packageName,
+                    packageState -> packageState.setPageSizeAppCompatMode(ApplicationInfo.PAGE_SIZE_APP_COMPAT_MODE_SETTINGS_OVERRIDE_ENABLED));
+            if (result.isSpecificPackageNull()) {
+                throw new IllegalArgumentException("Unknown package: " + packageName);
+            }
+            scheduleWriteSettings();
+        }
+
+        @Override
+        public boolean isPageSizeCompatModeEnabled(String packageName) {
+            final int callingUid = Binder.getCallingUid();
+            final int callingAppId = UserHandle.getAppId(callingUid);
+            final int userId = UserHandle.getCallingUserId();
+            final Computer snapshot = snapshotComputer();
+
+            snapshot.enforceCrossUserPermission(
+                    callingUid, userId, false /* requireFullPermission */,
+                    false /* checkShell */, "isPageSizeAppCompatModeEnabled");
+
+            if (!PackageManagerServiceUtils.isSystemOrRoot(callingAppId)) {
+                throw new SecurityException("Caller must be the system app.");
+            }
+
+            PackageStateInternal packageState = snapshot.getPackageStateForInstalledAndFiltered(
+                    packageName, callingUid, userId);
+
+            return packageState == null ? false : packageState.isPageSizeAppCompatModeEnabled();
+        }
+
+        @Override
+        public String getPageSizeCompatWarningDialog(String packageName) {
+            final int callingUid = Binder.getCallingUid();
+            final int callingAppId = UserHandle.getAppId(callingUid);
+            final int userId = UserHandle.getCallingUserId();
+            final Computer snapshot = snapshotComputer();
+
+            snapshot.enforceCrossUserPermission(
+                    callingUid, userId, false /* requireFullPermission */,
+                    false /* checkShell */, "isPageSizeAppCompatModeEnabled");
+
+            if (!PackageManagerServiceUtils.isSystemOrRoot(callingAppId)) {
+                throw new SecurityException("Caller must be the system app.");
+            }
+
+            PackageStateInternal packageState = snapshot.getPackageStateForInstalledAndFiltered(
+                    packageName, callingUid, userId);
+
+            return packageState == null ? null : packageState.getPageSizeCompatWarningDialog(mContext);
+        }
+
         @android.annotation.EnforcePermission(android.Manifest.permission.MANAGE_USERS)
         @Override
         public boolean setApplicationHiddenSettingAsUser(String packageName, boolean hidden,
