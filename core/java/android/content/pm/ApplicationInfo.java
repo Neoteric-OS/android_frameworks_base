@@ -849,6 +849,25 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
      */
     public static final int PRIVATE_FLAG_EXT_CPU_OVERRIDE = 1 << 5;
 
+    /**
+     * if set, Extract libs forcefully for 16KB device and show warning dialog
+     * @hide
+     */
+    public static final int PRIVATE_FLAG_EXT_APK_NOT_16KB_ALIGNED = 1 << 7;
+
+    /**
+     * if set, Load 4KB aligned ELFs on 16KB device in compat mode and show warning dialog
+     * @hide
+     */
+    public static final int PRIVATE_FLAG_EXT_ELF_NOT_16KB_ALIGNED = 1 << 8;
+
+    /**
+     * Run in 16kB app compat mode. This flag will be set explicitly through manifest.
+     * If set, hide the 16kb app compat warning dialogs.
+     * @hide
+     */
+    public static final int PRIVATE_FLAG_EXT_16KB_COMPAT_OVERRIDE = 1 << 9;
+
     /** @hide */
     @IntDef(flag = true, prefix = { "PRIVATE_FLAG_EXT_" }, value = {
             PRIVATE_FLAG_EXT_PROFILEABLE,
@@ -857,6 +876,9 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
             PRIVATE_FLAG_EXT_ENABLE_ON_BACK_INVOKED_CALLBACK,
             PRIVATE_FLAG_EXT_ALLOWLISTED_FOR_HIDDEN_APIS,
             PRIVATE_FLAG_EXT_CPU_OVERRIDE,
+            PRIVATE_FLAG_EXT_APK_NOT_16KB_ALIGNED,
+            PRIVATE_FLAG_EXT_ELF_NOT_16KB_ALIGNED,
+            PRIVATE_FLAG_EXT_16KB_COMPAT_OVERRIDE
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface ApplicationInfoPrivateFlagsExt {}
