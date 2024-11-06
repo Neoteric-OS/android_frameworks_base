@@ -16,6 +16,24 @@
       "message": "As for exposing APIs for tests only - how many of these are for VCN CTS tests themselves? It seems better *not* to expose those, and instead to make the VCN CTS tests compile against the VCN framework impl jars. I think this is what we do in the tethering and networking CTS tests.",
       "revId": "2e13312a75fb42777eed2c959a3c83dc01cba484",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec1454f4_7ff66eef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-06T00:47:35Z",
+      "side": 1,
+      "message": "Only the setter and getter for VCN test mode are for CTS test. I have removed them in the new patch",
+      "parentUuid": "a2e48151_945e2b34",
+      "revId": "2e13312a75fb42777eed2c959a3c83dc01cba484",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
