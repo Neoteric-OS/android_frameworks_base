@@ -16,6 +16,23 @@
       "message": "Discussing offline on whether this needs to be extracted into a separate callback altogether to allow multiple clients to register for these.",
       "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48625efc_0d97023b",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-06T20:11:00Z",
+      "side": 1,
+      "message": "FYI this file is marked executable and it probably shouldn\u0027t be. (to fix it, you\u0027ll probably need to use the terminal)",
+      "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
