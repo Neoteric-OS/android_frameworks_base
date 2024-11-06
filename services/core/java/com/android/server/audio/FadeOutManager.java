@@ -299,13 +299,13 @@ public final class FadeOutManager {
      * Class to group players from a common app, that are faded out.
      */
     private static final class FadedOutApp {
-        private static final VolumeShaper.Operation PLAY_CREATE_IF_NEEDED =
+        private static VolumeShaper.Operation PLAY_CREATE_IF_NEEDED =
                 new VolumeShaper.Operation.Builder(VolumeShaper.Operation.PLAY)
                         .createIfNeeded()
                         .build();
 
         // like a PLAY_CREATE_IF_NEEDED operation but with a skip to the end of the ramp
-        private static final VolumeShaper.Operation PLAY_SKIP_RAMP =
+        private static VolumeShaper.Operation PLAY_SKIP_RAMP =
                 new VolumeShaper.Operation.Builder(PLAY_CREATE_IF_NEEDED).setXOffset(1.0f).build();
 
         private final int mUid;
@@ -345,6 +345,15 @@ public final class FadeOutManager {
                 return;
             }
             if (apc.getPlayerProxy() != null) {
+                if (enableFadeManagerConfiguration()) {
+                    PLAY_CREATE_IF_NEEDED =
+                            new VolumeShaper.Operation.Builder(PLAY_CREATE_IF_NEEDED)
+                                    .replace(volShaper.getId(), /* join= */ true)
+                                    .build();
+                    PLAY_SKIP_RAMP =
+                            new VolumeShaper.Operation.Builder(PLAY_CREATE_IF_NEEDED)
+                                    .setXOffset(1.0f).build();
+                }
                 applyVolumeShaperInternal(apc, piid, volShaper,
                         skipRamp ? PLAY_SKIP_RAMP : PLAY_CREATE_IF_NEEDED, skipRamp,
                         PlaybackActivityMonitor.EVENT_TYPE_FADE_OUT);
