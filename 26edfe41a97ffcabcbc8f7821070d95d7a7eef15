@@ -92,6 +92,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d58425a1_0fcf2971",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-06T17:36:49Z",
+      "side": 1,
+      "message": "\u003e After our analysis found that Previous implementation which is already being used passes byte array, and also lower layers are implemented using byte array. We suggest to retain as byte array, If no specific concerns.\n\nCan we just use Integer in the API and convert to bytes inside the API to avoid changing lower layers? Having a byte array does not convey the usage of it properly.",
+      "parentUuid": "9bbb3af2_0a6e6f66",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9252af40_de8ea470",
         "filename": "nfc/java/android/nfc/NdefNfcee.java",
         "patchSetId": 2
@@ -145,6 +169,30 @@
       "side": 1,
       "message": "Since this API return\u0027s Int Range from 0 to Any positive numbner for STATUS_SUCCESS we can not use @IntDef.\n\nIs it ok to use @IntRange(from\u003d-8)?",
       "parentUuid": "9252af40_de8ea470",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96906df6_c65773f2",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-06T17:36:49Z",
+      "side": 1,
+      "message": "I did not understand, you have already documented the possible error codes in doc. Make that an official API.\n\n```\npublic static final int WRITE_DATA_STATUS_SUCESS \u003d 0;\npublic static final int WRITE_DATA_STATUS_FAILED \u003d 1;\n...\n\n    /**\n     * Possible return values for {@link #doWriteData(int, byte[])}.\n     *\n     * @hide\n     */\n    @IntDef(prefix \u003d { \"\" }, value \u003d {\n        WRITE_DATA_STATUS_SUCESS,\n        WRITE_DATA_STATUS_FAILED,\n        ...\n    })\n    @Retention(RetentionPolicy.SOURCE)\n    public @interface WriteDataStatus{}\n\n..\n\n public @WriteDataStatus int doWriteData(@NonNull byte[] fileId, @NonNull byte[] data) {\n ```",
+      "parentUuid": "45975b7b_470855c6",
       "range": {
         "startLine": 67,
         "startChar": 0,
