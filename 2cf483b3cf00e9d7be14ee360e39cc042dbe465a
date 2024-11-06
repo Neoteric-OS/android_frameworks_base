@@ -3,6 +3,88 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18ecdf19_b9fb4ecc",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1699,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-06T14:55:05Z",
+      "side": 1,
+      "message": "nit / optional: I\u0027d suggest adding a \u003cp\u003e here to separate from summary",
+      "range": {
+        "startLine": 1699,
+        "startChar": 84,
+        "endLine": 1699,
+        "endChar": 89
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6c6965b6_9bf9ecab",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1699,
+                "startChar": 0,
+                "endLine": 1700,
+                "endChar": 0
+              },
+              "replacement": "     * Executes a shell command with command and arguments passed in separately. This method\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54bc787d_10d28558",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-06T14:55:05Z",
+      "side": 1,
+      "message": "nit: don\u0027t need \u003c/p\u003e",
+      "range": {
+        "startLine": 1707,
+        "startChar": 7,
+        "endLine": 1707,
+        "endChar": 11
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "69a1856f_dd41a27b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1707,
+                "startChar": 0,
+                "endLine": 1708,
+                "endChar": 0
+              },
+              "replacement": "     *\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "55e33d62_40ffaf98",
         "filename": "core/java/android/app/UiAutomation.java",
         "patchSetId": 2
@@ -42,6 +124,71 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cb8d194_86c4f25e",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-06T14:55:05Z",
+      "side": 1,
+      "message": "This is a public API; @TestApi are those that are only used internal tests (typically CTS) and hence doesn´t need to be stable. \n\nThis one can be used for any app - it\u0027s part of \"Android testability\", not of tests themselves.",
+      "parentUuid": "55e33d62_40ffaf98",
+      "range": {
+        "startLine": 1713,
+        "startChar": 0,
+        "endLine": 1713,
+        "endChar": 50
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "339263c6_fba218a6",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-06T14:55:05Z",
+      "side": 1,
+      "message": "please check that command and args are not null",
+      "range": {
+        "startLine": 1717,
+        "startChar": 42,
+        "endLine": 1717,
+        "endChar": 55
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8eb77d84_6c19ace2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1716,
+                "startChar": 0,
+                "endLine": 1716,
+                "endChar": 0
+              },
+              "replacement": "        Preconditions.checkNotNull(command, \"Command cannot be null!\");\n        Preconditions.checkNotNull(args, \"Args cannot be null!\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "dcbba65d_503a4e96",
@@ -61,6 +208,111 @@
         "endLine": 1781,
         "endChar": 63
       },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b46f7702_7a9084ea",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1781,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-06T14:55:05Z",
+      "side": 1,
+      "message": "I think we should have just one internal method, so we don\u0027t duplicate the logic",
+      "parentUuid": "dcbba65d_503a4e96",
+      "range": {
+        "startLine": 1781,
+        "startChar": 0,
+        "endLine": 1781,
+        "endChar": 63
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1de223f6_e4ad3501",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1870,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-06T14:55:05Z",
+      "side": 1,
+      "message": "same here - please reuse / refactor these 2 (for example, the main logic could be in method that takes cmd and args[], then this one would split; or you could even \"optimize\" those to only check for cmd and 1st arg, as that\u0027s all that matters for now)",
+      "range": {
+        "startLine": 1870,
+        "startChar": 1,
+        "endLine": 1870,
+        "endChar": 52
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7044aaaa_8291c746",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1638,
+                "startChar": 0,
+                "endLine": 1639,
+                "endChar": 0
+              },
+              "replacement": "        warnIfBetterCommand(new String[] {command});\n"
+            },
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1733,
+                "startChar": 0,
+                "endLine": 1734,
+                "endChar": 0
+              },
+              "replacement": "        warnIfBetterCommand(new String[] {command});\n"
+            },
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1783,
+                "startChar": 0,
+                "endLine": 1784,
+                "endChar": 0
+              },
+              "replacement": "        warnIfBetterCommand(command, null);\n"
+            },
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1870,
+                "startChar": 0,
+                "endLine": 1873,
+                "endChar": 0
+              },
+              "replacement": "    private void warnIfBetterCommand(String[] cmd, @Nullable String[] args) {\n        if (cmd.length \u003e 0 \u0026\u0026 cmd[0].equals(\"pm\")) {\n            if (cmd.length \u003e 1 \u0026\u0026 cmd[1].equals(\"grant\")) {\n"
+            },
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1875,
+                "startChar": 0,
+                "endLine": 1876,
+                "endChar": 0
+              },
+              "replacement": "            } else if (cmd.length \u003e 1 \u0026\u0026 cmd[1].equals(\"revoke\")) {\n"
+            }
+          ]
+        }
+      ],
       "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
