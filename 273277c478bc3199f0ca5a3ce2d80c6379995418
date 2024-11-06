@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "96823108_3b22580d",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-06T22:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "711f68b3_f6d230dc",
+      "range": {
+        "startLine": 1123,
+        "startChar": 21,
+        "endLine": 1123,
+        "endChar": 38
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b77deb0_955047dd",
@@ -95,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a9ae931_084259d2",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-06T22:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6ead609_a67fda7b",
+      "range": {
+        "startLine": 1129,
+        "startChar": 21,
+        "endLine": 1129,
+        "endChar": 38
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bd15801_0e0f4f81",
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "Yeah, I agree it\u0027s not the clearest use case. I was expecting it to be used as a simple tally for metrics purposes. If a device is getting tons of command failed and NFC transactions aren\u0027t working (from Wallet\u0027s PoV), something NFC-related in probably broken. I noticed in our NFC metrics that we do see a lot of these errors, so it seemed important to surface.",
       "parentUuid": "0bd15801_0e0f4f81",
+      "range": {
+        "startLine": 1131,
+        "startChar": 0,
+        "endLine": 1142,
+        "endChar": 0
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a2ffd38_29fd8e6e",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-06T22:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9afaa9_856e9dba",
       "range": {
         "startLine": 1131,
         "startChar": 0,
@@ -203,6 +275,30 @@
       "side": 1,
       "message": "Gotcha, makes sense. I\u0027ll look into that approach.",
       "parentUuid": "78640908_277334e3",
+      "range": {
+        "startLine": 1108,
+        "startChar": 0,
+        "endLine": 1149,
+        "endChar": 65
+      },
+      "revId": "273277c478bc3199f0ca5a3ce2d80c6379995418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fc2422b_5ff001c4",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-06T22:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52250a82_7296d4a0",
       "range": {
         "startLine": 1108,
         "startChar": 0,
