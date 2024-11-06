@@ -22,14 +22,13 @@ import static android.os.UserHandle.SYSTEM;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.Instrumentation;
-import android.content.Context;
 import android.os.Build;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -74,17 +73,8 @@ public final class RavenwoodConfig {
 
     final RavenwoodSystemProperties mSystemProperties = new RavenwoodSystemProperties();
 
-    final List<Class<?>> mServicesRequired = new ArrayList<>();
+    List<Class<?>> mServicesRequired = List.of();
 
-    volatile Context mInstContext;
-    volatile Context mTargetContext;
-    volatile Instrumentation mInstrumentation;
-
-    /**
-     * Stores internal states / methods associated with this config that's only needed in
-     * junit-impl.
-     */
-    final RavenwoodConfigState mState = new RavenwoodConfigState(this);
     private RavenwoodConfig() {
     }
 
@@ -215,10 +205,7 @@ public final class RavenwoodConfig {
          * {@code SerialManagerInternal} can be obtained via {@code LocalServices.getService()}.
          */
         public Builder setServicesRequired(@NonNull Class<?>... services) {
-            mConfig.mServicesRequired.clear();
-            for (Class<?> service : services) {
-                mConfig.mServicesRequired.add(service);
-            }
+            mConfig.mServicesRequired = Arrays.asList(services);
             return this;
         }
 

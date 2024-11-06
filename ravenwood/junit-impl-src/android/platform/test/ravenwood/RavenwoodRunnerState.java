@@ -15,21 +15,46 @@
  */
 package android.platform.test.ravenwood;
 
+import static android.platform.test.ravenwood.RavenwoodSystemServer.ANDROID_PACKAGE_NAME;
+
+import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_EMPTY_RESOURCES_APK;
+import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_INST_RESOURCE_APK;
+import static com.android.ravenwood.common.RavenwoodCommonUtils.RAVENWOOD_RESOURCE_APK;
 import static com.android.ravenwood.common.RavenwoodCommonUtils.ensureIsPublicMember;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 
 import android.annotation.Nullable;
+import android.app.Instrumentation;
+import android.app.ResourcesManager;
+import android.app.UiAutomation;
+import android.content.res.Resources;
+import android.os.HandlerThread;
 import android.util.Log;
+import android.view.DisplayAdjustments;
 
+import com.android.hoststubgen.hosthelper.HostTestUtils;
 import com.android.ravenwood.common.RavenwoodRuntimeException;
+import com.android.ravenwood.common.SneakyThrow;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * Used to store various states associated with the current test runner that's inly needed
@@ -42,8 +67,12 @@ import java.lang.reflect.Field;
  */
 public final class RavenwoodRunnerState {
     private static final String TAG = "RavenwoodRunnerState";
+    private static final String MAIN_THREAD_NAME = "RavenwoodMain";
 
     private final RavenwoodAwareTestRunner mRunner;
+    /** Map from path -> resources. */
+    private final HashMap<File, Resources> mCachedResources = new HashMap<>();
+    private Set<String> mAdoptedPermission = Collections.emptySet();
 
     /**
      * Ctor.
@@ -68,8 +97,147 @@ public final class RavenwoodRunnerState {
     private boolean mHasRavenwoodRule;
     private Description mMethodDescription;
 
+    Instrumentation mInstrumentation;
+    RavenwoodContext mInstContext;
+    RavenwoodContext mTargetContext;
+    RavenwoodContext mSystemServerContext;
+
     public RavenwoodConfig getConfig() {
         return mCurrentConfig;
+    }
+
+    private void init() {
+        try {
+            initInner();
+        } catch (Exception th) {
+            Log.e(TAG, "init() failed", th);
+            SneakyThrow.sneakyThrow(th);
+        }
+    }
+
+    private void initInner() throws IOException {
+        final var config = Objects.requireNonNull(mCurrentConfig);
+
+        final boolean isSelfInstrumenting =
+                Objects.equals(config.mTestPackageName, config.mTargetPackageName);
+
+        // This will load the resources from the apk set to `resource_apk` in the build file.
+        // This is supposed to be the "target app"'s resources.
+        final Supplier<Resources> targetResourcesLoader = () -> {
+            var file = new File(RAVENWOOD_RESOURCE_APK);
+            return loadResources(file.exists() ? file : null);
+        };
+
+        // Set up test context's (== instrumentation context's) resources.
+        // If the target package name == test package name, then we use the main resources.
+        final Supplier<Resources> instResourcesLoader;
+        if (isSelfInstrumenting) {
+            instResourcesLoader = targetResourcesLoader;
+        } else {
+            instResourcesLoader = () -> {
+                var file = new File(RAVENWOOD_INST_RESOURCE_APK);
+                return loadResources(file.exists() ? file : null);
+            };
+        }
+
+        final var main = new HandlerThread(MAIN_THREAD_NAME);
+        main.start();
+        Objects.requireNonNull(main.getLooper());
+
+        var instContext = new RavenwoodContext(
+                config.mTestPackageName, main, instResourcesLoader);
+        var targetContext = new RavenwoodContext(
+                config.mTargetPackageName, main, targetResourcesLoader);
+
+        // Set up app context.
+        var appContext = new RavenwoodContext(
+                config.mTargetPackageName, main, targetResourcesLoader);
+        appContext.setApplicationContext(appContext);
+        if (isSelfInstrumenting) {
+            instContext.setApplicationContext(appContext);
+            targetContext.setApplicationContext(appContext);
+        } else {
+            // When instrumenting into another APK, the test context doesn't have an app context.
+            targetContext.setApplicationContext(appContext);
+        }
+        mInstContext = instContext;
+        mTargetContext = targetContext;
+
+        final Supplier<Resources> systemResourcesLoader = () -> loadResources(null);
+        mSystemServerContext =
+                new RavenwoodContext(ANDROID_PACKAGE_NAME, main, systemResourcesLoader);
+
+        // Prepare other fields.
+        mInstrumentation = new Instrumentation();
+        mInstrumentation.basicInit(instContext, targetContext, createMockUiAutomation());
+    }
+
+    /**
+     * Load {@link Resources} from an APK, with cache.
+     */
+    private Resources loadResources(@Nullable File apkPath) {
+        var cached = mCachedResources.get(apkPath);
+        if (cached != null) {
+            return cached;
+        }
+
+        var fileToLoad = apkPath != null ? apkPath : new File(RAVENWOOD_EMPTY_RESOURCES_APK);
+
+        assertTrue("File " + fileToLoad + " doesn't exist.", fileToLoad.isFile());
+
+        final String path = fileToLoad.getAbsolutePath();
+        final var emptyPaths = new String[0];
+
+        ResourcesManager.getInstance().initializeApplicationPaths(path, emptyPaths);
+
+        final var ret = ResourcesManager.getInstance().getResources(null, path,
+                emptyPaths, emptyPaths, emptyPaths,
+                emptyPaths, null, null,
+                new DisplayAdjustments().getCompatibilityInfo(),
+                RavenwoodRuntimeEnvironmentController.class.getClassLoader(), null);
+
+        assertNotNull(ret);
+
+        mCachedResources.put(apkPath, ret);
+        return ret;
+    }
+
+    // TODO: use the real UiAutomation class instead of a mock
+    private UiAutomation createMockUiAutomation() {
+        mAdoptedPermission = Collections.emptySet();
+        var mock = mock(UiAutomation.class, inv -> {
+            HostTestUtils.onThrowMethodCalled();
+            return null;
+        });
+        doAnswer(inv -> {
+            mAdoptedPermission = UiAutomation.ALL_PERMISSIONS;
+            return null;
+        }).when(mock).adoptShellPermissionIdentity();
+        doAnswer(inv -> {
+            if (inv.getArgument(0) == null) {
+                mAdoptedPermission = UiAutomation.ALL_PERMISSIONS;
+            } else {
+                mAdoptedPermission = (Set) Set.of(inv.getArguments());
+            }
+            return null;
+        }).when(mock).adoptShellPermissionIdentity(any());
+        doAnswer(inv -> {
+            mAdoptedPermission = Collections.emptySet();
+            return null;
+        }).when(mock).dropShellPermissionIdentity();
+        doAnswer(inv -> mAdoptedPermission).when(mock).getAdoptedShellPermissions();
+        return mock;
+    }
+
+    private void reset() {
+        mInstContext.getMainLooper().quit();
+        mInstContext.cleanUp();
+        mTargetContext.cleanUp();
+        mSystemServerContext.cleanUp();
+        mInstContext = null;
+        mTargetContext = null;
+        mSystemServerContext = null;
+        mInstrumentation = null;
     }
 
     public void enterTestRunner() {
@@ -90,7 +258,8 @@ public final class RavenwoodRunnerState {
         }
 
         if (mCurrentConfig != null) {
-            RavenwoodRuntimeEnvironmentController.init(mRunner);
+            init();
+            RavenwoodRuntimeEnvironmentController.init(this);
         }
     }
 
@@ -98,7 +267,7 @@ public final class RavenwoodRunnerState {
         Log.i(TAG, "enterTestClass: " + mRunner.mTestJavaClass.getName());
 
         if (mCurrentConfig != null) {
-            RavenwoodRuntimeEnvironmentController.init(mRunner);
+            RavenwoodRuntimeEnvironmentController.init(this);
         }
     }
 
@@ -107,6 +276,7 @@ public final class RavenwoodRunnerState {
         try {
             if (mCurrentConfig != null) {
                 RavenwoodRuntimeEnvironmentController.reset();
+                reset();
             }
         } finally {
             mConfig = null;
@@ -135,8 +305,9 @@ public final class RavenwoodRunnerState {
         mRule = rule;
         if (mCurrentConfig == null) {
             mCurrentConfig = rule.getConfiguration();
+            init();
         }
-        RavenwoodRuntimeEnvironmentController.init(mRunner);
+        RavenwoodRuntimeEnvironmentController.init(this);
     }
 
     public void exitRavenwoodRule(RavenwoodRule rule) {
