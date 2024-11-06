@@ -33,6 +33,75 @@
       "message": "FYI this file is marked executable and it probably shouldn\u0027t be. (to fix it, you\u0027ll probably need to use the terminal)",
       "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "813645b8_18bb816a",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-06T21:33:37Z",
+      "side": 1,
+      "message": "Which events apply to which of these actions?\n\n`LOG_ACTION_HCE_DATA` looks like it would probably not get an `EVENT_ENABLE`, for example.",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 59
+      },
+      "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c653b493_644b8d40",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-06T21:33:37Z",
+      "side": 1,
+      "message": "I.e. the action will be `LOG_ACTION_RF_FIELD_STATE_CHANGED`?",
+      "range": {
+        "startLine": 251,
+        "startChar": 16,
+        "endLine": 251,
+        "endChar": 36
+      },
+      "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "417d18b1_1a9393db",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-06T21:33:37Z",
+      "side": 1,
+      "message": "go/android-api-guidelines#time-types - recommend using Instant; the null semantic also works here.",
+      "range": {
+        "startLine": 255,
+        "startChar": 16,
+        "endLine": 255,
+        "endChar": 41
+      },
+      "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
