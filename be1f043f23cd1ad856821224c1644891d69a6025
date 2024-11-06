@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "783a9d03_f6c67c38",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-11-06T23:30:23Z",
+      "side": 1,
+      "message": "nit \".\"",
+      "range": {
+        "startLine": 231,
+        "startChar": 67,
+        "endLine": 231,
+        "endChar": 72
+      },
+      "revId": "be1f043f23cd1ad856821224c1644891d69a6025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0a51c1b_4281e0f4",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-11-06T23:30:23Z",
+      "side": 1,
+      "message": "Is this CTS tested?",
+      "range": {
+        "startLine": 321,
+        "startChar": 16,
+        "endLine": 321,
+        "endChar": 47
+      },
+      "revId": "be1f043f23cd1ad856821224c1644891d69a6025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
