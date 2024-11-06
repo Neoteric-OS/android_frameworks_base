@@ -225,3 +225,10 @@ flag {
      is_exported: true
      bug: "366598445"
 }
+
+flag {
+     name: "execute_shell_cmd_varags"
+     namespace: "uiautomation"
+     description: "Allow execute shell command in separate varags."
+     bug: "293132368"
+}
