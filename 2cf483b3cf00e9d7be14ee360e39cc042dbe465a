@@ -1,0 +1,68 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55e33d62_40ffaf98",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-06T09:21:22Z",
+      "side": 1,
+      "message": "Not sure if we should mark it as `flaggedApi` here, or can leave it unflagged since it should be a test API? I have little experience working in AOSP and no knowledge in launching new API in Android, and would appreciate any advice/suggestions, thanks!",
+      "range": {
+        "startLine": 1713,
+        "startChar": 0,
+        "endLine": 1713,
+        "endChar": 50
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b14d1308_ade1c4a1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/UiAutomation.java",
+              "range": {
+                "startLine": 1713,
+                "startChar": 0,
+                "endLine": 1714,
+                "endChar": 0
+              },
+              "replacement": "    @SuppressLint(\"ArrayReturn\")\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcbba65d_503a4e96",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1781,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-06T09:21:22Z",
+      "side": 1,
+      "message": "This method is the same as`private ParcelFileDescriptor[] executeShellCommandInternal(String command, boolean includeStderr)` except on L1810 it changes `executeShellCommandWithStderr` to  `executeShellCommandArrayWithStderr`",
+      "range": {
+        "startLine": 1781,
+        "startChar": 0,
+        "endLine": 1781,
+        "endChar": 63
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
