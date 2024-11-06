@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69fb86d0_cfcdebba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-11-06T19:31:15Z",
+      "side": 1,
+      "message": "PS5 makes the zeroize() methods clean the data cache, as requested by hboehm@.",
+      "revId": "5e9b69406bf91fdf315bd8b740b291671a101423",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
