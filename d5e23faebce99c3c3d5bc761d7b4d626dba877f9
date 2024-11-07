@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7994ade9_0257766f",
+        "filename": "core/java/android/view/Display.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2024-11-07T06:45:55Z",
+      "side": 1,
+      "message": "Question: do we want to update the mCompatInfo if the config is empty?",
+      "range": {
+        "startLine": 862,
+        "startChar": 51,
+        "endLine": 862,
+        "endChar": 67
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d4c5db0a_0534d5df",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/view/Display.java",
+              "range": {
+                "startLine": 861,
+                "startChar": 0,
+                "endLine": 863,
+                "endChar": 0
+              },
+              "replacement": "            if (!mDisplayAdjustments.equals(currentAdjustments)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d5e23faebce99c3c3d5bc761d7b4d626dba877f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
