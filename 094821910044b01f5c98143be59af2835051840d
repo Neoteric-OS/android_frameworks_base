@@ -16,6 +16,24 @@
       "message": "Please add an associated Bug: stanza to the cl description, so we have a description of the bug this change is attempting to address. \n\nIf a bug does not exist that describes the issue, please file one.",
       "revId": "094821910044b01f5c98143be59af2835051840d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fea60b0_cc5d6992",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1269628
+      },
+      "writtenOn": "2024-11-07T10:59:17Z",
+      "side": 1,
+      "message": "Issue attached\n\nhttps://issuetracker.google.com/366644924\n\nhttps://partnerissuetracker.corp.google.com/issues/366644924\n\nThanks!",
+      "parentUuid": "ab58f367_55aa0565",
+      "revId": "094821910044b01f5c98143be59af2835051840d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
