@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c69dc915_5a49b7e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2024-11-07T20:24:34Z",
+      "side": 1,
+      "message": "Linus / Mårten: we should think about what kind of tooling / testing would\u0027ve caught this issue",
+      "revId": "e4553d02a5627b13f74f550bf48a6861e3722ad1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
