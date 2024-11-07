@@ -316,6 +316,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bea3b0a7_b857810b",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-07T17:28:30Z",
+      "side": 1,
+      "message": "Yes, you need a new flag for this feature, and you should also add a Flag: stanza with it in the commit message.",
+      "parentUuid": "d43783ce_b34d201f",
+      "range": {
+        "startLine": 1713,
+        "startChar": 0,
+        "endLine": 1713,
+        "endChar": 50
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "339263c6_fba218a6",
         "filename": "core/java/android/app/UiAutomation.java",
         "patchSetId": 2
@@ -369,6 +393,30 @@
       "side": 1,
       "message": "Thanks for advice. I was considering whether we should do a null check here. Looking at the previous code, on L1694 `executeShellCommandRwe`, command is marked as `@NonNull` here, and on L1861 `warnIfBetterCommand`, is it calling `cmd.startsWith` directly without null check, so I thought we can assume those are passed in as how it is annotated. If it is not the case, SG to add a null check here.\n\nAnd maybe a following cleanup can be to add null check for other parts as well?",
       "parentUuid": "339263c6_fba218a6",
+      "range": {
+        "startLine": 1717,
+        "startChar": 42,
+        "endLine": 1717,
+        "endChar": 55
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "577deb7a_f3e45481",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-07T17:28:30Z",
+      "side": 1,
+      "message": "This is a public API, you have no control whether the caller is passing a non-null reference or not, so you need to check (maybe Kotlin would enforce that at comppile time, but Java doesn\u0027t)",
+      "parentUuid": "14b65ef7_a7002c43",
       "range": {
         "startLine": 1717,
         "startChar": 42,

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c62f5680_8a6bae5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-07T17:28:30Z",
+      "side": 1,
+      "message": "it\u0027s just \"commit SHA cea68bde6672ea05179b4ce787c5b2bb60899940\" (cea68bde6672ea05179b4ce787c5b2bb60899940 is the SHA :-), sorry for the confusion (notice that currently it doesn\u0027t generate a link)",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "4091629a7a570665d001c9d029a4c1badfdafcc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01aa9c55_2f7b8add",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-07T17:28:30Z",
+      "side": 1,
+      "message": "did you add new tests? If so, please include that CL in a topic, so they\u0027re merged together",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "4091629a7a570665d001c9d029a4c1badfdafcc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
