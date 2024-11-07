@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9efe151_19c2a068",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-07T02:41:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae70bae_a4d6a583",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "250f71f8_8033aaf0",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-06T14:55:48Z",
       "side": 1,
       "message": "nit: don\u0027t need b/",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "593b69a6_7a2f2abe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-07T02:41:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "250f71f8_8033aaf0",
       "range": {
         "startLine": 20,
         "startChar": 5,
@@ -88,6 +136,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba5870e5_67c7fa36",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1699,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-07T02:41:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18ecdf19_b9fb4ecc",
+      "range": {
+        "startLine": 1699,
+        "startChar": 84,
+        "endLine": 1699,
+        "endChar": 89
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54bc787d_10d28558",
@@ -125,6 +197,30 @@
           ]
         }
       ],
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26b87341_cc09e970",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-07T02:41:42Z",
+      "side": 1,
+      "message": "Added`\u003c/p\u003e`for consistency with the rest of the file, but I am fine without and deleted \u003c/p\u003e here. Thanks for suggesyion.",
+      "parentUuid": "54bc787d_10d28558",
+      "range": {
+        "startLine": 1707,
+        "startChar": 7,
+        "endLine": 1707,
+        "endChar": 11
+      },
       "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -196,6 +292,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d43783ce_b34d201f",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-07T02:41:42Z",
+      "side": 1,
+      "message": "Thanks for explanation. So shall we mark it as `@FlaggedApi` here and add a new flag for it? Or is there any existing flag we should reuse here?",
+      "parentUuid": "0cb8d194_86c4f25e",
+      "range": {
+        "startLine": 1713,
+        "startChar": 0,
+        "endLine": 1713,
+        "endChar": 50
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "339263c6_fba218a6",
         "filename": "core/java/android/app/UiAutomation.java",
         "patchSetId": 2
@@ -231,6 +351,30 @@
           ]
         }
       ],
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14b65ef7_a7002c43",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-07T02:41:42Z",
+      "side": 1,
+      "message": "Thanks for advice. I was considering whether we should do a null check here. Looking at the previous code, on L1694 `executeShellCommandRwe`, command is marked as `@NonNull` here, and on L1861 `warnIfBetterCommand`, is it calling `cmd.startsWith` directly without null check, so I thought we can assume those are passed in as how it is annotated. If it is not the case, SG to add a null check here.\n\nAnd maybe a following cleanup can be to add null check for other parts as well?",
+      "parentUuid": "339263c6_fba218a6",
+      "range": {
+        "startLine": 1717,
+        "startChar": 42,
+        "endLine": 1717,
+        "endChar": 55
+      },
       "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -359,6 +503,30 @@
           ]
         }
       ],
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e04cce8_8b97756d",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1870,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-07T02:41:42Z",
+      "side": 1,
+      "message": "Thanks for advice, used a bit of hacky way to integrate into 1 method - if cmd line is a single string, pass in as an array with only 1 element, and process separately inside the method.",
+      "parentUuid": "1de223f6_e4ad3501",
+      "range": {
+        "startLine": 1870,
+        "startChar": 1,
+        "endLine": 1870,
+        "endChar": 52
+      },
       "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
