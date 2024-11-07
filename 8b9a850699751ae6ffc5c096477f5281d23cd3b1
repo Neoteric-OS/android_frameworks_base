@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12713bf_35133e41",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-07T04:31:52Z",
+      "side": 1,
+      "message": "nit: `detected when a NFC tap is detected` or maybe `detected when a NFC transaction is being processed`",
+      "range": {
+        "startLine": 1130,
+        "startChar": 57,
+        "endLine": 1130,
+        "endChar": 65
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02e9eaba_e9c9ac83",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-07T04:31:52Z",
+      "side": 1,
+      "message": "nit: Same as above - `AID when a NFC tap is detected`",
+      "range": {
+        "startLine": 1139,
+        "startChar": 74,
+        "endLine": 1139,
+        "endChar": 77
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "437a30ec_eb5a0736",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-07T04:31:52Z",
+      "side": 1,
+      "message": "Add `@see NfcAdapter#getAdapterState()`",
+      "range": {
+        "startLine": 1148,
+        "startChar": 9,
+        "endLine": 1148,
+        "endChar": 10
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "091d956f_c5eb31c1",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-07T04:31:52Z",
+      "side": 1,
+      "message": "[@AdapterState](https://source.corp.google.com/h/android/platform/superproject/main/+/main:frameworks/base/nfc/java/android/nfc/NfcAdapter.java;drc\u003d86b8f575059a1799c760ca7012f540a528d68a9d;l\u003d305)",
+      "range": {
+        "startLine": 1152,
+        "startChar": 39,
+        "endLine": 1152,
+        "endChar": 48
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd2b44cb_c8b1fa42",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-07T04:31:52Z",
+      "side": 1,
+      "message": "Add `\u003cp\u003e Note that these errors can be reported when performing various internal NFC operations also and cannot always be explicitly correlated with a NFC transaction failure \u003c/p\u003e`",
+      "range": {
+        "startLine": 1163,
+        "startChar": 9,
+        "endLine": 1163,
+        "endChar": 10
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
