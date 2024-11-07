@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4879a61_48f4fb97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2024-11-07T07:08:06Z",
+      "side": 1,
+      "message": "Please check the bug for the investigation and the root cause of the issue.\n\nThe test ApplicationContext is something targeting SDK \u003c\u003d34.",
+      "revId": "d5e23faebce99c3c3d5bc761d7b4d626dba877f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7994ade9_0257766f",
