@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7bb9088_b7988dbf",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-07T07:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48625efc_0d97023b",
+      "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "813645b8_18bb816a",
@@ -48,6 +66,30 @@
       "writtenOn": "2024-11-06T21:33:37Z",
       "side": 1,
       "message": "Which events apply to which of these actions?\n\n`LOG_ACTION_HCE_DATA` looks like it would probably not get an `EVENT_ENABLE`, for example.",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 59
+      },
+      "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e409dd9f_09475ee4",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-07T07:25:42Z",
+      "side": 1,
+      "message": "`EVENT_ENABLE` and `EVENT_DISABLE` are only used for `LOG_ACTION_NFC_TOGGLE`. Added some javadoc",
+      "parentUuid": "813645b8_18bb816a",
       "range": {
         "startLine": 38,
         "startChar": 4,
@@ -81,6 +123,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4979cc31_845c2888",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-07T07:25:42Z",
+      "side": 1,
+      "message": "Added Javadoc to indicate which field should be set for all actions.",
+      "parentUuid": "c653b493_644b8d40",
+      "range": {
+        "startLine": 251,
+        "startChar": 16,
+        "endLine": 251,
+        "endChar": 36
+      },
+      "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "417d18b1_1a9393db",
@@ -94,6 +160,30 @@
       "writtenOn": "2024-11-06T21:33:37Z",
       "side": 1,
       "message": "go/android-api-guidelines#time-types - recommend using Instant; the null semantic also works here.",
+      "range": {
+        "startLine": 255,
+        "startChar": 16,
+        "endLine": 255,
+        "endChar": 41
+      },
+      "revId": "bd35a0df5e4aa1c0ef46b882c09f82babfcf6989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89eed61a_537eb873",
+        "filename": "nfc/java/android/nfc/OemLogItems.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-07T07:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "417d18b1_1a9393db",
       "range": {
         "startLine": 255,
         "startChar": 16,
