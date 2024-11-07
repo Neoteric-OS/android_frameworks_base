@@ -16,6 +16,29 @@
       "message": "R",
       "revId": "8278231d8ccbf161224b620dbcfbdcaf09a764da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcabc93d_c3070031",
+        "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 3581109
+      },
+      "writtenOn": "2024-11-07T23:18:01Z",
+      "side": 1,
+      "message": "I don\u0027t think we need the `start` anymore since we copy from `[start..start+length)` of the original `buffer` into `[0..length]` of the newly created `bufferBytes`.",
+      "range": {
+        "startLine": 180,
+        "startChar": 43,
+        "endLine": 180,
+        "endChar": 51
+      },
+      "revId": "8278231d8ccbf161224b620dbcfbdcaf09a764da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
