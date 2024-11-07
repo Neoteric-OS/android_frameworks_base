@@ -45,6 +45,30 @@
       },
       "revId": "be1f043f23cd1ad856821224c1644891d69a6025",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b2fbf00_b49e0d80",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-07T01:24:18Z",
+      "side": 1,
+      "message": "Locally CTS tested. I have b/376553318 to track CTS tests for new APIs",
+      "parentUuid": "b0a51c1b_4281e0f4",
+      "range": {
+        "startLine": 321,
+        "startChar": 16,
+        "endLine": 321,
+        "endChar": 47
+      },
+      "revId": "be1f043f23cd1ad856821224c1644891d69a6025",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
