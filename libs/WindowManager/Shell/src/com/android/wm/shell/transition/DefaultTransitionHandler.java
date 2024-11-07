@@ -355,13 +355,15 @@ public class DefaultTransitionHandler implements Transitions.TransitionHandler {
             boolean isSeamlessDisplayChange = false;
 
             if (mode == TRANSIT_CHANGE && change.hasFlags(FLAG_IS_DISPLAY)) {
+                if (change.getStartRotation() != change.getEndRotation()) {
+                    isDisplayRotationAnimationStarted = true;
+                }
                 if (info.getType() == TRANSIT_CHANGE) {
                     final int anim = getRotationAnimationHint(change, info, mDisplayController);
                     isSeamlessDisplayChange = anim == ROTATION_ANIMATION_SEAMLESS;
                     if (!(isSeamlessDisplayChange || anim == ROTATION_ANIMATION_JUMPCUT)) {
                         startRotationAnimation(startTransaction, change, info, anim, animations,
                                 onAnimFinish);
-                        isDisplayRotationAnimationStarted = true;
                         continue;
                     }
                 } else {
