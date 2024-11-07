@@ -340,6 +340,15 @@ public final class NfcOemExtension {
         void onEeListenActivated(boolean isActivated);
 
         /**
+        * Notifies that some NFCEE (NFC Execution Environment) has been updated.
+        *
+        * <p> This indicates that some applet has been installed/updated/removed in
+        * one of the NFCEE's.
+        * </p>
+        */
+        void onEeUpdated();
+
+        /**
          * Gets the intent to find the OEM package in the OEM App market. If the consumer returns
          * {@code null} or a timeout occurs, the intent from the first available package will be
          * used instead.
