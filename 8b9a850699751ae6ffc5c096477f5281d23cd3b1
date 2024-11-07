@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd225414_c3e657ac",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-07T16:57:23Z",
+      "side": 1,
+      "message": "Reworded.",
+      "parentUuid": "f12713bf_35133e41",
+      "range": {
+        "startLine": 1130,
+        "startChar": 57,
+        "endLine": 1130,
+        "endChar": 65
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c39e3f80_998958b6",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-07T04:34:29Z",
       "side": 1,
       "message": "Is this in CSV format? Can we instead send a list here instead.",
+      "range": {
+        "startLine": 1133,
+        "startChar": 18,
+        "endLine": 1133,
+        "endChar": 49
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9159f640_e79fa803",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-07T16:57:23Z",
+      "side": 1,
+      "message": "It\u0027s not. But the AidNotRouted string was. Fixed that one!",
+      "parentUuid": "c39e3f80_998958b6",
       "range": {
         "startLine": 1133,
         "startChar": 18,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b84e02e_c33da57c",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-07T16:57:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02e9eaba_e9c9ac83",
+      "range": {
+        "startLine": 1139,
+        "startChar": 74,
+        "endLine": 1139,
+        "endChar": 77
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "437a30ec_eb5a0736",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-11-07T04:31:52Z",
       "side": 1,
       "message": "Add `@see NfcAdapter#getAdapterState()`",
+      "range": {
+        "startLine": 1148,
+        "startChar": 9,
+        "endLine": 1148,
+        "endChar": 10
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28b7d69d_84677e39",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-07T16:57:23Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "437a30ec_eb5a0736",
       "range": {
         "startLine": 1148,
         "startChar": 9,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc6eac3d_8d298e48",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-07T16:57:23Z",
+      "side": 1,
+      "message": "Oh great catch.",
+      "parentUuid": "091d956f_c5eb31c1",
+      "range": {
+        "startLine": 1152,
+        "startChar": 39,
+        "endLine": 1152,
+        "endChar": 48
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd2b44cb_c8b1fa42",
@@ -129,6 +249,30 @@
       "writtenOn": "2024-11-07T04:31:52Z",
       "side": 1,
       "message": "Add `\u003cp\u003e Note that these errors can be reported when performing various internal NFC operations also and cannot always be explicitly correlated with a NFC transaction failure \u003c/p\u003e`",
+      "range": {
+        "startLine": 1163,
+        "startChar": 9,
+        "endLine": 1163,
+        "endChar": 10
+      },
+      "revId": "8b9a850699751ae6ffc5c096477f5281d23cd3b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d0ffffe_539c5420",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-07T16:57:23Z",
+      "side": 1,
+      "message": "A good addition.",
+      "parentUuid": "fd2b44cb_c8b1fa42",
       "range": {
         "startLine": 1163,
         "startChar": 9,
