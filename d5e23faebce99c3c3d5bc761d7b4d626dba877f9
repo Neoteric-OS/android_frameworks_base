@@ -57,6 +57,30 @@
       ],
       "revId": "d5e23faebce99c3c3d5bc761d7b4d626dba877f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eec2f26c_665fb757",
+        "filename": "core/java/android/view/Display.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2024-11-07T07:23:15Z",
+      "side": 1,
+      "message": "Another idea is to check if the current DAJ is `DEFAULT_DISPLAY_ADJUSTMENTS`.\nOnly set to `mDisplayAdjustments` if not.",
+      "parentUuid": "7994ade9_0257766f",
+      "range": {
+        "startLine": 862,
+        "startChar": 51,
+        "endLine": 862,
+        "endChar": 67
+      },
+      "revId": "d5e23faebce99c3c3d5bc761d7b4d626dba877f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
