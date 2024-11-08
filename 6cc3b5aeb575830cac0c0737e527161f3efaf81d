@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4ade126_03021514",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2024-11-08T07:53:58Z",
+      "side": 1,
+      "message": "Hello,\n\nWe are developers from Xiaomi team. We have a system application that writes some data to Settings.System when the process starts. However, we recently found that when we clear the data multiple times and then start it again, it crashes with the exception \"You are adding too many system settings.\" After checking, we found that clearing the application data will cause the data it has written to be cleared, but the occupied space will continue to accumulate. When it exceeds the limit of 40,000, it will cause a crash. So we tried to fix it. Please help review it.",
+      "revId": "6cc3b5aeb575830cac0c0737e527161f3efaf81d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
