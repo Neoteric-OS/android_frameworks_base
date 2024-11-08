@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ec9618f_1c9ff4d6",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-08T20:30:18Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "25950918_39940e96",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 40
+      },
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd15011c_19907d0e",
@@ -83,6 +107,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "129cdc64_ac1937ef",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-08T20:30:18Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "cd15011c_19907d0e",
+      "range": {
+        "startLine": 398,
+        "startChar": 11,
+        "endLine": 398,
+        "endChar": 70
+      },
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f649f634_b834a180",
@@ -96,6 +144,30 @@
       "writtenOn": "2024-11-08T20:08:19Z",
       "side": 1,
       "message": "remove.",
+      "range": {
+        "startLine": 402,
+        "startChar": 60,
+        "endLine": 402,
+        "endChar": 68
+      },
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3d71a86_ad69f991",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-08T20:30:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f649f634_b834a180",
       "range": {
         "startLine": 402,
         "startChar": 60,
@@ -147,6 +219,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8549c0a_83ba1525",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-08T20:30:18Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b2edea6e_4ce16ff5",
+      "range": {
+        "startLine": 743,
+        "startChar": 6,
+        "endLine": 743,
+        "endChar": 37
+      },
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84d0245f_b59b896e",
@@ -194,6 +290,30 @@
           ]
         }
       ],
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa967022_1d2783c8",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-08T20:30:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84d0245f_b59b896e",
+      "range": {
+        "startLine": 749,
+        "startChar": 15,
+        "endLine": 749,
+        "endChar": 28
+      },
       "revId": "da22d95485fc82419104404f640604f568f7bbdb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
