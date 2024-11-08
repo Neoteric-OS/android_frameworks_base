@@ -162,6 +162,30 @@
       },
       "revId": "a893ad38819cd7d33f776f3066005619bf62613c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58745657_b6a4ff67",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2024-11-08T21:23:17Z",
+      "side": 1,
+      "message": "While it\u0027s somewhat incorrect to add the javadoc now in case the flag doesn\u0027t end up landing in 25Q2, this doesn\u0027t look like a particularly at-risk addition.\n\nSo I\u0027d just add the docs there now, since it doesn\u0027t seem like that documenting that requires referring to any flag-gated methods.  Worst case we just have to remember to remove it if this doesn\u0027t land on time.",
+      "parentUuid": "63aec0d1_25fe0ab2",
+      "range": {
+        "startLine": 5722,
+        "startChar": 54,
+        "endLine": 5722,
+        "endChar": 70
+      },
+      "revId": "a893ad38819cd7d33f776f3066005619bf62613c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
