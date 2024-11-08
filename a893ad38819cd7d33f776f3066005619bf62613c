@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "49e3f1ac_7f0e3760",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2024-11-08T18:42:14Z",
+      "side": 1,
+      "message": "Flag: and Test: still needed",
+      "revId": "a893ad38819cd7d33f776f3066005619bf62613c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "870d8768_61403fee",
@@ -53,6 +70,29 @@
         "startChar": 11,
         "endLine": 5721,
         "endChar": 14
+      },
+      "revId": "a893ad38819cd7d33f776f3066005619bf62613c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9be68909_8691f18b",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2024-11-08T18:42:14Z",
+      "side": 1,
+      "message": "Do you mean, as of API level 36 (B), or something else? If it\u0027s API level, best to phrase it accordingly \"As of API level 36 or later, getMetrics can be used after ...\"\nI know we\u0027re adding this callback in API 36, so that should on some level be obvious, but since it\u0027s talking about other existing methods it\u0027s best to be very clear.",
+      "range": {
+        "startLine": 5722,
+        "startChar": 54,
+        "endLine": 5722,
+        "endChar": 70
       },
       "revId": "a893ad38819cd7d33f776f3066005619bf62613c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
