@@ -175,6 +175,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -947,6 +948,8 @@ class StorageManagerService extends IStorageManager.Stub
                     com.android.internal.R.bool.config_zramWriteback)) {
             ZramWriteback.scheduleZramWriteback(mContext);
         }
+        // TODO: check flags
+        ZramMaintenance.scheduleZramMaintenance(mContext, Duration.ofSeconds(1));
 
         configureTranscoding();
     }
