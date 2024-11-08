@@ -1083,6 +1083,35 @@ public final class CardEmulation {
         };
     }
 
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public static final int NFC_INTERNAL_ERROR_UNKNOWN = 0;
+
+    /**
+     * This error is reported when the NFC command watchdog restarts the NFC stack.
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public static final int NFC_INTERNAL_ERROR_NFC_CRASH_RESTART = 1;
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public static final int NFC_INTERNAL_ERROR_NFC_HARDWARE_ERROR = 2;
+
+    /**
+     * This error is reported when the NFC stack times out while waiting for a response to a command
+     * sent to the NFC hardware.
+     */
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    public static final int NFC_INTERNAL_ERROR_COMMAND_TIMEOUT = 3;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+    @IntDef(prefix = "NFC_INTERNAL_ERROR_", value = {
+            NFC_INTERNAL_ERROR_UNKNOWN,
+            NFC_INTERNAL_ERROR_NFC_CRASH_RESTART,
+            NFC_INTERNAL_ERROR_NFC_HARDWARE_ERROR,
+            NFC_INTERNAL_ERROR_COMMAND_TIMEOUT,
+    })
+    public @interface NfcInternalErrorType {}
+
     /** Listener for preferred service state changes. */
     @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
     public interface NfcEventListener {
@@ -1105,6 +1134,52 @@ public final class CardEmulation {
          */
         @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
         default void onObserveModeStateChanged(boolean isEnabled) {}
+
+        /**
+         * This method is called when an AID conflict is detected during an NFC transaction. This
+         * can happen when multiple services are registered for the same AID.
+         *
+         * @param aid The AID that is in conflict
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onAidConflictOccurred(@NonNull String aid) {}
+
+        /**
+         * This method is called when one or more AIDs are not routed to any service during an NFC
+         * transaction. This can happen when no service is registered for the given AID(s).
+         *
+         * @param aidList The AID(s) that are not routed
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onAidNotRouted(@NonNull List<String> aidList) {}
+
+        /**
+         * This method is called when the NFC state changes.
+         *
+         * @see NfcAdapter#getAdapterState()
+         *
+         * @param state The new NFC state
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onNfcStateChanged(@NfcAdapter.AdapterState int state) {}
+        /**
+         * This method is called when an NFC reader's field is either detected or lost.
+         *
+         * @param isActivated true if an NFC reader is detected, false if it is lost
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onRemoteFieldChanged(boolean isActivated) {}
+
+        /**
+         * This method is called when an internal error is reported by the NFC stack.
+         *
+         * Note that these errors can be reported when performing various internal NFC operations
+         * and cannot always be explicitly correlated with NFC transaction failures.
+         *
+         * @param errorType The type of the internal error
+         */
+        @FlaggedApi(android.nfc.Flags.FLAG_NFC_EVENT_LISTENER)
+        default void onInternalErrorReported(@NfcInternalErrorType int errorType) {}
     }
 
     private final ArrayMap<NfcEventListener, Executor> mNfcEventListeners = new ArrayMap<>();
@@ -1124,25 +1199,61 @@ public final class CardEmulation {
                                             mContext.getPackageName(),
                                             componentNameAndUser.getComponentName()
                                                     .getPackageName());
-                    synchronized (mNfcEventListeners) {
-                        mNfcEventListeners.forEach(
-                                (listener, executor) -> {
-                                    executor.execute(
-                                            () -> listener.onPreferredServiceChanged(isPreferred));
-                                });
-                    }
+                    callListeners(listener -> listener.onPreferredServiceChanged(isPreferred));
                 }
 
                 public void onObserveModeStateChanged(boolean isEnabled) {
                     if (!android.nfc.Flags.nfcEventListener()) {
                         return;
                     }
+                    callListeners(listener -> listener.onObserveModeStateChanged(isEnabled));
+                }
+
+                public void onAidConflictOccurred(String aid) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(listener -> listener.onAidConflictOccurred(aid));
+                }
+
+                public void onAidNotRouted(List<String> aidList) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(listener -> listener.onAidNotRouted(aidList));
+                }
+
+                public void onNfcStateChanged(int state) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(listener -> listener.onNfcStateChanged(state));
+                }
+
+                public void onRemoteFieldChanged(boolean isActivated) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(listener -> listener.onRemoteFieldChanged(isActivated));
+                }
+
+                public void onInternalErrorReported(@NfcInternalErrorType int errorType) {
+                    if (!android.nfc.Flags.nfcEventListener()) {
+                        return;
+                    }
+                    callListeners(listener -> listener.onInternalErrorReported(errorType));
+                }
+
+                interface ListenerCall {
+                    void invoke(NfcEventListener listener);
+                }
+
+                private void callListeners(ListenerCall listenerCall) {
                     synchronized (mNfcEventListeners) {
                         mNfcEventListeners.forEach(
-                                (listener, executor) -> {
-                                    executor.execute(
-                                            () -> listener.onObserveModeStateChanged(isEnabled));
-                                });
+                            (listener, executor) -> {
+                                executor.execute(() -> listenerCall.invoke(listener));
+                            });
                     }
                 }
             };
