@@ -37,6 +37,7 @@ filegroup {
         ":framework_native_aidl",
         ":gsiservice_aidl",
         ":installd_aidl",
+        ":mmd_aidl",
         ":storaged_aidl",
         ":vold_aidl",
     ],
