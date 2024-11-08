@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ab14306_d2498694",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-11-08T22:52:24Z",
+      "side": 1,
+      "message": "(fwiw, openssl doesn\u0027t have anything more clever ... they basically just roll their own memset_explicit() and don\u0027t do anything about caches.)",
+      "revId": "47fc4c7603ccb8cae401c6bb4fec1044365b8a8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4579bf97_c91d1f3b",
         "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
         "patchSetId": 6
@@ -31,6 +48,30 @@
       "writtenOn": "2024-11-07T01:22:37Z",
       "side": 1,
       "message": "I don\u0027t know what the conventions are in this part of the tree. If this were ART code, I would add DCHECKs that the result is a power of 2 between 16 and 128 inclusive.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "47fc4c7603ccb8cae401c6bb4fec1044365b8a8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a074b3a_321c4393",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-11-08T22:52:24Z",
+      "side": 1,
+      "message": "you probably want to replace this with a call to sysconf() and let bionic worry about the architecture-specific details?",
+      "parentUuid": "4579bf97_c91d1f3b",
       "range": {
         "startLine": 35,
         "startChar": 4,
@@ -78,6 +119,30 @@
       "side": 1,
       "message": "There is no cacheflush system call on AArch64, x86_64, i386, or RISC-V.  It does exist on 32-bit ARM, so it could be used there.\n\nI couldn\u0027t find any solution for RISC-V.  Let me know if you are aware of any.  It may need a new RISC-V extension to be developed.",
       "parentUuid": "6b0bc281_67e53eaa",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 1
+      },
+      "revId": "47fc4c7603ccb8cae401c6bb4fec1044365b8a8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba4a7936_7bdf124c",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-11-08T22:52:24Z",
+      "side": 1,
+      "message": "yeah, there\u0027s a __riscv_flush_icache(), but nothing for the data cache.",
+      "parentUuid": "f42c2bf7_52ee5f19",
       "range": {
         "startLine": 25,
         "startChar": 0,
