@@ -435,9 +435,9 @@ flag {
 }
 
 flag {
-    name: "status_bar_ron_chips"
+    name: "status_bar_notification_chips"
     namespace: "systemui"
-    description: "Show rich ongoing notifications as chips in the status bar"
+    description: "Show promoted ongoing notifications as chips in the status bar"
     bug: "361346412"
 }
 
@@ -988,6 +988,16 @@ flag {
     namespace: "systemui"
     description: "Allow showing education for physical keyboard and touchpad"
     bug: "317496783"
+}
+
+flag {
+    name: "shortcut_helper_key_glyph"
+    namespace: "systemui"
+    description: "Allow showing key glyph in shortcut helper"
+    bug: "353902478"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
 }
 
 flag {

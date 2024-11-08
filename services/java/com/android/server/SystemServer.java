@@ -1403,10 +1403,6 @@ public final class SystemServer implements Dumpable {
         mSystemServiceManager.startService(BatteryService.class);
         t.traceEnd();
 
-        t.traceBegin("StartTradeInModeService");
-        mSystemServiceManager.startService(TradeInModeService.class);
-        t.traceEnd();
-
         // Tracks application usage stats.
         t.traceBegin("StartUsageService");
         mSystemServiceManager.startService(UsageStatsService.class);
@@ -1782,6 +1778,13 @@ public final class SystemServer implements Dumpable {
                 mSystemServiceManager.startService(AdvancedProtectionService.Lifecycle.class);
                 t.traceEnd();
             }
+
+            if (!isWatch && !isTv && !isAutomotive) {
+                t.traceBegin("StartTradeInModeService");
+                mSystemServiceManager.startService(TradeInModeService.class);
+                t.traceEnd();
+            }
+
         } catch (Throwable e) {
             Slog.e("System", "******************************************");
             Slog.e("System", "************ Failure starting core service");
