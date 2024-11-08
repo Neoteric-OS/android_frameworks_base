@@ -364,6 +364,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91bdea08_c0d74c3c",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2024-11-08T16:23:10Z",
+      "side": 1,
+      "message": "Yes, a Flag: FLAG_NAME line.\n\nBut IDK in which aconfig / namespace to add it, you might need to ask in the bug.\n\nAlso, you should \"guard\" the code with the flag inside the method (and test) as well",
+      "parentUuid": "b61f7877_8a9b1fc2",
+      "range": {
+        "startLine": 1713,
+        "startChar": 0,
+        "endLine": 1713,
+        "endChar": 50
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "339263c6_fba218a6",
         "filename": "core/java/android/app/UiAutomation.java",
         "patchSetId": 2
