@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f38dc790_c88ae4b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-11-08T10:28:58Z",
+      "side": 1,
+      "message": "A display info with null uniqueId looks like it would point to a deeper issue. Could you remove the excess reviewers and file a bug in the display component?\n\nI think you could mention that internal issue b/331604544 might be similar (although that issue didn\u0027t get fixed afaics it shares the same stack trace)",
+      "revId": "d037ef65fb8d41cc221af9a32d347bed7e71038e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
