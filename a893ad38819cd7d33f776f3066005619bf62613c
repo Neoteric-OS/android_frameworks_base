@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f978ad37_4fc103d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-11-08T19:57:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "49e3f1ac_7f0e3760",
+      "revId": "a893ad38819cd7d33f776f3066005619bf62613c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "870d8768_61403fee",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -75,6 +93,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b4fbe58_9896275f",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5721,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-11-08T19:57:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bc4be28_86a9b4b1",
+      "range": {
+        "startLine": 5714,
+        "startChar": 11,
+        "endLine": 5721,
+        "endChar": 14
+      },
+      "revId": "a893ad38819cd7d33f776f3066005619bf62613c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9be68909_8691f18b",
@@ -88,6 +130,30 @@
       "writtenOn": "2024-11-08T18:42:14Z",
       "side": 1,
       "message": "Do you mean, as of API level 36 (B), or something else? If it\u0027s API level, best to phrase it accordingly \"As of API level 36 or later, getMetrics can be used after ...\"\nI know we\u0027re adding this callback in API 36, so that should on some level be obvious, but since it\u0027s talking about other existing methods it\u0027s best to be very clear.",
+      "range": {
+        "startLine": 5722,
+        "startChar": 54,
+        "endLine": 5722,
+        "endChar": 70
+      },
+      "revId": "a893ad38819cd7d33f776f3066005619bf62613c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63aec0d1_25fe0ab2",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5722,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-11-08T19:57:00Z",
+      "side": 1,
+      "message": "Yes, this should really go to getMetrics and be gated by API level, but it\u0027s also gated by the Feature flag, and we cannot gate javadoc by feature flag for an existing method.\n\nI added this language here so that at least it is somewhere until the flag gets merged into next. At which point we can move it under getMetrics javadoc.",
+      "parentUuid": "9be68909_8691f18b",
       "range": {
         "startLine": 5722,
         "startChar": 54,
