@@ -3046,7 +3046,8 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
                 || !Objects.equals(mInitialDisplayCutout, newCutout)
                 || !Objects.equals(mInitialRoundedCorners, newRoundedCorners)
                 || !Objects.equals(mInitialDisplayShape, newDisplayShape);
-        final boolean physicalDisplayChanged = !newUniqueId.equals(mCurrentUniqueDisplayId);
+        final boolean physicalDisplayChanged = !Objects.equals(newUniqueId,
+                mCurrentUniqueDisplayId);
 
         if (displayMetricsChanged || physicalDisplayChanged) {
             if (physicalDisplayChanged) {
