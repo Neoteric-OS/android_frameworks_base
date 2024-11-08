@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ba8e7f2d_9fa98a3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-08T02:10:12Z",
+      "side": 1,
+      "message": "I might misunderstood what you meant. Changed to change-Id, now it generates a link :)",
+      "parentUuid": "c62f5680_8a6bae5c",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "4091629a7a570665d001c9d029a4c1badfdafcc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "01aa9c55_2f7b8add",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2024-11-07T17:28:30Z",
       "side": 1,
       "message": "did you add new tests? If so, please include that CL in a topic, so they\u0027re merged together",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "4091629a7a570665d001c9d029a4c1badfdafcc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "235dc28d_9b6a7c1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-08T02:10:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01aa9c55_2f7b8add",
       "range": {
         "startLine": 19,
         "startChar": 12,

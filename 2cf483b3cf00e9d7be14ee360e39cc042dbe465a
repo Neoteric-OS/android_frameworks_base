@@ -340,6 +340,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b61f7877_8a9b1fc2",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-08T02:10:12Z",
+      "side": 1,
+      "message": "Thanks! Sorry I am new to Android and unfamiliar with the process - which namespace should I use? \n\u003e  add a Flag: stanza with it in the commit message.\n\nYou meant include the Flag info in the commit message?",
+      "parentUuid": "bea3b0a7_b857810b",
+      "range": {
+        "startLine": 1713,
+        "startChar": 0,
+        "endLine": 1713,
+        "endChar": 50
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "339263c6_fba218a6",
         "filename": "core/java/android/app/UiAutomation.java",
         "patchSetId": 2
@@ -417,6 +441,30 @@
       "side": 1,
       "message": "This is a public API, you have no control whether the caller is passing a non-null reference or not, so you need to check (maybe Kotlin would enforce that at comppile time, but Java doesn\u0027t)",
       "parentUuid": "14b65ef7_a7002c43",
+      "range": {
+        "startLine": 1717,
+        "startChar": 42,
+        "endLine": 1717,
+        "endChar": 55
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29f9b6ad_c8513dcb",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-08T02:10:12Z",
+      "side": 1,
+      "message": "Thanks! Added arg check with IllegalArgumentException thrown when null",
+      "parentUuid": "577deb7a_f3e45481",
       "range": {
         "startLine": 1717,
         "startChar": 42,
