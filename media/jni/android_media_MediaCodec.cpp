@@ -15,6 +15,7 @@
  */
 
 //#define LOG_NDEBUG 0
+#include "utils/RefBase.h"
 #define LOG_TAG "MediaCodec-JNI"
 #include <utils/Log.h>
 
@@ -1456,6 +1457,19 @@ void JMediaCodec::handleCallback(const sp<AMessage> &msg) {
                                   "Fatal error: failed to convert format "
                                   "from native to Java object");
                 return;
+            }
+
+            break;
+        }
+
+        case MediaCodec::CB_METRICS_FLUSHED:
+        {
+            sp<WrapperObject<std::unique_ptr<mediametrics::Item>>> metrics;
+            CHECK(msg->findObject("metrics", (sp<RefBase>*)&metrics));
+
+            if (metrics != nullptr) {
+                mediametrics::Item *item = metrics->value.get();
+                obj = MediaMetricsJNI::writeMetricsToBundle(env, item, NULL);
             }
 
             break;
