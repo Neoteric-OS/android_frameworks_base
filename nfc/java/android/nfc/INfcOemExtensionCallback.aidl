@@ -41,7 +41,7 @@ interface INfcOemExtensionCallback {
    void onEnableFinished(int status);
    void onDisableFinished(int status);
    void onTagDispatch(in ResultReceiver isSkipped);
-   void onRoutingChanged();
+   void onRoutingChanged(in ResultReceiver isSkipped);
    void onHceEventReceived(int action);
    void onReaderOptionChanged(boolean enabled);
    void onCardEmulationActivated(boolean isActivated);
@@ -53,4 +53,5 @@ interface INfcOemExtensionCallback {
    void onLaunchHceAppChooserActivity(in String selectedAid, in List<ApduServiceInfo> services, in ComponentName failedComponent, in String category);
    void onLaunchHceTapAgainActivity(in ApduServiceInfo service, in String category);
    void onLogEventNotified(in OemLogItems item);
+   void onExtractOemPackages(in NdefMessage message, in ResultReceiver packageReceiver);
 }
