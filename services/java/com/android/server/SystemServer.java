@@ -192,6 +192,7 @@ import com.android.server.media.MediaRouterService;
 import com.android.server.media.MediaSessionService;
 import com.android.server.media.metrics.MediaMetricsManagerService;
 import com.android.server.media.projection.MediaProjectionManagerService;
+import com.android.server.media.quality.MediaQualityService;
 import com.android.server.midi.MidiService;
 import com.android.server.musicrecognition.MusicRecognitionManagerService;
 import com.android.server.net.NetworkManagementService;
@@ -2624,6 +2625,10 @@ public final class SystemServer implements Dumpable {
                 mSystemServiceManager.startService(TunerResourceManagerService.class);
                 t.traceEnd();
             }
+
+            t.traceBegin("StartMediaQuality");
+            mSystemServiceManager.startService(MediaQualityService.class);
+            t.traceEnd();
 
             if (mPackageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)) {
                 t.traceBegin("StartMediaResourceMonitor");
