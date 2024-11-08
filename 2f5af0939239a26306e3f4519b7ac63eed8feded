@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5d15f49_ed5f11c3",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-08T22:38:45Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by AndroidLint: [FlaggedApi] Method `onMetricsFlushed()` is a flagged API and should be inside an `if (Flags.subsessionMetrics())` check (or annotate the surrounding method `handleCallback` with `@FlaggedApi(Flags.FLAG_SUBSESSION_METRICS) to transfer requi...\n\nAnalyzer Description: Reports AndroidLint warnings.\nOwner: colefaust@google.com\n\n[FlaggedApi] Method `onMetricsFlushed()` is a flagged API and should be inside an `if (Flags.subsessionMetrics())` check (or annotate the surrounding method `handleCallback` with `@FlaggedApi(Flags.FLAG_SUBSESSION_METRICS) to transfer requirement to caller`)\n\n                        mCallback.onMetricsFlushed(mCodec, (PersistableBundle)msg.obj);\n                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nThis lint check looks for accesses of APIs marked with `@FlaggedApi(X)` without a guarding `if (Flags.X)` check. See go/android-flagged-apis.\n\nSuppression and local reproduction steps: go/ayeaye-android-lint\n\nThis warning was found on the git_main branch",
+      "range": {
+        "startLine": 2020,
+        "startChar": 21,
+        "endLine": 2020,
+        "endChar": 83
+      },
+      "revId": "2f5af0939239a26306e3f4519b7ac63eed8feded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4d17196c_e7b50aa9",
         "filename": "media/java/android/media/MediaCodec.java",
         "patchSetId": 6
