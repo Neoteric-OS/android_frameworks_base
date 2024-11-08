@@ -186,6 +186,7 @@ import com.android.internal.util.Preconditions;
 import com.android.modules.utils.TypedXmlPullParser;
 import com.android.modules.utils.TypedXmlSerializer;
 import com.android.server.LocalServices;
+import com.android.server.art.ArtManagerLocal;
 import com.android.server.pm.Installer.InstallerException;
 import com.android.server.pm.dex.DexManager;
 import com.android.server.pm.pkg.AndroidPackage;
@@ -848,7 +849,11 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             if (file.getName().endsWith(REMOVE_MARKER_EXTENSION)) return false;
             if (file.getName().endsWith(V4Signature.EXT)) return false;
             if (isAppMetadata(file)) return false;
-            if (DexMetadataHelper.isDexMetadataFile(file)) return false;
+            if (com.android.art.flags.Flags.artServiceV3()) {
+                if (ArtManagerLocal.isArtManagedFileForInstall(file)) return false;
+            } else {
+                if (DexMetadataHelper.isDexMetadataFile(file)) return false;
+            }
             if (VerityUtils.isFsveritySignatureFile(file)) return false;
             if (ApkChecksums.isDigestOrDigestSignatureFile(file)) return false;
             return true;

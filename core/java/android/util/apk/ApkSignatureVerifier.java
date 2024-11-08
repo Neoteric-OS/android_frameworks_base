@@ -24,13 +24,16 @@ import static android.content.pm.PackageManager.INSTALL_PARSE_FAILED_UNEXPECTED_
 import static android.os.Trace.TRACE_TAG_PACKAGE_MANAGER;
 import static android.util.apk.ApkSignatureSchemeV4Verifier.APK_SIGNATURE_SCHEME_DEFAULT;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.content.pm.Signature;
 import android.content.pm.SigningDetails;
 import android.content.pm.SigningDetails.SignatureSchemeVersion;
 import android.content.pm.parsing.ApkLiteParseUtils;
 import android.content.pm.parsing.result.ParseInput;
 import android.content.pm.parsing.result.ParseResult;
+import android.content.pm.parsing.result.ParseTypeImpl;
 import android.os.Build;
 import android.os.Trace;
 import android.os.incremental.V4Signature;
@@ -65,8 +68,9 @@ import java.util.zip.ZipEntry;
  *
  * @hide for internal use only.
  */
+@FlaggedApi(android.content.pm.Flags.FLAG_CLOUD_COMPILATION_PM)
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public class ApkSignatureVerifier {
-
     private static final String LOG_TAG = "ApkSignatureVerifier";
 
     private static final AtomicReference<byte[]> sBuffer = new AtomicReference<>();
@@ -75,8 +79,27 @@ public class ApkSignatureVerifier {
     private static final ArrayMap<SigningDetails, SigningDetails> sOverrideSigningDetails =
             new ArrayMap<>();
 
+    /** @hide */
+    public ApkSignatureVerifier() {}
+
+    @FlaggedApi(android.content.pm.Flags.FLAG_CLOUD_COMPILATION_PM)
+    @NonNull
+    public static SigningDetails verify(@NonNull String apkPath,
+            @SignatureSchemeVersion int minSignatureSchemeVersion) throws SignatureException {
+        ParseTypeImpl input = ParseTypeImpl.forDefaultParsing();
+        ParseResult<SigningDetails> result =
+                ApkSignatureVerifier.verify(input, apkPath, minSignatureSchemeVersion);
+        if (result.isError()) {
+            throw new SignatureException(
+                    result.getErrorCode(), result.getErrorMessage(), result.getException());
+        }
+        return result.getResult();
+    }
+
     /**
      * Verifies the provided APK and returns the certificates associated with each signer.
+     *
+     * @hide
      */
     public static ParseResult<SigningDetails> verify(ParseInput input, String apkPath,
             @SignatureSchemeVersion int minSignatureSchemeVersion) {
@@ -87,6 +110,8 @@ public class ApkSignatureVerifier {
      * Returns the certificates associated with each signer for the given APK without verification.
      * This method is dangerous and should not be used, unless the caller is absolutely certain the
      * APK is trusted.
+     *
+     * @hide
      */
     public static ParseResult<SigningDetails> unsafeGetCertsWithoutVerification(
             ParseInput input, String apkPath, int minSignatureSchemeVersion) {
@@ -125,6 +150,8 @@ public class ApkSignatureVerifier {
      *
      * @param oldSigningDetails the original signing detail of the package
      * @param newSigningDetails the new signing detail that will replace the original one
+     *
+     * @hide
      */
     public static void addOverrideSigningDetails(@NonNull SigningDetails oldSigningDetails,
             @NonNull SigningDetails newSigningDetails) {
@@ -139,6 +166,8 @@ public class ApkSignatureVerifier {
      *
      * @param oldSigningDetails the original signing detail of the package
      * @throws SecurityException if the build is not debuggable
+     *
+     * @hide
      */
     public static void removeOverrideSigningDetails(@NonNull SigningDetails oldSigningDetails) {
         synchronized (sOverrideSigningDetails) {
@@ -148,6 +177,8 @@ public class ApkSignatureVerifier {
 
     /**
      * Clear all pairs of signing details previously added via {@link #addOverrideSigningDetails}.
+     *
+     * @hide
      */
     public static void clearOverrideSigningDetails() {
         synchronized (sOverrideSigningDetails) {
@@ -568,6 +599,8 @@ public class ApkSignatureVerifier {
     /**
      * Returns the minimum signature scheme version required for an app targeting the specified
      * {@code targetSdk}.
+     *
+     * @hide
      */
     public static int getMinimumSignatureSchemeVersionForTargetSdk(int targetSdk) {
         if (targetSdk >= Build.VERSION_CODES.R) {
@@ -578,6 +611,8 @@ public class ApkSignatureVerifier {
 
     /**
      * Result of a successful APK verification operation.
+     *
+     * @hide
      */
     public static class Result {
         public final Certificate[][] certs;
@@ -593,6 +628,8 @@ public class ApkSignatureVerifier {
 
     /**
      * @return the verity root hash in the Signing Block.
+     *
+     * @hide
      */
     public static byte[] getVerityRootHash(String apkPath) throws IOException, SecurityException {
         // first try v3
@@ -613,6 +650,8 @@ public class ApkSignatureVerifier {
      * ByteBufferFactory}.
      *
      * @return the verity root hash of the generated Merkle tree.
+     *
+     * @hide
      */
     public static byte[] generateApkVerity(String apkPath, ByteBufferFactory bufferFactory)
             throws IOException, SignatureNotFoundException, SecurityException, DigestException,

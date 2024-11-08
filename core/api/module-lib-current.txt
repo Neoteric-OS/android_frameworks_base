@@ -139,6 +139,19 @@ package android.content.pm {
     method @NonNull public String getPackageName();
   }
 
+  @FlaggedApi("android.content.pm.cloud_compilation_pm") public final class SigningDetails implements android.os.Parcelable {
+    method @FlaggedApi("android.content.pm.cloud_compilation_pm") public int describeContents();
+    method @FlaggedApi("android.content.pm.cloud_compilation_pm") @NonNull public java.util.List<android.content.pm.Signature> getSignatureList();
+    method @FlaggedApi("android.content.pm.cloud_compilation_pm") public boolean signaturesMatchExactly(@NonNull android.content.pm.SigningDetails);
+    method @FlaggedApi("android.content.pm.cloud_compilation_pm") public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @FlaggedApi("android.content.pm.cloud_compilation_pm") @NonNull public static final android.os.Parcelable.Creator<android.content.pm.SigningDetails> CREATOR;
+    field @FlaggedApi("android.content.pm.cloud_compilation_pm") public static final int VERSION_JAR = 1; // 0x1
+    field @FlaggedApi("android.content.pm.cloud_compilation_pm") public static final int VERSION_SIGNING_BLOCK_V2 = 2; // 0x2
+    field @FlaggedApi("android.content.pm.cloud_compilation_pm") public static final int VERSION_SIGNING_BLOCK_V3 = 3; // 0x3
+    field @FlaggedApi("android.content.pm.cloud_compilation_pm") public static final int VERSION_SIGNING_BLOCK_V4 = 4; // 0x4
+    field @FlaggedApi("android.content.pm.cloud_compilation_pm") public static final int VERSION_UNKNOWN = 0; // 0x0
+  }
+
 }
 
 package android.hardware.usb {
@@ -635,6 +648,18 @@ package android.util {
   public class SystemConfigFileCommitEventLogger {
     ctor public SystemConfigFileCommitEventLogger(@NonNull String);
     method public void setStartTime(long);
+  }
+
+}
+
+package android.util.apk {
+
+  @FlaggedApi("android.content.pm.cloud_compilation_pm") public class ApkSignatureVerifier {
+    method @FlaggedApi("android.content.pm.cloud_compilation_pm") @NonNull public static android.content.pm.SigningDetails verify(@NonNull String, int) throws android.util.apk.SignatureException;
+  }
+
+  @FlaggedApi("android.content.pm.cloud_compilation_pm") public class SignatureException extends java.lang.Exception {
+    method @FlaggedApi("android.content.pm.cloud_compilation_pm") public int getCode();
   }
 
 }
