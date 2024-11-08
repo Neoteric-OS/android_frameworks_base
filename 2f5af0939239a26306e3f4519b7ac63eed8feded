@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a2fb9bc_577484aa",
+        "filename": "media/java/android/media/MediaCodec.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2024-11-08T23:16:34Z",
+      "side": 1,
+      "message": "Thanks! I added a guard, but I doubt that Lint can recognize it. We don\u0027t always have context so we had to get flags in MC in a try block. It\u0027s not clear if b/325389296 was fixed by allowing to get flags without context as there are no attached CLs that allude to that.",
+      "parentUuid": "f5d15f49_ed5f11c3",
+      "range": {
+        "startLine": 2020,
+        "startChar": 21,
+        "endLine": 2020,
+        "endChar": 83
+      },
+      "revId": "2f5af0939239a26306e3f4519b7ac63eed8feded",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d17196c_e7b50aa9",
