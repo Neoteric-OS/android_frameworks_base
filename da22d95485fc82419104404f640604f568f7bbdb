@@ -1,0 +1,201 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25950918_39940e96",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-08T20:08:19Z",
+      "side": 1,
+      "message": "```\n         * @param isCommitRoutingSkipped The {@link Consumer} to be completed. If routing commit should be skipped,\n         *                  the {@link Consumer#accept(Object)} should be called with\n         *                  {@link Boolean#TRUE}, otherwise call with {@link Boolean#FALSE}.\n         \n```",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 40
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2c704a8b_3839888e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 290,
+                "startChar": 0,
+                "endLine": 291,
+                "endChar": 0
+              },
+              "replacement": "         * @param isCommitRoutingSkipped The {@link Consumer} to be\n         * completed. If routing commit should be skipped,\n         * the {@link Consumer#accept(Object)} should be called with\n         * {@link Boolean#TRUE}, otherwise call with {@link Boolean#FALSE}.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd15011c_19907d0e",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-08T20:08:19Z",
+      "side": 1,
+      "message": "`Callback to to extract OEM defined packages from given NDEF message when a NFC tag is detected. These are used to handle NFC tags encoded with a proprietary format for storing app name (Android natively supports AAR format). If a non-empty list of packages are returned, NFC stack will start the corresponding apps if they are installed on the device.`",
+      "range": {
+        "startLine": 398,
+        "startChar": 11,
+        "endLine": 398,
+        "endChar": 70
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8f98ebd0_892b318f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 398,
+                "startChar": 0,
+                "endLine": 399,
+                "endChar": 0
+              },
+              "replacement": "         * Callback to to extract OEM defined packages from given NDEF message when\n         * a NFC tag is detected. These are used to handle NFC tags encoded with a\n         * proprietary format for storing app name (Android native app format).\n         *\n"
+            }
+          ]
+        }
+      ],
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f649f634_b834a180",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-08T20:08:19Z",
+      "side": 1,
+      "message": "remove.",
+      "range": {
+        "startLine": 402,
+        "startChar": 60,
+        "endLine": 402,
+        "endChar": 68
+      },
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2edea6e_4ce16ff5",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-08T20:08:19Z",
+      "side": 1,
+      "message": "`API to force a routing table commit`",
+      "range": {
+        "startLine": 743,
+        "startChar": 6,
+        "endLine": 743,
+        "endChar": 37
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "98628c7b_5f9cb785",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 743,
+                "startChar": 0,
+                "endLine": 744,
+                "endChar": 0
+              },
+              "replacement": "     * API to force a routing table commit.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84d0245f_b59b896e",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-08T20:08:19Z",
+      "side": 1,
+      "message": "`forceRoutingTableCommit`",
+      "range": {
+        "startLine": 749,
+        "startChar": 15,
+        "endLine": 749,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "10f5b256_c3bad797",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 743,
+                "startChar": 0,
+                "endLine": 744,
+                "endChar": 0
+              },
+              "replacement": "     * API to force routing table update.\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 749,
+                "startChar": 0,
+                "endLine": 750,
+                "endChar": 0
+              },
+              "replacement": "    public int forceRoutingTableUpdate() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "da22d95485fc82419104404f640604f568f7bbdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
