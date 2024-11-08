@@ -18,6 +18,7 @@ package android.media;
 
 import static android.media.codec.Flags.FLAG_NULL_OUTPUT_SURFACE;
 import static android.media.codec.Flags.FLAG_REGION_OF_INTEREST;
+import static android.media.codec.Flags.FLAG_SUBSESSION_METRICS;
 
 import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
 
@@ -1835,6 +1836,13 @@ final public class MediaCodec {
     private static final int CB_CRYPTO_ERROR = 6;
     private static final int CB_LARGE_FRAME_OUTPUT_AVAILABLE = 7;
 
+    /**
+     * Callback ID for when the metrics for this codec have been flushed due to
+     * the start of a new subsession. The associated Java Message object will
+     * contain the flushed metrics as a PersistentBundle in the obj field.
+     */
+    private static final int CB_METRICS_FLUSHED = 8;
+
     private class EventHandler extends Handler {
         private MediaCodec mCodec;
 
@@ -2004,6 +2012,12 @@ final public class MediaCodec {
                 {
                     mCallback.onOutputFormatChanged(mCodec,
                             new MediaFormat((Map<String, Object>) msg.obj));
+                    break;
+                }
+
+                case CB_METRICS_FLUSHED:
+                {
+                    mCallback.onMetricsFlushed(mCodec, (PersistableBundle)msg.obj);
                     break;
                 }
 
@@ -5692,6 +5706,31 @@ final public class MediaCodec {
          */
         public abstract void onOutputFormatChanged(
                 @NonNull MediaCodec codec, @NonNull MediaFormat format);
+
+        /**
+         * Called when the metrics for this codec have been flushed due to the
+         * start of a new subsession.
+         * <p>
+         * This can happen when the codec is reconfigured after stop(), or
+         * mid-stream e.g. if the video size changes. When this happens, the
+         * metrics for the previous subsession are finalized and flushed, and
+         * {@link MediaCodec#getMetrics} will return the ad-hoc metrics for the
+         * new subsession. However, at any point prior to that {@link MediaCodec#getMetrics}
+         * returned only ad-hoc metrics, so the finalized metrics could not be
+         * obtained. This callback is provided to capture those finalized metrics.
+         * <p>
+         * Furthermore, {@link MediaCodec#getMetrics} can now be used after an
+         * error or stop() to capture the finalized metrics for the previous
+         * subsession.
+         *
+         * @param codec The MediaCodec object.
+         * @param metrics The flushed metrics for this codec.
+         */
+        @FlaggedApi(FLAG_SUBSESSION_METRICS)
+        public void onMetricsFlushed(
+                @NonNull MediaCodec codec, @NonNull PersistableBundle metrics) {
+            // default implementation ignores this callback.
+        }
     }
 
     private void postEventFromNative(
