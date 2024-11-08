@@ -3481,7 +3481,8 @@ class Task extends TaskFragment {
             return null;
         }
         final Rect windowFrame = mainWindow.getFrame();
-        if (top.getBounds().equals(windowFrame)) {
+        final Rect parentFrame = mainWindow.getParentFrame();
+        if (parentFrame.equals(windowFrame)) {
             return null;
         }
         return windowFrame;
