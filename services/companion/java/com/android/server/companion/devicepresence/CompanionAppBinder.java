@@ -96,7 +96,10 @@ public class CompanionAppBinder {
      * On package changed.
      */
     public void onPackagesChanged(@UserIdInt int userId, String packageName) {
-        mCompanionServicesRegister.forUser(userId).remove(packageName);
+        // TODO: We shouldn't need to clean up the whole user registry. We only need to remove the
+        //       package. I will do it in a separate change since it's not appropriate to use
+        //       PerUser anymore.
+        mCompanionServicesRegister.invalidate(userId);
     }
 
     /**
@@ -307,6 +310,10 @@ public class CompanionAppBinder {
         synchronized @NonNull List<ComponentName> forPackage(
                 @UserIdInt int userId, @NonNull String packageName) {
             return forUser(userId).getOrDefault(packageName, Collections.emptyList());
+        }
+
+        synchronized void invalidate(@UserIdInt int userId) {
+            remove(userId);
         }
 
         @Override

@@ -111,6 +111,8 @@ public class CompanionExemptionProcessor {
      * Update special access for the association's package
      */
     public void exemptPackage(int userId, String packageName, boolean hasPresentDevices) {
+        Slog.i(TAG, "Exempting package [" + packageName + "]...");
+
         final PackageInfo packageInfo = getPackageInfo(mContext, userId, packageName);
 
         Binder.withCleanCallingIdentity(

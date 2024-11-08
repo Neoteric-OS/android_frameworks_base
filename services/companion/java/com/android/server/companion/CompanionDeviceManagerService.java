@@ -248,9 +248,12 @@ public class CompanionDeviceManagerService extends SystemService {
         if (!associationsForPackage.isEmpty()) {
             Slog.i(TAG, "Package removed or data cleared for user=[" + userId + "], package=["
                     + packageName + "]. Cleaning up CDM data...");
-        }
-        for (AssociationInfo association : associationsForPackage) {
-            mDisassociationProcessor.disassociate(association.getId());
+
+            for (AssociationInfo association : associationsForPackage) {
+                mDisassociationProcessor.disassociate(association.getId());
+            }
+
+            mCompanionAppBinder.onPackagesChanged(userId, packageName);
         }
 
         // Clear observable UUIDs for the package.
@@ -259,8 +262,6 @@ public class CompanionDeviceManagerService extends SystemService {
         for (ObservableUuid uuid : uuidsTobeObserved) {
             mObservableUuidStore.removeObservableUuid(userId, uuid.getUuid(), packageName);
         }
-
-        mCompanionAppBinder.onPackagesChanged(userId, packageName);
     }
 
     private void onPackageModifiedInternal(@UserIdInt int userId, @NonNull String packageName) {
@@ -268,6 +269,7 @@ public class CompanionDeviceManagerService extends SystemService {
                 mAssociationStore.getAssociationsByPackage(userId, packageName);
         if (!associations.isEmpty()) {
             mCompanionExemptionProcessor.exemptPackage(userId, packageName, false);
+
             mCompanionAppBinder.onPackagesChanged(userId, packageName);
         }
     }

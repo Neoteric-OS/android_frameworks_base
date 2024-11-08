@@ -378,6 +378,17 @@ flag {
 }
 
 flag {
+    name: "status_bar_show_audio_only_projection_chip"
+    namespace: "systemui"
+    description: "Show chip on the left side of the status bar when a user is only sharing *audio* "
+        "during a media projection"
+    bug: "373308507"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "status_bar_use_repos_for_call_chip"
     namespace: "systemui"
     description: "Use repositories as the source of truth for call notifications shown as a chip in"
@@ -726,6 +737,13 @@ flag {
     namespace: "systemui"
     description: "Use viewpager2 in Smartspace"
     bug: "259566300"
+}
+
+flag {
+    name: "smartspace_swipe_event_logging"
+    namespace: "systemui"
+    description: "Log card swipe events in smartspace"
+    bug: "374150422"
 }
 
 flag {
@@ -1641,4 +1659,11 @@ flag {
   metadata {
     purpose: PURPOSE_BUGFIX
   }
+}
+
+flag {
+  name: "shade_expands_on_status_bar_long_press"
+  namespace: "systemui"
+  description: "Expands the shade on long press of any status bar"
+  bug: "371224114"
 }

@@ -2703,8 +2703,8 @@ public class AudioDeviceBroker {
                 Log.w(TAG, "failed to broadcast ACTION_SPEAKERPHONE_STATE_CHANGED: " + e);
             }
         }
-        mAudioService.postUpdateRingerModeServiceInt();
         dispatchCommunicationDevice();
+        mAudioService.postUpdateRingerModeServiceInt();
     }
 
     @GuardedBy("mDeviceStateLock")
