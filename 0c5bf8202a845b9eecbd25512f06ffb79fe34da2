@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88e2abb1_4f04f9be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3404192
+      },
+      "writtenOn": "2024-11-08T02:08:28Z",
+      "side": 1,
+      "message": "@ghanan@squareup.com good catch, done.",
+      "revId": "0c5bf8202a845b9eecbd25512f06ffb79fe34da2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

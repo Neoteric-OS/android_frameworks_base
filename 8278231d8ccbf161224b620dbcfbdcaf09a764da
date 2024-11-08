@@ -39,6 +39,30 @@
       },
       "revId": "8278231d8ccbf161224b620dbcfbdcaf09a764da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "955e755e_212f8aa1",
+        "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 3404192
+      },
+      "writtenOn": "2024-11-08T02:08:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcabc93d_c3070031",
+      "range": {
+        "startLine": 180,
+        "startChar": 43,
+        "endLine": 180,
+        "endChar": 51
+      },
+      "revId": "8278231d8ccbf161224b620dbcfbdcaf09a764da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
