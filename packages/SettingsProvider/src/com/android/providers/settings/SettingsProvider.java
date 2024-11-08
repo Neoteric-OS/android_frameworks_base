@@ -3518,6 +3518,7 @@ public class SettingsProvider extends ContentProvider {
             SettingsState systemSettings = mSettingsStates.get(systemKey);
             if (systemSettings != null) {
                 systemSettings.removeSettingsForPackageLocked(packageName);
+                systemSettings.clearMemoryUsagePerPackageLocked(packageName);
             }
         }
 

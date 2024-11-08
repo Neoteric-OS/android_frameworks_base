@@ -1263,6 +1263,18 @@ final class SettingsState {
         mPackageToMemoryUsage.put(packageName, newSize);
     }
 
+    @GuardedBy("mLock")
+    public void clearMemoryUsagePerPackageLocked(String packageName) {
+        if (isExemptFromMemoryUsageCap(packageName)) {
+            return;
+        }
+        if (DEBUG) {
+            Slog.i(LOG_TAG, "Settings for package: " + packageName
+                    + " memory usage cleared.");
+        }
+        mPackageToMemoryUsage.remove(packageName);
+    }
+
     public boolean hasSetting(String name) {
         synchronized (mLock) {
             return hasSettingLocked(name);
