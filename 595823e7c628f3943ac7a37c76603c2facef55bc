@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d28c7e0b_3ee1da61",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-09T00:59:30Z",
+      "side": 1,
+      "message": "This is _technically_ correct, but the intention of go/android-api-guidelines#return-error was to indicate that you should return error codes that give the caller actionable information about what went wrong.  @SetServiceEnabledStatusCode is the equivalent of true/false. :)",
+      "range": {
+        "startLine": 927,
+        "startChar": 4,
+        "endLine": 927,
+        "endChar": 32
+      },
+      "revId": "595823e7c628f3943ac7a37c76603c2facef55bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
