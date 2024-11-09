@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9decc8ad_4516a446",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-11-09T00:15:28Z",
+      "side": 1,
+      "message": "Good to know! You mean _SC_LEVEL1_DCACHE_SIZE ?",
+      "parentUuid": "4a074b3a_321c4393",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "47fc4c7603ccb8cae401c6bb4fec1044365b8a8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6b0bc281_67e53eaa",
         "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
         "patchSetId": 6
@@ -241,6 +265,30 @@
       "side": 1,
       "message": "Does GetPrimitiveArrayCritical() guarantee that the copy never happens, even if the array is movable?  (Assuming Android ART specifically, not an arbitrary Java implementation.)  If so, using it and asserting that a copy did not happen would make sense.  Otherwise, we would not want this to crash just because the caller passed in a movable array; they *should* use a non-movable one, but code does not always control the allocation site and we just need to do the best we can.",
       "parentUuid": "66dbdca8_df688fa8",
+      "range": {
+        "startLine": 93,
+        "startChar": 53,
+        "endLine": 93,
+        "endChar": 73
+      },
+      "revId": "47fc4c7603ccb8cae401c6bb4fec1044365b8a8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bd0d11d_7fbf8c0d",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-11-09T00:15:28Z",
+      "side": 1,
+      "message": "The ART implementation never copies. See https://cs.android.com/android/platform/superproject/main/+/main:art/runtime/jni/jni_internal.cc;l\u003d2385-2387\n\nPerformance in the movable case may not be great, since we may end up waiting for (parts of) the GC.",
+      "parentUuid": "b795dd80_82c6f087",
       "range": {
         "startLine": 93,
         "startChar": 53,
