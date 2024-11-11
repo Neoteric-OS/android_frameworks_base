@@ -7,8 +7,35 @@ package {
     default_applicable_licenses: ["frameworks_base_keystore_license"],
 }
 
+soong_config_module_type {
+    name: "filegroup_defaults_attest_modules_flag",
+    module_type: "filegroup_defaults",
+    config_namespace: "attest_modules",
+    bool_variables: [
+        "release_attest_modules",
+    ],
+    properties: [
+        "exclude_srcs",
+    ],
+}
+
+filegroup_defaults_attest_modules_flag {
+    name: "attest_modules_flag_defaults",
+    exclude_srcs: [
+        "android/security/KeyStore2.java",
+    ],
+    soong_config_variables: {
+        release_attest_modules: {
+            exclude_srcs: [
+                "android/security/KeyStore2Modules.java",
+            ],
+        },
+    },
+}
+
 filegroup {
     name: "framework-keystore-sources",
+    defaults: ["attest_modules_flag_defaults"],
     srcs: [
         "**/*.java",
         "**/*.aidl",
