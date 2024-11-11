@@ -17,9 +17,11 @@
 package android.security.keystore;
 
 import android.annotation.FlaggedApi;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.hardware.security.keymint.Tag;
 import android.security.KeyStore2;
 import android.security.KeyStoreException;
 import android.security.keystore2.AndroidKeyStoreProvider;
@@ -32,6 +34,8 @@ import android.util.Log;
 import com.android.internal.annotations.GuardedBy;
 
 import java.io.ByteArrayInputStream;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.PublicKey;
@@ -310,6 +314,32 @@ public final class KeyStoreManager {
         keyDescriptor.alias = alias;
         keyDescriptor.blob = null;
         return keyDescriptor;
+    }
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {MODULE_HASH})
+    public @interface AttestationInputTagEnum {}
+    public static final int MODULE_HASH = Tag.MODULE_HASH;
+
+    /**
+     * Returns tag-specific info required to interpret a tag's attested value.
+     * Attested values themselves are located in the attestation certificate.
+     *
+     * The semantics of the return value is specific to the input tag:
+     *
+     * o Tag::MODULE_HASH: returns the DER-encoded structure corresponding to the `Modules` schema
+     *   described in the KeyMint HAL's KeyCreationResult.aidl. The SHA-256 hash of this encoded
+     *   structure is what's included with the tag in attestations.
+     *
+     * @param tag tag for which info is being requested
+     * @return tag-specific info
+     * @throws KeyStoreException if the requested info is not available
+     */
+    @FlaggedApi(android.security.keystore2.Flags.FLAG_ATTEST_MODULES)
+    public @NonNull byte[] getAttestationInput(@AttestationInputTagEnum int tag)
+            throws KeyStoreException {
+        return mKeyStore2.getAttestationInput(tag);
     }
 
     /**
