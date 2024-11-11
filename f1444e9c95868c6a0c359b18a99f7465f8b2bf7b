@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44ceddd8_111227a4",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-11-11T14:58:32Z",
+      "side": 1,
+      "message": "I\u0027d prefer ConnectivityFrameworkInitializerBaklava for consistency with ConnectivityFrameworkInitializerTiramisu (as per aosp/3319434), if possible",
+      "range": {
+        "startLine": 324,
+        "startChar": 76,
+        "endLine": 324,
+        "endChar": 99
+      },
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb6473b0_4a5af96e",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-11-11T14:58:32Z",
+      "side": 1,
+      "message": "See if you can use ConnectivityServiceInitializer#onBootPhase instead. For ConnectivityManager, this was added because we were not sure about the precise timing of the systemReady relative to other services and were too scared to change it. But if you don\u0027t have as many cross-dependencies as ConnectivityService, onBootPhase should be enough.",
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5ad3277_8643a81d",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-11-11T14:58:32Z",
+      "side": 1,
+      "message": "getMinNatKeepaliveTimeout\n\nAPI guidelines 6.1.1. says \"Prefer java.time.* types where possible\", specifically java.time.Duration",
+      "range": {
+        "startLine": 339,
+        "startChar": 77,
+        "endLine": 339,
+        "endChar": 111
+      },
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81fd06e6_48278d75",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-11-11T14:58:32Z",
+      "side": 1,
+      "message": "It\u0027s not very clear what this means from the name (especially the \"min\" part). It would be best to clarify that and use a descriptive name that indicates what it does.",
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70f5055c_4df61d79",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-11-11T14:58:32Z",
+      "side": 1,
+      "message": "It would be best to document what actually happens when this is used (e.g. some mode where the system chooses when to send the keepalives automatically, or some default interval ?)",
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
