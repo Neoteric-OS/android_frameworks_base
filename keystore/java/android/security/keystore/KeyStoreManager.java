@@ -17,9 +17,11 @@
 package android.security.keystore;
 
 import android.annotation.FlaggedApi;
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.hardware.security.keymint.Tag;
 import android.security.KeyStore2;
 import android.security.KeyStoreException;
 import android.security.keystore2.AndroidKeyStoreProvider;
@@ -32,6 +34,8 @@ import android.util.Log;
 import com.android.internal.annotations.GuardedBy;
 
 import java.io.ByteArrayInputStream;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.PublicKey;
@@ -310,6 +314,25 @@ public final class KeyStoreManager {
         keyDescriptor.alias = alias;
         keyDescriptor.blob = null;
         return keyDescriptor;
+    }
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {MODULE_HASH})
+    public @interface AttestationInputTagEnum {}
+    public static final int MODULE_HASH = Tag.MODULE_HASH;
+
+    /**
+     * Returns tag-specific info required to interpret a tag's attested value.
+     * @see IKeystoreService#getAttestationInput(Tag) for more details.
+     * @param tag
+     * @return
+     * @throws KeyStoreException
+     */
+    @FlaggedApi(android.security.keystore2.Flags.FLAG_ATTEST_MODULES)
+    public @NonNull byte[] getAttestationInput(@AttestationInputTagEnum int tag)
+            throws KeyStoreException {
+        return mKeyStore2.getAttestationInput(tag);
     }
 
     /**
