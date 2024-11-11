@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56e4144c_6cdacd06",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-11T17:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44ceddd8_111227a4",
+      "range": {
+        "startLine": 324,
+        "startChar": 76,
+        "endLine": 324,
+        "endChar": 99
+      },
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb6473b0_4a5af96e",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-11-11T14:58:32Z",
       "side": 1,
       "message": "See if you can use ConnectivityServiceInitializer#onBootPhase instead. For ConnectivityManager, this was added because we were not sure about the precise timing of the systemReady relative to other services and were too scared to change it. But if you don\u0027t have as many cross-dependencies as ConnectivityService, onBootPhase should be enough.",
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eb5ab10_2f1fa96e",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-11T17:54:15Z",
+      "side": 1,
+      "message": "Removed. We can start the service when `PHASE_ACTIVITY_MANAGER_READY`",
+      "parentUuid": "eb6473b0_4a5af96e",
       "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -81,6 +123,48 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b5c6317_c11eed30",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-11T17:54:15Z",
+      "side": 1,
+      "message": "Keep the current shape to be consistent with VcnGatewayConnectionConfig",
+      "parentUuid": "e5ad3277_8643a81d",
+      "range": {
+        "startLine": 339,
+        "startChar": 77,
+        "endLine": 339,
+        "endChar": 111
+      },
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40e733b5_cf703081",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-11T17:54:15Z",
+      "side": 1,
+      "message": "I updated the doc.\n\nAs discussed offline. For the name and signature, we already exposed `VcnGatewayConnectionConfig#setMinUdpPort4500NatTimeoutSeconds` and `getMinUdpPort4500NatTimeoutSeconds` For consistency we will keep the same shape",
+      "parentUuid": "81fd06e6_48278d75",
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "70f5055c_4df61d79",
@@ -94,6 +178,24 @@
       "writtenOn": "2024-11-11T14:58:32Z",
       "side": 1,
       "message": "It would be best to document what actually happens when this is used (e.g. some mode where the system chooses when to send the keepalives automatically, or some default interval ?)",
+      "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1328da18_a0c0fa1e",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-11T17:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70f5055c_4df61d79",
       "revId": "f1444e9c95868c6a0c359b18a99f7465f8b2bf7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
