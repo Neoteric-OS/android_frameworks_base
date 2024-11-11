@@ -70,6 +70,30 @@
       },
       "revId": "595823e7c628f3943ac7a37c76603c2facef55bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33b223e6_e62effb6",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-11T19:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc84039_e41cc2af",
+      "range": {
+        "startLine": 927,
+        "startChar": 4,
+        "endLine": 927,
+        "endChar": 32
+      },
+      "revId": "595823e7c628f3943ac7a37c76603c2facef55bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
