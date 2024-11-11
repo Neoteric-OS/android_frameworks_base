@@ -114,6 +114,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60bae9d7_8c591c85",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-11T09:31:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d58425a1_0fcf2971",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9252af40_de8ea470",
@@ -203,6 +227,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0338760_8c21eb8d",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-11T09:31:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "96906df6_c65773f2",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af966a4a_3ba147a1",
@@ -254,6 +302,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad571232_62bd5adb",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-11T09:31:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "af966a4a_3ba147a1",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 47
+      },
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f80e13f9_fb8e0872",
@@ -291,6 +363,30 @@
           ]
         }
       ],
+      "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91081aa8_349d5d45",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-11T09:31:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f80e13f9_fb8e0872",
+      "range": {
+        "startLine": 131,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 66
+      },
       "revId": "26edfe41a97ffcabcbc8f7821070d95d7a7eef15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
