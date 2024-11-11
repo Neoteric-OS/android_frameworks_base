@@ -132,6 +132,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04a35279_bf87667d",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-11-11T17:36:19Z",
+      "side": 1,
+      "message": "Yes. Copied the wrong entry.",
+      "parentUuid": "dd37ac40_cec87921",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "47fc4c7603ccb8cae401c6bb4fec1044365b8a8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6b0bc281_67e53eaa",
         "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
         "patchSetId": 6
