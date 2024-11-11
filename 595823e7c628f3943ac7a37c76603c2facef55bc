@@ -46,6 +46,30 @@
       },
       "revId": "595823e7c628f3943ac7a37c76603c2facef55bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dc84039_e41cc2af",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-11T17:06:24Z",
+      "side": 1,
+      "message": "There are 4 return reasons I see in the code right now:\n\n1. [STATUS_FAILURE_FEATURE_UNSUPPORTED](https://source.corp.google.com/h/googleplex-android/platform/superproject/release/+/mainline-adservices-release:packages/apps/Nfc/src/com/android/nfc/cardemulation/CardEmulationManager.java;drc\u003dc7fadc2586414d2c77065a810af51cef5faf15f9;l\u003d1006)\n\n2. [STATUS_FAILURE_INVALID_SERVICE](https://source.corp.google.com/h/googleplex-android/platform/superproject/release/+/mainline-adservices-release:packages/apps/Nfc/src/com/android/nfc/cardemulation/RegisteredServicesCache.java;drc\u003de756f99e5fb26fa060e2cdbc71494c09ab130ca0;l\u003d1350)\n\n3. [STATUS_OK](https://source.corp.google.com/h/googleplex-android/platform/superproject/release/+/mainline-adservices-release:packages/apps/Nfc/src/com/android/nfc/cardemulation/RegisteredServicesCache.java;drc\u003de756f99e5fb26fa060e2cdbc71494c09ab130ca0;l\u003d1452)\n\n4. [STATUS_OK](https://source.corp.google.com/h/googleplex-android/platform/superproject/release/+/mainline-adservices-release:packages/apps/Nfc/src/com/android/nfc/cardemulation/RegisteredServicesCache.java;drc\u003de756f99e5fb26fa060e2cdbc71494c09ab130ca0;l\u003d1369)\n\nwe can add these 3 as the possible return codes.",
+      "parentUuid": "fbb3438a_a2b61a53",
+      "range": {
+        "startLine": 927,
+        "startChar": 4,
+        "endLine": 927,
+        "endChar": 32
+      },
+      "revId": "595823e7c628f3943ac7a37c76603c2facef55bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
