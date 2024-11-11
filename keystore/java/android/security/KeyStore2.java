@@ -369,6 +369,23 @@ public class KeyStore2 {
         }
     }
 
+    /**
+     * Returns tag-specific info required to interpret a tag's attested value.
+     * @see IKeystoreService#getSupplementaryAttestationInfo(Tag) for more details.
+     * @param tag
+     * @return
+     * @throws KeyStoreException
+     * @hide
+     */
+    public byte[] getSupplementaryAttestationInfo(int tag) throws KeyStoreException {
+        if (KeyStore2HalVersion.HAL_LATEST) {
+            return handleRemoteExceptionWithRetry(
+                (service) -> service.getSupplementaryAttestationInfo(tag));
+        } else {
+            return new byte[0];
+        }
+    }
+
     static KeyStoreException getKeyStoreException(int errorCode, String serviceErrorMessage) {
         if (errorCode > 0) {
             // KeyStore layer error
