@@ -22,6 +22,30 @@
       },
       "revId": "595823e7c628f3943ac7a37c76603c2facef55bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbb3438a_a2b61a53",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1891081
+      },
+      "writtenOn": "2024-11-11T16:37:17Z",
+      "side": 1,
+      "message": "But there\u0027s no way for us to know what the error is for now. How about change `STATUS_FAILED` to `UNNKNOWN_ERROR`? We can add more failed reasons in the future.",
+      "parentUuid": "d28c7e0b_3ee1da61",
+      "range": {
+        "startLine": 927,
+        "startChar": 4,
+        "endLine": 927,
+        "endChar": 32
+      },
+      "revId": "595823e7c628f3943ac7a37c76603c2facef55bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
