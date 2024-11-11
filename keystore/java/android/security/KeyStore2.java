@@ -369,6 +369,19 @@ public class KeyStore2 {
         }
     }
 
+    /**
+     * Returns tag-specific info required to interpret a tag's attested value.
+     * @see IKeystoreService#getAttestationInput(Tag) for more details.
+     * @param tag
+     * @return
+     * @throws KeyStoreException
+     * @hide
+     */
+    public byte[] getAttestationInput(int tag) throws KeyStoreException {
+        return handleRemoteExceptionWithRetry(
+            (service) -> service.getAttestationInput(tag));
+    }
+
     static KeyStoreException getKeyStoreException(int errorCode, String serviceErrorMessage) {
         if (errorCode > 0) {
             // KeyStore layer error
