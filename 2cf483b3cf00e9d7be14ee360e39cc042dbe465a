@@ -388,6 +388,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0c189527_d7a7f086",
+        "filename": "core/java/android/app/UiAutomation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1962260
+      },
+      "writtenOn": "2024-11-11T00:54:46Z",
+      "side": 1,
+      "message": "Thanks for the advice!\n\n\u003e Also, you should \"guard\" the code with the flag inside the method (and test) as well\n\nDo you mean flag the method and test as `flaggedApi` and `RequiresFlagsEnabled`?",
+      "parentUuid": "91bdea08_c0d74c3c",
+      "range": {
+        "startLine": 1713,
+        "startChar": 0,
+        "endLine": 1713,
+        "endChar": 50
+      },
+      "revId": "2cf483b3cf00e9d7be14ee360e39cc042dbe465a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "339263c6_fba218a6",
         "filename": "core/java/android/app/UiAutomation.java",
         "patchSetId": 2
