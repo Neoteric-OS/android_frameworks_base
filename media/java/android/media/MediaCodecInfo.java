@@ -1845,7 +1845,6 @@ public final class MediaCodecInfo {
     @IntDef(prefix = {"SECURITY_MODEL_"}, value = {
         SECURITY_MODEL_SANDBOXED,
         SECURITY_MODEL_MEMORY_SAFE,
-        SECURITY_MODEL_TRUSTED_CONTENT_ONLY,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface SecurityModel {}
@@ -1876,6 +1875,8 @@ public final class MediaCodecInfo {
      * Codecs with this security model is not included in
      * {@link MediaCodecList#REGULAR_CODECS}, but included in
      * {@link MediaCodecList#ALL_CODECS}.
+     *
+     * @hide
      */
     @FlaggedApi(FLAG_IN_PROCESS_SW_AUDIO_CODEC)
     public static final int SECURITY_MODEL_TRUSTED_CONTENT_ONLY = 2;
