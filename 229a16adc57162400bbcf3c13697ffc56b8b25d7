@@ -63,6 +63,30 @@
       },
       "revId": "229a16adc57162400bbcf3c13697ffc56b8b25d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "510484c7_66c90771",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/fragment/CollapsedStatusBarFragmentTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1877755
+      },
+      "writtenOn": "2024-11-12T08:29:01Z",
+      "side": 1,
+      "message": "I dropped that test again since I realized it wasn\u0027t testing anything useful, and at the same time I didn\u0027t manage to hook up the mocks in a way that it would actually test something useful. Unfortunately I don\u0027t have enough experience in frameworks testing to add something there.\n\nI\u0027ve also reworded the commit message to match what\u0027s happening on AOSP main.\n\nI\u0027ve tested this in an emulator image with lunch target sdk_phone64_x86_64-trunk_staging-userdebug with `\u003cboolean name\u003d\"show_operator_name_in_statusbar_bool\" value\u003d\"true\" /\u003e` added to `device/generic/goldfish/phone/overlay/packages/apps/CarrierConfig/res/xml/vendor.xml`. While the view definitely isn\u0027t perfect (still some bug, and the design is not good) it\u0027s at least functional again. I\u0027ll submit a partner issue about improving those parts soon.",
+      "parentUuid": "15abf67f_c3fd2761",
+      "range": {
+        "startLine": 665,
+        "startChar": 16,
+        "endLine": 665,
+        "endChar": 59
+      },
+      "revId": "229a16adc57162400bbcf3c13697ffc56b8b25d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
