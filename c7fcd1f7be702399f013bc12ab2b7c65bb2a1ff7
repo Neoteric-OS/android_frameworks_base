@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26001b50_0eace596",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1472174
+      },
+      "writtenOn": "2024-11-12T07:59:30Z",
+      "side": 1,
+      "message": "I used to land the new API in the internal git. AOSP is only for bug fix only. Is the rule changed ?",
+      "revId": "c7fcd1f7be702399f013bc12ab2b7c65bb2a1ff7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
