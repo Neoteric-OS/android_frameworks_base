@@ -3368,6 +3368,26 @@ final class InstallPackageHelper {
     }
 
     @GuardedBy("mPm.mLock")
+    public void prepareNonSystemPackageCleanUp(
+            WatchedArrayMap<String, PackageSetting> packageSettings,
+            int[] userIds) {
+        for (int index = packageSettings.size() - 1; index >= 0; index--) {
+            final PackageSetting ps = packageSettings.valueAt(index);
+            final String packageName = ps.getPackageName();
+            if (ps.isSystem()) {
+                continue;
+            }
+
+            final AndroidPackage scannedPkg = mPm.mPackages.get(packageName);
+            if (scannedPkg == null) {
+                logCriticalInfo(Log.WARN, "Data package " + packageName
+                        + " no longer exists; its data will be wiped");
+                mRemovePackageHelper.removePackageData(ps, userIds);
+            }
+        }
+    }
+
+    @GuardedBy("mPm.mLock")
     public void prepareSystemPackageCleanUp(
             WatchedArrayMap<String, PackageSetting> packageSettings,
             List<String> possiblyDeletedUpdatedSystemApps,

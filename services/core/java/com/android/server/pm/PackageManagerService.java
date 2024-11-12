@@ -2283,7 +2283,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
             PackageParser2 packageParser = mInjector.getScanningCachingPackageParser();
             mOverlayConfig = mInitAppsHelper.initSystemApps(packageParser, packageSettings, userIds,
                     startTime);
-            mInitAppsHelper.initNonSystemApps(packageParser, userIds, startTime);
+            mInitAppsHelper.initNonSystemApps(packageParser, packageSettings, userIds, startTime);
             packageParser.close();
 
             mRequiredVerifierPackages = getRequiredButNotReallyRequiredVerifiersLPr(computer);

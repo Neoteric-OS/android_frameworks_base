@@ -249,7 +249,8 @@ final class InitAppsHelper {
      * Install apps/updates from data dir and fix system apps that are affected.
      */
     @GuardedBy({"mPm.mInstallLock", "mPm.mLock"})
-    public void initNonSystemApps(PackageParser2 packageParser, @NonNull int[] userIds,
+    public void initNonSystemApps(PackageParser2 packageParser,
+            WatchedArrayMap<String, PackageSetting> packageSettings, @NonNull int[] userIds,
             long startTime) {
         EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_PMS_DATA_SCAN_START,
                 SystemClock.uptimeMillis());
@@ -267,6 +268,7 @@ final class InitAppsHelper {
                     + unfinishedTasks);
         }
         fixSystemPackages(userIds);
+        mInstallPackageHelper.prepareNonSystePackageCleanUp(packageSettings, userIds);
         logNonSystemAppScanningTime(startTime);
         mExpectingBetter.clear();
         mPm.mSettings.pruneRenamedPackagesLPw();
