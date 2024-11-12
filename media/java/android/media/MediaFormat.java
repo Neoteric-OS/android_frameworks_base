@@ -1729,7 +1729,6 @@ public final class MediaFormat {
     @IntDef(flag = true, prefix = {"FLAG_SECURITY_MODEL_"}, value = {
         FLAG_SECURITY_MODEL_SANDBOXED,
         FLAG_SECURITY_MODEL_MEMORY_SAFE,
-        FLAG_SECURITY_MODEL_TRUSTED_CONTENT_ONLY,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface SecurityModelFlag {}
@@ -1748,6 +1747,7 @@ public final class MediaFormat {
             (1 << MediaCodecInfo.SECURITY_MODEL_MEMORY_SAFE);
     /**
      * Flag for {@link MediaCodecInfo#SECURITY_MODEL_TRUSTED_CONTENT_ONLY}.
+     * @hide
      */
     @FlaggedApi(FLAG_IN_PROCESS_SW_AUDIO_CODEC)
     public static final int FLAG_SECURITY_MODEL_TRUSTED_CONTENT_ONLY =
@@ -1759,8 +1759,7 @@ public final class MediaFormat {
      * The associated value is a flag of the following values:
      * {@link FLAG_SECURITY_MODEL_SANDBOXED},
      * {@link FLAG_SECURITY_MODEL_MEMORY_SAFE},
-     * {@link FLAG_SECURITY_MODEL_TRUSTED_CONTENT_ONLY}. The default value is
-     * {@link FLAG_SECURITY_MODEL_SANDBOXED}.
+     * The default value is {@link FLAG_SECURITY_MODEL_SANDBOXED}.
      * <p>
      * When passed to {@link MediaCodecList#findDecoderForFormat} or
      * {@link MediaCodecList#findEncoderForFormat}, MediaCodecList filters
