@@ -17,6 +17,7 @@
 package com.android.server.biometrics.sensors;
 
 import android.util.SparseArray;
+import com.android.internal.annotations.GuardedBy;
 
 /**
  * Tracks biometric performance across sensors and users.
@@ -25,17 +26,20 @@ public class PerformanceTracker {
 
     private static final String TAG = "PerformanceTracker";
     // Keyed by SensorId
+    @GuardedBy("PerformanceTracker.class")
     private static SparseArray<PerformanceTracker> sTrackers;
 
     public static PerformanceTracker getInstanceForSensorId(int sensorId) {
-        if (sTrackers == null) {
-            sTrackers = new SparseArray<>();
-        }
+        synchronized (PerformanceTracker.class) {
+            if (sTrackers == null) {
+                sTrackers = new SparseArray<>();
+            }
 
-        if (!sTrackers.contains(sensorId)) {
-            sTrackers.put(sensorId, new PerformanceTracker());
+            if (!sTrackers.contains(sensorId)) {
+                sTrackers.put(sensorId, new PerformanceTracker());
+            }
+            return sTrackers.get(sensorId);
         }
-        return sTrackers.get(sensorId);
     }
 
     private static class Info {
