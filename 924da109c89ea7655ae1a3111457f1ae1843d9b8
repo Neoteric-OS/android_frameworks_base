@@ -16,6 +16,24 @@
       "message": "Should this versioning behind a build flag (specifying which version to use)?",
       "revId": "924da109c89ea7655ae1a3111457f1ae1843d9b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf968e10_e55cb0b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2024-11-12T17:00:55Z",
+      "side": 1,
+      "message": "I believe this isn\u0027t needed because of the `RELEASE_AIDL_USE_UNFROZEN` flag: https://source.android.com/docs/core/architecture/aidl/stable-aidl#aidl-build-flag.",
+      "parentUuid": "bef43144_563c97cc",
+      "revId": "924da109c89ea7655ae1a3111457f1ae1843d9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
