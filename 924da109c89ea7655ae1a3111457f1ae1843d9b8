@@ -34,6 +34,24 @@
       "parentUuid": "bef43144_563c97cc",
       "revId": "924da109c89ea7655ae1a3111457f1ae1843d9b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d934bb0_e1dda4e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2024-11-13T05:41:23Z",
+      "side": 1,
+      "message": "LaMont explained on chat that we still need to put this behind a build flag; `RELEASE_AIDL_USE_UNFROZEN`\u0027s value varies between release configurations. Thanks for all the info! \n\nEdited the CL to put the code behind a new build flag.",
+      "parentUuid": "bf968e10_e55cb0b0",
+      "revId": "924da109c89ea7655ae1a3111457f1ae1843d9b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
