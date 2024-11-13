@@ -17,9 +17,12 @@
 package android.os;
 
 import android.annotation.IntDef;
+import android.annotation.FlaggedApi;
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
 
 /**
- * UpdateEngineStable handles calls to the update engine stalbe which takes care of A/B OTA updates.
+ * UpdateEngineStable handles calls to the update engine stable which takes care of A/B OTA updates.
  * This interface has lesser functionalities than UpdateEngine and doesn't allow cancel.
  *
  * <p>The minimal flow is:
@@ -32,10 +35,12 @@ import android.annotation.IntDef;
  *
  * The APIs defined in this class and UpdateEngineStableCallback class must be in sync with the ones
  * in {@code system/update_engine/stable/android/os/IUpdateEngineStable.aidl} and {@code
- * ssystem/update_engine/stable/android/os/IUpdateEngineStableCallback.aidl}.
+ * system/update_engine/stable/android/os/IUpdateEngineStableCallback.aidl}.
  *
  * @hide
  */
+@FlaggedApi(Flags.FLAG_UPDATE_ENGINE_API)
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public class UpdateEngineStable {
     private static final String TAG = "UpdateEngineStable";
 
@@ -78,6 +83,8 @@ public class UpdateEngineStable {
      *
      * @hide
      */
+    @FlaggedApi(Flags.FLAG_UPDATE_ENGINE_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public UpdateEngineStable() {
         mUpdateEngineStable =
                 IUpdateEngineStable.Stub.asInterface(
@@ -187,6 +194,22 @@ public class UpdateEngineStable {
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }
+        }
+    }
+
+    /**
+     * Run postinstall script for specified partition |partition|
+     *
+     * @param partition The partition to trigger postinstall runs
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_UPDATE_ENGINE_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public void triggerPostinstall(@NonNull String partition){
+        try {
+            mUpdateEngineStable.triggerPostinstall(partition);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 }
