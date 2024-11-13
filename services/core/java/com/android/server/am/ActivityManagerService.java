@@ -7520,6 +7520,27 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         final long ident = Binder.clearCallingIdentity();
         try {
+            // Don't force stop running app if set-debug-app is transient
+            // and doesn't require app to wait for debugger (on re-start).
+            // Just mark application record as 'debugging' to enable its proper
+            // handling by system during IPC timeouts or ANRs.
+            if (packageName != null && !waitForDebugger && !persistent) {
+                boolean runningAppRecordsFound = false;
+                synchronized (mPidsSelfLocked) {
+                    for (int i = 0; i < mPidsSelfLocked.size(); i++) {
+                        final ProcessRecord p = mPidsSelfLocked.valueAt(i);
+                        boolean isAppDebuggable = (p.info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+                        if (packageName.equals(p.info.packageName) && isAppDebuggable) {
+                            Slog.i(TAG, "Set debugging running app: " + p.processName);
+                            p.setDebugging(true);
+                            runningAppRecordsFound = true;
+                        }
+                    }
+                }
+                if (runningAppRecordsFound) {
+                    return;
+                }
+            }
             // Note that this is not really thread safe if there are multiple
             // callers into it at the same time, but that's not a situation we
             // care about.
