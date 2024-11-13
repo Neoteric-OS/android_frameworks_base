@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00e28cb3_50a2d50b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1366584
+      },
+      "writtenOn": "2024-11-13T03:02:02Z",
+      "side": 1,
+      "message": "If I understand correctly this branch(android14-tests-dev) is only used to build CTS, so I think you can CP https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3273971 to your build after it get submit.",
+      "revId": "ea8bedc7ec7476d1dfd1b3721d355d331ca49fe2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
