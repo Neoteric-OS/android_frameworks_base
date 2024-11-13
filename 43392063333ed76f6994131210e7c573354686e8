@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13e4e357_5a5a038b",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-13T20:33:33Z",
+      "side": 1,
+      "message": "As discussed offline, we cannot add opaque containers in Android API surface.\n\ngo/android-api-guidelines#framework-bundle\n\n`In cases where the platform does read the data, avoid using Bundle and prefer a strongly-typed data class.`",
+      "range": {
+        "startLine": 1185,
+        "startChar": 12,
+        "endLine": 1185,
+        "endChar": 34
+      },
+      "revId": "43392063333ed76f6994131210e7c573354686e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
