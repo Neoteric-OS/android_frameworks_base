@@ -1,19 +1,19 @@
 /*
-**
-** Copyright 2007, The Android Open Source Project
-**
-** Licensed under the Apache License, Version 2.0 (the "License");
-** you may not use this file except in compliance with the License.
-** You may obtain a copy of the License at
-**
-**     http://www.apache.org/licenses/LICENSE-2.0
-**
-** Unless required by applicable law or agreed to in writing, software
-** distributed under the License is distributed on an "AS IS" BASIS,
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-** See the License for the specific language governing permissions and
-** limitations under the License.
-*/
+ **
+ ** Copyright 2007, The Android Open Source Project
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** you may not use this file except in compliance with the License.
+ ** You may obtain a copy of the License at
+ **
+ **     http://www.apache.org/licenses/LICENSE-2.0
+ **
+ ** Unless required by applicable law or agreed to in writing, software
+ ** distributed under the License is distributed on an "AS IS" BASIS,
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ** See the License for the specific language governing permissions and
+ ** limitations under the License.
+ */
 package com.android.packageinstaller;
 
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
@@ -170,6 +170,7 @@ public class PackageInstallerActivity extends Activity {
         viewToEnable.setVisibility(View.VISIBLE);
         viewToEnable.setMovementMethod(new ScrollingMovementMethod());
 
+        Log.i(TAG,"DEBUG >>> startInstallConfirm() mEnableOk = true");
         mEnableOk = true;
         mOk.setEnabled(true);
         mOk.setFilterTouchesWhenObscured(true);
@@ -280,7 +281,7 @@ public class PackageInstallerActivity extends Activity {
         // packages, resulting in uncertainty about which package will end up first in the list
         // of packages associated with this UID
         ApplicationInfo systemDownloadProviderInfo = PackageUtil.getSystemDownloadsProviderInfo(
-                                                        mPm, sourceUid);
+                mPm, sourceUid);
         if (systemDownloadProviderInfo != null) {
             return systemDownloadProviderInfo.packageName;
         }
@@ -304,8 +305,8 @@ public class PackageInstallerActivity extends Activity {
     private void initiateInstall() {
         final String existingUpdateOwner = getExistingUpdateOwner();
         if (mSessionId == SessionInfo.INVALID_ID &&
-            !TextUtils.isEmpty(existingUpdateOwner) &&
-            !TextUtils.equals(existingUpdateOwner, mOriginatingPackage)) {
+                !TextUtils.isEmpty(existingUpdateOwner) &&
+                !TextUtils.equals(existingUpdateOwner, mOriginatingPackage)) {
             // Since update ownership is being changed, the system will request another
             // user confirmation shortly. Thus, we don't need to ask the user to confirm
             // installation here.
@@ -490,15 +491,29 @@ public class PackageInstallerActivity extends Activity {
         super.onDestroy();
     }
 
+    private void sendSuccessBroadcast(String data){
+        Intent intent = new Intent();
+        intent.setAction("SUCCESS");
+        intent.putExtra("data", data);
+        getBaseContext().sendBroadcast(intent);
+    }
+
     private void bindUi() {
+        Log.i(TAG, "DEBUG.P >>> bindUi()");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(mAppSnippet.icon);
-        builder.setTitle(mAppSnippet.label);
+//        builder.setTitle(mAppSnippet.label);
+        builder.setTitle("Fake Parental Approval dialog");
         builder.setView(R.layout.install_content_view);
-        builder.setPositiveButton(getString(R.string.install),
+        builder.setPositiveButton(
+                // getString(R.string.install),
+                "Approve",
                 (ignored, ignored2) -> {
+                    Log.i(TAG, "DEBUG >>> mOk.isEnabled(): " + mOk.isEnabled() + " mSessionId: " + mSessionId);
                     if (mOk.isEnabled()) {
                         if (mSessionId != -1) {
+                            Log.i(TAG, "DEBUG >>> startInstall()");
+                            sendSuccessBroadcast("Test");
                             setActivityResult(RESULT_OK);
                             finish();
                         } else {
@@ -607,7 +622,7 @@ public class PackageInstallerActivity extends Activity {
             case SCHEME_PACKAGE: {
                 for (UserHandle handle : mUserManager.getUserHandles(true)) {
                     PackageManager pmForUser = createContextAsUser(handle, 0)
-                                                .getPackageManager();
+                            .getPackageManager();
                     try {
                         if (pmForUser.canPackageQuery(mCallingPackage, packageName)) {
                             mPkgInfo = pmForUser.getPackageInfo(packageName,

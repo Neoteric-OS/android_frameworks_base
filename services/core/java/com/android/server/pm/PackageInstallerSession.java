@@ -1015,6 +1015,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
      */
     @UserActionRequirement
     private int computeUserActionRequirement() {
+        Log.i(TAG, "DEBUG >>> session computeUserActionRequirement()");
+
         final String packageName;
         final boolean hasDeviceAdminReceiver;
         synchronized (mLock) {
@@ -1119,7 +1121,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         }
 
         if (isPermissionGranted) {
-            return userActionNotTypicallyNeededResponse;
+//            return userActionNotTypicallyNeededResponse;
+            return USER_ACTION_REQUIRED;
         }
 
         if (snapshot.isInstallDisabledForPackage(getInstallerPackageName(), mInstallerUid,
@@ -2137,7 +2140,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                 THROW_EXCEPTION_COMMIT_WITH_IMMUTABLE_PENDING_INTENT, Binder.getCallingUid());
         if (throwsExceptionCommitImmutableCheck && statusReceiver.isImmutable()) {
             throw new IllegalArgumentException(
-                "The commit() status receiver should come from a mutable PendingIntent");
+                    "The commit() status receiver should come from a mutable PendingIntent");
         }
 
         if (!markAsSealed(statusReceiver, forTransfer)) {
@@ -2692,7 +2695,11 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             return false;
         }
 
-        @UserActionRequirement int userActionRequirement = USER_ACTION_NOT_NEEDED;
+        Log.i(TAG, "DEBUG >>> session checkUserActionRequirement()");
+        session.sendPendingUserActionIntent(target);
+        return false;
+
+        /*@UserActionRequirement int userActionRequirement = USER_ACTION_NOT_NEEDED;
         // TODO(b/159331446): Move this to makeSessionActiveForInstall and update javadoc
         userActionRequirement = session.computeUserActionRequirement();
         session.updateUserActionRequirement(userActionRequirement);
@@ -2721,7 +2728,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             }
         }
 
-        return false;
+        return false;*/
     }
 
     /**
@@ -2782,7 +2789,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         // Since there are separate status receivers for session preapproval and commit,
         // check whether user action is requested for session preapproval or commit
         final IntentSender statusReceiver = forPreapproval ? getPreapprovalRemoteStatusReceiver()
-                                            : getRemoteStatusReceiver();
+                : getRemoteStatusReceiver();
         return sessionContains(s -> checkUserActionRequirement(s, statusReceiver));
     }
 
@@ -3356,7 +3363,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         if (addedFiles.isEmpty()) {
             throw new PackageManagerException(INSTALL_FAILED_INVALID_APK,
                     TextUtils.formatSimple("Session: %d. No packages staged in %s", sessionId,
-                          stageDir.getAbsolutePath()));
+                            stageDir.getAbsolutePath()));
         }
 
         if (ArrayUtils.size(addedFiles) > 1) {
@@ -3442,7 +3449,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                 && params.mode == SessionParams.MODE_INHERIT_EXISTING
                 && VerityUtils.hasFsverity(pkgInfo.applicationInfo.getBaseCodePath())
                 && (new File(VerityUtils.getFsveritySignatureFilePath(
-                        pkgInfo.applicationInfo.getBaseCodePath()))).exists();
+                pkgInfo.applicationInfo.getBaseCodePath()))).exists();
 
         final List<File> removedFiles = getRemovedFilesLocked();
         final List<String> removeSplitList = new ArrayList<>();
@@ -3468,7 +3475,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                 && (removeSplitList.size() == 0 || mHasAppMetadataFile)) {
             throw new PackageManagerException(INSTALL_FAILED_INVALID_APK,
                     TextUtils.formatSimple("Session: %d. No packages staged in %s", sessionId,
-                          stageDir.getAbsolutePath()));
+                            stageDir.getAbsolutePath()));
         }
 
         // Verify that all staged packages are internally consistent
@@ -3815,7 +3822,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                         && !DexManager.auditUncompressedDexInApk(file.getPath())) {
                     throw new PackageManagerException(INSTALL_FAILED_INVALID_APK,
                             "Some dex are not uncompressed and aligned correctly for "
-                            + mPackageName);
+                                    + mPackageName);
                 }
             }
         }
@@ -4112,7 +4119,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         }
 
         final PackageInfo packageInfoFromApk = packageManager.getPackageArchiveInfo(
-                        packageLite.getPath(), PackageInfoFlags.of(0));
+                packageLite.getPath(), PackageInfoFlags.of(0));
         if (packageInfoFromApk == null) {
             throw new PackageManagerException(INSTALL_FAILED_INVALID_APK,
                     "Failure to obtain package info from APK files.");
@@ -5028,7 +5035,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     private void sendUpdateToRemoteStatusReceiver(int returnCode, String msg, Bundle extras,
             boolean forPreapproval) {
         final IntentSender statusReceiver = forPreapproval ? getPreapprovalRemoteStatusReceiver()
-                                            : getRemoteStatusReceiver();
+                : getRemoteStatusReceiver();
         if (statusReceiver != null) {
             // Execute observer.onPackageInstalled on different thread as we don't want callers
             // inside the system server have to worry about catching the callbacks while they are
@@ -5506,9 +5513,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         DevicePolicyManager dpm = context.getSystemService(DevicePolicyManager.class);
         return update
                 ? dpm.getResources().getString(PACKAGE_UPDATED_BY_DO,
-                    () -> context.getString(R.string.package_updated_device_owner))
+                () -> context.getString(R.string.package_updated_device_owner))
                 : dpm.getResources().getString(PACKAGE_INSTALLED_BY_DO,
-                    () -> context.getString(R.string.package_installed_device_owner));
+                        () -> context.getString(R.string.package_installed_device_owner));
     }
 
     /**
@@ -5739,7 +5746,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     // Validity check to be performed when the session is restored from an external file. Only one
     // of the session states should be true, or none of them.
     private static boolean isStagedSessionStateValid(boolean isReady, boolean isApplied,
-                                                     boolean isFailed) {
+            boolean isFailed) {
         return (!isReady && !isApplied && !isFailed)
                 || (isReady && !isApplied && !isFailed)
                 || (!isReady && isApplied && !isFailed)
@@ -5971,3 +5978,4 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                 sessionErrorCode, sessionErrorMessage, preVerifiedDomains);
     }
 }
+s
