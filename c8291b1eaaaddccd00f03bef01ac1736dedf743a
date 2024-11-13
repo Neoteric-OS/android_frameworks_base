@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "536028bf_1204c60b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2024-11-13T21:50:59Z",
+      "side": 1,
+      "message": "Thanks for the fix!\n\n+Diya for a second approver.",
+      "revId": "c8291b1eaaaddccd00f03bef01ac1736dedf743a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "914285b0_9ee8e15d",
+        "filename": "services/core/java/com/android/server/biometrics/BiometricService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2024-11-13T21:50:59Z",
+      "side": 1,
+      "message": "nit: formatting (can you add missing space)?",
+      "fixSuggestions": [
+        {
+          "fixId": "9d43bbcd_d76462f9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/biometrics/BiometricService.java",
+              "range": {
+                "startLine": 154,
+                "startChar": 0,
+                "endLine": 155,
+                "endChar": 0
+              },
+              "replacement": "                @NonNull List\u003cBiometricSensor\u003e sensors, int userId,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c8291b1eaaaddccd00f03bef01ac1736dedf743a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
