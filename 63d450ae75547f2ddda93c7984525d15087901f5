@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf156f6c_f36baa4b",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 22
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-13T12:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0250e7ec_df9f51a6",
+      "range": {
+        "startLine": 329,
+        "startChar": 100,
+        "endLine": 329,
+        "endChar": 124
+      },
+      "revId": "63d450ae75547f2ddda93c7984525d15087901f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a691dedf_a4f08938",
@@ -125,6 +149,30 @@
       "writtenOn": "2024-11-13T11:57:07Z",
       "side": 1,
       "message": "If you expose this, please fix the Builder setter to accept this value as an argument, and update the documentation accordingly (both the Builder setter and the getter). You probably want to mention that if it\u0027s set to unset, it might be set by the system based on the current mobile carrier.",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 63
+      },
+      "revId": "63d450ae75547f2ddda93c7984525d15087901f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d54890a9_faacda31",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-13T12:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e9aef50_58dbae7f",
       "range": {
         "startLine": 99,
         "startChar": 28,
