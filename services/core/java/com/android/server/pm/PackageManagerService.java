@@ -1285,6 +1285,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                         request.getReturnCode(), request.getReturnMsg(), extras);
             } catch (RemoteException e) {
                 Slog.i(TAG, "Observer no longer exists.");
+                Slog.i(TAG, "Observer no longer exists.");
             }
         }
     }
