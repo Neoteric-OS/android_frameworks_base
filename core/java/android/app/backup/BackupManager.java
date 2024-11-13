@@ -111,6 +111,14 @@ public class BackupManager {
     public static final int ERROR_BACKUP_CANCELLED = -2003;
 
     /**
+     * The application had no data to backup.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int ERROR_BACKUP_EMPTY = -3001;
+
+    /**
      * The transport for some reason was not in a good state and
      * aborted the entire backup request. This is a transient
      * failure and should not be retried immediately.

@@ -1764,6 +1764,7 @@ package android.app.backup {
     method @RequiresPermission(android.Manifest.permission.BACKUP) public void updateTransportAttributes(@NonNull android.content.ComponentName, @NonNull String, @Nullable android.content.Intent, @NonNull String, @Nullable android.content.Intent, @Nullable CharSequence);
     field public static final int ERROR_AGENT_FAILURE = -1003; // 0xfffffc15
     field public static final int ERROR_BACKUP_CANCELLED = -2003; // 0xfffff82d
+    field public static final int ERROR_BACKUP_EMPTY = -3001; // 0xfffff447
     field public static final int ERROR_BACKUP_NOT_ALLOWED = -2001; // 0xfffff82f
     field public static final int ERROR_PACKAGE_NOT_FOUND = -2002; // 0xfffff82e
     field public static final int ERROR_TRANSPORT_ABORTED = -1000; // 0xfffffc18
@@ -18670,4 +18671,3 @@ package android.window {
   }
 
 }
-

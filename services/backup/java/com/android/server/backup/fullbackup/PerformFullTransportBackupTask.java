@@ -621,6 +621,12 @@ public class PerformFullTransportBackupTask extends FullBackupTask implements Ba
                     EventLog.writeEvent(EventLogTags.FULL_BACKUP_CANCELLED, packageName);
                     mUserBackupManagerService.tearDownAgentAndKill(currentPackage.applicationInfo);
                     // Do nothing, clean up, and continue looping.
+                } else if (backupPackageStatus == BackupManager.ERROR_BACKUP_EMPTY) {
+                    BackupObserverUtils.sendBackupOnPackageResult(
+                            mBackupObserver, packageName, BackupManager.ERROR_BACKUP_EMPTY);
+                    Slog.w(TAG, "Empty backup. package=" + packageName);
+                    mUserBackupManagerService.tearDownAgentAndKill(currentPackage.applicationInfo);
+                    // Do nothing, clean up, and continue looping.
                 } else if (backupPackageStatus != BackupTransport.TRANSPORT_OK) {
                     BackupObserverUtils
                             .sendBackupOnPackageResult(mBackupObserver, packageName,
@@ -772,6 +778,13 @@ public class PerformFullTransportBackupTask extends FullBackupTask implements Ba
                 }
                 if (MORE_DEBUG) {
                     Slog.v(TAG, "Got preflight response; size=" + totalSize);
+                }
+                if (totalSize == 0) {
+                    // If the agent didn't produce any data, we can skip the backup.
+                    if (MORE_DEBUG) {
+                        Slog.i(TAG, "Skipping backup of " + pkg.packageName + " due to empty data");
+                    }
+                    return BackupManager.ERROR_BACKUP_EMPTY;
                 }
 
                 BackupTransportClient transport =
