@@ -110,6 +110,29 @@
       },
       "revId": "63d450ae75547f2ddda93c7984525d15087901f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e9aef50_58dbae7f",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-11-13T11:57:07Z",
+      "side": 1,
+      "message": "If you expose this, please fix the Builder setter to accept this value as an argument, and update the documentation accordingly (both the Builder setter and the getter). You probably want to mention that if it\u0027s set to unset, it might be set by the system based on the current mobile carrier.",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 63
+      },
+      "revId": "63d450ae75547f2ddda93c7984525d15087901f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
