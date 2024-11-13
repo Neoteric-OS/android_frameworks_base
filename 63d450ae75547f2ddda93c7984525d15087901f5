@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0250e7ec_df9f51a6",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 22
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-13T11:42:04Z",
+      "side": 1,
+      "message": "It is also used in VcnGatewayConnectionConfig. `VcnGatewayConnectionConfig#getMinUdpPort4500NatTimeoutSeconds` can return -1 but we did not expose this constant before.\n\nThe design is that carrier apps configure the timeout in VcnGatewayConnectionConfig. Vpn reads the value from VcnTransportInfo.\n\nMaybe this should be public API?",
+      "parentUuid": "b970f66d_5f7fe404",
+      "range": {
+        "startLine": 329,
+        "startChar": 100,
+        "endLine": 329,
+        "endChar": 124
+      },
+      "revId": "63d450ae75547f2ddda93c7984525d15087901f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a691dedf_a4f08938",
         "filename": "core/api/module-lib-current.txt",
         "patchSetId": 22
@@ -54,6 +78,30 @@
       "writtenOn": "2024-11-13T11:20:44Z",
       "side": 1,
       "message": "Why are we exposing this? Is it only for tests? (I think it\u0027s pobably OK to expose it even if it\u0027s only for tests).",
+      "range": {
+        "startLine": 341,
+        "startChar": 83,
+        "endLine": 341,
+        "endChar": 99
+      },
+      "revId": "63d450ae75547f2ddda93c7984525d15087901f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "654d367c_613e374e",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 22
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-13T11:42:04Z",
+      "side": 1,
+      "message": "Yes primarily for VcnTransportInfo consumers to do tests.",
+      "parentUuid": "a691dedf_a4f08938",
       "range": {
         "startLine": 341,
         "startChar": 83,
