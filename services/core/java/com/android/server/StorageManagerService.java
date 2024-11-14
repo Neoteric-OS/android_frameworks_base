@@ -971,12 +971,6 @@ class StorageManagerService extends IStorageManager.Stub
             // changing the property value. There's no race: we're the
             // sole writer.
             SystemProperties.set(ZRAM_ENABLED_PROPERTY, desiredPropertyValue);
-            // Schedule writeback only if zram is being enabled.
-            if (desiredPropertyValue.equals("1")
-                    && mContext.getResources().getBoolean(
-                        com.android.internal.R.bool.config_zramWriteback)) {
-                ZramWriteback.scheduleZramWriteback(mContext);
-            }
         }
     }
 
