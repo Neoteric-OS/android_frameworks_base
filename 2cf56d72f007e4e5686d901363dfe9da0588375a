@@ -50,6 +50,29 @@
       ],
       "revId": "2cf56d72f007e4e5686d901363dfe9da0588375a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86f8dbae_8fefcc7c",
+        "filename": "services/core/java/com/android/server/wm/SurfaceAnimationRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-11-14T18:32:53Z",
+      "side": 1,
+      "message": "I don\u0027t think these checks should be necessary. From the bug, it seems more-likely that there is a synchronization issue with the dimlayer animations that should be fixed instead.",
+      "range": {
+        "startLine": 315,
+        "startChar": 24,
+        "endLine": 315,
+        "endChar": 63
+      },
+      "revId": "2cf56d72f007e4e5686d901363dfe9da0588375a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
