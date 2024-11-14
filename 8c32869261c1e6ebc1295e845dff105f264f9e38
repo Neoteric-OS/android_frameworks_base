@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "930aa601_7aaa96a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2024-11-14T19:01:39Z",
+      "side": 1,
+      "message": "Why do you need two flags for afl?  You\u0027ll need to handle their dependency.  Do you need to roll out two changes separately?",
+      "revId": "8c32869261c1e6ebc1295e845dff105f264f9e38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
