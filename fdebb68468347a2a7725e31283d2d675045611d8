@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9862884_61d7af65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2024-11-14T09:16:40Z",
+      "side": 1,
+      "message": "Is there a bug and a flag for this? This seems like a somewhat risky change.",
+      "revId": "fdebb68468347a2a7725e31283d2d675045611d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
