@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f933a44a_6f854136",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-11-14T16:43:35Z",
+      "side": 0,
+      "message": "Nit, we\u0027re probably going to just add this back in a month, right?",
+      "range": {
+        "startLine": 125,
+        "startChar": 56,
+        "endLine": 125,
+        "endChar": 68
+      },
+      "revId": "6cc7c9df3aa08ef16efe880fe71fc5c0bf4d21b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
