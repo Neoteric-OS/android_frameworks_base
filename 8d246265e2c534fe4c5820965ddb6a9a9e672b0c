@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1611a2fa_6cb5f601",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-14T00:11:31Z",
+      "side": 1,
+      "message": "This is essentially a boolean.  It doesn\u0027t provide the caller with any information as to why this failed.",
+      "range": {
+        "startLine": 767,
+        "startChar": 5,
+        "endLine": 767,
+        "endChar": 15
+      },
+      "revId": "8d246265e2c534fe4c5820965ddb6a9a9e672b0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9daaa204_2e97597e",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-14T00:11:31Z",
+      "side": 1,
+      "message": "What starts a routing table change?  It isn\u0027t clear where you\u0027d use this?  Ie what is the precondition to calling it?  When would the routing table commit normally?",
+      "range": {
+        "startLine": 768,
+        "startChar": 15,
+        "endLine": 768,
+        "endChar": 38
+      },
+      "revId": "8d246265e2c534fe4c5820965ddb6a9a9e672b0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
