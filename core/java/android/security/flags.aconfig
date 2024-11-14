@@ -128,3 +128,11 @@ flag {
     description: "Feature flag for exposing KeyStore grant APIs"
     bug: "351158708"
 }
+
+flag {
+    name: "afl_inc_impl"
+    namespace: "hardware_backed_security"
+    description: "For the incremental implementaiton of the AFL feature."
+    bug: "365994454"
+}
+
