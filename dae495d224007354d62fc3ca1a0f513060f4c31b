@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cada2707_131f5aa7",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6885,
+      "author": {
+        "id": 1961565
+      },
+      "writtenOn": "2024-11-14T18:02:07Z",
+      "side": 1,
+      "message": "Should this use the same value as in `WindowManagerService`?",
+      "revId": "dae495d224007354d62fc3ca1a0f513060f4c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "974b90f0_94bee31c",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1961565
+      },
+      "writtenOn": "2024-11-14T18:02:07Z",
+      "side": 1,
+      "message": "With multiple displays we needed more than the alotted 2s for everything to be completed as we noticed it was always timing out and unfreezing too early.\nIf Google wishes to leave it at 2000 I could change it to a `config_...` type resource.",
+      "revId": "dae495d224007354d62fc3ca1a0f513060f4c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
