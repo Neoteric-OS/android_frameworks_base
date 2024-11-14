@@ -286,14 +286,19 @@ class SurfaceAnimationRunner {
         anim.setDuration(a.mAnimSpec.getDuration());
         anim.addUpdateListener(animation -> {
             synchronized (mCancelLock) {
-                if (!a.mCancelled) {
-                    final long duration = anim.getDuration();
-                    long currentPlayTime = anim.getCurrentPlayTime();
-                    if (currentPlayTime > duration) {
-                        currentPlayTime = duration;
-                    }
-                    applyTransformation(a, mFrameTransaction, currentPlayTime);
+                if (a.mCancelled) {
+                    return;
                 }
+                if (null == a.mLeash || !a.mLeash.isValid()) {
+                    Log.e(TAG, "onAnimationUpdate: animation leash " + a.mLeash + " is not valid!");
+                    return;
+                }
+                final long duration = anim.getDuration();
+                long currentPlayTime = anim.getCurrentPlayTime();
+                if (currentPlayTime > duration) {
+                    currentPlayTime = duration;
+                }
+                applyTransformation(a, mFrameTransaction, currentPlayTime);
             }
 
             // Transaction will be applied in the commit phase.
@@ -304,11 +309,16 @@ class SurfaceAnimationRunner {
             @Override
             public void onAnimationStart(Animator animation) {
                 synchronized (mCancelLock) {
-                    if (!a.mCancelled) {
-                        // TODO: change this back to use show instead of alpha when b/138459974 is
-                        // fixed.
-                        mFrameTransaction.setAlpha(a.mLeash, 1);
+                    if (a.mCancelled) {
+                        return;
                     }
+                    if (null == a.mLeash || !a.mLeash.isValid()) {
+                        Log.e(TAG, "onAnimationStart: animation leash " + a.mLeash + " is not valid!");
+                        return;
+                    }
+                    // TODO: change this back to use show instead of alpha when b/138459974 is
+                    // fixed.
+                    mFrameTransaction.setAlpha(a.mLeash, 1);
                 }
             }
 
