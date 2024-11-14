@@ -22,6 +22,30 @@
       },
       "revId": "6cc7c9df3aa08ef16efe880fe71fc5c0bf4d21b8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8d20b4d_60cfe732",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-11-14T17:00:57Z",
+      "side": 0,
+      "message": "I agree. Let\u0027s just keep them.",
+      "parentUuid": "f933a44a_6f854136",
+      "range": {
+        "startLine": 125,
+        "startChar": 56,
+        "endLine": 125,
+        "endChar": 68
+      },
+      "revId": "6cc7c9df3aa08ef16efe880fe71fc5c0bf4d21b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
