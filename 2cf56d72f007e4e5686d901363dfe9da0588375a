@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "349fc8af_c3051d4c",
+        "filename": "services/core/java/com/android/server/wm/SurfaceAnimationRunner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1972759
+      },
+      "writtenOn": "2024-11-14T17:03:20Z",
+      "side": 1,
+      "message": "nit: `a.mLeash \u003d\u003d null` to be consistent with other checks in this file",
+      "range": {
+        "startLine": 292,
+        "startChar": 20,
+        "endLine": 292,
+        "endChar": 36
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5b33986d_2c892b23",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/wm/SurfaceAnimationRunner.java",
+              "range": {
+                "startLine": 292,
+                "startChar": 0,
+                "endLine": 293,
+                "endChar": 0
+              },
+              "replacement": "                if (a.mLeash \u003d\u003d null || !a.mLeash.isValid()) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/wm/SurfaceAnimationRunner.java",
+              "range": {
+                "startLine": 315,
+                "startChar": 0,
+                "endLine": 316,
+                "endChar": 0
+              },
+              "replacement": "                    if (a.mLeash \u003d\u003d null || !a.mLeash.isValid()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "2cf56d72f007e4e5686d901363dfe9da0588375a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
