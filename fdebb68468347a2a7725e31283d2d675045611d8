@@ -16,6 +16,24 @@
       "message": "Is there a bug and a flag for this? This seems like a somewhat risky change.",
       "revId": "fdebb68468347a2a7725e31283d2d675045611d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1b53922_6384ffb6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115178
+      },
+      "writtenOn": "2024-11-14T15:19:28Z",
+      "side": 1,
+      "message": "I filed b/379071663 with more detail, but this will be disabled by default for now.\n\nTamas, can you add \"Bug: 379071663\" to the commit message for this and the other CLs to help tracking on our end? Thanks!",
+      "parentUuid": "f9862884_61d7af65",
+      "revId": "fdebb68468347a2a7725e31283d2d675045611d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
