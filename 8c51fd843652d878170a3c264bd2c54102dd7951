@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8b85d8b_6335cd63",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-15T21:30:38Z",
+      "side": 1,
+      "message": "go/android-api-guidelines#return-error",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 60
+      },
+      "revId": "8c51fd843652d878170a3c264bd2c54102dd7951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c97e52c_6e47f98d",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-15T21:30:38Z",
+      "side": 1,
+      "message": "Docs don\u0027t match return value.",
+      "range": {
+        "startLine": 608,
+        "startChar": 16,
+        "endLine": 608,
+        "endChar": 63
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a44dcd06_ae5d75f8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 608,
+                "startChar": 0,
+                "endLine": 609,
+                "endChar": 0
+              },
+              "replacement": "     * @return {@link PollingStateChangeStatusCode} indicating the status of the operation\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 620,
+                "startChar": 0,
+                "endLine": 621,
+                "endChar": 0
+              },
+              "replacement": "     * @return {@link PollingStateChangeStatusCode} indicating the status of the operation\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8c51fd843652d878170a3c264bd2c54102dd7951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
