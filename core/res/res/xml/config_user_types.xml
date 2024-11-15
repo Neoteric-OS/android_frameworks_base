@@ -113,5 +113,10 @@ The 'change-user-type' tag should be used in conjunction with the 'version' prop
 type, if the former 'user-type's version of device is less than or equal to 'whenVersionLeq'.
 
 -->
-<user-types>
+<user-types version='0'>
+    <!-- see https://source.android.com/docs/devices/admin/custom-user-types -->
+    <profile-type
+        name='android.os.usertype.profile.MANAGED'
+        max-allowed-per-parent='7' >
+    </profile-type>
 </user-types>
