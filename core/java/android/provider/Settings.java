@@ -13696,6 +13696,12 @@ public final class Settings {
          * @hide
          */
         public static final String BERRY_BLACK_THEME = "berry_black_theme";
+
+	/**
+         * Boolean value whether activate keyguard affordance shortcuts on short press
+         * @hide
+         */
+        public static final String KEYGUARD_AFFORDANCE_SINGLE_TAP = "keyguard_affordance_single_tap";
     }
 
     /**
