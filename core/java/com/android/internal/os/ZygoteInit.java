@@ -60,6 +60,9 @@ import com.android.internal.util.Preconditions;
 import dalvik.system.VMRuntime;
 import dalvik.system.ZygoteHooks;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import libcore.io.IoUtils;
 
 import java.io.BufferedReader;
@@ -67,6 +70,7 @@ import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.SequenceInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -103,10 +107,10 @@ public class ZygoteInit {
     // --usap-socket-name parameter.
     private static final String SOCKET_NAME_ARG = "--socket-name=";
 
-    /**
-     * The path of a file that contains classes to preload.
-     */
-    private static final String PRELOADED_CLASSES = "/system/etc/preloaded-classes";
+    /** The paths of files that contain classes to preload. */
+    private static final List<String> PRELOADED_CLASSES_PATHS = List.of(
+        "/system/etc/preloaded-classes",
+        "/apex/com.android.art/etc/preloaded-classes");
 
     private static final int UNPRIVILEGED_UID = 9999;
     private static final int UNPRIVILEGED_GID = 9999;
@@ -262,13 +266,22 @@ public class ZygoteInit {
     private static void preloadClasses() {
         final VMRuntime runtime = VMRuntime.getRuntime();
 
-        InputStream is;
-        try {
-            is = new FileInputStream(PRELOADED_CLASSES);
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "Couldn't find " + PRELOADED_CLASSES + ".");
+        List<InputStream> inputStreams = PRELOADED_CLASSES_PATHS.stream()
+            .flatMap(path -> {
+            try {
+                return Stream.of(new FileInputStream(path));
+            } catch (FileNotFoundException e) {
+                Log.e(TAG, "Couldn't find " + path + ".");
+                return Stream.empty();
+            }
+        }).collect(Collectors.toList());
+
+        if(inputStreams.isEmpty()) {
+            Log.w(TAG, "No classes to preload found.");
             return;
         }
+        InputStream is =
+            new SequenceInputStream(Collections.enumeration(inputStreams));
 
         Log.i(TAG, "Preloading classes...");
         long startTime = SystemClock.uptimeMillis();
@@ -344,7 +357,7 @@ public class ZygoteInit {
                 Log.i(TAG, "Unresolved lambda preloads: " + missingLambdaCount);
             }
         } catch (IOException e) {
-            Log.e(TAG, "Error reading " + PRELOADED_CLASSES + ".", e);
+            Log.e(TAG, "Error reading " + PRELOADED_CLASSES_PATHS + ".", e);
         } finally {
             IoUtils.closeQuietly(is);
 

@@ -244,3 +244,15 @@ java_genrule { // This module exists to make the srcjar output available to Make
 platform_systemserverclasspath {
     name: "platform-systemserverclasspath",
 }
+
+prebuilt_etc {
+    name: "preloaded-classes",
+    src: "preloaded-classes",
+    filename: "preloaded-classes",
+    no_full_install: true,
+}
+
+filegroup {
+    name: "preloaded-classes-denylist",
+    srcs: ["preloaded-classes-denylist"],
+}
