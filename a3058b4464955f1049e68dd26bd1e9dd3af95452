@@ -16,6 +16,24 @@
       "message": "features needs to be sorted to avoid re-analysis every(ish) build.\n\nGiven how features is created, you could just sort it after this for loop completes, or you could sort the key names first, and then create features iterating over the sorted keys.",
       "revId": "a3058b4464955f1049e68dd26bd1e9dd3af95452",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "472fb209_472248ba",
+        "filename": "tools/systemfeatures/system_features.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-11-15T01:07:08Z",
+      "side": 1,
+      "message": "Updated and inlined the filtering logic.",
+      "parentUuid": "b4d55b6a_7c91b07b",
+      "revId": "a3058b4464955f1049e68dd26bd1e9dd3af95452",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
