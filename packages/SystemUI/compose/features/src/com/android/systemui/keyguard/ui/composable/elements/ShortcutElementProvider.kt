@@ -425,7 +425,7 @@ constructor(
     ): Modifier {
         var isTouchInput = true
 
-        return if (quickAffordanceViewModel.useLongPress) {
+        return if (quickAffordanceViewModel.useLongPress && !quickAffordanceViewModel.singleTap) {
             this.pointerInput(Unit) {
                     awaitPointerEventScope {
                         while (true) {
@@ -489,8 +489,11 @@ constructor(
                     )
                 }
         } else {
-            this.clickable {
+            this.clickable(enabled = quickAffordanceViewModel.isClickable) {
                 if (!falsingManager.isFalseTap(FalsingManager.LOW_PENALTY)) {
+                    hapticsViewModel.onQuickAffordanceLongPress(
+                        quickAffordanceViewModel.isActivated
+                    )
                     triggerQuickAffordance(quickAffordanceViewModel, expandable)
                 }
             }

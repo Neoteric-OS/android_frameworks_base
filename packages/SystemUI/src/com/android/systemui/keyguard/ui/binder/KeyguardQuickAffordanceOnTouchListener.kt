@@ -51,7 +51,7 @@ class KeyguardQuickAffordanceOnTouchListener(
             MotionEvent.ACTION_DOWN -> {
                 if (viewModel.configKey != null) {
                     downDisplayCoords.set(event.rawX, event.rawY)
-                    if (isUsingAccurateTool(event)) {
+                    if (isUsingAccurateTool(event) || viewModel.singleTap) {
                         // For accurate tool types (stylus, mouse, etc.), we don't require a
                         // long-press.
                     } else {
@@ -85,16 +85,17 @@ class KeyguardQuickAffordanceOnTouchListener(
                 if (falsingManager?.isFalseTap(FalsingManager.NO_PENALTY) == true) {
                     return false
                 }
-                if (isUsingAccurateTool(event)) {
+                if (isUsingAccurateTool(event) || viewModel.singleTap) {
                     // When using an accurate tool type (stylus, mouse, etc.), we don't require
                     // a long-press gesture to activate the quick affordance. Therefore, lifting
                     // the pointer performs a click.
+                    val configKey = viewModel.configKey
                     if (
-                        viewModel.configKey != null &&
-                            event.rawDistanceFrom(downDisplayCoords.x, downDisplayCoords.y) <=
-                                ViewConfiguration.getTouchSlop()
+                        configKey != null &&
+                            (event.rawDistanceFrom(downDisplayCoords.x, downDisplayCoords.y) <=
+                                ViewConfiguration.getTouchSlop() || viewModel.singleTap)
                     ) {
-                        dispatchClick(viewModel.configKey)
+                        dispatchClick(configKey)
                     }
                 } else {
                     // When not using a stylus, lifting the finger/pointer will actually cancel

@@ -17,6 +17,11 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
+import android.content.Context
+import android.database.ContentObserver
+import android.os.UserHandle
+import android.provider.Settings
+
 import androidx.annotation.VisibleForTesting
 import com.android.app.tracing.FlowTracing.traceEmissionCount
 import com.android.compose.animation.scene.ContentKey
@@ -37,9 +42,12 @@ import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import com.android.systemui.shared.keyguard.shared.model.KeyguardQuickAffordanceSlots
 import com.android.systemui.util.kotlin.BooleanFlowOperators.anyOf
+import com.android.systemui.util.kotlin.combine
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import com.android.systemui.utils.coroutines.flow.flatMapLatestConflated
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -56,6 +64,7 @@ class KeyguardQuickAffordancesCombinedViewModel
 constructor(
     @Application private val applicationScope: CoroutineScope,
     private val quickAffordanceInteractor: KeyguardQuickAffordanceInteractor,
+    private var context: Context,
     private val keyguardInteractor: KeyguardInteractor,
     shadeInteractor: ShadeInteractor,
     aodToLockscreenTransitionViewModel: AodToLockscreenTransitionViewModel,
@@ -275,6 +284,26 @@ constructor(
         previewMode.value = newPreviewMode
     }
 
+    private val singleTapEnabled: Flow<Boolean> =
+        conflatedCallbackFlow {
+            val observer =
+                object : ContentObserver(null) {
+                    override fun onChange(selfChange: Boolean) {
+                        trySend(useSingleTap())
+                    }
+                }
+            context.contentResolver.registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.KEYGUARD_AFFORDANCE_SINGLE_TAP),
+                false,
+                observer,
+                UserHandle.USER_ALL,
+            )
+            trySend(useSingleTap())
+            awaitClose {
+                context.contentResolver.unregisterContentObserver(observer)
+            }
+        }.distinctUntilChanged()
+
     private fun button(
         position: KeyguardQuickAffordancePosition,
         overrideQuickAffordanceId: String? = null,
@@ -294,7 +323,8 @@ constructor(
                         areQuickAffordancesFullyOpaque,
                         selectedPreviewSlotId,
                         quickAffordanceInteractor.useLongPress(),
-                    ) { model, animateReveal, isFullyOpaque, selectedPreviewSlotId, useLongPress ->
+                        singleTapEnabled,
+                    ) { model, animateReveal, isFullyOpaque, selectedPreviewSlotId, useLongPress, singleTap ->
                         val slotId = position.toSlotId()
                         val isSelected = selectedPreviewSlotId == slotId
                         model.toViewModel(
@@ -311,6 +341,7 @@ constructor(
                             forceInactive = previewMode.isInPreviewMode,
                             slotId = slotId,
                             useLongPress = useLongPress,
+                            singleTap = singleTap,
                         )
                     }
                     .distinctUntilChanged()
@@ -326,6 +357,7 @@ constructor(
         forceInactive: Boolean,
         slotId: String,
         useLongPress: Boolean,
+        singleTap: Boolean,
     ): KeyguardQuickAffordanceViewModel {
         return when (this) {
             is KeyguardQuickAffordanceModel.Visible ->
@@ -347,6 +379,7 @@ constructor(
                     useLongPress = useLongPress,
                     isDimmed = isDimmed,
                     slotId = slotId,
+                    singleTap = singleTap,
                 )
             is KeyguardQuickAffordanceModel.Hidden ->
                 KeyguardQuickAffordanceViewModel(slotId = slotId)
@@ -360,6 +393,15 @@ constructor(
         } else {
             icon
         }
+
+    fun useSingleTap(): Boolean {
+        return Settings.Secure.getIntForUser(
+            context.contentResolver,
+            Settings.Secure.KEYGUARD_AFFORDANCE_SINGLE_TAP,
+            0,
+            UserHandle.USER_CURRENT,
+        ) == 1
+    }
 
     companion object {
         // We select a value that's less than 1.0 because we want floating point math precision to
