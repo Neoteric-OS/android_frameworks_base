@@ -42,6 +42,7 @@ class SelinuxAuditLogsCollector {
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     private static final String SELINUX_PATTERN = "^.*\\bavc:\\s+(?<denial>.*)$";
+    private static final int MAX_LOG_QUEUE_SIZE = 50000;
 
     @VisibleForTesting
     static final Matcher SELINUX_MATCHER = Pattern.compile(SELINUX_PATTERN).matcher("");
@@ -102,6 +103,11 @@ class SelinuxAuditLogsCollector {
             if (!(eventData instanceof String)) {
                 continue;
             }
+
+            if (logLines.size() >= MAX_LOG_QUEUE_SIZE) {
+                logLines.poll();
+            }
+
             logLines.add(event);
         }
         return latestTimestamp;
