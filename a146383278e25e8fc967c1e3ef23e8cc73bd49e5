@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d109ca45_7c512eb7",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-15T17:20:05Z",
+      "side": 1,
+      "message": "Got it. I\u0027ll dig into the exact technical cause of the hardware error and try to surface the details based on that. This error was already being reported up to the framework, just not exposed to consumers, so I\u0027m not entirely sure what triggers it.\n\nThese error codes are largely intended for debugging and metrics rather than things that an app will directly act on (which is why they\u0027re all bundled together as a single callback). The NFC stack automatically handles the action (which is usually just restarting), but this provides visibility into these changes which may impact the performance of NFC for the consuming application.",
+      "parentUuid": "682d95d3_505c12fa",
+      "range": {
+        "startLine": 1086,
+        "startChar": 4,
+        "endLine": 1102,
+        "endChar": 67
+      },
+      "revId": "a146383278e25e8fc967c1e3ef23e8cc73bd49e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a71af353_9f331b0c",
         "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
         "patchSetId": 34
@@ -54,6 +78,30 @@
       "writtenOn": "2024-11-15T16:55:42Z",
       "side": 1,
       "message": "nit: isDetected?",
+      "range": {
+        "startLine": 1171,
+        "startChar": 50,
+        "endLine": 1171,
+        "endChar": 61
+      },
+      "revId": "a146383278e25e8fc967c1e3ef23e8cc73bd49e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca1cd4e4_99a6436a",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-15T17:20:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a71af353_9f331b0c",
       "range": {
         "startLine": 1171,
         "startChar": 50,
