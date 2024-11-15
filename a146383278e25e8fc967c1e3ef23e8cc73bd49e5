@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b1fc782_97e56e31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 34
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-15T16:55:42Z",
+      "side": 1,
+      "message": "Just a few minor docs nits; up to you if you want to fix them.",
+      "revId": "a146383278e25e8fc967c1e3ef23e8cc73bd49e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "682d95d3_505c12fa",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-15T16:55:42Z",
+      "side": 1,
+      "message": "Given these are public, it would be useful if the hardware error was documented.  Is there a recommended action the user should take based on these errors?  Ie is the error temporary or permanent, should they retry, when?  \n\nThose are mainly docs comments; up to you if you want to do more there.",
+      "range": {
+        "startLine": 1086,
+        "startChar": 4,
+        "endLine": 1102,
+        "endChar": 67
+      },
+      "revId": "a146383278e25e8fc967c1e3ef23e8cc73bd49e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a71af353_9f331b0c",
+        "filename": "nfc/java/android/nfc/cardemulation/CardEmulation.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-15T16:55:42Z",
+      "side": 1,
+      "message": "nit: isDetected?",
+      "range": {
+        "startLine": 1171,
+        "startChar": 50,
+        "endLine": 1171,
+        "endChar": 61
+      },
+      "revId": "a146383278e25e8fc967c1e3ef23e8cc73bd49e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
