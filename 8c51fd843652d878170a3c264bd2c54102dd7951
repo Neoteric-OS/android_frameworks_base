@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea4bb9c5_43c76124",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-15T22:23:15Z",
+      "side": 1,
+      "message": "Done. Removed the generic failed and instead throwing an Illegal arg exception.",
+      "parentUuid": "a8b85d8b_6335cd63",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 60
+      },
+      "revId": "8c51fd843652d878170a3c264bd2c54102dd7951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c97e52c_6e47f98d",
@@ -71,6 +95,30 @@
           ]
         }
       ],
+      "revId": "8c51fd843652d878170a3c264bd2c54102dd7951",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d96bfae7_8a42aada",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-15T22:23:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c97e52c_6e47f98d",
+      "range": {
+        "startLine": 608,
+        "startChar": 16,
+        "endLine": 608,
+        "endChar": 63
+      },
       "revId": "8c51fd843652d878170a3c264bd2c54102dd7951",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
