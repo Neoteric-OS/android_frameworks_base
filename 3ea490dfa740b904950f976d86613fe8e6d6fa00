@@ -16,6 +16,24 @@
       "message": "The list of sensors does not change after initialization.\n\nRather than make every access synchronized I think it would be better to create them all during initialization. Alternatively, using something like a concurrenthashmap may be better than class-level locks?",
       "revId": "3ea490dfa740b904950f976d86613fe8e6d6fa00",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "879c7a8c_9b4ee6d1",
+        "filename": "services/core/java/com/android/server/biometrics/sensors/PerformanceTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-11-15T03:32:59Z",
+      "side": 1,
+      "message": "Yes ,I agree with your point of view. Using concurrenthashmap is more efficient than using synchronized, especially in scenarios where read operations are frequent. I have modified the fix according to your suggestion and verified it locally. Please review it again.\nThanks.",
+      "parentUuid": "726ca537_1cd3df68",
+      "revId": "3ea490dfa740b904950f976d86613fe8e6d6fa00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
