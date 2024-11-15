@@ -1,0 +1,66 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a5961ef_4a121d63",
+        "filename": "services/core/java/com/android/server/biometrics/sensors/PerformanceTracker.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2024-11-15T19:41:28Z",
+      "side": 1,
+      "message": "To make this a little safer let\u0027s remove the lazy initialization and move this up. i.e. `sTrackers \u003d new Concurrent...`",
+      "revId": "8a952bb9fa62dada03c87e1aa9e7a333814180f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "742a9c58_f7c124a3",
+        "filename": "services/core/java/com/android/server/biometrics/sensors/PerformanceTracker.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2024-11-15T19:41:28Z",
+      "side": 1,
+      "message": "I think there is an atomic version of this `putIfAbsent`?",
+      "fixSuggestions": [
+        {
+          "fixId": "a45528d9_e7a83152",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/biometrics/sensors/PerformanceTracker.java",
+              "range": {
+                "startLine": 21,
+                "startChar": 0,
+                "endLine": 21,
+                "endChar": 0
+              },
+              "replacement": "import java.util.concurrent.ConcurrentHashMap;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/biometrics/sensors/PerformanceTracker.java",
+              "range": {
+                "startLine": 37,
+                "startChar": 0,
+                "endLine": 41,
+                "endChar": 0
+              },
+              "replacement": "        return sTrackers.putIfAbsent(sensorId, new PerformanceTracker());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8a952bb9fa62dada03c87e1aa9e7a333814180f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
