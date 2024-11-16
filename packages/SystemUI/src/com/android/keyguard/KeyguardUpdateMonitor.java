@@ -2698,9 +2698,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
      */
     public boolean isUserUnlocked(int userId) {
         if (Flags.userEncryptedSource()) {
-            boolean userStorageUnlocked = mUserManager.isUserUnlocked(userId);
-            mLogger.logUserStorageUnlocked(userId, userStorageUnlocked);
-            return userStorageUnlocked;
+            return mUserManager.isUserUnlocked(userId);
         } else {
             return mUserIsUnlocked.get(userId);
         }
