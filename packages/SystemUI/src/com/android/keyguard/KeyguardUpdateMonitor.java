@@ -121,6 +121,7 @@ import com.android.settingslib.WirelessUtils;
 import com.android.settingslib.fuelgauge.BatteryStatus;
 import com.android.systemui.CoreStartable;
 import com.android.systemui.Dumpable;
+import com.android.systemui.Flags;
 import com.android.systemui.biometrics.AuthController;
 import com.android.systemui.biometrics.FingerprintInteractiveToAuthProvider;
 import com.android.systemui.bouncer.domain.interactor.AlternateBouncerInteractor;
@@ -475,6 +476,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         }
     }
 
+    @Deprecated
     private final SparseBooleanArray mUserIsUnlocked = new SparseBooleanArray();
     private final SparseBooleanArray mUserHasTrust = new SparseBooleanArray();
     private final SparseBooleanArray mUserTrustIsManaged = new SparseBooleanArray();
@@ -2695,7 +2697,13 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
      * @see Intent#ACTION_USER_UNLOCKED
      */
     public boolean isUserUnlocked(int userId) {
-        return mUserIsUnlocked.get(userId);
+        if (Flags.userEncryptedSource()) {
+            boolean userStorageUnlocked = mUserManager.isUserUnlocked(userId);
+            mLogger.logUserStorageUnlocked(userId, userStorageUnlocked);
+            return userStorageUnlocked;
+        } else {
+            return mUserIsUnlocked.get(userId);
+        }
     }
 
     /**
@@ -4307,7 +4315,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         pw.println("    strongAuthFlags=" + Integer.toHexString(strongAuthFlags));
         pw.println("ActiveUnlockRunning="
                 + mTrustManager.isActiveUnlockRunning(mSelectedUserInteractor.getSelectedUserId()));
-        pw.println("userUnlockedCache[userid=" + userId + "]=" + isUserUnlocked(userId));
+        pw.println("userUnlockedCache[userid=" + userId + "]=" + mUserIsUnlocked.get(userId));
         pw.println("actualUserUnlocked[userid=" + userId + "]="
                 + mUserManager.isUserUnlocked(userId));
         new DumpsysTableLogger(

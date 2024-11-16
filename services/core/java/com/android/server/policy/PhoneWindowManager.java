@@ -3438,6 +3438,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     @Override
     public KeyboardShortcutGroup getApplicationLaunchKeyboardShortcuts(int deviceId) {
+        if (useKeyGestureEventHandler()) {
+            return mModifierShortcutManager.getApplicationLaunchKeyboardShortcuts(deviceId,
+                    mInputManager.getAppLaunchBookmarks());
+        }
         return mModifierShortcutManager.getApplicationLaunchKeyboardShortcuts(deviceId);
     }
 
@@ -4028,14 +4032,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean interceptSystemKeysAndShortcutsNew(IBinder focusedToken, KeyEvent event) {
         final int keyCode = event.getKeyCode();
         final int metaState = event.getMetaState();
-        final boolean keyguardOn = keyguardOn();
 
-        if (isUserSetupComplete() && !keyguardOn) {
-            if (mModifierShortcutManager.interceptKey(event)) {
-                dismissKeyboardShortcutsMenu();
-                return true;
-            }
-        }
         switch (keyCode) {
             case KeyEvent.KEYCODE_HOME:
                 return handleHomeShortcuts(focusedToken, event);
@@ -4777,6 +4774,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public void registerShortcutKey(long shortcutCode, IShortcutService shortcutService)
             throws RemoteException {
         synchronized (mLock) {
+            if (useKeyGestureEventHandler()) {
+                mInputManagerInternal.registerShortcutKey(shortcutCode, shortcutService);
+                return;
+            }
             mModifierShortcutManager.registerShortcutKey(shortcutCode, shortcutService);
         }
     }
