@@ -174,19 +174,10 @@ public final class RavenwoodConfig {
         }
 
         /**
-         * Configure the set of system services that are required for this test to operate.
-         *
-         * For example, passing {@code android.hardware.SerialManager.class} as an argument will
-         * ensure that the underlying service is created, initialized, and ready to use for the
-         * duration of the test. The {@code SerialManager} instance can be obtained via
-         * {@code RavenwoodRule.getContext()} and {@code Context.getSystemService()}, and
-         * {@code SerialManagerInternal} can be obtained via {@code LocalServices.getService()}.
+         * @deprecated Do not use
          */
+        @Deprecated
         public Builder setServicesRequired(@NonNull Class<?>... services) {
-            mConfig.mServicesRequired.clear();
-            for (Class<?> service : services) {
-                mConfig.mServicesRequired.add(service);
-            }
             return this;
         }
 

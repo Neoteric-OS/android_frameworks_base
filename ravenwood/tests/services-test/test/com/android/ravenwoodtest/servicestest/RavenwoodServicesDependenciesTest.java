@@ -18,6 +18,8 @@ package com.android.ravenwoodtest.servicestest;
 
 import static org.junit.Assert.assertEquals;
 
+import android.hardware.SerialManager;
+import android.platform.test.annotations.RavenwoodRequiredServices;
 import android.platform.test.ravenwood.RavenwoodRule;
 import android.ravenwood.example.BlueManager;
 import android.ravenwood.example.RedManager;
@@ -29,6 +31,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
+@RavenwoodRequiredServices({RedManager.class})
 public class RavenwoodServicesDependenciesTest {
     // NOTE: we carefully only ask for RedManager here, and rely on Ravenwood internals to spin
     // up the implicit dependency on BlueManager

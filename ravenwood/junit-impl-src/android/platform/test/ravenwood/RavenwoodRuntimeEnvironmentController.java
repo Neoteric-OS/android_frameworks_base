@@ -49,6 +49,7 @@ import android.os.Process_ravenwood;
 import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
 import android.os.SystemProperties;
+import android.platform.test.annotations.RavenwoodRequiredServices;
 import android.provider.DeviceConfig_host;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -67,12 +68,15 @@ import com.android.ravenwood.common.SneakyThrow;
 import com.android.server.LocalServices;
 import com.android.server.compat.PlatformCompat;
 
+import com.google.common.reflect.ClassPath;
 import org.junit.runner.Description;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -367,7 +371,8 @@ public class RavenwoodRuntimeEnvironmentController {
         config.mInstrumentation.basicInit(instContext, targetContext, createMockUiAutomation());
         InstrumentationRegistry.registerInstance(config.mInstrumentation, Bundle.EMPTY);
 
-        RavenwoodSystemServer.init(config);
+        var requiredServices = findRequiredServices();
+        RavenwoodSystemServer.init(config.mState.mSystemServerContext, requiredServices);
 
         initializeCompatIds(config);
 
@@ -434,7 +439,7 @@ public class RavenwoodRuntimeEnvironmentController {
             sPendingTimeout.cancel(false);
         }
 
-        RavenwoodSystemServer.reset(config);
+        RavenwoodSystemServer.reset();
 
         InstrumentationRegistry.registerInstance(null, Bundle.EMPTY);
         config.mInstrumentation = null;
@@ -587,5 +592,35 @@ public class RavenwoodRuntimeEnvironmentController {
             throw new IllegalArgumentException((write ? "Write" : "Read")
                     + " access to system property '" + key + "' denied via RavenwoodConfig");
         }
+    }
+
+    /**
+     * Iterate over all classes with {@link RavenwoodRequiredServices} and collect its values.
+     */
+    private static Collection<Class<?>> findRequiredServices() throws IOException {
+        var cp = ClassPath.from(RavenwoodRuntimeEnvironmentController.class.getClassLoader());
+
+
+        // Search all classes in the class path for ones with @RRS.
+        // This could (?) run class initializers of unrelated classes, which may have negative
+        // side effects. TODO: Consider collecting the information in Ravenizer instead.
+
+        var ret = new HashSet<Class<?>>();
+        for (var ci : cp.getAllClasses()) {
+            Class<?> clazz;
+            try {
+                clazz = ci.load();
+            } catch (Throwable e) {
+                continue;
+            }
+            var rrs = clazz.getAnnotation(RavenwoodRequiredServices.class);
+            if (rrs == null) {
+                continue;
+            }
+            for (var serviceClass : rrs.value()) {
+                ret.add(serviceClass);
+            }
+        }
+        return ret;
     }
 }
