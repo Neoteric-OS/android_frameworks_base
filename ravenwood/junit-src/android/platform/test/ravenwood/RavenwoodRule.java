@@ -23,6 +23,7 @@ import android.annotation.Nullable;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.platform.test.annotations.DisabledOnRavenwood;
+import android.platform.test.annotations.RavenwoodRequiredServices;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -172,16 +173,10 @@ public final class RavenwoodRule implements TestRule {
         }
 
         /**
-         * Configure the set of system services that are required for this test to operate.
-         *
-         * For example, passing {@code android.hardware.SerialManager.class} as an argument will
-         * ensure that the underlying service is created, initialized, and ready to use for the
-         * duration of the test. The {@code SerialManager} instance can be obtained via
-         * {@code RavenwoodRule.getContext()} and {@code Context.getSystemService()}, and
-         * {@code SerialManagerInternal} can be obtained via {@code LocalServices.getService()}.
+         * @deprecated no longer used. Use {@link RavenwoodRequiredServices} instead.
          */
+        @Deprecated
         public Builder setServicesRequired(@NonNull Class<?>... services) {
-            mBuilder.setServicesRequired(services);
             return this;
         }
 

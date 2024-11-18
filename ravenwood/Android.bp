@@ -91,6 +91,7 @@ java_library {
     ],
     static_libs: [
         "framework-annotations-lib", // should it be "libs" instead?
+        "guava",
     ],
     visibility: ["//visibility:private"],
 }
