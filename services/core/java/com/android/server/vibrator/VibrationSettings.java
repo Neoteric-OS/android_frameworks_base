@@ -236,7 +236,7 @@ final class VibrationSettings {
     public void onSystemReady() {
         PowerManagerInternal pm = LocalServices.getService(PowerManagerInternal.class);
         AudioManager am = mContext.getSystemService(AudioManager.class);
-        int ringerMode = am.getRingerModeInternal();
+        int ringerMode = (am == null) ? mRingerMode : am.getRingerModeInternal();
 
         synchronized (mLock) {
             mPowerManagerInternal = pm;
