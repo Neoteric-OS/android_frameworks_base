@@ -76,6 +76,8 @@ public interface DeviceIdleInternal {
 
     int[] getPowerSaveWhitelistUserAppIds();
 
+    int[] getPowerSaveWhitelistAllAppIds();
+
     int[] getPowerSaveTempWhitelistAppIds();
 
     @NonNull

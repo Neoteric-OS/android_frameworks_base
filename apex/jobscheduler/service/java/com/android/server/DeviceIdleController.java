@@ -2399,6 +2399,11 @@ public class DeviceIdleController extends SystemService
         }
 
         @Override
+        public int[] getPowerSaveWhitelistAllAppIds() {
+            return DeviceIdleController.this.getPowerSaveWhitelistAllAppIds();
+        }
+
+        @Override
         public int[] getPowerSaveTempWhitelistAppIds() {
             return DeviceIdleController.this.getAppIdTempWhitelistInternal();
         }
@@ -2615,6 +2620,12 @@ public class DeviceIdleController extends SystemService
     int[] getPowerSaveWhitelistUserAppIds() {
         synchronized (this) {
             return mPowerSaveWhitelistUserAppIdArray;
+        }
+    }
+
+    int[] getPowerSaveWhitelistAllAppIds() {
+        synchronized (this) {
+            return mPowerSaveWhitelistAllAppIdArray;
         }
     }
 
