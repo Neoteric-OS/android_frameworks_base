@@ -425,8 +425,12 @@ public class VibrationSettingsTest {
         setRingerMode(AudioManager.RINGER_MODE_SILENT);
 
         for (int usage : ALL_USAGES) {
-            if (usage == USAGE_RINGTONE || usage == USAGE_NOTIFICATION) {
-                assertVibrationIgnoredForUsage(usage, Vibration.Status.IGNORED_FOR_RINGER_MODE);
+            if (mAudioManagerMock != null) {
+                if (usage == USAGE_RINGTONE || usage == USAGE_NOTIFICATION) {
+                    assertVibrationIgnoredForUsage(usage, Vibration.Status.IGNORED_FOR_RINGER_MODE);
+                } else {
+                    assertVibrationNotIgnoredForUsage(usage);
+                }
             } else {
                 assertVibrationNotIgnoredForUsage(usage);
             }
@@ -593,11 +597,18 @@ public class VibrationSettingsTest {
         assertVibrationNotIgnoredForUsage(USAGE_RINGTONE);
 
         // Testing the broadcast flow manually.
-        when(mAudioManagerMock.getRingerModeInternal()).thenReturn(AudioManager.RINGER_MODE_SILENT);
+        if (mAudioManagerMock != null) {
+            when(mAudioManagerMock.getRingerModeInternal()).thenReturn(AudioManager.RINGER_MODE_SILENT);
+        }
         mVibrationSettings.mSettingChangeReceiver.onReceive(mContextSpy,
                 new Intent(AudioManager.INTERNAL_RINGER_MODE_CHANGED_ACTION));
 
-        assertVibrationIgnoredForUsage(USAGE_RINGTONE, Vibration.Status.IGNORED_FOR_RINGER_MODE);
+        if (mAudioManagerMock != null) {
+            assertVibrationIgnoredForUsage(USAGE_RINGTONE, Vibration.Status.IGNORED_FOR_RINGER_MODE);
+        } else {
+            // In the case where AudioManager is null, the default setting is NORMAL, so vibration will not be ignored
+            assertVibrationNotIgnoredForUsage(USAGE_RINGTONE);
+        }
     }
 
     @Test
@@ -997,7 +1008,10 @@ public class VibrationSettingsTest {
     }
 
     private void setRingerMode(int ringerMode) {
-        when(mAudioManagerMock.getRingerModeInternal()).thenReturn(ringerMode);
+        // Only update ringerMode if mAudioManagerMock is not null, else do nothing
+        if (mAudioManagerMock != null) {
+            when(mAudioManagerMock.getRingerModeInternal()).thenReturn(ringerMode);
+        }
         // Mock AudioManager broadcast of internal ringer mode change.
         mVibrationSettings.mSettingChangeReceiver.onReceive(mContextSpy,
                 new Intent(AudioManager.INTERNAL_RINGER_MODE_CHANGED_ACTION));
