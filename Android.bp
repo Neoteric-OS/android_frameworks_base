@@ -396,6 +396,7 @@ java_defaults {
         "ext",
         "framework-updatable-stubs-module_libs_api",
         "unsupportedappusage",
+        "aconfig_storage_stub",
     ],
     sdk_version: "core_platform",
     static_libs: [
