@@ -35,7 +35,7 @@ import com.android.systemui.util.mockito.kotlinArgumentCaptor
 import com.android.systemui.util.mockito.whenever
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.test.TestScope
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -64,7 +64,7 @@ class GuestUserInteractorTest : SysuiTestCase() {
 
     private lateinit var underTest: GuestUserInteractor
 
-    private lateinit var scope: TestCoroutineScope
+    private lateinit var scope: TestScope
     private lateinit var repository: FakeUserRepository
 
     @Before
@@ -72,7 +72,7 @@ class GuestUserInteractorTest : SysuiTestCase() {
         MockitoAnnotations.initMocks(this)
         whenever(manager.createGuest(any())).thenReturn(GUEST_USER_INFO)
 
-        scope = TestCoroutineScope()
+        scope = TestScope()
         repository = FakeUserRepository()
         repository.setUserInfos(ALL_USERS)
 
@@ -395,11 +395,7 @@ class GuestUserInteractorTest : SysuiTestCase() {
     companion object {
         private val IMMEDIATE = Dispatchers.Main.immediate
         private val NON_GUEST_USER_INFO =
-            UserInfo(
-                /* id= */ 818,
-                /* name= */ "non_guest",
-                /* flags= */ UserInfo.FLAG_FULL,
-            )
+            UserInfo(/* id= */ 818, /* name= */ "non_guest", /* flags= */ UserInfo.FLAG_FULL)
         private val GUEST_USER_INFO =
             UserInfo(
                 /* id= */ 669,
@@ -416,10 +412,6 @@ class GuestUserInteractorTest : SysuiTestCase() {
                 /* flags= */ UserInfo.FLAG_EPHEMERAL or UserInfo.FLAG_FULL,
                 UserManager.USER_TYPE_FULL_GUEST,
             )
-        private val ALL_USERS =
-            listOf(
-                NON_GUEST_USER_INFO,
-                GUEST_USER_INFO,
-            )
+        private val ALL_USERS = listOf(NON_GUEST_USER_INFO, GUEST_USER_INFO)
     }
 }
