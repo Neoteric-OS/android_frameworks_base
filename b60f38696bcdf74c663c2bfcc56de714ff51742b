@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ef9c4b8_f0f26f68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:08:56Z",
+      "side": 1,
+      "message": "@rpius@google.com please provide the lint error details",
+      "revId": "b60f38696bcdf74c663c2bfcc56de714ff51742b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
