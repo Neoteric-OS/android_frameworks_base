@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e45f0e5_9c0b3a10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2024-11-19T07:13:28Z",
+      "side": 1,
+      "message": "I think this is still a problem, maybe even worse with the flags being read only. Since the flags are read only, there\u0027s a high liklihood that they have different values in code compiled for the platform (e.g. compiled in 2024) and code compiled for a mainline module (e.g. compiled in 2028). Right?",
+      "range": {
+        "startLine": 11,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "c154f8d765fd4f71836f0b3f67dfe7870f1997be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
