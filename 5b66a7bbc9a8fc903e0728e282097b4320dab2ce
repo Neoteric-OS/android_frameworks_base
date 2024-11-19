@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff17c32b_26fe57dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-19T16:21:23Z",
+      "side": 1,
+      "message": "Hi Victor, I\u0027m talking to the owner mpgroover@ to see if his fine with exposing these APIs. Meanwhile, could you please take a quick look and provide some early feedback? Thanks!",
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
