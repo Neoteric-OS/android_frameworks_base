@@ -128,6 +128,30 @@
       },
       "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ff96098_0df928ef",
+        "filename": "services/core/java/com/android/server/vibrator/VibrationSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-11-19T17:48:00Z",
+      "side": 1,
+      "message": "Thanks! Please also update the unit tests at `VibrationSettingsTest` to cover these scenarios.",
+      "parentUuid": "3f30a1e6_3b82b4c6",
+      "range": {
+        "startLine": 239,
+        "startChar": 54,
+        "endLine": 239,
+        "endChar": 56
+      },
+      "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
