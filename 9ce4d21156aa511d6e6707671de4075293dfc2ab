@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67c08eda_414e2348",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-11-19T18:16:25Z",
+      "side": 1,
+      "message": "Trimmed the frameworks/base change to just switch to the new rule now in `build/soong`. PTAL.",
+      "revId": "9ce4d21156aa511d6e6707671de4075293dfc2ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
