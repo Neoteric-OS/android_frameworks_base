@@ -16,6 +16,24 @@
       "message": "@rpius@google.com please provide the lint error details",
       "revId": "b60f38696bcdf74c663c2bfcc56de714ff51742b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "307c09a0_e93702f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-19T19:45:58Z",
+      "side": 1,
+      "message": "Addressed it.",
+      "parentUuid": "7ef9c4b8_f0f26f68",
+      "revId": "b60f38696bcdf74c663c2bfcc56de714ff51742b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
