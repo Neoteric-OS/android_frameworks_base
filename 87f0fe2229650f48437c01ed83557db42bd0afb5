@@ -104,6 +104,30 @@
       },
       "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f30a1e6_3b82b4c6",
+        "filename": "services/core/java/com/android/server/vibrator/VibrationSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-11-19T15:10:48Z",
+      "side": 1,
+      "message": "Hi Lais, Done. Updated the initialization of mRingerMode, and ensured that updateRingerMode sets ringerMode to NORMAL (same as initialization) so that vibrations are not always disabled.",
+      "parentUuid": "1799c016_93e27114",
+      "range": {
+        "startLine": 239,
+        "startChar": 54,
+        "endLine": 239,
+        "endChar": 56
+      },
+      "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
