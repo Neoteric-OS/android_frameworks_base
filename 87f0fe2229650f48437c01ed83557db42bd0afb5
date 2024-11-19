@@ -56,6 +56,30 @@
       },
       "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a42cdcb5_771bf8de",
+        "filename": "services/core/java/com/android/server/vibrator/VibrationSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-11-19T10:57:56Z",
+      "side": 1,
+      "message": "Hi Lais, thanks for the quick response. \n\nSo the reason that audio manager is not available on system is that there are cases where various developers/partners would want to disable certain system services as they are not required for that specific Android device. So in some cases we disable the AudioManager Service to make it more lightweight, which from what we have observed, this nullifies this value on system ready. Therefore, it is a more graceful way of handling this scenario by checking if it is null or not and acting accordingly.\n\nAnd regarding using ```AudioManagerInternal``` instead, correct me if my understanding is incorrect please, but I don\u0027t believe it will be any more beneficial to change to it. As from what I know, both of them have the getRingerModeInternal() method, however ```AudioManagerInternal``` is just an interface to provide access to extra functionality, which is not needed in this case.",
+      "parentUuid": "66ecc098_c3e47cac",
+      "range": {
+        "startLine": 239,
+        "startChar": 54,
+        "endLine": 239,
+        "endChar": 56
+      },
+      "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
