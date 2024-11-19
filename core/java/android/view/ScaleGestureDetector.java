@@ -22,6 +22,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
+import android.os.SystemProperties;
 
 /**
  * Detects scaling transformation gestures using the supplied {@link MotionEvent}s.
@@ -222,10 +223,13 @@ public class ScaleGestureDetector {
     public ScaleGestureDetector(@NonNull Context context, @NonNull int spanSlop,
             @NonNull int minSpan, @Nullable Handler handler,
             @NonNull OnScaleGestureListener listener) {
+        int spanSlopOverride = SystemProperties.getInt("ggchien.spanSlop", -1);
+        int minSpanOverride = SystemProperties.getInt("ggchien.minSpan", -1);
+
         mContext = context;
         mListener = listener;
-        mSpanSlop = spanSlop;
-        mMinSpan = minSpan;
+        mSpanSlop = spanSlopOverride > 0 ? spanSlopOverride : spanSlop;
+        mMinSpan = minSpanOverride > 0 ? minSpanOverride : minSpan;
         mHandler = handler;
         // Quick scale is enabled by default after JB_MR2
         final int targetSdkVersion = context.getApplicationInfo().targetSdkVersion;
