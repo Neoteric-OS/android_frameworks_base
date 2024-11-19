@@ -80,6 +80,30 @@
       },
       "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1799c016_93e27114",
+        "filename": "services/core/java/com/android/server/vibrator/VibrationSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-11-19T12:40:49Z",
+      "side": 1,
+      "message": "Fair enough, I just checked and the `AudioManagerInternal` is registered in the `AudioManager` service creation, so it won\u0027t be available either.\n\nCould you please update the `mRingerMode` initialization to use `AudioManager.RINGER_MODE_NORMAL` by default, so the missing service won\u0027t affect vibrations?\n\nI think you need to update `updateRingerMode` to be a bit less strict as well, otherwise all notification/ringtone vibrations will always be disabled.\n\nCould you please also update `VibrationSettings` to cover these scenarios? Thanks!",
+      "parentUuid": "a42cdcb5_771bf8de",
+      "range": {
+        "startLine": 239,
+        "startChar": 54,
+        "endLine": 239,
+        "endChar": 56
+      },
+      "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
