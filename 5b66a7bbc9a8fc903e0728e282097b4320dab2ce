@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d9a3155_b9827be3",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-19T21:01:10Z",
+      "side": 1,
+      "message": "It\u0027s only used in internal binder calls, so we technically don\u0027t need to expose its Parcelable interface. However, `SigningDetails` is an existing class that already implements Parcelable. Is there a way to expose the class without exposing its Parcelable interface?",
+      "parentUuid": "ebfe8683_b84074f0",
+      "range": {
+        "startLine": 142,
+        "startChar": 113,
+        "endLine": 142,
+        "endChar": 123
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f85d15f_2a682e5e",
         "filename": "core/api/module-lib-current.txt",
         "patchSetId": 3
@@ -54,6 +78,30 @@
       "writtenOn": "2024-11-19T16:55:00Z",
       "side": 1,
       "message": "I feel like that it belongs to `android.content.pm`, because `android.util.apk` seems to be a new java package in the API surface. I don\u0027t seem to see `android.util.apk` in frameworks/base/core/api/current.txt.",
+      "range": {
+        "startLine": 654,
+        "startChar": 8,
+        "endLine": 654,
+        "endChar": 24
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af832cde_267a3d4e",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-19T21:01:10Z",
+      "side": 1,
+      "message": "This code used to belong to `android.content.pm`, but was moved to `android.util.apk` by http://ag/3340390, so I believe there was a reason for it. @mpgroover@google.com What\u0027s your opinion on the package name?",
+      "parentUuid": "8f85d15f_2a682e5e",
       "range": {
         "startLine": 654,
         "startChar": 8,
