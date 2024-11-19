@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "377d5bd3_9e482171",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Individual API\u0027s are internally taking care to releasing the resources. Autocloseable is not needed.",
+      "parentUuid": "4184dacc_1a89d764",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4001c2b_8b282acb",
@@ -55,6 +79,30 @@
       "writtenOn": "2024-11-15T21:28:48Z",
       "side": 1,
       "message": "Docs?",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 72
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4cf17f2_538bb0bb",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b4001c2b_8b282acb",
       "range": {
         "startLine": 63,
         "startChar": 4,
@@ -88,6 +136,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cc27580_aa0a43d7",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "9bbb343b_feb2da0a",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b24d7df_dd73fe52",
@@ -101,6 +173,30 @@
       "writtenOn": "2024-11-15T21:28:48Z",
       "side": 1,
       "message": "The name feels awkward; how about just `writeData`?\n\nThis API and the corresponding read method are also both performing operations to hardware.  You may want to consider making them API calls if they are time consuming, otherwise you\u0027ll likely want to specify the `@WorkerThread` annotation on both.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32bbab21_402a6ba0",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3b24d7df_dd73fe52",
       "range": {
         "startLine": 105,
         "startChar": 4,
@@ -134,6 +230,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e7ad107_cd7b7f9f",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b899cbdf_968e4f89",
+      "range": {
+        "startLine": 112,
+        "startChar": 12,
+        "endLine": 112,
+        "endChar": 22
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fb255dd_cb5e2040",
@@ -157,6 +277,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "293568f0_1fffd60d",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "IllegalStateException is valid in this case",
+      "parentUuid": "6fb255dd_cb5e2040",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc38b455_7b5d2100",
@@ -170,6 +314,30 @@
       "writtenOn": "2024-11-15T21:28:48Z",
       "side": 1,
       "message": "You should `e.rethrowAsRuntimeException` instead of absorbing the exception.",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 24
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03eba266_f0cefd71",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bc38b455_7b5d2100",
       "range": {
         "startLine": 136,
         "startChar": 12,
@@ -217,6 +385,30 @@
           ]
         }
       ],
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3de18584_b5d2063b",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5f8d09de_acaa5e47",
+      "range": {
+        "startLine": 148,
+        "startChar": 11,
+        "endLine": 148,
+        "endChar": 18
+      },
       "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -272,6 +464,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7deaaa8d_79e05a32",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged\n\nJust to get to know any read writer operation on going.",
+      "parentUuid": "2678a772_4548fbb4",
+      "range": {
+        "startLine": 165,
+        "startChar": 19,
+        "endLine": 165,
+        "endChar": 41
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdad336b_0be3b33b",
@@ -285,6 +501,30 @@
       "writtenOn": "2024-11-15T21:28:48Z",
       "side": 1,
       "message": "You should `e.rethrowAsRuntimeException` instead of absorbing the exception.",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 171,
+        "endChar": 25
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b09990de_a695d25e",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fdad336b_0be3b33b",
       "range": {
         "startLine": 170,
         "startChar": 12,
@@ -318,6 +558,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab19ccc9_f9f467f5",
+        "filename": "nfc/java/android/nfc/NdefNfcee.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a6f8a0d3_346a768c",
+      "range": {
+        "startLine": 188,
+        "startChar": 13,
+        "endLine": 189,
+        "endChar": 25
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b35227a6_9ffeaa85",
@@ -331,6 +595,30 @@
       "writtenOn": "2024-11-15T21:28:48Z",
       "side": 1,
       "message": "My understanding is that these acronyms mean: `NFC Data Exchange Format (NDEF) NFC Execution Environment (NFCEE)`.  This combination of acronyms reads odd.  Can you clarify in the API docs what exactly this means and when you\u0027d do it?\n\nI get the impression from looking at `NdefNfcee` that the instance returned here is a \"session\" of sorts used to read/write from the NFCEE.  Is there an associated lifecycle with that operation?  If you call this method multiple times you\u0027ll have multiple `NdefNfcee` instances; do they work concurrently?",
+      "range": {
+        "startLine": 422,
+        "startChar": 21,
+        "endLine": 422,
+        "endChar": 33
+      },
+      "revId": "d1dcce0a9e1991322cb93d508579efe82754a7bc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07a18b96_d05790ef",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1985025
+      },
+      "writtenOn": "2024-11-19T19:04:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b35227a6_9ffeaa85",
       "range": {
         "startLine": 422,
         "startChar": 21,
