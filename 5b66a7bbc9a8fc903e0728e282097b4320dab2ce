@@ -16,6 +16,52 @@
       "message": "Hi Victor, I\u0027m talking to the owner mpgroover@ to see if his fine with exposing these APIs. Meanwhile, could you please take a quick look and provide some early feedback? Thanks!",
       "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebfe8683_b84074f0",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-19T16:55:00Z",
+      "side": 1,
+      "message": "Is `SigningDetails` used in a binder call?",
+      "range": {
+        "startLine": 142,
+        "startChar": 113,
+        "endLine": 142,
+        "endChar": 123
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f85d15f_2a682e5e",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-19T16:55:00Z",
+      "side": 1,
+      "message": "I feel like that it belongs to `android.content.pm`, because `android.util.apk` seems to be a new java package in the API surface. I don\u0027t seem to see `android.util.apk` in frameworks/base/core/api/current.txt.",
+      "range": {
+        "startLine": 654,
+        "startChar": 8,
+        "endLine": 654,
+        "endChar": 24
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
