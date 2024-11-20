@@ -650,6 +650,17 @@ cc_aconfig_library {
     aconfig_declarations: "com.android.media.flags.editing-aconfig",
 }
 
+cc_aconfig_library {
+    name: "com.android.media.flags.editing-aconfig-cc-host",
+    aconfig_declarations: "com.android.media.flags.editing-aconfig",
+    host_supported: true,
+    min_sdk_version: "31",
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.media",
+    ],
+}
+
 // MediaProjection
 aconfig_declarations {
     name: "com.android.media.flags.projection-aconfig",
