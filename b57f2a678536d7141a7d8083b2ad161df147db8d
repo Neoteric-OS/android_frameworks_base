@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98025823_5cc39938",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2024-11-20T17:08:00Z",
+      "side": 1,
+      "message": "This isn\u0027t clear to me, can this be reworded? Is it \"Avoid calling this on Parcels from Parcelables you do not define\"?\n\nIf you define the parcelable yourself, why would you need to call these methods to determine? Is it supposed to only be for Parcels from Parcelables with `@nullable` FDs/Binders?\n\nIt seems like these APIs would be especially useful to call on Parcels from objects you don\u0027t define in case someone adds FDs/Binders later and you wanted to know.",
+      "range": {
+        "startLine": 896,
+        "startChar": 22,
+        "endLine": 896,
+        "endChar": 73
+      },
+      "revId": "b57f2a678536d7141a7d8083b2ad161df147db8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
