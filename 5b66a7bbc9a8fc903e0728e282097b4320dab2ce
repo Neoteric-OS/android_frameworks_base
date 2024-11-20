@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f91c95d_d7db187c",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-20T13:12:51Z",
+      "side": 1,
+      "message": "One alternative is to expose a new interface or wrapper class in the API surface, and SigningDetails implement the new interface or is wrapped by a new class.\n\nActually, Is `android.content.pm.SigningInfo` the existing wrapper of SigningDetails? Can we re-use it and add the new methods there?",
+      "parentUuid": "0d9a3155_b9827be3",
+      "range": {
+        "startLine": 142,
+        "startChar": 113,
+        "endLine": 142,
+        "endChar": 123
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f85d15f_2a682e5e",
         "filename": "core/api/module-lib-current.txt",
         "patchSetId": 3
@@ -126,6 +150,30 @@
       "side": 1,
       "message": "My understanding is APK signature verification was moved from the `android.content.pm` package because PackageManager shouldn\u0027t need to know the implementation details of APK signature verification and to have a more generic location for cases like this where other callers need to verify an APK\u0027s (or other supported file type\u0027s) signature. I don\u0027t think this should be exposed as a public API, but my understanding is this will be exposed as a SystemApi, correct?",
       "parentUuid": "af832cde_267a3d4e",
+      "range": {
+        "startLine": 654,
+        "startChar": 8,
+        "endLine": 654,
+        "endChar": 24
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5f7ef04_cd1a1604",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-20T13:12:51Z",
+      "side": 1,
+      "message": "I also agree that PackageManager shouldn\u0027t need to know the implementation details of APK signature verification.\n\nI chatted with Jiakai in Chat, the API surface has an existing class of https://developer.android.com/reference/android/content/pm/SigningInfo `SigningInfo` wrapping `SigningDetails`. The new methods can be added into `SigningInfo` instead of exposing the entire `SigningDetails`.\n\nCan we keep the implementation details in `android.util.apk`, but expose the new APIs in `android.content.pm`?",
+      "parentUuid": "7b2cd00b_36730b07",
       "range": {
         "startLine": 654,
         "startChar": 8,
