@@ -2469,6 +2469,15 @@ public final class DisplayManagerService extends SystemService {
                 DisplayManagerGlobal.EVENT_DISPLAY_HDR_SDR_RATIO_CHANGED);
     }
 
+    private void handleLogicalDisplayRefreshRateChangedLocked(@NonNull LogicalDisplay display) {
+        sendDisplayEventIfEnabledLocked(display,
+                DisplayManagerGlobal.EVENT_DISPLAY_REFRESH_RATE_CHANGED);
+    }
+
+    private void handleLogicalDisplayStateChangedLocked(@NonNull LogicalDisplay display) {
+        sendDisplayEventIfEnabledLocked(display, DisplayManagerGlobal.EVENT_DISPLAY_STATE_CHANGED);
+    }
+
     private void notifyDefaultDisplayDeviceUpdated(LogicalDisplay display) {
         mDisplayModeDirector.defaultDisplayDeviceUpdated(display.getPrimaryDisplayDeviceLocked()
                 .mDisplayDeviceConfig);
@@ -4011,6 +4020,12 @@ public final class DisplayManagerService extends SystemService {
                 case LogicalDisplayMapper.LOGICAL_DISPLAY_EVENT_DISCONNECTED:
                     handleLogicalDisplayDisconnectedLocked(display);
                     break;
+                case LogicalDisplayMapper.LOGICAL_DISPLAY_EVENT_REFRESH_RATE_CHANGED:
+                    handleLogicalDisplayRefreshRateChangedLocked(display);
+                    break;
+                case LogicalDisplayMapper.LOGICAL_DISPLAY_EVENT_STATE_CHANGED:
+                    handleLogicalDisplayStateChangedLocked(display);
+                    break;
             }
         }
 
@@ -4218,6 +4233,13 @@ public final class DisplayManagerService extends SystemService {
                     return (mask
                             & DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_CONNECTION_CHANGED)
                             != 0;
+                case DisplayManagerGlobal.EVENT_DISPLAY_REFRESH_RATE_CHANGED:
+                    return (mask
+                            & DisplayManagerGlobal
+                            .INTERNAL_EVENT_FLAG_DISPLAY_REFRESH_RATE) != 0;
+                case DisplayManagerGlobal.EVENT_DISPLAY_STATE_CHANGED:
+                    return (mask & DisplayManagerGlobal
+                            .INTERNAL_EVENT_FLAG_DISPLAY_STATE) != 0;
                 default:
                     // This should never happen.
                     Slog.e(TAG, "Unknown display event " + event);
