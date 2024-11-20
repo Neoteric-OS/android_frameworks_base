@@ -422,11 +422,11 @@ static int64_t compactProcess(int pid, VmaToAdviseFunc vmaToAdviseFunc) {
 // Compact process using process_madvise syscall or fallback to procfs in
 // case syscall does not exist.
 static void compactProcessOrFallback(int pid, int compactionFlags) {
-    if ((compactionFlags & (COMPACT_ACTION_ANON_FLAG | COMPACT_ACTION_FILE_FLAG)) == 0) return;
+    const bool compactAnon = compactionFlags & COMPACT_ACTION_ANON_FLAG;
+    const bool compactFile = compactionFlags & COMPACT_ACTION_FILE_FLAG;
 
-    bool compactAnon = compactionFlags & COMPACT_ACTION_ANON_FLAG;
-    bool compactFile = compactionFlags & COMPACT_ACTION_FILE_FLAG;
-
+    if (!compactAnon && !compactFile) return;
+    
     // Set when the system does not support process_madvise syscall to avoid
     // gathering VMAs in subsequent calls prior to falling back to procfs
     static bool shouldForceProcFs = false;
@@ -452,13 +452,31 @@ static void compactProcessOrFallback(int pid, int compactionFlags) {
     }
 }
 
+static void compactMemcgOrFallback(int uid, int pid, int compactionFlags) {
+    const bool compactAnon = compactionFlags & COMPACT_ACTION_ANON_FLAG;
+    const bool compactFile = compactionFlags & COMPACT_ACTION_FILE_FLAG;
+
+    if (!compactAnon && !compactFile) return;
+
+    std::string profile;
+    if (compactAnon && compactFile) profile = "CompactFull";
+    else if (compactAnon)           profile = "CompactAnon";
+    else if (compactFile)           profile = "CompactFile";
+
+    if (isProfileValidForProcess(profile, uid, pid)) {
+        SetProcessProfiles(uid, pid, {profile});
+    } else {
+        compactProcessOrFallback(pid, compactionFlags);
+    }
+}
+
 // This performs per-process reclaim on all processes belonging to non-app UIDs.
 // For the most part, these are non-zygote processes like Treble HALs, but it
 // also includes zygote-derived processes that run in system UIDs, like bluetooth
 // or potentially some mainline modules. The only process that should definitely
 // not be compacted is system_server, since compacting system_server around the
 // time of BOOT_COMPLETE could result in perceptible issues.
-static void com_android_server_am_CachedAppOptimizer_compactSystem(JNIEnv *, jobject) {
+static void com_android_server_am_CachedAppOptimizer_compactSystem(JNIEnv *, jobject) { // TODO or we could just iterate /sys/fs/cgroup/uid_*
     std::unique_ptr<DIR, decltype(&closedir)> proc(opendir("/proc"), closedir);
     struct dirent* current;
     while ((current = readdir(proc.get()))) {
@@ -487,7 +505,8 @@ static void com_android_server_am_CachedAppOptimizer_compactSystem(JNIEnv *, job
 
         int pid = atoi(current->d_name);
 
-        compactProcessOrFallback(pid, COMPACT_ACTION_ANON_FLAG | COMPACT_ACTION_FILE_FLAG);
+        compactMemcgOrFallback(status_info.st_uid, pid,
+            COMPACT_ACTION_ANON_FLAG | COMPACT_ACTION_FILE_FLAG);
     }
 }
 
@@ -522,7 +541,14 @@ static jlong com_android_server_am_CachedAppOptimizer_getMemoryFreedCompaction()
     return sysmeminfo.mem_compacted_kb("/sys/block/zram0/");
 }
 
-static void com_android_server_am_CachedAppOptimizer_compactProcess(JNIEnv*, jobject, jint pid,
+static void com_android_server_am_CachedAppOptimizer_compactProcess(JNIEnv*, jobject, jint uid,
+                                                                    jint pid,
+                                                                    jint compactionFlags) {
+    compactMemcgOrFallback(uid, pid, compactionFlags);
+}
+
+static void com_android_server_am_CachedAppOptimizer_compactNativeProcess(JNIEnv*, jobject,
+                                                                    jint pid,
                                                                     jint compactionFlags) {
     compactProcessOrFallback(pid, compactionFlags);
 }
@@ -591,7 +617,8 @@ static const JNINativeMethod sMethods[] = {
         {"getMemoryFreedCompaction", "()J",
          (void*)com_android_server_am_CachedAppOptimizer_getMemoryFreedCompaction},
         {"compactSystem", "()V", (void*)com_android_server_am_CachedAppOptimizer_compactSystem},
-        {"compactProcess", "(II)V", (void*)com_android_server_am_CachedAppOptimizer_compactProcess},
+        {"compactProcess", "(III)V", (void*)com_android_server_am_CachedAppOptimizer_compactProcess},
+        {"compactNativeProcess", "(II)V", (void*)com_android_server_am_CachedAppOptimizer_compactNativeProcess},
         {"freezeBinder", "(IZI)I", (void*)com_android_server_am_CachedAppOptimizer_freezeBinder},
         {"getBinderFreezeInfo", "(I)I",
          (void*)com_android_server_am_CachedAppOptimizer_getBinderFreezeInfo},
