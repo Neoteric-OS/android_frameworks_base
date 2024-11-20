@@ -53,9 +53,8 @@ interface INfcAdapter
     int getState();
     boolean disable(boolean saveState, in String pkg);
     boolean enable(in String pkg);
-    int pausePolling(int timeoutInMs);
+    int pausePolling(long timeoutInMs);
     int resumePolling();
-
     void setForegroundDispatch(in PendingIntent intent,
             in IntentFilter[] filters, in TechListParcel techLists);
     void setAppCallback(in IAppCallback callback);
@@ -123,5 +122,10 @@ interface INfcAdapter
     void indicateDataMigration(boolean inProgress, String pkg);
     int commitRouting();
     boolean isTagIntentAllowed(in String pkg, in int Userid);
+<<<<<<< PATCH SET (1c82f2 [framework] Add an API to get max pause polling timeout.)
+    long getMaxPausePollingTimeoutMs();
+||||||| BASE
+=======
     IT4tNdefNfcee getT4tNdefNfceeInterface();
+>>>>>>> BASE      (f3e2a3 Merge "Add T4T Ndef Nfceee feature support" into main)
 }
