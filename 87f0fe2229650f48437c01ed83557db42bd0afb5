@@ -152,6 +152,30 @@
       },
       "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "004e9e60_057a51d2",
+        "filename": "services/core/java/com/android/server/vibrator/VibrationSettings.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-11-20T12:23:56Z",
+      "side": 1,
+      "message": "Hi Lais, I\u0027ve tried updating the tests to cover these scenarios to the best of my knowledge. Covering cases where mAudiomManagerMock is null, therefore even when calling the intent to change ringer mode action, the ringerMode will be set to Normal (disregarding what it was meant to be set to). Meaning that some of the ```assertVibrationIgnoredForUsage``` would not pass and would need to be changed to ```asserVibrationNotIgnoredForUsage```, as from what I understood, vibration is not ignored for NORMAL mode.",
+      "parentUuid": "9ff96098_0df928ef",
+      "range": {
+        "startLine": 239,
+        "startChar": 54,
+        "endLine": 239,
+        "endChar": 56
+      },
+      "revId": "87f0fe2229650f48437c01ed83557db42bd0afb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
