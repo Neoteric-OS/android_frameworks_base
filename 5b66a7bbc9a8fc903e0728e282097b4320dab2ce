@@ -110,6 +110,30 @@
       },
       "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b2cd00b_36730b07",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2024-11-20T03:36:03Z",
+      "side": 1,
+      "message": "My understanding is APK signature verification was moved from the `android.content.pm` package because PackageManager shouldn\u0027t need to know the implementation details of APK signature verification and to have a more generic location for cases like this where other callers need to verify an APK\u0027s (or other supported file type\u0027s) signature. I don\u0027t think this should be exposed as a public API, but my understanding is this will be exposed as a SystemApi, correct?",
+      "parentUuid": "af832cde_267a3d4e",
+      "range": {
+        "startLine": 654,
+        "startChar": 8,
+        "endLine": 654,
+        "endChar": 24
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
