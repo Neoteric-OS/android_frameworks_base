@@ -22,6 +22,30 @@
       },
       "revId": "b57f2a678536d7141a7d8083b2ad161df147db8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b95bf69_611f5760",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-11-20T22:42:57Z",
+      "side": 1,
+      "message": "Even if you define it, it may come from another process. So, this is still important from a security perspective.\n\nAlso, it is fine to call them, but depending on the result (e.g. having your code break if the result changes) is what is actually problematic.\n\n\u003e It seems like these APIs would be especially useful to call on Parcels from objects you don\u0027t define in case someone adds FDs/Binders later and you wanted to know.\n\nI agree it seems like that, which is why I think there should be a warning.",
+      "parentUuid": "98025823_5cc39938",
+      "range": {
+        "startLine": 896,
+        "startChar": 22,
+        "endLine": 896,
+        "endChar": 73
+      },
+      "revId": "b57f2a678536d7141a7d8083b2ad161df147db8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
