@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c649c854_1d1e4c6b",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2024-11-20T20:08:41Z",
+      "side": 1,
+      "message": "long for consistency.",
+      "range": {
+        "startLine": 663,
+        "startChar": 49,
+        "endLine": 663,
+        "endChar": 52
+      },
+      "revId": "56eb1e8f47dfddb8651558d5d4723d5f402ec227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
