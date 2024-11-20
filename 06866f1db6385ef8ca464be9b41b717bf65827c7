@@ -16,6 +16,23 @@
       "message": "Thanks!",
       "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f2c4af3_66132db1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000701
+      },
+      "writtenOn": "2024-11-20T22:05:04Z",
+      "side": 1,
+      "message": "+1 for Android.bp",
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
