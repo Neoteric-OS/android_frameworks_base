@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c6ea884_decc24b7",
+        "filename": "services/tests/vibrator/src/com/android/server/vibrator/VibrationSettingsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-11-20T15:47:53Z",
+      "side": 1,
+      "message": "Please consider enhancing this test to also provide a null `AudioManager`, since it should be an optional service as well. You can do this by adding this line before the constructor and `onSystemReady` are called:\n\n```\nwhen(mContextSpy.getSystemService(eq(Context.AUDIO_SERVICE))).thenReturn(null);\n\nVibrationSettings minimalVibrationSettings...\n```",
+      "range": {
+        "startLine": 200,
+        "startChar": 16,
+        "endLine": 200,
+        "endChar": 53
+      },
+      "revId": "03bd1bafd5121e804fe17f418259edddc28e1010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f68c5fa_e7da76c1",
+        "filename": "services/tests/vibrator/src/com/android/server/vibrator/VibrationSettingsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-11-20T15:47:53Z",
+      "side": 1,
+      "message": "This field is being initialized via the mockito annotation, so it would never be null. Could you please remove these null checks?",
+      "range": {
+        "startLine": 428,
+        "startChar": 16,
+        "endLine": 428,
+        "endChar": 33
+      },
+      "revId": "03bd1bafd5121e804fe17f418259edddc28e1010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "055ed39d_be8da290",
+        "filename": "services/tests/vibrator/src/com/android/server/vibrator/VibrationSettingsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-11-20T15:47:53Z",
+      "side": 1,
+      "message": "Please consider adding a new test after this one that covers the new scenario related to ringer mode:\n\n```\n@Test\npublic void shouldIgnoreVibration_withoutAudioManager_allowsAllVibrations() {\n  when(mContextSpy.getSystemService(eq(Context.AUDIO_SERVICE))).thenReturn(null);\n  createSystemReadyVibrationSettings();\n\n  for (int usage : ALL_USAGES) {\n    assertVibrationNotIgnoredForUsage(usage);\n  }\n}\n```",
+      "range": {
+        "startLine": 459,
+        "startChar": 4,
+        "endLine": 466,
+        "endChar": 5
+      },
+      "revId": "03bd1bafd5121e804fe17f418259edddc28e1010",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
