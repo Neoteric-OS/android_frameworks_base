@@ -52,9 +52,8 @@ interface INfcAdapter
     int getState();
     boolean disable(boolean saveState, in String pkg);
     boolean enable(in String pkg);
-    int pausePolling(int timeoutInMs);
+    int pausePolling(long timeoutInMs);
     int resumePolling();
-
     void setForegroundDispatch(in PendingIntent intent,
             in IntentFilter[] filters, in TechListParcel techLists);
     void setAppCallback(in IAppCallback callback);
@@ -122,4 +121,5 @@ interface INfcAdapter
     void indicateDataMigration(boolean inProgress, String pkg);
     int commitRouting();
     boolean isTagIntentAllowed(in String pkg, in int Userid);
+    long getMaxPausePollingTimeoutMs();
 }
