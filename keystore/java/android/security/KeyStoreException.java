@@ -647,9 +647,13 @@ public class KeyStoreException extends Exception {
                 KEYMINT_INCORRECT_USAGE_ERROR);
         sErrorCodeToFailureInfo.put(KeymasterDefs.KM_ERROR_BOOT_LEVEL_EXCEEDED,
                 KEYMINT_INCORRECT_USAGE_ERROR);
-        // This should not be exposed to apps as it's handled by Keystore.
+
+        // These should not be exposed to apps as it's handled by Keystore.
         sErrorCodeToFailureInfo.put(KeymasterDefs.KM_ERROR_HARDWARE_NOT_YET_AVAILABLE,
                 GENERAL_KEYMINT_ERROR);
+        sErrorCodeToFailureInfo.put(KeymasterDefs.KM_ERROR_MODULE_HASH_ALREADY_SET,
+                GENERAL_KEYMINT_ERROR);
+
         sErrorCodeToFailureInfo.put(KeymasterDefs.KM_ERROR_UNIMPLEMENTED,
                 KEYMINT_UNIMPLEMENTED_ERROR);
         sErrorCodeToFailureInfo.put(KeymasterDefs.KM_ERROR_UNKNOWN_ERROR,

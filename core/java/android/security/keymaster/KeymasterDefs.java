@@ -128,6 +128,8 @@ public final class KeymasterDefs {
             Tag.DEVICE_UNIQUE_ATTESTATION; // KM_BOOL | 720;
     public static final int KM_TAG_ATTESTATION_ID_SECOND_IMEI =
             Tag.ATTESTATION_ID_SECOND_IMEI; // KM_BYTES | 723;
+    public static final int KM_TAG_MODULE_HASH =
+            Tag.MODULE_HASH; // KM_BYTES | 724;
 
     public static final int KM_TAG_NONCE = Tag.NONCE; // KM_BYTES | 1001;
     public static final int KM_TAG_MAC_LENGTH = Tag.MAC_LENGTH; // KM_UINT | 1003;
@@ -371,6 +373,8 @@ public final class KeymasterDefs {
             ErrorCode.BOOT_LEVEL_EXCEEDED; // -84;
     public static final int KM_ERROR_HARDWARE_NOT_YET_AVAILABLE =
             ErrorCode.HARDWARE_NOT_YET_AVAILABLE; // -85
+    public static final int KM_ERROR_MODULE_HASH_ALREADY_SET =
+            ErrorCode.MODULE_HASH_ALREADY_SET; // -86
     public static final int KM_ERROR_UNIMPLEMENTED =
             ErrorCode.UNIMPLEMENTED; // -100;
     public static final int KM_ERROR_VERSION_MISMATCH =
@@ -422,6 +426,7 @@ public final class KeymasterDefs {
         sErrorCodeToString.put(KM_ERROR_CANNOT_ATTEST_IDS, "Unable to attest device ids");
         sErrorCodeToString.put(KM_ERROR_HARDWARE_TYPE_UNAVAILABLE, "Requested security level "
                         + "(likely Strongbox) is not available.");
+        sErrorCodeToString.put(KM_ERROR_MODULE_HASH_ALREADY_SET, "Module hash already set.");
         sErrorCodeToString.put(KM_ERROR_DEVICE_LOCKED, "Device locked");
         sErrorCodeToString.put(KM_ERROR_UNIMPLEMENTED, "Not implemented");
         sErrorCodeToString.put(KM_ERROR_UNKNOWN_ERROR, "Unknown error");
