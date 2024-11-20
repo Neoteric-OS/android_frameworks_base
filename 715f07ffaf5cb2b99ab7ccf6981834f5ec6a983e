@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac105521_806718f1",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-20T22:50:43Z",
+      "side": 0,
+      "message": "Re-add this back since that seems more correct.",
+      "range": {
+        "startLine": 681,
+        "startChar": 93,
+        "endLine": 682,
+        "endChar": 57
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "da4a89b0_847a1915",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 681,
+                "startChar": 0,
+                "endLine": 684,
+                "endChar": 0
+              },
+              "replacement": "     * In case of {@code timeoutInMs} is zero or invalid polling will be stopped indefinitely.\n     * Use {@link #resumePolling()} to resume the polling.\n     * Use {@link #getMaxPausePollingTimeoutMs()} to check the max timeout value.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "715f07ffaf5cb2b99ab7ccf6981834f5ec6a983e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
