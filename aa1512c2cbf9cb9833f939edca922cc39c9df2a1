@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05844d8f_f459ba6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-11-20T18:13:14Z",
+      "side": 1,
+      "message": "Hi @rossyeh@google.com, could you please take a look at this change for fixing an Android 15 VTS test (b/377615704)?",
+      "revId": "aa1512c2cbf9cb9833f939edca922cc39c9df2a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
