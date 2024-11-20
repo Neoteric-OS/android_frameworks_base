@@ -35,6 +35,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.IntArray;
 import android.util.Log;
@@ -2524,14 +2525,23 @@ public class AudioSystem
         }
     }
 
+    // Cache the value so that we only change it on device boot.
+    private static int isMultiStreamEnabled = -1;
+
     /**
      * @hide
      * @return whether the system uses a single volume stream.
      */
     public static boolean isSingleVolume(Context context) {
+        // Verify we don't want to enable multi-stream volumes at runtime
+        // Will be removed as a part of T148320673
+        if (isMultiStreamEnabled < 0) {
+            isMultiStreamEnabled = Settings.Secure.getInt(
+                        context.getContentResolver(), "multi_stream_volume", 0);
+        }
         boolean forceSingleVolume = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_single_volume);
-        return getPlatformType(context) == PLATFORM_TELEVISION || forceSingleVolume;
+        return getPlatformType(context) == PLATFORM_TELEVISION || forceSingleVolume || (isMultiStreamEnabled == 1);
     }
 
     /**
