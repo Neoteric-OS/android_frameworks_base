@@ -16,6 +16,47 @@
       "message": "Hi Victor, could you help an API-review? Thanks!",
       "revId": "e02f34393138beda4f128e77f8c4664076ec96b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "080d2b4e_bcf21e08",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-20T10:56:24Z",
+      "side": 1,
+      "message": "Could you please add\n```\n@FlaggedApi(Flags.FLAG_UPDATE_ENGINE_API)\n@SystemApi(client \u003d SystemApi.Client.MODULE_LIBRARIES)\n```\nlike the example above, and then run `m module-lib-api-stubs-docs-non-updatable-update-current-api` to update `core/api/module-lib-current.txt`?",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 7
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "85cc679b_b02a23e1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/UpdateEngineStable.java",
+              "range": {
+                "startLine": 204,
+                "startChar": 0,
+                "endLine": 204,
+                "endChar": 0
+              },
+              "replacement": "    @FlaggedApi(Flags.FLAG_UPDATE_ENGINE_API)\n    @SystemApi(client \u003d SystemApi.Client.MODULE_LIBRARIES)\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e02f34393138beda4f128e77f8c4664076ec96b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
