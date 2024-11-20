@@ -755,6 +755,11 @@ public class PerformFullTransportBackupTask extends FullBackupTask implements Ba
                 if (MORE_DEBUG) {
                     Slog.d(TAG, "Preflighting full payload of " + pkg.packageName);
                 }
+
+                BackupTransportClient transport =
+                        mTransportConnection.connectOrThrow("PFTBT$SPBP.preflightFullBackup()");
+                agent.addExcludedFilePaths(transport.getExcludedFilePaths(pkg.packageName));
+
                 agent.doMeasureFullBackup(mQuota, mCurrentOpToken,
                         mUserBackupManagerService.getBackupManagerBinder(), mTransportFlags);
 
@@ -774,8 +779,6 @@ public class PerformFullTransportBackupTask extends FullBackupTask implements Ba
                     Slog.v(TAG, "Got preflight response; size=" + totalSize);
                 }
 
-                BackupTransportClient transport =
-                        mTransportConnection.connectOrThrow("PFTBT$SPBP.preflightFullBackup()");
                 result = transport.checkFullBackupSize(totalSize);
                 if (result == BackupTransport.TRANSPORT_QUOTA_EXCEEDED) {
                     if (MORE_DEBUG) {

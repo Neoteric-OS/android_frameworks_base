@@ -25,6 +25,7 @@ import android.os.ParcelFileDescriptor;
 
 import com.android.internal.backup.ITransportStatusCallback;
 import com.android.internal.infra.AndroidFuture;
+import java.util.List;
 
 /** {@hide} */
 oneway interface IBackupTransport {
@@ -341,6 +342,16 @@ oneway interface IBackupTransport {
      */
     void getBackupQuota(String packageName, boolean isFullBackup,
             in AndroidFuture<long> resultFuture);
+
+    /**
+     * Ask the transport for any file paths that should be excluded when performing a
+     * full backup for this app.
+     *
+     * @param packageName ID of package to provide the quota.
+     * @param resultFuture an {@link AndroidFuture} that is completed with a {@code List<String>}
+     *        which specifies the list of file paths to exclude. These can be files or directories.
+     */
+    void getExcludedFilePaths(String packageName, in AndroidFuture<List<String>> resultFuture);
 
     // full restore stuff
 

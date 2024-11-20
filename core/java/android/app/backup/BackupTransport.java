@@ -16,6 +16,9 @@
 
 package android.app.backup;
 
+import static java.util.Collections.emptyList;
+
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.content.Intent;
@@ -590,6 +593,18 @@ public class BackupTransport {
         return Long.MAX_VALUE;
     }
 
+    /**
+     * Ask the transport for any file paths that should be excluded when performing a full backup
+     * for this app.
+     *
+     * @param packageName ID of package to provide the quota.
+     * @return List of file paths to exclude. These can be files or directories.
+     */
+    @NonNull
+    public List<String> getExcludedFilePaths(@NonNull String packageName) {
+        return emptyList();
+    }
+
     // ------------------------------------------------------------------------------------
     // Full restore interfaces
 
@@ -727,6 +742,18 @@ public class BackupTransport {
             try {
                 CharSequence result = BackupTransport.this.dataManagementIntentLabel();
                 resultFuture.complete(result);
+            } catch (RuntimeException e) {
+                resultFuture.cancel(/* mayInterruptIfRunning */ true);
+            }
+        }
+
+        @Override
+        public void getExcludedFilePaths(
+                String packageName, AndroidFuture<List<String>> resultFuture) {
+            try {
+                List<String> excludedFilePaths =
+                        BackupTransport.this.getExcludedFilePaths(packageName);
+                resultFuture.complete(excludedFilePaths);
             } catch (RuntimeException e) {
                 resultFuture.cancel(/* mayInterruptIfRunning */ true);
             }

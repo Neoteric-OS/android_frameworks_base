@@ -365,6 +365,14 @@ public class BackupTransportClient {
         return result == null ? BackupTransport.TRANSPORT_ERROR : result;
     }
 
+    /** See {@link IBackupTransport#getExcludedFilePaths()} */
+    public List<String> getExcludedFilePaths(String packageName) throws RemoteException {
+        AndroidFuture<List<String>> resultFuture = mTransportFutures.newFuture();
+        mTransportBinder.getExcludedFilePaths(packageName, resultFuture);
+        List<String> result = getFutureResult(resultFuture);
+        return result;
+    }
+
     /**
      * See {@link IBackupTransport#getBackupManagerMonitor()}
      */

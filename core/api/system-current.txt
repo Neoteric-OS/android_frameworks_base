@@ -1898,6 +1898,7 @@ package android.app.backup {
     method public long getBackupQuota(String, boolean);
     method public android.os.IBinder getBinder();
     method public long getCurrentRestoreSet();
+    method @NonNull public java.util.List<java.lang.String> getExcludedFilePaths(@NonNull String);
     method public int getNextFullRestoreDataChunk(android.os.ParcelFileDescriptor);
     method public int getRestoreData(android.os.ParcelFileDescriptor);
     method public int getTransportFlags();

@@ -17,6 +17,7 @@
 package android.app.backup;
 
 import android.annotation.IntDef;
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.IBackupAgent;
 import android.app.QueuedWork;
@@ -639,6 +640,13 @@ public abstract class BackupAgent extends ContextWrapper {
      *    this application to store as a backup.
      */
     public void onQuotaExceeded(long backupDataBytes, long quotaBytes) {
+    }
+
+    public void addExcludedFilePaths(@NonNull List<String> paths) {
+        if (mExcludedDirectoriesFromFileFolder == null) {
+            loadExcludedDirectoriesFromFileFolder();
+        }
+        mExcludedDirectoriesFromFileFolder.addAll(paths);
     }
 
     private int getBackupUserId() {
@@ -1398,6 +1406,10 @@ public abstract class BackupAgent extends ContextWrapper {
             } finally {
                 Binder.restoreCallingIdentity(ident);
             }
+        }
+
+        public void addExcludedFilePaths(@NonNull List<String> paths) {
+            BackupAgent.this.addExcludedFilePaths(paths);
         }
     }
 
