@@ -122,4 +122,5 @@ interface INfcAdapter
     void indicateDataMigration(boolean inProgress, String pkg);
     int commitRouting();
     boolean isTagIntentAllowed(in String pkg, in int Userid);
+    long getMaxPausePollingTimeoutMs();
 }
