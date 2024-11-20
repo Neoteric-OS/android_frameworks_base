@@ -22,6 +22,30 @@
       },
       "revId": "c154f8d765fd4f71836f0b3f67dfe7870f1997be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41ca0b4f_8b6aceba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2024-11-20T03:40:41Z",
+      "side": 1,
+      "message": "Thank you! Right. I totally agree. I will follow up with the corresponding teams to fix this issue! Thank you",
+      "parentUuid": "0e45f0e5_9c0b3a10",
+      "range": {
+        "startLine": 11,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "c154f8d765fd4f71836f0b3f67dfe7870f1997be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
