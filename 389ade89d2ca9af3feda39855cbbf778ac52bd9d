@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2164d4eb_99e56c59",
+        "filename": "packages/SettingsLib/DataStore/src/com/android/settingslib/datastore/BackupRestoreStorage.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 2016516
+      },
+      "writtenOn": "2024-11-21T02:48:23Z",
+      "side": 1,
+      "message": "As mentioned at line 222, they should not be closed. It is just a wrapper of another stream, and there is no leaking as long as original stream is closed correctly.\n\nTo add more context, the API document https://developer.android.com/reference/android/app/backup/BackupHelper#performBackup(android.os.ParcelFileDescriptor,%20android.app.backup.BackupDataOutput,%20android.os.ParcelFileDescriptor) mentions:\n\n```\nNote: The helper should not close or seek either the oldState or the newState file descriptors.\n```",
+      "revId": "389ade89d2ca9af3feda39855cbbf778ac52bd9d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
