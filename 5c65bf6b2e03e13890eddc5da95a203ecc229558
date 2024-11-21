@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a9b2729_8e660377",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-11-21T12:53:33Z",
+      "side": 1,
+      "message": "I can\u0027t seem to to see the merge conflict causing the Presubmit failure as it is against an internal branch.",
+      "revId": "5c65bf6b2e03e13890eddc5da95a203ecc229558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
