@@ -467,7 +467,7 @@ public final class ActivityThread extends ClientTransactionHandler
     @UnsupportedAppUsage
     String mInstrumentedAppDir = null;
     String[] mInstrumentedSplitAppDirs = null;
-    String mInstrumentedLibDir = null;
+    String mInstrumentedLibDir = null;   
     boolean mInstrumentingWithoutRestart;
     boolean mSystemThread = false;
     boolean mSomeActivitiesChanged = false;
@@ -3704,7 +3704,7 @@ public final class ActivityThread extends ClientTransactionHandler
     }
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
-    public final Activity startActivityNow(Activity parent, String id,
+    public final Activity startActivityNow(Activity parent, String id,                  //启动Activity
             Intent intent, ActivityInfo activityInfo, IBinder token, Bundle state,
             Activity.NonConfigurationInstances lastNonConfigurationInstances, IBinder assistToken,
             IBinder shareableActivityToken) {
@@ -3879,7 +3879,7 @@ public final class ActivityThread extends ClientTransactionHandler
     }
 
     /**  Core implementation of activity launch. */
-    private Activity performLaunchActivity(ActivityClientRecord r, Intent customIntent) {
+    private Activity performLaunchActivity(ActivityClientRecord r, Intent customIntent) {   //这个类的起点加载Activity
         ActivityInfo aInfo = r.activityInfo;
 
         if (getInstrumentation() != null
@@ -3938,7 +3938,7 @@ public final class ActivityThread extends ClientTransactionHandler
             } else {
                 cl = activityBaseContext.getClassLoader();
             }
-            activity = mInstrumentation.newActivity(
+            activity = mInstrumentation.newActivity(          //创建要启动Activity，Activity由Instrumentation管理
                     cl, component.getClassName(), r.intent);
             StrictMode.incrementExpectedActivityCount(activity.getClass());
             r.intent.setExtrasClassLoader(cl);
@@ -4202,8 +4202,8 @@ public final class ActivityThread extends ClientTransactionHandler
      * Extended implementation of activity launch. Used when server requests a launch or relaunch.
      */
     @Override
-    public Activity handleLaunchActivity(ActivityClientRecord r,
-            PendingTransactionActions pendingActions, int deviceId, Intent customIntent) {
+    public Activity handleLaunchActivity(ActivityClientRecord r,         //从这里开始调用activity
+            PendingTransactionActions pendingActions, int deviceId, Intent customIntent) {   
         // If we are getting ready to gc after going to the background, well
         // we are back active so skip it.
         unscheduleGcIdler();
@@ -4232,7 +4232,7 @@ public final class ActivityThread extends ClientTransactionHandler
         // Hint the GraphicsEnvironment that an activity is launching on the process.
         GraphicsEnvironment.hintActivityLaunch();
 
-        final Activity a = performLaunchActivity(r, customIntent);
+        final Activity a = performLaunchActivity(r, customIntent);     //启动activity，注意参数
 
         if (a != null) {
             r.createdConfig = new Configuration(mConfigurationController.getConfiguration());
