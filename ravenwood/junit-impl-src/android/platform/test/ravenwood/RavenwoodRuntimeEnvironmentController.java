@@ -78,8 +78,10 @@ import org.junit.runner.Description;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
@@ -154,6 +156,7 @@ public class RavenwoodRuntimeEnvironmentController {
     /** Map from path -> resources. */
     private static final HashMap<File, Resources> sCachedResources = new HashMap<>();
     private static Set<String> sAdoptedPermissions = Collections.emptySet();
+    private static final List<RavenwoodTestProperties> sActiveProperties = new ArrayList<>();
 
     private static final Object sInitializationLock = new Object();
 
@@ -162,8 +165,6 @@ public class RavenwoodRuntimeEnvironmentController {
 
     @GuardedBy("sInitializationLock")
     private static Throwable sExceptionFromGlobalInit;
-
-    private static RavenwoodSystemProperties sProps;
 
     private static final int DEFAULT_TARGET_SDK_LEVEL = VERSION_CODES.CUR_DEVELOPMENT;
     private static final String DEFAULT_PACKAGE_NAME = "com.android.ravenwoodtests.defaultname";
@@ -234,7 +235,6 @@ public class RavenwoodRuntimeEnvironmentController {
 
         // Do the basic set up for the android sysprops.
         RavenwoodSystemProperties.initialize();
-        setSystemProperties(null);
 
         // Do this after loading RAVENWOOD_NATIVE_RUNTIME_NAME (which backs Os.setenv()),
         // before loadFrameworkNativeCode() (which uses $ANDROID_LOG_TAGS).
@@ -356,9 +356,13 @@ public class RavenwoodRuntimeEnvironmentController {
         // will call Mockito.framework().clearInlineMocks() after execution.
         sInstrumentation.basicInit(instContext, targetContext, createMockUiAutomation());
 
+        // Reset some global state
         Process_ravenwood.reset();
         DeviceConfig_host.reset();
         Binder.restoreCallingIdentity(sCallingIdentity);
+
+        SystemProperties.clearChangeCallbacksForTest();
+        setSystemProperties(null);
 
         if (ENABLE_TIMEOUT_STACKS) {
             sPendingTimeout = sTimeoutExecutor.schedule(
@@ -487,13 +491,16 @@ public class RavenwoodRuntimeEnvironmentController {
     /**
      * Set the current configuration to the actual SystemProperties.
      */
-    public static void setSystemProperties(@Nullable RavenwoodSystemProperties systemProperties) {
-        SystemProperties.clearChangeCallbacksForTest();
-        RavenwoodRuntimeNative.clearSystemProperties();
-        if (systemProperties == null) systemProperties = new RavenwoodSystemProperties();
-        sProps = new RavenwoodSystemProperties(systemProperties, true);
-        for (var entry : systemProperties.getValues().entrySet()) {
-            RavenwoodRuntimeNative.setSystemProperty(entry.getKey(), entry.getValue());
+    public static void setSystemProperties(@Nullable RavenwoodTestProperties systemProperties) {
+        if (systemProperties == null) {
+            // Clean up the existing property values
+            sActiveProperties.forEach(
+                    prop -> prop.getValues().keySet().forEach(
+                            key -> RavenwoodRuntimeNative.setSystemProperty(key, "")));
+            sActiveProperties.clear();
+        } else {
+            sActiveProperties.add(new RavenwoodTestProperties(systemProperties, true));
+            systemProperties.getValues().forEach(RavenwoodRuntimeNative::setSystemProperty);
         }
     }
 
@@ -548,10 +555,16 @@ public class RavenwoodRuntimeEnvironmentController {
 
     @SuppressWarnings("unused")  // Called from native code (ravenwood_sysprop.cpp)
     private static void checkSystemPropertyAccess(String key, boolean write) {
-        boolean result = write ? sProps.isKeyWritable(key) : sProps.isKeyReadable(key);
+        boolean result = write
+                ? RavenwoodSystemProperties.isKeyWritable(key)
+                : RavenwoodSystemProperties.isKeyReadable(key);
+        if (!result) {
+            result = sActiveProperties.stream().anyMatch(
+                    prop -> write ? prop.isKeyWritable(key) : prop.isKeyReadable(key));
+        }
         if (!result) {
             throw new IllegalArgumentException((write ? "Write" : "Read")
-                    + " access to system property '" + key + "' denied via RavenwoodConfig");
+                    + " access to system property '" + key + "' denied via RavenwoodRule");
         }
     }
 
