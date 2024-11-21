@@ -4912,6 +4912,16 @@ public abstract class PackageManager {
   public static final String FEATURE_CONTEXTUAL_SEARCH_HELPER =
       "android.software.contextualsearch";
 
+    /**
+     * As the generated feature count is useful for classes that may not be compiled in the same
+     * annotation processing unit as PackageManager, we redeclare it here for visibility.
+     *
+     * @hide
+     */
+    @VisibleForTesting
+    public static final int SDK_FEATURE_COUNT =
+            com.android.internal.pm.SystemFeaturesMetadata.SDK_FEATURE_COUNT;
+
     /** @hide */
     public static final boolean APP_ENUMERATION_ENABLED_BY_DEFAULT = true;
 
