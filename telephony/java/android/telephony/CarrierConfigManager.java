@@ -9880,6 +9880,16 @@ public class CarrierConfigManager {
             "satellite_data_support_mode_int";
 
     /**
+     * Indicates whether data roaming on satellite network is metered.
+     *
+     * {@code true} - data roaming on satellite network is metered.
+     * {@code false} - data roaming on satellite network is not metered.
+     * @hide
+     */
+    public static final String KEY_SATELLITE_DATA_ROAMING_METERED_BOOL =
+            "satellite_data_roaming_metered_bool";
+
+    /**
      * Determine whether to override roaming Wi-Fi Calling preference when device is connected to
      * non-terrestrial network.
      * {@code true}  - roaming preference cannot be changed by user independently.
@@ -11123,6 +11133,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_REMOVE_SATELLITE_PLMN_IN_MANUAL_NETWORK_SCAN_BOOL, true);
         sDefaults.putInt(KEY_SATELLITE_DATA_SUPPORT_MODE_INT,
                 CarrierConfigManager.SATELLITE_DATA_SUPPORT_ONLY_RESTRICTED);
+        sDefaults.putBoolean(KEY_SATELLITE_DATA_ROAMING_METERED_BOOL, false);
         sDefaults.putBoolean(KEY_OVERRIDE_WFC_ROAMING_MODE_WHILE_USING_NTN_BOOL, true);
         sDefaults.putInt(KEY_SATELLITE_ENTITLEMENT_STATUS_REFRESH_DAYS_INT, 7);
         sDefaults.putBoolean(KEY_SATELLITE_ENTITLEMENT_SUPPORTED_BOOL, false);
