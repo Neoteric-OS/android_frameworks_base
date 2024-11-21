@@ -815,7 +815,7 @@ public class ApplicationPackageManager extends PackageManager {
     private final static PropertyInvalidatedCache<HasSystemFeatureQuery, Boolean>
             mHasSystemFeatureCache =
             new PropertyInvalidatedCache<HasSystemFeatureQuery, Boolean>(
-                256, "cache_key.has_system_feature") {
+                SDK_FEATURE_COUNT, "cache_key.has_system_feature") {
                 @Override
                 public Boolean recompute(HasSystemFeatureQuery query) {
                     try {

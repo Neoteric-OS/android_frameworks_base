@@ -367,6 +367,7 @@ java_defaults {
     jarjar_rules: ":framework-jarjar-rules",
     javac_shard_size: 150,
     plugins: [
+        "systemfeatures-metadata-processor",
         "view-inspector-annotation-processor",
         "staledataclass-annotation-processor",
         "error_prone_android_framework",
