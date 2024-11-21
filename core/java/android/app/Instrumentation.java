@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+//Instrumentation 可以理解为应用进程管家，ActivityThread 要执行创建或暂停某个 Activity 的操作时，都需要通过 Instrumentation 来进行具体的操作
 package android.app;
 
 import android.annotation.FlaggedApi;
@@ -1448,7 +1448,7 @@ public class Instrumentation {
             ClassNotFoundException {
         String pkg = intent != null && intent.getComponent() != null
                 ? intent.getComponent().getPackageName() : null;
-        return getFactory(pkg).instantiateActivity(cl, className, intent);
+        return getFactory(pkg).instantiateActivity(cl, className, intent);   //classload 加载字节码创建activity
     }
 
     private AppComponentFactory getFactory(String pkg) {
