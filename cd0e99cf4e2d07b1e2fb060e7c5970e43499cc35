@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "686dbf3b_b52d3fb0",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-11-21T10:44:13Z",
+      "side": 1,
+      "message": "Why do we need to move this for loop? I think we would also need to add null check on `bootMitigationCounts` if we do want to move it.",
+      "revId": "cd0e99cf4e2d07b1e2fb060e7c5970e43499cc35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
