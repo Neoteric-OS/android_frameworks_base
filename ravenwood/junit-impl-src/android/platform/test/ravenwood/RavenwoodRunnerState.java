@@ -112,7 +112,7 @@ public final class RavenwoodRunnerState {
                     + " which is not supported.");
         }
         mRule = rule;
-        RavenwoodRuntimeEnvironmentController.setSystemProperties(rule.mSystemProperties);
+        RavenwoodRuntimeEnvironmentController.setSystemProperties(rule.mProperties);
     }
 
     public void exitRavenwoodRule(RavenwoodRule rule) {
