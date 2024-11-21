@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c21540e4_823573b6",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-21T23:04:41Z",
+      "side": 1,
+      "message": "nit: /* package private */",
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c1af5fa_40a5d1c6",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1894,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-21T23:04:41Z",
+      "side": 1,
+      "message": "nice! can we add a flag guard here so we can test?",
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6649f4a7_9b871eac",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 4982,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-21T23:04:41Z",
+      "side": 1,
+      "message": "maybe taking int simplifies the JNI part?\n\nAlso if this is specifically called from JNI, it can be private.",
+      "range": {
+        "startLine": 4982,
+        "startChar": 68,
+        "endLine": 4982,
+        "endChar": 75
+      },
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10974043_497e76d3",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-21T23:04:41Z",
+      "side": 1,
+      "message": "convertToJavaIntRange",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 40
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "42bc1293_4b24d603",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/jni/android_media_CodecCapabilities.cpp",
+              "range": {
+                "startLine": 44,
+                "startChar": 0,
+                "endLine": 45,
+                "endChar": 0
+              },
+              "replacement": "static jobject convertToJavaIntRange(JNIEnv *env, const Range\u003cint32_t\u003e\u0026 range) {\n"
+            },
+            {
+              "path": "media/jni/android_media_CodecCapabilities.cpp",
+              "range": {
+                "startLine": 72,
+                "startChar": 0,
+                "endLine": 73,
+                "endChar": 0
+              },
+              "replacement": "        jobject jRange \u003d convertToJavaIntRange(env, range);\n"
+            },
+            {
+              "path": "media/jni/android_media_CodecCapabilities.cpp",
+              "range": {
+                "startLine": 92,
+                "startChar": 0,
+                "endLine": 93,
+                "endChar": 0
+              },
+              "replacement": "    jobject jBitrateRange \u003d convertToJavaIntRange(env, bitrateRange);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bf21a5a_a8b751df",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-21T23:04:41Z",
+      "side": 1,
+      "message": "convertToJavaIntRangeArray",
+      "range": {
+        "startLine": 65,
+        "startChar": 20,
+        "endLine": 65,
+        "endChar": 50
+      },
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a2acc10_52319862",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-21T23:04:41Z",
+      "side": 1,
+      "message": "convertToJavaAudioCapabilities",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ab338af0_954ca31b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/jni/android_media_CodecCapabilities.cpp",
+              "range": {
+                "startLine": 84,
+                "startChar": 0,
+                "endLine": 85,
+                "endChar": 0
+              },
+              "replacement": "static jobject convertToJavaAudioCapabilities(\n"
+            }
+          ]
+        }
+      ],
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c66d1098_c1119d2e",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-21T23:04:41Z",
+      "side": 1,
+      "message": "maybe mention that the native AudioCapabilities won\u0027t be destructed until process ends",
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
