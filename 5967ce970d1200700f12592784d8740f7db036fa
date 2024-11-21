@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae16a05a_4dd5d33b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-21T18:27:51Z",
+      "side": 1,
+      "message": "Thanks! Got some minor comment but you can do it in a follow-up CL.",
+      "revId": "5967ce970d1200700f12592784d8740f7db036fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bdd6cf7_38339e36",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-21T18:27:51Z",
+      "side": 1,
+      "message": "This part should probably be moved to line 329, but it\u0027s okay to keep it as-is. I\u0027ll probably modify this part anyway for b/380108116.",
+      "fixSuggestions": [
+        {
+          "fixId": "afbaa63f_0c609c2a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 355,
+                "startChar": 0,
+                "endLine": 356,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 370,
+                "startChar": 0,
+                "endLine": 370,
+                "endChar": 0
+              },
+              "replacement": "\n        InstrumentationRegistry.registerInstance(sInstrumentation, Bundle.EMPTY);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5967ce970d1200700f12592784d8740f7db036fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed720a84_cb07a663",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-21T18:27:51Z",
+      "side": 1,
+      "message": "These are optional, right? I\u0027m wondering if we should even reset them. But it\u0027s okay to keep them as-is. We may change it later.",
+      "fixSuggestions": [
+        {
+          "fixId": "e2c47a1e_df39036e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 357,
+                "startChar": 0,
+                "endLine": 357,
+                "endChar": 0
+              },
+              "replacement": "        // TODO(b/377765941): These are optional, we may change it later.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5967ce970d1200700f12592784d8740f7db036fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb933d37_2a30aeff",
+        "filename": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-21T18:27:51Z",
+      "side": 1,
+      "message": "This call seems mysterious -- naively, we\u0027ll call it anyway before a test method starts, so it seems redundant. But I believe this is for the code that runs before a test code, right? (constructors, test rules, etc.)\n\nCould you add a comment to explain the intention here?\n\nYou can do that in a follow-up CL.",
+      "fixSuggestions": [
+        {
+          "fixId": "01b7ddae_91de108e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/junit-impl-src/android/platform/test/ravenwood/RavenwoodRuntimeEnvironmentController.java",
+              "range": {
+                "startLine": 360,
+                "startChar": 0,
+                "endLine": 360,
+                "endChar": 0
+              },
+              "replacement": "        // This is for the code that runs before a test method starts, e.g. constructors,\n        // @BeforeClass, @Before, etc.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5967ce970d1200700f12592784d8740f7db036fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
