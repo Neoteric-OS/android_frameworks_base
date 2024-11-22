@@ -19,6 +19,8 @@ package com.android.internal.os;
 import static android.system.OsConstants.S_IRWXG;
 import static android.system.OsConstants.S_IRWXO;
 
+import static android.net.http.Flags.preloadHttpengineInZygote;
+
 import static com.android.internal.util.FrameworkStatsLog.BOOT_TIME_EVENT_ELAPSED_TIME__EVENT__SECONDARY_ZYGOTE_INIT_START;
 import static com.android.internal.util.FrameworkStatsLog.BOOT_TIME_EVENT_ELAPSED_TIME__EVENT__ZYGOTE_INIT_START;
 
@@ -27,6 +29,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.pm.SharedLibraryInfo;
 import android.content.res.Resources;
 import android.os.Build;
+import android.net.http.HttpEngine;
 import android.os.Environment;
 import android.os.IInstalld;
 import android.os.Process;
@@ -144,6 +147,10 @@ public class ZygoteInit {
         Trace.traceEnd(Trace.TRACE_TAG_DALVIK);
         preloadSharedLibraries();
         preloadTextResources();
+
+        if (preloadHttpengineInZygote()) {
+            HttpEngine.preload();
+        }
         // Ask the WebViewFactory to do any initialization that must run in the zygote process,
         // for memory sharing purposes.
         WebViewFactory.prepareWebViewInZygote();
