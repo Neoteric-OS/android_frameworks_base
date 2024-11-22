@@ -72,6 +72,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e92927c_90d73e17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-22T19:54:40Z",
+      "side": 1,
+      "message": "Got it! Thanks for the detailed answer!",
+      "parentUuid": "29c150e4_dbb7d2d7",
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e329f05e_6216c279",
@@ -85,6 +103,30 @@
       "writtenOn": "2024-11-22T19:24:55Z",
       "side": 1,
       "message": "Would a `boolean` method be sufficient for your use case? E.g., `boolean verifySigningInfoMatchExactly(path1, path2)`?",
+      "range": {
+        "startLine": 11889,
+        "startChar": 27,
+        "endLine": 11889,
+        "endChar": 38
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e050a70_f81ee66a",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11889,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-22T19:54:40Z",
+      "side": 1,
+      "message": "The reason why we need to expose this as an API rather than having Package Manager verify the signature is more flexibility (see go/art-cloud-compilation-platform-design#heading\u003dh.ewbre2rq8kcr). A boolean won\u0027t give us this flexibility.",
+      "parentUuid": "e329f05e_6216c279",
       "range": {
         "startLine": 11889,
         "startChar": 27,
