@@ -2555,6 +2555,16 @@ public final class NfcAdapter {
         callService(() ->  sService.notifyTestHceData(technology, data));
     }
 
+    /**
+     * Notifies the system of an unknown internal error for tests.
+     *
+     * @hide
+     */
+    @TestApi
+    public void notifyInternalError() {
+        callService(() -> sService.notifyInternalError());
+    }
+
     /** @hide */
     interface ServiceCall {
         void call() throws RemoteException;
