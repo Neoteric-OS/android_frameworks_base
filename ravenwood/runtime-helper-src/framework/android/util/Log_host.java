@@ -18,9 +18,12 @@ package android.util;
 import android.util.Log.Level;
 
 import com.android.internal.os.RuntimeInit;
+import com.android.ravenwood.RavenwoodRuntimeNative;
 import com.android.ravenwood.common.RavenwoodCommonUtils;
 
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Ravenwood "native substitution" class for {@link android.util.Log}.
@@ -31,6 +34,9 @@ import java.io.PrintStream;
  */
 public class Log_host {
 
+    public static final SimpleDateFormat sTimestampFormat =
+            new SimpleDateFormat("MM-dd HH:mm:ss.SSS");
+
     public static boolean isLoggable(String tag, @Level int level) {
         return true;
     }
@@ -38,15 +44,6 @@ public class Log_host {
     public static int println_native(int bufID, int priority, String tag, String msg) {
         if (priority < Log.INFO && !RavenwoodCommonUtils.RAVENWOOD_VERBOSE_LOGGING) {
             return msg.length(); // No verbose logging.
-        }
-        final String buffer;
-        switch (bufID) {
-            case Log.LOG_ID_MAIN: buffer = "main"; break;
-            case Log.LOG_ID_RADIO: buffer = "radio"; break;
-            case Log.LOG_ID_EVENTS: buffer = "event"; break;
-            case Log.LOG_ID_SYSTEM: buffer = "system"; break;
-            case Log.LOG_ID_CRASH: buffer = "crash"; break;
-            default: buffer = "buf:" + bufID; break;
         }
 
         final String prio;
@@ -60,8 +57,12 @@ public class Log_host {
             default: prio = "prio:" + priority; break;
         }
 
+        String leading =  sTimestampFormat.format(new Date())
+                + " %-6d %-6d %s %-8s: ".formatted(getPid(), getTid(), prio, tag);
+        var out = getRealOut();
         for (String s : msg.split("\\n")) {
-            getRealOut().println(String.format("logd: [%s] %s %s: %s", buffer, prio, tag, s));
+            out.print(leading);
+            out.println(s);
         }
         return msg.length();
     }
@@ -79,6 +80,30 @@ public class Log_host {
             return RuntimeInit.sOut$ravenwood;
         } else {
             return System.out;
+        }
+    }
+
+    private static int sCachedPid = -1;
+
+    private static int getPid() {
+        if (sCachedPid > 0) {
+            return sCachedPid;
+        }
+        try {
+            sCachedPid = RavenwoodRuntimeNative.getpid();
+            return sCachedPid;
+        } catch (Throwable e) {
+            // If the native method isn't set up yet, just log 0.
+            return 0;
+        }
+    }
+
+    private static int getTid() {
+        try {
+            return RavenwoodRuntimeNative.gettid();
+        } catch (Throwable e) {
+            // If the native method isn't set up yet, just log 0.
+            return 0;
         }
     }
 }
