@@ -113,6 +113,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce56c2ae_1c0b63a7",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-22T16:31:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f113b2a_efd41082",
+      "range": {
+        "startLine": 142,
+        "startChar": 113,
+        "endLine": 142,
+        "endChar": 123
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f85d15f_2a682e5e",
@@ -222,6 +246,30 @@
       "side": 1,
       "message": "Yes, good idea. I\u0027ll update the CL with this change.",
       "parentUuid": "c5f7ef04_cd1a1604",
+      "range": {
+        "startLine": 654,
+        "startChar": 8,
+        "endLine": 654,
+        "endChar": 24
+      },
+      "revId": "5b66a7bbc9a8fc903e0728e282097b4320dab2ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21236af5_141f2ac2",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-22T16:31:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea126f3_e5b09d64",
       "range": {
         "startLine": 654,
         "startChar": 8,
