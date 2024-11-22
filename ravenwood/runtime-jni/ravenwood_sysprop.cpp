@@ -155,16 +155,29 @@ static jboolean setSystemProperty(JNIEnv* env, jclass, jstring javaKey, jstring 
     return property_set(key.c_str(), value.c_str()) ? JNI_TRUE : JNI_FALSE;
 }
 
-static void clearSystemProperties(JNIEnv*, jclass) {
+static jboolean removeSystemProperty(JNIEnv* env, jclass, jstring javaKey) {
     std::lock_guard lock(g_properties_lock);
-    g_properties.clear();
+
+    if (javaKey == nullptr) {
+        g_properties.clear();
+        return JNI_TRUE;
+    } else {
+        ScopedUtfChars key(env, javaKey);
+        auto it = g_properties.find(key);
+        if (it != g_properties.end()) {
+            g_properties.erase(it);
+            return JNI_TRUE;
+        } else {
+            return JNI_FALSE;
+        }
+    }
 }
 
 static const JNINativeMethod sMethods[] = {
         {"reloadNativeLibrary", "(Ljava/lang/String;)V", (void*)reloadNativeLibrary},
         {"getSystemProperty", "(Ljava/lang/String;)Ljava/lang/String;", (void*)getSystemProperty},
         {"setSystemProperty", "(Ljava/lang/String;Ljava/lang/String;)Z", (void*)setSystemProperty},
-        {"clearSystemProperties", "()V", (void*)clearSystemProperties},
+        {"removeSystemProperty", "(Ljava/lang/String;)Z", (void*)removeSystemProperty},
 };
 
 extern "C" jint JNI_OnLoad(JavaVM* vm, void* /* reserved */) {
