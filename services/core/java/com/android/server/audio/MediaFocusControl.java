@@ -82,11 +82,6 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
      */
     // automatic ducking was introduced for Android O
     static final int DUCKING_IN_APP_SDK_LEVEL = Build.VERSION_CODES.N_MR1;
-    /**
-     * set to true so the framework enforces muting media/game itself when the device is ringing
-     * or in a call.
-     */
-    static final boolean ENFORCE_MUTING_FOR_RING_OR_CALL = true;
 
     /**
      * set to true so the framework enforces fading out apps that lose audio focus in a
@@ -98,6 +93,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
     private final AppOpsManager mAppOps;
     private final @NonNull PlayerFocusEnforcer mFocusEnforcer;
     private boolean mMultiAudioFocusEnabled = false;
+    private boolean mEnforceMutingForRingOrCall = true;
 
     private boolean mRingOrCallActive = false;
 
@@ -112,6 +108,8 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
         final ContentResolver cr = mContext.getContentResolver();
         mMultiAudioFocusEnabled = Settings.System.getIntForUser(cr,
                 Settings.System.MULTI_AUDIO_FOCUS_ENABLED, 0, cr.getUserId()) != 0;
+        mEnforceMutingForRingOrCall = Settings.Secure.getInt(cr,
+                Settings.Secure.ENFORCE_MUTING_FOR_RING_OR_CALL, 1) != 0;
         initFocusThreading();
     }
 
@@ -1278,7 +1276,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             notifyExtPolicyFocusGrant_syncAf(nfr.toAudioFocusInfo(),
                     AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
 
-            if (ENFORCE_MUTING_FOR_RING_OR_CALL & enteringRingOrCall) {
+            if (mEnforceMutingForRingOrCall & enteringRingOrCall) {
                 runAudioCheckerForRingOrCallAsync(true/*enteringRingOrCall*/);
             }
         }//synchronized(mAudioFocusLock)
@@ -1323,7 +1321,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
 
                 removeFocusStackEntry(clientId, true /*signal*/, true /*notifyFocusFollowers*/);
 
-                if (ENFORCE_MUTING_FOR_RING_OR_CALL & exitingRingOrCall) {
+                if (mEnforceMutingForRingOrCall & exitingRingOrCall) {
                     runAudioCheckerForRingOrCallAsync(false/*enteringRingOrCall*/);
                 }
             }

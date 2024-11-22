@@ -363,6 +363,7 @@ public class SecureSettingsValidators {
         VALIDATORS.put(Secure.NOTIFICATION_BUBBLES, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Secure.LOCATION_TIME_ZONE_DETECTION_ENABLED, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Secure.LOCATION_SHOW_SYSTEM_OPS, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(Secure.ENFORCE_MUTING_FOR_RING_OR_CALL, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Secure.DEVICE_STATE_ROTATION_LOCK, value -> {
             if (TextUtils.isEmpty(value)) {
                 return true;

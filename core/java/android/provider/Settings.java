@@ -12385,6 +12385,12 @@ public final class Settings {
         @Readable
         public static final String GAME_DASHBOARD_ALWAYS_ON = "game_dashboard_always_on";
 
+        /**
+         * Used to determine if when the device receives a call whether any currently playing
+         * audio should be muted for the duration of the call.
+         * @hide
+         */
+        public static final String ENFORCE_MUTING_FOR_RING_OR_CALL = "enforce_muting_for_ring_or_call";
 
         /**
          * For this device state, no specific auto-rotation lock setting should be applied.
