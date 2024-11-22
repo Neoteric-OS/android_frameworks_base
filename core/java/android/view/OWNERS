@@ -12,6 +12,9 @@ jreck@google.com
 siyamed@google.com
 mount@google.com
 
+# Bug component: 1519745 = per-file WindowMetrics*
+    charlesccchen@google.com
+
 # Autofill
 per-file ViewStructure.java = file:/core/java/android/service/autofill/OWNERS
 
