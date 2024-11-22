@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09e94513_3c6dd0e6",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-22T21:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c21540e4_823573b6",
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c1af5fa_40a5d1c6",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa95ebd6_9af450f4",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 1894,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-22T21:24:51Z",
+      "side": 1,
+      "message": "Added a flag check.",
+      "parentUuid": "4c1af5fa_40a5d1c6",
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6649f4a7_9b871eac",
@@ -48,6 +84,30 @@
       "writtenOn": "2024-11-21T23:04:41Z",
       "side": 1,
       "message": "maybe taking int simplifies the JNI part?\n\nAlso if this is specifically called from JNI, it can be private.",
+      "range": {
+        "startLine": 4982,
+        "startChar": 68,
+        "endLine": 4982,
+        "endChar": 75
+      },
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b8eb48e_89b52a73",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 4982,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-22T21:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6649f4a7_9b871eac",
       "range": {
         "startLine": 4982,
         "startChar": 68,
@@ -119,6 +179,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b615edf8_82b91093",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-22T21:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10974043_497e76d3",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 40
+      },
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bf21a5a_a8b751df",
@@ -132,6 +216,30 @@
       "writtenOn": "2024-11-21T23:04:41Z",
       "side": 1,
       "message": "convertToJavaIntRangeArray",
+      "range": {
+        "startLine": 65,
+        "startChar": 20,
+        "endLine": 65,
+        "endChar": 50
+      },
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25304401_cb805319",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-22T21:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bf21a5a_a8b751df",
       "range": {
         "startLine": 65,
         "startChar": 20,
@@ -183,6 +291,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "471cb4be_0f9ce3e7",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-22T21:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a2acc10_52319862",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c66d1098_c1119d2e",
@@ -196,6 +328,24 @@
       "writtenOn": "2024-11-21T23:04:41Z",
       "side": 1,
       "message": "maybe mention that the native AudioCapabilities won\u0027t be destructed until process ends",
+      "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5a0b31e_57de744b",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-22T21:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c66d1098_c1119d2e",
       "revId": "69a5d58bf9b513c63da77ea8352aa1aa1dc51b63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
