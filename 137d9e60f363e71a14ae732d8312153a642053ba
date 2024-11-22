@@ -34,6 +34,47 @@
       "parentUuid": "428ca7c1_433c22c2",
       "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8caefb83_df8d8b2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-11-22T19:24:55Z",
+      "side": 1,
+      "message": "(Marking it unresolved in case it gets lost after my comments)",
+      "parentUuid": "428ca7c1_433c22c2",
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e329f05e_6216c279",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11889,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-11-22T19:24:55Z",
+      "side": 1,
+      "message": "Would a `boolean` method be sufficient for your use case? E.g., `boolean verifySigningInfoMatchExactly(path1, path2)`?",
+      "range": {
+        "startLine": 11889,
+        "startChar": 27,
+        "endLine": 11889,
+        "endChar": 38
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
