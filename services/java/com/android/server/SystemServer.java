@@ -1258,6 +1258,10 @@ public final class SystemServer implements Dumpable {
         if (SystemProperties.getBoolean("config.enable_display_offload", false)) {
             mSystemServiceManager.startService(WEAR_DISPLAYOFFLOAD_SERVICE_CLASS);
         }
+        // start the OffloadManagerService
+        if (SystemProperties.getBoolean("config.enable_qti_display_offload", false)) {
+            mSystemServiceManager.startService("com.qualcomm.qti.server.offloadservice.OffloadManagerService");
+        }
         t.traceEnd();
 
         // Display manager is needed to provide display metrics before package manager
