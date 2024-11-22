@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "29c150e4_dbb7d2d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2024-11-22T19:49:45Z",
+      "side": 1,
+      "message": "There were a couple vulnerabilities in the V1 signature scheme (Janus and Master Key are the two primary ones that immediately come to mind), but those were patched shortly after disclosure. The primary concern with the V1 signature scheme is that it can require SHA-1 for minSdkVersions \u003c 18, and attacks against SHA-1 have become increasingly severe (for more info, see [this paper](https://www.usenix.org/conference/usenixsecurity20/presentation/leurent)). This is why we added the minimum V2 signature for targetSdkVersion 30+, but there are currently no known issues with the whole APK signature schemes V2+.",
+      "parentUuid": "8caefb83_df8d8b2d",
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e329f05e_6216c279",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 4
