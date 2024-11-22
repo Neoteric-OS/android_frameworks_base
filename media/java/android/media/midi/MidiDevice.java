@@ -12,6 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 
 package android.media.midi;
@@ -144,7 +145,7 @@ public final class MidiDevice implements Closeable {
             }
             return new MidiInputPort(mDeviceServer, token, fd, portNumber);
         } catch (RemoteException e) {
-            Log.e(TAG, "RemoteException in openInputPort");
+            Log.e(TAG, "RemoteException in openInputPort for port " + portNumber);
             return null;
         }
     }
@@ -170,7 +171,7 @@ public final class MidiDevice implements Closeable {
             }
             return new MidiOutputPort(mDeviceServer, token, fd, portNumber);
         } catch (RemoteException e) {
-            Log.e(TAG, "RemoteException in openOutputPort");
+            Log.e(TAG, "RemoteException in openOutputPort for port " + portNumber);
             return null;
         }
     }
