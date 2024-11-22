@@ -16,6 +16,24 @@
       "message": "Changes look good to me. Just to confirm, will APK Signature Scheme v3 be used as the minimum SDK version for verification? Or will you instead use the target SDK requirement where anything targeting SDK version 30 or later must be signed with a minimum of V2?",
       "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f086ae9c_60ca9eb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-22T19:13:40Z",
+      "side": 1,
+      "message": "Thanks for the review! I plan to use v3 as a minimum. Since ART Service only verifies that the signature of the .sdm matches the APK when there is an .sdm file, the assumption is that the APK is also signed by the store in this case. Therefore, we don\u0027t have to be backward-compatible.\n\nJust curious, are there any security implications around signature scheme versions (some versions are considered insecure)?",
+      "parentUuid": "428ca7c1_433c22c2",
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
