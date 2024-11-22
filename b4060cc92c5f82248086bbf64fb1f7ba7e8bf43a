@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c44112d_8b8fa7d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-11-22T23:30:02Z",
+      "side": 1,
+      "message": "I\u0027ll have to manually CP this to internal as it\u0027s not a clean merge, will upload that separately but wanted to post in aosp to show how it will be used.",
+      "revId": "b4060cc92c5f82248086bbf64fb1f7ba7e8bf43a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
