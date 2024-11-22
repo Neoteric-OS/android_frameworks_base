@@ -39,6 +39,7 @@ import android.aconfigd.Aconfigd.StorageRequestMessage;
 import android.aconfigd.Aconfigd.StorageRequestMessages;
 import android.aconfigd.Aconfigd.StorageReturnMessage;
 import android.aconfigd.Aconfigd.StorageReturnMessages;
+import static android.mmd.flags.Flags.mmdEnabled;
 import static com.android.aconfig_new_storage.Flags.enableAconfigStorageDaemon;
 import static com.android.aconfig_new_storage.Flags.enableAconfigdFromMainline;
 
@@ -48,6 +49,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,37 +104,44 @@ public class SettingsToPropertiesMapper {
     // with format persist.device_config.[device_config_scope]. in system_server.te and grant read
     // permission in the corresponding .te file your feature belongs to.
     @VisibleForTesting
-    static final String[] sDeviceConfigScopes = new String[] {
-        DeviceConfig.NAMESPACE_ACTIVITY_MANAGER_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_CAMERA_NATIVE,
-        DeviceConfig.NAMESPACE_CONFIGURATION,
-        DeviceConfig.NAMESPACE_CONNECTIVITY,
-        DeviceConfig.NAMESPACE_EDGETPU_NATIVE,
-        DeviceConfig.NAMESPACE_INPUT_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_INTELLIGENCE_CONTENT_SUGGESTIONS,
-        DeviceConfig.NAMESPACE_LMKD_NATIVE,
-        DeviceConfig.NAMESPACE_MEDIA_NATIVE,
-        DeviceConfig.NAMESPACE_MGLRU_NATIVE,
-        DeviceConfig.NAMESPACE_NETD_NATIVE,
-        DeviceConfig.NAMESPACE_NNAPI_NATIVE,
-        DeviceConfig.NAMESPACE_PROFCOLLECT_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_REMOTE_KEY_PROVISIONING_NATIVE,
-        DeviceConfig.NAMESPACE_RUNTIME_NATIVE,
-        DeviceConfig.NAMESPACE_RUNTIME_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_STATSD_NATIVE,
-        DeviceConfig.NAMESPACE_STATSD_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_STORAGE_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_SURFACE_FLINGER_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_SWCODEC_NATIVE,
-        DeviceConfig.NAMESPACE_VENDOR_SYSTEM_NATIVE,
-        DeviceConfig.NAMESPACE_VENDOR_SYSTEM_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_VIRTUALIZATION_FRAMEWORK_NATIVE,
-        DeviceConfig.NAMESPACE_WINDOW_MANAGER_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_MEMORY_SAFETY_NATIVE_BOOT,
-        DeviceConfig.NAMESPACE_MEMORY_SAFETY_NATIVE,
-        DeviceConfig.NAMESPACE_HDMI_CONTROL,
-        NAMESPACE_TETHERING_U_OR_LATER_NATIVE
-    };
+    static final String[] generateDeviceConfigScopes() {
+        String[] defaultConfigs = new String[]{
+                DeviceConfig.NAMESPACE_ACTIVITY_MANAGER_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_CAMERA_NATIVE,
+                DeviceConfig.NAMESPACE_CONFIGURATION,
+                DeviceConfig.NAMESPACE_CONNECTIVITY,
+                DeviceConfig.NAMESPACE_EDGETPU_NATIVE,
+                DeviceConfig.NAMESPACE_INPUT_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_INTELLIGENCE_CONTENT_SUGGESTIONS,
+                DeviceConfig.NAMESPACE_LMKD_NATIVE,
+                DeviceConfig.NAMESPACE_MEDIA_NATIVE,
+                DeviceConfig.NAMESPACE_MGLRU_NATIVE,
+                DeviceConfig.NAMESPACE_NETD_NATIVE,
+                DeviceConfig.NAMESPACE_NNAPI_NATIVE,
+                DeviceConfig.NAMESPACE_PROFCOLLECT_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_REMOTE_KEY_PROVISIONING_NATIVE,
+                DeviceConfig.NAMESPACE_RUNTIME_NATIVE,
+                DeviceConfig.NAMESPACE_RUNTIME_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_STATSD_NATIVE,
+                DeviceConfig.NAMESPACE_STATSD_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_STORAGE_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_SURFACE_FLINGER_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_SWCODEC_NATIVE,
+                DeviceConfig.NAMESPACE_VENDOR_SYSTEM_NATIVE,
+                DeviceConfig.NAMESPACE_VENDOR_SYSTEM_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_VIRTUALIZATION_FRAMEWORK_NATIVE,
+                DeviceConfig.NAMESPACE_WINDOW_MANAGER_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_MEMORY_SAFETY_NATIVE_BOOT,
+                DeviceConfig.NAMESPACE_MEMORY_SAFETY_NATIVE,
+                DeviceConfig.NAMESPACE_HDMI_CONTROL,
+                NAMESPACE_TETHERING_U_OR_LATER_NATIVE
+        };
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(defaultConfigs));
+        if (mmdEnabled()) {
+            list.add(DeviceConfig.NAMESPACE_MMD_NATIVE);
+        }
+        return list.toArray(new String[0]);
+    }
 
     // All the aconfig flags under the listed DeviceConfig scopes will be synced to native level.
     // The list is sorted.
@@ -637,7 +646,7 @@ public class SettingsToPropertiesMapper {
         SettingsToPropertiesMapper mapper =  new SettingsToPropertiesMapper(
                 contentResolver,
                 sGlobalSettings,
-                sDeviceConfigScopes,
+                generateDeviceConfigScopes(),
                 sDeviceConfigAconfigScopes);
         mapper.updatePropertiesFromSettings();
         return mapper;
