@@ -33,6 +33,24 @@
       "message": "Should this be PackageManager.SDK_FEATURE_COUNT?",
       "revId": "b4060cc92c5f82248086bbf64fb1f7ba7e8bf43a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bf4647a_3f607383",
+        "filename": "core/java/android/app/ApplicationPackageManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-11-22T23:57:44Z",
+      "side": 1,
+      "message": "Should be equivalent but updated for clarity, done.",
+      "parentUuid": "fd2974d0_2ec96f92",
+      "revId": "b4060cc92c5f82248086bbf64fb1f7ba7e8bf43a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
