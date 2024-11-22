@@ -15,12 +15,22 @@
  */
 package android.platform.test.ravenwood;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import android.util.Log;
+import android.util.Pair;
+
+import com.android.ravenwood.RavenwoodRuntimeNative;
 
 import org.junit.runner.Description;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Used to store various states associated with the current test runner that's inly needed
+ * Used to store various states associated with the current test runner that's only needed
  * in junit-impl.
  *
  * We don't want to put it in junit-src to avoid having to recompile all the downstream
@@ -30,6 +40,11 @@ import org.junit.runner.Description;
  */
 public final class RavenwoodRunnerState {
     private static final String TAG = "RavenwoodRunnerState";
+    private static final String RAVENWOOD_RULE_ERROR =
+            "RavenwoodRule(s) are not executed in the correct order";
+
+    private static final List<Pair<RavenwoodRule, RavenwoodTestProperties>> sActiveProperties =
+            new ArrayList<>();
 
     private final RavenwoodAwareTestRunner mRunner;
 
@@ -53,6 +68,7 @@ public final class RavenwoodRunnerState {
 
     public void exitTestClass() {
         Log.i(TAG, "exitTestClass: " + mRunner.mTestJavaClass.getName());
+        assertTrue(RAVENWOOD_RULE_ERROR, sActiveProperties.isEmpty());
         RavenwoodRuntimeEnvironmentController.exitTestClass();
     }
 
@@ -66,9 +82,40 @@ public final class RavenwoodRunnerState {
     }
 
     public void enterRavenwoodRule(RavenwoodRule rule) {
-        RavenwoodRuntimeEnvironmentController.setSystemProperties(rule.mSystemProperties);
+        pushTestProperties(rule);
     }
 
     public void exitRavenwoodRule(RavenwoodRule rule) {
+        popTestProperties(rule);
+    }
+
+    private static void pushTestProperties(RavenwoodRule rule) {
+        rule.mProperties.getValues().forEach(RavenwoodRuntimeNative::setSystemProperty);
+        sActiveProperties.add(
+                Pair.create(rule, new RavenwoodTestProperties(rule.mProperties, true)));
+    }
+
+    private static void popTestProperties(RavenwoodRule rule) {
+        var pair = sActiveProperties.removeLast();
+        assertNotNull(RAVENWOOD_RULE_ERROR, pair);
+        assertEquals(RAVENWOOD_RULE_ERROR, rule, pair.first);
+        pair.second.getValues().keySet().forEach(RavenwoodRuntimeNative::removeSystemProperty);
+    }
+
+    @SuppressWarnings("unused")  // Called from native code (ravenwood_sysprop.cpp)
+    private static void checkSystemPropertyAccess(String key, boolean write) {
+        if (write && RavenwoodSystemProperties.sDefaultValues.containsKey(key)) {
+            // The default core values should never be modified
+            throw new IllegalArgumentException(
+                    "Writing core system property '" + key + "' is now allowed");
+        }
+
+        final boolean result = RavenwoodSystemProperties.isKeyAccessible(key, write)
+                || sActiveProperties.stream().anyMatch(p -> p.second.isKeyAccessible(key, write));
+
+        if (!result) {
+            throw new IllegalArgumentException((write ? "Write" : "Read")
+                    + " access to system property '" + key + "' denied via RavenwoodRule");
+        }
     }
 }
