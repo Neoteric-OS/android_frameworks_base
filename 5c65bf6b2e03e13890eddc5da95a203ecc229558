@@ -33,6 +33,42 @@
       "message": "Thank you so much Lais for the prompt reviews and all your help!",
       "revId": "5c65bf6b2e03e13890eddc5da95a203ecc229558",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5841503_4a245c7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-11-22T10:48:50Z",
+      "side": 1,
+      "message": "Conflict solved!",
+      "parentUuid": "4a9b2729_8e660377",
+      "revId": "5c65bf6b2e03e13890eddc5da95a203ecc229558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a4327d2_618c3edb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2024-11-22T10:48:50Z",
+      "side": 1,
+      "message": "Thank you for sending this fix and for adding the tests!",
+      "parentUuid": "21f3c134_4d5bf076",
+      "revId": "5c65bf6b2e03e13890eddc5da95a203ecc229558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
