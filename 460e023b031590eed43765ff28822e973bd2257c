@@ -16,6 +16,23 @@
       "message": "Adding Joe, Paul, Makoto for ownership review",
       "revId": "460e023b031590eed43765ff28822e973bd2257c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd02c2f1_75595eaf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-11-22T19:55:42Z",
+      "side": 1,
+      "message": "On the face of it, this looks fine to me, but Paul and Makoto will have to provide the expertise on whether the move locations are proper, which I can\u0027t say. I\u0027m fine with the package changes in the VCN code though. So +1 from me on that. Once everyone is on board, someone can +2.",
+      "revId": "460e023b031590eed43765ff28822e973bd2257c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
