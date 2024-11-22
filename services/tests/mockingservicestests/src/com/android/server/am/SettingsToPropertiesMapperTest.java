@@ -134,7 +134,7 @@ public class SettingsToPropertiesMapperTest {
     @Test
     public void validateRegisteredDeviceConfigScopes() {
         HashSet<String> hashSet = new HashSet<>();
-        for (String deviceConfigScope : SettingsToPropertiesMapper.sDeviceConfigScopes) {
+        for (String deviceConfigScope : SettingsToPropertiesMapper.generateDeviceConfigScopes()) {
             if (hashSet.contains(deviceConfigScope)) {
                 Assert.fail("deviceConfigScope "
                         + deviceConfigScope
