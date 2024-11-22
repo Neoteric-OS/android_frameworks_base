@@ -303,7 +303,7 @@ public class SettingsToPropertiesMapper {
                             if (propertyName == null) {
                                 logErr("unable to construct system property for " + scope + "/"
                                         + key);
-                                return;
+                                continue;
                             }
                             setProperty(propertyName, properties.getString(key, null));
 
@@ -315,7 +315,7 @@ public class SettingsToPropertiesMapper {
                             if (aconfigPropertyName == null) {
                                 logErr("unable to construct system property for " + scope + "/"
                                         + key);
-                                return;
+                                continue;
                             }
                             setProperty(aconfigPropertyName, properties.getString(key, null));
                         }
@@ -333,7 +333,7 @@ public class SettingsToPropertiesMapper {
                             if (aconfigPropertyName == null) {
                                 logErr("unable to construct system property for " + scope + "/"
                                         + key);
-                                return;
+                                continue;
                             }
                             setProperty(aconfigPropertyName, properties.getString(key, null));
                         }
