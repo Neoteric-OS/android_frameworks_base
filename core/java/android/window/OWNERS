@@ -3,3 +3,6 @@ set noparent
 include /services/core/java/com/android/server/wm/OWNERS
 
 per-file DesktopModeFlags.java = file:/libs/WindowManager/Shell/src/com/android/wm/shell/desktopmode/OWNERS
+
+# Bug component: 1519745 = per-file WindowContext*,WindowMetrics*,WindowProvider*,WindowTokenClient*
+    per-file WindowContext*,WindowMetrics*,WindowProvider*,WindowTokenClient* = charlesccchen@google.com
