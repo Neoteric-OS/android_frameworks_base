@@ -143,6 +143,11 @@ public abstract class FileObserver {
 
         public void stopWatching(int[] descriptors) {
             stopWatching(m_fd, descriptors);
+            for (int wfd: descriptors) {
+                if (wfd >= 0) {
+                    mRealObservers.delete(wfd);
+                }
+            }
         }
 
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
