@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de405cf2_28b2c3a1",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-23T00:41:21Z",
+      "side": 1,
+      "message": "these probably shouldn\u0027t be static",
+      "range": {
+        "startLine": 1810,
+        "startChar": 12,
+        "endLine": 1812,
+        "endChar": 78
+      },
+      "revId": "db356efb4850517bada21ee4242cf265f20429d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
