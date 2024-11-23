@@ -63,6 +63,30 @@
       },
       "revId": "6ee09869a82f57171dfdc389d96aac0b3b48c307",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b5f3a4d_c00599b5",
+        "filename": "ravenwood/runtime-helper-src/framework/android/util/Log_host.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-23T00:47:40Z",
+      "side": 1,
+      "message": "Since I\u0027ll tweak it further, I\u0027ll do the rename too.",
+      "parentUuid": "a8651067_757b5a5d",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "6ee09869a82f57171dfdc389d96aac0b3b48c307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
