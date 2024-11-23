@@ -22,6 +22,30 @@
       },
       "revId": "db356efb4850517bada21ee4242cf265f20429d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f8765f5_5e0af149",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-23T01:03:39Z",
+      "side": 1,
+      "message": "Yes, the CL was messed by a git issue. This is in the previous version of the CL. Updated to the latest one.",
+      "parentUuid": "de405cf2_28b2c3a1",
+      "range": {
+        "startLine": 1810,
+        "startChar": 12,
+        "endLine": 1812,
+        "endChar": 78
+      },
+      "revId": "db356efb4850517bada21ee4242cf265f20429d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
