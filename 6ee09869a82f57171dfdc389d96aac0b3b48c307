@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cf0a666_8785f74b",
+        "filename": "ravenwood/runtime-helper-src/framework/android/util/Log_host.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2024-11-23T00:34:51Z",
+      "side": 1,
+      "message": "Do you want to also rename this class to `Log_ravenwood` since you\u0027re here?",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "6ee09869a82f57171dfdc389d96aac0b3b48c307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
