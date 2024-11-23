@@ -16,6 +16,24 @@
       "message": "This is used for production code in the next CL.  Do we still need VisibleForTesting?",
       "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73936ed5_c2ccef69",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3120,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-11-23T00:01:28Z",
+      "side": 1,
+      "message": "I missed that the constant is used in a subclass of PackageManager.  Ignore this comment.",
+      "parentUuid": "ad6bbd09_ba6baac2",
+      "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
