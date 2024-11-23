@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3e7a651_6db4601b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-23T01:13:08Z",
+      "side": 1,
+      "message": "PTAL? No longer call uninitialized JNI methods.",
+      "revId": "0183e0b45436536f802e3c74233040ac8768e53d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
