@@ -34,6 +34,24 @@
       "parentUuid": "ad6bbd09_ba6baac2",
       "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35039cde_0c1e6e93",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3120,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-11-23T00:03:59Z",
+      "side": 1,
+      "message": "I added that as without the test I\u0027d have made this a protected field, and it\u0027s a hint as to why. I\u0027m OK removing the annotation but don\u0027t plan on using the constant  outside of the test or ApplicationPackageManager. @patb@google.com any preference?\n\nUnfortunately the codegen from the annotation processor doesn\u0027t seem to be visible when linking the usual set of test targets, otherwise I\u0027d just add a test for SystemFeaturesMetadata directly.",
+      "parentUuid": "ad6bbd09_ba6baac2",
+      "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
