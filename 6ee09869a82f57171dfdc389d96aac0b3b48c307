@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f861b305_b4b1ea9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-23T00:46:44Z",
+      "side": 1,
+      "message": "Actually, I have a second thought about calling native methods before they\u0027re set up... I\u0027ll change it.",
+      "revId": "6ee09869a82f57171dfdc389d96aac0b3b48c307",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8cf0a666_8785f74b",
         "filename": "ravenwood/runtime-helper-src/framework/android/util/Log_host.java",
         "patchSetId": 2
