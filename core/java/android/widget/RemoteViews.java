@@ -736,6 +736,27 @@ public class RemoteViews implements Parcelable, Filter {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void mergeRemoteViews(RemoteViews newRv) {
         if (newRv == null) return;
+        // Merges mSizedRemoteViews actions
+        if (newRv.hasSizedRemoteViews() && hasSizedRemoteViews()) {
+            for (int i = 0; i < newRv.mSizedRemoteViews.size(); i++) {
+                RemoteViews newSizeRv = newRv.mSizedRemoteViews.get(i);
+                SizeF newSizeF = newSizeRv.getIdealSize();
+                for (int j = 0; j < mSizedRemoteViews.size(); j++) {
+                    if (newSizeF != null && newSizeF.equals(mSizedRemoteViews.get(j).getIdealSize())) {
+                        RemoteViews sizeRv = mSizedRemoteViews.get(j);
+                        sizeRv.mergeRemoteViews(newSizeRv);
+                        break;
+                    }
+                }
+            }
+            return;
+        }
+        // Merges landscape and portrait RemoteViews actions
+        if (newRv.hasLandscapeAndPortraitLayouts() && hasLandscapeAndPortraitLayouts()) {
+            mLandscape.mergeRemoteViews(newRv.mLandscape);
+            mPortrait.mergeRemoteViews(newRv.mPortrait);
+            return;
+        }
         // We first copy the new RemoteViews, as the process of merging modifies the way the actions
         // reference the bitmap cache. We don't want to modify the object as it may need to
         // be merged and applied multiple times.
