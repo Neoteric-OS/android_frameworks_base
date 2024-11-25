@@ -4772,6 +4772,9 @@
   <java-symbol type="dimen" name="accessibility_magnification_thumbnail_container_stroke_width" />
   <java-symbol type="dimen" name="accessibility_magnification_thumbnail_padding" />
   <java-symbol type="id" name="accessibility_magnification_thumbnail_view" />
+  <java-symbol type="array" name="config_lockTaskModeAllowedPackages" />
+  <java-symbol type="array" name="config_lockTaskModeAllowedActivities" />
+
   <!-- Package with global data query permissions for AppSearch -->
   <java-symbol type="string" name="config_globalAppSearchDataQuerierPackage" />
 

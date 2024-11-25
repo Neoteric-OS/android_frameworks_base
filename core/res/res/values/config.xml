@@ -4845,7 +4845,7 @@
      See android.credentials.CredentialManager
     -->
     <string name="config_defaultCredentialManagerHybridService" translatable="false"></string>
-    
+
     <!-- The component name, flattened to a string, for the system's credential manager
       autofill service. This service allows interceding autofill requests and routing
       them to credential manager.
@@ -7091,9 +7091,25 @@
     <bool name="config_enableContextSyncInCall">false</bool>
 
     <!-- Whether the system uses auto-suspend mode. -->
+
     <bool name="config_useAutoSuspend">true</bool>
 
     <!-- Whether to show GAIA education screen during account login of private space setup.
          OEM/Partner can explicitly opt to disable the screen. -->
     <bool name="config_enableGaiaEducationInPrivateSpace">true</bool>
+
+    <bool name="config_skipAllowBackupCheckForNonSystemOrTestApps">false</bool>
+    <!-- List of packages that are allowed to bypass Lock Task Mode violations
+         while the device is in Lock Task Mode (which can be set by MDM apps).
+         -->
+    <string-array translatable="false" name="config_lockTaskModeAllowedPackages"></string-array>
+
+    <!-- List of activities that are allowed to bypass Lock Task Mode violations
+         while the device is in Lock Task Mode (which can be set by MDM apps).
+         You can find the relevant package and activity name in logs by
+         searching for <code>E ActivityTaskManager: Attempted Lock Task Mode
+         violation</code>. However, you need to remove the <code>/</code> from
+         the package/activity separator to match the output of
+         <code>ComponentName.getClassName()</code>. -->
+    <string-array translatable="false" name="config_lockTaskModeAllowedActivities"></string-array>
 </resources>

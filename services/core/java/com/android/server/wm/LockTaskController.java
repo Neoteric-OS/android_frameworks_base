@@ -47,6 +47,7 @@ import android.app.admin.IDevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Binder;
 import android.os.Debug;
 import android.os.Handler;
@@ -64,6 +65,7 @@ import android.util.SparseIntArray;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.protolog.common.ProtoLog;
+import com.android.internal.R;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.telephony.CellBroadcastUtils;
 import com.android.internal.widget.LockPatternUtils;
@@ -124,6 +126,13 @@ public class LockTaskController {
                 new Pair<>(StatusBarManager.DISABLE_NONE,
                         StatusBarManager.DISABLE2_GLOBAL_ACTIONS));
     }
+
+    // Packages in mAllowedPackages and activities in mAllowedActivities are
+    // allowed by bypass lock task mode. This is needed to prevent MDM apps
+    // from breaking system functionality. These values are defined in
+    // device/oculus.
+    private ArrayList<String> mAllowedPackages;
+    private ArrayList<String> mAllowedActivities;
 
     /** Tag used for disabling of keyguard */
     private static final String LOCK_TASK_TAG = "Lock-to-App";
@@ -212,6 +221,18 @@ public class LockTaskController {
         mSupervisor = supervisor;
         mHandler = handler;
         mTaskChangeNotificationController = taskChangeNotificationController;
+
+        loadAllowedPackagesAndActivities();
+    }
+
+    private void loadAllowedPackagesAndActivities() {
+        final Resources r = mContext.getResources();
+
+        final String[] allowedPackages = r.getStringArray(R.array.config_lockTaskModeAllowedPackages);
+        mAllowedPackages = new ArrayList<String>(Arrays.asList(allowedPackages));
+
+        final String[] allowedActivities = r.getStringArray(R.array.config_lockTaskModeAllowedActivities);
+        mAllowedActivities = new ArrayList<String>(Arrays.asList(allowedActivities));
     }
 
     /**
@@ -396,6 +417,22 @@ public class LockTaskController {
 
         if (isWirelessEmergencyAlert(intent)) {
             return false;
+        }
+
+        // Allow specific packages/activities listed in allowlist
+        // to bypass lock task mode
+        String packageName = null;
+        String className = null;
+        if (wc instanceof Task && ((Task) wc).realActivity != null) {
+            packageName = ((Task) wc).realActivity.getPackageName();
+            className = ((Task) wc).realActivity.getClassName();
+        } else if (wc instanceof ActivityRecord && ((ActivityRecord) wc).mActivityComponent != null) {
+            packageName = ((ActivityRecord) wc).mActivityComponent.getPackageName();
+            className = ((ActivityRecord) wc).mActivityComponent.getClassName();
+        }
+        if (mAllowedPackages.contains(packageName) ||
+                mAllowedActivities.contains(className)) {
+            taskAuth = LOCK_TASK_AUTH_ALLOWLISTED;
         }
 
         return !(isTaskAuthAllowlisted(taskAuth) || mLockTaskModeTasks.isEmpty());
@@ -670,7 +707,7 @@ public class LockTaskController {
             }
         }
 
-        // When a task is locked, dismiss the root pinned task if it exists 
+        // When a task is locked, dismiss the root pinned task if it exists
         mSupervisor.mRootWindowContainer.removeRootTasksInWindowingModes(WINDOWING_MODE_PINNED);
 
         // System can only initiate screen pinning, not full lock task mode
