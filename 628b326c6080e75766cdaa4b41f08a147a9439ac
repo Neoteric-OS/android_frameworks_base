@@ -34,6 +34,24 @@
       "parentUuid": "c213d730_106378b0",
       "revId": "628b326c6080e75766cdaa4b41f08a147a9439ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea0c3cb6_d04b5787",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-25T18:58:36Z",
+      "side": 1,
+      "message": "I don\u0027t really see a major benefit in adding an API just for the sake of invoking the callback. It\u0027s not really testing any internals.",
+      "parentUuid": "82e57bd8_c60ce467",
+      "revId": "628b326c6080e75766cdaa4b41f08a147a9439ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
