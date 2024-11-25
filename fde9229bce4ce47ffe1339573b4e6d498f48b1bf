@@ -16,6 +16,23 @@
       "message": "Upstream from Meta 😊",
       "revId": "fde9229bce4ce47ffe1339573b4e6d498f48b1bf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6645a3b8_30a058d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2024-11-25T16:53:55Z",
+      "side": 1,
+      "message": "These tuning sysprops have historically gone poorly. 99% of new devices are setup by copy/pasting from previous, so we used to get hit with all sorts of wonky values.\n\nCan you instead give the `initialMaxSurfaceAreaScale` a try? https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/libs/hwui/MemoryPolicy.h;l\u003d44\n\nWe don\u0027t currently use that in any shipping memory policy, but it has been experimented with in the \"extremelowram\" policy (see MemoryPolicy.cpp). A policy for these devices that configures that would be more palatable than this sysprop, as at least then the intention is understood and there\u0027s a recovery if the device gives a bad value or mis-judges an actual app\u0027s usage",
+      "revId": "fde9229bce4ce47ffe1339573b4e6d498f48b1bf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
