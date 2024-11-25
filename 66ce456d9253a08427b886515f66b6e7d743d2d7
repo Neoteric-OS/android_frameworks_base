@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79402da_d8a47f18",
+        "filename": "core/tests/coretests/src/android/window/OWNERS",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-11-25T08:39:12Z",
+      "side": 1,
+      "message": "No need your ldap? You are the default assignee of the bug component anyway",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 4,
+        "endChar": 28
+      },
+      "revId": "66ce456d9253a08427b886515f66b6e7d743d2d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
