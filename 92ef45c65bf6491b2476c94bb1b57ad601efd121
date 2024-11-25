@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5152ef81_1df7b92e",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-25T22:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1705a9bc_36f12ef2",
+      "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69468aaf_4d18ccfd",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae9d05e2_30426200",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-25T22:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69468aaf_4d18ccfd",
+      "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69838ec7_e1a6d6c3",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-11-25T20:48:33Z",
       "side": 1,
       "message": "nit: this never gets called in this patch set.",
+      "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcb49374_8e869bab",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-25T22:46:45Z",
+      "side": 1,
+      "message": "It is to group AudioCapabilities functionalities into a single CL for readabilities. I can move it to the last CL if it looks better.",
+      "parentUuid": "69838ec7_e1a6d6c3",
       "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
