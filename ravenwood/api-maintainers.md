@@ -12,7 +12,7 @@ As described in our Guiding Principles, when a team opts-in an API, we’re requ
 
 ## Opt-in to supporting a single method while other methods remained opt-out
 
-```
+```java
 @RavenwoodKeepPartialClass
 public class MyManager {
     @RavenwoodKeep
@@ -31,7 +31,7 @@ public class MyManager {
 
 ## Opt-in an entire class with opt-out of specific methods
 
-```
+```java
 @RavenwoodKeepWholeClass
 public class MyStruct {
     public void doSimple() {
@@ -50,7 +50,7 @@ public class MyStruct {
 
 ## Replace a complex method when under Ravenwood
 
-```
+```java
 @RavenwoodKeepWholeClass
 public class MyStruct {
     @RavenwoodReplace
@@ -80,7 +80,7 @@ Since this approach requires potentially complex re-implementation, it should on
 
 When a pure-Java implementation grows too large or complex to host within the original class, the `@RavenwoodNativeSubstitutionClass` annotation can be used to host it in a separate source file:
 
-```
+```java
 @RavenwoodKeepWholeClass
 @RavenwoodNativeSubstitutionClass("com.android.platform.test.ravenwood.nativesubstitution.MyComplexClass_host")
 public class MyComplexClass {

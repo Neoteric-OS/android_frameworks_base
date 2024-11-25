@@ -10,14 +10,14 @@ When writing tests under Ravenwood, all Android API symbols associated with your
 
 To run all Ravenwood tests, use:
 
-```
-./frameworks/base/ravenwood/scripts/run-ravenwood-tests.sh
+```shell
+$ $ANDROID_BUILD_TOP/frameworks/base/ravenwood/scripts/run-ravenwood-tests.sh
 ```
 
 To run a specific test, use "atest" as normal, selecting the test from a Ravenwood suite such as:
 
-```
-atest CtsOsTestCasesRavenwood:ParcelTest\#testSetDataCapacityNegative
+```shell
+$ atest CtsOsTestCasesRavenwood:ParcelTest\#testSetDataCapacityNegative
 ```
 
 ## Typical test structure
@@ -45,7 +45,7 @@ android_ravenwood_test {
 
 * Write your unit test just like you would for an Android device:
 
-```
+```java
 import android.platform.test.annotations.DisabledOnRavenwood;
 import android.platform.test.ravenwood.RavenwoodRule;
 
@@ -65,7 +65,7 @@ public class MyCodeTest {
 
 * APIs available under Ravenwood are stateless by default.  If your test requires explicit states (such as defining the UID you’re running under, or requiring a main `Looper` thread), add a `RavenwoodRule` to declare that:
 
-```
+```java
 import android.platform.test.annotations.DisabledOnRavenwood;
 import android.platform.test.ravenwood.RavenwoodRule;
 
@@ -85,11 +85,11 @@ public class MyCodeTest {
 
 Once you’ve defined your test, you can use typical commands to execute it locally:
 
-```
+```shell
 $ atest --host MyTestsRavenwood
 ```
 
-> **Note:** There's a known bug #312525698 where `atest` currently requires a connected device to run Ravenwood tests, but that device isn't used for testing. Using the `--host` argument above is a way to bypass this requirement until the bug is fixed.
+> **Note:** There was a bug (#312525698) where `atest` would require a connected device to run Ravenwood tests, even though a device isn't used by Ravenwood, so the `--host` could be used to bypass that requirement. That bug is now fixed, so you **shouldn't** need to use that option anymore...
 
 You can also run your new tests automatically via `TEST_MAPPING` rules like this:
 
@@ -110,7 +110,7 @@ You can also run your new tests automatically via `TEST_MAPPING` rules like this
 
 Ravenwood supports writing tests against logic that uses feature flags through the existing `SetFlagsRule` infrastructure maintained by the feature flagging team:
 
-```
+```java
 import android.platform.test.flag.junit.SetFlagsRule;
 
 @RunWith(AndroidJUnit4.class)
@@ -129,7 +129,7 @@ This naturally composes together well with any `RavenwoodRule` that your test ma
 
 While `SetFlagsRule` is generally a best-practice (as it can explicitly confirm behaviors for both "on" and "off" states), you may need to write tests that use `CheckFlagsRule` (such as when writing CTS).  Ravenwood currently supports `CheckFlagsRule` by offering "all-on" and "all-off" behaviors:
 
-```
+```java
 import android.platform.test.flag.junit.CheckFlagsRule;
 import android.platform.test.flag.junit.DeviceFlagsValueProvider;
 import android.platform.test.flag.junit.RavenwoodFlagsValueProvider;
@@ -153,7 +153,7 @@ In situations where a test method depends on API functionality not yet available
 
 Test authors are encouraged to provide a `blockedBy` or `reason` argument to help future maintainers understand why a test is being ignored, and under what conditions it might be supported in the future.
 
-```
+```java
 @RunWith(AndroidJUnit4.class)
 public class MyCodeTest {
     @Rule
@@ -194,7 +194,7 @@ As you write tests against Ravenwood, you’ll likely discover API dependencies 
 * Your code-under-test may benefit from subtle dependency refactoring to reduce coupling.  (For example, providing a specific `File` argument instead of deriving paths internally from a `Context` or `Environment`.)
     * One common use-case is providing a directory for your test to store temporary files, which can easily be accomplished using the `Files.createTempDirectory()` API which works on both physical devices and under Ravenwood:
 
-```
+```java
 import java.nio.file.Files;
 
 @RunWith(AndroidJUnit4.class)
@@ -209,9 +209,9 @@ public class MyTest {
 
 ## Strategies for debugging test development
 
-When writing tests you may encounter odd or hard to debug behaviors.  One good place to start is at the beginning of the logs stored by atest:
+When writing tests you may encounter odd or hard to debug behaviors.  One good place to start is at the beginning of the logs stored by `atest`:
 
-```
+```shell
 $ atest MyTestsRavenwood
 ...
 Test Logs have saved in /tmp/atest_result/20231128_094010_0e90t8v8/log
@@ -222,6 +222,26 @@ The most useful logs are in the `isolated-java-logs` text file, which can typica
 
 ```
 $ less /tmp/atest_result/20231128_133105_h9al__79/log/i*/i*/isolated-java-logs*
+```
+
+Alternatively, you can set the `RAVENWOOD_LOG_OUT` environment variable to redirect the sdout/stderr output. For example, to display it right away in the console running the test, use:
+
+```shell
+$ RAVENWOOD_LOG_OUT=$(tty) atest MyTestsRavenwood
+...
+Running Tests...
+logd: [main] I RavenwoodRuntimeEnvironmentController: JVM arguments:
+```
+
+Notice the `logd:` entry line above: it's the result of `logcat`'s `Log.i("RavenwoodRuntimeEnvironmentController", "JVM arguments")`. In fact, using this approach would only show logs of level `INFO` and above; to show everything (like `VERBOSE` and `DEBUG` levels), you'd also need to set `RAVENWOOD_VERBOSE` to `1`. Example:
+
+```shell
+$ RAVENWOOD_LOG_OUT=$(tty) RAVENWOOD_VERBOSE=1 atest MyTestsRavenwood
+...
+Running Tests...
+logd: [main] I RavenwoodRuntimeEnvironmentController: JVM arguments:
+...
+logd: [main] V RavenwoodSystemProperties: All system properties:
 ```
 
 Here are some common known issues and recommended workarounds:
