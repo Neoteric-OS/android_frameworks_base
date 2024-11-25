@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "182afb72_76a770cb",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 4201,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-25T23:36:41Z",
+      "side": 1,
+      "message": "nit: Called from native?",
+      "revId": "0f611c657a086c8935e601ae0a7b716db04cd7d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
