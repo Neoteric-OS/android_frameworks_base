@@ -264,6 +264,30 @@
       },
       "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e23022e_06c74fb4",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11889,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-25T13:15:39Z",
+      "side": 1,
+      "message": "However, it\u0027s a bit weird to return type X for a `verifyX` method. Just curious for local consistency. There are plenty of `get` methods in PackageManager, and are they relatively cheaper than this operation?  \n\nbtw, for concern 1, how about `getVerifiedSigningInfo`?",
+      "parentUuid": "c20305df_d3e221dc",
+      "range": {
+        "startLine": 11889,
+        "startChar": 39,
+        "endLine": 11889,
+        "endChar": 56
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
