@@ -92,6 +92,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e589b9e_b7401a4d",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-25T11:37:46Z",
+      "side": 1,
+      "message": "SigningInfo is a top-level class. Should SigningInfoException be a top-level class as well, instead of a nested class in PackageManager?",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 44
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e329f05e_6216c279",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 4
@@ -132,6 +155,29 @@
         "startChar": 27,
         "endLine": 11889,
         "endChar": 38
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fd03107_26685dbf",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11889,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-25T11:37:46Z",
+      "side": 1,
+      "message": "As discussed last Thursday, the verb should be `get` instead of `verify`.",
+      "range": {
+        "startLine": 11889,
+        "startChar": 39,
+        "endLine": 11889,
+        "endChar": 56
       },
       "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
