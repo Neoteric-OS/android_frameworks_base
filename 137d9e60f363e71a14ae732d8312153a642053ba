@@ -115,6 +115,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ece2c692_776b1fcf",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-25T11:39:25Z",
+      "side": 1,
+      "message": "Can the return type be annotated with @IntDef ?",
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e329f05e_6216c279",
         "filename": "core/java/android/content/pm/PackageManager.java",
         "patchSetId": 4
