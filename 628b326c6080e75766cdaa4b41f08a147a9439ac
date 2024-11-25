@@ -52,6 +52,24 @@
       "parentUuid": "82e57bd8_c60ce467",
       "revId": "628b326c6080e75766cdaa4b41f08a147a9439ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ddd4c45_3cb3ff86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-25T22:56:00Z",
+      "side": 1,
+      "message": "\u003e remove the broken internal error callback CTS test or to do something like this \n\nI would suggest to remove that CTS test and make it a unit test.",
+      "parentUuid": "ea0c3cb6_d04b5787",
+      "revId": "628b326c6080e75766cdaa4b41f08a147a9439ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
