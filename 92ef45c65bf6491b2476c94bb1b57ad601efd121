@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1705a9bc_36f12ef2",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-25T20:48:33Z",
+      "side": 1,
+      "message": "maybe should throw an exception then?",
+      "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69468aaf_4d18ccfd",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-25T20:48:33Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69838ec7_e1a6d6c3",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2024-11-25T20:48:33Z",
+      "side": 1,
+      "message": "nit: this never gets called in this patch set.",
+      "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
