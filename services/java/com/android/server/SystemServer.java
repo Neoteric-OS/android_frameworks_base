@@ -1468,6 +1468,9 @@ public final class SystemServer implements Dumpable {
 
         boolean isWatch = RoSystemFeatures.hasFeatureWatch(context);
 
+        boolean disableDynamicCodeLoggingService = SystemProperties.getBoolean(
+                "config.disable_dynamiccodeloggingservice", false);
+
         boolean isArc = context.getPackageManager().hasSystemFeature(
                 "org.chromium.arc");
 
@@ -2593,7 +2596,7 @@ public final class SystemServer implements Dumpable {
                 t.traceEnd();
             }
 
-            if (!isWatch) {
+            if (!isWatch && !disableDynamicCodeLoggingService) {
                 // We don't run this on watches as there are no plans to use the data logged
                 // on watch devices.
                 t.traceBegin("StartDynamicCodeLoggingService");
