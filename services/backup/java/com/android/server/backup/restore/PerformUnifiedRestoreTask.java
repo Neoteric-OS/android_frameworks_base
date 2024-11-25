@@ -419,6 +419,21 @@ public class PerformUnifiedRestoreTask implements BackupRestoreTask {
         sendStartRestore(mAcceptSet.size());
 
         try {
+            if (mAcceptSet.isEmpty()) {
+                Slog.e(
+                        TAG,
+                        "Restore list is empty; nothing to do. Proceeding to finish the restore.");
+                mStatus = BackupTransport.TRANSPORT_ERROR;
+                Bundle monitoringExtras = addRestoreOperationTypeToEvent(/* extras= */ null);
+                mBackupManagerMonitorEventSender.monitorEvent(
+                        BackupManagerMonitor.LOG_EVENT_ID_NO_PACKAGES_TO_RESTORE,
+                        mCurrentPackage,
+                        BackupManagerMonitor.LOG_EVENT_CATEGORY_BACKUP_MANAGER_POLICY,
+                        monitoringExtras);
+                executeNextState(UnifiedRestoreState.FINAL);
+                return;
+            }
+
             String transportDirName =
                     mTransportManager.getTransportDirName(
                             mTransportConnection.getTransportComponent());

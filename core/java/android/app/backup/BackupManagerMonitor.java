@@ -297,6 +297,11 @@ public class BackupManagerMonitor {
    @hide */
   public static final int LOG_EVENT_ID_FAILED_TO_READ_DATA_FROM_TRANSPORT = 81;
 
+  /** Packages that were supposed to be restored as part of the full restore were filtered out and
+   * when the restore tried to run there were no packages left.
+   * @hide */
+  public static final int LOG_EVENT_ID_NO_PACKAGES_TO_RESTORE = 82;
+
   /**
    * This method will be called each time something important happens on BackupManager.
    *
