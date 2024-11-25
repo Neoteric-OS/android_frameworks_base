@@ -16,6 +16,24 @@
       "message": "Why do we need to move this for loop? I think we would also need to add null check on `bootMitigationCounts` if we do want to move it.",
       "revId": "cd0e99cf4e2d07b1e2fb060e7c5970e43499cc35",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78bcbc97_f73092de",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-11-25T11:52:55Z",
+      "side": 1,
+      "message": "Hello, @harshitmahajan@google.com\n  I initially thought that bootMitigationCounts would only be empty when an exception occurred. So I returned directly when catching an exception. I will modify this. My suggestion is to move this block out because it will not cause an exception. I have modify this null exception,please help review again.\n  \n  Thanks.",
+      "parentUuid": "686dbf3b_b52d3fb0",
+      "revId": "cd0e99cf4e2d07b1e2fb060e7c5970e43499cc35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
