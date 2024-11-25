@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c213d730_106378b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-11-25T17:17:15Z",
+      "side": 1,
+      "message": "We cannot add @TestApi for mainline modules. I don\u0027t see any benefit with this since this is just directly calling the callback. It\u0027s not really testing any internals.",
+      "revId": "628b326c6080e75766cdaa4b41f08a147a9439ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
