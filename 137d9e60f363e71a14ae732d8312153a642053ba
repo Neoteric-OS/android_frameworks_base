@@ -113,6 +113,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4edd0799_476bd608",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-25T12:00:27Z",
+      "side": 1,
+      "message": "I initially put it at the top level, but then I moved it inside PackageManager to keep the consistency with `NameNotFoundException` right above.",
+      "parentUuid": "6e589b9e_b7401a4d",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 44
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ece2c692_776b1fcf",
@@ -126,6 +150,24 @@
       "writtenOn": "2024-11-25T11:39:25Z",
       "side": 1,
       "message": "Can the return type be annotated with @IntDef ?",
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e69dcc5e_6fbc3ae7",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-25T12:00:27Z",
+      "side": 1,
+      "message": "There is not an existing @IntDef for it. We can add one, but I\u0027m not sure the PM team would like to maintain an @IntDef for it, so I prefer not to annotate the type with @IntDef.\n\nAlternatively, I can remove the `getCode` method altogether.\n\nWDYT?",
+      "parentUuid": "ece2c692_776b1fcf",
       "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -190,6 +232,30 @@
       "writtenOn": "2024-11-25T11:37:46Z",
       "side": 1,
       "message": "As discussed last Thursday, the verb should be `get` instead of `verify`.",
+      "range": {
+        "startLine": 11889,
+        "startChar": 39,
+        "endLine": 11889,
+        "endChar": 56
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c20305df_d3e221dc",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11889,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-25T12:00:27Z",
+      "side": 1,
+      "message": "We haven\u0027t discussed this thoroughly. I think it\u0027s important to use `verify` because:\n\n1. The operation involves a signature verification, not just blindly returning any signature. In order words, this method only returns the signature if the verification passes.\n2. The word `get` may sound like the method is just a getter, while the method is actually quite expensive because it needs to verify the signature.",
+      "parentUuid": "3fd03107_26685dbf",
       "range": {
         "startLine": 11889,
         "startChar": 39,
