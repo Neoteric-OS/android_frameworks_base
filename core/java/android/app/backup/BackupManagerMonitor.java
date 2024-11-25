@@ -297,6 +297,16 @@ public class BackupManagerMonitor {
    @hide */
   public static final int LOG_EVENT_ID_FAILED_TO_READ_DATA_FROM_TRANSPORT = 81;
 
+    // Begin VROS Specific Events. Start at 1000 to avoid collision with other events that may be
+    // added to future
+    // versions of AOSP.
+
+    /**
+     * Packages that were supposed to be restored as part of the full restore were filtered out and
+     * when the restore tried to run there were no packages left. {@hide}
+     */
+    public static final int LOG_EVENT_ID_NO_PACKAGES_TO_RESTORE = 1000;
+
   /**
    * This method will be called each time something important happens on BackupManager.
    *
