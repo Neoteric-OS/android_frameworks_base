@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "448fc7d4_13fd1d9f",
+        "filename": "core/java/android/view/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-11-25T07:30:15Z",
+      "side": 1,
+      "message": "No need to add your ldap? line 115 should cover it.\n\nAlso, shouldn\u0027t this be added to `frameworks/base/core/tests/coretests/src/android/view/OWNERS` instead?",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "7fe9ec1b9b7f17465090998c79c871b2bed5e330",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccd1db51_db51c9ca",
+        "filename": "core/java/android/window/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-11-25T07:30:15Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "7fe9ec1b9b7f17465090998c79c871b2bed5e330",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
