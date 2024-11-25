@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d04d5d7_d370b31c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2024-11-25T05:52:53Z",
+      "side": 1,
+      "message": "LGTM. If Zygote is started before it\u0027s possible to query flags, then it seems like catching NoSuchMethodError is a reasonable way to proceed. It\u0027s not possible to solve this problem by removing the flag entirely, because on nextfood builds this API won\u0027t exist.",
+      "revId": "f2de9436c7d0167053f013131fb6e5df0e1786a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
