@@ -16,6 +16,24 @@
       "message": "We cannot add @TestApi for mainline modules. I don\u0027t see any benefit with this since this is just directly calling the callback. It\u0027s not really testing any internals.",
       "revId": "628b326c6080e75766cdaa4b41f08a147a9439ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82e57bd8_c60ce467",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1986287
+      },
+      "writtenOn": "2024-11-25T17:25:47Z",
+      "side": 1,
+      "message": "We have one CTS test that tests the internal error event listener callback, but it\u0027s flaky. Triggering that callback by triggering an internal error is not easy to do across all devices (virtual and real). So our options are to remove the broken internal error callback CTS test or to do something like this (which is just testing that the chain of callbacks are properly plumbed from the framework to the service).",
+      "parentUuid": "c213d730_106378b0",
+      "revId": "628b326c6080e75766cdaa4b41f08a147a9439ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
