@@ -6348,7 +6348,10 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
                 if (transition != null) {
                     collectDisplayChange(transition);
                 } else {
-                    requestChangeTransition(changes, null /* displayChange */);
+                    if ((changes & ActivityInfo.CONFIG_KEYBOARD) == 0
+                        || (changes & ActivityInfo.CONFIG_KEYBOARD_HIDDEN) == 0) {
+                            requestChangeTransition(changes, null /* displayChange */);
+                        }
                 }
             }
             onRequestedOverrideConfigurationChanged(mTempConfig);
