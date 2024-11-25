@@ -161,6 +161,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7ebb3a5_e37aae54",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-25T14:26:23Z",
+      "side": 1,
+      "message": "OK, moved the exception class to the top level.",
+      "parentUuid": "4cc853f6_4cd88763",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 44
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ece2c692_776b1fcf",
@@ -322,6 +346,30 @@
       "side": 1,
       "message": "However, it\u0027s a bit weird to return type X for a `verifyX` method. Just curious for local consistency. There are plenty of `get` methods in PackageManager, and are they relatively cheaper than this operation?  \n\nbtw, for concern 1, how about `getVerifiedSigningInfo`?",
       "parentUuid": "c20305df_d3e221dc",
+      "range": {
+        "startLine": 11889,
+        "startChar": 39,
+        "endLine": 11889,
+        "endChar": 56
+      },
+      "revId": "137d9e60f363e71a14ae732d8312153a642053ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef8a5e3c_42b05d8d",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11889,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-25T14:26:23Z",
+      "side": 1,
+      "message": "I think you are right that not every `get` methods in this class is relatively cheap. `getPackageArchiveInfo`, for example, is expensive.\n\nI like the idea of `getVerifiedSigningInfo`. Thank you for the suggestion. I updated the javadoc to express its expensiveness.",
+      "parentUuid": "8e23022e_06c74fb4",
       "range": {
         "startLine": 11889,
         "startChar": 39,
