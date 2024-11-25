@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3b30a0a_2b22e66d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2024-11-25T07:53:15Z",
+      "side": 1,
+      "message": "+1 owner vote for the VPN files. The directory LGTM, but I think it would be better to get a review from Remi, who is an expert in this area and can provide more insight.",
+      "revId": "785c86c75c8396d76672df3c303429534656b569",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
