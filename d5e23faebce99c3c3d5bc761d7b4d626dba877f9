@@ -81,6 +81,30 @@
       },
       "revId": "d5e23faebce99c3c3d5bc761d7b4d626dba877f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11a7a4d2_10d2d752",
+        "filename": "core/java/android/view/Display.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 2022644
+      },
+      "writtenOn": "2024-11-25T09:29:00Z",
+      "side": 1,
+      "message": "I tested it and found that using DEFAULT_DISPLAY_ADJUSTMENTS is fine as well.",
+      "parentUuid": "eec2f26c_665fb757",
+      "range": {
+        "startLine": 862,
+        "startChar": 51,
+        "endLine": 862,
+        "endChar": 67
+      },
+      "revId": "d5e23faebce99c3c3d5bc761d7b4d626dba877f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
