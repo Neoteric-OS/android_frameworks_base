@@ -104,6 +104,24 @@
       "parentUuid": "69838ec7_e1a6d6c3",
       "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f0dff3e_4043b368",
+        "filename": "media/jni/android_media_CodecCapabilities.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1895465
+      },
+      "writtenOn": "2024-11-25T23:11:32Z",
+      "side": 1,
+      "message": "Moved to the last CL",
+      "parentUuid": "fcb49374_8e869bab",
+      "revId": "92ef45c65bf6491b2476c94bb1b57ad601efd121",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
