@@ -522,6 +522,7 @@
         <item name="onShadeInactive">?android:attr/textColorPrimary</item>
         <item name="onShadeInactiveVariant">?android:attr/textColorSecondary</item>
         <item name="shadeDisabled">@color/material_dynamic_neutral70</item>
+        <item name="shadeStroke">@color/material_dynamic_neutral70</item>
         <item name="underSurface">@color/material_dynamic_neutral80</item>
         <item name="android:itemTextAppearance">@style/Control.MenuItem</item>
     </style>
