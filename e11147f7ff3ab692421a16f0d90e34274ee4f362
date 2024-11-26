@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d01cf52_4387bc9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-26T23:16:40Z",
+      "side": 1,
+      "message": "Updated it to make sure these methods don\u0027t get called on a real device.",
+      "revId": "e11147f7ff3ab692421a16f0d90e34274ee4f362",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
