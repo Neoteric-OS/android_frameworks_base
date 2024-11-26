@@ -242,6 +242,34 @@ public final class RavenwoodRule implements TestRule {
         return System.currentTimeMillis();
     }
 
+    /**
+     * Equivalent to setting the ANDROID_LOG_TAGS environmental variable.
+     *
+     * See https://developer.android.com/tools/logcat#filteringOutput for the string format.
+     */
+    public static void setAndroidLogTags(@Nullable String androidLogTags) {
+        try {
+            Class<?> logRavenwoodClazz = Class.forName("android.util.Log_ravenwood");
+            var setter = logRavenwoodClazz.getMethod("setLogLevels", String.class);
+            setter.invoke(null, androidLogTags);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Set a log level for a given tag. Pass NULL to {@code tag} to change the default level.
+     */
+    public static void setLogLevel(@Nullable String tag, int level) {
+        try {
+            Class<?> logRavenwoodClazz = Class.forName("android.util.Log_ravenwood");
+            var setter = logRavenwoodClazz.getMethod("setLogLevel", String.class, int.class);
+            setter.invoke(null, tag, level);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // Below are internal to ravenwood. Don't use them from normal tests...
 
     public static class RavenwoodPrivate {
