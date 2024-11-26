@@ -62,6 +62,30 @@
       },
       "revId": "0b31a4277eb308e9b729d99b5ae49d32d85ed487",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b21fcf6d_1fc60487",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4252,
+      "author": {
+        "id": 3524514
+      },
+      "writtenOn": "2024-11-26T14:13:06Z",
+      "side": 1,
+      "message": "But if the activity is destroyed due to a timeout, why would we not shut down the app process?\n\nBefore this change we were seeing instances of quitting and booting up the app straight away after it causing black screen issues as the app process was not properly killed by shell. So killing the application process solved this issue.",
+      "parentUuid": "0f7215c3_9576bcf8",
+      "range": {
+        "startLine": 4246,
+        "startChar": 0,
+        "endLine": 4252,
+        "endChar": 13
+      },
+      "revId": "0b31a4277eb308e9b729d99b5ae49d32d85ed487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
