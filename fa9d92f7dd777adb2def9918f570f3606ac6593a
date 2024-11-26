@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcfcd4a6_399248ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-11-26T17:35:39Z",
+      "side": 1,
+      "message": "+Lamont for Android.bp owners approval.",
+      "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad6bbd09_ba6baac2",
