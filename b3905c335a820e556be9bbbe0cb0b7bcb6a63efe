@@ -16,6 +16,29 @@
       "message": "Please help review,thx!",
       "revId": "b3905c335a820e556be9bbbe0cb0b7bcb6a63efe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3578580b_bfe01f18",
+        "filename": "services/core/java/com/android/server/wm/InsetsStateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2024-11-26T08:14:54Z",
+      "side": 1,
+      "message": "Can you help me understand how this could be null? mControlTargetProvidersMap should not control any null element and hence the returned getControlsForDispatch() should not contain any null value.",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 35
+      },
+      "revId": "b3905c335a820e556be9bbbe0cb0b7bcb6a63efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
