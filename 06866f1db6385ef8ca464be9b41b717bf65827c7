@@ -33,6 +33,194 @@
       "message": "+1 for Android.bp",
       "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4768a36b_153d72c5",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-26T10:59:38Z",
+      "side": 1,
+      "message": "I am not familiar with the terminology used in UpdateEngine. What does `Stable` mean here? Isn\u0027t it a `Manager` class?\n\n\n\u003e This interface has lesser functionalities than UpdateEngine and doesn\u0027t allow cancel.\n\n`UpdateEngine` is @SystemApi. Why does `UpdateEngine` and  `UpdateEngineStable` need to be a separate class in the API surface?",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5a685f3a_14dc116f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/UpdateEngineStable.java",
+              "range": {
+                "startLine": 25,
+                "startChar": 0,
+                "endLine": 27,
+                "endChar": 0
+              },
+              "replacement": " * UpdateEngineStable handles calls to the update engine stable which takes care of A/B OTA updates\n * and is a part of the update engine service. This interface has lesser functionalities than\n * UpdateEngine and doesn\u0027t allow cancel.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "207188cc_b394f1d4",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-26T10:59:38Z",
+      "side": 1,
+      "message": "Can you use an existing API from ServiceManager?\n\nFor example, can an `UpdateEngineStable` instance be obtained via `SystemServiceRegistry.getSystemServiceWithNoContext`?",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 29
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "fa3a005e_944de4c9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/UpdateEngineStable.java",
+              "range": {
+                "startLine": 23,
+                "startChar": 0,
+                "endLine": 23,
+                "endChar": 0
+              },
+              "replacement": "import android.content.Context;\n"
+            },
+            {
+              "path": "core/java/android/os/UpdateEngineStable.java",
+              "range": {
+                "startLine": 80,
+                "startChar": 0,
+                "endLine": 80,
+                "endChar": 0
+              },
+              "replacement": "    private final Context mContext;\n"
+            },
+            {
+              "path": "core/java/android/os/UpdateEngineStable.java",
+              "range": {
+                "startLine": 88,
+                "startChar": 0,
+                "endLine": 89,
+                "endChar": 0
+              },
+              "replacement": "    public UpdateEngineStable(Context context) {\n        mContext \u003d context;\n"
+            },
+            {
+              "path": "core/java/android/os/UpdateEngineStable.java",
+              "range": {
+                "startLine": 214,
+                "startChar": 0,
+                "endLine": 214,
+                "endChar": 0
+              },
+              "replacement": "\n    /**\n     * Returns the UpdateEngineStable instance for the given context.\n     *\n     * @hide\n     */\n    @FlaggedApi(Flags.FLAG_UPDATE_ENGINE_API)\n    @SystemApi(client \u003d SystemApi.Client.MODULE_LIBRARIES)\n    public static UpdateEngineStable getInstance(Context context) {\n        return new UpdateEngineStable(context);\n    }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4348705_4726fcf9",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-26T10:59:38Z",
+      "side": 1,
+      "message": "Can you document `@param partition`? Can it be annotated with @StringDef?",
+      "fixSuggestions": [
+        {
+          "fixId": "f6b67800_3fc7594e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/UpdateEngineStable.java",
+              "range": {
+                "startLine": 201,
+                "startChar": 0,
+                "endLine": 202,
+                "endChar": 0
+              },
+              "replacement": "     * Run postinstall script for specified partition.\n     *\n     * @param partition The partition to run postinstall script for.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ff09075_36b03a34",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-26T10:59:38Z",
+      "side": 1,
+      "message": "nit: `triggerPostInstall`\n\nNot a native speaker, but Google search tells me that \"post\" and \"install\" are considered 2 separate words. Also, existing AOSP codes seem to use `PostInstall` as well.",
+      "range": {
+        "startLine": 207,
+        "startChar": 23,
+        "endLine": 207,
+        "endChar": 34
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "05c8f30a_a0b6e250",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/UpdateEngineStable.java",
+              "range": {
+                "startLine": 207,
+                "startChar": 0,
+                "endLine": 208,
+                "endChar": 0
+              },
+              "replacement": "    public void triggerPostInstall(@NonNull String partition){\n"
+            }
+          ]
+        }
+      ],
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
