@@ -34,6 +34,24 @@
       "parentUuid": "7fdea780_cab0cc6e",
       "revId": "74445a8e5bf83ce8df1e219ec25683338b661524",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee8b8382_ecfb3af8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1289143
+      },
+      "writtenOn": "2024-11-26T18:38:38Z",
+      "side": 1,
+      "message": "`listFiles()` returned a null value (which internally I think can only happen if the file/directory is invalid or inaccessible)",
+      "parentUuid": "5268ce85_44cc788f",
+      "revId": "74445a8e5bf83ce8df1e219ec25683338b661524",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
