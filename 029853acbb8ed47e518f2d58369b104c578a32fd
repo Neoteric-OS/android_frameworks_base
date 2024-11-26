@@ -107,6 +107,30 @@
       },
       "revId": "029853acbb8ed47e518f2d58369b104c578a32fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1becde54_e4595c0a",
+        "filename": "core/java/android/app/ProfilerInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2024-11-26T21:05:06Z",
+      "side": 1,
+      "message": "This location seems fine",
+      "parentUuid": "aeace82c_4e2e8d16",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 58
+      },
+      "revId": "029853acbb8ed47e518f2d58369b104c578a32fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
