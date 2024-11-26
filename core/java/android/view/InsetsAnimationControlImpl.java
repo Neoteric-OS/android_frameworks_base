@@ -39,6 +39,7 @@ import static android.view.InsetsSource.SIDE_NONE;
 import static android.view.InsetsSource.SIDE_LEFT;
 import static android.view.InsetsSource.SIDE_RIGHT;
 import static android.view.InsetsSource.SIDE_TOP;
+import static android.view.WindowInsets.Type.NAVIGATION_BARS;
 import static android.view.WindowInsets.Type.ime;
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
 import static android.view.WindowManager.LayoutParams.TYPE_APPLICATION;
@@ -432,7 +433,7 @@ public class InsetsAnimationControlImpl implements InternalInsetsAnimationContro
         }
         for (int i = controls.size() - 1; i >= 0; i--) {
             final InsetsSourceControl control  = controls.valueAt(i);
-            if (control == null) {
+            if (control == null || (control.getType() & NAVIGATION_BARS) != 0) {
                 // control may be null if it got revoked.
                 continue;
             }
