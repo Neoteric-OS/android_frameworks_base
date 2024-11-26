@@ -39,6 +39,30 @@
       },
       "revId": "b3905c335a820e556be9bbbe0cb0b7bcb6a63efe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "785798dd_fc6de7ce",
+        "filename": "services/core/java/com/android/server/wm/InsetsStateController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1962615
+      },
+      "writtenOn": "2024-11-26T11:23:21Z",
+      "side": 1,
+      "message": "@Nullable InsetsSourceControl[] getControlsForDispatch(InsetsControlTarget target) {\n    final ArrayList\u003cInsetsSourceProvider\u003e controlled \u003d mControlTargetProvidersMap.get(target);\n    if (controlled \u003d\u003d null) {\n        return null;\n    }\n    final int size \u003d controlled.size();\n    final InsetsSourceControl[] result \u003d new InsetsSourceControl[size];\n    for (int i \u003d 0; i \u003c size; i++) {\n        result[i] \u003d controlled.get(i).getControl(target);  \u003c\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n    }\n    return result;\n}\n\nInsetsSourceControl getControl(InsetsControlTarget target) {\n    if (target \u003d\u003d mControlTarget) {\n        if (!isLeashReadyForDispatching() \u0026\u0026 mControl !\u003d null) {\n            // The surface transaction of preparing leash is not applied yet. We don\u0027t send it\n            // to the client in case that the client applies its transaction sooner than ours\n            // that we could unexpectedly overwrite the surface state.\n            return new InsetsSourceControl(mControl.getId(), mControl.getType(),\n                    null /* leash */, mControl.isInitiallyVisible(),\n                    mControl.getSurfacePosition(), mControl.getInsetsHint());\n        }\n        return mControl;\n    }\n    if (target \u003d\u003d mFakeControlTarget) {\n        return mFakeControl;\n    }\n    return null;  \u003c\u003d\u003d\u003d\u003d\u003d\u003d There is a possibility that the element is null\n}\n\nHello, Chen\nBy viewing the getControlsForDispatch source code, we found that the getControl method may return a null, so there may be a null element in the InsetsSourceControl[] returned by the getControlsForDispatch method.",
+      "parentUuid": "3578580b_bfe01f18",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 35
+      },
+      "revId": "b3905c335a820e556be9bbbe0cb0b7bcb6a63efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
