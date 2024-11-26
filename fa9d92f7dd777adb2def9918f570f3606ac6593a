@@ -52,6 +52,24 @@
       "parentUuid": "ad6bbd09_ba6baac2",
       "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42059bf5_28a85689",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3120,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2024-11-26T17:05:12Z",
+      "side": 1,
+      "message": "I\u0027m fine leaving this as written.",
+      "parentUuid": "35039cde_0c1e6e93",
+      "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
