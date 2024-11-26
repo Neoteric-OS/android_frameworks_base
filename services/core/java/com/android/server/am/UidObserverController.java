@@ -283,25 +283,27 @@ public class UidObserverController {
         mUidObservers.finishBroadcast();
 
         if (VALIDATE_UID_STATES && mUidObservers.getRegisteredCallbackCount() > 0) {
-            for (int j = 0; j < numUidChanges; ++j) {
-                final ChangeRecord item = mActiveUidChanges[j];
-                if ((item.change & UidRecord.CHANGE_GONE) != 0) {
-                    mValidateUids.remove(item.uid);
-                } else {
-                    UidRecord validateUid = mValidateUids.get(item.uid);
-                    if (validateUid == null) {
-                        validateUid = new UidRecord(item.uid, null);
-                        mValidateUids.put(item.uid, validateUid);
+            synchronized (mLock) {
+                for (int j = 0; j < numUidChanges; ++j) {
+                    final ChangeRecord item = mActiveUidChanges[j];
+                    if ((item.change & UidRecord.CHANGE_GONE) != 0) {
+                        mValidateUids.remove(item.uid);
+                    } else {
+                        UidRecord validateUid = mValidateUids.get(item.uid);
+                        if (validateUid == null) {
+                            validateUid = new UidRecord(item.uid, null);
+                            mValidateUids.put(item.uid, validateUid);
+                        }
+                        if ((item.change & UidRecord.CHANGE_IDLE) != 0) {
+                            validateUid.setIdle(true);
+                        } else if ((item.change & UidRecord.CHANGE_ACTIVE) != 0) {
+                            validateUid.setIdle(false);
+                        }
+                        validateUid.setSetProcState(item.procState);
+                        validateUid.setCurProcState(item.procState);
+                        validateUid.setSetCapability(item.capability);
+                        validateUid.setCurCapability(item.capability);
                     }
-                    if ((item.change & UidRecord.CHANGE_IDLE) != 0) {
-                        validateUid.setIdle(true);
-                    } else if ((item.change & UidRecord.CHANGE_ACTIVE) != 0) {
-                        validateUid.setIdle(false);
-                    }
-                    validateUid.setSetProcState(item.procState);
-                    validateUid.setCurProcState(item.procState);
-                    validateUid.setSetCapability(item.capability);
-                    validateUid.setCurCapability(item.capability);
                 }
             }
         }
