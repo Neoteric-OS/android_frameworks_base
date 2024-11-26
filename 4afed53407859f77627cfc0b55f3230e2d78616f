@@ -1,0 +1,85 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5e0efe8_cd0821cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-11-26T00:52:46Z",
+      "side": 1,
+      "message": "This looks good. A couple of suggestions.",
+      "revId": "4afed53407859f77627cfc0b55f3230e2d78616f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3b3ad77_b725446b",
+        "filename": "core/java/com/android/internal/util/ArrayUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-11-26T00:52:46Z",
+      "side": 1,
+      "message": "Please add a line along the lines of \"Use on other arrays might also introduce performance anomalies.\" It turns into a fairly heavyweight call that may need to wait for the GC, etc.",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 99
+      },
+      "revId": "4afed53407859f77627cfc0b55f3230e2d78616f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1235ab56_906f3fcb",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-11-26T00:52:46Z",
+      "side": 1,
+      "message": "Can we log an error (and then probably return 32) in this case? It really should never happen, I think. Crashing may be even better. I suspect that the cost of not noticing this failed has higher cost than breaking a build until we fix it. Though either seems very unlikely.",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "007106ba_142bbd9e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+              "range": {
+                "startLine": 30,
+                "startChar": 0,
+                "endLine": 30,
+                "endChar": 0
+              },
+              "replacement": "        LOG(ERROR) \u003c\u003c \"sysconf(_SC_LEVEL1_DCACHE_LINESIZE) returned \" \u003c\u003c size;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4afed53407859f77627cfc0b55f3230e2d78616f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
