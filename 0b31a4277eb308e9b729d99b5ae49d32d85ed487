@@ -16,6 +16,52 @@
       "message": "Upstream from Meta 😊",
       "revId": "0b31a4277eb308e9b729d99b5ae49d32d85ed487",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "868d4791_67ff01e9",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-11-26T01:00:14Z",
+      "side": 1,
+      "message": "That seems to be a different issue. The system should eventually report that the app is not responded.",
+      "range": {
+        "startLine": 1390,
+        "startChar": 62,
+        "endLine": 1390,
+        "endChar": 83
+      },
+      "revId": "0b31a4277eb308e9b729d99b5ae49d32d85ed487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f7215c3_9576bcf8",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4252,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-11-26T01:00:14Z",
+      "side": 1,
+      "message": "The app process should not be killed while an Activity is destroyed.",
+      "range": {
+        "startLine": 4246,
+        "startChar": 0,
+        "endLine": 4252,
+        "endChar": 13
+      },
+      "revId": "0b31a4277eb308e9b729d99b5ae49d32d85ed487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
