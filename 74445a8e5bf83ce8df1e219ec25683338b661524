@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fdea780_cab0cc6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-11-26T17:45:23Z",
+      "side": 1,
+      "message": "Can you provide a way to reproduce this issue? It\u0027s unclear how this code gets executed when the file directory is inaccessible",
+      "revId": "74445a8e5bf83ce8df1e219ec25683338b661524",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
