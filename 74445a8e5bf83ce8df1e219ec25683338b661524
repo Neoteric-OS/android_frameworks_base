@@ -16,6 +16,24 @@
       "message": "Can you provide a way to reproduce this issue? It\u0027s unclear how this code gets executed when the file directory is inaccessible",
       "revId": "74445a8e5bf83ce8df1e219ec25683338b661524",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5268ce85_44cc788f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1289143
+      },
+      "writtenOn": "2024-11-26T18:33:22Z",
+      "side": 1,
+      "message": "Details are listed here https://gitlab.com/CalyxOS/calyxos/-/issues/2834\nUnfortunately, it is a low reproducibility issue",
+      "parentUuid": "7fdea780_cab0cc6e",
+      "revId": "74445a8e5bf83ce8df1e219ec25683338b661524",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
