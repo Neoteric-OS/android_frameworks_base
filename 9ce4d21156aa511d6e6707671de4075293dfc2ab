@@ -16,6 +16,23 @@
       "message": "Trimmed the frameworks/base change to just switch to the new rule now in `build/soong`. PTAL.",
       "revId": "9ce4d21156aa511d6e6707671de4075293dfc2ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "100d44e2_340cf5a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3544521
+      },
+      "writtenOn": "2024-11-26T03:36:45Z",
+      "side": 1,
+      "message": "3340863: Use new java_system_features_srcs rule in framework | https://android-review.googlesource.com/c/platform/frameworks/base/+/3340863",
+      "revId": "9ce4d21156aa511d6e6707671de4075293dfc2ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
