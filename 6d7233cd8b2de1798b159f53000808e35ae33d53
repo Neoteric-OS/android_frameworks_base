@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4200a0c7_f674cd6a",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2024-11-27T18:21:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what this line is for? And same with the analogous lines below.",
+      "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
