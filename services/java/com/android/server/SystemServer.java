@@ -1264,6 +1264,13 @@ public final class SystemServer implements Dumpable {
         }
         t.traceEnd();
 
+        // Start the suspend manager
+        t.traceBegin("StartSuspendManagerService");
+        if (SystemProperties.getBoolean("config.enable_qti_suspend_manager", false)) {
+            mSystemServiceManager.startService("com.qualcomm.qti.server.suspendservice.SuspendManagerService");
+        }
+        t.traceEnd();
+
         // Display manager is needed to provide display metrics before package manager
         // starts up.
         t.traceBegin("StartDisplayManager");
