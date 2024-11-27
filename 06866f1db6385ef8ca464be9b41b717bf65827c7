@@ -102,6 +102,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "193245e3_1fc33914",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1710792
+      },
+      "writtenOn": "2024-11-27T22:54:49Z",
+      "side": 1,
+      "message": "re difference between `UpdateEngine` and `UpdateEngineStable`\n\n`UpdateEngineStable` has less API surface, we generally prefer granting permission for `UpdateEngineStable` if possible. `UpdateEngine` is only meant for applications which manage OTA updates(for example GMSCore). Since The intended use case of this new API is only to optimize when postinstall scripts run, and do not intend to take part in OTA installation, we prefer to use `UpdateEngineStable`",
+      "parentUuid": "9a5513d9_fb8d568c",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "207188cc_b394f1d4",
         "filename": "core/java/android/os/UpdateEngineStable.java",
         "patchSetId": 7
