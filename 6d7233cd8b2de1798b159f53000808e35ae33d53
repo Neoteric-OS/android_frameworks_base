@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a673c9ef_bf1f305c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-11-27T18:53:56Z",
+      "side": 1,
+      "message": "smoreland@ is there any chance you could give Code-Owners on this CL?  Thanks!",
+      "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4200a0c7_f674cd6a",
