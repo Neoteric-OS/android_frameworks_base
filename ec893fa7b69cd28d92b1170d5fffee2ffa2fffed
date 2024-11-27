@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21754fe9_1f494762",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6352,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2024-11-27T05:48:29Z",
+      "side": 1,
+      "message": "IIUC, this condition means we only request the transition if there is no connected keyboard. I\u0027m not very familiar with this. Can you help me to understand why this can fully fix the issue and won\u0027t introduce extra risks? Also, by reading the context of this change, I feel maybe the proper fix is to avoid affecting other USB devices when a new USB devices plugged in? Did you investigate that direction?\n\n+sunnygoyal who touched something similar to avoid interrupted system UI change when certain configuration change happens.\n+erosky who understand the transition system better.",
+      "range": {
+        "startLine": 6351,
+        "startChar": 20,
+        "endLine": 6352,
+        "endChar": 80
+      },
+      "revId": "ec893fa7b69cd28d92b1170d5fffee2ffa2fffed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
