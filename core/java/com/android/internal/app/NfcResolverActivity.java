@@ -45,9 +45,10 @@ public class NfcResolverActivity extends ResolverActivity {
         ArrayList<ResolveInfo> rList =
                 intent.getParcelableArrayListExtra(
                 NfcAdapter.EXTRA_RESOLVE_INFOS, ResolveInfo.class);
-        CharSequence title = intent.getExtras().getCharSequence(
+        final Bundle extras = intent.getExtras();
+        CharSequence title = extras != null ? extras.getCharSequence(
                 Intent.EXTRA_TITLE,
-                getResources().getText(com.android.internal.R.string.chooseActivity));
+                getResources().getText(com.android.internal.R.string.chooseActivity)) : null;
 
         super.onCreate(
                 savedInstanceState,
