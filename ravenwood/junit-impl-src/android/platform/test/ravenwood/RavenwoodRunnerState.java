@@ -15,23 +15,12 @@
  */
 package android.platform.test.ravenwood;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import android.util.Log;
-import android.util.Pair;
-
-import com.android.ravenwood.RavenwoodRuntimeNative;
 
 import org.junit.runner.Description;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 /**
- * Used to store various states associated with the current test runner that's only needed
+ * Used to store various states associated with the current test runner that's inly needed
  * in junit-impl.
  *
  * We don't want to put it in junit-src to avoid having to recompile all the downstream
@@ -41,11 +30,6 @@ import java.util.Set;
  */
 public final class RavenwoodRunnerState {
     private static final String TAG = "RavenwoodRunnerState";
-    private static final String RAVENWOOD_RULE_ERROR =
-            "RavenwoodRule(s) are not executed in the correct order";
-
-    private static final List<Pair<RavenwoodRule, RavenwoodPropertyState>> sActiveProperties =
-            new ArrayList<>();
 
     private final RavenwoodAwareTestRunner mRunner;
 
@@ -69,7 +53,6 @@ public final class RavenwoodRunnerState {
 
     public void exitTestClass() {
         Log.i(TAG, "exitTestClass: " + mRunner.mTestJavaClass.getName());
-        assertTrue(RAVENWOOD_RULE_ERROR, sActiveProperties.isEmpty());
         RavenwoodRuntimeEnvironmentController.exitTestClass();
     }
 
@@ -83,68 +66,9 @@ public final class RavenwoodRunnerState {
     }
 
     public void enterRavenwoodRule(RavenwoodRule rule) {
-        pushTestProperties(rule);
+        RavenwoodRuntimeEnvironmentController.setSystemProperties(rule.mSystemProperties);
     }
 
     public void exitRavenwoodRule(RavenwoodRule rule) {
-        popTestProperties(rule);
-    }
-
-    static class RavenwoodPropertyState {
-
-        final List<Pair<String, String>> mBackup;
-        final Set<String> mKeyReadable;
-        final Set<String> mKeyWritable;
-
-        RavenwoodPropertyState(RavenwoodTestProperties props) {
-            mBackup = props.mValues.keySet().stream()
-                    .map(key -> Pair.create(key, RavenwoodRuntimeNative.getSystemProperty(key)))
-                    .toList();
-            mKeyReadable = Set.copyOf(props.mKeyReadable);
-            mKeyWritable = Set.copyOf(props.mKeyWritable);
-        }
-
-        boolean isKeyAccessible(String key, boolean write) {
-            return write ? mKeyWritable.contains(key) : mKeyReadable.contains(key);
-        }
-
-        void restore() {
-            mBackup.forEach(pair -> {
-                if (pair.second == null) {
-                    RavenwoodRuntimeNative.removeSystemProperty(pair.first);
-                } else {
-                    RavenwoodRuntimeNative.setSystemProperty(pair.first, pair.second);
-                }
-            });
-        }
-    }
-
-    private static void pushTestProperties(RavenwoodRule rule) {
-        sActiveProperties.add(Pair.create(rule, new RavenwoodPropertyState(rule.mProperties)));
-        rule.mProperties.mValues.forEach(RavenwoodRuntimeNative::setSystemProperty);
-    }
-
-    private static void popTestProperties(RavenwoodRule rule) {
-        var pair = sActiveProperties.removeLast();
-        assertNotNull(RAVENWOOD_RULE_ERROR, pair);
-        assertEquals(RAVENWOOD_RULE_ERROR, rule, pair.first);
-        pair.second.restore();
-    }
-
-    @SuppressWarnings("unused")  // Called from native code (ravenwood_sysprop.cpp)
-    private static void checkSystemPropertyAccess(String key, boolean write) {
-        if (write && RavenwoodSystemProperties.sDefaultValues.containsKey(key)) {
-            // The default core values should never be modified
-            throw new IllegalArgumentException(
-                    "Setting core system property '" + key + "' is not allowed");
-        }
-
-        final boolean result = RavenwoodSystemProperties.isKeyAccessible(key, write)
-                || sActiveProperties.stream().anyMatch(p -> p.second.isKeyAccessible(key, write));
-
-        if (!result) {
-            throw new IllegalArgumentException((write ? "Write" : "Read")
-                    + " access to system property '" + key + "' denied via RavenwoodRule");
-        }
     }
 }

@@ -92,7 +92,7 @@ public final class RavenwoodRule implements TestRule {
         }
     }
 
-    final RavenwoodTestProperties mProperties = new RavenwoodTestProperties();
+    final RavenwoodSystemProperties mSystemProperties = new RavenwoodSystemProperties();
 
     public static class Builder {
 
@@ -144,8 +144,8 @@ public final class RavenwoodRule implements TestRule {
          * Has no effect on non-Ravenwood environments.
          */
         public Builder setSystemPropertyImmutable(@NonNull String key, @Nullable Object value) {
-            mRule.mProperties.setValue(key, value);
-            mRule.mProperties.setAccessReadOnly(key);
+            mRule.mSystemProperties.setValue(key, value);
+            mRule.mSystemProperties.setAccessReadOnly(key);
             return this;
         }
 
@@ -160,8 +160,8 @@ public final class RavenwoodRule implements TestRule {
          * Has no effect on non-Ravenwood environments.
          */
         public Builder setSystemPropertyMutable(@NonNull String key, @Nullable Object value) {
-            mRule.mProperties.setValue(key, value);
-            mRule.mProperties.setAccessReadWrite(key);
+            mRule.mSystemProperties.setValue(key, value);
+            mRule.mSystemProperties.setAccessReadWrite(key);
             return this;
         }
 
