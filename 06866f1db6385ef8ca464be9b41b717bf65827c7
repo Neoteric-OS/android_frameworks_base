@@ -126,6 +126,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cfb0aa9_669b32d5",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-27T23:49:41Z",
+      "side": 1,
+      "message": "IIUC, normally, Android frameworks manager class checks the permission in the service side during a AIDL method call, and different methods require different permissions. Are you saying that the permission or uid is checked during `onBind()` instead, and 2 different permissions are needed to bind `UpdateEngineStable` and `UpdateEngine` respectively? Would it possible to document the permission with `@RequirePermission`?\n\nI can\u0027t find the documentation why it\u0027s called `stable` either. My speculation is that UpdateEngineStable seems to maintain a stable and versioned AIDL interface. Particularly, \n\n\u003e If a device is shipped with such a backward incompatible change, it has a high risk of breaking later when a module using the interface is updated, e.g., Mainline modules.` \n\nhttps://r.android.com/1371069\n\nShould ART just talk to UpdateEngineStable via AIDL instead via a frameworks API here?",
+      "parentUuid": "193245e3_1fc33914",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "207188cc_b394f1d4",
         "filename": "core/java/android/os/UpdateEngineStable.java",
         "patchSetId": 7
@@ -244,6 +268,24 @@
       "side": 1,
       "message": "added @param partition. If I understand correctly, @StringDef means this parameter is enum-like and should only take one of the predefined values. We can\u0027t really do that for |partition| parameter, because vendors can have their own custom partition names that AOSP isn\u0027t aware of.",
       "parentUuid": "d4348705_4726fcf9",
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02caa0ae_799b2301",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-27T23:49:41Z",
+      "side": 1,
+      "message": "I see. In this case, is it possible to document the behavior in the javadoc if the partition doesn\u0027t exist?",
+      "parentUuid": "9f1d445a_00acdf2e",
       "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
