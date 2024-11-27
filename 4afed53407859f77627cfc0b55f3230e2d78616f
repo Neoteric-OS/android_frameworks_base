@@ -128,6 +128,30 @@
       },
       "revId": "4afed53407859f77627cfc0b55f3230e2d78616f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02361a3d_f4d7ee92",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-11-27T16:41:38Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "253b7560_2f6be1a3",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 18
+      },
+      "revId": "4afed53407859f77627cfc0b55f3230e2d78616f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
