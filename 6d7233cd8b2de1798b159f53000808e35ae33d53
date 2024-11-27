@@ -16,6 +16,24 @@
       "message": "I\u0027m not sure I understand what this line is for? And same with the analogous lines below.",
       "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab6af221_032a8567",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-11-27T18:48:13Z",
+      "side": 1,
+      "message": "The array is not guaranteed to be cache-line aligned, so we need to make sure the final cache line that contains part of it gets processed.",
+      "parentUuid": "4200a0c7_f674cd6a",
+      "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
