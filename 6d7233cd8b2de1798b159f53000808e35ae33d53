@@ -71,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acaefa00_f07a9fe7",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2024-11-27T23:38:24Z",
+      "side": 1,
+      "message": "Ah, so the instruction means something like \"Clean the cache line containing this address\"? Got it!",
+      "parentUuid": "c62e8aaa_bd6d7fd2",
+      "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58fe9414_2f8f244b",
