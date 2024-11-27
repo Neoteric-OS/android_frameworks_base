@@ -21,6 +21,7 @@ import static android.service.autofill.FillRequest.FLAG_MANUAL_REQUEST;
 import static android.service.autofill.FillRequest.FLAG_PASSWORD_INPUT_TYPE;
 import static android.service.autofill.FillRequest.FLAG_PCC_DETECTION;
 import static android.service.autofill.FillRequest.FLAG_RESET_FILL_DIALOG_STATE;
+import static android.service.autofill.FillRequest.FLAG_SCREEN_HAS_CREDMAN_FIELD;
 import static android.service.autofill.FillRequest.FLAG_SUPPORTS_FILL_DIALOG;
 import static android.service.autofill.FillRequest.FLAG_VIEW_NOT_FOCUSED;
 import static android.service.autofill.FillRequest.FLAG_VIEW_REQUESTS_CREDMAN_SERVICE;
@@ -705,6 +706,8 @@ public final class AutofillManager {
     // Indicate whether to apply heuristic check on important views before trigger fill request
     private boolean mIsTriggerFillRequestOnFilteredImportantViewsEnabled;
 
+    private final boolean mIsFillAndSaveDialogDisabledForCredentialManager;
+
     // Indicate whether to enable autofill for all view types
     private boolean mShouldEnableAutofillOnAllViewTypes;
 
@@ -937,7 +940,8 @@ public final class AutofillManager {
 
         mIsFillDialogEnabled = AutofillFeatureFlags.isFillDialogEnabled();
         mFillDialogEnabledHints = AutofillFeatureFlags.getFillDialogEnabledHints();
-        mShouldIgnoreCredentialViews = AutofillFeatureFlags.shouldIgnoreCredentialViews();
+        mIsFillAndSaveDialogDisabledForCredentialManager =
+        AutofillFeatureFlags.isFillAndSaveDialogDisabledForCredentialManager();
         if (sDebug) {
             Log.d(TAG, "Fill dialog is enabled:" + mIsFillDialogEnabled
                     + ", hints=" + Arrays.toString(mFillDialogEnabledHints));
@@ -1626,11 +1630,13 @@ public final class AutofillManager {
                             + view.getAutofillId().toString());
                 }
                 isCredmanRequested = true;
-            } else {
-                if (sDebug) {
-                    Log.d(TAG, "Ignoring Fill Dialog request since important for credMan:"
+            }
+                if (view.isCredential() && mIsFillAndSaveDialogDisabledForCredentialManager) {
+                    if (sDebug) {
+                       Log.d(TAG, "Ignoring Fill Dialog request since important for credMan:"
                             + view.getAutofillId().toString());
-                }
+                    }
+                mScreenHasCredmanField = true;
                 return;
             }
         }
@@ -1660,11 +1666,13 @@ public final class AutofillManager {
                             + v.getAutofillId().toString());
                 }
                 isCredmanRequested = true;
-            } else {
-                if (sDebug) {
+            }
+            if (v.isCredential() && mIsFillAndSaveDialogDisabledForCredentialManager) {
+                   if (sDebug) {
                     Log.d(TAG, "Ignoring Fill Dialog request since important for credMan:"
-                            + v.getAutofillId().toString());
-                }
+                            + v.getAutofillId());
+                   }
+                mScreenHasCredmanField = true;
                 return;
             }
         }
@@ -1993,6 +2001,14 @@ public final class AutofillManager {
         if (!isClientDisablingEnterExitEvent()) {
             if (view instanceof TextView && ((TextView) view).isAnyPasswordInputType()) {
                 flags |= FLAG_PASSWORD_INPUT_TYPE;
+            }
+            // Update session when screen has credman field
+            if (AutofillFeatureFlags.isFillAndSaveDialogDisabledForCredentialManager()
+                    && mScreenHasCredmanField) {
+                flags |= FLAG_SCREEN_HAS_CREDMAN_FIELD;
+                if (sVerbose) {
+                    Log.v(TAG, "updating session with flag screen has credman view");
+                }
             }
 
             flags |= getImeStateFlag(view);
@@ -2763,6 +2779,7 @@ public final class AutofillManager {
         mIsFillRequested.set(false);
         mShowAutofillDialogCalled = false;
         mFillDialogTriggerIds = null;
+        mScreenHasCredmanField = false;
         mAllTrackedViews.clear();
         if (resetEnteredIds) {
             mEnteredIds = null;
@@ -4096,7 +4113,8 @@ public final class AutofillManager {
     private boolean shouldShowAutofillDialog(View view, AutofillId id) {
         if (!hasFillDialogUiFeature()
                 || mShowAutofillDialogCalled
-                || mFillDialogTriggerIds == null) {
+                || mFillDialogTriggerIds == null
+                || mScreenHasCredmanField) {
             return false;
         }
 
