@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f5a57dc_f8a5c570",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2024-11-27T19:35:49Z",
+      "side": 1,
+      "message": "+Riddle. In general, though, if an app can redraw/reconfigure for a display-change, then we should make a transition for it.\n\nIf there\u0027s a flicker issue, then it should probably be solved shell-side.",
+      "revId": "ec893fa7b69cd28d92b1170d5fffee2ffa2fffed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "21754fe9_1f494762",
         "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
         "patchSetId": 2
