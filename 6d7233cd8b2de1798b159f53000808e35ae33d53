@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c62e8aaa_bd6d7fd2",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-11-27T23:30:49Z",
+      "side": 1,
+      "message": "Updated the comment to mention this.",
+      "parentUuid": "ab6af221_032a8567",
+      "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58fe9414_2f8f244b",
@@ -90,6 +108,30 @@
           ]
         }
       ],
+      "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cca314d4_de8171a3",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-11-27T23:30:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58fe9414_2f8f244b",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 28
+      },
       "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
