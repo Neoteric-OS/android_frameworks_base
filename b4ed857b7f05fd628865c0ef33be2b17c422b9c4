@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "001750e0_f4154c2b",
+        "filename": "ravenwood/texts/ravenwood-common-policies.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-11-27T20:19:08Z",
+      "side": 1,
+      "message": "Note, I don\u0027t intend to write all the existing polices, but I just updated this file as a real-life test.",
+      "revId": "b4ed857b7f05fd628865c0ef33be2b17c422b9c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
