@@ -19,6 +19,7 @@ package com.android.systemui.mediaprojection.data.repository
 import android.app.ActivityManager.RunningTaskInfo
 import android.media.projection.MediaProjectionInfo
 import android.media.projection.MediaProjectionManager
+import android.media.projection.StopReason
 import android.os.Handler
 import android.util.Log
 import android.view.ContentRecordingSession
@@ -64,8 +65,10 @@ constructor(
         }
     }
 
-    override suspend fun stopProjecting() {
-        withContext(backgroundDispatcher) { mediaProjectionManager.stopActiveProjection() }
+    override suspend fun stopProjecting(@StopReason stopReason: Int) {
+        withContext(backgroundDispatcher) {
+            mediaProjectionManager.stopActiveProjection(stopReason)
+        }
     }
 
     override val mediaProjectionState: Flow<MediaProjectionState> =

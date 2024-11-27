@@ -17,6 +17,7 @@
 package com.android.systemui.mediaprojection.data.repository
 
 import android.media.projection.MediaProjectionInfo
+import android.media.projection.StopReason
 import android.os.Binder
 import android.os.UserHandle
 import android.view.ContentRecordingSession
@@ -181,8 +182,9 @@ class MediaProjectionManagerRepositoryTest : SysuiTestCase() {
     @Test
     fun stopProjecting_invokesManager() =
         testScope.runTest {
-            repo.stopProjecting()
+            repo.stopProjecting(StopReason.STOP_QS_TILE)
 
-            verify(fakeMediaProjectionManager.mediaProjectionManager).stopActiveProjection()
+            verify(fakeMediaProjectionManager.mediaProjectionManager)
+                .stopActiveProjection(StopReason.STOP_QS_TILE)
         }
 }

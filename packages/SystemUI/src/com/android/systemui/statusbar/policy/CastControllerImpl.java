@@ -26,6 +26,7 @@ import android.media.MediaRouter;
 import android.media.MediaRouter.RouteInfo;
 import android.media.projection.MediaProjectionInfo;
 import android.media.projection.MediaProjectionManager;
+import android.media.projection.StopReason;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.ArrayMap;
@@ -207,7 +208,7 @@ public class CastControllerImpl implements CastController {
         if (isProjection) {
             final MediaProjectionInfo projection = (MediaProjectionInfo) device.tag;
             if (Objects.equals(mProjectionManager.getActiveProjectionInfo(), projection)) {
-                mProjectionManager.stopActiveProjection();
+                mProjectionManager.stopActiveProjection(StopReason.STOP_QS_TILE);
             } else {
                 Log.w(TAG, "Projection is no longer active: " + projection);
             }
