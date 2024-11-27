@@ -51,6 +51,47 @@
       "parentUuid": "4200a0c7_f674cd6a",
       "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58fe9414_2f8f244b",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2024-11-27T23:06:26Z",
+      "side": 1,
+      "message": "Could we add #error for this, so that it\u0027s visible and they can add it/fix it?",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bd98abde_e07098ad",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+              "range": {
+                "startLine": 69,
+                "startChar": 0,
+                "endLine": 69,
+                "endChar": 0
+              },
+              "replacement": "#error \"Unknown architecture\"\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
