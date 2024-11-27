@@ -54,6 +54,7 @@ import static android.content.pm.ActivityInfo.LAUNCH_SINGLE_TASK;
 import static android.content.pm.ActivityInfo.LAUNCH_SINGLE_TOP;
 import static android.content.pm.ActivityInfo.launchModeToString;
 import static android.os.Process.INVALID_UID;
+import static android.security.Flags.preventIntentRedirectAbortOrThrowException;
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.WindowManager.TRANSIT_NONE;
 import static android.view.WindowManager.TRANSIT_OPEN;
@@ -94,15 +95,16 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
-import android.app.BackgroundStartPrivileges;
 import android.app.IApplicationThread;
 import android.app.PendingIntent;
 import android.app.ProfilerInfo;
 import android.app.WaitResult;
 import android.app.WindowConfiguration;
+import android.app.compat.CompatChanges;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.Disabled;
 import android.compat.annotation.EnabledSince;
+import android.compat.annotation.Overridable;
 import android.content.IIntentSender;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -188,6 +190,10 @@ class ActivityStarter {
     @ChangeId
     @Disabled
     static final long ASM_RESTRICTIONS = 230590090L;
+
+    @ChangeId
+    @Overridable
+    private static final long ENABLE_PREVENT_INTENT_REDIRECT_TAKE_ACTION = 29623414L;
 
     private final ActivityTaskManagerService mService;
     private final RootWindowContainer mRootWindowContainer;
@@ -424,7 +430,7 @@ class ActivityStarter {
         WaitResult waitResult;
         int filterCallingUid;
         PendingIntentRecord originatingPendingIntent;
-        BackgroundStartPrivileges forcedBalByPiSender;
+        boolean allowBalExemptionForSystemProcess;
         boolean freezeScreen;
 
         final StringBuilder logMessage = new StringBuilder();
@@ -490,7 +496,7 @@ class ActivityStarter {
             allowPendingRemoteAnimationRegistryLookup = true;
             filterCallingUid = UserHandle.USER_NULL;
             originatingPendingIntent = null;
-            forcedBalByPiSender = BackgroundStartPrivileges.NONE;
+            allowBalExemptionForSystemProcess = false;
             freezeScreen = false;
             errorCallbackToken = null;
         }
@@ -534,7 +540,7 @@ class ActivityStarter {
                     = request.allowPendingRemoteAnimationRegistryLookup;
             filterCallingUid = request.filterCallingUid;
             originatingPendingIntent = request.originatingPendingIntent;
-            forcedBalByPiSender = request.forcedBalByPiSender;
+            allowBalExemptionForSystemProcess = request.allowBalExemptionForSystemProcess;
             freezeScreen = request.freezeScreen;
             errorCallbackToken = request.errorCallbackToken;
         }
@@ -609,11 +615,10 @@ class ActivityStarter {
             // Check if the Intent was redirected
             if ((intent.getExtendedFlags() & Intent.EXTENDED_FLAG_MISSING_CREATOR_OR_INVALID_TOKEN)
                     != 0) {
-                ActivityStarter.logForIntentRedirect(
+                ActivityStarter.logAndThrowExceptionForIntentRedirect(
                         "Unparceled intent does not have a creator token set.", intent,
-                        intentCreatorUid,
-                        intentCreatorPackage, resolvedCallingUid, resolvedCallingPackage);
-                // TODO b/368559093 - eventually ramp up to throw SecurityException
+                        intentCreatorUid, intentCreatorPackage, resolvedCallingUid,
+                        resolvedCallingPackage, null);
             }
             if (IntentCreatorToken.isValid(intent)) {
                 IntentCreatorToken creatorToken = (IntentCreatorToken) intent.getCreatorToken();
@@ -646,11 +651,10 @@ class ActivityStarter {
                                 intentGrants.merge(creatorIntentGrants);
                             }
                         } catch (SecurityException securityException) {
-                            ActivityStarter.logForIntentRedirect(
+                            ActivityStarter.logAndThrowExceptionForIntentRedirect(
                                     "Creator URI Grant Caused Exception.", intent, intentCreatorUid,
                                     intentCreatorPackage, resolvedCallingUid,
-                                    resolvedCallingPackage);
-                            // TODO b/368559093 - rethrow the securityException.
+                                    resolvedCallingPackage, securityException);
                         }
                     }
                 } else {
@@ -671,11 +675,10 @@ class ActivityStarter {
                                 intentGrants.merge(creatorIntentGrants);
                             }
                         } catch (SecurityException securityException) {
-                            ActivityStarter.logForIntentRedirect(
+                            ActivityStarter.logAndThrowExceptionForIntentRedirect(
                                     "Creator URI Grant Caused Exception.", intent, intentCreatorUid,
                                     intentCreatorPackage, resolvedCallingUid,
-                                    resolvedCallingPackage);
-                            // TODO b/368559093 - rethrow the securityException.
+                                    resolvedCallingPackage, securityException);
                         }
                     }
                 }
@@ -1046,7 +1049,7 @@ class ActivityStarter {
         int callingUid = request.callingUid;
         int intentCreatorUid = request.intentCreatorUid;
         String intentCreatorPackage = request.intentCreatorPackage;
-        String intentCallingPackage = request.callingPackage;
+        String callingPackage = request.callingPackage;
         String callingFeatureId = request.callingFeatureId;
         final int realCallingPid = request.realCallingPid;
         final int realCallingUid = request.realCallingUid;
@@ -1131,7 +1134,7 @@ class ActivityStarter {
                 // launched in the app flow to redirect to an activity picked by the user, where
                 // we want the final activity to consider it to have been launched by the
                 // previous app activity.
-                intentCallingPackage = sourceRecord.launchedFromPackage;
+                callingPackage = sourceRecord.launchedFromPackage;
                 callingFeatureId = sourceRecord.launchedFromFeatureId;
             }
         }
@@ -1153,7 +1156,7 @@ class ActivityStarter {
                 if (packageArchiver.isIntentResolvedToArchivedApp(intent, mRequest.userId)) {
                     err = packageArchiver
                             .requestUnarchiveOnActivityStart(
-                                    intent, intentCallingPackage, mRequest.userId, realCallingUid);
+                                    intent, callingPackage, mRequest.userId, realCallingUid);
                 }
             }
         }
@@ -1212,7 +1215,7 @@ class ActivityStarter {
         boolean abort;
         try {
             abort = !mSupervisor.checkStartAnyActivityPermission(intent, aInfo, resultWho,
-                    requestCode, callingPid, callingUid, intentCallingPackage, callingFeatureId,
+                    requestCode, callingPid, callingUid, callingPackage, callingFeatureId,
                     request.ignoreTargetSecurity, inTask != null, callerApp, resultRecord,
                     resultRootTask);
         } catch (SecurityException e) {
@@ -1240,7 +1243,7 @@ class ActivityStarter {
         abort |= !mService.mIntentFirewall.checkStartActivity(intent, callingUid,
                 callingPid, resolvedType, aInfo.applicationInfo);
         abort |= !mService.getPermissionPolicyInternal().checkStartActivity(intent, callingUid,
-                intentCallingPackage);
+                callingPackage);
 
         if (intentCreatorUid != Request.DEFAULT_INTENT_CREATOR_UID) {
             try {
@@ -1248,39 +1251,32 @@ class ActivityStarter {
                         requestCode, 0, intentCreatorUid, intentCreatorPackage, "",
                         request.ignoreTargetSecurity, inTask != null, null, resultRecord,
                         resultRootTask)) {
-                    logForIntentRedirect("Creator checkStartAnyActivityPermission Caused abortion.",
+                    abort = logAndAbortForIntentRedirect(
+                            "Creator checkStartAnyActivityPermission Caused abortion.",
                             intent, intentCreatorUid, intentCreatorPackage, callingUid,
-                            intentCallingPackage);
-                    // TODO b/368559093 - set abort to true.
-                    // abort = true;
+                            callingPackage);
                 }
             } catch (SecurityException e) {
-                logForIntentRedirect("Creator checkStartAnyActivityPermission Caused Exception.",
-                        intent, intentCreatorUid, intentCreatorPackage, callingUid,
-                        intentCallingPackage);
-                // TODO b/368559093 - rethrow the exception.
-                //throw e;
+                logAndThrowExceptionForIntentRedirect(
+                        "Creator checkStartAnyActivityPermission Caused Exception.",
+                        intent, intentCreatorUid, intentCreatorPackage, callingUid, callingPackage,
+                        e);
             }
-            if (!mService.mIntentFirewall.checkStartActivity(intent, intentCreatorUid, 0,
-                    resolvedType, aInfo.applicationInfo)) {
-                logForIntentRedirect("Creator IntentFirewall.checkStartActivity Caused abortion.",
-                        intent, intentCreatorUid, intentCreatorPackage, callingUid,
-                        intentCallingPackage);
-                // TODO b/368559093 - set abort to true.
-                // abort = true;
+            if (!mService.mIntentFirewall.checkStartActivity(intent, intentCreatorUid,
+                    0, resolvedType, aInfo.applicationInfo)) {
+                abort = logAndAbortForIntentRedirect(
+                        "Creator IntentFirewall.checkStartActivity Caused abortion.",
+                        intent, intentCreatorUid, intentCreatorPackage, callingUid, callingPackage);
             }
 
-            if (!mService.getPermissionPolicyInternal().checkStartActivity(intent, intentCreatorUid,
-                    intentCreatorPackage)) {
-                logForIntentRedirect(
+            if (!mService.getPermissionPolicyInternal().checkStartActivity(intent,
+                    intentCreatorUid, intentCreatorPackage)) {
+                abort = logAndAbortForIntentRedirect(
                         "Creator PermissionPolicyService.checkStartActivity Caused abortion.",
-                        intent, intentCreatorUid, intentCreatorPackage, callingUid,
-                        intentCallingPackage);
-                // TODO b/368559093 - set abort to true.
-                // abort = true;
+                        intent, intentCreatorUid, intentCreatorPackage, callingUid, callingPackage);
             }
-            intent.removeCreatorTokenInfo();
         }
+        intent.removeCreatorToken();
 
         // Merge the two options bundles, while realCallerOptions takes precedence.
         ActivityOptions checkedOptions = options != null
@@ -1297,12 +1293,12 @@ class ActivityStarter {
                         balController.checkBackgroundActivityStart(
                             callingUid,
                             callingPid,
-                                intentCallingPackage,
+                            callingPackage,
                             realCallingUid,
                             realCallingPid,
                             callerApp,
                             request.originatingPendingIntent,
-                            request.forcedBalByPiSender,
+                            request.allowBalExemptionForSystemProcess,
                             resultRecord,
                             intent,
                             checkedOptions);
@@ -1318,7 +1314,7 @@ class ActivityStarter {
         if (request.allowPendingRemoteAnimationRegistryLookup) {
             checkedOptions = mService.getActivityStartController()
                     .getPendingRemoteAnimationRegistry()
-                    .overrideOptionsIfNeeded(intentCallingPackage, checkedOptions);
+                    .overrideOptionsIfNeeded(callingPackage, checkedOptions);
         }
         if (mService.mController != null) {
             try {
@@ -1335,7 +1331,7 @@ class ActivityStarter {
         final TaskDisplayArea suggestedLaunchDisplayArea =
                 computeSuggestedLaunchDisplayArea(inTask, sourceRecord, checkedOptions);
         mInterceptor.setStates(userId, realCallingPid, realCallingUid, startFlags,
-                intentCallingPackage,
+                callingPackage,
                 callingFeatureId);
         if (mInterceptor.intercept(intent, rInfo, aInfo, resolvedType, inTask, inTaskFragment,
                 callingPid, callingUid, checkedOptions, suggestedLaunchDisplayArea)) {
@@ -1373,7 +1369,7 @@ class ActivityStarter {
             if (mService.getPackageManagerInternalLocked().isPermissionsReviewRequired(
                     aInfo.packageName, userId)) {
                 final IIntentSender target = mService.getIntentSenderLocked(
-                        ActivityManager.INTENT_SENDER_ACTIVITY, intentCallingPackage,
+                        ActivityManager.INTENT_SENDER_ACTIVITY, callingPackage,
                         callingFeatureId,
                         callingUid, userId, null, null, 0, new Intent[]{intent},
                         new String[]{resolvedType}, PendingIntent.FLAG_CANCEL_CURRENT
@@ -1437,7 +1433,7 @@ class ActivityStarter {
         // app [on install success].
         if (rInfo != null && rInfo.auxiliaryInfo != null) {
             intent = createLaunchIntent(rInfo.auxiliaryInfo, request.ephemeralIntent,
-                    intentCallingPackage, callingFeatureId, verificationBundle, resolvedType,
+                    callingPackage, callingFeatureId, verificationBundle, resolvedType,
                     userId);
             resolvedType = null;
             callingUid = realCallingUid;
@@ -1461,7 +1457,7 @@ class ActivityStarter {
                 .setCaller(callerApp)
                 .setLaunchedFromPid(callingPid)
                 .setLaunchedFromUid(callingUid)
-                .setLaunchedFromPackage(intentCallingPackage)
+                .setLaunchedFromPackage(callingPackage)
                 .setLaunchedFromFeature(callingFeatureId)
                 .setIntent(intent)
                 .setResolvedType(resolvedType)
@@ -1759,6 +1755,13 @@ class ActivityStarter {
         // a new Activity or reusing the existing activity.
         if (options != null && options.getTaskAlwaysOnTop()) {
             startedActivityRootTask.setAlwaysOnTop(true);
+        }
+
+        if (isIndependentLaunch && !mDoResume && avoidMoveToFront() && !mTransientLaunch
+                && !started.shouldBeVisible(true /* ignoringKeyguard */)) {
+            Slog.i(TAG, "Abort " + transition + " of invisible launch " + started);
+            transition.abort();
+            return startedActivityRootTask;
         }
 
         // If there is no state change (e.g. a resumed activity is reparented to top of
@@ -2372,6 +2375,9 @@ class ActivityStarter {
             return START_SUCCESS;
         }
 
+        if (mMovedToTopActivity != null) {
+            targetTaskTop = mMovedToTopActivity;
+        }
         // The reusedActivity could be finishing, for example of starting an activity with
         // FLAG_ACTIVITY_CLEAR_TOP flag. In that case, use the top running activity in the
         // task instead.
@@ -2610,7 +2616,7 @@ class ActivityStarter {
         mInTaskFragment = null;
         mAddingToTaskFragment = null;
         mAddingToTask = false;
-
+        mMovedToTopActivity = null;
         mSourceRootTask = null;
 
         mTargetRootTask = null;
@@ -3529,8 +3535,9 @@ class ActivityStarter {
         return this;
     }
 
-    ActivityStarter setBackgroundStartPrivileges(BackgroundStartPrivileges forcedBalByPiSender) {
-        mRequest.forcedBalByPiSender = forcedBalByPiSender;
+    ActivityStarter setAllowBalExemptionForSystemProcess(
+            boolean allowBalExemptionForSystemProcess) {
+        mRequest.allowBalExemptionForSystemProcess = allowBalExemptionForSystemProcess;
         return this;
     }
 
@@ -3591,16 +3598,32 @@ class ActivityStarter {
         pw.println(mInTaskFragment);
     }
 
-    static void logForIntentRedirect(String message, Intent intent, int intentCreatorUid,
-            String intentCreatorPackage, int callingUid, String callingPackage) {
+    static void logAndThrowExceptionForIntentRedirect(@NonNull String message,
+            @NonNull Intent intent, int intentCreatorUid, @Nullable String intentCreatorPackage,
+            int callingUid, @Nullable String callingPackage,
+            @Nullable SecurityException originalException) {
         String msg = getIntentRedirectPreventedLogMessage(message, intent, intentCreatorUid,
                 intentCreatorPackage, callingUid, callingPackage);
         Slog.wtf(TAG, msg);
+        if (preventIntentRedirectAbortOrThrowException() && CompatChanges.isChangeEnabled(
+                ENABLE_PREVENT_INTENT_REDIRECT_TAKE_ACTION, callingUid)) {
+            throw new SecurityException(msg, originalException);
+        }
     }
 
-    private static String getIntentRedirectPreventedLogMessage(String message, Intent intent,
-            int intentCreatorUid, String intentCreatorPackage, int callingUid,
-            String callingPackage) {
+    private static boolean logAndAbortForIntentRedirect(@NonNull String message,
+            @NonNull Intent intent, int intentCreatorUid, @Nullable String intentCreatorPackage,
+            int callingUid, @Nullable String callingPackage) {
+        String msg = getIntentRedirectPreventedLogMessage(message, intent, intentCreatorUid,
+                intentCreatorPackage, callingUid, callingPackage);
+        Slog.wtf(TAG, msg);
+        return preventIntentRedirectAbortOrThrowException() && CompatChanges.isChangeEnabled(
+                ENABLE_PREVENT_INTENT_REDIRECT_TAKE_ACTION, callingUid);
+    }
+
+    private static String getIntentRedirectPreventedLogMessage(@NonNull String message,
+            @NonNull Intent intent, int intentCreatorUid, @Nullable String intentCreatorPackage,
+            int callingUid, @Nullable String callingPackage) {
         return "[IntentRedirect]" + message + " intentCreatorUid: " + intentCreatorUid
                 + "; intentCreatorPackage: " + intentCreatorPackage + "; callingUid: " + callingUid
                 + "; callingPackage: " + callingPackage + "; intent: " + intent;

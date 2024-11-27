@@ -97,7 +97,6 @@ import android.app.ActivityManagerInternal;
 import android.app.ActivityOptions;
 import android.app.AppOpsManager;
 import android.app.AppOpsManagerInternal;
-import android.app.BackgroundStartPrivileges;
 import android.app.IActivityClientController;
 import android.app.ProfilerInfo;
 import android.app.ResultInfo;
@@ -256,6 +255,8 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
 
     static {
         ACTION_TO_RUNTIME_PERMISSION.put(MediaStore.ACTION_IMAGE_CAPTURE,
+                Manifest.permission.CAMERA);
+        ACTION_TO_RUNTIME_PERMISSION.put(MediaStore.ACTION_MOTION_PHOTO_CAPTURE,
                 Manifest.permission.CAMERA);
         ACTION_TO_RUNTIME_PERMISSION.put(MediaStore.ACTION_VIDEO_CAPTURE,
                 Manifest.permission.CAMERA);
@@ -1003,11 +1004,12 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
                     // transaction.
                     mService.getLifecycleManager().dispatchPendingTransaction(proc.getThread());
                 }
-                mService.getLifecycleManager().scheduleTransactionAndLifecycleItems(
-                        proc.getThread(), launchActivityItem, lifecycleItem,
+                mService.getLifecycleManager().scheduleTransactionItems(
+                        proc.getThread(),
                         // Immediately dispatch the transaction, so that if it fails, the server can
                         // restart the process and retry now.
-                        true /* shouldDispatchImmediately */);
+                        true /* shouldDispatchImmediately */,
+                        launchActivityItem, lifecycleItem);
 
                 if (procConfig.seq > mRootWindowContainer.getConfiguration().seq) {
                     // If the seq is increased, there should be something changed (e.g. registered
@@ -2486,8 +2488,8 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
                 && mTopResumedActivity.scheduleTopResumedActivityChanged(false /* onTop */)) {
             scheduleTopResumedStateLossTimeout(mTopResumedActivity);
             mTopResumedActivityWaitingForPrev = true;
-            mTopResumedActivity = null;
         }
+        mTopResumedActivity = null;
     }
 
     /** Schedule top resumed state change if previous top activity already reported back. */
@@ -2718,14 +2720,21 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         wpc.computeProcessActivityState();
     }
 
-    void computeProcessActivityStateBatch() {
+    boolean computeProcessActivityStateBatch() {
         if (mActivityStateChangedProcs.isEmpty()) {
-            return;
+            return false;
         }
+        boolean changed = false;
         for (int i = mActivityStateChangedProcs.size() - 1; i >= 0; i--) {
-            mActivityStateChangedProcs.get(i).computeProcessActivityState();
+            final WindowProcessController wpc = mActivityStateChangedProcs.get(i);
+            final int prevState = wpc.getActivityStateFlags();
+            wpc.computeProcessActivityState();
+            if (!changed && prevState != wpc.getActivityStateFlags()) {
+                changed = true;
+            }
         }
         mActivityStateChangedProcs.clear();
+        return changed;
     }
 
     /**
@@ -3008,7 +3017,7 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
                     callingPid, callingUid, callingPackage, callingFeatureId, intent, null, null,
                     null, 0, 0, options, userId, task, "startActivityFromRecents",
                     false /* validateIncomingUser */, null /* originatingPendingIntent */,
-                    BackgroundStartPrivileges.NONE);
+                    /* allowBalExemptionForSystemProcess */ false);
         } finally {
             SaferIntentUtils.DISABLE_ENFORCE_INTENTS_TO_MATCH_INTENT_FILTERS.set(false);
             synchronized (mService.mGlobalLock) {

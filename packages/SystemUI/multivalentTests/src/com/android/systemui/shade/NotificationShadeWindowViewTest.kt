@@ -15,8 +15,10 @@
  */
 package com.android.systemui.shade
 
+import android.content.res.Configuration
 import android.os.SystemClock
 import android.platform.test.annotations.DisableFlags
+import android.platform.test.annotations.EnableFlags
 import android.testing.TestableLooper.RunWithLooper
 import android.view.MotionEvent
 import android.widget.FrameLayout
@@ -54,6 +56,7 @@ import com.android.systemui.statusbar.notification.stack.AmbientState
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController
 import com.android.systemui.statusbar.phone.CentralSurfaces
+import com.android.systemui.statusbar.phone.ConfigurationForwarder
 import com.android.systemui.statusbar.phone.DozeScrimController
 import com.android.systemui.statusbar.phone.DozeServiceHost
 import com.android.systemui.statusbar.window.StatusBarWindowStateController
@@ -76,9 +79,11 @@ import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.never
 import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.eq
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -101,7 +106,7 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
     @Mock private lateinit var quickSettingsController: QuickSettingsController
     @Mock
     private lateinit var notificationStackScrollLayoutController:
-        NotificationStackScrollLayoutController
+            NotificationStackScrollLayoutController
     @Mock private lateinit var statusBarWindowStateController: StatusBarWindowStateController
     @Mock
     private lateinit var lockscreenShadeTransitionController: LockscreenShadeTransitionController
@@ -111,20 +116,19 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
     @Mock private lateinit var dumpManager: DumpManager
     @Mock private lateinit var pulsingGestureListener: PulsingGestureListener
     @Mock private lateinit var sysUiUnfoldComponent: SysUIUnfoldComponent
-    @Mock
-    private lateinit var mLockscreenHostedDreamGestureListener: LockscreenHostedDreamGestureListener
     @Mock private lateinit var keyguardBouncerComponentFactory: KeyguardBouncerComponent.Factory
     @Mock private lateinit var keyguardBouncerComponent: KeyguardBouncerComponent
     @Mock
     private lateinit var keyguardSecurityContainerController: KeyguardSecurityContainerController
     @Mock
     private lateinit var unfoldTransitionProgressProvider:
-        Optional<UnfoldTransitionProgressProvider>
+            Optional<UnfoldTransitionProgressProvider>
     @Mock private lateinit var notificationInsetsController: NotificationInsetsController
     @Mock private lateinit var mGlanceableHubContainerController: GlanceableHubContainerController
     @Mock private lateinit var keyguardTransitionInteractor: KeyguardTransitionInteractor
     @Mock lateinit var primaryBouncerInteractor: PrimaryBouncerInteractor
     @Mock lateinit var alternateBouncerInteractor: AlternateBouncerInteractor
+    @Mock lateinit var configurationForwarder: ConfigurationForwarder
     @Captor
     private lateinit var interactionEventHandlerCaptor: ArgumentCaptor<InteractionEventHandler>
 
@@ -138,10 +142,10 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
         MockitoAnnotations.initMocks(this)
         underTest = spy(NotificationShadeWindowView(context, null))
         whenever(
-                underTest.findViewById<NotificationStackScrollLayout>(
-                    R.id.notification_stack_scroller
-                )
+            underTest.findViewById<NotificationStackScrollLayout>(
+                R.id.notification_stack_scroller
             )
+        )
             .thenReturn(notificationStackScrollLayout)
         whenever(underTest.findViewById<FrameLayout>(R.id.keyguard_bouncer_container))
             .thenReturn(mock())
@@ -156,7 +160,6 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
 
         val featureFlags = FakeFeatureFlags()
         featureFlags.set(Flags.SPLIT_SHADE_SUBPIXEL_OPTIMIZATION, true)
-        featureFlags.set(Flags.LOCKSCREEN_WALLPAPER_DREAM_ENABLED, false)
         mSetFlagsRule.enableFlags(AConfigFlags.FLAG_REVAMPED_BOUNCER_MESSAGES)
         testScope = TestScope()
         controller =
@@ -184,7 +187,6 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
                 shadeLogger,
                 dumpManager,
                 pulsingGestureListener,
-                mLockscreenHostedDreamGestureListener,
                 keyguardTransitionInteractor,
                 mGlanceableHubContainerController,
                 NotificationLaunchAnimationInteractor(NotificationLaunchAnimationRepository()),
@@ -195,6 +197,7 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
                 primaryBouncerInteractor,
                 alternateBouncerInteractor,
                 mock(),
+                configurationForwarder,
             )
 
         controller.setupExpandedStatusBar()
@@ -225,6 +228,23 @@ class NotificationShadeWindowViewTest : SysuiTestCase() {
             // THEN we shouldn't intercept touch
             assertThat(interactionEventHandler.shouldInterceptTouchEvent(mock())).isFalse()
         }
+
+    @Test
+    @DisableFlags(AConfigFlags.FLAG_SHADE_WINDOW_GOES_AROUND)
+    fun onConfigurationChanged_configForwarderNotSet() {
+        underTest.onConfigurationChanged(Configuration())
+
+        verify(configurationForwarder, never()).onConfigurationChanged(any())
+    }
+
+    @Test
+    @EnableFlags(AConfigFlags.FLAG_SHADE_WINDOW_GOES_AROUND)
+    fun onConfigurationChanged_configForwarderSet_propagatesConfig() {
+        val config = Configuration()
+        underTest.onConfigurationChanged(config)
+
+        verify(configurationForwarder).onConfigurationChanged(eq(config))
+    }
 
     private fun captureInteractionEventHandler() {
         verify(underTest).setInteractionEventHandler(interactionEventHandlerCaptor.capture())

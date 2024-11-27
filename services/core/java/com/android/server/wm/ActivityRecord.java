@@ -1455,7 +1455,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     boolean scheduleTopResumedActivityChanged(boolean onTop) {
-        if (!attachedToProcess()) {
+        if (!attachedToProcess() || isState(DESTROYING, DESTROYED)) {
             ProtoLog.w(WM_DEBUG_STATES,
                     "Can't report activity position update - client not running, "
                             + "activityRecord=%s", this);
@@ -4948,7 +4948,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             final ActivityLifecycleItem lifecycleItem = getLifecycleItemForCurrentStateForResult();
             try {
                 if (lifecycleItem != null) {
-                    mAtmService.getLifecycleManager().scheduleTransactionAndLifecycleItems(
+                    mAtmService.getLifecycleManager().scheduleTransactionItems(
                             app.getThread(), activityResultItem, lifecycleItem);
                 } else {
                     Slog.w(TAG, "Unable to get the lifecycle item for state " + mState
@@ -5540,7 +5540,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 clearAllDrawn();
                 // Reset the draw state in order to prevent the starting window to be immediately
                 // dismissed when the app still has the surface.
-                if (!isVisible() && !isClientVisible()) {
+                if (!Flags.resetDrawStateOnClientInvisible()
+                        && !isVisible() && !isClientVisible()) {
                     forAllWindows(w -> {
                         if (w.mWinAnimator.mDrawState == HAS_DRAWN) {
                             w.mWinAnimator.resetDrawState();
@@ -6974,7 +6975,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         } else if (associatedTask.getActivity(
                 r -> r.isVisibleRequested() && !r.firstWindowDrawn) == null) {
             // The last drawn activity may not be the one that owns the starting window.
-            final ActivityRecord r = associatedTask.topActivityContainsStartingWindow();
+            final ActivityRecord r = associatedTask.getActivity(ar -> ar.mStartingData != null);
             if (r != null) {
                 r.removeStartingWindow();
             }
@@ -8356,7 +8357,9 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     @ActivityInfo.ScreenOrientation
     protected int getOverrideOrientation() {
         int candidateOrientation = super.getOverrideOrientation();
-        if (ActivityInfo.isFixedOrientation(candidateOrientation) && isUniversalResizeable()) {
+        if (candidateOrientation != ActivityInfo.SCREEN_ORIENTATION_LOCKED
+                && ActivityInfo.isFixedOrientation(candidateOrientation)
+                && isUniversalResizeable()) {
             candidateOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
         return mAppCompatController.getOrientationPolicy()
@@ -9805,7 +9808,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             } else {
                 lifecycleItem = new PauseActivityItem(token);
             }
-            mAtmService.getLifecycleManager().scheduleTransactionAndLifecycleItems(
+            mAtmService.getLifecycleManager().scheduleTransactionItems(
                     app.getThread(), callbackItem, lifecycleItem);
             startRelaunching();
             // Note: don't need to call pauseIfSleepingLocked() here, because the caller will only
