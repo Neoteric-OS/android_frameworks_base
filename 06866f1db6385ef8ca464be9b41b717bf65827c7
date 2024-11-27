@@ -78,6 +78,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9a5513d9_fb8d568c",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1710792
+      },
+      "writtenOn": "2024-11-27T22:52:36Z",
+      "side": 1,
+      "message": "UpdateEngineStable predates my work on OTA, so I don\u0027t know why it is named as such. Not sure why two different AIDL definitions are needed, but `UpdateEngine.aidl` and `UpdateEngineStable.aidl` have different API surfaces and have different permission settings, hence they need to be different classes.",
+      "parentUuid": "4768a36b_153d72c5",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "207188cc_b394f1d4",
         "filename": "core/java/android/os/UpdateEngineStable.java",
         "patchSetId": 7
@@ -182,6 +206,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f1d445a_00acdf2e",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1710792
+      },
+      "writtenOn": "2024-11-27T22:52:36Z",
+      "side": 1,
+      "message": "added @param partition. If I understand correctly, @StringDef means this parameter is enum-like and should only take one of the predefined values. We can\u0027t really do that for |partition| parameter, because vendors can have their own custom partition names that AOSP isn\u0027t aware of.",
+      "parentUuid": "d4348705_4726fcf9",
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ff09075_36b03a34",
@@ -219,6 +261,30 @@
           ]
         }
       ],
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bb2687f_b94c1534",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1710792
+      },
+      "writtenOn": "2024-11-27T22:52:36Z",
+      "side": 1,
+      "message": "https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:system/update_engine/payload_consumer/postinstall_runner_action.h;l\u003d41?q\u003dPostinstall\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%09branch:main\n\nExisting update-engine code all use lowercase `i` `Postinstall` , for consistency I think it\u0027s better to keep the same spelling. WDYT?",
+      "parentUuid": "2ff09075_36b03a34",
+      "range": {
+        "startLine": 207,
+        "startChar": 23,
+        "endLine": 207,
+        "endChar": 34
+      },
       "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
