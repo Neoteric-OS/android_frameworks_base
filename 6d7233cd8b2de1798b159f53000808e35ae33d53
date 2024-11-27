@@ -89,6 +89,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "926c7822_581fafa1",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2024-11-27T23:46:19Z",
+      "side": 1,
+      "message": "Yes, the arm64 \"dc cvac\" and the x86 \"clflush\" instructions are documented that way.\n\nI considered rounding to a cache line boundary so that we can issue the flushes precisely and not potentially flush the last line twice.  But that would require addressing outside the bounds of the buffer which feels a bit unsafe.  (I tested that it doesn\u0027t trip MTE on arm64, and it also can\u0027t cross a page boundary as the cache line size is always a power of 2, but still.)\n\nThe RISC-V cbo.clean doesn\u0027t explicitly say whether the address has to be cache line aligned or not, unfortunately.  We will have to figure that out when enabling it...",
+      "parentUuid": "acaefa00_f07a9fe7",
+      "revId": "6d7233cd8b2de1798b159f53000808e35ae33d53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58fe9414_2f8f244b",
