@@ -419,6 +419,30 @@
       },
       "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fab3a957_aea79f95",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-11-28T12:20:55Z",
+      "side": 1,
+      "message": "https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/api/system-current.txt;l\u003d11200?q\u003dPOST_INSTALL\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain:frameworks%2Fbase%2Fcore%2F\n\n\nLooks like that UpdateEngine considers `Post` and `Install` as 2 words in the API surface. The problem is that API can\u0027t be changed, but I guess that the internal names in update engine can be changed over time. If we follow this API guideline go/android-api-guidelines#constants-naming, I think that it should be consistently one word or 2 words.",
+      "parentUuid": "7bb2687f_b94c1534",
+      "range": {
+        "startLine": 207,
+        "startChar": 23,
+        "endLine": 207,
+        "endChar": 34
+      },
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
