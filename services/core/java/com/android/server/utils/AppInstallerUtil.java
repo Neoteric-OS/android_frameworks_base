@@ -41,9 +41,6 @@ public class AppInstallerUtil {
         } catch (IllegalArgumentException e) {
             Log.e(LOG_TAG, "Exception while retrieving the package installer of " + packageName, e);
         }
-        if (installerPackageName == null) {
-            return null;
-        }
         return installerPackageName;
     }
 
