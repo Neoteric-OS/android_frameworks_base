@@ -18,6 +18,8 @@ package android.view;
 
 import static android.Manifest.permission.CONFIGURE_DISPLAY_COLOR_MODE;
 import static android.Manifest.permission.CONTROL_DISPLAY_BRIGHTNESS;
+import static android.Manifest.permission.INTERNAL_SYSTEM_WINDOW;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.hardware.flags.Flags.FLAG_OVERLAYPROPERTIES_CLASS_API;
 
 import android.Manifest;
@@ -29,9 +31,11 @@ import android.annotation.RequiresPermission;
 import android.annotation.SuppressLint;
 import android.annotation.TestApi;
 import android.app.ActivityThread;
+import android.app.AppGlobals;
 import android.app.KeyguardManager;
 import android.app.WindowConfiguration;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.pm.IPackageManager;
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -49,6 +53,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Process;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.ArraySet;
 import android.util.DisplayMetrics;
@@ -1921,8 +1926,20 @@ public final class Display {
                 || uid == ownerUid
                 || uid == Process.SYSTEM_UID
                 || uid == 0
+                || checkInternalSystemWindowPermission(uid)
                 // Check if the UID is present on given display.
                 || DisplayManagerGlobal.getInstance().isUidPresentOnDisplay(uid, displayId);
+    }
+
+    private static boolean checkInternalSystemWindowPermission(int uid) {
+        try {
+            IPackageManager pm = AppGlobals.getPackageManager();
+            if (pm != null) {
+                return pm.checkUidPermission(INTERNAL_SYSTEM_WINDOW, uid) == PERMISSION_GRANTED;
+            }
+        } catch (RemoteException ignored) {
+        }
+        return false;
     }
 
     /**
