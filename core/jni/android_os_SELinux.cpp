@@ -18,18 +18,19 @@
 
 #include <errno.h>
 #include <fcntl.h>
-
-#include <utils/Log.h>
-
+#include <genfslabelsversion.h>
 #include <nativehelper/JNIPlatformHelp.h>
-#include "jni.h"
-#include "core_jni_helpers.h"
-#include "selinux/selinux.h"
-#include "selinux/android.h"
-#include <memory>
-#include <atomic>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedUtfChars.h>
+#include <utils/Log.h>
+
+#include <atomic>
+#include <memory>
+
+#include "core_jni_helpers.h"
+#include "jni.h"
+#include "selinux/android.h"
+#include "selinux/selinux.h"
 
 namespace android {
 namespace {
@@ -404,22 +405,35 @@ static jboolean native_restorecon(JNIEnv *env, jobject, jstring pathnameStr, jin
 }
 
 /*
+ * Function: getGenfsLabelsVersion
+ * Purpose: get which genfs labels version /vendor uses
+ * Returns: int: genfs labels version of /vendor
+ * Exceptions: none
+ */
+static jint getGenfsLabelsVersion(JNIEnv *, jclass) {
+    return get_genfs_labels_version();
+}
+
+/*
  * JNI registration.
  */
 static const JNINativeMethod method_table[] = {
-    /* name,                     signature,                    funcPtr */
-    { "checkSELinuxAccess"       , "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z" , (void*)checkSELinuxAccess },
-    { "getContext"               , "()Ljava/lang/String;"                         , (void*)getCon           },
-    { "getFileContext"           , "(Ljava/lang/String;)Ljava/lang/String;"       , (void*)getFileCon       },
-    { "getPeerContext"           , "(Ljava/io/FileDescriptor;)Ljava/lang/String;" , (void*)getPeerCon       },
-    { "getFileContext"           , "(Ljava/io/FileDescriptor;)Ljava/lang/String;" , (void*)getFdCon         },
-    { "getPidContext"            , "(I)Ljava/lang/String;"                        , (void*)getPidCon        },
-    { "isSELinuxEnforced"        , "()Z"                                          , (void*)isSELinuxEnforced},
-    { "isSELinuxEnabled"         , "()Z"                                          , (void*)isSELinuxEnabled },
-    { "native_restorecon"        , "(Ljava/lang/String;I)Z"                       , (void*)native_restorecon},
-    { "setFileContext"           , "(Ljava/lang/String;Ljava/lang/String;)Z"      , (void*)setFileCon       },
-    { "setFSCreateContext"       , "(Ljava/lang/String;)Z"                        , (void*)setFSCreateCon   },
-    { "fileSelabelLookup"        , "(Ljava/lang/String;)Ljava/lang/String;"       , (void*)fileSelabelLookup},
+        /* name,                     signature,                    funcPtr */
+        {"checkSELinuxAccess",
+         "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z",
+         (void *)checkSELinuxAccess},
+        {"getContext", "()Ljava/lang/String;", (void *)getCon},
+        {"getFileContext", "(Ljava/lang/String;)Ljava/lang/String;", (void *)getFileCon},
+        {"getPeerContext", "(Ljava/io/FileDescriptor;)Ljava/lang/String;", (void *)getPeerCon},
+        {"getFileContext", "(Ljava/io/FileDescriptor;)Ljava/lang/String;", (void *)getFdCon},
+        {"getPidContext", "(I)Ljava/lang/String;", (void *)getPidCon},
+        {"isSELinuxEnforced", "()Z", (void *)isSELinuxEnforced},
+        {"isSELinuxEnabled", "()Z", (void *)isSELinuxEnabled},
+        {"native_restorecon", "(Ljava/lang/String;I)Z", (void *)native_restorecon},
+        {"setFileContext", "(Ljava/lang/String;Ljava/lang/String;)Z", (void *)setFileCon},
+        {"setFSCreateContext", "(Ljava/lang/String;)Z", (void *)setFSCreateCon},
+        {"fileSelabelLookup", "(Ljava/lang/String;)Ljava/lang/String;", (void *)fileSelabelLookup},
+        {"getGenfsLabelsVersion", "()I", (void *)getGenfsLabelsVersion},
 };
 
 static int log_callback(int type, const char *fmt, ...) {
