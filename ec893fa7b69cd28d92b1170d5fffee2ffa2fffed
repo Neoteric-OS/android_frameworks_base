@@ -39,6 +39,30 @@
       },
       "revId": "ec893fa7b69cd28d92b1170d5fffee2ffa2fffed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9646a481_5589d1ad",
+        "filename": "services/core/java/com/android/server/wm/DisplayContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6352,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-11-28T04:07:59Z",
+      "side": 1,
+      "message": "This will break many other cases for rotation/locale/density/fontSize/... change.\n\nThe transition should be a [fade-out animation](https://cs.android.com/android/platform/superproject/+/android14-qpr3-release:frameworks/base/libs/WindowManager/Shell/src/com/android/wm/shell/transition/ScreenRotationAnimation.java;l\u003d274;drc\u003d164df0b0fd64ca2838b4301051e2e1359a801698): \n```\n11-08 18:29:40.086 10063  1061  1118 V WindowManagerShell: onTransitionReady android.os.BinderProxy@647a4eb: {id\u003d45 t\u003dCHANGE f\u003d0x0 trk\u003d0 r\u003d[0@Point(0, 0)] c\u003d[{WCT{android.window.IWindowContainerToken$Stub$Proxy@1ce621d} m\u003dCHANGE f\u003dIS_DISPLAY leash\u003dSurface(name\u003dWindowedMagnification:0:31)/@0xb875606 sb\u003dRect(0, 0 - 1920, 1080) eb\u003dRect(0, 0 - 1920, 1080) d\u003d0 snapshot\u003dSurface(name\u003dtransition snapshot: Display{#0 state\u003dON size\u003d1920x1080 ROTATION_0})/@0x379a4c7}]}\n11-08 18:29:40.091 10063  1061  1118 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@14c0ab\n11-08 18:29:40.216  1000   753   772 V WindowManager: Finish Transition #45: created at 11-08 18:29:39.979 collect-started\u003d0.069ms request-sent\u003d0.893ms started\u003d73.606ms ready\u003d74.369ms sent\u003d106.549ms finished\u003d237.104ms\n```\nIt first shows the `snapshot\u003dSurface(name\u003dtransition snapshot` on top and then fade out it to display the new content.  \n\nIt would be better to check where the black screen comes from.  \nThere is the tool to check the layer state by frame: https://source.android.com/docs/core/graphics/tracing-win-transitions  \nFrom the video of the bug, it looks like the snapshot is black, that could be more like the real problem.",
+      "parentUuid": "21754fe9_1f494762",
+      "range": {
+        "startLine": 6351,
+        "startChar": 20,
+        "endLine": 6352,
+        "endChar": 80
+      },
+      "revId": "ec893fa7b69cd28d92b1170d5fffee2ffa2fffed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
