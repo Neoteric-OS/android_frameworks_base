@@ -51,6 +51,24 @@
       "parentUuid": "5920ed0b_43f3cc7f",
       "revId": "8969fc781bf55a5cc76c69b3a2cc9dbf57dde123",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a3bb2c2_4a1626ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1524317
+      },
+      "writtenOn": "2024-11-28T09:41:57Z",
+      "side": 1,
+      "message": "Thanks Mattias, I changed teams and can no longer owner approve this change. @brup@google.com can you please take a look?",
+      "parentUuid": "355d6e43_38e1acb2",
+      "revId": "8969fc781bf55a5cc76c69b3a2cc9dbf57dde123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
