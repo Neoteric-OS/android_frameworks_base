@@ -66,7 +66,6 @@ import java.security.ProviderException;
 import java.security.SecureRandom;
 import java.security.UnrecoverableKeyException;
 import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.ECGenParameterSpec;
 import java.security.spec.NamedParameterSpec;
 import java.security.spec.RSAKeyGenParameterSpec;
 import java.util.ArrayList;
@@ -625,8 +624,8 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                 break;
             }
             case KeymasterDefs.KM_ALGORITHM_EC:
-                if (algSpecificSpec instanceof ECGenParameterSpec) {
-                    ECGenParameterSpec ecSpec = (ECGenParameterSpec) algSpecificSpec;
+                if (algSpecificSpec instanceof NamedParameterSpec) {
+                    NamedParameterSpec ecSpec = (NamedParameterSpec) algSpecificSpec;
                     mEcCurveName = ecSpec.getName();
                     if (mOriginalKeymasterAlgorithm == ALGORITHM_XDH
                             && !mEcCurveName.equalsIgnoreCase("x25519")) {
@@ -653,7 +652,7 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                     }
                 } else if (algSpecificSpec != null) {
                     throw new InvalidAlgorithmParameterException(
-                            "EC may only use ECGenParameterSpec");
+                            "EC may only use NamedParameterSpec");
                 }
                 break;
             default:
