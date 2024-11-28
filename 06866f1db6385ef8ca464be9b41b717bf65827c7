@@ -340,6 +340,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3cffba7_ccb62ff9",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-28T12:15:40Z",
+      "side": 1,
+      "message": "+1. I also wonder about error handling in general. What\u0027s the behavior if:\n- the partition doesn\u0027t exist\n- there is no postinstall script for the partition\n- there is no OTA\n- update_engine failed to trigger the postinstall script\n\nMy understanding is that update_engine [converts](https://cs.android.com/android/platform/superproject/main/+/main:system/update_engine/aosp/binder_service_android_common.h;l\u003d29;drc\u003d60545d5caebd2d51949000994964458249a234c3) any error to [ServiceSpecificException](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/ServiceSpecificException.java). Is that correct? If so, please document this behavior with @throw. Thanks!",
+      "parentUuid": "02caa0ae_799b2301",
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ff09075_36b03a34",
         "filename": "core/java/android/os/UpdateEngineStable.java",
         "patchSetId": 7
