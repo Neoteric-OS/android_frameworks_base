@@ -11160,7 +11160,7 @@ package android.os {
     field public static final long TRACE_TAG_AIDL = 16777216L; // 0x1000000L
   }
 
-  public class UpdateEngine {
+  @FlaggedApi("android.os.update_engine_api") public class UpdateEngine {
     ctor public UpdateEngine();
     method @NonNull @WorkerThread public android.os.UpdateEngine.AllocateSpaceResult allocateSpace(@NonNull String, @NonNull String[]);
     method public void applyPayload(String, long, long, String[]);
