@@ -33,6 +33,24 @@
       "message": "Please resolve Alan\u0027s concerns on the /syste/sepolicy change first (b/306198106#comment3).",
       "revId": "8969fc781bf55a5cc76c69b3a2cc9dbf57dde123",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "355d6e43_38e1acb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-11-28T09:29:58Z",
+      "side": 1,
+      "message": "@philipjunker@google.com , this change is now approved",
+      "parentUuid": "5920ed0b_43f3cc7f",
+      "revId": "8969fc781bf55a5cc76c69b3a2cc9dbf57dde123",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
