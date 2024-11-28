@@ -22,6 +22,7 @@ import android.annotation.ColorInt;
 import android.app.Dialog;
 import android.app.Presentation;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
@@ -80,6 +81,7 @@ public class VirtualDisplayTest extends AndroidTestCase {
     private ImageReader mImageReader;
     private Surface mSurface;
     private ImageListener mImageListener;
+    private boolean mSupportsProtectedBuffers = false;
 
     @Override
     protected void setUp() throws Exception {
@@ -88,6 +90,14 @@ public class VirtualDisplayTest extends AndroidTestCase {
         mDisplayManager = (DisplayManager)mContext.getSystemService(Context.DISPLAY_SERVICE);
         mHandler = new Handler(Looper.getMainLooper());
         mImageListener = new ImageListener();
+        mSupportsProtectedBuffers =
+                mContext.getResources()
+                        .getBoolean(
+                                Resources.getSystem()
+                                        .getIdentifier(
+                                                "config_virtualDisplaySupportsProtectedBuffers",
+                                                "bool",
+                                                "android"));
 
         mImageReaderLock.lock();
         try {
@@ -219,8 +229,15 @@ public class VirtualDisplayTest extends AndroidTestCase {
 
         Display display = virtualDisplay.getDisplay();
         try {
-            assertDisplayRegistered(display, Display.FLAG_PRESENTATION | Display.FLAG_SECURE);
-
+            if (mSupportsProtectedBuffers) {
+                assertDisplayRegistered(
+                        display,
+                        Display.FLAG_PRESENTATION
+                                | Display.FLAG_SECURE
+                                | Display.FLAG_SUPPORTS_PROTECTED_BUFFERS);
+            } else {
+                assertDisplayRegistered(display, Display.FLAG_PRESENTATION | Display.FLAG_SECURE);
+            }
             // Mirroring case with secure window (and display is secure).
             // Show a window on the default display.  It should be mirrored to the
             // virtual display automatically.
@@ -546,4 +563,3 @@ public class VirtualDisplayTest extends AndroidTestCase {
         }
     }
 }
-
