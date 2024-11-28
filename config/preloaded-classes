@@ -5607,6 +5607,8 @@ android.net.ConnectivityMetricsEvent$1
 android.net.ConnectivityMetricsEvent
 android.net.Credentials
 android.net.EventLogTags
+android.net.HttpEngine
+android.net.HttpEngine$Builder
 android.net.IIpConnectivityMetrics$Stub$Proxy
 android.net.IIpConnectivityMetrics$Stub
 android.net.IIpConnectivityMetrics
@@ -5694,6 +5696,8 @@ android.net.Uri$PathSegmentsBuilder
 android.net.Uri-IA
 android.net.Uri
 android.net.UriCodec
+android.net.UrlRequest
+android.net.UrlRequest$Builder
 android.net.VpnManager
 android.net.WebAddress
 android.net.WifiKey$1
