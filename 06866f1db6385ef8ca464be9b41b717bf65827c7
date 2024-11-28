@@ -148,6 +148,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8922acd4_bb59b2eb",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-28T12:03:53Z",
+      "side": 1,
+      "message": "Discussed with Kelvin and Victor offline.\n\nKelvin\u0027s concern about using `UpdateEngine` was that it may grant ART too many permissions, but ART is loaded into system server and run as system server, which controls the permissions of others and can do anything itself, so there isn\u0027t really a way to control the permissions of ART. We (ART team) will make sure we only use `triggerPostinstall`. Kelvin is okay with using `UpdateEngine` after the discussion.\n\nRegarding the stable AIDL, Victor and I are not sure how the stable AIDL helps Mainline as using stable AIDL in Mainline is forbidden per go/android-mainline-apis#stable-aidl. Our suspicion is that update_engine\u0027s stable AIDL predates the policy and someone is already using it. Anyway, there seems to be no point to use it in ART.",
+      "parentUuid": "8cfb0aa9_669b32d5",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "207188cc_b394f1d4",
@@ -215,6 +239,30 @@
           ]
         }
       ],
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "894870d9_de26c0ad",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-28T12:03:53Z",
+      "side": 1,
+      "message": "Moved the method to `UpdateEngine`, which is already an API and does not use `SystemServiceRegistry`.",
+      "parentUuid": "207188cc_b394f1d4",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 29
+      },
       "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
