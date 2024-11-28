@@ -16,6 +16,23 @@
       "message": "please have a look",
       "revId": "18066287a12fa82aa6386025ebadc371b7b864fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2da2b2c4_bc1975f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-11-28T09:28:56Z",
+      "side": 1,
+      "message": "Hi all, \nthis is now the \u0027only\u0027 change that needs approvals in order to get the entire request https://android-review.googlesource.com/q/topic:%22shutdown_checkpoints_platformapp%22 approved. \n\nPlease take a look\nBR\nMattias",
+      "revId": "18066287a12fa82aa6386025ebadc371b7b864fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
