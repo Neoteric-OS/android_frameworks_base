@@ -2581,6 +2581,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             loadSetting(stmt, Settings.Global.LID_BEHAVIOR, defaultLidBehavior);
 
+            loadStringSetting(stmt, Settings.Global.ACTIVITY_MANAGER_CONSTANTS,
+                    R.string.def_activity_manager_constants);
+
+
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
              * secure, and system settings are no longer stored in a database
