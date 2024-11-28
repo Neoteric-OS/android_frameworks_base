@@ -249,6 +249,9 @@
     <!-- Default for Settings.Secure.AWARE_LOCK_ENABLED -->
     <bool name="def_aware_lock_enabled">false</bool>
 
+    <!-- Default for Settings.Global.ACTIVITY_MANAGER_CONSTANTS -->
+    <string name="def_activity_manager_constants"></string>
+
     <!-- Default for Settings.Secure.SWIPE_BOTTOM_TO_NOTIFICATION_ENABLED -->
     <bool name="def_swipe_bottom_to_notification_enabled">false</bool>
 
