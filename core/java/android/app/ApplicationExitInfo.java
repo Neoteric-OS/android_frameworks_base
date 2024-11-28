@@ -560,6 +560,11 @@ public final class ApplicationExitInfo implements Parcelable {
     private @Nullable String mDescription;
 
     /**
+     * @see #getExitedAppVersion
+     */
+    private @Nullable String mExitedAppVersion;
+
+    /**
      * @see #getSubReason
      */
     private @SubReason int mSubReason;
@@ -802,6 +807,17 @@ public final class ApplicationExitInfo implements Parcelable {
     }
 
     /**
+     * The human readable exited app version of the process's death, given by the package manager; could be null.
+     * @hide
+     *
+     * <p class="note">Note: only intended to be human-readable and the system provides no
+     * guarantees that the format is stable across devices or Android releases.</p>
+     */
+    public @Nullable String getExitedAppVersion() {
+        return mExitedAppVersion;
+    }
+
+    /**
      * Return the user id of the record on a multi-user system.
      */
     public @NonNull UserHandle getUserHandle() {
@@ -1025,6 +1041,15 @@ public final class ApplicationExitInfo implements Parcelable {
     }
 
     /**
+     * @see #getExitedAppVersion
+     *
+     * @hide
+     */
+    public void setExitedAppVersion(final String exitedappversion) {
+        mExitedAppVersion = exitedappversion;
+    }
+
+    /**
      * @see #getSubReason
      *
      * @hide
@@ -1154,6 +1179,7 @@ public final class ApplicationExitInfo implements Parcelable {
         dest.writeLong(mRss);
         dest.writeLong(mTimestamp);
         dest.writeString(mDescription);
+        dest.writeString(mExitedAppVersion);
         dest.writeByteArray(mState);
         if (mAppTraceRetriever != null) {
             dest.writeInt(1);
@@ -1190,6 +1216,7 @@ public final class ApplicationExitInfo implements Parcelable {
         mRss = other.mRss;
         mTimestamp = other.mTimestamp;
         mDescription = other.mDescription;
+        mExitedAppVersion = other.mExitedAppVersion;
         mPackageName = other.mPackageName;
         mPackageList = other.mPackageList;
         mState = other.mState;
@@ -1216,6 +1243,7 @@ public final class ApplicationExitInfo implements Parcelable {
         mRss = in.readLong();
         mTimestamp = in.readLong();
         mDescription = intern(in.readString());
+        mExitedAppVersion = in.readString();
         mState = in.createByteArray();
         if (in.readInt() == 1) {
             mAppTraceRetriever = IAppTraceRetriever.Stub.asInterface(in.readStrongBinder());
@@ -1277,6 +1305,9 @@ public final class ApplicationExitInfo implements Parcelable {
                             ? "empty" : Integer.toString(mState.length) + " bytes"))
                 .append(" trace=").append(mTraceFile)
                 .append('\n');
+        sb.append(prefix)
+                .append(" exitedAppVersion=").append(mExitedAppVersion)
+                .append('\n');
         pw.print(sb.toString());
     }
 
@@ -1300,6 +1331,7 @@ public final class ApplicationExitInfo implements Parcelable {
         sb.append(" pss="); DebugUtils.sizeValueToString(mPss << 10, sb);
         sb.append(" rss="); DebugUtils.sizeValueToString(mRss << 10, sb);
         sb.append(" description=").append(mDescription);
+        sb.append(" exitedAppVersion=").append(mExitedAppVersion);
         sb.append(" state=").append(ArrayUtils.isEmpty(mState)
                 ? "empty" : Integer.toString(mState.length) + " bytes");
         sb.append(" trace=").append(mTraceFile);
@@ -1525,7 +1557,8 @@ public final class ApplicationExitInfo implements Parcelable {
                 && mStatus == o.mStatus && mTimestamp == o.mTimestamp
                 && mPss == o.mPss && mRss == o.mRss
                 && TextUtils.equals(mProcessName, o.mProcessName)
-                && TextUtils.equals(mDescription, o.mDescription);
+                && TextUtils.equals(mDescription, o.mDescription)
+                && TextUtils.equals(mExitedAppVersion, o.mExitedAppVersion);
     }
 
     @Override
@@ -1544,6 +1577,7 @@ public final class ApplicationExitInfo implements Parcelable {
         result = 31 * result + Long.hashCode(mTimestamp);
         result = 31 * result + Objects.hashCode(mProcessName);
         result = 31 * result + Objects.hashCode(mDescription);
+        result = 31 * result + Objects.hashCode(mExitedAppVersion);
         return result;
     }
 }

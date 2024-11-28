@@ -44,4 +44,5 @@ message ApplicationExitInfoProto {
     optional string description = 14 [(.android.privacy).dest = DEST_EXPLICIT];
     optional bytes state = 15;
     optional string trace_file = 16;
+    optional string exited_app_version = 17;
 }

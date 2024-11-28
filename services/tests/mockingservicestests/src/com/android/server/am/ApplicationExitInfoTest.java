@@ -223,6 +223,7 @@ public class ApplicationExitInfoTest {
                 (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08};
         final byte[] app1Cookie2 = {(byte) 0x08, (byte) 0x07, (byte) 0x06, (byte) 0x05,
                 (byte) 0x04, (byte) 0x03, (byte) 0x02, (byte) 0x01};
+        final String exitedappversion = "12345";
 
         final long now1 = 1;
         ProcessRecord app = makeProcessRecord(
@@ -271,7 +272,8 @@ public class ApplicationExitInfoTest {
                 app1Pss1,                             // pss
                 app1Rss1,                             // rss
                 IMPORTANCE_CACHED,                    // importance
-                null);                                // description
+                null,                                 // description
+                null);                                // exitedappversion
 
         assertTrue(ArrayUtils.equals(info.getProcessStateSummary(), app1Cookie1,
                 app1Cookie1.length));
@@ -348,7 +350,8 @@ public class ApplicationExitInfoTest {
                 app1Pss2,                             // pss
                 app1Rss2,                             // rss
                 IMPORTANCE_SERVICE,                   // importance
-                null);                                // description
+                null,                                 // description
+                exitedappversion);                    // exitedappversion
 
         assertTrue(ArrayUtils.equals(info.getProcessStateSummary(), app1Cookie2,
                 app1Cookie2.length));
@@ -369,7 +372,8 @@ public class ApplicationExitInfoTest {
                 app1sPss1,                                 // pss
                 app1sRss1,                                 // rss
                 IMPORTANCE_FOREGROUND,                     // importance
-                null);                                     // description
+                null,                                      // description
+                exitedappversion);                         // exitedappversion
 
         info = list.get(2);
         assertTrue(ArrayUtils.equals(info.getProcessStateSummary(), app1Cookie1,
@@ -416,7 +420,8 @@ public class ApplicationExitInfoTest {
                 app1Pss3,                            // pss
                 app1Rss3,                            // rss
                 IMPORTANCE_FOREGROUND_SERVICE,       // importance
-                null);                               // description
+                null,                                // description
+                null);                               // exitedappversion
 
         // try go get all from app1UidUser2
         list.clear();
@@ -440,7 +445,8 @@ public class ApplicationExitInfoTest {
                 app1Pss3,                            // pss
                 app1Rss3,                            // rss
                 IMPORTANCE_FOREGROUND_SERVICE,       // importance
-                null);                               // description
+                null,                                // description
+                null);                               // exitedappversion
 
         /*
          * Case 4: Create a process from another package with kill from lmkd
@@ -496,7 +502,8 @@ public class ApplicationExitInfoTest {
                 app2Pss1,                                 // pss
                 lmkd_reported_rss,                        // rss
                 IMPORTANCE_CACHED,                        // importance
-                null);                                    // description
+                null,                                     // description
+                exitedappversion);                        // exitedappversion
 
         // Verify to get all from User2 regarding app2
         list.clear();
@@ -563,7 +570,8 @@ public class ApplicationExitInfoTest {
                 app3Pss1,                                        // pss
                 app3Rss1,                                        // rss
                 IMPORTANCE_FOREGROUND,                           // importance
-                app3Description);                                // description
+                app3Description,                                 // description
+                exitedappversion);                               // exitedappversion
 
         // Verify the most recent kills, sorted by timestamp
         int maxNum = 3;
@@ -588,7 +596,8 @@ public class ApplicationExitInfoTest {
                 app3Pss1,                                        // pss
                 app3Rss1,                                        // rss
                 IMPORTANCE_FOREGROUND,                           // importance
-                app3Description);                                // description
+                app3Description,                                 // description
+                exitedappversion);                               // exitedappversion
 
         list.clear();
         mAppExitInfoTracker.getExitInfo(null, app2UidUser2, 0, maxNum, list);
@@ -610,7 +619,8 @@ public class ApplicationExitInfoTest {
                 app2Pss1,                                 // pss
                 lmkd_reported_rss,                        // rss
                 IMPORTANCE_CACHED,                        // importance
-                null);                                    // description
+                null,                                     // description
+                null);                                    // exitedappversion
 
         list.clear();
         mAppExitInfoTracker.getExitInfo(null, app1UidUser2, 0, maxNum, list);
@@ -633,7 +643,8 @@ public class ApplicationExitInfoTest {
                 app1Pss3,                            // pss
                 app1Rss3,                            // rss
                 IMPORTANCE_FOREGROUND_SERVICE,       // importance
-                null);                               // description
+                null,                                // description
+                null);                               // exitedappversion
 
         // Case 6: App Java crash
         final int app3Uid = 10345;
@@ -692,7 +703,8 @@ public class ApplicationExitInfoTest {
                 app3Pss2,                                 // pss
                 app3Rss2,                                 // rss
                 IMPORTANCE_CACHED,                        // importance
-                app3Description2);                        // description
+                app3Description2,                         // description
+                exitedappversion);                        // exitedappversion
 
         // Case 7: App1 is "uninstalled" from User2
         mAppExitInfoTracker.onPackageRemoved(app1PackageName, app1UidUser2, false);
@@ -721,7 +733,8 @@ public class ApplicationExitInfoTest {
                 app1Pss2,                             // pss
                 app1Rss2,                             // rss
                 IMPORTANCE_SERVICE,                   // importance
-                null);                                // description
+                null,                                 // description
+                null);                                // exitedappversion
 
         // Case 8: App1 gets "remove task"
         sleep(1);
@@ -774,7 +787,8 @@ public class ApplicationExitInfoTest {
                 app1Pss4,                                   // pss
                 app1Rss4,                                   // rss
                 IMPORTANCE_CACHED,                          // importance
-                null);                                      // description
+                null,                                       // description
+                null);                                      // exitedappversion
 
         // App1 gets "too many empty"
         final String app1Description2 = "too many empty";
@@ -839,7 +853,8 @@ public class ApplicationExitInfoTest {
                 app1Pss5,                                     // pss
                 app1Rss5,                                     // rss
                 IMPORTANCE_CACHED,                            // importance
-                app1Description2);                            // description
+                app1Description2,                             // description
+                null);                                        // exitedappversion
 
         // Verify if the traceFile get copied into the records correctly.
         verifyTraceFile(traceFile, traceStart, info.getTraceFile(), 0, traceEnd - traceStart);
@@ -891,7 +906,8 @@ public class ApplicationExitInfoTest {
                 app1Pss2,                             // pss
                 app1Rss2,                             // rss
                 IMPORTANCE_SERVICE,                   // importance
-                null);                                // description
+                null,                                 // description
+                null);                                // exitedappversion
 
         info = list.get(0);
         verifyApplicationExitInfo(
@@ -909,7 +925,8 @@ public class ApplicationExitInfoTest {
                 app1sPss1,                                 // pss
                 app1sRss1,                                 // rss
                 IMPORTANCE_FOREGROUND,                     // importance
-                null);                                     // description
+                null,                                      // description
+                null);                                     // exitedappversion
 
         info = list.get(2);
         exitCode = 5;
@@ -928,7 +945,8 @@ public class ApplicationExitInfoTest {
                 app1Pss1,                             // pss
                 app1Rss1,                             // rss
                 IMPORTANCE_CACHED,                    // importance
-                null);                                // description
+                null,                                 // description
+                null);                                // exitedappversion
 
         // Case 10: Save the info and load them again
         ArrayList<ApplicationExitInfo> original = new ArrayList<ApplicationExitInfo>();
@@ -1254,7 +1272,7 @@ public class ApplicationExitInfoTest {
             Long timestamp, Integer pid, Integer uid, Integer packageUid,
             Integer definingUid, String processName, Integer connectionGroup,
             Integer reason, Integer subReason, Integer status,
-            Long pss, Long rss, Integer importance, String description) {
+            Long pss, Long rss, Integer importance, String description, String exitedappversion) {
         assertNotNull(info);
 
         if (timestamp != null) {
@@ -1311,6 +1329,9 @@ public class ApplicationExitInfoTest {
                     info.getDescription()));
         } else if (description != null) {
             assertTrue(TextUtils.equals(description, info.getDescription()));
+        }
+        if (exitedappversion != null) {
+            assertTrue(TextUtils.equals(exitedappversion, info.getExitedAppVersion()));
         }
     }
 
