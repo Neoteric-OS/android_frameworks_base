@@ -87,6 +87,7 @@ public class VirtualDisplayAdapter extends DisplayAdapter {
     private final ArrayMap<IBinder, VirtualDisplayDevice> mVirtualDisplayDevices = new ArrayMap<>();
     private final Handler mHandler;
     private final SurfaceControlDisplayFactory mSurfaceControlDisplayFactory;
+    private final boolean mSupportsProtectedBuffers;
 
     // Called with SyncRoot lock held.
     public VirtualDisplayAdapter(DisplayManagerService.SyncRoot syncRoot,
@@ -114,6 +115,8 @@ public class VirtualDisplayAdapter extends DisplayAdapter {
         super(syncRoot, context, handler, listener, TAG, featureFlags);
         mHandler = handler;
         mSurfaceControlDisplayFactory = surfaceControlDisplayFactory;
+        mSupportsProtectedBuffers = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_virtualDisplaySupportsProtectedBuffers);
     }
 
     public DisplayDevice createVirtualDisplayLocked(IVirtualDisplayCallback callback,
@@ -462,6 +465,7 @@ public class VirtualDisplayAdapter extends DisplayAdapter {
             pw.println("mDisplayIdToMirror=" + mDisplayIdToMirror);
             pw.println("mWindowManagerMirroring=" + mIsWindowManagerMirroring);
             pw.println("mRequestedRefreshRate=" + mRequestedRefreshRate);
+            pw.println("mSupportsProtectedBuffers=" + mSupportsProtectedBuffers);
         }
 
         @Override
@@ -500,6 +504,9 @@ public class VirtualDisplayAdapter extends DisplayAdapter {
 
                 if ((mFlags & VIRTUAL_DISPLAY_FLAG_SECURE) != 0) {
                     mInfo.flags |= DisplayDeviceInfo.FLAG_SECURE;
+                    if (mSupportsProtectedBuffers) {
+                        mInfo.flags |= DisplayDeviceInfo.FLAG_SUPPORTS_PROTECTED_BUFFERS;
+                    }
                 }
                 if ((mFlags & VIRTUAL_DISPLAY_FLAG_PRESENTATION) != 0) {
                     mInfo.flags |= DisplayDeviceInfo.FLAG_PRESENTATION;
