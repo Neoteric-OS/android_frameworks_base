@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "67a7c69e_3fd44a8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3297237
+      },
+      "writtenOn": "2024-11-28T09:57:28Z",
+      "side": 1,
+      "message": "Hi @tigerhuang@google.com, we have added 1 empty line below the title and some description, thanks",
+      "parentUuid": "bab6297c_6bc540b3",
+      "revId": "ec893fa7b69cd28d92b1170d5fffee2ffa2fffed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0f5a57dc_f8a5c570",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
