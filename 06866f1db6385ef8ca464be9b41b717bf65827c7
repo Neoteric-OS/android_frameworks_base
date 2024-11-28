@@ -358,6 +358,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66e5b73e_813cf32f",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2024-11-28T17:32:49Z",
+      "side": 1,
+      "message": "Discussed with Victor offline. Given that update_engine [puts an error code](https://cs.android.com/android/platform/superproject/main/+/main:system/update_engine/aosp/binder_service_android_common.h;l\u003d31;drc\u003d60545d5caebd2d51949000994964458249a234c3) in `ServiceSpecificException` that is specific enough and allows callers to handle different errors differently, it\u0027s fine to throw `ServiceSpecificException`. Please just add a @throw and document that the error code in `ServiceSpecificException` is one of the codes defined in [`UpdateEngine.ErrorCode`](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/UpdateEngine.java;l\u003d185;drc\u003dfaf2ba91259b85dc02a86253b65b25d35a6d2ec5).",
+      "parentUuid": "f3cffba7_ccb62ff9",
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ff09075_36b03a34",
         "filename": "core/java/android/os/UpdateEngineStable.java",
         "patchSetId": 7
