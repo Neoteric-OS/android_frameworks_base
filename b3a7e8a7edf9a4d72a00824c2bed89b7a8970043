@@ -22,6 +22,30 @@
       },
       "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c846d48_f3936eb5",
+        "filename": "core/java/android/net/metrics/DnsEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2024-11-29T07:56:15Z",
+      "side": 1,
+      "message": "(the problem is likely stemming from the resize in:\n    public static IpConnectivityEvent toProto(DnsEvent in) {",
+      "parentUuid": "91a9e600_e3991d10",
+      "range": {
+        "startLine": 65,
+        "startChar": 38,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
