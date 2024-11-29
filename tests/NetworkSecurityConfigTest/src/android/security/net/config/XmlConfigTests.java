@@ -502,4 +502,30 @@ public class XmlConfigTests extends AndroidTestCase {
         TestUtils.assertConnectionSucceeds(context, "android.com", 443);
         TestUtils.assertConnectionSucceeds(context, "developer.android.com", 443);
     }
+
+    public void testCertificateTransparencyDomainConfig() throws Exception {
+        XmlConfigSource source = new XmlConfigSource(getContext(), R.xml.ct_domains,
+                TestUtils.makeApplicationInfo());
+        ApplicationConfig appConfig = new ApplicationConfig(source);
+        assertTrue(appConfig.hasPerDomainConfigs());
+        NetworkSecurityConfig config = appConfig.getConfigForHostname("");
+        assertNotNull(config);
+        // Check defaults.
+        assertTrue(config.isCertificateTransparencyVerificationRequired());
+
+        config = appConfig.getConfigForHostname("android.com");
+        assertTrue(config.isCertificateTransparencyVerificationRequired());
+
+        config = appConfig.getConfigForHostname("subdomain_user.android.com");
+        assertFalse(config.isCertificateTransparencyVerificationRequired());
+
+        config = appConfig.getConfigForHostname("subdomain_user_ct.android.com");
+        assertTrue(config.isCertificateTransparencyVerificationRequired());
+
+        config = appConfig.getConfigForHostname("subdomain_inline.android.com");
+        assertFalse(config.isCertificateTransparencyVerificationRequired());
+
+        config = appConfig.getConfigForHostname("subdomain_inline_ct.android.com");
+        assertTrue(config.isCertificateTransparencyVerificationRequired());
+    }
 }
