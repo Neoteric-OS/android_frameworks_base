@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91a9e600_e3991d10",
+        "filename": "core/java/android/net/metrics/DnsEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2024-11-29T07:53:40Z",
+      "side": 1,
+      "message": "Anyone know *why* this actually uses \u00271.4\u0027 as the multiplier?\n\nNormally I\u0027ve seen such logic simply double the size of the array, which would also entirely avoid this problem.\n\nIs this simply an attempt to grow things a little bit slower than 2x?  Why?\n\n[Before this patch it fails for 2 as well..., since I think 1.4 * 2 \u003d 2.8 rounds down to 2 as well]\n\n--\n\nFurthermore, AFAICT we\u0027ll never write to elements 20000 and up (SIZE_LIMIT check up above), but we don\u0027t prevent the resize from growing from 19000 to 26600 and effectively wasting all that space.\n\n--\n\nAlso, I haven\u0027t looked, but it would be useful to understand how we even hit this case.\n\nPerhaps it would be easier to just enforce initialCapacity has some reasonable value (like \u003e\u003d100).  Which AFAICT is already the case ( INITIAL_DNS_BATCH_SIZE \u003d 100;)",
+      "range": {
+        "startLine": 65,
+        "startChar": 38,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
