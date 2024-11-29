@@ -541,6 +541,9 @@ public final class LogcatManagerService extends SystemService {
         }
         try {
             try {
+                if (getLogdService() == null) {
+                    return;
+                }
                 getLogdService().decline(request.mUid, request.mGid, request.mPid, request.mFd);
             } catch (DeadObjectException e) {
                 // This can happen if logd restarts, so force getting a new connection
