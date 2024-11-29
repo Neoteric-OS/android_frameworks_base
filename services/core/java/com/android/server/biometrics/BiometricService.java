@@ -163,7 +163,7 @@ public class BiometricService extends SystemService {
             mSensorsPendingInvalidation = new ArraySet<>();
 
             for (BiometricSensor sensor : sensors) {
-                if (sensor.id == fromSensorId) {
+                if (sensor.id != fromSensorId) {
                     continue;
                 }
 
