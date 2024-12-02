@@ -16,6 +16,23 @@
       "message": "Removed the Android.bp change as it\u0027s not needed for now.",
       "revId": "c88f904242c81f302477c994c56f055a2aa2bb0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f06bf758_0d4a4905",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1052644
+      },
+      "writtenOn": "2024-12-02T16:49:36Z",
+      "side": 1,
+      "message": "Friendly ping: Kelvin, can we land this new API change before Wednesday? It looks like it\u0027s blocked on a few comments. Thanks for your help!",
+      "revId": "c88f904242c81f302477c994c56f055a2aa2bb0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
