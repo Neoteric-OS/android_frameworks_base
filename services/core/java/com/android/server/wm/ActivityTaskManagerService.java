@@ -1535,7 +1535,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
 
             final ActivityRecord[] outActivity = new ActivityRecord[1];
-            getActivityStartController().obtainStarter(intent, "dream")
+            final int startActivityResult = getActivityStartController()
+                    .obtainStarter(intent, "dream")
                     .setCallingUid(callingUid)
                     .setCallingPid(callingPid)
                     .setCallingPackage(intent.getPackage())
@@ -1547,11 +1548,13 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                     .setRealCallingUid(Binder.getCallingUid())
                     .setBackgroundStartPrivileges(BackgroundStartPrivileges.ALLOW_BAL)
                     .execute();
-
+            
+            if (!ActivityManager.isStartResultSuccessful(startActivityResult)) {
+                // start the dream activity failed.
+                return null;
+            }
             final ActivityRecord started = outActivity[0];
-            final IAppTask appTask = started == null ? null :
-                    new AppTaskImpl(this, started.getTask().mTaskId, callingUid);
-            return appTask;
+            return new AppTaskImpl(this, started.getTask().mTaskId, callingUid);
         }
     }
 
