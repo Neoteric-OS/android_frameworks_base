@@ -19,6 +19,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf1e92f8_10356da5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3311688
+      },
+      "writtenOn": "2024-12-02T21:28:42Z",
+      "side": 1,
+      "message": "(i just thumbed the \u003d button on my calculator a bunch of times without rounding 😅)\n\nyeah, agreed. i guess it would make more sense to just cap the size directly at that point, since we already know the upper bound...",
+      "parentUuid": "49c024cb_d194659d",
+      "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91a9e600_e3991d10",
