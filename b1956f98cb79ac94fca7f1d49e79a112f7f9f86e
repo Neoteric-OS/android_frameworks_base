@@ -52,6 +52,24 @@
       "parentUuid": "fc2942b0_c9406e22",
       "revId": "b1956f98cb79ac94fca7f1d49e79a112f7f9f86e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81a31d96_e5e98aac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-12-02T11:47:31Z",
+      "side": 1,
+      "message": "It may be enabled in the future release.\nFor now, though AOSP build can reproduce the same timing of the visibility change, but AOSP build won\u0027t have the \"wallpaper in rotation animation\" symptom.\n\nSo it could be also related to the customized rotation animation. You may refer to the [concept](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/libs/WindowManager/Shell/src/com/android/wm/shell/transition/ScreenRotationAnimation.java;l\u003d178;drc\u003dcc03f08373b8aa98a0ead51d23908c8a5d4cc37f/) to exclude wallpaper from your implementation.",
+      "parentUuid": "6e22a12b_c4282ecd",
+      "revId": "b1956f98cb79ac94fca7f1d49e79a112f7f9f86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
