@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab55f81e_7bfb2f33",
+        "filename": "core/java/com/android/internal/globalactions/ActionsDialog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2024-12-02T14:14:31Z",
+      "side": 0,
+      "message": "Why remove the final here?",
+      "revId": "219a0d17e88ebb5a55025994c88fd05440cb7245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

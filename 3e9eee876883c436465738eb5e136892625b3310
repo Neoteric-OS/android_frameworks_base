@@ -34,6 +34,47 @@
       "parentUuid": "d6809352_f76d0c47",
       "revId": "3e9eee876883c436465738eb5e136892625b3310",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d62e3f80_53794697",
+        "filename": "packages/SystemUI/tests/src/com/android/systemui/globalactions/GlobalActionsDialogLiteTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2024-12-02T14:14:31Z",
+      "side": 1,
+      "message": "Is there a way that this can be made to work independent of real time? Leveraging the TestableLooper?\n\n------------------------------\n\nPlease fix this WARNING reported by Check Contents: Do not use \"Thread.sleep()\". Please see go/avoid-thread-sleep for more details.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nDo not use \"Thread.sleep()\". Please see go/avoid-thread-sleep for more details.",
+      "range": {
+        "startLine": 230,
+        "startChar": 12,
+        "endLine": 230,
+        "endChar": 24
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8bc80930_02fa6d91",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/tests/src/com/android/systemui/globalactions/GlobalActionsDialogLiteTest.java",
+              "range": {
+                "startLine": 229,
+                "startChar": 0,
+                "endLine": 233,
+                "endChar": 0
+              },
+              "replacement": "        mTestableLooper.processAllMessages();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "3e9eee876883c436465738eb5e136892625b3310",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
