@@ -88,6 +88,24 @@
       "parentUuid": "81a31d96_e5e98aac",
       "revId": "b1956f98cb79ac94fca7f1d49e79a112f7f9f86e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6db15d6_257e9003",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2024-12-02T13:27:33Z",
+      "side": 1,
+      "message": "Hey, Riddle, because I just transitioned from the input module to the WM module, I\u0027m not very familiar with many of the logics here. However, through my investigation, it appears that Xiaomi did not reintroduce the screen rotation animation class but merely modified some parameters. Therefore, the aforementioned logic is already included in Xiaomi\u0027s build. Additionally, I also tried to reproduce this on Pixel devices or AOSP builds, and the behavior is indeed different; the gallery disappears directly. I have sent you the reproduction video via chat. Can we communicate further through chat?",
+      "parentUuid": "fbc4d973_da1c4ba1",
+      "revId": "b1956f98cb79ac94fca7f1d49e79a112f7f9f86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
