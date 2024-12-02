@@ -33,6 +33,24 @@
       "message": "what\u0027s your actual goal here? because if you\u0027re fine with a bit of pinning, you don\u0027t need to go this far --- GetByteArrayElements()/ReleaseByteArrayElements() will work too.\n\ndid the ART GC folks tell you pinning was a problem, or just to avoid the criticals?",
       "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03b839f4_06ad0a52",
+        "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1258954
+      },
+      "writtenOn": "2024-12-02T23:28:06Z",
+      "side": 1,
+      "message": "The GetPrimitiveArrayCritical()/ReleasePrimitiveArrayCritical() is basically a critical section blocking GC from passing a very important phase and hence making progress. So if this critical-section can be long (as suggested in the commit message) then this CL is doing the right thing.\n\nAdded Hans, in case he wants to add more insights.",
+      "parentUuid": "856babc7_b74fd099",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
