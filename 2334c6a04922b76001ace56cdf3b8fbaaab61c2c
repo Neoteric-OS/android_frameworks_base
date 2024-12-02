@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3198e849_2ea77348",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-12-02T09:52:05Z",
+      "side": 1,
+      "message": "Thanks for making this change.",
+      "revId": "2334c6a04922b76001ace56cdf3b8fbaaab61c2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "225d27e3_c73d6188",
+        "filename": "services/core/java/com/android/server/PackageWatchdog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-12-02T09:52:05Z",
+      "side": 1,
+      "message": "Could you please make this `Slog.i`? `Slog.wtf` is used for something that should never happen, while mitigation count could be empty.",
+      "revId": "2334c6a04922b76001ace56cdf3b8fbaaab61c2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
