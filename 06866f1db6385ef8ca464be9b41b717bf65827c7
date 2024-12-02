@@ -374,6 +374,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95494561_60297ee5",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1710792
+      },
+      "writtenOn": "2024-12-02T17:32:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e5b73e_813cf32f",
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ff09075_36b03a34",
@@ -453,6 +471,30 @@
       "side": 1,
       "message": "https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/api/system-current.txt;l\u003d11200?q\u003dPOST_INSTALL\u0026ss\u003dandroid%2Fplatform%2Fsuperproject%2Fmain:frameworks%2Fbase%2Fcore%2F\n\n\nLooks like that UpdateEngine considers `Post` and `Install` as 2 words in the API surface. The problem is that API can\u0027t be changed, but I guess that the internal names in update engine can be changed over time. If we follow this API guideline go/android-api-guidelines#constants-naming, I think that it should be consistently one word or 2 words.",
       "parentUuid": "7bb2687f_b94c1534",
+      "range": {
+        "startLine": 207,
+        "startChar": 23,
+        "endLine": 207,
+        "endChar": 34
+      },
+      "revId": "06866f1db6385ef8ca464be9b41b717bf65827c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7340ecdc_c63983a2",
+        "filename": "core/java/android/os/UpdateEngineStable.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1710792
+      },
+      "writtenOn": "2024-12-02T17:32:03Z",
+      "side": 1,
+      "message": "If we look at the original definition for error codes, it\u0027s lowercase `i`\n\nhttps://cs.android.com/android/platform/superproject/main/+/main:system/update_engine/common/error_code.h;l\u003d31?q\u003dkPostinstallRunnerError\u0026sq\u003d\n\nthe naming in current.txt is rather a mistake. I prefer to change names in current.txt, or keep it as is and make sure everywhere else is using `Postinstall` for consistency.",
+      "parentUuid": "fab3a957_aea79f95",
       "range": {
         "startLine": 207,
         "startChar": 23,
