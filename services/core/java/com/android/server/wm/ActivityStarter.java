@@ -1361,7 +1361,7 @@ class ActivityStarter {
                 request.voiceInteractor, startFlags, checkedOptions,
                 inTask, inTaskFragment, balVerdict, intentGrants, realCallingUid);
 
-        if (request.outActivity != null) {
+        if (request.outActivity != null && mLastStartActivityResult == START_SUCCESS) {
             request.outActivity[0] = mLastStartActivityRecord;
         }
 
