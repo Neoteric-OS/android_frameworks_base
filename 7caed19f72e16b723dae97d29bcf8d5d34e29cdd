@@ -39,6 +39,30 @@
       },
       "revId": "7caed19f72e16b723dae97d29bcf8d5d34e29cdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1b1cf69_9df63124",
+        "filename": "packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialogLite.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2024-12-02T11:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "927b5ca4_6bc7d556",
+      "range": {
+        "startLine": 320,
+        "startChar": 25,
+        "endLine": 320,
+        "endChar": 28
+      },
+      "revId": "7caed19f72e16b723dae97d29bcf8d5d34e29cdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
