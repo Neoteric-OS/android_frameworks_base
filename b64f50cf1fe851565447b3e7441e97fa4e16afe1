@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe474b1b_a0173da2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2024-12-02T09:21:34Z",
+      "side": 1,
+      "message": "Should we be doing the same when there\u0027s a \u003cpin-set\u003e applied to the domain, or is there still value in having CT enabled for those cases?",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "b64f50cf1fe851565447b3e7441e97fa4e16afe1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eddac3e6_e05fdc55",
+        "filename": "tests/NetworkSecurityConfigTest/res/xml/ct_domains.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2024-12-02T09:21:34Z",
+      "side": 1,
+      "message": "Might be worth adding an additional XML that uses user certs in its base config (both with and without CT enabled explicitly) to ensure we don\u0027t mess this up when moving to default opt-in in the future :)",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "b64f50cf1fe851565447b3e7441e97fa4e16afe1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
