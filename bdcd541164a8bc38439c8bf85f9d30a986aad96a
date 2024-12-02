@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02b86013_08f0b8e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-12-02T06:14:35Z",
+      "side": 1,
+      "message": "Cherry pick of ag/30199514. The only difference is that `core/api/module-lib-current.txt` in git_main  exposes APIs from `package android.net.wifi` but the AOSP version does not have them",
+      "revId": "bdcd541164a8bc38439c8bf85f9d30a986aad96a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
