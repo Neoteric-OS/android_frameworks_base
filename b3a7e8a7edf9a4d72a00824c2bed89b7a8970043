@@ -1,6 +1,24 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49c024cb_d194659d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2024-12-02T21:08:21Z",
+      "side": 1,
+      "message": "Maciej Żenczykowski, Kernel Networking Developer @ Google\n\nI got 21687 (for 100 * 1.4 ** n, but with rounding down each time) - close enough, not worth triple checking.\n\nConsider though that the worse case is 19999 * 1.4 \u003d 27998, so 21687 is actually not as close to 20K as you\u0027d like if you were optimizing specifically for that, since the worst case is only ~28K (it\u0027s 21% of the way to the worst case). It feels like 1.4 was simply chosen at random... weird.\n\n--",
+      "tag": "mailMessageId\u003d\u003cCANP3RGd9E+PQBk7m6j0Mybnup_wt301BhnkZLNtyZJo8k\u003dbL5w@mail.gmail.com\u003e",
+      "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91a9e600_e3991d10",
