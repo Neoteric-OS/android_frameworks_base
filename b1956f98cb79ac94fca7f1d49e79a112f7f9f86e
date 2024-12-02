@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fd92ef3_bac285dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-12-02T09:06:37Z",
+      "side": 1,
+      "message": "You can enable [this](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/wm/WallpaperController.java;l\u003d769;drc\u003d7b713207ff20298ef0bf0cea67a9295b1494fada) to collect token.\nThough there were some side effects that the surface visibility may not sync.\nHowever, even if transition doesn\u0027t commit invisible, the wallpaper should be able to set to invisible at [here](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/services/core/java/com/android/server/wm/WindowStateAnimator.java;l\u003d440;drc\u003dfe792ec2551ca74168541fa687c532e7c055897a) a bit later (usually one frame).\ne.g.\n```\n12-02 17:05:25.331  1769  1798 V WindowManager: Finish Transition (#140): created at 12-02 17:05:24.738 collect-started\u003d0.197ms request-sent\u003d26.217ms started\u003d48.023ms ready\u003d47.985ms sent\u003d54.335ms finished\u003d586.653ms\n12-02 17:05:25.337  1769  1802 I wm_wallpaper_surface: [0,0,Window{97278bb u0 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}]\n```\nWondering what\u0027s the problem about the little delay.",
+      "revId": "b1956f98cb79ac94fca7f1d49e79a112f7f9f86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
