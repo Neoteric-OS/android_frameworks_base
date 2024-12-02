@@ -51,6 +51,24 @@
       "parentUuid": "856babc7_b74fd099",
       "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7eb8c37_a5acdd35",
+        "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-12-02T23:40:24Z",
+      "side": 1,
+      "message": "my question was \"is an extra allocation and GetByteArray _Region_ () really required, or would just using GetByteArray _Elements_ () be better?\". it requires a pin for that array, but doesn\u0027t block the whole GC...",
+      "parentUuid": "03b839f4_06ad0a52",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
