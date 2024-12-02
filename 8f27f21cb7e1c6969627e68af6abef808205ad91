@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "225411f8_53ad3d4d",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 11163,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-12-02T23:11:44Z",
+      "side": 1,
+      "message": "I am not sure. Will it cause `UpdateEngine` disappear in 25Q1 system-current SDK?",
+      "range": {
+        "startLine": 11163,
+        "startChar": 2,
+        "endLine": 11163,
+        "endChar": 46
+      },
+      "revId": "8f27f21cb7e1c6969627e68af6abef808205ad91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
