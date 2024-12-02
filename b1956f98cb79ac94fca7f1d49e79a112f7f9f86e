@@ -34,6 +34,24 @@
       "parentUuid": "1fd92ef3_bac285dc",
       "revId": "b1956f98cb79ac94fca7f1d49e79a112f7f9f86e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e22a12b_c4282ecd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2024-12-02T11:10:28Z",
+      "side": 1,
+      "message": "By the way, we found the flag default value is disabled, do you know why we not enable this flag? Do you have any further plans for enabling it?",
+      "parentUuid": "fc2942b0_c9406e22",
+      "revId": "b1956f98cb79ac94fca7f1d49e79a112f7f9f86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
