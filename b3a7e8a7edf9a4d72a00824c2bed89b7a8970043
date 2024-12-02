@@ -46,6 +46,30 @@
       },
       "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44f70039_8e5ba36f",
+        "filename": "core/java/android/net/metrics/DnsEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3311688
+      },
+      "writtenOn": "2024-12-02T20:21:49Z",
+      "side": 1,
+      "message": "1.4 does feel like a really specific number; I feel like I\u0027d expect to see 1.5 instead if the idea was to grow more slowly than with 2. Perhaps the idea is that if you start at 100 and use 1.4, your biggest resize will be close to 20000 (21779)? But it\u0027s hard to say without understanding exactly how this array should grow in practice.",
+      "parentUuid": "6c846d48_f3936eb5",
+      "range": {
+        "startLine": 65,
+        "startChar": 38,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
