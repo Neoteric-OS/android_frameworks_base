@@ -156,6 +156,7 @@ import android.net.IPacProxyManager;
 import android.net.IVpnManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkScoreManager;
+import android.net.NetworkTransparencyManager;
 import android.net.NetworkWatchlistManager;
 import android.net.PacProxyManager;
 import android.net.TetheringManager;
@@ -1649,6 +1650,17 @@ public final class SystemServiceRegistry {
                         }
                         return new E2eeContactKeysManager(ctx);
                     }});
+
+    registerService(
+        Context.NETWORK_TRANSPARENCY_SERVICE,
+        NetworkTransparencyManager.class,
+        new CachedServiceFetcher<NetworkTransparencyManager>() {
+          @Override
+          public NetworkTransparencyManager createService(ContextImpl ctx)
+              throws ServiceNotFoundException {
+            return new NetworkTransparencyManager(ctx);
+          }
+        });
 
         // DO NOT do a flag check like this unless the flag is read-only.
         // (because this code is executed during preload in zygote.)

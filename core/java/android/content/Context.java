@@ -6664,6 +6664,9 @@ public abstract class Context {
     @FlaggedApi(android.provider.Flags.FLAG_USER_KEYS)
     public static final String CONTACT_KEYS_SERVICE = "contact_keys";
 
+    /** @hide */
+    public static final String NETWORK_TRANSPARENCY_SERVICE = "network_transparency";
+
     /**
      * Use with {@link #getSystemService(String)} to retrieve an
      * {@link android.os.ProfilingManager}.

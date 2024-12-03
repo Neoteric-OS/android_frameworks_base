@@ -187,6 +187,7 @@ import com.android.server.midi.MidiService;
 import com.android.server.musicrecognition.MusicRecognitionManagerService;
 import com.android.server.net.NetworkManagementService;
 import com.android.server.net.NetworkPolicyManagerService;
+import com.android.server.net.NetworkTransparencyService;
 import com.android.server.net.watchlist.NetworkWatchlistService;
 import com.android.server.notification.NotificationManagerService;
 import com.android.server.oemlock.OemLockService;
@@ -1691,6 +1692,11 @@ public final class SystemServer implements Dumpable {
             t.traceBegin("IpConnectivityMetrics");
             mSystemServiceManager.startService(IpConnectivityMetrics.class);
             t.traceEnd();
+
+      t.traceBegin("NetworkTransparencyService");
+      Slog.i(TAG, "NetworkTransparencyService");
+      mSystemServiceManager.startService(NetworkTransparencyService.Lifecycle.class);
+      t.traceEnd();
 
             t.traceBegin("NetworkWatchlistService");
             mSystemServiceManager.startService(NetworkWatchlistService.Lifecycle.class);

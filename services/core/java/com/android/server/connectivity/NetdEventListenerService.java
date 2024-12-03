@@ -107,7 +107,7 @@ public class NetdEventListenerService extends BaseNetdEventListener {
     final TransportForNetIdNetworkCallback mCallback = new TransportForNetIdNetworkCallback();
 
     /**
-     * There are only 3 possible callbacks.
+     * There are only 4 possible callbacks.
      *
      * mNetdEventCallbackList[CALLBACK_CALLER_CONNECTIVITY_SERVICE]
      * Callback registered/unregistered by ConnectivityService.
@@ -118,12 +118,16 @@ public class NetdEventListenerService extends BaseNetdEventListener {
      *
      * mNetdEventCallbackList[CALLBACK_CALLER_NETWORK_WATCHLIST]
      * Callback registered/unregistered by NetworkWatchlistService.
+     *
+     * mNetdEventCallbackList[CALLBACK_CALLER_NETWORK_TRANSPARENCY]
+     * Callback registered/unregistered by NetworkTransparencyService.
      */
     @GuardedBy("this")
     private static final int[] ALLOWED_CALLBACK_TYPES = {
         INetdEventCallback.CALLBACK_CALLER_CONNECTIVITY_SERVICE,
         INetdEventCallback.CALLBACK_CALLER_DEVICE_POLICY,
-        INetdEventCallback.CALLBACK_CALLER_NETWORK_WATCHLIST
+        INetdEventCallback.CALLBACK_CALLER_NETWORK_WATCHLIST,
+        INetdEventCallback.CALLBACK_CALLER_NETWORK_TRANSPARENCY
     };
 
     @GuardedBy("this")
