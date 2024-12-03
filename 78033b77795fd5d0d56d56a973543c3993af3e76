@@ -69,6 +69,24 @@
       "parentUuid": "03b839f4_06ad0a52",
       "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed65e53a_50795e90",
+        "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1258954
+      },
+      "writtenOn": "2024-12-03T00:06:45Z",
+      "side": 1,
+      "message": "Sorry, my bad.\n\nI looked at the code of GetByteArrayElements(). It makes a copy if the byte-array is movable. Otherwise not.\n\nIn any case, I agree GetByteArrayElements() seems like a better choice than GetByteArrayRegion(), unless `buffer` is a big movable array and `length` is expected to be small.",
+      "parentUuid": "e7eb8c37_a5acdd35",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
