@@ -106,6 +106,30 @@
       },
       "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1144d4ba_4205dcbb",
+        "filename": "core/java/android/net/metrics/DnsEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2024-12-03T19:02:18Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "44f70039_8e5ba36f",
+      "range": {
+        "startLine": 65,
+        "startChar": 38,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "b3a7e8a7edf9a4d72a00824c2bed89b7a8970043",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
