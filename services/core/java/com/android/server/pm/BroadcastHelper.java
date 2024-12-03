@@ -93,6 +93,8 @@ public final class BroadcastHelper {
     private final PackageMonitorCallbackHelper mPackageMonitorCallbackHelper;
     private final AppsFilterSnapshot mAppsFilter;
 
+    private final PackageManagerServiceInjector mInjector;
+
     BroadcastHelper(PackageManagerServiceInjector injector) {
         mUmInternal = injector.getUserManagerInternal();
         mAmInternal = injector.getActivityManagerInternal();
@@ -100,6 +102,7 @@ public final class BroadcastHelper {
         mHandler = injector.getHandler();
         mPackageMonitorCallbackHelper = injector.getPackageMonitorCallbackHelper();
         mAppsFilter = injector.getAppsFilter();
+        mInjector = injector;
     }
 
     /**
@@ -829,6 +832,9 @@ public final class BroadcastHelper {
                 instantUserIds, broadcastAllowList));
         mPackageMonitorCallbackHelper.notifyPackageChanged(packageName, dontKillApp, componentNames,
                 packageUid, reason, userIds, instantUserIds, broadcastAllowList, mHandler);
+        if (!Intent.ACTION_OVERLAY_CHANGED.equals(reason)) {
+            mInjector.getOverlayManagerInternal().handlePackageChanged(packageName, userId);
+        }
     }
 
     private void sendPackageBroadcastAndNotify(@NonNull String action,

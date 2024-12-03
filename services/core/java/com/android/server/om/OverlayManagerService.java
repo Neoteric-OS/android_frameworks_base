@@ -261,8 +261,6 @@ public final class OverlayManagerService extends SystemService {
 
     private final OverlayActorEnforcer mActorEnforcer;
 
-    private final PackageMonitor mPackageMonitor = new OverlayManagerPackageMonitor();
-
     private int mPrevStartedUserId = -1;
 
     public OverlayManagerService(@NonNull final Context context) {
@@ -278,11 +276,6 @@ public final class OverlayManagerService extends SystemService {
             mImpl = new OverlayManagerServiceImpl(mPackageManager, im, mSettings,
                     OverlayConfig.getSystemInstance(), getDefaultOverlayPackages());
             mActorEnforcer = new OverlayActorEnforcer(mPackageManager);
-
-            HandlerThread packageMonitorThread = new HandlerThread(TAG);
-            packageMonitorThread.start();
-            mPackageMonitor.register(
-                    context, packageMonitorThread.getLooper(), UserHandle.ALL, true);
 
             final IntentFilter userFilter = new IntentFilter();
             userFilter.addAction(ACTION_USER_ADDED);
@@ -306,6 +299,7 @@ public final class OverlayManagerService extends SystemService {
 
             publishBinderService(Context.OVERLAY_SERVICE, mService);
             publishLocalService(OverlayManagerService.class, this);
+            publishLocalService(OverlayManagerInternal.class, new OverlayManagerInternal());
         } finally {
             traceEnd(TRACE_TAG_RRO);
         }
@@ -372,24 +366,6 @@ public final class OverlayManagerService extends SystemService {
         return defaultPackages.toArray(new String[0]);
     }
 
-    private final class OverlayManagerPackageMonitor extends PackageMonitor {
-
-        @Override
-        public void onPackageAppearedWithExtras(String packageName, Bundle extras) {
-            handlePackageAdd(packageName, extras, getChangingUserId());
-        }
-
-        @Override
-        public void onPackageChangedWithExtras(String packageName, Bundle extras) {
-            handlePackageChange(packageName, extras, getChangingUserId());
-        }
-
-        @Override
-        public void onPackageDisappearedWithExtras(String packageName, Bundle extras) {
-            handlePackageRemove(packageName, extras, getChangingUserId());
-        }
-    }
-
     private int[] getUserIds(int uid) {
         final int[] userIds;
         if (uid == INVALID_UID) {
@@ -400,123 +376,80 @@ public final class OverlayManagerService extends SystemService {
         return userIds;
     }
 
-    private void handlePackageAdd(String packageName, Bundle extras, int userId) {
-        final boolean replacing = extras.getBoolean(Intent.EXTRA_REPLACING, false);
-        if (replacing) {
-            onPackageReplaced(packageName, userId);
-        } else {
-            onPackageAdded(packageName, userId);
-        }
-    }
-
-    private void handlePackageChange(String packageName, Bundle extras, int userId) {
-        if (!ACTION_OVERLAY_CHANGED.equals(extras.getString(EXTRA_REASON))) {
-            onPackageChanged(packageName, userId);
-        }
-    }
-
-    private void handlePackageRemove(String packageName, Bundle extras, int userId) {
-        final boolean replacing = extras.getBoolean(Intent.EXTRA_REPLACING, false);
-        final boolean systemUpdateUninstall =
-                extras.getBoolean(Intent.EXTRA_SYSTEM_UPDATE_UNINSTALL, false);
-
-        if (replacing) {
-            onPackageReplacing(packageName, systemUpdateUninstall, userId);
-        } else {
-            onPackageRemoved(packageName, userId);
-        }
-    }
-
-    private void onPackageAdded(@NonNull final String packageName, final int userId) {
-        try {
-            traceBegin(TRACE_TAG_RRO, "OMS#onPackageAdded " + packageName);
-            synchronized (mLock) {
-                var packageState = mPackageManager.onPackageAdded(packageName, userId);
-                if (packageState != null && !mPackageManager.isInstantApp(packageName,
-                        userId)) {
-                    try {
-                        updateTargetPackagesLocked(
-                                mImpl.onPackageAdded(packageName, userId));
-                    } catch (OperationFailedException e) {
-                        Slog.e(TAG, "onPackageAdded internal error", e);
+    public class OverlayManagerInternal {
+        /**
+         * This will be called in the following four scenarios:
+         * non-system app installed
+         * non-system app updated
+         * system app updated
+         * system app update uninstalled
+         * <p>
+         * At this point, the app's process is still frozen to ensure that the overlay
+         * can be successfully updated, if necessary.
+         *
+         */
+        public void handlePackageAdded(String packageName, int uid) {
+            try {
+                traceBegin(TRACE_TAG_RRO, "OMS#handlePackageAdded " + packageName);
+                synchronized (mLock) {
+                    for (int userId : getUserIds(uid)) {
+                        var packageState = mPackageManager.onPackageAdded(packageName, userId);
+                        if (packageState == null || mPackageManager.isInstantApp(packageName,
+                                userId)) {
+                            return;
+                        }
+                        try {
+                            updateTargetPackagesLocked(mImpl.onPackageAdded(packageName, userId));
+                        } catch (OperationFailedException e) {
+                            Slog.e(TAG, "onPackageAdded internal error", e);
+                        }
                     }
                 }
+            } finally {
+                traceEnd(TRACE_TAG_RRO);
             }
-        } finally {
-            traceEnd(TRACE_TAG_RRO);
         }
-    }
 
-    private void onPackageChanged(@NonNull final String packageName, final int userId) {
-        try {
-            traceBegin(TRACE_TAG_RRO, "OMS#onPackageChanged " + packageName);
-            synchronized (mLock) {
-                var packageState = mPackageManager.onPackageUpdated(packageName, userId);
-                if (packageState != null && !mPackageManager.isInstantApp(packageName,
-                        userId)) {
-                    try {
-                        updateTargetPackagesLocked(
-                                mImpl.onPackageChanged(packageName, userId));
-                    } catch (OperationFailedException e) {
-                        Slog.e(TAG, "onPackageChanged internal error", e);
+        /**
+         * Called when a non-system app's package is completely removed.
+         */
+        public void handlePackageRemoved(String packageName, int uid) {
+            try {
+                traceBegin(TRACE_TAG_RRO, "OMS#handlePackageRemoved " + packageName);
+                synchronized (mLock) {
+                    for (int userId : getUserIds(uid)) {
+                        mPackageManager.onPackageRemoved(packageName, userId);
+                        updateTargetPackagesLocked(mImpl.onPackageRemoved(packageName, userId));
                     }
                 }
+            } finally {
+                traceEnd(TRACE_TAG_RRO);
             }
-        } finally {
-            traceEnd(TRACE_TAG_RRO);
         }
-    }
 
-    private void onPackageReplacing(@NonNull final String packageName,
-                                    boolean systemUpdateUninstall, final int userId) {
-        try {
-            traceBegin(TRACE_TAG_RRO, "OMS#onPackageReplacing " + packageName);
-            synchronized (mLock) {
-                var packageState = mPackageManager.onPackageUpdated(packageName, userId);
-                if (packageState != null && !mPackageManager.isInstantApp(packageName,
-                        userId)) {
-                    try {
-                        updateTargetPackagesLocked(mImpl.onPackageReplacing(packageName,
-                                systemUpdateUninstall, userId));
-                    } catch (OperationFailedException e) {
-                        Slog.e(TAG, "onPackageReplacing internal error", e);
+        /**
+         *  Same as receiving {@link Intent#ACTION_PACKAGE_CHANGED} broadcast.
+         */
+        public void handlePackageChanged(String packageName, int uid) {
+            try {
+                traceBegin(TRACE_TAG_RRO, "OMS#handlePackageChanged " + packageName);
+                synchronized (mLock) {
+                    for (int userId : getUserIds(uid)) {
+                        var packageState = mPackageManager.onPackageUpdated(packageName, userId);
+                        if (packageState == null || mPackageManager.isInstantApp(packageName,
+                                userId)) {
+                            return;
+                        }
+                        try {
+                            updateTargetPackagesLocked(mImpl.onPackageChanged(packageName, userId));
+                        } catch (OperationFailedException e) {
+                            Slog.e(TAG, "onPackageChanged internal error", e);
+                        }
                     }
                 }
+            } finally {
+                traceEnd(TRACE_TAG_RRO);
             }
-        } finally {
-            traceEnd(TRACE_TAG_RRO);
-        }
-    }
-
-    private void onPackageReplaced(@NonNull final String packageName, final int userId) {
-        try {
-            traceBegin(TRACE_TAG_RRO, "OMS#onPackageReplaced " + packageName);
-            synchronized (mLock) {
-                var packageState = mPackageManager.onPackageUpdated(packageName, userId);
-                if (packageState != null && !mPackageManager.isInstantApp(packageName,
-                        userId)) {
-                    try {
-                        updateTargetPackagesLocked(
-                                mImpl.onPackageReplaced(packageName, userId));
-                    } catch (OperationFailedException e) {
-                        Slog.e(TAG, "onPackageReplaced internal error", e);
-                    }
-                }
-            }
-        } finally {
-            traceEnd(TRACE_TAG_RRO);
-        }
-    }
-
-    private void onPackageRemoved(@NonNull final String packageName, final int userId) {
-        try {
-            traceBegin(TRACE_TAG_RRO, "OMS#onPackageRemoved " + packageName);
-            synchronized (mLock) {
-                mPackageManager.onPackageRemoved(packageName, userId);
-                updateTargetPackagesLocked(mImpl.onPackageRemoved(packageName, userId));
-            }
-        } finally {
-            traceEnd(TRACE_TAG_RRO);
         }
     }
 

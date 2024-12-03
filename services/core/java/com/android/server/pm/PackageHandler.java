@@ -54,6 +54,7 @@ import android.util.Log;
 import android.util.Slog;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Part of PackageManagerService that handles events.
@@ -95,6 +96,7 @@ final class PackageHandler extends Handler {
                     }
                     break;
                 }
+                handlePostInstallForOverlay(request);
                 request.closeFreezer();
                 request.onInstallCompleted();
                 request.runPostInstallRunnable();
@@ -323,6 +325,22 @@ final class PackageHandler extends Handler {
                 }
                 break;
             }
+        }
+    }
+
+    /**
+     * This is called before the freezer is closed.
+     */
+    private void handlePostInstallForOverlay(InstallRequest request) {
+        final String packageName = request.getName();
+        if (packageName == null || request.getReturnCode() != PackageManager.INSTALL_SUCCEEDED
+                || mPm.mInjector.getOverlayManagerInternal() == null) {
+            return;
+        }
+        final int[] userIds = Objects.requireNonNullElseGet(request.getUpdateBroadcastUserIds(),
+                () -> new int[]{UserHandle.USER_ALL});
+        for (int userId : userIds) {
+            mPm.mInjector.getOverlayManagerInternal().handlePackageAdded(packageName, userId);
         }
     }
 

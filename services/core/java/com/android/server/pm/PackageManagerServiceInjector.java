@@ -29,6 +29,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.pm.parsing.PackageParser2;
 import com.android.server.SystemConfig;
 import com.android.server.compat.PlatformCompat;
+import com.android.server.om.OverlayManagerService.OverlayManagerInternal;
 import com.android.server.pm.dex.ArtManagerService;
 import com.android.server.pm.dex.DexManager;
 import com.android.server.pm.dex.DynamicCodeLogger;
@@ -418,6 +419,10 @@ public class PackageManagerServiceInjector {
 
     public PackageMonitorCallbackHelper getPackageMonitorCallbackHelper() {
         return mPackageMonitorCallbackHelper.get(this, mPackageManager);
+    }
+
+    public OverlayManagerInternal getOverlayManagerInternal() {
+        return getLocalService(OverlayManagerInternal.class);
     }
 
 

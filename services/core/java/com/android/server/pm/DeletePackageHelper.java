@@ -70,6 +70,8 @@ import com.android.server.pm.pkg.PackageStateInternal;
 import com.android.server.pm.pkg.PackageUserState;
 import com.android.server.wm.ActivityTaskManagerInternal;
 
+import java.util.Objects;
+
 import dalvik.system.VMRuntime;
 
 /**
@@ -247,6 +249,9 @@ final class DeletePackageHelper {
                     deleteFlags, "deletePackageX", ApplicationExitInfo.REASON_OTHER)) {
                 res = deletePackageLIF(packageName, UserHandle.of(removeUser), true, allUsers,
                         deleteFlags | PackageManager.DELETE_CHATTY, info, true);
+                if (res) {
+                    handlePostUninstallForOverlay(info);
+                }
             }
             if (res && pkg != null) {
                 final boolean packageInstalledForSomeUsers;
@@ -348,6 +353,25 @@ final class DeletePackageHelper {
         }
 
         return res ? DELETE_SUCCEEDED : PackageManager.DELETE_FAILED_INTERNAL_ERROR;
+    }
+
+    private void handlePostUninstallForOverlay(PackageRemovedInfo info) {
+        if (mPm.mInjector.getOverlayManagerInternal() == null) {
+            return;
+        }
+        final int[] userIds = Objects.requireNonNullElseGet(info.mBroadcastUsers,
+                () -> new int[]{UserHandle.USER_ALL});
+        for (int userId : userIds) {
+            if (info.mIsRemovedPackageSystemUpdate) {
+                // system app update uninstall
+                mPm.mInjector.getOverlayManagerInternal()
+                        .handlePackageAdded(info.mRemovedPackage, userId);
+            } else {
+                // non-system app uninstall
+                mPm.mInjector.getOverlayManagerInternal()
+                        .handlePackageRemoved(info.mRemovedPackage, userId);
+            }
+        }
     }
 
     /** Deletes dexopt artifacts for the given package*/
