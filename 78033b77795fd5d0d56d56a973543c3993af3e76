@@ -105,6 +105,24 @@
       "parentUuid": "ed65e53a_50795e90",
       "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04c19ed6_2a5590fa",
+        "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2024-12-03T18:59:11Z",
+      "side": 1,
+      "message": "I guess we have no real idea of what fraction of the array we\u0027re usually interested in, and what typical length values are?\n\nIIUC, for output of (nearly) the entire array GetByteArrayElements followed by JNI_ABORT when you release the buffer, is probably better. In all other cases, what you have looks at least competitive to me. I don\u0027t know enough about the context to tell whether that\u0027s worth optimizing.",
+      "parentUuid": "af8a54a2_8f1e7503",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
