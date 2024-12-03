@@ -87,6 +87,24 @@
       "parentUuid": "e7eb8c37_a5acdd35",
       "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af8a54a2_8f1e7503",
+        "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 3404192
+      },
+      "writtenOn": "2024-12-03T03:32:01Z",
+      "side": 1,
+      "message": "I\u0027m happy to make this change, but I\u0027d like to explain the thought process behind using Get/Set ByteArrayRegion:\n\nIt seems to me that Get/Set ByteArrayRegion is a better choice if the array is movable. Since I only need to do one of Get/Set ByteArrayRegion I only need 1 copy. With Get/Release ByteArrayElements I need to call both Get and Release, and each does a copy. So that\u0027s 1 copy vs 2, and the copies are potentially much smaller if we\u0027re operating on a sub-array of the array.\n\nThere is an optimization I can apply when the direction is USB_DIR_OUT: I can pass JNI_ABORT to ReleaseByteArrayElements and thereby avoid the second copy. But I can\u0027t do any such optimization for USB_DIR_IN - the second copy is unavoidable. And the copies will be of the entire array even if we\u0027re only operating on a sub-array.\n\nGet/Release ByteArrayElements is probably a better choice if the the array is non-movable, but I don\u0027t think it\u0027s a good idea to bet on this being the case. It\u0027s hard for me to exactly reason about how likely objects are to be movable, but I do see that large objects get allocated non-movable (i.e. in a discontinuous space): https://cs.android.com/android/platform/superproject/main/+/main:art/runtime/gc/space/large_object_space.h;l\u003d42 and the large object threshold seems to be 12KB by default: https://cs.android.com/android/platform/superproject/main/+/main:art/runtime/gc/heap.h;l\u003d155 so I believe that small arrays (\u003c12KB) are possibly (even likely?) movable.\n\nGiven that movable arrays are quite possible, I think we should choose operations that work well with both movable and non-movable arrays. An implementation that uses Get/Release ByteArrayElements would have exceptionally poor performance if someone passed in a small sub-array of a largish array (close to but not above the large object threshold). Even if we\u0027re operating on the entire array, it\u0027s not good to do 2 copies instead of 1. I expect passing in sub-arrays is probably unusual, but the API explicitly allows it, so I think that would be an unfortunate performance foot-gun.\n\nLet me know what you\u0027d prefer. I\u0027m perfectly happy to do either. If we do go with Get/Release ByteArrayElements here, we should probably also consider doing the same for bulkTransfer. In https://android-review.googlesource.com/c/platform/frameworks/base/+/3056082 I made it use Get/Set ByteArrayRegion.",
+      "parentUuid": "ed65e53a_50795e90",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
