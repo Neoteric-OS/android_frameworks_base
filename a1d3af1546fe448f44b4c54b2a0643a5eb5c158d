@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98da11e4_43fdb3cc",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-12-03T05:56:31Z",
+      "side": 1,
+      "message": "Better to wrap with flag to indicate that it won\u0027t be needed if the flag is enabled.\n```\nif (!Flags.ensureWallpaperInTransitions()) {\n    final WindowContainer\u003c?\u003e wc \u003d mParticipants.valueAt(i);\n    WallpaperWindowToken wt \u003d wc.asWallpaperToken();\n    if (wt \u003d\u003d null) {\n        final WindowState windowState \u003d wc.asWindowState();\n        if (windowState !\u003d null) {\n            wt \u003d windowState.mToken.asWallpaperToken();\n        }\n    }\n}\n```",
+      "range": {
+        "startLine": 1340,
+        "startChar": 12,
+        "endLine": 1347,
+        "endChar": 13
+      },
+      "revId": "a1d3af1546fe448f44b4c54b2a0643a5eb5c158d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
