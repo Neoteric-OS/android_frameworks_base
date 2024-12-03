@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be2e9e8e_987887d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-03T11:19:45Z",
+      "side": 1,
+      "message": "Hello,@harshitmahajan@google.com \n\n  One build failed ,need trigger another pre build,please help handle it.\n\nThanks.",
+      "revId": "b94a66bb36b4bb6cd2c99d2098ce26b3f330c4bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
