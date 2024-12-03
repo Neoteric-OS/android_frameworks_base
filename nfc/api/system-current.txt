@@ -56,6 +56,7 @@ package android.nfc {
 
   @FlaggedApi("android.nfc.nfc_oem_extension") public final class NfcOemExtension {
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public void clearPreference();
+    method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public int emulateNfcACard(boolean, int, int, int, @NonNull byte[], int, @NonNull byte[]);
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public int forceRoutingTableCommit();
     method @FlaggedApi("android.nfc.nfc_oem_extension") @NonNull public java.util.Map<java.lang.String,java.lang.Integer> getActiveNfceeList();
     method @FlaggedApi("android.nfc.nfc_oem_extension") @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) public long getMaxPausePollingTimeoutMills();
@@ -79,6 +80,9 @@ package android.nfc {
     field public static final int COMMIT_ROUTING_STATUS_FAILED_UPDATE_IN_PROGRESS = 6; // 0x6
     field public static final int COMMIT_ROUTING_STATUS_OK = 0; // 0x0
     field @FlaggedApi("android.nfc.nfc_oem_extension") public static final int DISABLE = 0; // 0x0
+    field public static final int EMULATE_NFC_A_CARD_STATUS_FAILED_INTERNAL = 2; // 0x2
+    field public static final int EMULATE_NFC_A_CARD_STATUS_FAILED_NFC_NOT_ENABLED = 1; // 0x1
+    field public static final int EMULATE_NFC_A_CARD_STATUS_OK = 0; // 0x0
     field @FlaggedApi("android.nfc.nfc_oem_extension") public static final int ENABLE_DEFAULT = 1; // 0x1
     field @FlaggedApi("android.nfc.nfc_oem_extension") public static final int ENABLE_EE = 3; // 0x3
     field @FlaggedApi("android.nfc.nfc_oem_extension") public static final int ENABLE_TRANSPARENT = 2; // 0x2
