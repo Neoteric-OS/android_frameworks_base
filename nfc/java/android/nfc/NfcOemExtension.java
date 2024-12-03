@@ -921,6 +921,50 @@ public final class NfcOemExtension {
                 () -> NfcAdapter.sService.commitRouting(), COMMIT_ROUTING_STATUS_FAILED);
     }
 
+    /**
+     */
+    public static final int EMULATE_NFC_A_CARD_STATUS_OK = 0;
+    /**
+     */
+    public static final int EMULATE_NFC_A_CARD_STATUS_FAILED_NFC_NOT_ENABLED = 1;
+    /**
+     */
+    public static final int EMULATE_NFC_A_CARD_STATUS_FAILED_INTERNAL = 2;
+
+    /**
+     * Status codes returned when calling {@link #emulateNfcACard(boolean, byte, byte, byte,
+     * byte[], byte, byte[])}
+     * @hide
+     */
+    @IntDef(prefix = "EMULATE_NFC_A_CARD_STATUS_", value = {
+            EMULATE_NFC_A_CARD_STATUS_OK,
+            EMULATE_NFC_A_CARD_STATUS_FAILED_NFC_NOT_ENABLED,
+            EMULATE_NFC_A_CARD_STATUS_FAILED_INTERNAL
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface EmulateNfcACardStatusCode {}
+
+    /**
+     * Emulate NFC Technology A card.
+     *
+     * @param enable whether to enable or disable the card emulation.
+     * @param bitFrameSdd
+     * @param platformConfig
+     * @param selInfo
+     * @param nfcid1
+     * @param rats
+     * @param histBytes
+     */
+    @EmulateNfcACardStatusCode
+    @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
+    @FlaggedApi(Flags.FLAG_NFC_OEM_EXTENSION)
+    public int emulateNfcACard(boolean enable, int bitFrameSdd, int platformConfig,
+            int selInfo, @NonNull byte[] nfcid1, int rats, @NonNull byte[] histBytes) {
+        return NfcAdapter.callServiceReturn(
+                () -> NfcAdapter.sService.emulateNfcACard(enable, bitFrameSdd, platformConfig,
+                        setConfig, nfcid1, rats, histBytes), COMMIT_ROUTING_STATUS_FAILED);
+    }
+
     private final class NfcOemExtensionCallback extends INfcOemExtensionCallback.Stub {
 
         @Override
