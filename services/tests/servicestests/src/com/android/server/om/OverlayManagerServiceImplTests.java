@@ -181,9 +181,7 @@ public class OverlayManagerServiceImplTests extends OverlayManagerServiceImplTes
         assertState(STATE_ENABLED, IDENTIFIER, USER);
 
         // target upgrades do not change the state of the overlay
-        upgradeAndAssert(target(TARGET), USER,
-                Set.of(UserPackage.of(USER, TARGET)),
-                Set.of(UserPackage.of(USER, TARGET)));
+        upgradeOrDowngradeAndAssert(target(TARGET), USER, Set.of(UserPackage.of(USER, TARGET)));
         assertState(STATE_ENABLED, IDENTIFIER, USER);
 
         uninstallAndAssert(TARGET, USER,
@@ -201,15 +199,12 @@ public class OverlayManagerServiceImplTests extends OverlayManagerServiceImplTes
                 Set.of(UserPackage.of(USER, TARGET)));
         installAndAssert(overlay(OVERLAY, TARGET), USER,
                 Set.of(UserPackage.of(USER, OVERLAY), UserPackage.of(USER, TARGET)));
-        upgradeAndAssert(overlay(OVERLAY, TARGET), USER,
-                Set.of(UserPackage.of(USER, TARGET)),
+        upgradeOrDowngradeAndAssert(overlay(OVERLAY, TARGET), USER,
                 Set.of(UserPackage.of(USER, TARGET)));
 
         // upgrade to a version where the overlay has changed its target
-        upgradeAndAssert(overlay(OVERLAY, TARGET2), USER,
-                Set.of(UserPackage.of(USER, TARGET)),
-                Set.of(UserPackage.of(USER, TARGET),
-                        UserPackage.of(USER, TARGET2)));
+        upgradeOrDowngradeAndAssert(overlay(OVERLAY, TARGET2), USER,
+                Set.of(UserPackage.of(USER, TARGET), UserPackage.of(USER, TARGET2)));
     }
 
     @Test
@@ -326,16 +321,9 @@ public class OverlayManagerServiceImplTests extends OverlayManagerServiceImplTes
 
     @Test
     public void testOnTargetSystemPackageUninstall() throws Exception {
-        installAndAssert(target(TARGET), USER,
-                Set.of(UserPackage.of(USER, TARGET)));
+        installAndAssert(target(TARGET), USER, Set.of(UserPackage.of(USER, TARGET)));
         installAndAssert(overlay(OVERLAY, TARGET), USER,
                 Set.of(UserPackage.of(USER, OVERLAY), UserPackage.of(USER, TARGET)));
-        upgradeAndAssert(target(TARGET), USER,
-                Set.of(UserPackage.of(USER, TARGET)),
-                Set.of(UserPackage.of(USER, TARGET)));
-
-        downgradeAndAssert(target(TARGET), USER,
-                Set.of(UserPackage.of(USER, TARGET)),
-                Set.of(UserPackage.of(USER, TARGET)));
+        upgradeOrDowngradeAndAssert(target(TARGET), USER, Set.of(UserPackage.of(USER, TARGET)));
     }
 }

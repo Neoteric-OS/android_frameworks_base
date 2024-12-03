@@ -20,9 +20,6 @@ import static android.content.om.OverlayInfo.STATE_DISABLED;
 import static android.content.om.OverlayInfo.STATE_ENABLED;
 import static android.content.om.OverlayInfo.STATE_MISSING_TARGET;
 import static android.content.om.OverlayInfo.STATE_NO_IDMAP;
-import static android.content.om.OverlayInfo.STATE_OVERLAY_IS_BEING_REPLACED;
-import static android.content.om.OverlayInfo.STATE_SYSTEM_UPDATE_UNINSTALL;
-import static android.content.om.OverlayInfo.STATE_TARGET_IS_BEING_REPLACED;
 import static android.os.UserHandle.USER_SYSTEM;
 
 import static com.android.server.om.IdmapManager.IDMAP_IS_MODIFIED;
@@ -72,15 +69,6 @@ import java.util.function.Predicate;
  * @see OverlayManagerService
  */
 final class OverlayManagerServiceImpl {
-    /**
-     * @deprecated Not used. See {@link OverlayInfo#STATE_TARGET_IS_BEING_REPLACED}.
-     */
-    @Deprecated
-    private static final int FLAG_TARGET_IS_BEING_REPLACED = 1 << 0;
-
-    // Flags to use in conjunction with updateState.
-    private static final int FLAG_OVERLAY_IS_BEING_REPLACED = 1 << 1;
-    private static final int FLAG_SYSTEM_UPDATE_UNINSTALL = 1 << 2;
 
     private final PackageManagerHelper mPackageManager;
     private final IdmapManager mIdmapManager;
@@ -281,22 +269,6 @@ final class OverlayManagerServiceImpl {
     @NonNull
     Set<UserPackage> onPackageChanged(@NonNull final String pkgName,
             final int userId) throws OperationFailedException {
-        return reconcileSettingsForPackage(pkgName, userId, 0 /* flags */);
-    }
-
-    @NonNull
-    Set<UserPackage> onPackageReplacing(@NonNull final String pkgName,
-            boolean systemUpdateUninstall, final int userId) throws OperationFailedException {
-        int flags = FLAG_OVERLAY_IS_BEING_REPLACED;
-        if (systemUpdateUninstall) {
-            flags |= FLAG_SYSTEM_UPDATE_UNINSTALL;
-        }
-        return reconcileSettingsForPackage(pkgName, userId, flags);
-    }
-
-    @NonNull
-    Set<UserPackage> onPackageReplaced(@NonNull final String pkgName, final int userId)
-            throws OperationFailedException {
         return reconcileSettingsForPackage(pkgName, userId, 0 /* flags */);
     }
 
@@ -850,18 +822,6 @@ final class OverlayManagerServiceImpl {
             @Nullable final AndroidPackage targetPackage, final int userId, final int flags,
             @IdmapManager.IdmapStatus final int idmapStatus)
             throws OverlayManagerSettings.BadKeyException {
-        if ((flags & FLAG_TARGET_IS_BEING_REPLACED) != 0) {
-            return STATE_TARGET_IS_BEING_REPLACED;
-        }
-
-        if ((flags & FLAG_OVERLAY_IS_BEING_REPLACED) != 0) {
-            return STATE_OVERLAY_IS_BEING_REPLACED;
-        }
-
-        if ((flags & FLAG_SYSTEM_UPDATE_UNINSTALL) != 0) {
-            return STATE_SYSTEM_UPDATE_UNINSTALL;
-        }
-
         if (targetPackage == null) {
             return STATE_MISSING_TARGET;
         }

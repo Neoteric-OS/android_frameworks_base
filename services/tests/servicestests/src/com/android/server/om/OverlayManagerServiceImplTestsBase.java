@@ -178,56 +178,20 @@ class OverlayManagerServiceImplTestsBase {
     }
 
     /**
-     * Begins upgrading the package.
-     *
-     * This corresponds to when the OMS receives the
-     * {@link Intent#ACTION_PACKAGE_REMOVED} broadcast with the
-     * {@link Intent#EXTRA_REPLACING} extra and then receives the
-     * {@link Intent#ACTION_PACKAGE_ADDED} broadcast with the
-     * {@link Intent#EXTRA_REPLACING} extra.
+     * The Overlay Manager Service (OMS) treats app updates and uninstalls in the same way.
+     * It only needs to process after the new package is added.
      *
      * @throws IllegalStateException if the package is not currently installed
      */
-    void upgradeAndAssert(FakeDeviceState.PackageBuilder pkg, int userId,
-            @NonNull Set<UserPackage> onReplacingUpdatedPackages,
-            @NonNull Set<UserPackage> onReplacedUpdatedPackages)
+    void upgradeOrDowngradeAndAssert(FakeDeviceState.PackageBuilder pkg, int userId,
+                                     @NonNull Set<UserPackage> onUpgradeUpdatedPackages)
             throws OperationFailedException {
         final FakeDeviceState.Package replacedPackage = mState.select(pkg.packageName, userId);
         if (replacedPackage == null) {
             throw new IllegalStateException("package " + pkg.packageName + " not installed");
         }
-
-        assertEquals(onReplacingUpdatedPackages, mImpl.onPackageReplacing(pkg.packageName,
-                /* systemUpdateUninstall */ false, userId));
         mState.add(pkg, userId);
-        assertEquals(onReplacedUpdatedPackages, mImpl.onPackageReplaced(pkg.packageName, userId));
-    }
-
-    /**
-     * Begins downgrading the package. Usually used simulating a system uninstall of its /data
-     * variant.
-     *
-     * This corresponds to when the OMS receives the
-     * {@link Intent#ACTION_PACKAGE_REMOVED} broadcast with the
-     * {@link Intent#EXTRA_REPLACING} and {@link Intent#EXTRA_SYSTEM_UPDATE_UNINSTALL} extras
-     * and then receives the {@link Intent#ACTION_PACKAGE_ADDED} broadcast with the
-     * {@link Intent#EXTRA_REPLACING} extra.
-     *
-     * @throws IllegalStateException if the package is not currently installed
-     */
-    void downgradeAndAssert(FakeDeviceState.PackageBuilder pkg, int userId,
-            @NonNull Set<UserPackage> onReplacingUpdatedPackages,
-            @NonNull Set<UserPackage> onReplacedUpdatedPackages)
-            throws OperationFailedException {
-        final FakeDeviceState.Package replacedPackage = mState.select(pkg.packageName, userId);
-        if (replacedPackage == null) {
-            throw new IllegalStateException("package " + pkg.packageName + " not installed");
-        }
-
-        assertEquals(onReplacingUpdatedPackages, mImpl.onPackageReplacing(pkg.packageName,
-                /* systemUpdateUninstall */ true, userId));
-        mState.add(pkg, userId);
-        assertEquals(onReplacedUpdatedPackages, mImpl.onPackageReplaced(pkg.packageName, userId));
+        assertEquals(onUpgradeUpdatedPackages, mImpl.onPackageAdded(pkg.packageName, userId));
     }
 
     /**
