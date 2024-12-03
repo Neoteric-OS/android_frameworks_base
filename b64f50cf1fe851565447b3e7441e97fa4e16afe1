@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6ddd676_bc917eb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2024-12-03T04:03:08Z",
+      "side": 1,
+      "message": "Looking more closely at the use cases, I intentionally did not update configs that use \u003cpin-set\u003e. This is because, an app using pin-set tends to pin an intermediate certificate (or a root certificate), with the leaf certificate still being able to pass CT verification. So there is no reason to implicitly disable CT here.",
+      "parentUuid": "fe474b1b_a0173da2",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "b64f50cf1fe851565447b3e7441e97fa4e16afe1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eddac3e6_e05fdc55",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-12-02T09:21:34Z",
       "side": 1,
       "message": "Might be worth adding an additional XML that uses user certs in its base config (both with and without CT enabled explicitly) to ensure we don\u0027t mess this up when moving to default opt-in in the future :)",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "b64f50cf1fe851565447b3e7441e97fa4e16afe1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "969ae125_ab74ad9c",
+        "filename": "tests/NetworkSecurityConfigTest/res/xml/ct_domains.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1561651
+      },
+      "writtenOn": "2024-12-03T04:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eddac3e6_e05fdc55",
       "range": {
         "startLine": 3,
         "startChar": 2,
