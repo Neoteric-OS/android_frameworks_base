@@ -22,6 +22,30 @@
       },
       "revId": "a1d3af1546fe448f44b4c54b2a0643a5eb5c158d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "160ccd76_5821ac32",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1934851
+      },
+      "writtenOn": "2024-12-03T09:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98da11e4_43fdb3cc",
+      "range": {
+        "startLine": 1340,
+        "startChar": 12,
+        "endLine": 1347,
+        "endChar": 13
+      },
+      "revId": "a1d3af1546fe448f44b4c54b2a0643a5eb5c158d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
