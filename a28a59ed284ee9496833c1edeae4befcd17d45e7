@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36e8a72d_5b2a4e0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-12-03T23:31:36Z",
+      "side": 1,
+      "message": "Clean cherry pick.",
+      "revId": "a28a59ed284ee9496833c1edeae4befcd17d45e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
