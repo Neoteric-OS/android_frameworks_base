@@ -16,6 +16,23 @@
       "message": "clean cherry pick",
       "revId": "60df934bcf486c119c36fc102aeb702df42e7a63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd477078_2bb6a56d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2024-12-03T20:04:03Z",
+      "side": 1,
+      "message": "Clean cherry pick.",
+      "revId": "60df934bcf486c119c36fc102aeb702df42e7a63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
