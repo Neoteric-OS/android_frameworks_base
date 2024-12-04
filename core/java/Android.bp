@@ -81,6 +81,11 @@ filegroup {
 }
 
 filegroup {
+    name: "IResultReceiver.aidl",
+    srcs: ["com/android/internal/os/IResultReceiver.aidl"],
+}
+
+filegroup {
     name: "ITracingServiceProxy.aidl",
     srcs: ["android/tracing/ITracingServiceProxy.aidl"],
 }
