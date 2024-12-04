@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31c34bb3_5301eede",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2024-12-04T09:12:05Z",
+      "side": 1,
+      "message": "Ah, yep, that makes total sense. Thanks for clarifying!",
+      "parentUuid": "e6ddd676_bc917eb9",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "b64f50cf1fe851565447b3e7441e97fa4e16afe1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eddac3e6_e05fdc55",
