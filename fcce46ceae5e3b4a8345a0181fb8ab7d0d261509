@@ -16,6 +16,24 @@
       "message": "@louischang@google.com\n\nThe outActivity[0] is set in ActivityStarter#executeRequest without checking the start activity result. Would it make sense to only set the outActivity if the start succeed?",
       "revId": "fcce46ceae5e3b4a8345a0181fb8ab7d0d261509",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "461aeb76_139ebde2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-12-04T07:13:00Z",
+      "side": 1,
+      "message": "Yes, please check the return result of the #execute method and just return null if the result code is start-fail.",
+      "parentUuid": "5da28c97_dedf52b6",
+      "revId": "fcce46ceae5e3b4a8345a0181fb8ab7d0d261509",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
