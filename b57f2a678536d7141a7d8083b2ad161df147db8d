@@ -46,6 +46,30 @@
       },
       "revId": "b57f2a678536d7141a7d8083b2ad161df147db8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f9d7a59_a1ca0557",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2024-12-04T23:02:40Z",
+      "side": 1,
+      "message": "What about `WARNING: Parcelable definitions change and file descriptors and binders can be added and removed`?\n\nI still don\u0027t understand what the use case for these functions would be if the user was assuming the parcelables _don\u0027t_ change. Like using these functions to determine which parcelable a parcel belonged to or something?\n\nEven if you define the parcelables, I don\u0027t think you should assume someone else isn\u0027t going to change them at some point.",
+      "parentUuid": "3b95bf69_611f5760",
+      "range": {
+        "startLine": 896,
+        "startChar": 22,
+        "endLine": 896,
+        "endChar": 73
+      },
+      "revId": "b57f2a678536d7141a7d8083b2ad161df147db8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
