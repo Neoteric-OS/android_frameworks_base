@@ -33,6 +33,23 @@
       "message": "Clean cherry pick.",
       "revId": "60df934bcf486c119c36fc102aeb702df42e7a63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d312567c_e51501ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-12-04T02:17:42Z",
+      "side": 1,
+      "message": "Almost-clean cherry-pick with only a trivial conflict in core/api/module-lib-current.txt (android.net.wifi APIs are only in internal main between android.net.netstats and android.nfc)",
+      "revId": "60df934bcf486c119c36fc102aeb702df42e7a63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
