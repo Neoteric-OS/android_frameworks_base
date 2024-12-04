@@ -761,6 +761,12 @@ class TransitionController {
             ActivityManager.RunningTaskInfo pipTaskInfo = null;
             if (startTask != null) {
                 startTaskInfo = startTask.getTaskInfo();
+                for (int i = mWaitingTransitions.size() - 1; i >= 0; --i) {
+                     if (mWaitingTransitions.get(i).isTransientLaunchTask(startTaskInfo.taskId)) {
+                         transition.mTriggerTaskId = startTaskInfo.taskId;
+                         break;
+                     }
+                }
             }
 
             // set the pip task in the request if provided
@@ -1186,6 +1192,12 @@ class TransitionController {
                 // Change overlaps with recents, so serialize.
                 return false;
             }
+        }
+        if (recents.isTransientLaunchTask(other.mTriggerTaskId)) {
+            return false;
+        }
+        if (other.mTargets.size() == 0) {
+            return false;
         }
         return true;
     }

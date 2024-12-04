@@ -176,6 +176,8 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
     @Retention(RetentionPolicy.SOURCE)
     @interface TransitionState {}
 
+    int mTriggerTaskId = -1;
+
     final @TransitionType int mType;
     private int mSyncId = -1;
     private @TransitionFlags int mFlags;
@@ -489,6 +491,16 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
 
     boolean isTransientLaunch(@NonNull ActivityRecord activity) {
         return mTransientLaunches != null && mTransientLaunches.containsKey(activity);
+    }
+
+    boolean isTransientLaunchTask(int taskid) {
+        if (mTransientLaunches == null || taskid == -1) return false;
+        for (int i = 0; i < mTransientLaunches.size(); ++i) {
+            if (taskid == mTransientLaunches.valueAt(i).mTaskId) {
+                return true;
+            }
+        }
+        return false;
     }
 
     Task getTransientLaunchRestoreTarget(@NonNull WindowContainer container) {
