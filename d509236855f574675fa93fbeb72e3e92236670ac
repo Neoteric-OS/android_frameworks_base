@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03f440e2_d271f1fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-12-04T19:49:22Z",
+      "side": 1,
+      "message": "Would it be possible to also link to the issue highlighted the performance regression? I do not see any details about the performance regression at http://b/333854840.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "d509236855f574675fa93fbeb72e3e92236670ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
