@@ -568,6 +568,9 @@ final class PackageAbiHelperImpl implements PackageAbiHelper {
     public String getAdjustedAbiForSharedUser(
             ArraySet<? extends PackageStateInternal> packagesForUser,
             AndroidPackage scannedPackage) {
+	if (VMRuntime.getRuntime().is64Bit()) {
+            return  Build.SUPPORTED_64_BIT_ABIS[0];
+        }
         String requiredInstructionSet = null;
         if (scannedPackage != null) {
             String pkgRawPrimaryCpuAbi = AndroidPackageUtils.getRawPrimaryCpuAbi(scannedPackage);
