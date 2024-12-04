@@ -234,6 +234,10 @@ class WindowStateAnimator {
             layoutNeeded = true;
         }
 
+        if (layoutNeeded && startingWindow) {
+            mWin.updateSurfacePositionNonOrganized();
+        }
+
         return layoutNeeded;
     }
 
