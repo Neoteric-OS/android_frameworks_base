@@ -1,0 +1,49 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c4bcee1_b94495cb",
+        "filename": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2024-12-04T00:07:06Z",
+      "side": 1,
+      "message": "Very neat :)",
+      "fixSuggestions": [
+        {
+          "fixId": "67917cf1_1d1a2849",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+              "range": {
+                "startLine": 72,
+                "startChar": 0,
+                "endLine": 73,
+                "endChar": 0
+              },
+              "replacement": "static void ZeroizePrimitiveArray(JNIEnv* env, jclass clazz, jarray array, size_t element_size) {\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_util_ArrayUtils.cpp",
+              "range": {
+                "startLine": 79,
+                "startChar": 0,
+                "endLine": 80,
+                "endChar": 0
+              },
+              "replacement": "    size_t buffer_size \u003d env-\u003eGetArrayLength(array) * element_size;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "71b5c96fdcfd7ddaf78a10d81917a74828c128d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
