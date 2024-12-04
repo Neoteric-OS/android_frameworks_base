@@ -25,6 +25,8 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 
+// import androidx.annotation.VisibleForTesting;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -400,4 +402,11 @@ public final class NfcActivityManager extends IAppCallback.Stub
                         token, pollTech, listenTech, mAdapter.getContext().getPackageName()));
     }
 
+    // @VisibleForTesting
+    public NfcActivityManager(NfcAdapter adapter, List<NfcActivityState> activities,
+            List<NfcApplicationState> apps) {
+        mAdapter = adapter;
+        mActivities = activities;
+        mApps = apps;  // Android VM usually has 1 app
+    }
 }
