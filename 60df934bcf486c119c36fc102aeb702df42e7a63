@@ -50,6 +50,23 @@
       "message": "Almost-clean cherry-pick with only a trivial conflict in core/api/module-lib-current.txt (android.net.wifi APIs are only in internal main between android.net.netstats and android.nfc)",
       "revId": "60df934bcf486c119c36fc102aeb702df42e7a63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed028954_da074f15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-12-04T23:25:10Z",
+      "side": 1,
+      "message": "This CL does not introduce new APIs. It just migrates exsiting APIs",
+      "revId": "60df934bcf486c119c36fc102aeb702df42e7a63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
