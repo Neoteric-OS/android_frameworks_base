@@ -400,4 +400,10 @@ public final class NfcActivityManager extends IAppCallback.Stub
                         token, pollTech, listenTech, mAdapter.getContext().getPackageName()));
     }
 
+    public NfcActivityManager(NfcAdapter adapter, List<NfcActivityState> activities,
+            List<NfcApplicationState> apps) {
+        mAdapter = adapter;
+        mActivities = activities;
+        mApps = apps;  // Android VM usually has 1 app
+    }
 }
