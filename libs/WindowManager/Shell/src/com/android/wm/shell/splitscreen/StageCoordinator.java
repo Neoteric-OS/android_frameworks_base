@@ -2871,7 +2871,8 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                     mSplitLayout.update(startTransaction, false /* resetImePosition */);
                 }
 
-                if (mMixedHandler.isEnteringPip(change, transitType)) {
+                if (mMixedHandler.isEnteringPip(change, transitType)
+                        && getSplitItemStage(change.getLastParent()) != STAGE_TYPE_UNDEFINED) {
                     pipChange = change;
                 }
 
@@ -2925,6 +2926,9 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             }
 
             if (pipChange != null) {
+                if (mMixedHandler.isEnterPipMixedTransition(transition)) {
+                    return false;
+                }
                 TransitionInfo.Change pipReplacingChange = getPipReplacingChange(info, pipChange,
                         mMainStage.mRootTaskInfo.taskId, mSideStage.mRootTaskInfo.taskId,
                         getSplitItemStage(pipChange.getLastParent()));
