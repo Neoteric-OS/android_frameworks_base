@@ -22,6 +22,30 @@
       },
       "revId": "7145abc84e523b66f9a19c1f08caa66af7b6ba9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a40ad1ad_96c546f8",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-05T02:16:16Z",
+      "side": 1,
+      "message": "For my education, if the activity starts failed, do we still expect to set the outActivity? And what is the use case for that?",
+      "parentUuid": "35826987_f7131b7f",
+      "range": {
+        "startLine": 1365,
+        "startChar": 32,
+        "endLine": 1365,
+        "endChar": 81
+      },
+      "revId": "7145abc84e523b66f9a19c1f08caa66af7b6ba9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
