@@ -70,6 +70,53 @@
       },
       "revId": "7145abc84e523b66f9a19c1f08caa66af7b6ba9a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d222ccc_453b0e92",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-05T05:00:59Z",
+      "side": 1,
+      "message": "I see, thanks for the info!",
+      "parentUuid": "6469f306_09e30f73",
+      "range": {
+        "startLine": 1365,
+        "startChar": 32,
+        "endLine": 1365,
+        "endChar": 81
+      },
+      "revId": "7145abc84e523b66f9a19c1f08caa66af7b6ba9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1de977a_24b73c6e",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-05T05:00:59Z",
+      "side": 1,
+      "message": "Based on the comment from Louis, can you please check the return value of this is `isStartResultSuccessful`? Like\n\n```\nfinal int startActivityResult \u003d getActivityStartController().obtainStarter(intent, \"dream\")\n  ...\n  .execute();\nfinal ActivityRecord started \u003d outActivity[0];\nif (started \u003d\u003d null || !ActivityManager.isStartResultSuccessful(startActivityResult)) {\n  return null;\n}\nreturn new AppTaskImpl(this, started.getTask().mTaskId, callingUid);\n```",
+      "range": {
+        "startLine": 1549,
+        "startChar": 21,
+        "endLine": 1549,
+        "endChar": 28
+      },
+      "revId": "7145abc84e523b66f9a19c1f08caa66af7b6ba9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
