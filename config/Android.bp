@@ -29,9 +29,19 @@ license {
     ],
 }
 
+genrule {
+    name: "preloaded-classes-trimmed",
+    srcs: [
+        "preloaded-classes",
+	":dump-oat-boot-arm64"
+    ],
+    out: ["preloaded-classes-trimmed"],
+    cmd: "cat boot.arm64.oatdump.txt | grep VisiblyInitialized | sed 's/.*"\(.*\)".*/\1/g' > tmp && grep -Fvxf tmp preloaded-classes > $(out)"
+}
+
 prebuilt_etc {
     name: "preloaded-classes",
-    src: "preloaded-classes",
+    src: ":preloaded-classes-trimmed",
     filename: "preloaded-classes",
     no_full_install: true,
 }
