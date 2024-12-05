@@ -46,6 +46,30 @@
       },
       "revId": "d509236855f574675fa93fbeb72e3e92236670ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d080314c_84d0b725",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-12-05T19:04:39Z",
+      "side": 1,
+      "message": "Thanks for providing this context. In that case, I\u0027d recommend updating http://b/333854840 with your findings or just the context you provided for future reference.",
+      "parentUuid": "83d63d72_78d3c2b0",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "d509236855f574675fa93fbeb72e3e92236670ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
