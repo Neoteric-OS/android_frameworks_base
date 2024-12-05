@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9212b0a6_31476cf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1639830
+      },
+      "writtenOn": "2024-12-05T16:08:32Z",
+      "side": 1,
+      "message": "If approved this should probably not be merged before\nhttps://android-review.googlesource.com/c/platform/packages/services/Car/+/3392382",
+      "revId": "be760b450dc48a403ffade32d0f9d5ca8a3441b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
