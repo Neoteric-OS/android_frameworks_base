@@ -51,6 +51,24 @@
       ],
       "revId": "5a28f06883a6fbedeb2873bba9beb010a8eb8083",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bf833bc_4efa544b",
+        "filename": "tools/systemfeatures/src/com/android/systemfeatures/SystemFeaturesMetadataProcessor.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-05T21:43:14Z",
+      "side": 1,
+      "message": "Oh good catch, I meant to completely delete the preceding block as we now rely entirely on `featureVarNames` for the generated `SDK_FEATURE_COUNT`, thanks!",
+      "parentUuid": "e3fdaad5_c1a6f055",
+      "revId": "5a28f06883a6fbedeb2873bba9beb010a8eb8083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
