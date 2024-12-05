@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35826987_f7131b7f",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2024-12-05T02:13:37Z",
+      "side": 1,
+      "message": "Could the check be done in the caller (i.e. where starts the dream activity)? \n\nThis changes the behavior that the outActivity is always set regardless the start is successful or not.",
+      "range": {
+        "startLine": 1365,
+        "startChar": 32,
+        "endLine": 1365,
+        "endChar": 81
+      },
+      "revId": "7145abc84e523b66f9a19c1f08caa66af7b6ba9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
