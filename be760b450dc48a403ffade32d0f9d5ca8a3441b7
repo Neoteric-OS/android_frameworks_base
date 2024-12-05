@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6799121a_ef55c0ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-12-05T18:08:45Z",
+      "side": 1,
+      "message": "i\u0027d skip this part of the change, since there\u0027s no motivation for it. close() implies a flush().",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "be760b450dc48a403ffade32d0f9d5ca8a3441b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9212b0a6_31476cf3",
@@ -14,6 +37,46 @@
       "writtenOn": "2024-12-05T16:08:32Z",
       "side": 1,
       "message": "If approved this should probably not be merged before\nhttps://android-review.googlesource.com/c/platform/packages/services/Car/+/3392382",
+      "revId": "be760b450dc48a403ffade32d0f9d5ca8a3441b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c78b6c38_fb9b82b5",
+        "filename": "core/java/android/util/AtomicFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-12-05T18:08:45Z",
+      "side": 1,
+      "message": "(not a regression, but probably a good time to make it clear that failure is an option: \"The next attempt to read the atomic file will return the new file stream, or the old one if the flush and sync fail (but never a mix).\"?)",
+      "range": {
+        "startLine": 169,
+        "startChar": 29,
+        "endLine": 170,
+        "endChar": 38
+      },
+      "revId": "be760b450dc48a403ffade32d0f9d5ca8a3441b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df721735_be3de9e0",
+        "filename": "core/java/android/util/AtomicFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-12-05T18:08:45Z",
+      "side": 1,
+      "message": "should this be skipped on failure too?",
       "revId": "be760b450dc48a403ffade32d0f9d5ca8a3441b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
