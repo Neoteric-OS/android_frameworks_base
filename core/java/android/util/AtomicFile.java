@@ -173,15 +173,28 @@ public class AtomicFile {
         if (str == null) {
             return;
         }
-        if (!FileUtils.sync(str)) {
-            Log.e(LOG_TAG, "Failed to sync file output stream");
+
+        boolean success = true;
+        try {
+            str.flush();
+            if (!FileUtils.sync(str)) {
+                success = false;
+                Log.e(LOG_TAG, "Failed to sync file output stream");
+            }
+        } catch (IOException e) {
+            success = false;
+            Log.e(LOG_TAG, "Failed to flush file output stream", e);
         }
         try {
             str.close();
         } catch (IOException e) {
             Log.e(LOG_TAG, "Failed to close file output stream", e);
         }
-        rename(mNewName, mBaseName);
+        if (success) {
+            rename(mNewName, mBaseName);
+        } else if (!mNewName.delete()) {
+            Log.e(LOG_TAG, "Failed to delete new file " + mNewName);
+        }
         if (mCommitEventLogger != null) {
             mCommitEventLogger.onFinishWrite();
         }

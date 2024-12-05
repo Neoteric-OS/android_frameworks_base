@@ -63,7 +63,8 @@ public class AtomicFileTest {
         FINISH,
         FAIL,
         ABORT,
-        READ_FINISH
+        READ_FINISH,
+        CLOSE_FINISH
     }
 
     private static final byte[] BASE_BYTES = "base".getBytes(StandardCharsets.UTF_8);
@@ -195,6 +196,10 @@ public class AtomicFileTest {
                 // Compatibility when openRead() is called between startWrite() and finishWrite() -
                 // the write should still succeed if it's the first write.
                 { "none + read & finish = new", null, WriteAction.READ_FINISH, NEW_BYTES },
+                // When the stream is closed the sync will fail which should not rename the likely
+                // incomplete file.
+                { "new + close & finish = none",
+                        new String[] { NEW_NAME }, WriteAction.CLOSE_FINISH, null },
         };
     }
 
@@ -253,6 +258,11 @@ public class AtomicFileTest {
                     case READ_FINISH:
                         // We are only using this action when there is no base file.
                         assertThrows(FileNotFoundException.class, atomicFile::openRead);
+                        atomicFile.finishWrite(outputStream);
+                        break;
+                    case CLOSE_FINISH:
+                        // Closing the stream first will cause the sync to fail.
+                        outputStream.close();
                         atomicFile.finishWrite(outputStream);
                         break;
                     default:
