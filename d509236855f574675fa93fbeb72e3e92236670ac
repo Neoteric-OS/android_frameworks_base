@@ -22,6 +22,30 @@
       },
       "revId": "d509236855f574675fa93fbeb72e3e92236670ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83d63d72_78d3c2b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1975865
+      },
+      "writtenOn": "2024-12-05T12:37:12Z",
+      "side": 1,
+      "message": "The issue is that no bug was reported. But my testing on post boot traces and field traces along with pitot data confirmed my suspicions that this was resulting in cold start up time regressions",
+      "parentUuid": "03f440e2_d271f1fe",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "d509236855f574675fa93fbeb72e3e92236670ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
