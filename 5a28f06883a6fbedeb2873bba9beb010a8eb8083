@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2b6d264_a3c59d74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-12-05T19:24:45Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "5a28f06883a6fbedeb2873bba9beb010a8eb8083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3fdaad5_c1a6f055",
+        "filename": "tools/systemfeatures/src/com/android/systemfeatures/SystemFeaturesMetadataProcessor.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2024-12-05T19:24:45Z",
+      "side": 1,
+      "message": "Could the list of names be empty when the featureCount is non-zero?",
+      "fixSuggestions": [
+        {
+          "fixId": "5efd732b_db1aa6e6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/systemfeatures/src/com/android/systemfeatures/SystemFeaturesMetadataProcessor.kt",
+              "range": {
+                "startLine": 72,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "5a28f06883a6fbedeb2873bba9beb010a8eb8083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
