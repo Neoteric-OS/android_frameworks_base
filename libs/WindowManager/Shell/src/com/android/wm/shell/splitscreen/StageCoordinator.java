@@ -2925,6 +2925,9 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             }
 
             if (pipChange != null) {
+                if (mMixedHandler.isEnterPipMixedTransition(transition)) {
+                    return false;
+                }
                 TransitionInfo.Change pipReplacingChange = getPipReplacingChange(info, pipChange,
                         mMainStage.mRootTaskInfo.taskId, mSideStage.mRootTaskInfo.taskId,
                         getSplitItemStage(pipChange.getLastParent()));
