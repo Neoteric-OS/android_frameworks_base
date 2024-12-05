@@ -456,7 +456,8 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
 
         boolean handled = chosenTransition.startAnimation(
                 transition, info, startTransaction, finishTransaction, callback);
-        if (!handled) {
+        if (!handled
+                && chosenTransition.mType != MixedTransition.TYPE_ENTER_PIP_WITH_DISPLAY_CHANGE) {
             mActiveTransitions.remove(chosenTransition);
         }
         return handled;
@@ -713,5 +714,16 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
                 newChange.setLeash(oldChange.getLeash());
             }
         }
+    }
+
+    public boolean isEnterPipMixedTransition(IBinder transition) {
+        for (int i = mActiveTransitions.size() - 1; i >= 0; --i) {
+            final MixedTransition mixed = mActiveTransitions.get(i);
+            if (mixed.mTransition == transition
+                    && mixed.mType == MixedTransition.TYPE_ENTER_PIP_WITH_DISPLAY_CHANGE) {
+                return true;
+            }
+        }
+        return false;
     }
 }
