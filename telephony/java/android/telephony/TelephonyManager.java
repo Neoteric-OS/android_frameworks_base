@@ -12337,9 +12337,10 @@ public class TelephonyManager {
      * @param subId Subscription ID
      * @return true if IMS status is registered, false if the IMS status is not registered or a
      * RemoteException occurred.
-     * Use {@link ImsMmTelManager.RegistrationCallback} instead.
      * @hide
+     * @deprecated Use {@link ImsMmTelManager#getRegistrationState(Executor, Consumer)} instead.
      */
+    @Deprecated
     public boolean isImsRegistered(int subId) {
         try {
             return getITelephony().isImsRegistered(subId);
@@ -12357,8 +12358,10 @@ public class TelephonyManager {
      * @return true if IMS status is registered, false if the IMS status is not registered or a
      * RemoteException occurred.
      * @see SubscriptionManager#getDefaultSubscriptionId()
+     * @deprecated Use {@link ImsMmTelManager#getRegistrationState(Executor, Consumer)} instead.
      * @hide
      */
+    @Deprecated
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public boolean isImsRegistered() {
        try {
@@ -12375,9 +12378,10 @@ public class TelephonyManager {
      * @return true if Voice over LTE is available or false if it is unavailable or unknown.
      * @see SubscriptionManager#getDefaultSubscriptionId()
      * <p>
-     * Use {@link ImsMmTelManager#isAvailable(int, int)} instead.
+     * @Deprecated Use {@link ImsMmTelManager#isAvailable(int, int)} instead.
      * @hide
      */
+    @Deprecated
     @UnsupportedAppUsage
     public boolean isVolteAvailable() {
         try {
@@ -12395,9 +12399,10 @@ public class TelephonyManager {
      * used during creation, the default subscription ID will be used. To query the
      * underlying technology that VT is available on, use {@link #getImsRegTechnologyForMmTel}.
      * @return true if VT is available, or false if it is unavailable or unknown.
-     * Use {@link ImsMmTelManager#isAvailable(int, int)} instead.
+     * @Deprecated Use {@link ImsMmTelManager#isAvailable(int, int)} instead.
      * @hide
      */
+    @Deprecated
     @UnsupportedAppUsage
     public boolean isVideoTelephonyAvailable() {
         try {
@@ -12411,9 +12416,10 @@ public class TelephonyManager {
      * Returns the Status of Wi-Fi calling (Voice over WiFi) for the subscription ID specified.
      * @param subId the subscription ID.
      * @return true if VoWiFi is available, or false if it is unavailable or unknown.
-     * Use {@link ImsMmTelManager#isAvailable(int, int)} instead.
+     * @Deprecated Use {@link ImsMmTelManager#isAvailable(int, int)} instead.
      * @hide
      */
+    @Deprecated
     @UnsupportedAppUsage
     public boolean isWifiCallingAvailable() {
        try {
@@ -12434,9 +12440,11 @@ public class TelephonyManager {
      *  other sim's internet, or
      *  - {@link ImsRegistrationImplBase#REGISTRATION_TECH_NONE} if we are not registered or the
      *  result is unavailable.
-     *  Use {@link ImsMmTelManager.RegistrationCallback} instead.
+     *  @Deprecated Use {@link ImsMmTelManager#registerImsRegistrationCallback(Executor, RegistrationCallback)}
+     *      or {@link ImsMmTelManager#getRegistrationTransportType(Executor, Consumer)} instead.
      *  @hide
      */
+    @Deprecated
     public @ImsRegistrationImplBase.ImsRegistrationTech int getImsRegTechnologyForMmTel() {
         try {
             return getITelephony().getImsRegTechnologyForMmTel(getSubId());
