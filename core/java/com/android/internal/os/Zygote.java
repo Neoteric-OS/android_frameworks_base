@@ -201,8 +201,14 @@ public final class Zygote {
      */
     public static final int DEBUG_ENABLE_PTRACE = 1 << 25;
 
+<<<<<<< PATCH SET (5d1700 SurfaceTexture: expose the size of the current buffer)
+    /** Allow the process to set real-time priorities for its threads. */
+    public static final int ALLOW_RT_PRIO = 1 << 31;
+||||||| BASE
+=======
     /** Load 4KB ELF files on 16KB device using appcompat mode */
     public static final int ENABLE_PAGE_SIZE_APP_COMPAT = 1 << 26;
+>>>>>>> BASE      (31317e Merge "[BugFix]Fixed a fatal exception which cause IndexOutO)
 
     /** No external storage should be mounted. */
     public static final int MOUNT_EXTERNAL_NONE = IVold.REMOUNT_MODE_NONE;

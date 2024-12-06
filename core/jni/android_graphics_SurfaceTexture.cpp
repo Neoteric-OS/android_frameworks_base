@@ -381,6 +381,21 @@ static jlong SurfaceTexture_getTimestamp(JNIEnv* env, jobject thiz)
     return surfaceTexture->getTimestamp();
 }
 
+static jint SurfaceTexture_getCurrentBufferWidth(JNIEnv* env, jobject thiz)
+{
+    sp<SurfaceTexture> surfaceTexture(SurfaceTexture_getSurfaceTexture(env, thiz));
+    sp<GraphicBuffer> buf = surfaceTexture->getCurrentBuffer();
+    return buf != NULL ? buf->getWidth() : 0;
+}
+
+static jint SurfaceTexture_getCurrentBufferHeight(JNIEnv* env, jobject thiz)
+{
+    sp<SurfaceTexture> surfaceTexture(SurfaceTexture_getSurfaceTexture(env, thiz));
+    sp<GraphicBuffer> buf = surfaceTexture->getCurrentBuffer();
+    return buf != NULL ? buf->getHeight() : 0;
+}
+
+
 static jint SurfaceTexture_getDataSpace(JNIEnv* env, jobject thiz) {
     sp<SurfaceTexture> surfaceTexture(SurfaceTexture_getSurfaceTexture(env, thiz));
     return surfaceTexture->getCurrentDataSpace();
@@ -410,6 +425,8 @@ static const JNINativeMethod gSurfaceTextureMethods[] = {
         {"nativeAttachToGLContext", "(I)I", (void*)SurfaceTexture_attachToGLContext},
         {"nativeGetTransformMatrix", "([F)V", (void*)SurfaceTexture_getTransformMatrix},
         {"nativeGetTimestamp", "()J", (void*)SurfaceTexture_getTimestamp},
+        {"nativeGetCurrentBufferWidth", "()I",  (void*)SurfaceTexture_getCurrentBufferWidth },
+        {"nativeGetCurrentBufferHeight","()I",  (void*)SurfaceTexture_getCurrentBufferHeight },
         {"nativeGetDataSpace", "()I", (void*)SurfaceTexture_getDataSpace},
         {"nativeRelease", "()V", (void*)SurfaceTexture_release},
         {"nativeIsReleased", "()Z", (void*)SurfaceTexture_isReleased},

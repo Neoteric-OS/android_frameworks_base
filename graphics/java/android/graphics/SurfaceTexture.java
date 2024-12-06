@@ -446,6 +446,22 @@ public class SurfaceTexture {
     }
 
     /**
+     * Returns the width of the buffer associated with the current image.
+     * @hide
+     */
+    public int getCurrentBufferWidth() {
+        return nativeGetCurrentBufferWidth();
+    }
+
+    /**
+     * Returns the height of the buffer associated with the current image.
+     * @hide
+     */
+    public int getCurrentBufferHeight() {
+        return nativeGetCurrentBufferHeight();
+    }
+
+    /**
      * Returns {@code true} if the SurfaceTexture was released.
      *
      * @see #release()
@@ -530,4 +546,6 @@ public class SurfaceTexture {
     private native int nativeAttachToGLContext(int texName);
     private native void nativeRelease();
     private native boolean nativeIsReleased();
+    private native int nativeGetCurrentBufferWidth();
+    private native int nativeGetCurrentBufferHeight();
 }
