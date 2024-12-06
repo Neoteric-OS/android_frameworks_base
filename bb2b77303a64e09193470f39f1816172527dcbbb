@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eda4106_d990cda7",
+        "filename": "packages/Vcn/framework-b/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2024-12-06T01:22:37Z",
+      "side": 1,
+      "message": "Hidden API flags inconsistent error:\n\nhttps://android-build.corp.google.com/build_explorer/artifact_viewer/P86301743/aosp_husky-trunk_staging-userdebug/logs/build_error.log?from\u003dbranchDashboardRoute",
+      "range": {
+        "startLine": 124,
+        "startChar": 20,
+        "endLine": 124,
+        "endChar": 66
+      },
+      "revId": "bb2b77303a64e09193470f39f1816172527dcbbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
