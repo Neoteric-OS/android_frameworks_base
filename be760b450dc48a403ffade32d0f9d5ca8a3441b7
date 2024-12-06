@@ -66,6 +66,111 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16695f6f_cad58c20",
+        "filename": "core/java/android/util/AtomicFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-12-06T10:36:23Z",
+      "side": 1,
+      "message": "I don\u0027t think we should try to flush here. `str` should be the original `FileOutpurStream` we returned from `startWrite()`, and `FileOutputStream.flush()` does nothing, so adding the `flush()` call here only adds a bit of unnecessary complexity and potential confusion that it will actually do something.",
+      "fixSuggestions": [
+        {
+          "fixId": "33fb9f68_170239d3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/util/AtomicFile.java",
+              "range": {
+                "startLine": 179,
+                "startChar": 0,
+                "endLine": 180,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "be760b450dc48a403ffade32d0f9d5ca8a3441b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caeb0db6_1fce4e6b",
+        "filename": "core/java/android/util/AtomicFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-12-06T10:36:23Z",
+      "side": 1,
+      "message": "Should an unsuccessful close be `success \u003d false` as well?",
+      "fixSuggestions": [
+        {
+          "fixId": "50d13459_671c1c78",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/util/AtomicFile.java",
+              "range": {
+                "startLine": 191,
+                "startChar": 0,
+                "endLine": 191,
+                "endChar": 0
+              },
+              "replacement": "            success \u003d false;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "be760b450dc48a403ffade32d0f9d5ca8a3441b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aead6aad_1214fb69",
+        "filename": "core/java/android/util/AtomicFile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-12-06T10:36:23Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to delete the file, because it is always ignored and will be overwritten upon the next write anyway.",
+      "fixSuggestions": [
+        {
+          "fixId": "283e8354_f930321b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/util/AtomicFile.java",
+              "range": {
+                "startLine": 195,
+                "startChar": 0,
+                "endLine": 197,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "be760b450dc48a403ffade32d0f9d5ca8a3441b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df721735_be3de9e0",
         "filename": "core/java/android/util/AtomicFile.java",
         "patchSetId": 1
