@@ -899,18 +899,20 @@ public final class OverlayManagerService extends SystemService {
                 throws RemoteException {
             try {
                 traceBegin(TRACE_TAG_RRO, "OMS#commit " + transaction);
-                try {
-                    executeAllRequests(transaction);
-                } catch (Exception e) {
-                    final long ident = Binder.clearCallingIdentity();
+                synchronized (mLock) {
                     try {
-                        restoreSettings();
-                    } finally {
-                        Binder.restoreCallingIdentity(ident);
+                        executeAllRequests(transaction);
+                    } catch (Exception e) {
+                        final long ident = Binder.clearCallingIdentity();
+                        try {
+                            restoreSettings();
+                        } finally {
+                            Binder.restoreCallingIdentity(ident);
+                        }
+                        Slog.d(TAG, "commit failed: " + e.getMessage(), e);
+                        throw new SecurityException("commit failed"
+                                + (DEBUG || Build.IS_DEBUGGABLE ? ": " + e.getMessage() : ""));
                     }
-                    Slog.d(TAG, "commit failed: " + e.getMessage(), e);
-                    throw new SecurityException("commit failed"
-                            + (DEBUG || Build.IS_DEBUGGABLE ? ": " + e.getMessage() : ""));
                 }
             } finally {
                 traceEnd(TRACE_TAG_RRO);
