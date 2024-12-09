@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e35cccbd_32e7dc78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-12-09T19:43:18Z",
+      "side": 1,
+      "message": "Trying again. The test failure seems to be due to a mismatch between the test and runtime caused by ag/30715723 and is not caused by this change.",
+      "revId": "81ee4c7f99febb386979b7b883594bb8578dcb2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7200fd07_0d5d0a7f",
@@ -41,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bece8f21_95c497f6",
+        "filename": "api/ApiDocs.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-12-09T19:43:18Z",
+      "side": 1,
+      "message": "Oops. I was going to do it as defaults and decided against but forgot to remove.",
+      "parentUuid": "7200fd07_0d5d0a7f",
+      "range": {
+        "startLine": 129,
+        "startChar": 3,
+        "endLine": 129,
+        "endChar": 21
+      },
+      "revId": "81ee4c7f99febb386979b7b883594bb8578dcb2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f7e21f6_c689b20f",
@@ -54,6 +95,30 @@
       "writtenOn": "2024-12-09T17:54:54Z",
       "side": 1,
       "message": "Unused module?",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 1
+      },
+      "revId": "81ee4c7f99febb386979b7b883594bb8578dcb2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e34b560_abd3f7fe",
+        "filename": "api/ApiDocs.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-12-09T19:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f7e21f6_c689b20f",
       "range": {
         "startLine": 130,
         "startChar": 0,
