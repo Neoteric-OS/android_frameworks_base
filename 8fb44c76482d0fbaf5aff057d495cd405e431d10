@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13e28295_387bbd46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2024-12-09T01:45:46Z",
+      "side": 1,
+      "message": "LGTM as it is but you might have to do some appcompat changes as discussed in the p/m/Connectivity change",
+      "revId": "8fb44c76482d0fbaf5aff057d495cd405e431d10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
