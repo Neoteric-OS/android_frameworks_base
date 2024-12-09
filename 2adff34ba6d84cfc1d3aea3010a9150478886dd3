@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89f7ceb8_a177625d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087574
+      },
+      "writtenOn": "2024-12-09T20:21:43Z",
+      "side": 1,
+      "message": "Trying to add nullness checking in Chrome and came across this.",
+      "revId": "2adff34ba6d84cfc1d3aea3010a9150478886dd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
