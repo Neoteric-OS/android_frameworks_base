@@ -633,7 +633,7 @@ public final class DisplayManager {
      *
      * @see #unregisterDisplayListener
      */
-    public void registerDisplayListener(DisplayListener listener, Handler handler) {
+    public void registerDisplayListener(DisplayListener listener, @Nullable Handler handler) {
         registerDisplayListener(listener, handler, EVENT_FLAG_DISPLAY_ADDED
                 | EVENT_FLAG_DISPLAY_CHANGED | EVENT_FLAG_DISPLAY_REMOVED);
     }
