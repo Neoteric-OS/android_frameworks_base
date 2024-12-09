@@ -453,11 +453,12 @@ final class ContentRecorder implements WindowContainerListener {
             case RECORD_CONTENT_TASK:
                 // Given the WindowToken of the region to record, retrieve the associated
                 // SurfaceControl.
-                if (tokenToRecord == null) {
+                if (tokenToRecord == null ||
+                        WindowContainer.fromBinder(tokenToRecord) == null) {
                     handleStartRecordingFailed();
                     ProtoLog.v(WM_DEBUG_CONTENT_RECORDING,
-                            "Content Recording: Unable to start recording due to null token for "
-                                    + "display %d",
+                            "Content Recording: Unable to start recording due to null token or " +
+                                    "null window container for " + "display %d",
                             mDisplayContent.getDisplayId());
                     return null;
                 }
