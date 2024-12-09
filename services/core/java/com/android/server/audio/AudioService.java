@@ -54,6 +54,7 @@ import static android.media.AudioManager.RINGER_MODE_VIBRATE;
 import static android.media.AudioManager.STREAM_SYSTEM;
 import static android.media.audio.Flags.autoPublicVolumeApiHardening;
 import static android.media.audio.Flags.automaticBtDeviceType;
+import static android.media.audio.Flags.concurrentAudioRecordBypassPermission;
 import static android.media.audio.Flags.featureSpatialAudioHeadtrackingLowLatency;
 import static android.media.audio.Flags.focusFreezeTestApi;
 import static android.media.audio.Flags.roForegroundAudioControl;
@@ -4934,6 +4935,8 @@ public class AudioService extends IAudioService.Stub
                 + equalScoLeaVcIndexRange());
         pw.println("\tcom.android.media.audio.ringMyCar:"
                 + ringMyCar());
+        pw.println("\tandroid.media.audio.Flags.concurrentAudioRecordBypassPermission:"
+                + concurrentAudioRecordBypassPermission());
     }
 
     private void dumpAudioMode(PrintWriter pw) {
@@ -4997,6 +5000,15 @@ public class AudioService extends IAudioService.Stub
         }
 
         final Set<Integer> deviceTypes = getDeviceSetForStreamDirect(streamType);
+
+        final Set<Integer> a2dpDevices = AudioSystem.intersectionAudioDeviceTypes(
+                AudioSystem.DEVICE_OUT_ALL_A2DP_SET, deviceTypes);
+        if (!a2dpDevices.isEmpty()) {
+            int index = getStreamVolume(streamType,
+                    a2dpDevices.toArray(new Integer[0])[0].intValue());
+            mDeviceBroker.postSetAvrcpAbsoluteVolumeIndex(index);
+        }
+
         final Set<Integer> absVolumeMultiModeCaseDevices =
                 AudioSystem.intersectionAudioDeviceTypes(
                         mAbsVolumeMultiModeCaseDevices, deviceTypes);
