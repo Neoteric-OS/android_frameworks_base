@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b814a9b3_c73ea6c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087574
+      },
+      "writtenOn": "2024-12-09T21:22:10Z",
+      "side": 1,
+      "message": "Attempted a rebase... I\u0027m just trying to use gerrit IDE to make this change, so if it doesn\u0027t work, I\u0027ll just abandon it.",
+      "revId": "6294f073140e11deda80dd6d91d4ddb4070d9448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
