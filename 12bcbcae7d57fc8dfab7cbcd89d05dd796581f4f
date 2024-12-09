@@ -16,6 +16,29 @@
       "message": "@vladokom@google.com\nsorry for build error  i have modify this error ,please help review again.\nThanks.",
       "revId": "12bcbcae7d57fc8dfab7cbcd89d05dd796581f4f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1564fc0c_11239062",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-09T14:16:02Z",
+      "side": 1,
+      "message": "Can you please store this as a local variable before the null check?",
+      "range": {
+        "startLine": 465,
+        "startChar": 36,
+        "endLine": 465,
+        "endChar": 77
+      },
+      "revId": "12bcbcae7d57fc8dfab7cbcd89d05dd796581f4f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
