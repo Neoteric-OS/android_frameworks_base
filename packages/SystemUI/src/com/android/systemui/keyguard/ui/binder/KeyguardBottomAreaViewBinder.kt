@@ -427,7 +427,9 @@ object KeyguardBottomAreaViewBinder {
 
         view.isClickable = viewModel.isClickable
         if (viewModel.isClickable) {
-            if (viewModel.useLongPress) {
+            if (viewModel.singleTap || !viewModel.useLongPress) {
+                view.setOnClickListener(OnClickListener(viewModel, checkNotNull(falsingManager), vibratorHelper))
+            } else if (viewModel.useLongPress) {
                 val onTouchListener =
                     KeyguardQuickAffordanceOnTouchListener(
                         view,
@@ -466,8 +468,6 @@ object KeyguardBottomAreaViewBinder {
                 }
                 view.onLongClickListener =
                     OnLongClickListener(falsingManager, viewModel, vibratorHelper, onTouchListener)
-            } else {
-                view.setOnClickListener(OnClickListener(viewModel, checkNotNull(falsingManager)))
             }
         } else {
             view.onLongClickListener = null
@@ -559,6 +559,7 @@ object KeyguardBottomAreaViewBinder {
     private class OnClickListener(
         private val viewModel: KeyguardQuickAffordanceViewModel,
         private val falsingManager: FalsingManager,
+        private val vibratorHelper: VibratorHelper?,
     ) : View.OnClickListener {
         override fun onClick(view: View) {
             if (falsingManager.isFalseTap(FalsingManager.LOW_PENALTY)) {
@@ -572,6 +573,21 @@ object KeyguardBottomAreaViewBinder {
                         expandable = Expandable.fromView(view),
                         slotId = viewModel.slotId,
                     )
+                )
+                vibratorHelper?.vibrate(
+                    if (viewModel.isActivated) {
+                        if (KeyguardBottomAreaVibrations.areAllPrimitivesSupported) {
+                            KeyguardBottomAreaVibrations.Activated
+                        } else {
+                            KeyguardBottomAreaVibrations.ActivatedAlt
+                        }
+                    } else {
+                        if (KeyguardBottomAreaVibrations.areAllPrimitivesSupported) {
+                            KeyguardBottomAreaVibrations.Deactivated
+                        } else {
+                            KeyguardBottomAreaVibrations.DeactivatedAlt
+                        }
+                    }
                 )
             }
         }
