@@ -51,6 +51,24 @@
       ],
       "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40bb3dbb_63e429d0",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-12-10T19:31:47Z",
+      "side": 1,
+      "message": "+1 -- but either way, wouldn\u0027t it be too noisy to be useful? I feel like I tried it and I got a lot of noises from random threads from random apps...\n\nWondering if we should do \"main thread on any UIDs\" (e.g. `log.looper.any.main.slow`) and/or \"any threads on a specific UID\" `log.looper.1000.any.slow`).",
+      "parentUuid": "b1e8e10a_41fc1826",
+      "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
