@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a174240_b91b56de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937066
+      },
+      "writtenOn": "2024-12-10T13:08:38Z",
+      "side": 1,
+      "message": "Hey Justin, can you PTAL? You are more familiar with the platform code.",
+      "revId": "d1855697c8d583350bc013b0fe510afa7d2dab6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
