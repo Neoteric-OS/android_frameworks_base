@@ -16,6 +16,23 @@
       "message": "Hey Justin, can you PTAL? You are more familiar with the platform code.",
       "revId": "d1855697c8d583350bc013b0fe510afa7d2dab6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72517fa0_a0cea91f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087574
+      },
+      "writtenOn": "2024-12-10T20:22:22Z",
+      "side": 1,
+      "message": "Assuming your +2 is sufficient for review, could you also git submit for me (I have no such button).",
+      "revId": "d1855697c8d583350bc013b0fe510afa7d2dab6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
