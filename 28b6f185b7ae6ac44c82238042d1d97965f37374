@@ -16,6 +16,23 @@
       "message": "+Jorim for owners approval",
       "revId": "28b6f185b7ae6ac44c82238042d1d97965f37374",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "feee5574_867167b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-10T01:34:26Z",
+      "side": 1,
+      "message": "Adding @yamasani@google.com for OWNERS as Jorim is OOO.",
+      "revId": "28b6f185b7ae6ac44c82238042d1d97965f37374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
