@@ -16,6 +16,41 @@
       "message": "roosa@ omakoto@ , please have a look\nBR\nMattias",
       "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1e8e10a_41fc1826",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-12-10T18:07:46Z",
+      "side": 1,
+      "message": "The format of the property below is `log.looper.[uid].[thread_name].slow`. Maybe match that? How about `log.looper.any.slow`?",
+      "fixSuggestions": [
+        {
+          "fixId": "4fe0891f_888f2fcc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/Looper.java",
+              "range": {
+                "startLine": 326,
+                "startChar": 0,
+                "endLine": 328,
+                "endChar": 0
+              },
+              "replacement": "        // adb shell \u0027setprop log.looper.any.slow 1 \u0026\u0026 stop \u0026\u0026 start\u0027\n        final int globalOverride \u003d SystemProperties.getInt(\"log.looper.any.slow\", -1);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
