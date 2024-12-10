@@ -42,6 +42,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a929d4b5_f446786c",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-10T14:35:21Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "4ba62e27_1fabb224",
+      "range": {
+        "startLine": 456,
+        "startChar": 43,
+        "endLine": 457,
+        "endChar": 73
+      },
+      "revId": "10898a3a53bb87a07304c7ce5fe73d90b4066437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "422d6f95_4b882e26",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-10T14:35:21Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "4ba62e27_1fabb224",
+      "range": {
+        "startLine": 456,
+        "startChar": 43,
+        "endLine": 457,
+        "endChar": 73
+      },
+      "revId": "10898a3a53bb87a07304c7ce5fe73d90b4066437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ca1f87b_8519fd9b",
@@ -83,6 +131,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cbe842c_964d1213",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-10T14:35:21Z",
+      "side": 1,
+      "message": "Done\napply fix conflict,I have fix this ,please help review again.",
+      "parentUuid": "0ca1f87b_8519fd9b",
+      "range": {
+        "startLine": 458,
+        "startChar": 20,
+        "endLine": 458,
+        "endChar": 45
+      },
+      "revId": "10898a3a53bb87a07304c7ce5fe73d90b4066437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66b5b24b_3301bc04",
@@ -120,6 +192,30 @@
           ]
         }
       ],
+      "revId": "10898a3a53bb87a07304c7ce5fe73d90b4066437",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20242a51_6b7b19b7",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-10T14:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66b5b24b_3301bc04",
+      "range": {
+        "startLine": 466,
+        "startChar": 16,
+        "endLine": 466,
+        "endChar": 20
+      },
       "revId": "10898a3a53bb87a07304c7ce5fe73d90b4066437",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
