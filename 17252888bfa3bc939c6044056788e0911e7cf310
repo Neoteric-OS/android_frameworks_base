@@ -22,6 +22,30 @@
       },
       "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8126ddf1_9c02ee45",
+        "filename": "core/java/android/permission/PermissionManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1757736
+      },
+      "writtenOn": "2024-12-11T18:21:54Z",
+      "side": 1,
+      "message": "I think there might be a behavior change with this, since Context.checkPermission(), which calls PermissionManager.checkPermission(), accounts for renounced permissions [1] and will return PERMISSION_DENIED. I\u0027ll leave this open for now in case the reviewer can confirm that the pid \u003d\u003d MY_PID check is (or isn\u0027t) safe to add here!\n\n[1] https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/app/ContextImpl.java;l\u003d2313",
+      "parentUuid": "bc7842eb_bce5a649",
+      "range": {
+        "startLine": 1719,
+        "startChar": 8,
+        "endLine": 1722,
+        "endChar": 9
+      },
+      "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
