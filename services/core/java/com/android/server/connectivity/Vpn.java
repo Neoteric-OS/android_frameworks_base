@@ -1959,7 +1959,11 @@ public class Vpn {
      */
     public void onUserAdded(int userId) {
         // If the user is restricted tie them to the parent user's VPN
-        UserInfo user = mUserManager.getUserInfo(userId);
+        final UserInfo user = mUserManager.getUserInfo(userId);
+        if (user == null) {
+            Log.e(TAG, "Can not retrieve UserInfo for userId=" + userId);
+            return;
+        }
         if (user.isRestricted() && user.restrictedProfileParentId == mUserId) {
             synchronized(Vpn.this) {
                 final Set<Range<Integer>> existingRanges = mNetworkCapabilities.getUids();
@@ -1988,7 +1992,11 @@ public class Vpn {
      */
     public void onUserRemoved(int userId) {
         // clean up if restricted
-        UserInfo user = mUserManager.getUserInfo(userId);
+        final UserInfo user = mUserManager.getUserInfo(userId);
+        if (user == null) {
+            Log.e(TAG, "Can not retrieve UserInfo for userId=" + userId);
+            return;
+        }
         if (user.isRestricted() && user.restrictedProfileParentId == mUserId) {
             synchronized(Vpn.this) {
                 final Set<Range<Integer>> existingRanges = mNetworkCapabilities.getUids();
