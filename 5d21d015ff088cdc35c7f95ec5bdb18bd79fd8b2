@@ -87,6 +87,24 @@
       "parentUuid": "40bb3dbb_63e429d0",
       "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41113b2e_5502f31b",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-12-11T17:15:29Z",
+      "side": 1,
+      "message": "Thanks for discussing this.\nIsak, if you still want to proceed with this change then please upload a new patch to address the feedback. Otherwise, you can abandon this change, and we\u0027ll focus on the other ones in the stack.",
+      "parentUuid": "5a5f0644_22159f9b",
+      "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
