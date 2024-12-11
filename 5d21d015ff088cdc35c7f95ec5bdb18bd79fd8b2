@@ -69,6 +69,24 @@
       "parentUuid": "b1e8e10a_41fc1826",
       "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a5f0644_22159f9b",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 3155470
+      },
+      "writtenOn": "2024-12-11T08:15:55Z",
+      "side": 1,
+      "message": "Yeah, you have a point, logging all the loopers might be a bit much. For our internal purposes, only logging the main loopers would suffice.",
+      "parentUuid": "40bb3dbb_63e429d0",
+      "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
