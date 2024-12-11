@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd29e119_da85dc11",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757736
+      },
+      "writtenOn": "2024-12-11T20:01:53Z",
+      "side": 1,
+      "message": "Hi Nate and Hai, this change moves the root/system check to occur before getService() (which returns null during this stage in boot anyways) in order to avoid unnecessary binder spam. Can you take a look? Thanks!",
+      "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc7842eb_bce5a649",
