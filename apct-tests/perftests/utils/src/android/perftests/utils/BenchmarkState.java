@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Trace;
 import android.util.Log;
 
 import androidx.test.InstrumentationRegistry;
@@ -132,6 +133,11 @@ public final class BenchmarkState {
         mStartTimeNs = System.nanoTime();
         mIteration = 0;
         mState = WARMUP;
+        Trace.beginSection("Warmup");
+    }
+
+    private void endWarmup() {
+        Trace.endSection();
     }
 
     private void beginBenchmark(long warmupDuration, int iterations) {
@@ -140,6 +146,7 @@ public final class BenchmarkState {
             Log.d(TAG, "Tracing to: " + f.getAbsolutePath());
             Debug.startMethodTracingSampling(f.getAbsolutePath(), 16 * 1024 * 1024, 100);
         }
+        Trace.beginSection("Benchmark");
         mMaxIterations = (int) (TARGET_TEST_DURATION_NS / (warmupDuration / iterations));
         mMaxIterations = Math.min(MAX_TEST_ITERATIONS,
                 Math.max(mMaxIterations, MIN_TEST_ITERATIONS));
@@ -148,6 +155,10 @@ public final class BenchmarkState {
         mRepeatCount = 0;
         mState = RUNNING;
         mStartTimeNs = System.nanoTime();
+    }
+
+    private void endBenchmark() {
+        Trace.endSection();
     }
 
     private boolean startNextTestRun() {
@@ -189,25 +200,31 @@ public final class BenchmarkState {
                 // don't yet have a target iteration count.
                 final long duration = System.nanoTime() - mStartTimeNs;
                 if (mIteration >= WARMUP_MIN_ITERATIONS && duration >= WARMUP_DURATION_NS) {
+                    endWarmup();
                     beginBenchmark(duration, mIteration);
                 }
                 return true;
             case RUNNING:
                 mIteration++;
+                boolean shouldKeepRunning = true;
                 if (mIteration >= mMaxIterations) {
-                    return startNextTestRun();
+                    shouldKeepRunning = startNextTestRun();
                 }
                 if (mPaused) {
                     throw new IllegalStateException(
                             "Benchmark step finished with paused state. " +
                             "Resume the benchmark before finishing each step.");
                 }
-                return true;
+                if (!shouldKeepRunning) {
+                    endBenchmark();
+                }
+                return shouldKeepRunning;
             case RUNNING_CUSTOMIZED:
                 mCustomizedIterationListener.onFinished(mCustomizedIterations);
                 mCustomizedIterations++;
                 if (mCustomizedIterations >= mMaxCustomizedIterations) {
                     mState = FINISHED;
+                    endBenchmark();
                     return false;
                 }
                 mCustomizedIterationListener.onStart(mCustomizedIterations);
