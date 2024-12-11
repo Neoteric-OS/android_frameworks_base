@@ -67,6 +67,24 @@
       "message": "@yutingfang@google.com @kiranmr@google.com Can we merge this to mainline?",
       "revId": "c25790f8f8da89d7a860e186907ce4fddad86747",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b68f826_b72b8e73",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2058068
+      },
+      "writtenOn": "2024-12-11T21:01:01Z",
+      "side": 1,
+      "message": "When you submit here, it should auto merge to mainline. Run Pre-Submit first.",
+      "parentUuid": "0218e9a3_3e0839ca",
+      "revId": "c25790f8f8da89d7a860e186907ce4fddad86747",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
