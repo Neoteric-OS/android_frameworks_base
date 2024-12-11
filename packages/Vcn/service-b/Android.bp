@@ -77,7 +77,6 @@ java_library {
         "framework-connectivity-t-pre-jarjar",
         "framework-connectivity-b-pre-jarjar",
         "framework-wifi.stubs.module_lib",
-        "keepanno-annotations",
         "modules-utils-statemachine",
         "unsupportedappusage",
     ],
