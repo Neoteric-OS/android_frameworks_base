@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "810593d1_e278c230",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-11T19:34:23Z",
+      "side": 1,
+      "message": "@patb@google.com for OWNERS. This proxy routing via PackageManager is unfortunate, but I don\u0027t anticipate needing to add any more to the generated metadata class. The alternative would be some runtime static reflection but that\u0027s probably even more unfortunate.",
+      "revId": "d6791e76016c94b2aa69542b74030ed11364be83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
