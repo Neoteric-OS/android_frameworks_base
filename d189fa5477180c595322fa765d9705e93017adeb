@@ -137,6 +137,30 @@
       ],
       "revId": "d189fa5477180c595322fa765d9705e93017adeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80c91030_17b6a690",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-12-11T16:02:25Z",
+      "side": 1,
+      "message": "yeah, `\"foo: %m\"` is equivalent to `\"foo: %s\", strerror(errno)`. the latter is more portable (it works on macOS too, whereas %m is a gnu extension that\u0027s available on glibc/musl and bionic), but the former is a lot easier to type. (if it helps, i remember \"%m\" as \"m for [error] message\" :-) )",
+      "parentUuid": "59589631_ae000331",
+      "range": {
+        "startLine": 68,
+        "startChar": 47,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "revId": "d189fa5477180c595322fa765d9705e93017adeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
