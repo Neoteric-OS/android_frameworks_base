@@ -16,6 +16,29 @@
       "message": "Phrasing LGTM",
       "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca736e05_6f0dd33e",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-12-11T16:42:12Z",
+      "side": 1,
+      "message": "It looks as though `SDK_SANDBOX` has a string representation of \"SDK Runtime\". Although that is in the body of the `toString()` method. Metalava cannot access them. So, we would either need to hard code that `SDK_SANDBOX -\u003e SDK Runtime` or there will need to be some other way to specify the string representation.",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
