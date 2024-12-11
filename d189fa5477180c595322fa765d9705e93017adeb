@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "455a26c9_253cbbea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-12-11T15:57:03Z",
+      "side": 1,
+      "message": "(i actually only need the __builtin_align_* changes, but i\u0027ve been trying to remove all instances of logging raw errno values, so while i was here anyway...)",
+      "revId": "d189fa5477180c595322fa765d9705e93017adeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
