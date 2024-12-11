@@ -87,6 +87,24 @@
       "parentUuid": "9902d1e3_0c77facd",
       "revId": "1b522bde57384c09b6a0aecc28950b2d19a9437d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c4505e9_f17ce55f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2024-12-11T16:39:31Z",
+      "side": 1,
+      "message": "So one immediate problem is that the non-HARDWARE bitmap configs are all uncompressed representations, and that will not be easy to change since the Bitmap api supports software rasterization + pixel retrieval.\n\nAnd, if you\u0027re decoding a bitmap with the HARDWARE config, then the uncompressed representation would only be used as intermediate memory during decoding. The final decoded result is transferred into a hardware resource which I would expect to be swizzled + compressed, and the uncompressed resource is thrown away.\n\nSo in practice, support through these apis won\u0027t buy you much. I\u0027m sympathetic to supporting decoding for interopability reasons (which would require Skia to agree to any changes), but the practical result of most apps using KTX resources would likely result in inflating their apk cost.",
+      "parentUuid": "9e5bacef_5b2f8df6",
+      "revId": "1b522bde57384c09b6a0aecc28950b2d19a9437d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
