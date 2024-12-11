@@ -16,6 +16,127 @@
       "message": "(i actually only need the __builtin_align_* changes, but i\u0027ve been trying to remove all instances of logging raw errno values, so while i was here anyway...)",
       "revId": "d189fa5477180c595322fa765d9705e93017adeb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59589631_ae000331",
+        "filename": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2024-12-11T15:59:14Z",
+      "side": 1,
+      "message": "Oh, interesting, does this automatically append the error message from `fallocate` above?",
+      "range": {
+        "startLine": 68,
+        "startChar": 47,
+        "endLine": 68,
+        "endChar": 49
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "76fd521d_c4ca7ec2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 42,
+                "startChar": 0,
+                "endLine": 43,
+                "endChar": 0
+              },
+              "replacement": "bool PunchWithBlockAlignment(borrowed_fd fd, uint64_t start, uint64_t length, uint64_t blockSize) {\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 75,
+                "startChar": 0,
+                "endLine": 76,
+                "endChar": 0
+              },
+              "replacement": "bool PunchHoles(const char *filePath, const uint64_t offset,\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 183,
+                "startChar": 0,
+                "endLine": 184,
+                "endChar": 0
+              },
+              "replacement": "        if (!PunchWithBlockAlignment(fd, punchStartOffset, punchLen, blockSize)) {\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 204,
+                "startChar": 0,
+                "endLine": 205,
+                "endChar": 0
+              },
+              "replacement": "bool GetLoadSegmentPhdrs(const char *filePath, const uint64_t offset,\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 252,
+                "startChar": 0,
+                "endLine": 253,
+                "endChar": 0
+              },
+              "replacement": "bool PunchHolesInElf64(const char *filePath, const uint64_t offset) {\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 254,
+                "startChar": 0,
+                "endLine": 255,
+                "endChar": 0
+              },
+              "replacement": "    if (!GetLoadSegmentPhdrs(filePath, offset, programHeaders)) {\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 258,
+                "startChar": 0,
+                "endLine": 259,
+                "endChar": 0
+              },
+              "replacement": "    return PunchHoles(filePath, offset, programHeaders);\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 261,
+                "startChar": 0,
+                "endLine": 262,
+                "endChar": 0
+              },
+              "replacement": "bool PunchHolesInZip(const char *filePath, uint64_t offset, uint16_t extraFieldLen) {\n"
+            },
+            {
+              "path": "core/jni/com_android_internal_content_FileSystemUtils.cpp",
+              "range": {
+                "startLine": 338,
+                "startChar": 0,
+                "endLine": 339,
+                "endChar": 0
+              },
+              "replacement": "            if (!PunchWithBlockAlignment(fd, punchOffset, punchLen, blockSize)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d189fa5477180c595322fa765d9705e93017adeb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
