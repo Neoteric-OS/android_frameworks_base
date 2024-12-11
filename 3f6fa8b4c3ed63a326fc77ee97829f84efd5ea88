@@ -16,6 +16,24 @@
       "message": "LGTM.  It would be interesting to hand-craft a test that compares the new APIs with the old binder APIs.",
       "revId": "3f6fa8b4c3ed63a326fc77ee97829f84efd5ea88",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3810123_85802cec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-11T20:27:34Z",
+      "side": 1,
+      "message": "Great idea, I can set up another benchmark for the public PackageManager query.",
+      "parentUuid": "384c34c3_3cc6dcfa",
+      "revId": "3f6fa8b4c3ed63a326fc77ee97829f84efd5ea88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
