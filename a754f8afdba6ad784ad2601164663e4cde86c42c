@@ -39,6 +39,30 @@
       },
       "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fe7ec22_a78d01a4",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1439319
+      },
+      "writtenOn": "2024-12-11T17:14:15Z",
+      "side": 1,
+      "message": "\u003e Metalava cannot access them. So, we would either need to hard code that SDK_SANDBOX -\u003e SDK Runtime\n\nI am fine with hard coding it, but why can\u0027t Metalava access the public enum? I was able to access it using reflection in the test: https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/libs/modules-utils/javatests/android/annotation/RestrictedForEnvironmentTests.java;l\u003d67?q\u003dRestrictedForEnvironment\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20b:main",
+      "parentUuid": "ca736e05_6f0dd33e",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
