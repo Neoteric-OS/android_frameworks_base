@@ -148,19 +148,19 @@ public class ZygoteInit {
         preloadSharedLibraries();
         preloadTextResources();
 
-        if (preloadHttpengineInZygote()) {
-            try {
-                HttpEngine.preload();
-            } catch (NoSuchMethodError e){
-                // The flag protecting this API is not an exported
-                // flag because ZygoteInit happens before the
-                // system service has initialized the flag which means
-                // that we can't query the real value of the flag
-                // from the tethering module. In order to avoid crashing
-                // in the case where we have (new zygote, old tethering).
-                // we catch the NoSuchMethodError and just log.
-                Log.d(TAG, "HttpEngine.preload() threw " + e);
-            }
+        // TODO: remove the try/catch and the flag read as soon as the flag is ramped and 25Q2
+        // starts building from source.
+        try {
+            HttpEngine.preload();
+        } catch (NoSuchMethodError e){
+            // The flag protecting this API is not an exported
+            // flag because ZygoteInit happens before the
+            // system service has initialized the flag which means
+            // that we can't query the real value of the flag
+            // from the tethering module. In order to avoid crashing
+            // in the case where we have (new zygote, old tethering).
+            // we catch the NoSuchMethodError and just log.
+            Log.d(TAG, "HttpEngine.preload() threw " + e);
         }
         // Ask the WebViewFactory to do any initialization that must run in the zygote process,
         // for memory sharing purposes.
