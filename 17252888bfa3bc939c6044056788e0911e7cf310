@@ -87,6 +87,30 @@
       },
       "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25f7b470_c2f5b99a",
+        "filename": "core/java/android/permission/PermissionManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1757736
+      },
+      "writtenOn": "2024-12-12T17:48:47Z",
+      "side": 1,
+      "message": "That makes sense, thanks! I misinterpreted the ContextImpl permission ordering. I\u0027ve added a `pid \u003d\u003d Process.myPid()` call here , since `com.android.server.am.ActivityManagerService[.MY_PID]` doesn\u0027t seem to be available to this package.",
+      "parentUuid": "3d34e4e6_5a4e76ea",
+      "range": {
+        "startLine": 1719,
+        "startChar": 8,
+        "endLine": 1722,
+        "endChar": 9
+      },
+      "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
