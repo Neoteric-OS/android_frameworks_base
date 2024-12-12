@@ -3118,6 +3118,23 @@ public class HdmiControlService extends SystemService {
                 Binder.restoreCallingIdentity(token);
             }
         }
+
+        @Override
+        public void updateMenuLanguageOnToggleOnce(boolean isMenuLanguageUpdate) {
+            initBinderCall();
+            runOnServiceThread(new Runnable() {
+                @Override
+                public void run() {
+                    for (HdmiCecLocalDevice device : getAllCecLocalDevices()) {
+                        int address = device.getDeviceInfo().getLogicalAddress();
+                        if (isMenuLanguageUpdate) {
+                            sendCecCommand(HdmiCecMessageBuilder.buildGiveMenuLanguageCommand(
+                                address, Constants.ADDR_TV));
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @VisibleForTesting

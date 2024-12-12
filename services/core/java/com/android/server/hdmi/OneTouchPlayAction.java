@@ -95,6 +95,13 @@ final class OneTouchPlayAction extends HdmiCecFeatureAction {
         // Because only source device can create this action, it's safe to cast.
         mSource = source();
 
+        if (mSource.mService.getHdmiCecConfig().getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_ONE_KEY_PLAY)
+                    == HdmiControlManager.ONE_KEY_PLAY_DISABLED) {
+            Slog.d(TAG, "Device does not send one key play to tv: one key play is disabled.");
+            return true;
+        }
+
         if (!mSource.mService.getPowerManager().isInteractive()) {
             Slog.d(TAG, "PowerManager is not interactive. Delay the action to check if standby"
                     + " started!");

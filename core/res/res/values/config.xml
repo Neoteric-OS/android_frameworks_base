@@ -3371,6 +3371,10 @@
         com.android.systemui/com.android.systemui.tv.hdmi.HdmiCecSetMenuLanguageActivity
     </string>
 
+    <!-- If supported, user can confirm system language change after receiving
+         <Set Menu Language> CEC message. -->
+    <bool name="config_hdmiCecSetMenuLanguageActivityEnable">true</bool>
+
     <!-- Component name of the activity used to inform user that their device lost Active Source
       status and will go to standby if there is no interaction. -->
     <string name="config_hdmiCecActiveSourceLostActivity"
@@ -6283,6 +6287,12 @@
     <bool name="config_cecVolumeControlModeEnabled_default">true</bool>
     <bool name="config_cecVolumeControlModeDisabled_allowed">true</bool>
     <bool name="config_cecVolumeControlModeDisabled_default">false</bool>
+
+    <bool name="config_cecOneKeyPlay_userConfigurable">true</bool>
+    <bool name="config_cecOneKeyPlayEnabled_allowed">true</bool>
+    <bool name="config_cecOneKeyPlayEnabled_default">true</bool>
+    <bool name="config_cecOneKeyPlayDisabled_allowed">true</bool>
+    <bool name="config_cecOneKeyPlayDisabled_default">false</bool>
 
     <bool name="config_cecTvWakeOnOneTouchPlay_userConfigurable">true</bool>
     <bool name="config_cecTvWakeOnOneTouchPlayEnabled_allowed">true</bool>

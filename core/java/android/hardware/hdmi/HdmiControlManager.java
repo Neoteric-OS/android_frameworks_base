@@ -604,6 +604,30 @@ public final class HdmiControlManager {
     @Retention(RetentionPolicy.SOURCE)
     public @interface TvWakeOnOneTouchPlay {}
 
+    // -- Whether the HDMI CEC one touch play is enabled or disabled.
+    /**
+     * HDMI CEC one touch play enabled.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_KEY_PLAY
+     */
+    public static final int ONE_KEY_PLAY_ENABLED = 1;
+    /**
+     * HDMI CEC one touch play disabled.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_KEY_PLAY
+     */
+    public static final int ONE_KEY_PLAY_DISABLED = 0;
+    /**
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_KEY_PLAY
+     * @hide
+     */
+    @IntDef(prefix = { "ONE_KEY_PLAY_" }, value = {
+            ONE_KEY_PLAY_ENABLED,
+            ONE_KEY_PLAY_DISABLED
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface OneKeyPlay {}
+
     // -- Whether TV should send &lt;Standby&gt; on sleep.
     /**
      * Sending &lt;Standby&gt; on sleep.
@@ -933,6 +957,14 @@ public final class HdmiControlManager {
     public static final String CEC_SETTING_NAME_TV_WAKE_ON_ONE_TOUCH_PLAY =
             "tv_wake_on_one_touch_play";
     /**
+     * Name of a setting deciding whether the device will turn on the TV when it goes
+     * to Actice source.
+     *
+     * @see HdmiControlManager#setTvSendStandbyOnSleep(int)
+     */
+    public static final String CEC_SETTING_NAME_ONE_KEY_PLAY =
+            "one_key_play";
+    /**
      * Name of a setting deciding whether the TV will also turn off other CEC devices
      * when it goes to standby mode.
      *
@@ -1122,6 +1154,7 @@ public final class HdmiControlManager {
         CEC_SETTING_NAME_SYSTEM_AUDIO_MODE_MUTING,
         CEC_SETTING_NAME_VOLUME_CONTROL_MODE,
         CEC_SETTING_NAME_TV_WAKE_ON_ONE_TOUCH_PLAY,
+        CEC_SETTING_NAME_ONE_KEY_PLAY,
         CEC_SETTING_NAME_TV_SEND_STANDBY_ON_SLEEP,
         CEC_SETTING_NAME_SET_MENU_LANGUAGE,
         CEC_SETTING_NAME_RC_PROFILE_TV,
@@ -1601,6 +1634,45 @@ public final class HdmiControlManager {
     public int getHdmiCecVolumeControlEnabled() {
         try {
             return mService.getCecSettingIntValue(CEC_SETTING_NAME_VOLUME_CONTROL_MODE);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Controls whether set/get menu language commands via HDMI CEC are enabled.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_SET_MENU_LANGUAGE
+     */
+    @RequiresPermission(android.Manifest.permission.HDMI_CEC)
+    public void setSetMenuLanguage(@SetMenuLanguage int hdmiCecMenuLanguageEnabled) {
+        if (mService == null) {
+            Log.e(TAG, "setSetMenuLanguage: HdmiControlService is not available");
+            throw new RuntimeException("HdmiControlService is not available");
+        }
+        try {
+            mService.setCecSettingIntValue(CEC_SETTING_NAME_SET_MENU_LANGUAGE, hdmiCecMenuLanguageEnabled);
+            Log.d(TAG, "[DEBUG] updateMenuLanguageOnToggleOnce: " + (hdmiCecMenuLanguageEnabled == SET_MENU_LANGUAGE_ENABLED));
+            mService.updateMenuLanguageOnToggleOnce(hdmiCecMenuLanguageEnabled == SET_MENU_LANGUAGE_ENABLED);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Returns whether set/get menu language changes via HDMI CEC are enabled.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_SET_MENU_LANGUAGE
+     */
+    @RequiresPermission(android.Manifest.permission.HDMI_CEC)
+    @SetMenuLanguage
+    public int getSetMenuLanguage() {
+        if (mService == null) {
+            Log.e(TAG, "getSetMenuLanguage: HdmiControlService is not available");
+            throw new RuntimeException("HdmiControlService is not available");
+        }
+        try {
+            return mService.getCecSettingIntValue(CEC_SETTING_NAME_SET_MENU_LANGUAGE);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -2613,6 +2685,50 @@ public final class HdmiControlManager {
         }
         try {
             return mService.getCecSettingIntValue(CEC_SETTING_NAME_TV_WAKE_ON_ONE_TOUCH_PLAY);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Set the device can use one touch play, if possible.
+     *
+     * <p>Sets whether the device will turn on TV when it goes
+     * to active source.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_KEY_PLAY
+     */
+    @RequiresPermission(android.Manifest.permission.HDMI_CEC)
+    public void setDeviceSendOneKeyPlay(@NonNull @OneKeyPlay int value) {
+        if (mService == null) {
+            Log.e(TAG, "setDeviceSendOneKeyPlay: HdmiControlService is not available");
+            throw new RuntimeException("HdmiControlService is not available");
+        }
+        try {
+            mService.setCecSettingIntValue(CEC_SETTING_NAME_ONE_KEY_PLAY, value);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get the device can use one touch play, if possible.
+     *
+     * <p>Reflects whether the device will turn on TV when it goes
+     * to active source.
+     *
+     * @see HdmiControlManager#CEC_SETTING_NAME_ONE_KEY_PLAY
+     */
+    @NonNull
+    @OneKeyPlay
+    @RequiresPermission(android.Manifest.permission.HDMI_CEC)
+    public int getDeviceSendOneKeyPlay() {
+        if (mService == null) {
+            Log.e(TAG, "getDeviceSendOneKeyPlay: HdmiControlService is not available");
+            throw new RuntimeException("HdmiControlService is not available");
+        }
+        try {
+            return mService.getCecSettingIntValue(CEC_SETTING_NAME_ONE_KEY_PLAY);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

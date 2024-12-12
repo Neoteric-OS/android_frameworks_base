@@ -115,6 +115,15 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
         mService.sendCecCommand(
                 HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
                         getDeviceInfo().getLogicalAddress(), mService.getVendorId()));
+        if (mService.getHdmiCecConfig().getIntValue(
+                HdmiControlManager.CEC_SETTING_NAME_SET_MENU_LANGUAGE)
+                    == HdmiControlManager.SET_MENU_LANGUAGE_ENABLED) {
+            Slog.d(TAG, "Show the mSetMenuLanguage: true.");
+            mService.sendCecCommand(HdmiCecMessageBuilder.buildGiveMenuLanguageCommand(
+                getDeviceInfo().getLogicalAddress(), Constants.ADDR_TV));
+        } else {
+            Slog.w(TAG, "Set menu language is disabled, abort the <Set Menu Language>.");
+        }
         // Actively send out an OSD name to the TV to update the TV panel in case the TV
         // does not query the OSD name on time. This is not a required behavior by the spec.
         // It is used for some TVs that need the OSD name update but don't query it themselves.
@@ -510,7 +519,12 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
                     // locale from being chosen. 'eng' in the CEC command, for instance,
                     // will always be mapped to en-AU among other variants like en-US, en-GB,
                     // an en-IN, which may not be the expected one.
-                    startSetMenuLanguageActivity(localeInfo.getLocale());
+                    if (mService.getContext().getResources().getBoolean(
+                                com.android.internal.R.bool.config_hdmiCecSetMenuLanguageActivityEnable)){
+                        startSetMenuLanguageActivity(localeInfo.getLocale());
+                    } else {
+                        LocalePicker.updateLocale(localeInfo.getLocale());
+                    }
                     return Constants.HANDLED;
                 }
             }

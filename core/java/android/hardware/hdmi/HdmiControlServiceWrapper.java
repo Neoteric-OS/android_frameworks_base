@@ -350,6 +350,11 @@ public final class HdmiControlServiceWrapper {
         public void setCecSettingIntValue(String name, int value) {
             HdmiControlServiceWrapper.this.setCecSettingIntValue(name, value);
         }
+
+        @Override
+        public void updateMenuLanguageOnToggleOnce(boolean isMenuLanguageUpdate) {
+            HdmiControlServiceWrapper.this.updateMenuLanguageOnToggleOnce(isMenuLanguageUpdate);
+        }
     };
 
     @BinderThread
@@ -581,5 +586,9 @@ public final class HdmiControlServiceWrapper {
 
     /** @hide */
     public void setCecSettingIntValue(String name, int value) {
+    }
+
+    /** @hide */
+    public void updateMenuLanguageOnToggleOnce(boolean isMenuLanguageUpdate) {
     }
 }

@@ -389,6 +389,7 @@
   <java-symbol type="string" name="config_sensorUseStartedActivity" />
   <java-symbol type="string" name="config_sensorUseStartedActivity_hwToggle" />
   <java-symbol type="string" name="config_sensorStateChangedActivity" />
+  <java-symbol type="bool" name="config_hdmiCecSetMenuLanguageActivityEnable" />
   <java-symbol type="string" name="config_hdmiCecSetMenuLanguageActivity" />
   <java-symbol type="string" name="config_hdmiCecActiveSourceLostActivity" />
   <java-symbol type="integer" name="config_minNumVisibleRecentTasks_lowRam" />
@@ -4878,6 +4879,12 @@
   <java-symbol type="bool" name="config_cecTvWakeOnOneTouchPlayEnabled_default" />
   <java-symbol type="bool" name="config_cecTvWakeOnOneTouchPlayDisabled_allowed" />
   <java-symbol type="bool" name="config_cecTvWakeOnOneTouchPlayDisabled_default" />
+
+  <java-symbol type="bool" name="config_cecOneKeyPlay_userConfigurable" />
+  <java-symbol type="bool" name="config_cecOneKeyPlayEnabled_allowed" />
+  <java-symbol type="bool" name="config_cecOneKeyPlayEnabled_default" />
+  <java-symbol type="bool" name="config_cecOneKeyPlayDisabled_allowed" />
+  <java-symbol type="bool" name="config_cecOneKeyPlayDisabled_default" />
 
   <java-symbol type="bool" name="config_cecTvSendStandbyOnSleep_userConfigurable" />
   <java-symbol type="bool" name="config_cecTvSendStandbyOnSleepEnabled_allowed" />

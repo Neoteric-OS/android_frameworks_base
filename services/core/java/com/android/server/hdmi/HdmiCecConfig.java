@@ -396,6 +396,16 @@ public class HdmiCecConfig {
                 R.bool.config_cecTvWakeOnOneTouchPlayDisabled_allowed,
                 R.bool.config_cecTvWakeOnOneTouchPlayDisabled_default);
 
+        Setting oneKeyPlay = registerSetting(
+                HdmiControlManager.CEC_SETTING_NAME_ONE_KEY_PLAY,
+                R.bool.config_cecOneKeyPlay_userConfigurable);
+        oneKeyPlay.registerValue(HdmiControlManager.ONE_KEY_PLAY_ENABLED,
+                R.bool.config_cecOneKeyPlayEnabled_allowed,
+                R.bool.config_cecOneKeyPlayEnabled_default);
+        oneKeyPlay.registerValue(HdmiControlManager.ONE_KEY_PLAY_DISABLED,
+                R.bool.config_cecOneKeyPlayDisabled_allowed,
+                R.bool.config_cecOneKeyPlayDisabled_default);
+
         Setting tvSendStandbyOnSleep = registerSetting(
                 HdmiControlManager.CEC_SETTING_NAME_TV_SEND_STANDBY_ON_SLEEP,
                 R.bool.config_cecTvSendStandbyOnSleep_userConfigurable);
@@ -738,6 +748,8 @@ public class HdmiCecConfig {
                 return STORAGE_SHARED_PREFS;
             case HdmiControlManager.CEC_SETTING_NAME_TV_WAKE_ON_ONE_TOUCH_PLAY:
                 return STORAGE_SHARED_PREFS;
+            case HdmiControlManager.CEC_SETTING_NAME_ONE_KEY_PLAY:
+                return STORAGE_SHARED_PREFS;
             case HdmiControlManager.CEC_SETTING_NAME_TV_SEND_STANDBY_ON_SLEEP:
                 return STORAGE_SHARED_PREFS;
             case HdmiControlManager.CEC_SETTING_NAME_SET_MENU_LANGUAGE:
@@ -814,6 +826,8 @@ public class HdmiCecConfig {
             case HdmiControlManager.CEC_SETTING_NAME_SYSTEM_AUDIO_MODE_MUTING:
                 return setting.getName();
             case HdmiControlManager.CEC_SETTING_NAME_TV_WAKE_ON_ONE_TOUCH_PLAY:
+                return setting.getName();
+            case HdmiControlManager.CEC_SETTING_NAME_ONE_KEY_PLAY:
                 return setting.getName();
             case HdmiControlManager.CEC_SETTING_NAME_TV_SEND_STANDBY_ON_SLEEP:
                 return setting.getName();

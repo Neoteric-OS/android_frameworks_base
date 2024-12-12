@@ -99,4 +99,5 @@ interface IHdmiControlService {
     void setCecSettingStringValue(String name, String value);
     int getCecSettingIntValue(String name);
     void setCecSettingIntValue(String name, int value);
+    void updateMenuLanguageOnToggleOnce(boolean isMenuLanguageUpdate);
 }
