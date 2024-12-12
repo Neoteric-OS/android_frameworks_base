@@ -105,6 +105,24 @@
       "parentUuid": "5a5f0644_22159f9b",
       "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b17b1da_0ef17808",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 3155470
+      },
+      "writtenOn": "2024-12-12T12:07:16Z",
+      "side": 1,
+      "message": "I have created a new patch-set addressing your comments, it removes the prevous property and instead adds log.looper.any.main.slow and log.looper.\u003cPID\u003e.any.slow",
+      "parentUuid": "41113b2e_5502f31b",
+      "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
