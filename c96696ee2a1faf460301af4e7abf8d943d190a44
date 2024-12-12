@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "869463f1_848510c5",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-12-12T18:37:41Z",
+      "side": 1,
+      "message": "Is `\"main\"` actually the name of the main looper, or is there another string name used?\nIf there is another name, consider using it here instead of `\"main\"`. If not, please disregard my comment.",
+      "range": {
+        "startLine": 327,
+        "startChar": 75,
+        "endLine": 327,
+        "endChar": 79
+      },
+      "revId": "c96696ee2a1faf460301af4e7abf8d943d190a44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1adb5a7_61e781a2",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-12-12T18:37:41Z",
+      "side": 1,
+      "message": "```suggestion\n        // Allow overrding the threshold for all threads within a process with a system prop.\n```",
+      "revId": "c96696ee2a1faf460301af4e7abf8d943d190a44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

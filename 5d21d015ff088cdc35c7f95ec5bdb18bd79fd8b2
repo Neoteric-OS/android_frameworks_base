@@ -123,6 +123,24 @@
       "parentUuid": "41113b2e_5502f31b",
       "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26d9a135_356dc836",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-12-12T18:37:41Z",
+      "side": 1,
+      "message": "Looks great!\nI voted +2.\nLet\u0027s hear from Makoto.",
+      "parentUuid": "8b17b1da_0ef17808",
+      "revId": "5d21d015ff088cdc35c7f95ec5bdb18bd79fd8b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
