@@ -135,6 +135,30 @@
       },
       "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbcd3558_a3dfefa3",
+        "filename": "core/java/android/permission/PermissionManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-12-13T02:21:31Z",
+      "side": 1,
+      "message": "s/our/that",
+      "parentUuid": "7f90d36b_d53f7601",
+      "range": {
+        "startLine": 1719,
+        "startChar": 8,
+        "endLine": 1722,
+        "endChar": 9
+      },
+      "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
