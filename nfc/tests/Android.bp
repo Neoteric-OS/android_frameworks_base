@@ -49,7 +49,11 @@ android_test {
         "libdexmakerjvmtiagent",
         "libstaticjvmtiagent",
     ],
-    srcs: ["src/**/*.java"],
+    srcs: [
+        "src/**/*.java",
+        ":framework-nfc-updatable-sources",
+        ":framework-nfc-non-updatable-sources",
+    ],
     platform_apis: true,
     certificate: "platform",
     test_suites: [
