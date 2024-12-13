@@ -24,6 +24,7 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.nfc.Flags;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,10 +32,13 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.os.Trace;
 import android.util.Log;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * <p>HostApduService is a convenience {@link Service} class that can be
@@ -200,6 +204,7 @@ public abstract class HostApduService extends Service {
     public static final int DEACTIVATION_DESELECTED = 1;
 
     static final String TAG = "ApduService";
+    private static final String EVENT_HCE_RESPONSE_APDU = "hce_response_apdu";
 
     /**
      * MSG_COMMAND_APDU is sent by NfcService when
@@ -239,6 +244,15 @@ public abstract class HostApduService extends Service {
      */
     public static final int MSG_POLLING_LOOP = 4;
 
+    /**
+     * @hide
+     */
+    public static final int MSG_COMMAND_APDU_ACK = 5;
+
+    /**
+     * @hide
+     */
+    public static final int MSG_RESPONSE_APDU_ACK = 6;
 
     /**
      * @hide
@@ -261,6 +275,8 @@ public abstract class HostApduService extends Service {
 
     final Messenger mMessenger = new Messenger(new MsgHandler());
 
+    private Random mCookieRandom = new Random(System.currentTimeMillis());
+
     final class MsgHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -274,14 +290,35 @@ public abstract class HostApduService extends Service {
 
                 byte[] apdu = dataBundle.getByteArray(KEY_DATA);
                 if (apdu != null) {
-                        HostApduService has = HostApduService.this;
+                    HostApduService has = HostApduService.this;
                     byte[] responseApdu = processCommandApdu(apdu, null);
+
+                    if (Flags.nfcHceLatencyEvents()) {
+                        try {
+                            Message ackMsg = Message.obtain(null, MSG_COMMAND_APDU_ACK);
+                            ackMsg.arg1 = msg.arg1;
+                            ackMsg.replyTo = mMessenger;
+                            mNfcService.send(ackMsg);
+                        } catch (RemoteException e) {
+                            Log.e(TAG, "Failed to acknowledge MSG_COMMAND_APDU", e);
+                        }
+                    }
+
                     if (responseApdu != null) {
                         if (mNfcService == null) {
                             Log.e(TAG, "Response not sent; service was deactivated.");
                             return;
                         }
+
                         Message responseMsg = Message.obtain(null, MSG_RESPONSE_APDU);
+
+                        int ackCookie = 0;
+                        if (Flags.nfcHceLatencyEvents()) {
+                            ackCookie = generateApduAckCookie();
+                            msg.arg1 = ackCookie;
+                            Trace.beginAsyncSection(EVENT_HCE_RESPONSE_APDU, ackCookie);
+                        }
+
                         Bundle responseBundle = new Bundle();
                         responseBundle.putByteArray(KEY_DATA, responseApdu);
                         responseMsg.setData(responseBundle);
@@ -289,6 +326,9 @@ public abstract class HostApduService extends Service {
                         try {
                             mNfcService.send(responseMsg);
                         } catch (RemoteException e) {
+                            if (Flags.nfcHceLatencyEvents()) {
+                                Trace.endAsyncSection(EVENT_HCE_RESPONSE_APDU, ackCookie);
+                            }
                             Log.e(TAG, "Response not sent; RemoteException calling into " +
                                     "NfcService.");
                         }
@@ -302,12 +342,17 @@ public abstract class HostApduService extends Service {
                     Log.e(TAG, "Response not sent; service was deactivated.");
                     return;
                 }
+
                 try {
                     msg.replyTo = mMessenger;
                     mNfcService.send(msg);
                 } catch (RemoteException e) {
                     Log.e(TAG, "RemoteException calling into NfcService.");
                 }
+                break;
+            case MSG_RESPONSE_APDU_ACK:
+                Trace.endAsyncSection(EVENT_HCE_RESPONSE_APDU, msg.arg1);
+                Log.e(TAG, "Received response apdu ack for " + msg.arg1);
                 break;
             case MSG_DEACTIVATED:
                 // Make sure we won't call into NfcService again
@@ -356,11 +401,26 @@ public abstract class HostApduService extends Service {
         Bundle dataBundle = new Bundle();
         dataBundle.putByteArray(KEY_DATA, responseApdu);
         responseMsg.setData(dataBundle);
+
+        int ackCookie = 0;
+        if (Flags.nfcHceLatencyEvents()) {
+            ackCookie = generateApduAckCookie();
+            responseMsg.arg1 = ackCookie;
+
+            Trace.beginAsyncSection(EVENT_HCE_RESPONSE_APDU, ackCookie);
+        }
+
         try {
             mMessenger.send(responseMsg);
         } catch (RemoteException e) {
             Log.e("TAG", "Local messenger has died.");
         }
+    }
+
+    private int generateApduAckCookie() {
+        byte[] token = new byte[Integer.BYTES];
+        mCookieRandom.nextBytes(token);
+        return ByteBuffer.wrap(token).getInt();
     }
 
     /**
