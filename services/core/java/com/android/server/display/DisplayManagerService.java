@@ -3165,7 +3165,7 @@ public final class DisplayManagerService extends SystemService {
         }
         int procState = mActivityManagerInternal.getUidProcessState(uid);
         int importance = ActivityManager.RunningAppProcessInfo.procStateToImportance(procState);
-        return importance >= IMPORTANCE_CACHED;
+        return importance > IMPORTANCE_CACHED;
     }
 
     // Runs on Handler thread.
