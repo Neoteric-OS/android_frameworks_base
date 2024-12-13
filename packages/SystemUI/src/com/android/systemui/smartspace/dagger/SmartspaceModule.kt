@@ -24,7 +24,17 @@ import dagger.BindsOptionalOf
 import dagger.Module
 import javax.inject.Named
 
+<<<<<<< PATCH SET (623d6b Don't bind nullables into non-nullable values.)
+@Module(
+    subcomponents = [SmartspaceViewComponent::class],
+    includes = [SmartspaceRepositoryModule::class],
+)
+||||||| BASE
+@Module(subcomponents = [SmartspaceViewComponent::class],
+    includes = [SmartspaceRepositoryModule::class])
+=======
 @Module(subcomponents = [SmartspaceViewComponent::class])
+>>>>>>> BASE      (b767ec Merge "profcollect: Move periodic trace worker to the system)
 abstract class SmartspaceModule {
     @Module
     companion object {
@@ -65,8 +75,8 @@ abstract class SmartspaceModule {
     @Binds
     @Named(LOCKSCREEN_SMARTSPACE_PRECONDITION)
     abstract fun bindSmartspacePrecondition(
-        lockscreenPrecondition: LockscreenPrecondition?
-    ): SmartspacePrecondition?
+        lockscreenPrecondition: LockscreenPrecondition
+    ): SmartspacePrecondition
 
     @BindsOptionalOf
     @Named(GLANCEABLE_HUB_SMARTSPACE_DATA_PLUGIN)
