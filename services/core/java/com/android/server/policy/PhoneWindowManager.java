@@ -685,6 +685,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     /* The number of steps between min and max brightness */
     private static final int BRIGHTNESS_STEPS = 10;
 
+    // Whether combo keys are enabled
+    boolean mEnableComboKey;
+
     SettingsObserver mSettingsObserver;
     ModifierShortcutManager mModifierShortcutManager;
     /** Currently fully consumed key codes per device */
@@ -940,6 +943,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NAV_BAR_KIDS_MODE), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.ENABLE_COMBO_KEY), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -3073,6 +3079,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 mKidsModeEnabled = kidsModeEnabled;
                 updateKidsModeSettings = true;
             }
+
+            mEnableComboKey = Settings.Global.getInt(resolver,
+                    Settings.Global.ENABLE_COMBO_KEY, 1) != 0;
         }
         if (updateKidsModeSettings) {
             updateKidsModeSettings(kidsModeEnabled);
@@ -3530,7 +3539,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 return true;
             case KeyEvent.KEYCODE_A:
-                if (firstDown && event.isMetaPressed()) {
+                if (firstDown && event.isMetaPressed()  && mEnableComboKey) {
                     launchAssistAction(Intent.EXTRA_ASSIST_INPUT_HINT_KEYBOARD,
                             deviceId, event.getEventTime(),
                             AssistUtils.INVOCATION_TYPE_UNKNOWN);
@@ -3541,12 +3550,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case KeyEvent.KEYCODE_H:
             case KeyEvent.KEYCODE_ENTER:
-                if (event.isMetaPressed()) {
+                if (event.isMetaPressed()  && mEnableComboKey) {
                     return handleHomeShortcuts(focusedToken, event);
                 }
                 break;
             case KeyEvent.KEYCODE_I:
-                if (firstDown && event.isMetaPressed()) {
+                if (firstDown && event.isMetaPressed()  && mEnableComboKey) {
                     showSystemSettings();
                     notifyKeyGestureCompleted(event,
                             KeyGestureEvent.KEY_GESTURE_TYPE_LAUNCH_SYSTEM_SETTINGS);
@@ -3554,7 +3563,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case KeyEvent.KEYCODE_L:
-                if (firstDown && event.isMetaPressed()) {
+                if (firstDown && event.isMetaPressed()  && mEnableComboKey) {
                     lockNow(null /* options */);
                     notifyKeyGestureCompleted(event,
                             KeyGestureEvent.KEY_GESTURE_TYPE_LOCK_SCREEN);
@@ -3562,7 +3571,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case KeyEvent.KEYCODE_N:
-                if (firstDown && event.isMetaPressed()) {
+                if (firstDown && event.isMetaPressed()  && mEnableComboKey) {
                     if (event.isCtrlPressed()) {
                         sendSystemKeyToStatusBarAsync(event);
                         notifyKeyGestureCompleted(event,
@@ -3576,7 +3585,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case KeyEvent.KEYCODE_S:
-                if (firstDown && event.isMetaPressed() && event.isCtrlPressed()) {
+                if (firstDown && event.isMetaPressed() && event.isCtrlPressed()  && mEnableComboKey) {
                     interceptScreenshotChord(SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
                     notifyKeyGestureCompleted(event,
                             KeyGestureEvent.KEY_GESTURE_TYPE_TAKE_SCREENSHOT);
@@ -3586,7 +3595,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KeyEvent.KEYCODE_DEL:
                 if (newBugreportKeyboardShortcut()) {
                     if (mEnableBugReportKeyboardShortcut && firstDown
-                            && event.isMetaPressed() && event.isCtrlPressed()) {
+                            && event.isMetaPressed() && event.isCtrlPressed()  && mEnableComboKey) {
                         try {
                             mActivityManagerService.requestInteractiveBugReport();
                         } catch (RemoteException e) {
@@ -3599,7 +3608,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 // fall through
             case KeyEvent.KEYCODE_ESCAPE:
-                if (firstDown && event.isMetaPressed()) {
+                if (firstDown && event.isMetaPressed()  && mEnableComboKey) {
                     notifyKeyGestureCompleted(event,
                             KeyGestureEvent.KEY_GESTURE_TYPE_BACK);
                     injectBackGesture(event.getDownTime());
@@ -3607,7 +3616,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
-                if (firstDown && event.isMetaPressed() && event.isCtrlPressed()) {
+                if (firstDown && event.isMetaPressed() && event.isCtrlPressed()  && mEnableComboKey) {
                     StatusBarManagerInternal statusbar = getStatusBarManagerInternal();
                     if (statusbar != null) {
                         statusbar.moveFocusedTaskToFullscreen(getTargetDisplayIdForKeyEvent(event));
@@ -3618,7 +3627,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                if (firstDown && event.isMetaPressed() && event.isCtrlPressed()) {
+                if (firstDown && event.isMetaPressed() && event.isCtrlPressed() && mEnableComboKey) {
                     StatusBarManagerInternal statusbar = getStatusBarManagerInternal();
                     if (statusbar != null) {
                         statusbar.moveFocusedTaskToDesktop(getTargetDisplayIdForKeyEvent(event));
@@ -3629,7 +3638,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                if (firstDown && event.isMetaPressed()) {
+                if (firstDown && event.isMetaPressed() && mEnableComboKey) {
                     if (event.isCtrlPressed()) {
                         moveFocusedTaskToStageSplit(getTargetDisplayIdForKeyEvent(event),
                                 true /* leftOrTop */);
@@ -3648,7 +3657,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                if (firstDown && event.isMetaPressed()) {
+                if (firstDown && event.isMetaPressed() && mEnableComboKey) {
                     if (event.isCtrlPressed()) {
                         moveFocusedTaskToStageSplit(getTargetDisplayIdForKeyEvent(event),
                                 false /* leftOrTop */);
@@ -3664,7 +3673,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 break;
             case KeyEvent.KEYCODE_SLASH:
-                if (firstDown && event.isMetaPressed() && !keyguardOn) {
+                if (firstDown && event.isMetaPressed() && !keyguardOn && mEnableComboKey) {
                     toggleKeyboardShortcutsMenu(event.getDeviceId());
                     notifyKeyGestureCompleted(event,
                             KeyGestureEvent.KEY_GESTURE_TYPE_OPEN_SHORTCUT_HELPER);
@@ -3734,12 +3743,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 break;
             case KeyEvent.KEYCODE_TAB:
                 if (firstDown && !keyguardOn && isUserSetupComplete()) {
-                    if (event.isMetaPressed()) {
+                    if (event.isMetaPressed() && mEnableComboKey) {
                         showRecentApps(false);
                         notifyKeyGestureCompleted(event,
                                 KeyGestureEvent.KEY_GESTURE_TYPE_RECENT_APPS);
                         return true;
-                    } else if (mRecentAppsHeldModifiers == 0) {
+                    } else if (mRecentAppsHeldModifiers == 0 && mEnableComboKey) {
                         final int shiftlessModifiers =
                                 event.getModifiers() & ~KeyEvent.META_SHIFT_MASK;
                         if (KeyEvent.metaStateHasModifiers(
@@ -3797,7 +3806,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KeyEvent.KEYCODE_META_LEFT:
             case KeyEvent.KEYCODE_META_RIGHT:
                 if (down) {
-                    if (event.isAltPressed()) {
+                    if (event.isAltPressed() && mEnableComboKey) {
                         mPendingCapsLockToggle = true;
                         mPendingMetaAction = false;
                     } else {
@@ -3827,7 +3836,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case KeyEvent.KEYCODE_ALT_LEFT:
             case KeyEvent.KEYCODE_ALT_RIGHT:
                 if (down) {
-                    if (event.isMetaPressed()) {
+                    if (event.isMetaPressed() && mEnableComboKey) {
                         mPendingCapsLockToggle = true;
                         mPendingMetaAction = false;
                     } else {
