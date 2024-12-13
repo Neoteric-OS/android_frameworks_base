@@ -15,6 +15,11 @@ filegroup {
         "java/**/*.java",
         "java/**/*.aidl",
     ],
+    visibility: [
+        "//__subpackages__",
+        "//frameworks/base:__subpackages__",
+        "//packages/modules/Nfc:__subpackages__",
+    ],
 }
 
 java_sdk_library {
