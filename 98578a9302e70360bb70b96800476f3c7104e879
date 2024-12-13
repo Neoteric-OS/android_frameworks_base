@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16042060_928379fb",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-12-13T17:27:21Z",
+      "side": 1,
+      "message": "I believe this check is cheaper than reading a sysprop (a thread local read + a static value read with synchronization), so this should guard the sysprop read.\n\n(I think this AI suggestion is correct.)",
+      "range": {
+        "startLine": 328,
+        "startChar": 35,
+        "endLine": 328,
+        "endChar": 64
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ed6cc20d_6dfbbe80",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/os/Looper.java",
+              "range": {
+                "startLine": 327,
+                "startChar": 0,
+                "endLine": 330,
+                "endChar": 0
+              },
+              "replacement": "        if (myLooper() \u003d\u003d getMainLooper()) {\n            final int globalOverride \u003d SystemProperties.getInt(\"log.looper.any.main.slow\", -1);\n            if (globalOverride \u003e\u003d 0) {\n                return globalOverride;\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "98578a9302e70360bb70b96800476f3c7104e879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
