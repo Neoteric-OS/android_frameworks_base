@@ -111,6 +111,30 @@
       },
       "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f90d36b_d53f7601",
+        "filename": "core/java/android/permission/PermissionManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-12-13T02:20:39Z",
+      "side": 1,
+      "message": "I don\u0027t think the my PID check makes sense here because our will make every app to think it always have every permission. The similar check made sense in system server because system server always has all permissions, but this code runs in app process as well.",
+      "parentUuid": "25f7b470_c2f5b99a",
+      "range": {
+        "startLine": 1719,
+        "startChar": 8,
+        "endLine": 1722,
+        "endChar": 9
+      },
+      "revId": "17252888bfa3bc939c6044056788e0911e7cf310",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
