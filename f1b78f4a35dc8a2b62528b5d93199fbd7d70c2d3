@@ -16,6 +16,29 @@
       "message": "cherry picekd from http://ag/28052663",
       "revId": "f1b78f4a35dc8a2b62528b5d93199fbd7d70c2d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57bd0bd2_211e71d8",
+        "filename": "core/java/android/os/flags.aconfig",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2024-12-13T18:34:25Z",
+      "side": 1,
+      "message": "api_* here,  *_api on the flags above.\nMaybe covert to that notation, for consistency",
+      "range": {
+        "startLine": 239,
+        "startChar": 10,
+        "endLine": 239,
+        "endChar": 35
+      },
+      "revId": "f1b78f4a35dc8a2b62528b5d93199fbd7d70c2d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
