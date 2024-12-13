@@ -39,6 +39,24 @@
       "message": "```suggestion\n        // Allow overrding the threshold for all threads within a process with a system prop.\n```",
       "revId": "c96696ee2a1faf460301af4e7abf8d943d190a44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0b7b235_1817e668",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2024-12-13T07:23:59Z",
+      "side": 1,
+      "message": "Fix applied (plus an \"i\" in override).",
+      "parentUuid": "d1adb5a7_61e781a2",
+      "revId": "c96696ee2a1faf460301af4e7abf8d943d190a44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
