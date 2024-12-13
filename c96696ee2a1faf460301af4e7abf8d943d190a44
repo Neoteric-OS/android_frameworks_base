@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ca3849f_7413d5e1",
+        "filename": "core/java/android/os/Looper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2024-12-13T17:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "749de07a_721311a0",
+      "range": {
+        "startLine": 327,
+        "startChar": 75,
+        "endLine": 327,
+        "endChar": 79
+      },
+      "revId": "c96696ee2a1faf460301af4e7abf8d943d190a44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1adb5a7_61e781a2",
