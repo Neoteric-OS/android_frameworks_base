@@ -2581,6 +2581,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
             loadSetting(stmt, Settings.Global.LID_BEHAVIOR, defaultLidBehavior);
 
+            loadIntegerSetting(stmt, Global.ENABLE_COMBO_KEY,
+                    R.integer.def_enable_combo_key);
+            
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
              * secure, and system settings are no longer stored in a database

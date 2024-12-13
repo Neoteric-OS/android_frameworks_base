@@ -17903,6 +17903,15 @@ public final class Settings {
         public static final String ONE_HANDED_KEYGUARD_SIDE = "one_handed_keyguard_side";
 
         /**
+         * Control whether to enable combo key.
+         * <p>The valid values for this key are: 0 (disabled) or 1 (enabled).
+         *
+         * @hide
+         */
+        @Readable
+        public static final String ENABLE_COMBO_KEY= "enable_combo_key";
+
+        /**
          * Global settings that shouldn't be persisted.
          *
          * @hide
