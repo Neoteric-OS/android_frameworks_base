@@ -37437,6 +37437,7 @@ package android.provider {
     field public static final String DEVELOPMENT_SETTINGS_ENABLED = "development_settings_enabled";
     field public static final String DEVICE_NAME = "device_name";
     field public static final String DEVICE_PROVISIONED = "device_provisioned";
+    field public static final String ENABLE_COMBO_KEY = "enable_combo_key";
     field public static final String HTTP_PROXY = "http_proxy";
     field @Deprecated public static final String INSTALL_NON_MARKET_APPS = "install_non_market_apps";
     field public static final String MODE_RINGER = "mode_ringer";
