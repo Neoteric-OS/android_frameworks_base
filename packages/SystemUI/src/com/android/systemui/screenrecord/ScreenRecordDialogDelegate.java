@@ -37,8 +37,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -81,13 +81,13 @@ public class ScreenRecordDialogDelegate implements SystemUIDialog.Delegate {
     private final UserContextProvider mUserContextProvider;
     private final RecordingController mController;
     private final Runnable mOnStartRecordingClicked;
-    private Switch mTapsSwitch;
-    private Switch mStopDotSwitch;
-    private Switch mLowQualitySwitch;
-    private Switch mLongerSwitch;
-    private Switch mHEVCSwitch;
-    private Switch mAudioSwitch;
-    private Switch mSkipSwitch;
+    private CompoundButton mTapsSwitch;
+    private CompoundButton mStopDotSwitch;
+    private CompoundButton mLowQualitySwitch;
+    private CompoundButton mLongerSwitch;
+    private CompoundButton mHEVCSwitch;
+    private CompoundButton mAudioSwitch;
+    private CompoundButton mSkipSwitch;
     private Spinner mOptions;
 
     @AssistedFactory

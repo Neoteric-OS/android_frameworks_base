@@ -32,8 +32,8 @@ import android.view.View.VISIBLE
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.CompoundButton
 import android.widget.Spinner
-import android.widget.Switch
 import androidx.annotation.LayoutRes
 import androidx.annotation.StyleRes
 import com.android.systemui.Prefs
@@ -113,14 +113,14 @@ class ScreenRecordPermissionDialogDelegate(
         ): ScreenRecordPermissionDialogDelegate
     }
 
-    private lateinit var tapsSwitch: Switch
+    private lateinit var tapsSwitch: CompoundButton
     private lateinit var tapsView: View
-    private lateinit var audioSwitch: Switch
-    private lateinit var stopDotSwitch: Switch
-    private lateinit var lowQualitySwitch: Switch
-    private lateinit var longerDurationSwitch: Switch
-    private lateinit var skipTimeSwitch: Switch
-    private lateinit var hevcSwitch: Switch
+    private lateinit var audioSwitch: CompoundButton
+    private lateinit var stopDotSwitch: CompoundButton
+    private lateinit var lowQualitySwitch: CompoundButton
+    private lateinit var longerDurationSwitch: CompoundButton
+    private lateinit var skipTimeSwitch: CompoundButton
+    private lateinit var hevcSwitch: CompoundButton
     private lateinit var options: Spinner
 
     override fun createDialog(): SystemUIDialog {
