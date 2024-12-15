@@ -625,7 +625,8 @@ class TransitionController {
         // Don't build window state into finish transaction in case another window is added or
         // removed during transition playing.
         if (mBuildingFinishLayers) {
-            return wc.asWindowState() == null;
+            return wc.asWindowState() == null && !(isPlaying() && !isCollecting(wc)
+                && wc.asTask() != null);
         }
         // Always allow WindowState to assign layers since it won't affect transition.
         return wc.asWindowState() != null || (!isPlaying()
