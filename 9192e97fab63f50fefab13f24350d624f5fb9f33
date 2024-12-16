@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7124b2c9_e25b3825",
+        "filename": "services/core/java/com/android/server/audio/FadeOutManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2024-12-16T23:02:31Z",
+      "side": 1,
+      "message": "looks like indeed it can be null from FadeManagerConfiguration. Can you please also annotate FadeManagerConfiguration#getVolumeShaperConfigFromWrapper as @Nullable? Thanks.",
+      "range": {
+        "startLine": 202,
+        "startChar": 33,
+        "endLine": 202,
+        "endChar": 37
+      },
+      "revId": "9192e97fab63f50fefab13f24350d624f5fb9f33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
