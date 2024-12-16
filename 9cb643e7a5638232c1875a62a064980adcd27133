@@ -33,6 +33,23 @@
       "message": "The fix request is on Android 12. On the main branch(Android 14 and beyond), we call the handleMessage on the client\u0027s executor, so IIUC it shouldnt happen there",
       "revId": "9cb643e7a5638232c1875a62a064980adcd27133",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e221321e_20609fc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953015
+      },
+      "writtenOn": "2024-12-16T17:44:15Z",
+      "side": 1,
+      "message": "santoscordon@google.com - could you please provide you approval as well.",
+      "revId": "9cb643e7a5638232c1875a62a064980adcd27133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
