@@ -4094,6 +4094,8 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                     mPendingBroadcasts.remove(userId, packageName);
                 } else {
                     mPendingBroadcasts.addComponent(userId, packageName, componentName);
+                    Trace.instant(Trace.TRACE_TAG_PACKAGE_MANAGER, "setEnabledSetting broadcast: "
+                                   + componentName + ": " + setting.getEnabledState());
                     scheduleBroadcastMessage = true;
                 }
             }
