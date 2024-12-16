@@ -92,6 +92,12 @@ class DesktopTasksLimiter (
             }
             taskToMinimize.transitionInfo = info
             activeTransitionTokensAndTasks[transition] = taskToMinimize
+
+            // Save current bounds before minimizing in case we need to restore to it later.
+            val boundsBeforeMinimize = info.changes.find { change ->
+                change.taskInfo?.taskId == taskToMinimize.taskId }?.startAbsBounds
+            taskRepository.saveBoundsBeforeMinimize(taskToMinimize.taskId, boundsBeforeMinimize)
+
             this@DesktopTasksLimiter.minimizeTask(
                     taskToMinimize.displayId, taskToMinimize.taskId)
         }
@@ -133,7 +139,6 @@ class DesktopTasksLimiter (
         }
 
         override fun onTransitionFinished(transition: IBinder, aborted: Boolean) {
-            logV("transition %s finished", transition)
             if (activeTransitionTokensAndTasks.remove(transition) != null) {
                 if (aborted) {
                     interactionJankMonitor.cancel(CUJ_DESKTOP_MODE_MINIMIZE_WINDOW)
@@ -250,10 +255,6 @@ class DesktopTasksLimiter (
 
     private fun logV(msg: String, vararg arguments: Any?) {
         ProtoLog.v(WM_SHELL_DESKTOP_MODE, "%s: $msg", TAG, *arguments)
-    }
-
-    private fun logE(msg: String, vararg arguments: Any?) {
-        ProtoLog.e(WM_SHELL_DESKTOP_MODE, "%s: $msg", TAG, *arguments)
     }
 
     private companion object {

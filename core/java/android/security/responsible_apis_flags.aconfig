@@ -67,6 +67,7 @@ flag {
     name: "aapm_api"
     namespace: "responsible_apis"
     description: "Android Advanced Protection Mode Service and Manager"
+    is_exported: true
     bug: "352420507"
     is_fixed_read_only: true
 }
@@ -87,10 +88,25 @@ flag {
 }
 
 flag {
+    name: "prevent_intent_redirect_show_toast"
+    namespace: "responsible_apis"
+    description: "Prevent intent redirect attacks by showing a toast when activity start is blocked"
+    bug: "361143368"
+    is_fixed_read_only: true
+}
+
+flag {
     name: "enable_intent_matching_flags"
     is_exported: true
     namespace: "permissions"
     is_fixed_read_only: true
     description: "Applies intentMatchingFlags while matching intents to application components"
     bug: "364354494"
+}
+
+flag {
+    name: "aapm_feature_disable_install_unknown_sources"
+    namespace: "responsible_apis"
+    description: "Android Advanced Protection Mode Feature: Disable Install Unknown Sources"
+    bug: "369361373"
 }

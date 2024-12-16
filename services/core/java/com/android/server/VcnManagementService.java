@@ -524,6 +524,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
+            if (action == null) {
+                return;
+            }
 
             switch (action) {
                 case Intent.ACTION_PACKAGE_ADDED: // Fallthrough
@@ -878,6 +881,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     private void garbageCollectAndWriteVcnConfigsLocked() {
         final SubscriptionManager subMgr = mContext.getSystemService(SubscriptionManager.class);
+        final Set<ParcelUuid> subGroups = mLastSnapshot.getAllSubscriptionGroups();
 
         boolean shouldWrite = false;
 
@@ -885,9 +889,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         while (configsIterator.hasNext()) {
             final ParcelUuid subGrp = configsIterator.next();
 
-            final List<SubscriptionInfo> subscriptions = subMgr.getSubscriptionsInGroup(subGrp);
-            if (subscriptions == null || subscriptions.isEmpty()) {
+            if (!subGroups.contains(subGrp)) {
                 // Trim subGrps with no more subscriptions; must have moved to another subGrp
+                logDbg("Garbage collect VcnConfig for group=" + subGrp);
                 configsIterator.remove();
                 shouldWrite = true;
             }
@@ -1094,13 +1098,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             synchronized (mLock) {
                 final Vcn vcn = mVcns.get(subGrp);
                 final VcnConfig vcnConfig = mConfigs.get(subGrp);
-                if (vcn != null) {
-                    if (vcnConfig == null) {
-                        // TODO: b/284381334 Investigate for the root cause of this issue
-                        // and handle it properly
-                        logWtf("Vcn instance exists but VcnConfig does not for " + subGrp);
-                    }
-
+                if (vcn != null && vcnConfig != null) {
                     if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
                         isVcnManagedNetwork = true;
                     }
@@ -1120,6 +1118,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                             }
                         }
                     }
+                } else if (vcn != null && vcnConfig == null) {
+                    logWtf("Vcn instance exists but VcnConfig does not for " + subGrp);
                 }
             }
 

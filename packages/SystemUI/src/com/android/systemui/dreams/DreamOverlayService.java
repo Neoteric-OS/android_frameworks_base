@@ -47,6 +47,7 @@ import androidx.lifecycle.ServiceLifecycleDispatcher;
 import androidx.lifecycle.ViewModelStore;
 
 import com.android.app.viewcapture.ViewCaptureAwareWindowManager;
+import com.android.compose.animation.scene.SceneKey;
 import com.android.dream.lowlight.dagger.LowLightDreamModule;
 import com.android.internal.logging.UiEvent;
 import com.android.internal.logging.UiEventLogger;
@@ -65,7 +66,9 @@ import com.android.systemui.dreams.dagger.DreamOverlayComponent;
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor;
 import com.android.systemui.navigationbar.gestural.domain.GestureInteractor;
 import com.android.systemui.navigationbar.gestural.domain.TaskMatcher;
+import com.android.systemui.scene.domain.interactor.SceneInteractor;
 import com.android.systemui.scene.shared.flag.SceneContainerFlag;
+import com.android.systemui.scene.shared.model.Scenes;
 import com.android.systemui.shade.ShadeExpansionChangeEvent;
 import com.android.systemui.touch.TouchInsetManager;
 import com.android.systemui.util.concurrency.DelayableExecutor;
@@ -163,6 +166,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
 
     private TouchMonitor mTouchMonitor;
 
+    private final SceneInteractor mSceneInteractor;
     private final CommunalInteractor mCommunalInteractor;
 
     private boolean mCommunalAvailable;
@@ -209,16 +213,14 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
     private final Consumer<Boolean> mBouncerShowingConsumer = new Consumer<>() {
         @Override
         public void accept(Boolean bouncerShowing) {
-            mExecutor.execute(() -> {
-                if (mBouncerShowing == bouncerShowing) {
-                    return;
-                }
+            mExecutor.execute(() -> updateBouncerShowingLocked(bouncerShowing));
+        }
+    };
 
-                mBouncerShowing = bouncerShowing;
-
-                updateLifecycleStateLocked();
-                updateGestureBlockingLocked();
-            });
+    private final Consumer<SceneKey> mCurrentSceneConsumer = new Consumer<>() {
+        @Override
+        public void accept(SceneKey currentScene) {
+            mExecutor.execute(() -> updateBouncerShowingLocked(currentScene == Scenes.Bouncer));
         }
     };
 
@@ -379,6 +381,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
             KeyguardUpdateMonitor keyguardUpdateMonitor,
             ScrimManager scrimManager,
             CommunalInteractor communalInteractor,
+            SceneInteractor sceneInteractor,
             SystemDialogsCloser systemDialogsCloser,
             UiEventLogger uiEventLogger,
             @Named(DREAM_TOUCH_INSET_MANAGER) TouchInsetManager touchInsetManager,
@@ -406,6 +409,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         mDreamOverlayCallbackController = dreamOverlayCallbackController;
         mWindowTitle = windowTitle;
         mCommunalInteractor = communalInteractor;
+        mSceneInteractor = sceneInteractor;
         mSystemDialogsCloser = systemDialogsCloser;
         mGestureInteractor = gestureInteractor;
         mDreamOverlayComponentFactory = dreamOverlayComponentFactory;
@@ -420,8 +424,13 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
                 mIsCommunalAvailableCallback));
         mFlows.add(collectFlow(getLifecycle(), communalInteractor.isCommunalVisible(),
                 mCommunalVisibleConsumer));
-        mFlows.add(collectFlow(getLifecycle(), keyguardInteractor.primaryBouncerShowing,
-                mBouncerShowingConsumer));
+        if (SceneContainerFlag.isEnabled()) {
+            mFlows.add(collectFlow(getLifecycle(), sceneInteractor.getCurrentScene(),
+                    mCurrentSceneConsumer));
+        } else {
+            mFlows.add(collectFlow(getLifecycle(), keyguardInteractor.primaryBouncerShowing,
+                    mBouncerShowingConsumer));
+        }
     }
 
     @NonNull
@@ -503,10 +512,10 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         mDreamOverlayContainerViewController =
                 dreamOverlayComponent.getDreamOverlayContainerViewController();
 
-        if (!SceneContainerFlag.isEnabled()) {
-            mTouchMonitor = ambientTouchComponent.getTouchMonitor();
-            mTouchMonitor.init();
-        }
+        // Touch monitor are also used with SceneContainer. See individual touch handlers for
+        // handling of SceneContainer.
+        mTouchMonitor = ambientTouchComponent.getTouchMonitor();
+        mTouchMonitor.init();
 
         mStateController.setShouldShowComplications(shouldShowComplications());
 
@@ -552,9 +561,15 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
     @Override
     public void onWakeRequested() {
         mUiEventLogger.log(CommunalUiEvent.DREAM_TO_COMMUNAL_HUB_DREAM_AWAKE_START);
-        mCommunalInteractor.changeScene(CommunalScenes.Communal,
-                "dream wake requested",
-                null);
+        if (SceneContainerFlag.isEnabled()) {
+            // Scene interactor can only be modified on main thread.
+            mExecutor.execute(() -> mSceneInteractor.changeScene(Scenes.Communal,
+                    "dream wake redirect to communal"));
+        } else {
+            mCommunalInteractor.changeScene(CommunalScenes.Communal,
+                    "dream wake requested",
+                    null);
+        }
     }
 
     private void updateGestureBlockingLocked() {
@@ -618,7 +633,13 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         mSystemDialogsCloser.closeSystemDialogs();
 
         // Hide glanceable hub (this is a nop if glanceable hub is not open).
-        mCommunalInteractor.changeScene(CommunalScenes.Blank, "dream come to front", null);
+        if (SceneContainerFlag.isEnabled()) {
+            // Scene interactor can only be modified on main thread.
+            mExecutor.execute(
+                    () -> mSceneInteractor.changeScene(Scenes.Dream, "closing hub to go to dream"));
+        } else {
+            mCommunalInteractor.changeScene(CommunalScenes.Blank, "dream come to front", null);
+        }
     }
 
     /**
@@ -689,5 +710,16 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         }
         Log.w(TAG, "Removing dream overlay container view parent!");
         parentView.removeView(containerView);
+    }
+
+    private void updateBouncerShowingLocked(boolean bouncerShowing) {
+        if (mBouncerShowing == bouncerShowing) {
+            return;
+        }
+
+        mBouncerShowing = bouncerShowing;
+
+        updateLifecycleStateLocked();
+        updateGestureBlockingLocked();
     }
 }

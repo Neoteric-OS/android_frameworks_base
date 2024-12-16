@@ -25,21 +25,18 @@ import static android.content.pm.PackageInstaller.UNARCHIVAL_ERROR_NO_CONNECTIVI
 import static android.content.pm.PackageInstaller.UNARCHIVAL_ERROR_USER_ACTION_NEEDED;
 import static android.content.pm.PackageInstaller.UNARCHIVAL_GENERIC_ERROR;
 import static android.content.pm.PackageInstaller.UNARCHIVAL_OK;
-import static android.content.pm.PackageInstaller.VERIFICATION_POLICY_BLOCK_FAIL_WARN;
 import static android.content.pm.PackageManager.DELETE_ARCHIVE;
 import static android.content.pm.PackageManager.INSTALL_UNARCHIVE_DRAFT;
 import static android.os.Process.INVALID_UID;
 import static android.os.Process.SYSTEM_UID;
 
 import static com.android.server.pm.PackageArchiver.isArchivingEnabled;
-import static com.android.server.pm.PackageInstallerSession.isValidVerificationPolicy;
 import static com.android.server.pm.PackageManagerService.SHELL_PACKAGE_NAME;
 
 import static org.xmlpull.v1.XmlPullParser.END_DOCUMENT;
 import static org.xmlpull.v1.XmlPullParser.START_TAG;
 
 import android.Manifest;
-import android.annotation.EnforcePermission;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
@@ -88,7 +85,6 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelableException;
-import android.os.PermissionEnforcer;
 import android.os.Process;
 import android.os.RemoteCallback;
 import android.os.RemoteCallbackList;
@@ -130,7 +126,6 @@ import com.android.server.SystemService;
 import com.android.server.SystemServiceManager;
 import com.android.server.pm.pkg.PackageStateInternal;
 import com.android.server.pm.utils.RequestThrottle;
-import com.android.server.pm.verify.pkg.VerifierController;
 
 import libcore.io.IoUtils;
 
@@ -154,7 +149,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.IntPredicate;
 import java.util.function.Supplier;
 
@@ -219,7 +213,7 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
     private final StagingManager mStagingManager;
 
     private AppOpsManager mAppOps;
-    private final VerifierController mVerifierController;
+    private final InstallDependencyHelper mInstallDependencyHelper;
 
     private final HandlerThread mInstallThread;
     private final Handler mInstallHandler;
@@ -280,13 +274,6 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
         }
     };
 
-    /**
-     * Default verification policy for incoming installation sessions.
-     * TODO(b/360129657): update the default policy.
-     */
-    private final AtomicInteger mVerificationPolicy = new AtomicInteger(
-            VERIFICATION_POLICY_BLOCK_FAIL_WARN);
-
     private static final class Lifecycle extends SystemService {
         private final PackageInstallerService mPackageInstallerService;
 
@@ -316,8 +303,6 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
 
     public PackageInstallerService(Context context, PackageManagerService pm,
             Supplier<PackageParser2> apexParserSupplier) {
-        super(PermissionEnforcer.fromContext(context));
-
         mContext = context;
         mPm = pm;
 
@@ -341,7 +326,8 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
         mGentleUpdateHelper = new GentleUpdateHelper(
                 context, mInstallThread.getLooper(), new AppStateHelper(context));
         mPackageArchiver = new PackageArchiver(mContext, mPm);
-        mVerifierController = new VerifierController(mContext, mInstallHandler);
+        mInstallDependencyHelper = new InstallDependencyHelper(mContext,
+                mPm.mInjector.getSharedLibrariesImpl());
 
         LocalServices.getService(SystemServiceManager.class).startService(
                 new Lifecycle(context, this));
@@ -539,7 +525,7 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
                             session = PackageInstallerSession.readFromXml(in, mInternalCallback,
                                     mContext, mPm, mInstallThread.getLooper(), mStagingManager,
                                     mSessionsDir, this, mSilentUpdatePolicy,
-                                    mVerifierController);
+                                    mInstallDependencyHelper);
                         } catch (Exception e) {
                             Slog.e(TAG, "Could not read session", e);
                             continue;
@@ -1057,7 +1043,7 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
                 userId, callingUid, installSource, params, createdMillis, 0L, stageDir, stageCid,
                 null, null, false, false, false, false, null, SessionInfo.INVALID_ID,
                 false, false, false, PackageManager.INSTALL_UNKNOWN, "", null,
-                mVerifierController, mVerificationPolicy.get());
+                mInstallDependencyHelper);
 
         synchronized (mSessions) {
             mSessions.put(sessionId, session);
@@ -1067,7 +1053,6 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
         mCallbacks.notifySessionCreated(session.sessionId, session.userId);
 
         mSettingsWriteRequest.schedule();
-
         if (LOGD) {
             Slog.d(TAG, "Created session id=" + sessionId + " staged=" + params.isStaged);
         }
@@ -1879,31 +1864,6 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
                 UNARCHIVAL_GENERIC_ERROR).contains(status)) {
             throw new IllegalStateException("Invalid status code passed " + status);
         }
-    }
-
-    @Override
-    @EnforcePermission(android.Manifest.permission.VERIFICATION_AGENT)
-    public @PackageInstaller.VerificationPolicy int getVerificationPolicy() {
-        getVerificationPolicy_enforcePermission();
-        return mVerificationPolicy.get();
-    }
-
-    @Override
-    @EnforcePermission(android.Manifest.permission.VERIFICATION_AGENT)
-    public boolean setVerificationPolicy(@PackageInstaller.VerificationPolicy int policy) {
-        setVerificationPolicy_enforcePermission();
-        final int callingUid = getCallingUid();
-        // Only the verifier currently bound by the system can change the policy, except for Shell
-        if (!PackageManagerServiceUtils.isRootOrShell(callingUid)) {
-            mVerifierController.assertCallerIsCurrentVerifier(callingUid);
-        }
-        if (!isValidVerificationPolicy(policy)) {
-            return false;
-        }
-        if (policy != mVerificationPolicy.get()) {
-            mVerificationPolicy.set(policy);
-        }
-        return true;
     }
 
     private static int getSessionCount(SparseArray<PackageInstallerSession> sessions,

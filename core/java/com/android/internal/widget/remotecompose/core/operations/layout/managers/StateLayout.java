@@ -15,6 +15,9 @@
  */
 package com.android.internal.widget.remotecompose.core.operations.layout.managers;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+
 import com.android.internal.widget.remotecompose.core.CoreDocument;
 import com.android.internal.widget.remotecompose.core.Operation;
 import com.android.internal.widget.remotecompose.core.Operations;
@@ -50,15 +53,15 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
     // This keep track of all the components associated with a given Id,
     // (the key being the id), and the set of components corresponds to the set of states
     // TODO: we should be able to optimize this
-    public Map<Integer, Component[]> statePaintedComponents = new HashMap<>();
+    @NonNull public Map<Integer, Component[]> statePaintedComponents = new HashMap<>();
 
     public int MAX_CACHE_ELEMENTS = 16;
-    public int[] cacheListElementsId = new int[MAX_CACHE_ELEMENTS];
+    @NonNull public int[] cacheListElementsId = new int[MAX_CACHE_ELEMENTS];
 
     public boolean inTransition = false;
 
     public StateLayout(
-            Component parent,
+            @Nullable Component parent,
             int componentId,
             int animationId,
             float x,
@@ -130,21 +133,21 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
 
     @Override
     public void computeSize(
-            PaintContext context,
+            @NonNull PaintContext context,
             float minWidth,
             float maxWidth,
             float minHeight,
             float maxHeight,
-            MeasurePass measure) {
+            @NonNull MeasurePass measure) {
         LayoutManager layout = getLayout(currentLayoutIndex);
         layout.computeSize(context, minWidth, maxWidth, minHeight, maxHeight, measure);
     }
 
     @Override
     public void internalLayoutMeasure(
-            PaintContext context,
+            @NonNull PaintContext context,
             // layoutInfo: LayoutInfo,
-            MeasurePass measure) {
+            @NonNull MeasurePass measure) {
         LayoutManager layout = getLayout(currentLayoutIndex);
         //        layout.internalLayoutMeasure(context, layoutInfo, measure)
         layout.internalLayoutMeasure(context, measure);
@@ -153,13 +156,18 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
     /** Subclasses can implement this to provide wrap sizing */
     @Override
     public void computeWrapSize(
-            PaintContext context, float maxWidth, float maxHeight, MeasurePass measure, Size size) {
+            @NonNull PaintContext context,
+            float maxWidth,
+            float maxHeight,
+            @NonNull MeasurePass measure,
+            @NonNull Size size) {
         LayoutManager layout = getLayout(currentLayoutIndex);
         layout.computeWrapSize(context, maxWidth, maxHeight, measure, size);
     }
 
     @Override
-    public void onClick(RemoteContext context, CoreDocument document, float x, float y) {
+    public void onClick(
+            @NonNull RemoteContext context, @NonNull CoreDocument document, float x, float y) {
         if (!contains(x, y)) {
             return;
         }
@@ -168,7 +176,7 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
     }
 
     @Override
-    public void layout(RemoteContext context, MeasurePass measure) {
+    public void layout(@NonNull RemoteContext context, @NonNull MeasurePass measure) {
         ComponentMeasure self = measure.get(this);
         super.selfLayout(context, measure);
 
@@ -207,12 +215,12 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
 
     @Override
     public void measure(
-            PaintContext context,
+            @NonNull PaintContext context,
             float minWidth,
             float maxWidth,
             float minHeight,
             float maxHeight,
-            MeasurePass measure) {
+            @NonNull MeasurePass measure) {
         // The general approach for this widget is to do most of the work/setup in measure.
         // layout and paint then simply use what's been setup in the measure phase.
 
@@ -350,7 +358,7 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
         }
     }
 
-    public LayoutManager getLayout(int idx) {
+    public @NonNull LayoutManager getLayout(int idx) {
         int index = 0;
         for (Component pane : mChildrenComponents) {
             if (pane instanceof LayoutComponent) {
@@ -364,19 +372,20 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
     }
 
     @Override
-    public void paint(PaintContext context) {
+    public void paint(@NonNull PaintContext context) {
         if (mIndexId != 0) {
             int newValue = context.getContext().mRemoteComposeState.getInteger(mIndexId);
             if (newValue != currentLayoutIndex) {
                 previousLayoutIndex = currentLayoutIndex;
                 currentLayoutIndex = newValue;
                 inTransition = true;
-                System.out.println("currentLayout index is $currentLayoutIndex");
+                // System.out.println("currentLayout index is $currentLayoutIndex");
                 // executeValueSetActions(getLayout(currentLayoutIndex));
                 invalidateMeasure();
             }
         }
-        System.out.println("PAINTING LAYOUT STATELAYOUT, CURRENT INDEX " + currentLayoutIndex);
+        //        System.out.println("PAINTING LAYOUT STATELAYOUT, CURRENT INDEX " +
+        // currentLayoutIndex);
         // Make sure to mark any components that are not in either the current or previous layout
         // as being GONE.
         int index = 0;
@@ -529,6 +538,7 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
     //        }
     //    }
 
+    @NonNull
     @Override
     public String toString() {
         return "STATE_LAYOUT";
@@ -539,7 +549,7 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
     //    }
 
     public static void apply(
-            WireBuffer buffer,
+            @NonNull WireBuffer buffer,
             int componentId,
             int animationId,
             int horizontalPositioning,
@@ -553,7 +563,7 @@ public class StateLayout extends LayoutManager implements ComponentStartOperatio
         buffer.writeInt(indexId);
     }
 
-    public static void read(WireBuffer buffer, List<Operation> operations) {
+    public static void read(@NonNull WireBuffer buffer, @NonNull List<Operation> operations) {
         int componentId = buffer.readInt();
         int animationId = buffer.readInt();
         buffer.readInt(); // horizontalPositioning

@@ -38,7 +38,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.transform
 
-/** A view-model to trigger haptics feedback on Quick Settings tiles */
+/** A view-model to trigger haptic feedback on Quick Settings tiles */
 @OptIn(ExperimentalCoroutinesApi::class)
 class TileHapticsViewModel
 @AssistedInject
@@ -83,9 +83,6 @@ constructor(
                     interactionState == TileInteractionState.LONG_CLICKED &&
                         animationState == TileAnimationState.ACTIVITY_LAUNCH ->
                         TileHapticsState.LONG_PRESS
-                    interactionState == TileInteractionState.LONG_CLICKED &&
-                        !tileViewModel.currentState.handlesLongClick ->
-                        TileHapticsState.FAILED_LONGPRESS
                     else -> TileHapticsState.NO_HAPTICS
                 }
             }
@@ -102,7 +99,6 @@ constructor(
                         TileHapticsState.TOGGLE_ON -> MSDLToken.SWITCH_ON
                         TileHapticsState.TOGGLE_OFF -> MSDLToken.SWITCH_OFF
                         TileHapticsState.LONG_PRESS -> MSDLToken.LONG_PRESS
-                        TileHapticsState.FAILED_LONGPRESS -> MSDLToken.FAILURE
                         TileHapticsState.NO_HAPTICS -> null
                     }
                 tokenToPlay?.let {
@@ -149,12 +145,11 @@ constructor(
             onActivityLaunchTransitionEnd = ::onActivityLaunchTransitionEnd,
         )
 
-    /** Models the state of toggle haptics to play */
+    /** Models the state of haptics to play */
     enum class TileHapticsState {
         TOGGLE_ON,
         TOGGLE_OFF,
         LONG_PRESS,
-        FAILED_LONGPRESS,
         NO_HAPTICS,
     }
 

@@ -109,6 +109,20 @@ public final class KeyGestureEvent {
     public static final int KEY_GESTURE_TYPE_CLOSE_ALL_DIALOGS = 61;
     public static final int KEY_GESTURE_TYPE_MOVE_TO_NEXT_DISPLAY = 62;
     public static final int KEY_GESTURE_TYPE_TOGGLE_TALKBACK = 63;
+    public static final int KEY_GESTURE_TYPE_TOGGLE_STICKY_KEYS = 64;
+    public static final int KEY_GESTURE_TYPE_TOGGLE_BOUNCE_KEYS = 65;
+    public static final int KEY_GESTURE_TYPE_TOGGLE_SLOW_KEYS = 66;
+    public static final int KEY_GESTURE_TYPE_TOGGLE_MOUSE_KEYS = 67;
+    public static final int KEY_GESTURE_TYPE_SNAP_LEFT_FREEFORM_WINDOW = 68;
+    public static final int KEY_GESTURE_TYPE_SNAP_RIGHT_FREEFORM_WINDOW = 69;
+    public static final int KEY_GESTURE_TYPE_MINIMIZE_FREEFORM_WINDOW = 70;
+    public static final int KEY_GESTURE_TYPE_TOGGLE_MAXIMIZE_FREEFORM_WINDOW = 71;
+    public static final int KEY_GESTURE_TYPE_MAGNIFIER_ZOOM_IN = 72;
+    public static final int KEY_GESTURE_TYPE_MAGNIFIER_ZOOM_OUT = 73;
+    public static final int KEY_GESTURE_TYPE_TOGGLE_MAGNIFICATION = 74;
+    public static final int KEY_GESTURE_TYPE_ACTIVATE_SELECT_TO_SPEAK = 75;
+    public static final int KEY_GESTURE_TYPE_MAXIMIZE_FREEFORM_WINDOW = 76;
+
 
     public static final int FLAG_CANCELLED = 1;
 
@@ -187,6 +201,19 @@ public final class KeyGestureEvent {
             KEY_GESTURE_TYPE_CLOSE_ALL_DIALOGS,
             KEY_GESTURE_TYPE_MOVE_TO_NEXT_DISPLAY,
             KEY_GESTURE_TYPE_TOGGLE_TALKBACK,
+            KEY_GESTURE_TYPE_TOGGLE_STICKY_KEYS,
+            KEY_GESTURE_TYPE_TOGGLE_BOUNCE_KEYS,
+            KEY_GESTURE_TYPE_TOGGLE_SLOW_KEYS,
+            KEY_GESTURE_TYPE_TOGGLE_MOUSE_KEYS,
+            KEY_GESTURE_TYPE_SNAP_LEFT_FREEFORM_WINDOW,
+            KEY_GESTURE_TYPE_SNAP_RIGHT_FREEFORM_WINDOW,
+            KEY_GESTURE_TYPE_MINIMIZE_FREEFORM_WINDOW,
+            KEY_GESTURE_TYPE_TOGGLE_MAXIMIZE_FREEFORM_WINDOW,
+            KEY_GESTURE_TYPE_MAGNIFIER_ZOOM_IN,
+            KEY_GESTURE_TYPE_MAGNIFIER_ZOOM_OUT,
+            KEY_GESTURE_TYPE_TOGGLE_MAGNIFICATION,
+            KEY_GESTURE_TYPE_ACTIVATE_SELECT_TO_SPEAK,
+            KEY_GESTURE_TYPE_MAXIMIZE_FREEFORM_WINDOW
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface KeyGestureType {
@@ -733,6 +760,32 @@ public final class KeyGestureEvent {
                 return "KEY_GESTURE_TYPE_CLOSE_ALL_DIALOGS";
             case KEY_GESTURE_TYPE_TOGGLE_TALKBACK:
                 return "KEY_GESTURE_TYPE_TOGGLE_TALKBACK";
+            case KEY_GESTURE_TYPE_TOGGLE_STICKY_KEYS:
+                return "KEY_GESTURE_TYPE_TOGGLE_STICKY_KEYS";
+            case KEY_GESTURE_TYPE_TOGGLE_BOUNCE_KEYS:
+                return "KEY_GESTURE_TYPE_TOGGLE_BOUNCE_KEYS";
+            case KEY_GESTURE_TYPE_TOGGLE_SLOW_KEYS:
+                return "KEY_GESTURE_TYPE_TOGGLE_SLOW_KEYS";
+            case KEY_GESTURE_TYPE_TOGGLE_MOUSE_KEYS:
+                return "KEY_GESTURE_TYPE_TOGGLE_MOUSE_KEYS";
+            case KEY_GESTURE_TYPE_SNAP_LEFT_FREEFORM_WINDOW:
+                return "KEY_GESTURE_TYPE_SNAP_LEFT_FREEFORM_WINDOW";
+            case KEY_GESTURE_TYPE_SNAP_RIGHT_FREEFORM_WINDOW:
+                return "KEY_GESTURE_TYPE_SNAP_RIGHT_FREEFORM_WINDOW";
+            case KEY_GESTURE_TYPE_MINIMIZE_FREEFORM_WINDOW:
+                return "KEY_GESTURE_TYPE_MINIMIZE_FREEFORM_WINDOW";
+            case KEY_GESTURE_TYPE_TOGGLE_MAXIMIZE_FREEFORM_WINDOW:
+                return "KEY_GESTURE_TYPE_TOGGLE_MAXIMIZE_FREEFORM_WINDOW";
+            case KEY_GESTURE_TYPE_MAGNIFIER_ZOOM_IN:
+                return "KEY_GESTURE_TYPE_MAGNIFIER_ZOOM_IN";
+            case KEY_GESTURE_TYPE_MAGNIFIER_ZOOM_OUT:
+                return "KEY_GESTURE_TYPE_MAGNIFIER_ZOOM_OUT";
+            case KEY_GESTURE_TYPE_TOGGLE_MAGNIFICATION:
+                return "KEY_GESTURE_TYPE_TOGGLE_MAGNIFICATION";
+            case KEY_GESTURE_TYPE_ACTIVATE_SELECT_TO_SPEAK:
+                return "KEY_GESTURE_TYPE_ACTIVATE_SELECT_TO_SPEAK";
+            case KEY_GESTURE_TYPE_MAXIMIZE_FREEFORM_WINDOW:
+                return "KEY_GESTURE_TYPE_MAXIMIZE_FREEFORM_WINDOW";
             default:
                 return Integer.toHexString(value);
         }

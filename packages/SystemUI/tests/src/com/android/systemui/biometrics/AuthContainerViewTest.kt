@@ -22,7 +22,6 @@ import android.content.res.Configuration
 import android.hardware.biometrics.BiometricAuthenticator
 import android.hardware.biometrics.BiometricConstants
 import android.hardware.biometrics.BiometricManager
-import android.hardware.biometrics.Flags.FLAG_CUSTOM_BIOMETRIC_PROMPT
 import android.hardware.biometrics.PromptContentViewWithMoreOptionsButton
 import android.hardware.biometrics.PromptInfo
 import android.hardware.biometrics.PromptVerticalListContentView
@@ -138,6 +137,7 @@ open class AuthContainerViewTest : SysuiTestCase() {
         PromptSelectorInteractorImpl(
             fingerprintRepository,
             displayStateInteractor,
+            credentialInteractor,
             biometricPromptRepository,
             lockPatternUtils,
         )
@@ -205,6 +205,20 @@ open class AuthContainerViewTest : SysuiTestCase() {
 
         // Simulate back invocation
         container.onBackInvoked()
+        waitForIdleSync()
+
+        assertThat(container.parent).isNull()
+        assertThat(root.isAttachedToWindow).isFalse()
+    }
+
+    @Test
+    fun testDimissOnLock() {
+        val container = initializeFingerprintContainer(addToView = true)
+        assertThat(container.parent).isNotNull()
+        val root = container.rootView
+
+        // Simulate sleep/lock invocation
+        container.onStartedGoingToSleep()
         waitForIdleSync()
 
         assertThat(container.parent).isNull()
@@ -412,7 +426,6 @@ open class AuthContainerViewTest : SysuiTestCase() {
 
     @Test
     fun testShowBiometricUI_ContentViewWithMoreOptionsButton() {
-        mSetFlagsRule.enableFlags(FLAG_CUSTOM_BIOMETRIC_PROMPT)
         var isButtonClicked = false
         val contentView =
             PromptContentViewWithMoreOptionsButton.Builder()
@@ -449,7 +462,6 @@ open class AuthContainerViewTest : SysuiTestCase() {
 
     @Test
     fun testShowCredentialUI_withVerticalListContentView() {
-        mSetFlagsRule.enableFlags(FLAG_CUSTOM_BIOMETRIC_PROMPT)
         val container =
             initializeFingerprintContainer(
                 authenticators = BiometricManager.Authenticators.DEVICE_CREDENTIAL,
@@ -470,7 +482,6 @@ open class AuthContainerViewTest : SysuiTestCase() {
 
     @Test
     fun testShowCredentialUI_withContentViewWithMoreOptionsButton() {
-        mSetFlagsRule.enableFlags(FLAG_CUSTOM_BIOMETRIC_PROMPT)
         val contentView =
             PromptContentViewWithMoreOptionsButton.Builder()
                 .setMoreOptionsButtonListener(fakeExecutor) { _, _ -> }

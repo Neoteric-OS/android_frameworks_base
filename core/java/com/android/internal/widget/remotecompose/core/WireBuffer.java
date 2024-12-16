@@ -15,13 +15,15 @@
  */
 package com.android.internal.widget.remotecompose.core;
 
+import android.annotation.NonNull;
+
 import java.util.Arrays;
 
 /** The base communication buffer capable of encoding and decoding various types */
 public class WireBuffer {
     private static final int BUFFER_SIZE = 1024 * 1024 * 1;
     int mMaxSize;
-    byte[] mBuffer;
+    @NonNull byte[] mBuffer;
     int mIndex = 0;
     int mStartingIndex = 0;
     int mSize = 0;
@@ -42,7 +44,7 @@ public class WireBuffer {
         }
     }
 
-    public byte[] getBuffer() {
+    public @NonNull byte[] getBuffer() {
         return mBuffer;
     }
 
@@ -166,14 +168,14 @@ public class WireBuffer {
         return java.lang.Double.longBitsToDouble(readLong());
     }
 
-    public byte[] readBuffer() {
+    public @NonNull byte[] readBuffer() {
         int count = readInt();
         byte[] b = Arrays.copyOfRange(mBuffer, mIndex, mIndex + count);
         mIndex += count;
         return b;
     }
 
-    public byte[] readBuffer(int maxSize) {
+    public @NonNull byte[] readBuffer(int maxSize) {
         int count = readInt();
         if (count < 0 || count > maxSize) {
             throw new RuntimeException(
@@ -184,11 +186,13 @@ public class WireBuffer {
         return b;
     }
 
+    @NonNull
     public String readUTF8() {
         byte[] stringBuffer = readBuffer();
         return new String(stringBuffer);
     }
 
+    @NonNull
     public String readUTF8(int maxSize) {
         byte[] stringBuffer = readBuffer(maxSize);
         return new String(stringBuffer);
@@ -250,7 +254,7 @@ public class WireBuffer {
         writeLong(Double.doubleToRawLongBits(value));
     }
 
-    public void writeBuffer(byte[] b) {
+    public void writeBuffer(@NonNull byte[] b) {
         resize(b.length + 4);
         writeInt(b.length);
         for (int i = 0; i < b.length; i++) {
@@ -259,7 +263,7 @@ public class WireBuffer {
         mSize += b.length;
     }
 
-    public void writeUTF8(String content) {
+    public void writeUTF8(@NonNull String content) {
         byte[] buffer = content.getBytes();
         writeBuffer(buffer);
     }

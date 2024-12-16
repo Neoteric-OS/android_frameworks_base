@@ -30,6 +30,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.grid.ui.compose.VerticalSpannedGrid
 import com.android.systemui.haptics.msdl.qs.TileHapticsViewModelFactoryProvider
 import com.android.systemui.lifecycle.rememberViewModel
+import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager.Companion.LOCATION_QS
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
 import com.android.systemui.qs.panels.ui.compose.PaginatableGridLayout
 import com.android.systemui.qs.panels.ui.compose.bounceableInfo
@@ -72,8 +73,14 @@ constructor(
             rememberViewModel(traceName = "InfiniteGridLayout.TileGrid") {
                 viewModel.dynamicIconTilesViewModelFactory.create()
             }
-        val columns by viewModel.gridSizeViewModel.columns.collectAsStateWithLifecycle()
-        val sizedTiles = tiles.map { SizedTileImpl(it, it.spec.width()) }
+        val columnsWithMediaViewModel =
+            rememberViewModel(traceName = "InfiniteGridLAyout.TileGrid") {
+                viewModel.columnsWithMediaViewModelFactory.create(LOCATION_QS)
+            }
+
+        val columns = columnsWithMediaViewModel.columns
+        val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
+        val sizedTiles = tiles.map { SizedTileImpl(it, it.spec.width(largeTilesSpan)) }
         val bounceables =
             remember(sizedTiles) { List(sizedTiles.size) { BounceableTileViewModel() } }
         val squishiness by viewModel.squishinessViewModel.squishiness.collectAsStateWithLifecycle()
@@ -118,22 +125,28 @@ constructor(
             rememberViewModel(traceName = "InfiniteGridLayout.EditTileGrid") {
                 viewModel.dynamicIconTilesViewModelFactory.create()
             }
-        val columns by viewModel.gridSizeViewModel.columns.collectAsStateWithLifecycle()
+        val columnsViewModel =
+            rememberViewModel(traceName = "InfiniteGridLayout.EditTileGrid") {
+                viewModel.columnsWithMediaViewModelFactory.createWithoutMediaTracking()
+            }
+        val columns = columnsViewModel.columns
+        val largeTilesSpan by iconTilesViewModel.largeTilesSpanState
         val largeTiles by iconTilesViewModel.largeTiles.collectAsStateWithLifecycle()
 
         // Non-current tiles should always be displayed as icon tiles.
         val sizedTiles =
-            remember(tiles, largeTiles) {
+            remember(tiles, largeTiles, largeTilesSpan) {
                 tiles.map {
                     SizedTileImpl(
                         it,
-                        if (!it.isCurrent || !largeTiles.contains(it.tileSpec)) 1 else 2,
+                        if (!it.isCurrent || !largeTiles.contains(it.tileSpec)) 1
+                        else largeTilesSpan,
                     )
                 }
             }
 
         val (currentTiles, otherTiles) = sizedTiles.partition { it.tile.isCurrent }
-        val currentListState = rememberEditListState(currentTiles, columns)
+        val currentListState = rememberEditListState(currentTiles, columns, largeTilesSpan)
         DefaultEditTileGrid(
             listState = currentListState,
             otherTiles = otherTiles,
@@ -144,6 +157,7 @@ constructor(
             onResize = iconTilesViewModel::resize,
             onStopEditing = onStopEditing,
             onReset = viewModel::showResetDialog,
+            largeTilesSpan = largeTilesSpan,
         )
     }
 
@@ -161,7 +175,7 @@ constructor(
             .map { it.flatten().map { it.tile } }
     }
 
-    private fun TileSpec.width(): Int {
-        return if (iconTilesViewModel.isIconTile(this)) 1 else 2
+    private fun TileSpec.width(largeSize: Int = iconTilesViewModel.largeTilesSpan.value): Int {
+        return if (iconTilesViewModel.isIconTile(this)) 1 else largeSize
     }
 }

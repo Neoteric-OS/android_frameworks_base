@@ -15,6 +15,8 @@
  */
 package com.android.internal.widget.remotecompose.core.operations;
 
+import android.annotation.NonNull;
+
 /** Utilities to be used across all core operations */
 public class Utils {
     public static float asNan(int v) {
@@ -30,11 +32,13 @@ public class Utils {
         return v - 0x100000000L;
     }
 
+    @NonNull
     public static String idStringFromNan(float value) {
         int b = Float.floatToRawIntBits(value) & 0x3FFFFF;
         return idString(b);
     }
 
+    @NonNull
     public static String idString(int b) {
         return (b > 0xFFFFF) ? "A_" + (b & 0xFFFFF) : "" + b;
     }
@@ -50,7 +54,8 @@ public class Utils {
      * @param n
      * @return
      */
-    public static String trimString(String str, int n) {
+    @NonNull
+    public static String trimString(@NonNull String str, int n) {
         if (str.length() > n) {
             str = str.substring(0, n - 3) + "...";
         }
@@ -64,7 +69,7 @@ public class Utils {
      * @param value
      * @return
      */
-    public static String floatToString(float idvalue, float value) {
+    public static @NonNull String floatToString(float idvalue, float value) {
         if (Float.isNaN(idvalue)) {
             if (idFromNan(value) == 0) {
                 return "NaN";
@@ -80,7 +85,7 @@ public class Utils {
      * @param value
      * @return
      */
-    public static String floatToString(float value) {
+    public static @NonNull String floatToString(float value) {
         if (Float.isNaN(value)) {
             if (idFromNan(value) == 0) {
                 return "NaN";
@@ -95,7 +100,7 @@ public class Utils {
      *
      * @param str
      */
-    public static void log(String str) {
+    public static void log(@NonNull String str) {
         StackTraceElement s = new Throwable().getStackTrace()[1];
         System.out.println(
                 "("
@@ -114,7 +119,7 @@ public class Utils {
      * @param str
      * @param n
      */
-    public static void logStack(String str, int n) {
+    public static void logStack(@NonNull String str, int n) {
         StackTraceElement[] st = new Throwable().getStackTrace();
         for (int i = 1; i < n + 1; i++) {
             StackTraceElement s = st[i];
@@ -145,6 +150,7 @@ public class Utils {
      * @param color
      * @return
      */
+    @NonNull
     public static String colorInt(int color) {
         String str = "000000000000" + Integer.toHexString(color);
         return "0x" + str.substring(str.length() - 8);

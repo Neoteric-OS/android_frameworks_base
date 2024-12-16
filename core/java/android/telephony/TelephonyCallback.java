@@ -30,6 +30,7 @@ import android.telephony.emergency.EmergencyNumber;
 import android.telephony.ims.ImsReasonInfo;
 import android.telephony.ims.MediaQualityStatus;
 import android.telephony.ims.MediaThreshold;
+import android.telephony.satellite.NtnSignalStrength;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -695,6 +696,37 @@ public class TelephonyCallback {
     public static final int EVENT_CARRIER_ROAMING_NTN_AVAILABLE_SERVICES_CHANGED = 44;
 
     /**
+     * Event for listening to carrier roaming non-terrestrial network signal strength changes.
+     *
+     * @see CarrierRoamingNtnModeListener
+     *
+     * @hide
+     */
+    public static final int EVENT_CARRIER_ROAMING_NTN_SIGNAL_STRENGTH_CHANGED = 45;
+
+    /**
+     * Event for changes to mobile network ciphering algorithms.
+     * See {@link SecurityAlgorithmsListener#onSecurityAlgorithmsChanged}
+     *
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_CELLULAR_IDENTIFIER_DISCLOSURE_INDICATIONS)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi
+    public static final int EVENT_SECURITY_ALGORITHMS_CHANGED = 46;
+
+     /**
+      * Event for updates to sensitive device identifier disclosures (IMSI, IMEI, unciphered SUCI).
+      * See {@link CellularIdentifierDisclosedListener#onCellularIdentifierDisclosedChanged}
+      *
+      * @hide
+      */
+    @FlaggedApi(Flags.FLAG_CELLULAR_IDENTIFIER_DISCLOSURE_INDICATIONS)
+    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
+    @SystemApi
+    public static final int EVENT_CELLULAR_IDENTIFIER_DISCLOSED_CHANGED = 47;
+
+    /**
      * @hide
      */
     @IntDef(prefix = {"EVENT_"}, value = {
@@ -741,7 +773,10 @@ public class TelephonyCallback {
             EVENT_SIMULTANEOUS_CELLULAR_CALLING_SUBSCRIPTIONS_CHANGED,
             EVENT_CARRIER_ROAMING_NTN_MODE_CHANGED,
             EVENT_CARRIER_ROAMING_NTN_ELIGIBLE_STATE_CHANGED,
-            EVENT_CARRIER_ROAMING_NTN_AVAILABLE_SERVICES_CHANGED
+            EVENT_CARRIER_ROAMING_NTN_AVAILABLE_SERVICES_CHANGED,
+            EVENT_CARRIER_ROAMING_NTN_SIGNAL_STRENGTH_CHANGED,
+            EVENT_SECURITY_ALGORITHMS_CHANGED,
+            EVENT_CELLULAR_IDENTIFIER_DISCLOSED_CHANGED
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface TelephonyEvent {
@@ -1715,11 +1750,10 @@ public class TelephonyCallback {
          * @see TelephonyManager#EMERGENCY_CALLBACK_MODE_SMS
          *
          * @param timerDuration is the time remaining in the emergency callback mode.
-         * @param subId The subscription ID used to start the emergency callback mode.
+         * @param subscriptionId The subscription ID used to start the emergency callback mode.
          */
-        @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
         void onCallbackModeStarted(@TelephonyManager.EmergencyCallbackModeType int type,
-                @NonNull Duration timerDuration, int subId);
+                @NonNull Duration timerDuration, int subscriptionId);
 
         /**
          * Indicates that emergency callback mode has been re-started.
@@ -1734,11 +1768,10 @@ public class TelephonyCallback {
          * @see TelephonyManager#EMERGENCY_CALLBACK_MODE_SMS
          *
          * @param timerDuration is the time remaining in the emergency callback mode.
-         * @param subId The subscription ID used to restart the emergency callback mode.
+         * @param subscriptionId The subscription ID used to restart the emergency callback mode.
          */
-        @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
         void onCallbackModeRestarted(@TelephonyManager.EmergencyCallbackModeType int type,
-                @NonNull Duration timerDuration, int subId);
+                @NonNull Duration timerDuration, int subscriptionId);
 
         /**
          * Indicates that emergency callback mode has been stopped.
@@ -1759,11 +1792,10 @@ public class TelephonyCallback {
          * @see TelephonyManager#STOP_REASON_TIMER_EXPIRED
          * @see TelephonyManager#STOP_REASON_USER_ACTION
          *
-         * @param subId is the current subscription used the emergency callback mode.
+         * @param subscriptionId is the current subscription used the emergency callback mode.
          */
-        @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
         void onCallbackModeStopped(@TelephonyManager.EmergencyCallbackModeType int type,
-                @TelephonyManager.EmergencyCallbackModeStopReason int reason, int subId);
+                @TelephonyManager.EmergencyCallbackModeStopReason int reason, int subscriptionId);
     }
 
     /**
@@ -1808,6 +1840,49 @@ public class TelephonyCallback {
          */
         default void onCarrierRoamingNtnAvailableServicesChanged(
                 @NetworkRegistrationInfo.ServiceType List<Integer> availableServices) {}
+
+        /**
+         * Callback invoked when carrier roaming non-terrestrial network signal strength changes.
+         *
+         * @param ntnSignalStrength non-terrestrial network signal strength.
+         */
+        default void onCarrierRoamingNtnSignalStrengthChanged(
+                @NonNull NtnSignalStrength ntnSignalStrength) {}
+    }
+
+    /**
+     * Interface for CellularIdentifierDisclosedListener
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_CELLULAR_IDENTIFIER_DISCLOSURE_INDICATIONS)
+    public interface CellularIdentifierDisclosedListener {
+        /**
+         * Callback invoked when a device identifier (IMSI, IMEI, or unciphered SUCI)
+         * is disclosed over the network before a security context is established
+         * ("pre-authentication").
+         *
+         * @param disclosure details of the identifier disclosure
+         * See {@link CellularIdentifierDisclosure} for more details
+         */
+        void onCellularIdentifierDisclosedChanged(@NonNull CellularIdentifierDisclosure disclosure);
+    }
+
+    /**
+     * Interface for SecurityAlgorithmsListener
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_SECURITY_ALGORITHMS_UPDATE_INDICATIONS)
+    public interface SecurityAlgorithmsListener {
+        /**
+         * Callback invoked when the most recently reported security algorithms has changed,
+         * per a specified connection event.
+         *
+         * @param securityAlgorithmUpdate details of the security algorithm update
+         * See {@link SecurityAlgorithmUpdate} for more details
+         */
+        void onSecurityAlgorithmsChanged(@NonNull SecurityAlgorithmUpdate securityAlgorithmUpdate);
     }
 
     /**
@@ -2192,7 +2267,7 @@ public class TelephonyCallback {
 
         @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
         public void onCallbackModeStarted(@TelephonyManager.EmergencyCallbackModeType int type,
-                long durationMillis, int subId) {
+                long durationMillis, int subscriptionId) {
             if (!Flags.emergencyCallbackModeNotification()) return;
 
             EmergencyCallbackModeListener listener =
@@ -2203,12 +2278,12 @@ public class TelephonyCallback {
             final Duration timerDuration = Duration.ofMillis(durationMillis);
             Binder.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> listener.onCallbackModeStarted(type,
-                            timerDuration, subId)));
+                            timerDuration, subscriptionId)));
         }
 
         @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
         public void onCallbackModeRestarted(@TelephonyManager.EmergencyCallbackModeType int type,
-                long durationMillis, int subId) {
+                long durationMillis, int subscriptionId) {
             if (!Flags.emergencyCallbackModeNotification()) return;
 
             EmergencyCallbackModeListener listener =
@@ -2219,12 +2294,12 @@ public class TelephonyCallback {
             final Duration timerDuration = Duration.ofMillis(durationMillis);
             Binder.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> listener.onCallbackModeRestarted(type,
-                            timerDuration, subId)));
+                            timerDuration, subscriptionId)));
         }
 
         @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
         public void onCallbackModeStopped(@TelephonyManager.EmergencyCallbackModeType int type,
-                @TelephonyManager.EmergencyCallbackModeStopReason int reason, int subId) {
+                @TelephonyManager.EmergencyCallbackModeStopReason int reason, int subscriptionId) {
             if (!Flags.emergencyCallbackModeNotification()) return;
 
             EmergencyCallbackModeListener listener =
@@ -2235,7 +2310,7 @@ public class TelephonyCallback {
 
             Binder.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> listener.onCallbackModeStopped(type, reason,
-                            subId)));
+                            subscriptionId)));
         }
 
         public void onCarrierRoamingNtnModeChanged(boolean active) {
@@ -2272,6 +2347,41 @@ public class TelephonyCallback {
                     .collect(Collectors.toList());
             Binder.withCleanCallingIdentity(() -> mExecutor.execute(
                     () -> listener.onCarrierRoamingNtnAvailableServicesChanged(ServiceList)));
+        }
+
+        public void onCarrierRoamingNtnSignalStrengthChanged(
+                @NonNull NtnSignalStrength ntnSignalStrength) {
+            if (!Flags.carrierRoamingNbIotNtn()) return;
+
+            CarrierRoamingNtnModeListener listener =
+                    (CarrierRoamingNtnModeListener) mTelephonyCallbackWeakRef.get();
+            if (listener == null) return;
+
+            Binder.withCleanCallingIdentity(() -> mExecutor.execute(
+                    () -> listener.onCarrierRoamingNtnSignalStrengthChanged(ntnSignalStrength)));
+
+        }
+
+        public void onSecurityAlgorithmsChanged(SecurityAlgorithmUpdate update) {
+            if (!Flags.securityAlgorithmsUpdateIndications()) return;
+
+            SecurityAlgorithmsListener listener =
+                    (SecurityAlgorithmsListener) mTelephonyCallbackWeakRef.get();
+            if (listener == null) return;
+
+            Binder.withCleanCallingIdentity(() -> mExecutor.execute(
+                    () -> listener.onSecurityAlgorithmsChanged(update)));
+        }
+
+        public void onCellularIdentifierDisclosedChanged(CellularIdentifierDisclosure disclosure) {
+            if (!Flags.cellularIdentifierDisclosureIndications()) return;
+
+            CellularIdentifierDisclosedListener listener =
+                    (CellularIdentifierDisclosedListener) mTelephonyCallbackWeakRef.get();
+            if (listener == null) return;
+
+            Binder.withCleanCallingIdentity(() -> mExecutor.execute(
+                    () -> listener.onCellularIdentifierDisclosedChanged(disclosure)));
         }
     }
 }

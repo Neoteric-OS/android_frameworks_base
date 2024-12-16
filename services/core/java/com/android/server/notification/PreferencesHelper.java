@@ -57,6 +57,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
+import android.app.ZenBypassingApp;
 import android.content.AttributionSource;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -183,6 +184,7 @@ public class PreferencesHelper implements RankingConfig {
     private static final boolean DEFAULT_SHOW_BADGE = true;
 
     private static final boolean DEFAULT_APP_LOCKED_IMPORTANCE  = false;
+    private static final boolean DEFAULT_CAN_HAVE_PROMOTED_NOTIFS = true;
 
     static final boolean DEFAULT_BUBBLES_ENABLED = true;
     @VisibleForTesting
@@ -368,8 +370,8 @@ public class PreferencesHelper implements RankingConfig {
                     null, ATT_USER_DEMOTED_INVALID_MSG_APP, false);
             r.hasSentValidBubble = parser.getAttributeBoolean(null, ATT_SENT_VALID_BUBBLE, false);
             if (android.app.Flags.uiRichOngoing()) {
-                r.canHavePromotedNotifs =
-                        parser.getAttributeBoolean(null, ATT_PROMOTE_NOTIFS, false);
+                r.canHavePromotedNotifs = parser.getAttributeBoolean(null, ATT_PROMOTE_NOTIFS,
+                        DEFAULT_CAN_HAVE_PROMOTED_NOTIFS);
             }
 
             final int innerDepth = parser.getDepth();
@@ -747,7 +749,7 @@ public class PreferencesHelper implements RankingConfig {
                 r.userDemotedMsgApp);
         out.attributeBoolean(null, ATT_SENT_VALID_BUBBLE, r.hasSentValidBubble);
         if (android.app.Flags.uiRichOngoing()) {
-            if (r.canHavePromotedNotifs) {
+            if (r.canHavePromotedNotifs != DEFAULT_CAN_HAVE_PROMOTED_NOTIFS) {
                 out.attributeBoolean(null, ATT_PROMOTE_NOTIFS, r.canHavePromotedNotifs);
             }
         }
@@ -1950,6 +1952,35 @@ public class PreferencesHelper implements RankingConfig {
     }
 
     /**
+     * Gets all apps that can bypass DND, and a boolean indicating whether all (true) or some
+     * (false) of its notification channels can currently bypass.
+     */
+    public @NonNull ArrayList<ZenBypassingApp> getPackagesBypassingDnd(@UserIdInt int userId) {
+        ArrayList<ZenBypassingApp> bypassing = new ArrayList<>();
+        synchronized (mLock) {
+            for (PackagePreferences p : mPackagePreferences.values()) {
+                if (p.userId != userId) {
+                    continue;
+                }
+                int totalChannelCount = p.channels.size();
+                int bypassingCount = 0;
+                if  (totalChannelCount == 0) {
+                    continue;
+                }
+                for (NotificationChannel channel : p.channels.values()) {
+                    if (channelIsLiveLocked(p, channel) && channel.canBypassDnd()) {
+                        bypassingCount++;
+                    }
+                }
+                if (bypassingCount > 0) {
+                    bypassing.add(new ZenBypassingApp(p.pkg, totalChannelCount == bypassingCount));
+                }
+            }
+        }
+        return bypassing;
+    }
+
+    /**
      * True for pre-O apps that only have the default channel, or pre O apps that have no
      * channels yet. This method will create the default channel for pre-O apps that don't have it.
      * Should never be true for O+ targeting apps, but that's enforced on boot/when an app
@@ -2028,8 +2059,9 @@ public class PreferencesHelper implements RankingConfig {
      * </ul>
      */
     void syncChannelsBypassingDnd() {
-        mCurrentUserHasChannelsBypassingDnd = (mZenModeHelper.getNotificationPolicy().state
-                & NotificationManager.Policy.STATE_CHANNELS_BYPASSING_DND) != 0;
+        mCurrentUserHasChannelsBypassingDnd =
+                (mZenModeHelper.getNotificationPolicy(UserHandle.CURRENT).state
+                        & NotificationManager.Policy.STATE_CHANNELS_BYPASSING_DND) != 0;
 
         updateCurrentUserHasChannelsBypassingDnd(/* callingUid= */ Process.SYSTEM_UID,
                 /* fromSystemOrSystemUi= */ true);
@@ -2072,7 +2104,8 @@ public class PreferencesHelper implements RankingConfig {
         if (mCurrentUserHasChannelsBypassingDnd != haveBypassingApps) {
             mCurrentUserHasChannelsBypassingDnd = haveBypassingApps;
             if (android.app.Flags.modesUi()) {
-                mZenModeHelper.updateHasPriorityChannels(mCurrentUserHasChannelsBypassingDnd);
+                mZenModeHelper.updateHasPriorityChannels(UserHandle.CURRENT,
+                        mCurrentUserHasChannelsBypassingDnd);
             } else {
                 updateZenPolicy(mCurrentUserHasChannelsBypassingDnd, callingUid,
                         fromSystemOrSystemUi);
@@ -2099,8 +2132,10 @@ public class PreferencesHelper implements RankingConfig {
     //                     PreferencesHelper should otherwise not need to modify actual policy
     public void updateZenPolicy(boolean areChannelsBypassingDnd, int callingUid,
             boolean fromSystemOrSystemUi) {
-        NotificationManager.Policy policy = mZenModeHelper.getNotificationPolicy();
+        NotificationManager.Policy policy = mZenModeHelper.getNotificationPolicy(
+                UserHandle.CURRENT);
         mZenModeHelper.setNotificationPolicy(
+                UserHandle.CURRENT,
                 new NotificationManager.Policy(
                         policy.priorityCategories, policy.priorityCallSenders,
                         policy.priorityMessageSenders, policy.suppressedVisualEffects,
@@ -2297,7 +2332,8 @@ public class PreferencesHelper implements RankingConfig {
                     pw.print(" fixedImportance=");
                     pw.print(r.fixedImportance);
                 }
-                if (android.app.Flags.uiRichOngoing() && r.canHavePromotedNotifs) {
+                if (android.app.Flags.uiRichOngoing()
+                        && r.canHavePromotedNotifs != DEFAULT_CAN_HAVE_PROMOTED_NOTIFS) {
                     pw.print(" promoted=");
                     pw.print(r.canHavePromotedNotifs);
                 }
@@ -3150,7 +3186,8 @@ public class PreferencesHelper implements RankingConfig {
         long creationTime;
 
         @FlaggedApi(android.app.Flags.FLAG_API_RICH_ONGOING)
-        boolean canHavePromotedNotifs = false;
+        // Until we enable the UI, we should return false.
+        boolean canHavePromotedNotifs = android.app.Flags.uiRichOngoing();
 
         @UserIdInt int userId;
 

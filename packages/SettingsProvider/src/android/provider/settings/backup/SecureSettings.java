@@ -133,6 +133,7 @@ public class SecureSettings {
         Settings.Secure.FINGERPRINT_SIDE_FPS_ENROLL_TAP_WINDOW,
         Settings.Secure.FINGERPRINT_SIDE_FPS_AUTH_DOWNTIME,
         Settings.Secure.SFPS_PERFORMANT_AUTH_ENABLED,
+        Settings.Secure.SCREEN_OFF_UNLOCK_UDFPS_ENABLED,
         Settings.Secure.ACTIVE_UNLOCK_ON_WAKE,
         Settings.Secure.ACTIVE_UNLOCK_ON_UNLOCK_INTENT,
         Settings.Secure.ACTIVE_UNLOCK_ON_UNLOCK_INTENT_LEGACY,
@@ -283,5 +284,6 @@ public class SecureSettings {
         Settings.Secure.MANDATORY_BIOMETRICS,
         Settings.Secure.MANDATORY_BIOMETRICS_REQUIREMENTS_SATISFIED,
         Settings.Secure.ADVANCED_PROTECTION_MODE,
+        Settings.Secure.ACCESSIBILITY_KEY_GESTURE_TARGETS,
     };
 }

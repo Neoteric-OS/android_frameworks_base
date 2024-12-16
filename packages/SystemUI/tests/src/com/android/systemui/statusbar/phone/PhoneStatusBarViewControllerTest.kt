@@ -43,10 +43,10 @@ import com.android.systemui.scene.ui.view.WindowRootView
 import com.android.systemui.shade.ShadeControllerImpl
 import com.android.systemui.shade.ShadeLogger
 import com.android.systemui.shade.ShadeViewController
+import com.android.systemui.shade.StatusBarLongPressGestureDetector
 import com.android.systemui.shade.domain.interactor.PanelExpansionInteractor
 import com.android.systemui.statusbar.CommandQueue
 import com.android.systemui.statusbar.data.repository.fakeStatusBarContentInsetsProviderStore
-import com.android.systemui.statusbar.data.repository.statusBarContentInsetsProviderStore
 import com.android.systemui.statusbar.policy.Clock
 import com.android.systemui.statusbar.policy.ConfigurationController
 import com.android.systemui.statusbar.window.StatusBarWindowStateController
@@ -97,6 +97,7 @@ class PhoneStatusBarViewControllerTest : SysuiTestCase() {
     @Mock private lateinit var windowRootView: Provider<WindowRootView>
     @Mock private lateinit var shadeLogger: ShadeLogger
     @Mock private lateinit var viewUtil: ViewUtil
+    @Mock private lateinit var mStatusBarLongPressGestureDetector: StatusBarLongPressGestureDetector
     private lateinit var statusBarWindowStateController: StatusBarWindowStateController
 
     private lateinit var view: PhoneStatusBarView
@@ -393,6 +394,7 @@ class PhoneStatusBarViewControllerTest : SysuiTestCase() {
                 shadeControllerImpl,
                 shadeViewController,
                 panelExpansionInteractor,
+                { mStatusBarLongPressGestureDetector },
                 windowRootView,
                 shadeLogger,
                 viewUtil,

@@ -22,14 +22,18 @@ import com.android.systemui.common.ui.domain.interactor.configurationInteractor
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
 import com.android.systemui.keyguard.domain.interactor.keyguardTransitionInteractor
 import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.media.controls.ui.view.qqsMediaHost
+import com.android.systemui.media.controls.ui.view.qsMediaHost
+import com.android.systemui.qs.composefragment.dagger.usingMediaInComposeFragment
 import com.android.systemui.qs.footerActionsController
 import com.android.systemui.qs.footerActionsViewModelFactory
 import com.android.systemui.qs.panels.domain.interactor.tileSquishinessInteractor
-import com.android.systemui.qs.panels.ui.viewmodel.paginatedGridViewModel
-import com.android.systemui.qs.ui.viewmodel.quickSettingsContainerViewModel
+import com.android.systemui.qs.panels.ui.viewmodel.inFirstPageViewModel
+import com.android.systemui.qs.panels.ui.viewmodel.mediaInRowInLandscapeViewModelFactory
+import com.android.systemui.qs.ui.viewmodel.quickSettingsContainerViewModelFactory
 import com.android.systemui.shade.largeScreenHeaderHelper
 import com.android.systemui.shade.transition.largeScreenShadeInterpolator
-import com.android.systemui.statusbar.disableflags.data.repository.disableFlagsRepository
+import com.android.systemui.statusbar.disableflags.domain.interactor.disableFlagsInteractor
 import com.android.systemui.statusbar.sysuiStatusBarStateController
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -41,19 +45,23 @@ val Kosmos.qsFragmentComposeViewModelFactory by
                 lifecycleScope: LifecycleCoroutineScope
             ): QSFragmentComposeViewModel {
                 return QSFragmentComposeViewModel(
-                    quickSettingsContainerViewModel,
+                    quickSettingsContainerViewModelFactory,
                     mainResources,
                     footerActionsViewModelFactory,
                     footerActionsController,
                     sysuiStatusBarStateController,
                     deviceEntryInteractor,
-                    disableFlagsRepository,
+                    disableFlagsInteractor,
                     keyguardTransitionInteractor,
                     largeScreenShadeInterpolator,
                     configurationInteractor,
                     largeScreenHeaderHelper,
                     tileSquishinessInteractor,
-                    paginatedGridViewModel,
+                    inFirstPageViewModel,
+                    mediaInRowInLandscapeViewModelFactory,
+                    qqsMediaHost,
+                    qsMediaHost,
+                    usingMediaInComposeFragment,
                     lifecycleScope,
                 )
             }

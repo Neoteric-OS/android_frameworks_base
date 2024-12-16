@@ -17,14 +17,15 @@
 package com.android.systemui.statusbar.chips.notification.ui.viewmodel
 
 import android.platform.test.annotations.EnableFlags
+import android.view.View
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.android.systemui.Flags.FLAG_STATUS_BAR_RON_CHIPS
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.statusbar.StatusBarIconView
-import com.android.systemui.statusbar.chips.ron.ui.viewmodel.notifChipsViewModel
+import com.android.systemui.statusbar.chips.notification.domain.interactor.statusBarNotificationChipsInteractor
+import com.android.systemui.statusbar.chips.notification.shared.StatusBarNotifChips
 import com.android.systemui.statusbar.chips.ui.model.OngoingActivityChipModel
 import com.android.systemui.statusbar.notification.data.model.activeNotificationModel
 import com.android.systemui.statusbar.notification.data.repository.ActiveNotificationsStore
@@ -42,7 +43,7 @@ import org.mockito.kotlin.mock
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-@EnableFlags(FLAG_STATUS_BAR_RON_CHIPS)
+@EnableFlags(StatusBarNotifChips.FLAG_NAME)
 class NotifChipsViewModelTest : SysuiTestCase() {
     private val kosmos = testKosmos()
     private val testScope = kosmos.testScope
@@ -65,27 +66,43 @@ class NotifChipsViewModelTest : SysuiTestCase() {
         testScope.runTest {
             val latest by collectLastValue(underTest.chips)
 
-            setNotifs(listOf(activeNotificationModel(key = "notif", statusBarChipIcon = null)))
+            setNotifs(
+                listOf(
+                    activeNotificationModel(
+                        key = "notif",
+                        statusBarChipIcon = null,
+                        isPromoted = true,
+                    )
+                )
+            )
 
             assertThat(latest).isEmpty()
         }
 
     @Test
-    fun chips_oneNotif_statusBarIconViewMatches() =
+    fun chips_onePromotedNotif_statusBarIconViewMatches() =
         testScope.runTest {
             val latest by collectLastValue(underTest.chips)
 
             val icon = mock<StatusBarIconView>()
-            setNotifs(listOf(activeNotificationModel(key = "notif", statusBarChipIcon = icon)))
+            setNotifs(
+                listOf(
+                    activeNotificationModel(
+                        key = "notif",
+                        statusBarChipIcon = icon,
+                        isPromoted = true,
+                    )
+                )
+            )
 
             assertThat(latest).hasSize(1)
             val chip = latest!![0]
-            assertThat(chip).isInstanceOf(OngoingActivityChipModel.Shown.ShortTimeDelta::class.java)
+            assertThat(chip).isInstanceOf(OngoingActivityChipModel.Shown.IconOnly::class.java)
             assertThat(chip.icon).isEqualTo(OngoingActivityChipModel.ChipIcon.StatusBarView(icon))
         }
 
     @Test
-    fun chips_twoNotifs_twoChips() =
+    fun chips_onlyForPromotedNotifs() =
         testScope.runTest {
             val latest by collectLastValue(underTest.chips)
 
@@ -93,14 +110,52 @@ class NotifChipsViewModelTest : SysuiTestCase() {
             val secondIcon = mock<StatusBarIconView>()
             setNotifs(
                 listOf(
-                    activeNotificationModel(key = "notif1", statusBarChipIcon = firstIcon),
-                    activeNotificationModel(key = "notif2", statusBarChipIcon = secondIcon),
+                    activeNotificationModel(
+                        key = "notif1",
+                        statusBarChipIcon = firstIcon,
+                        isPromoted = true,
+                    ),
+                    activeNotificationModel(
+                        key = "notif2",
+                        statusBarChipIcon = secondIcon,
+                        isPromoted = true,
+                    ),
+                    activeNotificationModel(
+                        key = "notif3",
+                        statusBarChipIcon = mock<StatusBarIconView>(),
+                        isPromoted = false,
+                    ),
                 )
             )
 
             assertThat(latest).hasSize(2)
             assertIsNotifChip(latest!![0], firstIcon)
             assertIsNotifChip(latest!![1], secondIcon)
+        }
+
+    @Test
+    fun chips_clickingChipNotifiesInteractor() =
+        testScope.runTest {
+            val latest by collectLastValue(underTest.chips)
+            val latestChipTap by
+                collectLastValue(
+                    kosmos.statusBarNotificationChipsInteractor.promotedNotificationChipTapEvent
+                )
+
+            setNotifs(
+                listOf(
+                    activeNotificationModel(
+                        key = "clickTest",
+                        statusBarChipIcon = mock<StatusBarIconView>(),
+                        isPromoted = true,
+                    )
+                )
+            )
+            val chip = latest!![0]
+
+            chip.onClickListener!!.onClick(mock<View>())
+
+            assertThat(latestChipTap).isEqualTo("clickTest")
         }
 
     private fun setNotifs(notifs: List<ActiveNotificationModel>) {
@@ -113,8 +168,7 @@ class NotifChipsViewModelTest : SysuiTestCase() {
 
     companion object {
         fun assertIsNotifChip(latest: OngoingActivityChipModel?, expectedIcon: StatusBarIconView) {
-            assertThat(latest)
-                .isInstanceOf(OngoingActivityChipModel.Shown.ShortTimeDelta::class.java)
+            assertThat(latest).isInstanceOf(OngoingActivityChipModel.Shown.IconOnly::class.java)
             assertThat((latest as OngoingActivityChipModel.Shown).icon)
                 .isEqualTo(OngoingActivityChipModel.ChipIcon.StatusBarView(expectedIcon))
         }

@@ -18,7 +18,6 @@ package com.android.server.wm;
 
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_RECENTS;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
-import static android.inputmethodservice.InputMethodService.ENABLE_HIDE_IME_CAPTION_BAR;
 import static android.view.Display.INVALID_DISPLAY;
 import static android.view.Display.TYPE_INTERNAL;
 import static android.view.InsetsFrameProvider.SOURCE_ARBITRARY_RECTANGLE;
@@ -204,6 +203,7 @@ public class DisplayPolicy {
 
     private static boolean SCROLL_BOOST_SS_ENABLE = false;
     private static boolean SILKY_SCROLLS_ENABLE = false;
+    private static boolean SILKY_SCROLLS_LITE_ENABLE = false;
     private static boolean isLowRAM = false;
 
     /*
@@ -477,6 +477,7 @@ public class DisplayPolicy {
         if (mPerf != null) {
             SCROLL_BOOST_SS_ENABLE = Boolean.parseBoolean(mPerf.perfGetProp("vendor.perf.gestureflingboost.enable", "false"));
             SILKY_SCROLLS_ENABLE = Boolean.parseBoolean(mPerf.perfGetProp("ro.vendor.perf.ss", "false"));
+            SILKY_SCROLLS_LITE_ENABLE = Boolean.parseBoolean(mPerf.perfGetProp("ro.vendor.perf.silkyscrolls_lite", "false"));
         }
         isLowRAM = SystemProperties.getBoolean("ro.config.low_ram", false);
 
@@ -670,8 +671,10 @@ public class DisplayPolicy {
                             mPerfBoostDrag.perfHint(BoostFramework.VENDOR_HINT_DRAG_BOOST,
                                             currentPackage, -1, 1);
                         } else {
-                            if (SILKY_SCROLLS_ENABLE){
+                            if (SILKY_SCROLLS_ENABLE || SILKY_SCROLLS_LITE_ENABLE){
                                 mPerfBoostDrag.perfEvent(BoostFramework.VENDOR_HINT_DRAG_END, currentPackage);
+                            } else if (mPerfBoostDrag.board_first_api_lvl >= BoostFramework.VENDOR_V_API_LEVEL) {
+                               mPerfBoostDrag.perfHintRelease();
                             }
                             mPerfBoostDrag.perfLockRelease();
                         }
@@ -1399,17 +1402,7 @@ public class DisplayPolicy {
                 throw new IllegalArgumentException("IME insets must be provided by a window.");
             }
 
-            if (!ENABLE_HIDE_IME_CAPTION_BAR && mNavigationBar != null && mHasBottomNavigationBar) {
-                // In gesture navigation, nav bar frame is larger than frame to calculate insets.
-                // IME should not provide frame which is smaller than the nav bar frame. Otherwise,
-                // nav bar might be overlapped with the content of the client when IME is shown.
-                sTmpRect.set(inOutFrame);
-                sTmpRect.intersectUnchecked(mNavigationBar.getFrame());
-                inOutFrame.inset(windowState.mGivenContentInsets);
-                inOutFrame.union(sTmpRect);
-            } else {
-                inOutFrame.inset(windowState.mGivenContentInsets);
-            }
+            inOutFrame.inset(windowState.mGivenContentInsets);
             return 0;
         };
     }
@@ -1897,9 +1890,9 @@ public class DisplayPolicy {
         }
 
         // Show IME over the keyguard if the target allows it.
-        final boolean showImeOverKeyguard = imeTarget != null && imeTarget.isVisible()
-                && win.mIsImWindow && (imeTarget.canShowWhenLocked()
-                        || !imeTarget.canBeHiddenByKeyguard());
+        final boolean showImeOverKeyguard =
+                imeTarget != null && win.mIsImWindow && imeTarget.isDisplayed() && (
+                        imeTarget.canShowWhenLocked() || !imeTarget.canBeHiddenByKeyguard());
         if (showImeOverKeyguard) {
             return false;
         }
@@ -3215,7 +3208,7 @@ public class DisplayPolicy {
             @InsetsType int insetsType) {
         for (int i = insetsState.sourceSize() - 1; i >= 0; i--) {
             final InsetsSource source = insetsState.sourceAt(i);
-            if ((source.getType() & insetsType) == 0 || !source.isVisible()) {
+            if ((source.getType() & insetsType) == 0) {
                 continue;
             }
             if (Rect.intersects(bounds, source.getFrame())) {

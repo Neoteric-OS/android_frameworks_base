@@ -17,6 +17,7 @@
 package android.app;
 
 import static android.text.TextUtils.formatSimple;
+import static com.android.internal.util.Preconditions.checkArgumentPositive;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -31,7 +32,10 @@ import android.os.Process;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.util.ArrayMap;
+import android.util.ArraySet;
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseBooleanArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -40,6 +44,7 @@ import com.android.internal.os.BackgroundThread;
 
 import dalvik.annotation.optimization.CriticalNative;
 import dalvik.annotation.optimization.FastNative;
+import dalvik.annotation.optimization.NeverCompile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
@@ -70,6 +75,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @hide
  */
 @TestApi
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
 public class PropertyInvalidatedCache<Query, Result> {
     /**
      * This is a configuration class that customizes a cache instance.
@@ -89,9 +95,6 @@ public class PropertyInvalidatedCache<Query, Result> {
          * caching on behalf of other processes.
          */
         public boolean shouldBypassCache(@NonNull Q query) {
-            if(android.multiuser.Flags.propertyInvalidatedCacheBypassMismatchedUids()) {
-                return Binder.getCallingUid() != Process.myUid();
-            }
             return false;
         }
     };
@@ -200,6 +203,23 @@ public class PropertyInvalidatedCache<Query, Result> {
     }
 
     /**
+     * The list of known and legal modules.  The list is not sorted.
+     */
+    private static final String[] sValidModule = {
+        MODULE_SYSTEM, MODULE_BLUETOOTH, MODULE_TELEPHONY, MODULE_TEST,
+    };
+
+    /**
+     * Verify that the module string is in the legal list.  Throw if it is not.
+     */
+    private static void throwIfInvalidModule(@NonNull String name) {
+        for (int i = 0; i < sValidModule.length; i++) {
+            if (sValidModule[i].equals(name)) return;
+        }
+        throw new IllegalArgumentException("invalid module: " + name);
+    }
+
+    /**
      * All legal keys start with one of the following strings.
      */
     private static final String[] sValidKeyPrefix = {
@@ -253,8 +273,11 @@ public class PropertyInvalidatedCache<Query, Result> {
     // written to global store.
     private static final int NONCE_BYPASS = 3;
 
+    // The largest reserved nonce value.  Update this whenever a reserved nonce is added.
+    private static final int MAX_RESERVED_NONCE = NONCE_BYPASS;
+
     private static boolean isReservedNonce(long n) {
-        return n >= NONCE_UNSET && n <= NONCE_BYPASS;
+        return n >= NONCE_UNSET && n <= MAX_RESERVED_NONCE;
     }
 
     /**
@@ -291,8 +314,16 @@ public class PropertyInvalidatedCache<Query, Result> {
     @GuardedBy("mLock")
     private long mMisses = 0;
 
+    // This counter tracks the number of times {@link #recompute} returned a null value.  Null
+    // results are cached, or not, depending on instantiation arguments.  Caching nulls when they
+    // should not be cached is a functional error. Failing to cache nulls that can be cached is a
+    // performance error.  A non-zero value here means the cache should be examined to be sure
+    // that nulls are correctly cached, or not.
     @GuardedBy("mLock")
-    private long[] mSkips = new long[]{ 0, 0, 0, 0 };
+    private long mNulls = 0;
+
+    @GuardedBy("mLock")
+    private long[] mSkips = new long[MAX_RESERVED_NONCE + 1];
 
     @GuardedBy("mLock")
     private long mMissOverflow = 0;
@@ -351,6 +382,11 @@ public class PropertyInvalidatedCache<Query, Result> {
     private final String mCacheName;
 
     /**
+     * True if nulls are valid returns from recompute().
+     */
+    private final boolean mCacheNullResults;
+
+    /**
      * The function that computes a Result, given a Query.  This function is called on a
      * cache miss.
      */
@@ -369,8 +405,226 @@ public class PropertyInvalidatedCache<Query, Result> {
         }
     }
 
+    /**
+     * An array of hash maps, indexed by calling UID.  The class behaves a bit like a hash map
+     * except that it uses the calling UID internally.
+     */
+    private class CacheMap<Query, Result> {
+
+        // Create a new map for a UID, using the parent's configuration for max size.
+        private LinkedHashMap<Query, Result> createMap() {
+            return new LinkedHashMap<Query, Result>(
+                2 /* start small */,
+                0.75f /* default load factor */,
+                true /* LRU access order */) {
+                @GuardedBy("mLock")
+                @Override
+                protected boolean removeEldestEntry(Map.Entry eldest) {
+                    final int size = size();
+                    if (size > mHighWaterMark) {
+                        mHighWaterMark = size;
+                    }
+                    if (size > mMaxEntries) {
+                        mMissOverflow++;
+                        return true;
+                    }
+                    return false;
+                }
+            };
+        }
+
+        // An array of maps, indexed by UID.
+        private final SparseArray<LinkedHashMap<Query, Result>> mCache = new SparseArray<>();
+
+        // If true, isolate the hash entries by calling UID.  If this is false, allow the cache
+        // entries to be combined in a single hash map.
+        private final boolean mIsolated;
+
+        // Collect statistics.
+        private final boolean mStatistics;
+
+        // An array of booleans to indicate if a UID has been involved in a map access.  A value
+        // exists for every UID that was ever involved during cache access. This is updated only
+        // if statistics are being collected.
+        private final SparseBooleanArray mUidSeen;
+
+        // A hash map that ignores the UID.  This is used in look-aside fashion just for hit/miss
+        // statistics.  This is updated only if statistics are being collected.
+        private final ArraySet<Query> mShadowCache;
+
+        // Shadow statistics.  Only hits and misses need to be recorded.  These are updated only
+        // if statistics are being collected.  The "SelfHits" records hits when the UID is the
+        // process uid.
+        private int mShadowHits;
+        private int mShadowMisses;
+        private int mShadowSelfHits;
+
+        // The process UID.
+        private final int mSelfUid;
+
+        // True in test mode.  In test mode, the cache uses Binder.getWorkSource() as the UID.
+        private final boolean mTestMode;
+
+        /**
+         * Create a CacheMap.  UID isolation is enabled if the input parameter is true and if the
+         * isolation feature is enabled.
+         */
+        CacheMap(boolean isolate, boolean testMode) {
+            mIsolated = Flags.picIsolateCacheByUid() && isolate;
+            mStatistics = Flags.picIsolatedCacheStatistics() && mIsolated;
+            if (mStatistics) {
+                mUidSeen = new SparseBooleanArray();
+                mShadowCache = new ArraySet<>();
+            } else {
+                mUidSeen = null;
+                mShadowCache = null;
+            }
+            mSelfUid = Process.myUid();
+            mTestMode = testMode;
+        }
+
+        // Return the UID for this cache invocation.  If uid isolation is disabled, the value of 0
+        // is returned, which effectively places all entries in a single hash map.
+        private int callerUid() {
+            if (!mIsolated) {
+                return 0;
+            } else if (mTestMode) {
+                return Binder.getCallingWorkSourceUid();
+            } else {
+                return Binder.getCallingUid();
+            }
+        }
+
+        /**
+         * Lookup an entry in the cache.
+         */
+        Result get(Query query) {
+            final int uid = callerUid();
+
+            // Shadow statistics
+            if (mStatistics) {
+                if (mShadowCache.contains(query)) {
+                    mShadowHits++;
+                    if (uid == mSelfUid) {
+                        mShadowSelfHits++;
+                    }
+                } else {
+                    mShadowMisses++;
+                }
+            }
+
+            var map = mCache.get(uid);
+            if (map != null) {
+                return map.get(query);
+            } else {
+                return null;
+            }
+        }
+
+        /**
+         * Return true if the entry is in the cache.
+         */
+        boolean containsKey(Query query) {
+            final int uid = callerUid();
+            var map = mCache.get(uid);
+            if (map != null) {
+                return map.containsKey(query);
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * Remove an entry from the cache.
+         */
+        void remove(Query query) {
+            final int uid = callerUid();
+            if (mStatistics) {
+                mShadowCache.remove(query);
+            }
+
+            var map = mCache.get(uid);
+            if (map != null) {
+                map.remove(query);
+            }
+        }
+
+        /**
+         * Record an entry in the cache.
+         */
+        void put(Query query, Result result) {
+            final int uid = callerUid();
+            if (mStatistics) {
+                mShadowCache.add(query);
+                mUidSeen.put(uid, true);
+            }
+
+            var map = mCache.get(uid);
+            if (map == null) {
+                map = createMap();
+                mCache.put(uid, map);
+            }
+            map.put(query, result);
+        }
+
+        /**
+         * Return the number of entries in the cache.
+         */
+        int size() {
+            int total = 0;
+            for (int i = 0; i < mCache.size(); i++) {
+                var map = mCache.valueAt(i);
+                total += map.size();
+            }
+            return total;
+        }
+
+        /**
+         * Clear the entries in the cache.  Update the shadow statistics.
+         */
+        void clear() {
+            if (mStatistics) {
+                mShadowCache.clear();
+            }
+
+            mCache.clear();
+        }
+
+        // Dump basic statistics, if any are collected.  Do nothing if statistics are not enabled.
+        void dump(PrintWriter pw) {
+            if (mStatistics) {
+                pw.println(formatSimple("    ShadowHits: %d, ShadowMisses: %d, ShadowSize: %d",
+                                mShadowHits, mShadowMisses, mShadowCache.size()));
+                pw.println(formatSimple("    ShadowUids: %d, SelfUid: %d",
+                                mUidSeen.size(), mShadowSelfHits));
+            }
+        }
+
+        // Dump detailed statistics
+        void dumpDetailed(PrintWriter pw) {
+            for (int i = 0; i < mCache.size(); i++) {
+                int uid = mCache.keyAt(i);
+                var map = mCache.valueAt(i);
+
+                Set<Map.Entry<Query, Result>> cacheEntries = map.entrySet();
+                if (cacheEntries.size() == 0) {
+                    break;
+                }
+
+                pw.println("    Contents:");
+                pw.println(formatSimple("      Uid: %d\n", uid));
+                for (Map.Entry<Query, Result> entry : cacheEntries) {
+                    String key = Objects.toString(entry.getKey());
+                    String value = Objects.toString(entry.getValue());
+
+                    pw.println(formatSimple("      Key: %s\n      Value: %s\n", key, value));
+                }
+            }
+        }
+    }
+
     @GuardedBy("mLock")
-    private final LinkedHashMap<Query, Result> mCache;
+    private final CacheMap<Query, Result> mCache;
 
     /**
      * The nonce handler for this cache.
@@ -694,11 +948,9 @@ public class PropertyInvalidatedCache<Query, Result> {
         // The shared memory.
         private volatile NonceStore mStore;
 
-        // The index of the nonce in shared memory.
+        // The index of the nonce in shared memory.  This changes from INVALID only when the local
+        // object is completely initialized.
         private volatile int mHandle = NonceStore.INVALID_NONCE_INDEX;
-
-        // True if the string has been stored, ever.
-        private volatile boolean mRecorded = false;
 
         // A short name that is saved in shared memory.  This is the portion of the property name
         // that follows the prefix.
@@ -713,48 +965,63 @@ public class PropertyInvalidatedCache<Query, Result> {
             }
         }
 
+        // Initialize the mStore and mHandle variables.  This function does nothing if the
+        // variables are already initialized.  Synchronization ensures that initialization happens
+        // no more than once.  The function returns the new value of mHandle.
+        //
+        // If the "update" boolean is true, then the property is registered with the nonce store
+        // before the associated handle is fetched.
+        private int initialize(boolean update) {
+            synchronized (mLock) {
+                int handle = mHandle;
+                if (handle == NonceStore.INVALID_NONCE_INDEX) {
+                    if (mStore == null) {
+                        mStore = NonceStore.getInstance();
+                        if (mStore == null) {
+                            return NonceStore.INVALID_NONCE_INDEX;
+                        }
+                    }
+                    if (update) {
+                        mStore.storeName(mShortName);
+                    }
+                    handle = mStore.getHandleForName(mShortName);
+                    if (handle == NonceStore.INVALID_NONCE_INDEX) {
+                        return NonceStore.INVALID_NONCE_INDEX;
+                    }
+                    // The handle must be valid.
+                    mHandle = handle;
+                }
+                return handle;
+            }
+        }
+
         // Fetch the nonce from shared memory.  If the shared memory is not available, return
         // UNSET.  If the shared memory is available but the nonce name is not known (it may not
         // have been invalidated by the server yet), return UNSET.
         @Override
         long getNonceInternal() {
-            if (mHandle == NonceStore.INVALID_NONCE_INDEX) {
-                if (mStore == null) {
-                    mStore = NonceStore.getInstance();
-                    if (mStore == null) {
-                        return NONCE_UNSET;
-                    }
-                }
-                mHandle = mStore.getHandleForName(mShortName);
-                if (mHandle == NonceStore.INVALID_NONCE_INDEX) {
+            int handle = mHandle;
+            if (handle == NonceStore.INVALID_NONCE_INDEX) {
+                handle = initialize(false);
+                if (handle == NonceStore.INVALID_NONCE_INDEX) {
                     return NONCE_UNSET;
                 }
             }
-            return mStore.getNonce(mHandle);
+            return mStore.getNonce(handle);
         }
 
-        // Set the nonce in shared mmory.  If the shared memory is not available, throw an
-        // exception.  Otherwise, if the nonce name has never been recorded, record it now and
-        // fetch the handle for the name.  If the handle cannot be created, throw an exception.
+        // Set the nonce in shared memory.  If the shared memory is not available or if the nonce
+        // cannot be registered in shared memory, throw an exception.
         @Override
         void setNonceInternal(long value) {
-            if (mHandle == NonceStore.INVALID_NONCE_INDEX || !mRecorded) {
-                if (mStore == null) {
-                    mStore = NonceStore.getInstance();
-                    if (mStore == null) {
-                        throw new IllegalStateException("setNonce: shared memory not ready");
-                    }
-                }
-                // Always store the name before fetching the handle.  storeName() is idempotent
-                // but does take a little time, so this code calls it just once.
-                mStore.storeName(mShortName);
-                mRecorded = true;
-                mHandle = mStore.getHandleForName(mShortName);
-                if (mHandle == NonceStore.INVALID_NONCE_INDEX) {
-                    throw new IllegalStateException("setNonce: shared memory store failed");
+            int handle = mHandle;
+            if (handle == NonceStore.INVALID_NONCE_INDEX) {
+                handle = initialize(true);
+                if (handle == NonceStore.INVALID_NONCE_INDEX) {
+                    throw new IllegalStateException("unable to assign nonce handle: " + mName);
                 }
             }
-            mStore.setNonce(mHandle, value);
+            mStore.setNonce(handle, value);
         }
     }
 
@@ -798,14 +1065,32 @@ public class PropertyInvalidatedCache<Query, Result> {
             = new ConcurrentHashMap<>();
 
     // True if shared memory is flag-enabled, false otherwise.  Read the flags exactly once.
-    private static final boolean sSharedMemoryAvailable =
-            com.android.internal.os.Flags.applicationSharedMemoryEnabled()
-            && android.app.Flags.picUsesSharedMemory();
+    private static final boolean sSharedMemoryAvailable = isSharedMemoryAvailable();
+
+    @android.ravenwood.annotation.RavenwoodReplace
+    private static boolean isSharedMemoryAvailable() {
+        return com.android.internal.os.Flags.applicationSharedMemoryEnabled()
+                && android.app.Flags.picUsesSharedMemory();
+    }
+
+    private static boolean isSharedMemoryAvailable$ravenwood() {
+        return false; // Always disable shared memory on Ravenwood. (for now)
+    }
+
+    /**
+     * Keys that cannot be put in shared memory yet.
+     */
+    private static boolean inSharedMemoryDenyList(@NonNull String name) {
+        final String pkginfo = PREFIX_SYSTEM + "package_info";
+        return name.equals(pkginfo);
+    };
 
     // Return true if this cache can use shared memory for its nonce.  Shared memory may be used
     // if the module is the system.
     private static boolean sharedMemoryOkay(@NonNull String name) {
-        return sSharedMemoryAvailable && name.startsWith(PREFIX_SYSTEM);
+        return sSharedMemoryAvailable
+                && name.startsWith(PREFIX_SYSTEM)
+                && !inSharedMemoryDenyList(name);
     }
 
     /**
@@ -835,6 +1120,93 @@ public class PropertyInvalidatedCache<Query, Result> {
     }
 
     /**
+     * A public argument builder to configure cache behavior.  The root instance requires a
+     * module; this is immutable.  New instances are created with member methods.  It is important
+     * to note that the member methods create new instances: they do not modify 'this'.  The api
+     * is allowed to be null in the record constructor to facility reuse of Args instances.
+     * @hide
+     */
+    public static record Args(@NonNull String mModule, @Nullable String mApi,
+            int mMaxEntries, boolean mIsolateUids, boolean mTestMode, boolean mCacheNulls) {
+
+        // Validation: the module must be one of the known module strings and the maxEntries must
+        // be positive.
+        public Args {
+            throwIfInvalidModule(mModule);
+            checkArgumentPositive(mMaxEntries, "max cache size must be positive");
+        }
+
+        // The base constructor must include the module.  Modules do not change in a source file,
+        // so even if the Args is reused, the module will not/should not change.  The api is null,
+        // which is not legal, but there is no reasonable default.  Clients must call the api
+        // method to set the field properly.
+        public Args(@NonNull String module) {
+            this(module,
+                    null,       // api
+                    32,         // maxEntries
+                    true,       // isolateUids
+                    false,      // testMode
+                    true        // allowNulls
+                 );
+        }
+
+        public Args api(@NonNull String api) {
+            return new Args(mModule, api, mMaxEntries, mIsolateUids, mTestMode, mCacheNulls);
+        }
+
+        public Args maxEntries(int val) {
+            return new Args(mModule, mApi, val, mIsolateUids, mTestMode, mCacheNulls);
+        }
+
+        public Args isolateUids(boolean val) {
+            return new Args(mModule, mApi, mMaxEntries, val, mTestMode, mCacheNulls);
+        }
+
+        public Args testMode(boolean val) {
+            return new Args(mModule, mApi, mMaxEntries, mIsolateUids, val, mCacheNulls);
+        }
+
+        public Args cacheNulls(boolean val) {
+            return new Args(mModule, mApi, mMaxEntries, mIsolateUids, mTestMode, val);
+        }
+    }
+
+    /**
+     * Make a new property invalidated cache.  The key is computed from the module and api
+     * parameters.
+     *
+     * @param args The cache configuration.
+     * @param cacheName Name of this cache in debug and dumpsys
+     * @param computer The code to compute values that are not in the cache.
+     * @hide
+     */
+    public PropertyInvalidatedCache(@NonNull Args args, @NonNull String cacheName,
+            @Nullable QueryHandler<Query, Result> computer) {
+        mPropertyName = createPropertyName(args.mModule, args.mApi);
+        mCacheName = cacheName;
+        mCacheNullResults = args.mCacheNulls && Flags.picCacheNulls();
+        mNonce = getNonceHandler(mPropertyName);
+        mMaxEntries = args.mMaxEntries;
+        mCache = new CacheMap<>(args.mIsolateUids, args.mTestMode);
+        mComputer = (computer != null) ? computer : new DefaultComputer<>(this);
+        registerCache();
+    }
+
+    /**
+     * Burst a property name into module and api.  Throw if the key is invalid.  This method is
+     * used in to transition legacy cache constructors to the args constructor.
+     */
+    private static Args parseProperty(@NonNull String name) {
+        throwIfInvalidCacheKey(name);
+        // Strip off the leading well-known prefix.
+        String base = name.substring(CACHE_KEY_PREFIX.length() + 1);
+        int dot = base.indexOf(".");
+        String module = base.substring(0, dot);
+        String api = base.substring(dot + 1);
+        return new Args(module).api(api);
+    }
+
+    /**
      * Make a new property invalidated cache.  This constructor names the cache after the
      * property name.  New clients should prefer the constructor that takes an explicit
      * cache name.
@@ -848,7 +1220,7 @@ public class PropertyInvalidatedCache<Query, Result> {
      * @hide
      */
     public PropertyInvalidatedCache(int maxEntries, @NonNull String propertyName) {
-        this(maxEntries, propertyName, propertyName);
+        this(parseProperty(propertyName).maxEntries(maxEntries), propertyName, null);
     }
 
     /**
@@ -864,13 +1236,7 @@ public class PropertyInvalidatedCache<Query, Result> {
      */
     public PropertyInvalidatedCache(int maxEntries, @NonNull String propertyName,
             @NonNull String cacheName) {
-        mPropertyName = propertyName;
-        mCacheName = cacheName;
-        mNonce = getNonceHandler(mPropertyName);
-        mMaxEntries = maxEntries;
-        mComputer = new DefaultComputer<>(this);
-        mCache = createMap();
-        registerCache();
+        this(parseProperty(propertyName).maxEntries(maxEntries), cacheName, null);
     }
 
     /**
@@ -888,35 +1254,7 @@ public class PropertyInvalidatedCache<Query, Result> {
     @TestApi
     public PropertyInvalidatedCache(int maxEntries, @NonNull String module, @NonNull String api,
             @NonNull String cacheName, @NonNull QueryHandler<Query, Result> computer) {
-        mPropertyName = createPropertyName(module, api);
-        mCacheName = cacheName;
-        mNonce = getNonceHandler(mPropertyName);
-        mMaxEntries = maxEntries;
-        mComputer = computer;
-        mCache = createMap();
-        registerCache();
-    }
-
-    // Create a map.  This should be called only from the constructor.
-    private LinkedHashMap<Query, Result> createMap() {
-        return new LinkedHashMap<Query, Result>(
-            2 /* start small */,
-            0.75f /* default load factor */,
-            true /* LRU access order */) {
-                @GuardedBy("mLock")
-                @Override
-                protected boolean removeEldestEntry(Map.Entry eldest) {
-                    final int size = size();
-                    if (size > mHighWaterMark) {
-                        mHighWaterMark = size;
-                    }
-                    if (size > mMaxEntries) {
-                        mMissOverflow++;
-                        return true;
-                    }
-                    return false;
-                }
-        };
+        this(new Args(module).maxEntries(maxEntries).api(api), cacheName, computer);
     }
 
     /**
@@ -944,7 +1282,12 @@ public class PropertyInvalidatedCache<Query, Result> {
     public static void setTestMode(boolean mode) {
         synchronized (sGlobalLock) {
             if (sTestMode == mode) {
-                throw new IllegalStateException("cannot set test mode redundantly: mode=" + mode);
+                final String msg = "cannot set test mode redundantly: mode=" + mode;
+                if (Flags.enforcePicTestmodeProtocol()) {
+                    throw new IllegalStateException(msg);
+                } else {
+                    Log.e(TAG, msg);
+                }
             }
             sTestMode = mode;
             if (mode) {
@@ -1157,7 +1500,8 @@ public class PropertyInvalidatedCache<Query, Result> {
     public @Nullable Result query(@NonNull Query query) {
         // Let access to mDisabled race: it's atomic anyway.
         long currentNonce = (!isDisabled()) ? getCurrentNonce() : NONCE_DISABLED;
-        if (bypass(query)) {
+        if (!isReservedNonce(currentNonce)
+            && bypass(query)) {
             currentNonce = NONCE_BYPASS;
         }
         for (;;) {
@@ -1179,12 +1523,24 @@ public class PropertyInvalidatedCache<Query, Result> {
                 }
                 return recompute(query);
             }
+
+            final boolean cacheHit;
             final Result cachedResult;
             synchronized (mLock) {
                 if (currentNonce == mLastSeenNonce) {
                     cachedResult = mCache.get(query);
-
-                    if (cachedResult != null) mHits++;
+                    if (cachedResult == null) {
+                        if (mCacheNullResults) {
+                            cacheHit = mCache.containsKey(query);
+                        } else {
+                            cacheHit = false;
+                        }
+                    } else {
+                        cacheHit = true;
+                    }
+                    if (cacheHit) {
+                        mHits++;
+                    }
                 } else {
                     if (DEBUG) {
                         Log.d(TAG, formatSimple(
@@ -1194,16 +1550,18 @@ public class PropertyInvalidatedCache<Query, Result> {
                     }
                     clear();
                     mLastSeenNonce = currentNonce;
+                    cacheHit = false;
                     cachedResult = null;
                 }
             }
+
             // Cache hit --- but we're not quite done yet.  A value in the cache might need to
             // be augmented in a "refresh" operation.  The refresh operation can combine the
             // old and the new nonce values.  In order to make sure the new parts of the value
             // are consistent with the old, possibly-reused parts, we check the property value
             // again after the refresh and do the whole fetch again if the property invalidated
             // us while we were refreshing.
-            if (cachedResult != null) {
+            if (cacheHit) {
                 final Result refreshedResult = refresh(cachedResult, query);
                 if (refreshedResult != cachedResult) {
                     if (DEBUG) {
@@ -1238,6 +1596,7 @@ public class PropertyInvalidatedCache<Query, Result> {
                 }
                 return maybeCheckConsistency(query, cachedResult);
             }
+
             // Cache miss: make the value from scratch.
             if (DEBUG) {
                 Log.d(TAG, "cache miss for " + cacheName() + " " + queryToString(query));
@@ -1246,8 +1605,13 @@ public class PropertyInvalidatedCache<Query, Result> {
             synchronized (mLock) {
                 // If someone else invalidated the cache while we did the recomputation, don't
                 // update the cache with a potentially stale result.
-                if (mLastSeenNonce == currentNonce && result != null) {
-                    mCache.put(query, result);
+                if (mLastSeenNonce == currentNonce) {
+                    if (result != null || mCacheNullResults) {
+                        mCache.put(query, result);
+                    }
+                    if (result == null) {
+                        mNulls++;
+                    }
                 }
                 mMisses++;
             }
@@ -1625,71 +1989,72 @@ public class PropertyInvalidatedCache<Query, Result> {
         return false;
     }
 
-    /**
-     * helper method to check if dump should be skipped due to zero values
-     * @param args takes command arguments to check if -brief is present
-     * @return True if dump should be skipped
-     */
-    private boolean skipDump(String[] args) {
-        for (String a : args) {
-            if (a.equals(BRIEF)) {
-                return (mSkips[NONCE_CORKED] + mSkips[NONCE_UNSET] + mSkips[NONCE_DISABLED]
-                      + mSkips[NONCE_BYPASS] + mHits + mMisses) == 0;
-            }
+    @GuardedBy("mLock")
+    private long getSkipsLocked() {
+        int sum = 0;
+        for (int i = 0; i < mSkips.length; i++) {
+            sum += mSkips[i];
         }
-        return false;
+        return sum;
     }
 
+    // Return true if this cache has had any activity.  If the hits, misses, and skips are all
+    // zero then the client never tried to use the cache.  If invalidations and corks are also
+    // zero then the server never tried to use the cache.
+    private boolean isActive(NonceHandler.Stats stats) {
+        synchronized (mLock) {
+            return mHits + mMisses + getSkipsLocked()
+                    + stats.invalidated + stats.corkedInvalidates > 0;
+        }
+    }
+
+    @NeverCompile
     private void dumpContents(PrintWriter pw, boolean detailed, String[] args) {
         // If the user has requested specific caches and this is not one of them, return
         // immediately.
         if (detailed && !showDetailed(args)) {
             return;
         }
+        // Does the user want brief output?
+        boolean brief = false;
+        for (String a : args) brief |= a.equals(BRIEF);
 
         NonceHandler.Stats stats = mNonce.getStats();
 
         synchronized (mLock) {
-            if (!skipDump(args)) {
-                pw.println(formatSimple("  Cache Name: %s", cacheName()));
-                pw.println(formatSimple("    Property: %s", mPropertyName));
-                final long skips =
-                        mSkips[NONCE_CORKED] + mSkips[NONCE_UNSET] + mSkips[NONCE_DISABLED]
-                                + mSkips[NONCE_BYPASS];
-                pw.println(formatSimple(
-                        "    Hits: %d, Misses: %d, Skips: %d, Clears: %d",
-                        mHits, mMisses, skips, mClears));
-                pw.println(formatSimple(
-                        "    Skip-corked: %d, Skip-unset: %d, Skip-bypass: %d, Skip-other: %d",
-                        mSkips[NONCE_CORKED], mSkips[NONCE_UNSET],
-                        mSkips[NONCE_BYPASS], mSkips[NONCE_DISABLED]));
-                pw.println(formatSimple(
-                        "    Nonce: 0x%016x, Invalidates: %d, CorkedInvalidates: %d",
-                        mLastSeenNonce, stats.invalidated, stats.corkedInvalidates));
-                pw.println(formatSimple(
-                        "    Current Size: %d, Max Size: %d, HW Mark: %d, Overflows: %d",
-                        mCache.size(), mMaxEntries, mHighWaterMark, mMissOverflow));
-                pw.println(formatSimple("    Enabled: %s", mDisabled ? "false" : "true"));
-                pw.println("");
-            }
-
-            // No specific cache was requested.  This is the default, and no details
-            // should be dumped.
-            if (!detailed) {
-                return;
-            }
-            Set<Map.Entry<Query, Result>> cacheEntries = mCache.entrySet();
-            if (cacheEntries.size() == 0) {
+            if (brief && !isActive(stats)) {
                 return;
             }
 
-            pw.println("    Contents:");
-            for (Map.Entry<Query, Result> entry : cacheEntries) {
-                String key = Objects.toString(entry.getKey());
-                String value = Objects.toString(entry.getValue());
+            pw.println(formatSimple("  Cache Name: %s", cacheName()));
+            pw.println(formatSimple("    Property: %s", mPropertyName));
+            pw.println(formatSimple(
+                "    Hits: %d, Misses: %d, Skips: %d, Clears: %d, Nulls: %d",
+                mHits, mMisses, getSkipsLocked(), mClears, mNulls));
 
-                pw.println(formatSimple("      Key: %s\n      Value: %s\n", key, value));
+            // Print all the skip reasons.
+            pw.format("    Skip-%s: %d", sNonceName[0], mSkips[0]);
+            for (int i = 1; i < mSkips.length; i++) {
+                pw.format(", Skip-%s: %d", sNonceName[i], mSkips[i]);
             }
+            pw.println();
+
+            pw.println(formatSimple(
+                "    Nonce: 0x%016x, Invalidates: %d, Corked: %d",
+                mLastSeenNonce, stats.invalidated, stats.corkedInvalidates));
+            pw.println(formatSimple(
+                "    Current Size: %d, Max Size: %d, HW Mark: %d, Overflows: %d",
+                mCache.size(), mMaxEntries, mHighWaterMark, mMissOverflow));
+            mCache.dump(pw);
+            pw.println(formatSimple("    Enabled: %s", mDisabled ? "false" : "true"));
+
+            // Dump the contents of the cache.
+            if (detailed) {
+                mCache.dumpDetailed(pw);
+            }
+
+            // Separator between caches.
+            pw.println("");
         }
     }
 
@@ -1699,6 +2064,7 @@ public class PropertyInvalidatedCache<Query, Result> {
      * specific caches (selection is by cache name or property name); if these switches
      * are used then the output includes both cache statistics and cache entries.
      */
+    @NeverCompile
     private static void dumpCacheInfo(@NonNull PrintWriter pw, @NonNull String[] args) {
         if (!sEnabled) {
             pw.println("  Caching is disabled in this process.");
@@ -1731,6 +2097,7 @@ public class PropertyInvalidatedCache<Query, Result> {
      * are used then the output includes both cache statistics and cache entries.
      * @hide
      */
+    @NeverCompile
     public static void dumpCacheInfo(@NonNull ParcelFileDescriptor pfd, @NonNull String[] args) {
         // Create a PrintWriter that uses a byte array.  The code can safely write to
         // this array without fear of blocking.  The completed byte array will be sent
@@ -1787,14 +2154,6 @@ public class PropertyInvalidatedCache<Query, Result> {
         // block.
         private static final int MAX_STRING_LENGTH = 63;
 
-        // The raw byte block.  Strings are stored as run-length encoded byte arrays.  The first
-        // byte is the length of the following string.  It is an axiom of the system that the
-        // string block is initially all zeros and that it is write-once memory: new strings are
-        // appended to existing strings, so there is never a need to revisit strings that have
-        // already been pulled from the string block.
-        @GuardedBy("mLock")
-        private final byte[] mStringBlock;
-
         // The expected hash code of the string block.  If the hash over the string block equals
         // this value, then the string block is valid.  Otherwise, the block is not valid and
         // should be re-read.  An invalid block generally means that a client has read the shared
@@ -1806,12 +2165,15 @@ public class PropertyInvalidatedCache<Query, Result> {
         // logging.
         private final int mMaxNonce;
 
+        // The size of the native byte block.
+        private final int mMaxByte;
+
         /** @hide */
         @VisibleForTesting
         public NonceStore(long ptr, boolean mutable) {
             mPtr = ptr;
             mMutable = mutable;
-            mStringBlock = new byte[nativeGetMaxByte(ptr)];
+            mMaxByte = nativeGetMaxByte(ptr);
             mMaxNonce = nativeGetMaxNonce(ptr);
             refreshStringBlockLocked();
         }
@@ -1870,17 +2232,17 @@ public class PropertyInvalidatedCache<Query, Result> {
         // and the block hash is not checked.  The function skips past strings that have already
         // been read, and then processes any new strings.
         @GuardedBy("mLock")
-        private void updateStringMapLocked() {
+        private void updateStringMapLocked(byte[] block) {
             int index = 0;
             int offset = 0;
-            while (offset < mStringBlock.length && mStringBlock[offset] != 0) {
+            while (offset < block.length && block[offset] != 0) {
                 if (index > mHighestIndex) {
                     // Only record the string if it has not been seen yet.
-                    final String s = new String(mStringBlock, offset+1, mStringBlock[offset]);
+                    final String s = new String(block, offset+1, block[offset]);
                     mStringHandle.put(s, index);
                     mHighestIndex = index;
                 }
-                offset += mStringBlock[offset] + 1;
+                offset += block[offset] + 1;
                 index++;
             }
             mStringBytes = offset;
@@ -1889,24 +2251,21 @@ public class PropertyInvalidatedCache<Query, Result> {
         // Append a string to the string block and update the hash.  This does not write the block
         // to shared memory.
         @GuardedBy("mLock")
-        private void appendStringToMapLocked(@NonNull String str) {
+        private void appendStringToMapLocked(@NonNull String str, @NonNull byte[] block) {
             int offset = 0;
-            while (offset < mStringBlock.length && mStringBlock[offset] != 0) {
-                offset += mStringBlock[offset] + 1;
+            while (offset < block.length && block[offset] != 0) {
+                offset += block[offset] + 1;
             }
             final byte[] strBytes = str.getBytes();
 
-            if (offset + strBytes.length >= mStringBlock.length) {
+            if (offset + strBytes.length >= block.length) {
                 // Overflow.  Do not add the string to the block; the string will remain undefined.
                 return;
             }
 
-            mStringBlock[offset] = (byte) strBytes.length;
-            offset++;
-            for (int i = 0; i < strBytes.length; i++, offset++) {
-                mStringBlock[offset] = strBytes[i];
-            }
-            mBlockHash = Arrays.hashCode(mStringBlock);
+            block[offset] = (byte) strBytes.length;
+            System.arraycopy(strBytes, 0, block, offset+1, strBytes.length);
+            mBlockHash = Arrays.hashCode(block);
         }
 
         // Possibly update the string block.  If the native shared memory has a new block hash,
@@ -1917,8 +2276,9 @@ public class PropertyInvalidatedCache<Query, Result> {
                 // The fastest way to know that the shared memory string block has not changed.
                 return;
             }
-            final int hash = nativeGetByteBlock(mPtr, mBlockHash, mStringBlock);
-            if (hash != Arrays.hashCode(mStringBlock)) {
+            byte[] block = new byte[mMaxByte];
+            final int hash = nativeGetByteBlock(mPtr, mBlockHash, block);
+            if (hash != Arrays.hashCode(block)) {
                 // This is a partial read: ignore it.  The next time someone needs this string
                 // the memory will be read again and should succeed.  Set the local hash to
                 // zero to ensure that the next read attempt will actually read from shared
@@ -1930,7 +2290,7 @@ public class PropertyInvalidatedCache<Query, Result> {
             // The hash has changed.  Update the strings from the byte block.
             mStringUpdated++;
             mBlockHash = hash;
-            updateStringMapLocked();
+            updateStringMapLocked(block);
         }
 
         // Throw an exception if the string cannot be stored in the string block.
@@ -1963,6 +2323,9 @@ public class PropertyInvalidatedCache<Query, Result> {
             }
         }
 
+        static final AtomicLong sStoreCount = new AtomicLong();
+
+
         // Add a string to the local copy of the block and write the block to shared memory.
         // Return the index of the new string.  If the string has already been recorded, the
         // shared memory is not updated but the index of the existing string is returned.
@@ -1972,9 +2335,11 @@ public class PropertyInvalidatedCache<Query, Result> {
                 if (handle == null) {
                     throwIfImmutable();
                     throwIfBadString(str);
-                    appendStringToMapLocked(str);
-                    nativeSetByteBlock(mPtr, mBlockHash, mStringBlock);
-                    updateStringMapLocked();
+                    byte[] block = new byte[mMaxByte];
+                    nativeGetByteBlock(mPtr, 0, block);
+                    appendStringToMapLocked(str, block);
+                    nativeSetByteBlock(mPtr, mBlockHash, block);
+                    updateStringMapLocked(block);
                     handle = mStringHandle.get(str);
                 }
                 return handle;
@@ -2038,6 +2403,7 @@ public class PropertyInvalidatedCache<Query, Result> {
      * @param mPtr the pointer to the native shared memory.
      * @return the number of nonces supported by the shared memory.
      */
+    @FastNative
     private static native int nativeGetMaxNonce(long mPtr);
 
     /**
@@ -2046,6 +2412,7 @@ public class PropertyInvalidatedCache<Query, Result> {
      * @param mPtr the pointer to the native shared memory.
      * @return the number of string bytes supported by the shared memory.
      */
+    @FastNative
     private static native int nativeGetMaxByte(long mPtr);
 
     /**

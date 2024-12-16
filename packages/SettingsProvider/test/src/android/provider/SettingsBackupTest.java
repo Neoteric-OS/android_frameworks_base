@@ -564,6 +564,8 @@ public class SettingsBackupTest {
                     Settings.Global.MANAGED_PROVISIONING_DEFER_PROVISIONING_TO_ROLE_HOLDER,
                     Settings.Global.REVIEW_PERMISSIONS_NOTIFICATION_STATE,
                     Settings.Global.ENABLE_BACK_ANIMATION, // Temporary for T, dev option only
+                    Settings.Global.HEARING_DEVICE_LOCAL_AMBIENT_VOLUME, // cache per hearing device
+                    Settings.Global.HEARING_DEVICE_LOCAL_NOTIFICATION, // cache per hearing device
                     Settings.Global.Wearable.COMBINED_LOCATION_ENABLE,
                     Settings.Global.Wearable.HAS_PAY_TOKENS,
                     Settings.Global.Wearable.GMS_CHECKIN_TIMEOUT_MIN,
@@ -633,7 +635,8 @@ public class SettingsBackupTest {
                     Settings.Global.Wearable.WEAR_MEDIA_SESSIONS_PACKAGE,
                     Settings.Global.Wearable.WEAR_POWER_ANOMALY_SERVICE_ENABLED,
                     Settings.Global.Wearable.CONNECTIVITY_KEEP_DATA_ON,
-                    Settings.Global.Wearable.PHONE_SWITCHING_REQUEST_SOURCE);
+                    Settings.Global.Wearable.PHONE_SWITCHING_REQUEST_SOURCE,
+                    Settings.Global.Wearable.WEAR_SYSTEM_STATUS_TRAY_CONFIGURATION);
 
     private static final Set<String> BACKUP_DENY_LIST_SECURE_SETTINGS =
              newHashSet(

@@ -22,6 +22,7 @@ import static android.hardware.flags.Flags.FLAG_OVERLAYPROPERTIES_CLASS_API;
 
 import static com.android.server.display.feature.flags.Flags.FLAG_HIGHEST_HDR_SDR_RATIO_API;
 import static com.android.server.display.feature.flags.Flags.FLAG_ENABLE_HAS_ARR_SUPPORT;
+import static com.android.server.display.feature.flags.Flags.FLAG_ENABLE_GET_SUGGESTED_FRAME_RATE;
 
 import android.Manifest;
 import android.annotation.FlaggedApi;
@@ -1279,6 +1280,71 @@ public final class Display {
     }
 
     /**
+     * Represents the {@link FrameRateCategory} for the Normal frame rate
+     *
+     * @see FrameRateCategory
+     */
+    @FlaggedApi(FLAG_ENABLE_GET_SUGGESTED_FRAME_RATE)
+    public static final int FRAME_RATE_CATEGORY_NORMAL = 0;
+
+    /**
+     * Represents the {@link FrameRateCategory} for the High frame rate
+     *
+     * @see FrameRateCategory
+     */
+    @FlaggedApi(FLAG_ENABLE_GET_SUGGESTED_FRAME_RATE)
+    public static final int FRAME_RATE_CATEGORY_HIGH = 1;
+
+    /**
+     * @hide
+     */
+    @IntDef(prefix = {"FRAME_RATE_CATEGORY_"},
+            value = {
+                FRAME_RATE_CATEGORY_NORMAL,
+                FRAME_RATE_CATEGORY_HIGH
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface FrameRateCategory {}
+
+    /**
+     * <p> Gets the display-defined frame rate given a descriptive frame rate category. </p>
+     *
+     * <p> For example, an animation that does not require fast render rates can use
+     * the {@link #FRAME_RATE_CATEGORY_NORMAL} to get the suggested frame rate.
+     * The suggested frame rate then can be used in the
+     * {@link Surface.FrameRateParams.Builder#setDesiredRateRange} for desiredMinRate.
+     *
+     * <pre>{@code
+     *  float desiredMinRate = display.getSuggestedFrameRate(FRAME_RATE_CATEGORY_NORMAL);
+     *  Surface.FrameRateParams params = new Surface.FrameRateParams.Builder().
+     *                                      setDesiredRateRange(desiredMinRate, Float.MAX).build();
+     *  surface.setFrameRate(params);
+     * }</pre>
+     * </p>
+     *
+     * @param category either {@link #FRAME_RATE_CATEGORY_NORMAL}
+     *                 or {@link #FRAME_RATE_CATEGORY_HIGH}
+     *
+     * @see Surface#setFrameRate(Surface.FrameRateParams)
+     * @see SurfaceControl.Transaction#setFrameRate(SurfaceControl, Surface.FrameRateParams)
+     * @throws IllegalArgumentException when category is not {@link #FRAME_RATE_CATEGORY_NORMAL}
+     * or {@link #FRAME_RATE_CATEGORY_HIGH}
+     */
+    @FlaggedApi(FLAG_ENABLE_GET_SUGGESTED_FRAME_RATE)
+    public float getSuggestedFrameRate(@FrameRateCategory int category) {
+        synchronized (mLock) {
+            updateDisplayInfoLocked();
+            if (category == FRAME_RATE_CATEGORY_HIGH) {
+                return mDisplayInfo.frameRateCategoryRate.getHigh();
+            } else if (category == FRAME_RATE_CATEGORY_NORMAL) {
+                return mDisplayInfo.frameRateCategoryRate.getNormal();
+            } else {
+                throw new IllegalArgumentException("Invalid FrameRateCategory provided");
+            }
+        }
+    }
+
+    /**
      * <p> Returns true if the connected display can be switched into a mode with minimal
      * post processing. </p>
      *
@@ -1494,8 +1560,9 @@ public final class Display {
             // Although we only care about the HDR/SDR ratio changing, that can also come in the
             // form of the larger DISPLAY_CHANGED event
             mGlobal.registerDisplayListener(toRegister, executor,
-                    DisplayManager.EVENT_FLAG_HDR_SDR_RATIO_CHANGED
-                            | DisplayManagerGlobal.EVENT_DISPLAY_CHANGED,
+                    DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_CHANGED
+                            | DisplayManagerGlobal
+                                    .INTERNAL_EVENT_FLAG_DISPLAY_HDR_SDR_RATIO_CHANGED,
                     ActivityThread.currentPackageName());
         }
 
@@ -1730,7 +1797,12 @@ public final class Display {
      *         {@code getWindowManager()} or {@code getSystemService(Context.WINDOW_SERVICE)}), the
      *         returned metrics provide the size of the current app window. As a result, in
      *         multi-window mode, the returned size can be smaller than the size of the device
-     *         screen.
+     *         screen. System decoration handling may vary depending on API level:
+     *         <ul>
+     *             <li>API level 35 and above, the window size will be returned.
+     *             <li>API level 34 and below, the window size minus system decoration areas and
+     *                 display cutout is returned.
+     *         </ul>
      *     <li>If metrics are requested from a non-activity context (for example, the application
      *         context, where the WindowManager is accessed by
      *         {@code getApplicationContext().getSystemService(Context.WINDOW_SERVICE)}), the

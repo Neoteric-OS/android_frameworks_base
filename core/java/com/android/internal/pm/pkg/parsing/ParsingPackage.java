@@ -123,6 +123,9 @@ public interface ParsingPackage {
 
     ParsingPackage addQueriesProvider(String authority);
 
+    /** Adds a feature flag (`android:featureFlag` attribute) encountered in the manifest. */
+    ParsingPackage addFeatureFlag(@NonNull String flagPackageAndName, @Nullable Boolean flagValue);
+
     /** Sets a process name -> {@link ParsedProcess} map coming from the <processes> tag. */
     ParsingPackage setProcesses(@NonNull Map<String, ParsedProcess> processes);
 
@@ -410,6 +413,18 @@ public interface ParsingPackage {
 
     ParsingPackage setOnBackInvokedCallbackEnabled(boolean enableOnBackInvokedCallback);
 
+    /**
+     * Set the drawable resources id array of the alternate icons that are parsing from the
+     * AndroidManifest file
+     */
+    ParsingPackage setAlternateLauncherIconResIds(int[] alternateLauncherIconResIds);
+
+    /**
+     * Set the string resources id array of the alternate labels that are parsing from the
+     * AndroidManifest file
+     */
+    ParsingPackage setAlternateLauncherLabelResIds(int[] alternateLauncherLabelResIds);
+
     @CallSuper
     ParsedPackage hideAsParsed();
 
@@ -550,4 +565,15 @@ public interface ParsingPackage {
     boolean isNormalScreensSupported();
 
     boolean isSmallScreensSupported();
+
+    /**
+     * Sets the intent matching flags. This value is intended to be set from the "application" tag.
+     * @see android.R.styleable#AndroidManifestApplication_intentMatchingFlags
+     */
+    ParsingPackage setIntentMatchingFlags(int intentMatchingFlags);
+
+    /**
+     * Returns the intent matching flags.
+     */
+    int getIntentMatchingFlags();
 }

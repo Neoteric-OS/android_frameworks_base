@@ -42,9 +42,11 @@ import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_FLOATIN
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_GESTURE;
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_NAVIGATION_BAR;
 import static android.provider.Settings.Secure.ACCESSIBILITY_DISPLAY_MAGNIFICATION_NAVBAR_ENABLED;
+import static android.view.Display.INVALID_DISPLAY;
 import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL;
 import static android.view.accessibility.AccessibilityManager.FlashNotificationReason;
 
+import static com.android.hardware.input.Flags.enableTalkbackAndMagnifierKeyGestures;
 import static com.android.hardware.input.Flags.keyboardA11yMouseKeys;
 import static com.android.internal.accessibility.AccessibilityShortcutController.ACCESSIBILITY_HEARING_AIDS_COMPONENT_NAME;
 import static com.android.internal.accessibility.AccessibilityShortcutController.MAGNIFICATION_COMPONENT_NAME;
@@ -52,8 +54,10 @@ import static com.android.internal.accessibility.AccessibilityShortcutController
 import static com.android.internal.accessibility.common.ShortcutConstants.CHOOSER_PACKAGE_NAME;
 import static com.android.internal.accessibility.common.ShortcutConstants.USER_SHORTCUT_TYPES;
 import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType;
+import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.ALL;
 import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.GESTURE;
 import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.HARDWARE;
+import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.KEY_GESTURE;
 import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.QUICK_SETTINGS;
 import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.SOFTWARE;
 import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.TRIPLETAP;
@@ -110,6 +114,8 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.hardware.display.DisplayManager;
 import android.hardware.fingerprint.IFingerprintService;
+import android.hardware.input.InputManager;
+import android.hardware.input.KeyGestureEvent;
 import android.media.AudioManagerInternal;
 import android.net.Uri;
 import android.os.Binder;
@@ -337,6 +343,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
 
     private AlertDialog mEnableTouchExplorationDialog;
 
+    private final InputManager mInputManager;
+
     private AccessibilityInputFilter mInputFilter;
 
     private boolean mHasInputFilter;
@@ -502,6 +510,25 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         }
     }
 
+    private InputManager.KeyGestureEventHandler mKeyGestureEventHandler =
+            new InputManager.KeyGestureEventHandler() {
+                @Override
+                public boolean handleKeyGestureEvent(
+                        @NonNull KeyGestureEvent event,
+                        @Nullable IBinder focusedToken) {
+                    return AccessibilityManagerService.this.handleKeyGestureEvent(event);
+                }
+
+                @Override
+                public boolean isKeyGestureSupported(int gestureType) {
+                    return switch (gestureType) {
+                        case KeyGestureEvent.KEY_GESTURE_TYPE_TOGGLE_MAGNIFICATION,
+                             KeyGestureEvent.KEY_GESTURE_TYPE_ACTIVATE_SELECT_TO_SPEAK -> true;
+                        default -> false;
+                    };
+                }
+            };
+
     @VisibleForTesting
     AccessibilityManagerService(
             Context context,
@@ -541,6 +568,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         mUmi = LocalServices.getService(UserManagerInternal.class);
         // TODO(b/255426725): not used on tests
         mVisibleBgUserIds = null;
+        mInputManager = context.getSystemService(InputManager.class);
 
         init();
     }
@@ -582,6 +610,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 mUiAutomationManager, this);
         mFlashNotificationsController = new FlashNotificationsController(mContext);
         mUmi = LocalServices.getService(UserManagerInternal.class);
+        mInputManager = context.getSystemService(InputManager.class);
 
         if (UserManager.isVisibleBackgroundUsersEnabled()) {
             mVisibleBgUserIds = new SparseBooleanArray();
@@ -598,6 +627,9 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         registerBroadcastReceivers();
         new AccessibilityContentObserver(mMainHandler).register(
                 mContext.getContentResolver());
+        if (enableTalkbackAndMagnifierKeyGestures()) {
+            mInputManager.registerKeyGestureEventHandler(mKeyGestureEventHandler);
+        }
         disableAccessibilityMenuToMigrateIfNeeded();
     }
 
@@ -637,6 +669,79 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     @Override
     public boolean isAccessibilityButtonShown() {
         return mIsAccessibilityButtonShown;
+    }
+
+    @VisibleForTesting
+    boolean handleKeyGestureEvent(KeyGestureEvent event) {
+        final boolean complete =
+                event.getAction() == KeyGestureEvent.ACTION_GESTURE_COMPLETE
+                        && !event.isCancelled();
+        final int gestureType = event.getKeyGestureType();
+        if (!complete) {
+            return false;
+        }
+
+        String targetName;
+        switch (gestureType) {
+            case KeyGestureEvent.KEY_GESTURE_TYPE_TOGGLE_MAGNIFICATION:
+                targetName = MAGNIFICATION_CONTROLLER_NAME;
+                break;
+            case KeyGestureEvent.KEY_GESTURE_TYPE_ACTIVATE_SELECT_TO_SPEAK:
+                targetName = mContext.getString(R.string.config_defaultSelectToSpeakService);
+                if (targetName.isEmpty()) {
+                    return false;
+                }
+
+                final ComponentName targetServiceComponent = TextUtils.isEmpty(targetName)
+                        ? null : ComponentName.unflattenFromString(targetName);
+                AccessibilityServiceInfo accessibilityServiceInfo;
+                synchronized (mLock) {
+                    AccessibilityUserState userState = getCurrentUserStateLocked();
+                    accessibilityServiceInfo =
+                            userState.getInstalledServiceInfoLocked(targetServiceComponent);
+                }
+                if (accessibilityServiceInfo == null) {
+                    return false;
+                }
+
+                // Skip enabling if a warning dialog is required for the feature.
+                // TODO(b/377752960): Explore better options to instead show the warning dialog
+                //  in this scenario.
+                if (isAccessibilityServiceWarningRequired(accessibilityServiceInfo)) {
+                    Slog.w(LOG_TAG,
+                            "Accessibility warning is required before this service can be "
+                                    + "activated automatically via KEY_GESTURE shortcut.");
+                    return false;
+                }
+                break;
+            default:
+                return false;
+        }
+
+        List<String> shortcutTargets = getAccessibilityShortcutTargets(
+                KEY_GESTURE);
+        if (!shortcutTargets.contains(targetName)) {
+            int userId;
+            synchronized (mLock) {
+                userId = mCurrentUserId;
+            }
+            // TODO(b/377752960): Add dialog to confirm enabling the service and to
+            //  activate the first time.
+            enableShortcutForTargets(true, UserShortcutType.KEY_GESTURE,
+                    List.of(targetName), userId);
+
+            // Do not perform action on first press since it was just registered. Eventually,
+            // this will be a separate dialog that appears that requires the user to confirm
+            // which will resolve this race condition. For now, just require two presses the
+            // first time it is activated.
+            return true;
+        }
+
+        final int displayId = event.getDisplayId() != INVALID_DISPLAY
+                ? event.getDisplayId() : getLastNonProxyTopFocusedDisplayId();
+        performAccessibilityShortcutInternal(displayId, KEY_GESTURE, targetName);
+
+        return true;
     }
 
     @Override
@@ -1223,14 +1328,14 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             int displayId = event.getDisplayId();
             final int windowId = event.getWindowId();
             if (windowId != AccessibilityWindowInfo.UNDEFINED_WINDOW_ID
-                    && displayId == Display.INVALID_DISPLAY) {
+                    && displayId == INVALID_DISPLAY) {
                 displayId = mA11yWindowManager.getDisplayIdByUserIdAndWindowId(
                         resolvedUserId, windowId);
                 event.setDisplayId(displayId);
             }
             synchronized (mLock) {
                 if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
-                        && displayId != Display.INVALID_DISPLAY
+                        && displayId != INVALID_DISPLAY
                         && mA11yWindowManager.isTrackingWindowsLocked(displayId)) {
                     shouldComputeWindows = true;
                 }
@@ -3256,6 +3361,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         updateAccessibilityShortcutTargetsLocked(userState, SOFTWARE);
         updateAccessibilityShortcutTargetsLocked(userState, GESTURE);
         updateAccessibilityShortcutTargetsLocked(userState, QUICK_SETTINGS);
+        updateAccessibilityShortcutTargetsLocked(userState, KEY_GESTURE);
         // Update the capabilities before the mode because we will check the current mode is
         // invalid or not..
         updateMagnificationCapabilitiesSettingsChangeLocked(userState);
@@ -3386,6 +3492,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         somethingChanged |= readAccessibilityShortcutTargetsLocked(userState, QUICK_SETTINGS);
         somethingChanged |= readAccessibilityShortcutTargetsLocked(userState, SOFTWARE);
         somethingChanged |= readAccessibilityShortcutTargetsLocked(userState, GESTURE);
+        somethingChanged |= readAccessibilityShortcutTargetsLocked(userState, KEY_GESTURE);
         somethingChanged |= readAccessibilityButtonTargetComponentLocked(userState);
         somethingChanged |= readUserRecommendedUiTimeoutSettingsLocked(userState);
         somethingChanged |= readMagnificationModeForDefaultDisplayLocked(userState);
@@ -3897,6 +4004,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 userState.getShortcutTargetsLocked(HARDWARE);
         final Set<String> qsShortcutTargets =
                 userState.getShortcutTargetsLocked(QUICK_SETTINGS);
+        final Set<String> shortcutTargets = userState.getShortcutTargetsLocked(ALL);
         userState.mEnabledServices.forEach(componentName -> {
             if (packageName != null && componentName != null
                     && !packageName.equals(componentName.getPackageName())) {
@@ -3917,7 +4025,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             if (TextUtils.isEmpty(serviceName)) {
                 return;
             }
-            if (doesShortcutTargetsStringContain(buttonTargets, serviceName)
+            if (android.provider.Flags.a11yStandaloneGestureEnabled()) {
+                if (doesShortcutTargetsStringContain(shortcutTargets, serviceName)) {
+                    return;
+                }
+            } else if (doesShortcutTargetsStringContain(buttonTargets, serviceName)
                     || doesShortcutTargetsStringContain(shortcutKeyTargets, serviceName)
                     || doesShortcutTargetsStringContain(qsShortcutTargets, serviceName)) {
                 return;
@@ -3962,6 +4074,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         if (android.provider.Flags.a11yStandaloneGestureEnabled()) {
             shortcutTypes.add(GESTURE);
         }
+        shortcutTypes.add(KEY_GESTURE);
 
         final ComponentName serviceName = service.getComponentName();
         for (Integer shortcutType: shortcutTypes) {
@@ -4072,13 +4185,15 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
      */
     private void performAccessibilityShortcutInternal(int displayId,
             @UserShortcutType int shortcutType, @Nullable String targetName) {
-        final List<String> shortcutTargets = getAccessibilityShortcutTargetsInternal(shortcutType);
+        final List<String> shortcutTargets = getAccessibilityShortcutTargetsInternal(
+                shortcutType);
         if (shortcutTargets.isEmpty()) {
             Slog.d(LOG_TAG, "No target to perform shortcut, shortcutType=" + shortcutType);
             return;
         }
         // In case the caller specified a target name
-        if (targetName != null && !doesShortcutTargetsStringContain(shortcutTargets, targetName)) {
+        if (targetName != null && !doesShortcutTargetsStringContain(shortcutTargets,
+                targetName)) {
             Slog.v(LOG_TAG, "Perform shortcut failed, invalid target name:" + targetName);
             targetName = null;
         }
@@ -4300,6 +4415,13 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             return;
         }
 
+        if (shortcutType == UserShortcutType.KEY_GESTURE
+                && !enableTalkbackAndMagnifierKeyGestures()) {
+            Slog.w(LOG_TAG,
+                    "KEY_GESTURE type shortcuts are disabled by feature flag");
+            return;
+        }
+
         final String shortcutTypeSettingKey = ShortcutUtils.convertToKey(shortcutType);
         if (shortcutType == UserShortcutType.TRIPLETAP
                 || shortcutType == UserShortcutType.TWOFINGER_DOUBLETAP) {
@@ -4381,13 +4503,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         }
         if (shortcutType == HARDWARE) {
             skipVolumeShortcutDialogTimeoutRestriction(userId);
-            if (com.android.server.accessibility.Flags.enableHardwareShortcutDisablesWarning()) {
-                persistIntToSetting(
-                        userId,
-                        Settings.Secure.ACCESSIBILITY_SHORTCUT_DIALOG_SHOWN,
-                        AccessibilityShortcutController.DialogStatus.SHOWN
-                );
-            }
+            persistIntToSetting(
+                    userId,
+                    Settings.Secure.ACCESSIBILITY_SHORTCUT_DIALOG_SHOWN,
+                    AccessibilityShortcutController.DialogStatus.SHOWN
+            );
         } else if (shortcutType == SOFTWARE) {
             // Update the A11y FAB size to large when the Magnification shortcut is
             // enabled and the user hasn't changed the floating button size
@@ -5065,6 +5185,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     @EnforcePermission(MANAGE_ACCESSIBILITY)
     public boolean isAccessibilityServiceWarningRequired(AccessibilityServiceInfo info) {
         isAccessibilityServiceWarningRequired_enforcePermission();
+        if (info == null) {
+            Log.e(LOG_TAG, "Called isAccessibilityServiceWarningRequired with null service info");
+            return true;
+        }
+
         final ComponentName componentName = info.getComponentName();
 
         // Warning is not required if the service is already enabled.
@@ -5672,6 +5797,9 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         private final Uri mAccessibilityGestureTargetsUri = Settings.Secure.getUriFor(
                 Settings.Secure.ACCESSIBILITY_GESTURE_TARGETS);
 
+        private final Uri mAccessibilityKeyGestureTargetsUri = Settings.Secure.getUriFor(
+                Settings.Secure.ACCESSIBILITY_KEY_GESTURE_TARGETS);
+
         private final Uri mUserNonInteractiveUiTimeoutUri = Settings.Secure.getUriFor(
                 Settings.Secure.ACCESSIBILITY_NON_INTERACTIVE_UI_TIMEOUT_MS);
 
@@ -5735,6 +5863,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                     mAccessibilityButtonTargetsUri, false, this, UserHandle.USER_ALL);
             contentResolver.registerContentObserver(
                     mAccessibilityGestureTargetsUri, false, this, UserHandle.USER_ALL);
+            contentResolver.registerContentObserver(
+                    mAccessibilityKeyGestureTargetsUri, false, this, UserHandle.USER_ALL);
             contentResolver.registerContentObserver(
                     mUserNonInteractiveUiTimeoutUri, false, this, UserHandle.USER_ALL);
             contentResolver.registerContentObserver(
@@ -5815,6 +5945,10 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                     }
                 } else if (mAccessibilityGestureTargetsUri.equals(uri)) {
                     if (readAccessibilityShortcutTargetsLocked(userState, GESTURE)) {
+                        onUserStateChangedLocked(userState);
+                    }
+                } else if (mAccessibilityKeyGestureTargetsUri.equals(uri)) {
+                    if (readAccessibilityShortcutTargetsLocked(userState, KEY_GESTURE)) {
                         onUserStateChangedLocked(userState);
                     }
                 } else if (mUserNonInteractiveUiTimeoutUri.equals(uri)

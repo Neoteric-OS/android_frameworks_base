@@ -18,6 +18,9 @@ package com.android.internal.widget.remotecompose.core.operations;
 import static com.android.internal.widget.remotecompose.core.documentation.DocumentedOperation.INT;
 import static com.android.internal.widget.remotecompose.core.documentation.DocumentedOperation.INT_ARRAY;
 
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+
 import com.android.internal.widget.remotecompose.core.Operation;
 import com.android.internal.widget.remotecompose.core.Operations;
 import com.android.internal.widget.remotecompose.core.RemoteContext;
@@ -41,20 +44,20 @@ public class IntegerExpression implements Operation, VariableSupport {
     public int mId;
     private int mMask;
     private int mPreMask;
-    public int[] mSrcValue;
-    public int[] mPreCalcValue;
+    @NonNull public final int[] mSrcValue;
+    @Nullable public int[] mPreCalcValue;
     private float mLastChange = Float.NaN;
     public static final int MAX_SIZE = 320;
-    IntegerExpressionEvaluator mExp = new IntegerExpressionEvaluator();
+    @NonNull IntegerExpressionEvaluator mExp = new IntegerExpressionEvaluator();
 
-    public IntegerExpression(int id, int mask, int[] value) {
+    public IntegerExpression(int id, int mask, @NonNull int[] value) {
         this.mId = id;
         this.mMask = mask;
         this.mSrcValue = value;
     }
 
     @Override
-    public void updateVariables(RemoteContext context) {
+    public void updateVariables(@NonNull RemoteContext context) {
         if (mPreCalcValue == null || mPreCalcValue.length != mSrcValue.length) {
             mPreCalcValue = new int[mSrcValue.length];
         }
@@ -70,7 +73,7 @@ public class IntegerExpression implements Operation, VariableSupport {
     }
 
     @Override
-    public void registerListening(RemoteContext context) {
+    public void registerListening(@NonNull RemoteContext context) {
         for (int i = 0; i < mSrcValue.length; i++) {
             if (isId(mMask, i, mSrcValue[i])) {
                 context.listensTo(mSrcValue[i], this);
@@ -79,7 +82,7 @@ public class IntegerExpression implements Operation, VariableSupport {
     }
 
     @Override
-    public void apply(RemoteContext context) {
+    public void apply(@NonNull RemoteContext context) {
         updateVariables(context);
         float t = context.getAnimationTime();
         if (Float.isNaN(mLastChange)) {
@@ -95,7 +98,7 @@ public class IntegerExpression implements Operation, VariableSupport {
      * @param context current context
      * @return the resulting value
      */
-    public int evaluate(RemoteContext context) {
+    public int evaluate(@NonNull RemoteContext context) {
         updateVariables(context);
         float t = context.getAnimationTime();
         if (Float.isNaN(mLastChange)) {
@@ -105,10 +108,11 @@ public class IntegerExpression implements Operation, VariableSupport {
     }
 
     @Override
-    public void write(WireBuffer buffer) {
+    public void write(@NonNull WireBuffer buffer) {
         apply(buffer, mId, mMask, mSrcValue);
     }
 
+    @NonNull
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -132,6 +136,7 @@ public class IntegerExpression implements Operation, VariableSupport {
         return "IntegerExpression[" + mId + "] = (" + s + ")";
     }
 
+    @NonNull
     public static String name() {
         return CLASS_NAME;
     }
@@ -148,7 +153,7 @@ public class IntegerExpression implements Operation, VariableSupport {
      * @param mask the mask bits of ints & operators or variables
      * @param value array of integers to be evaluated
      */
-    public static void apply(WireBuffer buffer, int id, int mask, int[] value) {
+    public static void apply(@NonNull WireBuffer buffer, int id, int mask, @NonNull int[] value) {
         buffer.start(OP_CODE);
         buffer.writeInt(id);
         buffer.writeInt(mask);
@@ -158,7 +163,7 @@ public class IntegerExpression implements Operation, VariableSupport {
         }
     }
 
-    public static void read(WireBuffer buffer, List<Operation> operations) {
+    public static void read(@NonNull WireBuffer buffer, @NonNull List<Operation> operations) {
         int id = buffer.readInt();
         int mask = buffer.readInt();
         int len = buffer.readInt();
@@ -173,7 +178,7 @@ public class IntegerExpression implements Operation, VariableSupport {
         operations.add(new IntegerExpression(id, mask, values));
     }
 
-    public static void documentation(DocumentationBuilder doc) {
+    public static void documentation(@NonNull DocumentationBuilder doc) {
         doc.operation("Data Operations", OP_CODE, CLASS_NAME)
                 .description("Expression that computes an integer")
                 .field(DocumentedOperation.INT, "id", "id of integer")
@@ -182,8 +187,9 @@ public class IntegerExpression implements Operation, VariableSupport {
                 .field(INT_ARRAY, "values", "length", "Array of ints");
     }
 
+    @NonNull
     @Override
-    public String deepToString(String indent) {
+    public String deepToString(@NonNull String indent) {
         return indent + toString();
     }
 

@@ -19,6 +19,7 @@
 
 package com.android.systemui.statusbar.notification.stack.ui.viewmodel
 
+import android.platform.test.annotations.DisableFlags
 import android.platform.test.annotations.EnableFlags
 import android.platform.test.flag.junit.FlagsParameterization
 import androidx.test.filters.SmallTest
@@ -66,10 +67,13 @@ import com.android.systemui.scene.data.repository.setTransition
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.mockLargeScreenHeaderHelper
 import com.android.systemui.shade.shadeTestUtil
+import com.android.systemui.shade.shared.flag.DualShade
 import com.android.systemui.statusbar.notification.stack.domain.interactor.sharedNotificationContainerInteractor
+import com.android.systemui.statusbar.notification.stack.ui.viewmodel.SharedNotificationContainerViewModel.HorizontalPosition
 import com.android.systemui.testKosmos
 import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
+import kotlin.test.assertIs
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -162,6 +166,83 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
             configurationRepository.onAnyConfigurationChange()
 
             assertThat(dimens!!.marginStart).isEqualTo(20)
+        }
+
+    @Test
+    fun validateHorizontalPositionSingleShade() =
+        testScope.runTest {
+            overrideDimensionPixelSize(R.dimen.shade_panel_width, 200)
+            val dimens by collectLastValue(underTest.configurationBasedDimensions)
+            shadeTestUtil.setSplitShade(false)
+
+            val horizontalPosition = checkNotNull(dimens).horizontalPosition
+            assertIs<HorizontalPosition.EdgeToEdge>(horizontalPosition)
+        }
+
+    @Test
+    fun validateHorizontalPositionSplitShade() =
+        testScope.runTest {
+            overrideDimensionPixelSize(R.dimen.shade_panel_width, 200)
+            val dimens by collectLastValue(underTest.configurationBasedDimensions)
+            shadeTestUtil.setSplitShade(true)
+
+            val horizontalPosition = checkNotNull(dimens).horizontalPosition
+            assertIs<HorizontalPosition.MiddleToEdge>(horizontalPosition)
+            assertThat(horizontalPosition.ratio).isEqualTo(0.5f)
+        }
+
+    @Test
+    @EnableSceneContainer
+    @DisableFlags(DualShade.FLAG_NAME)
+    fun validateHorizontalPositionInSceneContainerSingleShade() =
+        testScope.runTest {
+            overrideDimensionPixelSize(R.dimen.shade_panel_width, 200)
+            val dimens by collectLastValue(underTest.configurationBasedDimensions)
+            shadeTestUtil.setSplitShade(false)
+
+            val horizontalPosition = checkNotNull(dimens).horizontalPosition
+            assertIs<HorizontalPosition.EdgeToEdge>(horizontalPosition)
+        }
+
+    @Test
+    @EnableSceneContainer
+    @DisableFlags(DualShade.FLAG_NAME)
+    fun validateHorizontalPositionInSceneContainerSplitShade() =
+        testScope.runTest {
+            overrideDimensionPixelSize(R.dimen.shade_panel_width, 200)
+            val dimens by collectLastValue(underTest.configurationBasedDimensions)
+            shadeTestUtil.setSplitShade(true)
+
+            val horizontalPosition = checkNotNull(dimens).horizontalPosition
+            assertIs<HorizontalPosition.MiddleToEdge>(horizontalPosition)
+            assertThat(horizontalPosition.ratio).isEqualTo(0.5f)
+        }
+
+    @Test
+    @EnableSceneContainer
+    @EnableFlags(DualShade.FLAG_NAME)
+    fun validateHorizontalPositionInDualShade_narrowLayout() =
+        testScope.runTest {
+            overrideDimensionPixelSize(R.dimen.shade_panel_width, 200)
+            val dimens by collectLastValue(underTest.configurationBasedDimensions)
+            shadeTestUtil.setSplitShade(false)
+
+            val horizontalPosition = checkNotNull(dimens).horizontalPosition
+            assertIs<HorizontalPosition.EdgeToEdge>(horizontalPosition)
+        }
+
+    @Test
+    @EnableSceneContainer
+    @EnableFlags(DualShade.FLAG_NAME)
+    fun validateHorizontalPositionInDualShade_wideLayout() =
+        testScope.runTest {
+            overrideDimensionPixelSize(R.dimen.shade_panel_width, 200)
+            val dimens by collectLastValue(underTest.configurationBasedDimensions)
+            shadeTestUtil.setSplitShade(true)
+
+            val horizontalPosition = checkNotNull(dimens).horizontalPosition
+            assertIs<HorizontalPosition.FloatAtEnd>(horizontalPosition)
+            assertThat(horizontalPosition.width).isEqualTo(200)
         }
 
     @Test
@@ -757,27 +838,26 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
         testScope.runTest {
             var notificationCount = 10
             val calculateSpace = { space: Float, useExtraShelfSpace: Boolean -> notificationCount }
-            val maxNotifications by collectLastValue(underTest.getMaxNotifications(calculateSpace))
+            val config by collectLastValue(underTest.getLockscreenDisplayConfig(calculateSpace))
             advanceTimeBy(50L)
             showLockscreen()
 
             shadeTestUtil.setSplitShade(false)
             configurationRepository.onAnyConfigurationChange()
 
-            assertThat(maxNotifications).isEqualTo(10)
+            assertThat(config?.maxNotifications).isEqualTo(10)
 
             // Also updates when directly requested (as it would from NotificationStackScrollLayout)
             notificationCount = 25
             sharedNotificationContainerInteractor.notificationStackChanged()
             advanceTimeBy(50L)
-            assertThat(maxNotifications).isEqualTo(25)
+            assertThat(config?.maxNotifications).isEqualTo(25)
 
             // Also ensure another collection starts with the same value. As an example, folding
             // then unfolding will restart the coroutine and it must get the last value immediately.
-            val newMaxNotifications by
-                collectLastValue(underTest.getMaxNotifications(calculateSpace))
+            val newConfig by collectLastValue(underTest.getLockscreenDisplayConfig(calculateSpace))
             advanceTimeBy(50L)
-            assertThat(newMaxNotifications).isEqualTo(25)
+            assertThat(newConfig?.maxNotifications).isEqualTo(25)
         }
 
     @Test
@@ -785,18 +865,18 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
         testScope.runTest {
             var notificationCount = 10
             val calculateSpace = { space: Float, useExtraShelfSpace: Boolean -> notificationCount }
-            val maxNotifications by collectLastValue(underTest.getMaxNotifications(calculateSpace))
+            val config by collectLastValue(underTest.getLockscreenDisplayConfig(calculateSpace))
             advanceTimeBy(50L)
             showLockscreen()
 
             shadeTestUtil.setSplitShade(false)
             configurationRepository.onAnyConfigurationChange()
 
-            assertThat(maxNotifications).isEqualTo(10)
+            assertThat(config?.maxNotifications).isEqualTo(10)
 
             // Shade expanding... still 10
             shadeTestUtil.setLockscreenShadeExpansion(0.5f)
-            assertThat(maxNotifications).isEqualTo(10)
+            assertThat(config?.maxNotifications).isEqualTo(10)
 
             notificationCount = 25
 
@@ -804,20 +884,20 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
             shadeTestUtil.setLockscreenShadeTracking(true)
 
             // Should still be 10, since the user is interacting
-            assertThat(maxNotifications).isEqualTo(10)
+            assertThat(config?.maxNotifications).isEqualTo(10)
 
             shadeTestUtil.setLockscreenShadeTracking(false)
             shadeTestUtil.setLockscreenShadeExpansion(0f)
 
             // Stopped tracking, show 25
-            assertThat(maxNotifications).isEqualTo(25)
+            assertThat(config?.maxNotifications).isEqualTo(25)
         }
 
     @Test
     fun maxNotificationsOnShade() =
         testScope.runTest {
             val calculateSpace = { space: Float, useExtraShelfSpace: Boolean -> 10 }
-            val maxNotifications by collectLastValue(underTest.getMaxNotifications(calculateSpace))
+            val config by collectLastValue(underTest.getLockscreenDisplayConfig(calculateSpace))
             advanceTimeBy(50L)
 
             // Show lockscreen with shade expanded
@@ -827,7 +907,7 @@ class SharedNotificationContainerViewModelTest(flags: FlagsParameterization) : S
             configurationRepository.onAnyConfigurationChange()
 
             // -1 means No Limit
-            assertThat(maxNotifications).isEqualTo(-1)
+            assertThat(config?.maxNotifications).isEqualTo(-1)
         }
 
     @Test

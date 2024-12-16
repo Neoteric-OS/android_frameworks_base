@@ -129,6 +129,7 @@ import com.android.systemui.power.domain.interactor.PowerInteractor;
 import com.android.systemui.qs.QSFragmentLegacy;
 import com.android.systemui.res.R;
 import com.android.systemui.screenrecord.RecordingController;
+import com.android.systemui.settings.brightness.domain.interactor.BrightnessMirrorShowingInteractor;
 import com.android.systemui.shade.data.repository.FakeShadeRepository;
 import com.android.systemui.shade.data.repository.ShadeAnimationRepository;
 import com.android.systemui.shade.data.repository.ShadeRepository;
@@ -148,7 +149,6 @@ import com.android.systemui.statusbar.QsFrameTranslateController;
 import com.android.systemui.statusbar.StatusBarStateControllerImpl;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
 import com.android.systemui.statusbar.VibratorHelper;
-import com.android.systemui.statusbar.disableflags.data.repository.FakeDisableFlagsRepository;
 import com.android.systemui.statusbar.notification.ConversationNotificationManager;
 import com.android.systemui.statusbar.notification.DynamicPrivacyController;
 import com.android.systemui.statusbar.notification.HeadsUpTouchHelper;
@@ -212,6 +212,7 @@ import org.junit.Rule;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.stubbing.Answer;
@@ -350,6 +351,7 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
     @Mock private KeyguardClockPositionAlgorithm mKeyguardClockPositionAlgorithm;
     @Mock private NaturalScrollingSettingObserver mNaturalScrollingSettingObserver;
     @Mock private LargeScreenHeaderHelper mLargeScreenHeaderHelper;
+    @Mock private StatusBarLongPressGestureDetector mStatusBarLongPressGestureDetector;
     protected final int mMaxUdfpsBurnInOffsetY = 5;
     protected FakeFeatureFlagsClassic mFeatureFlags = new FakeFeatureFlagsClassic();
     protected KeyguardBottomAreaInteractor mKeyguardBottomAreaInteractor;
@@ -374,6 +376,9 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
     protected KeyguardStatusViewController mKeyguardStatusViewController;
     protected ShadeRepository mShadeRepository;
     protected FakeMSDLPlayer mMSDLPlayer = mKosmos.getMsdlPlayer();
+
+    protected BrightnessMirrorShowingInteractor mBrightnessMirrorShowingInteractor =
+            mKosmos.getBrightnessMirrorShowingInteractor();
 
     protected final FalsingManagerFake mFalsingManager = new FalsingManagerFake();
     protected final Optional<SysUIUnfoldComponent> mSysUIUnfoldComponent = Optional.empty();
@@ -425,7 +430,7 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
         mShadeInteractor = new ShadeInteractorImpl(
                 mTestScope.getBackgroundScope(),
                 mKosmos.getDeviceProvisioningInteractor(),
-                new FakeDisableFlagsRepository(),
+                mKosmos.getDisableFlagsInteractor(),
                 mDozeParameters,
                 mFakeKeyguardRepository,
                 mKeyguardTransitionInteractor,
@@ -513,7 +518,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
         when(mView.findViewById(R.id.qs_frame)).thenReturn(mQsFrame);
         when(mView.findViewById(R.id.keyguard_status_view))
                 .thenReturn(mock(KeyguardStatusView.class));
-        View rootView = mock(View.class);
+        ViewGroup rootView = mock(ViewGroup.class);
+        when(rootView.isVisibleToUser()).thenReturn(true);
         when(mView.getRootView()).thenReturn(rootView);
         when(rootView.findViewById(R.id.keyguard_status_view))
                 .thenReturn(mock(KeyguardStatusView.class));
@@ -615,7 +621,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
                         mScreenOffAnimationController,
                         new NotificationWakeUpCoordinatorLogger(logcatLogBuffer()),
                         notifsKeyguardInteractor,
-                        mKosmos.getCommunalInteractor());
+                        mKosmos.getCommunalInteractor(),
+                        mKosmos.getPulseExpansionInteractor());
         mConfigurationController = new ConfigurationControllerImpl(mContext);
         PulseExpansionHandler expansionHandler = new PulseExpansionHandler(
                 mContext,
@@ -650,12 +657,21 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
             ((Runnable) invocation.getArgument(0)).run();
             return null;
         }).when(mNotificationShadeWindowController).batchApplyWindowLayoutParams(any());
+        when(mNotificationShadeWindowController.getWindowRootView()).thenReturn(rootView);
         doAnswer(invocation -> {
             mLayoutChangeListener = invocation.getArgument(0);
             return null;
         }).when(mView).addOnLayoutChangeListener(any());
 
         when(mView.getViewTreeObserver()).thenReturn(mViewTreeObserver);
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                ViewTreeObserver.OnGlobalLayoutListener gll = invocation.getArgument(0);
+                gll.onGlobalLayout();
+                return null;
+            }
+        }).when(mViewTreeObserver).addOnGlobalLayoutListener(any());
         when(mView.getParent()).thenReturn(mViewParent);
         when(mQs.getHeader()).thenReturn(mQsHeader);
         when(mDownMotionEvent.getAction()).thenReturn(MotionEvent.ACTION_DOWN);
@@ -755,7 +771,8 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
                 mPowerInteractor,
                 mKeyguardClockPositionAlgorithm,
                 mNaturalScrollingSettingObserver,
-                mMSDLPlayer);
+                mMSDLPlayer,
+                mBrightnessMirrorShowingInteractor);
         mNotificationPanelViewController.initDependencies(
                 mCentralSurfaces,
                 null,
@@ -806,6 +823,7 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
                 mNotificationShadeDepthController,
                 mShadeHeaderController,
                 mStatusBarTouchableRegionManager,
+                () -> mStatusBarLongPressGestureDetector,
                 mKeyguardStateController,
                 mKeyguardBypassController,
                 mScrimController,
@@ -909,7 +927,7 @@ public class NotificationPanelViewControllerBaseTest extends SysuiTestCase {
     }
 
     protected boolean onTouchEvent(MotionEvent ev) {
-        return mTouchHandler.onTouch(mView, ev);
+        return mNotificationPanelViewController.handleExternalTouch(ev);
     }
 
     protected void setDozing(boolean dozing, boolean dozingAlwaysOn) {

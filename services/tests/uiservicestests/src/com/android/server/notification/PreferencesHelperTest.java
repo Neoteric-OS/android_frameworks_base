@@ -108,6 +108,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
+import android.app.ZenBypassingApp;
 import android.content.AttributionSource;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -255,6 +256,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     @Parameters(name = "{0}")
     public static List<FlagsParameterization> getParams() {
         return FlagsParameterization.allCombinationsOf(
+                android.app.Flags.FLAG_API_RICH_ONGOING,
                 FLAG_NOTIFICATION_CLASSIFICATION, FLAG_MODES_UI);
     }
 
@@ -359,7 +361,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
         mTestNotificationPolicy = new NotificationManager.Policy(0, 0, 0, 0,
                 NotificationManager.Policy.STATE_CHANNELS_BYPASSING_DND, 0);
-        when(mMockZenModeHelper.getNotificationPolicy()).thenReturn(mTestNotificationPolicy);
+        when(mMockZenModeHelper.getNotificationPolicy(any())).thenReturn(mTestNotificationPolicy);
         when(mAppOpsManager.noteOpNoThrow(anyInt(), anyInt(),
                 anyString(), eq(null), anyString())).thenReturn(MODE_DEFAULT);
 
@@ -493,7 +495,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
     private void resetZenModeHelper() {
         reset(mMockZenModeHelper);
-        when(mMockZenModeHelper.getNotificationPolicy()).thenReturn(mTestNotificationPolicy);
+        when(mMockZenModeHelper.getNotificationPolicy(any())).thenReturn(mTestNotificationPolicy);
     }
 
     private void setUpPackageWithUid(String packageName, int uid) throws Exception {
@@ -2620,6 +2622,72 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     }
 
     @Test
+    public void getPackagesBypassingDnd_noChannelsBypassing() throws Exception {
+        assertThat(mHelper.getPackagesBypassingDnd(UserHandle.getUserId(UID_N_MR1))).isEmpty();
+    }
+
+    @Test
+    public void getPackagesBypassingDnd_oneChannelBypassing_deleted() {
+        NotificationChannel channel1 = new NotificationChannel("id1", "name1",
+                NotificationManager.IMPORTANCE_MAX);
+        channel1.setBypassDnd(true);
+        channel1.setDeleted(true);
+        // has DND access, so can set bypassDnd attribute
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel1, true,
+                /*has DND access*/ true, UID_N_MR1, false);
+
+        assertThat(mHelper.getPackagesBypassingDnd(UserHandle.getUserId(UID_N_MR1))).isEmpty();
+    }
+
+    @Test
+    public void getPackagesBypassingDnd_oneChannelBypassing_groupBlocked() {
+        int uid = UID_N_MR1;
+        NotificationChannelGroup ncg = new NotificationChannelGroup("group1", "name1");
+        NotificationChannel channel1 = new NotificationChannel("id1", "name1",
+                NotificationManager.IMPORTANCE_MAX);
+        channel1.setBypassDnd(true);
+        channel1.setGroup(ncg.getId());
+        mHelper.createNotificationChannelGroup(PKG_N_MR1, uid, ncg,  /* fromTargetApp */ true,
+                uid, false);
+        mHelper.createNotificationChannel(PKG_N_MR1, uid, channel1, true, /*has DND access*/ true,
+                uid, false);
+        ncg.setBlocked(true);
+
+        assertThat(mHelper.getPackagesBypassingDnd(UserHandle.getUserId(uid))).isEmpty();
+    }
+
+    @Test
+    public void getPackagesBypassingDnd_multipleApps() {
+        List<ZenBypassingApp> expected = ImmutableList.of(
+                new ZenBypassingApp(PKG_O, true), new ZenBypassingApp(PKG_P, false));
+
+        NotificationChannel channel1 = new NotificationChannel("id1", "name1",
+                NotificationManager.IMPORTANCE_MAX);
+        NotificationChannel channel2 = new NotificationChannel("id2", "name2",
+                NotificationManager.IMPORTANCE_MAX);
+        NotificationChannel channel3 = new NotificationChannel("id3", "name3",
+                NotificationManager.IMPORTANCE_MAX);
+        NotificationChannel channel4 = new NotificationChannel("id4", "name3",
+                NotificationManager.IMPORTANCE_MAX);
+        channel1.setBypassDnd(false);
+        channel2.setBypassDnd(true);
+        channel3.setBypassDnd(true);
+        channel4.setBypassDnd(false);
+        // has DND access, so can set bypassDnd attribute
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel1, true,
+                /*has DND access*/ true, UID_N_MR1, false);
+        mHelper.createNotificationChannel(PKG_O, UID_O, channel2, true, true,
+                UID_O, false);
+        mHelper.createNotificationChannel(PKG_P, UID_P, channel3, true, true,
+                UID_P, false);
+        mHelper.createNotificationChannel(PKG_P, UID_P, channel4, true, true,
+                UID_P, false);
+
+        assertThat(mHelper.getPackagesBypassingDnd(UserHandle.getUserId(UID_O)))
+                .containsExactlyElementsIn(expected);
+    }
+
+    @Test
     public void testCreateAndDeleteCanChannelsBypassDnd_localSettings() {
         int uid = UserManager.isHeadlessSystemUserMode() ? UID_HEADLESS : UID_N_MR1;
         when(mPermissionHelper.hasPermission(uid)).thenReturn(true);
@@ -2632,9 +2700,10 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(anyBoolean());
+            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(any(), anyBoolean());
         } else {
-            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), any(), anyInt(),
+                    anyInt());
         }
         resetZenModeHelper();
 
@@ -2646,9 +2715,11 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertTrue(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(true));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(true));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
 
@@ -2656,18 +2727,21 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         mHelper.deleteNotificationChannel(PKG_N_MR1, uid, channel.getId(), uid, false);
         assertTrue(mHelper.areChannelsBypassingDnd()); // channel2 can still bypass DND
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(anyBoolean());
+            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(any(), anyBoolean());
         } else {
-            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), any(), anyInt(),
+                    anyInt());
         }
         resetZenModeHelper();
 
         mHelper.deleteNotificationChannel(PKG_N_MR1, uid, channel2.getId(), uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(false));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(false));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
     }
@@ -2685,9 +2759,10 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(anyBoolean());
+            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(any(), anyBoolean());
         } else {
-            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), any(), anyInt(),
+                    anyInt());
         }
         resetZenModeHelper();
 
@@ -2699,9 +2774,11 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
         assertTrue(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(true));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(true));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
     }
@@ -2719,9 +2796,10 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(anyBoolean());
+            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(any(), anyBoolean());
         } else {
-            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), any(), anyInt(),
+                    anyInt());
         }
         resetZenModeHelper();
 
@@ -2733,9 +2811,11 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertTrue(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(true));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(true));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
 
@@ -2743,18 +2823,21 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         mHelper.deleteNotificationChannel(PKG_N_MR1, uid, channel.getId(), uid, false);
         assertTrue(mHelper.areChannelsBypassingDnd()); // channel2 can still bypass DND
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(anyBoolean());
+            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(any(), anyBoolean());
         } else {
-            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), any(), anyInt(),
+                    anyInt());
         }
         resetZenModeHelper();
 
         mHelper.deleteNotificationChannel(PKG_N_MR1, uid, channel2.getId(), uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(false));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(false));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
     }
@@ -2767,7 +2850,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         // start in a 'allowed to bypass dnd state'
         mTestNotificationPolicy = new NotificationManager.Policy(0, 0, 0, 0,
                 NotificationManager.Policy.STATE_CHANNELS_BYPASSING_DND, 0);
-        when(mMockZenModeHelper.getNotificationPolicy()).thenReturn(mTestNotificationPolicy);
+        when(mMockZenModeHelper.getNotificationPolicy(any())).thenReturn(mTestNotificationPolicy);
         mHelper.syncChannelsBypassingDnd();
 
         // create notification channel that can bypass dnd, but app is blocked
@@ -2783,9 +2866,11 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(false));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(false));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
     }
@@ -2798,7 +2883,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         // start in a 'allowed to bypass dnd state'
         mTestNotificationPolicy = new NotificationManager.Policy(0, 0, 0, 0,
                 NotificationManager.Policy.STATE_CHANNELS_BYPASSING_DND, 0);
-        when(mMockZenModeHelper.getNotificationPolicy()).thenReturn(mTestNotificationPolicy);
+        when(mMockZenModeHelper.getNotificationPolicy(any())).thenReturn(mTestNotificationPolicy);
         mHelper.syncChannelsBypassingDnd();
 
         // create notification channel that can bypass dnd, but app is blocked
@@ -2809,9 +2894,11 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(false));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(false));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
     }
@@ -2824,7 +2911,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         // start in a 'allowed to bypass dnd state'
         mTestNotificationPolicy = new NotificationManager.Policy(0, 0, 0, 0,
                 NotificationManager.Policy.STATE_CHANNELS_BYPASSING_DND, 0);
-        when(mMockZenModeHelper.getNotificationPolicy()).thenReturn(mTestNotificationPolicy);
+        when(mMockZenModeHelper.getNotificationPolicy(any())).thenReturn(mTestNotificationPolicy);
         mHelper.syncChannelsBypassingDnd();
 
         // create notification channel that can bypass dnd, but app is blocked
@@ -2835,9 +2922,11 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(false));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(false));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
     }
@@ -2855,9 +2944,10 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 uid, false);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(anyBoolean());
+            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(any(), anyBoolean());
         } else {
-            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), any(), anyInt(),
+                    anyInt());
         }
         resetZenModeHelper();
 
@@ -2867,9 +2957,11 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         mHelper.updateNotificationChannel(PKG_N_MR1, uid, channel, true, SYSTEM_UID, true);
         assertTrue(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(true));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(true));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
 
@@ -2879,9 +2971,11 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         mHelper.updateNotificationChannel(PKG_N_MR1, uid, channel, true, SYSTEM_UID, true);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(false));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(false));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
     }
@@ -2892,13 +2986,15 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         // RankingHelper should change to false
         mTestNotificationPolicy = new NotificationManager.Policy(0, 0, 0, 0,
                 NotificationManager.Policy.STATE_CHANNELS_BYPASSING_DND, 0);
-        when(mMockZenModeHelper.getNotificationPolicy()).thenReturn(mTestNotificationPolicy);
+        when(mMockZenModeHelper.getNotificationPolicy(any())).thenReturn(mTestNotificationPolicy);
         mHelper.syncChannelsBypassingDnd();
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(false));
+            verify(mMockZenModeHelper, times(1)).updateHasPriorityChannels(eq(UserHandle.CURRENT),
+                    eq(false));
         } else {
-            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, times(1)).setNotificationPolicy(eq(UserHandle.CURRENT),
+                    any(), anyInt(), anyInt());
         }
         resetZenModeHelper();
     }
@@ -2907,12 +3003,13 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     public void testSetupNewZenModeHelper_cannotBypass() {
         // start notification policy off with mAreChannelsBypassingDnd = false
         mTestNotificationPolicy = new NotificationManager.Policy(0, 0, 0, 0, 0, 0);
-        when(mMockZenModeHelper.getNotificationPolicy()).thenReturn(mTestNotificationPolicy);
+        when(mMockZenModeHelper.getNotificationPolicy(any())).thenReturn(mTestNotificationPolicy);
         assertFalse(mHelper.areChannelsBypassingDnd());
         if (android.app.Flags.modesUi()) {
-            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(anyBoolean());
+            verify(mMockZenModeHelper, never()).updateHasPriorityChannels(any(), anyBoolean());
         } else {
-            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), anyInt(), anyInt());
+            verify(mMockZenModeHelper, never()).setNotificationPolicy(any(), any(), anyInt(),
+                    anyInt());
         }
         resetZenModeHelper();
     }
@@ -6415,9 +6512,18 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
     @Test
     @EnableFlags(android.app.Flags.FLAG_API_RICH_ONGOING)
+    @DisableFlags(android.app.Flags.FLAG_UI_RICH_ONGOING)
     public void testNoAppHasPermissionToPromoteByDefault() {
         mHelper.setShowBadge(PKG_P, UID_P, true);
         assertThat(mHelper.canBePromoted(PKG_P, UID_P)).isFalse();
+    }
+
+    @Test
+    @EnableFlags({android.app.Flags.FLAG_API_RICH_ONGOING,
+            android.app.Flags.FLAG_UI_RICH_ONGOING})
+    public void testAllAppsHavePermissionToPromoteByDefault() {
+        mHelper.setShowBadge(PKG_P, UID_P, true);
+        assertThat(mHelper.canBePromoted(PKG_P, UID_P)).isTrue();
     }
 
     @Test

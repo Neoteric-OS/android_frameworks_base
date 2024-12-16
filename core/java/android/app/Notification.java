@@ -155,7 +155,7 @@ public class Notification implements Parcelable
             FOREGROUND_SERVICE_IMMEDIATE,
             FOREGROUND_SERVICE_DEFERRED
     })
-    public @interface ServiceNotificationPolicy {};
+    public @interface ServiceNotificationPolicy {}
 
     /**
      * If the Notification associated with starting a foreground service has been
@@ -811,6 +811,27 @@ public class Notification implements Parcelable
     }
 
     private static boolean isStandardLayout(int layoutId) {
+        if (Flags.notificationsRedesignTemplates()) {
+            return switch (layoutId) {
+                case R.layout.notification_2025_template_collapsed_base,
+                     R.layout.notification_2025_template_heads_up_base,
+                     R.layout.notification_2025_template_header,
+                     R.layout.notification_template_material_big_base,
+                     R.layout.notification_template_material_big_picture,
+                     R.layout.notification_template_material_big_text,
+                     R.layout.notification_template_material_inbox,
+                     R.layout.notification_template_material_messaging,
+                     R.layout.notification_template_material_big_messaging,
+                     R.layout.notification_template_material_conversation,
+                     R.layout.notification_template_material_media,
+                     R.layout.notification_template_material_big_media,
+                     R.layout.notification_template_material_call,
+                     R.layout.notification_template_material_big_call,
+                     R.layout.notification_template_header -> true;
+                case R.layout.notification_template_material_progress -> Flags.apiRichOngoing();
+                default -> false;
+            };
+        }
         if (Flags.apiRichOngoing()) {
             if (layoutId == R.layout.notification_template_material_progress) {
                 return true;
@@ -1754,10 +1775,6 @@ public class Notification implements Parcelable
     private Icon mSmallIcon;
     @UnsupportedAppUsage
     private Icon mLargeIcon;
-    private Icon mAppIcon;
-
-    /** Cache for whether the notification was posted by a headless system app. */
-    private Boolean mBelongsToHeadlessSystemApp = null;
 
     @UnsupportedAppUsage
     private String mChannelId;
@@ -3143,12 +3160,16 @@ public class Notification implements Parcelable
                 callPerson.visitUris(visitor);
             }
             visitIconUri(visitor, extras.getParcelable(EXTRA_VERIFICATION_ICON, Icon.class));
-        }
 
-        if (Flags.apiRichOngoing()) {
-            visitIconUri(visitor, extras.getParcelable(EXTRA_PROGRESS_TRACKER_ICON, Icon.class));
-            visitIconUri(visitor, extras.getParcelable(EXTRA_PROGRESS_START_ICON, Icon.class));
-            visitIconUri(visitor, extras.getParcelable(EXTRA_PROGRESS_END_ICON, Icon.class));
+
+            if (Flags.apiRichOngoing()) {
+                visitIconUri(visitor, extras.getParcelable(EXTRA_PROGRESS_TRACKER_ICON,
+                    Icon.class));
+                visitIconUri(visitor, extras.getParcelable(EXTRA_PROGRESS_START_ICON,
+                    Icon.class));
+                visitIconUri(visitor, extras.getParcelable(EXTRA_PROGRESS_END_ICON,
+                    Icon.class));
+            }
         }
 
         if (mBubbleMetadata != null) {
@@ -3240,90 +3261,10 @@ public class Notification implements Parcelable
      */
     @FlaggedApi(Flags.FLAG_UI_RICH_ONGOING)
     public boolean hasPromotableCharacteristics() {
-        return isColorized()
+        return isColorizedRequested()
                 && hasTitle()
                 && !containsCustomViews()
                 && hasPromotableStyle();
-    }
-
-    /**
-     * Whether this notification was posted by a headless system app.
-     *
-     * If we don't have enough information to figure this out, this will return false. Therefore,
-     * false negatives are possible, but false positives should not be.
-     *
-     * @hide
-     */
-    public boolean belongsToHeadlessSystemApp(Context context) {
-        Trace.beginSection("Notification#belongsToHeadlessSystemApp");
-
-        try {
-            if (mBelongsToHeadlessSystemApp != null) {
-                return mBelongsToHeadlessSystemApp;
-            }
-
-            if (context == null) {
-                // Without a valid context, we don't know exactly. Let's assume it doesn't belong to
-                // a system app, but not cache the value.
-                return false;
-            }
-
-            ApplicationInfo info = getApplicationInfo(context);
-            if (info != null) {
-                if ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                    // It's not a system app at all.
-                    mBelongsToHeadlessSystemApp = false;
-                } else {
-                    // If there's no launch intent, it's probably a headless app.
-                    final PackageManager pm = context.getPackageManager();
-                    mBelongsToHeadlessSystemApp = pm.getLaunchIntentForPackage(info.packageName)
-                            == null;
-                }
-            } else {
-                // If for some reason we don't have the app info, we don't know; best assume it's
-                // not a system app.
-                return false;
-            }
-            return mBelongsToHeadlessSystemApp;
-        } finally {
-            Trace.endSection();
-        }
-    }
-
-    /**
-     * Get the resource ID of the app icon from application info.
-     * @hide
-     */
-    public int getHeaderAppIconRes(Context context) {
-        ApplicationInfo info = getApplicationInfo(context);
-        if (info != null) {
-            return info.icon;
-        }
-        return 0;
-    }
-
-    /**
-     * Load the app icon drawable from the package manager. This could result in a binder call.
-     * @hide
-     */
-    public Drawable loadHeaderAppIcon(Context context) {
-        Trace.beginSection("Notification#loadHeaderAppIcon");
-
-        try {
-            if (context == null) {
-                Log.e(TAG, "Cannot load the app icon drawable with a null context");
-                return null;
-            }
-            final PackageManager pm = context.getPackageManager();
-            ApplicationInfo info = getApplicationInfo(context);
-            if (info == null) {
-                Log.e(TAG, "Cannot load the app icon drawable: no application info");
-                return null;
-            }
-            return pm.getApplicationIcon(info);
-        } finally {
-            Trace.endSection();
-        }
     }
 
     /**
@@ -4146,6 +4087,12 @@ public class Notification implements Parcelable
                 flags &= ~FLAG_LIFETIME_EXTENDED_BY_DIRECT_REPLY;
             }
         }
+        if (Flags.apiRichOngoing()) {
+            if ((flags & FLAG_PROMOTED_ONGOING) != 0) {
+                flagStrings.add("PROMOTED_ONGOING");
+                flags &= ~FLAG_PROMOTED_ONGOING;
+            }
+        }
 
         if (android.service.notification.Flags.notificationSilentFlag()) {
             if ((flags & FLAG_SILENT) != 0) {
@@ -4361,55 +4308,6 @@ public class Notification implements Parcelable
     }
 
     /**
-     * The colored app icon that can replace the small icon in the notification starting in V.
-     *
-     * Before using this value, you should first check whether it's actually being used by the
-     * notification by calling {@link Notification#shouldUseAppIcon()}.
-     *
-     * @hide
-     */
-    public Icon getAppIcon() {
-        if (mAppIcon != null) {
-            return mAppIcon;
-        }
-        // If the app icon hasn't been loaded yet, check if we can load it without a context.
-        if (extras.containsKey(EXTRA_BUILDER_APPLICATION_INFO)) {
-            final ApplicationInfo info = extras.getParcelable(
-                    EXTRA_BUILDER_APPLICATION_INFO,
-                    ApplicationInfo.class);
-            if (info != null) {
-                int appIconRes = info.icon;
-                if (appIconRes == 0) {
-                    Log.w(TAG, "Failed to get the app icon: no icon in application info");
-                    return null;
-                }
-                mAppIcon = Icon.createWithResource(info.packageName, appIconRes);
-                return mAppIcon;
-            } else {
-                Log.e(TAG, "Failed to get the app icon: "
-                        + "there's an EXTRA_BUILDER_APPLICATION_INFO in extras but it's null");
-            }
-        } else {
-            Log.w(TAG, "Failed to get the app icon: no application info in extras");
-        }
-        return null;
-    }
-
-    /**
-     * Whether the notification is using the app icon instead of the small icon.
-     * @hide
-     */
-    public boolean shouldUseAppIcon() {
-        if (Flags.notificationsUseAppIconInRow()) {
-            if (belongsToHeadlessSystemApp(/* context = */ null)) {
-                return false;
-            }
-            return getAppIcon() != null;
-        }
-        return false;
-    }
-
-    /**
      * The large icon shown in this notification's content view.
      * @see Builder#getLargeIcon()
      * @see Builder#setLargeIcon(Icon)
@@ -4565,19 +4463,6 @@ public class Notification implements Parcelable
 
         private static final boolean USE_ONLY_TITLE_IN_LOW_PRIORITY_SUMMARY =
                 SystemProperties.getBoolean("notifications.only_title", true);
-
-        /**
-         * The lightness difference that has to be added to the primary text color to obtain the
-         * secondary text color when the background is light.
-         */
-        private static final int LIGHTNESS_TEXT_DIFFERENCE_LIGHT = 20;
-
-        /**
-         * The lightness difference that has to be added to the primary text color to obtain the
-         * secondary text color when the background is dark.
-         * A bit less then the above value, since it looks better on dark backgrounds.
-         */
-        private static final int LIGHTNESS_TEXT_DIFFERENCE_DARK = -10;
 
         private Context mContext;
         private Notification mN;
@@ -5149,7 +5034,7 @@ public class Notification implements Parcelable
 
         /**
          * Sets a very short string summarizing the most critical information contained in the
-         * notification. Suggested max length is 5 characters, and there is no guarantee how much or
+         * notification. Suggested max length is 7 characters, and there is no guarantee how much or
          * how little of this text will be shown.
          */
         @FlaggedApi(Flags.FLAG_API_RICH_ONGOING)
@@ -6451,36 +6336,12 @@ public class Notification implements Parcelable
         }
 
         private void bindSmallIcon(RemoteViews contentView, StandardTemplateParams p) {
-            if (Flags.notificationsUseAppIcon()) {
-                // Override small icon with app icon
-                mN.mSmallIcon = Icon.createWithResource(mContext,
-                        mN.getHeaderAppIconRes(mContext));
-            } else if (mN.mSmallIcon == null && mN.icon != 0) {
+            if (mN.mSmallIcon == null && mN.icon != 0) {
                 mN.mSmallIcon = Icon.createWithResource(mContext, mN.icon);
             }
-
-            boolean usingAppIcon = false;
-            if (Flags.notificationsUseAppIconInRow() && !mN.belongsToHeadlessSystemApp(mContext)) {
-                // Use the app icon in the view
-                int appIconRes = mN.getHeaderAppIconRes(mContext);
-                if (appIconRes != 0) {
-                    mN.mAppIcon = Icon.createWithResource(mContext, appIconRes);
-                    contentView.setImageViewIcon(R.id.icon, mN.mAppIcon);
-                    contentView.setBoolean(R.id.icon, "setShouldShowAppIcon", true);
-                    usingAppIcon = true;
-                } else {
-                    Log.w(TAG, "bindSmallIcon: could not get the app icon");
-                }
-            }
-            if (!usingAppIcon) {
-                contentView.setImageViewIcon(R.id.icon, mN.mSmallIcon);
-            }
+            contentView.setImageViewIcon(R.id.icon, mN.mSmallIcon);
             contentView.setInt(R.id.icon, "setImageLevel", mN.iconLevel);
-
-            // Don't change color if we're using the app icon.
-            if (!Flags.notificationsUseAppIcon() && !usingAppIcon) {
-                processSmallIconColor(mN.mSmallIcon, contentView, p);
-            }
+            processSmallIconColor(mN.mSmallIcon, contentView, p);
         }
 
         /**
@@ -6888,7 +6749,7 @@ public class Notification implements Parcelable
             // Headers on their own are never colorized
             p.disallowColorization();
             RemoteViews header = new BuilderRemoteViews(mContext.getApplicationInfo(),
-                    R.layout.notification_template_header);
+                    getHeaderLayoutResource());
             resetNotificationHeader(header);
             bindNotificationHeader(header, p);
             return header;
@@ -7277,7 +7138,9 @@ public class Notification implements Parcelable
          */
         public CharSequence ensureColorSpanContrastOrStripStyling(CharSequence cs,
                 int buttonFillColor) {
-            if (Flags.cleanUpSpansAndNewLines()) {
+            // Ongoing promoted notifications are allowed to have styling.
+            final boolean isPromotedOngoing = mN.isPromotedOngoing();
+            if (!isPromotedOngoing && Flags.cleanUpSpansAndNewLines()) {
                 return stripStyling(cs);
             }
 
@@ -7648,13 +7511,29 @@ public class Notification implements Parcelable
             return clone;
         }
 
+        private int getHeaderLayoutResource() {
+            if (Flags.notificationsRedesignTemplates()) {
+                return R.layout.notification_2025_template_header;
+            } else {
+                return R.layout.notification_template_header;
+            }
+        }
+
         @UnsupportedAppUsage
         private int getBaseLayoutResource() {
-            return R.layout.notification_template_material_base;
+            if (Flags.notificationsRedesignTemplates()) {
+                return R.layout.notification_2025_template_collapsed_base;
+            } else {
+                return R.layout.notification_template_material_base;
+            }
         }
 
         private int getHeadsUpBaseLayoutResource() {
-            return R.layout.notification_template_material_heads_up_base;
+            if (Flags.notificationsRedesignTemplates()) {
+                return R.layout.notification_2025_template_heads_up_base;
+            } else {
+                return R.layout.notification_template_material_heads_up_base;
+            }
         }
 
         private int getCompactHeadsUpBaseLayoutResource() {
@@ -7925,8 +7804,16 @@ public class Notification implements Parcelable
      * @hide
      */
     public boolean isColorized() {
-        return extras.getBoolean(EXTRA_COLORIZED)
-                && (hasColorizedPermission() || isFgsOrUij());
+        return isColorizedRequested()
+                && (hasColorizedPermission() || isFgsOrUij() || isPromotedOngoing());
+    }
+
+    /**
+     * @return true if this notification has requested to be colorized, regardless of whether it
+     * meets the requirements to be displayed that way.
+     */
+    private boolean isColorizedRequested() {
+        return extras.getBoolean(EXTRA_COLORIZED);
     }
 
     /**
@@ -7937,6 +7824,19 @@ public class Notification implements Parcelable
      */
     public boolean hasColorizedPermission() {
         return (flags & Notification.FLAG_CAN_COLORIZE) != 0;
+    }
+
+    /**
+     * Returns whether this notification is a promoted ongoing notification.
+     *
+     * This requires the Notification.FLAG_PROMOTED_ONGOING flag to be set
+     * (which may be true once the api_rich_ongoing feature flag is enabled),
+     * and requires that the ui_rich_ongoing feature flag is enabled.
+     *
+     * @hide
+     */
+    public boolean isPromotedOngoing() {
+        return Flags.uiRichOngoing() && (flags & Notification.FLAG_PROMOTED_ONGOING) != 0;
     }
 
     /**
@@ -8792,7 +8692,9 @@ public class Notification implements Parcelable
 
             // Replace the text with the big text, but only if the big text is not empty.
             CharSequence bigTextText = mBuilder.processLegacyText(mBigText);
-            if (Flags.cleanUpSpansAndNewLines()) {
+            // Ongoing promoted notifications are allowed to have styling.
+            final boolean isPromotedOngoing = mBuilder.mN.isPromotedOngoing();
+            if (!isPromotedOngoing && Flags.cleanUpSpansAndNewLines()) {
                 bigTextText = normalizeBigText(stripStyling(bigTextText));
             }
             if (!TextUtils.isEmpty(bigTextText)) {
@@ -9669,7 +9571,6 @@ public class Notification implements Parcelable
                 contentView.setViewVisibility(R.id.icon, View.GONE);
                 contentView.setViewVisibility(R.id.conversation_face_pile, View.GONE);
                 contentView.setViewVisibility(R.id.conversation_icon, View.VISIBLE);
-                contentView.setBoolean(R.id.conversation_icon, "setApplyCircularCrop", true);
                 contentView.setImageViewIcon(R.id.conversation_icon, conversationIcon);
             } else if (mIsGroupConversation) {
                 contentView.setViewVisibility(R.id.icon, View.GONE);
@@ -11697,11 +11598,9 @@ public class Notification implements Parcelable
             contentView.setBundle(R.id.progress,
                     "setProgressModel", model.toBundle());
 
-            if (mTrackerIcon != null) {
-                contentView.setIcon(R.id.progress,
-                        "setProgressTrackerIcon",
-                        mTrackerIcon);
-            }
+            contentView.setIcon(R.id.progress,
+                    "setProgressTrackerIcon",
+                    mTrackerIcon);
 
             return contentView;
         }
@@ -11807,8 +11706,10 @@ public class Notification implements Parcelable
             return points;
         }
 
-        @NonNull
-        private NotificationProgressModel createProgressModel(int defaultProgressColor,
+        /**
+         * @hide
+         */
+        public @NonNull NotificationProgressModel createProgressModel(int defaultProgressColor,
                 int backgroundColor) {
             final NotificationProgressModel model;
             if (mIndeterminate) {
@@ -11831,7 +11732,7 @@ public class Notification implements Parcelable
                     if (length <= 0) continue;
 
                     try {
-                        totalLength += Math.addExact(totalLength, length);
+                        totalLength = Math.addExact(totalLength, length);
                         segments.add(sanitizeSegment(segment, backgroundColor,
                                 defaultProgressColor));
                     } catch (ArithmeticException e) {
@@ -11853,7 +11754,6 @@ public class Notification implements Parcelable
                 for (Point point : mProgressPoints) {
                     final int position = point.getPosition();
                     if (position < 0 || position > totalLength) continue;
-
                     points.add(sanitizePoint(point, backgroundColor, defaultProgressColor));
                 }
 

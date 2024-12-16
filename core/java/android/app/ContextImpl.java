@@ -1167,6 +1167,7 @@ class ContextImpl extends Context {
     @Override
     public void startActivityAsUser(Intent intent, Bundle options, UserHandle user) {
         try {
+            intent.collectExtraIntentKeys();
             ActivityTaskManager.getService().startActivityAsUser(
                     mMainThread.getApplicationThread(), getOpPackageName(), getAttributionTag(),
                     intent, intent.resolveTypeIfNeeded(getContentResolver()),
@@ -1921,19 +1922,10 @@ class ContextImpl extends Context {
             }
         }
         try {
-            final Intent intent;
-            if (receiver == null && BroadcastStickyCache.useCache(filter)) {
-                intent = BroadcastStickyCache.getIntentUnchecked(filter);
-            } else {
-                intent = ActivityManager.getService().registerReceiverWithFeature(
-                        mMainThread.getApplicationThread(), mBasePackageName, getAttributionTag(),
-                        AppOpsManager.toReceiverId(receiver), rd, filter, broadcastPermission,
-                        userId,
-                        flags);
-                if (receiver == null) {
-                    BroadcastStickyCache.add(filter, intent);
-                }
-            }
+            final Intent intent = ActivityManager.getService().registerReceiverWithFeature(
+                    mMainThread.getApplicationThread(), mBasePackageName, getAttributionTag(),
+                    AppOpsManager.toReceiverId(receiver), rd, filter, broadcastPermission, userId,
+                    flags);
             if (intent != null) {
                 intent.setExtrasClassLoader(getClassLoader());
                 // TODO: determine at registration time if caller is
@@ -1954,6 +1946,24 @@ class ContextImpl extends Context {
                     getOuterContext(), receiver);
             try {
                 ActivityManager.getService().unregisterReceiver(rd);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        } else {
+            throw new RuntimeException("Not supported in system context");
+        }
+    }
+
+    @Override
+    @NonNull
+    public List<IntentFilter> getRegisteredIntentFilters(@NonNull BroadcastReceiver receiver) {
+        if (mPackageInfo != null) {
+            IIntentReceiver rd = mPackageInfo.findRegisteredReceiverDispatcher(
+                    receiver, getOuterContext());
+            try {
+                final List<IntentFilter> filters = ActivityManager.getService()
+                        .getRegisteredIntentFilters(rd);
+                return filters == null ? new ArrayList<>() : filters;
             } catch (RemoteException e) {
                 throw e.rethrowFromSystemServer();
             }

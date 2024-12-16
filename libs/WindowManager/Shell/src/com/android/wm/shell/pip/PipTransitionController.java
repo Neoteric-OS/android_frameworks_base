@@ -47,7 +47,6 @@ import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.common.pip.PipBoundsAlgorithm;
 import com.android.wm.shell.common.pip.PipBoundsState;
 import com.android.wm.shell.common.pip.PipMenuController;
-import com.android.wm.shell.common.split.SplitScreenUtils;
 import com.android.wm.shell.protolog.ShellProtoLogGroup;
 import com.android.wm.shell.sysui.ShellInit;
 import com.android.wm.shell.transition.DefaultMixedHandler;
@@ -312,10 +311,10 @@ public abstract class PipTransitionController implements Transitions.TransitionH
     }
 
     /** Whether a particular package is same as current pip package. */
-    public boolean isPackageActiveInPip(String packageName) {
-        final TaskInfo inPipTask = mPipOrganizer.getTaskInfo();
-        return packageName != null && inPipTask != null && mPipOrganizer.isInPip()
-                && packageName.equals(SplitScreenUtils.getPackageName(inPipTask.baseIntent));
+    public boolean isPackageActiveInPip(@Nullable String packageName) {
+        return packageName != null
+                && mPipBoundsState.getLastPipComponentName() != null
+                && packageName.equals(mPipBoundsState.getLastPipComponentName().getPackageName());
     }
 
     /** Add PiP-related changes to `outWCT` for the given request. */
@@ -368,10 +367,8 @@ public abstract class PipTransitionController implements Transitions.TransitionH
 
     /**
      * Finish the current transition if possible.
-     *
-     * @param tx transaction to be applied with a potentially new draw after finishing.
      */
-    public void finishTransition(@Nullable SurfaceControl.Transaction tx) {
+    public void finishTransition() {
     }
 
     /**

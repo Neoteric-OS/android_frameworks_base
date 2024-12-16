@@ -13,11 +13,20 @@
  */
 package com.android.systemui.plugins.clocks
 
+import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.util.DisplayMetrics
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.constraintlayout.widget.ConstraintSet.BOTTOM
+import androidx.constraintlayout.widget.ConstraintSet.END
+import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
+import androidx.constraintlayout.widget.ConstraintSet.START
+import androidx.constraintlayout.widget.ConstraintSet.TOP
+import androidx.constraintlayout.widget.ConstraintSet.WRAP_CONTENT
 import com.android.internal.annotations.Keep
+import com.android.internal.policy.SystemBarUtils
 import com.android.systemui.log.core.MessageBuffer
 import com.android.systemui.plugins.Plugin
 import com.android.systemui.plugins.annotations.GeneratedImport
@@ -28,6 +37,7 @@ import com.android.systemui.plugins.annotations.SimpleProperty
 import java.io.PrintWriter
 import java.util.Locale
 import java.util.TimeZone
+import org.json.JSONArray
 import org.json.JSONObject
 
 /** Identifies a clock design */
@@ -61,7 +71,7 @@ interface ClockProvider {
 
     @ProtectedReturn("return new ClockPickerConfig(\"\", \"\", \"\", null);")
     /** Settings configuration parameters for the clock */
-    fun getClockPickerConfig(id: ClockId): ClockPickerConfig
+    fun getClockPickerConfig(settings: ClockSettings): ClockPickerConfig
 }
 
 /** Interface for controlling an active clock */
@@ -129,7 +139,9 @@ data class ClockMessageBuffers(
 
     /** Message buffer for large clock rendering */
     val largeClockMessageBuffer: MessageBuffer,
-)
+) {
+    constructor(buffer: MessageBuffer) : this(buffer, buffer, buffer) {}
+}
 
 data class AodClockBurnInModel(val scale: Float, val translationX: Float, val translationY: Float)
 
@@ -148,7 +160,7 @@ interface ClockFaceLayout {
 
     @ProtectedReturn("return constraints;")
     /** Custom constraints to apply to preview ConstraintLayout. */
-    fun applyPreviewConstraints(constraints: ConstraintSet): ConstraintSet
+    fun applyPreviewConstraints(context: Context, constraints: ConstraintSet): ConstraintSet
 
     fun applyAodBurnIn(aodBurnInModel: AodClockBurnInModel)
 }
@@ -168,12 +180,83 @@ class DefaultClockFaceLayout(val view: View) : ClockFaceLayout {
         return constraints
     }
 
-    override fun applyPreviewConstraints(constraints: ConstraintSet): ConstraintSet {
-        return constraints
+    override fun applyPreviewConstraints(
+        context: Context,
+        constraints: ConstraintSet,
+    ): ConstraintSet {
+        return applyDefaultPreviewConstraints(context, constraints)
     }
 
     override fun applyAodBurnIn(aodBurnInModel: AodClockBurnInModel) {
         // Default clock doesn't need detailed control of view
+    }
+
+    companion object {
+        fun applyDefaultPreviewConstraints(
+            context: Context,
+            constraints: ConstraintSet,
+        ): ConstraintSet {
+            constraints.apply {
+                val lockscreenClockViewLargeId = getId(context, "lockscreen_clock_view_large")
+                constrainWidth(lockscreenClockViewLargeId, WRAP_CONTENT)
+                constrainHeight(lockscreenClockViewLargeId, WRAP_CONTENT)
+                constrainMaxHeight(lockscreenClockViewLargeId, 0)
+
+                val largeClockTopMargin =
+                    SystemBarUtils.getStatusBarHeight(context) +
+                        getDimen(context, "small_clock_padding_top") +
+                        getDimen(context, "keyguard_smartspace_top_offset") +
+                        getDimen(context, "date_weather_view_height") +
+                        getDimen(context, "enhanced_smartspace_height")
+                connect(lockscreenClockViewLargeId, TOP, PARENT_ID, TOP, largeClockTopMargin)
+                connect(lockscreenClockViewLargeId, START, PARENT_ID, START)
+                connect(lockscreenClockViewLargeId, END, PARENT_ID, END)
+
+                // In preview, we'll show UDFPS icon for UDFPS devices
+                // and nothing for non-UDFPS devices,
+                // and we're not planning to add this vide in clockHostView
+                // so we only need position of device entry icon to constrain clock
+                // Copied calculation codes from applyConstraints in DefaultDeviceEntrySection
+                val bottomPaddingPx = getDimen(context, "lock_icon_margin_bottom")
+                val defaultDensity =
+                    DisplayMetrics.DENSITY_DEVICE_STABLE.toFloat() /
+                        DisplayMetrics.DENSITY_DEFAULT.toFloat()
+                val lockIconRadiusPx = (defaultDensity * 36).toInt()
+                val clockBottomMargin = bottomPaddingPx + 2 * lockIconRadiusPx
+
+                connect(lockscreenClockViewLargeId, BOTTOM, PARENT_ID, BOTTOM, clockBottomMargin)
+                val smallClockViewId = getId(context, "lockscreen_clock_view")
+                constrainWidth(smallClockViewId, WRAP_CONTENT)
+                constrainHeight(smallClockViewId, getDimen(context, "small_clock_height"))
+                connect(
+                    smallClockViewId,
+                    START,
+                    PARENT_ID,
+                    START,
+                    getDimen(context, "clock_padding_start") +
+                        getDimen(context, "status_view_margin_horizontal"),
+                )
+                val smallClockTopMargin =
+                    getDimen(context, "keyguard_clock_top_margin") +
+                        SystemBarUtils.getStatusBarHeight(context)
+                connect(smallClockViewId, TOP, PARENT_ID, TOP, smallClockTopMargin)
+            }
+            return constraints
+        }
+
+        fun getId(context: Context, name: String): Int {
+            val packageName = context.packageName
+            val res = context.packageManager.getResourcesForApplication(packageName)
+            val id = res.getIdentifier(name, "id", packageName)
+            return id
+        }
+
+        fun getDimen(context: Context, name: String): Int {
+            val packageName = context.packageName
+            val res = context.packageManager.getResourcesForApplication(packageName)
+            val id = res.getIdentifier(name, "dimen", packageName)
+            return if (id == 0) 0 else res.getDimensionPixelSize(id)
+        }
     }
 }
 
@@ -203,17 +286,63 @@ interface ClockEvents {
     fun onZenDataChanged(data: ZenData)
 
     /** Update reactive axes for this clock */
-    fun onReactiveAxesChanged(axes: List<ClockReactiveSetting>)
+    fun onFontAxesChanged(axes: List<ClockFontAxisSetting>)
 }
 
 /** Axis setting value for a clock */
-data class ClockReactiveSetting(
-    /** Axis key; matches ClockReactiveAxis.key */
+data class ClockFontAxisSetting(
+    /** Axis key; matches ClockFontAxis.key */
     val key: String,
 
     /** Value to set this axis to */
     val value: Float,
-)
+) {
+    companion object {
+        private val KEY_AXIS_KEY = "key"
+        private val KEY_AXIS_VALUE = "value"
+
+        fun toJson(setting: ClockFontAxisSetting): JSONObject {
+            return JSONObject().apply {
+                put(KEY_AXIS_KEY, setting.key)
+                put(KEY_AXIS_VALUE, setting.value)
+            }
+        }
+
+        fun toJson(settings: List<ClockFontAxisSetting>): JSONArray {
+            return JSONArray().apply {
+                for (axis in settings) {
+                    put(toJson(axis))
+                }
+            }
+        }
+
+        fun fromJson(jsonObj: JSONObject): ClockFontAxisSetting {
+            return ClockFontAxisSetting(
+                key = jsonObj.getString(KEY_AXIS_KEY),
+                value = jsonObj.getDouble(KEY_AXIS_VALUE).toFloat(),
+            )
+        }
+
+        fun fromJson(jsonArray: JSONArray): List<ClockFontAxisSetting> {
+            val result = mutableListOf<ClockFontAxisSetting>()
+            for (i in 0..jsonArray.length() - 1) {
+                val obj = jsonArray.getJSONObject(i)
+                if (obj == null) continue
+                result.add(fromJson(obj))
+            }
+            return result
+        }
+
+        fun toFVar(settings: List<ClockFontAxisSetting>): String {
+            val sb = StringBuilder()
+            for (axis in settings) {
+                if (sb.length > 0) sb.append(", ")
+                sb.append("'${axis.key}' ${axis.value.toInt()}")
+            }
+            return sb.toString()
+        }
+    }
+}
 
 /** Methods which trigger various clock animations */
 @ProtectedInterface
@@ -323,11 +452,11 @@ constructor(
     val isReactiveToTone: Boolean = true,
 
     /** Font axes that can be modified on this clock */
-    val axes: List<ClockReactiveAxis> = listOf(),
+    val axes: List<ClockFontAxis> = listOf(),
 )
 
 /** Represents an Axis that can be modified */
-data class ClockReactiveAxis(
+data class ClockFontAxis(
     /** Axis key, not user renderable */
     val key: String,
 
@@ -348,15 +477,32 @@ data class ClockReactiveAxis(
 
     /** Description of the axis */
     val description: String,
-)
+) {
+    fun toSetting() = ClockFontAxisSetting(key, currentValue)
+
+    companion object {
+        fun merge(
+            fontAxes: List<ClockFontAxis>,
+            axisSettings: List<ClockFontAxisSetting>,
+        ): List<ClockFontAxis> {
+            val result = mutableListOf<ClockFontAxis>()
+            for (axis in fontAxes) {
+                val setting = axisSettings.firstOrNull { axis.key == it.key }
+                val output = setting?.let { axis.copy(currentValue = it.value) } ?: axis
+                result.add(output)
+            }
+            return result
+        }
+    }
+}
 
 /** Axis user interaction modes */
 enum class AxisType {
-    /** Boolean toggle. Swaps between minValue & maxValue */
-    Toggle,
+    /** Continuous range between minValue & maxValue. */
+    Float,
 
-    /** Continuous slider between minValue & maxValue */
-    Slider,
+    /** Only minValue & maxValue are valid. No intermediate values between them are allowed. */
+    Boolean,
 }
 
 /** Render configuration for the full clock. Modifies the way systemUI behaves with this clock. */
@@ -404,7 +550,7 @@ data class ClockFaceConfig(
 data class ClockSettings(
     val clockId: ClockId? = null,
     val seedColor: Int? = null,
-    val axes: List<ClockReactiveSetting>? = null,
+    val axes: List<ClockFontAxisSetting> = listOf(),
 ) {
     // Exclude metadata from equality checks
     var metadata: JSONObject = JSONObject()
@@ -413,38 +559,24 @@ data class ClockSettings(
         private val KEY_CLOCK_ID = "clockId"
         private val KEY_SEED_COLOR = "seedColor"
         private val KEY_METADATA = "metadata"
+        private val KEY_AXIS_LIST = "axes"
 
-        fun serialize(setting: ClockSettings?): String {
-            if (setting == null) {
-                return ""
+        fun toJson(setting: ClockSettings): JSONObject {
+            return JSONObject().apply {
+                put(KEY_CLOCK_ID, setting.clockId)
+                put(KEY_SEED_COLOR, setting.seedColor)
+                put(KEY_METADATA, setting.metadata)
+                put(KEY_AXIS_LIST, ClockFontAxisSetting.toJson(setting.axes))
             }
-
-            // TODO(b/364673977): Serialize axes
-
-            return JSONObject()
-                .put(KEY_CLOCK_ID, setting.clockId)
-                .put(KEY_SEED_COLOR, setting.seedColor)
-                .put(KEY_METADATA, setting.metadata)
-                .toString()
         }
 
-        fun deserialize(jsonStr: String?): ClockSettings? {
-            if (jsonStr.isNullOrEmpty()) {
-                return null
+        fun fromJson(json: JSONObject): ClockSettings {
+            val clockId = if (!json.isNull(KEY_CLOCK_ID)) json.getString(KEY_CLOCK_ID) else null
+            val seedColor = if (!json.isNull(KEY_SEED_COLOR)) json.getInt(KEY_SEED_COLOR) else null
+            val axisList = json.optJSONArray(KEY_AXIS_LIST)?.let(ClockFontAxisSetting::fromJson)
+            return ClockSettings(clockId, seedColor, axisList ?: listOf()).apply {
+                metadata = json.optJSONObject(KEY_METADATA) ?: JSONObject()
             }
-
-            // TODO(b/364673977): Deserialize axes
-
-            val json = JSONObject(jsonStr)
-            val result =
-                ClockSettings(
-                    if (!json.isNull(KEY_CLOCK_ID)) json.getString(KEY_CLOCK_ID) else null,
-                    if (!json.isNull(KEY_SEED_COLOR)) json.getInt(KEY_SEED_COLOR) else null,
-                )
-            if (!json.isNull(KEY_METADATA)) {
-                result.metadata = json.getJSONObject(KEY_METADATA)
-            }
-            return result
         }
     }
 }

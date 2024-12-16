@@ -17,7 +17,6 @@
 package com.android.systemui.shade;
 
 import static kotlinx.coroutines.flow.StateFlowKt.MutableStateFlow;
-import static kotlinx.coroutines.test.TestCoroutineDispatchersKt.StandardTestDispatcher;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -63,8 +62,6 @@ import com.android.systemui.statusbar.PulseExpansionHandler;
 import com.android.systemui.statusbar.QsFrameTranslateController;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
 import com.android.systemui.statusbar.disableflags.data.repository.FakeDisableFlagsRepository;
-import com.android.systemui.statusbar.notification.data.repository.ActiveNotificationListRepository;
-import com.android.systemui.statusbar.notification.domain.interactor.ActiveNotificationsInteractor;
 import com.android.systemui.statusbar.notification.stack.AmbientState;
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController;
 import com.android.systemui.statusbar.phone.DozeParameters;
@@ -129,6 +126,7 @@ public class QuickSettingsControllerImplBaseTest extends SysuiTestCase {
     @Mock protected NotificationShadeDepthController mNotificationShadeDepthController;
     @Mock protected ShadeHeaderController mShadeHeaderController;
     @Mock protected StatusBarTouchableRegionManager mStatusBarTouchableRegionManager;
+    @Mock protected StatusBarLongPressGestureDetector mStatusBarLongPressGestureDetector;
     @Mock protected DozeParameters mDozeParameters;
     @Mock protected KeyguardStateController mKeyguardStateController;
     @Mock protected KeyguardBypassController mKeyguardBypassController;
@@ -152,14 +150,12 @@ public class QuickSettingsControllerImplBaseTest extends SysuiTestCase {
     @Mock protected LargeScreenHeaderHelper mLargeScreenHeaderHelper;
 
     protected FakeDisableFlagsRepository mDisableFlagsRepository =
-            new FakeDisableFlagsRepository();
+            mKosmos.getFakeDisableFlagsRepository();
     protected FakeKeyguardRepository mKeyguardRepository = new FakeKeyguardRepository();
     protected FakeShadeRepository mShadeRepository = new FakeShadeRepository();
 
     protected SysuiStatusBarStateController mStatusBarStateController;
     protected ShadeInteractor mShadeInteractor;
-
-    protected ActiveNotificationsInteractor mActiveNotificationsInteractor;
 
     protected Handler mMainHandler;
     protected LockscreenShadeTransitionController.Callback mLockscreenShadeTransitionCallback;
@@ -190,7 +186,7 @@ public class QuickSettingsControllerImplBaseTest extends SysuiTestCase {
         mShadeInteractor = new ShadeInteractorImpl(
                 mTestScope.getBackgroundScope(),
                 mKosmos.getDeviceProvisioningInteractor(),
-                mDisableFlagsRepository,
+                mKosmos.getDisableFlagsInteractor(),
                 mDozeParameters,
                 mKeyguardRepository,
                 keyguardTransitionInteractor,
@@ -203,11 +199,6 @@ public class QuickSettingsControllerImplBaseTest extends SysuiTestCase {
                         mShadeRepository
                 ),
                 mKosmos.getShadeModeInteractor());
-
-        mActiveNotificationsInteractor = new ActiveNotificationsInteractor(
-                        new ActiveNotificationListRepository(),
-                        StandardTestDispatcher(/* scheduler = */ null, /* name = */ null)
-                );
 
         KeyguardStatusView keyguardStatusView = new KeyguardStatusView(mContext);
         keyguardStatusView.setId(R.id.keyguard_status_view);
@@ -260,6 +251,7 @@ public class QuickSettingsControllerImplBaseTest extends SysuiTestCase {
                 mNotificationShadeDepthController,
                 mShadeHeaderController,
                 mStatusBarTouchableRegionManager,
+                () -> mStatusBarLongPressGestureDetector,
                 mKeyguardStateController,
                 mKeyguardBypassController,
                 mScrimController,
@@ -277,7 +269,7 @@ public class QuickSettingsControllerImplBaseTest extends SysuiTestCase {
                 mock(DeviceEntryFaceAuthInteractor.class),
                 mShadeRepository,
                 mShadeInteractor,
-                mActiveNotificationsInteractor,
+                mKosmos.getActiveNotificationsInteractor(),
                 new JavaAdapter(mTestScope.getBackgroundScope()),
                 mCastController,
                 splitShadeStateController,

@@ -24,6 +24,8 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.platform.test.annotations.DisabledOnRavenwood;
 
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.android.ravenwood.common.RavenwoodCommonUtils;
 
 import org.junit.rules.TestRule;
@@ -34,10 +36,8 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
- * @deprecated Use {@link RavenwoodConfig} to configure the ravenwood environment instead.
- * A {@link RavenwoodRule} is no longer needed for {@link DisabledOnRavenwood}. To get the
- * {@link Context} and {@link Instrumentation}, use
- * {@link androidx.test.platform.app.InstrumentationRegistry} instead.
+ * @deprecated This class is undergoing a major change. Reach out to g/ravenwood if you need
+ * any featues in it.
  */
 @Deprecated
 public final class RavenwoodRule implements TestRule {
@@ -110,41 +110,34 @@ public final class RavenwoodRule implements TestRule {
         }
 
         /**
-         * Configure the identity of this process to be the system UID for the duration of the
-         * test. Has no effect on non-Ravenwood environments.
+         * @deprecated no longer used. We always use an app UID.
          */
+        @Deprecated
         public Builder setProcessSystem() {
-            mBuilder.setProcessSystem();
             return this;
         }
 
         /**
-         * Configure the identity of this process to be an app UID for the duration of the
-         * test. Has no effect on non-Ravenwood environments.
+         * @deprecated no longer used. We always use an app UID.
          */
+        @Deprecated
         public Builder setProcessApp() {
-            mBuilder.setProcessApp();
             return this;
         }
 
         /**
-         * Configure the identity of this process to be the given package name for the duration
-         * of the test. Has no effect on non-Ravenwood environments.
+         * @deprecated no longer used.
          */
+        @Deprecated
         public Builder setPackageName(@NonNull String packageName) {
-            mBuilder.setPackageName(packageName);
             return this;
         }
 
         /**
-         * Configure a "main" thread to be available for the duration of the test, as defined
-         * by {@code Looper.getMainLooper()}. Has no effect on non-Ravenwood environments.
-         *
-         * @deprecated
+         * @deprecated no longer used. Main thread is always available.
          */
         @Deprecated
         public Builder setProvideMainThread(boolean provideMainThread) {
-            mBuilder.setProvideMainThread(provideMainThread);
             return this;
         }
 
@@ -159,7 +152,7 @@ public final class RavenwoodRule implements TestRule {
          * Has no effect on non-Ravenwood environments.
          */
         public Builder setSystemPropertyImmutable(@NonNull String key, @Nullable Object value) {
-            mBuilder.setSystemPropertyImmutable(key, value);
+            mBuilder.setSystemPropertyImmutableReal(key, value);
             return this;
         }
 
@@ -174,7 +167,7 @@ public final class RavenwoodRule implements TestRule {
          * Has no effect on non-Ravenwood environments.
          */
         public Builder setSystemPropertyMutable(@NonNull String key, @Nullable Object value) {
-            mBuilder.setSystemPropertyMutable(key, value);
+            mBuilder.setSystemPropertyMutableReal(key, value);
             return this;
         }
 
@@ -219,8 +212,7 @@ public final class RavenwoodRule implements TestRule {
      */
     @Deprecated
     public Context getContext() {
-        return Objects.requireNonNull(mConfiguration.mInstContext,
-                "Context is only available during @Test execution");
+        return InstrumentationRegistry.getInstrumentation().getContext();
     }
 
     /**
@@ -230,8 +222,7 @@ public final class RavenwoodRule implements TestRule {
      */
     @Deprecated
     public Instrumentation getInstrumentation() {
-        return Objects.requireNonNull(mConfiguration.mInstrumentation,
-                "Instrumentation is only available during @Test execution");
+        return InstrumentationRegistry.getInstrumentation();
     }
 
     @Override
@@ -242,15 +233,11 @@ public final class RavenwoodRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                RavenwoodAwareTestRunnerHook.onRavenwoodRuleEnter(
-                        RavenwoodAwareTestRunner.getCurrentRunner(), description,
-                        RavenwoodRule.this);
+                RavenwoodAwareTestRunner.onRavenwoodRuleEnter(description, RavenwoodRule.this);
                 try {
                     base.evaluate();
                 } finally {
-                    RavenwoodAwareTestRunnerHook.onRavenwoodRuleExit(
-                            RavenwoodAwareTestRunner.getCurrentRunner(), description,
-                            RavenwoodRule.this);
+                    RavenwoodAwareTestRunner.onRavenwoodRuleExit(description, RavenwoodRule.this);
                 }
             }
         };

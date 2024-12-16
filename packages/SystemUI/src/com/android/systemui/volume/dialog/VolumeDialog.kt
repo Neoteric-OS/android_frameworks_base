@@ -18,27 +18,53 @@ package com.android.systemui.volume.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.PixelFormat
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import android.view.MotionEvent
+import android.view.ViewGroup
+import android.view.WindowManager
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.res.R
 import com.android.systemui.volume.Events
 import com.android.systemui.volume.dialog.domain.interactor.VolumeDialogVisibilityInteractor
-import com.android.systemui.volume.dialog.ui.binder.VolumeDialogBinder
+import com.android.systemui.volume.dialog.ui.binder.VolumeDialogViewBinder
 import javax.inject.Inject
 
 class VolumeDialog
 @Inject
 constructor(
     @Application context: Context,
-    private val dialogBinder: VolumeDialogBinder,
+    private val viewBinder: VolumeDialogViewBinder,
     private val visibilityInteractor: VolumeDialogVisibilityInteractor,
-) : Dialog(ContextThemeWrapper(context, R.style.volume_dialog_theme)) {
+) : Dialog(context, R.style.Theme_SystemUI_Dialog_Volume) {
+
+    init {
+        with(window!!) {
+            addFlags(
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
+                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
+            )
+            addPrivateFlags(WindowManager.LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY)
+
+            setType(WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY)
+            setWindowAnimations(-1)
+            setFormat(PixelFormat.TRANSLUCENT)
+
+            attributes =
+                attributes.apply {
+                    title = "VolumeDialog" // Not the same as Window#setTitle
+                }
+            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
+        setCanceledOnTouchOutside(true)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dialogBinder.bind(this)
+        setContentView(R.layout.volume_dialog)
+        viewBinder.bind(this)
     }
 
     /**

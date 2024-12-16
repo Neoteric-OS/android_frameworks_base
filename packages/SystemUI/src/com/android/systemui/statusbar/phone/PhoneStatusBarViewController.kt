@@ -27,6 +27,7 @@ import androidx.annotation.VisibleForTesting
 import com.android.systemui.Flags
 import com.android.systemui.Gefingerpoken
 import com.android.systemui.battery.BatteryMeterView
+import com.android.systemui.dagger.qualifiers.DisplaySpecific
 import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.flags.Flags.ENABLE_UNFOLD_STATUS_BAR_ANIMATIONS
 import com.android.systemui.plugins.DarkIconDispatcher
@@ -34,8 +35,10 @@ import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.scene.ui.view.WindowRootView
 import com.android.systemui.shade.ShadeController
+import com.android.systemui.shade.ShadeExpandsOnStatusBarLongPress
 import com.android.systemui.shade.ShadeLogger
 import com.android.systemui.shade.ShadeViewController
+import com.android.systemui.shade.StatusBarLongPressGestureDetector
 import com.android.systemui.shade.domain.interactor.PanelExpansionInteractor
 import com.android.systemui.shared.animation.UnfoldMoveFromCenterAnimator
 import com.android.systemui.statusbar.data.repository.StatusBarContentInsetsProviderStore
@@ -66,6 +69,7 @@ private constructor(
     private val shadeController: ShadeController,
     private val shadeViewController: ShadeViewController,
     private val panelExpansionInteractor: PanelExpansionInteractor,
+    private val statusBarLongPressGestureDetector: Provider<StatusBarLongPressGestureDetector>,
     private val windowRootView: Provider<WindowRootView>,
     private val shadeLogger: ShadeLogger,
     private val moveFromCenterAnimationController: StatusBarMoveFromCenterAnimationController?,
@@ -113,6 +117,10 @@ private constructor(
         battery = mView.requireViewById(R.id.battery)
         addDarkReceivers()
         addCursorSupportToIconContainers()
+
+        if (ShadeExpandsOnStatusBarLongPress.isEnabled) {
+            mView.setLongPressGestureDetector(statusBarLongPressGestureDetector.get())
+        }
 
         progressProvider?.setReadyToHandleTransition(true)
         configurationController.addCallback(configurationListener)
@@ -328,12 +336,13 @@ private constructor(
         private val shadeController: ShadeController,
         private val shadeViewController: ShadeViewController,
         private val panelExpansionInteractor: PanelExpansionInteractor,
+        private val statusBarLongPressGestureDetector: Provider<StatusBarLongPressGestureDetector>,
         private val windowRootView: Provider<WindowRootView>,
         private val shadeLogger: ShadeLogger,
         private val viewUtil: ViewUtil,
         private val configurationController: ConfigurationController,
         private val statusOverlayHoverListenerFactory: StatusOverlayHoverListenerFactory,
-        private val darkIconDispatcher: DarkIconDispatcher,
+        @DisplaySpecific private val darkIconDispatcher: DarkIconDispatcher,
         private val statusBarContentInsetsProviderStore: StatusBarContentInsetsProviderStore,
     ) {
         fun create(view: PhoneStatusBarView): PhoneStatusBarViewController {
@@ -352,6 +361,7 @@ private constructor(
                 shadeController,
                 shadeViewController,
                 panelExpansionInteractor,
+                statusBarLongPressGestureDetector,
                 windowRootView,
                 shadeLogger,
                 statusBarMoveFromCenterAnimationController,

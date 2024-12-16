@@ -17,10 +17,12 @@
 package android.media;
 
 import static android.media.MediaRouter2Utils.toUniqueId;
+import static android.media.audio.Flags.FLAG_ENABLE_MULTICHANNEL_GROUP_DEVICE;
 
 import static com.android.media.flags.Flags.FLAG_ENABLE_AUDIO_POLICIES_DEVICE_AND_BLUETOOTH_CONTROLLER;
 import static com.android.media.flags.Flags.FLAG_ENABLE_BUILT_IN_SPEAKER_ROUTE_SUITABILITY_STATUSES;
 import static com.android.media.flags.Flags.FLAG_ENABLE_NEW_MEDIA_ROUTE_2_INFO_TYPES;
+import static com.android.media.flags.Flags.FLAG_ENABLE_NEW_WIRED_MEDIA_ROUTE_2_INFO_TYPES;
 
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
@@ -149,6 +151,9 @@ public final class MediaRoute2Info implements Parcelable {
                 TYPE_HDMI,
                 TYPE_HDMI_ARC,
                 TYPE_HDMI_EARC,
+                TYPE_LINE_DIGITAL,
+                TYPE_LINE_ANALOG,
+                TYPE_AUX_LINE,
                 TYPE_USB_DEVICE,
                 TYPE_USB_ACCESSORY,
                 TYPE_DOCK,
@@ -230,6 +235,24 @@ public final class MediaRoute2Info implements Parcelable {
     public static final int TYPE_HDMI_EARC = AudioDeviceInfo.TYPE_HDMI_EARC;
 
     /**
+     * Indicates the route is a digital line connection (for example S/PDIF).
+     */
+    @FlaggedApi(FLAG_ENABLE_NEW_WIRED_MEDIA_ROUTE_2_INFO_TYPES)
+    public static final int TYPE_LINE_DIGITAL = AudioDeviceInfo.TYPE_LINE_DIGITAL;
+
+    /**
+     * Indicates the route is an analog line-level connection.
+     */
+    @FlaggedApi(FLAG_ENABLE_NEW_WIRED_MEDIA_ROUTE_2_INFO_TYPES)
+    public static final int TYPE_LINE_ANALOG = AudioDeviceInfo.TYPE_LINE_ANALOG;
+
+    /**
+     * Indicates the route is using the auxiliary line-level connectors.
+     */
+    @FlaggedApi(FLAG_ENABLE_NEW_WIRED_MEDIA_ROUTE_2_INFO_TYPES)
+    public static final int TYPE_AUX_LINE = AudioDeviceInfo.TYPE_AUX_LINE;
+
+    /**
      * Indicates the route is a USB audio device.
      *
      * @see #getType
@@ -270,6 +293,19 @@ public final class MediaRoute2Info implements Parcelable {
      * @see #getType
      */
     public static final int TYPE_BLE_HEADSET = AudioDeviceInfo.TYPE_BLE_HEADSET;
+
+    /**
+     * Indicates the route is a speaker group supporting multichannel contents.
+     *
+     * <p>The speakers in the group are connected together using local network based protocols. The
+     * speaker group requires additional input of the physical positions of each individual speaker
+     * to provide a better experience on multichannel contents.
+     *
+     * @see #getType
+     */
+    @FlaggedApi(FLAG_ENABLE_MULTICHANNEL_GROUP_DEVICE)
+    public static final int TYPE_MULTICHANNEL_SPEAKER_GROUP =
+            AudioDeviceInfo.TYPE_MULTICHANNEL_GROUP;
 
     /**
      * Indicates the route is a remote TV.
@@ -825,6 +861,7 @@ public final class MediaRoute2Info implements Parcelable {
     public boolean isSystemRouteType() {
         return switch (mType) {
             case TYPE_BUILTIN_SPEAKER,
+                            TYPE_AUX_LINE,
                             TYPE_BLUETOOTH_A2DP,
                             TYPE_DOCK,
                             TYPE_BLE_HEADSET,
@@ -832,6 +869,8 @@ public final class MediaRoute2Info implements Parcelable {
                             TYPE_HDMI,
                             TYPE_HDMI_ARC,
                             TYPE_HDMI_EARC,
+                            TYPE_LINE_DIGITAL,
+                            TYPE_LINE_ANALOG,
                             TYPE_USB_ACCESSORY,
                             TYPE_USB_DEVICE,
                             TYPE_USB_HEADSET,
@@ -1060,6 +1099,12 @@ public final class MediaRoute2Info implements Parcelable {
                 return "HDMI_ARC";
             case TYPE_HDMI_EARC:
                 return "HDMI_EARC";
+            case TYPE_LINE_DIGITAL:
+                return "LINE_DIGITAL";
+            case TYPE_LINE_ANALOG:
+                return "LINE_ANALOG";
+            case TYPE_AUX_LINE:
+                return "AUX_LINE";
             case TYPE_DOCK:
                 return "DOCK";
             case TYPE_USB_DEVICE:

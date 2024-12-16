@@ -21,6 +21,7 @@ package com.android.systemui.qs.panels.ui.compose.infinitegrid
 import android.content.res.Resources
 import android.service.quicksettings.Tile.STATE_ACTIVE
 import android.service.quicksettings.Tile.STATE_INACTIVE
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -38,6 +39,7 @@ import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -48,6 +50,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalConfiguration
@@ -58,9 +61,11 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.compose.animation.Expandable
 import com.android.compose.animation.bounceable
 import com.android.compose.modifiers.thenIf
@@ -74,15 +79,16 @@ import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.plugins.qs.QSTile
 import com.android.systemui.qs.panels.ui.compose.BounceableInfo
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.InactiveCornerRadius
+import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileHeight
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.longPressLabel
 import com.android.systemui.qs.panels.ui.viewmodel.TileUiState
 import com.android.systemui.qs.panels.ui.viewmodel.TileViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.toUiState
 import com.android.systemui.qs.tileimpl.QSTileImpl
+import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
 import java.util.function.Supplier
 import kotlinx.coroutines.CoroutineScope
-import com.android.app.tracing.coroutines.launchTraced as launch
 
 private const val TEST_TAG_SMALL = "qs_tile_small"
 private const val TEST_TAG_LARGE = "qs_tile_large"
@@ -120,7 +126,7 @@ fun Tile(
     val currentBounceableInfo by rememberUpdatedState(bounceableInfo)
     val resources = resources()
     val uiState = remember(state, resources) { state.toUiState(resources) }
-    val colors = TileDefaults.getColorForState(uiState)
+    val colors = TileDefaults.getColorForState(uiState, iconOnly)
     val hapticsViewModel: TileHapticsViewModel? =
         rememberViewModel(traceName = "TileHapticsViewModel") {
             tileHapticsViewModelFactoryProvider.getHapticsViewModelFactory()?.create(tile)
@@ -128,19 +134,16 @@ fun Tile(
 
     // TODO(b/361789146): Draw the shapes instead of clipping
     val tileShape = TileDefaults.animateTileShape(uiState.state)
+    val animatedColor by animateColorAsState(colors.background, label = "QSTileBackgroundColor")
 
     TileExpandable(
-        color =
-            if (iconOnly || !uiState.handlesSecondaryClick) {
-                colors.iconBackground
-            } else {
-                colors.background
-            },
+        color = { animatedColor },
         shape = tileShape,
         squishiness = squishiness,
         hapticsViewModel = hapticsViewModel,
         modifier =
             modifier
+                .borderOnFocus(color = MaterialTheme.colorScheme.secondary, tileShape.topEnd)
                 .fillMaxWidth()
                 .bounceable(
                     bounceable = currentBounceableInfo.bounceable,
@@ -150,6 +153,14 @@ fun Tile(
                     bounceEnd = currentBounceableInfo.bounceEnd,
                 ),
     ) { expandable ->
+        val longClick: (() -> Unit)? =
+            {
+                    hapticsViewModel?.setTileInteractionState(
+                        TileHapticsViewModel.TileInteractionState.LONG_CLICKED
+                    )
+                    tile.onLongClick(expandable)
+                }
+                .takeIf { uiState.handlesLongClick }
         TileContainer(
             onClick = {
                 tile.onClick(expandable)
@@ -160,12 +171,7 @@ fun Tile(
                     coroutineScope.launch { currentBounceableInfo.bounceable.animateBounce() }
                 }
             },
-            onLongClick = {
-                hapticsViewModel?.setTileInteractionState(
-                    TileHapticsViewModel.TileInteractionState.LONG_CLICKED
-                )
-                tile.onLongClick(expandable)
-            },
+            onLongClick = longClick,
             uiState = uiState,
             iconOnly = iconOnly,
         ) {
@@ -186,18 +192,11 @@ fun Tile(
                             tile.onSecondaryClick()
                         }
                         .takeIf { uiState.handlesSecondaryClick }
-                val longClick: (() -> Unit)? =
-                    {
-                            hapticsViewModel?.setTileInteractionState(
-                                TileHapticsViewModel.TileInteractionState.LONG_CLICKED
-                            )
-                            tile.onLongClick(expandable)
-                        }
-                        .takeIf { uiState.handlesLongClick }
                 LargeTileContent(
                     label = uiState.label,
                     secondaryLabel = uiState.secondaryLabel,
                     icon = icon,
+                    sideDrawable = uiState.sideDrawable,
                     colors = colors,
                     iconShape = iconShape,
                     toggleClick = secondaryClick,
@@ -212,7 +211,7 @@ fun Tile(
 
 @Composable
 private fun TileExpandable(
-    color: Color,
+    color: () -> Color,
     shape: Shape,
     squishiness: () -> Float,
     hapticsViewModel: TileHapticsViewModel?,
@@ -220,7 +219,7 @@ private fun TileExpandable(
     content: @Composable (Expandable) -> Unit,
 ) {
     Expandable(
-        color = color,
+        color = color(),
         shape = shape,
         modifier = modifier.clip(shape).verticalSquish(squishiness),
     ) {
@@ -231,14 +230,14 @@ private fun TileExpandable(
 @Composable
 fun TileContainer(
     onClick: () -> Unit,
-    onLongClick: () -> Unit,
+    onLongClick: (() -> Unit)?,
     uiState: TileUiState,
     iconOnly: Boolean,
     content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
         modifier =
-            Modifier.height(CommonTileDefaults.TileHeight)
+            Modifier.height(TileHeight)
                 .fillMaxWidth()
                 .tileCombinedClickable(
                     onClick = onClick,
@@ -275,7 +274,7 @@ fun Modifier.tilePadding(): Modifier {
 @Composable
 fun Modifier.tileCombinedClickable(
     onClick: () -> Unit,
-    onLongClick: () -> Unit,
+    onLongClick: (() -> Unit)?,
     uiState: TileUiState,
     iconOnly: Boolean,
 ): Modifier {
@@ -336,6 +335,16 @@ private object TileDefaults {
         )
 
     @Composable
+    fun inactiveDualTargetTileColors(): TileColors =
+        TileColors(
+            background = MaterialTheme.colorScheme.surfaceVariant,
+            iconBackground = MaterialTheme.colorScheme.surfaceContainerHighest,
+            label = MaterialTheme.colorScheme.onSurfaceVariant,
+            secondaryLabel = MaterialTheme.colorScheme.onSurfaceVariant,
+            icon = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+
+    @Composable
     fun inactiveTileColors(): TileColors =
         TileColors(
             background = MaterialTheme.colorScheme.surfaceVariant,
@@ -356,22 +365,30 @@ private object TileDefaults {
         )
 
     @Composable
-    fun getColorForState(uiState: TileUiState): TileColors {
+    fun getColorForState(uiState: TileUiState, iconOnly: Boolean): TileColors {
         return when (uiState.state) {
             STATE_ACTIVE -> {
-                if (uiState.handlesSecondaryClick) {
+                if (uiState.handlesSecondaryClick && !iconOnly) {
                     activeDualTargetTileColors()
                 } else {
                     activeTileColors()
                 }
             }
-            STATE_INACTIVE -> inactiveTileColors()
+
+            STATE_INACTIVE -> {
+                if (uiState.handlesSecondaryClick && !iconOnly) {
+                    inactiveDualTargetTileColors()
+                } else {
+                    inactiveTileColors()
+                }
+            }
+
             else -> unavailableTileColors()
         }
     }
 
     @Composable
-    fun animateIconShape(state: Int): Shape {
+    fun animateIconShape(state: Int): RoundedCornerShape {
         return animateShape(
             state = state,
             activeCornerRadius = ActiveIconCornerRadius,
@@ -380,7 +397,7 @@ private object TileDefaults {
     }
 
     @Composable
-    fun animateTileShape(state: Int): Shape {
+    fun animateTileShape(state: Int): RoundedCornerShape {
         return animateShape(
             state = state,
             activeCornerRadius = ActiveTileCornerRadius,
@@ -389,7 +406,7 @@ private object TileDefaults {
     }
 
     @Composable
-    fun animateShape(state: Int, activeCornerRadius: Dp, label: String): Shape {
+    fun animateShape(state: Int, activeCornerRadius: Dp, label: String): RoundedCornerShape {
         val animatedCornerRadius by
             animateDpAsState(
                 targetValue =
@@ -400,7 +417,15 @@ private object TileDefaults {
                     },
                 label = label,
             )
-        return RoundedCornerShape(animatedCornerRadius)
+
+        val corner = remember {
+            object : CornerSize {
+                override fun toPx(shapeSize: Size, density: Density): Float {
+                    return with(density) { animatedCornerRadius.toPx() }
+                }
+            }
+        }
+        return RoundedCornerShape(corner)
     }
 }
 

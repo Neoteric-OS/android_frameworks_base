@@ -103,6 +103,7 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.platform.test.annotations.EnableFlags;
 import android.platform.test.flag.junit.FlagsParameterization;
 import android.service.dreams.IDreamManager;
 import android.service.trust.TrustAgentService;
@@ -129,6 +130,7 @@ import com.android.keyguard.KeyguardUpdateMonitor.BiometricAuthenticated;
 import com.android.keyguard.logging.KeyguardUpdateMonitorLogger;
 import com.android.keyguard.logging.SimLogger;
 import com.android.settingslib.fuelgauge.BatteryStatus;
+import com.android.systemui.Flags;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.biometrics.AuthController;
 import com.android.systemui.biometrics.FingerprintInteractiveToAuthProvider;
@@ -190,6 +192,7 @@ import platform.test.runner.parameterized.Parameters;
 @SmallTest
 @RunWith(ParameterizedAndroidJunit4.class)
 @TestableLooper.RunWithLooper
+@EnableFlags(Flags.FLAG_USER_ENCRYPTED_SOURCE)
 public class KeyguardUpdateMonitorTest extends SysuiTestCase {
     private static final String PKG_ALLOWING_FP_LISTEN_ON_OCCLUDING_ACTIVITY =
             "test_app_fp_listen_on_occluding_activity";
@@ -1269,12 +1272,15 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
 
     @Test
     public void testIsUserUnlocked() {
+        when(mUserManager.isUserUnlocked(mSelectedUserInteractor.getSelectedUserId())).thenReturn(
+                true);
         // mUserManager will report the user as unlocked on @Before
         assertThat(
                 mKeyguardUpdateMonitor.isUserUnlocked(mSelectedUserInteractor.getSelectedUserId()))
                 .isTrue();
         // Invalid user should not be unlocked.
         int randomUser = 99;
+        when(mUserManager.isUserUnlocked(randomUser)).thenReturn(false);
         assertThat(mKeyguardUpdateMonitor.isUserUnlocked(randomUser)).isFalse();
     }
 
@@ -2241,6 +2247,23 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
                 TelephonyManager.SIM_STATE_PIN_REQUIRED);
         verify(keyguardUpdateMonitorCallback).onSimStateChanged(validSubId, slotId,
                 TelephonyManager.SIM_STATE_PIN_REQUIRED);
+    }
+
+    @Test
+    public void isSimPinSecureReturnsFalseWhenEmpty() {
+        assertThat(mKeyguardUpdateMonitor.isSimPinSecure()).isFalse();
+    }
+
+    @Test
+    public void isSimPinSecureReturnsTrueWhenOneSlotIsLocked() {
+        // Slot 0 is locked
+        mKeyguardUpdateMonitor.handleSimStateChange(10, 0,
+                TelephonyManager.SIM_STATE_PIN_REQUIRED);
+        // Slot 1 is not ready
+        mKeyguardUpdateMonitor.handleSimStateChange(11, 1,
+                TelephonyManager.SIM_STATE_NOT_READY);
+
+        assertThat(mKeyguardUpdateMonitor.isSimPinSecure()).isTrue();
     }
 
     @Test

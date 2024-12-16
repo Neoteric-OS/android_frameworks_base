@@ -21,6 +21,7 @@ package android.nfc;
 
 import android.app.PendingIntent;
 import android.content.IntentFilter;
+import android.nfc.Entry;
 import android.nfc.NdefMessage;
 import android.nfc.Tag;
 import android.nfc.TechListParcel;
@@ -123,4 +124,8 @@ interface INfcAdapter
     void triggerInitialization();
     boolean getSettingStatus();
     boolean isTagPresent();
+    List<Entry> getRoutingTableEntryList();
+    void indicateDataMigration(boolean inProgress, String pkg);
+    int commitRouting();
+    boolean isTagIntentAllowed(in String pkg, in int Userid);
 }

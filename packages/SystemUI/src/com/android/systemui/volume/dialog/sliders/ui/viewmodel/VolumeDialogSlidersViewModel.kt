@@ -16,20 +16,15 @@
 
 package com.android.systemui.volume.dialog.sliders.ui.viewmodel
 
-import androidx.compose.runtime.getValue
-import com.android.systemui.lifecycle.ExclusiveActivatable
-import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.volume.dialog.dagger.scope.VolumeDialog
-import com.android.systemui.volume.dialog.sliders.domain.interactor.VolumeDialogSliderInteractor
+import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderComponent
 import com.android.systemui.volume.dialog.sliders.domain.interactor.VolumeDialogSlidersInteractor
-import com.android.systemui.volume.dialog.sliders.domain.model.VolumeDialogSliderType
-import com.android.systemui.volume.dialog.sliders.ui.VolumeDialogSliderViewBinder
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
@@ -38,35 +33,20 @@ class VolumeDialogSlidersViewModel
 constructor(
     @VolumeDialog coroutineScope: CoroutineScope,
     private val slidersInteractor: VolumeDialogSlidersInteractor,
-    private val sliderInteractorFactory: VolumeDialogSliderInteractor.Factory,
-    private val sliderViewModelFactory: VolumeDialogSliderViewModel.Factory,
-    private val sliderViewBinderFactory: VolumeDialogSliderViewBinder.Factory,
-) : ExclusiveActivatable() {
+    private val sliderComponentFactory: VolumeDialogSliderComponent.Factory,
+) {
 
-    private val hydrator = Hydrator("VolumeDialogSlidersViewModel")
-    private val slidersStateFlow: StateFlow<VolumeDialogSliderUiModel?> =
+    val sliders: Flow<VolumeDialogSliderUiModel> =
         slidersInteractor.sliders
-            .distinctUntilChanged()
             .map { slidersModel ->
                 VolumeDialogSliderUiModel(
-                    sliderViewBinder = createSliderViewBinder(slidersModel.slider),
-                    floatingSliderViewBinders =
-                        slidersModel.floatingSliders.map(::createSliderViewBinder),
+                    sliderComponent = sliderComponentFactory.create(slidersModel.slider),
+                    floatingSliderComponent =
+                        slidersModel.floatingSliders.map(sliderComponentFactory::create),
                 )
             }
             .stateIn(coroutineScope, SharingStarted.Eagerly, null)
-
-    val uiModel: VolumeDialogSliderUiModel? by
-        hydrator.hydratedStateOf("VolumeDialogSlidersViewModel#uiModel", slidersStateFlow)
-
-    override suspend fun onActivated(): Nothing {
-        hydrator.activate()
-    }
-
-    private fun createSliderViewBinder(type: VolumeDialogSliderType): VolumeDialogSliderViewBinder =
-        sliderViewBinderFactory.create {
-            sliderViewModelFactory.create(sliderInteractorFactory.create(type))
-        }
+            .filterNotNull()
 
     @AssistedFactory
     interface Factory {
@@ -77,6 +57,6 @@ constructor(
 
 /** Models slider ui */
 data class VolumeDialogSliderUiModel(
-    val sliderViewBinder: VolumeDialogSliderViewBinder,
-    val floatingSliderViewBinders: List<VolumeDialogSliderViewBinder>,
+    val sliderComponent: VolumeDialogSliderComponent,
+    val floatingSliderComponent: List<VolumeDialogSliderComponent>,
 )

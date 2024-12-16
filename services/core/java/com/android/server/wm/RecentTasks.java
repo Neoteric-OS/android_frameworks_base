@@ -328,9 +328,12 @@ class RecentTasks {
         ProtoLog.i(WM_DEBUG_TASKS, "Setting frozen recents task list");
 
         // Always update the reordering time when this is called to ensure that the timeout
-        // is reset
+        // is reset.  Extend this duration when running in tests.
+        final long timeout = ActivityManager.isRunningInUserTestHarness()
+                ? mFreezeTaskListTimeoutMs * 10
+                : mFreezeTaskListTimeoutMs;
         mService.mH.removeCallbacks(mResetFreezeTaskListOnTimeoutRunnable);
-        mService.mH.postDelayed(mResetFreezeTaskListOnTimeoutRunnable, mFreezeTaskListTimeoutMs);
+        mService.mH.postDelayed(mResetFreezeTaskListOnTimeoutRunnable, timeout);
     }
 
     /**
@@ -2040,21 +2043,8 @@ class RecentTasks {
         // Fill in some deprecated values.
         rti.id = rti.isRunning ? rti.taskId : INVALID_TASK_ID;
         rti.persistentId = rti.taskId;
-        rti.lastSnapshotData.set(tr.mLastTaskSnapshotData);
         if (!getTasksAllowed) {
             Task.trimIneffectiveInfo(tr, rti);
-        }
-
-        // Fill in organized child task info for the task created by organizer.
-        if (tr.mCreatedByOrganizer) {
-            for (int i = tr.getChildCount() - 1; i >= 0; i--) {
-                final Task childTask = tr.getChildAt(i).asTask();
-                if (childTask != null && childTask.isOrganized()) {
-                    final ActivityManager.RecentTaskInfo cti = new ActivityManager.RecentTaskInfo();
-                    childTask.fillTaskInfo(cti, true /* stripExtras */, tda);
-                    rti.childrenTaskInfos.add(cti);
-                }
-            }
         }
         return rti;
     }

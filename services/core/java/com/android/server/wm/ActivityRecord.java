@@ -255,6 +255,7 @@ import static org.xmlpull.v1.XmlPullParser.END_DOCUMENT;
 import static org.xmlpull.v1.XmlPullParser.END_TAG;
 import static org.xmlpull.v1.XmlPullParser.START_TAG;
 
+import android.Manifest;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -639,6 +640,9 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     // The locusId associated with this activity, if set.
     private LocusId mLocusId;
 
+    // The timestamp of the last request to show the "Open in browser" education
+    public long mRequestOpenInBrowserEducationTimestamp;
+
     // Whether the activity was launched from a bubble.
     private boolean mLaunchedFromBubble;
 
@@ -719,9 +723,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
      * @see #occludesParent()
      */
     private boolean mOccludesParent;
-
-    /** Whether the activity have style floating */
-    private boolean mStyleFloating;
 
     /**
      * Unlike {@link #mOccludesParent} which can be changed at runtime. This is a static attribute
@@ -804,10 +805,10 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     // and therefore #isLetterboxedForFixedOrientationAndAspectRatio returns false.
     private boolean mIsEligibleForFixedOrientationLetterbox;
 
-    // activity is not displayed?
-    // TODO: rename to mNoDisplay
-    @VisibleForTesting
-    boolean noDisplay;
+    /**
+     * Whether the activity is to be displayed. See {@link android.R.attr#windowNoDisplay}.
+     */
+    private boolean mNoDisplay;
     final boolean mShowForAllUsers;
     // TODO: Make this final
     int mTargetSdk;
@@ -1191,7 +1192,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 pw.print(" inHistory="); pw.print(inHistory);
                 pw.print(" idle="); pw.println(idle);
         pw.print(prefix); pw.print("occludesParent="); pw.print(occludesParent());
-                pw.print(" noDisplay="); pw.print(noDisplay);
+                pw.print(" mNoDisplay="); pw.print(mNoDisplay);
                 pw.print(" immersive="); pw.print(immersive);
                 pw.print(" launchMode="); pw.println(launchMode);
         pw.print(prefix); pw.print("mActivityType=");
@@ -1638,6 +1639,11 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 newParent.setResumedActivity(this, "onParentChanged");
             }
             mAppCompatController.getTransparentPolicy().start();
+            if (mState == INITIALIZING && isRestrictedFixedOrientation(info.screenOrientation)) {
+                Slog.i(TAG, "Ignoring manifest-declared fixed orientation "
+                        + ActivityInfo.screenOrientationToString(info.screenOrientation)
+                        + " of " + this + " since target sdk 36");
+            }
         }
 
         if (rootTask != null && rootTask.topRunningActivity() == this) {
@@ -1808,8 +1814,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         }
         prevDc.onRunningActivityChanged();
 
-        // TODO(b/169035022): move to a more-appropriate place.
-        mTransitionController.collect(this);
         if (prevDc.mOpeningApps.remove(this)) {
             // Transfer opening transition to new display.
             mDisplayContent.mOpeningApps.add(this);
@@ -2026,20 +2030,19 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         if (ent != null) {
             final boolean styleTranslucent = ent.array.getBoolean(
                     com.android.internal.R.styleable.Window_windowIsTranslucent, false);
-            mStyleFloating = ent.array.getBoolean(
+            final boolean styleFloating = ent.array.getBoolean(
                     com.android.internal.R.styleable.Window_windowIsFloating, false);
-            mOccludesParent = !(styleTranslucent || mStyleFloating)
+            mOccludesParent = !(styleTranslucent || styleFloating)
                     // This style is propagated to the main window attributes with
                     // FLAG_SHOW_WALLPAPER from PhoneWindow#generateLayout.
                     || ent.array.getBoolean(R.styleable.Window_windowShowWallpaper, false);
             mStyleFillsParent = mOccludesParent;
-            noDisplay = ent.array.getBoolean(R.styleable.Window_windowNoDisplay, false);
+            mNoDisplay = ent.array.getBoolean(R.styleable.Window_windowNoDisplay, false);
             mOptOutEdgeToEdge = ent.array.getBoolean(
                     R.styleable.Window_windowOptOutEdgeToEdgeEnforcement, false);
         } else {
-            mStyleFloating = false;
             mStyleFillsParent = mOccludesParent = true;
-            noDisplay = false;
+            mNoDisplay = false;
             mOptOutEdgeToEdge = false;
         }
 
@@ -2563,6 +2566,19 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 }
             }
             if (!activityAllDrawn && !isActivityHome) {
+                // Only check the special case of a fragment host task because the starting window
+                // may not be visible if the client organizer delays the transition ready.
+                if (task.mTaskFragmentHostProcessName != null) {
+                    // It may be launched from a task trampoline that already has a starting window.
+                    // Return NONE because 2 consecutive splashes may not look smooth in visual.
+                    final Task prevTask = task.getParent().getTaskBelow(task);
+                    if (prevTask != null) {
+                        final ActivityRecord prevTaskTop = prevTask.getTopMostActivity();
+                        if (prevTaskTop != null && prevTaskTop.hasStartingWindow()) {
+                            return STARTING_WINDOW_TYPE_NONE;
+                        }
+                    }
+                }
                 return STARTING_WINDOW_TYPE_SPLASH_SCREEN;
             }
         }
@@ -3113,8 +3129,16 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         return occludesParent(true /* includingFinishing */);
     }
 
-    boolean isStyleFloating() {
-        return mStyleFloating;
+    boolean isNoDisplay() {
+        return mNoDisplay;
+    }
+
+    /**
+     * Exposed only for testing and should not be used to modify value of {@link #mNoDisplay}.
+     */
+    @VisibleForTesting
+    void setIsNoDisplay(boolean isNoDisplay) {
+        mNoDisplay = isNoDisplay;
     }
 
     /** Returns true if this activity is not finishing, is opaque and fills the entire space of
@@ -3196,6 +3220,17 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     /**
+     * Returns {@code true} if the orientation will be ignored for {@link #isUniversalResizeable()}.
+     */
+    private boolean isRestrictedFixedOrientation(
+            @ActivityInfo.ScreenOrientation int orientation) {
+        // Exclude "locked" because it is not explicit portrait or landscape.
+        return orientation != ActivityInfo.SCREEN_ORIENTATION_LOCKED
+                && ActivityInfo.isFixedOrientation(orientation)
+                && isUniversalResizeable();
+    }
+
+    /**
      * Returns {@code true} if the fixed orientation, aspect ratio, resizability of this activity
      * will be ignored.
      */
@@ -3212,6 +3247,9 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             return false;
         }
         if (mWmService.mConstants.isPackageOptOutIgnoreActivityOrientationRequest(packageName)) {
+            return false;
+        }
+        if (mAppCompatController.mAllowRestrictedResizability.getAsBoolean()) {
             return false;
         }
         // If the user preference respects aspect ratio, then it becomes non-resizable.
@@ -5573,8 +5611,10 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             if (!visible) {
                 if (mTransitionController.inPlayingTransition(this)) {
                     mTransitionChangeFlags |= FLAG_IS_OCCLUDED;
-                } else if (mTransitionController.inFinishingTransition(this)) {
-                    mTransitionChangeFlags |= FLAGS_IS_OCCLUDED_NO_ANIMATION;
+                    if (mTransitionController.mFinishingTransition != null
+                            && mTransitionController.mFinishingTransition.isTransientLaunch(this)) {
+                        mTransitionChangeFlags |= FLAGS_IS_OCCLUDED_NO_ANIMATION;
+                    }
                 }
             } else {
                 mTransitionChangeFlags &= ~FLAG_IS_OCCLUDED;
@@ -6175,7 +6215,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     void notifyUnknownVisibilityLaunchedForKeyguardTransition() {
         // No display activities never add a window, so there is no point in waiting them for
         // relayout.
-        if (noDisplay || !isKeyguardLocked()) {
+        if (mNoDisplay || !isKeyguardLocked()) {
             return;
         }
 
@@ -6578,7 +6618,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         returningOptions = null;
 
         if (canTurnScreenOn()) {
-            mTaskSupervisor.wakeUp("turnScreenOnFlag");
+            mTaskSupervisor.wakeUp(getDisplayId(), "turnScreenOnFlag");
         } else {
             // If the screen is going to turn on because the caller explicitly requested it and
             // the keyguard is not showing don't attempt to sleep. Otherwise the Activity will
@@ -7470,6 +7510,15 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         return mLocusId;
     }
 
+    void requestOpenInBrowserEducation() {
+        mRequestOpenInBrowserEducationTimestamp = System.currentTimeMillis();
+        final Task task = getTask();
+        if (task != null) {
+            final boolean force = isVisibleRequested() && this == task.getTopNonFinishingActivity();
+            getTask().dispatchTaskInfoChangedIfNeeded(force);
+        }
+    }
+
     public void reportScreenCaptured() {
         if (mCaptureCallbacks != null) {
             final int n = mCaptureCallbacks.beginBroadcast();
@@ -8266,7 +8315,13 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         ProtoLog.v(WM_DEBUG_ORIENTATION,
                 "Setting requested orientation %s for %s",
                 ActivityInfo.screenOrientationToString(requestedOrientation), this);
-        setOrientation(requestedOrientation, this);
+        final int resolvedOrientation = setOrientation(requestedOrientation, this);
+        if (resolvedOrientation != requestedOrientation
+                && isRestrictedFixedOrientation(requestedOrientation)) {
+            Slog.i(TAG, "Ignoring requested fixed orientation "
+                    + ActivityInfo.screenOrientationToString(requestedOrientation)
+                    + " of " + this + " since target sdk 36");
+        }
 
         // Push the new configuration to the requested app in case where it's not pushed, e.g. when
         // the request is handled at task level with letterbox.
@@ -8357,9 +8412,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     @ActivityInfo.ScreenOrientation
     protected int getOverrideOrientation() {
         int candidateOrientation = super.getOverrideOrientation();
-        if (candidateOrientation != ActivityInfo.SCREEN_ORIENTATION_LOCKED
-                && ActivityInfo.isFixedOrientation(candidateOrientation)
-                && isUniversalResizeable()) {
+        if (isRestrictedFixedOrientation(candidateOrientation)) {
             candidateOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
         }
         return mAppCompatController.getOrientationPolicy()
@@ -9052,6 +9105,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 mAppCompatController.getAppCompatSizeCompatModePolicy();
 
         if (scmPolicy.hasAppCompatDisplayInsetsWithoutInheritance()
+                && mAppCompatDisplayInsets != null
                 && !mAppCompatDisplayInsets.mIsInFixedOrientationOrAspectRatioLetterbox) {
             // App prefers to keep its original size.
             // If the size compat is from previous fixed orientation letterboxing, we may want to
@@ -10468,6 +10522,21 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     private void adjustPictureInPictureParamsIfNeeded(Rect windowBounds) {
         if (pictureInPictureArgs != null && pictureInPictureArgs.hasSourceBoundsHint()) {
             pictureInPictureArgs.getSourceRectHint().offset(windowBounds.left, windowBounds.top);
+        }
+
+        if (android.app.Flags.enableTvImplicitEnterPipRestriction()) {
+            PackageManager pm = mAtmService.mContext.getPackageManager();
+            if (pictureInPictureArgs.isAutoEnterEnabled()
+                    && pm.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
+                    && pm.checkPermission(Manifest.permission.TV_IMPLICIT_ENTER_PIP, packageName)
+                    == PackageManager.PERMISSION_DENIED) {
+                Log.i(TAG,
+                        "Auto-enter PiP only allowed on TV if android.permission"
+                                + ".TV_IMPLICIT_ENTER_PIP permission is held by the app.");
+                PictureInPictureParams.Builder builder = new PictureInPictureParams.Builder();
+                builder.setAutoEnterEnabled(false);
+                pictureInPictureArgs.copyOnlySet(builder.build());
+            }
         }
     }
 

@@ -48,7 +48,8 @@ import com.android.systemui.brightness.dagger.ScreenBrightnessModule;
 import com.android.systemui.classifier.FalsingModule;
 import com.android.systemui.clipboardoverlay.dagger.ClipboardOverlayModule;
 import com.android.systemui.common.data.CommonDataLayerModule;
-import com.android.systemui.common.ui.ConfigurationStateModule;
+import com.android.systemui.common.ui.ConfigurationModule;
+import com.android.systemui.common.ui.data.repository.ConfigurationRepositoryModule;
 import com.android.systemui.common.usagestats.data.CommonUsageStatsDataLayerModule;
 import com.android.systemui.communal.dagger.CommunalModule;
 import com.android.systemui.complication.dagger.ComplicationComponent;
@@ -70,6 +71,9 @@ import com.android.systemui.haptics.msdl.dagger.MSDLModule;
 import com.android.systemui.inputmethod.InputMethodModule;
 import com.android.systemui.keyboard.KeyboardModule;
 import com.android.systemui.keyevent.data.repository.KeyEventRepositoryModule;
+import com.android.systemui.keyguard.data.quickaffordance.KeyguardDataQuickAffordanceModule;
+import com.android.systemui.keyguard.shared.quickaffordance.KeyguardQuickAffordancesMetricsLogger;
+import com.android.systemui.keyguard.shared.quickaffordance.KeyguardQuickAffordancesMetricsLoggerImpl;
 import com.android.systemui.keyguard.ui.composable.LockscreenContent;
 import com.android.systemui.log.dagger.LogModule;
 import com.android.systemui.log.dagger.MonitorLog;
@@ -96,7 +100,7 @@ import com.android.systemui.qs.QSFragmentStartableModule;
 import com.android.systemui.qs.footer.dagger.FooterActionsModule;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.recordissue.RecordIssueModule;
-import com.android.systemui.retail.dagger.RetailModeModule;
+import com.android.systemui.retail.RetailModeModule;
 import com.android.systemui.scene.shared.model.SceneContainerConfig;
 import com.android.systemui.scene.shared.model.SceneDataSource;
 import com.android.systemui.scene.shared.model.SceneDataSourceDelegator;
@@ -208,7 +212,8 @@ import javax.inject.Named;
         ClockRegistryModule.class,
         CommunalModule.class,
         CommonDataLayerModule.class,
-        ConfigurationStateModule.class,
+        ConfigurationModule.class,
+        ConfigurationRepositoryModule.class,
         CommonUsageStatsDataLayerModule.class,
         ConfigurationControllerModule.class,
         ConnectivityModule.class,
@@ -227,6 +232,7 @@ import javax.inject.Named;
         InputMethodModule.class,
         KeyEventRepositoryModule.class,
         KeyboardModule.class,
+        KeyguardDataQuickAffordanceModule.class,
         LetterboxModule.class,
         LogModule.class,
         MediaProjectionActivitiesModule.class,
@@ -426,6 +432,11 @@ public abstract class SystemUIModule {
                 notifPipelineFlags,
                 sysuiMainExecutor,
                 sysuiUiBgExecutor));
+    }
+
+    @Provides
+    static KeyguardQuickAffordancesMetricsLogger providesKeyguardQuickAffordancesMetricsLogger() {
+        return new KeyguardQuickAffordancesMetricsLoggerImpl();
     }
 
     @Binds

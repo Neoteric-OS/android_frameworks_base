@@ -16,7 +16,6 @@
 package android.platform.test.ravenwood;
 
 import static android.os.Process.FIRST_APPLICATION_UID;
-import static android.os.Process.SYSTEM_UID;
 import static android.os.UserHandle.SYSTEM;
 
 import android.annotation.NonNull;
@@ -30,16 +29,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Represents how to configure the ravenwood environment for a test class.
- *
- * If a ravenwood test class has a public static field with the {@link Config} annotation,
- * Ravenwood will extract the config from it and initializes the environment. The type of the
- * field must be of {@link RavenwoodConfig}.
+ * @deprecated This class will be removed. Reach out to g/ravenwood if you need any features in it.
  */
+@Deprecated
 public final class RavenwoodConfig {
     /**
      * Use this to mark a field as the configuration.
@@ -60,16 +55,13 @@ public final class RavenwoodConfig {
      * Unless the test author requests differently, run as "nobody", and give each collection of
      * tests its own unique PID.
      */
-    int mUid = NOBODY_UID;
+    int mUid = FIRST_APPLICATION_UID;
     int mPid = sNextPid.getAndIncrement();
 
     String mTestPackageName;
     String mTargetPackageName;
 
-    int mMinSdkLevel;
     int mTargetSdkLevel;
-
-    boolean mProvideMainThread = false;
 
     final RavenwoodSystemProperties mSystemProperties = new RavenwoodSystemProperties();
 
@@ -94,12 +86,6 @@ public final class RavenwoodConfig {
         return RavenwoodRule.isOnRavenwood();
     }
 
-    private void setDefaults() {
-        if (mTargetPackageName == null) {
-            mTargetPackageName = mTestPackageName;
-        }
-    }
-
     public static class Builder {
         private final RavenwoodConfig mConfig = new RavenwoodConfig();
 
@@ -107,97 +93,80 @@ public final class RavenwoodConfig {
         }
 
         /**
-         * Configure the identity of this process to be the system UID for the duration of the
-         * test. Has no effect on non-Ravenwood environments.
+         * @deprecated no longer used. We always use an app UID.
          */
+        @Deprecated
         public Builder setProcessSystem() {
-            mConfig.mUid = SYSTEM_UID;
             return this;
         }
 
         /**
-         * Configure the identity of this process to be an app UID for the duration of the
-         * test. Has no effect on non-Ravenwood environments.
+         * @deprecated no longer used. We always use an app UID.
          */
+        @Deprecated
         public Builder setProcessApp() {
-            mConfig.mUid = FIRST_APPLICATION_UID;
             return this;
         }
 
         /**
-         * Configure the package name of the test, which corresponds to
-         * {@link Instrumentation#getContext()}.
+         * @deprecated no longer used. Package name is set in the build file. (for now)
          */
+        @Deprecated
         public Builder setPackageName(@NonNull String packageName) {
-            mConfig.mTestPackageName = Objects.requireNonNull(packageName);
             return this;
         }
 
         /**
-         * Configure the package name of the target app, which corresponds to
-         * {@link Instrumentation#getTargetContext()}. Defaults to {@link #setPackageName}.
+         * @deprecated no longer used. Package name is set in the build file. (for now)
          */
+        @Deprecated
         public Builder setTargetPackageName(@NonNull String packageName) {
-            mConfig.mTargetPackageName = Objects.requireNonNull(packageName);
             return this;
         }
 
-        /**
-         * Configure the min SDK level of the test.
-         */
-        public Builder setMinSdkLevel(int sdkLevel) {
-            mConfig.mMinSdkLevel = sdkLevel;
-            return this;
-        }
 
         /**
-         * Configure the target SDK level of the test.
+         * @deprecated no longer used. Target SDK level is set in the build file. (for now)
          */
+        @Deprecated
         public Builder setTargetSdkLevel(int sdkLevel) {
-            mConfig.mTargetSdkLevel = sdkLevel;
             return this;
         }
 
         /**
-         * Configure a "main" thread to be available for the duration of the test, as defined
-         * by {@code Looper.getMainLooper()}. Has no effect on non-Ravenwood environments.
-         *
-         * @deprecated
+         * @deprecated no longer used. Main thread is always available.
          */
         @Deprecated
         public Builder setProvideMainThread(boolean provideMainThread) {
-            mConfig.mProvideMainThread = provideMainThread;
             return this;
         }
 
         /**
-         * Configure the given system property as immutable for the duration of the test.
-         * Read access to the key is allowed, and write access will fail. When {@code value} is
-         * {@code null}, the value is left as undefined.
-         *
-         * All properties in the {@code debug.*} namespace are automatically mutable, with no
-         * developer action required.
-         *
-         * Has no effect on non-Ravenwood environments.
+         * @deprecated Use {@link RavenwoodRule.Builder#setSystemPropertyImmutable(String, Object)}
          */
+        @Deprecated
         public Builder setSystemPropertyImmutable(@NonNull String key,
+                @Nullable Object value) {
+            return this;
+        }
+
+        /**
+         * @deprecated Use {@link RavenwoodRule.Builder#setSystemPropertyMutable(String, Object)}
+         */
+        @Deprecated
+        public Builder setSystemPropertyMutable(@NonNull String key,
+                @Nullable Object value) {
+            return this;
+        }
+
+        Builder setSystemPropertyImmutableReal(@NonNull String key,
                 @Nullable Object value) {
             mConfig.mSystemProperties.setValue(key, value);
             mConfig.mSystemProperties.setAccessReadOnly(key);
             return this;
         }
 
-        /**
-         * Configure the given system property as mutable for the duration of the test.
-         * Both read and write access to the key is allowed, and its value will be reset between
-         * each test. When {@code value} is {@code null}, the value is left as undefined.
-         *
-         * All properties in the {@code debug.*} namespace are automatically mutable, with no
-         * developer action required.
-         *
-         * Has no effect on non-Ravenwood environments.
-         */
-        public Builder setSystemPropertyMutable(@NonNull String key,
+        Builder setSystemPropertyMutableReal(@NonNull String key,
                 @Nullable Object value) {
             mConfig.mSystemProperties.setValue(key, value);
             mConfig.mSystemProperties.setAccessReadWrite(key);
@@ -222,7 +191,6 @@ public final class RavenwoodConfig {
         }
 
         public RavenwoodConfig build() {
-            mConfig.setDefaults();
             return mConfig;
         }
     }

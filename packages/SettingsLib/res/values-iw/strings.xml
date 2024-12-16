@@ -358,7 +358,8 @@
     <string name="enable_terminal_title" msgid="3834790541986303654">"מסוף מקומי"</string>
     <string name="enable_terminal_summary" msgid="2481074834856064500">"הפעלה של אפליקציית מסוף המציעה גישה מקומית למעטפת"</string>
     <string name="enable_linux_terminal_title" msgid="5076044866895670637">"‏סביבת פיתוח של Linux"</string>
-    <string name="enable_linux_terminal_summary" msgid="5893216510985145320">"‏הפעלת טרמינל Linux ב-Android"</string>
+    <string name="enable_linux_terminal_summary" msgid="2029479880888108902">"‏(ניסיוני) הפעלת טרמינל Linux ב-Android"</string>
+    <string name="disable_linux_terminal_disclaimer" msgid="3054320531778388231">"‏אם ההגדרה תושבת, הנתונים של טרמינל Linux יימחקו"</string>
     <string name="hdcp_checking_title" msgid="3155692785074095986">"‏בדיקת HDCP"</string>
     <string name="hdcp_checking_dialog_title" msgid="7691060297616217781">"‏הגדרת האופן של בדיקת HDCP"</string>
     <string name="debug_debugging_category" msgid="535341063709248842">"ניפוי באגים"</string>
@@ -577,8 +578,8 @@
     <string name="zen_alarm_warning" msgid="245729928048586280">"לא תושמע ההתראה הבאה <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template" msgid="3346777418136233330">"בשעה <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template_far" msgid="6382760514842998629">"ב-<xliff:g id="WHEN">%1$s</xliff:g>"</string>
-    <string name="zen_mode_duration_settings_title" msgid="1553451650289651489">"משך זמן"</string>
-    <string name="zen_mode_duration_always_prompt_title" msgid="3212996860498119555">"יש לשאול בכל פעם"</string>
+    <string name="zen_mode_duration_settings_title" msgid="1553451650289651489">"כמה זמן"</string>
+    <string name="zen_mode_duration_always_prompt_title" msgid="3212996860498119555">"אני רוצה לבחור בכל פעם"</string>
     <string name="zen_mode_forever" msgid="3339224497605461291">"עד הכיבוי"</string>
     <string name="zen_mode_starred_contacts_empty_name" msgid="933552939706125937">"(ללא שם)"</string>
     <string name="time_unit_just_now" msgid="3006134267292728099">"הרגע"</string>
@@ -591,6 +592,9 @@
     <string name="media_transfer_external_device_name" msgid="2588672258721846418">"מכשיר חיצוני"</string>
     <string name="media_transfer_default_device_name" msgid="4315604017399871828">"המכשיר המחובר"</string>
     <string name="media_transfer_this_phone" msgid="7194341457812151531">"הטלפון הזה"</string>
+    <string name="media_transfer_digital_line_name" msgid="312091711951124301">"S/PDIF"</string>
+    <string name="media_transfer_analog_line_name" msgid="1841163866716302104">"אנלוגי"</string>
+    <string name="media_transfer_aux_line_name" msgid="894135835967856689">"AUX"</string>
     <string name="media_output_status_unknown_error" msgid="5098565887497902222">"לא ניתן להפעיל במכשיר"</string>
     <string name="media_output_status_require_premium" msgid="8411255800047014822">"יש לשדרג חשבון כדי לעבור"</string>
     <string name="media_output_status_not_support_downloads" msgid="4523828729240373315">"לא ניתן להפעיל הורדות"</string>

@@ -96,6 +96,16 @@ flag {
 }
 
 flag {
+    name: "enable_accessible_custom_headers"
+    namespace: "lse_desktop_experience"
+    description: "Enables a11y-friendly custom header input handling"
+    bug: "339302584"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "enable_app_header_with_task_density"
     namespace: "lse_desktop_experience"
     description: "Matches the App Header density to that of the app window, instead of SysUI's"
@@ -336,6 +346,23 @@ flag {
 }
 
 flag {
+    name: "enable_desktop_app_launch_transitions"
+    namespace: "lse_desktop_experience"
+    description: "Enables custom transitions for app launches in Desktop Mode."
+    bug: "375992828"
+}
+
+flag {
+    name: "enable_desktop_system_dialogs_transitions"
+    namespace: "lse_desktop_experience"
+    description: "Enables custom transitions for system dialogs in Desktop Mode."
+    bug: "335638193"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "enable_move_to_next_display_shortcut"
     namespace: "lse_desktop_experience"
     description: "Add new keyboard shortcut of moving a task into next display"
@@ -368,4 +395,18 @@ flag {
     namespace: "lse_desktop_experience"
     description: "Enables PiP features in desktop mode."
     bug: "350475854"
+}
+
+flag {
+    name: "enable_desktop_windowing_hsum"
+    namespace: "lse_desktop_experience"
+    description: "Enables HSUM on desktop mode."
+    bug: "366397912"
+}
+
+flag {
+    name: "enable_multiple_desktops"
+    namespace: "lse_desktop_experience"
+    description: "Enable multiple desktop sessions for desktop windowing."
+    bug: "379158791"
 }
