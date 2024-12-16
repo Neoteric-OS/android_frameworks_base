@@ -2548,6 +2548,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getMeid() {
+        if (Flags.cleanupCdma()) return null;
         return getMeid(getSlotIndex());
     }
 
@@ -2593,6 +2594,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getMeid(int slotIndex) {
+        if (Flags.cleanupCdma()) return null;
         ITelephony telephony = getITelephony();
         if (telephony == null) return null;
 
@@ -2624,6 +2626,7 @@ public class TelephonyManager {
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     @Nullable
     public String getManufacturerCode() {
+        if (Flags.cleanupCdma()) return null;
         return getManufacturerCode(getSlotIndex());
     }
 
@@ -2642,6 +2645,7 @@ public class TelephonyManager {
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     @Nullable
     public String getManufacturerCode(int slotIndex) {
+        if (Flags.cleanupCdma()) return null;
         ITelephony telephony = getITelephony();
         if (telephony == null) return null;
 
@@ -7040,6 +7044,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public @EriIconIndex int getCdmaEnhancedRoamingIndicatorDisplayNumber() {
+        if (Flags.cleanupCdma()) return -1;
         return getCdmaEriIconIndex(getSubId());
     }
 
@@ -7052,6 +7057,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
     public @EriIconIndex int getCdmaEriIconIndex(int subId) {
+        if (Flags.cleanupCdma()) return -1;
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
@@ -7078,6 +7084,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
     public @EriIconMode int getCdmaEriIconMode(int subId) {
+        if (Flags.cleanupCdma()) return -1;
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
@@ -7101,6 +7108,7 @@ public class TelephonyManager {
     @Deprecated
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     public String getCdmaEriText() {
+        if (Flags.cleanupCdma()) return null;
         return getCdmaEriText(getSubId());
     }
 
@@ -7114,6 +7122,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     @UnsupportedAppUsage
     public String getCdmaEriText(int subId) {
+        if (Flags.cleanupCdma()) return null;
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
@@ -8393,6 +8402,7 @@ public class TelephonyManager {
     @Deprecated
     @UnsupportedAppUsage
     public String nvReadItem(int itemID) {
+        if (Flags.cleanupCdma()) return "";
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null)
@@ -8422,6 +8432,7 @@ public class TelephonyManager {
      */
     @Deprecated
     public boolean nvWriteItem(int itemID, String itemValue) {
+        if (Flags.cleanupCdma()) return false;
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null)
@@ -8450,6 +8461,7 @@ public class TelephonyManager {
      */
     @Deprecated
     public boolean nvWriteCdmaPrl(byte[] preferredRoamingList) {
+        if (Flags.cleanupCdma()) return false;
         try {
             ITelephony telephony = getITelephony();
             if (telephony != null)
@@ -10810,6 +10822,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaMdn() {
+        if (Flags.cleanupCdma()) return null;
         return getCdmaMdn(getSubId());
     }
 
@@ -10825,6 +10838,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaMdn(int subId) {
+        if (Flags.cleanupCdma()) return null;
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
@@ -10849,6 +10863,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaMin() {
+        if (Flags.cleanupCdma()) return null;
         return getCdmaMin(getSubId());
     }
 
@@ -10864,6 +10879,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaMin(int subId) {
+        if (Flags.cleanupCdma()) return null;
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
@@ -12157,6 +12173,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public @CdmaRoamingMode int getCdmaRoamingMode() {
+        if (Flags.cleanupCdma()) return CDMA_ROAMING_MODE_RADIO_DEFAULT;
         int mode = CDMA_ROAMING_MODE_RADIO_DEFAULT;
         try {
             ITelephony telephony = getITelephony();
@@ -12204,6 +12221,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public void setCdmaRoamingMode(@CdmaRoamingMode int mode) {
+        if (Flags.cleanupCdma()) return;
         if (getPhoneType() != PHONE_TYPE_CDMA) {
             throw new IllegalStateException("Phone does not support CDMA.");
         }
@@ -12289,6 +12307,7 @@ public class TelephonyManager {
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public @CdmaSubscription int getCdmaSubscriptionMode() {
+        if (Flags.cleanupCdma()) return CDMA_SUBSCRIPTION_UNKNOWN;
         int mode = CDMA_SUBSCRIPTION_RUIM_SIM;
         try {
             ITelephony telephony = getITelephony();
@@ -12332,6 +12351,7 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public void setCdmaSubscriptionMode(@CdmaSubscription int mode) {
+        if (Flags.cleanupCdma()) return;
         if (getPhoneType() != PHONE_TYPE_CDMA) {
             throw new IllegalStateException("Phone does not support CDMA.");
         }
@@ -14059,6 +14079,7 @@ public class TelephonyManager {
     @SystemApi
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CDMA)
     public String getCdmaPrlVersion() {
+        if (Flags.cleanupCdma()) return null;
         return getCdmaPrlVersion(getSubId());
     }
 
@@ -14074,6 +14095,7 @@ public class TelephonyManager {
      */
     @Deprecated
     public String getCdmaPrlVersion(int subId) {
+        if (Flags.cleanupCdma()) return null;
         try {
             ITelephony service = getITelephony();
             if (service != null) {
