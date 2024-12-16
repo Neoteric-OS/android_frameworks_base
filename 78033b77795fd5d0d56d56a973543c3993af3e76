@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "53a85f14_b470f42e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-12-16T21:07:06Z",
+      "side": 1,
+      "message": "\u003e Looks like this didn\u0027t get merged. Is it because of a problem with a test? \n\nno, it\u0027s because you don\u0027t have +2 from someone in OWNERS...\n\n(at which point i realize you\u0027re not a google employee --- i really wish that was more obvious in the ui :-( )\n\ni think +anothermark\u0027s team owns this code. (and i think it was someone on his team who made the corresponding change to the other code?)",
+      "parentUuid": "ef6747ea_9ea41a6d",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "856babc7_b74fd099",
         "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
         "patchSetId": 3
@@ -174,6 +192,24 @@
       "side": 1,
       "message": "Thanks @enh@google.com. Again, I\u0027m more than happy to change to whatever you like. Just say what you\u0027d prefer and I\u0027ll make the change.\n\nMy opinion: I believe the only cases where we\u0027d avoid the native heap allocation/free are where the buffer is greater than the large object threshold (12k bytes by default), and I suspect that an extra copy of 12k bytes is quite a bit worse. The JNI_ABORT optimization does muddy the waters a bit. It really would be better when the direction is USB_DIR_OUT, the array is large, and no sub-array is specified, but I don\u0027t think it\u0027s worth the complexity to special case that.",
       "parentUuid": "84f63810_a90dbaad",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b117d089_8d66b629",
+        "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2024-12-16T21:07:06Z",
+      "side": 1,
+      "message": "(i think \"consistency with the other similar code\" is a good enough argument for now, and especially in the absence of data to know which trade off is actually better.)",
+      "parentUuid": "0dc13a31_053c6db3",
       "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
