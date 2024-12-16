@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a22dac06_e2598a01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2024-12-16T12:46:21Z",
+      "side": 1,
+      "message": "This makes sense.  We should not call clien code while holding a lock.  Rupesh can you see if this is how you want to fix this synchronization issue?",
+      "revId": "9cb643e7a5638232c1875a62a064980adcd27133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
