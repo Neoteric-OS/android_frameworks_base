@@ -1489,7 +1489,8 @@ class RecentTasks {
         if (!skipExcludedCheck) {
             // Keep the most recent task of home display even if it is excluded from recents.
             final boolean isExcludeFromRecents =
-                    (task.getBaseIntent().getFlags() & FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                    task.getBaseIntent() != null
+                            && (task.getBaseIntent().getFlags() & FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                             == FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
             if (isExcludeFromRecents) {
                 if (DEBUG_RECENTS_TRIM_TASKS) {
