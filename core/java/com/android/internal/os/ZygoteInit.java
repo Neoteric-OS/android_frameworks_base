@@ -146,6 +146,7 @@ public class ZygoteInit {
         preloadSharedLibraries();
         preloadTextResources();
 
+        bootTimingsTraceLog.traceBegin("LoadingHttpEngine");
         // TODO: remove the try/catch and the flag read as soon as the flag is ramped and 25Q2
         // starts building from source.
         try {
@@ -160,6 +161,7 @@ public class ZygoteInit {
             // we catch the NoSuchMethodError and just log.
             Log.d(TAG, "HttpEngine.preload() threw " + e);
         }
+        bootTimingsTraceLog.traceEnd();
         // Ask the WebViewFactory to do any initialization that must run in the zygote process,
         // for memory sharing purposes.
         WebViewFactory.prepareWebViewInZygote();
