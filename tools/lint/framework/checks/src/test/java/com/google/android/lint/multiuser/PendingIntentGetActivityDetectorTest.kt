@@ -1,0 +1,214 @@
+/*
+ * Copyright (C) 2024 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.google.android.lint.multiuser
+
+import com.android.tools.lint.checks.infrastructure.LintDetectorTest
+import com.android.tools.lint.checks.infrastructure.TestFile
+import com.android.tools.lint.checks.infrastructure.TestLintTask
+import com.android.tools.lint.detector.api.Detector
+import com.android.tools.lint.detector.api.Issue
+import org.junit.Test
+
+@Suppress("UnstableApiUsage")
+class PendingIntentGetActivityDetectorTest : LintDetectorTest() {
+
+  override fun getDetector(): Detector = PendingIntentGetActivityDetector()
+
+  override fun getIssues(): List<Issue> =
+    listOf(PendingIntentGetActivityDetector.ISSUE_PENDING_INTENT_GET_ACTIVITY)
+
+  override fun lint(): TestLintTask = super.lint().allowMissingSdk(true)
+
+  @Test
+  fun pendingIntentGetActivityWithMContext() {
+    lint()
+      .files(
+        java(
+            """
+                package test.pkg;
+
+                import android.app.PendingIntent;
+                import android.content.Context;
+                import android.content.Intent;
+
+                public class TestClass {
+                    private Context mContext;
+
+                    public void testMethod(Intent intent) {
+                        PendingIntent.getActivity(
+                            mContext, /*requestCode=*/0, intent,
+                            PendingIntent.FLAG_IMMUTABLE, /*options=*/null
+                        );
+                    }
+                }
+                """
+          )
+          .indented(),
+        *stubs,
+      )
+      .issues(PendingIntentGetActivityDetector.ISSUE_PENDING_INTENT_GET_ACTIVITY)
+      .run()
+      .expect(
+        """
+                src/test/pkg/TestClass.java:11: Warning: Using `PendingIntent.getActivity(...)` might not be multiuser-aware. Consider using `PendingIntent.getActivityAsUser()` or passing a user context created with `createContextAsUser()`. [PendingIntentGetActivity]
+                        PendingIntent.getActivity(
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+                0 errors, 1 warnings
+                """
+      )
+  }
+
+  @Test
+  fun pendingIntentGetActivityWithCreateContext() {
+    lint()
+      .files(
+        java(
+            """
+                package test.pkg;
+
+                import android.app.PendingIntent;
+                import android.content.Context;
+                import android.content.Intent;
+                import android.os.UserHandle;
+
+                public class TestClass {
+                    private Context mContext;
+
+                    public void testMethod(Intent intent) {
+                        Context userContext = mContext.createContextAsUser(new UserHandle(), 0);
+                        PendingIntent.getActivity(
+                            userContext, /*requestCode=*/0, intent,
+                            PendingIntent.FLAG_IMMUTABLE, /*options=*/null
+                        );
+                    }
+                }
+                """
+          )
+          .indented(),
+        *stubs,
+      )
+      .issues(PendingIntentGetActivityDetector.ISSUE_PENDING_INTENT_GET_ACTIVITY)
+      .run()
+      .expectClean()
+  }
+
+  @Test
+  fun pendingIntentGetActivityAsUser() {
+    lint()
+      .files(
+        java(
+            """
+                package test.pkg;
+
+                import android.app.PendingIntent;
+                import android.content.Context;
+                import android.content.Intent;
+                import android.os.UserHandle;
+
+                public class TestClass {
+                    private Context mContext;
+
+                    public void testMethod(Intent intent) {
+                        PendingIntent.getActivityAsUser(
+                            mContext, /*requestCode=*/0, intent,
+                            PendingIntent.FLAG_IMMUTABLE, /*options=*/null,
+                            UserHandle.CURRENT
+                        );
+                    }
+                }
+                """
+          )
+          .indented(),
+        *stubs,
+      )
+      .issues(PendingIntentGetActivityDetector.ISSUE_PENDING_INTENT_GET_ACTIVITY)
+      .run()
+      .expectClean()
+  }
+
+  private val pendingIntentStub: TestFile =
+    java(
+      """
+        package com.app;
+
+        import android.content.Context;
+        import android.content.Intent;
+        import android.os.UserHandle;
+        import android.os.Bundle;
+
+        public class PendingIntent {
+            public static boolean getActivity(Context context, int requestCode, Intent intent, int flags, Bundle options) {
+                return true;
+            }
+
+            public static boolean getActivityAsUser(
+                Context context,
+                int requestCode,
+                Intent intent,
+                int flags,
+                Bundle options,
+                UserHandle userHandle
+            ) {
+                return true;
+            }
+        }
+        """
+    )
+
+  private val contxtStub: TestFile =
+    java(
+      """
+        package android.content;
+
+        import android.os.UserHandle;
+
+        public class Context {
+
+           public Context createContextAsUser(UserHandle userHandle, int flags) {
+                return this;
+            }
+        }
+
+        """
+    )
+
+  private val userHandleStub: TestFile =
+    java(
+      """
+        package android.os;
+
+
+        public class UserHandle {
+
+        }
+
+        """
+    )
+  private val bundleStub: TestFile =
+    java(
+      """
+        package android.os;
+
+
+        public class Bundle {
+
+        }
+
+        """
+    )
+
+  private val stubs = arrayOf(pendingIntentStub, contxtStub, userHandleStub, bundleStub)
+}
