@@ -1,4 +1,14 @@
 # Bug component: 544200
 
+<<<<<<< PATCH SET (45f9c5 Update OWNERS.)
+dariofreni@google.com
+klikli@google.com
+shikhamalhotra@google.com
+||||||| BASE
 hackz@google.com
 shivanker@google.com
+volnov@google.com
+=======
+hackz@google.com
+shivanker@google.com
+>>>>>>> BASE      (32bb57 Merge "JobConcurrencyManager: fix the NPE problem." into mai)
