@@ -555,6 +555,28 @@ public class UserManagerServiceShellCommand extends ShellCommand {
      * Gets the {@link UserManager} associated with the context of the given user.
      */
     private UserManager getUserManagerForUser(int userId) {
+
+        //The correct PendingIntent in action
+        PendingIntent.getActivityAsUser(
+                mContext, /*requestCode=*/0, null,
+                PendingIntent.FLAG_IMMUTABLE, /*options=*/null,
+                UserHandle.of(10));
+        // Ending of the removed code
+
+          //The incorrect PendingIntent in action
+        PendingIntent.getActivity(
+                mContext, /*requestCode=*/0, null,
+                PendingIntent.FLAG_IMMUTABLE, /*options=*/null);
+        // Ending of the removed code
+
+
+        //The correct PendingIntent in action
+        Context userNickContext = mContext.createContextAsUser(UserHandle.of(10), /* flags= */ 0);
+        PendingIntent.getActivity(
+                userNickContext, /*requestCode=*/0, null,
+                PendingIntent.FLAG_IMMUTABLE, /*options=*/null);
+        // Ending of the removed code
+
         UserHandle user = UserHandle.of(userId);
         Context context = mContext.createContextAsUser(user, /* flags= */ 0);
         return context.getSystemService(UserManager.class);
