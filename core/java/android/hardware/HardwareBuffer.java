@@ -71,6 +71,12 @@ public final class HardwareBuffer implements Parcelable, AutoCloseable {
             R_16,
             RG_1616,
             RGBA_10101010,
+            R_12,
+            R_14,
+            RG_1212,
+            RG_1414,
+            RGBA_12121212,
+            RGBA_14141414,
     })
     public @interface Format {
     }
@@ -142,6 +148,24 @@ public final class HardwareBuffer implements Parcelable, AutoCloseable {
     /** Format: 10 bits each red, green, blue, alpha */
     @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_REQUESTED_FORMATS_V)
     public static final int RGBA_10101010 = 0x3b;
+    /** Format: 12 bits red */
+    @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_REQUESTED_FORMATS_V)
+    public static final int R_12 = 0x3d;
+    /** Format: 14 bits red */
+    @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_REQUESTED_FORMATS_V)
+    public static final int R_14 = 0x3e;
+    /** Format: 12 bits each red, green */
+    @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_REQUESTED_FORMATS_V)
+    public static final int RG_1212 = 0x3f;
+    /** Format: 14 bits each red, green */
+    @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_REQUESTED_FORMATS_V)
+    public static final int RG_1414 = 0x40;
+    /** Format: 12 bits each red, green, blue, alpha */
+    @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_REQUESTED_FORMATS_V)
+    public static final int RGBA_12121212 = 0x41;
+    /** Format: 14 bits each red, green, blue, alpha */
+    @FlaggedApi(com.android.graphics.hwui.flags.Flags.FLAG_REQUESTED_FORMATS_V)
+    public static final int RGBA_14141414 = 0x42;
 
     // Note: do not rename, this field is used by native code
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
