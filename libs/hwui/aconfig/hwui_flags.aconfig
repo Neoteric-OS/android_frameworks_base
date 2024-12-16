@@ -85,6 +85,14 @@ flag {
 }
 
 flag {
+  name: "requested_formats_12_14"
+  is_exported: true
+  namespace: "core_graphics"
+  description: "Add new 12 & 14-bit formats in the SDK"
+  bug: "390471495"
+}
+
+flag {
   name: "animate_hdr_transitions"
   namespace: "core_graphics"
   description: "Automatically animate all changes in HDR headroom"
