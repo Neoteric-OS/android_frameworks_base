@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e4a32e3_6f9c8b6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2024-12-16T18:09:43Z",
+      "side": 1,
+      "message": "@dsaichand@google.com, do we need to reflect this addition in battery historian?",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
