@@ -137,6 +137,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.SELinux;
 import android.os.SystemClock;
 import android.os.Trace;
@@ -188,6 +189,7 @@ import com.android.server.pm.pkg.PackageStateInternal;
 import com.android.server.pm.pkg.SharedLibraryWrapper;
 import com.android.server.rollback.RollbackManagerInternal;
 import com.android.server.security.FileIntegrityService;
+import com.android.server.utils.TimingsTraceAndSlog;
 import com.android.server.utils.WatchedArrayMap;
 import com.android.server.utils.WatchedLongSparseArray;
 
@@ -195,6 +197,8 @@ import dalvik.system.VMRuntime;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.security.DigestException;
 import java.security.DigestInputStream;
@@ -205,12 +209,16 @@ import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 final class InstallPackageHelper {
     // One minute over PM WATCHDOG_TIMEOUT
@@ -230,6 +238,12 @@ final class InstallPackageHelper {
     private final SharedLibrariesImpl mSharedLibraries;
     private final PackageManagerServiceInjector mInjector;
     private final UpdateOwnershipHelper mUpdateOwnershipHelper;
+    private static final String PROPERTY_NO_RIL = "ro.radio.noril";
+    /**
+     * Tracks packages that need to be disabled.
+     * Map of package name to its path on the file system.
+     */
+    final private HashMap<String, String> mPackagesToBeDisabled = new HashMap<>();
 
     private final Object mInternalLock = new Object();
     @GuardedBy("mInternalLock")
@@ -1206,71 +1220,68 @@ final class InstallPackageHelper {
 
     private boolean scanInstallPackages(List<InstallRequest> requests,
             Map<String, Boolean> createdAppId, Map<String, Settings.VersionInfo> versionInfos) {
-        // TODO(b/362840929): remove locker
-        try (PackageManagerTracedLock installLock = mPm.mInstallLock.acquireLock()) {
-            final Set<String> scannedPackages = new ArraySet<>(requests.size());
-            for (InstallRequest request : requests) {
-                final ParsedPackage packageToScan = request.getParsedPackage();
-                if (packageToScan == null) {
-                    request.setError(INSTALL_FAILED_SESSION_INVALID,
-                            "Failed to obtain package to scan");
+        final Set<String> scannedPackages = new ArraySet<>(requests.size());
+        for (InstallRequest request : requests) {
+            final ParsedPackage packageToScan = request.getParsedPackage();
+            if (packageToScan == null) {
+                request.setError(INSTALL_FAILED_SESSION_INVALID,
+                        "Failed to obtain package to scan");
+                return false;
+            }
+            request.setReturnCode(PackageManager.INSTALL_SUCCEEDED);
+            final String packageName = packageToScan.getPackageName();
+            try {
+                request.onScanStarted();
+                final ScanResult scanResult = scanPackageTraced(request.getParsedPackage(),
+                        request.getParseFlags(), request.getScanFlags(),
+                        System.currentTimeMillis(), request.getUser(),
+                        request.getAbiOverride());
+                request.setScanResult(scanResult);
+                request.onScanFinished();
+                if (!scannedPackages.add(packageName)) {
+                    request.setError(
+                            PackageManager.INSTALL_FAILED_DUPLICATE_PACKAGE,
+                            "Duplicate package "
+                                    + packageName
+                                    + " in multi-package install request.");
                     return false;
                 }
-                request.setReturnCode(PackageManager.INSTALL_SUCCEEDED);
-                final String packageName = packageToScan.getPackageName();
-                try {
-                    request.onScanStarted();
-                    final ScanResult scanResult = scanPackageTracedLI(request.getParsedPackage(),
-                            request.getParseFlags(), request.getScanFlags(),
-                            System.currentTimeMillis(), request.getUser(),
-                            request.getAbiOverride());
-                    request.setScanResult(scanResult);
-                    request.onScanFinished();
-                    if (!scannedPackages.add(packageName)) {
-                        request.setError(
-                                PackageManager.INSTALL_FAILED_DUPLICATE_PACKAGE,
-                                "Duplicate package "
-                                        + packageName
-                                        + " in multi-package install request.");
-                        return false;
-                    }
-                    if (!checkNoAppStorageIsConsistent(
-                            request.getScanRequestOldPackage(), packageToScan)) {
-                        // TODO: INSTALL_FAILED_UPDATE_INCOMPATIBLE is about incomptabible
-                        //  signatures. Is there a better error code?
-                        request.setError(
-                                INSTALL_FAILED_UPDATE_INCOMPATIBLE,
-                                "Update attempted to change value of "
-                                        + PackageManager.PROPERTY_NO_APP_DATA_STORAGE);
-                        return false;
-                    }
-                    final boolean isApex = (request.getScanFlags() & SCAN_AS_APEX) != 0;
-                    final boolean isSdkLibrary = packageToScan.isSdkLibrary();
-                    if (isApex || (isSdkLibrary && disallowSdkLibsToBeApps())) {
-                        request.getScannedPackageSetting().setAppId(Process.INVALID_UID);
-                    } else {
-                        createdAppId.put(packageName, optimisticallyRegisterAppId(request));
-                    }
-                    versionInfos.put(packageName,
-                            mPm.getSettingsVersionForPackage(packageToScan));
-                } catch (PackageManagerException e) {
-                    request.setError("Scanning Failed.", e);
+                if (!checkNoAppStorageIsConsistent(
+                        request.getScanRequestOldPackage(), packageToScan)) {
+                    // TODO: INSTALL_FAILED_UPDATE_INCOMPATIBLE is about incomptabible
+                    //  signatures. Is there a better error code?
+                    request.setError(
+                            INSTALL_FAILED_UPDATE_INCOMPATIBLE,
+                            "Update attempted to change value of "
+                                    + PackageManager.PROPERTY_NO_APP_DATA_STORAGE);
                     return false;
                 }
-                if (request.isArchived()) {
-                    final SparseArray<String> responsibleInstallerTitles =
-                            PackageArchiver.getResponsibleInstallerTitles(mContext,
-                                    mPm.snapshotComputer(), request.getInstallSource(),
-                                    request.getUserId(), mPm.mUserManager.getUserIds());
-                    if (responsibleInstallerTitles == null
-                            || responsibleInstallerTitles.size() == 0) {
-                        request.setError(PackageManagerException.ofInternalError(
-                                "Failed to obtain the responsible installer info",
-                                INTERNAL_ERROR_ARCHIVE_NO_INSTALLER_TITLE));
-                        return false;
-                    }
-                    request.setResponsibleInstallerTitles(responsibleInstallerTitles);
+                final boolean isApex = (request.getScanFlags() & SCAN_AS_APEX) != 0;
+                final boolean isSdkLibrary = packageToScan.isSdkLibrary();
+                if (isApex || (isSdkLibrary && disallowSdkLibsToBeApps())) {
+                    request.getScannedPackageSetting().setAppId(Process.INVALID_UID);
+                } else {
+                    createdAppId.put(packageName, optimisticallyRegisterAppId(request));
                 }
+                versionInfos.put(packageName,
+                        mPm.getSettingsVersionForPackage(packageToScan));
+            } catch (PackageManagerException e) {
+                request.setError("Scanning Failed.", e);
+                return false;
+            }
+            if (request.isArchived()) {
+                final SparseArray<String> responsibleInstallerTitles =
+                        PackageArchiver.getResponsibleInstallerTitles(mContext,
+                                mPm.snapshotComputer(), request.getInstallSource(),
+                                request.getUserId(), mPm.mUserManager.getUserIds());
+                if (responsibleInstallerTitles == null
+                        || responsibleInstallerTitles.size() == 0) {
+                    request.setError(PackageManagerException.ofInternalError(
+                            "Failed to obtain the responsible installer info",
+                            INTERNAL_ERROR_ARCHIVE_NO_INSTALLER_TITLE));
+                    return false;
+                }
+                request.setResponsibleInstallerTitles(responsibleInstallerTitles);
             }
         }
         return true;
@@ -1367,7 +1378,6 @@ final class InstallPackageHelper {
         }
     }
 
-    @GuardedBy("mPm.mInstallLock")
     private boolean checkNoAppStorageIsConsistent(AndroidPackage oldPkg, AndroidPackage newPkg) {
         if (oldPkg == null) {
             // New install, nothing to check against.
@@ -3856,6 +3866,15 @@ final class InstallPackageHelper {
                 Log.w(TAG, "Dropping cache of " + file.getAbsolutePath());
                 cacher.cleanCachedResult(file);
             }
+
+            if (mPackagesToBeDisabled.values() != null &&
+                    (mPackagesToBeDisabled.values().contains(file.toString()) ||
+                    mPackagesToBeDisabled.values().stream().anyMatch(file.toString()::contains))) {
+                // Ignore entries contained in {@link #mPackagesToBeDisabled}
+                Slog.d(TAG, "ignoring package: " + file);
+                continue;
+            }
+
             parallelPackageParser.submit(file, parseFlags);
             fileCount++;
         }
@@ -3899,6 +3918,75 @@ final class InstallPackageHelper {
                 logCriticalInfo(Log.WARN,
                         "Deleting invalid package at " + parseResult.scanFile);
                 mRemovePackageHelper.removeCodePath(parseResult.scanFile);
+            }
+        }
+    }
+
+    /**
+     * Read the list of packages that need to be disabled.
+     *
+     * For wifi-only devices (modem-less), telephony related applications do not need to run.
+     * This method will read the list of packages from a predefined file in the file system,
+     * and store it in {@link #mPackagesToBeDisabled}. These applications will be skipped when
+     * directories are scanned later.
+     */
+    protected void readListOfPackagesToBeDisabled() {
+        boolean wifiOnly = SystemProperties.getBoolean(PROPERTY_NO_RIL, false);
+        if (!wifiOnly) {
+            // Apps need to be disabled only for modem-less devices
+            return;
+        }
+
+        final String TELEPHONY_PACKAGES_PATH = "etc/telephony_packages.xml";
+        File telephonyPackagesFile =
+                new File(Environment.getVendorDirectory(), TELEPHONY_PACKAGES_PATH);
+        FileReader packagesReader = null;
+        Slog.d(TAG, "Disabling packages for wifi-only device, source: " + telephonyPackagesFile);
+
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            XmlPullParser packagesParser = factory.newPullParser();
+            packagesReader = new FileReader(telephonyPackagesFile);
+
+            if (packagesParser != null) {
+                packagesParser.setInput(packagesReader);
+                int eventType = packagesParser.getEventType();
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    String tagName = packagesParser.getName();
+                    switch (eventType) {
+                        case XmlPullParser.START_TAG:
+                            if (TextUtils.equals(tagName, "packageinfo")) {
+                                String name = packagesParser.getAttributeValue(null, "name");
+                                String path = packagesParser.getAttributeValue(null, "path");
+                                mPackagesToBeDisabled.put(name, path);
+                            }
+                            break;
+                    }
+                    eventType = packagesParser.next();
+                }
+            }
+        } catch (XmlPullParserException e) {
+            Log.e(TAG, "XmlPullParserException parsing '"+ telephonyPackagesFile + "'", e);
+        } catch (IOException e) {
+            Log.e(TAG, "IOException parsing '" + telephonyPackagesFile + "'", e);
+        } catch (Exception e) {
+            Log.e(TAG, "Exception parsing '" + telephonyPackagesFile + "'", e);
+        }
+
+        if (packagesReader != null) {
+            try {
+                packagesReader.close();
+            } catch (IOException e) {
+                // do nothing
+            }
+        }
+
+        if (DEBUG_PACKAGE_SCANNING) {
+            for (String packageName : mPackagesToBeDisabled.keySet()) {
+                Slog.d(TAG, "readListOfPackagesToBeDisabled"
+                        + ", package: " + packageName
+                        + ", path: " + mPackagesToBeDisabled.get(packageName));
             }
         }
     }
@@ -4141,14 +4229,13 @@ final class InstallPackageHelper {
         }
     }
 
-    @GuardedBy("mPm.mInstallLock")
-    private ScanResult scanPackageTracedLI(ParsedPackage parsedPackage,
+    private ScanResult scanPackageTraced(ParsedPackage parsedPackage,
             final @ParsingPackageUtils.ParseFlags int parseFlags,
             @PackageManagerService.ScanFlags int scanFlags, long currentTime,
             @Nullable UserHandle user, String cpuAbiOverride) throws PackageManagerException {
         Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "scanPackage");
         try {
-            return scanPackageNewLI(parsedPackage, parseFlags, scanFlags, currentTime, user,
+            return scanPackageNew(parsedPackage, parseFlags, scanFlags, currentTime, user,
                     cpuAbiOverride);
         } finally {
             Trace.traceEnd(TRACE_TAG_PACKAGE_MANAGER);
@@ -4225,8 +4312,7 @@ final class InstallPackageHelper {
                 realPkgName, parseFlags, scanFlags, isPlatformPackage, user, cpuAbiOverride);
     }
 
-    @GuardedBy("mPm.mInstallLock")
-    private ScanResult scanPackageNewLI(@NonNull ParsedPackage parsedPackage,
+    private ScanResult scanPackageNew(@NonNull ParsedPackage parsedPackage,
             final @ParsingPackageUtils.ParseFlags int parseFlags,
             @PackageManagerService.ScanFlags int scanFlags, long currentTime,
             @Nullable UserHandle user, String cpuAbiOverride)
@@ -4257,7 +4343,7 @@ final class InstallPackageHelper {
                     initialScanRequest.mOriginalPkgSetting, initialScanRequest.mRealPkgName,
                     parseFlags, scanFlags, initialScanRequest.mIsPlatformPackage, user,
                     cpuAbiOverride);
-            return ScanPackageUtils.scanPackageOnlyLI(request, mPm.mInjector, mPm.mFactoryTest,
+            return ScanPackageUtils.scanPackageOnly(request, mPm.mInjector, mPm.mFactoryTest,
                     currentTime);
         }
     }
@@ -4311,7 +4397,7 @@ final class InstallPackageHelper {
                 ScanPackageUtils.applyPolicy(parsedPackage, scanFlags,
                         mPm.getPlatformPackage(), true);
                 final ScanResult scanResult =
-                        ScanPackageUtils.scanPackageOnlyLI(request, mPm.mInjector,
+                        ScanPackageUtils.scanPackageOnly(request, mPm.mInjector,
                                 mPm.mFactoryTest, -1L);
                 if (scanResult.mExistingSettingCopied
                         && scanResult.mRequest.mPkgSetting != null) {
@@ -4503,7 +4589,7 @@ final class InstallPackageHelper {
 
         final long firstInstallTime = Flags.fixSystemAppsFirstInstallTime()
                 ? System.currentTimeMillis() : 0;
-        final ScanResult scanResult = scanPackageNewLI(parsedPackage, parseFlags,
+        final ScanResult scanResult = scanPackageNew(parsedPackage, parseFlags,
                 scanFlags | SCAN_UPDATE_SIGNATURE, firstInstallTime, user, null);
         return new Pair<>(scanResult, shouldHideSystemApp);
     }
