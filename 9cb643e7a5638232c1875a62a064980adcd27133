@@ -16,6 +16,23 @@
       "message": "This makes sense.  We should not call clien code while holding a lock.  Rupesh can you see if this is how you want to fix this synchronization issue?",
       "revId": "9cb643e7a5638232c1875a62a064980adcd27133",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "563eced1_c92eeb8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2024-12-16T13:09:30Z",
+      "side": 1,
+      "message": "The fix request is on Android 12. On the main branch(Android 14 and beyond), we call the handleMessage on the client\u0027s executor, so IIUC it shouldnt happen there",
+      "revId": "9cb643e7a5638232c1875a62a064980adcd27133",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
