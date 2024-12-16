@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27d3aca9_4c1f8078",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1060347
+      },
+      "writtenOn": "2024-12-16T19:22:08Z",
+      "side": 1,
+      "message": "This is only true for a system service (or possibly something else that always runs in user 0). Does this check apply only in those cases?\n\nIn an app, mContext is probably appropriate to use.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 89
+      },
+      "revId": "2f8ac316a4417220b44a9d34be2c9e965f6d9a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
