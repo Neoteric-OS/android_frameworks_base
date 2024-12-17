@@ -2659,7 +2659,7 @@ public final class SurfaceControl implements Parcelable {
      * @param lightPosZ Z axis position of the light used to cast the spot shadow in pixels. The X
      *                  axis position is set to the display width / 2.
      * @param lightRadius Radius of the light casting the shadow in pixels.
-     *[
+     *
      * @hide
      */
     public static void setGlobalShadowSettings(@Size(4) float[] ambientColor,
