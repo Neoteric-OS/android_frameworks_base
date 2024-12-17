@@ -16,6 +16,24 @@
       "message": "@dsaichand@google.com, do we need to reflect this addition in battery historian?",
       "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24eabe85_0d6cccca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007045
+      },
+      "writtenOn": "2024-12-17T01:00:30Z",
+      "side": 1,
+      "message": "Yeah we will need make changes to support this addition. There is an open bug for the work on battery historian, not including the bug here as I\u0027m unaware of the policies regarding these publicly redable comments.\n\nThanks cphlipot@ for making this change.",
+      "parentUuid": "3e4a32e3_6f9c8b6d",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
