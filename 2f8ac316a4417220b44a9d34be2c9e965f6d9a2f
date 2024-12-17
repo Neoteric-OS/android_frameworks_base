@@ -22,6 +22,30 @@
       },
       "revId": "2f8ac316a4417220b44a9d34be2c9e965f6d9a2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e799fa4_ff219781",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2024-12-17T10:39:18Z",
+      "side": 1,
+      "message": "The check is a `Project` lint check applicable only for the `platform/framework/`.",
+      "parentUuid": "27d3aca9_4c1f8078",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 89
+      },
+      "revId": "2f8ac316a4417220b44a9d34be2c9e965f6d9a2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
