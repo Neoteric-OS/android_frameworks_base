@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bfe283b_9023bd30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-12-17T02:48:38Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be adding trace events in the SDK. This will affect all apps. This should be done one the NFC service side.",
+      "revId": "01d0cc6391ba8c05dcca1533c921f60ed6d3e648",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a56dc65_b1736589",
+        "filename": "nfc/java/android/nfc/cardemulation/HostApduService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-12-17T02:48:38Z",
+      "side": 1,
+      "message": "This does not seem to be sent anywhere. I don\u0027t understand why we need the message above either.",
+      "range": {
+        "startLine": 255,
+        "startChar": 28,
+        "endLine": 255,
+        "endChar": 49
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8919c504_78c5dd6b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/cardemulation/HostApduService.java",
+              "range": {
+                "startLine": 255,
+                "startChar": 0,
+                "endLine": 256,
+                "endChar": 0
+              },
+              "replacement": "    public static final int MSG_COMMAND_APDU_ACK \u003d 6;\n"
+            },
+            {
+              "path": "nfc/java/android/nfc/cardemulation/HostApduService.java",
+              "range": {
+                "startLine": 353,
+                "startChar": 0,
+                "endLine": 354,
+                "endChar": 0
+              },
+              "replacement": "            case MSG_COMMAND_APDU_ACK:\n"
+            }
+          ]
+        }
+      ],
+      "revId": "01d0cc6391ba8c05dcca1533c921f60ed6d3e648",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
