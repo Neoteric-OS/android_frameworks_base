@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48a9a780_03902095",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3790621
+      },
+      "writtenOn": "2024-12-17T15:07:38Z",
+      "side": 1,
+      "message": "Hi\nJohn, Eino-ville you were added as reviewers according to the gerrit suggestion and OWNERS file",
+      "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
