@@ -237,11 +237,17 @@ public class Vcn extends Handler {
         // Update mIsMobileDataEnabled before starting handling of NetworkRequests.
         mIsMobileDataEnabled = getMobileDataStatus();
 
-        // Register mobile data state listeners.
-        updateMobileDataStateListeners();
+        try {
+            // Register mobile data state listeners.
+            updateMobileDataStateListeners();
 
-        // Register to receive cached and future NetworkRequests
-        mVcnContext.getVcnNetworkProvider().registerListener(mRequestListener);
+            // Register to receive cached and future NetworkRequests
+            mVcnContext.getVcnNetworkProvider().registerListener(mRequestListener);
+        } catch (Exception e) {
+            logWtf("Fail to construct Vcn: " + e);
+            handleTeardown();
+            throw e;
+        }
     }
 
     /** Asynchronously updates the configuration and triggers a re-evaluation of Networks */

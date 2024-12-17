@@ -753,9 +753,20 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         final VcnContext vcnContext =
                 mDeps.newVcnContext(
                         mContext, mLooper, mNetworkProvider, config.isTestModeProfile());
-        final Vcn newInstance =
-                mDeps.newVcn(vcnContext, subscriptionGroup, config, mLastSnapshot, vcnCallback);
-        mVcns.put(subscriptionGroup, newInstance);
+
+        Vcn newInstance = null;
+        try {
+            newInstance =
+                    mDeps.newVcn(vcnContext, subscriptionGroup, config, mLastSnapshot, vcnCallback);
+            mVcns.put(subscriptionGroup, newInstance);
+        } catch (Exception e) {
+            if (newInstance != null) {
+                newInstance.teardownAsynchronously();
+            }
+
+            logWtf("Fail to start VCN config for subGrp: " + subscriptionGroup + " error: " + e);
+            return;
+        }
 
         // Now that a new VCN has started, notify all registered listeners to refresh their
         // UnderlyingNetworkPolicy.
