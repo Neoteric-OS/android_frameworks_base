@@ -63,6 +63,30 @@
       },
       "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c66732d9_15adbdb1",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2024-12-17T15:58:00Z",
+      "side": 1,
+      "message": "Metalava can access the enum what it cannot do is determine its string representation. That involves looking in the body of the `toString()` method and that is just too complicated and too much effort for too little benefit. Part of the complication is that it requires digging into implementation specific details of the different backends and will not work at all in those that do not provide access to method bodies. It is also very fragile as even a minor change to the body could break the logic.",
+      "parentUuid": "9fe7ec22_a78d01a4",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
