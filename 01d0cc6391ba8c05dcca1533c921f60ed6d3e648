@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a793cc0_4394325f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2024-12-17T15:42:57Z",
+      "side": 1,
+      "message": "We\u0027re doing it on both sides. For response messages, those have to be measured in the app. The command messages are measured in the NFC service.",
+      "parentUuid": "2bfe283b_9023bd30",
+      "revId": "01d0cc6391ba8c05dcca1533c921f60ed6d3e648",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a56dc65_b1736589",
@@ -65,6 +83,30 @@
           ]
         }
       ],
+      "revId": "01d0cc6391ba8c05dcca1533c921f60ed6d3e648",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e675e390_78c71cfa",
+        "filename": "nfc/java/android/nfc/cardemulation/HostApduService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1974730
+      },
+      "writtenOn": "2024-12-17T15:42:57Z",
+      "side": 1,
+      "message": "It\u0027s used in the NFC service in the other CL.",
+      "parentUuid": "7a56dc65_b1736589",
+      "range": {
+        "startLine": 255,
+        "startChar": 28,
+        "endLine": 255,
+        "endChar": 49
+      },
       "revId": "01d0cc6391ba8c05dcca1533c921f60ed6d3e648",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
