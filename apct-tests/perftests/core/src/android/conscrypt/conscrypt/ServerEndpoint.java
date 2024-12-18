@@ -16,10 +16,13 @@
 
 package android.conscrypt;
 
+import static org.conscrypt.TestUtils.getLoopbackAddress;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.SocketException;
 import java.nio.channels.ClosedChannelException;
@@ -82,6 +85,7 @@ final class ServerEndpoint {
         this.messageSize = messageSize;
         this.protocols = protocols;
         this.cipherSuites = cipherSuites;
+        serverSocket.bind(new InetSocketAddress(getLoopbackAddress(), 0));
         buffer = new byte[messageSize];
     }
 
