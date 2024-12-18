@@ -16,6 +16,29 @@
       "message": "Hi\nJohn, Eino-ville you were added as reviewers according to the gerrit suggestion and OWNERS file",
       "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a42845c_f720e3b8",
+        "filename": "core/java/android/hardware/HardwareBuffer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2024-12-18T22:35:52Z",
+      "side": 1,
+      "message": "this flag already happened, so this would need to be a new flag. Which is probably more complicated to explain that it\u0027d be for me to just do. Similarly this won\u0027t build since an `update-api` wasn\u0027t performed to update current.txt",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 78
+      },
+      "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
