@@ -16,6 +16,23 @@
       "message": "@harshitmahajan@google.com @ancr@google.com\n  \n   Could you help review this CL?\n\nThanks.",
       "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81d29589_9e889657",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949655
+      },
+      "writtenOn": "2024-12-18T13:03:09Z",
+      "side": 1,
+      "message": "Hi, what\u0027s the benefit of removing this? Right now it may catch some other uncaught exceptions",
+      "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
