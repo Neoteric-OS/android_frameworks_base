@@ -44,6 +44,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 import org.junit.Rule;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -191,8 +192,8 @@ public final class ServerSocketPerfTest {
     void close() throws Exception {
         stopping = true;
         // Stop and wait for sending to complete.
-        server.stop();
         client.stop();
+        server.stop();
         executor.shutdown();
         receivingFuture.get(5, TimeUnit.SECONDS);
         executor.awaitTermination(5, TimeUnit.SECONDS);
@@ -201,15 +202,23 @@ public final class ServerSocketPerfTest {
     @Test
     @Parameters(method = "getParams")
     public void throughput(Config config) throws Exception {
-        setup(config);
-        BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
-        while (state.keepRunning()) {
-          recording.set(true);
-          while (bytesCounter.get() < config.messageSize()) {
-          }
-          bytesCounter.set(0);
-          recording.set(false);
+        try {
+            setup(config);
+            BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
+            while (state.keepRunning()) {
+                recording.set(true);
+                while (bytesCounter.get() < config.messageSize()) {
+                }
+                bytesCounter.set(0);
+                recording.set(false);
+            }
+        } finally {
+            close();
         }
+    }
+
+    @After
+    public void tearDown() throws Exception {
         close();
     }
 

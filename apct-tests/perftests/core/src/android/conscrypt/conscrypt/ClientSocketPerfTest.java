@@ -44,6 +44,7 @@ import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 
 import org.junit.Rule;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import junitparams.JUnitParamsRunner;
@@ -197,17 +198,25 @@ public final class ClientSocketPerfTest {
     @Test
     @Parameters(method = "getParams")
     public void time(Config config) throws Exception {
-        reset();
-        setup(config);
-        recording.set(true);
+        try {
+            reset();
+            setup(config);
+            recording.set(true);
 
-        BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
-        while (state.keepRunning()) {
-          while (bytesCounter.get() < config.messageSize()) {
-          }
-          bytesCounter.set(0);
+            BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
+            while (state.keepRunning()) {
+                while (bytesCounter.get() < config.messageSize()) {
+                }
+                bytesCounter.set(0);
+            }
+            recording.set(false);
+        } finally {
+            close();
         }
-        recording.set(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
         close();
     }
 
