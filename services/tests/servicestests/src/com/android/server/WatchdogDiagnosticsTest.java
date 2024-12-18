@@ -167,7 +167,7 @@ public class WatchdogDiagnosticsTest {
                     "    - locked <HASH> (a java.lang.Integer)\n" +
                     "    at com.android.server.WatchdogDiagnosticsTest$TestThread2.run(" +
                             "WatchdogDiagnosticsTest.java:78)\n";
-            assertEquals(expected, filterHashes(output));
+            assertEquals(filterLineNo(expected), filterLineNo(filterHashes(output)));
         }
 
         // Let the threads finish.
@@ -178,6 +178,14 @@ public class WatchdogDiagnosticsTest {
         thread1.join();
         thread2.join();
     }
+
+    /**
+     * A filter function that removes line number
+     */
+    private static String filterLineNo(String s) {
+        return s.replaceAll(":\\d+\\)", "\\)");
+    }
+
 
     /**
      * A filter function that removes hash codes (which will change between tests and cannot be
