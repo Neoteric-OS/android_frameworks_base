@@ -34,6 +34,24 @@
       "parentUuid": "3e4a32e3_6f9c8b6d",
       "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c236bd2d_fbcb306d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947675
+      },
+      "writtenOn": "2024-12-18T01:15:49Z",
+      "side": 1,
+      "message": "\u003e do we need to reflect this addition in battery historian?\n\nIs battery historian still supported? My original impression was no, based on reading https://developer.android.com/topic/performance/power/setup-battery-historian\n\n\nFor context, this change was originally intended to be in service of the WIP Perfetto battery stats parser, and i was planned to update the perfetto impl after this CL. Context: https://github.com/google/perfetto/issues/934\n\n\nAs an aside, i just wanted to remind that since i am an external contributor i can\u0027t trigger CI or submit any changes. Once you think this CL looks good i\u0027d appreciate if you can help with triggering that for me. Thanks!",
+      "parentUuid": "24eabe85_0d6cccca",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
