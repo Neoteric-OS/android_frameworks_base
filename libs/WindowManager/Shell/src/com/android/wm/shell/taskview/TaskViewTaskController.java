@@ -719,7 +719,6 @@ public class TaskViewTaskController implements ShellTaskOrganizer.TaskListener {
 
         // After the embedded task has appeared, set it to non-trimmable. This is important
         // to prevent recents from trimming and removing the embedded task.
-        wct.setTaskTrimmableFromRecents(taskInfo.token, false /* isTrimmableFromRecents */);
         mTaskViewBase.onTaskAppeared(mTaskInfo, mTaskLeash);
         if (mListener != null) {
             final int taskId = mTaskInfo.taskId;
