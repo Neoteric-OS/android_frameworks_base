@@ -52,6 +52,24 @@
       "parentUuid": "24eabe85_0d6cccca",
       "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae4b7c52_e5f2035f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2007045
+      },
+      "writtenOn": "2024-12-18T18:46:56Z",
+      "side": 1,
+      "message": "Unfortunately, we stopped supporting that and we don\u0027t plan to make any more changes. The battery historian dplotnikov@ and I are talking about is a newer internal tool wihch is not open source or productized externally.  \nAlthough.. I\u0027m curious to know how important the external battery historian is to the work you do. Can you please share more on that? This will help us understand how impactful the tool could be for external users.  \n\n@dplotnikov@google.com, you gave the +1 so I\u0027m assuming this change will successfully add the dock plug type. As I\u0027m not the owner, and have limited understanding of the codebase can you please trigger the submit?",
+      "parentUuid": "c236bd2d_fbcb306d",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
