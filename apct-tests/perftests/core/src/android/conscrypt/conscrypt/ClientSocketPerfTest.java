@@ -28,6 +28,7 @@ import androidx.test.filters.LargeTest;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.AutoCloseable;
 import java.net.SocketException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -127,8 +128,22 @@ public final class ClientSocketPerfTest {
         return params;
     }
 
-    private ClientEndpoint client;
-    private ServerEndpoint server;
+    private class ServerClientPair implements AutoCloseable {
+        private ClientEndpoint client;
+        private ServerEndpoint server;
+
+        ServerClientPair(ClientEndpoint client, ServerEndpoint server) {
+            this.client = client;
+            this.server = server;
+        }
+
+        @Override
+        public void close() {
+            client.close();
+            server.close();
+        }
+    }
+
     private byte[] message;
     private ExecutorService executor;
     private Future<?> sendingFuture;
@@ -137,11 +152,11 @@ public final class ClientSocketPerfTest {
     private static final AtomicLong bytesCounter = new AtomicLong();
     private AtomicBoolean recording = new AtomicBoolean();
 
-    private void setup(Config config) throws Exception {
+    private ServerClientPair setup(Config config) throws Exception {
         message = newTextMessage(512);
 
         // Always use the same server for consistency across the benchmarks.
-        server = config.serverFactory().newServer(
+        ServerEndpoint server = config.serverFactory().newServer(
                 config.messageSize(), config.protocol().getProtocols(),
                 ciphers(config));
 
@@ -156,7 +171,7 @@ public final class ClientSocketPerfTest {
         });
         Future<?> connectedFuture = server.start();
 
-        client = config.clientFactory().newClient(
+        ClientEndpoint client = config.clientFactory().newClient(
             config.channelType(), server.port(), config.protocol().getProtocols(), ciphers(config));
         client.start();
 
@@ -177,16 +192,17 @@ public final class ClientSocketPerfTest {
                 }
             }
         });
+        return new ServerClientPair(client, server);
     }
 
-    void close() throws Exception {
+    void close(ServerClientPair pair) throws Exception {
         stopping = true;
 
         // Wait for the sending thread to stop.
         sendingFuture.get(5, TimeUnit.SECONDS);
 
-        client.stop();
-        server.stop();
+        pair.client.stop();
+        pair.server.stop();
         executor.shutdown();
         executor.awaitTermination(5, TimeUnit.SECONDS);
     }
@@ -198,17 +214,19 @@ public final class ClientSocketPerfTest {
     @Parameters(method = "getParams")
     public void time(Config config) throws Exception {
         reset();
-        setup(config);
-        recording.set(true);
+        try (ServerClientPair pair = setup(config)) {
+            recording.set(true);
 
-        BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
-        while (state.keepRunning()) {
-          while (bytesCounter.get() < config.messageSize()) {
-          }
-          bytesCounter.set(0);
+            BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
+            while (state.keepRunning()) {
+            while (bytesCounter.get() < config.messageSize()) {
+            }
+            bytesCounter.set(0);
+            }
+            recording.set(false);
+        } finally {
+            close(pair);
         }
-        recording.set(false);
-        close();
     }
 
     void reset() {
