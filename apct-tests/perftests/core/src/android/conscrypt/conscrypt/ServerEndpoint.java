@@ -82,6 +82,7 @@ final class ServerEndpoint {
         this.messageSize = messageSize;
         this.protocols = protocols;
         this.cipherSuites = cipherSuites;
+        serverSocket.bind(new InetSocketAddress(TestUtils.getLoopbackAddress(), 0));
         buffer = new byte[messageSize];
     }
 
