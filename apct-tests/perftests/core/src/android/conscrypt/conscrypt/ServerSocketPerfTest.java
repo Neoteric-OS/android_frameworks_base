@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.AutoCloseable;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -115,22 +116,36 @@ public final class ServerSocketPerfTest {
         return params;
     }
 
-    private ClientEndpoint client;
-    private ServerEndpoint server;
+    private class ServerClientPair implements AutoCloseable {
+        private ClientEndpoint client;
+        private ServerEndpoint server;
+
+        ServerClientPair(ClientEndpoint client, ServerEndpoint server) {
+            this.client = client;
+            this.server = server;
+        }
+
+        @Override
+        public void close() {
+            client.close();
+            server.close();
+        }
+    }
+
     private ExecutorService executor;
     private Future<?> receivingFuture;
     private volatile boolean stopping;
     private static final AtomicLong bytesCounter = new AtomicLong();
     private AtomicBoolean recording = new AtomicBoolean();
 
-    private void setup(final Config config) throws Exception {
+    private ServerClientPair setup(final Config config) throws Exception {
         recording.set(false);
 
         byte[] message = newTextMessage(config.messageSize());
 
         final ChannelType channelType = config.channelType();
 
-        server = config.serverFactory().newServer(config.messageSize(),
+        ServerEndpoint server = config.serverFactory().newServer(config.messageSize(),
             new String[] {"TLSv1.3", "TLSv1.2"}, ciphers(config));
         server.setMessageProcessor(new MessageProcessor() {
             @Override
@@ -154,7 +169,7 @@ public final class ServerSocketPerfTest {
         Future<?> connectedFuture = server.start();
 
         // Always use the same client for consistency across the benchmarks.
-        client = config.clientFactory().newClient(
+        ClientEndpoint client = config.clientFactory().newClient(
                 ChannelType.CHANNEL, server.port(),
                 new String[] {"TLSv1.3", "TLSv1.2"}, ciphers(config));
         client.start();
@@ -186,13 +201,14 @@ public final class ServerSocketPerfTest {
                 }
             }
         });
+        return new ServerClientPair(client, server);
     }
 
-    void close() throws Exception {
+    void close(ServerClientPair pair) throws Exception {
         stopping = true;
         // Stop and wait for sending to complete.
-        server.stop();
-        client.stop();
+        pair.client.stop();
+        pair.server.stop();
         executor.shutdown();
         receivingFuture.get(5, TimeUnit.SECONDS);
         executor.awaitTermination(5, TimeUnit.SECONDS);
@@ -201,16 +217,16 @@ public final class ServerSocketPerfTest {
     @Test
     @Parameters(method = "getParams")
     public void throughput(Config config) throws Exception {
-        setup(config);
-        BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
-        while (state.keepRunning()) {
-          recording.set(true);
-          while (bytesCounter.get() < config.messageSize()) {
-          }
-          bytesCounter.set(0);
-          recording.set(false);
+        try (ServerClientPair pair = setup(config)) {
+            BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
+            while (state.keepRunning()) {
+                recording.set(true);
+                while (bytesCounter.get() < config.messageSize()) {
+                }
+                bytesCounter.set(0);
+                recording.set(false);
+            }
         }
-        close();
     }
 
     private String[] ciphers(Config config) {
