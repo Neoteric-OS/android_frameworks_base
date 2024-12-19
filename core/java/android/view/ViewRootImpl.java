@@ -2775,6 +2775,7 @@ public final class ViewRootImpl implements ViewParent,
         mBlastBufferQueue = new BLASTBufferQueue(mTag, mSurfaceControl,
                 mSurfaceSize.x, mSurfaceSize.y, mWindowAttributes.format);
         mBlastBufferQueue.setTransactionHangCallback(sTransactionHangCallback);
+        mBlastBufferQueue.setWaitForBufferReleaseCallback(mChoreographer::onWaitForBufferRelease);
         ScrollOptimizer.setBLASTBufferQueue(mBlastBufferQueue);
         // If we create and destroy BBQ without recreating the SurfaceControl, we can end up
         // queuing buffers on multiple apply tokens causing out of order buffer submissions. We
@@ -4438,7 +4439,8 @@ public final class ViewRootImpl implements ViewParent,
                 // merged with a sync group or BLASTBufferQueue before making it to this point
                 // But better a one or two frame flicker than steady-state broken from dropping
                 // whatever is in this transaction
-                mPendingTransaction.apply();
+                // apply immediately with bbq apply token
+                mergeWithNextTransaction(mPendingTransaction, 0);
                 mHasPendingTransactions = false;
             }
             mSyncBuffer = false;
@@ -5504,7 +5506,8 @@ public final class ViewRootImpl implements ViewParent,
                 Log.d(mTag, "Pending transaction will not be applied in sync with a draw due to "
                         + logReason);
             }
-            pendingTransaction.apply();
+            // apply immediately with bbq apply token
+            mergeWithNextTransaction(pendingTransaction, 0);
         }
     }
     /**

@@ -3197,7 +3197,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             return false;
         }
         if (mHeadsUpAppearanceController != null
-                && mHeadsUpAppearanceController.shouldBeVisible()) {
+                && mHeadsUpAppearanceController.shouldHeadsUpStatusBarBeVisible()) {
             return false;
         }
         return !mShowIconsWhenExpanded;
@@ -4646,7 +4646,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 @Override
                 public boolean shouldHeadsUpBeVisible() {
                     return mHeadsUpAppearanceController != null &&
-                            mHeadsUpAppearanceController.shouldBeVisible();
+                            mHeadsUpAppearanceController.shouldHeadsUpStatusBarBeVisible();
                 }
 
                 @Override
