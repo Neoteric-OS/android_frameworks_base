@@ -5440,10 +5440,16 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     void setDeferHidingClient() {
+        if (Flags.removeDeferHidingClient()) {
+            return;
+        }
         mDeferHidingClient = true;
     }
 
     void clearDeferHidingClient() {
+        if (Flags.removeDeferHidingClient()) {
+            return;
+        }
         if (!mDeferHidingClient) return;
         mDeferHidingClient = false;
         if (!mVisibleRequested) {
@@ -7309,9 +7315,11 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
 
     @Override
     void setClientVisible(boolean clientVisible) {
-        // TODO(shell-transitions): Remove mDeferHidingClient once everything is shell-transitions.
-        //                          pip activities should just remain in clientVisible.
-        if (!clientVisible && mDeferHidingClient) return;
+        if (!Flags.removeDeferHidingClient()) {
+            // TODO(shell-transitions): Remove mDeferHidingClient once everything is
+            //  shell-transitions. pip activities should just remain in clientVisible.
+            if (!clientVisible && mDeferHidingClient) return;
+        }
         super.setClientVisible(clientVisible);
     }
 
