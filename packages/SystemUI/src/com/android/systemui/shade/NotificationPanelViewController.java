@@ -364,7 +364,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private final TouchHandler mTouchHandler = new TouchHandler();
 
     private long mDownTime;
-    private long mStatusBarLongPressDowntime;
+    private long mStatusBarLongPressDowntime = -1L;
     private boolean mTouchSlopExceededBeforeDown;
     private float mOverExpansion;
     private CentralSurfaces mCentralSurfaces;
@@ -3717,7 +3717,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private void endMotionEvent(MotionEvent event, float x, float y, boolean forceCancel) {
         mShadeLog.logEndMotionEvent("endMotionEvent called", forceCancel, false);
         mTrackingPointer = -1;
-        mStatusBarLongPressDowntime = 0L;
+        mStatusBarLongPressDowntime = -1L;
         mAmbientState.setSwipingUp(false);
         if ((isTracking() && mTouchSlopExceeded) || Math.abs(x - mInitialExpandX) > mTouchSlop
                 || Math.abs(y - mInitialExpandY) > mTouchSlop
@@ -4732,7 +4732,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             }
 
             mKeyguardInteractor.setAlpha(alpha);
-            //todo was this needed?
 
             if (mKeyguardQsUserSwitchController != null) {
                 mKeyguardQsUserSwitchController.setAlpha(alpha);
@@ -5113,7 +5112,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                     mUpdateFlingOnLayout = false;
                     mMotionAborted = false;
                     mDownTime = mSystemClock.uptimeMillis();
-                    mStatusBarLongPressDowntime = 0L;
+                    mStatusBarLongPressDowntime = -1L;
                     mTouchAboveFalsingThreshold = false;
                     mCollapsedAndHeadsUpOnDown =
                             isFullyCollapsed() && mHeadsUpManager.hasPinnedHeadsUp();
