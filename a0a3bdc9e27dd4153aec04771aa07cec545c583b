@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2914876f_516d1073",
+        "filename": "nfc/java/android/nfc/NfcOemExtension.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2024-12-19T20:50:32Z",
+      "side": 1,
+      "message": "\"is detected\"?",
+      "range": {
+        "startLine": 411,
+        "startChar": 52,
+        "endLine": 411,
+        "endChar": 64
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "dfdfba35_bbe3fc74",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/java/android/nfc/NfcOemExtension.java",
+              "range": {
+                "startLine": 411,
+                "startChar": 0,
+                "endLine": 412,
+                "endChar": 0
+              },
+              "replacement": "        * Notifies the Remote NFC Endpoint RF Field is detected.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a0a3bdc9e27dd4153aec04771aa07cec545c583b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
