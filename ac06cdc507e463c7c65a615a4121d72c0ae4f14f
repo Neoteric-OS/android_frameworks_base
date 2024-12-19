@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9983988a_21141cda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-12-19T18:49:12Z",
+      "side": 1,
+      "message": "a",
+      "revId": "ac06cdc507e463c7c65a615a4121d72c0ae4f14f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb4a0e88_4852d01d",
+        "filename": "nfc/tests/src/android/nfc/tech/NfcBarcodeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-12-19T18:49:12Z",
+      "side": 1,
+      "message": "```\nframeworks/base/nfc/tests/src/android/nfc/tech/NfcBarcodeTest.java:88: error: [ImpossibleNullComparison] This value cannot be null, and comparing it to null may be misleading.\n        assertNotNull(result);\n                     ^\n                     \n```",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "906683b3_98a69ee1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "nfc/tests/src/android/nfc/tech/NfcBarcodeTest.java",
+              "range": {
+                "startLine": 88,
+                "startChar": 0,
+                "endLine": 89,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "ac06cdc507e463c7c65a615a4121d72c0ae4f14f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
