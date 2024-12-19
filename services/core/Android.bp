@@ -225,7 +225,6 @@ java_library_static {
         "vendor.qti.hardware.servicetrackeraidl-V1-java",
         "apache-commons-math",
         "battery_saver_flag_lib",
-        "guava",
         "notification_flags_lib",
         "power_hint_flags_lib",
         "biometrics_flags_lib",

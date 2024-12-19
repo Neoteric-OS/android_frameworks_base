@@ -4321,16 +4321,6 @@ public class WindowManagerService extends IWindowManager.Stub
     }
 
     /**
-     * Retrieves a snapshot. If restoreFromDisk equals equals {@code true}, DO NOT HOLD THE WINDOW
-     * MANAGER LOCK WHEN CALLING THIS METHOD!
-     */
-    public TaskSnapshot getTaskSnapshot(int taskId, int userId, boolean isLowResolution,
-            boolean restoreFromDisk) {
-        return mTaskSnapshotController.getSnapshot(taskId, userId, restoreFromDisk,
-                isLowResolution);
-    }
-
-    /**
      * Generates and returns an up-to-date {@link Bitmap} for the specified taskId.
      *
      * @param taskId                  The task ID of the task for which a Bitmap is requested.
@@ -10059,11 +10049,10 @@ public class WindowManagerService extends IWindowManager.Stub
                     && imeTargetWindow.mActivityRecord.mLastImeShown) {
                 return true;
             }
+            final TaskSnapshot snapshot = mTaskSnapshotController.getSnapshot(
+                    imeTargetWindowTask.mTaskId, false /* isLowResolution */);
+            return snapshot != null && snapshot.hasImeSurface();
         }
-        final TaskSnapshot snapshot = getTaskSnapshot(imeTargetWindowTask.mTaskId,
-                imeTargetWindowTask.mUserId, false /* isLowResolution */,
-                false /* restoreFromDisk */);
-        return snapshot != null && snapshot.hasImeSurface();
     }
 
     @Override
