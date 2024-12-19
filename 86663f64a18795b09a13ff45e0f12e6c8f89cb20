@@ -39,6 +39,30 @@
       },
       "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7173cedb_26d5bc41",
+        "filename": "core/java/android/hardware/HardwareBuffer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3790621
+      },
+      "writtenOn": "2024-12-19T06:44:14Z",
+      "side": 1,
+      "message": "Thanks for the comment. In my local tree I run all the commands required to build the differnt modules and current.txt was updated automatically so I thought it doesn\u0027t need to be added to the patch. If it is required I can add this file to the relevant patch.",
+      "parentUuid": "6a42845c_f720e3b8",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 78
+      },
+      "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
