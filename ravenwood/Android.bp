@@ -345,14 +345,29 @@ java_library {
     ],
 }
 
+// Note we use our own version of this, rather than using the actual one, which is
+// "services-platform-compat-config"
+//
+// One reason is to generate it from the host jar, rather than the dex jar.
+// (See the comment on framework-platform-compat-config in f/b/Android.bp for the reason.)
+//
+// The other reason is "services-platform-compat-config" requires
+// the whole services.jar to be rebuilt, which is a lot slower than just building
+// services.core, because services.jar includes a kotlin module.
+platform_compat_config {
+    name: "services.core-platform-compat-config-from-host-jar",
+    src: ":services.core-for-host",
+    visibility: ["//visibility:private"],
+}
+
 filegroup {
     name: "ravenwood-data",
     device_common_srcs: [
         ":system-build.prop",
         ":framework-res",
         ":ravenwood-empty-res",
-        ":framework-platform-compat-config",
-        ":services-platform-compat-config",
+        ":framework-platform-compat-config-from-host-jar",
+        ":services.core-platform-compat-config-from-host-jar",
         "texts/ravenwood-build.prop",
     ],
     device_first_srcs: [
@@ -616,6 +631,10 @@ android_ravenwood_libgroup {
         "android.test.mock.ravenwood",
         "ravenwood-helper-runtime",
         "hoststubgen-helper-runtime.ravenwood",
+
+        // Note, when we include other services.* jars, we'll need to add
+        // platform_compat_config for that module too.
+        // See services.core-platform-compat-config-from-host-jar above.
         "services.core.ravenwood-jarjar",
         "services.fakes.ravenwood-jarjar",
 

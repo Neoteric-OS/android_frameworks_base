@@ -16,13 +16,6 @@
 // visible publicly. We re-export them to Ravenwood in this file.
 
 java_library {
-    name: "framework-minus-apex-for-host",
-    installable: false,
-    static_libs: ["framework-minus-apex"],
-    visibility: ["//frameworks/base/ravenwood"],
-}
-
-java_library {
     name: "all-updatable-modules-system-stubs-for-host",
     installable: false,
     static_libs: ["all-updatable-modules-system-stubs"],

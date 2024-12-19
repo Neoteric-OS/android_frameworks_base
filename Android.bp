@@ -566,6 +566,15 @@ java_library {
     jarjar_shards: "10",
 }
 
+// This target is used to extract the host jar from `framework-minus-apex`.
+// It's used by Ravenwood.
+java_library {
+    name: "framework-minus-apex-for-host",
+    installable: false,
+    static_libs: ["framework-minus-apex"],
+    visibility: ["//frameworks/base/ravenwood"],
+}
+
 java_library {
     name: "framework-minus-apex-intdefs",
     defaults: ["framework-minus-apex-with-libs-defaults"],
@@ -620,9 +629,44 @@ java_library {
     ],
 }
 
+// Compat config extracted from framework-minus-apex.
+//
+// Here, we have two versions of it:
+// 1. "framework-platform-compat-config", which is the original one we've been using, and still
+//    used in device builds.
+// 2. "framework-platform-compat-config-from-host-jar", which is generated from the host jar
+//    version of framework-minus-apex.jar.
+//
+// They're supposed to be identical except 1 takes more time to rebuild. We still use 1 on
+// device builds just in case they're subtly different and break the device build.
+// We use 2 only on Ravenwood.
+//
+// The original version (1) is generated from the output file of "framework-minus-apex",
+// meaning it uses the DEX version of framework-minus-apex.jar, and in order to generate it,
+// we need to run D8 on framework-minus-apex, which is slow. (>40 seconds)
+// However, we should be able to generate it from the host side jar because that should
+// contain the exact same `*_compat_config.xml` files.
+//
+// Normally, the extra overhead on 1 doesn't matter because when "framework-platform-compat-config"
+// is needed, we also need the dex version of framework-minus-apex.jar.
+// However, it does matter for Ravenwood because Ravenwood needs "framework-platform-compat-config"
+// too, but Ravenwood doesn't use DEX jars at all. That means in order to rebuild ravenwood,
+// we'd have to run D8 on framework-mius-apex, just to generate framework-platform-compat-config.
+//
+// So here, we define a second vesion of framework-platform-compat-config from the host jar
+// of framework-minus-apex, which is specifically used by Ravenwood.
+//
+// We should be able to use the host version (#2) on the device side too, but we haven't done so
+// (yet), again just in case there's a subtle difference.
 platform_compat_config {
     name: "framework-platform-compat-config",
     src: ":framework-minus-apex",
+}
+
+// See above comment.
+platform_compat_config {
+    name: "framework-platform-compat-config-from-host-jar",
+    src: ":framework-minus-apex-for-host",
 }
 
 filegroup {
