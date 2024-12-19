@@ -200,7 +200,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
-
 /**
  * Manages attached displays.
  * <p>
@@ -915,6 +914,16 @@ public final class DisplayManagerService extends SystemService {
         }
     }
 
+    @VisibleForTesting
+    ContentObserver getSettingsObserver() {
+        return mSettingsObserver;
+    }
+
+    @VisibleForTesting
+    boolean shouldMirrorBuiltInDisplay() {
+        return mMirrorBuiltInDisplay;
+    }
+
     DisplayNotificationManager getDisplayNotificationManager() {
         return mDisplayNotificationManager;
     }
@@ -1239,11 +1248,6 @@ public final class DisplayManagerService extends SystemService {
     }
 
     private void updateMirrorBuiltInDisplaySettingLocked() {
-        if (!mFlags.isDisplayContentModeManagementEnabled()) {
-            Slog.e(TAG, "MirrorBuiltInDisplay setting shouldn't be updated when the flag is off.");
-            return;
-        }
-
         synchronized (mSyncRoot) {
             ContentResolver resolver = mContext.getContentResolver();
             final boolean mirrorBuiltInDisplay = Settings.Secure.getIntForUser(resolver,
@@ -1252,6 +1256,9 @@ public final class DisplayManagerService extends SystemService {
                 return;
             }
             mMirrorBuiltInDisplay = mirrorBuiltInDisplay;
+            if (mFlags.isDisplayContentModeManagementEnabled()) {
+                mLogicalDisplayMapper.forEachLocked(this::updateCanHostTasksIfNeededLocked);
+            }
         }
     }
 
@@ -2317,6 +2324,10 @@ public final class DisplayManagerService extends SystemService {
         mDisplayBrightnesses.append(displayId,
                 new BrightnessPair(brightnessDefault, brightnessDefault));
 
+        if (mFlags.isDisplayContentModeManagementEnabled()) {
+            updateCanHostTasksIfNeededLocked(display);
+        }
+
         DisplayManagerGlobal.invalidateLocalDisplayInfoCaches();
     }
 
@@ -2636,6 +2647,12 @@ public final class DisplayManagerService extends SystemService {
         if (mStableDisplaySize.x <= 0 && mStableDisplaySize.y <= 0) {
             DisplayInfo info = d.getDisplayInfoLocked();
             setStableDisplaySizeLocked(info.getNaturalWidth(), info.getNaturalHeight());
+        }
+    }
+
+    private void updateCanHostTasksIfNeededLocked(LogicalDisplay display) {
+        if (display.setCanHostTasksLocked(!mMirrorBuiltInDisplay)) {
+            sendDisplayEventIfEnabledLocked(display, DisplayManagerGlobal.EVENT_DISPLAY_CHANGED);
         }
     }
 
