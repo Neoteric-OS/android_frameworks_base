@@ -87,6 +87,30 @@
       },
       "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "878736ef_a05c8ec7",
+        "filename": "core/java/android/hardware/usb/UsbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1439319
+      },
+      "writtenOn": "2024-12-19T15:02:49Z",
+      "side": 1,
+      "message": "Ack. Let\u0027s hard code it then.",
+      "parentUuid": "c66732d9_15adbdb1",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
