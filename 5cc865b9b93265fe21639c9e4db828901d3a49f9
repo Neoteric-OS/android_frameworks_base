@@ -33,6 +33,24 @@
       "message": "Hi, what\u0027s the benefit of removing this? Right now it may catch some other uncaught exceptions",
       "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a644681d_e907c070",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-19T02:21:46Z",
+      "side": 1,
+      "message": "Hello,@ancr@google.com\n  if we don\u0027t remove this ,we will call the stream.close twice in finishWrite and closeQuietly method with no IOexception happen or failWrite and closeQuietly method\nwith IOException happen,no need to call the close method twcie,so we should remove the finally module,not the catch exceptions module.\n\nThanks.",
+      "parentUuid": "81d29589_9e889657",
+      "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
