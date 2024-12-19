@@ -16,6 +16,23 @@
       "message": "cc: @anothermark, as it\u0027s related to both crumpet and compat-framework.... (see http://g/crumpet/ykFCdezgoEE)",
       "revId": "3c66df8759545eb3f90e0208d3e7e43fbdc0737a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2131b6d0_863492ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2024-12-19T19:57:01Z",
+      "side": 1,
+      "message": "Sigh, there seems to be a step to merge all platform_compat_config\u0027s.",
+      "revId": "3c66df8759545eb3f90e0208d3e7e43fbdc0737a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
