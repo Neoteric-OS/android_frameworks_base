@@ -785,6 +785,10 @@ public class TarBackupReader {
         // to TarBackupReader if allowed and not denied (from PerformUnifiedRestoreTask)
 
         String vToUAllowlist = getVToUAllowlist(context, userId);
+        if (vToUAllowlist == null || vToUAllowlist.size() == 0) {
+            return false;
+        }
+
         List<String> mVToUAllowlist = Arrays.asList(vToUAllowlist.split(","));
         return Flags.enableVToURestoreForSystemComponentsInAllowlist()
                 && (installedPackageInfo.getLongVersionCode()
@@ -798,7 +802,7 @@ public class TarBackupReader {
                 context.getContentResolver(),
                 Settings.Secure.V_TO_U_RESTORE_ALLOWLIST,
                 userId);
-         return (allowlist == null) ? "" : allowlist;
+         return allowlist;
     }
 
     private static long extractRadix(byte[] data, int offset, int maxChars, int radix)
