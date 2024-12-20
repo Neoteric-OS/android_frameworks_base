@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a157df0f_0f688eb3",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-20T18:23:31Z",
+      "side": 1,
+      "message": "Nit: use a more descriptive var name, same with other tests",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 15
+      },
+      "revId": "463d9e3a57fabe3dbe87194b779c9259c8e913f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d89829a_ec62db2b",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-20T18:23:31Z",
+      "side": 1,
+      "message": "Prefer fluent assertions w/ assertThat",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1cef8455_91507f63",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 19,
+                "startChar": 0,
+                "endLine": 20,
+                "endChar": 0
+              },
+              "replacement": "import static com.google.common.truth.Truth.assertThat;\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 93,
+                "startChar": 0,
+                "endLine": 94,
+                "endChar": 0
+              },
+              "replacement": "        assertThat(packageList.size()).isAtLeast(num);\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 110,
+                "startChar": 0,
+                "endLine": 111,
+                "endChar": 0
+              },
+              "replacement": "        assertThat(flagName.size()).isAtLeast(num);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "463d9e3a57fabe3dbe87194b779c9259c8e913f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1f0a9f1_31d3ff5e",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-20T18:23:31Z",
+      "side": 1,
+      "message": "Nit: either make this static, or leave out the `isPlatform` arg and just reference the member var directly",
+      "range": {
+        "startLine": 118,
+        "startChar": 30,
+        "endLine": 118,
+        "endChar": 59
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "de7a946b_3fd32494",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 118,
+                "startChar": 0,
+                "endLine": 119,
+                "endChar": 0
+              },
+              "replacement": "    private static List\u003cparsed_flag\u003e findPackageHasAtLeastNumFlags(int num, boolean isPlatform) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "463d9e3a57fabe3dbe87194b779c9259c8e913f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5554e44e_3a0018c3",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-20T18:23:31Z",
+      "side": 1,
+      "message": "The method name here doesn\u0027t really indicate what is being returned?",
+      "range": {
+        "startLine": 118,
+        "startChar": 30,
+        "endLine": 118,
+        "endChar": 59
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c595ce91_38f499bd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 104,
+                "startChar": 0,
+                "endLine": 105,
+                "endChar": 0
+              },
+              "replacement": "        List\u003cparsed_flag\u003e l \u003d findFlagsFromPackageWithAtLeastNumFlags(num, mIsPlatform);\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 118,
+                "startChar": 0,
+                "endLine": 119,
+                "endChar": 0
+              },
+              "replacement": "    private List\u003cparsed_flag\u003e findFlagsFromPackageWithAtLeastNumFlags(int num, boolean isPlatform) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "463d9e3a57fabe3dbe87194b779c9259c8e913f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
