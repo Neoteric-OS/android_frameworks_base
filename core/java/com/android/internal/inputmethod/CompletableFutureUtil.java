@@ -88,7 +88,12 @@ public final class CompletableFutureUtil {
                 } catch (InterruptedException e) {
                     interrupted = true;
                 } catch (TimeoutException e) {
-                    logTimeoutInternal(tag, methodName, timeoutMillis);
+                    boolean isCanceled = cancellationGroup != null
+                            ? !cancellationGroup.isCandeled() : false;
+                    if (isCanceled) {
+                        cancellationGroup.cancelAll();
+                    }
+                    logTimeoutInternal(tag, methodName, timeoutMillis, isCanceled);
                     return null;
                 } catch (Throwable e) {
                     logErrorInternal(tag, methodName, e.getMessage());
@@ -107,11 +112,17 @@ public final class CompletableFutureUtil {
 
     @AnyThread
     private static void logTimeoutInternal(@Nullable String tag, @Nullable String methodName,
-            @DurationMillisLong long timeout) {
+            @DurationMillisLong long timeout, boolean isCanceled) {
         if (tag == null || methodName == null) {
             return;
         }
-        Log.w(tag, methodName + " didn't respond in " + timeout + " msec.");
+        if (isCanceled) {
+            Log.w(tag, "App process is frozen, " + methodName + " does not response within "
+                    + timeout + " milliseconds, all content will be ignored, "
+                    + "isCanceled: " + isCanceled);
+        } else {
+            Log.w(tag, methodName + " didn't respond in " + timeout + " msec.");
+        }
     }
 
     @AnyThread
