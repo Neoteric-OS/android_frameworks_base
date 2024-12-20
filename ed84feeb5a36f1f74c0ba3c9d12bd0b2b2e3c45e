@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa9595a1_8ab9a5ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1741425
+      },
+      "writtenOn": "2024-12-20T10:30:38Z",
+      "side": 1,
+      "message": "This version depends on https://lore.kernel.org/all/20241218212935.4162907-1-dualli@chromium.org/",
+      "revId": "ed84feeb5a36f1f74c0ba3c9d12bd0b2b2e3c45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
