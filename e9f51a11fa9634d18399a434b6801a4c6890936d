@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47f3768a_79e50a7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2053882
+      },
+      "writtenOn": "2024-12-20T03:46:24Z",
+      "side": 1,
+      "message": "mWindowis initialized during construction and has not been modified since then, it is impossible to be null.",
+      "revId": "e9f51a11fa9634d18399a434b6801a4c6890936d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
