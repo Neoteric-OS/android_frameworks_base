@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5392971_b9be4433",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-20T20:14:05Z",
+      "side": 1,
+      "message": "Prefer using something like `@BeforeClass` for static test init",
+      "range": {
+        "startLine": 55,
+        "startChar": 21,
+        "endLine": 55,
+        "endChar": 41
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "90b220c5_c7f9b30b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 26,
+                "startChar": 0,
+                "endLine": 26,
+                "endChar": 0
+              },
+              "replacement": "import org.junit.BeforeClass;\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 52,
+                "endChar": 0
+              },
+              "replacement": "    private static List\u003cparsed_flag\u003e sFlags;\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 53,
+                "startChar": 0,
+                "endLine": 54,
+                "endChar": 0
+              },
+              "replacement": "    @BeforeClass\n    public static void setUp() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "dff86fab810db6791444e7bd799aef9520e97fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aefcfe0_ae1d260e",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-20T20:14:05Z",
+      "side": 1,
+      "message": "This probably deserves a comment as to why this is a meaningful parameter for test permutations.",
+      "range": {
+        "startLine": 62,
+        "startChar": 19,
+        "endLine": 62,
+        "endChar": 30
+      },
+      "revId": "dff86fab810db6791444e7bd799aef9520e97fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56ed162f_57660d3d",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-20T20:14:05Z",
+      "side": 1,
+      "message": "Are we guaranteed to have non-platform containers with flags?",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3acac4e3_62bc357d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 66,
+                "startChar": 0,
+                "endLine": 67,
+                "endChar": 0
+              },
+              "replacement": "        String packageName \u003d null;\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 73,
+                "startChar": 0,
+                "endLine": 73,
+                "endChar": 0
+              },
+              "replacement": "        assertThat(packageName).isNotNull();\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 92,
+                "startChar": 0,
+                "endLine": 93,
+                "endChar": 0
+              },
+              "replacement": "        List\u003cString\u003e packageList \u003d new ArrayList\u003c\u003e(packageSet);\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 120,
+                "startChar": 0,
+                "endLine": 121,
+                "endChar": 0
+              },
+              "replacement": "        List\u003cparsed_flag\u003e ret \u003d new ArrayList\u003c\u003e();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "dff86fab810db6791444e7bd799aef9520e97fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dfc9997_fe7b425e",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2024-12-20T20:14:05Z",
+      "side": 1,
+      "message": "Same here, are we guaranteed to have matching criteria for this number of packages and/or flags in a packge for the following test?",
+      "range": {
+        "startLine": 82,
+        "startChar": 27,
+        "endLine": 82,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8eabcab9_93375439",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 81,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "        // load num packages, the number is the same as the number of packages in the device\n        int packageNum \u003d sFlags.size();\n"
+            },
+            {
+              "path": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+              "range": {
+                "startLine": 102,
+                "startChar": 0,
+                "endLine": 104,
+                "endChar": 0
+              },
+              "replacement": "        // get one package contains num of flags, the number is the same as the number of flags in the\n        // device\n        int flagNum \u003d sFlags.size();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "dff86fab810db6791444e7bd799aef9520e97fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
