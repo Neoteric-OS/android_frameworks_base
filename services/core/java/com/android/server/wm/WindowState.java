@@ -2950,7 +2950,7 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         if (mActivityRecord != null && mTransitionController.shouldKeepFocus(mActivityRecord)) {
             // During transient launch, the transient-hide windows are not visibleRequested
             // or on-top but are kept focusable and thus can receive keys.
-            return true;
+            return isShouldKeepFocus();
         }
         final boolean canReceiveKeys = isVisibleRequestedOrAdding()
                 && (mViewVisibility == View.VISIBLE) && !mRemoveOnExit
@@ -2967,6 +2967,10 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
         // touches the display.
         return fromUserTouch || getDisplayContent().isOnTop()
                 || getDisplayContent().isTrusted();
+    }
+
+    private boolean isShouldKeepFocus() {
+        return !(mStartingData != null && mStartingData instanceof SplashScreenStartingData);
     }
 
     @Override
