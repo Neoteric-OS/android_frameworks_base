@@ -57,6 +57,30 @@
       ],
       "revId": "ac06cdc507e463c7c65a615a4121d72c0ae4f14f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea546465_d60b7247",
+        "filename": "nfc/tests/src/android/nfc/tech/NfcBarcodeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2024-12-20T07:34:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb4a0e88_4852d01d",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "ac06cdc507e463c7c65a615a4121d72c0ae4f14f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
