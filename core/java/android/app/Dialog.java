@@ -529,10 +529,9 @@ public class Dialog implements DialogInterface, Window.Callback,
      * directly access parts of the Window API that are not available
      * through Activity/Screen.
      * 
-     * @return Window The current window, or null if the activity is not
-     *         visual.
+     * @return Window The current window.
      */
-    public @Nullable Window getWindow() {
+    public @NonNull Window getWindow() {
         return mWindow;
     }
 
@@ -540,13 +539,13 @@ public class Dialog implements DialogInterface, Window.Callback,
      * Call {@link android.view.Window#getCurrentFocus} on the
      * Window if this Activity to return the currently focused view.
      * 
-     * @return View The current View with focus or null.
+     * @return View The current View with focus.
      * 
      * @see #getWindow
      * @see android.view.Window#getCurrentFocus
      */
-    public @Nullable View getCurrentFocus() {
-        return mWindow != null ? mWindow.getCurrentFocus() : null;
+    public @NonNull View getCurrentFocus() {
+        return mWindow.getCurrentFocus();
     }
 
     /**
