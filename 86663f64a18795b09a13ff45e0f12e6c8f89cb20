@@ -111,6 +111,30 @@
       },
       "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "495d72af_91781b5e",
+        "filename": "core/java/android/hardware/HardwareBuffer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3790621
+      },
+      "writtenOn": "2024-12-20T11:21:56Z",
+      "side": 1,
+      "message": "Accoding to the instructions:\n\"Above AIDL file(s) has changed. Run `m android.hardware.graphics.common-update-api` to reflect the changes\nto the current version so that it is reviewed by\nandroid-aidl-api-council@google.com\nAnd then you need to change dependency on android.hardware.graphics.common-V(n)-* to android.hardware.graphics.common-V(n+1)-* to use\nnew APIs.\"\nI had to modifiy this in some Android.bp.\nAbout the removal, These lines were added accordsing to google instrction and franckly I don\u0027t understand thier meaning. so just to be sure, should I remove all the new lines with the declerations or just the @FlaggedApi?\nThanks for the help.",
+      "parentUuid": "f3ab8af0_bfa04959",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 78
+      },
+      "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
