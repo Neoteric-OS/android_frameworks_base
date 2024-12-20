@@ -16,6 +16,24 @@
       "message": "Is the crash occuring on AOSP? I don\u0027t see how that\u0027s possible. It\u0027s only mutated in `dispatchUidsChanged()`, which is only executed on the handler thread. We do access its value from other thread, but it is only ever used during the dump and shouldn\u0027t be causing the crash mentioned in the commit message?",
       "revId": "737a889a76d45167d64a12ef14cd7848edb8f9db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6088c45_c99b6a3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-12-20T11:51:12Z",
+      "side": 1,
+      "message": "Actually, dumpValidateUids() could modify it too\n\ndumpValidateUids() will be executed through `adb shell dumpsys activity process`",
+      "parentUuid": "df1c1b45_448d3e57",
+      "revId": "737a889a76d45167d64a12ef14cd7848edb8f9db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
