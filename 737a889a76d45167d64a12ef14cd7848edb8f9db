@@ -34,6 +34,24 @@
       "parentUuid": "df1c1b45_448d3e57",
       "revId": "737a889a76d45167d64a12ef14cd7848edb8f9db",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f5afc51_8d1c265d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-12-20T11:54:17Z",
+      "side": 1,
+      "message": "As read ops of SparseArray will trigger its internal gc process and that gc process would race with modifications made by dispatchUidsChanged()",
+      "parentUuid": "f6088c45_c99b6a3a",
+      "revId": "737a889a76d45167d64a12ef14cd7848edb8f9db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
