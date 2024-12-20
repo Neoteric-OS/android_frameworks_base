@@ -16,10 +16,12 @@
 
 package android.os;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.os.Flags;
 import android.util.ArrayMap;
 import android.util.Log;
 
@@ -330,7 +332,9 @@ public final class ServiceManager {
      * @return {@code null} only if there are permission problems or fatal errors.
      * @hide
      */
-    public static IBinder waitForService(@NonNull String name) {
+    @FlaggedApi(Flags.FLAG_SERVICE_MANAGER_API)
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @Nullable public static IBinder waitForService(@NonNull String name) {
         return Binder.allowBlocking(waitForServiceNative(name));
     }
 

@@ -241,3 +241,11 @@ flag {
     bug: "308461809"
     is_exported: true
 }
+
+flag {
+    name: "service_manager_api"
+    namespace: "adservices"
+    description: "System API AdServices Mainline module uses to get the specified service from the service manager."
+    is_exported: true
+    bug: "383366421"
+}
