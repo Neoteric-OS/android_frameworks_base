@@ -906,8 +906,11 @@ public abstract class ContentResolver implements ContentInterface {
     /**
      * Return the MIME type of the given content URL.
      *
+     * <p>Note: this method performs blocking Binder calls and should not be
+     * called from the main thread to avoid ANRs.
+     *
      * @param url A Uri identifying content (either a list or specific type),
-     * using the content:// scheme.
+     * using the content://scheme.
      * @return A MIME type for the content, or null if the URL is invalid or the type is unknown
      */
     @Override
@@ -1301,6 +1304,9 @@ public abstract class ContentResolver implements ContentInterface {
      * Uri that works only in the current environment but potentially more
      * efficiently than the canonical representation.</p>
      *
+     * <p>Note: this method performs blocking Binder calls and should not be
+     * called from the main thread to avoid ANRs.
+     *
      * @param url The {@link Uri} that is to be transformed to a canonical
      * representation.  Like all resolver calls, the input can be either
      * a non-canonical or canonical Uri.
@@ -1352,6 +1358,9 @@ public abstract class ContentResolver implements ContentInterface {
      * want to avoid any possible overhead when using it with the content
      * provider or want to verify that the referenced data exists at all in the
      * new environment.
+     *
+     * <p>Note: this method performs blocking Binder calls and should not be
+     * called from the main thread to avoid ANRs.
      *
      * @param url The canonical {@link Uri} that is to be convered back to its
      * non-canonical form.
