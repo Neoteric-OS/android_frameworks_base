@@ -1958,7 +1958,7 @@ final class Session
 
             if (mLogViewEntered) {
                 mLogViewEntered = false;
-                mService.logViewEntered(id, null, mCurrentViewId);
+                mService.logViewEntered(id, null, mCurrentViewId, shouldAddEventToHistory());
             }
         }
 
@@ -2862,7 +2862,12 @@ final class Session
                 forceRemoveFromServiceLocked();
                 return;
             }
-            mService.setAuthenticationSelected(id, mClientState, uiType, mCurrentViewId);
+            mService.setAuthenticationSelected(
+                    id,
+                    mClientState,
+                    uiType,
+                    mCurrentViewId,
+                    shouldAddEventToHistory());
         }
 
 
@@ -2937,7 +2942,12 @@ final class Session
                 if (!mLoggedInlineDatasetShown) {
                     // Chip inflation already logged, do not log again.
                     // This is needed because every chip inflation will call this.
-                    mService.logDatasetShown(this.id, mClientState, uiType, mCurrentViewId);
+                    mService.logDatasetShown(
+                            this.id,
+                            mClientState,
+                            uiType,
+                            mCurrentViewId,
+                            shouldAddEventToHistory());
                     Slog.d(TAG, "onShown(): " + uiType + ", " + numDatasetsShown);
                 }
                 mLoggedInlineDatasetShown = true;
@@ -2945,7 +2955,12 @@ final class Session
                 mPresentationStatsEventLogger.logWhenDatasetShown(numDatasetsShown);
                 // Explicitly sets maybeSetSuggestionPresentedTimestampMs
                 mPresentationStatsEventLogger.maybeSetSuggestionPresentedTimestampMs();
-                mService.logDatasetShown(this.id, mClientState, uiType, mCurrentViewId);
+                mService.logDatasetShown(
+                        this.id,
+                        mClientState,
+                        uiType,
+                        mCurrentViewId,
+                        shouldAddEventToHistory());
                 Slog.d(TAG, "onShown(): " + uiType + ", " + numDatasetsShown);
             }
         }
@@ -3939,7 +3954,8 @@ final class Session
                 detectedFieldClassifications,
                 mComponentName,
                 mCompatMode,
-                saveDialogNotShowReason);
+                saveDialogNotShowReason,
+                shouldAddEventToHistory());
         mSessionCommittedEventLogger.maybeSetCommitReason(commitReason);
         mSessionCommittedEventLogger.maybeSetRequestCount(mRequestCount);
         mSaveEventLogger.maybeSetSaveUiNotShownReason(saveDialogNotShowReason);
@@ -4568,7 +4584,7 @@ final class Session
     }
 
     private void logSaveShown() {
-        mService.logSaveShown(id, mClientState);
+        mService.logSaveShown(id, mClientState, shouldAddEventToHistory());
     }
 
     @Nullable
@@ -5222,7 +5238,8 @@ final class Session
                         // so this calling logViewEntered will be a nop.
                         // Calling logViewEntered() twice will only log it once
                         // TODO(271181979): this is broken for multiple partitions
-                        mService.logViewEntered(this.id, null, mCurrentViewId);
+                        mService.logViewEntered(
+                                this.id, null, mCurrentViewId, shouldAddEventToHistory());
                     }
 
                     // If this is the first time view is entered for inline, the last
@@ -6837,8 +6854,13 @@ final class Session
             // Autofill it directly...
             if (dataset.getAuthentication() == null) {
                 if (generateEvent) {
-                    mService.logDatasetSelected(dataset.getId(), id, mClientState, uiType,
-                            mCurrentViewId);
+                    mService.logDatasetSelected(
+                            dataset.getId(),
+                            id,
+                            mClientState,
+                            uiType,
+                            mCurrentViewId,
+                            shouldAddEventToHistory());
                 }
                 if (mCurrentViewId != null) {
                     mInlineSessionController.hideInlineSuggestionsUiLocked(mCurrentViewId);
@@ -6849,7 +6871,7 @@ final class Session
 
             // ...or handle authentication.
             mService.logDatasetAuthenticationSelected(dataset.getId(), id, mClientState, uiType,
-                        mCurrentViewId);
+                        mCurrentViewId, shouldAddEventToHistory());
             mPresentationStatsEventLogger.maybeSetAuthenticationType(
                     AUTHENTICATION_TYPE_DATASET_AUTHENTICATION);
             // does not matter the value of isPrimary because null response won't be overridden.
@@ -7990,6 +8012,32 @@ final class Session
                         + " i="
                         + isInline;
         mService.getMaster().logRequestLocked(historyItem);
+    }
+
+    /**
+     * Don't add secondary providers to FillEventHistory
+     */
+    boolean shouldAddEventToHistory() {
+
+        FillResponse lastResponse = null;
+
+        synchronized (mLock) {
+            lastResponse = getLastResponseLocked("shouldAddEventToHistory(%s)");
+        }
+
+        // There might be events (like TYPE_VIEW_REQUESTED_AUTOFILL) that are
+        // generated before FillRequest/FillResponse mechanism are started, so
+        // still need to log it
+        if (lastResponse == null) {
+            return true;
+        }
+
+        if (mRequestId.isSecondaryProvider(lastResponse.getRequestId())) {
+            // The request was to a secondary provider - don't log these events
+            return false;
+        }
+
+        return true;
     }
 
     private void wtf(@Nullable Exception e, String fmt, Object... args) {
