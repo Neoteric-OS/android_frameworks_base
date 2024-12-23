@@ -44,6 +44,7 @@ import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 
 import org.junit.Rule;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import junitparams.JUnitParamsRunner;
@@ -127,8 +128,7 @@ public final class ClientSocketPerfTest {
         return params;
     }
 
-    private ClientEndpoint client;
-    private ServerEndpoint server;
+    private SocketPair socketPair;
     private byte[] message;
     private ExecutorService executor;
     private Future<?> sendingFuture;
@@ -137,15 +137,32 @@ public final class ClientSocketPerfTest {
     private static final AtomicLong bytesCounter = new AtomicLong();
     private AtomicBoolean recording = new AtomicBoolean();
 
+    private class SocketPair implements AutoCloseable {
+        private ClientEndpoint client;
+        private ServerEndpoint server;
+        private byte[] message;
+
+        @Override
+        public void close() {
+            if (client != null) {
+                client.stop();
+            }
+            if (server != null) {
+                server.stop();
+            }
+        }
+    }
+
     private void setup(Config config) throws Exception {
         message = newTextMessage(512);
 
         // Always use the same server for consistency across the benchmarks.
-        server = config.serverFactory().newServer(
+        socketPair.server = config.serverFactory().newServer(
                 config.messageSize(), config.protocol().getProtocols(),
                 ciphers(config));
+        socketPair.server.init();
 
-        server.setMessageProcessor(new ServerEndpoint.MessageProcessor() {
+        socketPair.server.setMessageProcessor(new ServerEndpoint.MessageProcessor() {
             @Override
             public void processMessage(byte[] inMessage, int numBytes, OutputStream os) {
                 if (recording.get()) {
@@ -154,11 +171,11 @@ public final class ClientSocketPerfTest {
                 }
             }
         });
-        Future<?> connectedFuture = server.start();
+        Future<?> connectedFuture = socketPair.server.start();
 
-        client = config.clientFactory().newClient(
-            config.channelType(), server.port(), config.protocol().getProtocols(), ciphers(config));
-        client.start();
+        socketPair.client = config.clientFactory().newClient(
+            config.channelType(), socketPair.server.port(), config.protocol().getProtocols(), ciphers(config));
+        socketPair.client.start();
 
         // Wait for the initial connection to complete.
         connectedFuture.get(5, TimeUnit.SECONDS);
@@ -170,10 +187,10 @@ public final class ClientSocketPerfTest {
                 try {
                     Thread thread = Thread.currentThread();
                     while (!stopping && !thread.isInterrupted()) {
-                        client.sendMessage(message);
+                        socketPair.client.sendMessage(message);
                     }
                 } finally {
-                    client.flush();
+                    socketPair.client.flush();
                 }
             }
         });
@@ -185,8 +202,9 @@ public final class ClientSocketPerfTest {
         // Wait for the sending thread to stop.
         sendingFuture.get(5, TimeUnit.SECONDS);
 
-        client.stop();
-        server.stop();
+        if (socketPair != null) {
+            socketPair.close();
+        }
         executor.shutdown();
         executor.awaitTermination(5, TimeUnit.SECONDS);
     }
@@ -197,17 +215,25 @@ public final class ClientSocketPerfTest {
     @Test
     @Parameters(method = "getParams")
     public void time(Config config) throws Exception {
-        reset();
-        setup(config);
-        recording.set(true);
+        try {
+            reset();
+            setup(config);
+            recording.set(true);
 
-        BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
-        while (state.keepRunning()) {
-          while (bytesCounter.get() < config.messageSize()) {
-          }
-          bytesCounter.set(0);
+            BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
+            while (state.keepRunning()) {
+                while (bytesCounter.get() < config.messageSize()) {
+                }
+                bytesCounter.set(0);
+            }
+            recording.set(false);
+        } finally {
+            close();
         }
-        recording.set(false);
+    }
+
+    @After
+    public void tearDown() throws Exception {
         close();
     }
 

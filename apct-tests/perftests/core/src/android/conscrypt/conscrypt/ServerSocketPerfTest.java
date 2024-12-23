@@ -44,6 +44,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
 import org.junit.Rule;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -115,13 +116,28 @@ public final class ServerSocketPerfTest {
         return params;
     }
 
-    private ClientEndpoint client;
-    private ServerEndpoint server;
+    private SocketPair socketPair;
     private ExecutorService executor;
     private Future<?> receivingFuture;
     private volatile boolean stopping;
     private static final AtomicLong bytesCounter = new AtomicLong();
     private AtomicBoolean recording = new AtomicBoolean();
+
+    private class SocketPair implements AutoCloseable {
+        private ClientEndpoint client;
+        private ServerEndpoint server;
+        private byte[] message;
+
+        @Override
+        public void close() {
+            if (client != null) {
+                client.stop();
+            }
+            if (server != null) {
+                server.stop();
+            }
+        }
+    }
 
     private void setup(final Config config) throws Exception {
         recording.set(false);
@@ -130,9 +146,10 @@ public final class ServerSocketPerfTest {
 
         final ChannelType channelType = config.channelType();
 
-        server = config.serverFactory().newServer(config.messageSize(),
+        socketPair.server = config.serverFactory().newServer(config.messageSize(),
             new String[] {"TLSv1.3", "TLSv1.2"}, ciphers(config));
-        server.setMessageProcessor(new MessageProcessor() {
+        socketPair.server.init();
+        socketPair.server.setMessageProcessor(new MessageProcessor() {
             @Override
             public void processMessage(byte[] inMessage, int numBytes, OutputStream os) {
                 try {
@@ -151,20 +168,20 @@ public final class ServerSocketPerfTest {
             }
         });
 
-        Future<?> connectedFuture = server.start();
+        Future<?> connectedFuture = socketPair.server.start();
 
         // Always use the same client for consistency across the benchmarks.
-        client = config.clientFactory().newClient(
-                ChannelType.CHANNEL, server.port(),
+        socketPair.client = config.clientFactory().newClient(
+                ChannelType.CHANNEL, socketPair.server.port(),
                 new String[] {"TLSv1.3", "TLSv1.2"}, ciphers(config));
-        client.start();
+        socketPair.client.start();
 
         // Wait for the initial connection to complete.
         connectedFuture.get(5, TimeUnit.SECONDS);
 
         // Start the server-side streaming by sending a message to the server.
-        client.sendMessage(message);
-        client.flush();
+        socketPair.client.sendMessage(message);
+        socketPair.client.flush();
 
         executor = Executors.newSingleThreadExecutor();
         receivingFuture = executor.submit(new Runnable() {
@@ -173,7 +190,7 @@ public final class ServerSocketPerfTest {
                 Thread thread = Thread.currentThread();
                 byte[] buffer = new byte[config.messageSize()];
                 while (!stopping && !thread.isInterrupted()) {
-                    int numBytes = client.readMessage(buffer);
+                    int numBytes = socketPair.client.readMessage(buffer);
                     if (numBytes < 0) {
                         return;
                     }
@@ -191,8 +208,9 @@ public final class ServerSocketPerfTest {
     void close() throws Exception {
         stopping = true;
         // Stop and wait for sending to complete.
-        server.stop();
-        client.stop();
+        if (socketPair != null) {
+            socketPair.close();
+        }
         executor.shutdown();
         receivingFuture.get(5, TimeUnit.SECONDS);
         executor.awaitTermination(5, TimeUnit.SECONDS);
@@ -201,15 +219,23 @@ public final class ServerSocketPerfTest {
     @Test
     @Parameters(method = "getParams")
     public void throughput(Config config) throws Exception {
-        setup(config);
-        BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
-        while (state.keepRunning()) {
-          recording.set(true);
-          while (bytesCounter.get() < config.messageSize()) {
-          }
-          bytesCounter.set(0);
-          recording.set(false);
+        try {
+            setup(config);
+            BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
+            while (state.keepRunning()) {
+                recording.set(true);
+                while (bytesCounter.get() < config.messageSize()) {
+                }
+                bytesCounter.set(0);
+                recording.set(false);
+            }
+        } finally {
+            close();
         }
+    }
+
+    @After
+    public void tearDown() throws Exception {
         close();
     }
 
