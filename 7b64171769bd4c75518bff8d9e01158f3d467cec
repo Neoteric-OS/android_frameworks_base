@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "880ac8a2_9eade2a2",
+        "filename": "services/core/java/com/android/server/am/UidObserverController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2024-12-23T21:04:23Z",
+      "side": 0,
+      "message": "Could you move this into synchronized block at line:309? There is no need to release and re-acquire the lock.",
+      "range": {
+        "startLine": 285,
+        "startChar": 8,
+        "endLine": 307,
+        "endChar": 9
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8d3a937b_f8232cad",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/am/UidObserverController.java",
+              "range": {
+                "startLine": 286,
+                "startChar": 0,
+                "endLine": 288,
+                "endChar": 0
+              },
+              "replacement": "        synchronized (mLock) {\n            for (int j \u003d 0; j \u003c numUidChanges; j++) {\n                final ChangeRecord changeRecord \u003d mActiveUidChanges[j];\n                changeRecord.isPending \u003d false;\n                mAvailUidChanges.add(changeRecord);\n            }\n\n            if (VALIDATE_UID_STATES \u0026\u0026 mUidObservers.getRegisteredCallbackCount() \u003e 0) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/am/UidObserverController.java",
+              "range": {
+                "startLine": 311,
+                "startChar": 0,
+                "endLine": 319,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "7b64171769bd4c75518bff8d9e01158f3d467cec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
