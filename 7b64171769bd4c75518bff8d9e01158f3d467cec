@@ -50,6 +50,30 @@
       ],
       "revId": "7b64171769bd4c75518bff8d9e01158f3d467cec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a39f575b_2c006495",
+        "filename": "services/core/java/com/android/server/am/UidObserverController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-12-24T02:05:21Z",
+      "side": 0,
+      "message": "Good one, done\nAnd I don\u0027t merge the two loops because I think that would make the code a bit too complex since this is not on critical path, what you think?",
+      "parentUuid": "880ac8a2_9eade2a2",
+      "range": {
+        "startLine": 285,
+        "startChar": 8,
+        "endLine": 307,
+        "endChar": 9
+      },
+      "revId": "7b64171769bd4c75518bff8d9e01158f3d467cec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
