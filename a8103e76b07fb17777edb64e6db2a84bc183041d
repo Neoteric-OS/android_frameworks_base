@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8d47339_ce64d39a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2024-12-24T09:57:03Z",
+      "side": 1,
+      "message": "已经替你提过了，这个关掉吧，https://android-review.googlesource.com/c/platform/frameworks/base/+/3420561",
+      "revId": "a8103e76b07fb17777edb64e6db2a84bc183041d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
