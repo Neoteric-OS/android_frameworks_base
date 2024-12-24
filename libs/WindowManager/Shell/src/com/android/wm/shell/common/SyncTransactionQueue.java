@@ -194,11 +194,15 @@ public final class SyncTransactionQueue {
             }
             mInFlight = this;
             if (DEBUG) Slog.d(TAG, "Sending sync transaction: " + mWCT);
-            if (mLegacyTransition != null) {
-                mId = new WindowOrganizer().startLegacyTransition(mLegacyTransition.getType(),
-                        mLegacyTransition.getAdapter(), this, mWCT);
-            } else {
-                mId = new WindowOrganizer().applySyncTransaction(mWCT, this);
+            try {
+                if (mLegacyTransition != null) {
+                    mId = new WindowOrganizer().startLegacyTransition(mLegacyTransition.getType(),
+                            mLegacyTransition.getAdapter(), this, mWCT);
+                } else {
+                    mId = new WindowOrganizer().applySyncTransaction(mWCT, this);
+                }
+            } catch (RuntimeException e) {
+                Slog.e(TAG, "send failed", e);
             }
             if (DEBUG) Slog.d(TAG, " Sent sync transaction. Got id=" + mId);
             mMainExecutor.executeDelayed(mOnReplyTimeout, REPLY_TIMEOUT);
