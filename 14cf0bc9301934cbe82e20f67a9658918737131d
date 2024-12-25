@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43b5d34e_0ab54502",
+        "filename": "services/core/java/com/android/server/wm/InsetsStateController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2024-12-25T06:26:29Z",
+      "side": 1,
+      "message": "I am wondering why `controls` might contain a `null` object. Maybe we should prevent it in the first place?",
+      "revId": "14cf0bc9301934cbe82e20f67a9658918737131d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
