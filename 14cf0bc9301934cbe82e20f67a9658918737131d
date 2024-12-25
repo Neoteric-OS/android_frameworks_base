@@ -33,6 +33,24 @@
       "message": "Looks like there was similar workaround in\nhttps://android.googlesource.com/platform/frameworks/base/+/22f2b4c%5E%21/#F0\n`// TODO(b/122982984): Figure out why it can be null.`",
       "revId": "14cf0bc9301934cbe82e20f67a9658918737131d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba087cb8_9c81f2a5",
+        "filename": "services/core/java/com/android/server/wm/InsetsStateController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 3779643
+      },
+      "writtenOn": "2024-12-25T07:56:11Z",
+      "side": 1,
+      "message": "Can it be modified in the getControlsForDispatch() method to avoid controls might contain a null object?",
+      "parentUuid": "43b5d34e_0ab54502",
+      "revId": "14cf0bc9301934cbe82e20f67a9658918737131d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
