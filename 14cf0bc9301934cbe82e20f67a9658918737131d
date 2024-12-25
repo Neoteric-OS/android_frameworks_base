@@ -51,6 +51,42 @@
       "parentUuid": "43b5d34e_0ab54502",
       "revId": "14cf0bc9301934cbe82e20f67a9658918737131d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bea9493f_d591c9e9",
+        "filename": "services/core/java/com/android/server/wm/InsetsStateController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2024-12-25T08:22:11Z",
+      "side": 1,
+      "message": "It seems that the author of the comment also wanted to know why it can be null.",
+      "parentUuid": "68acfe31_8ff75440",
+      "revId": "14cf0bc9301934cbe82e20f67a9658918737131d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4db7e480_fc5c386f",
+        "filename": "services/core/java/com/android/server/wm/InsetsStateController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2024-12-25T08:22:11Z",
+      "side": 1,
+      "message": "I think we need to figure out why `InsetsSourceProvider#getcontrol(InsetsControlTarget)` can return `null` when the argument is supposed to be `mControlTarget`.\n- Does the `target` passed to `getcontrol` is no longer `mControlTarget`? If so, why we didn\u0027t update `mControlTargetProvidersMap` when `mControlTarget` pointed to a new target?\n- Does `InsetsSourceProvider#mControl` become `null`? If so, whe we didn\u0027t update `mControlTargetProvidersMap` when `mControl` became `null`?",
+      "parentUuid": "ba087cb8_9c81f2a5",
+      "revId": "14cf0bc9301934cbe82e20f67a9658918737131d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
