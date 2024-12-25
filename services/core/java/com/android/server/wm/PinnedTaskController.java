@@ -348,11 +348,13 @@ class PinnedTaskController {
      * Notifies listeners that the PIP needs to be adjusted for the IME.
      */
     private void notifyImeVisibilityChanged(boolean imeVisible, int imeHeight) {
-        if (mPinnedTaskListener != null) {
-            try {
-                mPinnedTaskListener.onImeVisibilityChanged(imeVisible, imeHeight);
-            } catch (RemoteException e) {
-                Slog.e(TAG_WM, "Error delivering bounds changed event.", e);
+        synchronized (mService.mGlobalLock) {
+            if (mPinnedTaskListener != null) {
+                try {
+                    mPinnedTaskListener.onImeVisibilityChanged(imeVisible, imeHeight);
+                } catch (RemoteException e) {
+                    Slog.e(TAG_WM, "Error delivering bounds changed event.", e);
+                }
             }
         }
     }
