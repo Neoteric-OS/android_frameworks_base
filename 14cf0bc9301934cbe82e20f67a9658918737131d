@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "baeb7212_3fdd8119",
+        "filename": "services/core/java/com/android/server/wm/ImeInsetsSourceProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2024-12-25T08:28:35Z",
+      "side": 1,
+      "message": "It looks like here might update `mControlTarget` without updating `InsetsStateController#mControlTargetProvidersMap`\n\n@fstern@google.com Do you mind taking a look at this?\n\nSee: `InsetsStateController#onControlTargetChanged`",
+      "revId": "14cf0bc9301934cbe82e20f67a9658918737131d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43b5d34e_0ab54502",
         "filename": "services/core/java/com/android/server/wm/InsetsStateController.java",
         "patchSetId": 3
