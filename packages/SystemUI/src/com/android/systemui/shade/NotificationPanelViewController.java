@@ -2034,13 +2034,22 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             mKeyguardUserSwitcherController.setAlpha(alpha);
         }
     }
-    
-    private void boostFrames() {
-        if (mView != null && mView.getViewRootImpl() != null) {
-            mView.getViewRootImpl().notifyRendererOfExpensiveFrame();
+
+    private void perfBoostFrames() {
+        if (mPerf != null) {
+            String currentPackage = mView.getContext().getPackageName();
+            mPerf.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST, currentPackage, -1, BoostFramework.Scroll.PANEL_VIEW);
         }
     }
-    
+
+    private void boostFrames() {
+        if (mView != null && mView.getViewRootImpl() != null) {
+            perfBoostFrames();
+            mView.getViewRootImpl().notifyRendererOfExpensiveFrame();
+            perfBoostFrames();
+        }
+    }
+
     private void boostFramesDuringRelayout() {
         boostFrames();
         this.mView.requestLayout();
