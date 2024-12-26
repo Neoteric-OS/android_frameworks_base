@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a6f198c_02a2188c",
+        "filename": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-26T03:33:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53aa7370_c148d063",
+      "range": {
+        "startLine": 358,
+        "startChar": 45,
+        "endLine": 358,
+        "endChar": 51
+      },
+      "revId": "f93142dcceafc505b9b4d3e68fac74c4c561967b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5032581c_087fb87e",
@@ -71,6 +95,30 @@
           ]
         }
       ],
+      "revId": "f93142dcceafc505b9b4d3e68fac74c4c561967b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6ebbe4d_ede8971c",
+        "filename": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-26T03:33:01Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "5032581c_087fb87e",
+      "range": {
+        "startLine": 373,
+        "startChar": 45,
+        "endLine": 373,
+        "endChar": 52
+      },
       "revId": "f93142dcceafc505b9b4d3e68fac74c4c561967b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
