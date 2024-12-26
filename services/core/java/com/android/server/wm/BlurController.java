@@ -32,6 +32,8 @@ import android.provider.Settings;
 import android.view.ICrossWindowBlurEnabledListener;
 import android.view.TunnelModeEnabledListener;
 
+import com.android.internal.annotations.GuardedBy;
+
 /**
  * Keeps track of the different factors that determine whether cross-window blur is enabled
  * or disabled. Also keeps a list of all interested listeners and notifies them when the
@@ -39,6 +41,7 @@ import android.view.TunnelModeEnabledListener;
  */
 final class BlurController {
     private final Context mContext;
+    @GuardedBy("mLock")
     private final RemoteCallbackList<ICrossWindowBlurEnabledListener>
             mBlurEnabledListeners = new RemoteCallbackList<>();
     // We don't use the WM global lock, because the BlurController is not involved in window
@@ -104,13 +107,17 @@ final class BlurController {
 
     boolean registerCrossWindowBlurEnabledListener(ICrossWindowBlurEnabledListener listener) {
         if (listener == null) return false;
-        mBlurEnabledListeners.register(listener);
+        synchronized (mLock) {
+            mBlurEnabledListeners.register(listener);
+        }
         return getBlurEnabled();
     }
 
     void unregisterCrossWindowBlurEnabledListener(ICrossWindowBlurEnabledListener listener) {
         if (listener == null) return;
-        mBlurEnabledListeners.unregister(listener);
+        synchronized (mLock) {
+            mBlurEnabledListeners.unregister(listener);
+        }
     }
 
     boolean getBlurEnabled() {
