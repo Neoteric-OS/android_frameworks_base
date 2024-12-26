@@ -672,7 +672,7 @@ public class InternetDialogDelegate implements
             mMobileDataToggle.setVisibility(mCanConfigMobileData ? View.VISIBLE : View.INVISIBLE);
             mMobileToggleDivider.setVisibility(
                     mCanConfigMobileData ? View.VISIBLE : View.INVISIBLE);
-            Log.d(TAG, "mNddsSubId: " + mNddsSubId + " isDualDataEnabled: " + isDualDataEnabled());
+            mNddsSubId = getNddsSubId();
             boolean nonDdsVisibleForDualData = SubscriptionManager
                     .isUsableSubscriptionId(mNddsSubId) && isDualDataEnabled();
             int primaryColor = isNetworkConnected
@@ -684,7 +684,10 @@ public class InternetDialogDelegate implements
             int nonDdsVisibility = (autoSwitchNonDdsSubId
                     != SubscriptionManager.INVALID_SUBSCRIPTION_ID || nonDdsVisibleForDualData)
                     ? View.VISIBLE : View.GONE;
-
+            Log.d(TAG, "mNddsSubId: " + mNddsSubId
+                    + " isDualDataEnabled: " + isDualDataEnabled()
+                    + " nonDdsVisibleForDualData: " + nonDdsVisibleForDualData
+                    + " nonDdsVisibility: " + nonDdsVisibility);
             int secondaryRes = isNetworkConnected
                     ? R.style.TextAppearance_InternetDialog_Secondary_Active
                     : R.style.TextAppearance_InternetDialog_Secondary;
