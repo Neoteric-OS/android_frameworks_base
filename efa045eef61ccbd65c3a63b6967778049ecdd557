@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10133e2e_2e2fd0eb",
+        "filename": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2024-12-26T02:31:35Z",
+      "side": 1,
+      "message": "Please provide which caller is not locked.\nActually the lock in `notifyMovementBoundsChanged` should be removed. Because assume that non-public methods should be already locked by callers.",
+      "revId": "efa045eef61ccbd65c3a63b6967778049ecdd557",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
