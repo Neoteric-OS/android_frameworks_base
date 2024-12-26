@@ -848,8 +848,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         mKeyguardStatusBarViewComponentFactory = keyguardStatusBarViewComponentFactory;
         mDepthController = notificationShadeDepthController;
         mContentResolver = contentResolver;
-        mKeyguardQsUserSwitchComponentFactory = keyguardQsUserSwitchComponentFactory;
-        mKeyguardUserSwitcherComponentFactory = keyguardUserSwitcherComponentFactory;
         mEmergencyButtonControllerFactory = emergencyButtonControllerFactory;
         mFragmentService = fragmentService;
         mStatusBarService = statusBarService;

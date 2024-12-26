@@ -10534,7 +10534,9 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         }
         if (!isVisibleRequested()) {
             // TODO(b/294925498): Remove this finishing check once we have accurate ready tracking.
-            if (task != null && task.getPausingActivity() == this) {
+            if (task != null && task.getPausingActivity() == this
+                    // Display is asleep, so nothing will be visible anyways.
+                    && !mDisplayContent.isSleeping()) {
                 // Visibility of starting activities isn't calculated until pause-complete, so if
                 // this is not paused yet, don't consider it ready.
                 return false;
