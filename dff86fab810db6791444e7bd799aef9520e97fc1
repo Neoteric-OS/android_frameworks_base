@@ -158,6 +158,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d327d446_6e2cbbe0",
+        "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2024-12-26T18:10:23Z",
+      "side": 1,
+      "message": "ah good question!! We cannot. For staging build, it pobably true that there are always platform, and non-platform flags, and there are 25 packages for each, and there are packages with 20 flags. But we cannot make sure that is always the trueth.\n\nThe problem is flags are installed to the deivce image at built time.",
+      "parentUuid": "56ed162f_57660d3d",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "dff86fab810db6791444e7bd799aef9520e97fc1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3dfc9997_fe7b425e",
         "filename": "apct-tests/perftests/aconfig/src/android/os/flagging/AconfigPackagePerfTest.java",
         "patchSetId": 5
