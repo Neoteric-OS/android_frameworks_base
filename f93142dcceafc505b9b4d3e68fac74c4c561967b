@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53aa7370_c148d063",
+        "filename": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-26T03:30:25Z",
+      "side": 1,
+      "message": "`ime visibility`",
+      "range": {
+        "startLine": 358,
+        "startChar": 45,
+        "endLine": 358,
+        "endChar": 51
+      },
+      "revId": "f93142dcceafc505b9b4d3e68fac74c4c561967b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5032581c_087fb87e",
+        "filename": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-26T03:30:25Z",
+      "side": 1,
+      "message": "Can you please update this as well? It should be `movement bounds`",
+      "range": {
+        "startLine": 373,
+        "startChar": 45,
+        "endLine": 373,
+        "endChar": 52
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a67c8989_1824ddb7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+              "range": {
+                "startLine": 358,
+                "startChar": 0,
+                "endLine": 359,
+                "endChar": 0
+              },
+              "replacement": "            Slog.e(TAG_WM, \"Error delivering ime visibility changed event.\", e);\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/wm/PinnedTaskController.java",
+              "range": {
+                "startLine": 373,
+                "startChar": 0,
+                "endLine": 374,
+                "endChar": 0
+              },
+              "replacement": "            Slog.e(TAG_WM, \"Error delivering movement bounds changed event.\", e);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f93142dcceafc505b9b4d3e68fac74c4c561967b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
