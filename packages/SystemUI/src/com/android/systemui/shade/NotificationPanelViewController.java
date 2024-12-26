@@ -58,7 +58,6 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.ContentResolver;
 import android.content.res.Resources;
-import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.Insets;
 import android.graphics.Rect;
@@ -69,7 +68,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Trace;
 import android.os.UserManager;
-import android.provider.Settings;
 import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.MathUtils;
@@ -108,10 +106,8 @@ import com.android.keyguard.KeyguardStatusView;
 import com.android.keyguard.KeyguardStatusViewController;
 import com.android.keyguard.KeyguardUnfoldTransition;
 import com.android.keyguard.KeyguardUpdateMonitor;
-import com.android.keyguard.dagger.KeyguardQsUserSwitchComponent;
 import com.android.keyguard.dagger.KeyguardStatusBarViewComponent;
 import com.android.keyguard.dagger.KeyguardStatusViewComponent;
-import com.android.keyguard.dagger.KeyguardUserSwitcherComponent;
 import com.android.systemui.DejankUtils;
 import com.android.systemui.Dumpable;
 import com.android.systemui.Gefingerpoken;
@@ -223,10 +219,7 @@ import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
 import com.android.systemui.statusbar.phone.TapAgainViewController;
 import com.android.systemui.statusbar.phone.UnlockedScreenOffAnimationController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
-import com.android.systemui.statusbar.policy.KeyguardQsUserSwitchController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
-import com.android.systemui.statusbar.policy.KeyguardUserSwitcherController;
-import com.android.systemui.statusbar.policy.KeyguardUserSwitcherView;
 import com.android.systemui.statusbar.policy.SplitShadeStateController;
 import com.android.systemui.unfold.SysUIUnfoldComponent;
 import com.android.systemui.util.Compile;
@@ -311,7 +304,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private final ShadeHeadsUpChangedListener mOnHeadsUpChangedListener =
             new ShadeHeadsUpChangedListener();
     private final ConfigurationListener mConfigurationListener = new ConfigurationListener();
-    private final SettingsChangeObserver mSettingsChangeObserver;
     private final StatusBarStateListener mStatusBarStateListener = new StatusBarStateListener();
     private final NotificationPanelView mView;
     private final VibratorHelper mVibratorHelper;
@@ -333,8 +325,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private final MediaHierarchyManager mMediaHierarchyManager;
     private final StatusBarKeyguardViewManager mStatusBarKeyguardViewManager;
     private final KeyguardStatusViewComponent.Factory mKeyguardStatusViewComponentFactory;
-    private final KeyguardQsUserSwitchComponent.Factory mKeyguardQsUserSwitchComponentFactory;
-    private final KeyguardUserSwitcherComponent.Factory mKeyguardUserSwitcherComponentFactory;
     private final KeyguardStatusBarViewComponent.Factory mKeyguardStatusBarViewComponentFactory;
     private final FragmentService mFragmentService;
     private final IStatusBarService mStatusBarService;
@@ -383,8 +373,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private float mKeyguardNotificationTopPadding;
     /** Current max allowed keyguard notifications determined by measuring the panel. */
     private int mMaxAllowedKeyguardNotifications;
-    private KeyguardQsUserSwitchController mKeyguardQsUserSwitchController;
-    private KeyguardUserSwitcherController mKeyguardUserSwitcherController;
     private KeyguardStatusBarViewController mKeyguardStatusBarViewController;
     private KeyguardStatusViewController mKeyguardStatusViewController;
     private NotificationsQuickSettingsContainer mNotificationContainerParent;
@@ -400,8 +388,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private OpenCloseListener mOpenCloseListener;
     private GestureRecorder mGestureRecorder;
 
-    private boolean mKeyguardQsUserSwitchEnabled;
-    private boolean mKeyguardUserSwitcherEnabled;
     private boolean mDozing;
     private boolean mDozingOnDown;
     private boolean mBouncerShowing;
@@ -697,8 +683,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             NotificationsQSContainerController notificationsQSContainerController,
             NotificationStackScrollLayoutController notificationStackScrollLayoutController,
             KeyguardStatusViewComponent.Factory keyguardStatusViewComponentFactory,
-            KeyguardQsUserSwitchComponent.Factory keyguardQsUserSwitchComponentFactory,
-            KeyguardUserSwitcherComponent.Factory keyguardUserSwitcherComponentFactory,
             KeyguardStatusBarViewComponent.Factory keyguardStatusBarViewComponentFactory,
             LockscreenShadeTransitionController lockscreenShadeTransitionController,
             AuthController authController,
@@ -851,7 +835,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         mEmergencyButtonControllerFactory = emergencyButtonControllerFactory;
         mFragmentService = fragmentService;
         mStatusBarService = statusBarService;
-        mSettingsChangeObserver = new SettingsChangeObserver(handler);
         mSplitShadeStateController = splitShadeStateController;
         mSplitShadeEnabled =
                 mSplitShadeStateController.shouldUseSplitNotificationShade(mResources);
@@ -880,7 +863,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
         dynamicPrivacyController.addListener(this::onDynamicPrivacyChanged);
         quickSettingsController.setExpansionHeightListener(this::onQsSetExpansionHeightCalled);
-        quickSettingsController.setQsStateUpdateListener(this::onQsStateUpdated);
         quickSettingsController.setApplyClippingImmediatelyListener(
                 this::onQsClippingImmediatelyApplied);
         quickSettingsController.setFlingQsWithoutClickListener(this::onFlingQsWithoutClick);
@@ -923,7 +905,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         mKeyguardUnfoldTransition = unfoldComponent.map(
                 SysUIUnfoldComponent::getKeyguardUnfoldTransition);
 
-        updateUserSwitcherFlags();
         mKeyguardClockInteractor = keyguardClockInteractor;
         KeyguardLongPressViewBinder.bind(
                 mView.requireViewById(R.id.keyguard_long_press),
@@ -1015,30 +996,14 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     void onFinishInflate() {
         loadDimens();
 
-        FrameLayout userAvatarContainer = null;
-        KeyguardUserSwitcherView keyguardUserSwitcherView = null;
-
-        if (mKeyguardUserSwitcherEnabled && mUserManager.isUserSwitcherEnabled(
-                mResources.getBoolean(R.bool.qs_show_user_switcher_for_single_user))) {
-            if (mKeyguardQsUserSwitchEnabled) {
-                ViewStub stub = mView.findViewById(R.id.keyguard_qs_user_switch_stub);
-                userAvatarContainer = (FrameLayout) stub.inflate();
-            } else {
-                ViewStub stub = mView.findViewById(R.id.keyguard_user_switcher_stub);
-                keyguardUserSwitcherView = (KeyguardUserSwitcherView) stub.inflate();
-            }
-        }
-
         mKeyguardStatusBarViewController =
                 mKeyguardStatusBarViewComponentFactory.build(
                                 mView.findViewById(R.id.keyguard_header),
                                 mShadeViewStateProvider)
                         .getKeyguardStatusBarViewController();
         mKeyguardStatusBarViewController.init();
-
         mNotificationContainerParent = mView.findViewById(R.id.notification_container_parent);
-        updateViewControllers(userAvatarContainer, keyguardUserSwitcherView);
-
+        updateStatusViewController();
         mNotificationStackScrollLayoutController.setOnHeightChangedListener(
                 new NsslHeightChangedListener());
         mNotificationStackScrollLayoutController.setOnEmptySpaceClickListener(
@@ -1231,39 +1196,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         }
     }
 
-    private void updateViewControllers(
-            FrameLayout userAvatarView,
-            KeyguardUserSwitcherView keyguardUserSwitcherView) {
-        updateStatusViewController();
-        if (mKeyguardUserSwitcherController != null) {
-            // Try to close the switcher so that callbacks are triggered if necessary.
-            // Otherwise, NPV can get into a state where some of the views are still hidden
-            mKeyguardUserSwitcherController.closeSwitcherIfOpenAndNotSimple(false);
-        }
-
-        mKeyguardQsUserSwitchController = null;
-        mKeyguardUserSwitcherController = null;
-
-        // Re-associate the KeyguardUserSwitcherController
-        if (userAvatarView != null) {
-            KeyguardQsUserSwitchComponent userSwitcherComponent =
-                    mKeyguardQsUserSwitchComponentFactory.build(userAvatarView);
-            mKeyguardQsUserSwitchController =
-                    userSwitcherComponent.getKeyguardQsUserSwitchController();
-            mKeyguardQsUserSwitchController.init();
-            mKeyguardStatusBarViewController.setKeyguardUserSwitcherEnabled(true);
-        } else if (keyguardUserSwitcherView != null) {
-            KeyguardUserSwitcherComponent userSwitcherComponent =
-                    mKeyguardUserSwitcherComponentFactory.build(keyguardUserSwitcherView);
-            mKeyguardUserSwitcherController =
-                    userSwitcherComponent.getKeyguardUserSwitcherController();
-            mKeyguardUserSwitcherController.init();
-            mKeyguardStatusBarViewController.setKeyguardUserSwitcherEnabled(true);
-        } else {
-            mKeyguardStatusBarViewController.setKeyguardUserSwitcherEnabled(false);
-        }
-    }
-
     /** Updates the StatusBarViewController and updates any that depend on it. */
     public void updateStatusViewController() {
         // Re-associate the KeyguardStatusViewController
@@ -1397,48 +1329,12 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
         // we need to update KeyguardStatusView constraints after reinflating it
         updateResources();
-
-        // Re-inflate the keyguard user switcher group.
-        updateUserSwitcherFlags();
-        boolean isUserSwitcherEnabled = mUserManager.isUserSwitcherEnabled(
-                mResources.getBoolean(R.bool.qs_show_user_switcher_for_single_user));
-        boolean showQsUserSwitch = mKeyguardQsUserSwitchEnabled && isUserSwitcherEnabled;
-        boolean showKeyguardUserSwitcher =
-                !mKeyguardQsUserSwitchEnabled
-                        && mKeyguardUserSwitcherEnabled
-                        && isUserSwitcherEnabled;
-        FrameLayout userAvatarView = (FrameLayout) reInflateStub(
-                R.id.keyguard_qs_user_switch_view /* viewId */,
-                R.id.keyguard_qs_user_switch_stub /* stubId */,
-                R.layout.keyguard_qs_user_switch /* layoutId */,
-                showQsUserSwitch /* enabled */);
-        KeyguardUserSwitcherView keyguardUserSwitcherView =
-                (KeyguardUserSwitcherView) reInflateStub(
-                        R.id.keyguard_user_switcher_view /* viewId */,
-                        R.id.keyguard_user_switcher_stub /* stubId */,
-                        R.layout.keyguard_user_switcher /* layoutId */,
-                        showKeyguardUserSwitcher /* enabled */);
-
-        updateViewControllers(userAvatarView, keyguardUserSwitcherView);
+        updateStatusViewController();
         mStatusBarStateListener.onDozeAmountChanged(mStatusBarStateController.getDozeAmount(),
                 mStatusBarStateController.getInterpolatedDozeAmount());
 
         if (!MigrateClocksToBlueprint.isEnabled()) {
             mKeyguardStatusViewController.setKeyguardStatusViewVisibility(
-                    mBarState,
-                    false,
-                    false,
-                    mBarState);
-        }
-        if (mKeyguardQsUserSwitchController != null) {
-            mKeyguardQsUserSwitchController.setKeyguardQsUserSwitchVisibility(
-                    mBarState,
-                    false,
-                    false,
-                    mBarState);
-        }
-        if (mKeyguardUserSwitcherController != null) {
-            mKeyguardUserSwitcherController.setKeyguardUserSwitcherVisibility(
                     mBarState,
                     false,
                     false,
@@ -1569,7 +1465,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     }
 
     private void updateClockAppearance() {
-        int userSwitcherPreferredY = mStatusBarHeaderHeightKeyguard;
         boolean bypassEnabled = mKeyguardBypassController.getBypassEnabled();
         boolean shouldAnimateClockChange = mScreenOffAnimationController.shouldAnimateClockChange();
         if (MigrateClocksToBlueprint.isEnabled()) {
@@ -1579,11 +1474,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                     shouldAnimateClockChange);
         }
         updateKeyguardStatusViewAlignment(/* animate= */true);
-        int userSwitcherHeight = mKeyguardQsUserSwitchController != null
-                ? mKeyguardQsUserSwitchController.getUserIconHeight() : 0;
-        if (mKeyguardUserSwitcherController != null) {
-            userSwitcherHeight = mKeyguardUserSwitcherController.getHeight();
-        }
         float expandedFraction =
                 mScreenOffAnimationController.shouldExpandNotifications()
                         ? 1.0f : getExpandedFraction();
@@ -1601,8 +1491,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 mStatusBarHeaderHeightKeyguard,
                 expandedFraction,
                 mKeyguardStatusViewController.getLockscreenHeight(),
-                userSwitcherHeight,
-                userSwitcherPreferredY,
                 darkAmount, mOverStretchAmount,
                 bypassEnabled,
                 mQsController.getHeaderHeight(),
@@ -1626,18 +1514,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             mKeyguardStatusViewController.updatePosition(
                     mClockPositionResult.clockX, mClockPositionResult.clockY,
                     mClockPositionResult.clockScale, animateClock);
-        }
-        if (mKeyguardQsUserSwitchController != null) {
-            mKeyguardQsUserSwitchController.updatePosition(
-                    mClockPositionResult.clockX,
-                    mClockPositionResult.userSwitchY,
-                    animateClock);
-        }
-        if (mKeyguardUserSwitcherController != null) {
-            mKeyguardUserSwitcherController.updatePosition(
-                    mClockPositionResult.clockX,
-                    mClockPositionResult.userSwitchY,
-                    animateClock);
         }
         updateNotificationTranslucency();
         updateClock();
@@ -1873,13 +1749,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         } else {
             mKeyguardStatusViewController
                 .setTranslationY(mKeyguardOnlyTransitionTranslationY, /* excludeMedia= */true);
-        }
-
-        if (mKeyguardQsUserSwitchController != null) {
-            mKeyguardQsUserSwitchController.setAlpha(alpha);
-        }
-        if (mKeyguardUserSwitcherController != null) {
-            mKeyguardUserSwitcherController.setAlpha(alpha);
         }
     }
 
@@ -3254,24 +3123,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     }
 
     @Override
-    public void startBouncerPreHideAnimation() {
-        if (mKeyguardQsUserSwitchController != null) {
-            mKeyguardQsUserSwitchController.setKeyguardQsUserSwitchVisibility(
-                    mBarState,
-                    true /* keyguardFadingAway */,
-                    false /* goingToFullShade */,
-                    mBarState);
-        }
-        if (mKeyguardUserSwitcherController != null) {
-            mKeyguardUserSwitcherController.setKeyguardUserSwitcherVisibility(
-                    mBarState,
-                    true /* keyguardFadingAway */,
-                    false /* goingToFullShade */,
-                    mBarState);
-        }
-    }
-
-    @Override
     public ShadeFoldAnimatorImpl getShadeFoldAnimator() {
         return mShadeFoldAnimator;
     }
@@ -3400,8 +3251,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         ipw.println(mMaxAllowedKeyguardNotifications);
         ipw.print("mAnimateNextPositionUpdate="); ipw.println(mAnimateNextPositionUpdate);
         ipw.print("isPanelExpanded()="); ipw.println(isPanelExpanded());
-        ipw.print("mKeyguardQsUserSwitchEnabled="); ipw.println(mKeyguardQsUserSwitchEnabled);
-        ipw.print("mKeyguardUserSwitcherEnabled="); ipw.println(mKeyguardUserSwitcherEnabled);
         ipw.print("mDozing="); ipw.println(mDozing);
         ipw.print("mDozingOnDown="); ipw.println(mDozingOnDown);
         ipw.print("mBouncerShowing="); ipw.println(mBouncerShowing);
@@ -3555,31 +3404,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     @VisibleForTesting
     TouchHandler getTouchHandler() {
         return mTouchHandler;
-    }
-
-    @Override
-    public boolean closeUserSwitcherIfOpen() {
-        if (mKeyguardUserSwitcherController != null) {
-            return mKeyguardUserSwitcherController.closeSwitcherIfOpenAndNotSimple(
-                    true /* animate */);
-        }
-        return false;
-    }
-
-    private void updateUserSwitcherFlags() {
-        mKeyguardUserSwitcherEnabled = mResources.getBoolean(
-                com.android.internal.R.bool.config_keyguardUserSwitcher);
-        mKeyguardQsUserSwitchEnabled =
-                mKeyguardUserSwitcherEnabled
-                        && mFeatureFlags.isEnabled(Flags.QS_USER_DETAIL_SHORTCUT);
-    }
-
-    private void registerSettingsChangeListener() {
-        mContentResolver.registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.USER_SWITCHER_ENABLED),
-                /* notifyForDescendants */ false,
-                mSettingsChangeObserver
-        );
     }
 
     @Override
@@ -4267,13 +4091,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         }
     }
 
-    private void onQsStateUpdated(boolean qsExpanded, boolean isStackScrollerOverscrolling) {
-        if (mKeyguardUserSwitcherController != null && qsExpanded
-                && !isStackScrollerOverscrolling) {
-            mKeyguardUserSwitcherController.closeSwitcherIfOpenAndNotSimple(true);
-        }
-    }
-
     private void onQsClippingImmediatelyApplied(boolean clipStatusView,
             Rect lastQsClipBounds, int top, boolean qsFragmentCreated, boolean qsVisible) {
         if (qsFragmentCreated) {
@@ -4389,40 +4206,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         }
 
         @Override
-        public void onSmallestScreenWidthChanged() {
-            Trace.beginSection("onSmallestScreenWidthChanged");
-            debugLog("onSmallestScreenWidthChanged");
-
-            // Can affect multi-user switcher visibility as it depends on screen size by default:
-            // it is enabled only for devices with large screens (see config_keyguardUserSwitcher)
-            boolean prevKeyguardUserSwitcherEnabled = mKeyguardUserSwitcherEnabled;
-            boolean prevKeyguardQsUserSwitchEnabled = mKeyguardQsUserSwitchEnabled;
-            updateUserSwitcherFlags();
-            if (prevKeyguardUserSwitcherEnabled != mKeyguardUserSwitcherEnabled
-                    || prevKeyguardQsUserSwitchEnabled != mKeyguardQsUserSwitchEnabled) {
-                reInflateViews();
-            }
-
-            Trace.endSection();
-        }
-
-        @Override
         public void onDensityOrFontScaleChanged() {
             debugLog("onDensityOrFontScaleChanged");
-            reInflateViews();
-        }
-    }
-
-    private final class SettingsChangeObserver extends ContentObserver {
-        SettingsChangeObserver(Handler handler) {
-            super(handler);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            debugLog("onSettingsChanged");
-
-            // Can affect multi-user switcher visibility
             reInflateViews();
         }
     }
@@ -4598,12 +4383,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             mConfigurationListener.onThemeChanged();
             mFalsingManager.addTapListener(mFalsingTapListener);
             mKeyguardIndicationController.init();
-            registerSettingsChangeListener();
         }
 
         @Override
         public void onViewDetachedFromWindow(View v) {
-            mContentResolver.unregisterContentObserver(mSettingsChangeObserver);
             mFragmentService.getFragmentHostManager(mView)
                     .removeTagListener(QS.TAG, mQsController.getQsFragmentListener());
             mStatusBarStateController.removeCallback(mStatusBarStateListener);
@@ -4730,13 +4513,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             }
 
             mKeyguardInteractor.setAlpha(alpha);
-
-            if (mKeyguardQsUserSwitchController != null) {
-                mKeyguardQsUserSwitchController.setAlpha(alpha);
-            }
-            if (mKeyguardUserSwitcherController != null) {
-                mKeyguardUserSwitcherController.setAlpha(alpha);
-            }
         };
     }
 
