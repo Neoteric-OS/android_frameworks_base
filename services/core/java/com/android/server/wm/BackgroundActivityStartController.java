@@ -1092,11 +1092,6 @@ public class BackgroundActivityStartController {
         // don't abort if the callingUid has SYSTEM_ALERT_WINDOW permission
         if (mService.hasSystemAlertWindowPermission(state.mCallingUid, state.mCallingPid,
                 state.mCallingPackage)) {
-            Slog.w(
-                    TAG,
-                    "Background activity start for "
-                            + state.mCallingPackage
-                            + " allowed because SYSTEM_ALERT_WINDOW permission is granted.");
             return new BalVerdict(BAL_ALLOW_SAW_PERMISSION,
                     /*background*/ true, "SYSTEM_ALERT_WINDOW permission is granted");
         }
@@ -1168,18 +1163,9 @@ public class BackgroundActivityStartController {
         }
 
         // don't abort if the realCallingUid has SYSTEM_ALERT_WINDOW permission
-        Slog.i(TAG, "hasSystemAlertWindowPermission(" + state.mRealCallingUid + ", "
-                + state.mRealCallingPid + ", " + state.mRealCallingPackage + ") "
-                + balStartModeToString(
-                state.mCheckedOptions.getPendingIntentBackgroundActivityStartMode()));
         if (allowAlways
                 && mService.hasSystemAlertWindowPermission(state.mRealCallingUid,
                 state.mRealCallingPid, state.mRealCallingPackage)) {
-            Slog.w(
-                    TAG,
-                    "Background activity start for "
-                            + state.mRealCallingPackage
-                            + " allowed because SYSTEM_ALERT_WINDOW permission is granted.");
             return new BalVerdict(BAL_ALLOW_SAW_PERMISSION,
                     /*background*/ true, "SYSTEM_ALERT_WINDOW permission is granted");
         }
