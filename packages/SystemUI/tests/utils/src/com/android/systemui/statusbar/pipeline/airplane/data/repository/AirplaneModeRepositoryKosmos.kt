@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 The Android Open Source Project
+ * Copyright (C) 2024 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,11 @@
  * limitations under the License.
  */
 
-package android.telephony.satellite;
+package com.android.systemui.statusbar.pipeline.airplane.data.repository
 
-/**
- * Interface for satellite supported state change callback.
- * @hide
- */
-oneway interface ISatelliteSupportedStateCallback {
-    /**
-     * Called when satellite supported state has changed.
-     *
-     * @param supoprted Whether satellite is supported or not.
-     */
-    void onSatelliteSupportedStateChanged(in boolean supported);
-}
+import com.android.systemui.kosmos.Kosmos
 
+val Kosmos.airplaneModeRepository by Kosmos.Fixture { FakeAirplaneModeRepository() }
+
+val AirplaneModeRepository.fake
+    get() = this as FakeAirplaneModeRepository

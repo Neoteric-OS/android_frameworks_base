@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 
-package com.android.systemui.statusbar.notification.promoted
+package com.android.systemui.common.ui.view
 
-import com.android.systemui.dagger.SysUISingleton
-import dagger.Binds
-import dagger.Module
+import com.android.systemui.kosmos.Kosmos
 
-@Module
-abstract class PromotedNotificationsModule {
-    @Binds
-    @SysUISingleton
-    abstract fun bindPromotedNotificationsProvider(
-        impl: PromotedNotificationsProviderImpl
-    ): PromotedNotificationsProvider
-}
+val Kosmos.fakeChoreographerUtils: FakeChoreographerUtils by
+    Kosmos.Fixture { FakeChoreographerUtils() }

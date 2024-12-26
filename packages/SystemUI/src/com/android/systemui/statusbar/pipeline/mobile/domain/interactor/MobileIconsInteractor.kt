@@ -81,6 +81,9 @@ interface MobileIconsInteractor {
     /** List of subscriptions, potentially filtered for CBRS */
     val filteredSubscriptions: Flow<List<SubscriptionModel>>
 
+    /** Subscription ID of the current default data subscription */
+    val defaultDataSubId: StateFlow<Int>
+
     /**
      * The current list of [MobileIconInteractor]s associated with the current list of
      * [filteredSubscriptions]
@@ -92,7 +95,7 @@ interface MobileIconsInteractor {
 
     /**
      * Flow providing a reference to the Interactor for the active data subId. This represents the
-     * [MobileConnectionInteractor] responsible for the active data connection, if any.
+     * [MobileIconInteractor] responsible for the active data connection, if any.
      */
     val activeDataIconInteractor: StateFlow<MobileIconInteractor?>
 
@@ -145,8 +148,6 @@ interface MobileIconsInteractor {
 
     val showVowifiIcon: StateFlow<Boolean>
 
-    val defaultDataSubId: StateFlow<Int>
-
     fun setDdsIconFLow(iconFlow: StateFlow<SignalIconModel?>) {}
 }
 
@@ -175,7 +176,7 @@ constructor(
         ddsIcon = iconFlow
     }
 
-    override val defaultDataSubId: StateFlow<Int> = mobileConnectionsRepo.defaultDataSubId
+    override val defaultDataSubId = mobileConnectionsRepo.defaultDataSubId
 
     override val mobileIsDefault =
         combine(
@@ -355,7 +356,7 @@ constructor(
         mobileConnectionsRepo.defaultMobileIconMapping.stateIn(
             scope,
             SharingStarted.WhileSubscribed(),
-            initialValue = mapOf()
+            initialValue = mapOf(),
         )
 
     override val alwaysShowDataRatIcon: StateFlow<Boolean> =
@@ -384,7 +385,7 @@ constructor(
         mobileConnectionsRepo.defaultMobileIconGroup.stateIn(
             scope,
             SharingStarted.WhileSubscribed(),
-            initialValue = TelephonyIcons.G
+            initialValue = TelephonyIcons.G,
         )
 
     /**

@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-package com.android.systemui.statusbar.notification.promoted
+package com.android.systemui.statusbar.pipeline.shared
 
 import com.android.systemui.kosmos.Kosmos
 
-var Kosmos.promotedNotificationsProvider: PromotedNotificationsProvider by
-    Kosmos.Fixture { PromotedNotificationsProviderImpl() }
+val Kosmos.connectivityConstants by Kosmos.Fixture { FakeConnectivityConstnants() }
+
+class FakeConnectivityConstnants : ConnectivityConstants {
+    override var hasDataCapabilities: Boolean = true
+
+    override var shouldShowActivityConfig: Boolean = false
+}
+
+val ConnectivityConstants.fake
+    get() = this as FakeConnectivityConstnants

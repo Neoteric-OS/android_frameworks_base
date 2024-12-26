@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-package com.android.systemui.statusbar.pipeline.shared.domain.interactor
+package com.android.systemui.statusbar.featurepods.media.domain.interactor
 
 import com.android.systemui.kosmos.Kosmos
-import com.android.systemui.statusbar.disableflags.domain.interactor.disableFlagsInteractor
+import com.android.systemui.kosmos.applicationCoroutineScope
+import com.android.systemui.media.controls.data.repository.mediaFilterRepository
 
-val Kosmos.collapsedStatusBarInteractor: CollapsedStatusBarInteractor by
-    Kosmos.Fixture { CollapsedStatusBarInteractor(disableFlagsInteractor) }
+val Kosmos.mediaControlChipInteractor: MediaControlChipInteractor by
+    Kosmos.Fixture {
+        MediaControlChipInteractor(
+            applicationScope = applicationCoroutineScope,
+            mediaFilterRepository = mediaFilterRepository,
+        )
+    }
