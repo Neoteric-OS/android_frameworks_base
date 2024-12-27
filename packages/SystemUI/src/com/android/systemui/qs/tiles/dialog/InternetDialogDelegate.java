@@ -552,6 +552,7 @@ public class InternetDialogDelegate implements
         mMobileDataToggle.setOnClickListener(v -> {
             boolean isChecked = mMobileDataToggle.isChecked();
             if (!isChecked && shouldShowMobileDialog(mDefaultDataSubId)) {
+                mMobileDataToggle.setChecked(true);
                 showTurnOffMobileDialog(mDefaultDataSubId);
             } else if (mInternetDialogController.isMobileDataEnabled(mDefaultDataSubId) != isChecked) {
                 mInternetDialogController.setMobileDataEnabled(
@@ -738,6 +739,7 @@ public class InternetDialogDelegate implements
                     (v) -> {
                         boolean isChecked = mSecondaryMobileDataToggle.isChecked();
                         if (!isChecked && shouldShowMobileDialog(mNddsSubId)) {
+                            mSecondaryMobileDataToggle.setChecked(true);
                             showTurnOffMobileDialog(mNddsSubId);
                         } else if (!shouldShowMobileDialog(mNddsSubId)) {
                             if (mInternetDialogController.isMobileDataEnabled(
