@@ -37,6 +37,7 @@
 #include <android-base/macros.h>
 #include <android-base/utf8.h>
 #include <androidfw/ByteBucketArray.h>
+#include <androidfw/LocaleDataLookup.h>
 #include <androidfw/ResourceTypes.h>
 #include <androidfw/TypeWrappers.h>
 #include <cutils/atomic.h>
@@ -2072,22 +2073,6 @@ void ResTable_config::copyFromDeviceNoSwap(const ResTable_config& o) {
   memset(out, 0, 4);
   return 0;
 }
-
-/* static */ void packLanguageOrRegion(const char* in, const char base,
-        char out[2]) {
-  if (in[2] == 0 || in[2] == '-') {
-      out[0] = in[0];
-      out[1] = in[1];
-  } else {
-      uint8_t first = (in[0] - base) & 0x007f;
-      uint8_t second = (in[1] - base) & 0x007f;
-      uint8_t third = (in[2] - base) & 0x007f;
-
-      out[0] = (0x80 | (third << 2) | (second >> 3));
-      out[1] = ((second << 5) | first);
-  }
-}
-
 
 void ResTable_config::packLanguage(const char* language) {
     packLanguageOrRegion(language, 'a', this->language);

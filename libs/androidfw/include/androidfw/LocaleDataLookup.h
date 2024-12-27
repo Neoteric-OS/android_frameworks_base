@@ -29,9 +29,34 @@ namespace hidden {
 
 constexpr size_t SCRIPT_LENGTH = 4;
 
+inline void packLanguageOrRegion(const char* in, const char base, char out[2]) {
+  if (in[2] == 0 || in[2] == '-') {
+      out[0] = in[0];
+      out[1] = in[1];
+  } else {
+      uint8_t first = (in[0] - base) & 0x007f;
+      uint8_t second = (in[1] - base) & 0x007f;
+      uint8_t third = (in[2] - base) & 0x007f;
+
+      out[0] = (0x80 | (third << 2) | (second >> 3));
+      out[1] = ((second << 5) | first);
+  }
+}
+
+uint32_t inline packLanguage(const char* language) {
+    char out[2];
+    packLanguageOrRegion(language, 'a', out);
+    return (((uint8_t) out[0]) << 8u) | ((uint8_t) out[1]);
+}
+
+uint32_t inline packRegion(const char* region) {
+    char out[2];
+    packLanguageOrRegion(region, '0', out);
+    return (((uint8_t) out[0]) << 8u) | ((uint8_t) out[1]);
+}
+
 inline uint32_t packLocale(const char* language, const char* region) {
-    return (((uint8_t) language[0]) << 24u) | (((uint8_t) language[1]) << 16u) |
-           (((uint8_t) region[0]) << 8u) | ((uint8_t) region[1]);
+    return ((packLanguage(language)) << 16u) | packRegion(region);
 }
 
 inline uint32_t dropRegion(uint32_t packed_locale) {
