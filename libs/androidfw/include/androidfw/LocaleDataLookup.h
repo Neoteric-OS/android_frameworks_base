@@ -42,6 +42,13 @@ inline bool hasRegion(uint32_t packed_locale) {
     return (packed_locale & 0x0000FFFFLU) != 0;
 }
 
+inline uint32_t packScript(const char* script) {
+    return (((uint32_t) script[0]) << 24u) |
+            (((uint32_t) script[1]) << 16u) |
+            (((uint32_t) script[2]) <<  8u) |
+            ((uint32_t) script[3]);
+}
+
 /**
  * Return nullptr if the key isn't found. The input packed_lang_region can be computed
  * by android::packLocale.
@@ -54,12 +61,9 @@ const char* lookupLikelyScript(uint32_t packed_lang_region);
  * by android::packLocale.
  */
 bool inline isLocaleRepresentative(uint32_t language_and_region, const char* script) {
-    const uint64_t packed_locale = (
+    const uint64_t packed_locale =
             (((uint64_t) language_and_region) << 32u) |
-            (((uint64_t) script[0]) << 24u) |
-            (((uint64_t) script[1]) << 16u) |
-            (((uint64_t) script[2]) <<  8u) |
-            ((uint64_t) script[3]));
+            ((uint64_t) packScript(script));
 
     return hidden::isRepresentative(packed_locale);
 }
