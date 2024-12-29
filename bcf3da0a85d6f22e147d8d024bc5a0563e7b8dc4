@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aebf530_56dc8b3a",
+        "filename": "services/core/java/com/android/server/wm/BlurController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-29T11:27:41Z",
+      "side": 1,
+      "message": "@GuardedBy(\"mLock\")",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 47
+      },
+      "revId": "bcf3da0a85d6f22e147d8d024bc5a0563e7b8dc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
