@@ -116,7 +116,7 @@ import java.util.concurrent.Executor;
 /**
  * Dialog for showing mobile network, connected Wi-Fi network and Wi-Fi networks.
  */
-public class InternetDialogDelegate implements
+public class InternetDialogDelegateLegacy implements
         SystemUIDialog.Delegate,
         InternetDetailsContentController.InternetDialogCallback {
     private static final String TAG = "InternetDialog";
@@ -266,7 +266,7 @@ public class InternetDialogDelegate implements
 
     @AssistedFactory
     public interface Factory {
-        InternetDialogDelegate create(
+        InternetDialogDelegateLegacy create(
                 @Assisted(ABOVE_STATUS_BAR) boolean aboveStatusBar,
                 @Assisted(CAN_CONFIG_MOBILE_DATA) boolean canConfigMobileData,
                 @Assisted(CAN_CONFIG_WIFI) boolean canConfigWifi,
@@ -274,7 +274,7 @@ public class InternetDialogDelegate implements
     }
 
     @AssistedInject
-    public InternetDialogDelegate(
+    public InternetDialogDelegateLegacy(
             @ShadeDisplayAware Context context,
             InternetDialogManager internetDialogManager,
             InternetDetailsContentController internetDetailsContentController,
@@ -289,6 +289,8 @@ public class InternetDialogDelegate implements
             KeyguardStateController keyguardStateController,
             SystemUIDialog.Factory systemUIDialogFactory,
             ShadeDialogContextInteractor shadeDialogContextInteractor) {
+        // TODO: b/377388104 QsDetailedView.assertInLegacyMode();
+
         mAboveStatusBar = aboveStatusBar;
         mSystemUIDialogFactory = systemUIDialogFactory;
         mShadeDialogContextInteractor = shadeDialogContextInteractor;
