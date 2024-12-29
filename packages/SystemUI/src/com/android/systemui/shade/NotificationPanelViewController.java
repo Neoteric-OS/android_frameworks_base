@@ -2216,6 +2216,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                         && vel >= 0;
         final boolean shouldSpringBack = addOverscroll || (mOverExpansion != 0.0f && expand);
         float overshootAmount = 0.0f;
+        boostFrames();
         if (addOverscroll) {
             // Let's overshoot depending on the amount of velocity
             overshootAmount = MathUtils.lerp(
@@ -2269,10 +2270,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                     resetBackTransformation();
                 }
             });
-        }
-        if (mPerf != null) {
-            String currentPackage = mView.getContext().getPackageName();
-            mPerf.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST, currentPackage, -1, BoostFramework.Scroll.PANEL_VIEW);
         }
         animator.addListener(new AnimatorListenerAdapter() {
             private boolean mCancelled;
@@ -4035,6 +4032,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             onFlingEnd(false /* cancelled */);
             return;
         }
+        boostFrames();
         mIsSpringBackAnimation = true;
         ValueAnimator animator = ValueAnimator.ofFloat(mOverExpansion, 0);
         animator.addUpdateListener(
@@ -4496,6 +4494,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private void onFlingQsWithoutClick(ValueAnimator animator, float qsExpansionHeight,
             float target, float vel) {
         mFlingAnimationUtils.apply(animator, qsExpansionHeight, target, vel);
+        boostFrames();
     }
 
     private void onExpansionHeightSetToMax(boolean requestPaddingUpdate) {
@@ -4570,6 +4569,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
             if (!isKeyguardShowing()) {
                 mNotificationStackScrollLayoutController.generateHeadsUpAnimation(entry, true);
+                boostFrames();
             }
         }
 
