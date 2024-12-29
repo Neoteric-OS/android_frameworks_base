@@ -5,7 +5,7 @@
  */
 package com.android.systemui.qs.tiles.dialog;
 
-import static com.android.systemui.qs.tiles.dialog.InternetDialogController.MAX_WIFI_ENTRY_COUNT;
+import static com.android.systemui.qs.tiles.dialog.InternetDetailsContentController.MAX_WIFI_ENTRY_COUNT;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -83,7 +83,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
     @Mock
     private InternetAdapter mInternetAdapter;
     @Mock
-    private InternetDialogController mInternetDialogController;
+    private InternetDetailsContentController mInternetDetailsContentController;
     @Mock
     private KeyguardStateController mKeyguard;
     @Mock
@@ -123,12 +123,12 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
         when(mInternetWifiEntry.hasInternetAccess()).thenReturn(true);
         when(mWifiEntries.size()).thenReturn(1);
 
-        when(mInternetDialogController.getMobileNetworkTitle(anyInt()))
+        when(mInternetDetailsContentController.getMobileNetworkTitle(anyInt()))
                 .thenReturn(MOBILE_NETWORK_TITLE);
-        when(mInternetDialogController.getMobileNetworkSummary(anyInt()))
+        when(mInternetDetailsContentController.getMobileNetworkSummary(anyInt()))
                 .thenReturn(MOBILE_NETWORK_SUMMARY);
-        when(mInternetDialogController.isWifiEnabled()).thenReturn(true);
-        when(mInternetDialogController.getActiveAutoSwitchNonDdsSubId()).thenReturn(
+        when(mInternetDetailsContentController.isWifiEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.getActiveAutoSwitchNonDdsSubId()).thenReturn(
                 SubscriptionManager.INVALID_SUBSCRIPTION_ID);
         mMockitoSession = ExtendedMockito.mockitoSession()
                 .spyStatic(WifiEnterpriseRestrictionUtils.class)
@@ -145,7 +145,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
         mInternetDialogDelegate = new InternetDialogDelegate(
                 mContext,
                 mock(InternetDialogManager.class),
-                mInternetDialogController,
+                mInternetDetailsContentController,
                 true,
                 true,
                 true,
@@ -205,7 +205,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_withApmOn_internetDialogSubTitleGone() {
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(true);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -217,7 +217,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_withApmOff_internetDialogSubTitleVisible() {
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(false);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -229,8 +229,8 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOffAndHasEthernet_showEthernet() {
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(false);
-        when(mInternetDialogController.hasEthernet()).thenReturn(true);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.hasEthernet()).thenReturn(true);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -242,8 +242,8 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOffAndNoEthernet_hideEthernet() {
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(false);
-        when(mInternetDialogController.hasEthernet()).thenReturn(false);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.hasEthernet()).thenReturn(false);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -255,8 +255,8 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOnAndHasEthernet_showEthernet() {
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(true);
-        when(mInternetDialogController.hasEthernet()).thenReturn(true);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.hasEthernet()).thenReturn(true);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -268,8 +268,8 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOnAndNoEthernet_hideEthernet() {
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(true);
-        when(mInternetDialogController.hasEthernet()).thenReturn(false);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.hasEthernet()).thenReturn(false);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -282,9 +282,9 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
     @Test
     public void updateDialog_apmOffAndNotCarrierNetwork_mobileDataLayoutGone() {
         // Mobile network should be gone if the list of active subscriptionId is null.
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(false);
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(false);
-        when(mInternetDialogController.hasActiveSubIdOnDds()).thenReturn(false);
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(false);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.hasActiveSubIdOnDds()).thenReturn(false);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -297,9 +297,9 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
     @Test
     public void updateDialog_apmOnWithCarrierNetworkAndWifiStatus_mobileDataLayoutVisible() {
         // Carrier network should be visible if airplane mode ON and Wi-Fi is ON.
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(true);
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(true);
-        when(mInternetDialogController.isWifiEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(true);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isWifiEnabled()).thenReturn(true);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -312,9 +312,9 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
     @Test
     public void updateDialog_apmOnWithCarrierNetworkAndWifiStatus_mobileDataLayoutGone() {
         // Carrier network should be gone if airplane mode ON and Wi-Fi is off.
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(true);
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(true);
-        when(mInternetDialogController.isWifiEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(true);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isWifiEnabled()).thenReturn(false);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -326,8 +326,8 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOnAndNoCarrierNetwork_mobileDataLayoutGone() {
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(false);
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(false);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(true);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -339,10 +339,10 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOnAndWifiOnHasCarrierNetwork_showAirplaneSummary() {
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(true);
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(true);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(true);
         mInternetDialogDelegate.mConnectedWifiEntry = null;
-        doReturn(false).when(mInternetDialogController).activeNetworkIsCellular();
+        doReturn(false).when(mInternetDetailsContentController).activeNetworkIsCellular();
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -355,10 +355,10 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOffAndWifiOnHasCarrierNetwork_notShowApmSummary() {
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(true);
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(true);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(false);
         mInternetDialogDelegate.mConnectedWifiEntry = null;
-        doReturn(false).when(mInternetDialogController).activeNetworkIsCellular();
+        doReturn(false).when(mInternetDetailsContentController).activeNetworkIsCellular();
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -370,8 +370,8 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOffAndHasCarrierNetwork_notShowApmSummary() {
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(true);
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(true);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(false);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -383,8 +383,8 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_apmOnAndNoCarrierNetwork_notShowApmSummary() {
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(false);
-        when(mInternetDialogController.isAirplaneModeEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(false);
+        when(mInternetDetailsContentController.isAirplaneModeEnabled()).thenReturn(true);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -396,9 +396,9 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_mobileDataIsEnabled_checkMobileDataSwitch() {
-        doReturn(true).when(mInternetDialogController).hasActiveSubIdOnDds();
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(true);
-        when(mInternetDialogController.isMobileDataEnabled(anyInt())).thenReturn(true);
+        doReturn(true).when(mInternetDetailsContentController).hasActiveSubIdOnDds();
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(true);
+        when(mInternetDetailsContentController.isMobileDataEnabled(anyInt())).thenReturn(true);
         mMobileToggleSwitch.setChecked(false);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
@@ -411,9 +411,9 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_mobileDataIsNotChanged_checkMobileDataSwitch() {
-        doReturn(true).when(mInternetDialogController).hasActiveSubIdOnDds();
-        when(mInternetDialogController.isCarrierNetworkActive()).thenReturn(true);
-        when(mInternetDialogController.isMobileDataEnabled(anyInt())).thenReturn(false);
+        doReturn(true).when(mInternetDetailsContentController).hasActiveSubIdOnDds();
+        when(mInternetDetailsContentController.isCarrierNetworkActive()).thenReturn(true);
+        when(mInternetDetailsContentController.isMobileDataEnabled(anyInt())).thenReturn(false);
         mMobileToggleSwitch.setChecked(false);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
@@ -426,10 +426,10 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_wifiOnAndHasInternetWifi_showConnectedWifi() {
-        when(mInternetDialogController.getActiveAutoSwitchNonDdsSubId()).thenReturn(1);
-        doReturn(true).when(mInternetDialogController).hasActiveSubIdOnDds();
+        when(mInternetDetailsContentController.getActiveAutoSwitchNonDdsSubId()).thenReturn(1);
+        doReturn(true).when(mInternetDetailsContentController).hasActiveSubIdOnDds();
         // The preconditions WiFi ON and Internet WiFi are already in setUp()
-        doReturn(false).when(mInternetDialogController).activeNetworkIsCellular();
+        doReturn(false).when(mInternetDetailsContentController).activeNetworkIsCellular();
 
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
@@ -447,7 +447,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
     public void updateDialog_wifiOnAndNoConnectedWifi_hideConnectedWifi() {
         // The precondition WiFi ON is already in setUp()
         mInternetDialogDelegate.mConnectedWifiEntry = null;
-        doReturn(false).when(mInternetDialogController).activeNetworkIsCellular();
+        doReturn(false).when(mInternetDetailsContentController).activeNetworkIsCellular();
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
 
@@ -548,7 +548,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
     @Test
     public void updateDialog_deviceLockedAndNoConnectedWifi_showWifiToggle() {
         // The preconditions WiFi entries are already in setUp()
-        when(mInternetDialogController.isDeviceLocked()).thenReturn(true);
+        when(mInternetDetailsContentController.isDeviceLocked()).thenReturn(true);
         mInternetDialogDelegate.mConnectedWifiEntry = null;
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
@@ -568,7 +568,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
     @Test
     public void updateDialog_deviceLockedAndHasConnectedWifi_showWifiToggleWithBackground() {
         // The preconditions WiFi ON and WiFi entries are already in setUp()
-        when(mInternetDialogController.isDeviceLocked()).thenReturn(true);
+        when(mInternetDetailsContentController.isDeviceLocked()).thenReturn(true);
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
 
@@ -619,11 +619,11 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_showSecondaryDataSub() {
-        when(mInternetDialogController.getActiveAutoSwitchNonDdsSubId()).thenReturn(1);
-        doReturn(1).when(mInternetDialogController).getActiveAutoSwitchNonDdsSubId();
-        doReturn(true).when(mInternetDialogController).hasActiveSubIdOnDds();
-        doReturn(false).when(mInternetDialogController).isAirplaneModeEnabled();
-        clearInvocations(mInternetDialogController);
+        when(mInternetDetailsContentController.getActiveAutoSwitchNonDdsSubId()).thenReturn(1);
+        doReturn(1).when(mInternetDetailsContentController).getActiveAutoSwitchNonDdsSubId();
+        doReturn(true).when(mInternetDetailsContentController).hasActiveSubIdOnDds();
+        doReturn(false).when(mInternetDetailsContentController).isAirplaneModeEnabled();
+        clearInvocations(mInternetDetailsContentController);
         mInternetDialogDelegate.updateDialog(true);
         mBgExecutor.runAllReady();
 
@@ -634,7 +634,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
                     LinearLayout secondaryLayout = mDialogView.requireViewById(
                             R.id.secondary_mobile_network_layout);
 
-                    verify(mInternetDialogController).getMobileNetworkSummary(1);
+                    verify(mInternetDetailsContentController).getMobileNetworkSummary(1);
                     assertThat(primaryLayout.getBackground()).isNotEqualTo(
                             secondaryLayout.getBackground());
                 });
@@ -657,8 +657,8 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_wifiOffAndWifiScanOff_hideWifiScanNotify() {
-        when(mInternetDialogController.isWifiEnabled()).thenReturn(false);
-        when(mInternetDialogController.isWifiScanEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isWifiEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isWifiScanEnabled()).thenReturn(false);
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
 
@@ -672,9 +672,9 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_wifiOffAndWifiScanOnAndDeviceLocked_hideWifiScanNotify() {
-        when(mInternetDialogController.isWifiEnabled()).thenReturn(false);
-        when(mInternetDialogController.isWifiScanEnabled()).thenReturn(true);
-        when(mInternetDialogController.isDeviceLocked()).thenReturn(true);
+        when(mInternetDetailsContentController.isWifiEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isWifiScanEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isDeviceLocked()).thenReturn(true);
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
 
@@ -688,9 +688,9 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_wifiOffAndWifiScanOnAndDeviceUnlocked_showWifiScanNotify() {
-        when(mInternetDialogController.isWifiEnabled()).thenReturn(false);
-        when(mInternetDialogController.isWifiScanEnabled()).thenReturn(true);
-        when(mInternetDialogController.isDeviceLocked()).thenReturn(false);
+        when(mInternetDetailsContentController.isWifiEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isWifiScanEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isDeviceLocked()).thenReturn(false);
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
 
@@ -706,7 +706,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_wifiIsDisabled_uncheckWifiSwitch() {
-        when(mInternetDialogController.isWifiEnabled()).thenReturn(false);
+        when(mInternetDetailsContentController.isWifiEnabled()).thenReturn(false);
         mWifiToggleSwitch.setChecked(true);
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
@@ -719,7 +719,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_wifiIsEnabled_checkWifiSwitch() throws Exception {
-        when(mInternetDialogController.isWifiEnabled()).thenReturn(true);
+        when(mInternetDetailsContentController.isWifiEnabled()).thenReturn(true);
         mWifiToggleSwitch.setChecked(false);
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
@@ -734,7 +734,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
     public void onClickSeeMoreButton_clickSeeAll_verifyLaunchNetworkSetting() {
         mSeeAll.performClick();
 
-        verify(mInternetDialogController).launchNetworkSetting(
+        verify(mInternetDetailsContentController).launchNetworkSetting(
                 mDialogView.requireViewById(R.id.see_all_layout));
     }
 
@@ -807,7 +807,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_shareWifiIntentNull_hideButton() {
-        when(mInternetDialogController.getConfiguratorQrCodeGeneratorIntentOrNull(any()))
+        when(mInternetDetailsContentController.getConfiguratorQrCodeGeneratorIntentOrNull(any()))
                 .thenReturn(null);
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
@@ -821,7 +821,7 @@ public class InternetDialogDelegateTest extends SysuiTestCase {
 
     @Test
     public void updateDialog_shareWifiShareable_showButton() {
-        when(mInternetDialogController.getConfiguratorQrCodeGeneratorIntentOrNull(any()))
+        when(mInternetDetailsContentController.getConfiguratorQrCodeGeneratorIntentOrNull(any()))
                 .thenReturn(new Intent());
         mInternetDialogDelegate.updateDialog(false);
         mBgExecutor.runAllReady();
