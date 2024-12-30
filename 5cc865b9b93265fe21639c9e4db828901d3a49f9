@@ -51,6 +51,24 @@
       "parentUuid": "81d29589_9e889657",
       "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6f1ebf4_2c8bd66a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949655
+      },
+      "writtenOn": "2024-12-30T10:54:03Z",
+      "side": 1,
+      "message": "It still protects against any RuntimeExceptions which might happen outside of IOException. I don\u0027t see any advantage in removing it, it will be a noop if the stream is already closed so there will be no performance impact?",
+      "parentUuid": "a644681d_e907c070",
+      "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
