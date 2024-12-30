@@ -46,6 +46,30 @@
       },
       "revId": "390c00841f6ee2f7016dbaff0b09ec1a8ac18cf4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25299b37_0408d33d",
+        "filename": "services/core/java/com/android/server/wm/BlurController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-12-30T08:42:31Z",
+      "side": 1,
+      "message": "Yes, I don\u0027t think the patch is necessary.\n\nThe only requirement to be thread-safe with RemoteCallbackList seems to be to `beginBroadcast`+`getBroadcastItem`+`finishBroadcast` all in the same synchronized{} block, which is happening already.",
+      "parentUuid": "cf4b47c2_64cbc86d",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "390c00841f6ee2f7016dbaff0b09ec1a8ac18cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
