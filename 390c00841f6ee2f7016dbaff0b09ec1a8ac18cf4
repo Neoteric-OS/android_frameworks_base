@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b375f581_7c5d7853",
+        "filename": "services/core/java/com/android/server/wm/BlurController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2024-12-30T07:55:00Z",
+      "side": 1,
+      "message": "RemoteCallbackList sychronizes on RemoteCallbackList.mInterfaces for the following methods:\n\n- RemoteCallbackList.register\n- RemoteCallbackList.unregister\n- RemoteCallbackList.beginBroadcast (creates a copy-on-write of the list, also under mLock)\n- RemoteCallbackList.finishBroadcast (clears copy-on-write of the list, also under mLock)\n\nThe last two are done under mLock. The following method doesn\u0027t need to hold RemoteCallbackList.mInterfaces because it only accesses an immutable copy of the list, not the modifiable list.\n\n- RemoteCallbackList.getBroadcastItem (reads copy-on-write array)\n\nSo although on first glance the class *looks* like it\u0027s being used wrongly by not holding a lock, I don\u0027t see an actual problem on review.\n\nWhere have you seen a concurrent modification exception using RemoteCallbackList in this way?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "390c00841f6ee2f7016dbaff0b09ec1a8ac18cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
