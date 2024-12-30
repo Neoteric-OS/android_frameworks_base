@@ -69,6 +69,24 @@
       "parentUuid": "a644681d_e907c070",
       "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0de49485_57a7b07b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-30T11:47:48Z",
+      "side": 1,
+      "message": "If  have might happen outside of IOException,the system_server will crash ,so we can not protect  against any RuntimeExceptions.I think it is useless code and other aosp code as like this do not use the finally module to close this stream.",
+      "parentUuid": "e6f1ebf4_2c8bd66a",
+      "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
