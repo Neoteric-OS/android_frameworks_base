@@ -22,6 +22,30 @@
       },
       "revId": "390c00841f6ee2f7016dbaff0b09ec1a8ac18cf4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf4b47c2_64cbc86d",
+        "filename": "services/core/java/com/android/server/wm/BlurController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-30T08:39:30Z",
+      "side": 1,
+      "message": "Hello,Robin:\n  I think you are right.According to your analysis, I think it is not necessary for notifyBlurEnabledChangedLocked method to hold mLock lock. What do you think?",
+      "parentUuid": "b375f581_7c5d7853",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "390c00841f6ee2f7016dbaff0b09ec1a8ac18cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
