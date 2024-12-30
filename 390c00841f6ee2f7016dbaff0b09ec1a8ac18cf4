@@ -70,6 +70,30 @@
       },
       "revId": "390c00841f6ee2f7016dbaff0b09ec1a8ac18cf4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "979a39d6_c5a85bc6",
+        "filename": "services/core/java/com/android/server/wm/BlurController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-30T08:51:36Z",
+      "side": 1,
+      "message": "OK,Thanks for your guidance.",
+      "parentUuid": "25299b37_0408d33d",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "390c00841f6ee2f7016dbaff0b09ec1a8ac18cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
