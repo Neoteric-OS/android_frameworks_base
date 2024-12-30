@@ -52,6 +52,24 @@
       "parentUuid": "138e9fed_caaf051c",
       "revId": "a82f786cda9ef35e9cadc0157a6a8f5c19798c8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58ec83ce_0a6ed425",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2024-12-30T12:31:00Z",
+      "side": 1,
+      "message": "I moved the mapping away from std::unordered_map. https://r.android.com/3430925\n\nCan you take a look? I think that it should avoid forcing initialization and reduces the memory overhead in Zygote.",
+      "parentUuid": "26c9e648_d0c41815",
+      "revId": "a82f786cda9ef35e9cadc0157a6a8f5c19798c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
