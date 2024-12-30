@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09333191_10ee637a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2024-12-30T18:59:07Z",
+      "side": 1,
+      "message": "Why would we ever allow installation of a package without any signature? I thought that should have been rejected upon package installation (or scanning during boot for APKs on system image)?",
+      "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
