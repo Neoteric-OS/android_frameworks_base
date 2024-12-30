@@ -87,6 +87,24 @@
       "parentUuid": "e6f1ebf4_2c8bd66a",
       "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbce0e0a_e34d5c67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947766
+      },
+      "writtenOn": "2024-12-30T15:31:58Z",
+      "side": 1,
+      "message": "I think other code should be doing this as well instead of removing it here. But I get that crash would happen in case of other exception, we will try to change that because saving observer state should not be in critical path of shutdown. Resolving this for now.",
+      "parentUuid": "0de49485_57a7b07b",
+      "revId": "5cc865b9b93265fe21639c9e4db828901d3a49f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
