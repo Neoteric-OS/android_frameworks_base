@@ -651,6 +651,14 @@ public final class PinnerService extends SystemService {
     }
 
     /**
+     * @see #unpinApp(int)
+     */
+    private void sendUnpinAppMessage(int key) {
+        mPinnerHandler.sendMessage(PooledLambda.obtainMessage(PinnerService::unpinApp, this,
+                key));
+    }
+
+    /**
      * Pins an app of a specific type {@code key}.
      *
      * @param force If false, this will not repin the app if it's currently active. See
@@ -882,6 +890,49 @@ public final class PinnerService extends SystemService {
                 pinOptimizedDexDependencies(pf, Integer.MAX_VALUE, appInfo);
             }
         }
+    }
+
+    private void pinFiles() {
+        String[] filesToPin = mContext.getResources().getStringArray(
+                com.android.internal.R.array.config_defaultPinnerServiceFiles);
+        // Continue trying to pin each file even if we fail to pin some of them
+        for (String fileToPin : filesToPin) {
+            pinFile(fileToPin, Integer.MAX_VALUE, null, null);
+        }
+        // app files add to mPinnedFiles which will cause unpin by unpinFiles
+        // pin these files here
+        int currentUser = ActivityManager.getCurrentUser();
+        pinApps(currentUser);
+    }
+
+    private void unpinFiles() {
+        HashSet<String> files = new HashSet<>();
+        synchronized(this) {
+            for (PinnedFile pinnedFile : mPinnedFiles.values()) {
+                if (!files.contains(pinnedFile.fileName)) {
+                    files.add(pinnedFile.fileName);
+                }
+            }
+        }
+        for (String file : files) {
+            unpinFile(file);
+        }
+    }
+
+    private void sendPinFilesMessage() {
+        mPinnerHandler.sendMessage(PooledLambda.obtainMessage(PinnerService::pinFiles, this));
+    }
+
+    private void sendUnpinFilesMessage() {
+        mPinnerHandler.sendMessage(PooledLambda.obtainMessage(PinnerService::unpinFiles, this));
+    }
+
+    private void sendPinFileMessage(String fileToPin) {
+        mPinnerHandler.sendMessage(PooledLambda.obtainMessage(PinnerService::pinFile, this, fileToPin, Integer.MAX_VALUE, null, null));
+    }
+
+    private void sendUnpinFileMessage(String fileToPin) {
+        mPinnerHandler.sendMessage(PooledLambda.obtainMessage(PinnerService::unpinFile, this, fileToPin));
     }
 
     /**
@@ -1441,6 +1492,14 @@ public final class PinnerService extends SystemService {
             sendPinAppsWithUpdatedKeysMessage(UserHandle.USER_SYSTEM);
         }
 
+        private void unpin() {
+            sendUnpinAppsMessage();
+        }
+
+        private void pin() {
+            sendPinAppsWithUpdatedKeysMessage(UserHandle.USER_SYSTEM);
+        }
+
         private void printError(FileDescriptor out, String message) {
             PrintWriter writer = new PrintWriter(new FileOutputStream(out));
             writer.println(message);
@@ -1461,6 +1520,12 @@ public final class PinnerService extends SystemService {
                 case "repin":
                     repin();
                     break;
+                case "unpin":
+                    unpin();
+                    break;
+                case "pin":
+                    pin();
+                    break;
                 default:
                     printError(out, String.format(
                             "Unknown pinner command: %s. Supported commands: repin", command));
@@ -1476,6 +1541,48 @@ public final class PinnerService extends SystemService {
         public List<PinnedFileStat> getPinnerStats() {
             getPinnerStats_enforcePermission();
             return PinnerService.this.getPinnerStats();
+        }
+
+        @Override
+        public void pinApp(int key) {
+            int currentUser = ActivityManager.getCurrentUser();
+            sendPinAppMessage(key, currentUser, true);
+        }
+
+        @Override
+        public void unpinApp(int key) {
+            sendUnpinAppMessage(key);
+        }
+
+        @Override
+        public void pinFile(String fileName) {
+            sendPinFileMessage(fileName);
+        }
+
+        @Override
+        public void unpinFile(String fileName) {
+            sendUnpinFileMessage(fileName);
+        }
+
+        @Override
+        public void pinFiles() {
+            sendPinFilesMessage();
+        }
+
+        @Override
+        public void unpinFiles() {
+            sendUnpinFilesMessage();
+        }
+
+        @Override
+        public void pinApps() {
+            int currentUser = ActivityManager.getCurrentUser();
+            sendPinAppsMessage(currentUser);
+        }
+
+        @Override
+        public void unpinApps() {
+            sendUnpinAppsMessage();
         }
     }
 

@@ -20,14 +20,12 @@ import static android.app.Flags.FLAG_PINNER_SERVICE_CLIENT_API;
 
 import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
-import android.annotation.TestApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
  * @hide
  */
-@TestApi
 @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
 public final class PinnedFileStat implements Parcelable {
     private String filename;
@@ -37,7 +35,6 @@ public final class PinnedFileStat implements Parcelable {
     /**
      * @hide
      */
-    @TestApi
     @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
     public long getBytesPinned() {
         return bytesPinned;
@@ -46,7 +43,6 @@ public final class PinnedFileStat implements Parcelable {
     /**
      * @hide
      */
-    @TestApi
     @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
     public @NonNull String getFilename() {
         return filename;
@@ -55,7 +51,6 @@ public final class PinnedFileStat implements Parcelable {
     /**
      * @hide
      */
-    @TestApi
     @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
     public @NonNull String getGroupName() {
         return groupName;
@@ -64,7 +59,6 @@ public final class PinnedFileStat implements Parcelable {
     /**
      * @hide
      */
-    @TestApi
     @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
     public PinnedFileStat(@NonNull String filename, long bytesPinned, @NonNull String groupName) {
         this.filename = filename;
@@ -79,7 +73,6 @@ public final class PinnedFileStat implements Parcelable {
     /**
      * @hide
      */
-    @TestApi
     @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
@@ -97,7 +90,6 @@ public final class PinnedFileStat implements Parcelable {
     /**
      * @hide
      */
-    @TestApi
     @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
     @Override
     public int describeContents() {
@@ -107,13 +99,11 @@ public final class PinnedFileStat implements Parcelable {
     /**
      * @hide
      */
-    @TestApi
     @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
     public static final @NonNull Creator<PinnedFileStat> CREATOR = new Creator<>() {
         /**
          * @hide
          */
-        @TestApi
         @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
         @Override
         public PinnedFileStat createFromParcel(Parcel source) {
@@ -123,7 +113,6 @@ public final class PinnedFileStat implements Parcelable {
         /**
          * @hide
          */
-        @TestApi
         @FlaggedApi(FLAG_PINNER_SERVICE_CLIENT_API)
         @Override
         public PinnedFileStat[] newArray(int size) {
