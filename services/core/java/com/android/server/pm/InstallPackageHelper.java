@@ -1410,7 +1410,7 @@ final class InstallPackageHelper {
                     replace = true;
                     if (DEBUG_INSTALL) Slog.d(TAG, "Replace existing package: " + pkgName);
                 }
-                if (replace) {
+                if (replace && ps != null) {
                     // Prevent apps opting out from runtime permissions
                     final int oldTargetSdk = ps.getTargetSdkVersion();
                     final int newTargetSdk = parsedPackage.getTargetSdkVersion();
