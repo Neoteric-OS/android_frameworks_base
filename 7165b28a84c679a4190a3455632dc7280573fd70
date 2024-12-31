@@ -34,6 +34,24 @@
       "parentUuid": "09333191_10ee637a",
       "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ac40076_c04c74d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2024-12-31T02:50:49Z",
+      "side": 1,
+      "message": "This change makes sense to me because `getSignatures` is marked nullable.\n\nHowever, I am not sure if it is ever possible to install an app without signature. If it should never happen, should we check null and throw some exception instead?",
+      "parentUuid": "add3781e_d9a42283",
+      "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
