@@ -52,6 +52,24 @@
       "parentUuid": "add3781e_d9a42283",
       "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adae301d_c06db6b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2024-12-31T03:06:21Z",
+      "side": 1,
+      "message": "@lihongyu@google.com @zhanghai@google.com \n\n We can install the apk without signature use the adb command.Like this:\n adb install -r apk_path.\n This method is just use to debug problem,so the getSignatures may be null,if we  throw some exception,we can not debug apk use this method.",
+      "parentUuid": "5ac40076_c04c74d7",
+      "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
