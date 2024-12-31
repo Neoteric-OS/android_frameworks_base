@@ -142,6 +142,9 @@ class InputSettingsObserver extends ContentObserver {
 
     @Override
     public void onChange(boolean selfChange, Uri uri) {
+        if (uri == null) {
+            return;
+        }
         mObservers.get(uri).accept("setting changed");
     }
 
