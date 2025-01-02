@@ -87,6 +87,24 @@
       "parentUuid": "35039cde_0c1e6e93",
       "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7cd5cfd_8526601a",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3120,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2025-01-02T20:35:32Z",
+      "side": 1,
+      "message": "Please ignore the initial comment.  I missed that the constant is used in a subclass of PackageManager.  No changes are needed (from me).",
+      "parentUuid": "35039cde_0c1e6e93",
+      "revId": "fa9d92f7dd777adb2def9918f570f3606ac6593a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
