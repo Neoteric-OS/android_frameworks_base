@@ -20,7 +20,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.AutoCloseable;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.nio.channels.ClosedChannelException;
@@ -34,7 +33,7 @@ import org.conscrypt.ChannelType;
  * Client-side endpoint. Provides basic services for sending/receiving messages from the client
  * socket.
  */
-final class ClientEndpoint implements AutoCloseable {
+final class ClientEndpoint {
     private final SSLSocket socket;
     private InputStream input;
     private OutputStream output;
@@ -55,11 +54,6 @@ final class ClientEndpoint implements AutoCloseable {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public void close() {
-        stop();
     }
 
     void stop() {
