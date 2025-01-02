@@ -491,6 +491,10 @@ public final class Parcel {
     public final static Parcelable.Creator<String> STRING_CREATOR
              = new Parcelable.Creator<String>() {
         public String createFromParcel(Parcel source) {
+	    if (source == null) {
+		Log.d (TAG, "Parcel is null, returning null");
+		return null;
+	    }
             return source.readString();
         }
         public String[] newArray(int size) {
