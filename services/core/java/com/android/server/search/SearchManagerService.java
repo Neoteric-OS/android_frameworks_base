@@ -213,18 +213,10 @@ public class SearchManagerService extends ISearchManager.Stub {
                 return true;
             }
 
-            ArraySet<String> knownSearchablePackageNames = new ArraySet<>();
-            synchronized (mSearchables) {
-                Searchables searchables = mSearchables.get(changingUserId);
-                if (searchables != null) {
-                    knownSearchablePackageNames = searchables.getKnownSearchablePackageNames();
-                }
-            }
-
             final int numOfPackages = mChangedPackages.size();
             for (int i = 0; i < numOfPackages; i++) {
                 final String packageName = mChangedPackages.get(i);
-                if (knownSearchablePackageNames.contains(packageName)) {
+                if (hasSearchableForPackage(packageName, changingUserId)) {
                     return true;
                 }
             }
