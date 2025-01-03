@@ -1,5 +1,7 @@
 -include proguard_kotlin.flags
--keep class com.android.systemui.VendorServices
+-keep class com.android.systemui.VendorServices {
+  public void <init>();
+}
 
 # Needed to ensure callback field references are kept in their respective
 # owning classes when the downstream callback registrars only store weak refs.
