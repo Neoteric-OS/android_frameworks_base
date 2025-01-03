@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2f67671_59c084eb",
+        "filename": "core/tests/coretests/src/android/os/BinderFrozenStateChangeNotificationTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-01-03T01:08:08Z",
+      "side": 1,
+      "message": "Ouch.\nWhy does the timeout have to be so long?\nIs 10 seconds actually not long enough? Should this be longer?\nAlternatively, is there a way to expedite the freezing?",
+      "revId": "5f3dba91c8a73c60779a3899bd3c1dfb9d521783",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
