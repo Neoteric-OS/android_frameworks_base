@@ -27,6 +27,7 @@ import com.android.hoststubgen.filters.ImplicitOutputFilter
 import com.android.hoststubgen.filters.KeepNativeFilter
 import com.android.hoststubgen.filters.OutputFilter
 import com.android.hoststubgen.filters.SanitizationFilter
+import com.android.hoststubgen.filters.TextFileFilterPolicyBuilder
 import com.android.hoststubgen.filters.TextFileFilterPolicyParser
 import com.android.hoststubgen.filters.printAsTextPolicy
 import com.android.hoststubgen.utils.ClassFilter
@@ -179,9 +180,9 @@ class HostStubGen(val options: HostStubGenOptions) {
         // Next, "text based" filter, which allows to override polices without touching
         // the target code.
         if (options.policyOverrideFiles.isNotEmpty()) {
-            val parser = TextFileFilterPolicyParser(allClasses, filter)
-            options.policyOverrideFiles.forEach(parser::parse)
-            filter = parser.createOutputFilter()
+            val builder = TextFileFilterPolicyBuilder(allClasses, filter)
+            options.policyOverrideFiles.forEach(builder::parse)
+            filter = builder.createOutputFilter()
         }
 
         // Apply the implicit filter.

@@ -23,10 +23,12 @@ import com.android.hoststubgen.asm.toJvmClassName
 import com.android.hoststubgen.log
 import com.android.hoststubgen.normalizeTextLine
 import com.android.hoststubgen.whitespaceRegex
-import java.io.File
-import java.io.PrintWriter
-import java.util.regex.Pattern
 import org.objectweb.asm.tree.ClassNode
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.PrintWriter
+import java.io.Reader
+import java.util.regex.Pattern
 
 /**
  * Print a class node as a "keep" policy.
@@ -48,7 +50,7 @@ fun printAsTextPolicy(pw: PrintWriter, cn: ClassNode) {
 
 private const val FILTER_REASON = "file-override"
 
-private enum class SpecialClass {
+enum class SpecialClass {
     NotSpecial,
     Aidl,
     FeatureFlags,
@@ -56,7 +58,36 @@ private enum class SpecialClass {
     RFile,
 }
 
-class TextFileFilterPolicyParser(
+interface PolicyFileVisitor {
+    fun visitPackage(name: String, policy: FilterPolicyWithReason)
+    fun visitRename(pattern: Pattern, prefix: String)
+
+    fun visitClass(): ClassPolicyVisitor
+    interface ClassPolicyVisitor {
+        fun visitRegularClassPolicy(name: String, policy: FilterPolicyWithReason)
+        fun visitSubClassPolicy(superClass: String, policy: FilterPolicyWithReason)
+        fun visitRedirectionClass(fromName: String, toClass: String)
+        fun visitClassLoadHook(name: String, callback: String)
+        fun visitSpecialClassPolicy(type: SpecialClass, policy: FilterPolicyWithReason)
+        fun visitClassEnd()
+    }
+
+    fun visitField(className: String, name: String, policy: FilterPolicyWithReason)
+
+    fun visitMethod(className: String, name: String, desc: String): MethodPolicyVisitor
+    interface MethodPolicyVisitor {
+        /** Called when a policy is not of a "replace". */
+        fun visitRegularMethodPolicy(policy: FilterPolicyWithReason)
+        fun visitInClassReplace(targetName: String, policy: FilterPolicyWithReason)
+        fun visitOutClassReplace(
+            replaceSpec: TextFilePolicyMethodReplaceFilter.MethodCallReplaceSpec,
+            policy: FilterPolicyWithReason,
+        )
+    }
+}
+
+
+class TextFileFilterPolicyBuilder(
     private val classes: ClassNodes,
     fallback: OutputFilter
 ) {
@@ -71,28 +102,13 @@ class TextFileFilterPolicyParser(
     private val methodReplaceSpec =
         mutableListOf<TextFilePolicyMethodReplaceFilter.MethodCallReplaceSpec>()
 
-    private lateinit var currentClassName: String
-
     /**
-     * Read a given "policy" file and return as an [OutputFilter]
+     * Parse a given policy file. This method can be called multiple times to read from
+     * multiple files. To get the resulting filter, use [createOutputFilter]
      */
     fun parse(file: String) {
-        log.i("Loading offloaded annotations from $file ...")
-        log.withIndent {
-            var lineNo = 0
-            try {
-                File(file).forEachLine {
-                    lineNo++
-                    val line = normalizeTextLine(it)
-                    if (line.isEmpty()) {
-                        return@forEachLine // skip empty lines.
-                    }
-                    parseLine(line)
-                }
-            } catch (e: ParseException) {
-                throw e.withSourceInfo(file, lineNo)
-            }
-        }
+        val parser = TextFileFilterPolicyParser()
+        parser.parse(FileReader(file), file, Visitor())
     }
 
     fun createOutputFilter(): OutputFilter {
@@ -112,14 +128,180 @@ class TextFileFilterPolicyParser(
         return ret
     }
 
+    private inner class Visitor : PolicyFileVisitor {
+        override fun visitPackage(name: String, policy: FilterPolicyWithReason) {
+            packageFilter.addPolicy(name, policy)
+        }
+
+        override fun visitRename(pattern: Pattern, prefix: String) {
+            typeRenameSpec += TextFilePolicyRemapperFilter.TypeRenameSpec(
+                pattern, prefix
+            )
+        }
+
+        override fun visitClass(): PolicyFileVisitor.ClassPolicyVisitor {
+            return object: PolicyFileVisitor.ClassPolicyVisitor {
+                override fun visitClassEnd() {
+                }
+
+                override fun visitRegularClassPolicy(name: String, policy: FilterPolicyWithReason) {
+                    log.i("class $name")
+                    imf.setPolicyForClass(name, policy)
+                }
+
+                override fun visitSubClassPolicy(superClass: String, policy: FilterPolicyWithReason) {
+                    log.i("class extends $superClass")
+                    subclassFilter.addPolicy( superClass, policy)
+                }
+
+                override fun visitRedirectionClass(fromName: String, toClass: String) {
+                    imf.setRedirectionClass(fromName, toClass)
+                }
+
+                override fun visitClassLoadHook(name: String, callback: String) {
+                    imf.setClassLoadHook(name, callback)
+                }
+
+                override fun visitSpecialClassPolicy(
+                    type: SpecialClass,
+                    policy: FilterPolicyWithReason,
+                ) {
+                    log.i("class special $type $policy")
+                    when (type) {
+                        SpecialClass.NotSpecial -> {} // Shouldn't happen
+
+                        SpecialClass.Aidl -> {
+                            aidlPolicy = policy
+                        }
+
+                        SpecialClass.FeatureFlags -> {
+                            featureFlagsPolicy = policy
+                        }
+
+                        SpecialClass.Sysprops -> {
+                            syspropsPolicy = policy
+                        }
+
+                        SpecialClass.RFile -> {
+                            rFilePolicy = policy
+                        }
+                    }
+                }
+            }
+        }
+
+        override fun visitField(className: String, name: String, policy: FilterPolicyWithReason) {
+            log.i("  field $className.$name $policy")
+            imf.setPolicyForField(className, name, policy)
+        }
+
+        override fun visitMethod(
+            className: String,
+            name: String,
+            desc: String
+        ): PolicyFileVisitor.MethodPolicyVisitor {
+            log.i("  method $className.$name $desc")
+            return object: PolicyFileVisitor.MethodPolicyVisitor {
+                override fun visitRegularMethodPolicy(policy: FilterPolicyWithReason) {
+                    imf.setPolicyForMethod(className, name, desc, policy)
+                }
+
+                override fun visitInClassReplace(
+                    targetName: String,
+                    policy: FilterPolicyWithReason,
+                    ) {
+                    imf.setPolicyForMethod(className, name, desc, policy)
+                    imf.setPolicyForMethod(className, targetName, desc, FilterPolicy.Keep.withReason(FILTER_REASON))
+                    imf.setRenameTo(className, targetName, desc, name)
+                }
+
+                override fun visitOutClassReplace(
+                    replaceSpec: TextFilePolicyMethodReplaceFilter.MethodCallReplaceSpec,
+                    policy: FilterPolicyWithReason,
+                ) {
+                    imf.setPolicyForMethod(className, name, desc, policy)
+                    methodReplaceSpec.add(replaceSpec)
+                }
+            }
+        }
+    }
+}
+
+class TextFileFilterPolicyParser {
+    private lateinit var visitor: PolicyFileVisitor
+    private var currentClassName: String? = null
+    private var lastClassVisitor: PolicyFileVisitor.ClassPolicyVisitor? = null
+
+    private var aidlPolicy: FilterPolicyWithReason? = null
+    private var featureFlagsPolicy: FilterPolicyWithReason? = null
+    private var syspropsPolicy: FilterPolicyWithReason? = null
+    private var rFilePolicy: FilterPolicyWithReason? = null
+
+    /**
+     * Parse a given "policy" file.
+     */
+    fun parse(reader: Reader, inputName: String, visitor: PolicyFileVisitor) {
+        log.i("Parsing text policy file $inputName ...")
+        this.visitor = visitor
+        BufferedReader(reader).use { rd ->
+            var lineNo = 0
+            try {
+                while (true) {
+                    var line = rd.readLine()
+                    if (line == null) {
+                        break
+                    }
+                    lineNo++
+                    line = normalizeTextLine(line)
+                    if (line.isEmpty()) {
+                        continue
+                    }
+                    parseLine(line)
+                }
+                finishCurrentClass()
+            } catch (e: ParseException) {
+                throw e.withSourceInfo(inputName, lineNo)
+            }
+        }
+    }
+
+    private fun finishCurrentClass() {
+        lastClassVisitor?.let {
+            it.visitClassEnd()
+            lastClassVisitor = null
+            currentClassName = null
+        }
+    }
+
+    private fun ensureInClass(directive: String) {
+        if (lastClassVisitor == null) {
+            throw ParseException("Directive '$directive' must follow a 'class' directive")
+        }
+    }
+
     private fun parseLine(line: String) {
         val fields = line.split(whitespaceRegex).toTypedArray()
         when (fields[0].lowercase()) {
-            "p", "package" -> parsePackage(fields)
-            "c", "class" -> parseClass(fields)
-            "f", "field" -> parseField(fields)
-            "m", "method" -> parseMethod(fields)
-            "r", "rename" -> parseRename(fields)
+            "p", "package" -> {
+                finishCurrentClass()
+                parsePackage(fields)
+            }
+            "c", "class" -> {
+                finishCurrentClass()
+                parseClass(fields)
+            }
+            "f", "field" -> {
+                ensureInClass("field")
+                parseField(fields)
+            }
+            "m", "method" -> {
+                ensureInClass("method")
+                parseMethod(fields)
+            }
+            "r", "rename" -> {
+                finishCurrentClass()
+                parseRename(fields)
+            }
             else -> throw ParseException("Unknown directive \"${fields[0]}\"")
         }
     }
@@ -184,20 +366,23 @@ class TextFileFilterPolicyParser(
         if (!policy.isUsableWithClasses) {
             throw ParseException("Package can't have policy '$policy'")
         }
-        packageFilter.addPolicy(name, policy.withReason(FILTER_REASON))
+        visitor.visitPackage(name, policy.withReason(FILTER_REASON))
     }
 
     private fun parseClass(fields: Array<String>) {
         if (fields.size < 3) {
             throw ParseException("Class ('c') expects 2 fields.")
         }
-        currentClassName = fields[1]
+        val name = fields[1]
+        currentClassName = name
+        val cv = visitor.visitClass()
+        lastClassVisitor = cv
 
         // superClass is set when the class name starts with a "*".
-        val superClass = resolveExtendingClass(currentClassName)
+        val superClass = resolveExtendingClass(name)
 
         // :aidl, etc?
-        val classType = resolveSpecialClass(currentClassName)
+        val classType = resolveSpecialClass(name)
 
         if (fields[2].startsWith("!")) {
             if (classType != SpecialClass.NotSpecial) {
@@ -208,7 +393,8 @@ class TextFileFilterPolicyParser(
             }
             // It's a redirection class.
             val toClass = fields[2].substring(1)
-            imf.setRedirectionClass(currentClassName, toClass)
+
+            cv.visitRedirectionClass(name, toClass)
         } else if (fields[2].startsWith("~")) {
             if (classType != SpecialClass.NotSpecial) {
                 // We could support it, but not needed at least for now.
@@ -218,7 +404,8 @@ class TextFileFilterPolicyParser(
             }
             // It's a class-load hook
             val callback = fields[2].substring(1)
-            imf.setClassLoadHook(currentClassName, callback)
+
+            cv.visitClassLoadHook(name, callback)
         } else {
             val policy = parsePolicy(fields[2])
             if (!policy.isUsableWithClasses) {
@@ -229,26 +416,28 @@ class TextFileFilterPolicyParser(
                 SpecialClass.NotSpecial -> {
                     // TODO: Duplicate check, etc
                     if (superClass == null) {
-                        imf.setPolicyForClass(
-                            currentClassName, policy.withReason(FILTER_REASON)
-                        )
+                        cv.visitRegularClassPolicy(name, policy.withReason(FILTER_REASON))
                     } else {
-                        subclassFilter.addPolicy(
+                        cv.visitSubClassPolicy(
                             superClass,
-                            policy.withReason("extends $superClass")
+                            policy.withReason("extends $superClass"),
                         )
+                        finishCurrentClass() // Can't have members.
                     }
                 }
-
                 SpecialClass.Aidl -> {
                     if (aidlPolicy != null) {
                         throw ParseException(
                             "Policy for AIDL classes already defined"
                         )
                     }
-                    aidlPolicy = policy.withReason(
+                    val p = policy.withReason(
                         "$FILTER_REASON (special-class AIDL)"
                     )
+                    cv.visitSpecialClassPolicy(classType, p)
+                    aidlPolicy = p
+
+                    finishCurrentClass() // Can't have members.
                 }
 
                 SpecialClass.FeatureFlags -> {
@@ -257,9 +446,13 @@ class TextFileFilterPolicyParser(
                             "Policy for feature flags already defined"
                         )
                     }
-                    featureFlagsPolicy = policy.withReason(
+                    val p = policy.withReason(
                         "$FILTER_REASON (special-class feature flags)"
                     )
+                    cv.visitSpecialClassPolicy(classType, p)
+                    featureFlagsPolicy = p
+
+                    finishCurrentClass() // Can't have members.
                 }
 
                 SpecialClass.Sysprops -> {
@@ -268,9 +461,13 @@ class TextFileFilterPolicyParser(
                             "Policy for sysprops already defined"
                         )
                     }
-                    syspropsPolicy = policy.withReason(
+                    val p = policy.withReason(
                         "$FILTER_REASON (special-class sysprops)"
                     )
+                    cv.visitSpecialClassPolicy(classType, p)
+                    syspropsPolicy = p
+
+                    finishCurrentClass() // Can't have members.
                 }
 
                 SpecialClass.RFile -> {
@@ -279,9 +476,13 @@ class TextFileFilterPolicyParser(
                             "Policy for R file already defined"
                         )
                     }
-                    rFilePolicy = policy.withReason(
+                    val p = policy.withReason(
                         "$FILTER_REASON (special-class R file)"
                     )
+                    cv.visitSpecialClassPolicy(classType, p)
+                    rFilePolicy = p
+
+                    finishCurrentClass() // Can't have members.
                 }
             }
         }
@@ -296,10 +497,9 @@ class TextFileFilterPolicyParser(
         if (!policy.isUsableWithFields) {
             throw ParseException("Field can't have policy '$policy'")
         }
-        require(this::currentClassName.isInitialized)
 
         // TODO: Duplicate check, etc
-        imf.setPolicyForField(currentClassName, name, policy.withReason(FILTER_REASON))
+        visitor.visitField(currentClassName!!, name, policy.withReason(FILTER_REASON))
     }
 
     private fun parseMethod(fields: Array<String>) {
@@ -323,44 +523,43 @@ class TextFileFilterPolicyParser(
             throw ParseException("Method can't have policy '$policy'")
         }
 
-        require(this::currentClassName.isInitialized)
+        val mv = visitor.visitMethod(currentClassName!!, name, signature)
 
-        imf.setPolicyForMethod(
-            currentClassName, name, signature,
-            policy.withReason(FILTER_REASON)
-        )
-        if (policy == FilterPolicy.Substitute) {
-            val fromName = policyStr.substring(1)
+        val policyWithReason = policy.withReason(FILTER_REASON)
+        if (policy != FilterPolicy.Substitute) {
+            mv.visitRegularMethodPolicy(policyWithReason)
+        } else {
+            val targetName = policyStr.substring(1)
 
-            if (fromName == name) {
+            if (targetName == name) {
                 throw ParseException(
                     "Substitution must have a different name"
                 )
             }
 
-            // Set the policy for the "from" method.
-            imf.setPolicyForMethod(
-                currentClassName, fromName, signature,
-                FilterPolicy.Keep.withReason(FILTER_REASON)
-            )
+// This was probably a bug -- we didn't need it on the "if" case
+//            // Set the policy for the "from" method.
+//            imf.setPolicyForMethod(
+//                currentClassName, fromName, signature,
+//                FilterPolicy.Keep.withReason(FILTER_REASON)
+//            )
 
-            val classAndMethod = splitWithLastPeriod(fromName)
+            val classAndMethod = splitWithLastPeriod(targetName)
             if (classAndMethod != null) {
                 // If the substitution target contains a ".", then
                 // it's a method call redirect.
-                methodReplaceSpec.add(
-                    TextFilePolicyMethodReplaceFilter.MethodCallReplaceSpec(
-                        currentClassName.toJvmClassName(),
+                val spec = TextFilePolicyMethodReplaceFilter.MethodCallReplaceSpec(
+                        currentClassName!!.toJvmClassName(),
                         name,
                         signature,
                         classAndMethod.first.toJvmClassName(),
                         classAndMethod.second,
                     )
-                )
+                mv.visitOutClassReplace(spec, policyWithReason)
             } else {
                 // It's an in-class replace.
                 // ("@RavenwoodReplace" equivalent)
-                imf.setRenameTo(currentClassName, fromName, signature, name)
+                mv.visitInClassReplace(targetName, policyWithReason)
             }
         }
     }
@@ -378,7 +577,7 @@ class TextFileFilterPolicyParser(
         // applied. (Which is needed for services.jar)
         val prefix = fields[2].trimStart('/')
 
-        typeRenameSpec += TextFilePolicyRemapperFilter.TypeRenameSpec(
+        visitor.visitRename(
             pattern, prefix
         )
     }

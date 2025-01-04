@@ -17,14 +17,22 @@ package com.android.ravenwoodtest.coretest;
 
 import static org.junit.Assert.assertEquals;
 
+import android.content.Intent;
 import android.platform.test.ravenwood.RavenwoodRule;
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.ravenwood.common.RavenwoodCommonUtils;
 
 import org.junit.Test;
 
 public class RavenwoodLogLevelTest {
+    public RavenwoodLogLevelTest() {
+    }
+
+    public RavenwoodLogLevelTest(Intent i) {
+    }
+
     /**
      * Assert that the `priority` is loggable, but one level below is not.
      */
@@ -105,4 +113,18 @@ public class RavenwoodLogLevelTest {
         assertBarelyLoggable("TAG2", Log.DEBUG);
         assertBarelyLoggable("TAG3", Log.INFO);
     }
+
+    /**
+     * aaa bbb
+     * @param arg1
+     * @return
+     */
+    public static int[] foo(Intent.ShortcutIconResource arg1, String[][] opts, Pair<String, Integer>[] abc) {
+        return null;
+    }
+
+    /**
+     * javadoc
+     */
+    public static boolean sBoolean;
 }
