@@ -27,6 +27,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.ravenwood.annotation.RavenwoodKeepWholeClass;
+import android.ravenwood.annotation.RavenwoodReplace;
 import android.text.TextUtils;
 import android.util.LongArray;
 import android.util.Slog;
@@ -74,7 +76,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
  * <p>It stores the default configuration for each change, and any per-package overrides that have
  * been configured.
  */
-@android.ravenwood.annotation.RavenwoodKeepWholeClass
+@RavenwoodKeepWholeClass
 final class CompatConfig {
     private static final String TAG = "CompatConfig";
     private static final String APP_COMPAT_DATA_DIR = "/data/misc/appcompat";
@@ -110,7 +112,7 @@ final class CompatConfig {
         return config;
     }
 
-    @android.ravenwood.annotation.RavenwoodReplace
+    @RavenwoodReplace
     private void loadConfigFiles() {
         initConfigFromLib(Environment.buildPath(
                 Environment.getRootDirectory(), "etc", "compatconfig"));
@@ -875,6 +877,7 @@ final class CompatConfig {
         }
     }
 
+    @RavenwoodReplace
     @Nullable
     private Long getVersionCodeOrNull(String packageName) {
         try {
@@ -884,6 +887,11 @@ final class CompatConfig {
         } catch (PackageManager.NameNotFoundException e) {
             return null;
         }
+    }
+
+    @Nullable
+    private Long getVersionCodeOrNull$ravenwood(String packageName) {
+        return 1L;
     }
 
     void registerContentObserver() {
