@@ -197,7 +197,7 @@ export default class DOM {
         }
 
         if (content != undefined) {
-            el.innerHTML = `${content}`;
+            el.textContent = `${content}`;
         }
 
         return true;
