@@ -22,6 +22,30 @@
       },
       "revId": "e639c93347392720096c21508e2371a31a031d5f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89ce991c_3488ba93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2025-01-06T15:27:21Z",
+      "side": 1,
+      "message": "Thank you Nicolas! Yes the reason is AconfigPackage is a class in mainline module, PlatformAconfigPackage is a class on the non-updatable part.\n\n\nAconfigPackage has a sdk_int check to decide whether should it load PlatformAconfigPackage, currently it checks weather sdk_int \u003e 35, which means it will never preload the platformAconfigPackage in the current trunk. So all the init logic of PlatformAconfigPackage will be executed by each process. PlatformAconfigPackage is used in the current non-updatable parts\n\nwe cannot check flag, since it cannot use the read_write flags, since this code is used by the generated flag accessor. we cannot use read_only flags, since AconfigPackage is in a mainline module, we don\u0027t want it to be enabled on older verion. so we need to control it by the sdk check.",
+      "parentUuid": "a82b4ad1_0a6c3d93",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "e639c93347392720096c21508e2371a31a031d5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
