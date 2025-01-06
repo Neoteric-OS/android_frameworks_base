@@ -293,6 +293,7 @@ import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
 import com.android.server.lineage.health.HealthInterfaceService;
+import com.android.server.neoteric.PowerShareService;
 
 import dalvik.system.VMRuntime;
 import dalvik.system.PathClassLoader;
@@ -313,6 +314,8 @@ import java.util.Timer;
 import java.util.TreeSet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
+
+import vendor.lineage.powershare.IPowerShare;
 
 /**
  * Entry point to {@code system_server}.
@@ -1746,6 +1749,13 @@ public final class SystemServer implements Dumpable {
             t.traceBegin("StartSmart5gService");
             mSystemServiceManager.startService(Smart5gService.class);
             t.traceEnd();
+
+            if (IPowerShare.Stub.asInterface(ServiceManager.
+                        getService("vendor.lineage.powershare.IPowerShare/default")) != null) {
+                t.traceBegin("StartPowerShareService");
+                mSystemServiceManager.startService(PowerShareService.class);
+                t.traceEnd();
+            }
 
         } catch (Throwable e) {
             Slog.e("System", "******************************************");

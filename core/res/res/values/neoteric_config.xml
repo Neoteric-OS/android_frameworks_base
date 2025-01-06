@@ -179,4 +179,7 @@
     <!-- Defines the value used by the device sysfs node
          to disable DC dimming -->
     <string name="config_deviceDcDimmingDisableValue">0</string>
+
+    <!-- Power share thresholds -->
+    <integer name="config_defPowerShareThreshold">20</integer>
 </resources>

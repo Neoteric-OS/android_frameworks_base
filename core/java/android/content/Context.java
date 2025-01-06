@@ -6670,6 +6670,15 @@ public abstract class Context {
     public static final String DC_DIM_SERVICE = "dc_dim";
 
     /**
+     * {@link android.hardware.PowerShareManager} for accessing and setting locked apps state.
+     *
+     * @see #getSystemService(String)
+     * @see android.hardware.PowerShareManager
+     * @hide
+     */
+    public static final String POWER_SHARE_SERVICE = "power_share";
+
+    /**
      * Determine whether the given permission is allowed for a particular
      * process and user ID running in the system.
      *
