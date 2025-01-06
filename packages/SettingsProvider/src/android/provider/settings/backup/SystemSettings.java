@@ -129,7 +129,8 @@ public class SystemSettings {
                 Settings.System.QS_SHOW_BRIGHTNESS,
         	Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
 		Settings.System.STATUS_BAR_BATTERY_STYLE,
-        	Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT
+        	Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT,
+                Settings.System.POWER_SHARE_THRESHOLD
         ));
         if (Flags.backUpSmoothDisplayAndForcePeakRefreshRate()) {
             settings.add(Settings.System.PEAK_REFRESH_RATE);
