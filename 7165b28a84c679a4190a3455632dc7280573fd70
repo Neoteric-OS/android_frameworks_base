@@ -90,6 +90,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "13e635b3_66a99091",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-01-06T21:39:58Z",
+      "side": 1,
+      "message": "If you parse an APK archive on the file system, you may parse one without signing certificates and that\u0027s totally fine and should be accounted for, so this method is marked nullable. However, the code here is going through APKs that are installed in the system, and IIUC the system just might not allow APKs without a signing certificate to be or remain installed.\n\n@schfan@google.com could you please confirm if we should ever account for an installed APK to not have any signing certificates? If so I\u0027ll be fine with merging, but if not I\u0027d like Jilou to provide more context on the situations this will actually needed in.",
+      "parentUuid": "73e7cb5d_538897af",
+      "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d8e4e471_e9813941",
