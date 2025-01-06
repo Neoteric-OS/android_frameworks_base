@@ -328,8 +328,9 @@ import com.android.server.webkit.WebViewUpdateService;
 import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
-import com.android.server.neoteric.CustomDeviceConfigService;
 import com.android.server.lineage.health.HealthInterfaceService;
+import com.android.server.neoteric.CustomDeviceConfigService;
+import com.android.server.neoteric.PowerShareService;
 
 import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
@@ -358,6 +359,8 @@ import java.util.concurrent.Future;
 
 import com.android.qcomfeatureconfig.QcomLowRamConfig;
 import vendor.qti.applauncher.AppLauncherService;
+
+import vendor.lineage.powershare.IPowerShare;
 
 /**
  * Entry point to {@code system_server}.
@@ -1919,6 +1922,13 @@ public final class SystemServer implements Dumpable {
             if (!isWatch && !isTv && !isAutomotive && enableTradeInMode()) {
                 t.traceBegin("StartTradeInModeService");
                 mSystemServiceManager.startService(TradeInModeService.class);
+                t.traceEnd();
+            }
+
+            if (IPowerShare.Stub.asInterface(ServiceManager.
+                        getService("vendor.lineage.powershare.IPowerShare/default")) != null) {
+                t.traceBegin("StartPowerShareService");
+                mSystemServiceManager.startService(PowerShareService.class);
                 t.traceEnd();
             }
 
