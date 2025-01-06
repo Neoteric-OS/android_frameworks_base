@@ -5798,6 +5798,15 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
             // Skip sync for invisible app windows which are not managed by activity lifecycle.
             return false;
         }
+
+        if (mHasSurface && mWinAnimator.mDrawState != DRAW_PENDING && mActivityRecord != null
+                && mActivityRecord.isVisibleRequested() && mViewVisibility == View.VISIBLE
+                && mWinAnimator.mAttrType != TYPE_APPLICATION_STARTING
+                && mActivityRecord.firstWindowDrawn) {
+            mSyncState = SYNC_STATE_NONE;
+            return false;
+        }
+
         // In the WindowContainer implementation we immediately mark ready
         // since a generic WindowContainer only needs to wait for its
         // children to finish and is immediately ready from its own
