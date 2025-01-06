@@ -216,6 +216,10 @@ constructor(
                         communalSceneInteractor.changeScene(
                             newScene = CommunalScenes.Blank,
                             loggingReason = "hub timeout",
+                            transitionKey =
+                                if (communalSettingsInteractor.isV2FlagEnabled())
+                                    CommunalTransitionKeys.SimpleFade
+                                else null,
                         )
                         uiEventLogger.log(CommunalUiEvent.COMMUNAL_HUB_TIMEOUT)
                     }

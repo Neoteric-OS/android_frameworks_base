@@ -260,6 +260,7 @@ import com.android.server.policy.WindowManagerPolicy;
 import com.android.server.wm.utils.RegionUtils;
 import com.android.server.wm.utils.RotationCache;
 import com.android.server.wm.utils.WmDisplayCutout;
+import com.android.window.flags.Flags;
 
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
@@ -791,6 +792,12 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
     private WindowState mLastWakeLockHoldingWindow;
 
     /**
+     * Whether display is allowed to ignore all activity size restrictions.
+     * @see #isDisplayIgnoreActivitySizeRestrictions
+     */
+    private final boolean mIgnoreActivitySizeRestrictions;
+
+    /**
      * The helper of policy controller.
      *
      * @see DisplayWindowPolicyControllerHelper
@@ -1220,6 +1227,8 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
 
         setWindowingMode(WINDOWING_MODE_FULLSCREEN);
         mWmService.mDisplayWindowSettings.applySettingsToDisplayLocked(this);
+        mIgnoreActivitySizeRestrictions =
+                mWmService.mDisplayWindowSettings.isIgnoreActivitySizeRestrictionsLocked(this);
 
         // Sets the initial touch mode state.
         mInTouchMode = mWmService.mContext.getResources().getBoolean(
@@ -1264,7 +1273,13 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
     @Override
     void migrateToNewSurfaceControl(Transaction t) {
         t.remove(mSurfaceControl);
-
+        // Reset the recording displays which were mirroring this display.
+        for (int i = mRootWindowContainer.getChildCount() - 1; i >= 0; i--) {
+            final ContentRecorder recorder = mRootWindowContainer.getChildAt(i).mContentRecorder;
+            if (recorder != null) {
+                recorder.resetRecordingDisplay(mDisplayId);
+            }
+        }
         mLastSurfacePosition.set(0, 0);
         mLastDeltaRotation = Surface.ROTATION_0;
 
@@ -1376,11 +1391,16 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         mTokenMap.put(binder, token);
 
         if (token.asActivityRecord() == null) {
-            // Set displayContent for non-app token to prevent same token will add twice after
-            // onDisplayChanged.
-            // TODO: Check if it's fine that super.onDisplayChanged of WindowToken
-            //  (WindowsContainer#onDisplayChanged) may skipped when token.mDisplayContent assigned.
-            token.mDisplayContent = this;
+            // Setting the mDisplayContent to the token is not needed: it is done by da.addChild
+            // below, that also calls onDisplayChanged once moved.
+            if (!Flags.reparentWindowTokenApi()) {
+                // Set displayContent for non-app token to prevent same token will add twice after
+                // onDisplayChanged.
+                // TODO: Check if it's fine that super.onDisplayChanged of WindowToken
+                //  (WindowsContainer#onDisplayChanged) may skipped when token.mDisplayContent
+                //  assigned.
+                token.mDisplayContent = this;
+            }
             // Add non-app token to container hierarchy on the display. App tokens are added through
             // the parent container managing them (e.g. Tasks).
             final DisplayArea.Tokens da = findAreaForToken(token).asTokens();
@@ -2266,7 +2286,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         if (shellTransitions) {
             // Before setDisplayProjection is applied by the start transaction of transition,
             // set the transform hint to avoid using surface in old rotation.
-            getPendingTransaction().setFixedTransformHint(mSurfaceControl, rotation);
+            setFixedTransformHint(getPendingTransaction(), mSurfaceControl, rotation);
             // The sync transaction should already contains setDisplayProjection, so unset the
             // hint to restore the natural state when the transaction is applied.
             transaction.unsetFixedTransformHint(mSurfaceControl);
@@ -2274,6 +2294,10 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         scheduleAnimation();
 
         mWmService.mRotationWatcherController.dispatchDisplayRotationChange(mDisplayId, rotation);
+    }
+
+    void setFixedTransformHint(Transaction t, SurfaceControl sc, int rotation) {
+        t.setFixedTransformHint(sc, (rotation + mDisplayInfo.installOrientation) % 4);
     }
 
     void configureDisplayPolicy() {
@@ -4267,16 +4291,13 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             return DISPLAY_IME_POLICY_FALLBACK_DISPLAY;
         }
         final int imePolicy = mWmService.mDisplayWindowSettings.getImePolicyLocked(this);
-        if (imePolicy == DISPLAY_IME_POLICY_FALLBACK_DISPLAY && forceDesktopMode()) {
+        if (imePolicy == DISPLAY_IME_POLICY_FALLBACK_DISPLAY
+                && isPublicSecondaryDisplayWithDesktopModeForceEnabled()) {
             // If the display has not explicitly requested for the IME to be hidden then it shall
             // show the IME locally.
             return DISPLAY_IME_POLICY_LOCAL;
         }
         return imePolicy;
-    }
-
-    boolean forceDesktopMode() {
-        return mWmService.mForceDesktopModeOnExternalDisplays && !isDefaultDisplay && !isPrivate();
     }
 
     /** @see WindowManagerInternal#onToggleImeRequested */
@@ -4871,7 +4892,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
 
     /** @return {@code true} if there is window to wait before enabling the screen. */
     boolean shouldWaitForSystemDecorWindowsOnBoot() {
-        if (!isDefaultDisplay && !supportsSystemDecorations()) {
+        if (!isDefaultDisplay && !isSystemDecorationsSupported()) {
             // Nothing to wait because the secondary display doesn't support system decorations,
             // there is no wallpaper, keyguard (status bar) or application (home) window to show
             // during booting.
@@ -5502,12 +5523,16 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             // Attach the SystemUiContext to this DisplayContent the get latest configuration.
             // Note that the SystemUiContext will be removed automatically if this DisplayContent
             // is detached.
-            final WindowProcessController wpc = mAtmService.getProcessController(
-                    getDisplayUiContext().getIApplicationThread());
-            mWmService.mWindowContextListenerController.registerWindowContainerListener(
-                    wpc, getDisplayUiContext().getWindowContextToken(), this,
-                    INVALID_WINDOW_TYPE, null /* options */);
+            registerSystemUiContext();
         }
+    }
+
+    private void registerSystemUiContext() {
+        final WindowProcessController wpc = mAtmService.getProcessController(
+                getDisplayUiContext().getIApplicationThread());
+        mWmService.mWindowContextListenerController.registerWindowContainerListener(
+                wpc, getDisplayUiContext().getWindowContextToken(), this,
+                INVALID_WINDOW_TYPE, null /* options */);
     }
 
     @Override
@@ -5746,22 +5771,48 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
     /**
      * @see Display#FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS
      */
-    boolean supportsSystemDecorations() {
-        boolean forceDesktopModeOnDisplay = forceDesktopMode();
-
-        if (com.android.window.flags.Flags.rearDisplayDisableForceDesktopSystemDecorations()) {
-            // System decorations should not be forced on a rear display due to security policies.
-            forceDesktopModeOnDisplay =
-                    forceDesktopModeOnDisplay && ((mDisplay.getFlags() & Display.FLAG_REAR) == 0);
+    boolean isSystemDecorationsSupported() {
+        if (mDisplayId == mWmService.mVr2dDisplayId) {
+            // VR virtual display will be used to run and render 2D app within a VR experience.
+            return false;
         }
+        if (!isTrusted()) {
+            // Do not show system decorations on untrusted virtual display.
+            return false;
+        }
+        if (mWmService.mDisplayWindowSettings.shouldShowSystemDecorsLocked(this)
+                || (mDisplay.getFlags() & FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS) != 0) {
+            // This display is configured to show system decorations.
+            return true;
+        }
+        if (isPublicSecondaryDisplayWithDesktopModeForceEnabled()) {
+            if (com.android.window.flags.Flags.rearDisplayDisableForceDesktopSystemDecorations()) {
+                // System decorations should not be forced on a rear display due to security
+                // policies.
+                return (mDisplay.getFlags() & Display.FLAG_REAR) == 0;
+            }
+            // If the display is forced to desktop mode, treat it the same as it is configured to
+            // show system decorations.
+            return true;
+        }
+        return false;
+    }
 
-        return (mWmService.mDisplayWindowSettings.shouldShowSystemDecorsLocked(this)
-                || (mDisplay.getFlags() & FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS) != 0
-                || forceDesktopModeOnDisplay)
-                // VR virtual display will be used to run and render 2D app within a VR experience.
-                && mDisplayId != mWmService.mVr2dDisplayId
-                // Do not show system decorations on untrusted virtual display.
-                && isTrusted();
+    /**
+     * This is the development option to force enable desktop mode on all secondary public displays
+     * that are not owned by a virtual device.
+     * When this is enabled, it also force enable system decorations on those displays.
+     *
+     * If we need a per-display config to enable desktop mode for production, that config should
+     * also check {@link #isSystemDecorationsSupported()} to avoid breaking any security policy.
+     */
+    boolean isPublicSecondaryDisplayWithDesktopModeForceEnabled() {
+        if (!mWmService.mForceDesktopModeOnExternalDisplays || isDefaultDisplay || isPrivate()) {
+            return false;
+        }
+        // Desktop mode is not supported on virtual devices.
+        int deviceId = mRootWindowContainer.mTaskSupervisor.getDeviceIdForDisplayId(mDisplayId);
+        return deviceId == Context.DEVICE_ID_DEFAULT;
     }
 
     /**
@@ -5772,7 +5823,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
      */
     boolean isHomeSupported() {
         return (mWmService.mDisplayWindowSettings.isHomeSupportedLocked(this) && isTrusted())
-                || supportsSystemDecorations();
+                || isSystemDecorationsSupported();
     }
 
     /**
@@ -5783,7 +5834,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
      * {@link VirtualDisplayConfig.Builder#setIgnoreActivitySizeRestrictions}.</p>
      */
     boolean isDisplayIgnoreActivitySizeRestrictions() {
-        return mWmService.mDisplayWindowSettings.isIgnoreActivitySizeRestrictionsLocked(this);
+        return mIgnoreActivitySizeRestrictions;
     }
 
     /**
@@ -7057,12 +7108,15 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         }
 
         @Override
-        public void setImeInputTargetRequestedVisibility(boolean visible) {
+        public void setImeInputTargetRequestedVisibility(boolean visible,
+                @NonNull ImeTracker.Token statsToken) {
             if (android.view.inputmethod.Flags.refactorInsetsController()) {
                 // TODO(b/353463205) we won't have the statsToken in all cases, but should still log
                 try {
-                    mRemoteInsetsController.setImeInputTargetRequestedVisibility(visible);
+                    mRemoteInsetsController.setImeInputTargetRequestedVisibility(visible,
+                            statsToken);
                 } catch (RemoteException e) {
+                    // TODO(b/353463205) fail statsToken
                     Slog.w(TAG, "Failed to deliver setImeInputTargetRequestedVisibility", e);
                 }
             }
@@ -7071,9 +7125,11 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         /**
          * @see #getRequestedVisibleTypes()
          */
-        void setRequestedVisibleTypes(@InsetsType int requestedVisibleTypes) {
-            if (mRequestedVisibleTypes != requestedVisibleTypes) {
-                mRequestedVisibleTypes = requestedVisibleTypes;
+        void updateRequestedVisibleTypes(@InsetsType int visibleTypes, @InsetsType int mask) {
+            int newRequestedVisibleTypes =
+                    (mRequestedVisibleTypes & ~mask) | (visibleTypes & mask);
+            if (mRequestedVisibleTypes != newRequestedVisibleTypes) {
+                mRequestedVisibleTypes = newRequestedVisibleTypes;
             }
         }
     }

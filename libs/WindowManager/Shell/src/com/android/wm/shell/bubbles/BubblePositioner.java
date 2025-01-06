@@ -101,9 +101,13 @@ public class BubblePositioner {
     private int mBubbleBarTopOnScreen;
 
     public BubblePositioner(Context context, WindowManager windowManager) {
+        this(context, DeviceConfig.create(context, windowManager));
+    }
+
+    public BubblePositioner(Context context, DeviceConfig deviceConfig) {
         mContext = context;
-        mDeviceConfig = DeviceConfig.create(context, windowManager);
-        update(mDeviceConfig);
+        mDeviceConfig = deviceConfig;
+        update(deviceConfig);
     }
 
     /**
@@ -159,8 +163,11 @@ public class BubblePositioner {
             mExpandedViewLargeScreenWidth = (int) (bounds.width()
                     * EXPANDED_VIEW_SMALL_TABLET_WIDTH_PERCENT);
         } else {
-            mExpandedViewLargeScreenWidth =
-                    res.getDimensionPixelSize(R.dimen.bubble_expanded_view_largescreen_width);
+            int expandedViewLargeScreenSpacing = res.getDimensionPixelSize(
+                    R.dimen.bubble_expanded_view_largescreen_landscape_padding);
+            mExpandedViewLargeScreenWidth = Math.min(
+                    res.getDimensionPixelSize(R.dimen.bubble_expanded_view_largescreen_width),
+                    bounds.width() - expandedViewLargeScreenSpacing * 2);
         }
         if (mDeviceConfig.isLargeScreen()) {
             if (mDeviceConfig.isSmallTablet()) {

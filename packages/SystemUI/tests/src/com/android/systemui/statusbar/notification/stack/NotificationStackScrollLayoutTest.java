@@ -103,7 +103,7 @@ import com.android.systemui.statusbar.notification.stack.shared.model.ShadeScrim
 import com.android.systemui.statusbar.phone.KeyguardBypassController;
 import com.android.systemui.statusbar.phone.ScreenOffAnimationController;
 import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
-import com.android.systemui.statusbar.policy.AvalancheController;
+import com.android.systemui.statusbar.notification.headsup.AvalancheController;
 import com.android.systemui.statusbar.policy.ResourcesSplitShadeStateController;
 import com.android.systemui.wallpapers.domain.interactor.WallpaperInteractor;
 
@@ -1272,6 +1272,37 @@ public class NotificationStackScrollLayoutTest extends SysuiTestCase {
         // Then
         assertThat(mStackScroller.getIntrinsicStackHeight()).isEqualTo(fullStackHeight);
         assertThat(mAmbientState.getStackEndHeight()).isEqualTo(stackViewPortHeight);
+    }
+
+    @Test
+    @EnableSceneContainer
+    public void testChildHeightUpdated_whenMaxDisplayedNotificationsSet_updatesStackHeight() {
+        ExpandableNotificationRow row = mock(ExpandableNotificationRow.class);
+        int maxNotifs = 1; // any non-zero limit
+        float stackTop = 100;
+        float stackCutoff = 1100;
+        mStackScroller.setStackTop(stackTop);
+        mStackScroller.setStackCutoff(stackCutoff);
+
+        // Given we have a limit on max displayed notifications
+        int stackHeightBeforeUpdate = 100;
+        when(mStackSizeCalculator.computeHeight(eq(mStackScroller), eq(maxNotifs), anyFloat()))
+                .thenReturn((float) stackHeightBeforeUpdate);
+        mStackScroller.setMaxDisplayedNotifications(maxNotifs);
+
+        // And the stack heights are set
+        assertThat(mStackScroller.getIntrinsicStackHeight()).isEqualTo(stackHeightBeforeUpdate);
+        assertThat(mAmbientState.getStackEndHeight()).isEqualTo(stackHeightBeforeUpdate);
+
+        // When a child changes its height
+        int stackHeightAfterUpdate = 300;
+        when(mStackSizeCalculator.computeHeight(eq(mStackScroller), eq(maxNotifs), anyFloat()))
+                .thenReturn((float) stackHeightAfterUpdate);
+        mStackScroller.onChildHeightChanged(row, /* needsAnimation = */ false);
+
+        // Then the stack heights are updated
+        assertThat(mStackScroller.getIntrinsicStackHeight()).isEqualTo(stackHeightAfterUpdate);
+        assertThat(mAmbientState.getStackEndHeight()).isEqualTo(stackHeightAfterUpdate);
     }
 
     @Test

@@ -186,15 +186,20 @@ fun CommunalContainer(
     ) {
         scene(
             CommunalScenes.Blank,
-            userActions = mapOf(Swipe.Start(fromSource = Edge.End) to CommunalScenes.Communal),
+            userActions =
+                if (viewModel.v2FlagEnabled()) emptyMap()
+                else mapOf(Swipe.Start(fromSource = Edge.End) to CommunalScenes.Communal),
         ) {
             // This scene shows nothing only allowing for transitions to the communal scene.
             Box(modifier = Modifier.fillMaxSize())
         }
 
-        val userActions = mapOf(Swipe.End to CommunalScenes.Blank)
-
-        scene(CommunalScenes.Communal, userActions = userActions) {
+        scene(
+            CommunalScenes.Communal,
+            userActions =
+                if (viewModel.v2FlagEnabled()) emptyMap()
+                else mapOf(Swipe.End to CommunalScenes.Blank),
+        ) {
             CommunalScene(
                 backgroundType = backgroundType,
                 colors = colors,

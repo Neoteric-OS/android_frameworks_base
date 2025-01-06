@@ -20,6 +20,7 @@ import static android.Manifest.permission.CONFIGURE_DISPLAY_COLOR_MODE;
 import static android.Manifest.permission.CONTROL_DISPLAY_BRIGHTNESS;
 import static android.hardware.flags.Flags.FLAG_OVERLAYPROPERTIES_CLASS_API;
 
+import static com.android.server.display.feature.flags.Flags.FLAG_ENABLE_GET_SUPPORTED_REFRESH_RATES;
 import static com.android.server.display.feature.flags.Flags.FLAG_HIGHEST_HDR_SDR_RATIO_API;
 import static com.android.server.display.feature.flags.Flags.FLAG_ENABLE_HAS_ARR_SUPPORT;
 import static com.android.server.display.feature.flags.Flags.FLAG_ENABLE_GET_SUGGESTED_FRAME_RATE;
@@ -63,6 +64,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
@@ -1207,17 +1209,36 @@ public final class Display {
 
     /**
      * Get the supported refresh rates of this display in frames per second.
-     * <p>
-     * This method only returns refresh rates for the display's default modes. For more options, use
-     * {@link #getSupportedModes()}.
      *
-     * @deprecated use {@link #getSupportedModes()} instead
+     * <ul>
+     * <li> Android version {@link Build.VERSION_CODES#BAKLAVA} and above:
+     * returns display supported render rates.
+     * <li> Android version {@link Build.VERSION_CODES#VANILLA_ICE_CREAM} and below:
+     * This method only returns refresh rates for the display's default modes. For more options,
+     * use {@link #getSupportedModes()}.
+     * </ul>
      */
-    @Deprecated
-    public float[] getSupportedRefreshRates() {
+    @FlaggedApi(FLAG_ENABLE_GET_SUPPORTED_REFRESH_RATES)
+    public @NonNull float[] getSupportedRefreshRates() {
         synchronized (mLock) {
             updateDisplayInfoLocked();
-            return mDisplayInfo.getDefaultRefreshRates();
+            final float[] refreshRates = mDisplayInfo.getDefaultRefreshRates();
+            Objects.requireNonNull(refreshRates);
+            return refreshRates;
+        }
+    }
+
+    /**
+     * @hide
+     */
+    @TestApi
+    @SuppressLint({"UnflaggedApi"}) // Usage in the CTS to test backward compatibility.
+    public @NonNull float[] getSupportedRefreshRatesLegacy() {
+        synchronized (mLock) {
+            updateDisplayInfoLocked();
+            final float[] refreshRates = mDisplayInfo.getDefaultRefreshRatesLegacy();
+            Objects.requireNonNull(refreshRates);
+            return refreshRates;
         }
     }
 
@@ -1280,17 +1301,23 @@ public final class Display {
     }
 
     /**
-     * Represents the {@link FrameRateCategory} for the Normal frame rate
+     * Normal category determines the framework's recommended normal frame rate.
+     * Opt for this normal rate unless a higher frame rate significantly enhances
+     * the user experience.
      *
-     * @see FrameRateCategory
+     * @see #getSuggestedFrameRate(int)
+     * @see #FRAME_RATE_CATEGORY_HIGH
      */
     @FlaggedApi(FLAG_ENABLE_GET_SUGGESTED_FRAME_RATE)
     public static final int FRAME_RATE_CATEGORY_NORMAL = 0;
 
     /**
-     * Represents the {@link FrameRateCategory} for the High frame rate
+     * High category determines the framework's recommended high frame rate.
+     * Opt for this high rate when a higher frame rate significantly enhances
+     * the user experience.
      *
-     * @see FrameRateCategory
+     * @see #getSuggestedFrameRate(int)
+     * @see #FRAME_RATE_CATEGORY_NORMAL
      */
     @FlaggedApi(FLAG_ENABLE_GET_SUGGESTED_FRAME_RATE)
     public static final int FRAME_RATE_CATEGORY_HIGH = 1;
@@ -1311,22 +1338,17 @@ public final class Display {
      *
      * <p> For example, an animation that does not require fast render rates can use
      * the {@link #FRAME_RATE_CATEGORY_NORMAL} to get the suggested frame rate.
-     * The suggested frame rate then can be used in the
-     * {@link Surface.FrameRateParams.Builder#setDesiredRateRange} for desiredMinRate.
      *
      * <pre>{@code
      *  float desiredMinRate = display.getSuggestedFrameRate(FRAME_RATE_CATEGORY_NORMAL);
-     *  Surface.FrameRateParams params = new Surface.FrameRateParams.Builder().
-     *                                      setDesiredRateRange(desiredMinRate, Float.MAX).build();
-     *  surface.setFrameRate(params);
+     *  surface.setFrameRate(desiredMinRate, Surface.FRAME_RATE_COMPATIBILITY_DEFAULT);
      * }</pre>
      * </p>
      *
      * @param category either {@link #FRAME_RATE_CATEGORY_NORMAL}
      *                 or {@link #FRAME_RATE_CATEGORY_HIGH}
      *
-     * @see Surface#setFrameRate(Surface.FrameRateParams)
-     * @see SurfaceControl.Transaction#setFrameRate(SurfaceControl, Surface.FrameRateParams)
+     * @see Surface#setFrameRate(float, int)
      * @throws IllegalArgumentException when category is not {@link #FRAME_RATE_CATEGORY_NORMAL}
      * or {@link #FRAME_RATE_CATEGORY_HIGH}
      */
@@ -2449,6 +2471,8 @@ public final class Display {
          * constrained by the system.
          * @hide
          */
+        @SuppressWarnings("UnflaggedApi") // For testing only
+        @TestApi
         public float getVsyncRate() {
             return mVsyncRate;
         }

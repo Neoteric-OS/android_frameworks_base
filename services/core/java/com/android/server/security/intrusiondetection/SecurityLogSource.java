@@ -22,6 +22,7 @@ import android.app.admin.DevicePolicyManager;
 import android.app.admin.SecurityLog.SecurityEvent;
 import android.content.Context;
 import android.security.intrusiondetection.IntrusionDetectionEvent;
+import android.util.Slog;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -33,7 +34,7 @@ public class SecurityLogSource implements DataSource {
 
     private static final String TAG = "IntrusionDetection SecurityLogSource";
 
-    private SecurityEventCallback mEventCallback = new SecurityEventCallback();
+    private SecurityEventCallback mEventCallback;
     private DevicePolicyManager mDpm;
     private Executor mExecutor;
     private DataAggregator mDataAggregator;
@@ -72,12 +73,8 @@ public class SecurityLogSource implements DataSource {
         }
     }
 
-    /**
-     * Check if security audit logging is enabled for the caller.
-     *
-     * @return Whether security audit logging is enabled.
-     */
-    public boolean isAuditLogEnabled() {
+    @RequiresPermission(permission.MANAGE_DEVICE_POLICY_AUDIT_LOGGING)
+    private boolean isAuditLogEnabled() {
         return mDpm.isAuditLogEnabled();
     }
 
@@ -85,6 +82,10 @@ public class SecurityLogSource implements DataSource {
 
         @Override
         public void accept(List<SecurityEvent> events) {
+            if (events.size() == 0) {
+                Slog.w(TAG, "No events received; caller may not be authorized");
+                return;
+            }
             List<IntrusionDetectionEvent> intrusionDetectionEvents =
                     events.stream()
                             .filter(event -> event != null)

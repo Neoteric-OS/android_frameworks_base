@@ -47,7 +47,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.verticalScroll
@@ -233,6 +232,7 @@ constructor(
                 // Only allow scrolling when we are fully expanded. That way, we don't intercept
                 // swipes in lockscreen (when somehow QS is receiving touches).
                 { (scrollState.canScrollForward && viewModel.isQsFullyExpanded) || isCustomizing },
+                viewModel::emitMotionEventForFalsingSwipeNested,
             )
         frame.addView(
             composeView,
@@ -247,7 +247,7 @@ constructor(
         PlatformTheme(isDarkTheme = true) {
             ProvideShortcutHelperIndication(interactionsConfig = interactionsConfig()) {
                 AnimatedVisibility(
-                    visible = viewModel.isQsVisible,
+                    visible = viewModel.isQsVisibleAndAnyShadeExpanded,
                     modifier =
                         Modifier.graphicsLayer { alpha = viewModel.viewAlpha }
                             // Clipping before translation to match QSContainerImpl.onDraw
@@ -628,11 +628,7 @@ constructor(
                                         id = R.string.accessibility_quick_settings_expand
                                     )
                                 )
-                                .padding(
-                                    horizontal = {
-                                        QuickSettingsShade.Dimensions.Padding.roundToPx()
-                                    }
-                                )
+                                .padding(horizontal = qsHorizontalMargin())
                     ) {
                         QuickQuickSettingsLayout(
                             tiles = Tiles,
@@ -712,13 +708,7 @@ constructor(
                                     GridAnchor()
                                     TileGrid(
                                         viewModel = containerViewModel.tileGridViewModel,
-                                        modifier =
-                                            Modifier.fillMaxWidth()
-                                                .heightIn(
-                                                    max =
-                                                        QuickSettingsShade.Dimensions.GridMaxHeight
-                                                ),
-                                        containerViewModel.editModeViewModel::startEditing,
+                                        modifier = Modifier.fillMaxWidth(),
                                     )
                                 }
                             }
@@ -737,8 +727,8 @@ constructor(
                                     .sysuiResTag(ResIdTags.quickSettingsPanel)
                                     .padding(
                                         top = QuickSettingsShade.Dimensions.Padding,
-                                        start = QuickSettingsShade.Dimensions.Padding,
-                                        end = QuickSettingsShade.Dimensions.Padding,
+                                        start = qsHorizontalMargin(),
+                                        end = qsHorizontalMargin(),
                                     )
                         ) {
                             QuickSettingsLayout(
@@ -951,6 +941,7 @@ private class FrameLayoutTouchPassthrough(
     private val clippingEnabledProvider: () -> Boolean,
     private val clippingTopProvider: () -> Int,
     private val canScrollForwardQs: () -> Boolean,
+    private val emitMotionEventForFalsing: () -> Unit,
 ) : FrameLayout(context) {
     override fun isTransformedTouchPointInView(
         x: Float,
@@ -967,6 +958,32 @@ private class FrameLayoutTouchPassthrough(
 
     val touchSlop = ViewConfiguration.get(context).scaledTouchSlop
     var downY = 0f
+    var preventingIntercept = false
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        val action = event.actionMasked
+        when (action) {
+            MotionEvent.ACTION_DOWN -> {
+                preventingIntercept = false
+                if (canScrollVertically(1)) {
+                    // If we can scroll down, make sure we're not intercepted by the parent
+                    preventingIntercept = true
+                    parent?.requestDisallowInterceptTouchEvent(true)
+                } else if (!canScrollVertically(-1)) {
+                    // Don't pass on the touch to the view, because scrolling will unconditionally
+                    // disallow interception even if we can't scroll.
+                    // if a user can't scroll at all, we should never listen to the touch.
+                    return false
+                }
+            }
+            MotionEvent.ACTION_UP -> {
+                if (preventingIntercept) {
+                    emitMotionEventForFalsing()
+                }
+            }
+        }
+        return super.onTouchEvent(event)
+    }
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         // If there's a touch on this view and we can scroll down, we don't want to be intercepted
@@ -974,8 +991,10 @@ private class FrameLayoutTouchPassthrough(
 
         when (action) {
             MotionEvent.ACTION_DOWN -> {
+                preventingIntercept = false
                 // If we can scroll down, make sure none of our parents intercepts us.
                 if (canScrollForwardQs()) {
+                    preventingIntercept = true
                     parent?.requestDisallowInterceptTouchEvent(true)
                 }
                 downY = ev.y
@@ -1097,6 +1116,8 @@ private object ResIdTags {
     const val qsScroll = "expanded_qs_scroll_view"
     const val qsFooterActions = "qs_footer_actions"
 }
+
+@Composable private fun qsHorizontalMargin() = dimensionResource(id = R.dimen.qs_horizontal_margin)
 
 @Composable
 private fun interactionsConfig() =

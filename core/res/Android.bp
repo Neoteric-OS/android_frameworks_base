@@ -160,7 +160,9 @@ android_app {
         "android.app.contextualsearch.flags-aconfig",
         "android.app.flags-aconfig",
         "android.appwidget.flags-aconfig",
+        "android.companion.virtualdevice.flags-aconfig",
         "android.content.pm.flags-aconfig",
+        "android.location.flags-aconfig",
         "android.media.audio-aconfig",
         "android.provider.flags-aconfig",
         "camera_platform_flags",
@@ -177,6 +179,7 @@ android_app {
         "art-aconfig-flags",
         "ranging_aconfig_flags",
         "aconfig_settingslib_flags",
+        "telephony_flags",
     ],
 }
 

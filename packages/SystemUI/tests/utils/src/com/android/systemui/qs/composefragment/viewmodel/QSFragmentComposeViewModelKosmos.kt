@@ -18,10 +18,12 @@ package com.android.systemui.qs.composefragment.viewmodel
 
 import android.content.res.mainResources
 import androidx.lifecycle.LifecycleCoroutineScope
+import com.android.systemui.classifier.domain.interactor.falsingInteractor
 import com.android.systemui.common.ui.domain.interactor.configurationInteractor
 import com.android.systemui.deviceentry.domain.interactor.deviceEntryInteractor
 import com.android.systemui.keyguard.domain.interactor.keyguardTransitionInteractor
 import com.android.systemui.kosmos.Kosmos
+import com.android.systemui.log.table.logcatTableLogBuffer
 import com.android.systemui.media.controls.ui.view.qqsMediaHost
 import com.android.systemui.media.controls.ui.view.qsMediaHost
 import com.android.systemui.qs.composefragment.dagger.usingMediaInComposeFragment
@@ -31,6 +33,7 @@ import com.android.systemui.qs.panels.domain.interactor.tileSquishinessInteracto
 import com.android.systemui.qs.panels.ui.viewmodel.inFirstPageViewModel
 import com.android.systemui.qs.panels.ui.viewmodel.mediaInRowInLandscapeViewModelFactory
 import com.android.systemui.qs.ui.viewmodel.quickSettingsContainerViewModelFactory
+import com.android.systemui.shade.domain.interactor.shadeInteractor
 import com.android.systemui.shade.largeScreenHeaderHelper
 import com.android.systemui.shade.transition.largeScreenShadeInterpolator
 import com.android.systemui.statusbar.disableflags.domain.interactor.disableFlagsInteractor
@@ -54,10 +57,13 @@ val Kosmos.qsFragmentComposeViewModelFactory by
                     disableFlagsInteractor,
                     keyguardTransitionInteractor,
                     largeScreenShadeInterpolator,
+                    shadeInteractor,
                     configurationInteractor,
                     largeScreenHeaderHelper,
                     tileSquishinessInteractor,
+                    falsingInteractor,
                     inFirstPageViewModel,
+                    logcatTableLogBuffer(this@Fixture),
                     mediaInRowInLandscapeViewModelFactory,
                     qqsMediaHost,
                     qsMediaHost,

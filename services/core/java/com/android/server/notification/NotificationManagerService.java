@@ -2594,6 +2594,7 @@ public class NotificationManagerService extends SystemService {
                     intent.setPackage(pkg);
                     intent.putExtra(EXTRA_AUTOMATIC_ZEN_RULE_ID, id);
                     intent.putExtra(EXTRA_AUTOMATIC_ZEN_RULE_STATUS, status);
+                    intent.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
                     getContext().sendBroadcastAsUser(intent, UserHandle.of(userId));
                 });
             }
@@ -6596,6 +6597,14 @@ public class NotificationManagerService extends SystemService {
                 getContext().enforceCallingOrSelfPermission(
                         android.Manifest.permission.INTERACT_ACROSS_USERS,
                         "setNotificationListenerAccessGrantedForUser for user " + userId);
+            }
+            if (mUmInternal.isVisibleBackgroundFullUser(userId)) {
+                // The main use case for visible background users is the Automotive multi-display
+                // configuration where a passenger can use a secondary display while the driver is
+                // using the main display. NotificationListeners is designed only for the current
+                // user and work profile. We added a condition to prevent visible background users
+                // from updating the data managed within the NotificationListeners object.
+                return;
             }
             checkNotificationListenerAccess();
             if (granted && listener.flattenToString().length()
@@ -12743,6 +12752,20 @@ public class NotificationManagerService extends SystemService {
                     }
                 }
             }
+        }
+
+        @Override
+        public void onUserUnlocked(int user) {
+            if (mUmInternal.isVisibleBackgroundFullUser(user)) {
+                // The main use case for visible background users is the Automotive
+                // multi-display configuration where a passenger can use a secondary
+                // display while the driver is using the main display.
+                // NotificationListeners is designed only for the current user and work
+                // profile. We added a condition to prevent visible background users from
+                // updating the data managed within the NotificationListeners object.
+                return;
+            }
+            super.onUserUnlocked(user);
         }
 
         @Override

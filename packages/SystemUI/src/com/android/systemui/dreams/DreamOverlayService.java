@@ -54,14 +54,18 @@ import com.android.internal.logging.UiEventLogger;
 import com.android.internal.policy.PhoneWindow;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
+import com.android.systemui.ambient.touch.TouchHandler;
 import com.android.systemui.ambient.touch.TouchMonitor;
 import com.android.systemui.ambient.touch.dagger.AmbientTouchComponent;
 import com.android.systemui.ambient.touch.scrim.ScrimManager;
 import com.android.systemui.communal.domain.interactor.CommunalInteractor;
+import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor;
 import com.android.systemui.communal.shared.log.CommunalUiEvent;
 import com.android.systemui.communal.shared.model.CommunalScenes;
+import com.android.systemui.communal.shared.model.CommunalTransitionKeys;
 import com.android.systemui.complication.dagger.ComplicationComponent;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.dreams.complication.dagger.DreamComplicationComponent;
 import com.android.systemui.dreams.dagger.DreamOverlayComponent;
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor;
 import com.android.systemui.navigationbar.gestural.domain.GestureInteractor;
@@ -76,8 +80,8 @@ import com.android.systemui.util.concurrency.DelayableExecutor;
 import kotlinx.coroutines.Job;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.function.Consumer;
 
@@ -138,8 +142,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
      */
     private boolean mBouncerShowing = false;
 
-    private final com.android.systemui.dreams.complication.dagger.ComplicationComponent.Factory
-            mDreamComplicationComponentFactory;
+    private final DreamComplicationComponent.Factory mDreamComplicationComponentFactory;
     private final ComplicationComponent.Factory mComplicationComponentFactory;
     private final DreamOverlayComponent.Factory mDreamOverlayComponentFactory;
     private final AmbientTouchComponent.Factory mAmbientTouchComponentFactory;
@@ -168,6 +171,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
 
     private final SceneInteractor mSceneInteractor;
     private final CommunalInteractor mCommunalInteractor;
+    private final CommunalSettingsInteractor mCommunalSettingsInteractor;
 
     private boolean mCommunalAvailable;
 
@@ -373,14 +377,14 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
             @Main DelayableExecutor executor,
             ViewCaptureAwareWindowManager viewCaptureAwareWindowManager,
             ComplicationComponent.Factory complicationComponentFactory,
-            com.android.systemui.dreams.complication.dagger.ComplicationComponent.Factory
-                    dreamComplicationComponentFactory,
+            DreamComplicationComponent.Factory dreamComplicationComponentFactory,
             DreamOverlayComponent.Factory dreamOverlayComponentFactory,
             AmbientTouchComponent.Factory ambientTouchComponentFactory,
             DreamOverlayStateController stateController,
             KeyguardUpdateMonitor keyguardUpdateMonitor,
             ScrimManager scrimManager,
             CommunalInteractor communalInteractor,
+            CommunalSettingsInteractor communalSettingsInteractor,
             SceneInteractor sceneInteractor,
             SystemDialogsCloser systemDialogsCloser,
             UiEventLogger uiEventLogger,
@@ -409,6 +413,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         mDreamOverlayCallbackController = dreamOverlayCallbackController;
         mWindowTitle = windowTitle;
         mCommunalInteractor = communalInteractor;
+        mCommunalSettingsInteractor = communalSettingsInteractor;
         mSceneInteractor = sceneInteractor;
         mSystemDialogsCloser = systemDialogsCloser;
         mGestureInteractor = gestureInteractor;
@@ -476,18 +481,23 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
                 mLifecycleOwner,
                 () -> mExecutor.execute(DreamOverlayService.this::requestExit),
                 new ViewModelStore(), mTouchInsetManager);
-        final com.android.systemui.dreams.complication.dagger.ComplicationComponent
-                dreamComplicationComponent = mDreamComplicationComponentFactory.create(
-                complicationComponent.getVisibilityController(), mTouchInsetManager);
+        final DreamComplicationComponent dreamComplicationComponent =
+                mDreamComplicationComponentFactory.create(
+                        complicationComponent.getVisibilityController(), mTouchInsetManager);
 
         final DreamOverlayComponent dreamOverlayComponent = mDreamOverlayComponentFactory.create(
                 mLifecycleOwner, complicationComponent.getComplicationHostViewController(),
                 mTouchInsetManager);
+
+        final ArrayList<TouchHandler> touchHandlers = new ArrayList<>(
+                List.of(dreamComplicationComponent.getHideComplicationTouchHandler()));
+        if (!mCommunalSettingsInteractor.isV2FlagEnabled()) {
+            // Do not add the communal touch handler for glanceable hub v2 since there is no dream
+            // to hub swipe gesture.
+            touchHandlers.add(dreamOverlayComponent.getCommunalTouchHandler());
+        }
         final AmbientTouchComponent ambientTouchComponent = mAmbientTouchComponentFactory.create(
-                mLifecycleOwner,
-                new HashSet<>(Arrays.asList(
-                        dreamComplicationComponent.getHideComplicationTouchHandler(),
-                        dreamOverlayComponent.getCommunalTouchHandler())), TAG);
+                mLifecycleOwner, new HashSet<>(touchHandlers), TAG);
 
         setLifecycleStateLocked(Lifecycle.State.STARTED);
 
@@ -568,7 +578,8 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         } else {
             mCommunalInteractor.changeScene(CommunalScenes.Communal,
                     "dream wake requested",
-                    null);
+                    mCommunalSettingsInteractor.isV2FlagEnabled()
+                            ? CommunalTransitionKeys.INSTANCE.getSimpleFade() : null);
         }
     }
 

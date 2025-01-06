@@ -40,7 +40,7 @@ import static android.view.WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW;
 import static android.view.WindowManager.LayoutParams.LAST_APPLICATION_WINDOW;
 
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_TASKS;
-import static com.android.launcher3.Flags.enableRefactorTaskThumbnail;
+import static com.android.launcher3.Flags.enableUseTopVisibleActivityForExcludeFromRecentTask;
 import static com.android.server.wm.ActivityRecord.State.RESUMED;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_RECENTS;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_RECENTS_TRIM_TASKS;
@@ -497,11 +497,18 @@ class RecentTasks {
         mTaskNotificationController.notifyTaskListUpdated();
     }
 
-    private void notifyTaskRemoved(Task task, boolean wasTrimmed, boolean killProcess) {
+    private void notifyTaskRemoved(Task task, boolean wasTrimmed, boolean killProcess,
+            boolean removedForAddTask) {
         for (int i = 0; i < mCallbacks.size(); i++) {
             mCallbacks.get(i).onRecentTaskRemoved(task, wasTrimmed, killProcess);
         }
         mTaskNotificationController.notifyTaskListUpdated();
+        if (removedForAddTask) {
+            mTaskNotificationController.notifyRecentTaskRemovedForAddTask(task.mTaskId);
+        }
+    }
+    private void notifyTaskRemoved(Task task, boolean wasTrimmed, boolean killProcess) {
+        notifyTaskRemoved(task, wasTrimmed, killProcess, false /* removedForAddTask */);
     }
 
     /**
@@ -1540,7 +1547,7 @@ class RecentTasks {
                 // The Recents is only supported on default display now, we should only keep the
                 // most recent task of home display.
                 boolean isMostRecentTask;
-                if (enableRefactorTaskThumbnail()) {
+                if (enableUseTopVisibleActivityForExcludeFromRecentTask()) {
                     isMostRecentTask = task.getTopVisibleActivity() != null;
                 } else {
                     isMostRecentTask = taskIndex == 0;
@@ -1653,7 +1660,8 @@ class RecentTasks {
                 // from becoming dangling.
                 mHiddenTasks.add(0, removedTask);
             }
-            notifyTaskRemoved(removedTask, false /* wasTrimmed */, false /* killProcess */);
+            notifyTaskRemoved(removedTask, false /* wasTrimmed */, false /* killProcess */,
+                    true /* removedForAddTask */);
             if (DEBUG_RECENTS_TRIM_TASKS) {
                 Slog.d(TAG, "Trimming task=" + removedTask
                         + " for addition of task=" + task);

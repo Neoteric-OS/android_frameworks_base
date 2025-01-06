@@ -19,7 +19,6 @@ package com.android.server.am;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.compat.annotation.ChangeId;
-import android.compat.annotation.EnabledSince;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.os.Binder;
@@ -41,7 +40,6 @@ public final class BroadcastFilter extends IntentFilter {
      * ({@link IntentFilter#SYSTEM_LOW_PRIORITY}, {@link IntentFilter#SYSTEM_HIGH_PRIORITY}).
      */
     @ChangeId
-    @EnabledSince(targetSdkVersion = android.os.Build.VERSION_CODES.BASE)
     @VisibleForTesting
     static final long RESTRICT_PRIORITY_VALUES = 371309185L;
 
@@ -57,7 +55,6 @@ public final class BroadcastFilter extends IntentFilter {
     final boolean visibleToInstantApp;
     public final boolean exported;
     final int initialPriority;
-    final ApplicationInfo applicationInfo;
 
     BroadcastFilter(IntentFilter _filter, ReceiverList _receiverList,
             String _packageName, String _featureId, String _receiverId, String _requiredPermission,
@@ -74,10 +71,9 @@ public final class BroadcastFilter extends IntentFilter {
         instantApp = _instantApp;
         visibleToInstantApp = _visibleToInstantApp;
         exported = _exported;
-        applicationInfo = _applicationInfo;
         initialPriority = getPriority();
         setPriority(calculateAdjustedPriority(owningUid, initialPriority,
-                applicationInfo, platformCompat));
+                _applicationInfo, platformCompat));
     }
 
     public @Nullable String getReceiverClassName() {
@@ -91,7 +87,7 @@ public final class BroadcastFilter extends IntentFilter {
     }
 
     public @NonNull ApplicationInfo getApplicationInfo() {
-        return applicationInfo;
+        return receiverList.app.info;
     }
 
     @NeverCompile

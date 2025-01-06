@@ -434,6 +434,7 @@ public class RecentTasksTest extends WindowTestsBase {
     @Test
     public void testAddTaskCompatibleWindowingMode_withFreeformAndFullscreen_expectRemove() {
         Task task1 = createTaskBuilder(".Task1")
+                .setTaskId(1)
                 .setFlags(FLAG_ACTIVITY_NEW_TASK)
                 .build();
         doReturn(WINDOWING_MODE_FREEFORM).when(task1).getWindowingMode();
@@ -452,6 +453,10 @@ public class RecentTasksTest extends WindowTestsBase {
         assertThat(mCallbacksRecorder.mTrimmed).isEmpty();
         assertThat(mCallbacksRecorder.mRemoved).hasSize(1);
         assertThat(mCallbacksRecorder.mRemoved).contains(task1);
+
+        TaskChangeNotificationController controller =
+                mAtm.getTaskChangeNotificationController();
+        verify(controller, times(1)).notifyRecentTaskRemovedForAddTask(task1.mTaskId);
     }
 
     @Test
@@ -712,13 +717,13 @@ public class RecentTasksTest extends WindowTestsBase {
     }
 
     @Test
-    @DisableFlags(Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL)
+    @DisableFlags(Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK)
     public void testVisibleTasks_excludedFromRecents() {
         testVisibleTasks_excludedFromRecents_internal();
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL)
+    @EnableFlags(Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK)
     public void testVisibleTasks_excludedFromRecents_withRefactorFlag() {
         testVisibleTasks_excludedFromRecents_internal();
     }
@@ -762,13 +767,13 @@ public class RecentTasksTest extends WindowTestsBase {
 
     @Test
     @Ignore("b/342627272")
-    @DisableFlags(Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL)
+    @DisableFlags(Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK)
     public void testVisibleTasks_excludedFromRecents_visibleTaskNotFirstTask() {
         testVisibleTasks_excludedFromRecents_visibleTaskNotFirstTask_internal();
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL)
+    @EnableFlags(Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK)
     public void testVisibleTasks_excludedFromRecents_visibleTaskNotFirstTask_withRefactorFlag() {
         testVisibleTasks_excludedFromRecents_visibleTaskNotFirstTask_internal();
     }
@@ -811,13 +816,13 @@ public class RecentTasksTest extends WindowTestsBase {
     }
 
     @Test
-    @DisableFlags(Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL)
+    @DisableFlags(Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK)
     public void testVisibleTasks_excludedFromRecents_firstTaskNotVisible() {
         testVisibleTasks_excludedFromRecents_firstTaskNotVisible_internal();
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_REFACTOR_TASK_THUMBNAIL)
+    @EnableFlags(Flags.FLAG_ENABLE_USE_TOP_VISIBLE_ACTIVITY_FOR_EXCLUDE_FROM_RECENT_TASK)
     public void testVisibleTasks_excludedFromRecents_firstTaskNotVisible_withRefactorFlag() {
         testVisibleTasks_excludedFromRecents_firstTaskNotVisible_internal();
     }
