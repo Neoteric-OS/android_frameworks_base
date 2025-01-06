@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a82b4ad1_0a6c3d93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2025-01-06T10:15:09Z",
+      "side": 1,
+      "message": "Not sure why preloading ensures decoupling?",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 65
+      },
+      "revId": "e639c93347392720096c21508e2371a31a031d5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
