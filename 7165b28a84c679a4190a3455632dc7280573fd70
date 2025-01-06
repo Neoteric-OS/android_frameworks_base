@@ -126,6 +126,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c552682_9cb8e5e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-01-06T21:49:47Z",
+      "side": 1,
+      "message": "+1 to Hai. `adb install -r` doesn\u0027t automatically allow an app to install without signatures. In fact `-r` is more like a no-op now. Could you provide an example APK that can be installed without signature?",
+      "parentUuid": "2fc2d91e_373c90c0",
+      "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d8e4e471_e9813941",
