@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.notification.stack;
 
+import static android.app.Flags.notificationsRedesignTemplates;
 import static android.os.Trace.TRACE_TAG_APP;
 import static android.view.MotionEvent.ACTION_CANCEL;
 import static android.view.MotionEvent.ACTION_UP;
@@ -62,6 +63,7 @@ import android.view.DisplayCutout;
 import android.view.InputDevice;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.NotificationHeaderView;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -866,9 +868,9 @@ public class NotificationStackScrollLayout
             y = (int) mAmbientState.getHeadsUpTop();
             drawDebugInfo(canvas, y, Color.GREEN, /* label= */ "getHeadsUpTop() = " + y);
 
-            y += getTopHeadsUpHeight();
+            y = (int) (mAmbientState.getStackTop() + mScrollViewFields.getIntrinsicStackHeight());
             drawDebugInfo(canvas, y, Color.BLUE,
-                    /* label= */ "getHeadsUpTop() + getTopHeadsUpHeight() = " + y);
+                    /* label= */ "getStackTop() + getIntrinsicStackHeight() = " + y);
 
             return; // the rest of the fields are not important in Flexiglass
         }
@@ -2612,20 +2614,13 @@ public class NotificationStackScrollLayout
         if (SceneContainerFlag.isUnexpectedlyInLegacyMode()) return;
 
         final int shelfIntrinsicHeight = mShelf != null ? mShelf.getIntrinsicHeight() : 0;
-        final int footerIntrinsicHeight =
-                mFooterView != null ? mFooterView.getIntrinsicHeight() : 0;
         final int notificationsHeight = (int) mNotificationStackSizeCalculator.computeHeight(
                 /* notificationStackScrollLayout= */ this,
                 mMaxDisplayedNotifications,
                 shelfIntrinsicHeight
         );
-        // When there is a limit in the max number of notifications, we never display the footer.
-        final int fullStackHeight = mMaxDisplayedNotifications != -1
-                ? notificationsHeight
-                : notificationsHeight + footerIntrinsicHeight + mBottomPadding;
-
-        if (mScrollViewFields.getIntrinsicStackHeight() != fullStackHeight) {
-            mScrollViewFields.setIntrinsicStackHeight(fullStackHeight);
+        if (mScrollViewFields.getIntrinsicStackHeight() != notificationsHeight) {
+            mScrollViewFields.setIntrinsicStackHeight(notificationsHeight);
             notifyStackHeightChangedListeners();
         }
     }
@@ -6856,15 +6851,29 @@ public class NotificationStackScrollLayout
             mExpandedGroupView = changedRow;
             mNeedsAnimation = true;
         }
+
         changedRow.setChildrenExpanded(expanded);
         onChildHeightChanged(changedRow, false /* needsAnimation */);
+        updateGroupHeaderAlignment(changedRow, expanded);
 
-        runAfterAnimationFinished(new Runnable() {
-            @Override
-            public void run() {
-                changedRow.onFinishedExpansionChange();
-            }
-        });
+        runAfterAnimationFinished(changedRow::onFinishedExpansionChange);
+    }
+
+    private void updateGroupHeaderAlignment(ExpandableNotificationRow row, boolean expanded) {
+        if (!notificationsRedesignTemplates()) {
+            return;
+        }
+
+        NotificationChildrenContainer childrenContainer = row.getChildrenContainer();
+        if (childrenContainer == null) {
+            Log.wtf(TAG, "Tried to update group header alignment for something that's "
+                    + "not a group; key = " + row.getEntry().getKey());
+            return;
+        }
+        NotificationHeaderView header = childrenContainer.getGroupHeader();
+        if (header != null) {
+            header.centerTopLine(expanded);
+        }
     }
 
     private final ExpandHelper.Callback mExpandHelperCallback = new ExpandHelper.Callback() {

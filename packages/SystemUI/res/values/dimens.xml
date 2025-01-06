@@ -782,6 +782,13 @@
     <!-- The top margin for the notification children container in its non-expanded form. -->
     <dimen name="notification_children_container_margin_top">48dp</dimen>
 
+    <!-- The spacing between the notification children container in its non-expanded form, and the
+         header text above it, scaling with text size. This value is chosen so that, taking into
+         account the text spacing for both the text in the top line and the text in the container,
+         the distance between them is 4dp with the default screen configuration (and will grow
+         accordingly for larger font sizes). -->
+    <dimen name="notification_2025_children_container_margin_top">@*android:dimen/notification_2025_content_margin_top</dimen>
+
     <!-- The height of the gap between adjacent notification sections. -->
     <dimen name="notification_section_divider_height">@dimen/notification_side_paddings</dimen>
 
@@ -1676,10 +1683,14 @@
     <dimen name="accessibility_floating_menu_margin">16dp</dimen>
     <dimen name="accessibility_floating_menu_small_padding">6dp</dimen>
     <dimen name="accessibility_floating_menu_small_width_height">36dp</dimen>
+    <dimen name="accessibility_floating_menu_small_badge_width_height">12dp</dimen>
+    <dimen name="accessibility_floating_menu_badge_position">0.67</dimen>
+    <dimen name="accessibility_floating_menu_left_badge_x_position">-0.67</dimen>
     <dimen name="accessibility_floating_menu_small_single_radius">25dp</dimen>
     <dimen name="accessibility_floating_menu_small_multiple_radius">20dp</dimen>
     <dimen name="accessibility_floating_menu_large_padding">8dp</dimen>
     <dimen name="accessibility_floating_menu_large_width_height">56dp</dimen>
+    <dimen name="accessibility_floating_menu_large_badge_width_height">18dp</dimen>
     <dimen name="accessibility_floating_menu_large_single_radius">35dp</dimen>
     <dimen name="accessibility_floating_menu_large_multiple_radius">35dp</dimen>
     <dimen name="accessibility_floating_menu_ime_shifting_space">48dp</dimen>
@@ -2109,6 +2120,8 @@
 
     <dimen name="volume_dialog_background_square_corner_radius">12dp</dimen>
 
+    <dimen name="volume_dialog_ringer_drawer_margin">10dp</dimen>
+    <dimen name="volume_dialog_ringer_drawer_diff_end_margin">6dp</dimen>
     <dimen name="volume_dialog_ringer_drawer_button_size">@dimen/volume_dialog_button_size</dimen>
     <dimen name="volume_dialog_ringer_drawer_button_icon_radius">10dp</dimen>
     <dimen name="volume_dialog_ringer_selected_button_background_radius">20dp</dimen>
