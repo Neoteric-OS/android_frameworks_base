@@ -137,6 +137,41 @@
       ],
       "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30f9222d_22110305",
+        "filename": "core/java/android/content/pm/SystemFeaturesCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1623611
+      },
+      "writtenOn": "2025-01-06T16:55:36Z",
+      "side": 1,
+      "message": "Maybe we could prohibit this value in the FeatureInfo class?  Definitely not in this CL, though.",
+      "fixSuggestions": [
+        {
+          "fixId": "b9f26428_bd0fbfe8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/content/pm/SystemFeaturesCache.java",
+              "range": {
+                "startLine": 96,
+                "startChar": 0,
+                "endLine": 96,
+                "endChar": 0
+              },
+              "replacement": "        // TODO: Consider prohibiting the sentinel value in FeatureInfo.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
