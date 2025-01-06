@@ -21,7 +21,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.SystemService;
 import android.content.Context;
-import android.hardware.security.keymint.TagType;
+import android.hardware.security.keymint.Tag;
 import android.security.KeyStore2;
 import android.security.KeyStoreException;
 import android.security.keystore2.AndroidKeyStoreProvider;
@@ -312,10 +312,11 @@ public final class KeyStoreManager {
      * When passed into getSupplementaryAttestationInfo, getSupplementaryAttestationInfo returns the
      * DER-encoded structure corresponding to the `Modules` schema described in the KeyMint HAL's
      * KeyCreationResult.aidl. The SHA-256 hash of this encoded structure is what's included with
-     * the tag in attestations.
+     * the tag in attestations. To ensure the returned encoded structure is the one attested to,
+     * clients should verify its SHA-256 hash matches the one in the attestation. Note that the
+     * returned structure can vary between boots.
      */
-    // TODO(b/369375199): Replace with Tag.MODULE_HASH when flagging is removed.
-    public static final int MODULE_HASH = TagType.BYTES | 724;
+    public static final int MODULE_HASH = Tag.MODULE_HASH;
 
     /**
      * Returns tag-specific data required to interpret a tag's attested value.
