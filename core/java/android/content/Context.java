@@ -7399,6 +7399,15 @@ public abstract class Context {
     public static final String D2D_CONNECTIVITY_SERVICE = "d2d_connectivity";
 
     /**
+     * {@link android.hardware.PowerShareManager} for accessing and setting locked apps state.
+     *
+     * @see #getSystemService(String)
+     * @see android.hardware.PowerShareManager
+     * @hide
+     */
+    public static final String POWER_SHARE_SERVICE = "power_share";
+
+    /**
      * Determine whether the given permission is allowed for a particular
      * process and user ID running in the system.
      *

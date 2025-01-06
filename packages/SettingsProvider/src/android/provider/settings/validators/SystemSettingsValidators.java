@@ -288,5 +288,6 @@ public class SystemSettingsValidators {
                 new PackageNameListValidator(","));
         VALIDATORS.put(System.QS_SHOW_BRIGHTNESS, new InclusiveIntegerRangeValidator(0, 2));
         VALIDATORS.put(System.QS_BRIGHTNESS_POSITION_BOTTOM, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.POWER_SHARE_THRESHOLD, new InclusiveIntegerRangeValidator(1, 99));
     }
 }
