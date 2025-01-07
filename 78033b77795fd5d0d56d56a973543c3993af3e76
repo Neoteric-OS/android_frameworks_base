@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e10dcac_4ec10a06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1826738
+      },
+      "writtenOn": "2025-01-07T22:40:17Z",
+      "side": 1,
+      "message": "I have just triggered off presubmit. Note that @vmartensson@google.com is now TL for this code.",
+      "parentUuid": "e4615f87_3dd8fddc",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "856babc7_b74fd099",
         "filename": "core/jni/android_hardware_UsbDeviceConnection.cpp",
         "patchSetId": 3
