@@ -22,6 +22,30 @@
       },
       "revId": "34e63f372c7be54b9f5f64c2caea901bf9f301e3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0beae9dc_757b9d07",
+        "filename": "core/java/android/os/ServiceManagerNative.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1958315
+      },
+      "writtenOn": "2025-01-07T08:32:27Z",
+      "side": 1,
+      "message": "SG, thank you for the follow-up! I thought that checkService was also UnsupportedAppUsage and I somehow dropped it by accident.",
+      "parentUuid": "3fa1b88a_ec2651ae",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "34e63f372c7be54b9f5f64c2caea901bf9f301e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
