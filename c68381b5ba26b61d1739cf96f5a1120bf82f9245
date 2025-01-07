@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6b7887e2_5d731b36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-01-07T14:04:48Z",
+      "side": 1,
+      "message": "Makes sense, thanks for the clarification",
+      "parentUuid": "da9ef550_2d6bae9d",
+      "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c88f9f2e_cec3dc82",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -83,6 +101,133 @@
       "writtenOn": "2025-01-02T11:56:18Z",
       "side": 1,
       "message": "Ok",
+      "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1179ff06_293298c3",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3184,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-01-07T14:04:48Z",
+      "side": 1,
+      "message": "Line too long",
+      "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc71330c_3d17db16",
+        "filename": "services/core/java/com/android/server/display/LocalDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-01-07T14:04:48Z",
+      "side": 1,
+      "message": "I think this line is redundant, this flag will always be set on line 781",
+      "fixSuggestions": [
+        {
+          "fixId": "3d4eb228_2f6edb6e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/display/LocalDisplayAdapter.java",
+              "range": {
+                "startLine": 730,
+                "startChar": 0,
+                "endLine": 731,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c6967c2_65f5eda2",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/LocalDisplayAdapterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-01-07T14:04:48Z",
+      "side": 1,
+      "message": "Update the comments here, I think they were copied from the other test",
+      "fixSuggestions": [
+        {
+          "fixId": "2ca23a75_2a442a0c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/tests/displayservicetests/src/com/android/server/display/LocalDisplayAdapterTest.java",
+              "range": {
+                "startLine": 272,
+                "startChar": 0,
+                "endLine": 273,
+                "endChar": 0
+              },
+              "replacement": "        // This should not have the flag\n"
+            },
+            {
+              "path": "services/tests/displayservicetests/src/com/android/server/display/LocalDisplayAdapterTest.java",
+              "range": {
+                "startLine": 275,
+                "startChar": 0,
+                "endLine": 276,
+                "endChar": 0
+              },
+              "replacement": "        // This should have the flag\n"
+            },
+            {
+              "path": "services/tests/displayservicetests/src/com/android/server/display/LocalDisplayAdapterTest.java",
+              "range": {
+                "startLine": 278,
+                "startChar": 0,
+                "endLine": 279,
+                "endChar": 0
+              },
+              "replacement": "        // This should not have the flag\n"
+            },
+            {
+              "path": "services/tests/displayservicetests/src/com/android/server/display/LocalDisplayAdapterTest.java",
+              "range": {
+                "startLine": 361,
+                "startChar": 0,
+                "endLine": 362,
+                "endChar": 0
+              },
+              "replacement": "        // This should not have the flag\n"
+            },
+            {
+              "path": "services/tests/displayservicetests/src/com/android/server/display/LocalDisplayAdapterTest.java",
+              "range": {
+                "startLine": 364,
+                "startChar": 0,
+                "endLine": 365,
+                "endChar": 0
+              },
+              "replacement": "        // This should not have the flag\n"
+            }
+          ]
+        }
+      ],
       "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
