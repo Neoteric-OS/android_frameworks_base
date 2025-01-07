@@ -238,7 +238,15 @@ public class LocationFudger {
     }
 
     // requires latitude since longitudinal distances change with distance from equator.
-    private static double metersToDegreesLongitude(double distance, double lat) {
-        return distance / APPROXIMATE_METERS_PER_DEGREE_AT_EQUATOR / Math.cos(Math.toRadians(lat));
+    @VisibleForTesting
+    static double metersToDegreesLongitude(double distance, double lat) {
+        // Needed to convert from longitude distance to longitude degree.
+        // 1° at equator is a much longer distance than 1° at the poles.
+        double cosLat = Math.cos(Math.toRadians(lat));
+        // If we are right on top of the pole, the distance is always 0.
+        if (cosLat == 0.0) {
+            return 0.0;
+        }
+        return distance / APPROXIMATE_METERS_PER_DEGREE_AT_EQUATOR / cosLat;
     }
 }

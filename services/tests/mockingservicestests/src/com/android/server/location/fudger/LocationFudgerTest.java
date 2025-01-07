@@ -152,6 +152,12 @@ public class LocationFudgerTest {
         assertThat(passed / (double) iterations).isGreaterThan(.70);
     }
 
+    @Test
+    public void testMetersToDegreesLongitude_atPoles_returnsZero() {
+        assertThat(LocationFudger.metersToDegreesLongitude(1000, 90)).isEqualTo(0);
+        assertThat(LocationFudger.metersToDegreesLongitude(1000, -90)).isEqualTo(0);
+    }
+
     // step in a random direction by distance - assume cartesian
     private Location step(Location input, double distanceM) {
         double radians = mRandom.nextDouble() * 2 * Math.PI;
