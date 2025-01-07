@@ -708,7 +708,9 @@ public class HdmiControlService extends SystemService {
             // Register ContentObserver to monitor the settings change.
             registerContentObserver();
         }
-        mMhlController.setOption(OPTION_MHL_SERVICE_CONTROL, ENABLED);
+        if (mMhlController != null) {
+            mMhlController.setOption(OPTION_MHL_SERVICE_CONTROL, ENABLED);
+        }
     }
 
     @VisibleForTesting
