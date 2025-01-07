@@ -1087,6 +1087,10 @@ public final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             if (!isConnectedToArcPort(avrDeviceInfo.getPhysicalAddress())) {
                 displayOsd(OSD_MESSAGE_ARC_CONNECTED_INVALID_PORT);
             }
+            if (isMessageForSystemAudio(message)) {
+                Slog.e(TAG, "Disable ARC since <Feature Abort> [Initiate ARC] is sent.");
+                disableArcIfExist();
+            }
             return Constants.ABORT_REFUSED;
         }
 
