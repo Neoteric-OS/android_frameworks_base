@@ -102,11 +102,13 @@ public class VcnNetworkProvider extends NetworkProvider {
                 new NetworkOfferCallback() {
                     @Override
                     public void onNetworkNeeded(@NonNull NetworkRequest request) {
+                        android.util.Log.i("TEST", "handleNetworkRequested");
                         handleNetworkRequested(request);
                     }
 
                     @Override
                     public void onNetworkUnneeded(@NonNull NetworkRequest request) {
+                        android.util.Log.i("TEST", "handleNetworkRequestWithdrawn");
                         handleNetworkRequestWithdrawn(request);
                     }
                 });
@@ -151,9 +153,17 @@ public class VcnNetworkProvider extends NetworkProvider {
     /** Sends all cached NetworkRequest(s) to the specified listener. */
     @VisibleForTesting(visibility = Visibility.PACKAGE)
     public void resendAllRequests(@NonNull NetworkRequestListener listener) {
+        android.util.Log.i("TEST", "resendAllRequests start mRequests.size " + mRequests.size());
         for (NetworkRequest request : mRequests) {
+            try {
+                Thread.currentThread().sleep(5000L);
+            } catch(Exception e) {
+                android.util.Log.i("TEST", "resendAllRequests exception " + e);
+            }
+            
             notifyListenerForEvent(listener, request);
         }
+        android.util.Log.i("TEST", "resendAllRequests done mRequests.size " + mRequests.size());
     }
 
     private void notifyListenerForEvent(

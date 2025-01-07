@@ -180,7 +180,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     // Public for use in all other VCN classes
     @NonNull public static final LocalLog LOCAL_LOG = new LocalLog(LOCAL_LOG_LINE_COUNT);
 
-    public static final boolean VDBG = false; // STOPSHIP: if true
+    public static final boolean VDBG = true; // STOPSHIP: if true
 
     // The system path is copied from Environment.getDataSystemDirectory
     @VisibleForTesting(visibility = Visibility.PRIVATE)
@@ -695,6 +695,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         // Remove in 2 steps. Make sure teardownAsync is triggered before removing from the map.
         final Vcn vcnToTeardown = mVcns.get(uuidToTeardown);
+        logInfo("vcnToTeardown " + vcnToTeardown);
         if (vcnToTeardown == null) {
             return;
         }
