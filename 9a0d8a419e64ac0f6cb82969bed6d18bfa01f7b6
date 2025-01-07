@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33385a30_ebe066e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2025-01-07T17:08:40Z",
+      "side": 1,
+      "message": "lgtm, I\u0027ll let Islam approve.",
+      "revId": "9a0d8a419e64ac0f6cb82969bed6d18bfa01f7b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
