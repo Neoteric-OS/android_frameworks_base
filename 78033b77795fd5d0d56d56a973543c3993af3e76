@@ -88,6 +88,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4615f87_3dd8fddc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3404192
+      },
+      "writtenOn": "2025-01-07T22:36:53Z",
+      "side": 1,
+      "message": "I just resolved my open comment thread - maybe that was holding up TreeHugger? @enh@google.com is there anything else needed to get TreeHugger to run again?",
+      "revId": "78033b77795fd5d0d56d56a973543c3993af3e76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "856babc7_b74fd099",
