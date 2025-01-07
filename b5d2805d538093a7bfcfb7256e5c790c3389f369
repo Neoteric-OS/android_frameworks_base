@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b615ec04_b67c7b27",
+        "filename": "services/core/java/com/android/server/location/fudger/LocationFudger.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1939360
+      },
+      "writtenOn": "2025-01-07T12:07:32Z",
+      "side": 1,
+      "message": "I initially made this method @VisibleForTesting and added a test in LocationFudgerTest with lat\u003d90. which should trigger this condition. Sadly because the conversion from degrees to radian is inexact, cosLat was very close to zero but non-zero. \n\nHaving a test with lat\u003d89.xxxxx or 90.xxxxx would be semantically wrong IMO. What should trigger a division by zero is lat\u003d90.\n\nI think the best step forward is either to carefully review this manually and submit without test, and/or drop this change altogether if we consider it too rare to occur. WDYT ?",
+      "revId": "b5d2805d538093a7bfcfb7256e5c790c3389f369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
