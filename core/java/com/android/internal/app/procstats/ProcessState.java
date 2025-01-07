@@ -455,6 +455,12 @@ public final class ProcessState {
      */
     public void setState(int state, int memFactor, long now,
             ArrayMap<String, ProcessStateHolder> pkgList) {
+        if (mName.equals("com.android.server.cts.device.statsdatom")) {
+            android.util.Log.i("DEBUG-testCachedState", "ProcessState.setState called. "
+                + " mName: " + mName
+                + " state: " + state
+                + " now: " + now);
+        }
         if (state < 0) {
             state = mNumStartedServices > 0
                     ? (STATE_SERVICE_RESTARTING + (memFactor * STATE_COUNT)) : STATE_NOTHING;
@@ -469,6 +475,13 @@ public final class ProcessState {
      */
     void setCombinedState(int state, long now,
             ArrayMap<String, ProcessStateHolder> pkgList) {
+
+        if (mName.equals("com.android.server.cts.device.statsdatom")) {
+            android.util.Log.i("DEBUG-testCachedState", "ProcessState.setCombinedState called. "
+                + " mName: " + mName
+                + " state: " + state
+                + " now: " + now);
+        }
         // First update the common process.
         mCommonProcess.setCombinedStateIdv(state, now);
 
@@ -1613,6 +1626,18 @@ public final class ProcessState {
                     frozenMs += duration;
                     break;
             }
+        }
+        if (mName.equals("com.android.server.cts.device.statsdatom")) {
+            android.util.Log.i("DEBUG-testCachedState", "ProcessState.dumpStateDurationToStatsd  called. "
+                + " mName: " + mName
+                + " topMs: " + topMs
+                + " fgsMs: " + fgsMs
+                + " boundTopMs: " + boundTopMs
+                + " boundFgsMs: " + boundFgsMs
+                + " importantForegroundMs: " + importantForegroundMs
+                + " cachedMs: " + cachedMs
+                + " frozenMs: " + frozenMs
+                + " otherMs: " + otherMs);
         }
         statsEventOutput.write(
                 atomTag,
