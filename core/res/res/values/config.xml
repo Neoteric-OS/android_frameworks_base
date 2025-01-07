@@ -1607,6 +1607,10 @@
          brightness value and will repeat for the following ramp if autobrightness is enabled. -->
     <bool name="config_skipScreenOnBrightnessRamp">false</bool>
 
+    <!-- Whether or not to skip a color fade transition to black when the display transitions to
+         STATE_OFF. Setting this to true will skip the color fade transition. -->
+    <bool name="config_skipScreenOffTransition">false</bool>
+
     <!-- Allow automatic adjusting of the screen brightness while dozing in low power state. -->
     <bool name="config_allowAutoBrightnessWhileDozing">false</bool>
 
@@ -2161,6 +2165,17 @@
          config_enableGeofenceOverlay is false. -->
     <string name="config_geofenceProviderPackageName" translatable="false">@null</string>
 
+    <!-- Whether to enable GNSS assistance overlay which allows GnssAssistanceProvider to be
+     replaced by an app at run-time. When disabled, only the
+     config_gnssAssistanceProviderPackageName package will be searched for
+     GnssAssistanceProvider, otherwise any system package is eligible. Anyone who wants to
+     disable the overlay mechanism can set it to false.
+     -->
+    <bool name="config_enableGnssAssistanceOverlay" translatable="false">true</bool>
+    <!-- Package name providing GNSS assistance API support. Used only when
+         config_enableGnssAssistanceOverlay is false. -->
+    <string name="config_gnssAssistanceProviderPackageName" translatable="false">@null</string>
+
     <!-- Whether to enable Hardware Activity-Recognition overlay which allows Hardware
          Activity-Recognition to be replaced by an app at run-time. When disabled, only the
          config_activityRecognitionHardwarePackageName package will be searched for
@@ -2469,9 +2484,6 @@
     <string name="config_systemCallStreaming" translatable="false"></string>
     <!-- The name of the package that will hold the default retail demo role. -->
     <string name="config_defaultRetailDemo" translatable="false"></string>
-    <!-- The name of the package that will hold the default reserved for testing profile group
-         exclusivity role. -->
-    <string name="config_defaultReservedForTestingProfileGroupExclusivity" translatable="false">android.app.rolemultiuser.cts.app</string>
 
     <!-- The component name of the wear service class that will be started by the system server. -->
     <string name="config_wearServiceComponent" translatable="false"></string>
@@ -7236,10 +7248,6 @@
          screen. -->
     <bool name="config_dragToMaximizeInDesktopMode">false</bool>
 
-    <!-- Whether showing the app handle is supported on this device.
-         If config_isDesktopModeSupported, then this has no effect -->
-    <bool name="config_enableAppHandle">false</bool>
-
     <!-- Frame rate compatibility value for Wallpaper
          FRAME_RATE_COMPATIBILITY_MIN (102) is used by default for lower power consumption -->
     <integer name="config_wallpaperFrameRateCompatibility">102</integer>
@@ -7304,4 +7312,7 @@
          features. Examples include the search functionality or the app
          predictor. -->
     <string name="config_systemVendorIntelligence" translatable="false"></string>
+
+    <!-- Whether the device supports Wi-Fi USD feature. -->
+    <bool name="config_deviceSupportsWifiUsd">false</bool>
 </resources>

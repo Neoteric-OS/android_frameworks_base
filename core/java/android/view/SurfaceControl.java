@@ -22,7 +22,6 @@ import static android.graphics.Matrix.MSKEW_X;
 import static android.graphics.Matrix.MSKEW_Y;
 import static android.graphics.Matrix.MTRANS_X;
 import static android.graphics.Matrix.MTRANS_Y;
-import static android.view.flags.Flags.bufferStuffingRecovery;
 import static android.view.SurfaceControlProto.HASH_CODE;
 import static android.view.SurfaceControlProto.LAYER_ID;
 import static android.view.SurfaceControlProto.NAME;
@@ -4674,8 +4673,7 @@ public final class SurfaceControl implements Parcelable {
          * Sets the importance the layer's contents has to the app's user experience.
          * <p>
          * When a two layers within the same app are competing for a limited rendering resource,
-         * the priority will determine which layer gets access to the resource. The lower the
-         * priority, the more likely the layer will get access to the resource.
+         * the layer with the highest priority will gets access to the resource.
          * <p>
          * Resources managed by this priority:
          * <ul>
@@ -5122,11 +5120,9 @@ public final class SurfaceControl implements Parcelable {
          */
         @NonNull
         public Transaction setRecoverableFromBufferStuffing(@NonNull SurfaceControl sc) {
-            if (bufferStuffingRecovery()) {
-                checkPreconditions(sc);
-                nativeSetFlags(mNativeObject, sc.mNativeObject, RECOVERABLE_FROM_BUFFER_STUFFING,
-                        RECOVERABLE_FROM_BUFFER_STUFFING);
-            }
+            checkPreconditions(sc);
+            nativeSetFlags(mNativeObject, sc.mNativeObject, RECOVERABLE_FROM_BUFFER_STUFFING,
+                    RECOVERABLE_FROM_BUFFER_STUFFING);
             return this;
         }
 

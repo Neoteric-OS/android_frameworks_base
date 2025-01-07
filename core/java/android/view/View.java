@@ -27,7 +27,7 @@ import static android.view.Surface.FRAME_RATE_CATEGORY_LOW;
 import static android.view.Surface.FRAME_RATE_CATEGORY_NORMAL;
 import static android.view.Surface.FRAME_RATE_CATEGORY_NO_PREFERENCE;
 import static android.view.Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE;
-import static android.view.Surface.FRAME_RATE_COMPATIBILITY_GTE;
+import static android.view.Surface.FRAME_RATE_COMPATIBILITY_AT_LEAST;
 import static android.view.WindowManager.LayoutParams.TYPE_INPUT_METHOD;
 import static android.view.accessibility.AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED;
 import static android.view.accessibility.Flags.FLAG_DEPRECATE_ACCESSIBILITY_ANNOUNCEMENT_APIS;
@@ -11072,10 +11072,6 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             return false;
         }
 
-        // Disable triggering autofill if the view is integrated with CredentialManager.
-        if (afm.shouldIgnoreCredentialViews() && isCredential()) {
-            return false;
-        }
 
         // Check whether view is not part of an activity. If it's not, return false.
         if (getAutofillViewId() <= LAST_APP_AUTOFILL_ID) {
@@ -28286,25 +28282,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         mPrivateFlags |= PFLAG_FORCE_LAYOUT;
         mPrivateFlags |= PFLAG_INVALIDATED;
 
-        if (mParent != null) {
-            if (!mParent.isLayoutRequested()) {
-                mParent.requestLayout();
-            } else {
-                clearMeasureCacheOfAncestors();
-            }
+        if (mParent != null && !mParent.isLayoutRequested()) {
+            mParent.requestLayout();
         }
         if (mAttachInfo != null && mAttachInfo.mViewRequestingLayout == this) {
             mAttachInfo.mViewRequestingLayout = null;
-        }
-    }
-
-    private void clearMeasureCacheOfAncestors() {
-        ViewParent parent = mParent;
-        while (parent instanceof View view) {
-            if (view.mMeasureCache != null) {
-                view.mMeasureCache.clear();
-            }
-            parent = view.mParent;
         }
     }
 
@@ -28663,10 +28645,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      */
     @RemotableViewMethod
     public void setMinimumHeight(int minHeight) {
-        if (mMinHeight != minHeight) {
-            mMinHeight = minHeight;
-            requestLayout();
-        }
+        mMinHeight = minHeight;
+        requestLayout();
     }
 
     /**
@@ -28696,10 +28676,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      */
     @RemotableViewMethod
     public void setMinimumWidth(int minWidth) {
-        if (mMinWidth != minWidth) {
-            mMinWidth = minWidth;
-            requestLayout();
-        }
+        mMinWidth = minWidth;
+        requestLayout();
 
     }
 
@@ -34278,7 +34256,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 compatibility = FRAME_RATE_COMPATIBILITY_FIXED_SOURCE;
                 frameRateToSet = frameRate;
             } else {
-                compatibility = FRAME_RATE_COMPATIBILITY_GTE;
+                compatibility = FRAME_RATE_COMPATIBILITY_AT_LEAST;
                 frameRateToSet = velocityFrameRate;
             }
             viewRootImpl.votePreferredFrameRate(frameRateToSet, compatibility);

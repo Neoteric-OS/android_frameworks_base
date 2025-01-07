@@ -107,7 +107,7 @@ import static com.android.aconfig_new_storage.Flags.enableAconfigStorageDaemon;
  * the same lock to grab the current state to write to disk.
  * </p>
  */
-final class SettingsState {
+public class SettingsState {
     private static final boolean DEBUG = false;
     private static final boolean DEBUG_PERSISTENCE = false;
 
@@ -171,7 +171,6 @@ final class SettingsState {
 
     private static final List<String> sAconfigTextProtoFilesOnDevice = List.of(
             "/system/etc/aconfig_flags.pb",
-            "/system_ext/etc/aconfig_flags.pb",
             "/product/etc/aconfig_flags.pb",
             "/vendor/etc/aconfig_flags.pb");
 
@@ -1839,7 +1838,7 @@ final class SettingsState {
         }
     }
 
-    class Setting {
+    public class Setting {
         private String name;
         private String value;
         private String defaultValue;

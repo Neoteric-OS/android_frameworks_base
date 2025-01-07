@@ -47,6 +47,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.FontSizeUtils;
+import com.android.systemui.FontStyles;
 import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.flags.Flags;
 import com.android.systemui.qs.QSEditEvent;
@@ -314,7 +315,7 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             v.setMinimumHeight(calculateHeaderMinHeight(context));
             if (gsfQuickSettings()) {
                 ((TextView) v.findViewById(android.R.id.title)).setTypeface(
-                        Typeface.create("gsf-label-large", Typeface.NORMAL));
+                        Typeface.create(FontStyles.GSF_LABEL_LARGE, Typeface.NORMAL));
             }
             return new Holder(v);
         }
@@ -674,17 +675,11 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         }
 
         private void add() {
-            if (addFromPosition(getLayoutPosition())) {
-                itemView.announceForAccessibility(
-                        itemView.getContext().getText(R.string.accessibility_qs_edit_tile_added));
-            }
+            addFromPosition(getLayoutPosition());
         }
 
         private void remove() {
-            if (removeFromPosition(getLayoutPosition())) {
-                itemView.announceForAccessibility(
-                        itemView.getContext().getText(R.string.accessibility_qs_edit_tile_removed));
-            }
+            removeFromPosition(getLayoutPosition());
         }
 
         boolean isCurrentTile() {

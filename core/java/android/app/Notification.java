@@ -3323,6 +3323,18 @@ public class Notification implements Parcelable
     }
 
     /**
+     * Make sure this String is safe to put into a bundle.
+     * @hide
+     */
+    public static String safeString(String str) {
+        if (str == null) return str;
+        if (str.length() > MAX_CHARSEQUENCE_LENGTH) {
+            str = str.substring(0, MAX_CHARSEQUENCE_LENGTH);
+        }
+        return str;
+    }
+
+    /**
      * Make sure this CharSequence is safe to put into a bundle, which basically
      * means it had better not be some custom Parcelable implementation.
      * @hide
@@ -5051,7 +5063,7 @@ public class Notification implements Parcelable
         @FlaggedApi(Flags.FLAG_API_RICH_ONGOING)
         @NonNull
         public Builder setShortCriticalText(@Nullable String shortCriticalText) {
-            mN.extras.putString(EXTRA_SHORT_CRITICAL_TEXT, shortCriticalText);
+            mN.extras.putString(EXTRA_SHORT_CRITICAL_TEXT, safeString(shortCriticalText));
             return this;
         }
 
@@ -6024,8 +6036,9 @@ public class Notification implements Parcelable
         /**
          * @param isHeader If the notification is a notification header
          * @return An instance of mColors after resolving the palette
+         * @hide
          */
-        private Colors getColors(boolean isHeader) {
+        public Colors getColors(boolean isHeader) {
             mColors.resolvePalette(mContext, mN.color, !isHeader && mN.isColorized(), mInNightMode);
             return mColors;
         }
@@ -11195,8 +11208,8 @@ public class Notification implements Parcelable
         private static final String KEY_SEGMENT_LENGTH = "length";
         private static final String KEY_POINT_POSITION = "position";
 
-        private static final int MAX_PROGRESS_SEGMENT_LIMIT = 15;
-        private static final int MAX_PROGRESS_STOP_LIMIT = 5;
+        private static final int MAX_PROGRESS_SEGMENT_LIMIT = 10;
+        private static final int MAX_PROGRESS_POINT_LIMIT = 4;
         private static final int DEFAULT_PROGRESS_MAX = 100;
 
         private List<Segment> mProgressSegments = new ArrayList<>();
@@ -11273,7 +11286,9 @@ public class Notification implements Parcelable
                 mProgressSegments = new ArrayList<>();
             }
             mProgressSegments.clear();
-            mProgressSegments.addAll(progressSegments);
+            for (Segment segment : progressSegments) {
+                addProgressSegment(segment);
+            }
             return this;
         }
 
@@ -11289,7 +11304,11 @@ public class Notification implements Parcelable
             if (mProgressSegments == null) {
                 mProgressSegments = new ArrayList<>();
             }
-            mProgressSegments.add(segment);
+            if (segment.getLength() > 0) {
+                mProgressSegments.add(segment);
+            } else {
+                Log.w(TAG, "Dropped the segment. The length is not a positive integer.");
+            }
 
             return this;
         }
@@ -11314,7 +11333,14 @@ public class Notification implements Parcelable
          * @see Point
          */
         public @NonNull ProgressStyle setProgressPoints(@NonNull List<Point> points) {
-            mProgressPoints = new ArrayList<>(points);
+            if (mProgressPoints == null) {
+                mProgressPoints = new ArrayList<>();
+            }
+            mProgressPoints.clear();
+
+            for (Point point: points) {
+                addProgressPoint(point);
+            }
             return this;
         }
 
@@ -11335,7 +11361,17 @@ public class Notification implements Parcelable
             if (mProgressPoints == null) {
                 mProgressPoints = new ArrayList<>();
             }
-            mProgressPoints.add(point);
+            if (point.getPosition() >= 0) {
+                mProgressPoints.add(point);
+
+                if (mProgressPoints.size() > MAX_PROGRESS_POINT_LIMIT) {
+                    Log.w(TAG, "Progress points limit is reached. First"
+                            + MAX_PROGRESS_POINT_LIMIT + " points will be rendered.");
+                }
+
+            } else {
+                Log.w(TAG, "Dropped the point. The position is a negative integer.");
+            }
 
             return this;
         }
@@ -11371,8 +11407,7 @@ public class Notification implements Parcelable
             } else {
                 int progressMax = 0;
                 int validSegmentCount = 0;
-                for (int i = 0; i < progressSegment.size()
-                        && validSegmentCount < MAX_PROGRESS_SEGMENT_LIMIT; i++) {
+                for (int i = 0; i < progressSegment.size(); i++) {
                     int segmentLength = progressSegment.get(i).getLength();
                     if (segmentLength > 0) {
                         try {
@@ -11819,6 +11854,30 @@ public class Notification implements Parcelable
                     totalLength = DEFAULT_PROGRESS_MAX;
                     segments.add(sanitizeSegment(new Segment(totalLength), backgroundColor,
                             defaultProgressColor));
+                } else if (segments.size() > MAX_PROGRESS_SEGMENT_LIMIT) {
+                    // If segment limit is exceeded. All segments will be replaced
+                    // with a single segment
+                    boolean allSameColor = true;
+                    int firstSegmentColor = segments.get(0).getColor();
+
+                    for (int i = 1; i < segments.size(); i++) {
+                        if (segments.get(i).getColor() != firstSegmentColor) {
+                            allSameColor = false;
+                            break;
+                        }
+                    }
+
+                    // This single segment length has same max as total.
+                    final Segment singleSegment = new Segment(totalLength);
+                    // Single segment color: if all segments have the same color,
+                    // use that color. Otherwise, use 0 / default.
+                    singleSegment.setColor(allSameColor ? firstSegmentColor
+                            : Notification.COLOR_DEFAULT);
+
+                    segments.clear();
+                    segments.add(sanitizeSegment(singleSegment,
+                            backgroundColor,
+                            defaultProgressColor));
                 }
 
                 // Ensure point color contrasts.
@@ -11827,6 +11886,9 @@ public class Notification implements Parcelable
                     final int position = point.getPosition();
                     if (position < 0 || position > totalLength) continue;
                     points.add(sanitizePoint(point, backgroundColor, defaultProgressColor));
+                    if (points.size() == MAX_PROGRESS_POINT_LIMIT) {
+                        break;
+                    }
                 }
 
                 model = new NotificationProgressModel(segments, points,
@@ -11855,8 +11917,10 @@ public class Notification implements Parcelable
          * has the same hue as the original color, but is lightened or darkened depending on
          * whether the background is dark or light.
          *
+         * @hide
          */
-        private int sanitizeProgressColor(@ColorInt int color,
+        @VisibleForTesting
+        public static int sanitizeProgressColor(@ColorInt int color,
                 @ColorInt int bg,
                 @ColorInt int defaultColor) {
             return Builder.ensureColorContrast(
@@ -14765,7 +14829,6 @@ public class Notification implements Parcelable
      * A utility which stores and calculates the palette of colors used to color notifications.
      * @hide
      */
-    @VisibleForTesting
     public static class Colors {
         private int mPaletteIsForRawColor = COLOR_INVALID;
         private boolean mPaletteIsForColorized = false;
@@ -14839,10 +14902,7 @@ public class Notification implements Parcelable
 
             if (isColorized) {
                 if (rawColor == COLOR_DEFAULT) {
-                    int[] attrs = {R.attr.materialColorSecondary};
-                    try (TypedArray ta = obtainDayNightAttributes(ctx, attrs)) {
-                        mBackgroundColor = getColor(ta, 0, Color.WHITE);
-                    }
+                    mBackgroundColor = ctx.getColor(R.color.materialColorSecondary);
                 } else {
                     mBackgroundColor = rawColor;
                 }
@@ -14874,30 +14934,25 @@ public class Notification implements Parcelable
                 mRippleAlpha = 0x33;
             } else {
                 int[] attrs = {
-                        R.attr.materialColorSurfaceContainerHigh,
-                        R.attr.materialColorOnSurface,
-                        R.attr.materialColorOnSurfaceVariant,
-                        R.attr.materialColorPrimary,
-                        R.attr.materialColorSecondary,
-                        R.attr.materialColorTertiary,
-                        R.attr.materialColorOnTertiary,
-                        R.attr.materialColorTertiaryFixedDim,
-                        R.attr.materialColorOnTertiaryFixed,
                         R.attr.colorError,
                         R.attr.colorControlHighlight
                 };
+
+                mBackgroundColor = ctx.getColor(R.color.materialColorSurfaceContainerHigh);
+                mPrimaryTextColor = ctx.getColor(R.color.materialColorOnSurface);
+                mSecondaryTextColor = ctx.getColor(R.color.materialColorOnSurfaceVariant);
+                mPrimaryAccentColor = ctx.getColor(R.color.materialColorPrimary);
+                mSecondaryAccentColor = ctx.getColor(R.color.materialColorSecondary);
+                mTertiaryAccentColor = ctx.getColor(R.color.materialColorTertiary);
+                mOnTertiaryAccentTextColor = ctx.getColor(R.color.materialColorOnTertiary);
+                mTertiaryFixedDimAccentColor = ctx.getColor(
+                        R.color.materialColorTertiaryFixedDim);
+                mOnTertiaryFixedAccentTextColor = ctx.getColor(
+                        R.color.materialColorOnTertiaryFixed);
+
                 try (TypedArray ta = obtainDayNightAttributes(ctx, attrs)) {
-                    mBackgroundColor = getColor(ta, 0, nightMode ? Color.BLACK : Color.WHITE);
-                    mPrimaryTextColor = getColor(ta, 1, COLOR_INVALID);
-                    mSecondaryTextColor = getColor(ta, 2, COLOR_INVALID);
-                    mPrimaryAccentColor = getColor(ta, 3, COLOR_INVALID);
-                    mSecondaryAccentColor = getColor(ta, 4, COLOR_INVALID);
-                    mTertiaryAccentColor = getColor(ta, 5, COLOR_INVALID);
-                    mOnTertiaryAccentTextColor = getColor(ta, 6, COLOR_INVALID);
-                    mTertiaryFixedDimAccentColor = getColor(ta, 7, COLOR_INVALID);
-                    mOnTertiaryFixedAccentTextColor = getColor(ta, 8, COLOR_INVALID);
-                    mErrorColor = getColor(ta, 9, COLOR_INVALID);
-                    mRippleAlpha = Color.alpha(getColor(ta, 10, 0x33ffffff));
+                    mErrorColor = getColor(ta, 0, COLOR_INVALID);
+                    mRippleAlpha = Color.alpha(getColor(ta, 1, 0x33ffffff));
                 }
                 mContrastColor = calculateContrastColor(ctx, rawColor, mPrimaryAccentColor,
                         mBackgroundColor, nightMode);

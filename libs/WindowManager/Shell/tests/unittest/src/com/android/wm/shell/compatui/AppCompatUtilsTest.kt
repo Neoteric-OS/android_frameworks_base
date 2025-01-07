@@ -20,7 +20,6 @@ import android.content.ComponentName
 import android.testing.AndroidTestingRunner
 import androidx.test.filters.SmallTest
 import com.android.internal.R
-import com.android.wm.shell.ShellTestCase
 import com.android.wm.shell.desktopmode.DesktopTestHelpers.createFreeformTask
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -28,14 +27,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * Tests for {@link AppCompatUtils}.
+ * Tests for [@link AppCompatUtils].
  *
- * Build/Install/Run:
- *  atest WMShellUnitTests:AppCompatUtilsTest
+ * Build/Install/Run: atest WMShellUnitTests:AppCompatUtilsTest
  */
 @RunWith(AndroidTestingRunner::class)
 @SmallTest
-class AppCompatUtilsTest : ShellTestCase() {
+class AppCompatUtilsTest : CompatUIShellTestCase() {
     @Test
     fun testIsTopActivityExemptFromDesktopWindowing_onlyTransparentActivitiesInStack() {
         assertTrue(isTopActivityExemptFromDesktopWindowing(mContext,

@@ -19,6 +19,7 @@ package android.view;
 import static android.Manifest.permission.CONFIGURE_DISPLAY_COLOR_MODE;
 import static android.Manifest.permission.CONTROL_DISPLAY_BRIGHTNESS;
 import static android.hardware.flags.Flags.FLAG_OVERLAYPROPERTIES_CLASS_API;
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 
 import static com.android.server.display.feature.flags.Flags.FLAG_ENABLE_GET_SUPPORTED_REFRESH_RATES;
 import static com.android.server.display.feature.flags.Flags.FLAG_HIGHEST_HDR_SDR_RATIO_API;
@@ -58,6 +59,7 @@ import android.os.SystemClock;
 import android.util.ArraySet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -1048,6 +1050,19 @@ public final class Display {
     }
 
     /**
+     * Returns the smallest size of the display in dp
+     * @hide
+     */
+    public float getMinSizeDimensionDp() {
+        synchronized (mLock) {
+            updateDisplayInfoLocked();
+            mDisplayInfo.getAppMetrics(mTempMetrics);
+            return TypedValue.deriveDimension(COMPLEX_UNIT_DIP,
+                    Math.min(mDisplayInfo.logicalWidth, mDisplayInfo.logicalHeight), mTempMetrics);
+        }
+    }
+
+    /**
      * @deprecated Use {@link WindowMetrics#getBounds#width()} instead.
      */
     @Deprecated
@@ -1582,7 +1597,9 @@ public final class Display {
             // Although we only care about the HDR/SDR ratio changing, that can also come in the
             // form of the larger DISPLAY_CHANGED event
             mGlobal.registerDisplayListener(toRegister, executor,
-                    DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_CHANGED
+                    DisplayManagerGlobal
+                                    .INTERNAL_EVENT_FLAG_DISPLAY_BASIC_CHANGED
+                            | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_REFRESH_RATE
                             | DisplayManagerGlobal
                                     .INTERNAL_EVENT_FLAG_DISPLAY_HDR_SDR_RATIO_CHANGED,
                     ActivityThread.currentPackageName());
@@ -2037,6 +2054,22 @@ public final class Display {
         synchronized (mLock) {
             updateDisplayInfoLocked();
             return mIsValid ? mDisplayInfo.committedState : STATE_UNKNOWN;
+        }
+    }
+
+    /**
+     * Returns whether the display is eligible for hosting tasks.
+     *
+     * For example, if the display is used for mirroring, this will return {@code false}.
+     *
+     * TODO (b/383666349): Rename this later once there is a better option.
+     *
+     * @hide
+     */
+    public boolean canHostTasks() {
+        synchronized (mLock) {
+            updateDisplayInfoLocked();
+            return mIsValid && mDisplayInfo.canHostTasks;
         }
     }
 

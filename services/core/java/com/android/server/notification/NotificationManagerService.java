@@ -112,6 +112,7 @@ import static android.service.notification.Flags.FLAG_NOTIFICATION_CONVERSATION_
 import static android.service.notification.Flags.callstyleCallbackApi;
 import static android.service.notification.Flags.notificationClassification;
 import static android.service.notification.Flags.notificationForceGrouping;
+import static android.service.notification.Flags.notificationRegroupOnClassification;
 import static android.service.notification.Flags.redactSensitiveNotificationsBigTextStyle;
 import static android.service.notification.Flags.redactSensitiveNotificationsFromUntrustedListeners;
 import static android.service.notification.NotificationListenerService.FLAG_FILTER_TYPE_ALERTING;
@@ -361,6 +362,7 @@ import com.android.server.lights.LightsManager;
 import com.android.server.notification.GroupHelper.NotificationAttributes;
 import com.android.server.notification.ManagedServices.ManagedServiceInfo;
 import com.android.server.notification.ManagedServices.UserProfiles;
+import com.android.server.notification.NotificationRecordLogger.NotificationReportedEvent;
 import com.android.server.notification.toast.CustomToastRecord;
 import com.android.server.notification.toast.TextToastRecord;
 import com.android.server.notification.toast.ToastRecord;
@@ -1850,6 +1852,42 @@ public class NotificationManagerService extends SystemService {
             }
         }
 
+        @Override
+        public void unbundleNotification(String key) {
+            if (!(notificationClassification() && notificationRegroupOnClassification())) {
+                return;
+            }
+            synchronized (mNotificationLock) {
+                NotificationRecord r = mNotificationsByKey.get(key);
+                if (r == null) {
+                    return;
+                }
+
+                if (DBG) {
+                    Slog.v(TAG, "unbundleNotification: " + r);
+                }
+
+                boolean hasOriginalSummary = false;
+                if (r.getSbn().isAppGroup() && r.getNotification().isGroupChild()) {
+                    final String oldGroupKey = GroupHelper.getFullAggregateGroupKey(
+                            r.getSbn().getPackageName(), r.getOriginalGroupKey(), r.getUserId());
+                    NotificationRecord groupSummary = mSummaryByGroupKey.get(oldGroupKey);
+                    // We only care about app-provided valid groups
+                    hasOriginalSummary = (groupSummary != null
+                            && !GroupHelper.isAggregatedGroup(groupSummary));
+                }
+
+                // Only NotificationRecord's mChannel is updated when bundled, the Notification
+                // mChannelId will always be the original channel.
+                String origChannelId = r.getNotification().getChannelId();
+                NotificationChannel originalChannel = mPreferencesHelper.getNotificationChannel(
+                        r.getSbn().getPackageName(), r.getUid(), origChannelId, false);
+                if (originalChannel != null && !origChannelId.equals(r.getChannel().getId())) {
+                    r.updateNotificationChannel(originalChannel);
+                    mGroupHelper.onNotificationUnbundled(r, hasOriginalSummary);
+                }
+            }
+        }
     };
 
     NotificationManagerPrivate mNotificationManagerPrivate = new NotificationManagerPrivate() {
@@ -1934,10 +1972,20 @@ public class NotificationManagerService extends SystemService {
                 hasSensitiveContent, lifespanMs);
     }
 
-    protected void logClassificationChannelAdjustmentReceived(boolean hasPosted, boolean isAlerting,
-                                                              int classification, int lifespanMs) {
+    protected void logClassificationChannelAdjustmentReceived(NotificationRecord r,
+                                                              boolean hasPosted,
+                                                              int classification) {
+        // Note that this value of isAlerting does not fully indicate whether a notif
+        // would make a sound or HUN on device; it is an approximation for metrics.
+        boolean isAlerting = r.getChannel().getImportance() >= IMPORTANCE_DEFAULT;
+        int instanceId = r.getSbn().getInstanceId() == null
+                ? 0 : r.getSbn().getInstanceId().getId();
+
         FrameworkStatsLog.write(FrameworkStatsLog.NOTIFICATION_CHANNEL_CLASSIFICATION,
-                hasPosted, isAlerting, classification, lifespanMs);
+                hasPosted, isAlerting, classification,
+                r.getLifespanMs(System.currentTimeMillis()),
+                NotificationReportedEvent.NOTIFICATION_ADJUSTED.getId(),
+                instanceId, r.getUid());
     }
 
     protected final BroadcastReceiver mLocaleChangeReceiver = new BroadcastReceiver() {
@@ -6134,7 +6182,7 @@ public class NotificationManagerService extends SystemService {
         }
 
         private void enforcePolicyAccess(int uid, String method) {
-            if (PERMISSION_GRANTED == getContext().checkCallingPermission(
+            if (PERMISSION_GRANTED == getContext().checkCallingOrSelfPermission(
                     android.Manifest.permission.MANAGE_NOTIFICATIONS)) {
                 return;
             }
@@ -6165,7 +6213,7 @@ public class NotificationManagerService extends SystemService {
         }
 
         private void enforcePolicyAccess(String pkg, String method) {
-            if (PERMISSION_GRANTED == getContext().checkCallingPermission(
+            if (PERMISSION_GRANTED == getContext().checkCallingOrSelfPermission(
                     android.Manifest.permission.MANAGE_NOTIFICATIONS)) {
                 return;
             }
@@ -6974,6 +7022,7 @@ public class NotificationManagerService extends SystemService {
 
     protected void checkNotificationListenerAccess() {
         if (!isCallerSystemOrPhone()) {
+            // Safe to check calling permission as caller is already not system or phone
             getContext().enforceCallingPermission(
                     permission.MANAGE_NOTIFICATION_LISTENERS,
                     "Caller must hold " + permission.MANAGE_NOTIFICATION_LISTENERS);
@@ -7052,11 +7101,8 @@ public class NotificationManagerService extends SystemService {
                     int classification = adjustments.getInt(KEY_TYPE);
                     // swap app provided type with the real thing
                     adjustments.putParcelable(KEY_TYPE, newChannel);
-                    // Note that this value of isAlerting does not fully indicate whether a notif
-                    // would make a sound or HUN on device; it is an approximation for metrics.
-                    boolean isAlerting = r.getChannel().getImportance() >= IMPORTANCE_DEFAULT;
-                    logClassificationChannelAdjustmentReceived(isPosted, isAlerting, classification,
-                            r.getLifespanMs(System.currentTimeMillis()));
+
+                    logClassificationChannelAdjustmentReceived(r, isPosted, classification);
                 }
             }
             r.addAdjustment(adjustment);

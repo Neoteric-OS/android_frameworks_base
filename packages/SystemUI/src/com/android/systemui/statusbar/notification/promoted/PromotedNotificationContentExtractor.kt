@@ -34,15 +34,22 @@ import com.android.systemui.statusbar.notification.promoted.shared.model.Promote
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.When
 import javax.inject.Inject
 
+interface PromotedNotificationContentExtractor {
+    fun extractContent(
+        entry: NotificationEntry,
+        recoveredBuilder: Notification.Builder,
+    ): PromotedNotificationContentModel?
+}
+
 @SysUISingleton
-class PromotedNotificationContentExtractor
+class PromotedNotificationContentExtractorImpl
 @Inject
 constructor(
     private val promotedNotificationsProvider: PromotedNotificationsProvider,
     @ShadeDisplayAware private val context: Context,
     private val logger: PromotedNotificationLogger,
-) {
-    fun extractContent(
+) : PromotedNotificationContentExtractor {
+    override fun extractContent(
         entry: NotificationEntry,
         recoveredBuilder: Notification.Builder,
     ): PromotedNotificationContentModel? {
@@ -71,11 +78,19 @@ constructor(
         contentBuilder.appName = notification.loadHeaderAppName(context)
         contentBuilder.subText = notification.subText()
         contentBuilder.time = notification.extractWhen()
+        contentBuilder.shortCriticalText = notification.shortCriticalText()
         contentBuilder.lastAudiblyAlertedMs = entry.lastAudiblyAlertedMs
         contentBuilder.profileBadgeResId = null // TODO
         contentBuilder.title = notification.title()
         contentBuilder.text = notification.text()
         contentBuilder.skeletonLargeIcon = null // TODO
+
+        val colorsFromNotif = recoveredBuilder.getColors(/* header= */ false)
+        contentBuilder.colors =
+            PromotedNotificationContentModel.Colors(
+                backgroundColor = colorsFromNotif.backgroundColor,
+                primaryTextColor = colorsFromNotif.primaryTextColor,
+            )
 
         recoveredBuilder.style?.extractContent(contentBuilder)
             ?: run { contentBuilder.style = Style.Ineligible }
@@ -90,6 +105,13 @@ private fun Notification.text(): CharSequence? = extras?.getCharSequence(EXTRA_T
 
 private fun Notification.subText(): String? = extras?.getString(EXTRA_SUB_TEXT)
 
+private fun Notification.shortCriticalText(): String? {
+    if (!android.app.Flags.apiRichOngoing()) {
+        return null
+    }
+    return this.shortCriticalText
+}
+
 private fun Notification.chronometerCountDown(): Boolean =
     extras?.getBoolean(EXTRA_CHRONOMETER_COUNT_DOWN, /* defaultValue= */ false) ?: false
 
@@ -100,7 +122,7 @@ private fun Notification.extractWhen(): When? {
     val countDown = chronometerCountDown()
 
     return when {
-        showsTime -> When(time, When.Mode.Absolute)
+        showsTime -> When(time, When.Mode.BasicTime)
         showsChronometer -> When(time, if (countDown) When.Mode.CountDown else When.Mode.CountUp)
         else -> null
     }
@@ -154,5 +176,5 @@ private fun CallStyle.extractContent(contentBuilder: PromotedNotificationContent
 
 private fun ProgressStyle.extractContent(contentBuilder: PromotedNotificationContentModel.Builder) {
     // TODO: Create NotificationProgressModel.toSkeleton, or something similar.
-    contentBuilder.progress = createProgressModel(0xffffffff.toInt(), 0x00000000)
+    contentBuilder.progress = createProgressModel(0xffffffff.toInt(), 0xff000000.toInt())
 }

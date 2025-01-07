@@ -64,14 +64,18 @@ import android.os.Binder;
 import android.os.CpuHeadroomParamsInternal;
 import android.os.GpuHeadroomParamsInternal;
 import android.os.IBinder;
+import android.os.IHintManager;
 import android.os.IHintSession;
 import android.os.PerformanceHintManager;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.SessionCreationConfig;
+import android.platform.test.annotations.DisableFlags;
+import android.platform.test.annotations.EnableFlags;
 import android.platform.test.annotations.RequiresFlagsEnabled;
 import android.platform.test.flag.junit.CheckFlagsRule;
 import android.platform.test.flag.junit.DeviceFlagsValueProvider;
+import android.platform.test.flag.junit.SetFlagsRule;
 import android.util.Log;
 
 import com.android.server.FgThread;
@@ -88,6 +92,8 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -154,9 +160,13 @@ public class HintManagerServiceTest {
     private ActivityManagerInternal mAmInternalMock;
     @Mock
     private PackageManager mMockPackageManager;
+    @Mock
+    private IHintManager.IHintManagerClient mClientCallback;
     @Rule
     public final CheckFlagsRule mCheckFlagsRule =
             DeviceFlagsValueProvider.createCheckFlagsRule();
+    @Rule
+    public final SetFlagsRule mSetFlagsRule = new SetFlagsRule();
 
     private HintManagerService mService;
     private ChannelConfig mConfig;
@@ -171,6 +181,24 @@ public class HintManagerServiceTest {
         };
     }
 
+    private SupportInfo makeDefaultSupportInfo() {
+        mSupportInfo = new SupportInfo();
+        mSupportInfo.usesSessions = true;
+        // By default, mark everything as fully supported
+        mSupportInfo.sessionHints = -1;
+        mSupportInfo.sessionModes = -1;
+        mSupportInfo.modes = -1;
+        mSupportInfo.boosts = -1;
+        mSupportInfo.sessionTags = -1;
+        mSupportInfo.headroom = new SupportInfo.HeadroomSupportInfo();
+        mSupportInfo.headroom.isCpuSupported = true;
+        mSupportInfo.headroom.cpuMinIntervalMillis = 2000;
+        mSupportInfo.headroom.isGpuSupported = true;
+        mSupportInfo.headroom.gpuMinIntervalMillis = 2000;
+        mSupportInfo.compositionData = new SupportInfo.CompositionDataSupportInfo();
+        return mSupportInfo;
+    }
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -181,12 +209,7 @@ public class HintManagerServiceTest {
         mConfig.eventFlagDescriptor = new MQDescriptor<Byte, Byte>();
         ApplicationInfo applicationInfo = new ApplicationInfo();
         applicationInfo.category = ApplicationInfo.CATEGORY_GAME;
-        mSupportInfo = new SupportInfo();
-        mSupportInfo.headroom = new SupportInfo.HeadroomSupportInfo();
-        mSupportInfo.headroom.isCpuSupported = true;
-        mSupportInfo.headroom.cpuMinIntervalMillis = 2000;
-        mSupportInfo.headroom.isGpuSupported = true;
-        mSupportInfo.headroom.gpuMinIntervalMillis = 2000;
+        mSupportInfo = makeDefaultSupportInfo();
         when(mContext.getPackageManager()).thenReturn(mMockPackageManager);
         when(mMockPackageManager.getNameForUid(anyInt())).thenReturn(TEST_APP_NAME);
         when(mMockPackageManager.getApplicationInfo(eq(TEST_APP_NAME), anyInt()))
@@ -215,6 +238,7 @@ public class HintManagerServiceTest {
         when(mIPowerMock.getInterfaceVersion()).thenReturn(6);
         when(mIPowerMock.getSupportInfo()).thenReturn(mSupportInfo);
         when(mIPowerMock.getSessionChannel(anyInt(), anyInt())).thenReturn(mConfig);
+        when(mIPowerMock.getSupportInfo()).thenReturn(mSupportInfo);
         LocalServices.removeServiceForTest(ActivityManagerInternal.class);
         LocalServices.addService(ActivityManagerInternal.class, mAmInternalMock);
     }
@@ -409,8 +433,11 @@ public class HintManagerServiceTest {
         HintManagerService service = createService();
         IBinder token = new Binder();
 
-        final int threadCount =
-                service.getBinderServiceInstance().getMaxGraphicsPipelineThreadsCount();
+        IHintManager.HintManagerClientData data = service.getBinderServiceInstance()
+                .registerClient(mClientCallback);
+
+        final int threadCount = data.maxGraphicsPipelineThreads;
+
         long sessionPtr1 = 1111L;
         long sessionId1 = 11111L;
         CountDownLatch stopLatch1 = new CountDownLatch(1);
@@ -1255,6 +1282,54 @@ public class HintManagerServiceTest {
     }
 
     @Test
+    public void testCpuHeadroomInvalidParams() {
+        HintManagerService service = createService();
+        final CpuHeadroomParamsInternal param1 = new CpuHeadroomParamsInternal();
+        param1.calculationType = 100;
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getBinderServiceInstance().getCpuHeadroom(param1);
+        });
+
+        final CpuHeadroomParamsInternal param2 = new CpuHeadroomParamsInternal();
+        param2.calculationWindowMillis = 49;
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getBinderServiceInstance().getCpuHeadroom(param2);
+        });
+        param2.calculationWindowMillis = 10001;
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getBinderServiceInstance().getCpuHeadroom(param2);
+        });
+
+        final CpuHeadroomParamsInternal param3 = new CpuHeadroomParamsInternal();
+        param3.tids = new int[]{1, 2, 3, 4, 5, 6};
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getBinderServiceInstance().getCpuHeadroom(param3);
+        });
+    }
+
+    @Test
+    public void testGpuHeadroomInvalidParams() {
+        HintManagerService service = createService();
+        final GpuHeadroomParamsInternal param1 = new GpuHeadroomParamsInternal();
+        param1.calculationType = 100;
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getBinderServiceInstance().getGpuHeadroom(param1);
+        });
+
+        final GpuHeadroomParamsInternal param2 = new GpuHeadroomParamsInternal();
+        param2.calculationWindowMillis = 49;
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getBinderServiceInstance().getGpuHeadroom(param2);
+        });
+        param2.calculationWindowMillis = 10001;
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getBinderServiceInstance().getGpuHeadroom(param2);
+        });
+    }
+
+
+    @Test
+    @EnableFlags({Flags.FLAG_CPU_HEADROOM_AFFINITY_CHECK})
     public void testCpuHeadroomCache() throws Exception {
         CpuHeadroomParamsInternal params1 = new CpuHeadroomParamsInternal();
         CpuHeadroomParams halParams1 = new CpuHeadroomParams();
@@ -1268,11 +1343,14 @@ public class HintManagerServiceTest {
         halParams2.calculationType = CpuHeadroomParams.CalculationType.MIN;
         halParams2.tids = new int[]{};
 
+        CountDownLatch latch = new CountDownLatch(2);
+        int[] tids = createThreads(2, latch);
         CpuHeadroomParamsInternal params3 = new CpuHeadroomParamsInternal();
+        params3.tids = tids;
         params3.calculationType = CpuHeadroomParams.CalculationType.AVERAGE;
         CpuHeadroomParams halParams3 = new CpuHeadroomParams();
+        halParams3.tids = tids;
         halParams3.calculationType = CpuHeadroomParams.CalculationType.AVERAGE;
-        halParams3.tids = new int[]{Process.myPid()};
 
         // this params should not be cached as the window is not default
         CpuHeadroomParamsInternal params4 = new CpuHeadroomParamsInternal();
@@ -1344,6 +1422,65 @@ public class HintManagerServiceTest {
         verify(mIPowerMock, times(1)).getCpuHeadroom(eq(halParams2));
         verify(mIPowerMock, times(1)).getCpuHeadroom(eq(halParams3));
         verify(mIPowerMock, times(1)).getCpuHeadroom(eq(halParams4));
+        latch.countDown();
+    }
+
+    @Test
+    @EnableFlags({Flags.FLAG_CPU_HEADROOM_AFFINITY_CHECK})
+    public void testGetCpuHeadroomDifferentAffinity_flagOn() throws Exception {
+        CountDownLatch latch = new CountDownLatch(2);
+        int[] tids = createThreads(2, latch);
+        CpuHeadroomParamsInternal params = new CpuHeadroomParamsInternal();
+        params.tids = tids;
+        CpuHeadroomParams halParams = new CpuHeadroomParams();
+        halParams.tids = tids;
+        float headroom = 0.1f;
+        CpuHeadroomResult halRet = CpuHeadroomResult.globalHeadroom(headroom);
+        String ret1 = runAndWaitForCommand("taskset -p 1 " + tids[0]);
+        String ret2 = runAndWaitForCommand("taskset -p 3 " + tids[1]);
+
+        HintManagerService service = createService();
+        clearInvocations(mIPowerMock);
+        when(mIPowerMock.getCpuHeadroom(eq(halParams))).thenReturn(halRet);
+        assertThrows("taskset cmd return: " + ret1 + "\n" + ret2, IllegalStateException.class,
+                () -> service.getBinderServiceInstance().getCpuHeadroom(params));
+        verify(mIPowerMock, times(0)).getCpuHeadroom(any());
+    }
+
+    @Test
+    @DisableFlags({Flags.FLAG_CPU_HEADROOM_AFFINITY_CHECK})
+    public void testGetCpuHeadroomDifferentAffinity_flagOff() throws Exception {
+        CountDownLatch latch = new CountDownLatch(2);
+        int[] tids = createThreads(2, latch);
+        CpuHeadroomParamsInternal params = new CpuHeadroomParamsInternal();
+        params.tids = tids;
+        CpuHeadroomParams halParams = new CpuHeadroomParams();
+        halParams.tids = tids;
+        float headroom = 0.1f;
+        CpuHeadroomResult halRet = CpuHeadroomResult.globalHeadroom(headroom);
+        String ret1 = runAndWaitForCommand("taskset -p 1 " + tids[0]);
+        String ret2 = runAndWaitForCommand("taskset -p 3 " + tids[1]);
+
+        HintManagerService service = createService();
+        clearInvocations(mIPowerMock);
+        when(mIPowerMock.getCpuHeadroom(eq(halParams))).thenReturn(halRet);
+        assertEquals("taskset cmd return: " + ret1 + "\n" + ret2, halRet,
+                service.getBinderServiceInstance().getCpuHeadroom(params));
+        verify(mIPowerMock, times(1)).getCpuHeadroom(any());
+    }
+
+    private String runAndWaitForCommand(String command) throws Exception {
+        java.lang.Process process = Runtime.getRuntime().exec(command);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        StringBuilder res = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            res.append(line);
+        }
+        process.waitFor();
+        // somehow the exit code can be 1 for the taskset command though it exits successfully,
+        // thus we just return the output
+        return res.toString();
     }
 
     @Test
@@ -1399,5 +1536,68 @@ public class HintManagerServiceTest {
         verify(mIPowerMock, times(2)).getGpuHeadroom(any());
         verify(mIPowerMock, times(1)).getGpuHeadroom(eq(halParams1));
         verify(mIPowerMock, times(1)).getGpuHeadroom(eq(halParams2));
+    }
+
+    @Test
+    public void testRegisteringClient() throws Exception {
+        HintManagerService service = createService();
+        IHintManager.HintManagerClientData data = service.getBinderServiceInstance()
+                .registerClient(mClientCallback);
+        assertNotNull(data);
+        assertEquals(data.supportInfo, mSupportInfo);
+    }
+
+    @Test
+    public void testRegisteringClientOnV4() throws Exception {
+        when(mIPowerMock.getInterfaceVersion()).thenReturn(4);
+        HintManagerService service = createService();
+        IHintManager.HintManagerClientData data = service.getBinderServiceInstance()
+                .registerClient(mClientCallback);
+        assertNotNull(data);
+        assertEquals(data.supportInfo.usesSessions, true);
+        assertEquals(data.supportInfo.boosts, 0);
+        assertEquals(data.supportInfo.modes, 0);
+        assertEquals(data.supportInfo.sessionHints, 31);
+        assertEquals(data.supportInfo.sessionModes, 0);
+        assertEquals(data.supportInfo.sessionTags, 0);
+        assertEquals(data.powerHalVersion, 4);
+        assertEquals(data.preferredRateNanos, DEFAULT_HINT_PREFERRED_RATE);
+    }
+
+    @Test
+    public void testRegisteringClientOnV5() throws Exception {
+        when(mIPowerMock.getInterfaceVersion()).thenReturn(5);
+        HintManagerService service = createService();
+        IHintManager.HintManagerClientData data = service.getBinderServiceInstance()
+                .registerClient(mClientCallback);
+        assertNotNull(data);
+        assertEquals(data.supportInfo.usesSessions, true);
+        assertEquals(data.supportInfo.boosts, 0);
+        assertEquals(data.supportInfo.modes, 0);
+        assertEquals(data.supportInfo.sessionHints, 255);
+        assertEquals(data.supportInfo.sessionModes, 1);
+        assertEquals(data.supportInfo.sessionTags, 31);
+        assertEquals(data.powerHalVersion, 5);
+        assertEquals(data.preferredRateNanos, DEFAULT_HINT_PREFERRED_RATE);
+    }
+
+    @Test
+    public void testSettingUpOldClientWhenUnsupported() throws Exception {
+        when(mIPowerMock.getInterfaceVersion()).thenReturn(5);
+        // Mock unsupported to modify the default support behavior
+        when(mNativeWrapperMock.halGetHintSessionPreferredRate())
+                .thenReturn(-1L);
+        HintManagerService service = createService();
+        IHintManager.HintManagerClientData data = service.getBinderServiceInstance()
+                .registerClient(mClientCallback);
+        assertNotNull(data);
+        assertEquals(data.supportInfo.usesSessions, false);
+        assertEquals(data.supportInfo.boosts, 0);
+        assertEquals(data.supportInfo.modes, 0);
+        assertEquals(data.supportInfo.sessionHints, 0);
+        assertEquals(data.supportInfo.sessionModes, 0);
+        assertEquals(data.supportInfo.sessionTags, 0);
+        assertEquals(data.powerHalVersion, 5);
+        assertEquals(data.preferredRateNanos, -1);
     }
 }

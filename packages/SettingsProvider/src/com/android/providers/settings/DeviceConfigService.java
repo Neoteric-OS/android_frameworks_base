@@ -72,7 +72,6 @@ import java.util.regex.Pattern;
 public final class DeviceConfigService extends Binder {
     private static final List<String> sAconfigTextProtoFilesOnDevice = List.of(
             "/system/etc/aconfig_flags.pb",
-            "/system_ext/etc/aconfig_flags.pb",
             "/product/etc/aconfig_flags.pb",
             "/vendor/etc/aconfig_flags.pb");
 
@@ -133,12 +132,7 @@ public final class DeviceConfigService extends Binder {
             }
 
             pw.println("DeviceConfig provider: ");
-            try (ParcelFileDescriptor pfd = ParcelFileDescriptor.dup(fd)) {
-                DeviceConfig.dump(pfd, pw, /* prefix= */ "  ", args);
-            } catch (IOException e) {
-                pw.print("IOException creating ParcelFileDescriptor: ");
-                pw.println(e);
-            }
+            DeviceConfig.dump(pw, /* prefix= */ "  ", args);
         }
 
         IContentProvider iprovider = mProvider.getIContentProvider();
@@ -154,27 +148,7 @@ public final class DeviceConfigService extends Binder {
             // TODO(b/364399200): use filter to skip instead?
             return;
         }
-
-        ArrayList<String> missingFiles = new ArrayList<String>();
-        for (String fileName : sAconfigTextProtoFilesOnDevice) {
-            File aconfigFile = new File(fileName);
-            if (!aconfigFile.exists()) {
-                missingFiles.add(fileName);
-            }
-        }
-
-        if (missingFiles.isEmpty()) {
-            pw.println("\nAconfig flags:");
-            for (String name : MyShellCommand.listAllAconfigFlags(iprovider)) {
-                pw.println(name);
-            }
-        } else {
-            pw.println("\nFailed to dump aconfig flags due to missing files:");
-            for (String fileName : missingFiles) {
-                pw.println(fileName);
-            }
-        }
-    }
+   }
 
     private static HashSet<String> getAconfigFlagNamesInDeviceConfig() {
         HashSet<String> nameSet = new HashSet<String>();

@@ -30,6 +30,7 @@ import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_D
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_PRESENTATION;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_TRUSTED;
 import static android.provider.Settings.Global.DEVELOPMENT_FORCE_DESKTOP_MODE_ON_EXTERNAL_DISPLAYS;
+import static android.provider.Settings.Secure.MIRROR_BUILT_IN_DISPLAY;
 import static android.view.ContentRecordingSession.RECORD_CONTENT_DISPLAY;
 import static android.view.ContentRecordingSession.RECORD_CONTENT_TASK;
 import static android.view.Display.HdrCapabilities.HDR_TYPE_INVALID;
@@ -88,6 +89,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Insets;
 import android.graphics.Rect;
 import android.hardware.Sensor;
@@ -212,7 +214,8 @@ public class DisplayManagerServiceTest {
     private static final String PACKAGE_NAME = "com.android.frameworks.displayservicetests";
     private static final long STANDARD_DISPLAY_EVENTS =
             DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_ADDED
-            | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_CHANGED
+            | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_BASIC_CHANGED
+            | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_REFRESH_RATE
             | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_REMOVED;
     private static final long STANDARD_AND_CONNECTION_DISPLAY_EVENTS =
             STANDARD_DISPLAY_EVENTS
@@ -220,7 +223,7 @@ public class DisplayManagerServiceTest {
 
     private static final String EVENT_DISPLAY_ADDED = "EVENT_DISPLAY_ADDED";
     private static final String EVENT_DISPLAY_REMOVED = "EVENT_DISPLAY_REMOVED";
-    private static final String EVENT_DISPLAY_CHANGED = "EVENT_DISPLAY_CHANGED";
+    private static final String EVENT_DISPLAY_BASIC_CHANGED = "EVENT_DISPLAY_BASIC_CHANGED";
     private static final String EVENT_DISPLAY_BRIGHTNESS_CHANGED =
             "EVENT_DISPLAY_BRIGHTNESS_CHANGED";
     private static final String EVENT_DISPLAY_HDR_SDR_RATIO_CHANGED =
@@ -887,7 +890,6 @@ public class DisplayManagerServiceTest {
 
         FakeDisplayManagerCallback callback = registerDisplayListenerCallback(
                 displayManager, bs, displayDevice);
-
         // Simulate DisplayDevice change
         DisplayDeviceInfo displayDeviceInfo2 = new DisplayDeviceInfo();
         displayDeviceInfo2.copyFrom(displayDeviceInfo);
@@ -898,7 +900,8 @@ public class DisplayManagerServiceTest {
 
         Handler handler = displayManager.getDisplayHandler();
         waitForIdleHandler(handler);
-        assertThat(callback.receivedEvents()).containsExactly(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).containsExactly(EVENT_DISPLAY_BASIC_CHANGED,
+                EVENT_DISPLAY_REFRESH_RATE_CHANGED);
     }
 
     /**
@@ -2143,7 +2146,7 @@ public class DisplayManagerServiceTest {
                         new DisplayEventReceiver.FrameRateOverride(myUid, 30f),
                 });
         waitForIdleHandler(displayManager.getDisplayHandler());
-        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_BASIC_CHANGED);
         callback.clear();
 
         updateFrameRateOverride(displayManager, displayDevice,
@@ -2152,7 +2155,7 @@ public class DisplayManagerServiceTest {
                         new DisplayEventReceiver.FrameRateOverride(1234, 30f),
                 });
         waitForIdleHandler(displayManager.getDisplayHandler());
-        assertThat(callback.receivedEvents()).doesNotContain(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).doesNotContain(EVENT_DISPLAY_BASIC_CHANGED);
 
         updateFrameRateOverride(displayManager, displayDevice,
                 new DisplayEventReceiver.FrameRateOverride[]{
@@ -2161,7 +2164,7 @@ public class DisplayManagerServiceTest {
                         new DisplayEventReceiver.FrameRateOverride(5678, 30f),
                 });
         waitForIdleHandler(displayManager.getDisplayHandler());
-        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_BASIC_CHANGED);
         callback.clear();
 
         updateFrameRateOverride(displayManager, displayDevice,
@@ -2170,7 +2173,7 @@ public class DisplayManagerServiceTest {
                         new DisplayEventReceiver.FrameRateOverride(5678, 30f),
                 });
         waitForIdleHandler(displayManager.getDisplayHandler());
-        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_BASIC_CHANGED);
         callback.clear();
 
         updateFrameRateOverride(displayManager, displayDevice,
@@ -2178,7 +2181,7 @@ public class DisplayManagerServiceTest {
                         new DisplayEventReceiver.FrameRateOverride(5678, 30f),
                 });
         waitForIdleHandler(displayManager.getDisplayHandler());
-        assertThat(callback.receivedEvents()).doesNotContain(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).doesNotContain(EVENT_DISPLAY_BASIC_CHANGED);
     }
 
     /**
@@ -2301,16 +2304,16 @@ public class DisplayManagerServiceTest {
 
         updateRenderFrameRate(displayManager, displayDevice, 30f);
         waitForIdleHandler(displayManager.getDisplayHandler());
-        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_REFRESH_RATE_CHANGED);
         callback.clear();
 
         updateRenderFrameRate(displayManager, displayDevice, 30f);
         waitForIdleHandler(displayManager.getDisplayHandler());
-        assertThat(callback.receivedEvents()).doesNotContain(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).doesNotContain(EVENT_DISPLAY_REFRESH_RATE_CHANGED);
 
         updateRenderFrameRate(displayManager, displayDevice, 20f);
         waitForIdleHandler(displayManager.getDisplayHandler());
-        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_CHANGED);
+        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_REFRESH_RATE_CHANGED);
         callback.clear();
     }
 
@@ -3708,7 +3711,7 @@ public class DisplayManagerServiceTest {
                 eq(config));
 
         bs.releaseVirtualDisplay(mMockAppToken);
-        verify(mMockVirtualDisplayAdapter).releaseVirtualDisplayLocked(binder, callingUid);
+        verify(mMockVirtualDisplayAdapter).releaseVirtualDisplayLocked(binder);
     }
 
     @Test
@@ -3828,6 +3831,96 @@ public class DisplayManagerServiceTest {
         waitForIdleHandler(handler);
 
         assertThat(callback.receivedEvents()).isEmpty();
+    }
+
+    @Test
+    public void testMirrorBuiltInDisplay_flagEnabled() {
+        when(mMockFlags.isDisplayContentModeManagementEnabled()).thenReturn(true);
+        Settings.Secure.putInt(mContext.getContentResolver(), MIRROR_BUILT_IN_DISPLAY, 0);
+
+        DisplayManagerService displayManager = new DisplayManagerService(mContext, mBasicInjector);
+        displayManager.systemReady(/* safeMode= */ false);
+        assertThat(displayManager.shouldMirrorBuiltInDisplay()).isFalse();
+
+        Settings.Secure.putInt(mContext.getContentResolver(), MIRROR_BUILT_IN_DISPLAY, 1);
+        final ContentObserver observer = displayManager.getSettingsObserver();
+        observer.onChange(false, Settings.Secure.getUriFor(MIRROR_BUILT_IN_DISPLAY));
+        assertThat(displayManager.shouldMirrorBuiltInDisplay()).isTrue();
+    }
+
+    @Test
+    public void testMirrorBuiltInDisplay_flagDisabled() {
+        when(mMockFlags.isDisplayContentModeManagementEnabled()).thenReturn(false);
+        Settings.Secure.putInt(mContext.getContentResolver(), MIRROR_BUILT_IN_DISPLAY, 0);
+
+        DisplayManagerService displayManager = new DisplayManagerService(mContext, mBasicInjector);
+        displayManager.systemReady(/* safeMode= */ false);
+        assertThat(displayManager.shouldMirrorBuiltInDisplay()).isFalse();
+
+        Settings.Secure.putInt(mContext.getContentResolver(), MIRROR_BUILT_IN_DISPLAY, 1);
+        final ContentObserver observer = displayManager.getSettingsObserver();
+        observer.onChange(false, Settings.Secure.getUriFor(MIRROR_BUILT_IN_DISPLAY));
+        assertThat(displayManager.shouldMirrorBuiltInDisplay()).isFalse();
+    }
+
+    @Test
+    public void testShouldNotNotifyDefaultDisplayChanges_whenMirrorBuiltInDisplayChanges() {
+        when(mMockFlags.isDisplayContentModeManagementEnabled()).thenReturn(true);
+        Settings.Secure.putInt(mContext.getContentResolver(), MIRROR_BUILT_IN_DISPLAY, 0);
+
+        DisplayManagerService displayManager = new DisplayManagerService(mContext, mBasicInjector);
+        displayManager.systemReady(/* safeMode= */ false);
+
+        DisplayManagerService.BinderService displayManagerBinderService =
+                displayManager.new BinderService();
+        Handler handler = displayManager.getDisplayHandler();
+        waitForIdleHandler(handler);
+
+        FakeDisplayManagerCallback callback = new FakeDisplayManagerCallback();
+        displayManagerBinderService.registerCallbackWithEventMask(
+                callback, STANDARD_DISPLAY_EVENTS);
+        waitForIdleHandler(handler);
+
+        // Create a default display device
+        createFakeDisplayDevice(displayManager, new float[] {60f}, Display.TYPE_INTERNAL);
+
+        Settings.Secure.putInt(mContext.getContentResolver(), MIRROR_BUILT_IN_DISPLAY, 1);
+        final ContentObserver observer = displayManager.getSettingsObserver();
+        observer.onChange(false, Settings.Secure.getUriFor(MIRROR_BUILT_IN_DISPLAY));
+        waitForIdleHandler(handler);
+
+        assertThat(callback.receivedEvents()).doesNotContain(EVENT_DISPLAY_BASIC_CHANGED);
+    }
+
+    @Test
+    public void testShouldNotifyNonDefaultDisplayChanges_whenMirrorBuiltInDisplayChanges() {
+        when(mMockFlags.isDisplayContentModeManagementEnabled()).thenReturn(true);
+        Settings.Secure.putInt(mContext.getContentResolver(), MIRROR_BUILT_IN_DISPLAY, 0);
+
+        DisplayManagerService displayManager = new DisplayManagerService(mContext, mBasicInjector);
+        displayManager.systemReady(/* safeMode= */ false);
+
+        DisplayManagerService.BinderService displayManagerBinderService =
+                displayManager.new BinderService();
+        Handler handler = displayManager.getDisplayHandler();
+        waitForIdleHandler(handler);
+
+        FakeDisplayManagerCallback callback = new FakeDisplayManagerCallback();
+        displayManagerBinderService.registerCallbackWithEventMask(
+                callback, STANDARD_DISPLAY_EVENTS);
+        waitForIdleHandler(handler);
+
+        // Create a default display device
+        createFakeDisplayDevice(displayManager, new float[] {60f}, Display.TYPE_INTERNAL);
+        // Create a non-default display device
+        createFakeDisplayDevice(displayManager, new float[] {60f}, Display.TYPE_EXTERNAL);
+
+        Settings.Secure.putInt(mContext.getContentResolver(), MIRROR_BUILT_IN_DISPLAY, 1);
+        final ContentObserver observer = displayManager.getSettingsObserver();
+        observer.onChange(false, Settings.Secure.getUriFor(MIRROR_BUILT_IN_DISPLAY));
+        waitForIdleHandler(handler);
+
+        assertThat(callback.receivedEvents()).contains(EVENT_DISPLAY_BASIC_CHANGED);
     }
 
     private void initDisplayPowerController(DisplayManagerInternal localService) {
@@ -4297,8 +4390,8 @@ public class DisplayManagerServiceTest {
                     return EVENT_DISPLAY_ADDED;
                 case DisplayManagerGlobal.EVENT_DISPLAY_REMOVED:
                     return EVENT_DISPLAY_REMOVED;
-                case DisplayManagerGlobal.EVENT_DISPLAY_CHANGED:
-                    return EVENT_DISPLAY_CHANGED;
+                case DisplayManagerGlobal.EVENT_DISPLAY_BASIC_CHANGED:
+                    return EVENT_DISPLAY_BASIC_CHANGED;
                 case DisplayManagerGlobal.EVENT_DISPLAY_BRIGHTNESS_CHANGED:
                     return EVENT_DISPLAY_BRIGHTNESS_CHANGED;
                 case DisplayManagerGlobal.EVENT_DISPLAY_HDR_SDR_RATIO_CHANGED:

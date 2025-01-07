@@ -5,7 +5,6 @@ import androidx.compose.foundation.gestures.Orientation
 import com.android.compose.animation.scene.ProgressConverter
 import com.android.compose.animation.scene.TransitionKey
 import com.android.compose.animation.scene.transitions
-import com.android.systemui.bouncer.ui.composable.Bouncer
 import com.android.systemui.notifications.ui.composable.Notifications
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
@@ -33,7 +32,6 @@ import com.android.systemui.scene.ui.composable.transitions.notificationsShadeTo
 import com.android.systemui.scene.ui.composable.transitions.shadeToQuickSettingsTransition
 import com.android.systemui.scene.ui.composable.transitions.toNotificationsShadeTransition
 import com.android.systemui.scene.ui.composable.transitions.toQuickSettingsShadeTransition
-import com.android.systemui.shade.ui.composable.OverlayShade
 import com.android.systemui.shade.ui.composable.Shade
 
 /**
@@ -111,17 +109,13 @@ val SceneContainerTransitions = transitions {
 
     // Overlay transitions
 
-    // TODO(b/376659778): Remove this transition once nested STLs are supported.
-    from(Scenes.Gone, to = Overlays.NotificationsShade) {
-        toNotificationsShadeTransition(translateClock = true)
-    }
     to(Overlays.NotificationsShade) { toNotificationsShadeTransition() }
     to(Overlays.QuickSettingsShade) { toQuickSettingsShadeTransition() }
     from(Overlays.NotificationsShade, to = Overlays.QuickSettingsShade) {
         notificationsShadeToQuickSettingsShadeTransition()
     }
     from(Scenes.Gone, to = Overlays.NotificationsShade, key = SlightlyFasterShadeCollapse) {
-        toNotificationsShadeTransition(translateClock = true, durationScale = 0.9)
+        toNotificationsShadeTransition(durationScale = 0.9)
     }
     from(Scenes.Gone, to = Overlays.QuickSettingsShade, key = SlightlyFasterShadeCollapse) {
         toQuickSettingsShadeTransition(durationScale = 0.9)
@@ -134,27 +128,11 @@ val SceneContainerTransitions = transitions {
     }
 
     // Scene overscroll
-
+    // TODO(b/382477212) Remove STL Overscroll DSL
     overscrollDisabled(Scenes.Gone, Orientation.Vertical)
     overscrollDisabled(Scenes.Lockscreen, Orientation.Vertical)
-    overscroll(Scenes.Bouncer, Orientation.Vertical) {
-        translate(Bouncer.Elements.Content, y = { absoluteDistance })
-    }
-    overscroll(Scenes.Shade, Orientation.Vertical) {
-        translate(
-            Notifications.Elements.NotificationScrim,
-            y = Shade.Dimensions.ScrimOverscrollLimit,
-        )
-        translate(Shade.Elements.SplitShadeStartColumn, y = Shade.Dimensions.ScrimOverscrollLimit)
-        translate(
-            Notifications.Elements.NotificationStackPlaceholder,
-            y = Shade.Dimensions.ScrimOverscrollLimit,
-        )
-    }
-    overscroll(Overlays.NotificationsShade, Orientation.Vertical) {
-        translate(OverlayShade.Elements.Panel, y = OverlayShade.Dimensions.OverscrollLimit)
-    }
-    overscroll(Overlays.QuickSettingsShade, Orientation.Vertical) {
-        translate(OverlayShade.Elements.Panel, y = OverlayShade.Dimensions.OverscrollLimit)
-    }
+    overscrollDisabled(Scenes.Bouncer, Orientation.Vertical)
+    overscrollDisabled(Scenes.Shade, Orientation.Vertical)
+    overscrollDisabled(Overlays.NotificationsShade, Orientation.Vertical)
+    overscrollDisabled(Overlays.QuickSettingsShade, Orientation.Vertical)
 }

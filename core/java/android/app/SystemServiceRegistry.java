@@ -17,7 +17,7 @@
 package android.app;
 
 import static android.app.appfunctions.flags.Flags.enableAppFunctionManager;
-import static android.provider.flags.Flags.stageFlagsForBuild;
+import static android.provider.flags.Flags.newStoragePublicApi;
 import static android.server.Flags.removeGameManagerServiceFromWear;
 
 import android.accounts.AccountManager;
@@ -624,8 +624,8 @@ public final class SystemServiceRegistry {
                                     com.android.internal.R.style.Theme_Dialog,
                                     com.android.internal.R.style.Theme_Holo_Dialog,
                                     com.android.internal.R.style.Theme_DeviceDefault_Dialog,
-                                    com.android.internal.R.style.Theme_DeviceDefault_Light_Dialog)),
-                    ctx.mMainThread.getHandler());
+                                    com.android.internal.R.style.Theme_DeviceDefault_Light_Dialog))
+                );
             }});
 
         registerService(Context.PEOPLE_SERVICE, PeopleManager.class,
@@ -1841,7 +1841,7 @@ public final class SystemServiceRegistry {
             VirtualizationFrameworkInitializer.registerServiceWrappers();
             ConnectivityFrameworkInitializerBaklava.registerServiceWrappers();
 
-            if (stageFlagsForBuild()) {
+            if (newStoragePublicApi()) {
                 ConfigInfrastructureFrameworkInitializer.registerServiceWrappers();
             }
 

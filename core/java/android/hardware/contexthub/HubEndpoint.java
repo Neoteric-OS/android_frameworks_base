@@ -66,13 +66,14 @@ public class HubEndpoint {
                 REASON_CLOSE_ENDPOINT_SESSION_REQUESTED,
                 REASON_ENDPOINT_INVALID,
                 REASON_ENDPOINT_STOPPED,
+                REASON_PERMISSION_DENIED,
             })
     public @interface Reason {}
 
     /** Unclassified failure */
     public static final int REASON_FAILURE = 0;
 
-    // The values 1 and 2 are reserved at the Context Hub HAL but not exposed to apps.
+    // The values 1-2 are reserved at the Context Hub HAL but not exposed to apps.
 
     /** The peer rejected the request to open this endpoint session. */
     public static final int REASON_OPEN_ENDPOINT_SESSION_REQUEST_REJECTED = 3;
@@ -82,6 +83,11 @@ public class HubEndpoint {
 
     /** The peer endpoint is invalid. */
     public static final int REASON_ENDPOINT_INVALID = 5;
+
+    // The values 6-8 are reserved at the Context Hub HAL but not exposed to apps.
+
+    /** The endpoint did not have the required permissions. */
+    public static final int REASON_PERMISSION_DENIED = 9;
 
     /**
      * The endpoint is now stopped. The app should retrieve the endpoint info using {@link
@@ -93,8 +99,8 @@ public class HubEndpoint {
 
     private final Object mLock = new Object();
     private final HubEndpointInfo mPendingHubEndpointInfo;
-    @Nullable private final IHubEndpointLifecycleCallback mLifecycleCallback;
-    @Nullable private final IHubEndpointMessageCallback mMessageCallback;
+    @Nullable private final HubEndpointLifecycleCallback mLifecycleCallback;
+    @Nullable private final HubEndpointMessageCallback mMessageCallback;
     @NonNull private final Executor mLifecycleCallbackExecutor;
     @NonNull private final Executor mMessageCallbackExecutor;
 
@@ -329,9 +335,9 @@ public class HubEndpoint {
 
     private HubEndpoint(
             @NonNull HubEndpointInfo pendingEndpointInfo,
-            @Nullable IHubEndpointLifecycleCallback endpointLifecycleCallback,
+            @Nullable HubEndpointLifecycleCallback endpointLifecycleCallback,
             @NonNull Executor lifecycleCallbackExecutor,
-            @Nullable IHubEndpointMessageCallback endpointMessageCallback,
+            @Nullable HubEndpointMessageCallback endpointMessageCallback,
             @NonNull Executor messageCallbackExecutor) {
         mPendingHubEndpointInfo = pendingEndpointInfo;
         mLifecycleCallback = endpointLifecycleCallback;
@@ -349,7 +355,10 @@ public class HubEndpoint {
         }
         try {
             IContextHubEndpoint serviceToken =
-                    service.registerEndpoint(mPendingHubEndpointInfo, mServiceCallback);
+                    service.registerEndpoint(
+                            mPendingHubEndpointInfo,
+                            mServiceCallback,
+                            mPendingHubEndpointInfo.getTag());
             mAssignedHubEndpointInfo = serviceToken.getAssignedHubEndpointInfo();
             mServiceToken = serviceToken;
         } catch (RemoteException e) {
@@ -395,11 +404,11 @@ public class HubEndpoint {
 
         HubEndpointSession newSession;
         try {
-            // Request system service to assign session id.
-            int sessionId = mServiceToken.openSession(destinationInfo, serviceDescriptor);
-
-            // Save the newly created session
             synchronized (mLock) {
+                // Request system service to assign session id.
+                int sessionId = mServiceToken.openSession(destinationInfo, serviceDescriptor);
+
+                // Save the newly created session
                 newSession =
                         new HubEndpointSession(
                                 sessionId,
@@ -476,12 +485,12 @@ public class HubEndpoint {
     }
 
     @Nullable
-    public IHubEndpointLifecycleCallback getLifecycleCallback() {
+    public HubEndpointLifecycleCallback getLifecycleCallback() {
         return mLifecycleCallback;
     }
 
     @Nullable
-    public IHubEndpointMessageCallback getMessageCallback() {
+    public HubEndpointMessageCallback getMessageCallback() {
         return mMessageCallback;
     }
 
@@ -489,11 +498,11 @@ public class HubEndpoint {
     public static final class Builder {
         private final String mPackageName;
 
-        @Nullable private IHubEndpointLifecycleCallback mLifecycleCallback;
+        @Nullable private HubEndpointLifecycleCallback mLifecycleCallback;
 
         @NonNull private Executor mLifecycleCallbackExecutor;
 
-        @Nullable private IHubEndpointMessageCallback mMessageCallback;
+        @Nullable private HubEndpointMessageCallback mMessageCallback;
         @NonNull private Executor mMessageCallbackExecutor;
 
         private int mVersion;
@@ -530,10 +539,13 @@ public class HubEndpoint {
             return this;
         }
 
-        /** Attach a callback interface for lifecycle events for this Endpoint */
+        /**
+         * Attach a callback interface for lifecycle events for this Endpoint. Callback will be
+         * posted to the main thread.
+         */
         @NonNull
         public Builder setLifecycleCallback(
-                @NonNull IHubEndpointLifecycleCallback lifecycleCallback) {
+                @NonNull HubEndpointLifecycleCallback lifecycleCallback) {
             mLifecycleCallback = lifecycleCallback;
             return this;
         }
@@ -545,15 +557,18 @@ public class HubEndpoint {
         @NonNull
         public Builder setLifecycleCallback(
                 @NonNull @CallbackExecutor Executor executor,
-                @NonNull IHubEndpointLifecycleCallback lifecycleCallback) {
+                @NonNull HubEndpointLifecycleCallback lifecycleCallback) {
             mLifecycleCallbackExecutor = executor;
             mLifecycleCallback = lifecycleCallback;
             return this;
         }
 
-        /** Attach a callback interface for message events for this Endpoint */
+        /**
+         * Attach a callback interface for message events for this Endpoint. Callback will be posted
+         * to the main thread.
+         */
         @NonNull
-        public Builder setMessageCallback(@NonNull IHubEndpointMessageCallback messageCallback) {
+        public Builder setMessageCallback(@NonNull HubEndpointMessageCallback messageCallback) {
             mMessageCallback = messageCallback;
             return this;
         }
@@ -565,7 +580,7 @@ public class HubEndpoint {
         @NonNull
         public Builder setMessageCallback(
                 @NonNull @CallbackExecutor Executor executor,
-                @NonNull IHubEndpointMessageCallback messageCallback) {
+                @NonNull HubEndpointMessageCallback messageCallback) {
             mMessageCallbackExecutor = executor;
             mMessageCallback = messageCallback;
             return this;

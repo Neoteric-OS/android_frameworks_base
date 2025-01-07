@@ -200,7 +200,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
-
 /**
  * Manages attached displays.
  * <p>
@@ -915,6 +914,16 @@ public final class DisplayManagerService extends SystemService {
         }
     }
 
+    @VisibleForTesting
+    ContentObserver getSettingsObserver() {
+        return mSettingsObserver;
+    }
+
+    @VisibleForTesting
+    boolean shouldMirrorBuiltInDisplay() {
+        return mMirrorBuiltInDisplay;
+    }
+
     DisplayNotificationManager getDisplayNotificationManager() {
         return mDisplayNotificationManager;
     }
@@ -1239,11 +1248,6 @@ public final class DisplayManagerService extends SystemService {
     }
 
     private void updateMirrorBuiltInDisplaySettingLocked() {
-        if (!mFlags.isDisplayContentModeManagementEnabled()) {
-            Slog.e(TAG, "MirrorBuiltInDisplay setting shouldn't be updated when the flag is off.");
-            return;
-        }
-
         synchronized (mSyncRoot) {
             ContentResolver resolver = mContext.getContentResolver();
             final boolean mirrorBuiltInDisplay = Settings.Secure.getIntForUser(resolver,
@@ -1252,6 +1256,9 @@ public final class DisplayManagerService extends SystemService {
                 return;
             }
             mMirrorBuiltInDisplay = mirrorBuiltInDisplay;
+            if (mFlags.isDisplayContentModeManagementEnabled()) {
+                mLogicalDisplayMapper.forEachLocked(this::updateCanHostTasksIfNeededLocked);
+            }
         }
     }
 
@@ -2051,7 +2058,7 @@ public final class DisplayManagerService extends SystemService {
                         // handles stopping the projection.
                         Slog.w(TAG, "Content Recording: failed to start mirroring - "
                                 + "releasing virtual display " + displayId);
-                        releaseVirtualDisplayInternal(callback.asBinder(), callingUid);
+                        releaseVirtualDisplayInternal(callback.asBinder());
                         return Display.INVALID_DISPLAY;
                     } else if (projection != null) {
                         // Indicate that this projection has been used to record, and can't be used
@@ -2140,7 +2147,7 @@ public final class DisplayManagerService extends SystemService {
         // Something weird happened and the logical display was not created.
         Slog.w(TAG, "Rejecting request to create virtual display "
                 + "because the logical display was not created.");
-        mVirtualDisplayAdapter.releaseVirtualDisplayLocked(callback.asBinder(), callingUid);
+        mVirtualDisplayAdapter.releaseVirtualDisplayLocked(callback.asBinder());
         mDisplayDeviceRepo.onDisplayDeviceEvent(device,
                 DisplayAdapter.DISPLAY_DEVICE_EVENT_REMOVED);
         return -1;
@@ -2167,14 +2174,14 @@ public final class DisplayManagerService extends SystemService {
         }
     }
 
-    private void releaseVirtualDisplayInternal(IBinder appToken, int callingUid) {
+    private void releaseVirtualDisplayInternal(IBinder appToken) {
         synchronized (mSyncRoot) {
             if (mVirtualDisplayAdapter == null) {
                 return;
             }
 
             DisplayDevice device =
-                    mVirtualDisplayAdapter.releaseVirtualDisplayLocked(appToken, callingUid);
+                    mVirtualDisplayAdapter.releaseVirtualDisplayLocked(appToken);
             Slog.d(TAG, "Virtual Display: Display Device released");
             if (device != null) {
                 // TODO: multi-display - handle virtual displays the same as other display adapters.
@@ -2317,6 +2324,10 @@ public final class DisplayManagerService extends SystemService {
         mDisplayBrightnesses.append(displayId,
                 new BrightnessPair(brightnessDefault, brightnessDefault));
 
+        if (mFlags.isDisplayContentModeManagementEnabled()) {
+            updateCanHostTasksIfNeededLocked(display);
+        }
+
         DisplayManagerGlobal.invalidateLocalDisplayInfoCaches();
     }
 
@@ -2395,9 +2406,13 @@ public final class DisplayManagerService extends SystemService {
         // We don't bother invalidating the display info caches here because any changes to the
         // display info will trigger a cache invalidation inside of LogicalDisplay before we hit
         // this point.
-        sendDisplayEventIfEnabledLocked(display, DisplayManagerGlobal.EVENT_DISPLAY_CHANGED);
+        sendDisplayEventIfEnabledLocked(display, DisplayManagerGlobal.EVENT_DISPLAY_BASIC_CHANGED);
 
         applyDisplayChangedLocked(display);
+
+        if (mDisplayTopologyCoordinator != null) {
+            mDisplayTopologyCoordinator.onDisplayChanged(display.getDisplayInfoLocked());
+        }
     }
 
     private void applyDisplayChangedLocked(@NonNull LogicalDisplay display) {
@@ -2636,6 +2651,13 @@ public final class DisplayManagerService extends SystemService {
         if (mStableDisplaySize.x <= 0 && mStableDisplaySize.y <= 0) {
             DisplayInfo info = d.getDisplayInfoLocked();
             setStableDisplaySizeLocked(info.getNaturalWidth(), info.getNaturalHeight());
+        }
+    }
+
+    private void updateCanHostTasksIfNeededLocked(LogicalDisplay display) {
+        if (display.setCanHostTasksLocked(!mMirrorBuiltInDisplay)) {
+            sendDisplayEventIfEnabledLocked(display,
+                    DisplayManagerGlobal.EVENT_DISPLAY_BASIC_CHANGED);
         }
     }
 
@@ -3466,7 +3488,7 @@ public final class DisplayManagerService extends SystemService {
 
     private void sendDisplayEventFrameRateOverrideLocked(int displayId) {
         Message msg = mHandler.obtainMessage(MSG_DELIVER_DISPLAY_EVENT_FRAME_RATE_OVERRIDE,
-                displayId, DisplayManagerGlobal.EVENT_DISPLAY_CHANGED);
+                displayId, DisplayManagerGlobal.EVENT_DISPLAY_BASIC_CHANGED);
         mHandler.sendMessage(msg);
     }
 
@@ -4064,7 +4086,7 @@ public final class DisplayManagerService extends SystemService {
                     handleLogicalDisplayAddedLocked(display);
                     break;
 
-                case LogicalDisplayMapper.LOGICAL_DISPLAY_EVENT_CHANGED:
+                case LogicalDisplayMapper.LOGICAL_DISPLAY_EVENT_BASIC_CHANGED:
                     handleLogicalDisplayChangedLocked(display);
                     break;
 
@@ -4289,8 +4311,9 @@ public final class DisplayManagerService extends SystemService {
             switch (event) {
                 case DisplayManagerGlobal.EVENT_DISPLAY_ADDED:
                     return (mask & DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_ADDED) != 0;
-                case DisplayManagerGlobal.EVENT_DISPLAY_CHANGED:
-                    return (mask & DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_CHANGED) != 0;
+                case DisplayManagerGlobal.EVENT_DISPLAY_BASIC_CHANGED:
+                    return (mask & DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_BASIC_CHANGED)
+                            != 0;
                 case DisplayManagerGlobal.EVENT_DISPLAY_BRIGHTNESS_CHANGED:
                     return (mask
                             & DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_BRIGHTNESS_CHANGED)
@@ -4545,7 +4568,8 @@ public final class DisplayManagerService extends SystemService {
         public void registerCallback(IDisplayManagerCallback callback) {
             registerCallbackWithEventMask(callback,
                     DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_ADDED
-                    | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_CHANGED
+                    | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_BASIC_CHANGED
+                    | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_REFRESH_RATE
                     | DisplayManagerGlobal.INTERNAL_EVENT_FLAG_DISPLAY_REMOVED);
         }
 
@@ -4809,10 +4833,9 @@ public final class DisplayManagerService extends SystemService {
 
         @Override // Binder call
         public void releaseVirtualDisplay(IVirtualDisplayCallback callback) {
-            final int callingUid = Binder.getCallingUid();
             final long token = Binder.clearCallingIdentity();
             try {
-                releaseVirtualDisplayInternal(callback.asBinder(), callingUid);
+                releaseVirtualDisplayInternal(callback.asBinder());
             } finally {
                 Binder.restoreCallingIdentity(token);
             }

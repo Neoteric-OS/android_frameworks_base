@@ -267,6 +267,7 @@ public class FrameworkServicesModule {
     }
 
     @Provides
+    @Nullable
     @Singleton
     static VirtualDeviceManager provideVirtualDeviceManager(Context context) {
         return context.getSystemService(VirtualDeviceManager.class);
@@ -706,6 +707,14 @@ public class FrameworkServicesModule {
     @Singleton
     static WindowManager provideWindowManager(Context context) {
         return context.getSystemService(WindowManager.class);
+    }
+
+    /** A window manager working for the default display only. */
+    @Provides
+    @Singleton
+    @Main
+    static WindowManager provideMainWindowManager(WindowManager windowManager) {
+        return windowManager;
     }
 
     @Provides
