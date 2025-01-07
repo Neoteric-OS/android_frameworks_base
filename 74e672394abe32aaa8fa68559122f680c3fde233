@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c4a8423_69eb452d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2025-01-07T00:27:09Z",
+      "side": 1,
+      "message": "We should consider adding a unit test for these side effects -- definitely for the path still being actively used for freeze decisions.\n\nIf writing a unit test for this scenario is overly complex, it should be fine to merge with a short description of the manual steps in a `Test: ` stanza (using the test apps cited in issue 375496915).",
+      "revId": "74e672394abe32aaa8fa68559122f680c3fde233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
