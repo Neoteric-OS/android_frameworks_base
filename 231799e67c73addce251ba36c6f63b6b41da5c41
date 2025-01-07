@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5fa6a2d_e78fd688",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2025-01-07T18:31:20Z",
+      "side": 1,
+      "message": "jeffv@ could you give Code-Owners for flags.aconfig?  Thanks.",
+      "revId": "231799e67c73addce251ba36c6f63b6b41da5c41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
