@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "da9ef550_2d6bae9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1986696
+      },
+      "writtenOn": "2025-01-07T11:12:19Z",
+      "side": 1,
+      "message": "Hi, thanks for having a look.\nNot sure I understood your question correctly.\n\nThere is currently just no way to set this flag to a physical display. The only way (as far as I figured out) currently implemented is using the VIRTUAL_DISPLAY_FLAG_STEAL_TOP_FOCUS_DISABLED as display flag in createVirtualDisplay. There is no similar call for adding a physical display. \n\nFor the same reason I assume config_localPrivateDisplayPorts has been added to be able to give physical displays the FLAG_PRIVATE display flag. In this patch I copied the config_localPrivateDisplayPorts solution.",
+      "parentUuid": "bb45b506_0356dd7e",
+      "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c88f9f2e_cec3dc82",
