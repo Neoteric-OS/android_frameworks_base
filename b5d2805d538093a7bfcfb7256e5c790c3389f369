@@ -52,6 +52,24 @@
       "parentUuid": "cde73925_e067d7ed",
       "revId": "b5d2805d538093a7bfcfb7256e5c790c3389f369",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e87b714_471d18a7",
+        "filename": "services/core/java/com/android/server/location/fudger/LocationFudger.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2025-01-07T18:22:43Z",
+      "side": 1,
+      "message": "If this returns 0, then will line 174 throw an `ArithmeticException`?\n\n`longitude \u003d wrapLongitude(Math.round(longitude / lonGranularity) * lonGranularity);`\n\nMaybe the `cosLat` can have a lower bound (e.g., `cosLat \u003d Math.max(cosLat, 0.001)`) to avoid the peculiar case.",
+      "parentUuid": "ec0f7d90_5aa4c7ab",
+      "revId": "b5d2805d538093a7bfcfb7256e5c790c3389f369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
