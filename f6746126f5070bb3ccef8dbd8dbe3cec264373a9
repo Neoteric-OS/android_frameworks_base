@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e47ac6a9_238dd89d",
+        "filename": "core/java/android/content/pm/SystemFeaturesCache.aidl",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-01-07T00:03:07Z",
+      "side": 1,
+      "message": "Pesky new year! Done.",
+      "parentUuid": "bcdb3ee1_f929b9d3",
+      "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e7a13eff_82ab296a",
         "filename": "core/java/android/content/pm/SystemFeaturesCache.java",
         "patchSetId": 4
@@ -89,6 +107,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2bb06246_49131a24",
+        "filename": "core/java/android/content/pm/SystemFeaturesCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-01-07T00:03:07Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s needed, removed and added a comment.",
+      "parentUuid": "fc85b25c_726f095e",
+      "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3ee3a4dc_0363fa0a",
         "filename": "core/java/android/content/pm/SystemFeaturesCache.java",
         "patchSetId": 4
@@ -100,6 +136,24 @@
       "writtenOn": "2025-01-04T20:26:46Z",
       "side": 1,
       "message": "Just for my edification, can you tell me how `createIntArray` knows to create the feature array, and not some other array?",
+      "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d868909_6455e28c",
+        "filename": "core/java/android/content/pm/SystemFeaturesCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-01-07T00:03:07Z",
+      "side": 1,
+      "message": "In this case, the Parcel should be at the position where it\u0027s ready to create a SystemFeaturesCache parcelable, as this is only used by the CREATOR abstraction. I\u0027ll add a brief note. I guess I could move all this logic into the CREATOR helper, I\u0027ve seen both approaches.",
+      "parentUuid": "3ee3a4dc_0363fa0a",
       "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -141,6 +195,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "97999d8b_52648782",
+        "filename": "core/java/android/content/pm/SystemFeaturesCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-01-07T00:03:07Z",
+      "side": 1,
+      "message": "Should be @NonNull, updated.",
+      "parentUuid": "1074eb38_f9e2f556",
+      "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "30f9222d_22110305",
         "filename": "core/java/android/content/pm/SystemFeaturesCache.java",
         "patchSetId": 4
@@ -170,6 +242,24 @@
           ]
         }
       ],
+      "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3952fd72_54c45a5c",
+        "filename": "core/java/android/content/pm/SystemFeaturesCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-01-07T00:03:07Z",
+      "side": 1,
+      "message": "It\u0027s a good point, though I\u0027d hate to let this implementation detail leak into the API surface and technically that would be a breaking change. It\u0027s such a rare case, in theory we could handle it by using boxed values, but a shame to waste the space.\n\n@patb@google.com not sure if you have any strong opinions?",
+      "parentUuid": "30f9222d_22110305",
       "revId": "f6746126f5070bb3ccef8dbd8dbe3cec264373a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
