@@ -30,7 +30,6 @@ import static android.view.WindowManager.TRANSIT_TO_BACK;
 import static android.view.WindowManager.TRANSIT_TO_FRONT;
 import static android.view.WindowManager.fixScale;
 import static android.window.TransitionInfo.FLAGS_IS_NON_APP_WINDOW;
-import static android.window.TransitionInfo.FLAG_BACK_GESTURE_ANIMATED;
 import static android.window.TransitionInfo.FLAG_IN_TASK_WITH_EMBEDDED_ACTIVITY;
 import static android.window.TransitionInfo.FLAG_IS_BEHIND_STARTING_WINDOW;
 import static android.window.TransitionInfo.FLAG_IS_OCCLUDED;
@@ -41,7 +40,6 @@ import static android.window.TransitionInfo.FLAG_IS_WALLPAPER;
 
 import static com.android.systemui.shared.Flags.returnAnimationFrameworkLongLived;
 import static com.android.window.flags.Flags.ensureWallpaperInTransitions;
-import static com.android.window.flags.Flags.migratePredictiveBackTransition;
 import static com.android.wm.shell.shared.TransitionUtil.isClosingType;
 import static com.android.wm.shell.shared.TransitionUtil.isOpeningType;
 
@@ -547,8 +545,13 @@ public class Transitions implements RemoteCallable<Transitions>,
                 // When the window is moved to front, make sure the crop is updated to prevent it
                 // from using the old crop.
                 t.setPosition(leash, change.getEndRelOffset().x, change.getEndRelOffset().y);
-                t.setWindowCrop(leash, change.getEndAbsBounds().width(),
-                        change.getEndAbsBounds().height());
+                if (change.getContainer() != null) {
+                    // We don't want to crop on non-remotable (activity), because it can have
+                    // letterbox child surface that is position at a negative position related to
+                    // the activity's surface.
+                    t.setWindowCrop(leash, change.getEndAbsBounds().width(),
+                            change.getEndAbsBounds().height());
+                }
             }
 
             // Don't move anything that isn't independent within its parents
@@ -558,8 +561,13 @@ public class Transitions implements RemoteCallable<Transitions>,
                     t.setMatrix(leash, 1, 0, 0, 1);
                     t.setAlpha(leash, 1.f);
                     t.setPosition(leash, change.getEndRelOffset().x, change.getEndRelOffset().y);
-                    t.setWindowCrop(leash, change.getEndAbsBounds().width(),
-                            change.getEndAbsBounds().height());
+                    if (change.getContainer() != null) {
+                        // We don't want to crop on non-remotable (activity), because it can have
+                        // letterbox child surface that is position at a negative position related
+                        // to the activity's surface.
+                        t.setWindowCrop(leash, change.getEndAbsBounds().width(),
+                                change.getEndAbsBounds().height());
+                    }
                 }
                 continue;
             }
@@ -845,12 +853,6 @@ public class Transitions implements RemoteCallable<Transitions>,
                 // Remove the change because it should be invisible in the animation.
                 info.getChanges().remove(i);
                 continue;
-            }
-            // The change has already animated by back gesture, don't need to play transition
-            // animation on it.
-            if (!migratePredictiveBackTransition()
-                    && change.hasFlags(FLAG_BACK_GESTURE_ANIMATED)) {
-                info.getChanges().remove(i);
             }
         }
         // There does not need animation when:

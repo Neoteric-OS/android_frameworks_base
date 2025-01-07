@@ -524,11 +524,14 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         }
     }
 
-    // TODO(b/373709676): update usages.
     /** @deprecated b/373709676 replace with {@link #getAdjacentTaskFragments()}. */
     @Deprecated
     @Nullable
     TaskFragment getAdjacentTaskFragment() {
+        if (Flags.allowMultipleAdjacentTaskFragments()) {
+            throw new IllegalStateException("allowMultipleAdjacentTaskFragments is enabled. "
+                    + "Use #getAdjacentTaskFragments instead");
+        }
         return mAdjacentTaskFragment;
     }
 
@@ -1342,14 +1345,24 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                     mTmpRect.set(getBounds());
                     for (int j = adjacentTaskFragments.size() - 1; j >= 0; --j) {
                         final TaskFragment taskFragment = adjacentTaskFragments.get(j);
-                        final TaskFragment adjacentTaskFragment =
-                                taskFragment.mAdjacentTaskFragment;
-                        if (adjacentTaskFragment == this) {
+                        if (taskFragment.isAdjacentTo(this)) {
                             continue;
                         }
-                        if (mTmpRect.intersect(taskFragment.getBounds())
-                                || mTmpRect.intersect(adjacentTaskFragment.getBounds())) {
-                            return TASK_FRAGMENT_VISIBILITY_INVISIBLE;
+                        if (Flags.allowMultipleAdjacentTaskFragments()) {
+                            final boolean isOccluding = mTmpRect.intersect(taskFragment.getBounds())
+                                    || taskFragment.forOtherAdjacentTaskFragments(adjacentTf -> {
+                                        return mTmpRect.intersect(adjacentTf.getBounds());
+                                    });
+                            if (isOccluding) {
+                                return TASK_FRAGMENT_VISIBILITY_INVISIBLE;
+                            }
+                        } else {
+                            final TaskFragment adjacentTaskFragment =
+                                    taskFragment.mAdjacentTaskFragment;
+                            if (mTmpRect.intersect(taskFragment.getBounds())
+                                    || mTmpRect.intersect(adjacentTaskFragment.getBounds())) {
+                                return TASK_FRAGMENT_VISIBILITY_INVISIBLE;
+                            }
                         }
                     }
                 }
@@ -1377,20 +1390,38 @@ class TaskFragment extends WindowContainer<WindowContainer> {
             }
 
             final TaskFragment otherTaskFrag = other.asTaskFragment();
-            if (otherTaskFrag != null && otherTaskFrag.mAdjacentTaskFragment != null) {
-                if (adjacentTaskFragments.contains(otherTaskFrag.mAdjacentTaskFragment)) {
-                    if (otherTaskFrag.isTranslucent(starting)
-                            || otherTaskFrag.mAdjacentTaskFragment.isTranslucent(starting)) {
-                        // Can be visible behind a translucent adjacent TaskFragments.
-                        gotTranslucentFullscreen = true;
-                        gotTranslucentAdjacent = true;
-                        continue;
+            if (otherTaskFrag != null && otherTaskFrag.hasAdjacentTaskFragment()) {
+                if (Flags.allowMultipleAdjacentTaskFragments()) {
+                    final boolean hasTraversedAdj = otherTaskFrag.forOtherAdjacentTaskFragments(
+                            adjacentTaskFragments::contains);
+                    if (hasTraversedAdj) {
+                        final boolean isTranslucent = otherTaskFrag.isTranslucent(starting)
+                                || otherTaskFrag.forOtherAdjacentTaskFragments(adjacentTf -> {
+                                    return adjacentTf.isTranslucent(starting);
+                                });
+                        if (isTranslucent) {
+                            // Can be visible behind a translucent adjacent TaskFragments.
+                            gotTranslucentFullscreen = true;
+                            gotTranslucentAdjacent = true;
+                            continue;
+                        }
+                        // Can not be visible behind adjacent TaskFragments.
+                        return TASK_FRAGMENT_VISIBILITY_INVISIBLE;
                     }
-                    // Can not be visible behind adjacent TaskFragments.
-                    return TASK_FRAGMENT_VISIBILITY_INVISIBLE;
                 } else {
-                    adjacentTaskFragments.add(otherTaskFrag);
+                    if (adjacentTaskFragments.contains(otherTaskFrag.mAdjacentTaskFragment)) {
+                        if (otherTaskFrag.isTranslucent(starting)
+                                || otherTaskFrag.mAdjacentTaskFragment.isTranslucent(starting)) {
+                            // Can be visible behind a translucent adjacent TaskFragments.
+                            gotTranslucentFullscreen = true;
+                            gotTranslucentAdjacent = true;
+                            continue;
+                        }
+                        // Can not be visible behind adjacent TaskFragments.
+                        return TASK_FRAGMENT_VISIBILITY_INVISIBLE;
+                    }
                 }
+                adjacentTaskFragments.add(otherTaskFrag);
             }
 
         }
@@ -2767,7 +2798,12 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         if (!forceUpdate && width == mLastSurfaceSize.x && height == mLastSurfaceSize.y) {
             return;
         }
-        t.setWindowCrop(mSurfaceControl, width, height);
+        if (fillsParent()) {
+            // Rely on parent's crop.
+            t.setCrop(mSurfaceControl, null);
+        } else {
+            t.setWindowCrop(mSurfaceControl, width, height);
+        }
         mLastSurfaceSize.set(width, height);
     }
 
@@ -3568,10 +3604,18 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                 throw new IllegalStateException("allowMultipleAdjacentTaskFragments must be"
                         + " enabled to set more than two TaskFragments adjacent to each other.");
             }
-            if (taskFragments.size() < 2) {
+            final int size = taskFragments.size();
+            if (size < 2) {
                 throw new IllegalArgumentException("Adjacent TaskFragments must contain at least"
-                        + " two TaskFragments, but only " + taskFragments.size()
-                        + " were provided.");
+                        + " two TaskFragments, but only " + size + " were provided.");
+            }
+            if (size > 2) {
+                for (int i = 0; i < size; i++) {
+                    if (taskFragments.valueAt(i).asTask() == null) {
+                        throw new IllegalArgumentException(
+                                "Not yet support 3+ adjacent for non-Task TFs");
+                    }
+                }
             }
             mAdjacentSet = taskFragments;
         }
@@ -3647,6 +3691,10 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                 }
             }
             return false;
+        }
+
+        int size() {
+            return mAdjacentSet.size();
         }
 
         @Override

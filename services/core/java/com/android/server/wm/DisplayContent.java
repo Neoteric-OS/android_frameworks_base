@@ -100,6 +100,7 @@ import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_SCREEN_ON;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_WALLPAPER;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_SHOW_TRANSACTIONS;
 import static com.android.internal.util.LatencyTracker.ACTION_ROTATE_SCREEN;
+import static com.android.server.display.feature.flags.Flags.enableDisplayContentModeManagement;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_ANIM;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_CONFIG;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_LAYOUT;
@@ -2912,6 +2913,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         // contains another opaque activity.
         if (mFixedRotationLaunchingApp != null && mFixedRotationLaunchingApp.isVisible()
                 && !mTransitionController.isCollecting()
+                && !mTransitionController.isPlayingTarget(mFixedRotationLaunchingApp)
                 && !mAtmService.mBackNavigationController.isMonitoringFinishTransition()) {
             final Transition finishTransition = mTransitionController.mFinishingTransition;
             if (finishTransition == null || !finishTransition.mParticipants.contains(
@@ -3286,6 +3288,32 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         w = Math.min(Math.max(w, minSize), maxSize);
         h = Math.min(Math.max(h, minSize), maxSize);
         return new Point(w, h);
+    }
+
+    void onDisplayInfoChangeApplied() {
+        if (!enableDisplayContentModeManagement()) {
+            Slog.e(TAG, "ShouldShowSystemDecors shouldn't be updated when the flag is off.");
+        }
+
+        final boolean shouldShow;
+        if (isDefaultDisplay) {
+            shouldShow = true;
+        } else if (isPrivate()) {
+            shouldShow = false;
+        } else {
+            shouldShow = mDisplay.canHostTasks();
+        }
+
+        if (shouldShow == mWmService.mDisplayWindowSettings.shouldShowSystemDecorsLocked(this)) {
+            return;
+        }
+        mWmService.mDisplayWindowSettings.setShouldShowSystemDecorsLocked(this, shouldShow);
+
+        if (shouldShow) {
+            mRootWindowContainer.startSystemDecorations(this, "onDisplayInfoChangeApplied");
+        } else {
+            clearAllTasksOnDisplay(null);
+        }
     }
 
     DisplayCutout loadDisplayCutout(int displayWidth, int displayHeight) {
@@ -6522,10 +6550,8 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         return mRemoving;
     }
 
-    void remove() {
-        mRemoving = true;
+    private void clearAllTasksOnDisplay(@Nullable Runnable clearTasksCallback) {
         Task lastReparentedRootTask;
-
         mRootWindowContainer.mTaskSupervisor.beginDeferResume();
         try {
             lastReparentedRootTask = reduceOnAllTaskDisplayAreas((taskDisplayArea, rootTask) -> {
@@ -6538,10 +6564,9 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         } finally {
             mRootWindowContainer.mTaskSupervisor.endDeferResume();
         }
-        mRemoved = true;
 
-        if (mContentRecorder != null) {
-            mContentRecorder.stopRecording();
+        if (clearTasksCallback != null) {
+            clearTasksCallback.run();
         }
 
         // Only update focus/visibility for the last one because there may be many root tasks are
@@ -6549,6 +6574,19 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         if (lastReparentedRootTask != null) {
             lastReparentedRootTask.resumeNextFocusAfterReparent();
         }
+    }
+
+    void remove() {
+        mRemoving = true;
+
+        clearAllTasksOnDisplay(() -> {
+            mRemoved = true;
+
+            if (mContentRecorder != null) {
+                mContentRecorder.stopRecording();
+            }
+        });
+
         releaseSelfIfNeeded();
         mDisplayPolicy.release();
 
@@ -7046,8 +7084,21 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
 
     class RemoteInsetsControlTarget implements InsetsControlTarget {
         private final IDisplayWindowInsetsController mRemoteInsetsController;
-        private @InsetsType int mRequestedVisibleTypes = WindowInsets.Type.defaultVisible();
         private final boolean mCanShowTransient;
+
+        /** The actual requested visible inset types for this display */
+        private @InsetsType int mRequestedVisibleTypes = WindowInsets.Type.defaultVisible();
+
+        /** The component name of the top focused window on this display */
+        private ComponentName mTopFocusedComponentName = null;
+
+        /**
+         * The inset types that the top focused window is currently requesting to be visible.
+         * This may be different than the actual visible types above depending on the remote
+         * insets controller implementation.
+         */
+        private @InsetsType int mTopFocusedRequestedVisibleTypes =
+                WindowInsets.Type.defaultVisible();
 
         RemoteInsetsControlTarget(IDisplayWindowInsetsController controller) {
             mRemoteInsetsController = controller;
@@ -7058,11 +7109,17 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
         /**
          * Notifies the remote insets controller that the top focused window has changed.
          *
-         * @param component The application component that is open in the top focussed window.
+         * @param component The application component that is open in the top focused window.
          * @param requestedVisibleTypes The insets types requested visible by the focused window.
          */
         void topFocusedWindowChanged(ComponentName component,
                 @InsetsType int requestedVisibleTypes) {
+            if (mTopFocusedComponentName != null && mTopFocusedComponentName.equals(component)
+                    && mTopFocusedRequestedVisibleTypes == requestedVisibleTypes) {
+                return;
+            }
+            mTopFocusedComponentName = component;
+            mTopFocusedRequestedVisibleTypes = requestedVisibleTypes;
             try {
                 mRemoteInsetsController.topFocusedWindowChanged(component, requestedVisibleTypes);
             } catch (RemoteException e) {
