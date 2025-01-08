@@ -824,7 +824,10 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                         break;
                     }
                     case AttestationUtils.ID_TYPE_MEID: {
-                        final String meid = telephonyService.getMeid(0);
+                        String meid = null;
+                        try {
+                            meid = telephonyService.getMeid(0);
+                        } catch (UnsupportedOperationException e) { }
                         if (meid == null) {
                             throw new DeviceIdAttestationException("Unable to retrieve MEID");
                         }
