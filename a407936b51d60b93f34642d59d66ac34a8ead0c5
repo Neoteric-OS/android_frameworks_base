@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23d27447_7b236ccd",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2025-01-08T17:40:40Z",
+      "side": 1,
+      "message": "You can still leave this part as mManageOrHistoryButton, it\u0027s the line above that has issues.",
+      "range": {
+        "startLine": 141,
+        "startChar": 24,
+        "endLine": 141,
+        "endChar": 36
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "813b8c6f_33e2717c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+              "range": {
+                "startLine": 141,
+                "startChar": 0,
+                "endLine": 142,
+                "endChar": 0
+              },
+              "replacement": "            pw.println(\"mManageOrHistoryButton visibility: \"\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a407936b51d60b93f34642d59d66ac34a8ead0c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
