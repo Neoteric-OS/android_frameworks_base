@@ -755,14 +755,16 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                         mContext, mLooper, mNetworkProvider, config.isTestModeProfile());
         final Vcn newInstance =
                 mDeps.newVcn(vcnContext, subscriptionGroup, config, mLastSnapshot, vcnCallback);
-        mVcns.put(subscriptionGroup, newInstance);
 
-        // Now that a new VCN has started, notify all registered listeners to refresh their
-        // UnderlyingNetworkPolicy.
-        notifyAllPolicyListenersLocked();
+        throw new NullPointerException("Test purposes");
+        // mVcns.put(subscriptionGroup, newInstance);
 
-        // TODO(b/181789060): invoke asynchronously after Vcn notifies through VcnCallback
-        notifyAllPermissionedStatusCallbacksLocked(subscriptionGroup, VCN_STATUS_CODE_ACTIVE);
+        // // Now that a new VCN has started, notify all registered listeners to refresh their
+        // // UnderlyingNetworkPolicy.
+        // notifyAllPolicyListenersLocked();
+
+        // // TODO(b/181789060): invoke asynchronously after Vcn notifies through VcnCallback
+        // notifyAllPermissionedStatusCallbacksLocked(subscriptionGroup, VCN_STATUS_CODE_ACTIVE);
     }
 
     @GuardedBy("mLock")
