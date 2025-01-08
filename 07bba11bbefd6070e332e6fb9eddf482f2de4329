@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "362dc8f2_73ec28ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1943111
+      },
+      "writtenOn": "2025-01-08T02:15:18Z",
+      "side": 1,
+      "message": "Did you annotate another interface?",
+      "revId": "07bba11bbefd6070e332e6fb9eddf482f2de4329",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
