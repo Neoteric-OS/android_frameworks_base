@@ -40,6 +40,30 @@
       ],
       "revId": "a407936b51d60b93f34642d59d66ac34a8ead0c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91941930_af4acaf3",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 3806853
+      },
+      "writtenOn": "2025-01-08T18:03:44Z",
+      "side": 1,
+      "message": "I\u0027d rather keep the previous name if they can\u0027t be changed consistently.",
+      "parentUuid": "23d27447_7b236ccd",
+      "range": {
+        "startLine": 141,
+        "startChar": 24,
+        "endLine": 141,
+        "endChar": 36
+      },
+      "revId": "a407936b51d60b93f34642d59d66ac34a8ead0c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
