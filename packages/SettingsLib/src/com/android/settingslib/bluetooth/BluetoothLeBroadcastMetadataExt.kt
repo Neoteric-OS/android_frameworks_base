@@ -61,7 +61,7 @@ object BluetoothLeBroadcastMetadataExt {
 
     // BT constants
     private const val BIS_SYNC_MAX_CHANNEL = 32
-    private const val BIS_SYNC_NO_PREFERENCE = 0xFFFFFFFFu
+    private const val BIS_SYNC_NO_PREFERENCE = 0x0FFFFFFFu
     private const val SUBGROUP_LC3_CODEC_ID = 0x6L
 
     /**
