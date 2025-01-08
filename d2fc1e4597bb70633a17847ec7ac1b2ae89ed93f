@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f59862c_c2d5992e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3806853
+      },
+      "writtenOn": "2025-01-08T14:45:44Z",
+      "side": 1,
+      "message": "Hi all. What should I do to get the presubmit-verified votes?",
+      "revId": "d2fc1e4597bb70633a17847ec7ac1b2ae89ed93f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
