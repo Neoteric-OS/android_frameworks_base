@@ -16,6 +16,24 @@
       "message": "Can you try reverting the change on this line? The line has been removed in a different branch, that may help fix the merge conflict.",
       "revId": "7659de1fc23622c144e5fb6175ae84342a613669",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11e2c083_1f1daf0b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3806853
+      },
+      "writtenOn": "2025-01-08T17:33:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83ef88b3_518e7fd4",
+      "revId": "7659de1fc23622c144e5fb6175ae84342a613669",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
