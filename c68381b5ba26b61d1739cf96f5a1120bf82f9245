@@ -122,6 +122,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3eb20e9_b3e76e26",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3184,
+      "author": {
+        "id": 1986696
+      },
+      "writtenOn": "2025-01-08T10:09:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1179ff06_293298c3",
+      "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc71330c_3d17db16",
@@ -153,6 +171,24 @@
           ]
         }
       ],
+      "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "107c02c8_8a43cc9e",
+        "filename": "services/core/java/com/android/server/display/LocalDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1986696
+      },
+      "writtenOn": "2025-01-08T10:09:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fc71330c_3d17db16",
       "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -228,6 +264,24 @@
           ]
         }
       ],
+      "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "434a35c8_8220cb41",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/LocalDisplayAdapterTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1986696
+      },
+      "writtenOn": "2025-01-08T10:09:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0c6967c2_65f5eda2",
       "revId": "c68381b5ba26b61d1739cf96f5a1120bf82f9245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
