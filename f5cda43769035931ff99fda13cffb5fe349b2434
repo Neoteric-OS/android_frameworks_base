@@ -16,6 +16,23 @@
       "message": "May I get another +2 on this, I added a new owner file for a new test.",
       "revId": "f5cda43769035931ff99fda13cffb5fe349b2434",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28cbd8a8_ad55bf59",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1933945
+      },
+      "writtenOn": "2025-01-08T23:52:19Z",
+      "side": 1,
+      "message": "sorry for the naming, but this has nothing to do with the system health team but more about the power team who owns SDK APIs under SystemHealthManager, check https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/os/health/OWNERS?q\u003dframeworks%2Fbase%2Fcore%2Fjava%2Fandroid%2Fos%2Fhealth%2FOWNERS\n\nI\u0027m the owner for the headroom APIs under that namespace, and these new owner files again are for new repo/tests that only cover headroom APIs right for now. So I\u0027m not adding them",
+      "revId": "f5cda43769035931ff99fda13cffb5fe349b2434",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
