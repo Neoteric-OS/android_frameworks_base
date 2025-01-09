@@ -1,0 +1,154 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "999671ed_304405d5",
+        "filename": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2025-01-09T01:04:38Z",
+      "side": 1,
+      "message": "Are you sure this follows the Visitor pattern?  Looks more like a \"Processor\".",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 9
+      },
+      "revId": "21538b2d9155be200beef7a58b12d7188d6f1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a05e5e3_6ed02570",
+        "filename": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2025-01-09T01:04:38Z",
+      "side": 1,
+      "message": "\"directive\" here and everywhere",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d2108ac0_7b582683",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+              "range": {
+                "startLine": 65,
+                "startChar": 0,
+                "endLine": 66,
+                "endChar": 0
+              },
+              "replacement": "    /** \"package\" directive. */\n"
+            },
+            {
+              "path": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+              "range": {
+                "startLine": 68,
+                "startChar": 0,
+                "endLine": 69,
+                "endChar": 0
+              },
+              "replacement": "    /** \"rename\" directive. */\n"
+            },
+            {
+              "path": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+              "range": {
+                "startLine": 71,
+                "startChar": 0,
+                "endLine": 72,
+                "endChar": 0
+              },
+              "replacement": "    /** \"class\" directive. */\n"
+            },
+            {
+              "path": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+              "range": {
+                "startLine": 82,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "    /** \"field\" directive. */\n"
+            },
+            {
+              "path": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+              "range": {
+                "startLine": 85,
+                "startChar": 0,
+                "endLine": 86,
+                "endChar": 0
+              },
+              "replacement": "    /** \"method\" directive. */\n"
+            }
+          ]
+        }
+      ],
+      "revId": "21538b2d9155be200beef7a58b12d7188d6f1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c10d92f3_344d14d1",
+        "filename": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2025-01-09T01:04:38Z",
+      "side": 1,
+      "message": "Why bother with a nested interface? Could all these methods reside on the PolicyFileVisitor itself?",
+      "range": {
+        "startLine": 73,
+        "startChar": 14,
+        "endLine": 73,
+        "endChar": 32
+      },
+      "revId": "21538b2d9155be200beef7a58b12d7188d6f1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89539f40_39b52764",
+        "filename": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2025-01-09T01:04:38Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 87,
+        "startChar": 14,
+        "endLine": 87,
+        "endChar": 33
+      },
+      "revId": "21538b2d9155be200beef7a58b12d7188d6f1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
