@@ -47,16 +47,168 @@ class android.net.UriCodec keepclass
 class android.telephony.PinResult keepclass
 
 # Just enough to support mocking, no further functionality
-class android.content.BroadcastReceiver keep
+class android.content.BroadcastReceiver keep #no-pta
     method <init> ()V keep
-class android.content.Context keep
+class android.content.Context keep           #no-pta
     method <init> ()V keep
-    method getSystemService (Ljava/lang/Class;)Ljava/lang/Object; keep
+    method getSystemService (Ljava/lang/Class;)Ljava/lang/Object; keep #no-pta
 class android.content.pm.PackageManager keep
     method <init> ()V keep
 class android.text.ClipboardManager keep
     method <init> ()V keep
 
 # Just enough to allow ResourcesManager to run
-class android.hardware.display.DisplayManagerGlobal keep
+class android.hardware.display.DisplayManagerGlobal keep           #no-pta
     method getInstance ()Landroid/hardware/display/DisplayManagerGlobal; ignore
+
+# Opt-in all classes for now
+package android.text keepclass
+
+class android.graphics.AvoidXfermode keepclass
+class android.graphics.BaseCanvas keepclass
+class android.graphics.BaseRecordingCanvas keepclass
+class android.graphics.Bitmap keepclass
+class android.graphics.BitmapFactory keepclass
+class android.graphics.BitmapRegionDecoder keepclass
+class android.graphics.BitmapShader keepclass
+class android.graphics.BLASTBufferQueue keepclass
+class android.graphics.BlendMode keepclass
+class android.graphics.BlendModeColorFilter keepclass
+class android.graphics.BlurMaskFilter keepclass
+class android.graphics.Camera keepclass
+class android.graphics.Canvas keepclass
+class android.graphics.CanvasProperty keepclass
+class android.graphics.Color keepclass
+class android.graphics.ColorFilter keepclass
+class android.graphics.ColorMatrixColorFilter keepclass
+class android.graphics.ColorSpace keepclass
+class android.graphics.Compatibility keepclass
+class android.graphics.ComposePathEffect keepclass
+class android.graphics.ComposeShader keepclass
+class android.graphics.CornerPathEffect keepclass
+class android.graphics.DashPathEffect keepclass
+class android.graphics.DiscretePathEffect keepclass
+class android.graphics.DrawFilter keepclass
+class android.graphics.EmbossMaskFilter keepclass
+class android.graphics.FontFamily keepclass
+class android.graphics.FontListParser keepclass
+class android.graphics.ForceDarkType keepclass
+class android.graphics.FrameInfo keepclass
+class android.graphics.Gainmap keepclass
+class android.graphics.GraphicBuffer keepclass
+class android.graphics.GraphicsProtos keepclass
+class android.graphics.GraphicsStatsService keepclass
+class android.graphics.HardwareBufferRenderer keepclass
+class android.graphics.HardwareRenderer keepclass
+class android.graphics.HardwareRendererObserver keepclass
+class android.graphics.ImageDecoder keepclass
+class android.graphics.ImageFormat keepclass
+class android.graphics.Insets keepclass
+class android.graphics.Interpolator keepclass
+class android.graphics.LayerRasterizer keepclass
+class android.graphics.LeakyTypefaceStorage keepclass
+class android.graphics.LightingColorFilter keepclass
+class android.graphics.LinearGradient keepclass
+class android.graphics.MaskFilter keepclass
+class android.graphics.Matrix keepclass
+class android.graphics.Matrix44 keepclass
+class android.graphics.Mesh keepclass
+class android.graphics.MeshSpecification keepclass
+class android.graphics.Movie keepclass
+class android.graphics.NinePatch keepclass
+class android.graphics.Outline keepclass
+class android.graphics.Paint keepclass
+class android.graphics.PaintFlagsDrawFilter keepclass
+class android.graphics.ParcelableColorSpace keepclass
+class android.graphics.Path keepclass
+class android.graphics.PathDashPathEffect keepclass
+class android.graphics.PathEffect keepclass
+class android.graphics.PathIterator keepclass
+class android.graphics.PathMeasure keepclass
+class android.graphics.Picture keepclass
+class android.graphics.PixelFormat keepclass
+class android.graphics.PixelXorXfermode keepclass
+class android.graphics.Point keepclass
+class android.graphics.PointF keepclass
+class android.graphics.PorterDuff keepclass
+class android.graphics.PorterDuffColorFilter keepclass
+class android.graphics.PorterDuffXfermode keepclass
+class android.graphics.PostProcessor keepclass
+class android.graphics.RadialGradient keepclass
+class android.graphics.Rasterizer keepclass
+class android.graphics.RecordingCanvas keepclass
+class android.graphics.Rect keepclass
+class android.graphics.RectF keepclass
+class android.graphics.Region keepclass
+class android.graphics.RegionIterator keepclass
+class android.graphics.RenderEffect keepclass
+class android.graphics.RenderNode keepclass
+class android.graphics.RuntimeColorFilter keepclass
+class android.graphics.RuntimeShader keepclass
+class android.graphics.RuntimeXfermode keepclass
+class android.graphics.Shader keepclass
+class android.graphics.SumPathEffect keepclass
+class android.graphics.SurfaceTexture keepclass
+class android.graphics.SweepGradient keepclass
+class android.graphics.TableMaskFilter keepclass
+class android.graphics.TemporaryBuffer keepclass
+class android.graphics.TextureLayer keepclass
+class android.graphics.Typeface keepclass
+class android.graphics.Xfermode keepclass
+class android.graphics.YuvImage keepclass
+
+class android.graphics.fonts.SystemFonts keepclass
+class android.graphics.fonts.FontVariationAxis keepclass
+class android.graphics.fonts.FontStyle keepclass
+class android.graphics.fonts.FontFileUtil keepclass
+class android.graphics.fonts.FontFamily keepclass
+class android.graphics.fonts.FontCustomizationParser keepclass
+class android.graphics.fonts.Font keepclass
+class android.graphics.fonts.FontFileUpdateRequest keepclass
+class android.graphics.fonts.FontFamilyUpdateRequest keepclass
+
+class android.graphics.text.TextRunShaper keepclass
+class android.graphics.text.PositionedGlyphs keepclass
+class android.graphics.text.MeasuredText keepclass
+class android.graphics.text.LineBreaker keepclass
+class android.graphics.text.LineBreakConfig keepclass
+class android.graphics.text.GraphemeBreak keepclass
+
+# Bare minimum to support running ImageDecoderTest
+class android.graphics.drawable.Drawable$ConstantState keepclass
+class android.graphics.drawable.BitmapDrawable$BitmapState keepclass
+class android.graphics.drawable.BitmapDrawable keep
+    method <init> (Landroid/content/res/Resources;Landroid/graphics/Bitmap;)V keep
+    method init * keep
+    method updateLocalState * keep
+    method computeBitmapSize * keep
+    method getIntrinsicWidth * keep
+    method getIntrinsicHeight * keep
+    method getBitmap * keep
+class android.graphics.drawable.Drawable keep
+    method <init> ()V keep
+    method resolveDensity * keep
+    method updateBlendModeFilter * ignore
+
+# These are classes that we explicitly do not support
+# class android.text.style.DrawableMarginSpan throw
+# class android.text.style.EasyEditSpan throw
+# class android.text.style.ImageSpan throw
+# class android.text.style.DynamicDrawableSpan throw
+
+class android.os.StrictMode keep
+    method noteSlowCall (Ljava/lang/String;)V ignore
+
+class android.graphics.ImageDecoder keepclass
+    method isHevcDecoderSupported ()Z ignore
+    method isP010SupportedForAV1 ()Z ignore
+    method isP010SupportedForHEVC ()Z ignore
+
+# Classes we want to support in follow up
+# class android.webkit.WebView keep
+#     method findAddress (Ljava/lang/String;)Ljava/lang/String; keep
+# class android.webkit.FindAddress keepclass
+# class android.telephony.PhoneNumberUtils keepclass
+# class com.android.telephony.Rlog keepclass
+# class android.telephony.JapanesePhoneNumberFormatter keepclass
+# class android.text.util.Linkify keepclass
