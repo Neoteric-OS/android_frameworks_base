@@ -529,9 +529,11 @@ public class TaskViewTaskController implements ShellTaskOrganizer.TaskListener {
             Slog.w(TAG, "Trying to remove a task that was never added? (no taskToken)");
             return;
         }
+        //cache it to avoid NPE due to timing issue
+        final WindowContainerToken taskToken = mTaskToken;
         mShellExecutor.execute(() -> {
             WindowContainerTransaction wct = new WindowContainerTransaction();
-            wct.removeTask(mTaskToken);
+            wct.removeTask(taskToken);
             mTaskViewTransitions.closeTaskView(wct, this);
         });
     }
