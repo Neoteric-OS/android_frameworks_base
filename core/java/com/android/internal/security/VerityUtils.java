@@ -53,28 +53,12 @@ import java.security.cert.X509Certificate;
 public abstract class VerityUtils {
     private static final String TAG = "VerityUtils";
 
-    /**
-     * File extension of the signature file. For example, foo.apk.fsv_sig is the signature file of
-     * foo.apk.
-     */
-    public static final String FSVERITY_SIGNATURE_FILE_EXTENSION = ".fsv_sig";
-
     /** SHA256 hash size. */
     private static final int HASH_SIZE_BYTES = 32;
 
     public static boolean isFsVeritySupported() {
         return Build.VERSION.DEVICE_INITIAL_SDK_INT >= Build.VERSION_CODES.R
                 || SystemProperties.getInt("ro.apk_verity.mode", 0) == 2;
-    }
-
-    /** Returns true if the given file looks like containing an fs-verity signature. */
-    public static boolean isFsveritySignatureFile(File file) {
-        return file.getName().endsWith(FSVERITY_SIGNATURE_FILE_EXTENSION);
-    }
-
-    /** Returns the fs-verity signature file path of the given file. */
-    public static String getFsveritySignatureFilePath(String filePath) {
-        return filePath + FSVERITY_SIGNATURE_FILE_EXTENSION;
     }
 
     /** Enables fs-verity for the file without signature. */
