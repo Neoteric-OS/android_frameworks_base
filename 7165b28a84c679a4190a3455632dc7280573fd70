@@ -302,6 +302,24 @@
       "message": "@zhanghai@google.com \n \n The main branch have conflicts with the internal branch and due to the build failed,Could you help fix the conflict?\n\nThanks.",
       "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa28fece_95d03115",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-01-09T22:40:23Z",
+      "side": 1,
+      "message": "We actually updated the code two days ago to no longer read the signatures of the APKs on internal main, for a different reason. So this change is no longer necessary and I think you may abandon it unless you have a specific reason to change it on AOSP main before the next AOSP source drop for 25Q2.",
+      "parentUuid": "0fb27da1_b82e0fe2",
+      "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
