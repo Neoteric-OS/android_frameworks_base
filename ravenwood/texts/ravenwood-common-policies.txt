@@ -18,3 +18,7 @@ class java.io.FileDescriptor keep
     method setInt$ @com.android.ravenwood.RavenwoodJdkPatch.setInt$
 class java.util.LinkedHashMap keep
     method eldest @com.android.ravenwood.RavenwoodJdkPatch.eldest
+
+# Always set flag UNICODE_CHARACTER_CLASS when compiling regex
+class java.util.regex.Pattern keep
+    method compile @com.android.ravenwood.RavenwoodJdkPatch.compilePattern
