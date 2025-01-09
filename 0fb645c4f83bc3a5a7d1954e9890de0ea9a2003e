@@ -1,0 +1,151 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0b685f3_ea0ea9d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2025-01-09T20:37:58Z",
+      "side": 1,
+      "message": "can we run this with automation and do it a few hundred or a few thousand times?",
+      "range": {
+        "startLine": 21,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 14
+      },
+      "revId": "0fb645c4f83bc3a5a7d1954e9890de0ea9a2003e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb02350e_05091598",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2025-01-09T20:37:58Z",
+      "side": 1,
+      "message": "nit",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "0fb645c4f83bc3a5a7d1954e9890de0ea9a2003e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7851966_4707c4a7",
+        "filename": "packages/Vcn/service-b/src/com/android/server/vcn/VcnNetworkProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2025-01-09T20:37:58Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of this as a permanent solution becuase it provides an ad-hoc multithread safe change to one specific variable. We need to solve for the general case, so please make sure there\u0027s a bug open tagged to find a more comprehensive solution.",
+      "range": {
+        "startLine": 64,
+        "startChar": 59,
+        "endLine": 64,
+        "endChar": 76
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c3c90ad9_089dcd02",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/Vcn/service-b/src/com/android/server/vcn/VcnNetworkProvider.java",
+              "range": {
+                "startLine": 37,
+                "startChar": 0,
+                "endLine": 38,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "packages/Vcn/service-b/src/com/android/server/vcn/VcnNetworkProvider.java",
+              "range": {
+                "startLine": 44,
+                "startChar": 0,
+                "endLine": 45,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "packages/Vcn/service-b/src/com/android/server/vcn/VcnNetworkProvider.java",
+              "range": {
+                "startLine": 50,
+                "startChar": 0,
+                "endLine": 50,
+                "endChar": 0
+              },
+              "replacement": "import java.util.concurrent.Executors;\n"
+            },
+            {
+              "path": "packages/Vcn/service-b/src/com/android/server/vcn/VcnNetworkProvider.java",
+              "range": {
+                "startLine": 64,
+                "startChar": 0,
+                "endLine": 64,
+                "endChar": 0
+              },
+              "replacement": "    // TODO(b/190439047): Remove ConcurrentHashMap and replace with a thread-safe data structure\n"
+            },
+            {
+              "path": "packages/Vcn/service-b/src/com/android/server/vcn/VcnNetworkProvider.java",
+              "range": {
+                "startLine": 67,
+                "startChar": 0,
+                "endLine": 68,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "packages/Vcn/service-b/src/com/android/server/vcn/VcnNetworkProvider.java",
+              "range": {
+                "startLine": 90,
+                "startChar": 0,
+                "endLine": 91,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "packages/Vcn/service-b/src/com/android/server/vcn/VcnNetworkProvider.java",
+              "range": {
+                "startLine": 101,
+                "startChar": 0,
+                "endLine": 102,
+                "endChar": 0
+              },
+              "replacement": "                Executors.newSingleThreadExecutor(),\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0fb645c4f83bc3a5a7d1954e9890de0ea9a2003e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
