@@ -273,11 +273,15 @@ class TextFileFilterPolicyParser {
     private var rFilePolicy: FilterPolicyWithReason? = null
 
     /** Name of the file that's currently being processed.  */
-    var filename: String? = null
+    var filename: String = ""
         private set
 
     /** 1-based line number in the current file */
     var lineNumber = -1
+        private set
+
+    /** Current line */
+    var currentLineText = ""
         private set
 
     /**
@@ -286,7 +290,6 @@ class TextFileFilterPolicyParser {
     fun parse(reader: Reader, inputName: String, processor: PolicyFileProcessor) {
         filename = inputName
 
-        log.i("Parsing text policy file $inputName ...")
         this.processor = processor
         BufferedReader(reader).use { rd ->
             lineNumber = 0
@@ -297,6 +300,7 @@ class TextFileFilterPolicyParser {
                         break
                     }
                     lineNumber++
+                    currentLineText = line
                     line = normalizeTextLine(line) // Remove comment and trim.
                     if (line.isEmpty()) {
                         continue
@@ -416,7 +420,7 @@ class TextFileFilterPolicyParser {
         if (fields.size <= 1) {
             throw ParseException("Class ('c') expects 1 or 2 fields.")
         }
-        val className = fields[1]
+        val className = fields[1].toHumanReadableClassName()
 
         // superClass is set when the class name starts with a "*".
         val superClass = resolveExtendingClass(className)
