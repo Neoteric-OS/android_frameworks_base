@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "654f1199_f41e52ca",
+        "filename": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2025-01-09T17:20:19Z",
+      "side": 1,
+      "message": "Yeah I admit it was kind of weird. I like that name. Done.",
+      "parentUuid": "999671ed_304405d5",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 9
+      },
+      "revId": "21538b2d9155be200beef7a58b12d7188d6f1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a05e5e3_6ed02570",
@@ -105,6 +129,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6941c706_7269401f",
+        "filename": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2025-01-09T17:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a05e5e3_6ed02570",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "21538b2d9155be200beef7a58b12d7188d6f1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c10d92f3_344d14d1",
@@ -128,6 +176,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8af769e6_baa1b841",
+        "filename": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2025-01-09T17:20:19Z",
+      "side": 1,
+      "message": "inlined them.",
+      "parentUuid": "c10d92f3_344d14d1",
+      "range": {
+        "startLine": 73,
+        "startChar": 14,
+        "endLine": 73,
+        "endChar": 32
+      },
+      "revId": "21538b2d9155be200beef7a58b12d7188d6f1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89539f40_39b52764",
@@ -141,6 +213,30 @@
       "writtenOn": "2025-01-09T01:04:38Z",
       "side": 1,
       "message": "Ditto",
+      "range": {
+        "startLine": 87,
+        "startChar": 14,
+        "endLine": 87,
+        "endChar": 33
+      },
+      "revId": "21538b2d9155be200beef7a58b12d7188d6f1c3e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3526494_21fced0d",
+        "filename": "ravenwood/tools/hoststubgen/src/com/android/hoststubgen/filters/TextFileFilterPolicyParser.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2025-01-09T17:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89539f40_39b52764",
       "range": {
         "startLine": 87,
         "startChar": 14,
