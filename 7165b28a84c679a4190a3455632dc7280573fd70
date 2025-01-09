@@ -285,6 +285,23 @@
       "message": "@zhanghai@google.com\n\n  Please help review this CL again.\nThanks.",
       "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb27da1_b82e0fe2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-01-09T12:14:44Z",
+      "side": 1,
+      "message": "@zhanghai@google.com \n \n The main branch have conflicts with the internal branch and due to the build failed,Could you help fix the conflict?\n\nThanks.",
+      "revId": "7165b28a84c679a4190a3455632dc7280573fd70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
