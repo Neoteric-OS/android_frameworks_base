@@ -18,9 +18,9 @@
 # !com.android.hoststubgen.test.*
 
 
-com.android.hoststubgen.test.tinyframework.*
-com.supported.*
-com.unsupported.*
+#com.android.hoststubgen.test.tinyframework.*
+#com.supported.*
+#com.unsupported.*
 
 # Use this to allow all packages
 # *
