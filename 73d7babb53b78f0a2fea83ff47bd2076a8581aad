@@ -16,6 +16,24 @@
       "message": "Will this affect callers who just want to attest to brand/product etc?",
       "revId": "73d7babb53b78f0a2fea83ff47bd2076a8581aad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "238295a8_a3ada926",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2025-01-10T18:14:24Z",
+      "side": 1,
+      "message": "Ah, that\u0027s a good point. Added a conditional.",
+      "parentUuid": "7e031760_55a1abe5",
+      "revId": "73d7babb53b78f0a2fea83ff47bd2076a8581aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
