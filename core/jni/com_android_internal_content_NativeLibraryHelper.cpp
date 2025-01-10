@@ -382,7 +382,7 @@ public:
                 continue;
             }
 
-            const char* lastSlash = util::ValidLibraryPathLastSlash(fileName, false, mDebuggable);
+            const char* lastSlash = util::ValidLibraryPathLastSlash(fileName, false);
             if (lastSlash) {
                 mLastSlash = lastSlash;
                 break;
