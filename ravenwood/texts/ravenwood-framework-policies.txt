@@ -16,12 +16,12 @@ class com.android.internal.util.IndentingPrintWriter keepclass
 class com.android.internal.util.LocalLog keepclass
 class com.android.internal.util.MessageUtils keepclass
 class com.android.internal.util.TokenBucket keepclass
-class android.os.HandlerExecutor keepclass
-class android.util.BackupUtils keepclass
-class android.util.IndentingPrintWriter keepclass
-class android.util.LocalLog keepclass
-class android.util.Pair keepclass
-class android.util.Rational keepclass
+#class android.os.HandlerExecutor keepclass
+#class android.util.BackupUtils keepclass
+#class android.util.IndentingPrintWriter keepclass
+#class android.util.LocalLog keepclass
+#class android.util.Pair keepclass
+#class android.util.Rational keepclass
 
 # From modules-utils; cannot use annotations
 class com.android.internal.util.Preconditions keepclass
