@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63149787_1adbce71",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2025-01-10T14:10:49Z",
+      "side": 1,
+      "message": "Does this need something similar?",
+      "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff7b1651_33fb0669",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2025-01-10T14:10:49Z",
+      "side": 1,
+      "message": "Also here?",
+      "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3c0a29b_f53377e6",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2025-01-10T14:10:49Z",
+      "side": 1,
+      "message": "There\u0027s an errorprone warning about permissions here.  It\u0027s pre-existing, but maybe a comment would help reviewers ignore it.\n\nIs the following true?\n\n// getMeid requires android.permission.READ_PRIVILEGED_PHONE_STATE, but\n// that\u0027s checked elsewhere, before ID_TYPE_MEID gets populated,",
+      "range": {
+        "startLine": 829,
+        "startChar": 0,
+        "endLine": 829,
+        "endChar": 63
+      },
+      "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6695bfa0_cdb4aa3d",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2025-01-10T14:10:49Z",
+      "side": 1,
+      "message": "Would a comment \"// Treat failure to retrieve MEID as absence of MEID\" here silence the lint?",
+      "range": {
+        "startLine": 830,
+        "startChar": 67,
+        "endLine": 830,
+        "endChar": 68
+      },
+      "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
