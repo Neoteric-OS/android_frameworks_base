@@ -348,14 +348,14 @@ static install_status_t copyFileIfChanged(JNIEnv* env, void* arg, ZipFileRO* zip
  */
 class NativeLibrariesIterator {
 private:
-    NativeLibrariesIterator(ZipFileRO* zipFile, bool debuggable, void* cookie)
-          : mZipFile(zipFile), mDebuggable(debuggable), mCookie(cookie), mLastSlash(nullptr) {
+    NativeLibrariesIterator(ZipFileRO* zipFile, void* cookie)
+          : mZipFile(zipFile), mCookie(cookie), mLastSlash(nullptr) {
         fileName[0] = '\0';
     }
 
 public:
     static base::expected<std::unique_ptr<NativeLibrariesIterator>, int32_t> create(
-            ZipFileRO* zipFile, bool debuggable) {
+            ZipFileRO* zipFile) {
         // Do not specify a suffix to find both .so files and gdbserver.
         auto result = zipFile->startIterationOrError(APK_LIB.data(), nullptr /* suffix */);
         if (!result.ok()) {
@@ -363,7 +363,7 @@ public:
         }
 
         return std::unique_ptr<NativeLibrariesIterator>(
-                new NativeLibrariesIterator(zipFile, debuggable, result.value()));
+                new NativeLibrariesIterator(zipFile, result.value()));
     }
 
     base::expected<ZipEntryRO, int32_t> next() {
@@ -382,7 +382,7 @@ public:
                 continue;
             }
 
-            const char* lastSlash = util::ValidLibraryPathLastSlash(fileName, false, mDebuggable);
+            const char* lastSlash = util::ValidLibraryPathLastSlash(fileName, false);
             if (lastSlash) {
                 mLastSlash = lastSlash;
                 break;
@@ -407,20 +407,19 @@ private:
 
     char fileName[PATH_MAX];
     ZipFileRO* const mZipFile;
-    const bool mDebuggable;
     void* mCookie;
     const char* mLastSlash;
 };
 
 static install_status_t
 iterateOverNativeFiles(JNIEnv *env, jlong apkHandle, jstring javaCpuAbi,
-                       jboolean debuggable, iterFunc callFunc, void* callArg) {
+                       iterFunc callFunc, void* callArg) {
     ZipFileRO* zipFile = reinterpret_cast<ZipFileRO*>(apkHandle);
     if (zipFile == nullptr) {
         return INSTALL_FAILED_INVALID_APK;
     }
 
-    auto result = NativeLibrariesIterator::create(zipFile, debuggable);
+    auto result = NativeLibrariesIterator::create(zipFile);
     if (!result.ok()) {
         return INSTALL_FAILED_INVALID_APK;
     }
@@ -462,14 +461,13 @@ iterateOverNativeFiles(JNIEnv *env, jlong apkHandle, jstring javaCpuAbi,
     return INSTALL_SUCCEEDED;
 }
 
-static int findSupportedAbi(JNIEnv* env, jlong apkHandle, jobjectArray supportedAbisArray,
-                            jboolean debuggable) {
+static int findSupportedAbi(JNIEnv* env, jlong apkHandle, jobjectArray supportedAbisArray) {
     ZipFileRO* zipFile = reinterpret_cast<ZipFileRO*>(apkHandle);
     if (zipFile == nullptr) {
         return INSTALL_FAILED_INVALID_APK;
     }
 
-    auto result = NativeLibrariesIterator::create(zipFile, debuggable);
+    auto result = NativeLibrariesIterator::create(zipFile);
     if (!result.ok()) {
         return INSTALL_FAILED_INVALID_APK;
     }
@@ -539,26 +537,26 @@ com_android_internal_content_NativeLibraryHelper_copyNativeBinaries(JNIEnv *env,
 {
     jboolean app_compat_16kb = app_compat_16kb_enabled();
     void* args[] = { &javaNativeLibPath, &extractNativeLibs, &debuggable, &app_compat_16kb };
-    return (jint) iterateOverNativeFiles(env, apkHandle, javaCpuAbi, debuggable,
+    return (jint) iterateOverNativeFiles(env, apkHandle, javaCpuAbi,
             copyFileIfChanged, reinterpret_cast<void*>(args));
 }
 
 static jlong
 com_android_internal_content_NativeLibraryHelper_sumNativeBinaries(JNIEnv *env, jclass clazz,
-        jlong apkHandle, jstring javaCpuAbi, jboolean debuggable)
+        jlong apkHandle, jstring javaCpuAbi)
 {
     size_t totalSize = 0;
 
-    iterateOverNativeFiles(env, apkHandle, javaCpuAbi, debuggable, sumFiles, &totalSize);
+    iterateOverNativeFiles(env, apkHandle, javaCpuAbi, sumFiles, &totalSize);
 
     return totalSize;
 }
 
 static jint
 com_android_internal_content_NativeLibraryHelper_findSupportedAbi(JNIEnv *env, jclass clazz,
-        jlong apkHandle, jobjectArray javaCpuAbisToSearch, jboolean debuggable)
+        jlong apkHandle, jobjectArray javaCpuAbisToSearch)
 {
-    return (jint) findSupportedAbi(env, apkHandle, javaCpuAbisToSearch, debuggable);
+    return (jint) findSupportedAbi(env, apkHandle, javaCpuAbisToSearch);
 }
 
 enum bitcode_scan_result_t {
@@ -647,10 +645,10 @@ static const JNINativeMethod gMethods[] = {
             "(JLjava/lang/String;Ljava/lang/String;ZZ)I",
             (void *)com_android_internal_content_NativeLibraryHelper_copyNativeBinaries},
     {"nativeSumNativeBinaries",
-            "(JLjava/lang/String;Z)J",
+            "(JLjava/lang/String;)J",
             (void *)com_android_internal_content_NativeLibraryHelper_sumNativeBinaries},
     {"nativeFindSupportedAbi",
-            "(J[Ljava/lang/String;Z)I",
+            "(J[Ljava/lang/String;)I",
             (void *)com_android_internal_content_NativeLibraryHelper_findSupportedAbi},
     {"hasRenderscriptBitcode", "(J)I",
             (void *)com_android_internal_content_NativeLibraryHelper_hasRenderscriptBitcode},
