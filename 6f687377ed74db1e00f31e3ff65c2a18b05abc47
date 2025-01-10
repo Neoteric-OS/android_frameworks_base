@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e83b082_6a58ca85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2025-01-10T00:47:06Z",
+      "side": 1,
+      "message": "A change here would not be expected to cause something like b/388922725.\n\n\u003e junit.framework.AssertionFailedError: Doesn\u0027t receive onClickEvent at Point(1, 159)",
+      "revId": "6f687377ed74db1e00f31e3ff65c2a18b05abc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
