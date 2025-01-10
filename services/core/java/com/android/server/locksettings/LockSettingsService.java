@@ -399,6 +399,8 @@ public class LockSettingsService extends ILockSettings.Stub {
                 destroyMigratedProtectors();
 
                 loadEscrowData();
+
+                AndroidKeyStoreMaintenance.bootCompleted();
             });
         }
     }

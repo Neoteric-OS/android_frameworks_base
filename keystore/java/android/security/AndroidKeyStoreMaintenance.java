@@ -45,6 +45,18 @@ public class AndroidKeyStoreMaintenance {
     }
 
     /**
+     * Tells Keystore that the boot has completed.  This is the point at which, if the device just
+     * took an OTA, rollback to the old build is no longer allowed.
+     */
+    public static void bootCompleted() {
+        try {
+            getService().bootCompleted();
+        } catch (Exception e) {
+            Log.e(TAG, "bootCompleted failed", e);
+        }
+    }
+
+    /**
      * Informs Keystore 2.0 about adding a user
      *
      * @param userId - Android user id of the user being added
