@@ -34,6 +34,24 @@
       "parentUuid": "1ebf33f2_77284784",
       "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "502d8fce_2ffce7ca",
+        "filename": "services/core/java/com/android/server/wm/WindowContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-01-10T03:16:15Z",
+      "side": 1,
+      "message": "If it doesn\u0027t have a parent, it should use `parent.addChild(wc)` instead of `wc.reparent(parent)`.",
+      "parentUuid": "5969de26_abd575fa",
+      "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
