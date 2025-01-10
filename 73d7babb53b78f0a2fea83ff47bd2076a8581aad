@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e031760_55a1abe5",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1836235
+      },
+      "writtenOn": "2025-01-10T17:41:28Z",
+      "side": 1,
+      "message": "Will this affect callers who just want to attest to brand/product etc?",
+      "revId": "73d7babb53b78f0a2fea83ff47bd2076a8581aad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
