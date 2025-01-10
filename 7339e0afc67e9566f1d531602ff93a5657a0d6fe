@@ -106,6 +106,24 @@
       "parentUuid": "a7334869_2f6a688a",
       "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1626fae0_d85debe2",
+        "filename": "services/core/java/com/android/server/wm/WindowContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-01-10T10:06:02Z",
+      "side": 1,
+      "message": "The problem is more like that some places forget to call ActivityRecord#clearLastParentBeforePip.\nAllowing reparent a detached task may cause further strange symptoms.",
+      "parentUuid": "f3436dcf_7bc16297",
+      "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
