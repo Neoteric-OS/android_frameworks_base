@@ -88,6 +88,24 @@
       "parentUuid": "ca83e9c5_106f5567",
       "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3436dcf_7bc16297",
+        "filename": "services/core/java/com/android/server/wm/WindowContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-01-10T08:47:22Z",
+      "side": 1,
+      "message": "I would like to ask if this is possible:\n1 The display changes, and the removeChild method is used to set the task\u0027s parent to null.\n2 When the app dies, the cleanup operation is performed, as described in the crash stack, will there be a null pointer situation?",
+      "parentUuid": "a7334869_2f6a688a",
+      "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
