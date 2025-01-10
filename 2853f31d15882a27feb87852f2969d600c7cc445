@@ -50,6 +50,24 @@
       "message": "Thanks for the +2, as far as I understand, I need another review for it to become mergable? (It looks like the pre-submit need to be-run as well, which I don\u0027t know how to trigger)",
       "revId": "2853f31d15882a27feb87852f2969d600c7cc445",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd93b85a_4d05c1b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-01-10T17:46:46Z",
+      "side": 1,
+      "message": "Isak, sorry this has taken so long. Let me try to merge this and the other change for you.",
+      "parentUuid": "4695977f_1e9099ed",
+      "revId": "2853f31d15882a27feb87852f2969d600c7cc445",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
