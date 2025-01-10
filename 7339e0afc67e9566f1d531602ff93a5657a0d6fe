@@ -70,6 +70,24 @@
       "parentUuid": "502d8fce_2ffce7ca",
       "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7334869_2f6a688a",
+        "filename": "services/core/java/com/android/server/wm/WindowContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-01-10T07:29:54Z",
+      "side": 1,
+      "message": "Those methods are assumed to be called only for attached container, so it is fine to not add additonal check, to avoid hiding real problem.",
+      "parentUuid": "ca83e9c5_106f5567",
+      "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
