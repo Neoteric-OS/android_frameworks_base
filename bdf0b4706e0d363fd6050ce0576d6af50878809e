@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be4dc0e9_88f71667",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2025-01-10T17:05:47Z",
+      "side": 1,
+      "message": "Leaving it due to https://b.corp.google.com/issues/341254535#comment3",
+      "parentUuid": "63149787_1adbce71",
+      "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff7b1651_33fb0669",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-10T14:10:49Z",
       "side": 1,
       "message": "Also here?",
+      "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7001592f_9684e51a",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2025-01-10T17:05:47Z",
+      "side": 1,
+      "message": "As above",
+      "parentUuid": "ff7b1651_33fb0669",
       "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -58,6 +94,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e252bf3e_02132d3e",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2025-01-10T17:05:47Z",
+      "side": 1,
+      "message": "Thanks, ended up adding the @RequiresPermission annotation to satisfy the warning.",
+      "parentUuid": "d3c0a29b_f53377e6",
+      "range": {
+        "startLine": 829,
+        "startChar": 0,
+        "endLine": 829,
+        "endChar": 63
+      },
+      "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6695bfa0_cdb4aa3d",
@@ -71,6 +131,30 @@
       "writtenOn": "2025-01-10T14:10:49Z",
       "side": 1,
       "message": "Would a comment \"// Treat failure to retrieve MEID as absence of MEID\" here silence the lint?",
+      "range": {
+        "startLine": 830,
+        "startChar": 67,
+        "endLine": 830,
+        "endChar": 68
+      },
+      "revId": "bdf0b4706e0d363fd6050ce0576d6af50878809e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acd0391d_60771664",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyPairGeneratorSpi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1954750
+      },
+      "writtenOn": "2025-01-10T17:05:47Z",
+      "side": 1,
+      "message": "Thanks, ended up moving the code around a little so that the catch isn\u0027t empty.",
+      "parentUuid": "6695bfa0_cdb4aa3d",
       "range": {
         "startLine": 830,
         "startChar": 67,
