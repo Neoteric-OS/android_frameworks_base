@@ -5,7 +5,6 @@ adamp@google.com
 aurimas@google.com
 siyamed@google.com
 mount@google.com
-njawad@google.com
 
 per-file TextView*,Edit*,Selection* = file:../text/OWNERS
 
