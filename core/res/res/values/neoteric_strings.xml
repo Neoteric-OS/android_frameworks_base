@@ -30,4 +30,11 @@
     <string name="charging_speed_slow">Slow</string>
     <string name="charging_speed_fast">Fast</string>
     <string name="charging_speed_super_fast">Super fast</string>
+
+    <!-- PowerShare -->
+    <string name="battery_share_label">Battery Share</string>
+    <string name="battery_share_notification_summary">Notifications for Battery Share status</string>
+    <string name="battery_share_disabled">Battery Share disabled</string>
+    <string name="battery_share_disabled_power_saver">Battery Share has been disabled due to battery saver being enabled.</string>
+    <string name="battery_share_disabled_low_battery">Battery Share has been disabled as battery percentage reached the minimum threshold.</string>
 </resources>
