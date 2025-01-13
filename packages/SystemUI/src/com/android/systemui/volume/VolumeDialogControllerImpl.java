@@ -548,6 +548,30 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         }
         return changed;
     }
+ 
+    private boolean checkRoutedToARCW(int stream) {
+        boolean changed = false;
+        if (stream == AudioManager.STREAM_MUSIC) {
+            final boolean routedToARC =
+                    (mAudio.getDevicesForStream(AudioManager.STREAM_MUSIC)
+                     & AudioManager.DEVICE_OUT_HDMI_ARC) != 0;
+            changed |= updateStreamRoutedToARCW(stream, routedToARC);
+        }
+        return changed;
+    }
+
+    private boolean checkRoutedToHeadsetW(int stream) {
+        boolean changed = false;
+        if (stream == AudioManager.STREAM_MUSIC) {
+            final boolean routedToHeadset =
+                    (mAudio.getDevicesForStream(AudioManager.STREAM_MUSIC)
+                     & (AudioManager.DEVICE_OUT_WIRED_HEADSET
+                     | AudioManager.DEVICE_OUT_WIRED_HEADPHONE
+                     | AudioManager.DEVICE_OUT_USB_HEADSET)) != 0;
+            changed |= updateStreamRoutedToHeadsetW(stream, routedToHeadset);
+        }
+        return changed;
+    }
 
     private boolean shouldShowUI(int flags) {
         int wakefulness = mWakefulnessLifecycle.getWakefulness();
@@ -569,6 +593,8 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         int lastAudibleStreamVolume = getAudioManagerStreamVolume(stream);
         changed |= updateStreamLevelW(stream, lastAudibleStreamVolume);
         changed |= checkRoutedToBluetoothW(showUI ? AudioManager.STREAM_MUSIC : stream);
+        changed |= checkRoutedToARCW(showUI ? AudioManager.STREAM_MUSIC : stream);
+        changed |= checkRoutedToHeadsetW(showUI ? AudioManager.STREAM_MUSIC : stream);
         if (changed) {
             mCallbacks.onStateChanged(mState);
         }
@@ -639,6 +665,28 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         ss.routedToBluetooth = routedToBluetooth;
         if (D.BUG) Log.d(TAG, "updateStreamRoutedToBluetoothW stream=" + stream
                 + " routedToBluetooth=" + routedToBluetooth);
+        return true;
+    }
+
+    private boolean updateStreamRoutedToARCW(int stream, boolean routedToARC) {
+        final StreamState ss = streamStateW(stream);
+        if (ss.routedToARC == routedToARC) return false;
+        ss.routedToARC = routedToARC;
+        if (D.BUG) {
+            Log.d(TAG, "updateStreamRoutedToARCW stream=" + stream
+                    + " routedToARC=" + routedToARC);
+        }
+        return true;
+    }
+
+    private boolean updateStreamRoutedToHeadsetW(int stream, boolean routedToHeadset) {
+        final StreamState ss = streamStateW(stream);
+        if (ss.routedToHeadset == routedToHeadset) return false;
+        ss.routedToHeadset = routedToHeadset;
+        if (D.BUG) {
+            Log.d(TAG, "updateStreamRoutedToHeadsetW stream=" + stream
+                    + " routedToHeadset=" + routedToHeadset);
+        }
         return true;
     }
 
