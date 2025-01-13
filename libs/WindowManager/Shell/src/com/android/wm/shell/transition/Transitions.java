@@ -637,6 +637,9 @@ public class Transitions implements RemoteCallable<Transitions>,
             final TransitionInfo.Change change = info.getChanges().get(i);
             final SurfaceControl leash = change.getLeash();
 
+            final int layer = calculateAnimLayer(change, i, numChanges, type);
+            t.setLayer(leash, layer);
+
             // Don't reparent anything that isn't independent within its parents
             if (!TransitionInfo.isIndependent(change, info)) {
                 continue;
@@ -651,8 +654,6 @@ public class Transitions implements RemoteCallable<Transitions>,
                         change.getStartAbsBounds().left - root.getOffset().x,
                         change.getStartAbsBounds().top - root.getOffset().y);
             }
-            final int layer = calculateAnimLayer(change, i, numChanges, type);
-            t.setLayer(leash, layer);
         }
     }
 
