@@ -2691,11 +2691,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         }
         // Only do transfer after transaction has done when starting window exist.
         if (mStartingData != null) {
-            final boolean isWaitingForSyncTransactionCommit =
-                    Flags.removeStartingWindowWaitForMultiTransitions()
-                            ? getSyncTransactionCommitCallbackDepth() > 0
-                            : mStartingData.mWaitForSyncTransactionCommit;
-            if (isWaitingForSyncTransactionCommit) {
+            if (getSyncTransactionCommitCallbackDepth() > 0) {
                 mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_COPY_TO_CLIENT;
                 return true;
             }
@@ -2858,21 +2854,12 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     @Override
-    void waitForSyncTransactionCommit(ArraySet<WindowContainer> wcAwaitingCommit) {
-        super.waitForSyncTransactionCommit(wcAwaitingCommit);
-        if (mStartingData != null) {
-            mStartingData.mWaitForSyncTransactionCommit = true;
-        }
-    }
-
-    @Override
     void onSyncTransactionCommitted(SurfaceControl.Transaction t) {
         super.onSyncTransactionCommitted(t);
         if (mStartingData == null) {
             return;
         }
         final StartingData lastData = mStartingData;
-        lastData.mWaitForSyncTransactionCommit = false;
         if (lastData.mRemoveAfterTransaction == AFTER_TRANSACTION_REMOVE_DIRECTLY) {
             removeStartingWindowAnimation(lastData.mPrepareRemoveAnimation);
         } else if (lastData.mRemoveAfterTransaction == AFTER_TRANSACTION_COPY_TO_CLIENT) {
@@ -2902,12 +2889,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         final boolean animate;
         final boolean hasImeSurface;
         if (mStartingData != null) {
-            final boolean isWaitingForSyncTransactionCommit =
-                    Flags.removeStartingWindowWaitForMultiTransitions()
-                            ? getSyncTransactionCommitCallbackDepth() > 0
-                            : mStartingData.mWaitForSyncTransactionCommit;
-            if (isWaitingForSyncTransactionCommit
-                    || mSyncState != SYNC_STATE_NONE) {
+            if (getSyncTransactionCommitCallbackDepth() > 0 || mSyncState != SYNC_STATE_NONE) {
                 mStartingData.mRemoveAfterTransaction = AFTER_TRANSACTION_REMOVE_DIRECTLY;
                 mStartingData.mPrepareRemoveAnimation = prepareAnimation;
                 return;
