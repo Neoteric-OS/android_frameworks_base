@@ -1980,6 +1980,9 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             iconRes = R.drawable.ic_volume_ringer_vibrate;
         } else if (isRingSilent) {
             iconRes = row.iconMuteRes;
+        } else if (ss.routedToARC) {
+            iconRes = isStreamMuted(ss) ? R.drawable.ic_volume_media_arc_mute
+                                        : R.drawable.ic_volume_media_arc;
         } else if (ss.routedToBluetooth) {
             if (isVoiceCallStream) {
                 iconRes = R.drawable.ic_volume_bt_sco;
@@ -1987,12 +1990,17 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 iconRes = isStreamMuted(ss) ? R.drawable.ic_volume_media_bt_mute
                                             : R.drawable.ic_volume_media_bt;
             }
+        } else if (ss.routedToHeadset) {
+            iconRes = isStreamMuted(ss) ? R.drawable.ic_volume_media_headset_mute
+                                        : R.drawable.ic_volume_media_headset;
         } else if (isStreamMuted(ss)) {
             iconRes = row.iconMuteRes;
         } else {
             iconRes = mShowLowMediaVolumeIcon && ss.level * 2 < (ss.levelMax + ss.levelMin)
                       ? R.drawable.ic_volume_media_low : row.iconRes;
         }
+
+        row.icon.setImageResource(iconRes);
 
         row.setIcon(iconRes, mContext.getTheme());
         row.iconState =
