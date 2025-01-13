@@ -1850,7 +1850,8 @@ public class AudioSystem
         int deviceMask = DEVICE_NONE; // zero.
         int deviceInChecksum = DEVICE_BIT_IN;
         for (Integer device : deviceSet) {
-            if ((device & (device - 1) & ~DEVICE_BIT_IN) != 0) {
+            if (((device & (device - 1) & ~DEVICE_BIT_IN) != 0)
+                    && (device != DEVICE_OUT_HDMI_EARC)) { // eARC can't skip
                 Log.v(TAG, "getDeviceMaskFromSet skipping multi-bit device value " + device);
                 continue;
             }
