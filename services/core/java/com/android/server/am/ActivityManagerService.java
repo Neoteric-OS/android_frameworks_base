@@ -19504,7 +19504,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             }
             if (preventIntentRedirectCollectNestedKeysOnServerIfNotCollected()) {
                 // this flag will be ramped to public.
-                intent.collectExtraIntentKeys();
+                intent.collectExtraIntentKeys(true);
             }
         }
 

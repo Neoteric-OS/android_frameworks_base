@@ -4293,7 +4293,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     void finishRelaunching() {
-        mAppCompatController.getAppCompatOrientationOverrides()
+        mAppCompatController.getOrientationOverrides()
                 .setRelaunchingAfterRequestedOrientationChanged(false);
         mTaskSupervisor.getActivityMetricsLogger().notifyActivityRelaunched(this);
 
@@ -8399,7 +8399,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 mLastReportedConfiguration.getMergedConfiguration())) {
             ensureActivityConfiguration(false /* ignoreVisibility */);
             if (mPendingRelaunchCount > originalRelaunchingCount) {
-                mAppCompatController.getAppCompatOrientationOverrides()
+                mAppCompatController.getOrientationOverrides()
                         .setRelaunchingAfterRequestedOrientationChanged(true);
             }
             if (mTransitionController.inPlayingTransition(this)) {
@@ -8921,7 +8921,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             navBarInsets = Insets.NONE;
         }
         final AppCompatReachabilityOverrides reachabilityOverrides =
-                mAppCompatController.getAppCompatReachabilityOverrides();
+                mAppCompatController.getReachabilityOverrides();
         // Horizontal position
         int offsetX = 0;
         if (parentBounds.width() != screenResolvedBoundsWidth) {
@@ -10396,7 +10396,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 mAppCompatController.getAppCompatAspectRatioOverrides()
                         .shouldOverrideMinAspectRatio());
         proto.write(SHOULD_IGNORE_ORIENTATION_REQUEST_LOOP,
-                mAppCompatController.getAppCompatOrientationOverrides()
+                mAppCompatController.getOrientationOverrides()
                         .shouldIgnoreOrientationRequestLoop());
         proto.write(SHOULD_OVERRIDE_FORCE_RESIZE_APP,
                 mAppCompatController.getResizeOverrides().shouldOverrideForceResizeApp());
