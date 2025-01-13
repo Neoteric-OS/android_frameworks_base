@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "60bdf5ea_d1b49364",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2025-01-13T13:51:49Z",
+      "side": 1,
+      "message": "I noticed that `RestrictedForEnvironment` is repeatable and can also have multiple `environments`. Given the former, the latter seems unnecessary.\n\nDo you have a specific use case in mind where you would supply more than one environment per annotation instance?",
+      "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca736e05_6f0dd33e",
         "filename": "core/java/android/hardware/usb/UsbManager.java",
         "patchSetId": 2
