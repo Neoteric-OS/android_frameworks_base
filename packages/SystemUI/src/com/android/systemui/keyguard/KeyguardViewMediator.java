@@ -817,7 +817,7 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
             if (targetUserId != mSelectedUserInteractor.getSelectedUserId()) {
                 return;
             }
-            if (DEBUG) Log.d(TAG, "keyguardDone");
+            Log.d(TAG, "keyguardDone");
             tryKeyguardDone();
         }
 
@@ -836,7 +836,7 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
         @Override
         public void keyguardDonePending(int targetUserId) {
             Trace.beginSection("KeyguardViewMediator.mViewMediatorCallback#keyguardDonePending");
-            if (DEBUG) Log.d(TAG, "keyguardDonePending");
+            Log.d(TAG, "keyguardDonePending");
             if (targetUserId != mSelectedUserInteractor.getSelectedUserId()) {
                 Trace.endSection();
                 return;
@@ -2740,10 +2740,8 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
     }
 
     private void tryKeyguardDone() {
-        if (DEBUG) {
-            Log.d(TAG, "tryKeyguardDone: pending - " + mKeyguardDonePending + ", animRan - "
-                    + mHideAnimationRun + " animRunning - " + mHideAnimationRunning);
-        }
+        Log.d(TAG, "tryKeyguardDone: pending - " + mKeyguardDonePending + ", animRan - "
+                + mHideAnimationRun + " animRunning - " + mHideAnimationRunning);
         if (!mKeyguardDonePending && mHideAnimationRun && !mHideAnimationRunning) {
             handleKeyguardDone();
         } else if (mSurfaceBehindRemoteAnimationRunning) {
@@ -3045,7 +3043,7 @@ public class KeyguardViewMediator implements CoreStartable, Dumpable,
     }
 
     private final Runnable mHideAnimationFinishedRunnable = () -> {
-        Log.e(TAG, "mHideAnimationFinishedRunnable#run");
+        Log.d(TAG, "mHideAnimationFinishedRunnable#run");
         mHideAnimationRunning = false;
         tryKeyguardDone();
     };
