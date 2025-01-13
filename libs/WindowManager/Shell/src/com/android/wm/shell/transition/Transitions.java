@@ -643,16 +643,15 @@ public class Transitions implements RemoteCallable<Transitions>,
             }
 
             boolean hasParent = change.getParent() != null;
-
-            final TransitionInfo.Root root = TransitionUtil.getRootFor(change, info);
             if (!hasParent) {
+                final TransitionInfo.Root root = TransitionUtil.getRootFor(change, info);
                 t.reparent(leash, root.getLeash());
                 t.setPosition(leash,
                         change.getStartAbsBounds().left - root.getOffset().x,
                         change.getStartAbsBounds().top - root.getOffset().y);
+                final int layer = calculateAnimLayer(change, i, numChanges, type);
+                t.setLayer(leash, layer);
             }
-            final int layer = calculateAnimLayer(change, i, numChanges, type);
-            t.setLayer(leash, layer);
         }
     }
 
