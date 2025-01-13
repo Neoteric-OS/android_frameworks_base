@@ -5267,10 +5267,11 @@ class Task extends TaskFragment {
     @GuardedBy("mService")
     private boolean resumeTopActivityInnerLocked(ActivityRecord prev, ActivityOptions options,
             boolean deferPause) {
-        if (!mAtmService.isBooting() && !mAtmService.isBooted()) {
+        if (!mAtmService.isBooting() && !mAtmService.isBooted() || !mTaskSupervisor.readyToResume()) {
             // Not ready yet!
             return false;
         }
+
         final ActivityRecord topActivity = topRunningActivity(true /* focusableOnly */);
         if (topActivity == null) {
             // There are no activities left in this task, let's look somewhere else.

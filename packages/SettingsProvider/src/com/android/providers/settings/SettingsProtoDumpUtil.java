@@ -2553,6 +2553,9 @@ class SettingsProtoDumpUtil {
         dumpSetting(s, p,
                 Settings.Secure.SCREENSAVER_DEFAULT_COMPONENT,
                 SecureSettingsProto.Screensaver.DEFAULT_COMPONENT);
+        dumpSetting(s, p,
+                Settings.Secure.SCREENSAVER_ACTIVATE_ON_POSTURED,
+                SecureSettingsProto.Screensaver.ACTIVATE_ON_POSTURED);
         p.end(screensaverToken);
 
         final long searchToken = p.start(SecureSettingsProto.SEARCH);
