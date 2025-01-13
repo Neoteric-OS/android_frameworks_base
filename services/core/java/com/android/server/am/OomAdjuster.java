@@ -159,7 +159,6 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
-import android.os.UserHandle;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.BoostFramework;
@@ -3510,13 +3509,10 @@ public class OomAdjuster {
     }
 
     private static int getCpuCapability(ProcessRecord app, long nowUptime) {
+        // Note: persistent processes get all capabilities, including CPU_TIME.
         final UidRecord uidRec = app.getUidRecord();
         if (uidRec != null && uidRec.isCurAllowListed()) {
             // Process is in the power allowlist.
-            return PROCESS_CAPABILITY_CPU_TIME;
-        }
-        if (UserHandle.isCore(app.uid)) {
-            // Make sure all system components are not frozen.
             return PROCESS_CAPABILITY_CPU_TIME;
         }
         if (app.mState.getCachedHasVisibleActivities()) {

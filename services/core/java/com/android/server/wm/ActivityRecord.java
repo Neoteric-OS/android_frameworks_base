@@ -9172,13 +9172,12 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 || orientationRespectedWithInsets)) {
             return;
         }
-        final AppCompatDisplayInsets mAppCompatDisplayInsets = getAppCompatDisplayInsets();
+        final AppCompatDisplayInsets appCompatDisplayInsets = getAppCompatDisplayInsets();
         final AppCompatSizeCompatModePolicy scmPolicy =
                 mAppCompatController.getAppCompatSizeCompatModePolicy();
 
-        if (scmPolicy.hasAppCompatDisplayInsetsWithoutInheritance()
-                && mAppCompatDisplayInsets != null
-                && !mAppCompatDisplayInsets.mIsInFixedOrientationOrAspectRatioLetterbox) {
+        if (appCompatDisplayInsets != null
+                && !appCompatDisplayInsets.mIsInFixedOrientationOrAspectRatioLetterbox) {
             // App prefers to keep its original size.
             // If the size compat is from previous fixed orientation letterboxing, we may want to
             // have fixed orientation letterbox again, otherwise it will show the size compat
@@ -9230,8 +9229,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 .applyDesiredAspectRatio(newParentConfig, parentBounds, resolvedBounds,
                         containingBoundsWithInsets, containingBounds);
 
-        if (scmPolicy.hasAppCompatDisplayInsetsWithoutInheritance()) {
-            mAppCompatDisplayInsets.getBoundsByRotation(mTmpBounds,
+        if (appCompatDisplayInsets != null) {
+            appCompatDisplayInsets.getBoundsByRotation(mTmpBounds,
                     newParentConfig.windowConfiguration.getRotation());
             if (resolvedBounds.width() != mTmpBounds.width()
                     || resolvedBounds.height() != mTmpBounds.height()) {
@@ -9254,7 +9253,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
 
         // Calculate app bounds using fixed orientation bounds because they will be needed later
         // for comparison with size compat app bounds in {@link resolveSizeCompatModeConfiguration}.
-        mResolveConfigHint.mTmpCompatInsets = mAppCompatDisplayInsets;
+        mResolveConfigHint.mTmpCompatInsets = appCompatDisplayInsets;
         computeConfigByResolveHint(getResolvedOverrideConfiguration(), newParentConfig);
         mAppCompatController.getAppCompatAspectRatioPolicy()
                 .setLetterboxBoundsForFixedOrientationAndAspectRatio(new Rect(resolvedBounds));
