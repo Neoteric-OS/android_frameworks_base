@@ -3044,6 +3044,18 @@ public class Editor {
 
         shadowView.layout(0, 0, shadowView.getMeasuredWidth(), shadowView.getMeasuredHeight());
         shadowView.invalidate();
+
+        if (shadowView.getWidth() <= 0 || shadowView.getHeight() <= 0) {
+            return new View.DragShadowBuilder() {
+                @Override
+                public void onProvideShadowMetrics(Point outShadowSize, Point outShadowTouchPoint) {
+                    // A workaround for P+ not accepting non-positive drag shadow sizes.
+                    outShadowSize.set(1, 1);
+                    outShadowTouchPoint.set(0, 0);
+                }
+            };
+        }
+
         return new DragShadowBuilder(shadowView);
     }
 
