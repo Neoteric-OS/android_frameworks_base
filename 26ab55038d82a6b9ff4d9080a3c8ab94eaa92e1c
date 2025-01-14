@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c26a8c0_e80418ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2025-01-14T10:10:23Z",
+      "side": 1,
+      "message": "Please obtain an OWNERS review from PackageManagerService.java OWNERS.\n\nAfter that, readd me to approve the xml changes if the https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/PACKAGE_MANAGER_OWNERS?q\u003dpackage_manager_owners\u0026sq\u003d(repo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20branch:main%20OR%20git:googleplex-android%2Fplatform%2Fframeworks%2Fsupport@androidx-platform-dev%20OR%20f:google3%2Fthird_party%2Fandroid%2Fandroidx_test%2F) cannot approve them.",
+      "revId": "26ab55038d82a6b9ff4d9080a3c8ab94eaa92e1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
