@@ -19,6 +19,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.service.quicksettings.Tile
 import com.android.internal.jank.InteractionJankMonitor
 import com.android.internal.logging.MetricsLogger
 import com.android.systemui.accessibility.fontscaling.FontScalingDialogDelegate
@@ -111,6 +112,8 @@ constructor(
         state?.label = mContext.getString(R.string.quick_settings_font_scaling_label)
         state?.icon = icon
         state?.contentDescription = state?.label
+        // FontScaling tile does not indicate any states, so let's try to make it not that glaring
+        state?.state = Tile.STATE_INACTIVE
     }
 
     override fun getLongClickIntent(): Intent? {
