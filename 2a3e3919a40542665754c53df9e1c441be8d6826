@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf54ff36_86aeb6a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2025-01-14T14:26:58Z",
+      "side": 1,
+      "message": "PTAL, Please refer the example results [here](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3417042/2/services/core/java/com/android/server/pm/UserManagerServiceShellCommand.java)",
+      "revId": "2a3e3919a40542665754c53df9e1c441be8d6826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
