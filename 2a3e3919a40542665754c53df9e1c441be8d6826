@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7d4573d_1cdfc374",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2025-01-14T15:41:08Z",
+      "side": 1,
+      "message": "I can add the `system_server` condition to make it more specific to that and also add a when to ignore condition to ignore this if the warning is not in system_server.",
+      "parentUuid": "a468e408_6138d2dd",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 75
+      },
+      "revId": "2a3e3919a40542665754c53df9e1c441be8d6826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "18419832_92bb4577",
         "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
         "patchSetId": 25
@@ -54,6 +78,30 @@
       "writtenOn": "2025-01-14T15:20:37Z",
       "side": 1,
       "message": "Even if they are sure a user 0 pending intent is correct, they also need to be sure that they are passing in a user 0 context.",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 83
+      },
+      "revId": "2a3e3919a40542665754c53df9e1c441be8d6826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe6fb699_6b9a1bfe",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2025-01-14T15:41:08Z",
+      "side": 1,
+      "message": "I was trying to imply that the activity returned for user 0 context is the expected activity, I can rephrase this by saying the returned activity instead of the context.\n\nAlso should we also imply as an additional condition saying that if it\u0027s not in the system server it\u0027s safe to ignore this warning assuming that they might be usign some other users\u0027s context?",
+      "parentUuid": "18419832_92bb4577",
       "range": {
         "startLine": 67,
         "startChar": 8,
