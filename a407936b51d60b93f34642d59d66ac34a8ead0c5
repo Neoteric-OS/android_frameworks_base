@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe5d0c88_3f1b84bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2025-01-14T12:44:50Z",
+      "side": 1,
+      "message": "I give up. Let\u0027s just bypass presubmits, it\u0027s way too unstable and this is a safe change.",
+      "revId": "a407936b51d60b93f34642d59d66ac34a8ead0c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23d27447_7b236ccd",
