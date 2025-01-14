@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "987d2f71_f449479a",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskSupervisor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-01-14T05:54:03Z",
+      "side": 1,
+      "message": "Thanks for @riddlehsu@google.com,this modify is better than previous plan.I have modify this CL as your suggestion.Please help review .\n\nThanks.",
+      "parentUuid": "a5bc8dd4_14d3cbf7",
+      "revId": "7339e0afc67e9566f1d531602ff93a5657a0d6fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ebf33f2_77284784",
