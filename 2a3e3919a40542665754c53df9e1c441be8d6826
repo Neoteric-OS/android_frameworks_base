@@ -16,6 +16,52 @@
       "message": "PTAL, Please refer the example results [here](https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3417042/2/services/core/java/com/android/server/pm/UserManagerServiceShellCommand.java)",
       "revId": "2a3e3919a40542665754c53df9e1c441be8d6826",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a468e408_6138d2dd",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1060347
+      },
+      "writtenOn": "2025-01-14T15:20:37Z",
+      "side": 1,
+      "message": "This isn\u0027t accurate, is it? `getActivity` doesn\u0027t always default to user 0 context.\n\nWe should say that the reason for this warning is that using `PendingIntent.getActivity` inside system server makes it easy to accidentally use a user 0 context with it. It also can be difficult to tell at a glance which user the pending intent will relate to. Therefore it\u0027s better to be explicit about which user this is for by calling `getActivityAsUser` instead.",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 75
+      },
+      "revId": "2a3e3919a40542665754c53df9e1c441be8d6826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18419832_92bb4577",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 25
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1060347
+      },
+      "writtenOn": "2025-01-14T15:20:37Z",
+      "side": 1,
+      "message": "Even if they are sure a user 0 pending intent is correct, they also need to be sure that they are passing in a user 0 context.",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 83
+      },
+      "revId": "2a3e3919a40542665754c53df9e1c441be8d6826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
