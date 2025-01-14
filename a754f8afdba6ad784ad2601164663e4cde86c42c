@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4fb07b41_bd22dca6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2025-01-14T14:31:46Z",
+      "side": 1,
+      "message": "So, you think it likely that multiple environments will add a restriction at the same level? I suppose it makes sense that an API that needs restricting in one environment is likely to need restricting in another environment. It also makes sense to try and add those restrictions at the same API version.\n\nThanks.\n\n@nanaasiedu@google.com - fyi",
+      "parentUuid": "bea14642_fcc867f1",
+      "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca736e05_6f0dd33e",
         "filename": "core/java/android/hardware/usb/UsbManager.java",
         "patchSetId": 2
