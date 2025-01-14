@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0222b0cc_cb7822a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-01-14T06:06:22Z",
+      "side": 1,
+      "message": "Please update the title and description as well.",
+      "revId": "37229b8169810d90d464a67f15483bad5051bed3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
