@@ -14675,14 +14675,35 @@ public class AudioService extends IAudioService.Stub
         device = retrieveBluetoothAddress(device);
 
         final String key = "additional_output_device_delay";
-        final String reply = AudioSystem.getParameters(
-                key + "=" + device.getInternalType() + "," + device.getAddress());
         long delayMillis;
+
         try {
-            delayMillis = Long.parseLong(reply.substring(key.length() + 1));
+            if (AudioHalVersionInfo.AUDIO_HAL_TYPE_AIDL == getHalVersion().getHalType()) {
+                final String reply = AudioSystem.getParameters(key);
+                final String keyDeviceAddressPrefix =
+                    Integer.toUnsignedString(device.getInternalType()) + "," + device.getAddress() +
+                    ",";
+                int start = reply.indexOf(keyDeviceAddressPrefix);
+                int end = -1;
+                if (start != -1) {
+                    start += keyDeviceAddressPrefix.length();
+                    end = reply.indexOf(":", start);
+                    if (end == -1) {
+                        end = reply.length();
+                    }
+                    delayMillis = Long.parseLong(reply.substring(start, end));
+                } else {
+                    delayMillis = 0;
+                }
+            } else {
+                final String reply = AudioSystem.getParameters(
+                    key + "=" + device.getInternalType() + "," + device.getAddress());
+                delayMillis = Long.parseLong(reply.substring(key.length() + 1));
+            }
         } catch (NullPointerException e) {
             delayMillis = 0;
         }
+
         return delayMillis;
     }
 
@@ -14705,14 +14726,35 @@ public class AudioService extends IAudioService.Stub
         device = retrieveBluetoothAddress(device);
 
         final String key = "max_additional_output_device_delay";
-        final String reply = AudioSystem.getParameters(
-                key + "=" + device.getInternalType() + "," + device.getAddress());
         long delayMillis;
+
         try {
-            delayMillis = Long.parseLong(reply.substring(key.length() + 1));
+            if (AudioHalVersionInfo.AUDIO_HAL_TYPE_AIDL == getHalVersion().getHalType()) {
+                final String reply = AudioSystem.getParameters(key);
+                final String keyDeviceAddressPrefix =
+                    Integer.toUnsignedString(device.getInternalType()) + "," + device.getAddress() +
+                    ",";
+                int start = reply.indexOf(keyDeviceAddressPrefix);
+                int end = -1;
+                if (start != -1) {
+                    start += keyDeviceAddressPrefix.length();
+                    end = reply.indexOf(":", start);
+                    if (end == -1) {
+                        end = reply.length();
+                    }
+                    delayMillis = Long.parseLong(reply.substring(start, end));
+                } else {
+                    delayMillis = 0;
+                }
+            } else {
+                final String reply = AudioSystem.getParameters(
+                    key + "=" + device.getInternalType() + "," + device.getAddress());
+                delayMillis = Long.parseLong(reply.substring(key.length() + 1));
+            }
         } catch (NullPointerException e) {
             delayMillis = 0;
         }
+
         return delayMillis;
     }
 
