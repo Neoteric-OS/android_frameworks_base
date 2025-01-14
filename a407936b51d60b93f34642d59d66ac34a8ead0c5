@@ -139,6 +139,29 @@
       },
       "revId": "a407936b51d60b93f34642d59d66ac34a8ead0c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d5a5137_dafa9725",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2025-01-14T17:34:55Z",
+      "side": 1,
+      "message": "Oooh I just realised why presubmits keep failing, although I thought the failure is unrelated. Looks like this field can be null, and since we\u0027re dumping after test runs, it\u0027s causing a crash.\n\n```\njava.lang.NullPointerException: Attempt to invoke virtual method \u0027int android.widget.Button.getVisibility()\u0027 on a null object reference\n\nProcess\nat com.android.systemui.statusbar.notification.footer.ui.view.FooterView$$\u003clambda\u003e.run\nat com.android.systemui.util.DumpUtilsKt.withIncreasedIndent\nat com.android.systemui.statusbar.notification.footer.ui.view.FooterView.dump\nat com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout$$\u003clambda\u003e.run\n  at com.android.systemui.statusbar.notification.footer.ui.view.FooterView$$ExternalSyntheticLambda0.run(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:43)\n  at com.android.systemui.util.DumpUtilsKt.withIncreasedIndent(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:4)\n  at com.android.systemui.statusbar.notification.footer.ui.view.FooterView.dump(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:13)\n  at com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout$$ExternalSyntheticLambda5.run(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:43)\n  at com.android.systemui.util.DumpUtilsKt.withIncreasedIndent(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:4)\n  at com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout.dump(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:37)\n  at com.android.systemui.dump.DumpHandler$Companion.dumpDumpable(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:21)\n  at com.android.systemui.dump.DumpHandler.dumpCritical(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:31)\n  at com.android.systemui.dump.DumpHandler.dump(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:8)\n  at com.android.systemui.SystemUIService.dump(go/retraceme 03f765f5a04477a5e5e832f049fcfc4ebb16f203c94ed347b54f89eec3122169:19)\n  at android.app.ActivityThread.handleDumpService(ActivityThread.java:5239)\n  at android.app.ActivityThread.-$$Nest$mhandleDumpService(Unknown Source:0)\n  at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2654)\n  at android.os.Handler.dispatchMessage(Handler.java:110)\n  at android.os.Looper.loopOnce(Looper.java:239)\n  at android.os.Looper.loop(Looper.java:328)\n  at android.app.ActivityThread.main(ActivityThread.java:8932)\n  at java.lang.reflect.Method.invoke(Native Method)\n  at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:591)\n  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:911)\n```\n\nPlease add a null check here!",
+      "range": {
+        "startLine": 142,
+        "startChar": 22,
+        "endLine": 142,
+        "endChar": 92
+      },
+      "revId": "a407936b51d60b93f34642d59d66ac34a8ead0c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
