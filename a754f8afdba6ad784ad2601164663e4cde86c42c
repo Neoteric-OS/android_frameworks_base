@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bea14642_fcc867f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1439319
+      },
+      "writtenOn": "2025-01-14T14:27:30Z",
+      "side": 1,
+      "message": "That\u0027s just for ease of use between environments that share common restrictions. We don\u0027t have specific use case at the moment, but we kept it open for future.\n\nIsolated Process has lots of common restriction with SdkSandbox, but nobody is working on adding those annotation currently. We might have more sandbox in future (discussion ongoing) with similar restriction.\n\nRepetable is for situations where restrictions diverge. I think most of the time, it will be the same (hence list for env) and \"repetable\" helps with exceptions.",
+      "parentUuid": "60bdf5ea_d1b49364",
+      "revId": "a754f8afdba6ad784ad2601164663e4cde86c42c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca736e05_6f0dd33e",
         "filename": "core/java/android/hardware/usb/UsbManager.java",
         "patchSetId": 2
