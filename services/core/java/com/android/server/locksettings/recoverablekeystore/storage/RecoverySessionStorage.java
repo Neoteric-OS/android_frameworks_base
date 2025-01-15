@@ -19,9 +19,8 @@ package com.android.server.locksettings.recoverablekeystore.storage;
 import android.annotation.Nullable;
 import android.util.SparseArray;
 
-import com.android.internal.widget.LockPatternUtils;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.security.auth.Destroyable;
 
@@ -188,8 +187,8 @@ public class RecoverySessionStorage implements Destroyable {
          */
         @Override
         public void destroy() {
-            LockPatternUtils.zeroize(mLskfHash);
-            LockPatternUtils.zeroize(mKeyClaimant);
+            Arrays.fill(mLskfHash, (byte) 0);
+            Arrays.fill(mKeyClaimant, (byte) 0);
         }
     }
 }

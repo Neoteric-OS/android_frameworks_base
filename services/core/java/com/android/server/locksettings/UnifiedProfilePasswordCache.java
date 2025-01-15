@@ -26,7 +26,6 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.LockscreenCredential;
 
 import java.security.GeneralSecurityException;
@@ -155,7 +154,7 @@ public class UnifiedProfilePasswordCache {
             }
             LockscreenCredential result =
                     LockscreenCredential.createUnifiedProfilePassword(credential);
-            LockPatternUtils.zeroize(credential);
+            Arrays.fill(credential, (byte) 0);
             return result;
         }
     }
@@ -176,7 +175,7 @@ public class UnifiedProfilePasswordCache {
                 Slog.d(TAG, "Cannot delete key", e);
             }
             if (mEncryptedPasswords.contains(userId)) {
-                LockPatternUtils.zeroize(mEncryptedPasswords.get(userId));
+                Arrays.fill(mEncryptedPasswords.get(userId), (byte) 0);
                 mEncryptedPasswords.remove(userId);
             }
         }
