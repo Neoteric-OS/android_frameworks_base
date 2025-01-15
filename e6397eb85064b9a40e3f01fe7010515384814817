@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78be4320_7701aecd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-01-15T07:50:05Z",
+      "side": 1,
+      "message": "Please try the change to see if it was fixed by https://android.googlesource.com/platform/frameworks/base/+/d1d2e8bf8b4c0e0e7decba84b304e8b676a3faeb",
+      "revId": "e6397eb85064b9a40e3f01fe7010515384814817",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
