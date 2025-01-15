@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a560f7e0_17d515c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2025-01-15T17:27:53Z",
+      "side": 1,
+      "message": "Ugh, there\u0027s still a conflict. Let me try something else - I\u0027ll cherry pick this to our internal branch to fix the conflict, and once that\u0027s merged we should be able to submit this into AOSP. No action is required from you at this point, I\u0027ll get back to you when the change can be merged.",
+      "revId": "3053b79da5ab5512349be1754fbf2dc3b9e39dc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
