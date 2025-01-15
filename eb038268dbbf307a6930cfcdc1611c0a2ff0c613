@@ -16,6 +16,24 @@
       "message": "Thank you for fixing this issue!",
       "revId": "eb038268dbbf307a6930cfcdc1611c0a2ff0c613",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b1ecba4_a4c9dfe5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165870
+      },
+      "writtenOn": "2025-01-15T04:32:34Z",
+      "side": 1,
+      "message": "Could you help to merge it? Thanks.",
+      "parentUuid": "04a1ac03_0919e066",
+      "revId": "eb038268dbbf307a6930cfcdc1611c0a2ff0c613",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
