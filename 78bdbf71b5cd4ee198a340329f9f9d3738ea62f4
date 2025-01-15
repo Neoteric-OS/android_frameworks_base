@@ -34,6 +34,24 @@
       ],
       "revId": "78bdbf71b5cd4ee198a340329f9f9d3738ea62f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d077bfdc_93b34738",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 3806853
+      },
+      "writtenOn": "2025-01-15T16:15:10Z",
+      "side": 1,
+      "message": "Oh yes I forgot about this. DONE.",
+      "parentUuid": "7a12efb2_c3df7a45",
+      "revId": "78bdbf71b5cd4ee198a340329f9f9d3738ea62f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
