@@ -16,6 +16,24 @@
       "message": "Not sure what this attribution is exactly and why we need it.",
       "revId": "6c08b179d66c29c3afaaf37c98376e7d4067a94e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06faa20d_bac9ae8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1289143
+      },
+      "writtenOn": "2025-01-15T15:27:07Z",
+      "side": 1,
+      "message": "I\u0027ve observed crashes like this in logcat occasionally https://gitlab.com/CalyxOS/calyxos/-/issues/2579",
+      "parentUuid": "d1c3613a_834ecd1d",
+      "revId": "6c08b179d66c29c3afaaf37c98376e7d4067a94e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
