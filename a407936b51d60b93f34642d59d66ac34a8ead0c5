@@ -162,6 +162,30 @@
       },
       "revId": "a407936b51d60b93f34642d59d66ac34a8ead0c5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b89594cb_884229e5",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 3806853
+      },
+      "writtenOn": "2025-01-15T12:48:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d5a5137_dafa9725",
+      "range": {
+        "startLine": 142,
+        "startChar": 22,
+        "endLine": 142,
+        "endChar": 92
+      },
+      "revId": "a407936b51d60b93f34642d59d66ac34a8ead0c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
