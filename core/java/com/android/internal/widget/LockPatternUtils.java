@@ -773,8 +773,7 @@ public class LockPatternUtils {
         UserInfo userInfo = getUserManager().getUserInfo(userId);
         boolean isDemoUser = UserManager.isDeviceInDemoMode(mContext) && userInfo != null
                 && userInfo.isDemo();
-        return getBoolean(DISABLE_LOCKSCREEN_KEY, false, userId)
-                || disabledByDefault
+        return (getBoolean(DISABLE_LOCKSCREEN_KEY, false, userId) && disabledByDefault)
                 || isDemoUser;
     }
 
