@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a12efb2_c3df7a45",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2025-01-15T12:51:45Z",
+      "side": 1,
+      "message": "This line is going to cause a merge conflict again (since it is being removed in a more recent branch). Either revert the changes on this line, or just remove it completely.",
+      "fixSuggestions": [
+        {
+          "fixId": "f2649e48_bb91bac9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/statusbar/notification/footer/ui/view/FooterView.java",
+              "range": {
+                "startLine": 140,
+                "startChar": 0,
+                "endLine": 141,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "78bdbf71b5cd4ee198a340329f9f9d3738ea62f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
