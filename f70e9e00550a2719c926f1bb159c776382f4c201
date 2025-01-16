@@ -16,6 +16,23 @@
       "message": "To verify how much CPU time could be reduced, I checked below top command along with monkey test (which generates frequent UID process changes)\nSince I didn\u0027t use a mobile SIM card, there was no NetworkStats data collected during the test; therefore, these results might solely reflect the impact of this fix (move RateLimiter before post msg to handler)\n\n* Before applying this fix: Average \u003d 0.316%\n```\n130|e3q:/ # top -d 10 -H -b | grep 5429\n 5429 system       20   0  29G 595M 402M S  0.4   5.3   0:08.63 MobileDataStats system_server\n 5429 system       20   0  29G 626M 410M S  0.3   5.6   0:08.67 MobileDataStats system_server\n...\n 5429 system       20   0  29G 589M 392M S  0.3   5.3   0:10.28 MobileDataStats system_server\n 5429 system       20   0  29G 603M 398M S  0.3   5.4   0:10.31 MobileDataStats system_server\n 5429 system       20   0  29G 617M 402M S  0.2   5.5   0:10.34 MobileDataStats system_server\n```\n* After applying this fix]: Average \u003d 0.137%\n```\n 4353 system       20   0  30G 617M 396M S  0.2   5.5   0:26.17 MobileDataStats system_server\n 4353 system       20   0  30G 613M 394M S  0.2   5.5   0:26.19 MobileDataStats system_server\n...\n 4353 system       20   0  30G 620M 398M S  0.1   5.6   0:26.47 MobileDataStats system_server\n 4353 system       20   0  30G 637M 398M S  0.1   5.7   0:26.48 MobileDataStats system_server\n 4353 system       20   0  30G 650M 400M S  0.1   5.8   0:26.49 MobileDataStats system_server\n```",
       "revId": "f70e9e00550a2719c926f1bb159c776382f4c201",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "845f8a2f_8ab720cf",
+        "filename": "services/core/java/com/android/server/stats/pull/AggregatedMobileDataStatsPuller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1965306
+      },
+      "writtenOn": "2025-01-16T08:26:56Z",
+      "side": 1,
+      "message": "Recently, I encountered some performance issues with MobileDataStatsHandler and Atom number 10002 (MobileBytesTransfer). The cause was that there were numerous tags associated with certain UIDs, resulting in excessive processing time for NetworkStats data.\n\nI have a question regarding updateNetworkStatsDelta: Does the delta size of updateNetworkStatsDelta also increase when a particular UID excessively creates tags? (I confirmed that AggregatedMobileDataStatsPuller has UID_STATS_MAX_SIZE to mitigate potential performance problems caused by having too many UID entries.)",
+      "revId": "f70e9e00550a2719c926f1bb159c776382f4c201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
