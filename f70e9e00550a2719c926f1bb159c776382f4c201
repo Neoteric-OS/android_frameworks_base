@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a1f8467_a7f29c51",
+        "filename": "services/core/java/com/android/server/stats/pull/AggregatedMobileDataStatsPuller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2025-01-16T19:33:41Z",
+      "side": 1,
+      "message": "Thank you these number looks representative",
+      "parentUuid": "fbcf33bb_8980085e",
+      "revId": "f70e9e00550a2719c926f1bb159c776382f4c201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "845f8a2f_8ab720cf",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-01-16T08:26:56Z",
       "side": 1,
       "message": "Recently, I encountered some performance issues with MobileDataStatsHandler and Atom number 10002 (MobileBytesTransfer). The cause was that there were numerous tags associated with certain UIDs, resulting in excessive processing time for NetworkStats data.\n\nI have a question regarding updateNetworkStatsDelta: Does the delta size of updateNetworkStatsDelta also increase when a particular UID excessively creates tags? (I confirmed that AggregatedMobileDataStatsPuller has UID_STATS_MAX_SIZE to mitigate potential performance problems caused by having too many UID entries.)",
+      "revId": "f70e9e00550a2719c926f1bb159c776382f4c201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79af5971_e42e1032",
+        "filename": "services/core/java/com/android/server/stats/pull/AggregatedMobileDataStatsPuller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1827146
+      },
+      "writtenOn": "2025-01-16T19:33:41Z",
+      "side": 1,
+      "message": "@junyulai Could you please help to answer this?",
+      "parentUuid": "845f8a2f_8ab720cf",
       "revId": "f70e9e00550a2719c926f1bb159c776382f4c201",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
