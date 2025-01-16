@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db5b22a2_26db6f61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1995295
+      },
+      "writtenOn": "2025-01-16T14:00:59Z",
+      "side": 1,
+      "message": "Hi, it was suggested to amend aosp file owner file first (in comment of ag/31314366)  so I\u0027ve created this CL. Thanks!",
+      "revId": "b7c4a3eddcaed803585970d72e25a338ded7baca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
