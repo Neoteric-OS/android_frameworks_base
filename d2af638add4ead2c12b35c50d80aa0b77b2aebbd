@@ -46,6 +46,30 @@
       },
       "revId": "d2af638add4ead2c12b35c50d80aa0b77b2aebbd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02b7fe4a_f18ae706",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1315593
+      },
+      "writtenOn": "2025-01-16T21:00:59Z",
+      "side": 1,
+      "message": "While at it, please add a snippet on how this is tested. See https://docs.partner.android.com/automotive/setup/overview/upstream-patches\ndocs.partner.android.com/automotive/setup/overview/upstream-patches#requirements",
+      "parentUuid": "8e660195_228e23bd",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "d2af638add4ead2c12b35c50d80aa0b77b2aebbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
