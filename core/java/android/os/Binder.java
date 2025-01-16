@@ -1232,9 +1232,15 @@ public class Binder implements IBinder {
         return 0;
     }
 
+    private IBinder mExtension = null;
+    private final native void setExtensionNative(@Nullable IBinder extension);
+
     /** @hide */
     @Override
-    public final native @Nullable IBinder getExtension();
+    public final @Nullable IBinder getExtension() {
+        return mExtension;
+    }
+
 
     /**
      * Set the binder extension.
@@ -1242,7 +1248,10 @@ public class Binder implements IBinder {
      *
      * @hide
      */
-    public final native void setExtension(@Nullable IBinder extension);
+    public final void setExtension(@Nullable IBinder extension) {
+        mExtension = extension;
+        setExtensionNative(extension);
+    }
 
     /**
      * Default implementation rewinds the parcels and calls onTransact. On
