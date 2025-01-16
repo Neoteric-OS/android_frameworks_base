@@ -394,13 +394,13 @@ public class StorageNotification implements CoreStartable {
         final VolumeRecord rec = mStorageManager.findRecordByUuid(vol.getFsUuid());
         final DiskInfo disk = vol.getDisk();
 
-        // Don't annoy when user dismissed in past.  (But make sure the disk is adoptable; we
-        // used to allow snoozing non-adoptable disks too.)
-        if (rec == null || (rec.isSnoozed() && disk.isAdoptable())) {
+        // Don't annoy when user dismissed in past. Make sure the disk is adoptable or sdcard.
+        if (rec == null || (rec.isSnoozed() && (disk.isAdoptable() || disk.isSd()))) {
             return null;
         }
-        if (disk.isAdoptable() && !rec.isInited() && rec.getType() != VolumeInfo.TYPE_PUBLIC
-            && rec.getType() != VolumeInfo.TYPE_PRIVATE) {
+        if ((disk.isAdoptable() || disk.isSd()) && !rec.isInited()
+                && rec.getType() != VolumeInfo.TYPE_PUBLIC
+                && rec.getType() != VolumeInfo.TYPE_PRIVATE) {
             final CharSequence title = disk.getDescription();
             final CharSequence text = mContext.getString(
                     R.string.ext_media_new_notification_message, disk.getDescription());
@@ -439,8 +439,8 @@ public class StorageNotification implements CoreStartable {
                             buildUnmountPendingIntent(vol)))
                     .setContentIntent(browseIntent)
                     .setCategory(Notification.CATEGORY_SYSTEM);
-            // Non-adoptable disks can't be snoozed.
-            if (disk.isAdoptable()) {
+            // Adoptable disks and sdcards can be snoozed.
+            if (disk.isAdoptable() || disk.isSd()) {
                 builder.setDeleteIntent(buildSnoozeIntent(vol.getFsUuid()));
             }
 
@@ -459,6 +459,12 @@ public class StorageNotification implements CoreStartable {
                 R.string.ext_media_unmounting_notification_title, disk.getDescription());
         final CharSequence text = mContext.getString(
                 R.string.ext_media_unmounting_notification_message, disk.getDescription());
+
+        final String fsUuid = vol.getFsUuid();
+        final VolumeRecord rec = mStorageManager.findRecordByUuid(fsUuid);
+        if (disk.isSd() && rec != null && rec.isSnoozed()) {
+            mStorageManager.setVolumeSnoozed(fsUuid, false);
+        }
 
         return buildNotificationBuilder(vol, title, text)
                 .setCategory(Notification.CATEGORY_PROGRESS)
