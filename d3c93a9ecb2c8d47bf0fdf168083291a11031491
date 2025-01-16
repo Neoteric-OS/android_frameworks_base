@@ -16,6 +16,24 @@
       "message": "Interesting... Can you double check which is the right one?  I see different ones from the orignal bug b/295527852, ag/24735250, cl/561419773.  If it\u0027s inconsistent, the change could fix one thing and break another :-/",
       "revId": "d3c93a9ecb2c8d47bf0fdf168083291a11031491",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5266ce6e_add235d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2025-01-16T22:42:19Z",
+      "side": 1,
+      "message": "I haven\u0027t investigated in detail, but perhaps \"platform\" got removed at some point because all the flags are for the \"platform\".  I am looking at the list at https://android-flags.corp.google.com/ which just says \"security\".  Also, this flag does not show up in Gantry as-is.",
+      "parentUuid": "2b174c74_9322de4e",
+      "revId": "d3c93a9ecb2c8d47bf0fdf168083291a11031491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
