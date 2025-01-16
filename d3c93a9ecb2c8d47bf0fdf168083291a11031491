@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b174c74_9322de4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042276
+      },
+      "writtenOn": "2025-01-16T22:33:15Z",
+      "side": 1,
+      "message": "Interesting... Can you double check which is the right one?  I see different ones from the orignal bug b/295527852, ag/24735250, cl/561419773.  If it\u0027s inconsistent, the change could fix one thing and break another :-/",
+      "revId": "d3c93a9ecb2c8d47bf0fdf168083291a11031491",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
