@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a78ea4b_4a25463f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2025-01-17T20:25:14Z",
+      "side": 1,
+      "message": "I\u0027m happy to see how this goes. \nWhat code-base will this lint run on? Just frameworks/base, and everything therein?\nNot sure if @olilan@google.com has other comments.",
+      "revId": "093f6ba8484b95b4ebb6e304994f5f90b540782a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
