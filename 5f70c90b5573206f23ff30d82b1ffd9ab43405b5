@@ -34,6 +34,24 @@
       "parentUuid": "48f33c23_7a6a2d60",
       "revId": "5f70c90b5573206f23ff30d82b1ffd9ab43405b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbe85f0e_8cc421dd",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-01-17T02:13:02Z",
+      "side": 1,
+      "message": "onDisplayChanged should not accept a null display. And only task will clear its mDisplayContent.",
+      "parentUuid": "54138c56_d04b8120",
+      "revId": "5f70c90b5573206f23ff30d82b1ffd9ab43405b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
