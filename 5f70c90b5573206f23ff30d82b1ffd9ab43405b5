@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48f33c23_7a6a2d60",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-01-17T01:53:59Z",
+      "side": 1,
+      "message": "If the task is removed, this should be called to make isCurrentlyRecording false. Please check why this doesn\u0027t work instead.",
+      "revId": "5f70c90b5573206f23ff30d82b1ffd9ab43405b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
