@@ -130,6 +130,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cd122701_1514add3",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2025-01-17T00:24:43Z",
+      "side": 1,
+      "message": "Okay. I looked at the output. It doesn\u0027t look so bad. \n(But I still think that it could probably still be clearer with a \"However,\" or something in front of it, since it is under the \"When to ignore\" subsection.)",
+      "parentUuid": "1de74cb2_47b07160",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "455f3d78_d1aa0731",
         "filename": "tools/lint/framework/checks/src/test/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetectorTest.kt",
         "patchSetId": 26
