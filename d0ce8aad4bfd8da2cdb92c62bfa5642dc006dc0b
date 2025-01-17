@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eb79d6c_46f6d00f",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2025-01-17T16:06:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b2f07854_32d84380",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bfe819f_ab4a2949",
@@ -77,6 +101,54 @@
       "writtenOn": "2025-01-17T00:04:04Z",
       "side": 1,
       "message": "This makes it sound like the main problem is readability. That\u0027s definitely part of it. But I think this should either emphasize the potential error, or at least use the word \"also\" somewhere, so it\u0027s clear that the first sentence isn\u0027t being minimized. Perhaps just append \"and error-prone\" to the end of the sentence. \n```suggestion\n      Calling `PendingIntent.getActivity` often accidentally uses the user 0 context, especially in `system_server`.  Moreover, since there\u0027s no explicit user parameter in the `getActivity` method, it can be hard to tell which user the `PendingIntent` activity is associated with, making the code error-prone and less readable.\n```",
+      "range": {
+        "startLine": 48,
+        "startChar": 304,
+        "endLine": 48,
+        "endChar": 312
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7251295f_ce0a5c8e",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2025-01-17T16:06:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7bfe819f_ab4a2949",
+      "range": {
+        "startLine": 48,
+        "startChar": 86,
+        "endLine": 48,
+        "endChar": 115
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6842d8dd_933a792f",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2025-01-17T16:06:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8a6d638f_bf2835f6",
       "range": {
         "startLine": 48,
         "startChar": 304,
@@ -152,6 +224,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b02f87b5_904e526e",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2025-01-17T16:06:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cd122701_1514add3",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "455f3d78_d1aa0731",
@@ -165,6 +261,30 @@
       "writtenOn": "2025-01-17T00:04:04Z",
       "side": 1,
       "message": "nit: 2025",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "652e7de5_cade1a3a",
+        "filename": "tools/lint/framework/checks/src/test/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetectorTest.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1963537
+      },
+      "writtenOn": "2025-01-17T16:06:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "455f3d78_d1aa0731",
       "range": {
         "startLine": 2,
         "startChar": 17,
