@@ -16,6 +16,139 @@
       "message": "PTAL",
       "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2f07854_32d84380",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2025-01-17T00:04:04Z",
+      "side": 1,
+      "message": "nit: 2025",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bfe819f_ab4a2949",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2025-01-17T00:04:04Z",
+      "side": 1,
+      "message": "This sentence is a little confusing, because actually it doesn\u0027t happen \"often\". Apps don\u0027t generally have this problem. So, my question is:\nWill this run on code outside of the system_server? \n\nIf not really, then I\u0027d recommend rewording to\n\n\n\n```suggestion\n      Calling `PendingIntent.getActivity()` in the `system_server` often accidentally uses the user 0 context.  Since there\u0027s no explicit user parameter in the `getActivity` method, it can be hard to tell at a glance which user the `PendingIntent` activity is associated with, making the code less readable.\n```",
+      "range": {
+        "startLine": 48,
+        "startChar": 86,
+        "endLine": 48,
+        "endChar": 115
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a6d638f_bf2835f6",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2025-01-17T00:04:04Z",
+      "side": 1,
+      "message": "This makes it sound like the main problem is readability. That\u0027s definitely part of it. But I think this should either emphasize the potential error, or at least use the word \"also\" somewhere, so it\u0027s clear that the first sentence isn\u0027t being minimized. Perhaps just append \"and error-prone\" to the end of the sentence. \n```suggestion\n      Calling `PendingIntent.getActivity` often accidentally uses the user 0 context, especially in `system_server`.  Moreover, since there\u0027s no explicit user parameter in the `getActivity` method, it can be hard to tell which user the `PendingIntent` activity is associated with, making the code error-prone and less readable.\n```",
+      "range": {
+        "startLine": 48,
+        "startChar": 304,
+        "endLine": 48,
+        "endChar": 312
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1de74cb2_47b07160",
+        "filename": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2025-01-17T00:04:04Z",
+      "side": 1,
+      "message": "Does this sentence visually look like it\u0027s part of the \"When to Ignore\" section? (To me it does, but I don\u0027t know what the real output will look like.) If so, then perhaps add a \"Note:\" or something first. Otherwise it looks like it\u0027s saying \"you can ignore this warning if you\u0027re unsure about the user context\", which is the opposite of what we mean.",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5b1b44a9_af62f604",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/lint/framework/checks/src/main/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetector.kt",
+              "range": {
+                "startLine": 69,
+                "startChar": 0,
+                "endLine": 70,
+                "endChar": 0
+              },
+              "replacement": "      **Note:** If you are unsure about the user context, it\u0027s best to err on the side of caution and explicitly specify the user using the method specified above.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "455f3d78_d1aa0731",
+        "filename": "tools/lint/framework/checks/src/test/java/com/google/android/lint/multiuser/PendingIntentGetActivityDetectorTest.kt",
+        "patchSetId": 26
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2025-01-17T00:04:04Z",
+      "side": 1,
+      "message": "nit: 2025",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "d0ce8aad4bfd8da2cdb92c62bfa5642dc006dc0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
