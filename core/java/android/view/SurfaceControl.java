@@ -3029,6 +3029,7 @@ public final class SurfaceControl implements Parcelable {
         // Only non-null if the SurfaceControlRegistry is enabled. This list tracks the set of calls
         // made through this transaction object, and is dumped (and cleared) when the transaction is
         // later applied.
+        @Nullable
         ArrayList<String> mCalls;
 
         Runnable mFreeNativeResources;
@@ -4901,8 +4902,10 @@ public final class SurfaceControl implements Parcelable {
                 SurfaceControlRegistry.getProcessInstance().checkCallStackDebugging(
                         "merge", this, null, "otherTx=" + other.getId());
                 if (mCalls != null) {
-                    mCalls.addAll(other.mCalls);
-                    other.mCalls.clear();
+                    if (other.mCalls != null) {
+                        mCalls.addAll(other.mCalls);
+                        other.mCalls.clear();
+                    }
                 }
             }
             mResizedSurfaces.putAll(other.mResizedSurfaces);
