@@ -48,7 +48,6 @@ cc_library_shared {
         "libmemevents",
         "libmeminfo",
         "libnativehelper",
-        "libprocessgroup",
         "libutils",
         "libcutils",
         "android.hardware.graphics.bufferqueue@1.0",
