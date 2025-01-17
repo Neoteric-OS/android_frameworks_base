@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7b82e4e_5d3beb2f",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-01-17T01:51:42Z",
+      "side": 1,
+      "message": "This does not seem to be a necessary change.",
+      "revId": "bf308b9dfb7e9503890244c035f3d1ad382385e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
