@@ -16,6 +16,24 @@
       "message": "out of curiosity, do we ever get delivered an intent with a nulled action on this recv?\n\nin any case, lgtm as cleanup",
       "revId": "40f1538fdb55cc5207d3f3e04cba7ca0948852af",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b98477f_81a556fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950860
+      },
+      "writtenOn": "2025-01-18T05:36:37Z",
+      "side": 1,
+      "message": "So far we have not  get delivered an intent with a nulled action on this receiver.",
+      "parentUuid": "5a515edd_79cb6ff8",
+      "revId": "40f1538fdb55cc5207d3f3e04cba7ca0948852af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
