@@ -69,6 +69,24 @@
       "parentUuid": "845f8a2f_8ab720cf",
       "revId": "f70e9e00550a2719c926f1bb159c776382f4c201",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae019d0c_7d8b8b52",
+        "filename": "services/core/java/com/android/server/stats/pull/AggregatedMobileDataStatsPuller.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2025-01-20T08:19:42Z",
+      "side": 1,
+      "message": "Hi Hyunjae,\n   I\u0027ll suggest to apply this fix and see if the problem is still reproducable.\n   It seems to me the Puller doesn\u0027t really allocate new object for different tags.\n   It combines tagged data into the MobileDataStats for the same uid.\n   The impact would be insignificant I think.\n   \nHi Vova,\n   Besides of the performance issue,\n   it seems to me the puller are adding all tagged data into the stats.\n   It seems to me this would causes double counting problem: From the return value got from NetworkStatsManager, a tagged data will be duplicated as tag\u003d0. For example, for a 10MB download tagged with 0x1234, it will be like:\n   rxbytes\u003d10MB, uid\u003d1000, tag\u003d0x1234\n   rxbytes\u003d10MB, uid\u003d1000, tag\u003d0x0\n  If so, you might want to filter tagged data before aggregate them into the snapshot.",
+      "parentUuid": "79af5971_e42e1032",
+      "revId": "f70e9e00550a2719c926f1bb159c776382f4c201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
