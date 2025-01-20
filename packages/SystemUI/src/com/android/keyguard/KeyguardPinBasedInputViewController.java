@@ -38,6 +38,10 @@ import com.android.systemui.classifier.FalsingCollector;
 import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.res.R;
 import com.android.systemui.user.domain.interactor.SelectedUserInteractor;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.os.Message;
 
 public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinBasedInputView>
         extends KeyguardAbsKeyInputViewController<T> {
@@ -46,6 +50,9 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
     private final FalsingCollector mFalsingCollector;
     private final KeyguardKeyboardInteractor mKeyguardKeyboardInteractor;
     protected PasswordTextView mPasswordEntry;
+    private static final int MSG_REQUEST_FOCUS = 1;
+    private static final long DELAY_MILLIS = 0;
+    private final static String TAG = "KeyguardPinBasedInputViewController";
 
     private final OnKeyListener mOnKeyListener = (v, keyCode, event) -> {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -175,6 +182,16 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
             button.setOnTouchListener(null);
         }
     }
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == MSG_REQUEST_FOCUS) {
+                if (mPasswordEntry != null) {
+                    mPasswordEntry.requestFocus();
+                }
+            }
+        }
+    };
 
     @Override
     public void onResume(int reason) {
@@ -185,6 +202,9 @@ public abstract class KeyguardPinBasedInputViewController<T extends KeyguardPinB
         // it's guaranteed that the view has focus.
         mPasswordEntry.clearFocus();
         mPasswordEntry.requestFocus();
+
+        mHandler.removeMessages(MSG_REQUEST_FOCUS);
+        mHandler.sendEmptyMessageDelayed(MSG_REQUEST_FOCUS, DELAY_MILLIS);
     }
 
     @Override
