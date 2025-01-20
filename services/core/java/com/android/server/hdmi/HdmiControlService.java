@@ -1700,6 +1700,8 @@ public class HdmiControlService extends SystemService {
                     if (result != SendMessageResult.SUCCESS) {
                         localDevice.addAndStartAction(new
                                 ResendCecCommandAction(localDevice, command, callback));
+                    } else if (callback != null) {
+                        callback.onSendCompleted(result);
                     }
                 }
             });
