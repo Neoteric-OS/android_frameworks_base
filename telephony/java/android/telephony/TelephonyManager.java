@@ -745,19 +745,7 @@ public class TelephonyManager {
     }
 
 // QTI_END: 2023-03-16: Telephony: DSDA: Add APIs to support DSDA -> DSDS transition use cases
-// QTI_BEGIN: 2023-03-19: Telephony: DSDA: Add API to support DSDS transition use cases
-    /**
-     * Returns true if Multi SIM voice capability is DSDS.
-     * Returns false for other cases.
-     */
-    /** {@hide} */
-    public static boolean isDsdsMode() {
-        int mSimVoiceConfig = TelephonyProperties.multi_sim_voice_capability().orElse(
-                MultiSimVoiceCapability.UNKNOWN);
-        return mSimVoiceConfig == MultiSimVoiceCapability.DSDS;
-    }
 
-// QTI_END: 2023-03-19: Telephony: DSDA: Add API to support DSDS transition use cases
     /**
      * Returns the number of phones available.
      *
