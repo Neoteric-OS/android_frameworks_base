@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "455532c6_61f25bf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165189
+      },
+      "writtenOn": "2025-01-21T17:28:49Z",
+      "side": 1,
+      "message": "Adding Tetiana for the core team review.",
+      "revId": "1b2cb5fc781cd8cdf5de25ae5f9575cf83444fab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
