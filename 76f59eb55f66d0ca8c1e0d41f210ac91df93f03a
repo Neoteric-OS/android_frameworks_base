@@ -39,6 +39,30 @@
       },
       "revId": "76f59eb55f66d0ca8c1e0d41f210ac91df93f03a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9419d4d4_0a380c96",
+        "filename": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3630385
+      },
+      "writtenOn": "2025-01-21T05:10:26Z",
+      "side": 1,
+      "message": "I might need to abandon this change and make a new one. I figured out how how to use `repo upload` but it fails no matter what I do because of missing commits that don\u0027t exist.",
+      "parentUuid": "3ffccad2_6fe10f51",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 104
+      },
+      "revId": "76f59eb55f66d0ca8c1e0d41f210ac91df93f03a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
