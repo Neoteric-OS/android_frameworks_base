@@ -679,17 +679,6 @@ public class TelephonyManager {
         static final int UNSUPPORTED = 4;
     }
 
-    /**
-     * Returns true if concurrent calls on both subscriptions are possible (ex: DSDA).
-     * Returns false for other cases.
-     */
-    /** {@hide} */
-    public static boolean isConcurrentCallsPossible() {
-        int mSimVoiceConfig = TelephonyProperties.multi_sim_voice_capability().orElse(
-                MultiSimVoiceCapability.UNKNOWN);
-        return mSimVoiceConfig == MultiSimVoiceCapability.DSDA;
-    }
-
 // QTI_END: 2021-07-13: Telephony: IMS: Define new property for multi sim voice capability
 // QTI_BEGIN: 2023-03-16: Telephony: DSDA: Add APIs to support DSDA -> DSDS transition use cases
     /**
