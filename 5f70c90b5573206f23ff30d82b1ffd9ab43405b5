@@ -52,6 +52,24 @@
       "parentUuid": "54138c56_d04b8120",
       "revId": "5f70c90b5573206f23ff30d82b1ffd9ab43405b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af9d19f1_6f3be3d3",
+        "filename": "services/core/java/com/android/server/wm/ContentRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-01-21T01:38:38Z",
+      "side": 1,
+      "message": "I haven\u0027t found anything unusual about this problem. I suspect it may be caused by the fact that the code we added ourselves is not locked. I will raise an issue with you later if I find anything unusual.\nThanks.",
+      "parentUuid": "fbe85f0e_8cc421dd",
+      "revId": "5f70c90b5573206f23ff30d82b1ffd9ab43405b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
