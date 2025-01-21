@@ -31,6 +31,7 @@ per-file *UserSwitchObserver* = file:/ACTIVITY_MANAGER_OWNERS
 per-file UidObserver* = file:/ACTIVITY_MANAGER_OWNERS
 
 # UI Automation
+per-file *UiAutomation* = file:/cmds/uiautomator/OWNERS
 per-file *UiAutomation* = file:/services/accessibility/OWNERS
 per-file *UiAutomation* = file:/core/java/android/permission/OWNERS
 
