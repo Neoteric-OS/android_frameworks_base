@@ -373,6 +373,12 @@ public class AudioService extends IAudioService.Stub
      */
     private static final int FLAG_ADJUST_VOLUME = 1;
 
+    /**
+     * Used to force adding the primary assistant UIID in the active assistant UIDs list
+     */
+    private static final boolean PRIMARY_ASSISTANT_ALWAYS_ACTIVE =
+            SystemProperties.getBoolean("ro.config.assitant_always_active", false);
+
     final Context mContext;
     private final ContentResolver mContentResolver;
     private final AppOpsManager mAppOps;
@@ -3107,9 +3113,34 @@ public class AudioService extends IAudioService.Stub
         }
         if ((mPrimaryAssistantUid != assistantUid) || forceUpdate) {
             mAssistantUids.remove(mPrimaryAssistantUid);
+            if (PRIMARY_ASSISTANT_ALWAYS_ACTIVE) {
+                setAsActiveAssistant(mPrimaryAssistantUid, false);
+            }
             mPrimaryAssistantUid = assistantUid;
             addAssistantServiceUidsLocked(new int[]{mPrimaryAssistantUid});
+            if (PRIMARY_ASSISTANT_ALWAYS_ACTIVE) {
+                setAsActiveAssistant(mPrimaryAssistantUid, true);
+            }
         }
+    }
+
+    private void setAsActiveAssistant(int uid, boolean active) {
+        int[] activeAssistantUids = getActiveAssistantServiceUids();
+        int updatedLength = active ?
+                activeAssistantUids.length + 1 : Math.max(activeAssistantUids.length - 1, 0);
+        int[] updatedActiveAssistantUids = new int[updatedLength];
+        if (active) {
+            updatedActiveAssistantUids = Arrays.copyOf(activeAssistantUids, updatedLength);
+            updatedActiveAssistantUids[activeAssistantUids.length] = uid;
+        } else {
+            for (int i = 0, k = 0; i < activeAssistantUids.length; i++) {
+                if (activeAssistantUids[i] == uid) {
+                    continue;
+                }
+                updatedActiveAssistantUids[k++] = activeAssistantUids[i];
+            }
+        }
+        setActiveAssistantServiceUids(updatedActiveAssistantUids);
     }
 
     private void readPersistedSettings() {
@@ -3158,8 +3189,8 @@ public class AudioService extends IAudioService.Stub
             readDockAudioSettings(cr);
             sendEncodedSurroundMode(cr, "readPersistedSettings");
             sendEnabledSurroundFormats(cr, true);
-            updateAssistantUIdLocked(/* forceUpdate= */ true);
             resetActiveAssistantUidsLocked();
+            updateAssistantUIdLocked(/* forceUpdate= */ true);
             AudioSystem.setRttEnabled(mRttEnabled);
         }
 
