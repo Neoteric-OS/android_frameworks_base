@@ -22,6 +22,30 @@
       },
       "revId": "60de8b169bea112348a85f68a438ca59804427fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a0e511e_88ad7ddc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1393882
+      },
+      "writtenOn": "2025-01-21T09:49:09Z",
+      "side": 1,
+      "message": "+1, please also file a ticket to https://issuetracker.google.com/ and elaborate the issue.",
+      "parentUuid": "4a8c656e_87168a0b",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "60de8b169bea112348a85f68a438ca59804427fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
