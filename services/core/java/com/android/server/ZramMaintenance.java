@@ -24,6 +24,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.os.IBinder;
 import android.os.IMmd;
+import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
@@ -49,6 +50,7 @@ public class ZramMaintenance extends JobService {
     private static final int JOB_ID = 375432472;
     private static final ComponentName sZramMaintenance =
             new ComponentName("android", ZramMaintenance.class.getName());
+    private static final String KEY_CHECK_STATUS = "check_status";
 
     private static final String FIRST_DELAY_SECONDS_PROP =
             "mm.zram.maintenance.first_delay_seconds";
@@ -70,19 +72,27 @@ public class ZramMaintenance extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         IBinder binder = ServiceManager.getService("mmd");
+        boolean checkStatus = params.getExtras().getBoolean(KEY_CHECK_STATUS);
         if (binder != null) {
             IMmd mmd = IMmd.Stub.asInterface(binder);
             try {
+                if (checkStatus && !mmd.isZramMaintenanceSupported()) {
+                    Slog.i(TAG, "zram maintenance is not supported");
+                    return true;
+                }
+                // Status check is required before the first doZramMaintenanceAsync() call once.
+                checkStatus = false;
+
                 mmd.doZramMaintenanceAsync();
             } catch (RemoteException e) {
-                Slog.e(TAG, "Failed to doZramMaintenance", e);
+                Slog.e(TAG, "Failed to binder call to mmd", e);
             }
         } else {
             Slog.w(TAG, "binder not found");
         }
         Duration delay = Duration.ofSeconds(SystemProperties.getLong(PERIODIC_DELAY_SECONDS_PROP,
                 DEFAULT_PERIODIC_DELAY_SECONDS));
-        scheduleZramMaintenance(this, delay);
+        scheduleZramMaintenance(this, delay, checkStatus);
         return true;
     }
 
@@ -97,13 +107,16 @@ public class ZramMaintenance extends JobService {
     public static void startZramMaintenance(Context context) {
         Duration delay = Duration.ofSeconds(
                 SystemProperties.getLong(FIRST_DELAY_SECONDS_PROP, DEFAULT_FIRST_DELAY_SECONDS));
-        scheduleZramMaintenance(context, delay);
+        scheduleZramMaintenance(context, delay, true);
     }
 
-    private static void scheduleZramMaintenance(Context context, Duration delay) {
+    private static void scheduleZramMaintenance(Context context, Duration delay,
+            boolean checkStatus) {
         JobScheduler js = context.getSystemService(JobScheduler.class);
 
         if (js != null) {
+            final PersistableBundle bundle = new PersistableBundle();
+            bundle.putBoolean(KEY_CHECK_STATUS, checkStatus);
             js.schedule(new JobInfo.Builder(JOB_ID, sZramMaintenance)
                     .setMinimumLatency(delay.toMillis())
                     .setRequiresDeviceIdle(
@@ -112,6 +125,7 @@ public class ZramMaintenance extends JobService {
                     .setRequiresBatteryNotLow(
                             SystemProperties.getBoolean(REQUIRE_BATTERY_NOT_LOW_PROP,
                                     DEFAULT_REQUIRE_BATTERY_NOT_LOW))
+                    .setExtras(bundle)
                     .build());
         }
     }
