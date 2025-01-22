@@ -1176,12 +1176,12 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         r.notifyUnknownVisibilityLaunchedForKeyguardTransition();
 
         final boolean isTop = andResume && r.isTopRunningActivity();
-        // if (isTop) {
-        //     ProcessFreezerManager freezer = ProcessFreezerManager.getInstance(mService);
-        //     if (freezer != null && freezer.useFreezerManager()) {
-        //         freezer.startFreeze(r.processName, ProcessFreezerManager.COLD_LAUNCH_FREEZE);
-        //     }
-        // }
+        if (isTop) {
+            ProcessFreezerManager freezer = ProcessFreezerManager.getInstance();
+            if (freezer != null && freezer.useFreezerManager()) {
+                freezer.startFreeze(r.processName, ProcessFreezerManager.COLD_LAUNCH_FREEZE);
+            }
+        }
         mService.startProcessAsync(r, knownToBeDead, isTop,
                 isTop ? HostingRecord.HOSTING_TYPE_TOP_ACTIVITY
                         : HostingRecord.HOSTING_TYPE_ACTIVITY);
@@ -2681,7 +2681,7 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
 
     void wakeUp(int displayId, String reason) {
         mPowerManager.wakeUp(SystemClock.uptimeMillis(), PowerManager.WAKE_REASON_APPLICATION,
-                "android.server.am:TURN_ON:" + reason, displayId);
+                "android.server.wm:TURN_ON:" + reason, displayId);
     }
 
     /** Starts a batch of visibility updates. */
