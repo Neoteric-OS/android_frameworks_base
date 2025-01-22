@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f9cac3a_d7d27b6a",
+        "filename": "services/core/java/com/android/server/ZramMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2025-01-22T19:01:17Z",
+      "side": 0,
+      "message": "You removed this check. Is binder guaranteed to be non-NULL?",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "4c27cb4bcd44906f3f6310cff5e6cfdb45e21583",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
