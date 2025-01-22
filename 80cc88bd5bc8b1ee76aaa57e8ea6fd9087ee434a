@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83e1380a_82134f37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2025-01-22T20:55:18Z",
+      "side": 1,
+      "message": "There are 3 failures in presubmit with this sort of stack trace:\n\n```\njava.lang.AssertionError: Gesture navigation mode overlay exists\n    at org.junit.Assert.fail(Assert.java:89)\n    at org.junit.Assert.assertTrue(Assert.java:42)\n    at android.view.inputmethod.cts.InputMethodServiceTest.testOnCustomImeSwitcherButtonRequestedVisible_gestureNav(InputMethodServiceTest.java:1251)\n```\n\nThis test has not been failing before the change. Could you check out whether this is passing for you please?",
+      "revId": "80cc88bd5bc8b1ee76aaa57e8ea6fd9087ee434a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
