@@ -5443,7 +5443,7 @@ public class ComputerEngine implements Computer {
             if (targetSetting instanceof PackageSetting) {
                 return !shouldFilterApplication(
                         (PackageSetting) targetSetting, callingUid, userId);
-            } else {
+            } else if (targetSetting instanceof SharedUserSetting) {
                 return !shouldFilterApplication(
                         (SharedUserSetting) targetSetting, callingUid, userId);
             }
