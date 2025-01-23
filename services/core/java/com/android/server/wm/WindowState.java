@@ -2616,7 +2616,7 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
             }
         }
         return isVisibleRequestedOrAdding()
-                || (isVisible() && mActivityRecord != null && mActivityRecord.isVisible());
+                || (isVisible() && mActivityRecord != null && mActivityRecord.isVisible() && mActivityRecord.isVisibleRequested());
     }
 
     void openInputChannel(@NonNull InputChannel outInputChannel) {
