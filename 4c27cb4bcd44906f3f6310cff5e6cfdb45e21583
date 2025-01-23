@@ -22,6 +22,30 @@
       },
       "revId": "4c27cb4bcd44906f3f6310cff5e6cfdb45e21583",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3858501b_a0734311",
+        "filename": "services/core/java/com/android/server/ZramMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1965132
+      },
+      "writtenOn": "2025-01-23T02:39:19Z",
+      "side": 0,
+      "message": "`IMmd.Stub.asInterface()` does NULL check [1].\n\nI check whether IMmd is NULL or not at `startJob()` instead.\n\nIs it risky to depends on the auto-generated implementation of `IMmd.Stub.asInterface()`?\n \n[1]: https://cs.android.com/android/platform/superproject/main/+/main:out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/xref38/srcjars.xref/android/os/IMmd.java;l\u003d51-53;drc\u003df80e786d308318894be30d54b93f38034496fc66",
+      "parentUuid": "5f9cac3a_d7d27b6a",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "4c27cb4bcd44906f3f6310cff5e6cfdb45e21583",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
