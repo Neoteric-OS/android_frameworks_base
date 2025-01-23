@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef5f141c_4e7922fe",
+        "filename": "services/core/java/com/android/server/ZramMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 2044797
+      },
+      "writtenOn": "2025-01-23T15:52:12Z",
+      "side": 1,
+      "message": "Should we be rescheduling in this case?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 44
+      },
+      "revId": "9805e127e3192f2790c7841804d3c51d66e35d09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
