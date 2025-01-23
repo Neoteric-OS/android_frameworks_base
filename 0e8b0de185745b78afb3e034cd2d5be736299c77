@@ -16,6 +16,24 @@
       "message": "Hi Fucheng,\nThank you for sending your change.\nIt looks like the code is functionally identical with this change. Is my understanding correct?\nCould you please explain the motivation for the change?",
       "revId": "0e8b0de185745b78afb3e034cd2d5be736299c77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f311623a_00e28f06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3601933
+      },
+      "writtenOn": "2025-01-23T08:39:03Z",
+      "side": 1,
+      "message": "Hi Dear，\n\nThank you for your reviewing,\n\nThe function is the same, but this is an integrated method, which looks more familiar, hahaha\n\n\nYour understanding is absolutely correct, so I said at the beginning that it is worth thinking about...\n\n🌹",
+      "parentUuid": "8d633043_9ef94ce8",
+      "revId": "0e8b0de185745b78afb3e034cd2d5be736299c77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
