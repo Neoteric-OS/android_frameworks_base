@@ -18,6 +18,41 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0e5689c_b323d0f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3630385
+      },
+      "writtenOn": "2025-01-23T17:09:28Z",
+      "side": 1,
+      "message": "If it runs as is the time will jump around. If Android is running under a hypervisor the initial time will be different than the hypervisor time since the hypervisor would initialize using the RTC and Android would not. With this change Android and the hypervisor are both initialized using the RTC so time can be synchronized faster.",
+      "parentUuid": "80cdc7fa_22aa81ac",
+      "revId": "24866c4f58e70f41825e367f178a76be05fbda9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d6d8f17_1ffe13e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3630385
+      },
+      "writtenOn": "2025-01-23T17:09:28Z",
+      "side": 1,
+      "message": "The unrelated indentation was triggered via the repo hooks from `repo upload`. I was held up because of a line length over 100 so I figured that I\u0027d need to run the repo hooks before uploading. \n\nI\u0027ve applied the suggestion anyway.",
+      "revId": "24866c4f58e70f41825e367f178a76be05fbda9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "518d9690_c6fe08ca",
@@ -65,6 +100,30 @@
           ]
         }
       ],
+      "revId": "24866c4f58e70f41825e367f178a76be05fbda9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f47d5de2_829629aa",
+        "filename": "services/core/java/com/android/server/SystemClockTime.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 3630385
+      },
+      "writtenOn": "2025-01-23T17:09:28Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "518d9690_c6fe08ca",
+      "range": {
+        "startLine": 99,
+        "startChar": 25,
+        "endLine": 107,
+        "endChar": 24
+      },
       "revId": "24866c4f58e70f41825e367f178a76be05fbda9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
