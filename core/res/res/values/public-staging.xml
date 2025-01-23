@@ -128,12 +128,23 @@
   <staging-public-group type="style" first-id="0x01b50000">
   </staging-public-group>
 
+<<<<<<< HEAD
   <staging-public-group type="string" first-id="0x01b40000">
   </staging-public-group>
 
   <staging-public-group type="dimen" first-id="0x01b30000">
   </staging-public-group>
 
+=======
+    <public name="alternateLauncherIcons"/>
+    <!-- @FlaggedApi(android.content.pm.Flags.FLAG_CHANGE_LAUNCHER_BADGING) -->
+    <public name="alternateLauncherLabels"/>
+    <!-- @FlaggedApi(android.content.pm.Flags.FLAG_APP_COMPAT_OPTION_16KB) -->
+    <public name="pageSizeCompat" />
+  </staging-public-group>
+
+  <staging-public-group type="id" first-id="0x01b60000">
+>>>>>>> PATCH
   <staging-public-group type="color" first-id="0x01b20000">
   </staging-public-group>
 
