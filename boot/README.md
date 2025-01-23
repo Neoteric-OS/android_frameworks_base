@@ -1,5 +1,7 @@
 # Configuration files for ART compiling the framework
 
+test
+
 *   boot-image-profile.txt: A list of methods from the framework boot classpath
     to be compiled by dex2oat. The order in the file is not relevant.
 *   boot-profile.txt: An ordered list of methods from the boot classpath to be
