@@ -34,6 +34,24 @@
       "parentUuid": "8d633043_9ef94ce8",
       "revId": "0e8b0de185745b78afb3e034cd2d5be736299c77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5e3221e_192afcf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-01-23T18:08:01Z",
+      "side": 1,
+      "message": "Thank you for clarifying.\nIf this change is not solving a clearly stated problem then unfortunately we won\u0027t take it.",
+      "parentUuid": "f311623a_00e28f06",
+      "revId": "0e8b0de185745b78afb3e034cd2d5be736299c77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
