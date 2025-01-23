@@ -13,6 +13,6 @@ java_aconfig_library {
 java_aconfig_library {
     name: "am_flags_host_lib",
     host_supported: true,
-    libs: ["fake_device_config"],
+    libs: ["aconfig_storage_stub"],
     aconfig_declarations: "am_flags",
 }

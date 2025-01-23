@@ -141,7 +141,7 @@ java_defaults {
 java_defaults {
     name: "framework-minus-apex-aconfig-java-defaults",
     sdk_version: "core_platform",
-    libs: ["fake_device_config"],
+    libs: ["aconfig_storage_stub"],
 }
 
 // ART
