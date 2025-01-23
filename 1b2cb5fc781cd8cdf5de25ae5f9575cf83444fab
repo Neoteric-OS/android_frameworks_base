@@ -33,6 +33,47 @@
       "message": "Hi Suprabh, could you please have a look at this change to AlarmManagerService?",
       "revId": "1b2cb5fc781cd8cdf5de25ae5f9575cf83444fab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6722f893_8b86195a",
+        "filename": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2025-01-23T14:30:01Z",
+      "side": 1,
+      "message": "I would prefer to put this check inside SystemClockTime.initializeIfRequired as that is the canonical place to manage this.\n\nNote that other clients are free to call this method within SystemClockTime too.",
+      "range": {
+        "startLine": 1854,
+        "startChar": 16,
+        "endLine": 1854,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4179a5f5_fe2df0e9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "apex/jobscheduler/service/java/com/android/server/alarm/AlarmManagerService.java",
+              "range": {
+                "startLine": 1854,
+                "startChar": 0,
+                "endLine": 1858,
+                "endChar": 0
+              },
+              "replacement": "            // Ensure that we\u0027re booting with a halfway sensible current time.\n            mInjector.initializeTimeIfRequired();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1b2cb5fc781cd8cdf5de25ae5f9575cf83444fab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
