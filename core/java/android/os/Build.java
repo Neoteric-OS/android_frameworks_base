@@ -1268,6 +1268,7 @@ public class Build {
      * @hide
      */
     public static final int VENDOR_API_2024_Q2 = 202404;
+<<<<<<< HEAD
 
     /** The type of build, like "user" or "eng". */
     public static final String TYPE = getString("ro.build.type");
@@ -1275,6 +1276,15 @@ public class Build {
     /** Comma-separated tags describing the build, like "unsigned,debug". */
     public static final String TAGS = getString("ro.build.tags");
 
+=======
+         * Baklava.
+         */
+        @FlaggedApi(Flags.FLAG_MAJOR_MINOR_VERSIONING_SCHEME)
+        public static final int BAKLAVA = 36;
+    }
+
+    /** @hide */
+>>>>>>> PATCH
     /** A string that uniquely identifies this build.  Do not attempt to parse this value. */
     public static final String FINGERPRINT = deriveFingerprint();
 

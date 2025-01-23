@@ -33465,6 +33465,7 @@ package android.os {
     method @Nullable public <T> T readTypedObject(@NonNull android.os.Parcelable.Creator<T>);
     method @Nullable public Object readValue(@Nullable ClassLoader);
     method public void recycle();
+<<<<<<< HEAD
     method public void setDataCapacity(int);
     method public void setDataPosition(int);
     method public void setDataSize(int);
@@ -33472,6 +33473,15 @@ package android.os {
     method public void unmarshall(@NonNull byte[], int, int);
     method public void writeArray(@Nullable Object[]);
     method public void writeBinderArray(@Nullable android.os.IBinder[]);
+=======
+
+  public static class Build.VERSION_CODES {
+    ctor public Build.VERSION_CODES();
+    field @FlaggedApi("android.sdk.major_minor_versioning_scheme") public static final int BAKLAVA = 36; // 0x24
+    field public static final int BASE = 1; // 0x1
+    field public static final int BASE_1_1 = 2; // 0x2
+    field public static final int CUPCAKE = 3; // 0x3
+>>>>>>> PATCH
     method public void writeBinderList(@Nullable java.util.List<android.os.IBinder>);
     method public void writeBlob(@Nullable byte[]);
     method public void writeBlob(@Nullable byte[], int, int);
@@ -33495,6 +33505,7 @@ package android.os {
     method public <T extends android.os.IInterface> void writeInterfaceList(@Nullable java.util.List<T>);
     method public void writeInterfaceToken(@NonNull String);
     method public void writeList(@Nullable java.util.List);
+<<<<<<< HEAD
     method public void writeLong(long);
     method public void writeLongArray(@Nullable long[]);
     method public void writeMap(@Nullable java.util.Map);
@@ -33502,6 +33513,15 @@ package android.os {
     method public void writeParcelable(@Nullable android.os.Parcelable, int);
     method public <T extends android.os.Parcelable> void writeParcelableArray(@Nullable T[], int);
     method public void writeParcelableCreator(@NonNull android.os.Parcelable);
+=======
+  }
+
+  @FlaggedApi("android.sdk.major_minor_versioning_scheme") public static class Build.VERSION_CODES_FULL {
+    field public static final int BAKLAVA = 3600000; // 0x36ee80
+    field public static final int BASE = 100000; // 0x186a0
+    field public static final int BASE_1_1 = 200000; // 0x30d40
+    field public static final int CUPCAKE = 300000; // 0x493e0
+>>>>>>> PATCH
     method public <T extends android.os.Parcelable> void writeParcelableList(@Nullable java.util.List<T>, int);
     method public void writePersistableBundle(@Nullable android.os.PersistableBundle);
     method public void writeSerializable(@Nullable java.io.Serializable);
