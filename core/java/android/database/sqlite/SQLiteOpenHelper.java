@@ -409,7 +409,7 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
                         if (version == 0) {
                             onCreate(db);
                         } else {
-                            if (version > mNewVersion) {
+                            if (!db.needUpgrade(mNewVersion)) {
                                 onDowngrade(db, version, mNewVersion);
                             } else {
                                 onUpgrade(db, version, mNewVersion);
