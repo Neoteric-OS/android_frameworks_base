@@ -490,7 +490,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -1653,9 +1652,10 @@ public class ActivityManagerService extends IActivityManager.Stub
                     ensureBootCompleted();
                 } break;
                 case SHOW_STRICT_MODE_VIOLATION_UI_MSG: {
-                    HashMap<String, Object> data = (HashMap<String, Object>) msg.obj;
+                    Pair<ProcessRecord, AppErrorResult> data =
+                        (Pair<ProcessRecord, AppErrorResult>) msg.obj;
                     synchronized (mProcLock) {
-                        ProcessRecord proc = (ProcessRecord) data.get("app");
+                        ProcessRecord proc = data.first;
                         if (proc == null) {
                             Slog.e(TAG, "App not found when showing strict mode dialog.");
                             break;
@@ -1664,7 +1664,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                             Slog.e(TAG, "App already has strict mode dialog: " + proc);
                             return;
                         }
-                        AppErrorResult res = (AppErrorResult) data.get("result");
+                        AppErrorResult res = data.second;
                         if (mAtmInternal.showStrictModeViolationDialog()) {
                             proc.mErrorState.getDialogController().showViolationDialogs(res);
                         } else {
@@ -9398,10 +9398,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             try {
                 Message msg = Message.obtain();
                 msg.what = SHOW_STRICT_MODE_VIOLATION_UI_MSG;
-                HashMap<String, Object> data = new HashMap<String, Object>();
-                data.put("result", result);
-                data.put("app", r);
-                data.put("info", info);
+                Pair<ProcessRecord, AppErrorResult> data = new Pair<>(r, result);
                 msg.obj = data;
                 mUiHandler.sendMessage(msg);
             } finally {
