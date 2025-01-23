@@ -61,5 +61,5 @@ class android.text.ClipboardManager keep  # no-pta
     method <init> ()V keep
 
 # Just enough to allow ResourcesManager to run
-class android.hardware.display.DisplayManagerGlobal keep # no-pta
-    method getInstance ()Landroid/hardware/display/DisplayManagerGlobal; ignore
+class android.hardware.display.DisplayManagerGlobal keep #no-pta
+    method getInstance ()Landroid/hardware/display/DisplayManagerGlobal; ignore #no-pta
