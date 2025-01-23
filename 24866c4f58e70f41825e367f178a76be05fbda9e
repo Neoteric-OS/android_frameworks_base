@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80cdc7fa_22aa81ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2025-01-23T16:36:21Z",
+      "side": 1,
+      "message": "Adding owners for SystemClockTime. Though I agree with the discussion on the bug that we should probably find a more complete solution instead of patching a workaround here.\n\nAlso, it is not clear to me what the drawback of the current code is. What happens if it runs as is? Anyway, it appears that the vendor service is guaranteed to be initialized after this code is executed, then it should be able to overwrite the value to what is required?",
+      "revId": "24866c4f58e70f41825e367f178a76be05fbda9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "518d9690_c6fe08ca",
+        "filename": "services/core/java/com/android/server/SystemClockTime.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2025-01-23T16:36:21Z",
+      "side": 1,
+      "message": "Please undo unrelated indentation changes.",
+      "range": {
+        "startLine": 99,
+        "startChar": 25,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8f6e9383_6f0ef241",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/SystemClockTime.java",
+              "range": {
+                "startLine": 99,
+                "startChar": 0,
+                "endLine": 104,
+                "endChar": 0
+              },
+              "replacement": "        // Use the most recent of Build.TIME, the root file system\u0027s timestamp, and the value of the\n        // ro.build.date.utc system property (which is in seconds).\n        final long systemBuildTime \u003d Long.max(\n                1000L * SystemProperties.getLong(\"ro.build.date.utc\", -1L),\n                Long.max(Environment.getRootDirectory().lastModified(), Build.TIME));\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/SystemClockTime.java",
+              "range": {
+                "startLine": 106,
+                "startChar": 0,
+                "endLine": 108,
+                "endChar": 0
+              },
+              "replacement": "            String logMsg \u003d \"Current time only \" + currentTimeMillis\n                    + \", advancing to build time \" + systemBuildTime;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "24866c4f58e70f41825e367f178a76be05fbda9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
