@@ -22,6 +22,30 @@
       },
       "revId": "9805e127e3192f2790c7841804d3c51d66e35d09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6d81261_e4a0cef0",
+        "filename": "services/core/java/com/android/server/ZramMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1965132
+      },
+      "writtenOn": "2025-01-24T01:54:50Z",
+      "side": 1,
+      "message": "Binder can be null if mmd is not ready yet (though I think it is very rare bacause mmd starts as soon as boot_completed and first zram maintenance is 1 hour after).\n\nAlso if mmd restarts, binder is null until mmd re-expose its Binder API. So I think we should reschedule the job 1 hour after (by default).\n\nBut indeed, it may be good idea to stop rescheduling if it fails to get binder multiple time in a row. If you think we need the counter for null binder, I will do it in another CL.",
+      "parentUuid": "ef5f141c_4e7922fe",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 44
+      },
+      "revId": "9805e127e3192f2790c7841804d3c51d66e35d09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
