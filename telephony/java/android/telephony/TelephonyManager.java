@@ -2540,6 +2540,7 @@ public class TelephonyManager {
      * as follows:
      *
      * <ul>
+     *     <li>If the device is running Android 25Q2 or later, then null is returned.</li>
      *     <li>If the calling app's target SDK is API level 28 or lower and the app has the
      *     READ_PHONE_STATE permission then null is returned.</li>
      *     <li>If the calling app's target SDK is API level 28 or lower and the app does not have
@@ -2548,7 +2549,8 @@ public class TelephonyManager {
      * </ul>
      *
      * @deprecated Legacy CDMA is unsupported.
-     * @throws UnsupportedOperationException If the device does not have
+     * @throws UnsupportedOperationException If the device is running
+     *          Android 25Q1 or earlier and does not have
      *          {@link PackageManager#FEATURE_TELEPHONY_CDMA}.
      */
     @FlaggedApi(Flags.FLAG_DEPRECATE_CDMA)
