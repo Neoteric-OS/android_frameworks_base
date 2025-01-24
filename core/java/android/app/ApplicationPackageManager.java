@@ -78,6 +78,7 @@ import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.content.pm.SharedLibraryInfo;
 import android.content.pm.SuspendDialogInfo;
+import android.content.pm.SystemFeaturesCache;
 import android.content.pm.VerifierDeviceIdentity;
 import android.content.pm.VersionedPackage;
 import android.content.pm.dex.ArtManager;
@@ -192,6 +193,7 @@ public class ApplicationPackageManager extends PackageManager {
     private volatile ArtManager mArtManager;
     private volatile DevicePolicyManager mDevicePolicyManager;
     private volatile String mPermissionsControllerPackageName;
+    private volatile SystemFeaturesCache mSdkSystemFeaturesCache;
 
     @GuardedBy("mDelegates")
     private final ArrayList<MoveCallbackDelegate> mDelegates = new ArrayList<>();
@@ -219,6 +221,14 @@ public class ApplicationPackageManager extends PackageManager {
             mPermissionManager = mContext.getSystemService(PermissionManager.class);
         }
         return mPermissionManager;
+    }
+
+    private SystemFeaturesCache getSdkSystemFeaturesCache() {
+        if (mSdkSystemFeaturesCache == null) {
+            mSdkSystemFeaturesCache =
+                    ActivityThread.currentActivityThread().getSystemFeaturesCache();
+        }
+        return mSdkSystemFeaturesCache;
     }
 
     @Override
@@ -817,22 +827,12 @@ public class ApplicationPackageManager extends PackageManager {
     // none are ever invalidated.  MPTS tests suggests that the cache should
     // hold at least 150 entries.
     private final static PropertyInvalidatedCache<HasSystemFeatureQuery, Boolean>
-            mHasSystemFeatureCache =
+            sSystemFeatureIpcCache =
             new PropertyInvalidatedCache<HasSystemFeatureQuery, Boolean>(
                 256, createSystemCacheKey("has_system_feature")) {
                 @Override
                 public Boolean recompute(HasSystemFeatureQuery query) {
                     try {
-                        // As an optimization, check first to see if the feature was defined at
-                        // compile-time as either available or unavailable.
-                        // TODO(b/203143243): Consider hoisting this optimization out of the cache
-                        // after the trunk stable (build) flag has soaked and more features are
-                        // defined at compile-time.
-                        Boolean maybeHasSystemFeature =
-                                RoSystemFeatures.maybeHasFeature(query.name, query.version);
-                        if (maybeHasSystemFeature != null) {
-                            return maybeHasSystemFeature.booleanValue();
-                        }
                         return ActivityThread.currentActivityThread().getPackageManager().
                             hasSystemFeature(query.name, query.version);
                     } catch (RemoteException e) {
@@ -843,17 +843,28 @@ public class ApplicationPackageManager extends PackageManager {
 
     @Override
     public boolean hasSystemFeature(String name, int version) {
-        return mHasSystemFeatureCache.query(new HasSystemFeatureQuery(name, version));
+        // We check for system features in the following order:
+        //    * Build time-defined system features (constant, very efficient)
+        //    * SDK-defined system features (cached at process start, very efficient)
+        //    * IPC-retrieved system features (lazily cached, requires per-feature IPC)
+        // TODO(b/375000483): Refactor all of this logic into SystemFeaturesCache after initial
+        // rollout and validation.
+        Boolean maybeHasSystemFeature = RoSystemFeatures.maybeHasFeature(name, version);
+        if (maybeHasSystemFeature != null) {
+            return maybeHasSystemFeature.booleanValue();
+        }
+        if (android.content.pm.Flags.cacheSdkSystemFeatures()) {
+            maybeHasSystemFeature = getSdkSystemFeaturesCache().maybeHasFeature(name, version);
+            if (maybeHasSystemFeature != null) {
+                return maybeHasSystemFeature.booleanValue();
+            }
+        }
+        return sSystemFeatureIpcCache.query(new HasSystemFeatureQuery(name, version));
     }
 
     /** @hide */
-    public void disableHasSystemFeatureCache() {
-        mHasSystemFeatureCache.disableLocal();
-    }
-
-    /** @hide */
-    public static void invalidateHasSystemFeatureCache() {
-        mHasSystemFeatureCache.invalidateCache();
+    public static void invalidateSystemFeatureIpcCache() {
+        sSystemFeatureIpcCache.invalidateCache();
     }
 
     @Override

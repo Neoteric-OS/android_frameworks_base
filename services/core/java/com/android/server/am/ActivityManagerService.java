@@ -295,6 +295,7 @@ import android.content.pm.ProviderInfoList;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.content.pm.SharedLibraryInfo;
+import android.content.pm.SystemFeaturesCache;
 import android.content.pm.TestUtilityService;
 import android.content.pm.UserInfo;
 import android.content.pm.UserProperties;
@@ -418,7 +419,6 @@ import com.android.internal.util.FastPrintWriter;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.MemInfoReader;
 import com.android.internal.util.Preconditions;
-import com.android.server.crashrecovery.CrashRecoveryHelper;
 import com.android.server.AlarmManagerInternal;
 import com.android.server.BootReceiver;
 import com.android.server.DeviceIdleInternal;
@@ -438,6 +438,7 @@ import com.android.server.am.LowMemDetector.MemFactor;
 import com.android.server.appop.AppOpsService;
 import com.android.server.compat.PlatformCompat;
 import com.android.server.contentcapture.ContentCaptureManagerInternal;
+import com.android.server.crashrecovery.CrashRecoveryHelper;
 import com.android.server.criticalevents.CriticalEventLog;
 import com.android.server.firewall.IntentFirewall;
 import com.android.server.graphics.fonts.FontManagerInternal;
@@ -1938,6 +1939,11 @@ public class ActivityManagerService extends IActivityManager.Stub
             ApplicationInfo info = mContext.getPackageManager().getApplicationInfo(
                     "android", STOCK_PM_FLAGS | MATCH_SYSTEM_ONLY);
             mSystemThread.installSystemApplicationInfo(info, getClass().getClassLoader());
+
+            if (android.content.pm.Flags.cacheSdkSystemFeatures()) {
+                mSystemThread.setSystemFeaturesCache(
+                        new SystemFeaturesCache(SystemConfig.getInstance().getAvailableFeatures()));
+            }
 
             synchronized (this) {
                 ProcessRecord app = mProcessList.newProcessRecordLocked(info, info.processName,
@@ -4724,6 +4730,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         contentCaptureOptions,
                         app.getDisabledCompatChanges(),
                         app.getLoggableCompatChanges(),
+                        mSystemThread.getSystemFeaturesCache(),
                         serializedSystemFontMap,
                         app.getStartElapsedTime(),
                         app.getStartUptime());

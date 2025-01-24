@@ -760,7 +760,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
             PackageManager.disablePackageInfoCache();
             ApplicationPackageManager.invalidateGetPackagesForUidCache();
             ApplicationPackageManager.disableGetPackagesForUidCache();
-            ApplicationPackageManager.invalidateHasSystemFeatureCache();
+            ApplicationPackageManager.invalidateSystemFeatureIpcCache();
             PackageManager.corkPackageInfoCache();
         }
 
