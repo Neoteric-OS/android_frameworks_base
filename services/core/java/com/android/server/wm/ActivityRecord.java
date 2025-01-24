@@ -413,7 +413,7 @@ import vendor.qti.hardware.servicetracker.V1_2.ActivityStates;
 /**
  * An entry in the history task, representing an activity.
  */
-public final class ActivityRecord extends WindowToken implements WindowManagerService.AppFreezeListener {
+public final class ActivityRecord extends WindowToken {
     private static final String TAG = TAG_WITH_CLASS_NAME ? "ActivityRecord" : TAG_ATM;
     private static final String TAG_ADD_REMOVE = TAG + POSTFIX_ADD_REMOVE;
     private static final String TAG_APP = TAG + POSTFIX_APP;
@@ -751,9 +751,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
      * {@link BackgroundActivityStartController#checkActivityAllowedToStart}
      */
     boolean mAllowCrossUidActivitySwitchFromBelow;
-
-    /** Have we been asked to have this token keep the screen frozen? */
-    private boolean mFreezingScreen;
 
     // These are used for determining when all windows associated with
     // an activity have been drawn, so they can be made visible together
@@ -1830,36 +1827,34 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             }
         }
 
-        mAppCompatController.getAppCompatLetterboxPolicy()
-                .onMovedToDisplay(mDisplayContent.getDisplayId());
+        mAppCompatController.getLetterboxPolicy().onMovedToDisplay(mDisplayContent.getDisplayId());
     }
 
     void layoutLetterboxIfNeeded(WindowState winHint) {
-        mAppCompatController.getAppCompatLetterboxPolicy().start(winHint);
+        mAppCompatController.getLetterboxPolicy().start(winHint);
     }
 
     boolean hasWallpaperBackgroundForLetterbox() {
-        return mAppCompatController.getAppCompatLetterboxOverrides()
-                .hasWallpaperBackgroundForLetterbox();
+        return mAppCompatController.getLetterboxOverrides().hasWallpaperBackgroundForLetterbox();
     }
 
     void updateLetterboxSurfaceIfNeeded(WindowState winHint, Transaction t) {
-        mAppCompatController.getAppCompatLetterboxPolicy()
+        mAppCompatController.getLetterboxPolicy()
                 .updateLetterboxSurfaceIfNeeded(winHint, t, getPendingTransaction());
     }
 
     void updateLetterboxSurfaceIfNeeded(WindowState winHint) {
-        mAppCompatController.getAppCompatLetterboxPolicy().updateLetterboxSurfaceIfNeeded(winHint);
+        mAppCompatController.getLetterboxPolicy().updateLetterboxSurfaceIfNeeded(winHint);
     }
 
     /** Gets the letterbox insets. The insets will be empty if there is no letterbox. */
     Rect getLetterboxInsets() {
-        return mAppCompatController.getAppCompatLetterboxPolicy().getLetterboxInsets();
+        return mAppCompatController.getLetterboxPolicy().getLetterboxInsets();
     }
 
     /** Gets the inner bounds of letterbox. The bounds will be empty if there is no letterbox. */
     void getLetterboxInnerBounds(Rect outBounds) {
-        mAppCompatController.getAppCompatLetterboxPolicy().getLetterboxInnerBounds(outBounds);
+        mAppCompatController.getLetterboxPolicy().getLetterboxInnerBounds(outBounds);
     }
 
     /**
@@ -1867,8 +1862,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
      *     when the current activity is displayed.
      */
     boolean isFullyTransparentBarAllowed(Rect rect) {
-        return mAppCompatController.getAppCompatLetterboxPolicy()
-                .isFullyTransparentBarAllowed(rect);
+        return mAppCompatController.getLetterboxPolicy().isFullyTransparentBarAllowed(rect);
     }
 
     private static class Token extends Binder {
@@ -2847,8 +2841,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     void removeStartingWindow() {
-        final AppCompatLetterboxPolicy letterboxPolicy = mAppCompatController
-                .getAppCompatLetterboxPolicy();
+        final AppCompatLetterboxPolicy letterboxPolicy = mAppCompatController.getLetterboxPolicy();
         boolean prevEligibleForLetterboxEducation =
                 letterboxPolicy.isEligibleForLetterboxEducation();
 
@@ -4484,7 +4477,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         mTaskSupervisor.getActivityMetricsLogger().notifyActivityRemoved(this);
         mTaskSupervisor.mStoppingActivities.remove(this);
 
-        mAppCompatController.getAppCompatLetterboxPolicy().stop();
+        mAppCompatController.getLetterboxPolicy().stop();
         mAppCompatController.getTransparentPolicy().stop();
 
         // Defer removal of this activity when either a child is animating, or app transition is on
@@ -4542,8 +4535,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             cancelAnimation();
             removeIfPossible();
         }
-
-        stopFreezingScreen(true, true);
 
         final DisplayContent dc = getDisplayContent();
         if (dc.mFocusedApp == this) {
@@ -5825,9 +5816,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                         + " visibleRequested=%b, isInTransition=%b, runningAnimation=%b, caller=%s",
                 this, isVisible(), mVisibleRequested, isInTransition(), runningAnimation,
                 Debug.getCallers(5));
-        if (!visible) {
-            stopFreezingScreen(true, true);
-        } else {
+        if (visible) {
             // If we are being set visible, and the starting window is not yet displayed,
             // then make sure it doesn't get displayed.
             if (mStartingWindow != null && !mStartingWindow.isDrawn()
@@ -5835,9 +5824,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 mStartingWindow.clearPolicyVisibilityFlag(LEGACY_POLICY_VISIBILITY);
                 mStartingWindow.mLegacyPolicyVisibilityAfterAnim = false;
             }
-            // We are becoming visible, so better freeze the screen with the windows that are
-            // getting visible so we also wait for them.
-            forAllWindows(mWmService::makeWindowFreezingScreenIfNeededLocked, true);
         }
         // dispatchTaskInfoChangedIfNeeded() right after ActivityRecord#setVisibility() can report
         // the stale visible state, because the state will be updated after the app transition.
@@ -6964,123 +6950,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         rootTask.removeLaunchTickMessages();
     }
 
-    boolean mayFreezeScreenLocked() {
-        return mayFreezeScreenLocked(app);
-    }
-
-    private boolean mayFreezeScreenLocked(WindowProcessController app) {
-        // Only freeze the screen if this activity is currently attached to
-        // an application, and that application is not blocked or unresponding.
-        // In any other case, we can't count on getting the screen unfrozen,
-        // so it is best to leave as-is.
-        return hasProcess() && !app.isCrashing() && !app.isNotResponding();
-    }
-
-    void startFreezingScreenLocked(WindowProcessController app, int configChanges) {
-        if (mayFreezeScreenLocked(app)) {
-            if (getParent() == null) {
-                Slog.w(TAG_WM,
-                        "Attempted to freeze screen with non-existing app token: " + token);
-                return;
-            }
-
-            // Window configuration changes only effect windows, so don't require a screen freeze.
-            int freezableConfigChanges = configChanges & ~(CONFIG_WINDOW_CONFIGURATION);
-            if (freezableConfigChanges == 0 && okToDisplay()) {
-                ProtoLog.v(WM_DEBUG_ORIENTATION, "Skipping set freeze of %s", token);
-                return;
-            }
-
-            startFreezingScreen();
-        }
-    }
-
-    void startFreezingScreen() {
-        startFreezingScreen(ROTATION_UNDEFINED /* overrideOriginalDisplayRotation */);
-    }
-
-    void startFreezingScreen(int overrideOriginalDisplayRotation) {
-        if (mTransitionController.isShellTransitionsEnabled()) {
-            return;
-        }
-        ProtoLog.i(WM_DEBUG_ORIENTATION,
-                "Set freezing of %s: visible=%b freezing=%b visibleRequested=%b. %s",
-                token, isVisible(), mFreezingScreen, mVisibleRequested,
-                new RuntimeException().fillInStackTrace());
-        if (!mVisibleRequested) {
-            return;
-        }
-
-        // If the override is given, the rotation of display doesn't change but we still want to
-        // cover the activity whose configuration is changing by freezing the display and running
-        // the rotation animation.
-        final boolean forceRotation = overrideOriginalDisplayRotation != ROTATION_UNDEFINED;
-        if (!mFreezingScreen) {
-            mFreezingScreen = true;
-            mWmService.registerAppFreezeListener(this);
-            mWmService.mAppsFreezingScreen++;
-            if (mWmService.mAppsFreezingScreen == 1) {
-                if (forceRotation) {
-                    // Make sure normal rotation animation will be applied.
-                    mDisplayContent.getDisplayRotation().cancelSeamlessRotation();
-                }
-                mWmService.startFreezingDisplay(0 /* exitAnim */, 0 /* enterAnim */,
-                        mDisplayContent, overrideOriginalDisplayRotation);
-                mWmService.mH.removeMessages(H.APP_FREEZE_TIMEOUT);
-                mWmService.mH.sendEmptyMessageDelayed(H.APP_FREEZE_TIMEOUT, 2000);
-            }
-        }
-        if (forceRotation) {
-            // The rotation of the real display won't change, so in order to unfreeze the screen
-            // via {@link #checkAppWindowsReadyToShow}, the windows have to be able to call
-            // {@link WindowState#reportResized} (it is skipped if the window is freezing) to update
-            // the drawn state.
-            return;
-        }
-        final int count = mChildren.size();
-        for (int i = 0; i < count; i++) {
-            final WindowState w = mChildren.get(i);
-            w.onStartFreezingScreen();
-        }
-    }
-
-    boolean isFreezingScreen() {
-        return mFreezingScreen;
-    }
-
-    @Override
-    public void onAppFreezeTimeout() {
-        Slog.w(TAG_WM, "Force clearing freeze: " + this);
-        stopFreezingScreen(true, true);
-    }
-
-    void stopFreezingScreen(boolean unfreezeSurfaceNow, boolean force) {
-        if (!mFreezingScreen) {
-            return;
-        }
-        ProtoLog.v(WM_DEBUG_ORIENTATION,
-                "Clear freezing of %s force=%b", this, force);
-        final int count = mChildren.size();
-        boolean unfrozeWindows = false;
-        for (int i = 0; i < count; i++) {
-            final WindowState w = mChildren.get(i);
-            unfrozeWindows |= w.onStopFreezingScreen();
-        }
-        if (force || unfrozeWindows) {
-            ProtoLog.v(WM_DEBUG_ORIENTATION, "No longer freezing: %s", this);
-            mFreezingScreen = false;
-            mWmService.unregisterAppFreezeListener(this);
-            mWmService.mAppsFreezingScreen--;
-            mWmService.mLastFinishedFreezeSource = this;
-        }
-        if (unfreezeSurfaceNow) {
-            if (unfrozeWindows) {
-                mWmService.mWindowPlacerLocked.performSurfacePlacement();
-            }
-            mWmService.stopFreezingDisplayLocked();
-        }
-    }
-
     void onFirstWindowDrawn(WindowState win) {
         firstWindowDrawn = true;
         // stop tracking
@@ -7269,24 +7138,11 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             return;
         }
 
-        // The token has now changed state to having all windows shown...  what to do, what to do?
-        if (mFreezingScreen) {
-            showAllWindowsLocked();
-            stopFreezingScreen(false, true);
-            ProtoLog.i(WM_DEBUG_ORIENTATION,
-                    "Setting mOrientationChangeComplete=true because wtoken %s "
-                            + "numInteresting=%d numDrawn=%d",
-                    this, mNumInterestingWindows, mNumDrawnWindows);
-            // This will set mOrientationChangeComplete and cause a pass through layout.
-            setAppLayoutChanges(FINISH_LAYOUT_REDO_WALLPAPER,
-                    "checkAppWindowsReadyToShow: freezingScreen");
-        } else {
-            setAppLayoutChanges(FINISH_LAYOUT_REDO_ANIM, "checkAppWindowsReadyToShow");
+        setAppLayoutChanges(FINISH_LAYOUT_REDO_ANIM, "checkAppWindowsReadyToShow");
 
-            // We can now show all of the drawn windows!
-            if (!getDisplayContent().mOpeningApps.contains(this) && canShowWindows()) {
-                showAllWindowsLocked();
-            }
+        // We can now show all of the drawn windows!
+        if (!getDisplayContent().mOpeningApps.contains(this) && canShowWindows()) {
+            showAllWindowsLocked();
         }
     }
 
@@ -7372,10 +7228,10 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
 
         if (DEBUG_STARTING_WINDOW_VERBOSE && w == mStartingWindow) {
             Slog.d(TAG, "updateWindows: starting " + w + " isOnScreen=" + w.isOnScreen()
-                    + " allDrawn=" + allDrawn + " freezingScreen=" + mFreezingScreen);
+                    + " allDrawn=" + allDrawn);
         }
 
-        if (allDrawn && !mFreezingScreen) {
+        if (allDrawn) {
             return false;
         }
 
@@ -7416,10 +7272,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                         mNumDrawnWindows++;
 
                         if (DEBUG_VISIBILITY || WM_DEBUG_ORIENTATION.isLogToLogcat()) {
-                            Slog.v(TAG, "tokenMayBeDrawn: "
-                                    + this + " w=" + w + " numInteresting=" + mNumInterestingWindows
-                                    + " freezingScreen=" + mFreezingScreen
-                                    + " mAppFreezing=" + w.mAppFreezing);
+                            Slog.v(TAG, "tokenMayBeDrawn: " + this + " w=" + w
+                                    + " numInteresting=" + mNumInterestingWindows);
                         }
 
                         isInterestingAndDrawn = true;
@@ -8030,7 +7884,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             t.setLayer(mAnimationBoundsLayer, getLastLayer());
 
             if (mNeedsLetterboxedAnimation) {
-                final int cornerRadius = mAppCompatController.getAppCompatLetterboxPolicy()
+                final int cornerRadius = mAppCompatController.getLetterboxPolicy()
                         .getRoundedCornersRadius(findMainWindow());
 
                 final Rect letterboxInnerBounds = new Rect();
@@ -8376,8 +8230,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         }
 
         mDisplayContent.mPinnedTaskController.onCancelFixedRotationTransform();
-        // Perform rotation animation according to the rotation of this activity.
-        startFreezingScreen(originalDisplayRotation);
         // This activity may relaunch or perform configuration change so once it has reported drawn,
         // the screen can be unfrozen.
         ensureActivityConfiguration();
@@ -8618,8 +8470,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         final AppCompatAspectRatioPolicy aspectRatioPolicy =
                 mAppCompatController.getAspectRatioPolicy();
         aspectRatioPolicy.reset();
-        mAppCompatController.getAppCompatLetterboxPolicy()
-                .resetFixedOrientationLetterboxEligibility();
+        mAppCompatController.getLetterboxPolicy().resetFixedOrientationLetterboxEligibility();
         mResolveConfigHint.resolveTmpOverrides(mDisplayContent, newParentConfiguration,
                 isFixedRotationTransforming());
 
@@ -9060,7 +8911,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         // make it fit the available bounds by scaling down its bounds.
         final int forcedOrientation = getRequestedConfigurationOrientation();
         final boolean isEligibleForFixedOrientationLetterbox = mAppCompatController
-                .getAppCompatLetterboxPolicy()
+                .getLetterboxPolicy()
                 .resolveFixedOrientationLetterboxEligibility(forcedOrientation, parentOrientation);
 
         if (!isEligibleForFixedOrientationLetterbox && (forcedOrientation == ORIENTATION_UNDEFINED
@@ -9561,11 +9412,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 mLastReportedConfiguration);
 
         if (shouldRelaunchLocked(changes, mTmpConfig)) {
-            // Aha, the activity isn't handling the change, so DIE DIE DIE.
-            if (mVisible && mAtmService.mTmpUpdateConfigurationResult.mIsUpdating
-                    && !mTransitionController.isShellTransitionsEnabled()) {
-                startFreezingScreenLocked(app, mAtmService.mTmpUpdateConfigurationResult.changes);
-            }
             final boolean displayMayChange = mTmpConfig.windowConfiguration.getDisplayRotation()
                     != getWindowConfiguration().getDisplayRotation()
                     || !mTmpConfig.windowConfiguration.getMaxBounds().equals(
@@ -9573,10 +9419,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
             final boolean isAppResizeOnly = !displayMayChange
                     && (changes & ~(CONFIG_SCREEN_SIZE | CONFIG_SMALLEST_SCREEN_SIZE
                             | CONFIG_ORIENTATION | CONFIG_SCREEN_LAYOUT)) == 0;
-            // Do not preserve window if it is freezing screen because the original window won't be
-            // able to update drawn state that causes freeze timeout.
             // TODO(b/258618073): Always preserve if possible.
-            final boolean preserveWindow = isAppResizeOnly && !mFreezingScreen;
+            final boolean preserveWindow = isAppResizeOnly;
             final boolean hasResizeChange = hasResizeChange(changes & ~info.getRealConfigChanged());
             if (hasResizeChange) {
                 final boolean isDragResizing = task.isDragResizing();
@@ -9874,7 +9718,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
                 scheduleStopForRestartProcess();
             });
         } else {
-            startFreezingScreen();
             scheduleStopForRestartProcess();
         }
     }
