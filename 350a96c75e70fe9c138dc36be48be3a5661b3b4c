@@ -53,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "578083ce_3b16b306",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3630385
+      },
+      "writtenOn": "2025-01-24T14:59:23Z",
+      "side": 1,
+      "message": "In scenarios when the preferred NTP server is unavailable, Android is used as a backup. When Android was starting at the build date time synchronization was taking too long. Not setting Android to the build date initially was the solution agreed upon in the Ford fork. There were a couple more options tried and they were not good enough. Having a \"switch\" to turn this behavior on and off via resource overlay seemed like the cleanest solution. This is for upstreaming only but some code moved upun request.",
+      "parentUuid": "ba0a7d27_6879ce3b",
+      "revId": "350a96c75e70fe9c138dc36be48be3a5661b3b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84a5ce74_fb47804d",
