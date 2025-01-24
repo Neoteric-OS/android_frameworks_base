@@ -295,6 +295,7 @@ import android.content.pm.ProviderInfoList;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.content.pm.SharedLibraryInfo;
+import android.content.pm.SystemFeaturesCache;
 import android.content.pm.TestUtilityService;
 import android.content.pm.UserInfo;
 import android.content.pm.UserProperties;
@@ -1938,6 +1939,11 @@ public class ActivityManagerService extends IActivityManager.Stub
             ApplicationInfo info = mContext.getPackageManager().getApplicationInfo(
                     "android", STOCK_PM_FLAGS | MATCH_SYSTEM_ONLY);
             mSystemThread.installSystemApplicationInfo(info, getClass().getClassLoader());
+
+            if (android.content.pm.Flags.cacheSdkSystemFeatures()) {
+                mSystemThread.setSystemFeaturesCache(
+                        new SystemFeaturesCache(SystemConfig.getInstance().getAvailableFeatures()));
+            }
 
             synchronized (this) {
                 ProcessRecord app = mProcessList.newProcessRecordLocked(info, info.processName,
@@ -4721,6 +4727,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         mCoreSettingsObserver.getCoreSettingsLocked(),
                         buildSerial,
                         autofillOptions,
+                        mSystemThread.getSystemFeaturesCache(),
                         contentCaptureOptions,
                         app.getDisabledCompatChanges(),
                         app.getLoggableCompatChanges(),

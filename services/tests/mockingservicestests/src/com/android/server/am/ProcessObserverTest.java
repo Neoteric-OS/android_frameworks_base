@@ -215,6 +215,7 @@ public class ProcessObserverTest {
                 anyBoolean(), anyBoolean(), any(),
                 any(), any(), any(),
                 any(), any(),
+                any(),
                 any(), any(),
                 any(), any(),
                 anyLong(), anyLong());
@@ -263,6 +264,7 @@ public class ProcessObserverTest {
                 true, false,
                 null,
                 null, null,
+                null,
                 null,
                 null, null, null,
                 null, null, null,

@@ -35,6 +35,7 @@ import android.content.pm.ParceledListSlice;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ProviderInfoList;
 import android.content.pm.ServiceInfo;
+import android.content.pm.SystemFeaturesCache;
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -90,6 +91,7 @@ oneway interface IApplicationThread {
             boolean restrictedBackupMode, boolean persistent, in Configuration config,
             in CompatibilityInfo compatInfo, in Map services,
             in Bundle coreSettings, in String buildSerial, in AutofillOptions autofillOptions,
+            in SystemFeaturesCache systemFeaturesCache,
             in ContentCaptureOptions contentCaptureOptions, in long[] disabledCompatChanges,
             in long[] loggableCompatChanges, in SharedMemory serializedSystemFontMap,
             long startRequestedElapsedTime, long startRequestedUptime);
