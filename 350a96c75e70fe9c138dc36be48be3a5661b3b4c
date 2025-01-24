@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "86c8534a_8bf35850",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3492818
+      },
+      "writtenOn": "2025-01-24T16:50:15Z",
+      "side": 1,
+      "message": "In your scenario, do you know why setting the time at 1970-01-01 works better than a more recent date (e.g. build date)?\n\nYour change is not only preventing to set the date at build time but also at the root file system\u0027s timestamp, and the value of the ro.build.date.utc system property, so the config name is a bit misleading. Why are you calling SystemClockTime#initializeIfRequired altogether?",
+      "parentUuid": "578083ce_3b16b306",
+      "revId": "350a96c75e70fe9c138dc36be48be3a5661b3b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "84a5ce74_fb47804d",
         "filename": "services/core/java/com/android/server/SystemClockTime.java",
         "patchSetId": 7
