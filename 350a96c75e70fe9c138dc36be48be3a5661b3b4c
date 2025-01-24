@@ -89,6 +89,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5371c9a7_a927a086",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3630385
+      },
+      "writtenOn": "2025-01-24T17:40:11Z",
+      "side": 1,
+      "message": "Feeling kind of like a broken record but here we go again... The RTC I\u0027m talking about is in the firmware and has a default date. A seperate service sets the hypervisor and Android system time according the RTC that is inaccessible to Android and uses a protocol that Android does not understand. So a separate service is needed. \n\nThis change is configured via resource overlay and the default behavior is unchanged.\n\nFor why it is called in the first place was because of feedback from @suprabh (Suprabh Shukla).\n\nIs it possible to have a call so everyone is aligned?\nThis should have been clear in the bug ticket.",
+      "parentUuid": "86c8534a_8bf35850",
+      "revId": "350a96c75e70fe9c138dc36be48be3a5661b3b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84a5ce74_fb47804d",
