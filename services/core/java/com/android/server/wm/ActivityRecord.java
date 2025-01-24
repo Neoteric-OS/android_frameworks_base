@@ -800,11 +800,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     @NonNull
     final AppCompatController mAppCompatController;
 
-    // Whether the activity is eligible to be letterboxed for fixed orientation with respect to its
-    // requested orientation, even when it's letterbox for another reason (e.g., size compat mode)
-    // and therefore #isLetterboxedForFixedOrientationAndAspectRatio returns false.
-    private boolean mIsEligibleForFixedOrientationLetterbox;
-
     /**
      * Whether the activity is to be displayed. See {@link android.R.attr#windowNoDisplay}.
      */
@@ -2852,7 +2847,10 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     void removeStartingWindow() {
-        boolean prevEligibleForLetterboxEducation = isEligibleForLetterboxEducation();
+        final AppCompatLetterboxPolicy letterboxPolicy = mAppCompatController
+                .getAppCompatLetterboxPolicy();
+        boolean prevEligibleForLetterboxEducation =
+                letterboxPolicy.isEligibleForLetterboxEducation();
 
         if (mStartingData != null
                 && mStartingData.mRemoveAfterTransaction == AFTER_TRANSITION_FINISH) {
@@ -2865,8 +2863,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         removeStartingWindowAnimation(true /* prepareAnimation */);
 
         final Task task = getTask();
-        if (prevEligibleForLetterboxEducation != isEligibleForLetterboxEducation()
-                && task != null) {
+        if (task != null && prevEligibleForLetterboxEducation
+                != letterboxPolicy.isEligibleForLetterboxEducation()) {
             // Trigger TaskInfoChanged to update the letterbox education.
             task.dispatchTaskInfoChangedIfNeeded(true /* force */);
         }
@@ -8620,7 +8618,8 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         final AppCompatAspectRatioPolicy aspectRatioPolicy =
                 mAppCompatController.getAspectRatioPolicy();
         aspectRatioPolicy.reset();
-        mIsEligibleForFixedOrientationLetterbox = false;
+        mAppCompatController.getAppCompatLetterboxPolicy()
+                .resetFixedOrientationLetterboxEligibility();
         mResolveConfigHint.resolveTmpOverrides(mDisplayContent, newParentConfiguration,
                 isFixedRotationTransforming());
 
@@ -8957,28 +8956,6 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
     }
 
     /**
-     * Whether this activity is eligible for letterbox eduction.
-     *
-     * <p>Conditions that need to be met:
-     *
-     * <ul>
-     *     <li>{@link AppCompatConfiguration#getIsEducationEnabled} is true.
-     *     <li>The activity is eligible for fixed orientation letterbox.
-     *     <li>The activity is in fullscreen.
-     *     <li>The activity is portrait-only.
-     *     <li>The activity doesn't have a starting window (education should only be displayed
-     *     once the starting window is removed in {@link #removeStartingWindow}).
-     * </ul>
-     */
-    boolean isEligibleForLetterboxEducation() {
-        return mWmService.mAppCompatConfiguration.getIsEducationEnabled()
-                && mIsEligibleForFixedOrientationLetterbox
-                && getWindowingMode() == WINDOWING_MODE_FULLSCREEN
-                && getRequestedConfigurationOrientation() == ORIENTATION_PORTRAIT
-                && mStartingWindow == null;
-    }
-
-    /**
      * In some cases, applying insets to bounds changes the orientation. For example, if a
      * close-to-square display rotates to portrait to respect a portrait orientation activity, after
      * insets such as the status and nav bars are applied, the activity may actually have a
@@ -9082,11 +9059,11 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         // If the activity requires a different orientation (either by override or activityInfo),
         // make it fit the available bounds by scaling down its bounds.
         final int forcedOrientation = getRequestedConfigurationOrientation();
+        final boolean isEligibleForFixedOrientationLetterbox = mAppCompatController
+                .getAppCompatLetterboxPolicy()
+                .resolveFixedOrientationLetterboxEligibility(forcedOrientation, parentOrientation);
 
-        mIsEligibleForFixedOrientationLetterbox = forcedOrientation != ORIENTATION_UNDEFINED
-                && forcedOrientation != parentOrientation;
-
-        if (!mIsEligibleForFixedOrientationLetterbox && (forcedOrientation == ORIENTATION_UNDEFINED
+        if (!isEligibleForFixedOrientationLetterbox && (forcedOrientation == ORIENTATION_UNDEFINED
                 || orientationRespectedWithInsets)) {
             return;
         }
@@ -10284,7 +10261,7 @@ public final class ActivityRecord extends WindowToken implements WindowManagerSe
         proto.write(OVERRIDE_ORIENTATION, getOverrideOrientation());
         proto.write(SHOULD_SEND_COMPAT_FAKE_FOCUS, shouldSendCompatFakeFocus());
         final AppCompatCameraOverrides cameraOverrides =
-                mAppCompatController.getAppCompatCameraOverrides();
+                mAppCompatController.getCameraOverrides();
         proto.write(SHOULD_FORCE_ROTATE_FOR_CAMERA_COMPAT,
                 cameraOverrides.shouldForceRotateForCameraCompat());
         proto.write(SHOULD_REFRESH_ACTIVITY_FOR_CAMERA_COMPAT,
