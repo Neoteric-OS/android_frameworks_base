@@ -2193,19 +2193,16 @@ public final class SystemServer implements Dumpable {
                 Slog.i(TAG, "Not starting VpnManagerService");
             }
 
-            t.traceBegin("StartVcnManagementService");
-            try {
-                if (VcnLocation.IS_VCN_IN_MAINLINE) {
-                    mSystemServiceManager.startServiceFromJar(
-                            CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS,
-                            CONNECTIVITY_SERVICE_APEX_PATH);
-                } else {
+            // When VCN is in mainline, registration will be done in ConnectivityServiceInitializer
+            if (!VcnLocation.IS_VCN_IN_MAINLINE) {
+                t.traceBegin("StartVcnManagementService");
+                try {
                     mSystemServiceManager.startService(CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS);
+                } catch (Throwable e) {
+                    reportWtf("starting VCN Management Service", e);
                 }
-            } catch (Throwable e) {
-                reportWtf("starting VCN Management Service", e);
+                t.traceEnd();
             }
-            t.traceEnd();
 
             t.traceBegin("StartSystemUpdateManagerService");
             try {
