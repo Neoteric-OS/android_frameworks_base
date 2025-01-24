@@ -3,6 +3,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3284b92a_c5f7eb9a",
+        "filename": "services/core/java/com/android/server/ZramMaintenance.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1960915
+      },
+      "writtenOn": "2025-01-24T18:56:46Z",
+      "side": 1,
+      "message": "Is it possbile that an exception will be thrown before the jobFinished gets called?\n\nIn that case, the JobSchedulerService would still consider the job was running and hold the wakelock for this job.",
+      "fixSuggestions": [
+        {
+          "fixId": "2f63e3fb_b87fbdab",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/ZramMaintenance.java",
+              "range": {
+                "startLine": 83,
+                "startChar": 0,
+                "endLine": 85,
+                "endChar": 0
+              },
+              "replacement": "                try {\n                    startJob(ZramMaintenance.this, params, mmd);\n                } finally {\n                    jobFinished(params, false);\n                }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9805e127e3192f2790c7841804d3c51d66e35d09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef5f141c_4e7922fe",
         "filename": "services/core/java/com/android/server/ZramMaintenance.java",
         "patchSetId": 3
