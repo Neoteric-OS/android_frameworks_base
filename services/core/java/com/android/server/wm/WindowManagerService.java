@@ -16,6 +16,7 @@
 
 package com.android.server.wm;
 
+import static android.service.autofill.Flags.improveFillDialogAconfig;
 import static android.Manifest.permission.ACCESS_SURFACE_FLINGER;
 import static android.Manifest.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS;
 import static android.Manifest.permission.INPUT_CONSUMER;
@@ -278,6 +279,7 @@ import android.view.InputApplicationHandle;
 import android.view.InputChannel;
 import android.view.InputDevice;
 import android.view.InputWindowHandle;
+import android.view.InsetsController;
 import android.view.InsetsFrameProvider;
 import android.view.InsetsSourceControl;
 import android.view.InsetsState;
@@ -310,6 +312,7 @@ import android.window.ActivityWindowInfo;
 import android.window.AddToSurfaceSyncGroupResult;
 import android.window.ClientWindowFrames;
 import android.window.ConfigurationChangeSetting;
+import android.window.DesktopModeFlags;
 import android.window.IGlobalDragListener;
 import android.window.IScreenRecordingCallback;
 import android.window.ISurfaceSyncGroupCompletedListener;
@@ -800,6 +803,9 @@ public class WindowManagerService extends IWindowManager.Stub
     final TrustedPresentationListenerController mTrustedPresentationListenerController =
             new TrustedPresentationListenerController();
 
+    private WindowManagerInternal.ImeInsetsAnimationChangeListener
+            mImeInsetsAnimationChangeListener;
+
     @VisibleForTesting
     final class SettingsObserver extends ContentObserver {
         private final Uri mDisplayInversionEnabledUri =
@@ -828,6 +834,8 @@ public class WindowManagerService extends IWindowManager.Stub
                 DEVELOPMENT_WM_DISPLAY_SETTINGS_PATH);
         private final Uri mMaximumObscuringOpacityForTouchUri = Settings.Global.getUriFor(
                 Settings.Global.MAXIMUM_OBSCURING_OPACITY_FOR_TOUCH);
+        private final Uri mDevelopmentOverrideDesktopExperienceUri = Settings.Global.getUriFor(
+                Settings.Global.DEVELOPMENT_OVERRIDE_DESKTOP_EXPERIENCE_FEATURES);
 
         public SettingsObserver() {
             super(new Handler());
@@ -854,6 +862,8 @@ public class WindowManagerService extends IWindowManager.Stub
             resolver.registerContentObserver(mDisplaySettingsPathUri, false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(mMaximumObscuringOpacityForTouchUri, false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(mDevelopmentOverrideDesktopExperienceUri, false, this,
                     UserHandle.USER_ALL);
         }
 
@@ -895,6 +905,11 @@ public class WindowManagerService extends IWindowManager.Stub
 
             if (mDisableSecureWindowsUri.equals(uri)) {
                 updateDisableSecureWindows();
+                return;
+            }
+
+            if (mDevelopmentOverrideDesktopExperienceUri.equals(uri)) {
+                updateDevelopmentOverrideDesktopExperience();
                 return;
             }
 
@@ -962,6 +977,16 @@ public class WindowManagerService extends IWindowManager.Stub
                     DEVELOPMENT_FORCE_RESIZABLE_ACTIVITIES, 0) != 0;
 
             mAtmService.mForceResizableActivities = forceResizable;
+        }
+
+        void updateDevelopmentOverrideDesktopExperience() {
+            ContentResolver resolver = mContext.getContentResolver();
+            final int overrideDesktopMode = Settings.Global.getInt(resolver,
+                    Settings.Global.DEVELOPMENT_OVERRIDE_DESKTOP_EXPERIENCE_FEATURES,
+                    DesktopModeFlags.ToggleOverride.OVERRIDE_UNSET.getSetting());
+
+            SystemProperties.set(DesktopModeFlags.SYSTEM_PROPERTY_NAME,
+                    Integer.toString(overrideDesktopMode));
         }
 
         void updateDevEnableNonResizableMultiWindow() {
@@ -8633,6 +8658,14 @@ public class WindowManagerService extends IWindowManager.Stub
             // WMS.takeAssistScreenshot takes care of the locking.
             return WindowManagerService.this.takeAssistScreenshot(windowTypesToExclude);
         }
+
+        @Override
+        public void setImeInsetsAnimationChangeListener(
+                @Nullable WindowManagerInternal.ImeInsetsAnimationChangeListener listener) {
+            synchronized (mGlobalLock) {
+                mImeInsetsAnimationChangeListener = listener;
+            }
+        }
     }
 
     private final class ImeTargetVisibilityPolicyImpl extends ImeTargetVisibilityPolicy {
@@ -10187,6 +10220,24 @@ public class WindowManagerService extends IWindowManager.Stub
         mAtmService.enforceTaskPermission("setUnhandledDragListener");
         synchronized (mGlobalLock) {
             mDragDropController.setGlobalDragListener(listener);
+        }
+    }
+
+    @Override
+    public void notifyImeInsetsAnimationStateChanged(
+            boolean running, @InsetsController.AnimationType int animationType) {
+        if (improveFillDialogAconfig()) {
+            synchronized (mGlobalLock) {
+                if (mImeInsetsAnimationChangeListener == null) {
+                    return;
+                }
+                if (running) {
+                    mImeInsetsAnimationChangeListener.onAnimationStart(
+                            animationType, mCurrentUserId);
+                } else {
+                    mImeInsetsAnimationChangeListener.onAnimationEnd(animationType, mCurrentUserId);
+                }
+            }
         }
     }
 
