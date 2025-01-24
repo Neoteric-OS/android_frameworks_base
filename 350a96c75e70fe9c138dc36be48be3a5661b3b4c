@@ -33,6 +33,47 @@
       "message": "Thanks for the change.\nHowever, could you please explain the advantage(s) of not having any time set rather than a \"floor\" at the time of build? Does setting the device to the last build time prevent the RTC outside of the Android OS to update the time? Thanks.",
       "revId": "350a96c75e70fe9c138dc36be48be3a5661b3b4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba0a7d27_6879ce3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3492818
+      },
+      "writtenOn": "2025-01-24T12:01:57Z",
+      "side": 1,
+      "message": "[marking unresolved]",
+      "parentUuid": "68d4f0f1_2527a957",
+      "revId": "350a96c75e70fe9c138dc36be48be3a5661b3b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84a5ce74_fb47804d",
+        "filename": "services/core/java/com/android/server/SystemClockTime.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 3492818
+      },
+      "writtenOn": "2025-01-24T12:01:57Z",
+      "side": 1,
+      "message": "please add tests to cover that scenario",
+      "range": {
+        "startLine": 96,
+        "startChar": 13,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "350a96c75e70fe9c138dc36be48be3a5661b3b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
