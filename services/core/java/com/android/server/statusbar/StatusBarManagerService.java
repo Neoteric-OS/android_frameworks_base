@@ -794,6 +794,26 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
         }
 
         @Override
+        public void onDisplayRemoveSystemDecorations(int displayId) {
+            if (isVisibleBackgroundUserOnDisplay(displayId)) {
+                if (SPEW) {
+                    Slog.d(TAG,
+                            "Skipping onDisplayRemoveSystemDecorations for visible background "
+                                    + "user "
+                                    + mUserManagerInternal.getUserAssignedToDisplay(displayId));
+                }
+                return;
+            }
+
+            IStatusBar bar = mBar;
+            if (bar != null) {
+                try {
+                    bar.onDisplayRemoveSystemDecorations(displayId);
+                } catch (RemoteException ex) {}
+            }
+        }
+
+        @Override
         public void onSystemBarAttributesChanged(int displayId, @Appearance int appearance,
                 AppearanceRegion[] appearanceRegions, boolean navbarColorManagedByIme,
                 @Behavior int behavior, @InsetsType int requestedVisibleTypes,
@@ -996,6 +1016,23 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
         @Override
         public void passThroughShellCommand(String[] args, FileDescriptor fd) {
             StatusBarManagerService.this.passThroughShellCommand(args, fd);
+        }
+
+        @Override
+        public void setHasNavigationBar(int displayId, boolean hasNavigationBar) {
+            if (isVisibleBackgroundUserOnDisplay(displayId)) {
+                if (SPEW) {
+                    Slog.d(TAG, "Skipping setHasNavigationBar for visible background user "
+                            + mUserManagerInternal.getUserAssignedToDisplay(displayId));
+                }
+                return;
+            }
+            IStatusBar bar = mBar;
+            if (bar != null) {
+                try {
+                    bar.setHasNavigationBar(displayId, hasNavigationBar);
+                } catch (RemoteException ex) {}
+            }
         }
     };
 
