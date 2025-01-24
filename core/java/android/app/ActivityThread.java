@@ -102,6 +102,7 @@ import android.content.pm.PermissionInfo;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ProviderInfoList;
 import android.content.pm.ServiceInfo;
+import android.content.pm.SystemFeaturesCache;
 import android.content.res.AssetManager;
 import android.content.res.CompatibilityInfo;
 import android.content.res.Configuration;
@@ -580,6 +581,8 @@ public final class ActivityThread extends ClientTransactionHandler
 
     Bundle mCoreSettings = null;
 
+    private SystemFeaturesCache mSystemFeaturesCache;
+
     /**
      * The lock word for the {@link #mCoreSettings}.
      */
@@ -976,6 +979,12 @@ public final class ActivityThread extends ClientTransactionHandler
         AutofillOptions autofillOptions;
 
         /**
+         * Non-null iff android.content.pm.Flags.cacheSdkSystemFeatures() is enabled.
+         */
+        @Nullable
+        SystemFeaturesCache mSystemFeaturesCache;
+
+        /**
          * Content capture options for the application - when null, it means ContentCapture is not
          * enabled for the package.
          */
@@ -1297,6 +1306,7 @@ public final class ActivityThread extends ClientTransactionHandler
                 Bundle coreSettings,
                 String buildSerial,
                 AutofillOptions autofillOptions,
+                SystemFeaturesCache systemFeaturesCache,
                 ContentCaptureOptions contentCaptureOptions,
                 long[] disabledCompatChanges,
                 long[] loggableCompatChanges,
@@ -1352,6 +1362,7 @@ public final class ActivityThread extends ClientTransactionHandler
             data.initProfilerInfo = profilerInfo;
             data.buildSerial = buildSerial;
             data.autofillOptions = autofillOptions;
+            data.mSystemFeaturesCache = systemFeaturesCache;
             data.contentCaptureOptions = contentCaptureOptions;
             data.disabledCompatChanges = disabledCompatChanges;
             data.mLoggableCompatChanges = loggableCompatChanges;
@@ -3249,6 +3260,20 @@ public final class ActivityThread extends ClientTransactionHandler
             //Slog.i(TAG, "**** WE DO, WE DO WANT TO GC!");
             BinderInternal.forceGc(reason);
         }
+    }
+
+    /** @hide */
+    public void setSystemFeaturesCache(@Nullable SystemFeaturesCache systemFeaturesCache) {
+        if (mSystemFeaturesCache != null) {
+            throw new IllegalArgumentException("SystemFeaturesCache already initialized.");
+        }
+        mSystemFeaturesCache = systemFeaturesCache;
+    }
+
+    /** @hide */
+    @Nullable
+    public SystemFeaturesCache getSystemFeaturesCache() {
+        return mSystemFeaturesCache;
     }
 
     private static final String HEAP_FULL_COLUMN =
@@ -7389,6 +7414,8 @@ public final class ActivityThread extends ClientTransactionHandler
          * Set the LocaleList. This may change once we create the App Context.
          */
         LocaleList.setDefault(data.config.getLocales());
+
+        setSystemFeaturesCache(data.mSystemFeaturesCache);
 
         if (Typeface.ENABLE_LAZY_TYPEFACE_INITIALIZATION) {
             try {
