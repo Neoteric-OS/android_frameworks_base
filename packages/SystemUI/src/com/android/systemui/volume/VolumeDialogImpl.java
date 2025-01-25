@@ -560,11 +560,10 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 extraRowsSize += getExpandableRowsExtraSize();
             }
             if (!mIsRingerDrawerOpen) {
-                xExtraSize =
-                        Math.max(getRingerDrawerOpenExtraSize(), extraRowsSize);
+                xExtraSize = extraRowsSize;
             } else if (!mIsRingerDrawerOpen) {
                 if (getRingerDrawerOpenExtraSize() > getVisibleRowsExtraSize()) {
-                    xExtraSize = getRingerDrawerOpenExtraSize() - getVisibleRowsExtraSize();
+                    xExtraSize = Math.max(getRingerDrawerOpenExtraSize(), extraRowsSize);
                 }
             } else {
                 if ((getVisibleRowsExtraSize() + extraRowsSize)
