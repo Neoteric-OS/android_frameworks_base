@@ -19,6 +19,7 @@ package com.android.systemui.volume.dialog.ui.utils
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.view.ViewPropertyAnimator
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
@@ -69,17 +70,25 @@ suspend fun ViewPropertyAnimator.suspendAnimate(
 @Suppress("UNCHECKED_CAST")
 suspend fun <T> ValueAnimator.suspendAnimate(onValueChanged: (T) -> Unit) {
     suspendCancellableCoroutine { continuation ->
-        addListener(
+        val listener =
             object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) = continuation.resumeIfCan(Unit)
+                    override fun onAnimationEnd(animation: Animator) =
+                        continuation.resumeIfCan(Unit)
 
-                override fun onAnimationCancel(animation: Animator) = continuation.resumeIfCan(Unit)
-            }
-        )
-        addUpdateListener { onValueChanged(it.animatedValue as T) }
+                    override fun onAnimationCancel(animation: Animator) =
+                        continuation.resumeIfCan(Unit)
+                }
+                .also(::addListener)
+        val updateListener =
+            AnimatorUpdateListener { onValueChanged(it.animatedValue as T) }
+                .also(::addUpdateListener)
 
         start()
-        continuation.invokeOnCancellation { cancel() }
+        continuation.invokeOnCancellation {
+            removeUpdateListener(updateListener)
+            removeListener(listener)
+            cancel()
+        }
     }
 }
 
@@ -87,22 +96,21 @@ suspend fun <T> ValueAnimator.suspendAnimate(onValueChanged: (T) -> Unit) {
  * Starts spring animation and suspends until it's finished. Cancels the animation if the running
  * coroutine is cancelled.
  */
-suspend fun SpringAnimation.suspendAnimate(
-    animationUpdateListener: DynamicAnimation.OnAnimationUpdateListener? = null,
-    animationEndListener: DynamicAnimation.OnAnimationEndListener? = null,
-) = suspendCancellableCoroutine { continuation ->
-    animationUpdateListener?.let(::addUpdateListener)
-    addEndListener { animation, canceled, value, velocity ->
-        continuation.resumeIfCan(Unit)
-        animationEndListener?.onAnimationEnd(animation, canceled, value, velocity)
+suspend fun SpringAnimation.suspendAnimate(onAnimationUpdate: (Float) -> Unit) =
+    suspendCancellableCoroutine { continuation ->
+        val updateListener =
+            DynamicAnimation.OnAnimationUpdateListener { _, value, _ -> onAnimationUpdate(value) }
+        val endListener =
+            DynamicAnimation.OnAnimationEndListener { _, _, _, _ -> continuation.resumeIfCan(Unit) }
+        addUpdateListener(updateListener)
+        addEndListener(endListener)
+        animateToFinalPosition(1F)
+        continuation.invokeOnCancellation {
+            removeUpdateListener(updateListener)
+            removeEndListener(endListener)
+            cancel()
+        }
     }
-    animateToFinalPosition(1F)
-    continuation.invokeOnCancellation {
-        animationUpdateListener?.let(::removeUpdateListener)
-        animationEndListener?.let(::removeEndListener)
-        cancel()
-    }
-}
 
 /**
  * Starts the animation and suspends until it's finished. Cancels the animation if the running

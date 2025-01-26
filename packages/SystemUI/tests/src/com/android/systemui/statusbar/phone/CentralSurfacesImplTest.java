@@ -36,6 +36,8 @@ import static com.android.systemui.statusbar.phone.CentralSurfaces.MSG_DISMISS_K
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static kotlinx.coroutines.flow.FlowKt.flowOf;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -54,8 +56,6 @@ import static org.mockito.Mockito.when;
 
 import static java.util.Collections.emptySet;
 
-import static kotlinx.coroutines.flow.FlowKt.flowOf;
-
 import android.app.ActivityManager;
 import android.app.IWallpaperManager;
 import android.app.NotificationManager;
@@ -69,7 +69,6 @@ import android.graphics.Rect;
 import android.hardware.devicestate.DeviceState;
 import android.hardware.devicestate.DeviceStateManager;
 import android.hardware.display.AmbientDisplayConfiguration;
-import android.hardware.fingerprint.FingerprintManager;
 import android.metrics.LogMaker;
 import android.os.Binder;
 import android.os.Handler;
@@ -123,7 +122,6 @@ import com.android.systemui.emergency.EmergencyGestureModule.EmergencyGestureInt
 import com.android.systemui.flags.DisableSceneContainer;
 import com.android.systemui.flags.EnableSceneContainer;
 import com.android.systemui.flags.FakeFeatureFlags;
-import com.android.systemui.flags.Flags;
 import com.android.systemui.fragments.FragmentService;
 import com.android.systemui.keyguard.KeyguardUnlockAnimationController;
 import com.android.systemui.keyguard.KeyguardViewMediator;
@@ -134,6 +132,7 @@ import com.android.systemui.navigationbar.NavigationBarController;
 import com.android.systemui.notetask.NoteTaskController;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.ActivityStarter.OnDismissAction;
+import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.PluginDependencyProvider;
 import com.android.systemui.plugins.PluginManager;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
@@ -177,6 +176,7 @@ import com.android.systemui.statusbar.StatusBarStateControllerImpl;
 import com.android.systemui.statusbar.core.StatusBarConnectedDisplays;
 import com.android.systemui.statusbar.core.StatusBarInitializerImpl;
 import com.android.systemui.statusbar.data.repository.FakeStatusBarModeRepository;
+import com.android.systemui.statusbar.data.repository.StatusBarConfigurationController;
 import com.android.systemui.statusbar.data.repository.StatusBarModePerDisplayRepository;
 import com.android.systemui.statusbar.notification.NotifPipelineFlags;
 import com.android.systemui.statusbar.notification.NotificationActivityStarter;
@@ -218,6 +218,10 @@ import com.android.systemui.volume.VolumeComponent;
 import com.android.wm.shell.bubbles.Bubbles;
 import com.android.wm.shell.startingsurface.StartingSurface;
 
+import dagger.Lazy;
+
+import kotlinx.coroutines.test.TestScope;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -233,9 +237,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.inject.Provider;
-
-import dagger.Lazy;
-import kotlinx.coroutines.test.TestScope;
 
 @SmallTest
 @RunWith(AndroidJUnit4.class)
@@ -360,7 +361,6 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     @Mock private AlternateBouncerInteractor mAlternateBouncerInteractor;
     @Mock private UserTracker mUserTracker;
     @Mock private AvalancheProvider mAvalancheProvider;
-    @Mock private FingerprintManager mFingerprintManager;
     @Mock IPowerManager mPowerManagerService;
     @Mock ActivityStarter mActivityStarter;
     @Mock private WindowRootViewVisibilityInteractor mWindowRootViewVisibilityInteractor;
@@ -399,8 +399,6 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
 
         // Set default value to avoid IllegalStateException.
         mFeatureFlags.set(SHORTCUT_LIST_SEARCH_LAYOUT, false);
-        // Turn AOD on and toggle feature flag for jank fixes
-        mFeatureFlags.set(Flags.ZJ_285570694_LOCKSCREEN_TRANSITION_FROM_AOD, true);
         when(mDozeParameters.getAlwaysOn()).thenReturn(true);
 
         IThermalService thermalService = mock(IThermalService.class);
@@ -443,7 +441,6 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
         mVisualInterruptionDecisionProvider.start();
 
         mContext.addMockSystemService(TrustManager.class, mock(TrustManager.class));
-        mContext.addMockSystemService(FingerprintManager.class, mock(FingerprintManager.class));
 
         mMetricsLogger = new FakeMetricsLogger();
 
@@ -542,6 +539,8 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
                 new StatusBarInitializerImpl(
                         mStatusBarWindowController,
                         mStatusBarModePerDisplayRepository,
+                        mock(StatusBarConfigurationController.class),
+                        mock(DarkIconDispatcher.class),
                         mCollapsedStatusBarFragmentProvider,
                         mock(StatusBarRootFactory.class),
                         mock(HomeStatusBarComponent.Factory.class),
@@ -637,7 +636,6 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
                 mLightRevealScrim,
                 mAlternateBouncerInteractor,
                 mUserTracker,
-                () -> mFingerprintManager,
                 mActivityStarter,
                 mBrightnessMirrorShowingInteractor,
                 mGlanceableHubContainerController,
@@ -1119,27 +1117,6 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
         when(mKeyguardViewMediator.isOccludeAnimationPlaying()).thenReturn(false);
         setKeyguardShowingAndOccluded(false /* showing */, true /* occluded */);
         verify(mStatusBarStateController).setState(SHADE);
-    }
-
-    /** Regression test for b/298355063 */
-    @Test
-    public void fingerprintManagerNull_noNPE() {
-        // GIVEN null fingerprint manager
-        mFingerprintManager = null;
-        createCentralSurfaces();
-
-        // GIVEN should animate doze wakeup
-        when(mDozeServiceHost.shouldAnimateWakeup()).thenReturn(true);
-        when(mBiometricUnlockController.getMode()).thenReturn(
-                BiometricUnlockController.MODE_ONLY_WAKE);
-        when(mDozeServiceHost.isPulsing()).thenReturn(false);
-        when(mStatusBarStateController.getDozeAmount()).thenReturn(1f);
-
-        // WHEN waking up from the power button
-        mWakefulnessLifecycle.dispatchStartedWakingUp(PowerManager.WAKE_REASON_POWER_BUTTON);
-        mCentralSurfaces.mWakefulnessObserver.onStartedWakingUp();
-
-        // THEN no NPE when fingerprintManager is null
     }
 
     @Test

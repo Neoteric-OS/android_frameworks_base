@@ -3232,6 +3232,12 @@ public class AccountManagerService
                                         "the type and name should not be empty");
                                 return;
                             }
+                            if (!type.equals(mAccountType)) {
+                                onError(AccountManager.ERROR_CODE_INVALID_RESPONSE,
+                                        "incorrect account type");
+                                return;
+                            }
+
                             Account resultAccount = new Account(name, type);
                             if (!customTokens) {
                                 saveAuthTokenToDatabase(
@@ -5267,6 +5273,22 @@ public class AccountManagerService
                 } catch (RemoteException e) {
                     if (Log.isLoggable(TAG, Log.VERBOSE)) {
                         Log.v(TAG, "Session.onServiceDisconnected: "
+                                + "caught RemoteException while responding", e);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onNullBinding(ComponentName name) {
+            IAccountManagerResponse response = getResponseAndClose();
+            if (response != null) {
+                try {
+                    response.onError(AccountManager.ERROR_CODE_REMOTE_EXCEPTION,
+                            "disconnected");
+                } catch (RemoteException e) {
+                    if (Log.isLoggable(TAG, Log.VERBOSE)) {
+                        Log.v(TAG, "Session.onNullBinding: "
                                 + "caught RemoteException while responding", e);
                     }
                 }

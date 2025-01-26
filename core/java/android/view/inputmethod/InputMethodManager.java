@@ -944,27 +944,6 @@ public final class InputMethodManager {
             synchronized (mH) {
                 if (mCurRootView == viewRootImpl) {
                     mCurRootViewWindowFocused = false;
-
-                    if (Flags.refactorInsetsController() && mCurRootView != null) {
-                        final int softInputMode = mCurRootView.mWindowAttributes.softInputMode;
-                        final int state =
-                                softInputMode & WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE;
-                        if (state == WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN) {
-                            // when losing focus (e.g., by going to another window), we reset the
-                            // requestedVisibleTypes of WindowInsetsController by hiding the IME
-                            final var statsToken = ImeTracker.forLogging().onStart(
-                                    ImeTracker.TYPE_HIDE, ImeTracker.ORIGIN_CLIENT,
-                                    SoftInputShowHideReason.HIDE_WINDOW_LOST_FOCUS,
-                                    false /* fromUser */);
-                            if (DEBUG) {
-                                Log.d(TAG, "onWindowLostFocus, hiding IME because "
-                                        + "of STATE_ALWAYS_HIDDEN");
-                            }
-                            mCurRootView.getInsetsController().hide(WindowInsets.Type.ime(),
-                                    false /* fromIme */, statsToken);
-                        }
-                    }
-
                     clearCurRootViewIfNeeded();
                 }
             }
@@ -1018,11 +997,35 @@ public final class InputMethodManager {
         @GuardedBy("mH")
         private void setCurrentRootViewLocked(ViewRootImpl rootView) {
             final boolean wasEmpty = mCurRootView == null;
+            if (Flags.refactorInsetsController() && !wasEmpty && mCurRootView != rootView) {
+                onImeFocusLost(mCurRootView);
+            }
+
             mImeDispatcher.switchRootView(mCurRootView, rootView);
             mCurRootView = rootView;
             if (wasEmpty && mCurRootView != null) {
                 mImeDispatcher.updateReceivingDispatcher(mCurRootView.getOnBackInvokedDispatcher());
             }
+        }
+    }
+
+    private void onImeFocusLost(@NonNull ViewRootImpl previousRootView) {
+        final int softInputMode = previousRootView.mWindowAttributes.softInputMode;
+        final int state =
+                softInputMode & WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE;
+        if (state == WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN) {
+            // when losing input focus (e.g., by going to another window), we reset the
+            // requestedVisibleTypes of WindowInsetsController by hiding the IME
+            final var statsToken = ImeTracker.forLogging().onStart(
+                    ImeTracker.TYPE_HIDE, ImeTracker.ORIGIN_CLIENT,
+                    SoftInputShowHideReason.HIDE_WINDOW_LOST_FOCUS,
+                    false /* fromUser */);
+            if (DEBUG) {
+                Log.d(TAG, "onImeFocusLost, hiding IME because "
+                        + "of STATE_ALWAYS_HIDDEN");
+            }
+            previousRootView.getInsetsController().hide(WindowInsets.Type.ime(),
+                    false /* fromIme */, statsToken);
         }
     }
 
@@ -4540,6 +4543,19 @@ public final class InputMethodManager {
     @RequiresPermission(Manifest.permission.WRITE_SECURE_SETTINGS)
     public void onImeSwitchButtonClickFromSystem(int displayId) {
         IInputMethodManagerGlobalInvoker.onImeSwitchButtonClickFromSystem(displayId);
+    }
+
+    /**
+     * A test API for CTS to check whether the IME Switcher button should be shown when the IME
+     * is shown.
+     *
+     * @hide
+     */
+    @SuppressLint("UnflaggedApi") // @TestApi without associated feature.
+    @TestApi
+    @RequiresPermission(Manifest.permission.TEST_INPUT_METHOD)
+    public boolean shouldShowImeSwitcherButtonForTest() {
+        return IInputMethodManagerGlobalInvoker.shouldShowImeSwitcherButtonForTest();
     }
 
     /**

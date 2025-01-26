@@ -1036,6 +1036,11 @@ class ProcessRecord implements WindowProcessListener {
     }
 
     @GuardedBy(anyOf = {"mService", "mProcLock"})
+    boolean hasActiveInstrumentation() {
+        return mInstr != null;
+    }
+
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
     boolean isKilledByAm() {
         return mKilledByAm;
     }
@@ -1741,7 +1746,7 @@ class ProcessRecord implements WindowProcessListener {
         return mService.mOomAdjuster.mCachedAppOptimizer.useFreezer()
                 && !mOptRecord.isFreezeExempt()
                 && !mOptRecord.shouldNotFreeze()
-                && mState.getCurAdj() >= ProcessList.FREEZER_CUTOFF_ADJ;
+                && mState.getCurAdj() >= mService.mConstants.FREEZER_CUTOFF_ADJ;
     }
 
     public void forEachConnectionHost(Consumer<ProcessRecord> consumer) {

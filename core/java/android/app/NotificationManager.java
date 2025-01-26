@@ -68,6 +68,7 @@ import android.service.notification.ZenModeConfig;
 import android.service.notification.ZenPolicy;
 import android.util.Log;
 import android.util.LruCache;
+import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 
 import java.lang.annotation.Retention;
@@ -646,16 +647,21 @@ public class NotificationManager {
      */
     public static int MAX_SERVICE_COMPONENT_NAME_LENGTH = 500;
 
-    private static final float MAX_NOTIFICATION_ENQUEUE_RATE = 5f;
+    private static final float MAX_NOTIFICATION_UPDATE_RATE = 5f;
+    private static final float MAX_NOTIFICATION_UNNECESSARY_CANCEL_RATE = 5f;
+    private static final int KNOWN_STATUS_ENQUEUED = 1;
+    private static final int KNOWN_STATUS_CANCELLED = 2;
 
     private final Context mContext;
     private final Map<CallNotificationEventListener, CallNotificationEventCallbackStub>
             mCallNotificationEventCallbacks = new HashMap<>();
 
     private final InstantSource mClock;
-    private final RateEstimator mEnqueueRateEstimator = new RateEstimator();
-    private final LruCache<String, Boolean> mEnqueuedNotificationKeys = new LruCache<>(10);
-    private final Object mEnqueueThrottleLock = new Object();
+    private final RateEstimator mUpdateRateEstimator = new RateEstimator();
+    private final RateEstimator mUnnecessaryCancelRateEstimator = new RateEstimator();
+    // Value is KNOWN_STATUS_ENQUEUED/_CANCELLED
+    private final LruCache<NotificationKey, Integer> mKnownNotifications = new LruCache<>(100);
+    private final Object mThrottleLock = new Object();
 
     @UnsupportedAppUsage
     private static INotificationManager sService;
@@ -762,6 +768,10 @@ public class NotificationManager {
         INotificationManager service = service();
         String sender = mContext.getPackageName();
 
+        if (discardNotify(mContext.getUser(), targetPackage, tag, id, notification)) {
+            return;
+        }
+
         try {
             if (localLOGV) Log.v(TAG, sender + ": notify(" + id + ", " + notification + ")");
             service.enqueueNotificationWithTag(targetPackage, sender, tag, id,
@@ -780,7 +790,7 @@ public class NotificationManager {
     {
         INotificationManager service = service();
         String pkg = mContext.getPackageName();
-        if (discardNotify(tag, id, notification)) {
+        if (discardNotify(user, pkg, tag, id, notification)) {
             return;
         }
 
@@ -797,32 +807,39 @@ public class NotificationManager {
      * Determines whether a {@link #notify} call should be skipped. If the notification is not
      * skipped, updates tracking metadata to use in future decisions.
      */
-    private boolean discardNotify(@Nullable String tag, int id, Notification notification) {
+    private boolean discardNotify(UserHandle user, String pkg, @Nullable String tag, int id,
+            Notification notification) {
         if (notificationClassification()
                 && NotificationChannel.SYSTEM_RESERVED_IDS.contains(notification.getChannelId())) {
             return true;
         }
 
         if (Flags.nmBinderPerfThrottleNotify()) {
-            String key = toEnqueuedNotificationKey(tag, id);
+            NotificationKey key = new NotificationKey(user, pkg, tag, id);
             long now = mClock.millis();
-            synchronized (mEnqueueThrottleLock) {
-                if (mEnqueuedNotificationKeys.get(key) != null
-                        && !notification.hasCompletedProgress()
-                        && mEnqueueRateEstimator.getRate(now) > MAX_NOTIFICATION_ENQUEUE_RATE) {
-                    return true;
+            synchronized (mThrottleLock) {
+                Integer status = mKnownNotifications.get(key);
+                if (status != null && status == KNOWN_STATUS_ENQUEUED
+                        && !notification.hasCompletedProgress()) {
+                    float updateRate = mUpdateRateEstimator.getRate(now);
+                    if (updateRate > MAX_NOTIFICATION_UPDATE_RATE) {
+                        Slog.w(TAG, "Shedding update of " + key
+                                + ", notification update maximum rate exceeded (" + updateRate
+                                + ")");
+                        return true;
+                    }
+                    mUpdateRateEstimator.update(now);
                 }
 
-                mEnqueueRateEstimator.update(now);
-                mEnqueuedNotificationKeys.put(key, Boolean.TRUE);
+                mKnownNotifications.put(key, KNOWN_STATUS_ENQUEUED);
             }
         }
 
         return false;
     }
-    private static String toEnqueuedNotificationKey(@Nullable String tag, int id) {
-        return tag + "," + id;
-    }
+
+    private record NotificationKey(@NonNull UserHandle user, @NonNull String pkg,
+                                   @Nullable String tag, int id) { }
 
     private Notification fixNotification(Notification notification) {
         String pkg = mContext.getPackageName();
@@ -905,6 +922,10 @@ public class NotificationManager {
      * @param id An identifier for this notification.
      */
     public void cancelAsPackage(@NonNull String targetPackage, @Nullable String tag, int id) {
+        if (discardCancel(mContext.getUser(), targetPackage, tag, id)) {
+            return;
+        }
+
         INotificationManager service = service();
         try {
             service.cancelNotificationWithTag(targetPackage, mContext.getOpPackageName(),
@@ -920,14 +941,12 @@ public class NotificationManager {
     @UnsupportedAppUsage
     public void cancelAsUser(@Nullable String tag, int id, UserHandle user)
     {
-        if (Flags.nmBinderPerfThrottleNotify()) {
-            synchronized (mEnqueueThrottleLock) {
-                mEnqueuedNotificationKeys.remove(toEnqueuedNotificationKey(tag, id));
-            }
+        String pkg = mContext.getPackageName();
+        if (discardCancel(user, pkg, tag, id)) {
+            return;
         }
 
         INotificationManager service = service();
-        String pkg = mContext.getPackageName();
         if (localLOGV) Log.v(TAG, pkg + ": cancel(" + id + ")");
         try {
             service.cancelNotificationWithTag(
@@ -938,19 +957,52 @@ public class NotificationManager {
     }
 
     /**
+     * Determines whether a {@link #cancel} call should be skipped. If not skipped, updates tracking
+     * metadata to use in future decisions.
+     */
+    private boolean discardCancel(UserHandle user, String pkg, @Nullable String tag, int id) {
+        if (Flags.nmBinderPerfThrottleNotify()) {
+            NotificationKey key = new NotificationKey(user, pkg, tag, id);
+            long now = mClock.millis();
+            synchronized (mThrottleLock) {
+                Integer status = mKnownNotifications.get(key);
+                if (status != null && status == KNOWN_STATUS_CANCELLED) {
+                    float cancelRate = mUnnecessaryCancelRateEstimator.getRate(now);
+                    if (cancelRate > MAX_NOTIFICATION_UNNECESSARY_CANCEL_RATE) {
+                        Slog.w(TAG, "Shedding cancel of " + key
+                                + ", presumably unnecessary and maximum rate exceeded ("
+                                + cancelRate + ")");
+                        return true;
+                    }
+                    mUnnecessaryCancelRateEstimator.update(now);
+                }
+                mKnownNotifications.put(key, KNOWN_STATUS_CANCELLED);
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Cancel all previously shown notifications. See {@link #cancel} for the
      * detailed behavior.
      */
     public void cancelAll()
     {
+        String pkg = mContext.getPackageName();
+        UserHandle user = mContext.getUser();
+
         if (Flags.nmBinderPerfThrottleNotify()) {
-            synchronized (mEnqueueThrottleLock) {
-                mEnqueuedNotificationKeys.evictAll();
+            synchronized (mThrottleLock) {
+                for (NotificationKey key : mKnownNotifications.snapshot().keySet()) {
+                    if (key.pkg.equals(pkg) && key.user.equals(user)) {
+                        mKnownNotifications.put(key, KNOWN_STATUS_CANCELLED);
+                    }
+                }
             }
         }
 
         INotificationManager service = service();
-        String pkg = mContext.getPackageName();
         if (localLOGV) Log.v(TAG, pkg + ": cancelAll()");
         try {
             service.cancelAllNotifications(pkg, mContext.getUserId());
@@ -974,7 +1026,7 @@ public class NotificationManager {
     public void setNotificationDelegate(@Nullable String delegate) {
         INotificationManager service = service();
         String pkg = mContext.getPackageName();
-        if (localLOGV) Log.v(TAG, pkg + ": cancelAll()");
+        if (localLOGV) Log.v(TAG, pkg + ": setNotificationDelegate()");
         try {
             service.setNotificationDelegate(pkg, delegate);
         } catch (RemoteException e) {
@@ -1934,10 +1986,12 @@ public class NotificationManager {
      * @hide
      */
     @FlaggedApi(android.app.Flags.FLAG_NOTIFICATION_CLASSIFICATION_UI)
-    public void setTypeAdjustmentForPackageState(@NonNull String pkg, boolean enabled) {
+    public void setAssistantAdjustmentKeyTypeStateForPackage(@NonNull String pkg,
+                                                             @Adjustment.Types int type,
+                                                             boolean enabled) {
         INotificationManager service = service();
         try {
-            service.setTypeAdjustmentForPackageState(pkg, enabled);
+            service.setAssistantAdjustmentKeyTypeStateForPackage(pkg, type, enabled);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

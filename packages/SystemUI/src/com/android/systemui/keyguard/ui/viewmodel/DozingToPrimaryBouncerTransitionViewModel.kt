@@ -16,17 +16,15 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
-import android.util.MathUtils
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.keyguard.domain.interactor.FromDozingTransitionInteractor.Companion.TO_PRIMARY_BOUNCER_DURATION
 import com.android.systemui.keyguard.shared.model.Edge
 import com.android.systemui.keyguard.shared.model.KeyguardState.DOZING
 import com.android.systemui.keyguard.shared.model.KeyguardState.PRIMARY_BOUNCER
 import com.android.systemui.keyguard.ui.KeyguardTransitionAnimationFlow
+import com.android.systemui.keyguard.ui.transitions.BlurConfig
 import com.android.systemui.keyguard.ui.transitions.DeviceEntryIconTransition
 import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition
-import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition.Companion.MAX_BACKGROUND_BLUR_RADIUS
-import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition.Companion.MIN_BACKGROUND_BLUR_RADIUS
 import com.android.systemui.scene.shared.model.Scenes
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,7 +38,7 @@ import kotlinx.coroutines.flow.Flow
 @SysUISingleton
 class DozingToPrimaryBouncerTransitionViewModel
 @Inject
-constructor(animationFlow: KeyguardTransitionAnimationFlow) :
+constructor(private val blurConfig: BlurConfig, animationFlow: KeyguardTransitionAnimationFlow) :
     DeviceEntryIconTransition, PrimaryBouncerTransition {
 
     private val transitionAnimation =
@@ -58,8 +56,12 @@ constructor(animationFlow: KeyguardTransitionAnimationFlow) :
         transitionAnimation.sharedFlow(
             TO_PRIMARY_BOUNCER_DURATION,
             onStep = { step ->
-                MathUtils.lerp(MIN_BACKGROUND_BLUR_RADIUS, MAX_BACKGROUND_BLUR_RADIUS, step)
+                transitionProgressToBlurRadius(
+                    starBlurRadius = blurConfig.minBlurRadiusPx,
+                    endBlurRadius = blurConfig.maxBlurRadiusPx,
+                    transitionProgress = step,
+                )
             },
-            onFinish = { MAX_BACKGROUND_BLUR_RADIUS },
+            onFinish = { blurConfig.maxBlurRadiusPx },
         )
 }

@@ -88,7 +88,6 @@ import com.android.compose.animation.scene.ContentKey
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.LowestZIndexContentPicker
-import com.android.compose.animation.scene.NestedScrollBehavior
 import com.android.compose.animation.scene.SceneTransitionLayoutState
 import com.android.compose.animation.scene.content.state.TransitionState
 import com.android.compose.modifiers.thenIf
@@ -236,10 +235,7 @@ fun ContentScope.SnoozeableHeadsUpNotificationSpace(
                     )
                 }
                 .thenIf(isHeadsUp) {
-                    Modifier.verticalNestedScrollToScene(
-                            bottomBehavior = NestedScrollBehavior.EdgeAlways
-                        )
-                        .nestedScroll(nestedScrollConnection)
+                    Modifier.nestedScroll(nestedScrollConnection)
                         .scrollable(orientation = Orientation.Vertical, state = scrollableState)
                 },
     )
@@ -288,8 +284,9 @@ fun ContentScope.NotificationScrollingStack(
     viewModel: NotificationsPlaceholderViewModel,
     maxScrimTop: () -> Float,
     shouldPunchHoleBehindScrim: Boolean,
+    stackTopPadding: Dp,
+    stackBottomPadding: Dp,
     shouldFillMaxSize: Boolean = true,
-    shouldReserveSpaceForNavBar: Boolean = true,
     shouldIncludeHeadsUpSpace: Boolean = true,
     shouldShowScrim: Boolean = true,
     supportNestedScrolling: Boolean,
@@ -311,10 +308,7 @@ fun ContentScope.NotificationScrollingStack(
     val expansionFraction by viewModel.expandFraction.collectAsStateWithLifecycle(0f)
     val shadeToQsFraction by viewModel.shadeToQsFraction.collectAsStateWithLifecycle(0f)
 
-    val topPadding = dimensionResource(id = R.dimen.notification_side_paddings)
     val navBarHeight = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding()
-    val bottomPadding = if (shouldReserveSpaceForNavBar) navBarHeight else 0.dp
-
     val screenHeight = with(density) { LocalConfiguration.current.screenHeightDp.dp.toPx() }
 
     /**
@@ -344,11 +338,12 @@ fun ContentScope.NotificationScrollingStack(
     // set the bounds to null when the scrim disappears
     DisposableEffect(Unit) { onDispose { viewModel.onScrimBoundsChanged(null) } }
 
-    val minScrimTop = with(density) { ShadeHeader.Dimensions.CollapsedHeight.toPx() }
+    // Top position if the scrim, when it is fully expanded.
+    val minScrimTop = ShadeHeader.Dimensions.CollapsedHeight
 
     // The minimum offset for the scrim. The scrim is considered fully expanded when it
     // is at this offset.
-    val minScrimOffset: () -> Float = { minScrimTop - maxScrimTop() }
+    val minScrimOffset: () -> Float = { with(density) { minScrimTop.toPx() } - maxScrimTop() }
 
     // The height of the scrim visible on screen when it is in its resting (collapsed) state.
     val minVisibleScrimHeight: () -> Float = {
@@ -366,8 +361,9 @@ fun ContentScope.NotificationScrollingStack(
     val shadeScrollState by remember {
         derivedStateOf {
             ShadeScrollState(
-                // we are not scrolled to the top unless the scrim is at its maximum offset.
-                isScrolledToTop = scrimOffset.value >= 0f,
+                // we are not scrolled to the top unless the scroll position is zero,
+                // and the scrim is at its maximum offset
+                isScrolledToTop = scrimOffset.value >= 0f && scrollState.value == 0,
                 scrollPosition = scrollState.value,
                 maxScrollPosition = scrollState.maxValue,
             )
@@ -567,20 +563,17 @@ fun ContentScope.NotificationScrollingStack(
                     }
                     .thenIf(shouldShowScrim) { Modifier.background(scrimBackgroundColor) }
                     .thenIf(shouldFillMaxSize) { Modifier.fillMaxSize() }
+                    .thenIf(supportNestedScrolling) { Modifier.padding(bottom = minScrimTop) }
                     .debugBackground(viewModel, DEBUG_BOX_COLOR)
         ) {
             Column(
                 modifier =
-                    Modifier.verticalNestedScrollToScene(
-                            topBehavior = NestedScrollBehavior.EdgeWithPreview,
-                            isExternalOverscrollGesture = { isCurrentGestureOverscroll.value },
-                        )
-                        .thenIf(supportNestedScrolling) {
+                    Modifier.thenIf(supportNestedScrolling) {
                             Modifier.nestedScroll(scrimNestedScrollConnection)
                         }
                         .stackVerticalOverscroll(coroutineScope) { scrollState.canScrollForward }
                         .verticalScroll(scrollState)
-                        .padding(top = topPadding)
+                        .padding(top = stackTopPadding, bottom = stackBottomPadding)
                         .fillMaxWidth()
                         .onGloballyPositioned { coordinates ->
                             stackBoundsOnScreen.value = coordinates.boundsInWindow()
@@ -593,11 +586,10 @@ fun ContentScope.NotificationScrollingStack(
                         !shouldUseLockscreenStackBounds(layoutState.transitionState)
                     },
                     modifier =
-                        Modifier.notificationStackHeight(
-                                view = stackScrollView,
-                                totalVerticalPadding = topPadding + bottomPadding,
-                            )
-                            .onSizeChanged { size -> stackHeight.intValue = size.height },
+                        Modifier.notificationStackHeight(view = stackScrollView).onSizeChanged {
+                            size ->
+                            stackHeight.intValue = size.height
+                        },
                 )
                 Spacer(
                     modifier =
@@ -613,7 +605,7 @@ fun ContentScope.NotificationScrollingStack(
                 stackScrollView = stackScrollView,
                 viewModel = viewModel,
                 useHunBounds = { !shouldUseLockscreenHunBounds(layoutState.transitionState) },
-                modifier = Modifier.padding(top = topPadding),
+                modifier = Modifier.padding(top = stackTopPadding),
             )
         }
     }

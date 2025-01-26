@@ -184,7 +184,7 @@ public class BubbleBarLayerView extends FrameLayout
         }
         BubbleViewProvider previousBubble = null;
         if (mExpandedBubble != null && !b.getKey().equals(mExpandedBubble.getKey())) {
-            if (mIsExpanded) {
+            if (mIsExpanded && mExpandedBubble.getBubbleBarExpandedView() != null) {
                 // Previous expanded view open, keep it visible to animate the switch
                 previousBubble = mExpandedBubble;
             } else {
@@ -421,6 +421,13 @@ public class BubbleBarLayerView extends FrameLayout
         if (mIsExpanded || mEducationViewController.isEducationVisible()) {
             getBoundsOnScreen(mTempRect);
             outRegion.op(mTempRect, Region.Op.UNION);
+        }
+    }
+
+    /** Handles IME position changes. */
+    public void onImeTopChanged(int imeTop) {
+        if (mIsExpanded) {
+            mAnimationHelper.onImeTopChanged(imeTop);
         }
     }
 

@@ -24,6 +24,7 @@ import static com.android.server.power.hint.Flags.cpuHeadroomAffinityCheck;
 import static com.android.server.power.hint.Flags.powerhintThreadCleanup;
 import static com.android.server.power.hint.Flags.resetOnForkEnabled;
 
+import android.Manifest;
 import android.adpf.ISessionManager;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -41,6 +42,7 @@ import android.hardware.power.GpuHeadroomParams;
 import android.hardware.power.GpuHeadroomResult;
 import android.hardware.power.IPower;
 import android.hardware.power.SessionConfig;
+import android.hardware.power.SessionMode;
 import android.hardware.power.SessionTag;
 import android.hardware.power.SupportInfo;
 import android.hardware.power.WorkDuration;
@@ -57,8 +59,12 @@ import android.os.PerformanceHintManager;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.ServiceSpecificException;
 import android.os.SessionCreationConfig;
 import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.system.Os;
+import android.system.OsConstants;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -76,10 +82,12 @@ import com.android.server.FgThread;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
 import com.android.server.SystemService;
-import com.android.server.power.hint.HintManagerService.AppHintSession.SessionModes;
 import com.android.server.utils.Slogf;
 
+import java.io.BufferedReader;
 import java.io.FileDescriptor;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -95,6 +103,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** An hint service implementation that runs in System Server process. */
 public final class HintManagerService extends SystemService {
@@ -103,10 +113,10 @@ public final class HintManagerService extends SystemService {
 
     private static final int EVENT_CLEAN_UP_UID = 3;
     @VisibleForTesting  static final int CLEAN_UP_UID_DELAY_MILLIS = 1000;
-    // The minimum interval between the headroom calls as rate limiting.
-    private static final int DEFAULT_GPU_HEADROOM_INTERVAL_MILLIS = 1000;
-    private static final int DEFAULT_CPU_HEADROOM_INTERVAL_MILLIS = 1000;
 
+    // example: cpu  2255 34 2290 22625563 6290 127 456
+    private static final Pattern PROC_STAT_CPU_TIME_TOTAL_PATTERN =
+            Pattern.compile("cpu\\s+(?<user>[0-9]+)\\s(?<nice>[0-9]+).+");
 
     @VisibleForTesting final long mHintSessionPreferredRate;
 
@@ -192,10 +202,26 @@ public final class HintManagerService extends SystemService {
     private static final String PROPERTY_HWUI_ENABLE_HINT_MANAGER = "debug.hwui.use_hint_manager";
     private static final String PROPERTY_USE_HAL_HEADROOMS = "persist.hms.use_hal_headrooms";
     private static final String PROPERTY_CHECK_HEADROOM_TID = "persist.hms.check_headroom_tid";
-    private static final String PROPERTY_CHECK_HEADROOM_AFFINITY = "persist.hms.check_affinity";
+    private static final String PROPERTY_CHECK_HEADROOM_AFFINITY =
+            "persist.hms.check_headroom_affinity";
+    private static final String PROPERTY_CHECK_HEADROOM_PROC_STAT_MIN_MILLIS =
+            "persist.hms.check_headroom_proc_stat_min_millis";
     private Boolean mFMQUsesIntegratedEventFlag = false;
 
     private final Object mCpuHeadroomLock = new Object();
+    @VisibleForTesting
+    final float mJiffyMillis;
+    private final int mCheckHeadroomProcStatMinMillis;
+    @GuardedBy("mCpuHeadroomLock")
+    private long mLastCpuUserModeTimeCheckedMillis = 0;
+    @GuardedBy("mCpuHeadroomLock")
+    private long mLastCpuUserModeJiffies = 0;
+    @GuardedBy("mCpuHeadroomLock")
+    private final Map<Integer, Long> mUidToLastUserModeJiffies;
+    @VisibleForTesting
+    private String mProcStatFilePathOverride = null;
+    @VisibleForTesting
+    private boolean mEnforceCpuHeadroomUserModeCpuTimeCheck = false;
 
     private ISessionManager mSessionManager;
 
@@ -310,8 +336,16 @@ public final class HintManagerService extends SystemService {
                 new GpuHeadroomParamsInternal().calculationWindowMillis;
         if (mSupportInfo.headroom.isCpuSupported) {
             mCpuHeadroomCache = new HeadroomCache<>(2, mSupportInfo.headroom.cpuMinIntervalMillis);
+            mUidToLastUserModeJiffies = new ArrayMap<>();
+            long jiffyHz = Os.sysconf(OsConstants._SC_CLK_TCK);
+            mJiffyMillis = 1000.0f / jiffyHz;
+            mCheckHeadroomProcStatMinMillis = SystemProperties.getInt(
+                    PROPERTY_CHECK_HEADROOM_PROC_STAT_MIN_MILLIS, 50);
         } else {
             mCpuHeadroomCache = null;
+            mUidToLastUserModeJiffies = null;
+            mJiffyMillis = 0.0f;
+            mCheckHeadroomProcStatMinMillis = 0;
         }
         if (mSupportInfo.headroom.isGpuSupported) {
             mGpuHeadroomCache = new HeadroomCache<>(2, mSupportInfo.headroom.gpuMinIntervalMillis);
@@ -368,6 +402,35 @@ public final class HintManagerService extends SystemService {
             }
         }
         return supportInfo;
+    }
+
+    @VisibleForTesting
+    void setProcStatPathOverride(String override) {
+        mProcStatFilePathOverride = override;
+        mEnforceCpuHeadroomUserModeCpuTimeCheck = true;
+    }
+
+    private boolean tooManyPipelineThreads(int uid) {
+        synchronized (mThreadsUsageObject) {
+            ArraySet<ThreadUsageTracker> threadsSet = mThreadsUsageMap.get(uid);
+            int graphicsPipelineThreadCount = 0;
+            if (threadsSet != null) {
+                // We count the graphics pipeline threads that are
+                // *not* in this session, since those in this session
+                // will be replaced. Then if the count plus the new tids
+                // is over max available graphics pipeline threads we raise
+                // an exception.
+                for (ThreadUsageTracker t : threadsSet) {
+                    if (t.isGraphicsPipeline()) {
+                        graphicsPipelineThreadCount++;
+                    }
+                }
+                if (graphicsPipelineThreadCount > MAX_GRAPHICS_PIPELINE_THREADS_COUNT) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     private ServiceThread createCleanUpThread() {
@@ -851,6 +914,11 @@ public final class HintManagerService extends SystemService {
                         mChannelMap.remove(uid);
                     }
                 }
+                synchronized (mCpuHeadroomLock) {
+                    if (mSupportInfo.headroom.isCpuSupported && mUidToLastUserModeJiffies != null) {
+                        mUidToLastUserModeJiffies.remove(uid);
+                    }
+                }
             });
         }
 
@@ -1230,7 +1298,7 @@ public final class HintManagerService extends SystemService {
             // Only call into AM if the tid is either isolated or invalid
             if (isolatedPids == null) {
                 // To avoid deadlock, do not call into AMS if the call is from system.
-                if (uid == Process.SYSTEM_UID) {
+                if (UserHandle.getAppId(uid) == Process.SYSTEM_UID) {
                     return tid;
                 }
                 isolatedPids = mAmInternal.getIsolatedProcesses(uid);
@@ -1263,9 +1331,9 @@ public final class HintManagerService extends SystemService {
     @VisibleForTesting
     final class BinderService extends IHintManager.Stub {
         @Override
-        public IHintSession createHintSessionWithConfig(@NonNull IBinder token,
-                    @SessionTag int tag, SessionCreationConfig creationConfig,
-                    SessionConfig config) {
+        public IHintManager.SessionCreationReturn createHintSessionWithConfig(
+                    @NonNull IBinder token, @SessionTag int tag,
+                    SessionCreationConfig creationConfig, SessionConfig config) {
             if (!isHintSessionSupported()) {
                 throw new UnsupportedOperationException("PowerHintSessions are not supported!");
             }
@@ -1283,8 +1351,24 @@ public final class HintManagerService extends SystemService {
             final long identity = Binder.clearCallingIdentity();
             final long durationNanos = creationConfig.targetWorkDurationNanos;
 
-            Preconditions.checkArgument(checkGraphicsPipelineValid(creationConfig, callingUid),
-                    "not enough of available graphics pipeline thread.");
+            boolean isGraphicsPipeline = false;
+            boolean isAutoTimed = false;
+            if (creationConfig.modesToEnable != null) {
+                for (int mode : creationConfig.modesToEnable) {
+                    if (mode == SessionMode.GRAPHICS_PIPELINE) {
+                        isGraphicsPipeline = true;
+                    }
+                    if (mode == SessionMode.AUTO_CPU || mode == SessionMode.AUTO_GPU) {
+                        isAutoTimed = true;
+                    }
+                }
+            }
+
+            if (isAutoTimed) {
+                Preconditions.checkArgument(isGraphicsPipeline,
+                        "graphics pipeline mode not enabled for an automatically timed session");
+            }
+
             try {
                 final IntArray nonIsolated = powerhintThreadCleanup() ? new IntArray(tids.length)
                         : null;
@@ -1402,12 +1486,8 @@ public final class HintManagerService extends SystemService {
                 }
 
                 if (hs != null) {
-                    boolean isGraphicsPipeline = false;
                     if (creationConfig.modesToEnable != null) {
                         for (int sessionMode : creationConfig.modesToEnable) {
-                            if (sessionMode == SessionModes.GRAPHICS_PIPELINE.ordinal()) {
-                                isGraphicsPipeline = true;
-                            }
                             hs.setMode(sessionMode, true);
                         }
                     }
@@ -1426,7 +1506,10 @@ public final class HintManagerService extends SystemService {
                     }
                 }
 
-                return hs;
+                IHintManager.SessionCreationReturn out = new IHintManager.SessionCreationReturn();
+                out.pipelineThreadLimitExceeded = tooManyPipelineThreads(callingUid);
+                out.session = hs;
+                return out;
             } finally {
                 Binder.restoreCallingIdentity(identity);
             }
@@ -1485,14 +1568,17 @@ public final class HintManagerService extends SystemService {
                 throw new UnsupportedOperationException();
             }
             checkCpuHeadroomParams(params);
+            final int uid = Binder.getCallingUid();
+            final int pid = Binder.getCallingPid();
             final CpuHeadroomParams halParams = new CpuHeadroomParams();
-            halParams.tids = new int[]{Binder.getCallingPid()};
+            halParams.tids = new int[]{pid};
             halParams.calculationType = params.calculationType;
             halParams.calculationWindowMillis = params.calculationWindowMillis;
             if (params.usesDeviceHeadroom) {
                 halParams.tids = new int[]{};
             } else if (params.tids != null && params.tids.length > 0) {
-                if (SystemProperties.getBoolean(PROPERTY_CHECK_HEADROOM_TID, true)) {
+                if (UserHandle.getAppId(uid) != Process.SYSTEM_UID && SystemProperties.getBoolean(
+                        PROPERTY_CHECK_HEADROOM_TID, true)) {
                     final int tgid = Process.getThreadGroupLeader(Binder.getCallingPid());
                     for (int tid : params.tids) {
                         if (Process.getThreadGroupLeader(tid) != tgid) {
@@ -1508,11 +1594,22 @@ public final class HintManagerService extends SystemService {
                 }
                 halParams.tids = params.tids;
             }
-            if (halParams.calculationWindowMillis
-                    == mDefaultCpuHeadroomCalculationWindowMillis) {
+            synchronized (mCpuHeadroomLock) {
+                final CpuHeadroomResult res = mCpuHeadroomCache.get(halParams);
+                if (res != null) return res;
+            }
+            final boolean shouldCheckUserModeCpuTime =
+                    mEnforceCpuHeadroomUserModeCpuTimeCheck
+                            || (UserHandle.getAppId(uid) != Process.SYSTEM_UID
+                            && mContext.checkCallingPermission(
+                            Manifest.permission.DEVICE_POWER)
+                            == PackageManager.PERMISSION_DENIED);
+
+            if (shouldCheckUserModeCpuTime) {
                 synchronized (mCpuHeadroomLock) {
-                    final CpuHeadroomResult res = mCpuHeadroomCache.get(halParams);
-                    if (res != null) return res;
+                    if (!checkPerUidUserModeCpuTimeElapsedLocked(uid)) {
+                        return null;
+                    }
                 }
             }
             // return from HAL directly
@@ -1522,10 +1619,12 @@ public final class HintManagerService extends SystemService {
                     Slog.wtf(TAG, "CPU headroom from Power HAL is invalid");
                     return null;
                 }
-                if (halParams.calculationWindowMillis
-                        == mDefaultCpuHeadroomCalculationWindowMillis) {
+                synchronized (mCpuHeadroomLock) {
+                    mCpuHeadroomCache.add(halParams, result);
+                }
+                if (shouldCheckUserModeCpuTime) {
                     synchronized (mCpuHeadroomLock) {
-                        mCpuHeadroomCache.add(halParams, result);
+                        mUidToLastUserModeJiffies.put(uid, mLastCpuUserModeJiffies);
                     }
                 }
                 return result;
@@ -1554,6 +1653,40 @@ public final class HintManagerService extends SystemService {
                             + Arrays.toString(tids));
                 }
             }
+        }
+
+        // check if there has been sufficient user mode cpu time elapsed since last call
+        // from the same uid
+        @GuardedBy("mCpuHeadroomLock")
+        private boolean checkPerUidUserModeCpuTimeElapsedLocked(int uid) {
+            // skip checking proc stat if it's within mCheckHeadroomProcStatMinMillis
+            if (System.currentTimeMillis() - mLastCpuUserModeTimeCheckedMillis
+                    > mCheckHeadroomProcStatMinMillis) {
+                try {
+                    mLastCpuUserModeJiffies = getUserModeJiffies();
+                } catch (Exception e) {
+                    Slog.e(TAG, "Failed to get user mode CPU time", e);
+                    return false;
+                }
+                mLastCpuUserModeTimeCheckedMillis = System.currentTimeMillis();
+            }
+            if (mUidToLastUserModeJiffies.containsKey(uid)) {
+                long uidLastUserModeJiffies = mUidToLastUserModeJiffies.get(uid);
+                if ((mLastCpuUserModeJiffies - uidLastUserModeJiffies) * mJiffyMillis
+                        < mSupportInfo.headroom.cpuMinIntervalMillis) {
+                    Slog.w(TAG, "UID " + uid + " is requesting CPU headroom too soon");
+                    Slog.d(TAG, "UID " + uid + " last request at "
+                            + uidLastUserModeJiffies * mJiffyMillis
+                            + "ms with device currently at "
+                            + mLastCpuUserModeJiffies * mJiffyMillis
+                            + "ms, the interval: "
+                            + (mLastCpuUserModeJiffies - uidLastUserModeJiffies)
+                            * mJiffyMillis + "ms is less than require minimum interval "
+                            + mSupportInfo.headroom.cpuMinIntervalMillis + "ms");
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void checkCpuHeadroomParams(CpuHeadroomParamsInternal params) {
@@ -1598,12 +1731,9 @@ public final class HintManagerService extends SystemService {
             final GpuHeadroomParams halParams = new GpuHeadroomParams();
             halParams.calculationType = params.calculationType;
             halParams.calculationWindowMillis = params.calculationWindowMillis;
-            if (halParams.calculationWindowMillis
-                    == mDefaultGpuHeadroomCalculationWindowMillis) {
-                synchronized (mGpuHeadroomLock) {
-                    final GpuHeadroomResult res = mGpuHeadroomCache.get(halParams);
-                    if (res != null) return res;
-                }
+            synchronized (mGpuHeadroomLock) {
+                final GpuHeadroomResult res = mGpuHeadroomCache.get(halParams);
+                if (res != null) return res;
             }
             // return from HAL directly
             try {
@@ -1612,11 +1742,8 @@ public final class HintManagerService extends SystemService {
                     Slog.wtf(TAG, "GPU headroom from Power HAL is invalid");
                     return null;
                 }
-                if (halParams.calculationWindowMillis
-                        == mDefaultGpuHeadroomCalculationWindowMillis) {
-                    synchronized (mGpuHeadroomLock) {
-                        mGpuHeadroomCache.add(halParams, headroom);
-                    }
+                synchronized (mGpuHeadroomLock) {
+                    mGpuHeadroomCache.add(halParams, headroom);
                 }
                 return headroom;
             } catch (RemoteException e) {
@@ -1731,43 +1858,25 @@ public final class HintManagerService extends SystemService {
             }
         }
 
-        private boolean checkGraphicsPipelineValid(SessionCreationConfig creationConfig, int uid) {
-            if (creationConfig.modesToEnable == null) {
-                return true;
-            }
-            boolean setGraphicsPipeline = false;
-            for (int modeToEnable : creationConfig.modesToEnable) {
-                if (modeToEnable == SessionModes.GRAPHICS_PIPELINE.ordinal()) {
-                    setGraphicsPipeline = true;
-                }
-            }
-            if (!setGraphicsPipeline) {
-                return true;
-            }
-
-            synchronized (mThreadsUsageObject) {
-                // count used graphics pipeline threads for the calling UID
-                // consider the case that new tids are overlapping with in session tids
-                ArraySet<ThreadUsageTracker> threadsSet = mThreadsUsageMap.get(uid);
-                if (threadsSet == null) {
-                    return true;
-                }
-
-                final int newThreadCount = creationConfig.tids.length;
-                int graphicsPipelineThreadCount = 0;
-                for (ThreadUsageTracker t : threadsSet) {
-                    // count graphics pipeline threads in use
-                    // and exclude overlapping ones
-                    if (t.isGraphicsPipeline()) {
-                        graphicsPipelineThreadCount++;
-                        if (contains(creationConfig.tids, t.getTid())) {
-                            graphicsPipelineThreadCount--;
-                        }
+        private long getUserModeJiffies() throws IOException {
+            String filePath =
+                    mProcStatFilePathOverride == null ? "/proc/stat" : mProcStatFilePathOverride;
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    Matcher matcher = PROC_STAT_CPU_TIME_TOTAL_PATTERN.matcher(line.trim());
+                    if (matcher.find()) {
+                        long userJiffies = Long.parseLong(matcher.group("user"));
+                        long niceJiffies = Long.parseLong(matcher.group("nice"));
+                        Slog.d(TAG,
+                                "user: " + userJiffies + " nice: " + niceJiffies
+                                        + " total " + (userJiffies + niceJiffies));
+                        reader.close();
+                        return userJiffies + niceJiffies;
                     }
                 }
-                return graphicsPipelineThreadCount + newThreadCount
-                        <= MAX_GRAPHICS_PIPELINE_THREADS_COUNT;
             }
+            throw new IllegalStateException("Can't find cpu line in " + filePath);
         }
 
         private void logPerformanceHintSessionAtom(int uid, long sessionId,
@@ -1806,11 +1915,6 @@ public final class HintManagerService extends SystemService {
         protected boolean mShouldForcePause;
         protected Integer mSessionId;
         protected boolean mTrackedBySF;
-
-        enum SessionModes {
-            POWER_EFFICIENCY,
-            GRAPHICS_PIPELINE,
-        };
 
         protected AppHintSession(
                 int uid, int pid, int sessionTag, int[] threadIds, IBinder token,
@@ -1864,8 +1968,8 @@ public final class HintManagerService extends SystemService {
                 if (!isHintAllowed()) {
                     return;
                 }
-                Preconditions.checkArgument(targetDurationNanos > 0, "Expected"
-                        + " the target duration to be greater than 0.");
+                Preconditions.checkArgument(targetDurationNanos >= 0, "Expected"
+                        + " the target duration to be greater than or equal to 0.");
                 mNativeWrapper.halUpdateTargetWorkDuration(mHalSessionPtr, targetDurationNanos);
                 mTargetDurationNanos = targetDurationNanos;
             }
@@ -2028,6 +2132,11 @@ public final class HintManagerService extends SystemService {
 
         public void setThreads(@NonNull int[] tids) {
             setThreadsInternal(tids, true);
+            if (tooManyPipelineThreads(Binder.getCallingUid())) {
+                // This is technically a success but we are going to throw a fit anyway
+                throw new ServiceSpecificException(5,
+                                    "Not enough available graphics pipeline threads.");
+            }
         }
 
         private void setThreadsInternal(int[] tids, boolean checkTid) {
@@ -2035,32 +2144,7 @@ public final class HintManagerService extends SystemService {
                 throw new IllegalArgumentException("Thread id list can't be empty.");
             }
 
-
             final int callingUid = Binder.getCallingUid();
-            if (mGraphicsPipeline) {
-                synchronized (mThreadsUsageObject) {
-                    // replace original tids with new tids
-                    ArraySet<ThreadUsageTracker> threadsSet = mThreadsUsageMap.get(callingUid);
-                    int graphicsPipelineThreadCount = 0;
-                    if (threadsSet != null) {
-                        // We count the graphics pipeline threads that are
-                        // *not* in this session, since those in this session
-                        // will be replaced. Then if the count plus the new tids
-                        // is over max available graphics pipeline threads we raise
-                        // an exception.
-                        for (ThreadUsageTracker t : threadsSet) {
-                            if (t.isGraphicsPipeline() && !contains(mThreadIds, t.getTid())) {
-                                graphicsPipelineThreadCount++;
-                            }
-                        }
-                        if (graphicsPipelineThreadCount + tids.length
-                                > MAX_GRAPHICS_PIPELINE_THREADS_COUNT) {
-                            throw new IllegalArgumentException(
-                                    "Not enough available graphics pipeline threads.");
-                        }
-                    }
-                }
-            }
 
             synchronized (this) {
                 if (mHalSessionPtr == 0) {
@@ -2194,15 +2278,15 @@ public final class HintManagerService extends SystemService {
                 }
                 Preconditions.checkArgument(mode >= 0, "the mode Id value should be"
                         + " greater than zero.");
-                if (mode == SessionModes.POWER_EFFICIENCY.ordinal()) {
+                if (mode == SessionMode.POWER_EFFICIENCY) {
                     mPowerEfficient = enabled;
-                } else if (mode == SessionModes.GRAPHICS_PIPELINE.ordinal()) {
+                } else if (mode == SessionMode.GRAPHICS_PIPELINE) {
                     mGraphicsPipeline = enabled;
                 }
                 mNativeWrapper.halSetMode(mHalSessionPtr, mode, enabled);
             }
             if (enabled) {
-                if (mode == SessionModes.POWER_EFFICIENCY.ordinal()) {
+                if (mode == SessionMode.POWER_EFFICIENCY) {
                     if (!mHasBeenPowerEfficient) {
                         mHasBeenPowerEfficient = true;
                         synchronized (mSessionSnapshotMapLock) {
@@ -2221,7 +2305,7 @@ public final class HintManagerService extends SystemService {
                             sessionSnapshot.logPowerEfficientSession();
                         }
                     }
-                } else if (mode == SessionModes.GRAPHICS_PIPELINE.ordinal()) {
+                } else if (mode == SessionMode.GRAPHICS_PIPELINE) {
                     if (!mHasBeenGraphicsPipeline) {
                         mHasBeenGraphicsPipeline = true;
                         synchronized (mSessionSnapshotMapLock) {

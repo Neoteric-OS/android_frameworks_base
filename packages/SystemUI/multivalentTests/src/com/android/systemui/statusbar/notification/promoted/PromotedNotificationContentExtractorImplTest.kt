@@ -20,6 +20,7 @@ import android.app.Notification
 import android.app.Notification.BigPictureStyle
 import android.app.Notification.BigTextStyle
 import android.app.Notification.CallStyle
+import android.app.Notification.FLAG_PROMOTED_ONGOING
 import android.app.Notification.MessagingStyle
 import android.app.Notification.ProgressStyle
 import android.app.Notification.ProgressStyle.Segment
@@ -34,6 +35,7 @@ import com.android.systemui.SysuiTestCase
 import com.android.systemui.statusbar.chips.notification.shared.StatusBarNotifChips
 import com.android.systemui.statusbar.notification.collection.NotificationEntry
 import com.android.systemui.statusbar.notification.collection.NotificationEntryBuilder
+import com.android.systemui.statusbar.notification.promoted.AutomaticPromotionCoordinator.Companion.EXTRA_WAS_AUTOMATICALLY_PROMOTED
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.Style
 import com.android.systemui.testKosmos
@@ -45,9 +47,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class PromotedNotificationContentExtractorImplTest : SysuiTestCase() {
     private val kosmos = testKosmos()
-
-    private val provider =
-        FakePromotedNotificationsProvider().also { kosmos.promotedNotificationsProvider = it }
 
     private val underTest = kosmos.promotedNotificationContentExtractor
 
@@ -87,7 +86,7 @@ class PromotedNotificationContentExtractorImplTest : SysuiTestCase() {
 
     @Test
     @EnableFlags(PromotedNotificationUi.FLAG_NAME, StatusBarNotifChips.FLAG_NAME)
-    fun shouldNotExtract_providerDidNotPromote() {
+    fun shouldNotExtract_becauseNotPromoted() {
         val entry = createEntry(promoted = false)
         val content = extractContent(entry)
         assertThat(content).isNull()
@@ -108,6 +107,26 @@ class PromotedNotificationContentExtractorImplTest : SysuiTestCase() {
         assertThat(content?.subText).isEqualTo(TEST_SUB_TEXT)
         assertThat(content?.title).isEqualTo(TEST_CONTENT_TITLE)
         assertThat(content?.text).isEqualTo(TEST_CONTENT_TEXT)
+    }
+
+    @Test
+    @EnableFlags(PromotedNotificationUi.FLAG_NAME, StatusBarNotifChips.FLAG_NAME)
+    fun extractContent_wasPromotedAutomatically_false() {
+        val entry = createEntry { extras.putBoolean(EXTRA_WAS_AUTOMATICALLY_PROMOTED, false) }
+
+        val content = extractContent(entry)
+
+        assertThat(content!!.wasPromotedAutomatically).isFalse()
+    }
+
+    @Test
+    @EnableFlags(PromotedNotificationUi.FLAG_NAME, StatusBarNotifChips.FLAG_NAME)
+    fun extractContent_wasPromotedAutomatically_true() {
+        val entry = createEntry { extras.putBoolean(EXTRA_WAS_AUTOMATICALLY_PROMOTED, true) }
+
+        val content = extractContent(entry)
+
+        assertThat(content!!.wasPromotedAutomatically).isTrue()
     }
 
     @Test
@@ -231,9 +250,10 @@ class PromotedNotificationContentExtractorImplTest : SysuiTestCase() {
         builderBlock: Notification.Builder.() -> Unit = {},
     ): NotificationEntry {
         val notif = Notification.Builder(context, "channel").also(builderBlock).build()
-        return NotificationEntryBuilder().setNotification(notif).build().also {
-            provider.shouldPromoteForEntry[it] = promoted
+        if (promoted) {
+            notif.flags = FLAG_PROMOTED_ONGOING
         }
+        return NotificationEntryBuilder().setNotification(notif).build()
     }
 
     companion object {

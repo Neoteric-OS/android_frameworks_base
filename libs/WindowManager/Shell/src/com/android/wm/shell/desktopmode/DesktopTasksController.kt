@@ -73,6 +73,7 @@ import com.android.wm.shell.Flags.enableFlexibleSplit
 import com.android.wm.shell.R
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer
 import com.android.wm.shell.ShellTaskOrganizer
+import com.android.wm.shell.bubbles.BubbleController
 import com.android.wm.shell.common.DisplayController
 import com.android.wm.shell.common.DisplayLayout
 import com.android.wm.shell.common.ExternalInterfaceBinder
@@ -95,6 +96,7 @@ import com.android.wm.shell.desktopmode.DragToDesktopTransitionHandler.DragToDes
 import com.android.wm.shell.desktopmode.EnterDesktopTaskTransitionHandler.FREEFORM_ANIMATION_DURATION
 import com.android.wm.shell.desktopmode.ExitDesktopTaskTransitionHandler.FULLSCREEN_ANIMATION_DURATION
 import com.android.wm.shell.desktopmode.common.ToggleTaskSizeInteraction
+import com.android.wm.shell.desktopmode.desktopwallpaperactivity.DesktopWallpaperActivityTokenProvider
 import com.android.wm.shell.desktopmode.minimize.DesktopWindowLimitRemoteHandler
 import com.android.wm.shell.draganddrop.DragAndDropController
 import com.android.wm.shell.freeform.FreeformTaskTransitionStarter
@@ -170,6 +172,8 @@ class DesktopTasksController(
     private val desktopModeEventLogger: DesktopModeEventLogger,
     private val desktopModeUiEventLogger: DesktopModeUiEventLogger,
     private val desktopTilingDecorViewModel: DesktopTilingDecorViewModel,
+    private val desktopWallpaperActivityTokenProvider: DesktopWallpaperActivityTokenProvider,
+    private val bubbleController: Optional<BubbleController>,
 ) :
     RemoteCallable<DesktopTasksController>,
     Transitions.TransitionHandler,
@@ -881,6 +885,12 @@ class DesktopTasksController(
             applyFreeformDisplayChange(wct, task, displayId)
         }
         wct.reparent(task.token, displayAreaInfo.token, true /* onTop */)
+        if (Flags.enableDisplayFocusInShellTransitions()) {
+            // Bring the destination display to top with includingParents=true, so that the
+            // destination display gains the display focus, which makes the top task in the display
+            // gains the global focus.
+            wct.reorder(task.token, /* onTop= */ true, /* includingParents= */ true)
+        }
 
         if (Flags.enablePerDisplayDesktopWallpaperActivity()) {
             performDesktopExitCleanupIfNeeded(task.taskId, task.displayId, wct)
@@ -1334,35 +1344,60 @@ class DesktopTasksController(
 
     private fun addWallpaperActivity(displayId: Int, wct: WindowContainerTransaction) {
         logV("addWallpaperActivity")
-        val userHandle = UserHandle.of(userId)
-        val userContext = context.createContextAsUser(userHandle, /* flags= */ 0)
-        val intent = Intent(userContext, DesktopWallpaperActivity::class.java)
-        intent.putExtra(Intent.EXTRA_USER_HANDLE, userId)
-        val options =
-            ActivityOptions.makeBasic().apply {
-                launchWindowingMode = WINDOWING_MODE_FULLSCREEN
-                pendingIntentBackgroundActivityStartMode =
-                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOW_ALWAYS
-                if (Flags.enableBugFixesForSecondaryDisplay()) {
-                    launchDisplayId = displayId
+        if (Flags.enableDesktopWallpaperActivityOnSystemUser()) {
+            val intent = Intent(context, DesktopWallpaperActivity::class.java)
+            val options =
+                ActivityOptions.makeBasic().apply {
+                    launchWindowingMode = WINDOWING_MODE_FULLSCREEN
+                    pendingIntentBackgroundActivityStartMode =
+                        ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOW_ALWAYS
+                    if (Flags.enableBugFixesForSecondaryDisplay()) {
+                        launchDisplayId = displayId
+                    }
                 }
-            }
-        val pendingIntent =
-            PendingIntent.getActivityAsUser(
-                userContext,
-                /* requestCode= */ 0,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE,
-                /* options= */ null,
-                userHandle,
-            )
-        wct.sendPendingIntent(pendingIntent, intent, options.toBundle())
+            val pendingIntent =
+                PendingIntent.getActivity(
+                    context,
+                    /* requestCode = */ 0,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE,
+                )
+            wct.sendPendingIntent(pendingIntent, intent, options.toBundle())
+        } else {
+            val userHandle = UserHandle.of(userId)
+            val userContext = context.createContextAsUser(userHandle, /* flags= */ 0)
+            val intent = Intent(userContext, DesktopWallpaperActivity::class.java)
+            intent.putExtra(Intent.EXTRA_USER_HANDLE, userId)
+            val options =
+                ActivityOptions.makeBasic().apply {
+                    launchWindowingMode = WINDOWING_MODE_FULLSCREEN
+                    pendingIntentBackgroundActivityStartMode =
+                        ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOW_ALWAYS
+                    if (Flags.enableBugFixesForSecondaryDisplay()) {
+                        launchDisplayId = displayId
+                    }
+                }
+            val pendingIntent =
+                PendingIntent.getActivityAsUser(
+                    userContext,
+                    /* requestCode= */ 0,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE,
+                    /* options= */ null,
+                    userHandle,
+                )
+            wct.sendPendingIntent(pendingIntent, intent, options.toBundle())
+        }
     }
 
     private fun removeWallpaperActivity(wct: WindowContainerTransaction) {
-        taskRepository.wallpaperActivityToken?.let { token ->
+        desktopWallpaperActivityTokenProvider.getToken()?.let { token ->
             logV("removeWallpaperActivity")
-            wct.removeTask(token)
+            if (Flags.enableDesktopWallpaperActivityOnSystemUser()) {
+                wct.reorder(token, /* onTop= */ false)
+            } else {
+                wct.removeTask(token)
+            }
         }
     }
 
@@ -1390,9 +1425,7 @@ class DesktopTasksController(
         desktopModeEnterExitTransitionListener?.onExitDesktopModeTransitionStarted(
             FULLSCREEN_ANIMATION_DURATION
         )
-        if (taskRepository.wallpaperActivityToken != null) {
-            removeWallpaperActivity(wct)
-        }
+        removeWallpaperActivity(wct)
     }
 
     fun releaseVisualIndicator() {
@@ -2159,6 +2192,19 @@ class DesktopTasksController(
         }
     }
 
+    /** Requests a task be transitioned from whatever mode it's in to a bubble. */
+    fun requestFloat(taskInfo: RunningTaskInfo) {
+        val isDragging = dragToDesktopTransitionHandler.inProgress
+        val shouldRequestFloat =
+            taskInfo.isFullscreen || taskInfo.isFreeform || isDragging || taskInfo.isMultiWindow
+        if (!shouldRequestFloat) return
+        if (isDragging) {
+            releaseVisualIndicator()
+        } else {
+            bubbleController.ifPresent { it.expandStackAndSelectBubble(taskInfo) }
+        }
+    }
+
     private fun getDefaultDensityDpi(): Int {
         return context.resources.displayMetrics.densityDpi
     }
@@ -2577,8 +2623,7 @@ class DesktopTasksController(
         val innerPrefix = "$prefix  "
         pw.println("${prefix}DesktopTasksController")
         DesktopModeStatus.dump(pw, innerPrefix, context)
-        pw.println("${prefix}userId=$userId")
-        taskRepository.dump(pw, innerPrefix)
+        userRepositories.dump(pw, innerPrefix)
     }
 
     /** The interface for calls from outside the shell, within the host process. */

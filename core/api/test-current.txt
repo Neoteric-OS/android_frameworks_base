@@ -1677,6 +1677,7 @@ package android.hardware.devicestate {
 
   @FlaggedApi("android.hardware.devicestate.feature.flags.device_state_property_api") public final class DeviceState {
     ctor public DeviceState(@NonNull android.hardware.devicestate.DeviceState.Configuration);
+    field @FlaggedApi("android.hardware.devicestate.feature.flags.device_state_rdm_v2") public static final int PROPERTY_FEATURE_REAR_DISPLAY_OUTER_DEFAULT = 1001; // 0x3e9
     field public static final int PROPERTY_POLICY_AVAILABLE_FOR_APP_REQUEST = 8; // 0x8
   }
 
@@ -4135,6 +4136,7 @@ package android.view.inputmethod {
     method @RequiresPermission(android.Manifest.permission.TEST_INPUT_METHOD) public boolean isInputMethodPickerShown();
     method @NonNull @RequiresPermission(value=android.Manifest.permission.INTERACT_ACROSS_USERS_FULL, conditional=true) public boolean isStylusHandwritingAvailableAsUser(@NonNull android.os.UserHandle);
     method @RequiresPermission(android.Manifest.permission.TEST_INPUT_METHOD) public void setStylusWindowIdleTimeoutForTest(long);
+    method @RequiresPermission(android.Manifest.permission.TEST_INPUT_METHOD) public boolean shouldShowImeSwitcherButtonForTest();
     field public static final long CLEAR_SHOW_FORCED_FLAG_WHEN_LEAVING = 214016041L; // 0xcc1a029L
   }
 

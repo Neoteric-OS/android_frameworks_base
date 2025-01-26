@@ -134,7 +134,11 @@ interface NativeInputManagerService {
 
     void setMouseReverseVerticalScrollingEnabled(boolean enabled);
 
+    void setMouseScrollingAccelerationEnabled(boolean enabled);
+
     void setMouseSwapPrimaryButtonEnabled(boolean enabled);
+
+    void setMouseAccelerationEnabled(boolean enabled);
 
     void setTouchpadPointerSpeed(int speed);
 
@@ -421,7 +425,13 @@ interface NativeInputManagerService {
         public native void setMouseReverseVerticalScrollingEnabled(boolean enabled);
 
         @Override
+        public native void setMouseScrollingAccelerationEnabled(boolean enabled);
+
+        @Override
         public native void setMouseSwapPrimaryButtonEnabled(boolean enabled);
+
+        @Override
+        public native void setMouseAccelerationEnabled(boolean enabled);
 
         @Override
         public native void setTouchpadPointerSpeed(int speed);

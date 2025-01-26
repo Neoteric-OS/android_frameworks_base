@@ -47,7 +47,6 @@ import com.android.launcher3.icons.IconProvider;
 import com.android.window.flags.Flags;
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.ShellTaskOrganizer;
-import com.android.wm.shell.WindowManagerShellWrapper;
 import com.android.wm.shell.activityembedding.ActivityEmbeddingController;
 import com.android.wm.shell.apptoweb.AppToWebGenericLinksParser;
 import com.android.wm.shell.apptoweb.AssistContentRequester;
@@ -100,6 +99,7 @@ import com.android.wm.shell.desktopmode.SpringDragToDesktopTransitionHandler;
 import com.android.wm.shell.desktopmode.ToggleResizeDesktopTaskTransitionHandler;
 import com.android.wm.shell.desktopmode.WindowDecorCaptionHandleRepository;
 import com.android.wm.shell.desktopmode.compatui.SystemModalsTransitionHandler;
+import com.android.wm.shell.desktopmode.desktopwallpaperactivity.DesktopWallpaperActivityTokenProvider;
 import com.android.wm.shell.desktopmode.education.AppHandleEducationController;
 import com.android.wm.shell.desktopmode.education.AppHandleEducationFilter;
 import com.android.wm.shell.desktopmode.education.AppToWebEducationController;
@@ -232,7 +232,8 @@ public abstract class WMShellModule {
             FloatingContentCoordinator floatingContentCoordinator,
             IStatusBarService statusBarService,
             WindowManager windowManager,
-            WindowManagerShellWrapper windowManagerShellWrapper,
+            DisplayInsetsController displayInsetsController,
+            DisplayImeController displayImeController,
             UserManager userManager,
             LauncherApps launcherApps,
             TaskStackListenerImpl taskStackListener,
@@ -264,7 +265,8 @@ public abstract class WMShellModule {
                         new BubblePersistentRepository(context)),
                 statusBarService,
                 windowManager,
-                windowManagerShellWrapper,
+                displayInsetsController,
+                displayImeController,
                 userManager,
                 launcherApps,
                 logger,
@@ -733,7 +735,9 @@ public abstract class WMShellModule {
             FocusTransitionObserver focusTransitionObserver,
             DesktopModeEventLogger desktopModeEventLogger,
             DesktopModeUiEventLogger desktopModeUiEventLogger,
-            DesktopTilingDecorViewModel desktopTilingDecorViewModel) {
+            DesktopTilingDecorViewModel desktopTilingDecorViewModel,
+            DesktopWallpaperActivityTokenProvider desktopWallpaperActivityTokenProvider,
+            Optional<BubbleController> bubbleController) {
         return new DesktopTasksController(
                 context,
                 shellInit,
@@ -764,7 +768,9 @@ public abstract class WMShellModule {
                 mainHandler,
                 desktopModeEventLogger,
                 desktopModeUiEventLogger,
-                desktopTilingDecorViewModel);
+                desktopTilingDecorViewModel,
+                desktopWallpaperActivityTokenProvider,
+                bubbleController);
     }
 
     @WMSingleton
@@ -1092,6 +1098,7 @@ public abstract class WMShellModule {
             ShellTaskOrganizer shellTaskOrganizer,
             Optional<DesktopMixedTransitionHandler> desktopMixedTransitionHandler,
             Optional<BackAnimationController> backAnimationController,
+            DesktopWallpaperActivityTokenProvider desktopWallpaperActivityTokenProvider,
             ShellInit shellInit) {
         return desktopUserRepositories.flatMap(
                 repository ->
@@ -1103,6 +1110,7 @@ public abstract class WMShellModule {
                                         shellTaskOrganizer,
                                         desktopMixedTransitionHandler.get(),
                                         backAnimationController.get(),
+                                        desktopWallpaperActivityTokenProvider,
                                         shellInit)));
     }
 
@@ -1304,6 +1312,12 @@ public abstract class WMShellModule {
             PackageManager packageManager
     ) {
         return new DesktopModeUiEventLogger(uiEventLogger, packageManager);
+    }
+
+    @WMSingleton
+    @Provides
+    static DesktopWallpaperActivityTokenProvider provideDesktopWallpaperActivityTokenProvider() {
+        return new DesktopWallpaperActivityTokenProvider();
     }
 
     //

@@ -847,7 +847,7 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
      */
     void positionTaskBehindHome(Task task) {
         final Task home = getOrCreateRootHomeTask();
-        final WindowContainer homeParent = home.getParent();
+        final WindowContainer homeParent = home != null ? home.getParent() : null;
         final Task homeParentTask = homeParent != null ? homeParent.asTask() : null;
         if (homeParentTask == null) {
             // reparent throws if parent didn't change...
@@ -1047,7 +1047,7 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
                                 + adjacentFlagRootTask);
             }
 
-            if (adjacentFlagRootTask.getAdjacentTaskFragment() == null) {
+            if (!adjacentFlagRootTask.hasAdjacentTaskFragment()) {
                 throw new UnsupportedOperationException(
                         "Can't set non-adjacent root as launch adjacent flag root tr="
                                 + adjacentFlagRootTask);
@@ -1887,6 +1887,11 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
         mRemoved = true;
 
         return lastReparentedRootTask;
+    }
+
+    // TODO(b/385263090): Remove this method
+    void restart() {
+        mRemoved = false;
     }
 
     /**

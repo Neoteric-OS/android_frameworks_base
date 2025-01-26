@@ -371,15 +371,9 @@ class InsetsStateController {
         array.add(provider);
     }
 
-    void notifyControlChanged(InsetsControlTarget target, InsetsSourceProvider provider) {
+    void notifyControlChanged(@NonNull InsetsControlTarget target, InsetsSourceProvider provider) {
         addToPendingControlMaps(target, provider);
         notifyPendingInsetsControlChanged();
-
-        if (android.view.inputmethod.Flags.refactorInsetsController()) {
-            notifyInsetsChanged();
-            mDisplayContent.updateSystemGestureExclusion();
-            mDisplayContent.getDisplayPolicy().updateSystemBarAttributes();
-        }
     }
 
     void notifySurfaceTransactionReady(InsetsSourceProvider provider, long id, boolean ready) {

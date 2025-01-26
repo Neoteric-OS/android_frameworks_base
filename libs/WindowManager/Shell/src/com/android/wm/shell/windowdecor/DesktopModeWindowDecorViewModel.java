@@ -776,6 +776,18 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                 DesktopUiEventEnum.DESKTOP_WINDOW_APP_HANDLE_MENU_TAP_TO_SPLIT_SCREEN);
     }
 
+    private void onToFloat(int taskId) {
+        final DesktopModeWindowDecoration decoration = mWindowDecorByTaskId.get(taskId);
+        if (decoration == null) {
+            return;
+        }
+        decoration.closeHandleMenu();
+        // When the app enters float, the handle will no longer be visible, meaning
+        // we shouldn't receive input for it any longer.
+        decoration.disposeStatusBarInputLayer();
+        mDesktopTasksController.requestFloat(decoration.mTaskInfo);
+    }
+
     private void onNewWindow(int taskId) {
         final DesktopModeWindowDecoration decoration = mWindowDecorByTaskId.get(taskId);
         if (decoration == null) {
@@ -935,10 +947,12 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                 //  back to the decoration using
                 //  {@link DesktopModeWindowDecoration#setOnMaximizeOrRestoreClickListener}, which
                 //  should shared with the maximize menu's maximize/restore actions.
+                final DesktopRepository desktopRepository = mDesktopUserRepositories.getProfile(
+                        decoration.mTaskInfo.userId);
                 if (Flags.enableFullyImmersiveInDesktop()
-                        && TaskInfoKt.getRequestingImmersive(decoration.mTaskInfo)) {
-                    // Task is requesting immersive, so it should either enter or exit immersive,
-                    // depending on immersive state.
+                        && desktopRepository.isTaskInFullImmersiveState(
+                                decoration.mTaskInfo.taskId)) {
+                    // Task is in immersive and should exit.
                     onEnterOrExitImmersive(decoration.mTaskInfo);
                 } else {
                     // Full immersive is disabled or task doesn't request/support it, so just
@@ -1727,6 +1741,10 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
         });
         windowDecoration.setOnToSplitScreenClickListener(() -> {
             onToSplitScreen(taskInfo.taskId);
+            return Unit.INSTANCE;
+        });
+        windowDecoration.setOnToFloatClickListener(() -> {
+            onToFloat(taskInfo.taskId);
             return Unit.INSTANCE;
         });
         windowDecoration.setOpenInBrowserClickListener((intent) -> {

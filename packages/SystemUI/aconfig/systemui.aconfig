@@ -492,7 +492,7 @@ flag {
     name: "status_bar_notification_chips"
     namespace: "systemui"
     description: "Show promoted ongoing notifications as chips in the status bar"
-    bug: "361346412"
+    bug: "364653005"
 }
 
 flag {
@@ -544,14 +544,6 @@ flag {
    namespace: "systemui"
    description: "Replace Record Trace QS Tile with expanded Record Issue QS Tile"
    bug: "305049544"
-}
-
-flag {
-   name: "migrate_clocks_to_blueprint"
-   namespace: "systemui"
-   description: "Move clock related views from KeyguardStatusView to KeyguardRootView, "
-        "and use modern architecture for lockscreen clocks"
-   bug: "301502635"
 }
 
 flag {
@@ -758,13 +750,6 @@ flag {
     namespace: "systemui"
     description: "Improves screenshot policy handling for split screen and desktop mode."
     bug: "365597999"
-}
-
-flag {
-    name: "screenshot_context_url"
-    namespace: "systemui"
-    description: "Include optional app-provided context URL when sharing a screenshot."
-    bug: "242791070"
 }
 
 flag {
@@ -1219,6 +1204,13 @@ flag {
   namespace: "systemui"
   description: "Enables responsive grid on glanceable hub"
   bug: "378171351"
+}
+
+flag {
+  name: "low_light_clock_dream"
+  namespace: "systemui"
+  description: "Enables low light clock dream experience on mobile phones"
+  bug: "378174125"
 }
 
 flag {
@@ -1804,6 +1796,15 @@ flag {
   bug: "371224114"
 }
 
+flag {
+  name: "disable_shade_expands_on_trackpad_two_finger_swipe"
+  namespace: "systemui"
+  description: "Disables expansion of the shade via two finger swipe on a trackpad"
+  bug: "356804470"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
 
 flag {
     name: "keyboard_shortcut_helper_shortcut_customizer"
@@ -1903,4 +1904,11 @@ flag {
    namespace: "systemui"
    description: "Invokes edit mode directly from long press in glanceable hub"
    bug: "382531177"
+}
+
+flag {
+   name: "notification_magic_actions_treatment"
+   namespace: "systemui"
+   description: "Special UI treatment for magic actions"
+   bug: "383567383"
 }

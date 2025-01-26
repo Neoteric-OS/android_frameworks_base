@@ -29,7 +29,9 @@ import android.content.Context
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.statusbar.notification.collection.NotificationEntry
+import com.android.systemui.statusbar.notification.promoted.AutomaticPromotionCoordinator.Companion.EXTRA_WAS_AUTOMATICALLY_PROMOTED
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel
+import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.Companion.isPromotedForStatusBarChip
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.Style
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.When
 import javax.inject.Inject
@@ -45,7 +47,6 @@ interface PromotedNotificationContentExtractor {
 class PromotedNotificationContentExtractorImpl
 @Inject
 constructor(
-    private val promotedNotificationsProvider: PromotedNotificationsProvider,
     @ShadeDisplayAware private val context: Context,
     private val logger: PromotedNotificationLogger,
 ) : PromotedNotificationContentExtractor {
@@ -58,14 +59,15 @@ constructor(
             return null
         }
 
-        if (!promotedNotificationsProvider.shouldPromote(entry)) {
-            logger.logExtractionSkipped(entry, "shouldPromote returned false")
-            return null
-        }
-
         val notification = entry.sbn.notification
         if (notification == null) {
             logger.logExtractionFailed(entry, "entry.sbn.notification is null")
+            return null
+        }
+
+        // The status bar chips rely on this extractor, so take them into account for promotion.
+        if (!isPromotedForStatusBarChip(notification)) {
+            logger.logExtractionSkipped(entry, "isPromotedOngoing returned false")
             return null
         }
 
@@ -74,6 +76,8 @@ constructor(
         // TODO: Pitch a fit if style is unsupported or mandatory fields are missing once
         // FLAG_PROMOTED_ONGOING is set reliably and we're not testing status bar chips.
 
+        contentBuilder.wasPromotedAutomatically =
+            notification.extras.getBoolean(EXTRA_WAS_AUTOMATICALLY_PROMOTED, false)
         contentBuilder.skeletonSmallIcon = entry.icons.aodIcon?.sourceIcon
         contentBuilder.appName = notification.loadHeaderAppName(context)
         contentBuilder.subText = notification.subText()

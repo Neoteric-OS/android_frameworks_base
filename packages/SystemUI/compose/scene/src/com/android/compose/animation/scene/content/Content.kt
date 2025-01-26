@@ -31,6 +31,7 @@ import androidx.compose.ui.layout.approachLayout
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.zIndex
+import com.android.compose.animation.scene.Ancestor
 import com.android.compose.animation.scene.AnimatedState
 import com.android.compose.animation.scene.ContentKey
 import com.android.compose.animation.scene.ContentScope
@@ -42,7 +43,6 @@ import com.android.compose.animation.scene.ElementStateScope
 import com.android.compose.animation.scene.MovableElement
 import com.android.compose.animation.scene.MovableElementContentScope
 import com.android.compose.animation.scene.MovableElementKey
-import com.android.compose.animation.scene.NestedScrollBehavior
 import com.android.compose.animation.scene.SceneTransitionLayoutForTesting
 import com.android.compose.animation.scene.SceneTransitionLayoutImpl
 import com.android.compose.animation.scene.SceneTransitionLayoutScope
@@ -53,11 +53,10 @@ import com.android.compose.animation.scene.UserActionResult
 import com.android.compose.animation.scene.ValueKey
 import com.android.compose.animation.scene.animateSharedValueAsState
 import com.android.compose.animation.scene.effect.GestureEffect
-import com.android.compose.animation.scene.effect.OffsetOverscrollEffect
 import com.android.compose.animation.scene.effect.VisualEffect
 import com.android.compose.animation.scene.element
 import com.android.compose.animation.scene.modifiers.noResizeDuringTransitions
-import com.android.compose.animation.scene.nestedScrollToScene
+import com.android.compose.gesture.effect.OffsetOverscrollEffect
 import com.android.compose.modifiers.thenIf
 import com.android.compose.ui.graphics.ContainerState
 import com.android.compose.ui.graphics.container
@@ -173,32 +172,6 @@ internal class ContentScopeImpl(
         )
     }
 
-    override fun Modifier.horizontalNestedScrollToScene(
-        leftBehavior: NestedScrollBehavior,
-        rightBehavior: NestedScrollBehavior,
-        isExternalOverscrollGesture: () -> Boolean,
-    ): Modifier {
-        return nestedScrollToScene(
-            draggableHandler = layoutImpl.horizontalDraggableHandler,
-            topOrLeftBehavior = leftBehavior,
-            bottomOrRightBehavior = rightBehavior,
-            isExternalOverscrollGesture = isExternalOverscrollGesture,
-        )
-    }
-
-    override fun Modifier.verticalNestedScrollToScene(
-        topBehavior: NestedScrollBehavior,
-        bottomBehavior: NestedScrollBehavior,
-        isExternalOverscrollGesture: () -> Boolean,
-    ): Modifier {
-        return nestedScrollToScene(
-            draggableHandler = layoutImpl.verticalDraggableHandler,
-            topOrLeftBehavior = topBehavior,
-            bottomOrRightBehavior = bottomBehavior,
-            isExternalOverscrollGesture = isExternalOverscrollGesture,
-        )
-    }
-
     override fun Modifier.noResizeDuringTransitions(): Modifier {
         return noResizeDuringTransitions(layoutState = layoutImpl.state)
     }
@@ -209,16 +182,17 @@ internal class ContentScopeImpl(
         modifier: Modifier,
         builder: SceneTransitionLayoutScope.() -> Unit,
     ) {
+        val ancestors =
+            remember(layoutImpl, contentKey, layoutImpl.ancestors) {
+                layoutImpl.ancestors + Ancestor(layoutImpl, contentKey)
+            }
         SceneTransitionLayoutForTesting(
             state,
             modifier,
             onLayoutImpl = null,
             builder = builder,
             sharedElementMap = layoutImpl.elements,
-            ancestorContentKeys =
-                remember(layoutImpl.ancestorContentKeys, contentKey) {
-                    layoutImpl.ancestorContentKeys + contentKey
-                },
+            ancestors = ancestors,
             lookaheadScope = layoutImpl.lookaheadScope,
         )
     }

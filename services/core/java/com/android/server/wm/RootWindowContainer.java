@@ -46,6 +46,7 @@ import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_STATES;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_TASKS;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_WALLPAPER;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_SHOW_SURFACE_ALLOC;
+import static com.android.server.display.feature.flags.Flags.enableDisplayContentModeManagement;
 import static com.android.server.policy.PhoneWindowManager.SYSTEM_DIALOG_REASON_ASSIST;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_LAYOUT;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_WALLPAPER;
@@ -153,6 +154,7 @@ import com.android.server.LocalServices;
 import com.android.server.am.ActivityManagerService;
 import com.android.server.am.AppTimeTracker;
 import com.android.server.am.UserState;
+import com.android.server.display.feature.DisplayManagerFlags;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.policy.PermissionPolicyInternal;
 import com.android.server.policy.WindowManagerPolicy;
@@ -1447,6 +1449,13 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
                     : getDefaultTaskDisplayArea();
         }
 
+        // When display content mode management flag is enabled, the task display area is marked as
+        // removed when switching from extended display to mirroring display. We need to restart the
+        // task display area before starting the home.
+        if (enableDisplayContentModeManagement() && taskDisplayArea.isRemoved()) {
+            taskDisplayArea.restart();
+        }
+
         Intent homeIntent = null;
         ActivityInfo aInfo = null;
         if (taskDisplayArea == getDefaultTaskDisplayArea()
@@ -1950,7 +1959,8 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         if (Flags.enableTopVisibleRootTaskPerUserTracking()) {
             final IntArray visibleRootTasks = new IntArray();
             forAllRootTasks(rootTask -> {
-                if (mCurrentUser == rootTask.mUserId && rootTask.isVisibleRequested()) {
+                if ((mCurrentUser == rootTask.mUserId || rootTask.showForAllUsers())
+                        && rootTask.isVisible()) {
                     visibleRootTasks.add(rootTask.getRootTaskId());
                 }
             }, /* traverseTopToBottom */ false);
@@ -2054,6 +2064,11 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
 
             if (Flags.enableTopVisibleRootTaskPerUserTracking()) {
                 final IntArray rootTasks = mUserVisibleRootTasks.get(userId, new IntArray());
+                // If root task already exists in the list, move it to the top instead.
+                final int rootTaskIndex = rootTasks.indexOf(rootTask.getRootTaskId());
+                if (rootTaskIndex != -1) {
+                    rootTasks.remove(rootTaskIndex);
+                }
                 rootTasks.add(rootTask.getRootTaskId());
                 mUserVisibleRootTasks.put(userId, rootTasks);
             } else {
@@ -2974,20 +2989,24 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
             if (display == null) {
                 return;
             }
-            // Do not start home before booting, or it may accidentally finish booting before it
-            // starts. Instead, we expect home activities to be launched when the system is ready
-            // (ActivityManagerService#systemReady).
-            if (mService.isBooted() || mService.isBooting()) {
-                startSystemDecorations(display);
-            }
+
+            startSystemDecorations(display, "displayAdded");
+
             // Drop any cached DisplayInfos associated with this display id - the values are now
             // out of date given this display added event.
             mWmService.mPossibleDisplayInfoMapper.removePossibleDisplayInfos(displayId);
         }
     }
 
-    private void startSystemDecorations(final DisplayContent displayContent) {
-        startHomeOnDisplay(mCurrentUser, "displayAdded", displayContent.getDisplayId());
+    void startSystemDecorations(final DisplayContent displayContent, String reason) {
+        // Do not start home before booting, or it may accidentally finish booting before it
+        // starts. Instead, we expect home activities to be launched when the system is ready
+        // (ActivityManagerService#systemReady).
+        if (!mService.isBooted() && !mService.isBooting()) {
+            return;
+        }
+
+        startHomeOnDisplay(mCurrentUser, reason, displayContent.getDisplayId());
         displayContent.getDisplayPolicy().notifyDisplayReady();
     }
 
@@ -3014,7 +3033,13 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         synchronized (mService.mGlobalLock) {
             final DisplayContent displayContent = getDisplayContent(displayId);
             if (displayContent != null) {
-                displayContent.requestDisplayUpdate(() -> clearDisplayInfoCaches(displayId));
+                displayContent.requestDisplayUpdate(
+                        () -> {
+                            clearDisplayInfoCaches(displayId);
+                            if (enableDisplayContentModeManagement()) {
+                                displayContent.onDisplayInfoChangeApplied();
+                            }
+                        });
             } else {
                 clearDisplayInfoCaches(displayId);
             }
@@ -3050,7 +3075,6 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
     }
 
     void prepareForShutdown() {
-        mWindowManager.mSnapshotController.mTaskSnapshotController.prepareShutdown();
         for (int i = 0; i < getChildCount(); i++) {
             createSleepToken("shutdown", getChildAt(i).mDisplayId);
         }

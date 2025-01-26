@@ -419,8 +419,12 @@ public class DisplayImeController implements DisplayController.OnDisplaysChanged
                 // already (e.g., when focussing an editText in activity B, while and editText in
                 // activity A is focussed), we will not get a call of #insetsControlChanged, and
                 // therefore have to start the show animation from here
-                startAnimation(mImeRequestedVisible /* show */, false /* forceRestart */,
-                        statsToken);
+                if (visible || mImeShowing) {
+                    // only start the animation if we're either already showing or becoming visible.
+                    // otherwise starting another hide animation causes flickers.
+                    startAnimation(mImeRequestedVisible /* show */, false /* forceRestart */,
+                            statsToken);
+                }
 
                 // In case of a hide, the statsToken should not been send yet (as the animation
                 // is still ongoing). It will be sent at the end of the animation
@@ -643,7 +647,9 @@ public class DisplayImeController implements DisplayController.OnDisplaysChanged
                         t.setPosition(animatingLeash, x, endY);
                         t.setAlpha(animatingLeash, 1.f);
                     }
-                    dispatchEndPositioning(mDisplayId, mCancelled, t);
+                    if (!android.view.inputmethod.Flags.refactorInsetsController()) {
+                        dispatchEndPositioning(mDisplayId, mCancelled, t);
+                    }
                     if (mAnimationDirection == DIRECTION_HIDE && !mCancelled) {
                         ImeTracker.forLogging().onProgress(mStatsToken,
                                 ImeTracker.PHASE_WM_ANIMATION_RUNNING);
@@ -658,6 +664,14 @@ public class DisplayImeController implements DisplayController.OnDisplaysChanged
                     } else if (mCancelled) {
                         ImeTracker.forLogging().onCancelled(mStatsToken,
                                 ImeTracker.PHASE_WM_ANIMATION_RUNNING);
+                    }
+                    if (android.view.inputmethod.Flags.refactorInsetsController()) {
+                        // In split screen, we also set {@link
+                        // WindowContainer#mExcludeInsetsTypes} but this should only happen after
+                        // the IME client visibility was set. Otherwise the insets will we
+                        // dispatched too early, and we get a flicker. Thus, only dispatching it
+                        // after reporting that the IME is hidden to system server.
+                        dispatchEndPositioning(mDisplayId, mCancelled, t);
                     }
                     if (DEBUG_IME_VISIBILITY) {
                         EventLog.writeEvent(IMF_IME_REMOTE_ANIM_END,
@@ -713,6 +727,10 @@ public class DisplayImeController implements DisplayController.OnDisplaysChanged
      * Allows other things to synchronize with the ime position
      */
     public interface ImePositionProcessor {
+
+        /** Default animation flags. */
+        int IME_ANIMATION_DEFAULT = 0;
+
         /**
          * Indicates that ime shouldn't animate alpha. It will always be opaque. Used when stuff
          * behind the IME shouldn't be visible (for example during split-screen adjustment where
@@ -722,6 +740,7 @@ public class DisplayImeController implements DisplayController.OnDisplaysChanged
 
         /** @hide */
         @IntDef(prefix = {"IME_ANIMATION_"}, value = {
+                IME_ANIMATION_DEFAULT,
                 IME_ANIMATION_NO_ALPHA,
         })
         @interface ImeAnimationFlags {
@@ -748,7 +767,7 @@ public class DisplayImeController implements DisplayController.OnDisplaysChanged
         @ImeAnimationFlags
         default int onImeStartPositioning(int displayId, int hiddenTop, int shownTop,
                 boolean showing, boolean isFloating, SurfaceControl.Transaction t) {
-            return 0;
+            return IME_ANIMATION_DEFAULT;
         }
 
         /**

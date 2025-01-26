@@ -16,7 +16,6 @@
 
 package com.android.systemui.keyguard.ui.viewmodel
 
-import android.util.MathUtils
 import com.android.systemui.bouncer.domain.interactor.PrimaryBouncerInteractor
 import com.android.systemui.bouncer.shared.flag.ComposeBouncerFlags
 import com.android.systemui.dagger.SysUISingleton
@@ -28,9 +27,8 @@ import com.android.systemui.keyguard.shared.model.KeyguardState.GONE
 import com.android.systemui.keyguard.shared.model.KeyguardState.PRIMARY_BOUNCER
 import com.android.systemui.keyguard.shared.model.ScrimAlpha
 import com.android.systemui.keyguard.ui.KeyguardTransitionAnimationFlow
+import com.android.systemui.keyguard.ui.transitions.BlurConfig
 import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition
-import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition.Companion.MAX_BACKGROUND_BLUR_RADIUS
-import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition.Companion.MIN_BACKGROUND_BLUR_RADIUS
 import com.android.systemui.statusbar.SysuiStatusBarStateController
 import dagger.Lazy
 import javax.inject.Inject
@@ -48,6 +46,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 class PrimaryBouncerToGoneTransitionViewModel
 @Inject
 constructor(
+    private val blurConfig: BlurConfig,
     private val statusBarStateController: SysuiStatusBarStateController,
     private val primaryBouncerInteractor: PrimaryBouncerInteractor,
     keyguardDismissActionInteractor: Lazy<KeyguardDismissActionInteractor>,
@@ -116,9 +115,13 @@ constructor(
             onStart = { willRunDismissFromKeyguard = willRunAnimationOnKeyguard() },
             onStep = {
                 if (willRunDismissFromKeyguard) {
-                    MIN_BACKGROUND_BLUR_RADIUS
+                    blurConfig.minBlurRadiusPx
                 } else {
-                    MathUtils.lerp(MAX_BACKGROUND_BLUR_RADIUS, MIN_BACKGROUND_BLUR_RADIUS, it)
+                    transitionProgressToBlurRadius(
+                        starBlurRadius = blurConfig.maxBlurRadiusPx,
+                        endBlurRadius = blurConfig.minBlurRadiusPx,
+                        transitionProgress = it,
+                    )
                 }
             },
         )

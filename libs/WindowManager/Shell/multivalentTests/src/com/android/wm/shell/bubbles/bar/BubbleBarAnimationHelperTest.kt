@@ -16,14 +16,20 @@
 
 package com.android.wm.shell.bubbles.bar
 
+import android.animation.AnimatorTestRule
+import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.graphics.Insets
+import android.graphics.Outline
 import android.graphics.Rect
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
-import androidx.core.animation.AnimatorTestRule
+import android.widget.FrameLayout.LayoutParams
+import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
@@ -36,27 +42,35 @@ import com.android.wm.shell.bubbles.BubbleExpandedViewManager
 import com.android.wm.shell.bubbles.BubbleLogger
 import com.android.wm.shell.bubbles.BubbleOverflow
 import com.android.wm.shell.bubbles.BubblePositioner
+import com.android.wm.shell.bubbles.BubbleTaskView
 import com.android.wm.shell.bubbles.DeviceConfig
 import com.android.wm.shell.bubbles.FakeBubbleExpandedViewManager
 import com.android.wm.shell.bubbles.FakeBubbleFactory
-import com.android.wm.shell.bubbles.FakeBubbleTaskViewFactory
+import com.android.wm.shell.taskview.TaskView
+import com.android.wm.shell.taskview.TaskViewTaskController
 import com.google.common.truth.Truth.assertThat
 import java.util.concurrent.Semaphore
 import java.util.concurrent.TimeUnit
 import org.junit.After
 import org.junit.Before
-import org.junit.ClassRule
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.kotlin.any
+import org.mockito.kotlin.clearInvocations
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 /** Tests for [BubbleBarAnimationHelper] */
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class BubbleBarAnimationHelperTest {
 
-    companion object {
-        @JvmField @ClassRule val animatorTestRule: AnimatorTestRule = AnimatorTestRule()
+    @get:Rule val animatorTestRule: AnimatorTestRule = AnimatorTestRule(this)
+    private lateinit var activityScenario: ActivityScenario<TestActivity>
 
+    companion object {
         const val SCREEN_WIDTH = 2000
         const val SCREEN_HEIGHT = 1000
     }
@@ -75,6 +89,8 @@ class BubbleBarAnimationHelperTest {
     fun setUp() {
         ProtoLog.REQUIRE_PROTOLOGTOOL = false
         ProtoLog.init()
+        activityScenario = ActivityScenario.launch(TestActivity::class.java)
+        activityScenario.onActivity { activity -> container = activity.container }
         val windowManager = context.getSystemService(WindowManager::class.java)
         bubblePositioner = BubblePositioner(context, windowManager)
         bubblePositioner.setShowingInBubbleBar(true)
@@ -94,8 +110,6 @@ class BubbleBarAnimationHelperTest {
         mainExecutor = TestShellExecutor()
         bgExecutor = TestShellExecutor()
 
-        container = FrameLayout(context)
-
         animationHelper = BubbleBarAnimationHelper(context, bubblePositioner)
     }
 
@@ -113,7 +127,7 @@ class BubbleBarAnimationHelperTest {
         val semaphore = Semaphore(0)
         val after = Runnable { semaphore.release() }
 
-        getInstrumentation().runOnMainSync {
+        activityScenario.onActivity {
             animationHelper.animateSwitch(fromBubble, toBubble, after)
             animatorTestRule.advanceTimeBy(1000)
         }
@@ -137,7 +151,7 @@ class BubbleBarAnimationHelperTest {
             .updateHandleColor(/* isRegionDark= */ true, /* animated= */ false)
         val toBubble = createBubble(key = "to").initialize(container)
 
-        getInstrumentation().runOnMainSync {
+        activityScenario.onActivity {
             animationHelper.animateSwitch(fromBubble, toBubble, /* afterAnimation= */ null)
             animatorTestRule.advanceTimeBy(1000)
         }
@@ -148,6 +162,26 @@ class BubbleBarAnimationHelperTest {
     }
 
     @Test
+    fun animateSwitch_bubbleToBubble_updateTaskBounds() {
+        val fromBubble = createBubble("from").initialize(container)
+        val toBubbleTaskController = mock<TaskViewTaskController>()
+        val toBubble = createBubble("to", toBubbleTaskController).initialize(container)
+
+        activityScenario.onActivity {
+            animationHelper.animateSwitch(fromBubble, toBubble) {}
+            // Start the animation, but don't finish
+            animatorTestRule.advanceTimeBy(100)
+        }
+        getInstrumentation().waitForIdleSync()
+        // Clear invocations to ensure that bounds update happens after animation ends
+        clearInvocations(toBubbleTaskController)
+        getInstrumentation().runOnMainSync { animatorTestRule.advanceTimeBy(900) }
+        getInstrumentation().waitForIdleSync()
+
+        verify(toBubbleTaskController).setWindowBounds(any())
+    }
+
+    @Test
     fun animateSwitch_bubbleToOverflow_oldHiddenNewShown() {
         val fromBubble = createBubble(key = "from").initialize(container)
         val overflow = createOverflow().initialize(container)
@@ -155,7 +189,7 @@ class BubbleBarAnimationHelperTest {
         val semaphore = Semaphore(0)
         val after = Runnable { semaphore.release() }
 
-        getInstrumentation().runOnMainSync {
+        activityScenario.onActivity {
             animationHelper.animateSwitch(fromBubble, overflow, after)
             animatorTestRule.advanceTimeBy(1000)
         }
@@ -178,7 +212,7 @@ class BubbleBarAnimationHelperTest {
         val semaphore = Semaphore(0)
         val after = Runnable { semaphore.release() }
 
-        getInstrumentation().runOnMainSync {
+        activityScenario.onActivity {
             animationHelper.animateSwitch(overflow, toBubble, after)
             animatorTestRule.advanceTimeBy(1000)
         }
@@ -193,13 +227,117 @@ class BubbleBarAnimationHelperTest {
         assertThat(toBubble.bubbleBarExpandedView?.isSurfaceZOrderedOnTop).isFalse()
     }
 
-    private fun createBubble(key: String): Bubble {
+    @Test
+    fun animateToRestPosition_updateTaskBounds() {
+        val taskController = mock<TaskViewTaskController>()
+        val bubble = createBubble("key", taskController).initialize(container)
+
+        activityScenario.onActivity {
+            animationHelper.animateExpansion(bubble) {}
+            animatorTestRule.advanceTimeBy(1000)
+        }
+        getInstrumentation().waitForIdleSync()
+        getInstrumentation().runOnMainSync {
+            animationHelper.animateToRestPosition()
+            animatorTestRule.advanceTimeBy(100)
+        }
+        // Clear invocations to ensure that bounds update happens after animation ends
+        clearInvocations(taskController)
+        getInstrumentation().runOnMainSync { animatorTestRule.advanceTimeBy(900) }
+        getInstrumentation().waitForIdleSync()
+
+        verify(taskController).setWindowBounds(any())
+    }
+
+    @Test
+    fun animateExpansion() {
+        val bubble = createBubble(key = "b1").initialize(container)
+        val bbev = bubble.bubbleBarExpandedView!!
+
+        val semaphore = Semaphore(0)
+        val after = Runnable { semaphore.release() }
+
+        activityScenario.onActivity {
+            bbev.onTaskCreated()
+            animationHelper.animateExpansion(bubble, after)
+            animatorTestRule.advanceTimeBy(1000)
+        }
+        getInstrumentation().waitForIdleSync()
+
+        assertThat(semaphore.tryAcquire(5, TimeUnit.SECONDS)).isTrue()
+        assertThat(bbev.alpha).isEqualTo(1)
+    }
+
+    @Test
+    fun onImeTopChanged_noOverlap() {
+        val bubble = createBubble(key = "b1").initialize(container)
+        val bbev = bubble.bubbleBarExpandedView!!
+
+        val semaphore = Semaphore(0)
+        val after = Runnable { semaphore.release() }
+
+        activityScenario.onActivity {
+            bbev.onTaskCreated()
+            animationHelper.animateExpansion(bubble, after)
+            animatorTestRule.advanceTimeBy(1000)
+        }
+        getInstrumentation().waitForIdleSync()
+
+        assertThat(semaphore.tryAcquire(5, TimeUnit.SECONDS)).isTrue()
+
+        val bbevBottom = bbev.contentBottomOnScreen + bubblePositioner.insets.top
+        activityScenario.onActivity {
+            // notify that the IME top coordinate is greater than the bottom of the expanded view.
+            // there's no overlap so it should not be clipped.
+            animationHelper.onImeTopChanged(bbevBottom * 2)
+        }
+        val outline = Outline()
+        bbev.outlineProvider.getOutline(bbev, outline)
+        assertThat(outline.mRect.bottom).isEqualTo(bbev.height)
+    }
+
+    @Test
+    fun onImeTopChanged_overlapsWithExpandedView() {
+        val bubble = createBubble(key = "b1").initialize(container)
+        val bbev = bubble.bubbleBarExpandedView!!
+
+        val semaphore = Semaphore(0)
+        val after = Runnable { semaphore.release() }
+
+        activityScenario.onActivity {
+            bbev.onTaskCreated()
+            animationHelper.animateExpansion(bubble, after)
+            animatorTestRule.advanceTimeBy(1000)
+        }
+        getInstrumentation().waitForIdleSync()
+
+        assertThat(semaphore.tryAcquire(5, TimeUnit.SECONDS)).isTrue()
+
+        activityScenario.onActivity {
+            // notify that the IME top coordinate is less than the bottom of the expanded view,
+            // meaning it overlaps with it so we should be clipping the expanded view.
+            animationHelper.onImeTopChanged(bbev.contentBottomOnScreen - 10)
+        }
+        val outline = Outline()
+        bbev.outlineProvider.getOutline(bbev, outline)
+        assertThat(outline.mRect.bottom).isEqualTo(bbev.height - 10)
+    }
+
+    private fun createBubble(
+        key: String,
+        taskViewTaskController: TaskViewTaskController = mock<TaskViewTaskController>(),
+    ): Bubble {
+        val taskView = TaskView(context, taskViewTaskController)
+        val taskInfo = mock<ActivityManager.RunningTaskInfo>()
+        whenever(taskViewTaskController.taskInfo).thenReturn(taskInfo)
+        val bubbleTaskView = BubbleTaskView(taskView, mainExecutor)
+
         val bubbleBarExpandedView =
             FakeBubbleFactory.createExpandedView(
                 context,
                 bubblePositioner,
                 expandedViewManager,
-                FakeBubbleTaskViewFactory(context, mainExecutor).create(),
+                bubbleTaskView,
                 mainExecutor,
                 bgExecutor,
                 bubbleLogger,
@@ -215,14 +353,24 @@ class BubbleBarAnimationHelperTest {
     }
 
     private fun Bubble.initialize(container: ViewGroup): Bubble {
-        getInstrumentation().runOnMainSync { container.addView(bubbleBarExpandedView) }
+        activityScenario.onActivity { container.addView(bubbleBarExpandedView) }
         // Mark taskView's visible
         bubbleBarExpandedView!!.onContentVisibilityChanged(true)
         return this
     }
 
     private fun BubbleOverflow.initialize(container: ViewGroup): BubbleOverflow {
-        getInstrumentation().runOnMainSync { container.addView(bubbleBarExpandedView) }
+        activityScenario.onActivity { container.addView(bubbleBarExpandedView) }
         return this
+    }
+
+    class TestActivity : Activity() {
+        lateinit var container: FrameLayout
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            container = FrameLayout(applicationContext)
+            container.layoutParams = LayoutParams(50, 50)
+            setContentView(container)
+        }
     }
 }

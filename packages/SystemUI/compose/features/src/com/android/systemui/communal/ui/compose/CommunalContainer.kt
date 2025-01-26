@@ -8,7 +8,6 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -21,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
@@ -44,6 +44,7 @@ import com.android.compose.animation.scene.SceneTransitionLayout
 import com.android.compose.animation.scene.Swipe
 import com.android.compose.animation.scene.observableTransitionState
 import com.android.compose.animation.scene.transitions
+import com.android.compose.modifiers.thenIf
 import com.android.systemui.communal.shared.model.CommunalBackgroundType
 import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.communal.shared.model.CommunalTransitionKeys
@@ -128,9 +129,6 @@ val sceneTransitions = transitions {
             fade(Communal.Elements.Grid)
         }
     }
-    // Disable horizontal overscroll. If the scene is overscrolled too soon after showing, this
-    // can lead to inconsistent KeyguardState changes.
-    overscrollDisabled(CommunalScenes.Communal, Orientation.Horizontal)
 }
 
 /**
@@ -162,6 +160,7 @@ fun CommunalContainer(
             transitions = sceneTransitions,
         )
     }
+    val isUiBlurred by viewModel.isUiBlurred.collectAsStateWithLifecycle()
 
     val detector = remember { CommunalSwipeDetector() }
 
@@ -178,9 +177,11 @@ fun CommunalContainer(
         onDispose { viewModel.setTransitionState(null) }
     }
 
+    val blurRadius = with(LocalDensity.current) { viewModel.blurRadiusPx.toDp() }
+
     SceneTransitionLayout(
         state = state,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().thenIf(isUiBlurred) { Modifier.blur(blurRadius) },
         swipeSourceDetector = detector,
         swipeDetector = detector,
     ) {
@@ -205,7 +206,6 @@ fun CommunalContainer(
                 colors = colors,
                 content = content,
                 viewModel = viewModel,
-                modifier = Modifier.horizontalNestedScrollToScene(),
             )
         }
     }

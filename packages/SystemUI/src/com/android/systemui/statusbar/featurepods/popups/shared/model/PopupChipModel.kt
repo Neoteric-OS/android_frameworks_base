@@ -23,7 +23,7 @@ import com.android.systemui.common.shared.model.Icon
  * displaying its popup at a time.
  */
 sealed class PopupChipId(val value: String) {
-    data object MediaControls : PopupChipId("MediaControls")
+    data object MediaControl : PopupChipId("MediaControl")
 }
 
 /** Model for individual status bar popup chips. */
@@ -38,7 +38,13 @@ sealed class PopupChipModel {
 
     data class Shown(
         override val chipId: PopupChipId,
+        /** Default icon displayed on the chip */
         val icon: Icon,
+        /**
+         * Icon to be displayed if the chip is hovered. i.e. the mouse pointer is inside the bounds
+         * of the chip.
+         */
+        val hoverIcon: Icon,
         val chipText: String,
         val isToggled: Boolean = false,
         val onToggle: () -> Unit,

@@ -6204,7 +6204,7 @@ public class Notification implements Parcelable
             int textColor = Colors.flattenAlpha(getPrimaryTextColor(p), pillColor);
             contentView.setInt(R.id.expand_button, "setDefaultTextColor", textColor);
             contentView.setInt(R.id.expand_button, "setDefaultPillColor", pillColor);
-            // Use different highlighted colors for conversations' unread count
+            // Use different highlighted colors for e.g. unopened groups
             if (p.mHighlightExpander) {
                 pillColor = Colors.flattenAlpha(
                         getColors(p).getTertiaryFixedDimAccentColor(), bgColor);
@@ -6453,6 +6453,16 @@ public class Notification implements Parcelable
             big.setColorStateList(R.id.snooze_button, "setImageTintList", actionColor);
             big.setColorStateList(R.id.bubble_button, "setImageTintList", actionColor);
 
+            // Update margins to leave space for the top line (but not for HUNs, which use a
+            // different layout that already accounts for that).
+            if (Flags.notificationsRedesignTemplates()
+                    && p.mViewType != StandardTemplateParams.VIEW_TYPE_HEADS_UP) {
+                int margin = getContentMarginTop(mContext,
+                        R.dimen.notification_2025_content_margin_top);
+                big.setViewLayoutMargin(R.id.notification_main_column, RemoteViews.MARGIN_TOP,
+                        margin, TypedValue.COMPLEX_UNIT_PX);
+            }
+
             boolean validRemoteInput = false;
 
             // In the UI, contextual actions appear separately from the standard actions, so we
@@ -6547,6 +6557,30 @@ public class Notification implements Parcelable
             }
 
             return big;
+        }
+
+        /**
+         * Calculate the top margin for the content in px, to allow enough space for the top line
+         * above, using the given resource ID for the desired spacing.
+         *
+         * @hide
+         */
+        public static int getContentMarginTop(Context context, @DimenRes int spacingRes) {
+            final Resources resources = context.getResources();
+            // The margin above the text, at the top of the notification (originally in dp)
+            int notifMargin = resources.getDimensionPixelSize(R.dimen.notification_2025_margin);
+            // Spacing between the text lines, scaling with the font size (originally in sp)
+            int spacing = resources.getDimensionPixelSize(spacingRes);
+
+            // Size of the text in the notification top line (originally in sp)
+            int[] textSizeAttr = new int[] { android.R.attr.textSize };
+            TypedArray typedArray = context.obtainStyledAttributes(
+                    R.style.TextAppearance_DeviceDefault_Notification_Info, textSizeAttr);
+            int textSize = typedArray.getDimensionPixelSize(0 /* index */, -1 /* default */);
+            typedArray.recycle();
+
+            // Adding up all the values as pixels
+            return notifMargin + spacing + textSize;
         }
 
         private boolean hasValidRemoteInput(Action action) {
@@ -6770,6 +6804,8 @@ public class Notification implements Parcelable
         public RemoteViews makeNotificationGroupHeader() {
             return makeNotificationHeader(mParams.reset()
                     .viewType(StandardTemplateParams.VIEW_TYPE_GROUP_HEADER)
+                    // Highlight group expander until the group is first opened
+                    .highlightExpander(Flags.notificationsRedesignTemplates())
                     .fillTextsFrom(this));
         }
 
@@ -6786,6 +6822,12 @@ public class Notification implements Parcelable
                     getHeaderLayoutResource());
             resetNotificationHeader(header);
             bindNotificationHeader(header, p);
+            if (Flags.notificationsRedesignTemplates()
+                    && (p.mViewType == StandardTemplateParams.VIEW_TYPE_MINIMIZED
+                    || p.mViewType == StandardTemplateParams.VIEW_TYPE_PUBLIC)) {
+                // Center top line vertically in minimized and public header-only views
+                header.setBoolean(R.id.notification_header, "centerTopLine", true);
+            }
             return header;
         }
 
@@ -6939,12 +6981,14 @@ public class Notification implements Parcelable
          * @param useRegularSubtext uses the normal subtext set if there is one available. Otherwise
          *                          a new subtext is created consisting of the content of the
          *                          notification.
+         * @param highlightExpander whether the expander should use the highlighted colors
          * @hide
          */
-        public RemoteViews makeLowPriorityContentView(boolean useRegularSubtext) {
+        public RemoteViews makeLowPriorityContentView(boolean useRegularSubtext,
+                boolean highlightExpander) {
             StandardTemplateParams p = mParams.reset()
                     .viewType(StandardTemplateParams.VIEW_TYPE_MINIMIZED)
-                    .highlightExpander(false)
+                    .highlightExpander(highlightExpander)
                     .fillTextsFrom(this);
             if (!useRegularSubtext || TextUtils.isEmpty(p.mSubText)) {
                 p.summaryText(createSummaryText());

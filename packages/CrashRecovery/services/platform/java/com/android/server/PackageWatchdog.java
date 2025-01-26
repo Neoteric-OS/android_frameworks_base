@@ -363,7 +363,7 @@ public class PackageWatchdog {
      * it will resume observing any packages requested from a previous boot.
      * @hide
      */
-    public void registerHealthObserver(PackageHealthObserver observer, Executor ignoredExecutor) {
+    public void registerHealthObserver(Executor ignoredExecutor, PackageHealthObserver observer) {
         synchronized (mLock) {
             ObserverInternal internalObserver = mAllObservers.get(observer.getUniqueIdentifier());
             if (internalObserver != null) {
@@ -397,8 +397,8 @@ public class PackageWatchdog {
      * {@link #DEFAULT_OBSERVING_DURATION_MS} will be used.
      * @hide
      */
-    public void startExplicitHealthCheck(PackageHealthObserver observer, List<String> packageNames,
-            long durationMs) {
+    public void startExplicitHealthCheck(List<String> packageNames, long durationMs,
+            PackageHealthObserver observer) {
         if (packageNames.isEmpty()) {
             Slog.wtf(TAG, "No packages to observe, " + observer.getUniqueIdentifier());
             return;
@@ -446,7 +446,7 @@ public class PackageWatchdog {
             }
 
             // Register observer in case not already registered
-            registerHealthObserver(observer, null);
+            registerHealthObserver(null, observer);
 
             // Sync after we add the new packages to the observers. We may have received packges
             // requiring an earlier schedule than we are currently scheduled for.
@@ -1372,8 +1372,6 @@ public class PackageWatchdog {
                 Slog.w(TAG, "Failed to save monitored packages, restoring backup", e);
                 mPolicyFile.failWrite(stream);
                 return false;
-            } finally {
-                IoUtils.closeQuietly(stream);
             }
         }
     }

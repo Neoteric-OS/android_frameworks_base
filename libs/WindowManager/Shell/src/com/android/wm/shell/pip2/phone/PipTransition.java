@@ -63,6 +63,7 @@ import com.android.wm.shell.common.pip.PipDisplayLayoutState;
 import com.android.wm.shell.common.pip.PipMenuController;
 import com.android.wm.shell.common.pip.PipUtils;
 import com.android.wm.shell.common.split.SplitScreenUtils;
+import com.android.wm.shell.desktopmode.DesktopUserRepositories;
 import com.android.wm.shell.pip.PipTransitionController;
 import com.android.wm.shell.pip2.animation.PipAlphaAnimator;
 import com.android.wm.shell.pip2.animation.PipEnterAnimator;
@@ -71,6 +72,8 @@ import com.android.wm.shell.shared.TransitionUtil;
 import com.android.wm.shell.shared.pip.PipContentOverlay;
 import com.android.wm.shell.sysui.ShellInit;
 import com.android.wm.shell.transition.Transitions;
+
+import java.util.Optional;
 
 /**
  * Implementation of transitions for PiP on phone.
@@ -106,6 +109,7 @@ public class PipTransition extends PipTransitionController implements
     private final PipScheduler mPipScheduler;
     private final PipTransitionState mPipTransitionState;
     private final PipDisplayLayoutState mPipDisplayLayoutState;
+    private final Optional<DesktopUserRepositories> mDesktopUserRepositoriesOptional;
 
     //
     // Transition caches
@@ -140,7 +144,8 @@ public class PipTransition extends PipTransitionController implements
             PipScheduler pipScheduler,
             PipTransitionState pipTransitionState,
             PipDisplayLayoutState pipDisplayLayoutState,
-            PipUiStateChangeController pipUiStateChangeController) {
+            PipUiStateChangeController pipUiStateChangeController,
+            Optional<DesktopUserRepositories> desktopUserRepositoriesOptional) {
         super(shellInit, shellTaskOrganizer, transitions, pipBoundsState, pipMenuController,
                 pipBoundsAlgorithm);
 
@@ -151,6 +156,7 @@ public class PipTransition extends PipTransitionController implements
         mPipTransitionState = pipTransitionState;
         mPipTransitionState.addPipTransitionStateChangedListener(this);
         mPipDisplayLayoutState = pipDisplayLayoutState;
+        mDesktopUserRepositoriesOptional = desktopUserRepositoriesOptional;
     }
 
     @Override
@@ -278,7 +284,8 @@ public class PipTransition extends PipTransitionController implements
         }
 
         if (isRemovePipTransition(info)) {
-            return removePipImmediately(info, startTransaction, finishTransaction, finishCallback);
+            mPipTransitionState.setState(PipTransitionState.EXITING_PIP);
+            return startRemoveAnimation(info, startTransaction, finishTransaction, finishCallback);
         }
         return false;
     }
@@ -668,13 +675,18 @@ public class PipTransition extends PipTransitionController implements
         return true;
     }
 
-    private boolean removePipImmediately(@NonNull TransitionInfo info,
+    private boolean startRemoveAnimation(@NonNull TransitionInfo info,
             @NonNull SurfaceControl.Transaction startTransaction,
             @NonNull SurfaceControl.Transaction finishTransaction,
             @NonNull Transitions.TransitionFinishCallback finishCallback) {
-        startTransaction.apply();
-        finishCallback.onTransitionFinished(null);
-        mPipTransitionState.setState(PipTransitionState.EXITED_PIP);
+        TransitionInfo.Change pipChange = getChangeByToken(info,
+                mPipTransitionState.getPipTaskToken());
+        mFinishCallback = finishCallback;
+        PipAlphaAnimator animator = new PipAlphaAnimator(mContext, pipChange.getLeash(),
+                startTransaction, PipAlphaAnimator.FADE_OUT);
+        finishTransaction.setAlpha(pipChange.getLeash(), 0f);
+        animator.setAnimationEndCallback(this::finishTransition);
+        animator.start();
         return true;
     }
 
@@ -811,6 +823,17 @@ public class PipTransition extends PipTransitionController implements
             return false;
         }
         if (pipTask.pictureInPictureParams == null) {
+            return false;
+        }
+
+
+        // Since opening a new task while in Desktop Mode always first open in Fullscreen
+        // until DesktopMode Shell code resolves it to Freeform, PipTransition will get a
+        // possibility to handle it also. In this case return false to not have it enter PiP.
+        final boolean isInDesktopSession = !mDesktopUserRepositoriesOptional.isEmpty()
+                && mDesktopUserRepositoriesOptional.get().getCurrent().getVisibleTaskCount(
+                pipTask.displayId) > 0;
+        if (isInDesktopSession) {
             return false;
         }
 

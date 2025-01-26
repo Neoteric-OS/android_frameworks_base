@@ -30,7 +30,6 @@ import static android.view.WindowManager.TRANSIT_TO_BACK;
 import static android.view.WindowManager.TRANSIT_TO_FRONT;
 import static android.view.WindowManager.fixScale;
 import static android.window.TransitionInfo.FLAGS_IS_NON_APP_WINDOW;
-import static android.window.TransitionInfo.FLAG_BACK_GESTURE_ANIMATED;
 import static android.window.TransitionInfo.FLAG_IN_TASK_WITH_EMBEDDED_ACTIVITY;
 import static android.window.TransitionInfo.FLAG_IS_BEHIND_STARTING_WINDOW;
 import static android.window.TransitionInfo.FLAG_IS_OCCLUDED;
@@ -41,7 +40,6 @@ import static android.window.TransitionInfo.FLAG_IS_WALLPAPER;
 
 import static com.android.systemui.shared.Flags.returnAnimationFrameworkLongLived;
 import static com.android.window.flags.Flags.ensureWallpaperInTransitions;
-import static com.android.window.flags.Flags.migratePredictiveBackTransition;
 import static com.android.wm.shell.shared.TransitionUtil.isClosingType;
 import static com.android.wm.shell.shared.TransitionUtil.isOpeningType;
 
@@ -86,6 +84,7 @@ import com.android.wm.shell.common.DisplayController;
 import com.android.wm.shell.common.ExternalInterfaceBinder;
 import com.android.wm.shell.common.RemoteCallable;
 import com.android.wm.shell.common.ShellExecutor;
+import com.android.wm.shell.desktopmode.DesktopModeTransitionTypes;
 import com.android.wm.shell.keyguard.KeyguardTransitionHandler;
 import com.android.wm.shell.protolog.ShellProtoLogGroup;
 import com.android.wm.shell.shared.FocusTransitionListener;
@@ -167,22 +166,6 @@ public class Transitions implements RemoteCallable<Transitions>,
 
     /** Transition type for maximize to freeform transition. */
     public static final int TRANSIT_RESTORE_FROM_MAXIMIZE = WindowManager.TRANSIT_FIRST_CUSTOM + 9;
-
-    /** Transition type for starting the drag to desktop mode. */
-    public static final int TRANSIT_DESKTOP_MODE_START_DRAG_TO_DESKTOP =
-            WindowManager.TRANSIT_FIRST_CUSTOM + 10;
-
-    /** Transition type for finalizing the drag to desktop mode. */
-    public static final int TRANSIT_DESKTOP_MODE_END_DRAG_TO_DESKTOP =
-            WindowManager.TRANSIT_FIRST_CUSTOM + 11;
-
-    /** Transition type to cancel the drag to desktop mode. */
-    public static final int TRANSIT_DESKTOP_MODE_CANCEL_DRAG_TO_DESKTOP =
-            WindowManager.TRANSIT_FIRST_CUSTOM + 13;
-
-    /** Transition type to animate the toggle resize between the max and default desktop sizes. */
-    public static final int TRANSIT_DESKTOP_MODE_TOGGLE_RESIZE =
-            WindowManager.TRANSIT_FIRST_CUSTOM + 14;
 
     /** Transition to resize PiP task. */
     public static final int TRANSIT_RESIZE_PIP = TRANSIT_FIRST_CUSTOM + 16;
@@ -562,8 +545,13 @@ public class Transitions implements RemoteCallable<Transitions>,
                 // When the window is moved to front, make sure the crop is updated to prevent it
                 // from using the old crop.
                 t.setPosition(leash, change.getEndRelOffset().x, change.getEndRelOffset().y);
-                t.setWindowCrop(leash, change.getEndAbsBounds().width(),
-                        change.getEndAbsBounds().height());
+                if (change.getContainer() != null) {
+                    // We don't want to crop on non-remotable (activity), because it can have
+                    // letterbox child surface that is position at a negative position related to
+                    // the activity's surface.
+                    t.setWindowCrop(leash, change.getEndAbsBounds().width(),
+                            change.getEndAbsBounds().height());
+                }
             }
 
             // Don't move anything that isn't independent within its parents
@@ -573,8 +561,13 @@ public class Transitions implements RemoteCallable<Transitions>,
                     t.setMatrix(leash, 1, 0, 0, 1);
                     t.setAlpha(leash, 1.f);
                     t.setPosition(leash, change.getEndRelOffset().x, change.getEndRelOffset().y);
-                    t.setWindowCrop(leash, change.getEndAbsBounds().width(),
-                            change.getEndAbsBounds().height());
+                    if (change.getContainer() != null) {
+                        // We don't want to crop on non-remotable (activity), because it can have
+                        // letterbox child surface that is position at a negative position related
+                        // to the activity's surface.
+                        t.setWindowCrop(leash, change.getEndAbsBounds().width(),
+                                change.getEndAbsBounds().height());
+                    }
                 }
                 continue;
             }
@@ -860,12 +853,6 @@ public class Transitions implements RemoteCallable<Transitions>,
                 // Remove the change because it should be invisible in the animation.
                 info.getChanges().remove(i);
                 continue;
-            }
-            // The change has already animated by back gesture, don't need to play transition
-            // animation on it.
-            if (!migratePredictiveBackTransition()
-                    && change.hasFlags(FLAG_BACK_GESTURE_ANIMATED)) {
-                info.getChanges().remove(i);
             }
         }
         // There does not need animation when:
@@ -1880,11 +1867,6 @@ public class Transitions implements RemoteCallable<Transitions>,
             case TRANSIT_SPLIT_DISMISS -> "SPLIT_DISMISS";
             case TRANSIT_MAXIMIZE -> "MAXIMIZE";
             case TRANSIT_RESTORE_FROM_MAXIMIZE -> "RESTORE_FROM_MAXIMIZE";
-            case TRANSIT_DESKTOP_MODE_START_DRAG_TO_DESKTOP -> "DESKTOP_MODE_START_DRAG_TO_DESKTOP";
-            case TRANSIT_DESKTOP_MODE_END_DRAG_TO_DESKTOP -> "DESKTOP_MODE_END_DRAG_TO_DESKTOP";
-            case TRANSIT_DESKTOP_MODE_CANCEL_DRAG_TO_DESKTOP ->
-                    "DESKTOP_MODE_CANCEL_DRAG_TO_DESKTOP";
-            case TRANSIT_DESKTOP_MODE_TOGGLE_RESIZE -> "DESKTOP_MODE_TOGGLE_RESIZE";
             case TRANSIT_RESIZE_PIP -> "RESIZE_PIP";
             case TRANSIT_TASK_FRAGMENT_DRAG_RESIZE -> "TASK_FRAGMENT_DRAG_RESIZE";
             case TRANSIT_SPLIT_PASSTHROUGH -> "SPLIT_PASSTHROUGH";
@@ -1894,6 +1876,9 @@ public class Transitions implements RemoteCallable<Transitions>,
             case TRANSIT_END_RECENTS_TRANSITION -> "END_RECENTS_TRANSITION";
             default -> "";
         };
+        if (typeStr.isEmpty()) {
+            typeStr = DesktopModeTransitionTypes.transitTypeToString(transitType);
+        }
         return typeStr + "(FIRST_CUSTOM+" + (transitType - TRANSIT_FIRST_CUSTOM) + ")";
     }
 

@@ -343,7 +343,9 @@ public:
     void setPointerSpeed(int32_t speed);
     void setMousePointerAccelerationEnabled(ui::LogicalDisplayId displayId, bool enabled);
     void setMouseReverseVerticalScrollingEnabled(bool enabled);
+    void setMouseScrollingAccelerationEnabled(bool enabled);
     void setMouseSwapPrimaryButtonEnabled(bool enabled);
+    void setMouseAccelerationEnabled(bool enabled);
     void setTouchpadPointerSpeed(int32_t speed);
     void setTouchpadNaturalScrollingEnabled(bool enabled);
     void setTouchpadTapToClickEnabled(bool enabled);
@@ -492,11 +494,17 @@ private:
         // True if stylus button reporting through motion events is enabled.
         bool stylusButtonMotionEventsEnabled{true};
 
+        // True if mouse scrolling acceleration is enabled.
+        bool mouseScrollingAccelerationEnabled{true};
+
         // True if mouse vertical scrolling is reversed.
         bool mouseReverseVerticalScrollingEnabled{false};
 
         // True if the mouse primary button is swapped (left/right buttons).
         bool mouseSwapPrimaryButtonEnabled{false};
+
+        // True if the mouse cursor will accelerate as the mouse moves faster.
+        bool mousePointerAccelerationEnabled{true};
 
         // The touchpad pointer speed, as a number from -7 (slowest) to 7 (fastest).
         int32_t touchpadPointerSpeed{0};
@@ -828,6 +836,10 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
                         mLocked.pointerDisplayId) == 0
                 ? android::os::IInputConstants::DEFAULT_POINTER_ACCELERATION
                 : 1;
+        outConfig->wheelVelocityControlParameters.acceleration =
+                mLocked.mouseScrollingAccelerationEnabled
+                ? android::os::IInputConstants::DEFAULT_MOUSE_WHEEL_ACCELERATION
+                : 1;
         outConfig->pointerGesturesEnabled = mLocked.pointerGesturesEnabled;
 
         outConfig->pointerCaptureRequest = mLocked.pointerCaptureRequest;
@@ -839,6 +851,7 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
         outConfig->mouseReverseVerticalScrollingEnabled =
                 mLocked.mouseReverseVerticalScrollingEnabled;
         outConfig->mouseSwapPrimaryButtonEnabled = mLocked.mouseSwapPrimaryButtonEnabled;
+        outConfig->mousePointerAccelerationEnabled = mLocked.mousePointerAccelerationEnabled;
 
         outConfig->touchpadPointerSpeed = mLocked.touchpadPointerSpeed;
         outConfig->touchpadNaturalScrollingEnabled = mLocked.touchpadNaturalScrollingEnabled;
@@ -1420,6 +1433,21 @@ void NativeInputManager::setMouseReverseVerticalScrollingEnabled(bool enabled) {
             InputReaderConfiguration::Change::MOUSE_SETTINGS);
 }
 
+void NativeInputManager::setMouseScrollingAccelerationEnabled(bool enabled) {
+    { // acquire lock
+        std::scoped_lock _l(mLock);
+
+        if (mLocked.mouseScrollingAccelerationEnabled == enabled) {
+            return;
+        }
+
+        mLocked.mouseScrollingAccelerationEnabled = enabled;
+    } // release lock
+
+    mInputManager->getReader().requestRefreshConfiguration(
+            InputReaderConfiguration::Change::POINTER_SPEED);
+}
+
 void NativeInputManager::setMouseSwapPrimaryButtonEnabled(bool enabled) {
     { // acquire lock
         std::scoped_lock _l(mLock);
@@ -1433,6 +1461,21 @@ void NativeInputManager::setMouseSwapPrimaryButtonEnabled(bool enabled) {
 
     mInputManager->getReader().requestRefreshConfiguration(
             InputReaderConfiguration::Change::MOUSE_SETTINGS);
+}
+
+void NativeInputManager::setMouseAccelerationEnabled(bool enabled) {
+    { // acquire lock
+        std::scoped_lock _l(mLock);
+
+        if (mLocked.mousePointerAccelerationEnabled == enabled) {
+            return;
+        }
+
+        mLocked.mousePointerAccelerationEnabled = enabled;
+    } // release lock
+
+    mInputManager->getReader().requestRefreshConfiguration(
+            InputReaderConfiguration::Change::POINTER_SPEED);
 }
 
 void NativeInputManager::setPointerSpeed(int32_t speed) {
@@ -3179,6 +3222,12 @@ static jint nativeGetLastUsedInputDeviceId(JNIEnv* env, jobject nativeImplObj) {
     return static_cast<jint>(im->getInputManager()->getReader().getLastUsedInputDeviceId());
 }
 
+static void nativeSetMouseScrollingAccelerationEnabled(JNIEnv* env, jobject nativeImplObj,
+                                                       bool enabled) {
+    NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
+    im->setMouseScrollingAccelerationEnabled(enabled);
+}
+
 static void nativeSetMouseReverseVerticalScrollingEnabled(JNIEnv* env, jobject nativeImplObj,
                                                           bool enabled) {
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
@@ -3189,6 +3238,11 @@ static void nativeSetMouseSwapPrimaryButtonEnabled(JNIEnv* env, jobject nativeIm
                                                    bool enabled) {
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
     im->setMouseSwapPrimaryButtonEnabled(enabled);
+}
+
+static void nativeSetMouseAccelerationEnabled(JNIEnv* env, jobject nativeImplObj, bool enabled) {
+    NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
+    im->setMouseAccelerationEnabled(enabled);
 }
 
 static jboolean nativeSetKernelWakeEnabled(JNIEnv* env, jobject nativeImplObj, jint deviceId,
@@ -3248,7 +3302,10 @@ static const JNINativeMethod gInputManagerMethods[] = {
          (void*)nativeSetMousePointerAccelerationEnabled},
         {"setMouseReverseVerticalScrollingEnabled", "(Z)V",
          (void*)nativeSetMouseReverseVerticalScrollingEnabled},
+        {"setMouseScrollingAccelerationEnabled", "(Z)V",
+         (void*)nativeSetMouseScrollingAccelerationEnabled},
         {"setMouseSwapPrimaryButtonEnabled", "(Z)V", (void*)nativeSetMouseSwapPrimaryButtonEnabled},
+        {"setMouseAccelerationEnabled", "(Z)V", (void*)nativeSetMouseAccelerationEnabled},
         {"setTouchpadPointerSpeed", "(I)V", (void*)nativeSetTouchpadPointerSpeed},
         {"setTouchpadNaturalScrollingEnabled", "(Z)V",
          (void*)nativeSetTouchpadNaturalScrollingEnabled},
