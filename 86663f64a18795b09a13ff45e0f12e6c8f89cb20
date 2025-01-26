@@ -176,6 +176,30 @@
       },
       "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15609bf9_a0a65ed0",
+        "filename": "core/java/android/hardware/HardwareBuffer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3790621
+      },
+      "writtenOn": "2025-01-26T10:45:22Z",
+      "side": 1,
+      "message": "Hi\nI would appritiate your answer about this issue.",
+      "parentUuid": "f4dc7221_f547de18",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 78
+      },
+      "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
