@@ -149,3 +149,13 @@ flag {
         purpose: PURPOSE_BUGFIX
     }
 }
+
+flag {
+    name: "set_preferred_audio_route_for_bt_device_when_wired_connected"
+    namespace: "bluetooth"
+    description: "When wired device is connected and BT device is being set to active - set BT as preferred audio route"
+    bug: "392584446"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
