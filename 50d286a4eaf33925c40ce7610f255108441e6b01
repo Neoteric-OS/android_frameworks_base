@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "063a56b0_e2e30d92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-01-27T21:17:02Z",
+      "side": 1,
+      "message": "I considered just adding a flag in ART that deprecates/ignores the runtime argument. Fine with either approach, I *think* we can still ramp mainline trunks table flags and get A/B trunkfood partial data, but haven\u0027t fully confirmed that. A/B might be overkill, could also set the .mk value with a build flag but it\u0027s nice to get some comparative data.",
+      "revId": "50d286a4eaf33925c40ce7610f255108441e6b01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
