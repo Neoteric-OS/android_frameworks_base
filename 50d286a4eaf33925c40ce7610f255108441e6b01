@@ -51,6 +51,24 @@
       "parentUuid": "3ba57e3c_0382e2f5",
       "revId": "50d286a4eaf33925c40ce7610f255108441e6b01",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7d1e599_70c773ce",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-01-27T21:54:41Z",
+      "side": 1,
+      "message": "Thank you, this makes more sense to me now that you pointed out that I should look at all changes in this topic and not just this change in isolation.",
+      "parentUuid": "c7dbbfb0_cafc2d18",
+      "revId": "50d286a4eaf33925c40ce7610f255108441e6b01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
