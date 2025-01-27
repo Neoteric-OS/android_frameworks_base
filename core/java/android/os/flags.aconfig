@@ -203,6 +203,13 @@ flag {
 }
 
 flag {
+     namespace: "system_performance"
+     name: "disable_madvise_artfile_default"
+     description: "Disables madvise of .art files by default during app start."
+     bug: "382110550"
+}
+
+flag {
     name: "allow_consentless_bugreport_delegated_consent"
     namespace: "crumpet"
     description: "Allow privileged apps to call bugreport generation without enforcing user consent and delegate it to the calling app instead"
