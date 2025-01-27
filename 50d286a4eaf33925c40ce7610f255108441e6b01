@@ -33,6 +33,24 @@
       "message": "I\u0027m a little confused.\n\nBefore this change, if the makefile specified \"dalvik.vm.madvise.artfile.size\u003d...\" then we would madvise as much, otherwise we would not madvise anything (the default in `runtime_options.def` is 0). Correct?\n\nWith this change, we are introducing a new flag `disable_madvise_artfile_default`.\nIf the flag is set, IIUC nothing changes from the previous behavior. That is to say, if the makefile specifies a value then we use it, otherwise it\u0027s 0.\nIf the flag is not set, we still respect a value from the makefile if provided, otherwise we set 4294967295. Is this correct?",
       "revId": "50d286a4eaf33925c40ce7610f255108441e6b01",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7dbbfb0_cafc2d18",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-01-27T21:52:46Z",
+      "side": 1,
+      "message": "There are two layers today:\n\nFramework: default comes from sysprop `dalvik.vm.madvise.artfile.size` (currently set to UINT_MAX via `runtime_libart.mk`, which is inherited for basically every device). This is fed to ART as a runtime arg. \nART: default comes from `runtime_options.def` (currently set to 0) if nothing passed from the framework.\n\nBecause the framework always sets `dalvik.vm.madvise.artfile.size` via `runtime_libart.mk`, the global default is effectively always `UINT_MAX`. \n\nWith this topic, I moved the framework default from `runtime_libart.mk` into `AndroidRuntime.cpp`. With the flag enabled, we suppress that UINT_MAX default, deferring to ART where the default is 0 (disabled).\n\nIt\u0027s a bit convoluted, but I wanted to do this with a rampable aconfig flag. The alternative would be to just have a rampable mainline ART aconfig flag to simply ignore/disable the madvise entirely. I messaged @ngeoffray@google.com earlier about which he prefers, I don\u0027t feel strongly.",
+      "parentUuid": "3ba57e3c_0382e2f5",
+      "revId": "50d286a4eaf33925c40ce7610f255108441e6b01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
