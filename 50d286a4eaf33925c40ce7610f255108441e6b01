@@ -16,6 +16,23 @@
       "message": "I considered just adding a flag in ART that deprecates/ignores the runtime argument. Fine with either approach, I *think* we can still ramp mainline trunks table flags and get A/B trunkfood partial data, but haven\u0027t fully confirmed that. A/B might be overkill, could also set the .mk value with a build flag but it\u0027s nice to get some comparative data.",
       "revId": "50d286a4eaf33925c40ce7610f255108441e6b01",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ba57e3c_0382e2f5",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-01-27T21:28:50Z",
+      "side": 1,
+      "message": "I\u0027m a little confused.\n\nBefore this change, if the makefile specified \"dalvik.vm.madvise.artfile.size\u003d...\" then we would madvise as much, otherwise we would not madvise anything (the default in `runtime_options.def` is 0). Correct?\n\nWith this change, we are introducing a new flag `disable_madvise_artfile_default`.\nIf the flag is set, IIUC nothing changes from the previous behavior. That is to say, if the makefile specifies a value then we use it, otherwise it\u0027s 0.\nIf the flag is not set, we still respect a value from the makefile if provided, otherwise we set 4294967295. Is this correct?",
+      "revId": "50d286a4eaf33925c40ce7610f255108441e6b01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
