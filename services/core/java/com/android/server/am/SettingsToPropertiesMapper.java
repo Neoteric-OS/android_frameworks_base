@@ -174,6 +174,7 @@ public class SettingsToPropertiesMapper {
         "core_libraries",
         "crumpet",
         "dck_framework",
+        "desktop_wifi",
         "devoptions_settings",
         "game",
         "gpu",
