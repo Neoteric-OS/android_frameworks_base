@@ -241,3 +241,10 @@ flag {
     bug: "308461809"
     is_exported: true
 }
+
+flag {
+     name: "disable_madvise_artfile_default"
+     namespace: "system_performance"
+     description: "Disables madvise of .art files by default during app start."
+     bug: "382110550"
+}
