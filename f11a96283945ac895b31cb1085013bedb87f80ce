@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "216d554f_cd3c96f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-01-28T23:56:55Z",
+      "side": 1,
+      "message": "Adding @spandandas@google.com for Android.bp owners",
+      "revId": "f11a96283945ac895b31cb1085013bedb87f80ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
