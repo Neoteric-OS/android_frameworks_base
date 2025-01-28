@@ -289,6 +289,7 @@ public class LockSettingsService extends ILockSettings.Stub {
     private final SynchronizedStrongAuthTracker mStrongAuthTracker;
     private final BiometricDeferredQueue mBiometricDeferredQueue;
     private final LongSparseArray<byte[]> mGatekeeperPasswords;
+    private final WrongGuessTracker mWrongGuessTracker;
 
     private final NotificationManager mNotificationManager;
     protected final UserManager mUserManager;
@@ -687,6 +688,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         mHandler = injector.getHandler(injector.getServiceThread());
         mStrongAuth = injector.getStrongAuth();
         mActivityManager = injector.getActivityManager();
+        mWrongGuessTracker = new WrongGuessTracker();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_USER_STARTING);
@@ -2439,6 +2441,11 @@ public class LockSettingsService extends ILockSettings.Stub {
         VerifyCredentialResponse response;
 
         synchronized (mSpManager) {
+            if (android.security.Flags.ignoreDuplicateWrongGuesses()
+                    && mWrongGuessTracker.checkIfSeen(userId, credential)) {
+                Slogf.i(TAG, "Duplicate wrong guess detected");
+                return VerifyCredentialResponse.ERROR;
+            }
             if (isSpecialUserId(userId)) {
                 response = mSpManager.verifySpecialUserCredential(userId, getGateKeeperService(),
                         credential, progressCallback);
@@ -2470,6 +2477,7 @@ public class LockSettingsService extends ILockSettings.Stub {
             Slogf.i(TAG, "Successfully verified lockscreen credential for user %d", userId);
             onCredentialVerified(authResult.syntheticPassword,
                     PasswordMetrics.computeForCredential(credential), userId);
+            mWrongGuessTracker.clear(userId);
             if ((flags & VERIFY_FLAG_REQUEST_GK_PW_HANDLE) != 0) {
                 final long gkHandle = storeGatekeeperPasswordTemporarily(
                         authResult.syntheticPassword.deriveGkPassword());
@@ -2478,9 +2486,14 @@ public class LockSettingsService extends ILockSettings.Stub {
                         .build();
             }
             sendCredentialsOnUnlockIfRequired(credential, userId);
-        } else if (response.getResponseCode() == VerifyCredentialResponse.RESPONSE_RETRY) {
-            if (response.getTimeout() > 0) {
-                requireStrongAuth(STRONG_AUTH_REQUIRED_AFTER_LOCKOUT, userId);
+        } else {
+            if (android.security.Flags.ignoreDuplicateWrongGuesses()) {
+                mWrongGuessTracker.insert(userId, credential);
+            }
+            if (response.getResponseCode() == VerifyCredentialResponse.RESPONSE_RETRY) {
+                if (response.getTimeout() > 0) {
+                    requireStrongAuth(STRONG_AUTH_REQUIRED_AFTER_LOCKOUT, userId);
+                }
             }
         }
         if (reportPrimaryAuthAttempts()) {
@@ -2653,6 +2666,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         // Clean up storage last, so that removeStateForReusedUserIdIfNecessary() can assume that no
         // USER_SERIAL_NUMBER_KEY means user is fully removed.
         mStorage.removeUser(userId);
+        mWrongGuessTracker.clear(userId);
     }
 
     private void removeKeystoreProfileKey(int targetUserId) {
@@ -3168,6 +3182,7 @@ public class LockSettingsService extends ILockSettings.Stub {
             }
         }
         mSpManager.destroyLskfBasedProtector(oldProtectorId, userId);
+        mWrongGuessTracker.clear(userId);
         Slogf.i(TAG, "Successfully changed lockscreen credential of user %d", userId);
         return newProtectorId;
     }

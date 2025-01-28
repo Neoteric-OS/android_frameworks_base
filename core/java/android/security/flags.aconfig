@@ -52,6 +52,13 @@ flag {
 }
 
 flag {
+    name: "ignore_duplicate_wrong_guesses"
+    namespace: "security"
+    description: "Ignore duplicate wrong guesses of lockscreen credential"
+    bug: "375688572"
+}
+
+flag {
     name: "deprecate_fsv_sig"
     namespace: "hardware_backed_security"
     description: "Feature flag for deprecating .fsv_sig"
