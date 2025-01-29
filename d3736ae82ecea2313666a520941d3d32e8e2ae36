@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "548ed039_8dc62253",
+        "filename": "services/tests/servicestests/src/com/android/server/zram/ZramMaintenanceTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2025-01-29T11:20:03Z",
+      "side": 1,
+      "message": "nit: unittests should generally go in the same package as the class they test. Would it make sense to move ZramMaintainance also into a zram subdirectory?",
+      "revId": "d3736ae82ecea2313666a520941d3d32e8e2ae36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6660683d_5327c95d",
+        "filename": "services/tests/servicestests/src/com/android/server/zram/ZramMaintenanceTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2025-01-29T11:20:03Z",
+      "side": 1,
+      "message": "nit: please make sure this file/directory has appropriate OWNERS coverage",
+      "revId": "d3736ae82ecea2313666a520941d3d32e8e2ae36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
