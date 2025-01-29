@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08493ec1_cfb4aad0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1494236
+      },
+      "writtenOn": "2025-01-29T21:56:52Z",
+      "side": 1,
+      "message": "Do you have an open bug by any chance?",
+      "revId": "d870f577a9738de8a9b407d2019be54e79080cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff7be94_e820b60a",
+        "filename": "services/voiceinteraction/java/com/android/server/voiceinteraction/RecognitionServiceInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1494236
+      },
+      "writtenOn": "2025-01-29T21:56:52Z",
+      "side": 1,
+      "message": "nit: trailing space",
+      "revId": "d870f577a9738de8a9b407d2019be54e79080cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
