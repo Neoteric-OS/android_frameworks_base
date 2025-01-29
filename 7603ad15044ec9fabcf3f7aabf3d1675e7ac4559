@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e56207a6_7c644da7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165189
+      },
+      "writtenOn": "2025-01-29T17:56:57Z",
+      "side": 1,
+      "message": "Adding Nick to get global override, if he has it.",
+      "revId": "7603ad15044ec9fabcf3f7aabf3d1675e7ac4559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
