@@ -515,7 +515,7 @@ public class ContextWrapper extends Context {
     @Override
     public void sendBroadcastMultiplePermissions(@NonNull Intent intent,
             @NonNull String[] receiverPermissions) {
-        mBase.sendBroadcastMultiplePermissions(intent, receiverPermissions);
+        mBase.sendBroadcastWithMultiplePermissions(intent, receiverPermissions);
     }
 
     /** @hide */
