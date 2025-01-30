@@ -17,52 +17,22 @@
 package com.android.settingslib.bluetooth;
 
 import android.content.Context;
-import android.media.AudioAttributes;
 import android.media.AudioDeviceAttributes;
 import android.media.AudioDeviceInfo;
-import android.media.AudioManager;
 import android.media.audiopolicy.AudioProductStrategy;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-/**
- * A helper class to configure the routing strategy for hearing aids.
- */
-public class HearingAidAudioRoutingHelper {
+/** A helper class to configure the audio routing for hearing aids. */
+public class HearingAidAudioRoutingHelper extends AudioRoutingHelper {
 
-    private final AudioManager mAudioManager;
+    private static final String TAG = "HearingAidAudioRoutingHelper";
 
     public HearingAidAudioRoutingHelper(Context context) {
-        mAudioManager = context.getSystemService(AudioManager.class);
-    }
-
-    /**
-     * Gets the list of {@link AudioProductStrategy} referred by the given list of usage values
-     * defined in {@link AudioAttributes}
-     */
-    public List<AudioProductStrategy> getSupportedStrategies(int[] attributeSdkUsageList) {
-        final List<AudioAttributes> audioAttrList = new ArrayList<>(attributeSdkUsageList.length);
-        for (int attributeSdkUsage : attributeSdkUsageList) {
-            audioAttrList.add(new AudioAttributes.Builder().setUsage(attributeSdkUsage).build());
-        }
-
-        final List<AudioProductStrategy> allStrategies = getAudioProductStrategies();
-        final List<AudioProductStrategy> supportedStrategies = new ArrayList<>();
-        for (AudioProductStrategy strategy : allStrategies) {
-            for (AudioAttributes audioAttr : audioAttrList) {
-                if (strategy.supportsAudioAttributes(audioAttr)) {
-                    supportedStrategies.add(strategy);
-                }
-            }
-        }
-
-        return supportedStrategies.stream().distinct().collect(Collectors.toList());
+        super(context);
     }
 
     /**
@@ -113,54 +83,37 @@ public class HearingAidAudioRoutingHelper {
             return null;
         }
 
-        AudioDeviceInfo[] audioDevices = mAudioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
-        for (AudioDeviceInfo audioDevice : audioDevices) {
-            // ASHA for TYPE_HEARING_AID, HAP for TYPE_BLE_HEADSET
-            if (audioDevice.getType() == AudioDeviceInfo.TYPE_HEARING_AID
-                    || audioDevice.getType() == AudioDeviceInfo.TYPE_BLE_HEADSET) {
-                if (matchAddress(device, audioDevice)) {
-                    return new AudioDeviceAttributes(audioDevice);
-                }
-            }
-        }
-        return null;
+        // ASHA for TYPE_HEARING_AID, HAP for TYPE_BLE_HEADSET
+        return getMatchedDeviceAttributes(
+                device,
+                Arrays.asList(
+                        AudioDeviceInfo.TYPE_HEARING_AID,
+                        AudioDeviceInfo.TYPE_BLE_HEADSET), /* isOutput */
+                true);
     }
 
-    private boolean matchAddress(CachedBluetoothDevice device, AudioDeviceInfo audioDevice) {
-        final String audioDeviceAddress = audioDevice.getAddress();
-        final CachedBluetoothDevice subDevice = device.getSubDevice();
-        final Set<CachedBluetoothDevice> memberDevices = device.getMemberDevice();
-
-        return device.getAddress().equals(audioDeviceAddress)
-                || (subDevice != null && subDevice.getAddress().equals(audioDeviceAddress))
-                || (!memberDevices.isEmpty() && memberDevices.stream().anyMatch(
-                    m -> m.getAddress().equals(audioDeviceAddress)));
-    }
-
-    private boolean setPreferredDeviceForStrategies(List<AudioProductStrategy> strategies,
-            AudioDeviceAttributes audioDevice) {
-        boolean status = true;
-        for (AudioProductStrategy strategy : strategies) {
-            status &= mAudioManager.setPreferredDeviceForStrategy(strategy, audioDevice);
-
+    /**
+     * Gets the matched input hearing device {@link AudioDeviceAttributes} for {@code device}.
+     *
+     * <p>Will also try to match the {@link CachedBluetoothDevice#getSubDevice()} and
+     * {@link CachedBluetoothDevice#getMemberDevice()} of {@code device}
+     *
+     * @param device the {@link CachedBluetoothDevice} need to be hearing aid device
+     * @return the requested AudioDeviceAttributes or {@code null} if not match
+     */
+    @Nullable
+    private AudioDeviceAttributes getMatchedHearingDeviceAttributesInput(
+            @Nullable CachedBluetoothDevice device) {
+        if (device == null || !device.isHearingAidDevice()) {
+            return null;
         }
 
-        return status;
-    }
-
-    private boolean removePreferredDeviceForStrategies(List<AudioProductStrategy> strategies) {
-        boolean status = true;
-        for (AudioProductStrategy strategy : strategies) {
-            if (mAudioManager.getPreferredDeviceForStrategy(strategy) != null) {
-                status &= mAudioManager.removePreferredDeviceForStrategy(strategy);
-            }
-        }
-
-        return status;
-    }
-
-    @VisibleForTesting
-    public List<AudioProductStrategy> getAudioProductStrategies() {
-        return AudioManager.getAudioProductStrategies();
+        // ASHA for TYPE_HEARING_AID, HAP for TYPE_BLE_HEADSET
+        return getMatchedDeviceAttributes(
+                device,
+                List.of(
+                        AudioDeviceInfo.TYPE_HEARING_AID,
+                        AudioDeviceInfo.TYPE_BLE_HEADSET), /* isOutput */
+                false);
     }
 }
