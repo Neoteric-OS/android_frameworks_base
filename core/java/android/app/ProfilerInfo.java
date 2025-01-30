@@ -98,9 +98,19 @@ public class ProfilerInfo implements Parcelable {
      */
     public final int profilerOutputVersion;
 
+    /**
+     * Indicates if we should trace long running methods for lowoverhead tracing
+     */
+    public final boolean profileLongRunningMethods;
+
+    /**
+     * The duration for which the lowoverhed tracing has to be run
+     */
+    public final int duration;
+
     public ProfilerInfo(String filename, ParcelFileDescriptor fd, int interval, boolean autoStop,
             boolean streaming, String agent, boolean attachAgentDuringBind, int clockType,
-            int profilerOutputVersion) {
+            int profilerOutputVersion, boolean profileLongRunningMethods, int duration) {
         profileFile = filename;
         profileFd = fd;
         samplingInterval = interval;
@@ -110,6 +120,8 @@ public class ProfilerInfo implements Parcelable {
         this.agent = agent;
         this.attachAgentDuringBind = attachAgentDuringBind;
         this.profilerOutputVersion = profilerOutputVersion;
+        this.profileLongRunningMethods = profileLongRunningMethods;
+        this.duration = duration;
     }
 
     public ProfilerInfo(ProfilerInfo in) {
@@ -122,6 +134,8 @@ public class ProfilerInfo implements Parcelable {
         attachAgentDuringBind = in.attachAgentDuringBind;
         clockType = in.clockType;
         profilerOutputVersion = in.profilerOutputVersion;
+        profileLongRunningMethods = in.profileLongRunningMethods;
+        duration = in.duration;
     }
 
     /**
@@ -165,7 +179,8 @@ public class ProfilerInfo implements Parcelable {
     public ProfilerInfo setAgent(String agent, boolean attachAgentDuringBind) {
         return new ProfilerInfo(this.profileFile, this.profileFd, this.samplingInterval,
                 this.autoStopProfiler, this.streamingOutput, agent, attachAgentDuringBind,
-                this.clockType, this.profilerOutputVersion);
+                this.clockType, this.profilerOutputVersion, this.profileLongRunningMethods,
+                this.duration);
     }
 
     /**
@@ -207,6 +222,8 @@ public class ProfilerInfo implements Parcelable {
         out.writeBoolean(attachAgentDuringBind);
         out.writeInt(clockType);
         out.writeInt(profilerOutputVersion);
+        out.writeBoolean(profileLongRunningMethods);
+        out.writeInt(duration);
     }
 
     /** @hide */
@@ -222,6 +239,8 @@ public class ProfilerInfo implements Parcelable {
         proto.write(ProfilerInfoProto.AGENT, agent);
         proto.write(ProfilerInfoProto.CLOCK_TYPE, clockType);
         proto.write(ProfilerInfoProto.PROFILER_OUTPUT_VERSION, profilerOutputVersion);
+        proto.write(ProfilerInfoProto.PROFILE_LONG_RUNNING_METHODS, profileLongRunningMethods);
+        proto.write(ProfilerInfoProto.DURATION, duration);
         proto.end(token);
     }
 
@@ -248,6 +267,8 @@ public class ProfilerInfo implements Parcelable {
         attachAgentDuringBind = in.readBoolean();
         clockType = in.readInt();
         profilerOutputVersion = in.readInt();
+        profileLongRunningMethods = in.readBoolean();
+        duration = in.readInt();
     }
 
     @Override
@@ -265,7 +286,9 @@ public class ProfilerInfo implements Parcelable {
                 && samplingInterval == other.samplingInterval
                 && streamingOutput == other.streamingOutput && Objects.equals(agent, other.agent)
                 && clockType == other.clockType
-                && profilerOutputVersion == other.profilerOutputVersion;
+                && profilerOutputVersion == other.profilerOutputVersion
+                && profileLongRunningMethods == other.profileLongRunningMethods
+                && duration == other.duration;
     }
 
     @Override
@@ -278,6 +301,8 @@ public class ProfilerInfo implements Parcelable {
         result = 31 * result + Objects.hashCode(agent);
         result = 31 * result + clockType;
         result = 31 * result + profilerOutputVersion;
+        result = 31 * result + (profileLongRunningMethods ? 1 : 0);
+        result = 31 * result + duration;
         return result;
     }
 }

@@ -207,6 +207,8 @@ final class ActivityManagerShellCommand extends ShellCommand {
     private boolean mAttachAgentDuringBind;  // Whether agent should be attached late.
     private int mClockType; // Whether we need thread cpu / wall clock / both.
     private int mProfilerOutputVersion; // The version of the profiler output.
+    private boolean mLongRunningMethods; // Whether we need to trace only long running methods
+    private int mDuration; // How long should we trace for.
     private int mDisplayId;
     private int mTaskDisplayAreaFeatureId;
     private int mWindowingMode;
@@ -543,6 +545,8 @@ final class ActivityManagerShellCommand extends ShellCommand {
         mSamplingInterval = 0;
         mAutoStop = false;
         mStreaming = false;
+        mLongRunningMethods = false;
+        mDuration = 0;
         mUserId = defUser;
         mDisplayId = INVALID_DISPLAY;
         mTaskDisplayAreaFeatureId = FEATURE_UNDEFINED;
@@ -743,9 +747,9 @@ final class ActivityManagerShellCommand extends ShellCommand {
                         return 1;
                     }
                 }
-                profilerInfo =
-                        new ProfilerInfo(mProfileFile, fd, mSamplingInterval, mAutoStop, mStreaming,
-                                mAgent, mAttachAgentDuringBind, mClockType, mProfilerOutputVersion);
+                profilerInfo = new ProfilerInfo(mProfileFile, fd, mSamplingInterval, mAutoStop,
+                        mStreaming, mAgent, mAttachAgentDuringBind, mClockType,
+                        mProfilerOutputVersion, mLongRunningMethods, mDuration);
             }
 
             pw.println("Starting: " + intent);
@@ -1105,6 +1109,8 @@ final class ActivityManagerShellCommand extends ShellCommand {
         mSamplingInterval = 0;
         mStreaming = false;
         mClockType = ProfilerInfo.CLOCK_TYPE_DEFAULT;
+        mLongRunningMethods = false;
+        mDuration = 0;
         mProfilerOutputVersion = ProfilerInfo.OUTPUT_VERSION_DEFAULT;
 
         String process = null;
@@ -1149,6 +1155,14 @@ final class ActivityManagerShellCommand extends ShellCommand {
             cmd = getNextArgRequired();
             if ("start".equals(cmd)) {
                 start = true;
+                String opt;
+                while ((opt = getNextOption()) != null) {
+                    if (opt.equals("--longrunning")) {
+                        mLongRunningMethods = true;
+                    } else if (opt.equals("--duration")) {
+                        mDuration = Integer.parseInt(getNextArgRequired());
+                    }
+                }
             } else if ("stop".equals(cmd)) {
                 start = false;
             } else {
@@ -1177,16 +1191,21 @@ final class ActivityManagerShellCommand extends ShellCommand {
         // For regular method tracing  profileFile should be provided with the start command. For
         // low overhead method tracing the profileFile is optional and provided with the stop
         // command.
-        if ((start && profileType == ProfilerInfo.PROFILE_TYPE_REGULAR)
-                || (profileType == ProfilerInfo.PROFILE_TYPE_LOW_OVERHEAD
-                  && !start && getRemainingArgsCount() > 0)) {
+        boolean hasFileArg = (profileType == ProfilerInfo.PROFILE_TYPE_REGULAR && start)
+                || (profileType == ProfilerInfo.PROFILE_TYPE_LOW_OVERHEAD && !start
+                        && getRemainingArgsCount() > 0);
+        if (hasFileArg) {
             profileFile = getNextArgRequired();
             fd = openFileForSystem(profileFile, "w");
             if (fd == null) {
                 return -1;
             }
+        }
+
+        if (start || hasFileArg) {
             profilerInfo = new ProfilerInfo(profileFile, fd, mSamplingInterval, false, mStreaming,
-                    null, false, mClockType, mProfilerOutputVersion);
+                    null, false, mClockType, mProfilerOutputVersion, mLongRunningMethods,
+                    mDuration);
         }
 
         if (!mInterface.profileControl(process, userId, start, profilerInfo, profileType)) {

@@ -6950,7 +6950,14 @@ public final class ActivityThread extends ClientTransactionHandler
                         Slog.w(TAG, "Low overhead tracing feature is not enabled");
                         break;
                     }
-                    VMDebug.startLowOverheadTraceForAllMethods();
+
+                    if (profilerInfo.profileLongRunningMethods) {
+                        long milliToNano = 1000 * 1000;
+                        VMDebug.startLowOverheadTraceForLongRunningMethods(
+                                profilerInfo.duration * milliToNano);
+                    } else {
+                        VMDebug.startLowOverheadTraceForAllMethods();
+                    }
                     break;
                 default:
                     try {
