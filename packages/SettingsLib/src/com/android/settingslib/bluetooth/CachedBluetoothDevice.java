@@ -664,28 +664,28 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         A2dpProfile a2dpProfile = mProfileManager.getA2dpProfile();
         if (a2dpProfile != null && isConnectedProfile(a2dpProfile)) {
             if (a2dpProfile.setActiveDevice(getDevice())) {
-                Log.i(TAG, "OnPreferenceClickListener: A2DP active device=" + this);
+                Log.i(TAG, "setActive: A2DP active device=" + this);
                 result = true;
             }
         }
         HeadsetProfile headsetProfile = mProfileManager.getHeadsetProfile();
         if ((headsetProfile != null) && isConnectedProfile(headsetProfile)) {
             if (headsetProfile.setActiveDevice(getDevice())) {
-                Log.i(TAG, "OnPreferenceClickListener: Headset active device=" + this);
+                Log.i(TAG, "setActive: Headset active device=" + this);
                 result = true;
             }
         }
         HearingAidProfile hearingAidProfile = mProfileManager.getHearingAidProfile();
         if ((hearingAidProfile != null) && isConnectedProfile(hearingAidProfile)) {
             if (hearingAidProfile.setActiveDevice(getDevice())) {
-                Log.i(TAG, "OnPreferenceClickListener: Hearing Aid active device=" + this);
+                Log.i(TAG, "setActive: Hearing Aid active device=" + this);
                 result = true;
             }
         }
         LeAudioProfile leAudioProfile = mProfileManager.getLeAudioProfile();
         if ((leAudioProfile != null) && isConnectedProfile(leAudioProfile)) {
             if (leAudioProfile.setActiveDevice(getDevice())) {
-                Log.i(TAG, "OnPreferenceClickListener: LeAudio active device=" + this);
+                Log.i(TAG, "setActive: LeAudio active device=" + this);
                 result = true;
             }
         }
