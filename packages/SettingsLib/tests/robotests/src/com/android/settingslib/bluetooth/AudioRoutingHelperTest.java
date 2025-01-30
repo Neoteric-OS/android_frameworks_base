@@ -19,8 +19,11 @@ package com.android.settingslib.bluetooth;
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
@@ -124,5 +127,35 @@ public class AudioRoutingHelperTest {
                         (
                         /* isOutput */ true));
         assertThat(resultAudioDeviceAttributes).isNull();
+    }
+
+    @Test
+    public void setPreferredDeviceForMediaAudioRoute_noneAudioDeviceAttributesMatched() {
+        when(mDeviceInfoOutput.getType()).thenReturn(AudioDeviceInfo.TYPE_USB_HEADSET);
+        doReturn(true).when(mAudioManager).setPreferredDeviceForStrategy(any(), any());
+
+        assertThat(mHelper.setPreferredDeviceForMediaAudioRoute(mCachedBluetoothDeviceOutput))
+                .isFalse();
+        verify(mAudioManager, times(1)).getDevices(eq(AudioManager.GET_DEVICES_OUTPUTS));
+    }
+
+    @Test
+    public void setPreferredDeviceForMediaAudioRoute_success() {
+        AudioDeviceAttributes deviceOutputAttributes = new AudioDeviceAttributes(mDeviceInfoOutput);
+        AudioAttributes outputAttributes =
+                new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).build();
+
+        when(mDeviceInfoOutput.getType()).thenReturn(AudioDeviceInfo.TYPE_BLUETOOTH_A2DP);
+        when(mAudioStrategy.supportsAudioAttributes(eq(outputAttributes))).thenReturn(true);
+        doReturn(true).when(mAudioManager).setPreferredDeviceForStrategy(any(), any());
+        doReturn(deviceOutputAttributes).when(mAudioManager).getPreferredDeviceForStrategy(any());
+        doReturn(true).when(mAudioManager).removePreferredDeviceForStrategy(any());
+
+        assertThat(mHelper.setPreferredDeviceForMediaAudioRoute(mCachedBluetoothDeviceOutput))
+                .isTrue();
+
+        verify(mAudioManager, times(1)).getPreferredDeviceForStrategy(mAudioStrategy);
+        verify(mAudioManager, times(1)).removePreferredDeviceForStrategy(mAudioStrategy);
+        verify(mAudioManager, times(1)).setPreferredDeviceForStrategy(any(), any());
     }
 }

@@ -24,10 +24,12 @@ import android.media.AudioManager;
 import android.media.audiopolicy.AudioProductStrategy;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -109,6 +111,57 @@ public class AudioRoutingHelper {
     @VisibleForTesting
     public List<AudioProductStrategy> getAudioProductStrategies() {
         return AudioManager.getAudioProductStrategies();
+    }
+
+    /**
+     * Set the preferred device for media audio route.
+     *
+     * @param device the {@link CachedBluetoothDevice}
+     * @return true on success, otherwise false
+     */
+    public boolean setPreferredDeviceForMediaAudioRoute(@NonNull CachedBluetoothDevice device) {
+        if (device == null) {
+            Log.e(TAG, "setPreferredDeviceForMediaAudioRoute: device is null");
+            return false;
+        }
+
+        AudioDeviceAttributes preferredAudioDeviceAttributes =
+                getMatchedDeviceAttributes(
+                        device,
+                        Arrays.asList(
+                                AudioDeviceInfo.TYPE_BLUETOOTH_A2DP,
+                                AudioDeviceInfo.TYPE_BLE_SPEAKER,
+                                AudioDeviceInfo.TYPE_BLE_HEADSET),
+                        (
+                        /* isOutput */ true));
+        if (preferredAudioDeviceAttributes == null) {
+            Log.e(
+                    TAG,
+                    "setPreferredDeviceForMediaAudioRoute: preferredAudioDeviceAttributes is null");
+            return false;
+        }
+
+        List<AudioProductStrategy> supportedStrategies =
+                getSupportedStrategies(new int[] {AudioAttributes.USAGE_MEDIA});
+        if (supportedStrategies.isEmpty()) {
+            Log.e(TAG, "setPreferredDeviceForMediaAudioRoute: no supported strategies");
+            return false;
+        }
+
+        if (!removePreferredDeviceForStrategies(supportedStrategies)) {
+            Log.e(
+                    TAG,
+                    "setPreferredDeviceForMediaAudioRoute: could not remove current device from"
+                            + " media strategy");
+            return false;
+        }
+
+        Log.i(
+                TAG,
+                "setPreferredDeviceForMediaAudioRoute: preferredAudioDeviceAttributes: "
+                        + preferredAudioDeviceAttributes);
+
+        return setPreferredDeviceForStrategies(supportedStrategies, preferredAudioDeviceAttributes);
     }
 
     protected boolean matchAddress(CachedBluetoothDevice device, AudioDeviceInfo audioDevice) {
