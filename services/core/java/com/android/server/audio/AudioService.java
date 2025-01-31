@@ -57,6 +57,7 @@ import static android.media.AudioManager.STREAM_SYSTEM;
 import static android.media.audio.Flags.autoPublicVolumeApiHardening;
 import static android.media.audio.Flags.automaticBtDeviceType;
 import static android.media.audio.Flags.cacheGetStreamMinMaxVolume;
+import static android.media.audio.Flags.cacheGetStreamVolume;
 import static android.media.audio.Flags.concurrentAudioRecordBypassPermission;
 import static android.media.audio.Flags.featureSpatialAudioHeadtrackingLowLatency;
 import static android.media.audio.Flags.focusFreezeTestApi;
@@ -1940,6 +1941,12 @@ public class AudioService extends IAudioService.Stub
             mSpatializerHelper.onRoutingUpdated();
         }
         checkMuteAwaitConnection();
+        if (cacheGetStreamVolume()) {
+            if (DEBUG_VOL) {
+                Log.d(TAG, "Clear volume cache after routing update");
+            }
+            AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
+        }
     }
 
     //-----------------------------------------------------------------
@@ -5056,6 +5063,8 @@ public class AudioService extends IAudioService.Stub
                 + concurrentAudioRecordBypassPermission());
         pw.println("\tandroid.media.audio.Flags.cacheGetStreamMinMaxVolume:"
                 + cacheGetStreamMinMaxVolume());
+        pw.println("\tandroid.media.audio.Flags.cacheGetStreamVolume:"
+                + cacheGetStreamVolume());
     }
 
     private void dumpAudioMode(PrintWriter pw) {
@@ -7122,6 +7131,13 @@ public class AudioService extends IAudioService.Stub
                         !isStreamMutedByRingerOrZenMode(streamType)) || mUseFixedVolume)) {
                     streamState.mIsMuted = false;
                 }
+            }
+            if (cacheGetStreamVolume()) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG,
+                            "Clear volume cache after possibly changing mute in readAudioSettings");
+                }
+                AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
             }
         }
 
@@ -9401,11 +9417,23 @@ public class AudioService extends IAudioService.Stub
             public void put(int key, int value) {
                 super.put(key, value);
                 record("put", key, value);
+                if (cacheGetStreamVolume()) {
+                    if (DEBUG_VOL) {
+                        Log.d(TAG, "Clear volume cache after update index map");
+                    }
+                    AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
+                }
             }
             @Override
             public void setValueAt(int index, int value) {
                 super.setValueAt(index, value);
                 record("setValueAt", keyAt(index), value);
+                if (cacheGetStreamVolume()) {
+                    if (DEBUG_VOL) {
+                        Log.d(TAG, "Clear volume cache after update index map");
+                    }
+                    AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
+                }
             }
 
             // Record all changes in the VolumeStreamState
@@ -10135,8 +10163,9 @@ public class AudioService extends IAudioService.Stub
          * @return true if the mute state was changed
          */
         public boolean mute(boolean state, boolean apply, String src) {
+            boolean changed;
             synchronized (VolumeStreamState.class) {
-                boolean changed = state != mIsMuted;
+                changed = state != mIsMuted;
                 if (changed) {
                     sMuteLogger.enqueue(
                             new AudioServiceEvents.StreamMuteEvent(mStreamType, state, src));
@@ -10154,8 +10183,16 @@ public class AudioService extends IAudioService.Stub
                         doMute();
                     }
                 }
-                return changed;
             }
+
+            if (cacheGetStreamVolume() && changed) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "Clear volume cache after changing mute state");
+                }
+                AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
+            }
+
+            return changed;
         }
 
         public void doMute() {
