@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee09c5f0_7479f173",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-01-31T16:24:58Z",
+      "side": 1,
+      "message": "I don\u0027t understand why the BT settgins has to control the prefered device for media? This is normally the role of the output swticher and/or MediaRouter.\nDid you discuss this with the BeTo team?",
+      "revId": "53bd76fdbbce4b254337323a7a1f1a9c5ae0ea8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
