@@ -16,6 +16,24 @@
       "message": "I don\u0027t understand why the BT settgins has to control the prefered device for media? This is normally the role of the output swticher and/or MediaRouter.\nDid you discuss this with the BeTo team?",
       "revId": "53bd76fdbbce4b254337323a7a1f1a9c5ae0ea8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c06ade21_68d2c380",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2025-01-31T20:24:01Z",
+      "side": 1,
+      "message": "That\u0027s the another solution for: b/202832397 - if we don\u0027t want to set device to null and them be visible as such in audio framework, I had to make switching devices from settings work somehow, hence this change. I asked about this particular solution on offline chat and you agreed. \n\nAgain when the wired device is connected and playing audio and a bluetooth device is connected, not playing - just connected - triggering a change of audio route from wired to bt was impossible from BLuetooth Settings. We triggered setActive for a device - a profile saw that it\u0027s already active and returned - nothing else happend. \n\nLet me know if you have another solution for that, I thought it is ok as I proposed it",
+      "parentUuid": "ee09c5f0_7479f173",
+      "revId": "53bd76fdbbce4b254337323a7a1f1a9c5ae0ea8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
