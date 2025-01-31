@@ -16,7 +16,6 @@
 
 package com.android.server.wm;
 
-import static android.service.autofill.Flags.improveFillDialogAconfig;
 import static android.Manifest.permission.ACCESS_SURFACE_FLINGER;
 import static android.Manifest.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS;
 import static android.Manifest.permission.INPUT_CONSUMER;
@@ -240,7 +239,9 @@ import android.sysprop.SurfaceFlingerProperties;
 import android.text.format.DateUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+// QTI_BEGIN: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
 import android.util.BoostFramework;
+// QTI_END: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.IntArray;
@@ -279,7 +280,6 @@ import android.view.InputApplicationHandle;
 import android.view.InputChannel;
 import android.view.InputDevice;
 import android.view.InputWindowHandle;
-import android.view.InsetsController;
 import android.view.InsetsFrameProvider;
 import android.view.InsetsSourceControl;
 import android.view.InsetsState;
@@ -360,7 +360,9 @@ import com.android.server.policy.WindowManagerPolicy.ScreenOffListener;
 import com.android.server.power.ShutdownThread;
 import com.android.server.utils.PriorityDump;
 import com.android.server.wallpaper.WallpaperCropper.WallpaperCropUtils;
+// QTI_BEGIN: 2024-05-22: Performance: framework_base: Add process freezer to improve app launch latency
 import com.android.server.am.ProcessFreezerManager;
+// QTI_END: 2024-05-22: Performance: framework_base: Add process freezer to improve app launch latency
 import com.android.window.flags.Flags;
 
 import dalvik.annotation.optimization.NeverCompile;
@@ -403,9 +405,10 @@ public class WindowManagerService extends IWindowManager.Stub
 
     static final int LAYOUT_REPEAT_THRESHOLD = 4;
 
-    static final boolean PROFILE_ORIENTATION = false;
+// QTI_BEGIN: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
     static WindowState mFocusingWindow;
     String mFocusingActivity;
+// QTI_END: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
 
     /** The maximum length we will accept for a loaded animation duration:
      * this is 10 seconds.
@@ -488,8 +491,10 @@ public class WindowManagerService extends IWindowManager.Stub
 
     private final DisplayAreaPolicy.Provider mDisplayAreaPolicyProvider;
 
+// QTI_BEGIN: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
     private BoostFramework mPerf = null;
 
+// QTI_END: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
     final private KeyguardDisableHandler mKeyguardDisableHandler;
 
     private final RemoteCallbackList<IKeyguardLockedStateListener> mKeyguardLockedStateListeners =
@@ -802,9 +807,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
     final TrustedPresentationListenerController mTrustedPresentationListenerController =
             new TrustedPresentationListenerController();
-
-    private WindowManagerInternal.ImeInsetsAnimationChangeListener
-            mImeInsetsAnimationChangeListener;
 
     @VisibleForTesting
     final class SettingsObserver extends ContentObserver {
@@ -1761,7 +1763,9 @@ public class WindowManagerService extends IWindowManager.Stub
             // UID, otherwise we allow unlimited duration. When a UID looses focus we
             // schedule hiding all of its toast windows.
             if (type == TYPE_TOAST) {
+// QTI_BEGIN: 2023-06-08: Performance: DSR: Fix DSR when we have toast window
                 mAtmService.setToastWindow();
+// QTI_END: 2023-06-08: Performance: DSR: Fix DSR when we have toast window
                 if (!displayContent.canAddToastWindowForUid(callingUid)) {
                     ProtoLog.w(WM_ERROR, "Adding more than one toast window for UID at a time.");
                     return WindowManagerGlobal.ADD_DUPLICATE_ADD;
@@ -2797,11 +2801,15 @@ public class WindowManagerService extends IWindowManager.Stub
 
     void finishDrawingWindow(Session session, IWindow client,
             @Nullable SurfaceControl.Transaction postDrawTransaction, int seqId) {
+// QTI_BEGIN: 2024-05-22: Performance: framework_base: Add process freezer to improve app launch latency
         //unfreeze process if the first frame appeared
+// QTI_END: 2024-05-22: Performance: framework_base: Add process freezer to improve app launch latency
+// QTI_BEGIN: 2025-01-02: Performance: app freezer: Uncomment app freezer by Google
         ProcessFreezerManager freezer = ProcessFreezerManager.getInstance();
         if (freezer != null && freezer.useFreezerManager()) {
             freezer.startUnfreeze(session.mPackageName, ProcessFreezerManager.COMPLETE_LAUNCH_UNFREEZE);
         }
+// QTI_END: 2025-01-02: Performance: app freezer: Uncomment app freezer by Google
 
         if (postDrawTransaction != null) {
             postDrawTransaction.sanitize(Binder.getCallingPid(), Binder.getCallingUid());
@@ -3608,6 +3616,7 @@ public class WindowManagerService extends IWindowManager.Stub
         ValueAnimator.setDurationScale(scale);
     }
 
+// QTI_BEGIN: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
     private float animationScalesCheck (int which) {
         float value = -1.0f;
         if (!mAnimationsDisabled) {
@@ -3624,12 +3633,17 @@ public class WindowManagerService extends IWindowManager.Stub
         return value;
     }
 
+// QTI_END: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
     public float getWindowAnimationScaleLocked() {
+// QTI_BEGIN: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
         return animationScalesCheck(WINDOW_ANIMATION_SCALE);
+// QTI_END: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
     }
 
     public float getTransitionAnimationScaleLocked() {
+// QTI_BEGIN: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
         return animationScalesCheck(TRANSITION_ANIMATION_SCALE);
+// QTI_END: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
     }
 
     @Override
@@ -8658,14 +8672,6 @@ public class WindowManagerService extends IWindowManager.Stub
             // WMS.takeAssistScreenshot takes care of the locking.
             return WindowManagerService.this.takeAssistScreenshot(windowTypesToExclude);
         }
-
-        @Override
-        public void setImeInsetsAnimationChangeListener(
-                @Nullable WindowManagerInternal.ImeInsetsAnimationChangeListener listener) {
-            synchronized (mGlobalLock) {
-                mImeInsetsAnimationChangeListener = listener;
-            }
-        }
     }
 
     private final class ImeTargetVisibilityPolicyImpl extends ImeTargetVisibilityPolicy {
@@ -10220,24 +10226,6 @@ public class WindowManagerService extends IWindowManager.Stub
         mAtmService.enforceTaskPermission("setUnhandledDragListener");
         synchronized (mGlobalLock) {
             mDragDropController.setGlobalDragListener(listener);
-        }
-    }
-
-    @Override
-    public void notifyImeInsetsAnimationStateChanged(
-            boolean running, @InsetsController.AnimationType int animationType) {
-        if (improveFillDialogAconfig()) {
-            synchronized (mGlobalLock) {
-                if (mImeInsetsAnimationChangeListener == null) {
-                    return;
-                }
-                if (running) {
-                    mImeInsetsAnimationChangeListener.onAnimationStart(
-                            animationType, mCurrentUserId);
-                } else {
-                    mImeInsetsAnimationChangeListener.onAnimationEnd(animationType, mCurrentUserId);
-                }
-            }
         }
     }
 

@@ -24,7 +24,6 @@ import static android.graphics.HardwareRenderer.SYNC_CONTEXT_IS_STOPPED;
 import static android.graphics.HardwareRenderer.SYNC_LOST_SURFACE_REWARD_IF_FOUND;
 import static android.os.IInputConstants.INVALID_INPUT_EVENT_ID;
 import static android.os.Trace.TRACE_TAG_VIEW;
-import static android.service.autofill.Flags.improveFillDialogAconfig;
 import static android.util.SequenceUtils.getInitSeq;
 import static android.util.SequenceUtils.isIncomingSeqStale;
 import static android.view.Display.DEFAULT_DISPLAY;
@@ -216,7 +215,9 @@ import android.sysprop.DisplayProperties;
 import android.sysprop.ViewProperties;
 import android.text.TextUtils;
 import android.util.AndroidRuntimeException;
+// QTI_BEGIN: 2020-06-15: Performance: Pre-rendering AOSP part
 import android.util.BoostFramework.ScrollOptimizer;
+// QTI_END: 2020-06-15: Performance: Pre-rendering AOSP part
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.IndentingPrintWriter;
@@ -924,8 +925,6 @@ public final class ViewRootImpl implements ViewParent,
 
     private boolean mInsetsAnimationRunning;
 
-    private int mInsetsAnimatingTypes = 0;
-
     private long mPreviousFrameDrawnTime = -1;
     // The largest view size percentage to the display size. Used on trace to collect metric.
     private float mLargestChildPercentage = 0.0f;
@@ -1197,7 +1196,9 @@ public final class ViewRootImpl implements ViewParent,
     private String mFpsTraceName;
     private String mLargestViewTraceName;
 
+// QTI_BEGIN: 2018-02-20: Core: BoostFramework: To Enhance performance.
     boolean mHaveMoveEvent = false;
+// QTI_END: 2018-02-20: Core: BoostFramework: To Enhance performance.
 
     private final boolean mAppStartInfoTimestampsFlagValue;
     private AtomicBoolean mAppStartTimestampsSent = new AtomicBoolean(false);
@@ -2526,49 +2527,17 @@ public final class ViewRootImpl implements ViewParent,
      * Notify the when the running state of a insets animation changed.
      */
     @VisibleForTesting
-    public void notifyInsetsAnimationRunningStateChanged(boolean running,
-            @InsetsController.AnimationType int animationType,
-            @InsetsType int insetsTypes) {
-        @InsetsType int previousInsetsType = mInsetsAnimatingTypes;
-        // If improveFillDialogAconfig is disabled, we notify WindowSession of all the updates we
-        // receive here
-        boolean notifyWindowSession = !improveFillDialogAconfig();
-        if (running) {
-            mInsetsAnimatingTypes |= insetsTypes;
-        } else {
-            mInsetsAnimatingTypes &= ~insetsTypes;
-        }
+    public void notifyInsetsAnimationRunningStateChanged(boolean running) {
         if (sToolkitSetFrameRateReadOnlyFlagValue) {
+            if (Trace.isTagEnabled(Trace.TRACE_TAG_VIEW)) {
+                Trace.instant(Trace.TRACE_TAG_VIEW,
+                        TextUtils.formatSimple("notifyInsetsAnimationRunningStateChanged(%s)",
+                        Boolean.toString(running)));
+            }
             mInsetsAnimationRunning = running;
-            // If improveFillDialogAconfig is enabled, we need to confirm other animations aren't
-            // running to maintain the existing behavior. System server were notified previously
-            // only when animation started running or stopped when there were no running animations.
-            if (improveFillDialogAconfig()) {
-                if ((previousInsetsType == 0 && mInsetsAnimatingTypes != 0)
-                        || (previousInsetsType != 0 && mInsetsAnimatingTypes == 0)) {
-                    notifyWindowSession = true;
-                }
-            }
-            if (notifyWindowSession) {
-                if (Trace.isTagEnabled(Trace.TRACE_TAG_VIEW)) {
-                    Trace.instant(Trace.TRACE_TAG_VIEW,
-                            TextUtils.formatSimple("notifyInsetsAnimationRunningStateChanged(%s)",
-                                    Boolean.toString(running)));
-                }
-                try {
-                    mWindowSession.notifyInsetsAnimationRunningStateChanged(mWindow, running);
-                } catch (RemoteException e) {
-                }
-            }
-        }
-        if (improveFillDialogAconfig()) {
-            // Update WindowManager for ImeAnimation
-            if ((insetsTypes & WindowInsets.Type.ime()) != 0) {
-                try {
-                    WindowManagerGlobal.getWindowManagerService()
-                            .notifyImeInsetsAnimationStateChanged(running, animationType);
-                } catch (RemoteException e) {
-                }
+            try {
+                mWindowSession.notifyInsetsAnimationRunningStateChanged(mWindow, running);
+            } catch (RemoteException e) {
             }
         }
     }
@@ -2798,7 +2767,9 @@ public final class ViewRootImpl implements ViewParent,
             mBlastBufferQueue.destroy();
         }
         mBlastBufferQueue = new BLASTBufferQueue(mTag, true /* updateDestinationFrame */);
+// QTI_BEGIN: 2022-03-08: Performance: Correct mismatch hook of pre-rendering FR due to T-upgrade
         ScrollOptimizer.setBLASTBufferQueue(mBlastBufferQueue);
+// QTI_END: 2022-03-08: Performance: Correct mismatch hook of pre-rendering FR due to T-upgrade
         // If we create and destroy BBQ without recreating the SurfaceControl, we can end up
         // queuing buffers on multiple apply tokens causing out of order buffer submissions. We
         // fix this by setting the same apply token on all BBQs created by this VRI.
@@ -8165,11 +8136,15 @@ public final class ViewRootImpl implements ViewParent,
             mAttachInfo.mHandlingPointerEvent = true;
             handled = mView.dispatchPointerEvent(event);
             final int action = event.getActionMasked();
+// QTI_BEGIN: 2019-07-16: Performance: perf: Remove Scroll Boosts and use GestureflingBoost
             if (action == MotionEvent.ACTION_MOVE) {
                 mHaveMoveEvent = true;
             } else if (action == MotionEvent.ACTION_UP) {
                 mHaveMoveEvent = false;
+// QTI_END: 2019-07-16: Performance: perf: Remove Scroll Boosts and use GestureflingBoost
+// QTI_BEGIN: 2018-02-20: Core: BoostFramework: To Enhance performance.
             }
+// QTI_END: 2018-02-20: Core: BoostFramework: To Enhance performance.
             maybeUpdatePointerIcon(event);
             maybeUpdateTooltip(event);
             mAttachInfo.mHandlingPointerEvent = false;
@@ -10391,7 +10366,9 @@ public final class ViewRootImpl implements ViewParent,
     }
 
     void doProcessInputEvents() {
+// QTI_BEGIN: 2021-05-11: Performance: refactor pre-rendering feature for BLASTBufferQueue
         ScrollOptimizer.setBLASTBufferQueue(mBlastBufferQueue);
+// QTI_END: 2021-05-11: Performance: refactor pre-rendering feature for BLASTBufferQueue
         // Deliver all pending input events in the queue.
         while (mPendingInputEventHead != null) {
             QueuedInputEvent q = mPendingInputEventHead;
@@ -10407,10 +10384,12 @@ public final class ViewRootImpl implements ViewParent,
 
             mViewFrameInfo.setInputEvent(mInputEventAssigner.processEvent(q.mEvent));
 
+// QTI_BEGIN: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
             if (q.mEvent instanceof MotionEvent) {
                 ScrollOptimizer.setMotionType(((MotionEvent)q.mEvent).getActionMasked());
             }
 
+// QTI_END: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
             deliverInputEvent(q);
         }
 
