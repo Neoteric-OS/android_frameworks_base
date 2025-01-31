@@ -33,6 +33,42 @@
       "message": "nit: please make sure this file/directory has appropriate OWNERS coverage",
       "revId": "d3736ae82ecea2313666a520941d3d32e8e2ae36",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "840cd056_d7403f34",
+        "filename": "services/tests/servicestests/src/com/android/server/zram/ZramMaintenanceTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965132
+      },
+      "writtenOn": "2025-01-31T03:12:58Z",
+      "side": 1,
+      "message": "Acknowledged. I will change the structure in another CL.",
+      "parentUuid": "548ed039_8dc62253",
+      "revId": "d3736ae82ecea2313666a520941d3d32e8e2ae36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dabb6bbe_6b169ce0",
+        "filename": "services/tests/servicestests/src/com/android/server/zram/ZramMaintenanceTest.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965132
+      },
+      "writtenOn": "2025-01-31T03:12:58Z",
+      "side": 1,
+      "message": "Acknowledged. I will change the structure in another CL.",
+      "parentUuid": "6660683d_5327c95d",
+      "revId": "d3736ae82ecea2313666a520941d3d32e8e2ae36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
