@@ -48,8 +48,10 @@ import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
 /**
  * Tests functionality of {@link android.os.IBinder.FrozenStateChangeCallback}.
@@ -84,6 +86,7 @@ public class BinderFrozenStateChangeNotificationTest {
                 mContext.getPackageManager().getPackageUid(TEST_PACKAGE_NAME_1, 0),
                 "Wiping Test Package");
         mTestAppConnection = bindService();
+        waitForBugReportCompletion(3, TimeUnit.MINUTES);
     }
 
     private IBinder getNewRemoteBinder(String testPackage) throws InterruptedException {
@@ -263,5 +266,46 @@ public class BinderFrozenStateChangeNotificationTest {
 
     private void unfreezeApp2() throws Exception {
         executeShellCommand("am unfreeze " + TEST_PACKAGE_NAME_2);
+    }
+
+    /**
+     * Waits for an in-progress bugreport (if any) to complete. Freezer may be disabled while a
+     * bugreport is taken which causes tests to be flaky.
+     */
+    public void waitForBugReportCompletion(long timeout, TimeUnit unit)
+            throws TimeoutException, InterruptedException {
+        waitForCondition(() -> {
+            try {
+                return UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+                        .executeShellCommand("pidof dumpstate").length() == 0;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }, timeout, unit);
+    }
+
+    /**
+     * Waits for a certain condition to become true.
+     */
+    public void waitForCondition(Supplier<Boolean> condition, long timeout, TimeUnit unit)
+            throws TimeoutException, InterruptedException {
+        long startTime = System.currentTimeMillis();
+        long timeoutMillis = unit.toMillis(timeout);
+
+        while (true) {
+            // Calculate remaining time
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            long remainingTime = timeoutMillis - elapsedTime;
+
+            if (remainingTime <= 0) {
+                throw new TimeoutException();
+            }
+
+            if (condition.get().booleanValue()) {
+                break;
+            }
+
+            Thread.sleep(5000);  // 5 seconds
+        }
     }
 }
