@@ -34,6 +34,24 @@
       "parentUuid": "ee09c5f0_7479f173",
       "revId": "53bd76fdbbce4b254337323a7a1f1a9c5ae0ea8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb7e8475_3d070fce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2025-02-03T12:41:04Z",
+      "side": 1,
+      "message": "I would like you to check this solution from the audio framework perspective, if the API used is correct or if it should be done somehow differently.\n\nMaybe it might be done such that audio framework will handle setting the audio route itself, when only notified about active device change - I tried using handleBluetoothActiveDeviceChanged to do that:\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/media/java/android/media/AudioManager.java;drc\u003d5c410b2504cbac31ccbd06cd06a516ef0db631ee;l\u003d6769\n\nin a place where setActive returns true because the device is already active. It is checked here:\nhttps://cs.android.com/android/platform/superproject/main/+/main:packages/modules/Bluetooth/android/app/src/com/android/bluetooth/a2dp/A2dpService.java;drc\u003d39aabd29c8c6f80f7495ba392c0476ccb53d4f33;l\u003d512\n\nbut I couldn\u0027t make it work - it seems that audio framework does not handle such case with handleBluetoothActiveDeviceChanged / or I am doing something wrong.\n\nSo when this did not work, I found setPreferredDeviceForStrategy and this works well. Also I found the whole Hearing Aid helper in Bluetooth Settings that actually handles audio routing itself: \nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/packages/SettingsLib/src/com/android/settingslib/bluetooth/HearingAidAudioRoutingHelper.java;drc\u003d15f6ae2962bc8ed7840f3f8566be2f5be0e664c6;l\u003d37\n\nso I thought it\u0027s ok for us to use. \n\nIf you will agree that those changes are correct from audioframework perspective I will then assign someone from the Bluetooth team and confirm that it is the way we want to fix it - or not. But without your consent on these it doesn\u0027t make sense for me to involve anyone else. Please let me know if you see any other way, thank you!",
+      "parentUuid": "c06ade21_68d2c380",
+      "revId": "53bd76fdbbce4b254337323a7a1f1a9c5ae0ea8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

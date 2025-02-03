@@ -1,0 +1,49 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2ba91a3_56a86ba9",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/AudioRoutingHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1974186
+      },
+      "writtenOn": "2025-02-03T12:41:04Z",
+      "side": 1,
+      "message": "@elaurent@google.com should I remove the current device from strategies here or it\u0027s redundant / or could break something else?",
+      "fixSuggestions": [
+        {
+          "fixId": "28c882d3_7620c95f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SettingsLib/src/com/android/settingslib/bluetooth/AudioRoutingHelper.java",
+              "range": {
+                "startLine": 150,
+                "startChar": 0,
+                "endLine": 158,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "packages/SettingsLib/src/com/android/settingslib/bluetooth/AudioRoutingHelper.java",
+              "range": {
+                "startLine": 185,
+                "startChar": 0,
+                "endLine": 196,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "e237c21c4632c8d86b4132553cbd501d04695a48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
