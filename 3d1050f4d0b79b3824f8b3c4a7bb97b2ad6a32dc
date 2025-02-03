@@ -39,6 +39,30 @@
       },
       "revId": "3d1050f4d0b79b3824f8b3c4a7bb97b2ad6a32dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23ebf116_bb58ad66",
+        "filename": "core/jni/android_graphics_GraphicBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2025-02-03T21:53:17Z",
+      "side": 1,
+      "message": "I don\u0027t want to track all of these. I\u0027m preventing more and going to fix a few where it comes up.",
+      "parentUuid": "46e880f7_fe4b3ade",
+      "range": {
+        "startLine": 16,
+        "startChar": 61,
+        "endLine": 16,
+        "endChar": 92
+      },
+      "revId": "3d1050f4d0b79b3824f8b3c4a7bb97b2ad6a32dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
