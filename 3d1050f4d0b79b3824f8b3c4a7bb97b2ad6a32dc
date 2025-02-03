@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d5a7139_790d9b22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2025-02-03T21:36:55Z",
+      "side": 1,
+      "message": "Nice!!",
+      "revId": "3d1050f4d0b79b3824f8b3c4a7bb97b2ad6a32dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46e880f7_fe4b3ade",
+        "filename": "core/jni/android_graphics_GraphicBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2025-02-03T21:36:55Z",
+      "side": 1,
+      "message": "nit: Should we track in a bug?\n`find frameworks/base/core/jni -type f -exec sed -i \u0027s/TODO:remove/TODO(b/???): remove/g\u0027 {} \\;`?",
+      "range": {
+        "startLine": 16,
+        "startChar": 61,
+        "endLine": 16,
+        "endChar": 92
+      },
+      "revId": "3d1050f4d0b79b3824f8b3c4a7bb97b2ad6a32dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
