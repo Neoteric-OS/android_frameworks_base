@@ -100,7 +100,7 @@ public final class DisplayManagerGlobal {
 
     @IntDef(prefix = {"EVENT_DISPLAY_"}, flag = true, value = {
             EVENT_DISPLAY_ADDED,
-            EVENT_DISPLAY_CHANGED,
+            EVENT_DISPLAY_BASIC_CHANGED,
             EVENT_DISPLAY_REMOVED,
             EVENT_DISPLAY_BRIGHTNESS_CHANGED,
             EVENT_DISPLAY_HDR_SDR_RATIO_CHANGED,
@@ -111,7 +111,7 @@ public final class DisplayManagerGlobal {
     public @interface DisplayEvent {}
 
     public static final int EVENT_DISPLAY_ADDED = 1;
-    public static final int EVENT_DISPLAY_CHANGED = 2;
+    public static final int EVENT_DISPLAY_BASIC_CHANGED = 2;
     public static final int EVENT_DISPLAY_REMOVED = 3;
     public static final int EVENT_DISPLAY_BRIGHTNESS_CHANGED = 4;
     public static final int EVENT_DISPLAY_HDR_SDR_RATIO_CHANGED = 5;
