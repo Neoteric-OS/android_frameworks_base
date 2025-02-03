@@ -224,6 +224,30 @@
       },
       "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f152429b_9d978690",
+        "filename": "core/java/android/hardware/HardwareBuffer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 3790621
+      },
+      "writtenOn": "2025-02-03T08:57:52Z",
+      "side": 1,
+      "message": "Done\nI have uploaded the updated files with the new rule.",
+      "parentUuid": "3f4b83e6_f0efa7d7",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 78
+      },
+      "revId": "86663f64a18795b09a13ff45e0f12e6c8f89cb20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
