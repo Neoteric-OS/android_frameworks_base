@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c404a520_e3bcfb9d",
+        "filename": "media/jni/android_media_MediaCodec.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2025-02-03T18:56:42Z",
+      "side": 1,
+      "message": "nit: only one space around `*`. I prefer a space before the star.",
+      "revId": "f24f5c37d36b007db7f179ada47ea70514392451",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
