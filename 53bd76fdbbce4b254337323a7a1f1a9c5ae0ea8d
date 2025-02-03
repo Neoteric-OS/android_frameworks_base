@@ -52,6 +52,24 @@
       "parentUuid": "c06ade21_68d2c380",
       "revId": "53bd76fdbbce4b254337323a7a1f1a9c5ae0ea8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ec23544_89141cf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-02-03T16:19:54Z",
+      "side": 1,
+      "message": "If I agreed that the BT settings will call setPreferredeviceForStrategy API then this was a mistake. I probably did not understand which module you were working on.\nThis API should only be used by MediaRouter or the output switcher to avoid conficting requests coming from different components that would have to be resolved by each component keeping its internal state and listening to changes made by other components which will not be scalable. \nI still don\u0027t understand why the BT stack or BT settings have to worry about changing the BT active device whne a wired device is connected. The default routing policy rules in the audio framewok wil take care of swtiching route to and from the wired headset and active BT headset if needed and if no exoplicit route is set by the output switcher.\nThis has beenn working this way for years.",
+      "parentUuid": "eb7e8475_3d070fce",
+      "revId": "53bd76fdbbce4b254337323a7a1f1a9c5ae0ea8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
