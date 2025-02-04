@@ -51,6 +51,24 @@
       "message": "This will break a bunch of existing platform targets that depend on this code.",
       "revId": "6ff57b8635f41a7da5172ada0b0cee3e256f8178",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec7b0099_31b9ab54",
+        "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2025-02-04T15:36:34Z",
+      "side": 1,
+      "message": "Thank you very much! Could I understand the reason? If it is easy to fix, I can make some updates in this change",
+      "parentUuid": "918dd4e3_b635931e",
+      "revId": "6ff57b8635f41a7da5172ada0b0cee3e256f8178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
