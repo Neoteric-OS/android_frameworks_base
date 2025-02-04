@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a72ad16_e099208c",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2025-02-04T15:33:41Z",
+      "side": 1,
+      "message": "Thank you. Could you please help me why will it break presubmit? For `frameworks-base-testutils` it would be the same. The thing changes here is the `HandlerExecutor` which is identical.",
+      "parentUuid": "2643cc5c_95b0cb7c",
+      "revId": "6ff57b8635f41a7da5172ada0b0cee3e256f8178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "918dd4e3_b635931e",
         "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
         "patchSetId": 3
