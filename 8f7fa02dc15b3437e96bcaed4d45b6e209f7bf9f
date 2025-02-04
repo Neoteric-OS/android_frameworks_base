@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2e6f32d_f08f30dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2025-02-04T13:32:02Z",
+      "side": 1,
+      "message": "Please add appropriate OWNERS coverage for this file and get approval from one of the proposed OWNERS.\n\n(I would not allow picking out a single file to be compile separately into a separate library in a codebase that I own; c.f. https://irm.corp.google.com/incidents/i_A6b7EqhEePC7gQ9rev2q/documentation/read/narrative?search\u003d\u0026teams\u003d1161801439583,1530960685127 for a crash caused by a similar setup)",
+      "revId": "8f7fa02dc15b3437e96bcaed4d45b6e209f7bf9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
