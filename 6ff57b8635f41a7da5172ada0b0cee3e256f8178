@@ -140,6 +140,24 @@
       "parentUuid": "918dd4e3_b635931e",
       "revId": "6ff57b8635f41a7da5172ada0b0cee3e256f8178",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c91eb17_2807688e",
+        "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-02-04T15:46:05Z",
+      "side": 1,
+      "message": "I suggest trying to build AOSP with your change and seeing the failures.",
+      "parentUuid": "ec7b0099_31b9ab54",
+      "revId": "6ff57b8635f41a7da5172ada0b0cee3e256f8178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
