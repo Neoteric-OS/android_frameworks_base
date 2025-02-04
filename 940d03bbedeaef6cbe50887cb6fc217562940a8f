@@ -16,6 +16,24 @@
       "message": "I don\u0027t see why you can\u0027t use this in a mainline test.",
       "revId": "940d03bbedeaef6cbe50887cb6fc217562940a8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0b3f97d_e1bf0f7a",
+        "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1944425
+      },
+      "writtenOn": "2025-02-04T15:58:39Z",
+      "side": 0,
+      "message": "ah Yes, I can explain. It is from the flags in framework. Flags in framework should be jarjared to avoid the class name collision. So we had way to automatically jarjar the flags in framework, and all dependants who depends on the implementation of the framework, for example system service jar, since these depends can use the implementation (not stub) of the framework, including the hidden methods, and the flags. For example system service jar will directly use the flags in framework instead of duplicating them.\n\n`sdk_version` decided whether a target is build against the implemention of framework, or against the stubs of framework. If `sdk_version` is not set, then the target is built against the implementation of the framework, which means it will be applied the same flag jarjar rule, since we don\u0027t know whther it uses the flags in framework or not.\n\nBack to this case `frameworks-base-testutils` is built against the implemention of the framework, and theoritically it can use any hidden methods in framework, which means whoever add it through `static_libs` will have the ability, it because a backdoor. If mainline uses some libraries it should have sdk_version set (unfortunately it is not the case). \n\n`frameworks-base-testutils` will be applied the flag jarjar rule, and whoever add it through `static_libs` will be applied the jarjar rule as well, becasues the `static_libs` kind of means include the src into the fianl binary.",
+      "parentUuid": "8ed94aa2_7cb725de",
+      "revId": "940d03bbedeaef6cbe50887cb6fc217562940a8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
