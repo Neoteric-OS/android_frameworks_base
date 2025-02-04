@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2d93a20_d76d3561",
+        "filename": "tests/utils/testutils/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-02-04T15:36:45Z",
+      "side": 1,
+      "message": "Example: `frameworks/base/tests/vcn/java/com/android/server/vcn/VcnTest.java` uses `TestLooper`. This source is part of `FrameworksVcnTests`, a build target that depends on `frameworks-base-testutils` to get `TestLooper.java`. Your test will break that target at compile time.\n\nGo run presubmit and see for yourself that there are build failures.",
+      "parentUuid": "8a72ad16_e099208c",
+      "revId": "6ff57b8635f41a7da5172ada0b0cee3e256f8178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "918dd4e3_b635931e",
         "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
         "patchSetId": 3

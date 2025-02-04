@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ed94aa2_7cb725de",
+        "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-02-04T15:36:45Z",
+      "side": 0,
+      "message": "I don\u0027t see why you can\u0027t use this in a mainline test.",
+      "revId": "940d03bbedeaef6cbe50887cb6fc217562940a8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
