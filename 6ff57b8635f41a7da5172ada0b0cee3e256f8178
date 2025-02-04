@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9444a802_b9cc3ebc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1059977
+      },
+      "writtenOn": "2025-02-04T15:38:44Z",
+      "side": 1,
+      "message": "AFAICT there are already mainline tests that use TestLooper.\n(unfortunately, because as a result of this I now need to make this class backwards compatible, where before this was not a requirement)",
+      "revId": "6ff57b8635f41a7da5172ada0b0cee3e256f8178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2643cc5c_95b0cb7c",
         "filename": "tests/utils/testutils/Android.bp",
         "patchSetId": 3
