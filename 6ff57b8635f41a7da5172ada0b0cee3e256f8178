@@ -145,6 +145,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1ef0a828_c41a9347",
+        "filename": "tests/utils/testutils/java/android/os/test/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2025-02-04T17:18:02Z",
+      "side": 1,
+      "message": "- Can we move this to tests/utils/testutils/Android.bp, right before \"frameworks-base-testutils\"? I think that\u0027d make it easy to understand why we\u0027re excluding TestLooper.java from \"frameworks-base-testutils\". Otherwise, as it is, it\u0027s very hard to understand what\u0027s going on.\n\n- Also please add a comment ot this module -- e.g. \"// We build it seperately from frameworks-base-testutils so that we can reuse it in mainlne modules.\" or something like that.",
+      "revId": "6ff57b8635f41a7da5172ada0b0cee3e256f8178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "918dd4e3_b635931e",
         "filename": "tests/utils/testutils/java/android/os/test/TestLooper.java",
         "patchSetId": 3
