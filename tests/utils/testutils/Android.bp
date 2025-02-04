@@ -29,15 +29,32 @@ java_library {
     srcs: ["java/**/*.java"],
 
     static_libs: [
-        "junit",
-        "hamcrest-library",
         "androidx.test.runner",
+        "hamcrest-library",
+        "junit",
     ],
 
     libs: [
-        "android.test.runner.stubs.system",
         "android.test.base.stubs.system",
         "android.test.mock.stubs.system",
+        "android.test.runner.stubs.system",
         "mockito-target-extended-minus-junit4",
+        "modules-utils-handlerexecutor",
+    ],
+}
+
+java_library {
+    name: "module-os-testlooper",
+    srcs: [
+        "java/android/os/test/TestLooper.java",
+    ],
+    sdk_version: "module_current",
+    static_libs: [
+        "junit",
+        "modules-utils-handlerexecutor",
+    ],
+    apex_available: [
+        "//apex_available:anyapex",
+        "//apex_available:platform",
     ],
 }
