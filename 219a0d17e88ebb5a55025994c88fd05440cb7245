@@ -16,6 +16,24 @@
       "message": "Why remove the final here?",
       "revId": "219a0d17e88ebb5a55025994c88fd05440cb7245",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8efdcf0f_7b207340",
+        "filename": "core/java/com/android/internal/globalactions/ActionsDialog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2025-02-05T17:47:51Z",
+      "side": 0,
+      "message": "This was necessary to allow the override of dispatchTouchEvent in LegacyGlobalActions, but I decided to remove the timeout as it is not the main case we are trying to solve.",
+      "parentUuid": "ab55f81e_7bfb2f33",
+      "revId": "219a0d17e88ebb5a55025994c88fd05440cb7245",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
