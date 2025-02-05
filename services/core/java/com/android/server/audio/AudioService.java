@@ -3886,7 +3886,7 @@ public class AudioService extends IAudioService.Stub
 
         VolumeStreamState streamState = getVssForStreamOrDefault(streamTypeAlias);
 
-        final int device = getDeviceForStream(streamTypeAlias);
+        final int device = getDeviceForStream(streamTypeAlias, flags);
 
         int aliasIndex = streamState.getIndex(device);
         boolean adjustVolume = true;
@@ -4201,7 +4201,7 @@ public class AudioService extends IAudioService.Stub
                     // Unmute all aliasted streams
                     muteAliasStreams(streamAlias, false);
                 }
-                final int device = getDeviceForStream(streamAlias);
+                final int device = getDeviceForStream(streamAlias, flags);
                 final int index = streamState.getIndex(device);
                 sendVolumeUpdate(streamAlias, index, index, flags, device);
             }
@@ -4627,7 +4627,7 @@ public class AudioService extends IAudioService.Stub
 
         if (ada == null) {
             // call was already logged in setDeviceVolume()
-            final int deviceType = getDeviceForStream(streamType);
+            final int deviceType = getDeviceForStream(streamType, flags);
             sVolumeLogger.enqueue(new VolumeEvent(VolumeEvent.VOL_SET_STREAM_VOL, streamType,
                     index/*val1*/, flags/*val2*/, getStreamVolume(streamType, deviceType) /*val3*/,
                     callingPackage));
@@ -5039,7 +5039,7 @@ public class AudioService extends IAudioService.Stub
         }
 
         final int device = (ada == null)
-                ? getDeviceForStream(streamType)
+                ? getDeviceForStream(streamType, flags)
                 : ada.getInternalType();
         int oldIndex;
 
@@ -7890,21 +7890,27 @@ public class AudioService extends IAudioService.Stub
      */
     @VisibleForTesting
     public int getDeviceForStream(int stream) {
+        return getDeviceForStream(stream, /* flags =*/ 0);
+    }
+
+    private int getDeviceForStream(int stream, int flags) {
         stream = replaceBtScoStreamWithVoiceCall(stream, "getDeviceForStream");
-        return selectOneAudioDevice(getDeviceSetForStream(stream));
+        return selectOneAudioDevice(getDeviceSetForStream(stream), flags);
     }
 
     /*
      * Must match native apm_extract_one_audio_device() used in getDeviceForVolume()
      * or the wrong device volume may be adjusted.
      */
-    private int selectOneAudioDevice(Set<Integer> deviceSet) {
+    private int selectOneAudioDevice(Set<Integer> deviceSet, int flags) {
         if (deviceSet.isEmpty()) {
             return AudioSystem.DEVICE_NONE;
         } else if (deviceSet.size() == 1) {
             return deviceSet.iterator().next();
         } else {
             // Multiple device selection is either:
+            //  - absolute volume device + one other device: give priority to absolute volume
+            // device if absolute volume flag is set
             //  - dock + one other device: give priority to dock in this case.
             //  - speaker + one other device: give priority to speaker in this case.
             //  - one A2DP device + another device: happens with duplicated output. In this case
@@ -7912,7 +7918,20 @@ public class AudioService extends IAudioService.Stub
             // selection if not the speaker.
             //  - HDMI-CEC system audio mode only output: give priority to available item in order.
 
-            if (deviceSet.contains(AudioSystem.DEVICE_OUT_DGTL_DOCK_HEADSET)) {
+            if ((flags & AudioManager.FLAG_BLUETOOTH_ABS_VOLUME) != 0) {
+                for (int device : deviceSet) {
+                    if (isA2dpAbsoluteVolumeDevice(device)
+                            || AudioSystem.isLeAudioDeviceType(device)) {
+                        return device;
+                    }
+                }
+            } else if ((flags & AudioManager.FLAG_ABSOLUTE_VOLUME) != 0) {
+                for (int device : deviceSet) {
+                    if (isAbsoluteVolumeDevice(device)) {
+                        return device;
+                    }
+                }
+            } else if (deviceSet.contains(AudioSystem.DEVICE_OUT_DGTL_DOCK_HEADSET)) {
                 return AudioSystem.DEVICE_OUT_DGTL_DOCK_HEADSET;
             } else if (deviceSet.contains(AudioSystem.DEVICE_OUT_SPEAKER)) {
                 return AudioSystem.DEVICE_OUT_SPEAKER;
