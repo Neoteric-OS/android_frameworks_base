@@ -94,6 +94,40 @@
       },
       "revId": "60de8b169bea112348a85f68a438ca59804427fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e2e1f5a_02324ef6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1393882
+      },
+      "writtenOn": "2025-02-05T09:10:12Z",
+      "side": 1,
+      "message": "The subject should be followed by an empty line.\n```suggestion\nFix issue crash Timezone Istanbul\n\n```",
+      "revId": "60de8b169bea112348a85f68a438ca59804427fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efbcc6ff_6696fdf0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1393882
+      },
+      "writtenOn": "2025-02-05T09:10:12Z",
+      "side": 1,
+      "message": "Please format the message like this, and also add a test case in `ZoneGetterTest.java` to ensure your patch is safe.\n\n```suggestion\n\nSolution: Add condition if LONG_DAYLIGHT and LONG_STANDARD are null,\nthen get EXEMPLAR_LOCATION\n\nBug: 350054006\nTest: atest ZoneGetterTest\n```",
+      "revId": "60de8b169bea112348a85f68a438ca59804427fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
