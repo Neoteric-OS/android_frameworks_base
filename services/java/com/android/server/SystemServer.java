@@ -875,6 +875,14 @@ public final class SystemServer implements Dumpable {
 
             SystemServiceRegistry.sEnableServiceNotFoundWtf = true;
 
+            // Prepare the thread pool for init tasks that can be parallelized
+            SystemServerInitThreadPool tp = SystemServerInitThreadPool.start();
+            mDumper.addDumpable(tp);
+
+            if (android.server.Flags.earlySystemConfigInit()) {
+                startSystemConfigInit();
+            }
+
             // Initialize native services.
             System.loadLibrary("android_servers");
 
@@ -907,9 +915,6 @@ public final class SystemServer implements Dumpable {
             mDumper.addDumpable(mSystemServiceManager);
 
             LocalServices.addService(SystemServiceManager.class, mSystemServiceManager);
-            // Prepare the thread pool for init tasks that can be parallelized
-            SystemServerInitThreadPool tp = SystemServerInitThreadPool.start();
-            mDumper.addDumpable(tp);
 
             // Lazily load the pre-installed system font map in SystemServer only if we're not doing
             // the optimized font loading in the FontManagerService.
@@ -1057,6 +1062,14 @@ public final class SystemServer implements Dumpable {
         }
     }
 
+    private void startSystemConfigInit() {
+        Slog.i(TAG, "Reading configuration...");
+        final String tagSystemConfig = "ReadingSystemConfig";
+        t.traceBegin(tagSystemConfig);
+        SystemServerInitThreadPool.submit(SystemConfig::getInstance, tagSystemConfig);
+        t.traceEnd();
+    }
+
     private void createSystemContext() {
         ActivityThread activityThread = ActivityThread.systemMain();
         mSystemContext = activityThread.getSystemContext();
@@ -1095,11 +1108,9 @@ public final class SystemServer implements Dumpable {
         mDumper.addDumpable(watchdog);
         t.traceEnd();
 
-        Slog.i(TAG, "Reading configuration...");
-        final String TAG_SYSTEM_CONFIG = "ReadingSystemConfig";
-        t.traceBegin(TAG_SYSTEM_CONFIG);
-        SystemServerInitThreadPool.submit(SystemConfig::getInstance, TAG_SYSTEM_CONFIG);
-        t.traceEnd();
+        if (!android.server.Flags.earlySystemConfigInit()) {
+            startSystemConfigInit();
+        }
 
         // Orchestrates some ProtoLogging functionality.
         if (android.tracing.Flags.clientSideProtoLogging()) {
