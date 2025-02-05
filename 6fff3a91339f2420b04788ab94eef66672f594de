@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6cfbf5b_1a21f6e7",
+        "filename": "core/jni/android_view_InputQueue.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2025-02-05T23:49:57Z",
+      "side": 1,
+      "message": "this may need to be refactored to be in onFirstRef (may cause aborts...)",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 86
+      },
+      "revId": "6fff3a91339f2420b04788ab94eef66672f594de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
