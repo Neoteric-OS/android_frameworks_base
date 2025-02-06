@@ -116,6 +116,7 @@ public class SettingsSpinnerPreference extends Preference implements OnPreferenc
         spinner.setAdapter(mAdapter);
         spinner.setSelection(mPosition);
         spinner.setOnItemSelectedListener(mOnSelectedListener);
+        spinner.setLongClickable(false);
         if (mShouldPerformClick) {
             mShouldPerformClick = false;
             // To show dropdown view.
