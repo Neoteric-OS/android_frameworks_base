@@ -3779,6 +3779,10 @@ public class HdmiControlService extends SystemService {
     @ServiceThreadOnly
     void wakeUp() {
         assertRunOnServiceThread();
+        if (isPowerOnOrTransient()) {
+            return;
+        }
+        HdmiLogger.debug("Hdmi cec wake up.");
         mWakeUpMessageReceived = true;
         mPowerManager.wakeUp(SystemClock.uptimeMillis(), PowerManager.WAKE_REASON_HDMI,
                 "android.server.hdmi:WAKE");
@@ -3792,6 +3796,10 @@ public class HdmiControlService extends SystemService {
         if (!canGoToStandby()) {
             return;
         }
+        if (isPowerStandbyOrTransient()) {
+            return;
+        }
+        HdmiLogger.debug("Hdmi cec standby.");
         mStandbyMessageReceived = true;
         mPowerManager.goToSleep(SystemClock.uptimeMillis(), PowerManager.GO_TO_SLEEP_REASON_HDMI, 0);
         // PowerManger will send the broadcast Intent.ACTION_SCREEN_OFF and after this gets
