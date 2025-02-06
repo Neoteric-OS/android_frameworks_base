@@ -1,0 +1,3 @@
+# Bug component: 1530954
+
+include /services/accessibility/java/com/android/server/accessibility/magnification/OWNERS
