@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2fa723b_1be7ea10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-02-06T17:50:39Z",
+      "side": 1,
+      "message": "See also the prototype in aosp/3479313 that I will rebase. It\u0027s showing ~100ms boot time improvement on a recent Pixel, and ~400-500ms boot time improvement on wear.",
+      "revId": "00626174263d74b0e500d74d1e0226c95c73e74e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
