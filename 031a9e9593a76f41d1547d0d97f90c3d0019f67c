@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10b52938_11aafd73",
+        "filename": "services/accessibility/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2009640
+      },
+      "writtenOn": "2025-02-07T03:14:10Z",
+      "side": 0,
+      "message": "If some devs have logic/behavior issues and try to find OWNER here, I feel like the main 44215 component could be a better place since they\u0027re not automation test bugs. Shall we only use the test component under test dirs?",
+      "revId": "031a9e9593a76f41d1547d0d97f90c3d0019f67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
