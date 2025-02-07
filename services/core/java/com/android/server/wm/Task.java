@@ -1134,7 +1134,7 @@ class Task extends TaskFragment {
         // TODO(b/168037178): The check for null display content and setting it to null doesn't
         //                    really make sense here...
 
-        // TODO(b/168037178): This is mostly taking care of the case where the stask is removing
+        // TODO(b/168037178): This is mostly taking care of the case where the task is removing
         //                    from the display, so we should probably consolidate it there instead.
 
         if (getParent() == null && mDisplayContent != null) {
