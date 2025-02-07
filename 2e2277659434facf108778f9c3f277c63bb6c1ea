@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c930842_56fafd85",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3188,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2025-02-07T13:18:33Z",
+      "side": 1,
+      "message": "I wouldn\u0027t include FLAG_TRUSTED in this list.  It\u0027s trusted because it\u0027s a local display, not because of this config value.",
+      "range": {
+        "startLine": 3188,
+        "startChar": 36,
+        "endLine": 3188,
+        "endChar": 48
+      },
+      "revId": "2e2277659434facf108778f9c3f277c63bb6c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
