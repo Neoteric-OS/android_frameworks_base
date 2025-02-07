@@ -19,9 +19,6 @@ package com.android.wm.shell.pip2.phone;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
 
-import static com.android.wm.shell.transition.Transitions.TRANSIT_EXIT_PIP;
-import static com.android.wm.shell.transition.Transitions.TRANSIT_REMOVE_PIP;
-
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
@@ -40,6 +37,7 @@ import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.common.ShellExecutor;
 import com.android.wm.shell.common.pip.PipBoundsState;
 import com.android.wm.shell.desktopmode.DesktopUserRepositories;
+import com.android.wm.shell.desktopmode.desktopwallpaperactivity.DesktopWallpaperActivityTokenProvider;
 import com.android.wm.shell.pip.PipTransitionController;
 import com.android.wm.shell.pip2.PipSurfaceTransactionHelper;
 import com.android.wm.shell.pip2.animation.PipAlphaAnimator;
@@ -59,6 +57,8 @@ public class PipScheduler {
     private final ShellExecutor mMainExecutor;
     private final PipTransitionState mPipTransitionState;
     private final Optional<DesktopUserRepositories> mDesktopUserRepositoriesOptional;
+    private final Optional<DesktopWallpaperActivityTokenProvider>
+            mDesktopWallpaperActivityTokenProviderOptional;
     private final RootTaskDisplayAreaOrganizer mRootTaskDisplayAreaOrganizer;
     private PipTransitionController mPipTransitionController;
     private PipSurfaceTransactionHelper.SurfaceControlTransactionFactory
@@ -73,12 +73,16 @@ public class PipScheduler {
             ShellExecutor mainExecutor,
             PipTransitionState pipTransitionState,
             Optional<DesktopUserRepositories> desktopUserRepositoriesOptional,
+            Optional<DesktopWallpaperActivityTokenProvider>
+                    desktopWallpaperActivityTokenProviderOptional,
             RootTaskDisplayAreaOrganizer rootTaskDisplayAreaOrganizer) {
         mContext = context;
         mPipBoundsState = pipBoundsState;
         mMainExecutor = mainExecutor;
         mPipTransitionState = pipTransitionState;
         mDesktopUserRepositoriesOptional = desktopUserRepositoriesOptional;
+        mDesktopWallpaperActivityTokenProviderOptional =
+                desktopWallpaperActivityTokenProviderOptional;
         mRootTaskDisplayAreaOrganizer = rootTaskDisplayAreaOrganizer;
 
         mSurfaceControlTransactionFactory =
@@ -105,19 +109,6 @@ public class PipScheduler {
         return wct;
     }
 
-    @Nullable
-    private WindowContainerTransaction getRemovePipTransaction() {
-        WindowContainerToken pipTaskToken = mPipTransitionState.getPipTaskToken();
-        if (pipTaskToken == null) {
-            return null;
-        }
-        WindowContainerTransaction wct = new WindowContainerTransaction();
-        wct.setBounds(pipTaskToken, null);
-        wct.setWindowingMode(pipTaskToken, WINDOWING_MODE_UNDEFINED);
-        wct.reorder(pipTaskToken, false);
-        return wct;
-    }
-
     /**
      * Schedules exit PiP via expand transition.
      */
@@ -126,21 +117,16 @@ public class PipScheduler {
             if (!mPipTransitionState.isInPip()) return;
             WindowContainerTransaction wct = getExitPipViaExpandTransaction();
             if (wct != null) {
-                mPipTransitionController.startExitTransition(TRANSIT_EXIT_PIP, wct,
-                        null /* destinationBounds */);
+                mPipTransitionController.startExpandTransition(wct);
             }
         });
     }
 
     /** Schedules remove PiP transition. */
-    public void scheduleRemovePip() {
+    public void scheduleRemovePip(boolean withFadeout) {
         mMainExecutor.execute(() -> {
             if (!mPipTransitionState.isInPip()) return;
-            WindowContainerTransaction wct = getRemovePipTransaction();
-            if (wct != null) {
-                mPipTransitionController.startExitTransition(TRANSIT_REMOVE_PIP, wct,
-                        null /* destinationBounds */);
-            }
+            mPipTransitionController.startRemoveTransition(withFadeout);
         });
     }
 
@@ -209,9 +195,11 @@ public class PipScheduler {
      * @param degrees the angle to rotate the bounds to.
      */
     public void scheduleUserResizePip(Rect toBounds, float degrees) {
-        if (toBounds.isEmpty()) {
+        if (toBounds.isEmpty() || !mPipTransitionState.isInPip()) {
             ProtoLog.w(ShellProtoLogGroup.WM_SHELL_PICTURE_IN_PICTURE,
-                    "%s: Attempted to user resize PIP to empty bounds, aborting.", TAG);
+                    "%s: Attempted to user resize PIP in invalid state, aborting;"
+                            + "toBounds=%s, mPipTransitionState=%s",
+                    TAG, toBounds, mPipTransitionState);
             return;
         }
         SurfaceControl leash = mPipTransitionState.getPinnedTaskLeash();
@@ -260,10 +248,18 @@ public class PipScheduler {
 
     /** Returns whether PiP is exiting while we're in desktop mode. */
     private boolean isPipExitingToDesktopMode() {
-        return Flags.enableDesktopWindowingPip() && mDesktopUserRepositoriesOptional.isPresent()
-                && (mDesktopUserRepositoriesOptional.get().getCurrent().getVisibleTaskCount(
-                Objects.requireNonNull(mPipTransitionState.getPipTaskInfo()).displayId) > 0
-                || isDisplayInFreeform());
+        // Early return if PiP in Desktop Windowing is not supported.
+        if (!Flags.enableDesktopWindowingPip() || mDesktopUserRepositoriesOptional.isEmpty()
+                || mDesktopWallpaperActivityTokenProviderOptional.isEmpty()) {
+            return false;
+        }
+        final int displayId = Objects.requireNonNull(
+                mPipTransitionState.getPipTaskInfo()).displayId;
+        return mDesktopUserRepositoriesOptional.get().getCurrent().getVisibleTaskCount(displayId)
+                > 0
+                || mDesktopWallpaperActivityTokenProviderOptional.get().isWallpaperActivityVisible(
+                displayId)
+                || isDisplayInFreeform();
     }
 
     /**
@@ -298,7 +294,8 @@ public class PipScheduler {
     interface PipAlphaAnimatorSupplier {
         PipAlphaAnimator get(@NonNull Context context,
                 SurfaceControl leash,
-                SurfaceControl.Transaction tx,
+                SurfaceControl.Transaction startTransaction,
+                SurfaceControl.Transaction finishTransaction,
                 @PipAlphaAnimator.Fade int direction);
     }
 

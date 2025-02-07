@@ -78,6 +78,24 @@ public class InputSettings {
     public static final int DEFAULT_POINTER_SPEED = 0;
 
     /**
+     * Pointer Speed: The minimum (slowest) mouse scrolling speed (-7).
+     * @hide
+     */
+    public static final int MIN_MOUSE_SCROLLING_SPEED = -7;
+
+    /**
+     * Pointer Speed: The maximum (fastest) mouse scrolling speed (7).
+     * @hide
+     */
+    public static final int MAX_MOUSE_SCROLLING_SPEED = 7;
+
+    /**
+     * Pointer Speed: The default mouse scrolling speed (0).
+     * @hide
+     */
+    public static final int DEFAULT_MOUSE_SCROLLING_SPEED = 0;
+
+    /**
      * Bounce Keys Threshold: The default value of the threshold (500 ms).
      *
      * @hide
@@ -367,6 +385,42 @@ public class InputSettings {
     }
 
     /**
+     * Whether touchpad acceleration is enabled or not.
+     *
+     * @param context The application context.
+     *
+     * @hide
+     */
+    public static boolean isTouchpadAccelerationEnabled(@NonNull Context context) {
+        if (!isPointerAccelerationFeatureFlagEnabled()) {
+            return false;
+        }
+
+        return Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.TOUCHPAD_ACCELERATION_ENABLED, 1, UserHandle.USER_CURRENT)
+                == 1;
+    }
+
+   /**
+    * Enables or disables touchpad acceleration.
+    *
+    * @param context The application context.
+    * @param enabled Will enable touchpad acceleration if true, disable it if
+    *                false.
+    * @hide
+    */
+    @RequiresPermission(Manifest.permission.WRITE_SETTINGS)
+    public static void setTouchpadAccelerationEnabled(@NonNull Context context,
+            boolean enabled) {
+        if (!isPointerAccelerationFeatureFlagEnabled()) {
+            return;
+        }
+        Settings.System.putIntForUser(context.getContentResolver(),
+                Settings.System.TOUCHPAD_ACCELERATION_ENABLED, enabled ? 1 : 0,
+                UserHandle.USER_CURRENT);
+    }
+
+    /**
      * Returns true if the feature flag for disabling system gestures on touchpads is enabled.
      *
      * @hide
@@ -650,6 +704,54 @@ public class InputSettings {
     }
 
     /**
+     * Gets the mouse scrolling speed.
+     *
+     * The returned value only applies when mouse scrolling acceleration is not enabled.
+     *
+     * @param context The application context.
+     * @return The mouse scrolling speed as a value between {@link #MIN_MOUSE_SCROLLING_SPEED} and
+     *         {@link #MAX_MOUSE_SCROLLING_SPEED}, or the default value
+     *         {@link #DEFAULT_MOUSE_SCROLLING_SPEED}.
+     *
+     * @hide
+     */
+    public static int getMouseScrollingSpeed(@NonNull Context context) {
+        if (!isMouseScrollingAccelerationFeatureFlagEnabled()) {
+            return 0;
+        }
+
+        return Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.MOUSE_SCROLLING_SPEED, DEFAULT_MOUSE_SCROLLING_SPEED,
+                UserHandle.USER_CURRENT);
+    }
+
+    /**
+     * Sets the mouse scrolling speed, and saves it in the settings.
+     *
+     * The new speed will only apply when mouse scrolling acceleration is not enabled.
+     *
+     * @param context The application context.
+     * @param speed The mouse scrolling speed as a value between {@link #MIN_MOUSE_SCROLLING_SPEED}
+     *              and {@link #MAX_MOUSE_SCROLLING_SPEED}, or the default value
+     *              {@link #DEFAULT_MOUSE_SCROLLING_SPEED}.
+     *
+     * @hide
+     */
+    @RequiresPermission(Manifest.permission.WRITE_SETTINGS)
+    public static void setMouseScrollingSpeed(@NonNull Context context, int speed) {
+        if (isMouseScrollingAccelerationEnabled(context)) {
+            return;
+        }
+
+        if (speed < MIN_MOUSE_SCROLLING_SPEED || speed > MAX_MOUSE_SCROLLING_SPEED) {
+            throw new IllegalArgumentException("speed out of range");
+        }
+
+        Settings.System.putIntForUser(context.getContentResolver(),
+                Settings.System.MOUSE_SCROLLING_SPEED, speed, UserHandle.USER_CURRENT);
+    }
+
+    /**
      * Whether mouse vertical scrolling is reversed. This applies only to connected mice.
      *
      * @param context The application context.
@@ -768,7 +870,6 @@ public class InputSettings {
                 Settings.System.MOUSE_POINTER_ACCELERATION_ENABLED, enabled ? 1 : 0,
                 UserHandle.USER_CURRENT);
     }
-
 
     /**
      * Whether Accessibility bounce keys feature is enabled.

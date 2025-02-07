@@ -111,10 +111,8 @@
     <string name="screenrecord_channel_description" msgid="4147077128486138351">"Konstant notifikation om skærmoptagelse"</string>
     <string name="screenrecord_permission_dialog_title" msgid="7415261783188749730">"Vil du optage din skærm?"</string>
     <string name="screenrecord_permission_dialog_option_text_single_app" msgid="1996450687814647583">"Optag én app"</string>
-    <!-- no translation found for screenrecord_permission_dialog_option_text_entire_screen (4882406311415082016) -->
-    <skip />
-    <!-- no translation found for screenrecord_permission_dialog_option_text_entire_screen_for_display (4169494703993148253) -->
-    <skip />
+    <string name="screenrecord_permission_dialog_option_text_entire_screen" msgid="4882406311415082016">"Optag denne skærm"</string>
+    <string name="screenrecord_permission_dialog_option_text_entire_screen_for_display" msgid="4169494703993148253">"Optag %s"</string>
     <string name="screenrecord_permission_dialog_warning_entire_screen" msgid="1321758636709366068">"Når du optager hele skærmen, bliver alt det, der vises på skærmen, optaget. Vær derfor forsigtig med ting såsom adgangskoder, betalingsoplysninger, beskeder, billeder, lyd og video."</string>
     <string name="screenrecord_permission_dialog_warning_single_app" msgid="3738199712880063924">"Når du optager en app, optages alt det, der vises eller afspilles i den pågældende app. Vær derfor forsigtig med ting såsom adgangskoder, betalingsoplysninger, beskeder, billeder, lyd og video."</string>
     <string name="screenrecord_permission_dialog_continue_entire_screen" msgid="5557974446773486600">"Optag skærm"</string>
@@ -417,20 +415,13 @@
     <string name="hearing_devices_presets_error" msgid="350363093458408536">"Forindstillingen kunne ikke opdateres"</string>
     <string name="hearing_devices_preset_label" msgid="7878267405046232358">"Forindstilling"</string>
     <string name="hearing_devices_spinner_item_selected" msgid="3137083889662762383">"Valgt"</string>
-    <!-- no translation found for hearing_devices_ambient_label (629440938614895797) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_control_left (3586965448230412600) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_control_right (6192137602448918383) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_expand_controls (2131816068187709200) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_collapse_controls (2261097656446201581) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_mute (1836882837647429416) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_unmute (2187938085943876814) -->
-    <skip />
+    <string name="hearing_devices_ambient_label" msgid="629440938614895797">"Omgivelser"</string>
+    <string name="hearing_devices_ambient_control_left" msgid="3586965448230412600">"Venstre"</string>
+    <string name="hearing_devices_ambient_control_right" msgid="6192137602448918383">"Højre"</string>
+    <string name="hearing_devices_ambient_expand_controls" msgid="2131816068187709200">"Udvid til adskilte styringselementer til venstre og højre"</string>
+    <string name="hearing_devices_ambient_collapse_controls" msgid="2261097656446201581">"Minimer til samlet styringselement"</string>
+    <string name="hearing_devices_ambient_mute" msgid="1836882837647429416">"Ignorer omgivelser"</string>
+    <string name="hearing_devices_ambient_unmute" msgid="2187938085943876814">"Ignorer ikke omgivelser"</string>
     <string name="hearing_devices_tools_label" msgid="1929081464316074476">"Værktøjer"</string>
     <string name="quick_settings_hearing_devices_live_caption_title" msgid="1054814050932225451">"Livetekstning"</string>
     <string name="quick_settings_notes_label" msgid="1028004078001002623">"Note"</string>
@@ -759,6 +750,8 @@
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"Opdaterer"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"Arbejdsprofil"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"Flytilstand"</string>
+    <!-- no translation found for status_bar_supervision (6735015942701134125) -->
+    <skip />
     <string name="zen_alarm_warning" msgid="7844303238486849503">"Du vil ikke kunne høre din næste alarm <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template" msgid="2234991538018805736">"kl. <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template_far" msgid="3561752195856839456">"på <xliff:g id="WHEN">%1$s</xliff:g>"</string>
@@ -768,7 +761,7 @@
     <string name="accessibility_status_bar_satellite_good_connection" msgid="308079391708578704">"Satellit – god forbindelse"</string>
     <string name="accessibility_status_bar_satellite_available" msgid="6514855015496916829">"Satellit – forbindelsen er tilgængelig"</string>
     <string name="satellite_connected_carrier_text" msgid="118524195198532589">"SOS-meldinger via satellit"</string>
-    <string name="satellite_emergency_only_carrier_text" msgid="828510231597991206">"Nødopkald eller SOS-meldinger via satellit"</string>
+    <string name="satellite_emergency_only_carrier_text" msgid="9103913890116841786">"Kun nødopkald eller SOS-meldinger via satellit"</string>
     <string name="accessibility_phone_string_format" msgid="7798841417881811812">"<xliff:g id="CARRIER_NAME">%1$s</xliff:g>, <xliff:g id="SIGNAL_STRENGTH_DESCRIPTION">%2$s</xliff:g>."</string>
     <string name="accessibility_no_signal" msgid="7052827511409250167">"intet signal"</string>
     <string name="accessibility_one_bar" msgid="5342012847647834506">"én bjælke"</string>
@@ -865,7 +858,6 @@
     <string name="keyboard_shortcut_group_system_back" msgid="1055709713218453863">"Tilbage"</string>
     <string name="keyboard_shortcut_group_system_notifications" msgid="3615971650562485878">"Notifikationer"</string>
     <string name="keyboard_shortcut_group_system_shortcuts_helper" msgid="4856808328618265589">"Tastaturgenveje"</string>
-    <string name="keyboard_shortcut_group_system_switch_input" msgid="952555530383268166">"Skift tastaturlayout"</string>
     <string name="keyboard_shortcut_join" msgid="3578314570034512676">"eller"</string>
     <string name="keyboard_shortcut_clear_text" msgid="6631051796030377857">"Ryd søgeforespørgsel"</string>
     <string name="keyboard_shortcut_search_list_title" msgid="4271769465397671138">"Tastaturgenveje"</string>
@@ -976,11 +968,9 @@
     <string name="tuner_low_priority" msgid="8412666814123009820">"Vis ikoner for notifikationer med lav prioritet"</string>
     <string name="other" msgid="429768510980739978">"Andet"</string>
     <string name="accessibility_qs_edit_remove_tile_action" msgid="775511891457193480">"fjern felt"</string>
-    <!-- no translation found for accessibility_qs_edit_tile_add_action (8311378984458545661) -->
-    <skip />
+    <string name="accessibility_qs_edit_tile_add_action" msgid="8311378984458545661">"føj handlingsfeltet til den sidste position"</string>
     <string name="accessibility_qs_edit_tile_start_move" msgid="2009373939914517817">"Flyt felt"</string>
-    <!-- no translation found for accessibility_qs_edit_tile_start_add (8141710006899065161) -->
-    <skip />
+    <string name="accessibility_qs_edit_tile_start_add" msgid="8141710006899065161">"Føj handlingsfeltet til den ønskede placering"</string>
     <string name="accessibility_qs_edit_tile_move_to_position" msgid="5198161544045930556">"Flyt til <xliff:g id="POSITION">%1$d</xliff:g>"</string>
     <string name="accessibility_qs_edit_tile_add_to_position" msgid="9029163095148274690">"Føj til lokation <xliff:g id="POSITION">%1$d</xliff:g>"</string>
     <string name="accessibilit_qs_edit_tile_add_move_invalid_position" msgid="2858467994472624487">"Positionen er ugyldig."</string>
@@ -996,8 +986,7 @@
     <string name="accessibility_quick_settings_choose_user_action" msgid="4554388498186576087">"vælge bruger"</string>
     <string name="data_connection_no_internet" msgid="691058178914184544">"Intet internet"</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"Åbn <xliff:g id="ID_1">%s</xliff:g>-indstillinger."</string>
-    <!-- no translation found for accessibility_quick_settings_edit (6544873823850165) -->
-    <skip />
+    <string name="accessibility_quick_settings_edit" msgid="6544873823850165">"Rediger rækkefølgen af kvikmenuen."</string>
     <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"Menu for afbryderknappen"</string>
     <string name="accessibility_quick_settings_page" msgid="7506322631645550961">"Side <xliff:g id="ID_1">%1$d</xliff:g> af <xliff:g id="ID_2">%2$d</xliff:g>"</string>
     <string name="tuner_lock_screen" msgid="2267383813241144544">"Låseskærm"</string>
@@ -1301,7 +1290,7 @@
     <string name="accessibility_enter_hint" msgid="2617864063504824834">"få adgang til enheden"</string>
     <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"Brug fingeraftryk for at åbne"</string>
     <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"Godkendelse er påkrævet. Sæt fingeren på fingeraftrykssensoren for at godkende."</string>
-    <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"Igangværende telefonopkald"</string>
+    <string name="ongoing_call_content_description" msgid="6394763878322348560">"Igangværende opkald"</string>
     <string name="mobile_data_settings_title" msgid="3955246641380064901">"Mobildata"</string>
     <string name="mobile_data_connection_active" msgid="944490013299018227">"Forbundet"</string>
     <string name="mobile_data_temp_connection_active" msgid="4590222725908806824">"Midlertidigt forbundet"</string>
@@ -1443,18 +1432,20 @@
     <string name="shortcut_helper_category_system_apps" msgid="6001757545472556810">"Systemapps"</string>
     <string name="shortcut_helper_category_multitasking" msgid="7413381961404090136">"Multitasking"</string>
     <string name="shortcutHelper_category_split_screen" msgid="1159669813444812244">"Opdelt skærm"</string>
+    <!-- no translation found for shortcutHelper_category_accessibility (8068337792277570938) -->
+    <skip />
     <string name="shortcut_helper_category_input" msgid="8674018654124839566">"Input"</string>
     <string name="shortcut_helper_category_app_shortcuts" msgid="8010249408308587117">"Appgenveje"</string>
     <string name="shortcut_helper_category_current_app_shortcuts" msgid="4017840565974573628">"Aktuel app"</string>
     <string name="shortcut_helper_category_a11y" msgid="6314444792641773464">"Hjælpefunktioner"</string>
     <string name="shortcut_helper_title" msgid="8567500639300970049">"Tastaturgenveje"</string>
-    <string name="shortcut_helper_customize_mode_title" msgid="1467657117101096033">"Tilpas tastaturgenveje"</string>
+    <string name="shortcut_helper_customize_mode_title" msgid="8327297960035006036">"Tilpas genveje"</string>
     <string name="shortcut_customize_mode_remove_shortcut_dialog_title" msgid="7106420484940737208">"Skal genvejen fjernes?"</string>
     <string name="shortcut_customize_mode_reset_shortcut_dialog_title" msgid="8131184731313717780">"Vil du nulstille til standard?"</string>
-    <string name="shortcut_customize_mode_add_shortcut_description" msgid="6866025005347407696">"Tryk på en tast for at tildele genvej"</string>
+    <string name="shortcut_customize_mode_add_shortcut_description" msgid="7636040209946696120">"Opret denne genvej ved at trykke på handlingstasten og én eller flere andre taster samtidigt"</string>
     <string name="shortcut_customize_mode_remove_shortcut_description" msgid="6851287900585057128">"Denne handling sletter din tilpassede genvej permanent."</string>
     <string name="shortcut_customize_mode_reset_shortcut_description" msgid="2081849715634358684">"Denne handling sletter alle dine tilpassede genveje permanent."</string>
-    <string name="shortcut_helper_search_placeholder" msgid="5488547526269871819">"Genveje til søgning"</string>
+    <string name="shortcut_helper_search_placeholder" msgid="5488547526269871819">"Søg efter genveje"</string>
     <string name="shortcut_helper_no_search_results" msgid="8554756497996692160">"Der er ingen søgeresultater"</string>
     <string name="shortcut_helper_content_description_collapse_icon" msgid="8028015738431664954">"Ikon for Skjul"</string>
     <string name="shortcut_helper_content_description_meta_key" msgid="3989315044342124818">"Ikon for handlingstast eller metatast"</string>
@@ -1473,9 +1464,11 @@
     <string name="shortcut_helper_customize_dialog_reset_button_label" msgid="7645535254306312685">"Ja, nulstil"</string>
     <string name="shortcut_helper_customize_dialog_cancel_button_label" msgid="5595546460431741178">"Annuller"</string>
     <string name="shortcut_helper_add_shortcut_dialog_placeholder" msgid="9154297849458741995">"Tryk på en tast"</string>
-    <string name="shortcut_customizer_key_combination_in_use_error_message" msgid="7693234470526626327">"Tastekombinationen er allerede i brug. Prøv en anden tast."</string>
+    <string name="shortcut_customizer_key_combination_in_use_error_message" msgid="3325858369539848162">"Tastekombinationen er allerede i brug. Prøv en anden kombination."</string>
     <string name="shortcut_customizer_generic_error_message" msgid="3128454624049722741">"Genvejen kan ikke konfigureres."</string>
     <string name="shortcut_helper_plus_symbol" msgid="4534843157353732011">"+"</string>
+    <string name="shortcut_helper_add_shortcut_button_label" msgid="7655779534665954910">"Tilføj genvej"</string>
+    <string name="shortcut_helper_delete_shortcut_button_label" msgid="3148773472696137052">"Slet genvej"</string>
     <string name="launch_keyboard_tutorial_notification_title" msgid="8849933155160522519">"Naviger ved hjælp af dit tastatur"</string>
     <string name="launch_keyboard_tutorial_notification_content" msgid="2880339951512757918">"Se tastaturgenveje"</string>
     <string name="launch_touchpad_tutorial_notification_title" msgid="2243780062772196901">"Naviger ved hjælp af din touchplade"</string>
@@ -1485,6 +1478,7 @@
     <string name="touchpad_tutorial_back_gesture_button" msgid="3104716365403620315">"Gå tilbage"</string>
     <string name="touchpad_tutorial_home_gesture_button" msgid="8023973153559885624">"Gå til startsiden"</string>
     <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"Se seneste apps"</string>
+    <string name="touchpad_tutorial_switch_apps_gesture_button" msgid="7768255095423767779">"Skift mellem apps"</string>
     <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"Udfør"</string>
     <string name="gesture_error_title" msgid="469064941635578511">"Prøv igen!"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"Gå tilbage"</string>
@@ -1502,6 +1496,13 @@
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Godt klaret!"</string>
     <string name="touchpad_recent_apps_gesture_success_body" msgid="4334263906697493273">"Du har udført bevægelsen for at se de seneste apps."</string>
     <string name="touchpad_recent_gesture_error_body" msgid="8695535720378462022">"Du kan se nyligt brugte apps ved at stryge opad og holde tre fingre nede på touchpladen"</string>
+    <string name="touchpad_switch_apps_gesture_action_title" msgid="6835222344612924512">"Skift mellem apps"</string>
+    <!-- no translation found for touchpad_switch_apps_gesture_guidance (2751565200937541667) -->
+    <skip />
+    <string name="touchpad_switch_apps_gesture_success_title" msgid="4894947244328032458">"Godt klaret!"</string>
+    <string name="touchpad_switch_apps_gesture_success_body" msgid="8151089866035126312">"Du har fuldført bevægelsen for at skifte mellem apps."</string>
+    <!-- no translation found for touchpad_switch_gesture_error_body (5508381152326379652) -->
+    <skip />
     <string name="tutorial_action_key_title" msgid="8172535792469008169">"Se alle apps"</string>
     <string name="tutorial_action_key_guidance" msgid="5040613427202799294">"Tryk på handlingstasten på dit tastatur"</string>
     <string name="tutorial_action_key_success_title" msgid="2371827347071979571">"Flot klaret!"</string>

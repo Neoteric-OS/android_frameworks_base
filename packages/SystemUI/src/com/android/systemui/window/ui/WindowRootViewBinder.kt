@@ -19,12 +19,12 @@ package com.android.systemui.window.ui
 import android.util.Log
 import android.view.Choreographer
 import android.view.Choreographer.FrameCallback
+import com.android.systemui.Flags
 import com.android.systemui.lifecycle.WindowLifecycleState
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.lifecycle.viewModel
 import com.android.systemui.scene.ui.view.WindowRootView
 import com.android.systemui.statusbar.BlurUtils
-import com.android.systemui.window.flag.WindowBlurFlag
 import com.android.systemui.window.ui.viewmodel.WindowRootViewModel
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.filter
@@ -43,13 +43,12 @@ object WindowRootViewBinder {
         blurUtils: BlurUtils?,
         choreographer: Choreographer?,
     ) {
-        if (!WindowBlurFlag.isEnabled) return
+        if (!Flags.bouncerUiRevamp()) return
         if (blurUtils == null || choreographer == null) return
 
         view.repeatWhenAttached {
             Log.d(TAG, "Binding root view")
             var frameCallbackPendingExecution: FrameCallback? = null
-            val viewRootImpl = view.rootView.viewRootImpl
             view.viewModel(
                 minWindowLifecycleState = WindowLifecycleState.ATTACHED,
                 factory = { viewModelFactory.create() },
@@ -64,13 +63,13 @@ object WindowRootViewBinder {
                                 val newFrameCallback = FrameCallback {
                                     frameCallbackPendingExecution = null
                                     blurUtils.applyBlur(
-                                        viewRootImpl,
+                                        view.rootView?.viewRootImpl,
                                         blurState.radius,
                                         blurState.isOpaque,
                                     )
                                     viewModel.onBlurApplied(blurState.radius)
                                 }
-                                blurUtils.prepareBlur(viewRootImpl, blurState.radius)
+                                blurUtils.prepareBlur(view.rootView?.viewRootImpl, blurState.radius)
                                 if (frameCallbackPendingExecution != null) {
                                     choreographer.removeFrameCallback(frameCallbackPendingExecution)
                                 }

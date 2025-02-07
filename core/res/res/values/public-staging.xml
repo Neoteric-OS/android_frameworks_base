@@ -116,7 +116,7 @@
     <public name="adServiceTypes" />
     <!-- @FlaggedApi("android.view.inputmethod.ime_switcher_revamp_api") -->
     <public name="languageSettingsActivity"/>
-    <!-- @FlaggedApi("android.service.controls.flags.Flags.FLAG_HOME_PANEL_DREAM") -->
+    <!-- @FlaggedApi(android.service.controls.flags.Flags.FLAG_HOME_PANEL_DREAM) -->
     <public name="dreamCategory"/>
     <!-- @FlaggedApi("android.permission.flags.replace_body_sensor_permission_enabled")
          @hide @SystemApi -->
@@ -137,6 +137,14 @@
     <public name="wantsRoleHolderPriority"/>
     <!-- @FlaggedApi(android.sdk.Flags.FLAG_MAJOR_MINOR_VERSIONING_SCHEME) -->
     <public name="minSdkVersionFull"/>
+    <!-- @hide Only for device overlay to use this. -->
+    <public name="pointerIconVectorFill"/>
+    <!-- @hide Only for device overlay to use this. -->
+    <public name="pointerIconVectorFillInverse"/>
+    <!-- @hide Only for device overlay to use this. -->
+    <public name="pointerIconVectorStroke"/>
+    <!-- @hide Only for device overlay to use this. -->
+    <public name="pointerIconVectorStrokeInverse"/>
   </staging-public-group>
 
   <staging-public-group type="id" first-id="0x01b60000">
@@ -159,15 +167,15 @@
 
     <!-- @FlaggedApi(android.app.ondeviceintelligence.flags.Flags.FLAG_ENABLE_ON_DEVICE_INTELLIGENCE_MODULE)
      @hide @SystemApi -->
-    <public name="config_defaultOnDeviceIntelligenceService"></public>
+    <public name="config_defaultOnDeviceIntelligenceService" />
 
     <!-- @FlaggedApi(android.app.ondeviceintelligence.flags.Flags.FLAG_ENABLE_ON_DEVICE_INTELLIGENCE_MODULE)
      @hide @SystemApi -->
-    <public name="config_defaultOnDeviceSandboxedInferenceService"></public>
+    <public name="config_defaultOnDeviceSandboxedInferenceService" />
 
     <!-- @FlaggedApi(android.app.ondeviceintelligence.flags.Flags.FLAG_ENABLE_ON_DEVICE_INTELLIGENCE_MODULE)
      @hide @SystemApi -->
-    <public name="config_defaultOnDeviceIntelligenceDeviceConfigNamespace"></public>
+    <public name="config_defaultOnDeviceIntelligenceDeviceConfigNamespace" />
 
   </staging-public-group>
 

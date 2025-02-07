@@ -17,8 +17,7 @@
 package com.android.systemui.statusbar.chips.call.ui.viewmodel
 
 import android.view.View
-import com.android.internal.jank.InteractionJankMonitor
-import com.android.systemui.Flags
+import com.android.internal.jank.Cuj
 import com.android.systemui.animation.ActivityTransitionAnimator
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
@@ -31,11 +30,14 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.chips.StatusBarChipLogTags.pad
 import com.android.systemui.statusbar.chips.StatusBarChipsLog
 import com.android.systemui.statusbar.chips.call.domain.interactor.CallChipInteractor
+import com.android.systemui.statusbar.chips.notification.shared.StatusBarNotifChips
 import com.android.systemui.statusbar.chips.ui.model.ColorsModel
+import com.android.systemui.statusbar.chips.ui.model.ColorsModel.Companion.toCustomColorsModel
 import com.android.systemui.statusbar.chips.ui.model.OngoingActivityChipModel
 import com.android.systemui.statusbar.chips.ui.view.ChipBackgroundContainer
 import com.android.systemui.statusbar.chips.ui.viewmodel.OngoingActivityChipViewModel
 import com.android.systemui.statusbar.core.StatusBarConnectedDisplays
+import com.android.systemui.statusbar.phone.ongoingcall.StatusBarChipsModernization
 import com.android.systemui.statusbar.phone.ongoingcall.shared.model.OngoingCallModel
 import com.android.systemui.util.time.SystemClock
 import javax.inject.Inject
@@ -64,23 +66,24 @@ constructor(
                     is OngoingCallModel.InCallWithVisibleApp -> OngoingActivityChipModel.Hidden()
                     is OngoingCallModel.InCall -> {
                         val icon =
-                            if (
-                                Flags.statusBarCallChipNotificationIcon() &&
-                                    state.notificationIconView != null
-                            ) {
+                            if (state.notificationIconView != null) {
                                 StatusBarConnectedDisplays.assertInLegacyMode()
                                 OngoingActivityChipModel.ChipIcon.StatusBarView(
                                     state.notificationIconView
                                 )
-                            } else if (
-                                StatusBarConnectedDisplays.isEnabled &&
-                                    Flags.statusBarCallChipNotificationIcon()
-                            ) {
+                            } else if (StatusBarConnectedDisplays.isEnabled) {
                                 OngoingActivityChipModel.ChipIcon.StatusBarNotificationIcon(
                                     state.notificationKey
                                 )
                             } else {
                                 OngoingActivityChipModel.ChipIcon.SingleColorIcon(phoneIcon)
+                            }
+
+                        val colors =
+                            if (StatusBarNotifChips.isEnabled && state.promotedContent != null) {
+                                state.promotedContent.toCustomColorsModel()
+                            } else {
+                                ColorsModel.Themed
                             }
 
                         // This block mimics OngoingCallController#updateChip.
@@ -89,8 +92,9 @@ constructor(
                             // icon. See b/192379214.
                             OngoingActivityChipModel.Shown.IconOnly(
                                 icon = icon,
-                                colors = ColorsModel.Themed,
-                                getOnClickListener(state),
+                                colors = colors,
+                                onClickListenerLegacy = getOnClickListener(state),
+                                clickBehavior = getClickBehavior(state),
                             )
                         } else {
                             val startTimeInElapsedRealtime =
@@ -98,9 +102,10 @@ constructor(
                                     systemClock.elapsedRealtime()
                             OngoingActivityChipModel.Shown.Timer(
                                 icon = icon,
-                                colors = ColorsModel.Themed,
+                                colors = colors,
                                 startTimeMs = startTimeInElapsedRealtime,
-                                getOnClickListener(state),
+                                onClickListenerLegacy = getOnClickListener(state),
+                                clickBehavior = getClickBehavior(state),
                             )
                         }
                     }
@@ -114,6 +119,7 @@ constructor(
         }
 
         return View.OnClickListener { view ->
+            StatusBarChipsModernization.assertInLegacyMode()
             logger.log(TAG, LogLevel.INFO, {}, { "Chip clicked" })
             val backgroundView =
                 view.requireViewById<ChipBackgroundContainer>(R.id.ongoing_activity_chip_background)
@@ -122,11 +128,32 @@ constructor(
                 state.intent,
                 ActivityTransitionAnimator.Controller.fromView(
                     backgroundView,
-                    InteractionJankMonitor.CUJ_STATUS_BAR_APP_LAUNCH_FROM_CALL_CHIP,
+                    Cuj.CUJ_STATUS_BAR_APP_LAUNCH_FROM_CALL_CHIP,
                 ),
             )
         }
     }
+
+    private fun getClickBehavior(
+        state: OngoingCallModel.InCall
+    ): OngoingActivityChipModel.ClickBehavior =
+        if (state.intent == null) {
+            OngoingActivityChipModel.ClickBehavior.None
+        } else {
+            OngoingActivityChipModel.ClickBehavior.ExpandAction(
+                onClick = { expandable ->
+                    StatusBarChipsModernization.assertInNewMode()
+                    val animationController =
+                        expandable.activityTransitionController(
+                            Cuj.CUJ_STATUS_BAR_APP_LAUNCH_FROM_CALL_CHIP
+                        )
+                    activityStarter.postStartActivityDismissingKeyguard(
+                        state.intent,
+                        animationController,
+                    )
+                }
+            )
+        }
 
     companion object {
         private val phoneIcon =

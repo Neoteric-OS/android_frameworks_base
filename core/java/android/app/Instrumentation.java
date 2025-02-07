@@ -59,7 +59,6 @@ import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.SurfaceControl;
 import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManagerGlobal;
@@ -137,7 +136,6 @@ public class Instrumentation {
     private PerformanceCollector mPerformanceCollector;
     private Bundle mPerfMetrics = new Bundle();
     private UiAutomation mUiAutomation;
-    private final Object mAnimationCompleteLock = new Object();
 
     @RavenwoodKeep
     public Instrumentation() {
@@ -455,31 +453,6 @@ public class Instrumentation {
         idler.waitForIdle();
     }
 
-    private void waitForEnterAnimationComplete(Activity activity) {
-        synchronized (mAnimationCompleteLock) {
-            long timeout = 5000;
-            try {
-                // We need to check that this specified Activity completed the animation, not just
-                // any Activity. If it was another Activity, then decrease the timeout by how long
-                // it's already waited and wait for the thread to wakeup again.
-                while (timeout > 0 && !activity.mEnterAnimationComplete) {
-                    long startTime = System.currentTimeMillis();
-                    mAnimationCompleteLock.wait(timeout);
-                    long totalTime = System.currentTimeMillis() - startTime;
-                    timeout -= totalTime;
-                }
-            } catch (InterruptedException e) {
-            }
-        }
-    }
-
-    /** @hide */
-    public void onEnterAnimationComplete() {
-        synchronized (mAnimationCompleteLock) {
-            mAnimationCompleteLock.notifyAll();
-        }
-    }
-
     /**
      * Execute a call on the application's main thread, blocking until it is
      * complete.  Useful for doing things that are not thread-safe, such as
@@ -595,7 +568,9 @@ public class Instrumentation {
      */
     @NonNull
     public Activity startActivitySync(@NonNull Intent intent, @Nullable Bundle options) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(376, intent.toString());
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         if (DEBUG_START_ACTIVITY) {
             Log.d(TAG, "startActivity: intent=" + intent + " options=" + options, new Throwable());
         }
@@ -641,13 +616,14 @@ public class Instrumentation {
             activity = aw.activity;
         }
 
-        // Do not call this method within mSync, lest it could block the main thread.
-        waitForEnterAnimationComplete(activity);
-
-        // Apply an empty transaction to ensure SF has a chance to update before
-        // the Activity is ready (b/138263890).
-        try (SurfaceControl.Transaction t = new SurfaceControl.Transaction()) {
-            t.apply(true);
+        // Typically, callers expect that the launched activity can receive input events after this
+        // method returns, so wait until a stable state, i.e. animation is finished and input info
+        // is updated.
+        try {
+            WindowManagerGlobal.getWindowManagerService()
+                    .syncInputTransactions(true /* waitForAnimations */);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
         }
         return activity;
     }
@@ -1962,7 +1938,9 @@ public class Instrumentation {
     public ActivityResult execStartActivity(
             Context who, IBinder contextThread, IBinder token, Activity target,
             Intent intent, int requestCode, Bundle options) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(377, intent.toString());
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         if (DEBUG_START_ACTIVITY) {
             Log.d(TAG, "startActivity: who=" + who + " source=" + target + " intent=" + intent
                     + " requestCode=" + requestCode + " options=" + options, new Throwable());
@@ -2047,7 +2025,9 @@ public class Instrumentation {
     public int execStartActivitiesAsUser(Context who, IBinder contextThread,
             IBinder token, Activity target, Intent[] intents, Bundle options,
             int userId) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(378, intents.toString());
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         if (DEBUG_START_ACTIVITY) {
             StringJoiner joiner = new StringJoiner(", ");
             for (Intent i : intents) {
@@ -2140,7 +2120,9 @@ public class Instrumentation {
     public ActivityResult execStartActivity(
         Context who, IBinder contextThread, IBinder token, String target,
         Intent intent, int requestCode, Bundle options) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(377, intent.toString());
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         if (DEBUG_START_ACTIVITY) {
             Log.d(TAG, "startActivity: who=" + who + " target=" + target
                     + " intent=" + intent + " requestCode=" + requestCode
@@ -2221,7 +2203,9 @@ public class Instrumentation {
     public ActivityResult execStartActivity(
             Context who, IBinder contextThread, IBinder token, String resultWho,
             Intent intent, int requestCode, Bundle options, UserHandle user) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(377, intent.toString());
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         if (DEBUG_START_ACTIVITY) {
             Log.d(TAG, "startActivity: who=" + who + " user=" + user + " intent=" + intent
                     + " requestCode=" + requestCode + " resultWho=" + resultWho
@@ -2342,7 +2326,9 @@ public class Instrumentation {
     public void execStartActivityFromAppTask(
             Context who, IBinder contextThread, IAppTask appTask,
             Intent intent, Bundle options) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(380, intent.toString());
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         if (DEBUG_START_ACTIVITY) {
             Log.d(TAG, "startActivity: who=" + who + " intent=" + intent
                     + " options=" + options, new Throwable());

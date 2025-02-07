@@ -16,20 +16,17 @@
 
 package com.android.wm.shell.pip2.phone;
 
-import static com.android.wm.shell.transition.Transitions.TRANSIT_EXIT_PIP;
-import static com.android.wm.shell.transition.Transitions.TRANSIT_REMOVE_PIP;
-
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
 import static org.mockito.kotlin.MatchersKt.eq;
 import static org.mockito.kotlin.VerificationKt.times;
 import static org.mockito.kotlin.VerificationKt.verify;
 
+import android.app.TaskInfo;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Matrix;
@@ -45,7 +42,9 @@ import androidx.test.filters.SmallTest;
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.common.ShellExecutor;
 import com.android.wm.shell.common.pip.PipBoundsState;
+import com.android.wm.shell.desktopmode.DesktopRepository;
 import com.android.wm.shell.desktopmode.DesktopUserRepositories;
+import com.android.wm.shell.desktopmode.desktopwallpaperactivity.DesktopWallpaperActivityTokenProvider;
 import com.android.wm.shell.pip.PipTransitionController;
 import com.android.wm.shell.pip2.PipSurfaceTransactionHelper;
 import com.android.wm.shell.pip2.animation.PipAlphaAnimator;
@@ -56,6 +55,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
@@ -83,7 +83,8 @@ public class PipSchedulerTest {
     @Mock private PipSurfaceTransactionHelper.SurfaceControlTransactionFactory mMockFactory;
     @Mock private SurfaceControl.Transaction mMockTransaction;
     @Mock private PipAlphaAnimator mMockAlphaAnimator;
-    @Mock private Optional<DesktopUserRepositories> mMockOptionalDesktopUserRepositories;
+    @Mock private DesktopUserRepositories mMockDesktopUserRepositories;
+    @Mock private DesktopWallpaperActivityTokenProvider mMockDesktopWallpaperActivityTokenProvider;
     @Mock private RootTaskDisplayAreaOrganizer mRootTaskDisplayAreaOrganizer;
 
     @Captor private ArgumentCaptor<Runnable> mRunnableArgumentCaptor;
@@ -100,13 +101,17 @@ public class PipSchedulerTest {
         when(mMockFactory.getTransaction()).thenReturn(mMockTransaction);
         when(mMockTransaction.setMatrix(any(SurfaceControl.class), any(Matrix.class), any()))
                 .thenReturn(mMockTransaction);
+        when(mMockDesktopUserRepositories.getCurrent())
+                .thenReturn(Mockito.mock(DesktopRepository.class));
+        when(mMockPipTransitionState.getPipTaskInfo()).thenReturn(Mockito.mock(TaskInfo.class));
 
         mPipScheduler = new PipScheduler(mMockContext, mMockPipBoundsState, mMockMainExecutor,
-                mMockPipTransitionState, mMockOptionalDesktopUserRepositories,
+                mMockPipTransitionState, Optional.of(mMockDesktopUserRepositories),
+                Optional.of(mMockDesktopWallpaperActivityTokenProvider),
                 mRootTaskDisplayAreaOrganizer);
         mPipScheduler.setPipTransitionController(mMockPipTransitionController);
         mPipScheduler.setSurfaceControlTransactionFactory(mMockFactory);
-        mPipScheduler.setPipAlphaAnimatorSupplier((context, leash, tx, direction) ->
+        mPipScheduler.setPipAlphaAnimatorSupplier((context, leash, startTx, finishTx, direction) ->
                 mMockAlphaAnimator);
 
         SurfaceControl testLeash = new SurfaceControl.Builder()
@@ -115,12 +120,13 @@ public class PipSchedulerTest {
                 .setCallsite("PipSchedulerTest")
                 .build();
         when(mMockPipTransitionState.getPinnedTaskLeash()).thenReturn(testLeash);
+        // PiP is in a valid state by default.
+        when(mMockPipTransitionState.isInPip()).thenReturn(true);
     }
 
     @Test
     public void scheduleExitPipViaExpand_nullTaskToken_noop() {
         setNullPipTaskToken();
-        when(mMockPipTransitionState.isInPip()).thenReturn(true);
 
         mPipScheduler.scheduleExitPipViaExpand();
 
@@ -128,14 +134,12 @@ public class PipSchedulerTest {
         assertNotNull(mRunnableArgumentCaptor.getValue());
         mRunnableArgumentCaptor.getValue().run();
 
-        verify(mMockPipTransitionController, never())
-                .startExitTransition(eq(TRANSIT_EXIT_PIP), any(), isNull());
+        verify(mMockPipTransitionController, never()).startExpandTransition(any());
     }
 
     @Test
     public void scheduleExitPipViaExpand_exitTransitionCalled() {
         setMockPipTaskToken();
-        when(mMockPipTransitionState.isInPip()).thenReturn(true);
 
         mPipScheduler.scheduleExitPipViaExpand();
 
@@ -143,23 +147,21 @@ public class PipSchedulerTest {
         assertNotNull(mRunnableArgumentCaptor.getValue());
         mRunnableArgumentCaptor.getValue().run();
 
-        verify(mMockPipTransitionController, times(1))
-                .startExitTransition(eq(TRANSIT_EXIT_PIP), any(), isNull());
+        verify(mMockPipTransitionController, times(1)).startExpandTransition(any());
     }
 
     @Test
     public void removePipAfterAnimation() {
         setMockPipTaskToken();
-        when(mMockPipTransitionState.isInPip()).thenReturn(true);
 
-        mPipScheduler.scheduleRemovePip();
+        mPipScheduler.scheduleRemovePip(true /* withFadeout */);
 
         verify(mMockMainExecutor, times(1)).execute(mRunnableArgumentCaptor.capture());
         assertNotNull(mRunnableArgumentCaptor.getValue());
         mRunnableArgumentCaptor.getValue().run();
 
         verify(mMockPipTransitionController, times(1))
-                .startExitTransition(eq(TRANSIT_REMOVE_PIP), any(), isNull());
+                .startRemoveTransition(true /* withFadeout */);
     }
 
     @Test
@@ -183,7 +185,6 @@ public class PipSchedulerTest {
     @Test
     public void scheduleAnimateResizePip_boundsConfig_setsConfigAtEnd() {
         setMockPipTaskToken();
-        when(mMockPipTransitionState.isInPip()).thenReturn(true);
 
         mPipScheduler.scheduleAnimateResizePip(TEST_BOUNDS, true);
 
@@ -224,7 +225,6 @@ public class PipSchedulerTest {
     @Test
     public void scheduleAnimateResizePip_resizeTransition() {
         setMockPipTaskToken();
-        when(mMockPipTransitionState.isInPip()).thenReturn(true);
 
         mPipScheduler.scheduleAnimateResizePip(TEST_BOUNDS, true, TEST_RESIZE_DURATION);
 

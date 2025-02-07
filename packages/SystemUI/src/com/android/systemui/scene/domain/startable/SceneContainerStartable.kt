@@ -25,6 +25,7 @@ import com.android.internal.logging.UiEventLogger
 import com.android.keyguard.AuthInteractionProperties
 import com.android.systemui.CoreStartable
 import com.android.systemui.Flags
+import com.android.systemui.animation.ActivityTransitionAnimator
 import com.android.systemui.authentication.domain.interactor.AuthenticationInteractor
 import com.android.systemui.authentication.shared.model.AuthenticationMethodModel
 import com.android.systemui.bouncer.domain.interactor.AlternateBouncerInteractor
@@ -93,7 +94,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNot
@@ -146,6 +146,7 @@ constructor(
     private val vibratorHelper: VibratorHelper,
     private val msdlPlayer: MSDLPlayer,
     private val disabledContentInteractor: DisabledContentInteractor,
+    private val activityTransitionAnimator: ActivityTransitionAnimator,
 ) : CoreStartable {
     private val centralSurfaces: CentralSurfaces?
         get() = centralSurfacesOptLazy.get().getOrNull()
@@ -169,6 +170,7 @@ constructor(
             handleKeyguardEnabledness()
             notifyKeyguardDismissCancelledCallbacks()
             refreshLockscreenEnabled()
+            hydrateActivityTransitionAnimationState()
         } else {
             sceneLogger.logFrameworkEnabled(
                 isEnabled = false,
@@ -562,7 +564,7 @@ constructor(
                 .collect {
                     switchToScene(
                         targetSceneKey = Scenes.Lockscreen,
-                        loggingReason = "device became non-interactive",
+                        loggingReason = "device became non-interactive (SceneContainerStartable)",
                     )
                 }
         }
@@ -714,14 +716,7 @@ constructor(
         }
 
         applicationScope.launch {
-            keyguardInteractor.isAodAvailable
-                .flatMapLatest { isAodAvailable ->
-                    if (!isAodAvailable) {
-                        powerInteractor.detailedWakefulness
-                    } else {
-                        emptyFlow()
-                    }
-                }
+            powerInteractor.detailedWakefulness
                 .distinctUntilChangedBy { it.isAwake() }
                 .collect { wakefulness ->
                     when {
@@ -927,6 +922,35 @@ constructor(
                 .filter { it }
                 .collectLatest { deviceEntryInteractor.refreshLockscreenEnabled() }
         }
+    }
+
+    /**
+     * Wires the scene framework to activity transition animations that originate from anywhere. A
+     * subset of these may actually originate from UI inside one of the scenes in the framework.
+     *
+     * Telling the scene framework about ongoing activity transition animations is critical so the
+     * scene framework doesn't make its scene container invisible during a transition.
+     *
+     * As it turns out, making the scene container view invisible during a transition animation
+     * disrupts the animation and causes interaction jank CUJ tracking to ignore reports of the CUJ
+     * ending or being canceled.
+     */
+    private fun hydrateActivityTransitionAnimationState() {
+        activityTransitionAnimator.addListener(
+            object : ActivityTransitionAnimator.Listener {
+                override fun onTransitionAnimationStart() {
+                    sceneInteractor.onTransitionAnimationStart()
+                }
+
+                override fun onTransitionAnimationEnd() {
+                    sceneInteractor.onTransitionAnimationEnd()
+                }
+
+                override fun onTransitionAnimationCancelled() {
+                    sceneInteractor.onTransitionAnimationCancelled()
+                }
+            }
+        )
     }
 
     companion object {

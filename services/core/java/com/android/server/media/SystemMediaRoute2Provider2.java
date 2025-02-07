@@ -17,6 +17,7 @@
 package com.android.server.media;
 
 import static android.media.MediaRoute2Info.FEATURE_LIVE_AUDIO;
+import static android.media.MediaRoute2Info.FEATURE_LIVE_VIDEO;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -128,8 +129,20 @@ import java.util.stream.Stream;
                                 targetProviderProxyId, existingSession.getProviderId())) {
                     // The currently selected route and target route both belong to the same
                     // provider. We tell the provider to handle the transfer.
-                    targetProviderProxyRecord.requestTransfer(
-                            existingSession.getOriginalId(), serviceTargetRoute);
+                    if (serviceTargetRoute == null) {
+                        notifyRequestFailed(
+                                requestId, MediaRoute2ProviderService.REASON_ROUTE_NOT_AVAILABLE);
+                    } else {
+                        targetProviderProxyRecord.mProxy.transferToRoute(
+                                requestId,
+                                clientUserHandle,
+                                clientPackageName,
+                                existingSession.getOriginalId(),
+                                targetProviderProxyRecord.mNewOriginalIdToSourceOriginalIdMap.get(
+                                        routeOriginalId),
+                                transferReason);
+                    }
+                    return;
                 } else {
                     // The target route is handled by a provider other than the target one. We need
                     // to release the existing session.
@@ -203,6 +216,28 @@ import java.util.stream.Stream;
                 return systemSession;
             }
         }
+    }
+
+    @Override
+    public void setRouteVolume(long requestId, String routeOriginalId, int volume) {
+        synchronized (mLock) {
+            var targetProviderProxyId = mOriginalRouteIdToProviderId.get(routeOriginalId);
+            var targetProviderProxyRecord = mProxyRecords.get(targetProviderProxyId);
+            // Holds the target route, if it's managed by a provider service. Holds null otherwise.
+            if (targetProviderProxyRecord != null) {
+                var serviceTargetRoute =
+                        targetProviderProxyRecord.mNewOriginalIdToSourceOriginalIdMap.get(
+                                routeOriginalId);
+                if (serviceTargetRoute != null) {
+                    targetProviderProxyRecord.mProxy.setRouteVolume(
+                            requestId, serviceTargetRoute, volume);
+                } else {
+                    notifyRequestFailed(
+                            requestId, MediaRoute2ProviderService.REASON_ROUTE_NOT_AVAILABLE);
+                }
+            }
+        }
+        super.setRouteVolume(requestId, routeOriginalId, volume);
     }
 
     /**
@@ -429,11 +464,6 @@ import java.util.stream.Stream;
             }
         }
 
-        public void requestTransfer(String sessionId, MediaRoute2Info targetRoute) {
-            // TODO: Map the target route to the source route original id.
-            throw new UnsupportedOperationException("TODO Implement");
-        }
-
         public void releaseSession(long requestId, String originalSessionId) {
             mProxy.releaseSession(requestId, originalSessionId);
         }
@@ -456,11 +486,18 @@ import java.util.stream.Stream;
                 }
                 String id =
                         asSystemRouteId(providerInfo.getUniqueId(), sourceRoute.getOriginalId());
-                var newRoute =
-                        new MediaRoute2Info.Builder(id, sourceRoute.getName())
-                                .addFeature(FEATURE_LIVE_AUDIO)
-                                .build();
-                routesMap.put(id, newRoute);
+                var newRouteBuilder = new MediaRoute2Info.Builder(id, sourceRoute);
+                if ((sourceRoute.getSupportedRoutingTypes()
+                                & MediaRoute2Info.FLAG_ROUTING_TYPE_SYSTEM_AUDIO)
+                        != 0) {
+                    newRouteBuilder.addFeature(FEATURE_LIVE_AUDIO);
+                }
+                if ((sourceRoute.getSupportedRoutingTypes()
+                                & MediaRoute2Info.FLAG_ROUTING_TYPE_SYSTEM_VIDEO)
+                        != 0) {
+                    newRouteBuilder.addFeature(FEATURE_LIVE_VIDEO);
+                }
+                routesMap.put(id, newRouteBuilder.build());
                 idMap.put(id, sourceRoute.getOriginalId());
             }
             return new ProviderProxyRecord(
@@ -491,18 +528,19 @@ import java.util.stream.Stream;
                     () -> {
                         if (mSessionRecord != null) {
                             mSessionRecord.onSessionUpdate(sessionInfo);
+                        } else {
+                            SystemMediaSessionRecord systemMediaSessionRecord =
+                                    new SystemMediaSessionRecord(mProviderId, sessionInfo);
+                            RoutingSessionInfo translatedSession;
+                            synchronized (mLock) {
+                                mSessionRecord = systemMediaSessionRecord;
+                                mPackageNameToSessionRecord.put(
+                                        mClientPackageName, systemMediaSessionRecord);
+                                mPendingSessionCreations.remove(mRequestId);
+                                translatedSession = systemMediaSessionRecord.mTranslatedSessionInfo;
+                            }
+                            onSessionOverrideUpdated(translatedSession);
                         }
-                        SystemMediaSessionRecord systemMediaSessionRecord =
-                                new SystemMediaSessionRecord(mProviderId, sessionInfo);
-                        RoutingSessionInfo translatedSession;
-                        synchronized (mLock) {
-                            mSessionRecord = systemMediaSessionRecord;
-                            mPackageNameToSessionRecord.put(
-                                    mClientPackageName, systemMediaSessionRecord);
-                            mPendingSessionCreations.remove(mRequestId);
-                            translatedSession = systemMediaSessionRecord.mTranslatedSessionInfo;
-                        }
-                        onSessionOverrideUpdated(translatedSession);
                     });
         }
 
@@ -546,7 +584,6 @@ import java.util.stream.Stream;
          * The same as {@link #mSourceSessionInfo}, except ids are {@link #asSystemRouteId system
          * provider ids}.
          */
-        @GuardedBy("SystemMediaRoute2Provider2.this.mLock")
         @NonNull
         private RoutingSessionInfo mTranslatedSessionInfo;
 
@@ -559,10 +596,10 @@ import java.util.stream.Stream;
 
         @Override
         public void onSessionUpdate(@NonNull RoutingSessionInfo sessionInfo) {
-            RoutingSessionInfo translatedSessionInfo = mTranslatedSessionInfo;
+            RoutingSessionInfo translatedSessionInfo = asSystemProviderSession(sessionInfo);
             synchronized (mLock) {
                 mSourceSessionInfo = sessionInfo;
-                mTranslatedSessionInfo = asSystemProviderSession(sessionInfo);
+                mTranslatedSessionInfo = translatedSessionInfo;
             }
             onSessionOverrideUpdated(translatedSessionInfo);
         }

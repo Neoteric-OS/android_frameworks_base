@@ -563,10 +563,12 @@ public final class ProcessList {
 
     ActivityManagerGlobalLock mProcLock;
 
+// QTI_BEGIN: 2019-08-16: Performance: BoostFramework: Q Upgrade - Add Kill, Update Hints.
     /**
      * BoostFramework Object
      */
     public static BoostFramework mPerfServiceStartHint = new BoostFramework();
+// QTI_END: 2019-08-16: Performance: BoostFramework: Q Upgrade - Add Kill, Update Hints.
 
     private static final String PROPERTY_APPLY_SDK_SANDBOX_AUDIT_RESTRICTIONS =
             "apply_sdk_sandbox_audit_restrictions";
@@ -2559,13 +2561,12 @@ public final class ProcessList {
                 final AppZygote appZygote = createAppZygoteForProcessIfNeeded(app);
 
                 // We can't isolate app data and storage data as parent zygote already did that.
-                startResult = appZygote.getProcess().start(entryPoint,
-                        app.processName, uid, uid, gids, runtimeFlags, mountExternal,
+                startResult = appZygote.startProcess(entryPoint,
+                        app.processName, uid, gids, runtimeFlags, mountExternal,
                         app.info.targetSdkVersion, seInfo, requiredAbi, instructionSet,
-                        app.info.dataDir, null, app.info.packageName,
-                        /*zygotePolicyFlags=*/ ZYGOTE_POLICY_FLAG_EMPTY, isTopApp,
-                        app.getDisabledCompatChanges(), pkgDataInfoMap, allowlistedAppDataInfoMap,
-                        false, false, false,
+                        app.info.dataDir, app.info.packageName, isTopApp,
+                        app.getDisabledCompatChanges(), pkgDataInfoMap,
+                        allowlistedAppDataInfoMap,
                         new String[]{PROC_START_SEQ_IDENT + app.getStartSeq()});
             } else {
                 regularZygote = true;
@@ -2615,16 +2616,24 @@ public final class ProcessList {
                 storageManagerInternal.prepareStorageDirs(userId, pkgDataInfoMap.keySet(),
                         app.processName);
             }
+// QTI_BEGIN: 2019-08-16: Performance: BoostFramework: Q Upgrade - Add Kill, Update Hints.
             if (mPerfServiceStartHint != null) {
+// QTI_END: 2019-08-16: Performance: BoostFramework: Q Upgrade - Add Kill, Update Hints.
+// QTI_BEGIN: 2021-01-29: Performance: Boostframework: Call perfHint with new hostingType when application starts.
                 if ((hostingRecord.getType() != null)
+// QTI_END: 2021-01-29: Performance: Boostframework: Call perfHint with new hostingType when application starts.
                        && (hostingRecord.getType().equals(HostingRecord.HOSTING_TYPE_NEXT_ACTIVITY)
                                || hostingRecord.getType().equals(HostingRecord.HOSTING_TYPE_NEXT_TOP_ACTIVITY))) {
+// QTI_BEGIN: 2021-01-29: Performance: Boostframework: Call perfHint with new hostingType when application starts.
                                    //TODO: not acting on pre-activity
+// QTI_END: 2021-01-29: Performance: Boostframework: Call perfHint with new hostingType when application starts.
+// QTI_BEGIN: 2019-08-16: Performance: BoostFramework: Q Upgrade - Add Kill, Update Hints.
                     if (startResult != null) {
                         mPerfServiceStartHint.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST, app.processName, startResult.pid, BoostFramework.Launch.TYPE_START_PROC);
                     }
                 }
             }
+// QTI_END: 2019-08-16: Performance: BoostFramework: Q Upgrade - Add Kill, Update Hints.
             checkSlow(startTime, "startProcess: returned from zygote!");
             return startResult;
         } finally {
@@ -3228,7 +3237,6 @@ public final class ProcessList {
         if ((pid > 0 && pid != ActivityManagerService.MY_PID)
                 || (pid == 0 && app.isPendingStart())) {
             if (pid > 0) {
-                mService.removePidLocked(pid, app);
                 app.setBindMountPending(false);
                 mService.mHandler.removeMessages(PROC_START_TIMEOUT_MSG, app);
                 mService.mBatteryStatsService.noteProcessFinish(app.processName, app.info.uid);
@@ -3246,6 +3254,12 @@ public final class ProcessList {
                 }
             }
             app.killLocked(reason, reasonCode, subReason, true, async);
+            if (pid > 0) {
+                // Remove pid record mapping after killing the process, so there won't be a short
+                // period that the app is still alive but its access to system may be illegal due
+                // to no existing record for its pid.
+                mService.removePidLocked(pid, app);
+            }
             mService.handleAppDiedLocked(app, pid, willRestart, allowRestart,
                     false /* fromBinderDied */);
             if (willRestart) {

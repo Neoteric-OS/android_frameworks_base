@@ -24,6 +24,8 @@ import com.android.systemui.statusbar.chips.ui.model.MultipleOngoingActivityChip
 import com.android.systemui.statusbar.chips.ui.model.OngoingActivityChipModel
 import com.android.systemui.statusbar.events.shared.model.SystemEventAnimationState.Idle
 import com.android.systemui.statusbar.featurepods.popups.shared.model.PopupChipModel
+import com.android.systemui.statusbar.pipeline.shared.ui.model.SystemInfoCombinedVisibilityModel
+import com.android.systemui.statusbar.pipeline.shared.ui.model.VisibilityModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +33,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class FakeHomeStatusBarViewModel(
     override val operatorNameViewModel: StatusBarOperatorNameViewModel
 ) : HomeStatusBarViewModel {
-    private val areNotificationLightsOut = MutableStateFlow(false)
+    override val areNotificationsLightsOut = MutableStateFlow(false)
 
     override val isTransitioningFromLockscreenToOccluded = MutableStateFlow(false)
 
@@ -46,45 +48,34 @@ class FakeHomeStatusBarViewModel(
 
     override val isHomeStatusBarAllowedByScene = MutableStateFlow(false)
 
+    override val shouldHomeStatusBarBeVisible = MutableStateFlow(false)
+
     override val shouldShowOperatorNameView = MutableStateFlow(false)
 
     override val isClockVisible =
-        MutableStateFlow(
-            HomeStatusBarViewModel.VisibilityModel(
-                visibility = View.GONE,
-                shouldAnimateChange = false,
-            )
-        )
+        MutableStateFlow(VisibilityModel(visibility = View.GONE, shouldAnimateChange = false))
 
     override val isNotificationIconContainerVisible =
-        MutableStateFlow(
-            HomeStatusBarViewModel.VisibilityModel(
-                visibility = View.GONE,
-                shouldAnimateChange = false,
-            )
-        )
+        MutableStateFlow(VisibilityModel(visibility = View.GONE, shouldAnimateChange = false))
 
     override val systemInfoCombinedVis =
         MutableStateFlow(
-            HomeStatusBarViewModel.SystemInfoCombinedVisibilityModel(
-                HomeStatusBarViewModel.VisibilityModel(
-                    visibility = View.GONE,
-                    shouldAnimateChange = false,
-                ),
+            SystemInfoCombinedVisibilityModel(
+                VisibilityModel(visibility = View.GONE, shouldAnimateChange = false),
                 Idle,
             )
         )
 
     override val iconBlockList: MutableStateFlow<List<String>> = MutableStateFlow(listOf())
 
-    override fun areNotificationsLightsOut(displayId: Int): Flow<Boolean> = areNotificationLightsOut
+    override val contentArea = MutableStateFlow(Rect(0, 0, 1, 1))
 
     val darkRegions = mutableListOf<Rect>()
 
     var darkIconTint = Color.BLACK
     var lightIconTint = Color.WHITE
 
-    override fun areaTint(displayId: Int): Flow<StatusBarTintColor> =
+    override val areaTint: Flow<StatusBarTintColor> =
         MutableStateFlow(
             StatusBarTintColor { viewBounds ->
                 if (DarkIconDispatcher.isInAreas(darkRegions, viewBounds)) {

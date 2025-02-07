@@ -183,6 +183,9 @@ public class CommandQueue extends IStatusBar.Stub implements
     private static final int MSG_ENTER_DESKTOP = 80 << MSG_SHIFT;
     private static final int MSG_SET_SPLITSCREEN_FOCUS = 81 << MSG_SHIFT;
     private static final int MSG_TOGGLE_QUICK_SETTINGS_PANEL = 82 << MSG_SHIFT;
+    private static final int MSG_WALLET_ACTION_LAUNCH_GESTURE = 83 << MSG_SHIFT;
+    private static final int MSG_SET_HAS_NAVIGATION_BAR = 84 << MSG_SHIFT;
+    private static final int MSG_DISPLAY_REMOVE_SYSTEM_DECORATIONS = 85 << MSG_SHIFT;
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
     public static final int FLAG_EXCLUDE_RECENTS_PANEL = 1 << 1;
@@ -343,6 +346,11 @@ public class CommandQueue extends IStatusBar.Stub implements
         default void onCameraLaunchGestureDetected(int source) { }
 
         /**
+         * Notifies SysUI that the wallet launch gesture was detected.
+         */
+        default void onWalletLaunchGestureDetected() {}
+
+        /**
          * Notifies SysUI that the emergency action gesture was detected.
          */
         default void onEmergencyActionLaunchGestureDetected() { }
@@ -410,6 +418,12 @@ public class CommandQueue extends IStatusBar.Stub implements
          * @see IStatusBar#onDisplayReady(int)
          */
         default void onDisplayReady(int displayId) {
+        }
+
+        /**
+         * @see IStatusBar#onDisplayRemoveSystemDecorations(int)
+         */
+        default void onDisplayRemoveSystemDecorations(int displayId) {
         }
 
         /**
@@ -574,6 +588,12 @@ public class CommandQueue extends IStatusBar.Stub implements
          * @see IStatusBar#moveFocusedTaskToDesktop(int)
          */
         default void moveFocusedTaskToDesktop(int displayId) {}
+
+        /**
+         * @see IStatusBar#setHasNavigationBar(int, boolean)
+         */
+        default void setHasNavigationBar(int displayId, boolean hasNavigationBar) {
+        }
     }
 
     @VisibleForTesting
@@ -953,6 +973,18 @@ public class CommandQueue extends IStatusBar.Stub implements
     }
 
     @Override
+    public void onWalletLaunchGestureDetected() {
+        synchronized (mLock) {
+            if (mPowerInteractor != null) {
+                mPowerInteractor.get().onWalletLaunchGestureDetected();
+            }
+
+            mHandler.removeMessages(MSG_WALLET_ACTION_LAUNCH_GESTURE);
+            mHandler.obtainMessage(MSG_WALLET_ACTION_LAUNCH_GESTURE).sendToTarget();
+        }
+    }
+
+    @Override
     public void onEmergencyActionLaunchGestureDetected() {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_EMERGENCY_ACTION_LAUNCH_GESTURE);
@@ -1176,6 +1208,14 @@ public class CommandQueue extends IStatusBar.Stub implements
     public void onDisplayReady(int displayId) {
         synchronized (mLock) {
             mHandler.obtainMessage(MSG_DISPLAY_READY, displayId, 0).sendToTarget();
+        }
+    }
+
+    @Override
+    public void onDisplayRemoveSystemDecorations(int displayId) {
+        synchronized (mLock) {
+            mHandler.obtainMessage(MSG_DISPLAY_REMOVE_SYSTEM_DECORATIONS, displayId, 0)
+                    .sendToTarget();
         }
     }
 
@@ -1492,6 +1532,15 @@ public class CommandQueue extends IStatusBar.Stub implements
         mHandler.obtainMessage(MSG_ENTER_DESKTOP, args).sendToTarget();
     }
 
+    @Override
+    public void setHasNavigationBar(int displayId, boolean hasNavigationBar) {
+        synchronized (mLock) {
+            mHandler.obtainMessage(MSG_SET_HAS_NAVIGATION_BAR, displayId,
+                    hasNavigationBar ? 1 : 0).sendToTarget();
+        }
+    }
+
+
     private final class H extends Handler {
         private H(Looper l) {
             super(l);
@@ -1640,6 +1689,11 @@ public class CommandQueue extends IStatusBar.Stub implements
                 case MSG_CAMERA_LAUNCH_GESTURE:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).onCameraLaunchGestureDetected(msg.arg1);
+                    }
+                    break;
+                case MSG_WALLET_ACTION_LAUNCH_GESTURE:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).onWalletLaunchGestureDetected();
                     }
                     break;
                 case MSG_EMERGENCY_ACTION_LAUNCH_GESTURE:
@@ -1800,6 +1854,11 @@ public class CommandQueue extends IStatusBar.Stub implements
                 case MSG_DISPLAY_READY:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).onDisplayReady(msg.arg1);
+                    }
+                    break;
+                case MSG_DISPLAY_REMOVE_SYSTEM_DECORATIONS:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).onDisplayRemoveSystemDecorations(msg.arg1);
                     }
                     break;
                 case MSG_RECENTS_ANIMATION_STATE_CHANGED:
@@ -2013,6 +2072,11 @@ public class CommandQueue extends IStatusBar.Stub implements
                     }
                     break;
                 }
+                case MSG_SET_HAS_NAVIGATION_BAR:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).setHasNavigationBar(msg.arg1, msg.arg2 != 0);
+                    }
+                    break;
             }
         }
     }

@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,11 +32,15 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.isVisible
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.app.tracing.coroutines.launchTraced as launch
+import com.android.compose.theme.PlatformTheme
 import com.android.keyguard.AlphaOptimizedLinearLayout
 import com.android.systemui.plugins.DarkIconDispatcher
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.chips.ui.compose.OngoingActivityChips
+import com.android.systemui.statusbar.core.StatusBarRootModernization
 import com.android.systemui.statusbar.data.repository.DarkIconDispatcherStore
 import com.android.systemui.statusbar.events.domain.interactor.SystemStatusEventAnimationInteractor
 import com.android.systemui.statusbar.featurepods.popups.StatusBarPopupChips
@@ -52,14 +57,16 @@ import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.HomeStatusBarIconBlockListBinder
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.HomeStatusBarViewBinder
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.StatusBarVisibilityChangeListener
+import com.android.systemui.statusbar.pipeline.shared.ui.model.VisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.viewmodel.HomeStatusBarViewModel
+import com.android.systemui.statusbar.pipeline.shared.ui.viewmodel.HomeStatusBarViewModel.HomeStatusBarViewModelFactory
 import javax.inject.Inject
 
 /** Factory to simplify the dependency management for [StatusBarRoot] */
 class StatusBarRootFactory
 @Inject
 constructor(
-    private val homeStatusBarViewModel: HomeStatusBarViewModel,
+    private val homeStatusBarViewModelFactory: HomeStatusBarViewModelFactory,
     private val homeStatusBarViewBinder: HomeStatusBarViewBinder,
     private val notificationIconsBinder: NotificationIconContainerStatusBarViewBinder,
     private val darkIconManagerFactory: DarkIconManager.Factory,
@@ -70,13 +77,14 @@ constructor(
 ) {
     fun create(root: ViewGroup, andThen: (ViewGroup) -> Unit): ComposeView {
         val composeView = ComposeView(root.context)
+        val displayId = root.context.displayId
         val darkIconDispatcher =
             darkIconDispatcherStore.forDisplay(root.context.displayId) ?: return composeView
         composeView.apply {
             setContent {
                 StatusBarRoot(
                     parent = root,
-                    statusBarViewModel = homeStatusBarViewModel,
+                    statusBarViewModel = homeStatusBarViewModelFactory.create(displayId),
                     statusBarViewBinder = homeStatusBarViewBinder,
                     notificationIconsBinder = notificationIconsBinder,
                     darkIconManagerFactory = darkIconManagerFactory,
@@ -137,10 +145,14 @@ fun StatusBarRoot(
 
     Box(Modifier.fillMaxSize()) {
         // TODO(b/364360986): remove this before rolling the flag forward
-        Disambiguation(viewModel = statusBarViewModel)
+        if (StatusBarRootModernization.SHOW_DISAMBIGUATION) {
+            Disambiguation(viewModel = statusBarViewModel)
+        }
 
         Row(Modifier.fillMaxSize()) {
             val scope = rememberCoroutineScope()
+            val visible =
+                statusBarViewModel.shouldHomeStatusBarBeVisible.collectAsStateWithLifecycle(false)
             AndroidView(
                 factory = { context ->
                     val inflater = LayoutInflater.from(context)
@@ -158,17 +170,64 @@ fun StatusBarRoot(
                             darkIconDispatcher,
                         )
                     iconController.addIconGroup(darkIconManager)
+
+                    if (StatusBarChipsModernization.isEnabled) {
+                        val startSideExceptHeadsUp =
+                            phoneStatusBarView.requireViewById<LinearLayout>(
+                                R.id.status_bar_start_side_except_heads_up
+                            )
+
+                        val composeView =
+                            ComposeView(context).apply {
+                                layoutParams =
+                                    LinearLayout.LayoutParams(
+                                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    )
+
+                                setViewCompositionStrategy(
+                                    ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed
+                                )
+
+                                setContent {
+                                    PlatformTheme {
+                                        val chips by
+                                            statusBarViewModel.ongoingActivityChips
+                                                .collectAsStateWithLifecycle()
+                                        OngoingActivityChips(chips = chips)
+                                    }
+                                }
+                            }
+
+                        // Add the composable container for ongoingActivityChips before the
+                        // notification_icon_area to maintain the same ordering for ongoing activity
+                        // chips in the status bar layout.
+                        val notificationIconAreaIndex =
+                            startSideExceptHeadsUp.indexOfChild(
+                                startSideExceptHeadsUp.findViewById(R.id.notification_icon_area)
+                            )
+                        startSideExceptHeadsUp.addView(composeView, notificationIconAreaIndex)
+                    }
+
                     HomeStatusBarIconBlockListBinder.bind(
                         statusIconContainer,
                         darkIconManager,
                         statusBarViewModel.iconBlockList,
                     )
 
-                    if (!StatusBarChipsModernization.isEnabled) {
+                    if (StatusBarChipsModernization.isEnabled) {
+                        // Make sure the primary chip is hidden when StatusBarChipsModernization is
+                        // enabled. OngoingActivityChips will be shown in a composable container
+                        // when this flag is enabled.
+                        phoneStatusBarView
+                            .requireViewById<View>(R.id.ongoing_activity_chip_primary)
+                            .visibility = View.GONE
+                    } else {
                         ongoingCallController.setChipView(
                             phoneStatusBarView.requireViewById(R.id.ongoing_activity_chip_primary)
                         )
                     }
+
                     // For notifications, first inflate the [NotificationIconContainer]
                     val notificationIconArea =
                         phoneStatusBarView.requireViewById<ViewGroup>(R.id.notification_icon_area)
@@ -228,7 +287,12 @@ fun StatusBarRoot(
                     }
                     onViewCreated(phoneStatusBarView)
                     phoneStatusBarView
-                }
+                },
+                update = { view ->
+                    // Show or hide the entire status bar. This is important so that we aren't
+                    // visible when first inflated
+                    view.isVisible = visible.value
+                },
             )
         }
     }
@@ -241,11 +305,7 @@ fun StatusBarRoot(
 fun Disambiguation(viewModel: HomeStatusBarViewModel) {
     val clockVisibilityModel =
         viewModel.isClockVisible.collectAsStateWithLifecycle(
-            initialValue =
-                HomeStatusBarViewModel.VisibilityModel(
-                    visibility = View.GONE,
-                    shouldAnimateChange = false,
-                )
+            initialValue = VisibilityModel(visibility = View.GONE, shouldAnimateChange = false)
         )
     if (clockVisibilityModel.value.visibility == View.VISIBLE) {
         Box(modifier = Modifier.fillMaxSize().alpha(0.5f), contentAlignment = Alignment.Center) {

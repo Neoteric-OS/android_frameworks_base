@@ -41,7 +41,6 @@ import static android.window.ConfigurationHelper.shouldUpdateResources;
 
 import static com.android.internal.annotations.VisibleForTesting.Visibility.PACKAGE;
 import static com.android.internal.os.SafeZipPathValidatorCallback.VALIDATE_ZIP_PATH_FOR_PATH_TRAVERSAL;
-import static com.android.sdksandbox.flags.Flags.sandboxActivitySdkBasedContext;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -190,7 +189,9 @@ import android.system.StructStat;
 import android.telephony.TelephonyFrameworkInitializer;
 import android.util.AndroidRuntimeException;
 import android.util.ArrayMap;
+// QTI_BEGIN: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
 import android.util.BoostFramework;
+// QTI_END: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
@@ -4073,9 +4074,7 @@ public final class ActivityThread extends ClientTransactionHandler
                     r.activityInfo.targetActivity);
         }
 
-        boolean isSandboxActivityContext =
-                sandboxActivitySdkBasedContext()
-                        && SdkSandboxActivityAuthority.isSdkSandboxActivityIntent(
+        boolean isSandboxActivityContext = SdkSandboxActivityAuthority.isSdkSandboxActivityIntent(
                                 mSystemContext, r.intent);
         boolean isSandboxedSdkContextUsed = false;
         ContextImpl activityBaseContext;
@@ -4735,6 +4734,7 @@ public final class ActivityThread extends ClientTransactionHandler
     }
 
     private void reportSplashscreenViewShown(IBinder token, SplashScreenView view) {
+        Trace.instant(Trace.TRACE_TAG_VIEW, "reportSplashscreenViewShown");
         ActivityClient.getInstance().reportSplashScreenAttached(token);
         synchronized (this) {
             if (mSplashScreenGlobal != null) {
@@ -4752,10 +4752,32 @@ public final class ActivityThread extends ClientTransactionHandler
         final SurfaceControl.Transaction transaction = new SurfaceControl.Transaction();
         transaction.hide(startingWindowLeash);
 
-        decorView.getViewRootImpl().applyTransactionOnDraw(transaction);
         view.syncTransferSurfaceOnDraw();
-        // Tell server we can remove the starting window
-        decorView.postOnAnimation(() -> reportSplashscreenViewShown(token, view));
+
+        if (com.android.window.flags.Flags.useRtFrameCallbackForSplashScreenTransfer()
+                && decorView.isHardwareAccelerated()) {
+            decorView.getViewRootImpl().registerRtFrameCallback(
+                    new HardwareRenderer.FrameDrawingCallback() {
+                        @Override
+                        public void onFrameDraw(long frame) { }
+                        @Override
+                        public HardwareRenderer.FrameCommitCallback onFrameDraw(
+                                int syncResult, long frame) {
+                            return didProduceBuffer -> {
+                                Trace.instant(Trace.TRACE_TAG_VIEW, "transferSplashscreenView");
+                                transaction.apply();
+                                // Tell server we can remove the starting window after frame commit.
+                                decorView.postOnAnimation(() ->
+                                        reportSplashscreenViewShown(token, view));
+                            };
+                        }
+                    });
+        } else {
+            Trace.instant(Trace.TRACE_TAG_VIEW, "transferSplashscreenView_software");
+            decorView.getViewRootImpl().applyTransactionOnDraw(transaction);
+            // Tell server we can remove the starting window after frame commit.
+            decorView.postOnAnimation(() -> reportSplashscreenViewShown(token, view));
+        }
     }
 
     /**
@@ -7042,7 +7064,7 @@ public final class ActivityThread extends ClientTransactionHandler
                         Slog.w(TAG, "Low overhead tracing feature is not enabled");
                         break;
                     }
-                    VMDebug.startLowOverheadTrace();
+                    VMDebug.startLowOverheadTraceForAllMethods();
                     break;
                 default:
                     try {
@@ -7381,8 +7403,10 @@ public final class ActivityThread extends ClientTransactionHandler
 
     @UnsupportedAppUsage
     private void handleBindApplication(AppBindData data) {
+// QTI_BEGIN: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
         long st_bindApp = SystemClock.uptimeMillis();
         BoostFramework ux_perf = null;
+// QTI_END: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
         mDdmSyncStageUpdater.next(Stage.Bind);
 
         // Register the UI Thread as a sensitive thread to the runtime.
@@ -7516,10 +7540,13 @@ public final class ActivityThread extends ClientTransactionHandler
         /**
          * Switch this process to density compatibility mode if needed.
          */
+// QTI_BEGIN: 2018-02-20: Performance: Activity Trigger frameworks support
         if ((data.appInfo.flags & ApplicationInfo.FLAG_SUPPORTS_SCREEN_DENSITIES)
+// QTI_END: 2018-02-20: Performance: Activity Trigger frameworks support
                 == 0) {
             mDensityCompatMode = true;
             Bitmap.setDefaultDensity(DisplayMetrics.DENSITY_DEFAULT);
+// QTI_BEGIN: 2018-02-20: Performance: Activity Trigger frameworks support
         } else {
             int overrideDensity = data.appInfo.getOverrideDensity();
             if(overrideDensity != 0) {
@@ -7527,6 +7554,7 @@ public final class ActivityThread extends ClientTransactionHandler
                 mDensityCompatMode = true;
                 Bitmap.setDefaultDensity(overrideDensity);
             }
+// QTI_END: 2018-02-20: Performance: Activity Trigger frameworks support
         }
         mConfigurationController.updateDefaultDensity(data.config.densityDpi);
 
@@ -7600,15 +7628,25 @@ public final class ActivityThread extends ClientTransactionHandler
             Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
         }
 
+// QTI_BEGIN: 2018-10-31: Core: IOP/UXE: This change is related to IOP and UXE Feature.
         if (!Process.isIsolated()) {
+// QTI_END: 2018-10-31: Core: IOP/UXE: This change is related to IOP and UXE Feature.
+// QTI_BEGIN: 2018-11-22: Performance: framework: Adding temporary disk access for Boostframework
             final int old_mask = StrictMode.allowThreadDiskWritesMask();
             try {
+// QTI_END: 2018-11-22: Performance: framework: Adding temporary disk access for Boostframework
+// QTI_BEGIN: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
                 ux_perf = new BoostFramework(appContext);
+// QTI_END: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
+// QTI_BEGIN: 2018-11-22: Performance: framework: Adding temporary disk access for Boostframework
             } finally {
                  StrictMode.setThreadPolicyMask(old_mask);
             }
+// QTI_END: 2018-11-22: Performance: framework: Adding temporary disk access for Boostframework
+// QTI_BEGIN: 2018-10-31: Core: IOP/UXE: This change is related to IOP and UXE Feature.
         }
 
+// QTI_END: 2018-10-31: Core: IOP/UXE: This change is related to IOP and UXE Feature.
         if (!Process.isIsolated()) {
             final int oldMask = StrictMode.allowThreadDiskWritesMask();
             try {
@@ -7750,6 +7788,7 @@ public final class ActivityThread extends ClientTransactionHandler
                 throw e.rethrowFromSystemServer();
             }
         }
+// QTI_BEGIN: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
         long end_bindApp = SystemClock.uptimeMillis();
         int bindApp_dur = (int) (end_bindApp - st_bindApp);
         String pkg_name = null;
@@ -7757,6 +7796,8 @@ public final class ActivityThread extends ClientTransactionHandler
             pkg_name = appContext.getPackageName();
         }
         if (ux_perf != null && !Process.isIsolated() && pkg_name != null) {
+// QTI_END: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
+// QTI_BEGIN: 2019-05-30: Performance: Perf: Change for AGPE
             String pkgDir = null;
             try
             {
@@ -7767,6 +7808,7 @@ public final class ActivityThread extends ClientTransactionHandler
             {
                 Slog.e(TAG, "HeavyGameThread () : Exception_1 = " + e);
             }
+// QTI_END: 2019-05-30: Performance: Perf: Change for AGPE
             if (ux_perf.board_first_api_lvl < BoostFramework.VENDOR_T_API_LEVEL &&
                 ux_perf.board_api_lvl < BoostFramework.VENDOR_T_API_LEVEL) {
                 ux_perf.perfUXEngine_events(BoostFramework.UXE_EVENT_BINDAPP, 0,
@@ -7776,7 +7818,9 @@ public final class ActivityThread extends ClientTransactionHandler
             } else {
                 ux_perf.perfEvent(BoostFramework.VENDOR_HINT_BINDAPP, pkg_name, 2, bindApp_dur, 0);
             }
+// QTI_BEGIN: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
         }
+// QTI_END: 2018-12-02: Core: IOP/UXE: This change is related to IOP and UXE Feature.
 
         try {
             mgr.finishAttachApplication(mStartSeq, timestampApplicationOnCreateNs);

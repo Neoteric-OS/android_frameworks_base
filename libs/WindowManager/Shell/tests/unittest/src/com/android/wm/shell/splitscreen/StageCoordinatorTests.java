@@ -17,6 +17,9 @@
 package com.android.wm.shell.splitscreen;
 
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
+import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
+import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
+import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
 import static android.view.Display.DEFAULT_DISPLAY;
 
 import static com.android.wm.shell.shared.split.SplitScreenConstants.SPLIT_INDEX_UNDEFINED;
@@ -26,16 +29,22 @@ import static com.android.wm.shell.shared.split.SplitScreenConstants.SPLIT_POSIT
 import static com.android.wm.shell.splitscreen.SplitScreen.STAGE_TYPE_MAIN;
 import static com.android.wm.shell.splitscreen.SplitScreen.STAGE_TYPE_SIDE;
 import static com.android.wm.shell.splitscreen.SplitScreen.STAGE_TYPE_UNDEFINED;
+import static com.android.wm.shell.splitscreen.SplitScreenController.EXIT_REASON_DRAG_DIVIDER;
+import static com.android.wm.shell.splitscreen.SplitScreenController.EXIT_REASON_DESKTOP_MODE;
 import static com.android.wm.shell.transition.Transitions.TRANSIT_SPLIT_DISMISS;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -50,15 +59,20 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.view.SurfaceControl;
+import android.window.DisplayAreaInfo;
 import android.window.RemoteTransition;
+import android.window.WindowContainerToken;
 import android.window.WindowContainerTransaction;
 
 import androidx.test.annotation.UiThreadTest;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
+import com.android.wm.shell.MockToken;
+import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.ShellTestCase;
 import com.android.wm.shell.TestRunningTaskInfoBuilder;
@@ -84,10 +98,12 @@ import com.android.wm.shell.transition.Transitions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Tests for {@link StageCoordinator}
@@ -120,7 +136,7 @@ public class StageCoordinatorTests extends ShellTestCase {
     @Mock
     private SplitState mSplitState;
     @Mock
-    private ShellExecutor mBgExecutor;
+    private RootTaskDisplayAreaOrganizer mRootTDAOrganizer;
 
     private final Rect mBounds1 = new Rect(10, 20, 30, 40);
     private final Rect mBounds2 = new Rect(5, 10, 15, 20);
@@ -134,6 +150,10 @@ public class StageCoordinatorTests extends ShellTestCase {
     private final TestShellExecutor mMainExecutor = new TestShellExecutor();
     private final ShellExecutor mAnimExecutor = new TestShellExecutor();
     private final Handler mMainHandler = new Handler(Looper.getMainLooper());
+    private final DisplayAreaInfo mDisplayAreaInfo = new DisplayAreaInfo(new MockToken().token(),
+            DEFAULT_DISPLAY, 0);
+    private final ActivityManager.RunningTaskInfo mMainChildTaskInfo =
+            new TestRunningTaskInfoBuilder().setVisible(true).build();
 
     @Before
     @UiThreadTest
@@ -143,10 +163,11 @@ public class StageCoordinatorTests extends ShellTestCase {
         mStageCoordinator = spy(new StageCoordinator(mContext, DEFAULT_DISPLAY, mSyncQueue,
                 mTaskOrganizer, mMainStage, mSideStage, mDisplayController, mDisplayImeController,
                 mDisplayInsetsController, mSplitLayout, mTransitions, mTransactionPool,
-                mMainExecutor, mMainHandler, mBgExecutor, Optional.empty(),
-                mLaunchAdjacentController, Optional.empty(), mSplitState,
-                Optional.empty()));
+                mMainExecutor, mMainHandler, Optional.empty(), mLaunchAdjacentController,
+                Optional.empty(), mSplitState, Optional.empty(), mRootTDAOrganizer));
+
         mDividerLeash = new SurfaceControl.Builder().setName("fakeDivider").build();
+        when(mRootTDAOrganizer.getDisplayAreaInfo(DEFAULT_DISPLAY)).thenReturn(mDisplayAreaInfo);
 
         when(mSplitLayout.getTopLeftBounds()).thenReturn(mBounds1);
         when(mSplitLayout.getBottomRightBounds()).thenReturn(mBounds2);
@@ -163,6 +184,12 @@ public class StageCoordinatorTests extends ShellTestCase {
         mMainStage.mRootTaskInfo = new TestRunningTaskInfoBuilder().build();
         doReturn(mock(SplitDecorManager.class)).when(mMainStage).getSplitDecorManager();
         doReturn(mock(SplitDecorManager.class)).when(mSideStage).getSplitDecorManager();
+
+        doAnswer(invocation -> {
+            Consumer<ActivityManager.RunningTaskInfo> consumer = invocation.getArgument(0);
+            consumer.accept(mMainChildTaskInfo);
+            return null;
+        }).when(mMainStage).doForAllChildTaskInfos(any());
     }
 
     @Test
@@ -425,6 +452,79 @@ public class StageCoordinatorTests extends ShellTestCase {
                 null /*instanceId*/);
         verify(splitScreenTransitions, times(2))
                 .startFullscreenTransition(any(), any());
+    }
+
+
+    @Test
+    public void startTask_ensureWindowingModeCleared() {
+        SplitScreenTransitions splitScreenTransitions =
+                spy(mStageCoordinator.getSplitTransitions());
+        mStageCoordinator.setSplitTransitions(splitScreenTransitions);
+        ArgumentCaptor<WindowContainerTransaction> wctCaptor =
+                ArgumentCaptor.forClass(WindowContainerTransaction.class);
+        int taskId = 18;
+        IBinder binder = mock(IBinder.class);
+        ActivityManager.RunningTaskInfo rti = mock(ActivityManager.RunningTaskInfo.class);
+        WindowContainerToken mockToken = mock(WindowContainerToken.class);
+        when(mockToken.asBinder()).thenReturn(binder);
+        when(rti.getToken()).thenReturn(mockToken);
+        when(mTaskOrganizer.getRunningTaskInfo(taskId)).thenReturn(rti);
+        mStageCoordinator.startTask(taskId, SPLIT_POSITION_TOP_OR_LEFT, null /*options*/,
+                null, SPLIT_INDEX_UNDEFINED);
+        verify(splitScreenTransitions).startEnterTransition(anyInt(),
+                wctCaptor.capture(), any(), any(), anyInt(), anyBoolean());
+
+        int windowingMode = wctCaptor.getValue().getChanges().get(binder).getWindowingMode();
+        assertEquals(windowingMode, WINDOWING_MODE_UNDEFINED);
+    }
+    @Test
+    public void testDismiss_freeformDisplay() {
+        mDisplayAreaInfo.configuration.windowConfiguration.setWindowingMode(
+                WINDOWING_MODE_FREEFORM);
+        when(mStageCoordinator.isSplitActive()).thenReturn(true);
+
+        WindowContainerTransaction wct = new WindowContainerTransaction();
+        mStageCoordinator.prepareExitSplitScreen(STAGE_TYPE_MAIN, wct, EXIT_REASON_DRAG_DIVIDER);
+
+        assertEquals(wct.getChanges().get(mMainChildTaskInfo.token.asBinder()).getWindowingMode(),
+                WINDOWING_MODE_FULLSCREEN);
+    }
+
+    @Test
+    public void testDismiss_freeformDisplayToDesktop() {
+        mDisplayAreaInfo.configuration.windowConfiguration.setWindowingMode(
+                WINDOWING_MODE_FREEFORM);
+        when(mStageCoordinator.isSplitActive()).thenReturn(true);
+
+        WindowContainerTransaction wct = new WindowContainerTransaction();
+        mStageCoordinator.prepareExitSplitScreen(STAGE_TYPE_MAIN, wct, EXIT_REASON_DESKTOP_MODE);
+
+        WindowContainerTransaction.Change c =
+                wct.getChanges().get(mMainChildTaskInfo.token.asBinder());
+        assertFalse(c != null && c.getWindowingMode() == WINDOWING_MODE_FULLSCREEN);
+    }
+
+    @Test
+    public void testDismiss_fullscreenDisplay() {
+        when(mStageCoordinator.isSplitActive()).thenReturn(true);
+
+        WindowContainerTransaction wct = new WindowContainerTransaction();
+        mStageCoordinator.prepareExitSplitScreen(STAGE_TYPE_MAIN, wct, EXIT_REASON_DRAG_DIVIDER);
+
+        assertEquals(wct.getChanges().get(mMainChildTaskInfo.token.asBinder()).getWindowingMode(),
+                WINDOWING_MODE_UNDEFINED);
+    }
+
+    @Test
+    public void testDismiss_fullscreenDisplayToDesktop() {
+        when(mStageCoordinator.isSplitActive()).thenReturn(true);
+
+        WindowContainerTransaction wct = new WindowContainerTransaction();
+        mStageCoordinator.prepareExitSplitScreen(STAGE_TYPE_MAIN, wct, EXIT_REASON_DESKTOP_MODE);
+
+        WindowContainerTransaction.Change c =
+                wct.getChanges().get(mMainChildTaskInfo.token.asBinder());
+        assertFalse(c != null && c.getWindowingMode() == WINDOWING_MODE_FULLSCREEN);
     }
 
     private Transitions createTestTransitions() {

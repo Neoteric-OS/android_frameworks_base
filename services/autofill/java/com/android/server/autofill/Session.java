@@ -34,7 +34,9 @@ import static android.service.autofill.FillRequest.FLAG_MANUAL_REQUEST;
 import static android.service.autofill.FillRequest.FLAG_PASSWORD_INPUT_TYPE;
 import static android.service.autofill.FillRequest.FLAG_PCC_DETECTION;
 import static android.service.autofill.FillRequest.FLAG_RESET_FILL_DIALOG_STATE;
+// QTI_BEGIN: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
 import static android.service.autofill.FillRequest.FLAG_SCREEN_HAS_CREDMAN_FIELD;
+// QTI_END: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
 import static android.service.autofill.FillRequest.FLAG_SUPPORTS_FILL_DIALOG;
 import static android.service.autofill.FillRequest.FLAG_VIEW_NOT_FOCUSED;
 import static android.service.autofill.FillRequest.FLAG_VIEW_REQUESTS_CREDMAN_SERVICE;
@@ -442,6 +444,9 @@ final class Session
     private Bundle mClientState;
 
     @GuardedBy("mLock")
+    private Bundle mClientStateForSecondary;
+
+    @GuardedBy("mLock")
     boolean mDestroyed;
 
     /**
@@ -724,9 +729,11 @@ final class Session
         /** Whether the current {@link FillResponse} is expired. */
         private boolean mExpiredResponse;
 
+// QTI_BEGIN: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
         /** Whether current screen has credman field. */
         private boolean mScreenHasCredmanField;
 
+// QTI_END: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
         /** Whether the fill dialog UI is disabled. */
         private boolean mFillDialogDisabled;
     }
@@ -980,13 +987,19 @@ final class Session
                         mergePreviousSessionLocked(/* forSave= */ false);
                 final List<String> hints = getTypeHintsForProvider();
 
+                Bundle sendBackClientState = mClientState;
+                if (Flags.multipleFillHistory()
+                        && mRequestId.isSecondaryProvider(requestId)) {
+                    sendBackClientState = mClientStateForSecondary;
+                }
+
                 mDelayedFillPendingIntent = createPendingIntent(requestId);
                 request =
                         new FillRequest(
                                 requestId,
                                 contexts,
                                 hints,
-                                mClientState,
+                                sendBackClientState,
                                 flags,
                                 /* inlineSuggestionsRequest= */ null,
                                 /* delayedFillIntentSender= */ mDelayedFillPendingIntent == null
@@ -3317,7 +3330,7 @@ final class Session
                         AUTHENTICATION_RESULT_SUCCESS);
                 if (newClientState != null) {
                     if (sDebug) Slog.d(TAG, "Updating client state from auth dataset");
-                    mClientState = newClientState;
+                    setClientState(newClientState, requestId);
                 }
                 Dataset datasetFromResult = getEffectiveDatasetForAuthentication((Dataset) result);
                 final Dataset oldDataset = authenticatedResponse.getDatasets().get(datasetIdx);
@@ -4169,6 +4182,7 @@ final class Session
         final FillResponse response = getLastResponseLocked("showSaveLocked(%s)");
         final SaveInfo saveInfo = response == null ? null : response.getSaveInfo();
 
+// QTI_BEGIN: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
         /*
          * Don't show save if the session has credman field
          */
@@ -4181,6 +4195,7 @@ final class Session
                     Event.NO_SAVE_UI_REASON_NONE);
         }
 
+// QTI_END: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
         /*
          * The Save dialog is only shown if all conditions below are met:
          *
@@ -5124,10 +5139,12 @@ final class Session
             return;
         }
 
+// QTI_BEGIN: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
         if ((flags & FLAG_SCREEN_HAS_CREDMAN_FIELD) != 0) {
             mSessionFlags.mScreenHasCredmanField = true;
         }
 
+// QTI_END: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
         switch(action) {
             case ACTION_START_SESSION:
                 // View is triggering autofill.
@@ -5700,7 +5717,9 @@ final class Session
 
     private boolean isFillDialogUiEnabled() {
         synchronized (mLock) {
+// QTI_BEGIN: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
             return !mSessionFlags.mFillDialogDisabled && !mSessionFlags.mScreenHasCredmanField;
+// QTI_END: 2024-12-03: SystemUI: Adding changes for Autofill test cases module.
         }
     }
 
@@ -6694,6 +6713,18 @@ final class Session
     }
 
     @GuardedBy("mLock")
+    private void setClientState(@Nullable Bundle newClientState, int requestId) {
+        if (Flags.multipleFillHistory()
+                && mRequestId.isSecondaryProvider(requestId)) {
+            // Set the secondary clientstate
+            mClientStateForSecondary = newClientState;
+        } else {
+            // The old way - only set the primary provider clientstate
+            mClientState = newClientState;
+        }
+    }
+
+    @GuardedBy("mLock")
     private void processResponseLocked(
             @NonNull FillResponse newResponse, @Nullable Bundle newClientState, int flags) {
         // Make sure we are hiding the UI which will be shown
@@ -6728,7 +6759,9 @@ final class Session
             mResponses = new SparseArray<>(2);
         }
         mResponses.put(requestId, newResponse);
-        mClientState = newClientState != null ? newClientState : newResponse.getClientState();
+
+        setClientState(newClientState != null ? newClientState : newResponse.getClientState(),
+                requestId);
 
         boolean webviewRequestedCredman =
                 newClientState != null

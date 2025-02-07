@@ -42,10 +42,6 @@ public class DisplayManagerFlags {
             Flags.FLAG_ENABLE_PORT_IN_DISPLAY_LAYOUT,
             Flags::enablePortInDisplayLayout);
 
-    private final FlagState mConnectedDisplayManagementFlagState = new FlagState(
-            Flags.FLAG_ENABLE_CONNECTED_DISPLAY_MANAGEMENT,
-            Flags::enableConnectedDisplayManagement);
-
     private final FlagState mAdaptiveToneImprovements1 = new FlagState(
             Flags.FLAG_ENABLE_ADAPTIVE_TONE_IMPROVEMENTS_1,
             Flags::enableAdaptiveToneImprovements1);
@@ -262,16 +258,26 @@ public class DisplayManagerFlags {
             Flags::subscribeGranularDisplayEvents
     );
 
+    private final FlagState mBaseDensityForExternalDisplays = new FlagState(
+            Flags.FLAG_BASE_DENSITY_FOR_EXTERNAL_DISPLAYS,
+            Flags::baseDensityForExternalDisplays
+    );
+
+    private final FlagState mFramerateOverrideTriggersRrCallbacks = new FlagState(
+            Flags.FLAG_FRAMERATE_OVERRIDE_TRIGGERS_RR_CALLBACKS,
+            Flags::framerateOverrideTriggersRrCallbacks
+    );
+
+    private final FlagState mRefreshRateEventForForegroundApps = new FlagState(
+            Flags.FLAG_REFRESH_RATE_EVENT_FOR_FOREGROUND_APPS,
+            Flags::refreshRateEventForForegroundApps
+    );
+
     /**
      * @return {@code true} if 'port' is allowed in display layout configuration file.
      */
     public boolean isPortInDisplayLayoutEnabled() {
         return mPortInDisplayLayoutFlagState.isEnabled();
-    }
-
-    /** Returns whether connected display management is enabled or not. */
-    public boolean isConnectedDisplayManagementEnabled() {
-        return mConnectedDisplayManagementFlagState.isEnabled();
     }
 
     /** Returns whether power throttling clamper is enabled on not. */
@@ -562,6 +568,30 @@ public class DisplayManagerFlags {
     }
 
     /**
+     * @return {@code true} if the flag for base density for external displays is enabled
+     */
+    public boolean isBaseDensityForExternalDisplaysEnabled() {
+        return mBaseDensityForExternalDisplays.isEnabled();
+    }
+
+    /**
+     * @return {@code true} if the flag triggering refresh rate callbacks when framerate is
+     * overridden is enabled
+     */
+    public boolean isFramerateOverrideTriggersRrCallbacksEnabled() {
+        return mFramerateOverrideTriggersRrCallbacks.isEnabled();
+    }
+
+
+    /**
+     * @return {@code true} if the flag for sending refresh rate events only for the apps in
+     * foreground is enabled
+     */
+    public boolean isRefreshRateEventForForegroundAppsEnabled() {
+        return mRefreshRateEventForForegroundApps.isEnabled();
+    }
+
+    /**
      * dumps all flagstates
      * @param pw printWriter
      */
@@ -572,7 +602,6 @@ public class DisplayManagerFlags {
         pw.println(" " + mAdaptiveToneImprovements2);
         pw.println(" " + mBackUpSmoothDisplayAndForcePeakRefreshRateFlagState);
         pw.println(" " + mConnectedDisplayErrorHandlingFlagState);
-        pw.println(" " + mConnectedDisplayManagementFlagState);
         pw.println(" " + mDisplayOffloadFlagState);
         pw.println(" " + mExternalDisplayLimitModeState);
         pw.println(" " + mDisplayTopology);
@@ -616,6 +645,9 @@ public class DisplayManagerFlags {
         pw.println(" " + mDisplayListenerPerformanceImprovementsFlagState);
         pw.println(" " + mSubscribeGranularDisplayEvents);
         pw.println(" " + mEnableDisplayContentModeManagementFlagState);
+        pw.println(" " + mBaseDensityForExternalDisplays);
+        pw.println(" " + mFramerateOverrideTriggersRrCallbacks);
+        pw.println(" " + mRefreshRateEventForForegroundApps);
     }
 
     private static class FlagState {

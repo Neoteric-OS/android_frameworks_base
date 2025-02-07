@@ -37,10 +37,10 @@ import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.ObservableTransitionState
 import com.android.compose.animation.scene.Scale
 import com.android.compose.animation.scene.SceneKey
-import com.android.compose.animation.scene.SceneScope
 import com.android.compose.animation.scene.UserAction
 import com.android.compose.animation.scene.UserActionResult
 import com.android.compose.animation.scene.isElement
@@ -69,6 +69,7 @@ import com.android.systemui.scene.shared.model.sceneDataSourceDelegator
 import com.android.systemui.scene.ui.composable.Scene
 import com.android.systemui.scene.ui.composable.SceneContainer
 import com.android.systemui.scene.ui.composable.SceneContainerTransitions
+import com.android.systemui.scene.ui.view.sceneJankMonitorFactory
 import com.android.systemui.testKosmos
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.awaitCancellation
@@ -193,6 +194,7 @@ class BouncerPredictiveBackTest : SysuiTestCase() {
                                 overlayByKey = emptyMap(),
                                 dataSourceDelegator = kosmos.sceneDataSourceDelegator,
                                 qsSceneAdapter = { kosmos.fakeQsSceneAdapter },
+                                sceneJankMonitorFactory = kosmos.sceneJankMonitorFactory,
                             )
                         }
                     },
@@ -268,7 +270,7 @@ class BouncerPredictiveBackTest : SysuiTestCase() {
         override val userActions: Flow<Map<UserAction, UserActionResult>> = flowOf()
 
         @Composable
-        override fun SceneScope.Content(modifier: Modifier) {
+        override fun ContentScope.Content(modifier: Modifier) {
             Box(modifier = modifier, contentAlignment = Alignment.Center) {
                 Text(text = "Fake Lockscreen")
             }

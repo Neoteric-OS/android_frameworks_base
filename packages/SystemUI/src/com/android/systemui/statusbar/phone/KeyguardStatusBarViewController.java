@@ -23,6 +23,7 @@ import static com.android.systemui.Flags.updateUserSwitcherBackground;
 import static com.android.systemui.statusbar.StatusBarState.KEYGUARD;
 import static com.android.systemui.util.kotlin.JavaAdapterKt.collectFlow;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
@@ -56,6 +57,7 @@ import com.android.systemui.log.core.LogLevel;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.res.R;
 import com.android.systemui.scene.shared.flag.SceneContainerFlag;
+import com.android.systemui.shade.ShadeDisplayAware;
 import com.android.systemui.shade.ShadeViewStateProvider;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.StatusBarState;
@@ -64,6 +66,7 @@ import com.android.systemui.statusbar.data.repository.StatusBarContentInsetsProv
 import com.android.systemui.statusbar.disableflags.DisableStateTracker;
 import com.android.systemui.statusbar.events.SystemStatusAnimationCallback;
 import com.android.systemui.statusbar.events.SystemStatusAnimationScheduler;
+import com.android.systemui.statusbar.layout.StatusBarContentInsetsProvider;
 import com.android.systemui.statusbar.notification.AnimatableProperty;
 import com.android.systemui.statusbar.notification.PropertyAnimator;
 import com.android.systemui.statusbar.notification.stack.AnimationProperties;
@@ -113,6 +116,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
             R.id.keyguard_hun_animator_start_tag);
 
     private final CoroutineDispatcher mCoroutineDispatcher;
+    private final Context mContext;
     private final CarrierTextController mCarrierTextController;
     private final ConfigurationController mConfigurationController;
     private final SystemStatusAnimationScheduler mAnimationScheduler;
@@ -128,7 +132,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
     private final KeyguardStatusBarViewModel mKeyguardStatusBarViewModel;
     private final BiometricUnlockController mBiometricUnlockController;
     private final SysuiStatusBarStateController mStatusBarStateController;
-    private final StatusBarContentInsetsProvider mInsetsProvider;
+    private final StatusBarContentInsetsProviderStore mInsetsProviderStore;
     private final UserManager mUserManager;
     private final StatusBarUserChipViewModel mStatusBarUserChipViewModel;
     private final SecureSettings mSecureSettings;
@@ -313,6 +317,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
     @Inject
     public KeyguardStatusBarViewController(
             @Main CoroutineDispatcher dispatcher,
+            @ShadeDisplayAware Context context,
             KeyguardStatusBarView view,
             CarrierTextController carrierTextController,
             ConfigurationController configurationController,
@@ -346,6 +351,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
     ) {
         super(view);
         mCoroutineDispatcher = dispatcher;
+        mContext = context;
         mCarrierTextController = carrierTextController;
         mConfigurationController = configurationController;
         mAnimationScheduler = animationScheduler;
@@ -361,7 +367,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
         mKeyguardStatusBarViewModel = keyguardStatusBarViewModel;
         mBiometricUnlockController = biometricUnlockController;
         mStatusBarStateController = statusBarStateController;
-        mInsetsProvider = statusBarContentInsetsProviderStore.getDefaultDisplay();
+        mInsetsProviderStore = statusBarContentInsetsProviderStore;
         mUserManager = userManager;
         mStatusBarUserChipViewModel = userChipViewModel;
         mSecureSettings = secureSettings;
@@ -403,6 +409,10 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
         mStatusOverlayHoverListenerFactory = statusOverlayHoverListenerFactory;
     }
 
+    private StatusBarContentInsetsProvider insetsProvider() {
+        return mInsetsProviderStore.forDisplay(mContext.getDisplayId());
+    }
+
     @Override
     protected void onInit() {
         super.onInit();
@@ -420,7 +430,9 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
         mAnimationScheduler.addCallback(mAnimationCallback);
         mUserInfoController.addCallback(mOnUserInfoChangedListener);
         mStatusBarStateController.addCallback(mStatusBarStateListener);
+// QTI_BEGIN: 2024-09-11: Android_UI: SystemUI: Update statusBarState in KeyguardStatusBarViewController
         mStatusBarState = mStatusBarStateController.getState();
+// QTI_END: 2024-09-11: Android_UI: SystemUI: Update statusBarState in KeyguardStatusBarViewController
         mKeyguardUpdateMonitor.registerCallback(mKeyguardUpdateMonitorCallback);
         mDisableStateTracker.startTracking(mCommandQueue, mView.getDisplay().getDisplayId());
         if (mTintedIconManager == null) {
@@ -446,7 +458,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
                 .createDarkAwareListener(mSystemIconsContainer, mView.darkChangeFlow());
         mSystemIconsContainer.setOnHoverListener(hoverListener);
         mView.setOnApplyWindowInsetsListener(
-                (view, windowInsets) -> mView.updateWindowInsets(windowInsets, mInsetsProvider));
+                (view, windowInsets) -> mView.updateWindowInsets(windowInsets, insetsProvider()));
         mSecureSettings.registerContentObserverForUserSync(
                 Settings.Secure.STATUS_BAR_SHOW_VIBRATE_ICON,
                 false,
@@ -529,6 +541,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
             return;
         }
         mDozing = dozing;
+        updateViewState();
     }
 
     /** Animate the keyguard status bar in. */
@@ -644,7 +657,7 @@ public class KeyguardStatusBarViewController extends ViewController<KeyguardStat
      * {@code OnApplyWindowInsetsListener}s.
      */
     public void setDisplayCutout(@Nullable DisplayCutout displayCutout) {
-        mView.setDisplayCutout(displayCutout, mInsetsProvider);
+        mView.setDisplayCutout(displayCutout, insetsProvider());
     }
 
     /**

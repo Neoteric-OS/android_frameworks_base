@@ -17,13 +17,14 @@
 package com.android.systemui.qs.ui.viewmodel
 
 import androidx.compose.runtime.getValue
-import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.scene.domain.interactor.SceneInteractor
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel
+import com.android.systemui.statusbar.notification.stack.domain.interactor.NotificationStackAppearanceInteractor
+import com.android.systemui.statusbar.notification.stack.shared.model.ShadeScrimShape
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.awaitCancellation
@@ -44,11 +45,19 @@ class QuickSettingsShadeOverlayContentViewModel
 constructor(
     val shadeInteractor: ShadeInteractor,
     val sceneInteractor: SceneInteractor,
+    val notificationStackAppearanceInteractor: NotificationStackAppearanceInteractor,
     val shadeHeaderViewModelFactory: ShadeHeaderViewModel.Factory,
     quickSettingsContainerViewModelFactory: QuickSettingsContainerViewModel.Factory,
 ) : ExclusiveActivatable() {
 
     private val hydrator = Hydrator("QuickSettingsContainerViewModel.hydrator")
+
+    val isShadeLayoutWide: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "isShadeLayoutWide",
+            initialValue = shadeInteractor.isShadeLayoutWide.value,
+            source = shadeInteractor.isShadeLayoutWide,
+        )
 
     val showHeader: Boolean by
         hydrator.hydratedStateOf(
@@ -58,6 +67,13 @@ constructor(
         )
 
     val quickSettingsContainerViewModel = quickSettingsContainerViewModelFactory.create(false)
+
+    val showQuickSettingsOverlayHeader: Boolean by
+        hydrator.hydratedStateOf(
+            traceName = "showQuickSettingsOverlayHeader",
+            initialValue = shadeInteractor.isShadeLayoutWide.value,
+            source = shadeInteractor.isShadeLayoutWide,
+        )
 
     override suspend fun onActivated(): Nothing {
         coroutineScope {
@@ -90,6 +106,11 @@ constructor(
         }
 
         awaitCancellation()
+    }
+
+    /** Notifies that the bounds of the QuickSettings panel have changed. */
+    fun onPanelShapeChanged(shape: ShadeScrimShape?) {
+        notificationStackAppearanceInteractor.sendQsPanelShape(shape)
     }
 
     fun onScrimClicked() {

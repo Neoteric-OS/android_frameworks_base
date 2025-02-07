@@ -31,12 +31,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.android.compose.animation.scene.SceneScope
+import com.android.compose.animation.scene.ContentScope
 import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor
 import com.android.systemui.communal.smartspace.SmartspaceInteractionHandler
 import com.android.systemui.communal.ui.compose.section.AmbientStatusBarSection
 import com.android.systemui.communal.ui.compose.section.CommunalPopupSection
 import com.android.systemui.communal.ui.compose.section.CommunalToDreamButtonSection
+import com.android.systemui.communal.ui.compose.section.HubOnboardingSection
 import com.android.systemui.communal.ui.view.layout.sections.CommunalAppWidgetSection
 import com.android.systemui.communal.ui.viewmodel.CommunalViewModel
 import com.android.systemui.keyguard.ui.composable.blueprint.BlueprintAlignmentLines
@@ -62,10 +63,11 @@ constructor(
     private val communalPopupSection: CommunalPopupSection,
     private val widgetSection: CommunalAppWidgetSection,
     private val communalToDreamButtonSection: CommunalToDreamButtonSection,
+    private val hubOnboardingSection: HubOnboardingSection,
 ) {
 
     @Composable
-    fun SceneScope.Content(modifier: Modifier = Modifier) {
+    fun ContentScope.Content(modifier: Modifier = Modifier) {
         CommunalTouchableSurface(viewModel = viewModel, modifier = modifier) {
             Layout(
                 modifier = Modifier.fillMaxSize(),
@@ -81,8 +83,9 @@ constructor(
                             dialogFactory = dialogFactory,
                             widgetSection = widgetSection,
                             modifier = Modifier.element(Communal.Elements.Grid),
-                            sceneScope = this@Content,
+                            contentScope = this@Content,
                         )
+                        with(hubOnboardingSection) { BottomSheet() }
                     }
                     if (communalSettingsInteractor.isV2FlagEnabled()) {
                         Icon(
@@ -193,6 +196,7 @@ constructor(
     companion object {
         private val screensaverButtonSize: Dp = 64.dp
         private val screensaverButtonPadding: Dp = 24.dp
+
         // TODO(b/382739998): Remove these hardcoded values once lock icon size and bottom area
         // position are sorted.
         private val lockIconSize: Dp = 54.dp

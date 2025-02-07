@@ -27,6 +27,7 @@ import static android.os.PowerManagerInternal.WAKEFULNESS_ASLEEP;
 import static android.os.PowerManagerInternal.WAKEFULNESS_AWAKE;
 import static android.os.PowerManagerInternal.WAKEFULNESS_DOZING;
 import static android.os.PowerManagerInternal.WAKEFULNESS_DREAMING;
+import static android.service.dreams.Flags.FLAG_ALLOW_DREAM_WHEN_POSTURED;
 
 import static com.android.server.deviceidle.Flags.FLAG_DISABLE_WAKELOCKS_IN_LIGHT_IDLE;
 
@@ -81,14 +82,15 @@ import android.os.BatterySaverPolicyConfig;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.IWakeLockCallback;
 import android.os.IScreenTimeoutPolicyListener;
+import android.os.IWakeLockCallback;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.os.PowerManagerInternal;
 import android.os.PowerSaveState;
 import android.os.UserHandle;
 import android.os.test.TestLooper;
+import android.platform.test.annotations.DisableFlags;
 import android.platform.test.annotations.EnableFlags;
 import android.platform.test.flag.junit.SetFlagsRule;
 import android.provider.DeviceConfig;
@@ -120,6 +122,7 @@ import com.android.server.power.batterysaver.BatterySaverController;
 import com.android.server.power.batterysaver.BatterySaverPolicy;
 import com.android.server.power.batterysaver.BatterySaverStateMachine;
 import com.android.server.power.feature.PowerManagerFlags;
+import com.android.server.power.feature.flags.Flags;
 import com.android.server.testutils.OffsettableClock;
 
 import com.google.testing.junit.testparameterinjector.TestParameter;
@@ -277,6 +280,8 @@ public class PowerManagerServiceTest {
                 Settings.Global.STAY_ON_WHILE_PLUGGED_IN, 0);
         Settings.Secure.putInt(mContextSpy.getContentResolver(),
                 Settings.Secure.SCREENSAVER_ACTIVATE_ON_SLEEP, 0);
+        Settings.Secure.putInt(mContextSpy.getContentResolver(),
+                Settings.Secure.SCREENSAVER_ACTIVATE_ON_POSTURED, 0);
 
         mClock = new OffsettableClock.Stopped();
         mTestLooper = new TestLooper(mClock::now);
@@ -1211,6 +1216,52 @@ public class PowerManagerServiceTest {
 
         advanceTime(15000);
         assertThat(mService.getGlobalWakefulnessLocked()).isEqualTo(WAKEFULNESS_DREAMING);
+    }
+
+    @EnableFlags(FLAG_ALLOW_DREAM_WHEN_POSTURED)
+    @Test
+    public void testDreamActivateWhilePosturedEnabled_postured_afterTimeout_goesToDreaming() {
+        when(mBatteryManagerInternalMock.isPowered(anyInt())).thenReturn(true);
+        Settings.Secure.putInt(mContextSpy.getContentResolver(),
+                Settings.Secure.SCREENSAVER_ACTIVATE_ON_POSTURED, 1);
+
+        doAnswer(inv -> {
+            when(mDreamManagerInternalMock.isDreaming()).thenReturn(true);
+            return null;
+        }).when(mDreamManagerInternalMock).startDream(anyBoolean(), anyString());
+
+        setMinimumScreenOffTimeoutConfig(5);
+        createService();
+        startSystem();
+        mService.getLocalServiceInstance().setDevicePostured(true);
+
+        assertThat(mService.getGlobalWakefulnessLocked()).isEqualTo(WAKEFULNESS_AWAKE);
+
+        advanceTime(15000);
+        assertThat(mService.getGlobalWakefulnessLocked()).isEqualTo(WAKEFULNESS_DREAMING);
+    }
+
+    @EnableFlags(FLAG_ALLOW_DREAM_WHEN_POSTURED)
+    @Test
+    public void testDreamActivateWhilePosturedEnabled_notPostured_afterTimeout_goesToDozing() {
+        when(mBatteryManagerInternalMock.isPowered(anyInt())).thenReturn(true);
+        Settings.Secure.putInt(mContextSpy.getContentResolver(),
+                Settings.Secure.SCREENSAVER_ACTIVATE_ON_POSTURED, 1);
+
+        doAnswer(inv -> {
+            when(mDreamManagerInternalMock.isDreaming()).thenReturn(true);
+            return null;
+        }).when(mDreamManagerInternalMock).startDream(anyBoolean(), anyString());
+
+        setMinimumScreenOffTimeoutConfig(5);
+        createService();
+        startSystem();
+        mService.getLocalServiceInstance().setDevicePostured(false);
+
+        assertThat(mService.getGlobalWakefulnessLocked()).isEqualTo(WAKEFULNESS_AWAKE);
+
+        advanceTime(15000);
+        assertThat(mService.getGlobalWakefulnessLocked()).isEqualTo(WAKEFULNESS_DOZING);
     }
 
     @EnableFlags(android.companion.virtualdevice.flags.Flags.FLAG_DEVICE_AWARE_DISPLAY_POWER)
@@ -3456,6 +3507,25 @@ public class PowerManagerServiceTest {
     }
 
     @Test
+    @DisableFlags(Flags.FLAG_ENABLE_SCREEN_TIMEOUT_POLICY_LISTENER_API)
+    public void testAcquireWakelock_screenTimeoutListenersDisabled_noCrashes() {
+        IntArray displayGroupIds = IntArray.wrap(new int[]{Display.DEFAULT_DISPLAY_GROUP});
+        when(mDisplayManagerInternalMock.getDisplayGroupIds()).thenReturn(displayGroupIds);
+
+        final DisplayInfo displayInfo = new DisplayInfo();
+        displayInfo.displayGroupId = Display.DEFAULT_DISPLAY_GROUP;
+        when(mDisplayManagerInternalMock.getDisplayInfo(Display.DEFAULT_DISPLAY))
+                .thenReturn(displayInfo);
+
+        createService();
+        startSystem();
+
+        acquireWakeLock("screenBright", PowerManager.SCREEN_BRIGHT_WAKE_LOCK,
+                    Display.DEFAULT_DISPLAY);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_ENABLE_SCREEN_TIMEOUT_POLICY_LISTENER_API)
     public void testAddWakeLockKeepingScreenOn_addsToNotifierAndReportsTimeoutPolicyChange() {
         IntArray displayGroupIds = IntArray.wrap(new int[]{Display.DEFAULT_DISPLAY_GROUP});
         when(mDisplayManagerInternalMock.getDisplayGroupIds()).thenReturn(displayGroupIds);
@@ -3483,6 +3553,7 @@ public class PowerManagerServiceTest {
     }
 
     @Test
+    @EnableFlags(Flags.FLAG_ENABLE_SCREEN_TIMEOUT_POLICY_LISTENER_API)
     public void test_addAndRemoveScreenTimeoutListener_propagatesToNotifier()
             throws Exception {
         IntArray displayGroupIds = IntArray.wrap(new int[]{Display.DEFAULT_DISPLAY_GROUP});
@@ -3509,6 +3580,7 @@ public class PowerManagerServiceTest {
     }
 
     @Test
+    @EnableFlags(Flags.FLAG_ENABLE_SCREEN_TIMEOUT_POLICY_LISTENER_API)
     public void test_displayIsRemoved_clearsScreenTimeoutListeners()
             throws Exception {
         IntArray displayGroupIds = IntArray.wrap(new int[]{Display.DEFAULT_DISPLAY_GROUP});
@@ -3531,7 +3603,8 @@ public class PowerManagerServiceTest {
     }
 
     @Test
-    public void testScreenWakeLockListener_screenHasWakelocks_addsWithHeldTimeoutPolicyToNotifier()
+    @EnableFlags(Flags.FLAG_ENABLE_SCREEN_TIMEOUT_POLICY_LISTENER_API)
+    public void testScreenTimeoutListener_screenHasWakelocks_addsWithHeldTimeoutPolicyToNotifier()
             throws Exception {
         IntArray displayGroupIds = IntArray.wrap(new int[]{Display.DEFAULT_DISPLAY_GROUP});
         when(mDisplayManagerInternalMock.getDisplayGroupIds()).thenReturn(displayGroupIds);

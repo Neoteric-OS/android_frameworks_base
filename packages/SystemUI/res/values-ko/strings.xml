@@ -111,10 +111,8 @@
     <string name="screenrecord_channel_description" msgid="4147077128486138351">"화면 녹화 세션에 관한 지속적인 알림"</string>
     <string name="screenrecord_permission_dialog_title" msgid="7415261783188749730">"화면을 녹화하시겠습니까?"</string>
     <string name="screenrecord_permission_dialog_option_text_single_app" msgid="1996450687814647583">"단일 앱 녹화"</string>
-    <!-- no translation found for screenrecord_permission_dialog_option_text_entire_screen (4882406311415082016) -->
-    <skip />
-    <!-- no translation found for screenrecord_permission_dialog_option_text_entire_screen_for_display (4169494703993148253) -->
-    <skip />
+    <string name="screenrecord_permission_dialog_option_text_entire_screen" msgid="4882406311415082016">"이 화면 녹화"</string>
+    <string name="screenrecord_permission_dialog_option_text_entire_screen_for_display" msgid="4169494703993148253">"%s 녹화"</string>
     <string name="screenrecord_permission_dialog_warning_entire_screen" msgid="1321758636709366068">"전체 화면을 녹화하면 화면에 표시되는 모든 항목이 녹화됩니다. 따라서 비밀번호, 결제 세부정보, 메시지, 사진, 오디오 및 동영상 등이 노출되지 않도록 주의하세요."</string>
     <string name="screenrecord_permission_dialog_warning_single_app" msgid="3738199712880063924">"앱을 녹화하면 앱에 표시되거나 앱에서 재생되는 모든 항목이 녹화됩니다. 따라서 비밀번호, 결제 세부정보, 메시지, 사진, 오디오 및 동영상 등이 노출되지 않도록 주의하세요."</string>
     <string name="screenrecord_permission_dialog_continue_entire_screen" msgid="5557974446773486600">"화면 녹화"</string>
@@ -417,20 +415,13 @@
     <string name="hearing_devices_presets_error" msgid="350363093458408536">"사전 설정을 업데이트할 수 없음"</string>
     <string name="hearing_devices_preset_label" msgid="7878267405046232358">"미리 설정"</string>
     <string name="hearing_devices_spinner_item_selected" msgid="3137083889662762383">"선택됨"</string>
-    <!-- no translation found for hearing_devices_ambient_label (629440938614895797) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_control_left (3586965448230412600) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_control_right (6192137602448918383) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_expand_controls (2131816068187709200) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_collapse_controls (2261097656446201581) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_mute (1836882837647429416) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_unmute (2187938085943876814) -->
-    <skip />
+    <string name="hearing_devices_ambient_label" msgid="629440938614895797">"주변 소리"</string>
+    <string name="hearing_devices_ambient_control_left" msgid="3586965448230412600">"왼쪽"</string>
+    <string name="hearing_devices_ambient_control_right" msgid="6192137602448918383">"오른쪽"</string>
+    <string name="hearing_devices_ambient_expand_controls" msgid="2131816068187709200">"왼쪽 및 오른쪽 개별 제어로 확장"</string>
+    <string name="hearing_devices_ambient_collapse_controls" msgid="2261097656446201581">"통합 제어로 축소"</string>
+    <string name="hearing_devices_ambient_mute" msgid="1836882837647429416">"주변 소리 음소거"</string>
+    <string name="hearing_devices_ambient_unmute" msgid="2187938085943876814">"주변 소리 음소거 해제"</string>
     <string name="hearing_devices_tools_label" msgid="1929081464316074476">"도구"</string>
     <string name="quick_settings_hearing_devices_live_caption_title" msgid="1054814050932225451">"실시간 자막"</string>
     <string name="quick_settings_notes_label" msgid="1028004078001002623">"메모"</string>
@@ -759,6 +750,8 @@
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"업데이트 중"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"직장 프로필"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"비행기 모드"</string>
+    <!-- no translation found for status_bar_supervision (6735015942701134125) -->
+    <skip />
     <string name="zen_alarm_warning" msgid="7844303238486849503">"<xliff:g id="WHEN">%1$s</xliff:g>에 다음 알람을 들을 수 없습니다."</string>
     <string name="alarm_template" msgid="2234991538018805736">"시간: <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template_far" msgid="3561752195856839456">"일시: <xliff:g id="WHEN">%1$s</xliff:g>"</string>
@@ -768,7 +761,7 @@
     <string name="accessibility_status_bar_satellite_good_connection" msgid="308079391708578704">"위성, 연결 상태 양호"</string>
     <string name="accessibility_status_bar_satellite_available" msgid="6514855015496916829">"위성, 연결 가능"</string>
     <string name="satellite_connected_carrier_text" msgid="118524195198532589">"위성 긴급 SOS"</string>
-    <string name="satellite_emergency_only_carrier_text" msgid="828510231597991206">"긴급 전화 또는 SOS"</string>
+    <string name="satellite_emergency_only_carrier_text" msgid="9103913890116841786">"긴급 전화 또는 SOS만 허용"</string>
     <string name="accessibility_phone_string_format" msgid="7798841417881811812">"<xliff:g id="CARRIER_NAME">%1$s</xliff:g>, <xliff:g id="SIGNAL_STRENGTH_DESCRIPTION">%2$s</xliff:g>."</string>
     <string name="accessibility_no_signal" msgid="7052827511409250167">"신호가 없습니다"</string>
     <string name="accessibility_one_bar" msgid="5342012847647834506">"신호 막대가 1개입니다"</string>
@@ -865,7 +858,6 @@
     <string name="keyboard_shortcut_group_system_back" msgid="1055709713218453863">"뒤로"</string>
     <string name="keyboard_shortcut_group_system_notifications" msgid="3615971650562485878">"알림"</string>
     <string name="keyboard_shortcut_group_system_shortcuts_helper" msgid="4856808328618265589">"단축키"</string>
-    <string name="keyboard_shortcut_group_system_switch_input" msgid="952555530383268166">"키보드 레이아웃 전환"</string>
     <string name="keyboard_shortcut_join" msgid="3578314570034512676">"또는"</string>
     <string name="keyboard_shortcut_clear_text" msgid="6631051796030377857">"검색어 삭제"</string>
     <string name="keyboard_shortcut_search_list_title" msgid="4271769465397671138">"단축키"</string>
@@ -891,7 +883,7 @@
     <string name="group_system_access_all_apps_search" msgid="1553588630154197469">"앱 목록 열기"</string>
     <string name="group_system_access_system_settings" msgid="8731721963449070017">"설정 열기"</string>
     <string name="group_system_access_google_assistant" msgid="7210074957915968110">"어시스턴트 열기"</string>
-    <string name="group_system_lock_screen" msgid="7391191300363416543">"잠금 화면"</string>
+    <string name="group_system_lock_screen" msgid="7391191300363416543">"화면 잠금"</string>
     <string name="group_system_quick_memo" msgid="3764560265935722903">"메모 작성"</string>
     <string name="keyboard_shortcut_group_system_multitasking" msgid="6967816258924795558">"멀티태스킹"</string>
     <string name="system_multitasking_rhs" msgid="8779289852395243004">"앱이 오른쪽에 오도록 화면 분할 사용"</string>
@@ -976,11 +968,9 @@
     <string name="tuner_low_priority" msgid="8412666814123009820">"우선순위가 낮은 알림 아이콘 표시"</string>
     <string name="other" msgid="429768510980739978">"기타"</string>
     <string name="accessibility_qs_edit_remove_tile_action" msgid="775511891457193480">"타일 삭제"</string>
-    <!-- no translation found for accessibility_qs_edit_tile_add_action (8311378984458545661) -->
-    <skip />
+    <string name="accessibility_qs_edit_tile_add_action" msgid="8311378984458545661">"마지막 위치에 타일 추가"</string>
     <string name="accessibility_qs_edit_tile_start_move" msgid="2009373939914517817">"타일 이동"</string>
-    <!-- no translation found for accessibility_qs_edit_tile_start_add (8141710006899065161) -->
-    <skip />
+    <string name="accessibility_qs_edit_tile_start_add" msgid="8141710006899065161">"원하는 위치에 타일 추가"</string>
     <string name="accessibility_qs_edit_tile_move_to_position" msgid="5198161544045930556">"<xliff:g id="POSITION">%1$d</xliff:g> 위치로 이동"</string>
     <string name="accessibility_qs_edit_tile_add_to_position" msgid="9029163095148274690">"<xliff:g id="POSITION">%1$d</xliff:g> 위치에 추가"</string>
     <string name="accessibilit_qs_edit_tile_add_move_invalid_position" msgid="2858467994472624487">"위치가 잘못되었습니다."</string>
@@ -996,8 +986,7 @@
     <string name="accessibility_quick_settings_choose_user_action" msgid="4554388498186576087">"사용자 선택"</string>
     <string name="data_connection_no_internet" msgid="691058178914184544">"인터넷 연결 없음"</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"<xliff:g id="ID_1">%s</xliff:g> 설정 열기"</string>
-    <!-- no translation found for accessibility_quick_settings_edit (6544873823850165) -->
-    <skip />
+    <string name="accessibility_quick_settings_edit" msgid="6544873823850165">"빠른 설정 순서 수정"</string>
     <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"전원 메뉴"</string>
     <string name="accessibility_quick_settings_page" msgid="7506322631645550961">"<xliff:g id="ID_2">%2$d</xliff:g>페이지 중 <xliff:g id="ID_1">%1$d</xliff:g>페이지"</string>
     <string name="tuner_lock_screen" msgid="2267383813241144544">"잠금 화면"</string>
@@ -1301,7 +1290,7 @@
     <string name="accessibility_enter_hint" msgid="2617864063504824834">"기기 입력"</string>
     <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"지문으로 열기"</string>
     <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"인증이 필요합니다. 지문 센서를 터치하여 인증하세요."</string>
-    <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"진행 중인 전화 통화"</string>
+    <string name="ongoing_call_content_description" msgid="6394763878322348560">"진행 중인 통화"</string>
     <string name="mobile_data_settings_title" msgid="3955246641380064901">"모바일 데이터"</string>
     <string name="mobile_data_connection_active" msgid="944490013299018227">"연결됨"</string>
     <string name="mobile_data_temp_connection_active" msgid="4590222725908806824">"일시적으로 연결됨"</string>
@@ -1443,18 +1432,20 @@
     <string name="shortcut_helper_category_system_apps" msgid="6001757545472556810">"시스템 앱"</string>
     <string name="shortcut_helper_category_multitasking" msgid="7413381961404090136">"멀티태스킹"</string>
     <string name="shortcutHelper_category_split_screen" msgid="1159669813444812244">"화면 분할"</string>
+    <!-- no translation found for shortcutHelper_category_accessibility (8068337792277570938) -->
+    <skip />
     <string name="shortcut_helper_category_input" msgid="8674018654124839566">"입력"</string>
     <string name="shortcut_helper_category_app_shortcuts" msgid="8010249408308587117">"앱 단축키"</string>
     <string name="shortcut_helper_category_current_app_shortcuts" msgid="4017840565974573628">"현재 앱"</string>
     <string name="shortcut_helper_category_a11y" msgid="6314444792641773464">"접근성"</string>
     <string name="shortcut_helper_title" msgid="8567500639300970049">"단축키"</string>
-    <string name="shortcut_helper_customize_mode_title" msgid="1467657117101096033">"단축키 맞춤설정"</string>
-    <string name="shortcut_customize_mode_remove_shortcut_dialog_title" msgid="7106420484940737208">"바로가기를 제거하시겠습니까?"</string>
+    <string name="shortcut_helper_customize_mode_title" msgid="8327297960035006036">"단축키 맞춤설정"</string>
+    <string name="shortcut_customize_mode_remove_shortcut_dialog_title" msgid="7106420484940737208">"단축키를 삭제하시겠어요?"</string>
     <string name="shortcut_customize_mode_reset_shortcut_dialog_title" msgid="8131184731313717780">"기본값으로 재설정하시겠어요?"</string>
-    <string name="shortcut_customize_mode_add_shortcut_description" msgid="6866025005347407696">"키를 눌러 단축키 지정"</string>
-    <string name="shortcut_customize_mode_remove_shortcut_description" msgid="6851287900585057128">"맞춤 단축어가 영구적으로 삭제됩니다."</string>
-    <string name="shortcut_customize_mode_reset_shortcut_description" msgid="2081849715634358684">"모든 맞춤 바로가기가 완전히 삭제됩니다."</string>
-    <string name="shortcut_helper_search_placeholder" msgid="5488547526269871819">"검색 바로가기"</string>
+    <string name="shortcut_customize_mode_add_shortcut_description" msgid="7636040209946696120">"이 단축키를 만들려면 작업 키와 다른 키 하나 이상을 함께 누르세요"</string>
+    <string name="shortcut_customize_mode_remove_shortcut_description" msgid="6851287900585057128">"맞춤 단축키가 영구적으로 삭제됩니다."</string>
+    <string name="shortcut_customize_mode_reset_shortcut_description" msgid="2081849715634358684">"모든 맞춤 단축키가 완전히 삭제됩니다."</string>
+    <string name="shortcut_helper_search_placeholder" msgid="5488547526269871819">"단축키 검색"</string>
     <string name="shortcut_helper_no_search_results" msgid="8554756497996692160">"검색 결과 없음"</string>
     <string name="shortcut_helper_content_description_collapse_icon" msgid="8028015738431664954">"접기 아이콘"</string>
     <string name="shortcut_helper_content_description_meta_key" msgid="3989315044342124818">"작업 또는 메타 키 아이콘"</string>
@@ -1473,9 +1464,11 @@
     <string name="shortcut_helper_customize_dialog_reset_button_label" msgid="7645535254306312685">"재설정"</string>
     <string name="shortcut_helper_customize_dialog_cancel_button_label" msgid="5595546460431741178">"취소"</string>
     <string name="shortcut_helper_add_shortcut_dialog_placeholder" msgid="9154297849458741995">"키를 누르세요."</string>
-    <string name="shortcut_customizer_key_combination_in_use_error_message" msgid="7693234470526626327">"이미 사용 중인 키 조합입니다. 다른 키를 사용해 보세요."</string>
+    <string name="shortcut_customizer_key_combination_in_use_error_message" msgid="3325858369539848162">"이미 사용 중인 키 조합입니다. 다른 조합을 사용해 보세요."</string>
     <string name="shortcut_customizer_generic_error_message" msgid="3128454624049722741">"단축키를 설정할 수 없습니다."</string>
     <string name="shortcut_helper_plus_symbol" msgid="4534843157353732011">"+"</string>
+    <string name="shortcut_helper_add_shortcut_button_label" msgid="7655779534665954910">"단축키 추가"</string>
+    <string name="shortcut_helper_delete_shortcut_button_label" msgid="3148773472696137052">"단축키 삭제"</string>
     <string name="launch_keyboard_tutorial_notification_title" msgid="8849933155160522519">"키보드를 사용하여 이동"</string>
     <string name="launch_keyboard_tutorial_notification_content" msgid="2880339951512757918">"단축키에 관해 알아보세요."</string>
     <string name="launch_touchpad_tutorial_notification_title" msgid="2243780062772196901">"터치패드를 사용하여 이동"</string>
@@ -1485,6 +1478,7 @@
     <string name="touchpad_tutorial_back_gesture_button" msgid="3104716365403620315">"뒤로 이동"</string>
     <string name="touchpad_tutorial_home_gesture_button" msgid="8023973153559885624">"홈으로 이동"</string>
     <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"최근 앱 보기"</string>
+    <string name="touchpad_tutorial_switch_apps_gesture_button" msgid="7768255095423767779">"앱 전환"</string>
     <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"완료"</string>
     <string name="gesture_error_title" msgid="469064941635578511">"다시 시도해 보세요"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"뒤로"</string>
@@ -1502,6 +1496,13 @@
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"아주 좋습니다"</string>
     <string name="touchpad_recent_apps_gesture_success_body" msgid="4334263906697493273">"최근 앱 보기 동작을 완료했습니다."</string>
     <string name="touchpad_recent_gesture_error_body" msgid="8695535720378462022">"최근 앱을 보려면 터치패드에서 세 손가락을 사용해 위로 스와이프한 채로 유지하세요."</string>
+    <string name="touchpad_switch_apps_gesture_action_title" msgid="6835222344612924512">"앱 전환"</string>
+    <!-- no translation found for touchpad_switch_apps_gesture_guidance (2751565200937541667) -->
+    <skip />
+    <string name="touchpad_switch_apps_gesture_success_title" msgid="4894947244328032458">"잘하셨습니다"</string>
+    <string name="touchpad_switch_apps_gesture_success_body" msgid="8151089866035126312">"앱 전환 동작을 완료했습니다."</string>
+    <!-- no translation found for touchpad_switch_gesture_error_body (5508381152326379652) -->
+    <skip />
     <string name="tutorial_action_key_title" msgid="8172535792469008169">"모든 앱 보기"</string>
     <string name="tutorial_action_key_guidance" msgid="5040613427202799294">"키보드의 작업 키를 누르세요."</string>
     <string name="tutorial_action_key_success_title" msgid="2371827347071979571">"잘하셨습니다"</string>

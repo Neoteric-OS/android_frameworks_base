@@ -12,11 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+// QTI_BEGIN: 2023-03-24: Audio: base: check for audio mode in getBluetoothContextualVolumeStream
  *
  * Changes from Qualcomm Innovation Center are provided under the following license:
  * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause-Clear
  *
+// QTI_END: 2023-03-24: Audio: base: check for audio mode in getBluetoothContextualVolumeStream
  */
 
 package com.android.server.audio;
@@ -52,6 +54,7 @@ import static android.media.AudioManager.RINGER_MODE_NORMAL;
 import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static android.media.AudioManager.RINGER_MODE_VIBRATE;
 import static android.media.AudioManager.STREAM_SYSTEM;
+import static android.media.IAudioManagerNative.HardeningType;
 import static android.media.audio.Flags.autoPublicVolumeApiHardening;
 import static android.media.audio.Flags.automaticBtDeviceType;
 import static android.media.audio.Flags.concurrentAudioRecordBypassPermission;
@@ -72,6 +75,7 @@ import static com.android.media.audio.Flags.alarmMinVolumeZero;
 import static com.android.media.audio.Flags.asDeviceConnectionFailure;
 import static com.android.media.audio.Flags.audioserverPermissions;
 import static com.android.media.audio.Flags.disablePrescaleAbsoluteVolume;
+import static com.android.media.audio.Flags.deferWearPermissionUpdates;
 import static com.android.media.audio.Flags.equalScoLeaVcIndexRange;
 import static com.android.media.audio.Flags.replaceStreamBtSco;
 import static com.android.media.audio.Flags.ringMyCar;
@@ -156,6 +160,7 @@ import android.media.BluetoothProfileConnectionInfo;
 import android.media.FadeManagerConfiguration;
 import android.media.IAudioDeviceVolumeDispatcher;
 import android.media.IAudioFocusDispatcher;
+import android.media.IAudioManagerNative;
 import android.media.IAudioModeDispatcher;
 import android.media.IAudioRoutesObserver;
 import android.media.IAudioServerStateDispatcher;
@@ -247,6 +252,7 @@ import android.util.PrintWriterPrinter;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+import android.util.SystemPropertySetter;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityManager;
@@ -258,6 +264,7 @@ import com.android.internal.os.BackgroundThread;
 import com.android.internal.os.SomeArgs;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.Preconditions;
+import com.android.modules.expresslog.Counter;
 import com.android.server.EventLogTags;
 import com.android.server.LocalManagerRegistry;
 import com.android.server.LocalServices;
@@ -354,9 +361,11 @@ public class AudioService extends IAudioService.Stub
     /** Debug log sound fx (touchsounds...) in dumpsys */
     protected static final boolean DEBUG_LOG_SOUND_FX = false;
 
+// QTI_BEGIN: 2019-03-15: Bluetooth: HFP: Porting changes for AudioService file
     /** debug SCO modes */
     protected static final boolean DEBUG_SCO = true;
 
+// QTI_END: 2019-03-15: Bluetooth: HFP: Porting changes for AudioService file
     /** How long to delay before persisting a change in volume/ringer mode. */
     private static final int PERSIST_DELAY = 500;
 
@@ -388,9 +397,11 @@ public class AudioService extends IAudioService.Stub
     // indicates whether the system maps all streams to a single stream.
     private final boolean mIsSingleVolume;
 
+// QTI_BEGIN: 2021-05-17: Audio: Add HDR restore param functionality in AudioService
     private static HashMap<String, String> mCachedParams =
         new HashMap<String, String>();
 
+// QTI_END: 2021-05-17: Audio: Add HDR restore param functionality in AudioService
     /**
      * indicates whether STREAM_NOTIFICATION is aliased to STREAM_RING
      *     not final due to test method, see {@link #setNotifAliasRingForTest(boolean)}.
@@ -520,6 +531,15 @@ public class AudioService extends IAudioService.Stub
 
     // check playback or record activity every 6 seconds for UIDs owning mode IN_COMMUNICATION
     private static final int CHECK_MODE_FOR_UID_PERIOD_MS = 6000;
+
+    // Roughly chosen to be long enough to suppress the autocork behavior of the permission
+    // cache (50ms), while not introducing visible permission leaks - since the app needs to
+    // restart, and trigger an action which requires permissions from audioserver before this
+    // delay. For RECORD_AUDIO, we are additionally protected by appops.
+    private static final int SCHEDULED_PERMISSION_UPDATE_DELAY_MS = 60;
+
+    // Increased delay to not interefere with low core app launch latency
+    private static final int SCHEDULED_PERMISSION_UPDATE_LONG_DELAY_MS = 500;
 
     /** @see AudioSystemThread */
     private AudioSystemThread mAudioSystemThread;
@@ -844,6 +864,58 @@ public class AudioService extends IAudioService.Stub
 
     private final UserRestrictionsListener mUserRestrictionsListener =
             new AudioServiceUserRestrictionsListener();
+
+    private final IAudioManagerNative mNativeShim = new IAudioManagerNative.Stub() {
+        static final String METRIC_COUNTERS_PLAYBACK_PARTIAL =
+                "media_audio.value_audio_playback_hardening_partial_restriction";
+        static final String METRIC_COUNTERS_PLAYBACK_STRICT =
+                "media_audio.value_audio_playback_hardening_strict_would_restrict";
+
+        String getPackNameForUid(int uid) {
+            final long token = Binder.clearCallingIdentity();
+            try {
+                final String[] names = AudioService.this.mContext.
+                                            getPackageManager().getPackagesForUid(uid);
+                if (names == null
+                        || names.length == 0
+                        || TextUtils.isEmpty(names[0])) {
+                    return "[" + uid + "]";
+                }
+                return names[0];
+            } finally {
+                Binder.restoreCallingIdentity(token);
+            }
+        }
+
+        // oneway
+        @Override
+        public void playbackHardeningEvent(int uid, byte type, boolean bypassed) {
+            if (Binder.getCallingUid() != Process.AUDIOSERVER_UID) {
+                return;
+            }
+            if (type == HardeningType.PARTIAL) {
+                Counter.logIncrementWithUid(METRIC_COUNTERS_PLAYBACK_PARTIAL, uid);
+            } else if (type == HardeningType.FULL) {
+                Counter.logIncrementWithUid(METRIC_COUNTERS_PLAYBACK_STRICT, uid);
+            } else {
+                Slog.wtf(TAG, "Unexpected hardening type" + type);
+                return;
+            }
+            String msg = "AudioHardening background playback "
+                    + (bypassed ? "would be " : "")
+                    + "muted for "
+                    + getPackNameForUid(uid) + " (" + uid + "), "
+                    + "level: " + (type == HardeningType.PARTIAL ? "partial" : "full");
+
+            AudioService.this.mHardeningLogger.enqueueAndSlog(msg,
+                    bypassed ? EventLogger.Event.ALOGI : EventLogger.Event.ALOGW, TAG);
+        }
+
+        @Override
+        public void permissionUpdateBarrier() {
+            AudioService.this.permissionUpdateBarrier();
+        }
+    };
 
     // List of binder death handlers for setMode() client processes.
     // The last process to have called setMode() is at the top of the list.
@@ -1521,6 +1593,7 @@ public class AudioService extends IAudioService.Stub
         // done with service initialization, continue additional work in our Handler thread
         queueMsgUnderWakeLock(mAudioHandler, MSG_INIT_STREAMS_VOLUMES,
                 0 /* arg1 */,  0 /* arg2 */, null /* obj */,  0 /* delay */);
+// QTI_BEGIN: 2021-05-17: Audio: Add HDR restore param functionality in AudioService
 
         mCachedParams.put("hdr_record_on", "false");
         mCachedParams.put("wnr_on", "false");
@@ -1530,6 +1603,7 @@ public class AudioService extends IAudioService.Stub
         mCachedParams.put("facing", "none");
         mCachedParams.put("hdr_audio_channel_count", "0");
         mCachedParams.put("hdr_audio_sampling_rate", "0");
+// QTI_END: 2021-05-17: Audio: Add HDR restore param functionality in AudioService
 
         queueMsgUnderWakeLock(mAudioHandler, MSG_INIT_ADI_DEVICE_STATES,
                 0 /* arg1 */, 0 /* arg2 */, null /* obj */, 0 /* delay */);
@@ -1551,7 +1625,8 @@ public class AudioService extends IAudioService.Stub
         mMusicFxHelper = new MusicFxHelper(mContext, mAudioHandler);
 
         mHardeningEnforcer = new HardeningEnforcer(mContext, isPlatformAutomotive(), mAppOps,
-                context.getPackageManager());
+                context.getPackageManager(),
+                mHardeningLogger);
     }
 
     private void initVolumeStreamStates() {
@@ -1970,6 +2045,7 @@ public class AudioService extends IAudioService.Stub
         // process restarts after a crash, not the first time it is started.
         AudioSystem.setParameters("restarting=true");
 
+// QTI_BEGIN: 2021-05-17: Audio: Add HDR restore param functionality in AudioService
         // Restore cached parameters
         String params = new String("");
         Log.i(TAG, "Cached params " + mCachedParams.toString());
@@ -1990,6 +2066,7 @@ public class AudioService extends IAudioService.Stub
             Log.i(TAG, "Empty cached params " + params);
         }
 
+// QTI_END: 2021-05-17: Audio: Add HDR restore param functionality in AudioService
         readAndSetLowRamDevice();
 
         mIsCallScreeningModeSupported = AudioSystem.isCallScreeningModeSupported();
@@ -2850,6 +2927,11 @@ public class AudioService extends IAudioService.Stub
         }
         new AudioManagerShellCommand(AudioService.this).exec(this, in, out, err,
                 args, callback, resultReceiver);
+    }
+
+    @Override
+    public IAudioManagerNative getNativeInterface() {
+        return mNativeShim;
     }
 
     /** @see AudioManager#getSurroundFormats() */
@@ -3771,29 +3853,39 @@ public class AudioService extends IAudioService.Stub
         }
 
         int streamType;
+// QTI_BEGIN: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
         synchronized (mForceControlStreamLock) {
             if (DEBUG_VOL) Log.d(TAG, "adjustSuggestedStreamVolume() stream=" + suggestedStreamType
                     + ", flags=" + flags + ", caller=" + caller
                     + ", volControlStream=" + mVolumeControlStream
                     + ", userSelect=" + mUserSelectedVolumeControlStream);
+// QTI_END: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
             // Request lock in case mVolumeControlStream is changed by other thread.
+// QTI_BEGIN: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
             if (mUserSelectedVolumeControlStream) { // implies mVolumeControlStream != -1
+// QTI_END: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
                 streamType = mVolumeControlStream;
+// QTI_BEGIN: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
             } else {
+// QTI_END: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
                 // TODO discard activity on a muted stream?
+// QTI_BEGIN: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
                 final int maybeActiveStreamType = getActiveStreamType(suggestedStreamType);
                 final boolean activeForReal;
                 if (maybeActiveStreamType == AudioSystem.STREAM_RING
                         || maybeActiveStreamType == AudioSystem.STREAM_NOTIFICATION) {
                     activeForReal = wasStreamActiveRecently(maybeActiveStreamType, 0);
                 } else {
+// QTI_END: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
                     activeForReal = mAudioSystem.isStreamActive(maybeActiveStreamType, 0);
+// QTI_BEGIN: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
                 }
                 if (activeForReal || mVolumeControlStream == -1) {
                     streamType = maybeActiveStreamType;
                 } else {
                     streamType = mVolumeControlStream;
                 }
+// QTI_END: 2018-01-16: Audio: AudioService: synchronize access to user selected volume ctrl stream
             }
         }
 
@@ -3880,9 +3972,11 @@ public class AudioService extends IAudioService.Stub
     protected void adjustStreamVolume(int streamType, int direction, int flags,
             String callingPackage, String caller, int uid, int pid, String attributionTag,
             boolean hasModifyAudioSettings, int keyEventMode) {
+// QTI_BEGIN: 2018-09-10: Audio: AudioService: Ignore volume control during MirrorLink
         if (DEBUG_VOL) Log.d(TAG, "adjustStreamVolume() stream=" + streamType + ", dir=" + direction
                 + ", flags=" + flags + ", caller=" + caller);
 
+// QTI_END: 2018-09-10: Audio: AudioService: Ignore volume control during MirrorLink
         if (mUseFixedVolume) {
             return;
         }
@@ -7165,7 +7259,9 @@ public class AudioService extends IAudioService.Stub
         final String eventSource = new StringBuilder("setSpeakerphoneOn(").append(on)
                 .append(") from u/pid:").append(uid).append("/")
                 .append(pid).toString();
+// QTI_BEGIN: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         Log.i(TAG, "In setSpeakerphoneOn(), on: " + on + ", eventSource: " + eventSource);
+// QTI_END: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
 
         new MediaMetrics.Item(MediaMetrics.Name.AUDIO_DEVICE
                 + MediaMetrics.SEPARATOR + "setSpeakerphoneOn")
@@ -7200,9 +7296,11 @@ public class AudioService extends IAudioService.Stub
         }
         // Only enable calls from system components
         if (UserHandle.getCallingAppId() >= FIRST_APPLICATION_UID) {
+// QTI_BEGIN: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
             Log.i(TAG, "In setBluetoothScoOn(), on: "+on+". The calling application Uid: "
                   + Binder.getCallingUid() + ", is greater than FIRST_APPLICATION_UID"
                   + " exiting from setBluetoothScoOn()");
+// QTI_END: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
             mBtScoOnByApp = on;
             return;
         }
@@ -7212,7 +7310,9 @@ public class AudioService extends IAudioService.Stub
         final int pid = Binder.getCallingPid();
         final String eventSource = new StringBuilder("setBluetoothScoOn(").append(on)
                 .append(") from u/pid:").append(uid).append("/").append(pid).toString();
+// QTI_BEGIN: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         Log.i(TAG, "In setBluetoothScoOn(), eventSource: " + eventSource);
+// QTI_END: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
 
         //bt sco
         new MediaMetrics.Item(MediaMetrics.Name.AUDIO_DEVICE
@@ -7265,7 +7365,7 @@ public class AudioService extends IAudioService.Stub
         final int pid = Binder.getCallingPid();
         final String eventSource = new StringBuilder("setBluetoothA2dpOn(").append(on)
                 .append(") from u/pid:").append(uid).append("/")
-                .append(pid).toString();
+                .append(pid).append(" src:AudioService.setBtA2dpOn").toString();
 
         new MediaMetrics.Item(MediaMetrics.Name.AUDIO_DEVICE
                 + MediaMetrics.SEPARATOR + "setBluetoothA2dpOn")
@@ -7283,6 +7383,7 @@ public class AudioService extends IAudioService.Stub
         return mDeviceBroker.isBluetoothA2dpOn();
     }
 
+// QTI_BEGIN: 2024-07-18: Audio: Route SCO related params through AudioDeviceBroker to AHAL
     public void setSwbParameters(String keyValuePairs) {
         mDeviceBroker.setSwbParameters(keyValuePairs);
     }
@@ -7291,10 +7392,13 @@ public class AudioService extends IAudioService.Stub
         mDeviceBroker.setScoParameters(name, hasNrecEnabled, hasWbsEnabled);
     }
 
+// QTI_END: 2024-07-18: Audio: Route SCO related params through AudioDeviceBroker to AHAL
     /** @see AudioManager#startBluetoothSco() */
     public void startBluetoothSco(IBinder cb, int targetSdkVersion,
             @NonNull AttributionSource attributionSource) {
+// QTI_BEGIN: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         Log.i(TAG, "In startBluetoothSco()");
+// QTI_END: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         if (attributionSource == null) {
             return;
         }
@@ -7325,7 +7429,9 @@ public class AudioService extends IAudioService.Stub
     /** @see AudioManager#startBluetoothScoVirtualCall() */
     public void startBluetoothScoVirtualCall(IBinder cb,
             @NonNull AttributionSource attributionSource) {
+// QTI_BEGIN: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         Log.i(TAG, "In startBluetoothScoVirtualCall()");
+// QTI_END: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         if (attributionSource == null) {
             return;
         }
@@ -7351,7 +7457,9 @@ public class AudioService extends IAudioService.Stub
 
     void startBluetoothScoInt(IBinder cb, AttributionSource attributionSource,
             int scoAudioMode, @NonNull String eventSource) {
+// QTI_BEGIN: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         Log.i(TAG, "In startBluetoothScoInt(), scoAudioMode: " + scoAudioMode);
+// QTI_END: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         MediaMetrics.Item mmi = new MediaMetrics.Item(MediaMetrics.Name.AUDIO_BLUETOOTH)
                 .set(MediaMetrics.Property.EVENT, "startBluetoothScoInt")
                 .set(MediaMetrics.Property.SCO_AUDIO_MODE,
@@ -7377,7 +7485,9 @@ public class AudioService extends IAudioService.Stub
     /** @see AudioManager#stopBluetoothSco() */
     public void stopBluetoothSco(IBinder cb,
             @NonNull AttributionSource attributionSource) {
+// QTI_BEGIN: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         Log.i(TAG, "In stopBluetoothSco()");
+// QTI_END: 2018-05-15: Bluetooth: HFP: Limiting the mStartcount to 1 for each mScoClient
         if (attributionSource == null) {
             return;
         }
@@ -8506,6 +8616,7 @@ public class AudioService extends IAudioService.Stub
         getVssForStreamOrDefault(AudioSystem.STREAM_MUSIC).muteInternally(mute);
     }
 
+// QTI_BEGIN: 2019-06-20: Audio: Revert the change: AudioService: remove dead BT code.
     /**
      * @see AudioManager#handleBluetoothA2dpActiveDeviceChange(BluetoothDevice, int, int,
      *                                                        boolean, int)
@@ -8523,10 +8634,13 @@ public class AudioService extends IAudioService.Stub
                 && state != BluetoothProfile.STATE_DISCONNECTED) {
             throw new IllegalArgumentException("Invalid state " + state);
         }
+// QTI_END: 2019-06-20: Audio: Revert the change: AudioService: remove dead BT code.
         mDeviceBroker.queueOnBluetoothActiveDeviceChanged(
                   new AudioDeviceBroker.BtDeviceChangedData(device, device, new BluetoothProfileConnectionInfo(profile), "AudioService"));
+// QTI_BEGIN: 2019-06-20: Audio: Revert the change: AudioService: remove dead BT code.
     }
 
+// QTI_END: 2019-06-20: Audio: Revert the change: AudioService: remove dead BT code.
     private static final Set<Integer> DEVICE_MEDIA_UNMUTED_ON_PLUG_SET;
     static {
         DEVICE_MEDIA_UNMUTED_ON_PLUG_SET = new HashSet<>();
@@ -8655,6 +8769,12 @@ public class AudioService extends IAudioService.Stub
         return true;
     }
 
+    private boolean shouldPreserveVolume(boolean userSwitch, VolumeGroupState vgs) {
+        // as for STREAM_MUSIC, preserve volume from one user to the next except
+        // Android Automotive platform
+        return (userSwitch && vgs.isMusic()) && !isPlatformAutomotive();
+    }
+
     private void readVolumeGroupsSettings(boolean userSwitch) {
         synchronized (mSettingsLock) {
             synchronized (VolumeStreamState.class) {
@@ -8663,8 +8783,7 @@ public class AudioService extends IAudioService.Stub
                 }
                 for (int i = 0; i < sVolumeGroupStates.size(); i++) {
                     VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
-                    // as for STREAM_MUSIC, preserve volume from one user to the next.
-                    if (!(userSwitch && vgs.isMusic())) {
+                    if (!shouldPreserveVolume(userSwitch, vgs)) {
                         vgs.clearIndexCache();
                         vgs.readSettings();
                     }
@@ -9103,6 +9222,11 @@ public class AudioService extends IAudioService.Stub
             mIndexMap.clear();
         }
 
+        private @UserIdInt int getVolumePersistenceUserId() {
+            return isMusic() && !isPlatformAutomotive()
+                    ? UserHandle.USER_SYSTEM : UserHandle.USER_CURRENT;
+        }
+
         private void persistVolumeGroup(int device) {
             // No need to persist the index if the volume group is backed up
             // by a public stream type as this is redundant
@@ -9120,7 +9244,7 @@ public class AudioService extends IAudioService.Stub
             boolean success = mSettings.putSystemIntForUser(mContentResolver,
                     getSettingNameForDevice(device),
                     getIndex(device),
-                    isMusic() ? UserHandle.USER_SYSTEM : UserHandle.USER_CURRENT);
+                    getVolumePersistenceUserId());
             if (!success) {
                 Log.e(TAG, "persistVolumeGroup failed for group " +  mAudioVolumeGroup.name());
             }
@@ -9143,7 +9267,7 @@ public class AudioService extends IAudioService.Stub
                     String name = getSettingNameForDevice(device);
                     index = mSettings.getSystemIntForUser(
                             mContentResolver, name, defaultIndex,
-                            isMusic() ? UserHandle.USER_SYSTEM : UserHandle.USER_CURRENT);
+                            getVolumePersistenceUserId());
                     if (index == -1) {
                         continue;
                     }
@@ -10772,9 +10896,11 @@ public class AudioService extends IAudioService.Stub
     public void checkMusicActive(int deviceType, String caller) {
         if (mSoundDoseHelper.safeDevicesContains(deviceType)) {
             mSoundDoseHelper.scheduleMusicActiveCheck();
+// QTI_BEGIN: 2018-07-06: Bluetooth: Handle Audio setup paths for TWSPLUS devices
         }
     }
 
+// QTI_END: 2018-07-06: Bluetooth: Handle Audio setup paths for TWSPLUS devices
     /**
      * Receiver for misc intent broadcasts the Phone app cares about.
      */
@@ -10988,12 +11114,7 @@ public class AudioService extends IAudioService.Stub
     }
 
     /* Listen to permission invalidations for the PermissionProvider */
-    private void setupPermissionListener() {
-        // Roughly chosen to be long enough to suppress the autocork behavior of the permission
-        // cache (50ms), while not introducing visible permission leaks - since the app needs to
-        // restart, and trigger an action which requires permissions from audioserver before this
-        // delay. For RECORD_AUDIO, we are additionally protected by appops.
-        final long UPDATE_DELAY_MS = 60;
+    private void setupPermissionListener()  {
         // instanceof to simplify the construction requirements of AudioService for testing: no
         // delayed execution during unit tests.
         if (mAudioServerLifecycleExecutor instanceof ScheduledExecutorService exec) {
@@ -11035,7 +11156,7 @@ public class AudioService extends IAudioService.Stub
                             Thread.getDefaultUncaughtExceptionHandler()
                                     .uncaughtException(Thread.currentThread(), e);
                         }
-                    }, UPDATE_DELAY_MS, TimeUnit.MILLISECONDS));
+                    }, getAudioPermissionsDelay(), TimeUnit.MILLISECONDS));
                 }
             };
             mSysPropListenerNativeHandle = mAudioSystem.listenForSystemPropertyChange(
@@ -11117,7 +11238,7 @@ public class AudioService extends IAudioService.Stub
         @GuardedBy("mLock")
         private void updateLocked() {
             String n = Long.toString(mToken++);
-            SystemProperties.set(PermissionManager.CACHE_KEY_PACKAGE_INFO_NOTIFY, n);
+            SystemPropertySetter.setWithRetry(PermissionManager.CACHE_KEY_PACKAGE_INFO_NOTIFY, n);
         }
 
         private void trigger() {
@@ -11966,7 +12087,7 @@ public class AudioService extends IAudioService.Stub
         mLoudnessCodecHelper.startLoudnessCodecUpdates(sessionId);
     }
 
-    /** @see LoudnessCodecController#release() */
+    /** @see LoudnessCodecController#close() */
     @Override
     public void stopLoudnessCodecUpdates(int sessionId) {
         mLoudnessCodecHelper.stopLoudnessCodecUpdates(sessionId);
@@ -12746,6 +12867,7 @@ public class AudioService extends IAudioService.Stub
     static final int LOG_NB_EVENTS_DYN_POLICY = 10;
     static final int LOG_NB_EVENTS_SPATIAL = 30;
     static final int LOG_NB_EVENTS_SOUND_DOSE = 50;
+    static final int LOG_NB_EVENTS_HARDENING = 50;
 
     static final int LOG_NB_EVENTS_LOUDNESS_CODEC = 30;
 
@@ -12783,6 +12905,9 @@ public class AudioService extends IAudioService.Stub
     final private EventLogger
             mDynPolicyLogger = new EventLogger(LOG_NB_EVENTS_DYN_POLICY,
             "dynamic policy events (logged when command received by AudioService)");
+
+    private final EventLogger mHardeningLogger = new EventLogger(
+            LOG_NB_EVENTS_HARDENING, "Hardening enforcement");
 
     private static final String[] RINGER_MODE_NAMES = new String[] {
             "SILENT",
@@ -12858,7 +12983,7 @@ public class AudioService extends IAudioService.Stub
             pw.println("\nMessage handler is null");
         }
         dumpFlags(pw);
-        mHardeningEnforcer.dump(pw);
+        mHardeningLogger.dump(pw);
         mMediaFocusControl.dump(pw);
         dumpStreamStates(pw);
         dumpVolumeGroups(pw);
@@ -12911,7 +13036,9 @@ public class AudioService extends IAudioService.Stub
                         + " FromRestrictions=" + mMicMuteFromRestrictions
                         + " FromApi=" + mMicMuteFromApi
                         + " from system=" + mMicMuteFromSystemCached);
+// QTI_BEGIN: 2020-09-15: Audio: AudioService: CleanUp and add dumpsys info.
         pw.print("  mMonitorRotation="); pw.println(mMonitorRotation);
+// QTI_END: 2020-09-15: Audio: AudioService: CleanUp and add dumpsys info.
         pw.print("  mMasterMute="); pw.println(mMasterMute.get());
         dumpAccessibilityServiceUids(pw);
         dumpAssistantServicesUids(pw);
@@ -13039,10 +13166,10 @@ public class AudioService extends IAudioService.Stub
                 int uid = intent.getIntExtra(Intent.EXTRA_UID, Process.INVALID_UID);
                 if (intent.getBooleanExtra(EXTRA_REPLACING, false) ||
                         intent.getBooleanExtra(EXTRA_ARCHIVAL, false)) return;
-                if (action.equals(ACTION_PACKAGE_ADDED)) {
+                if (ACTION_PACKAGE_ADDED.equals(action)) {
                     audioserverExecutor.execute(() ->
                             provider.onModifyPackageState(uid, pkgName, false /* isRemoved */));
-                } else if (action.equals(ACTION_PACKAGE_REMOVED)) {
+                } else if (ACTION_PACKAGE_REMOVED.equals(action)) {
                     audioserverExecutor.execute(() ->
                             provider.onModifyPackageState(uid, pkgName, true /* isRemoved */));
                 }
@@ -15153,6 +15280,7 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+// QTI_BEGIN: 2021-05-17: Audio: Add HDR restore param functionality in AudioService
     public void cacheParameters(String keyValuePairs) {
         String[] kvpairs = keyValuePairs.split(";");
         for (String pair : kvpairs) {
@@ -15164,6 +15292,7 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+// QTI_END: 2021-05-17: Audio: Add HDR restore param functionality in AudioService
     /**
      * @hide
      * Sets an additional audio output device delay in milliseconds.
@@ -15532,6 +15661,18 @@ public class AudioService extends IAudioService.Stub
         synchronized (mAbsoluteVolumeDeviceInfoMapLock) {
             return mAbsoluteVolumeDeviceInfoMap.remove(audioSystemDeviceOut);
         }
+    }
+
+    private long getAudioPermissionsDelay() {
+        return isAudioPermissionUpdatesAddtionallyDelayed()
+                ? SCHEDULED_PERMISSION_UPDATE_LONG_DELAY_MS
+                : SCHEDULED_PERMISSION_UPDATE_DELAY_MS;
+    }
+
+    private boolean isAudioPermissionUpdatesAddtionallyDelayed() {
+        //  Additional delays on low core devices in order to optimize app launch latencies
+        return deferWearPermissionUpdates()
+            && mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WATCH);
     }
 
     //====================

@@ -19,6 +19,7 @@ import static android.app.AppOpsManager.MODE_ALLOWED;
 import static android.app.AppOpsManager.MODE_DEFAULT;
 import static android.app.AppOpsManager.OP_SYSTEM_ALERT_WINDOW;
 import static android.app.Flags.FLAG_MODES_UI;
+import static android.app.Flags.FLAG_NOTIFICATION_CLASSIFICATION_UI;
 import static android.app.Notification.VISIBILITY_PRIVATE;
 import static android.app.Notification.VISIBILITY_SECRET;
 import static android.app.NotificationChannel.ALLOW_BUBBLE_ON;
@@ -66,7 +67,6 @@ import static com.android.internal.config.sysui.SystemUiSystemPropertiesFlags.No
 import static com.android.internal.util.FrameworkStatsLog.PACKAGE_NOTIFICATION_PREFERENCES__FSI_STATE__DENIED;
 import static com.android.internal.util.FrameworkStatsLog.PACKAGE_NOTIFICATION_PREFERENCES__FSI_STATE__GRANTED;
 import static com.android.internal.util.FrameworkStatsLog.PACKAGE_NOTIFICATION_PREFERENCES__FSI_STATE__NOT_REQUESTED;
-import static com.android.server.notification.Flags.FLAG_NOTIFICATION_VERIFY_CHANNEL_SOUND_URI;
 import static com.android.server.notification.Flags.FLAG_PERSIST_INCOMPLETE_RESTORE_DATA;
 import static com.android.server.notification.NotificationChannelLogger.NotificationChannelEvent.NOTIFICATION_CHANNEL_UPDATED_BY_USER;
 import static com.android.server.notification.PreferencesHelper.DEFAULT_BUBBLE_PREFERENCE;
@@ -116,6 +116,7 @@ import android.content.IContentProvider;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ParceledListSlice;
 import android.content.pm.Signature;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
@@ -162,8 +163,10 @@ import com.android.modules.utils.TypedXmlSerializer;
 import com.android.os.AtomsProto;
 import com.android.os.AtomsProto.PackageNotificationChannelPreferences;
 import com.android.os.AtomsProto.PackageNotificationPreferences;
+import com.android.os.notification.NotificationProtoEnums;
 import com.android.server.UiServiceTestCase;
 import com.android.server.notification.PermissionHelper.PackagePermission;
+import com.android.server.uri.UriGrantsManagerInternal;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
@@ -178,6 +181,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import platform.test.runner.parameterized.ParameterizedAndroidJunit4;
+import platform.test.runner.parameterized.Parameters;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -198,9 +204,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
-
-import platform.test.runner.parameterized.ParameterizedAndroidJunit4;
-import platform.test.runner.parameterized.Parameters;
 
 @SmallTest
 @RunWith(ParameterizedAndroidJunit4.class)
@@ -239,9 +242,10 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
     private NotificationManager.Policy mTestNotificationPolicy;
 
-    private PreferencesHelper mHelper;
-    // fresh object for testing xml reading
-    private PreferencesHelper mXmlHelper;
+    private TestPreferencesHelper mHelper;
+    // fresh object for testing xml reading; also TestPreferenceHelper in order to avoid interacting
+    // with real IpcDataCaches
+    private TestPreferencesHelper mXmlHelper;
     private AudioAttributes mAudioAttributes;
     private NotificationChannelLoggerFake mLogger = new NotificationChannelLoggerFake();
 
@@ -255,7 +259,8 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     public static List<FlagsParameterization> getParams() {
         return FlagsParameterization.allCombinationsOf(
                 android.app.Flags.FLAG_API_RICH_ONGOING,
-                FLAG_NOTIFICATION_CLASSIFICATION, FLAG_MODES_UI);
+                FLAG_NOTIFICATION_CLASSIFICATION, FLAG_NOTIFICATION_CLASSIFICATION_UI,
+                FLAG_MODES_UI);
     }
 
     public PreferencesHelperTest(FlagsParameterization flags) {
@@ -378,10 +383,10 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         when(mUserProfiles.getCurrentProfileIds()).thenReturn(currentProfileIds);
         when(mClock.millis()).thenReturn(System.currentTimeMillis());
 
-        mHelper = new PreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
+        mHelper = new TestPreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, false, mClock);
-        mXmlHelper = new PreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
+        mXmlHelper = new TestPreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, false, mClock);
         resetZenModeHelper();
@@ -793,7 +798,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
     @Test
     public void testReadXml_oldXml_migrates() throws Exception {
-        mXmlHelper = new PreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
+        mXmlHelper = new TestPreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, /* showReviewPermissionsNotification= */ true, mClock);
 
@@ -929,7 +934,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
     @Test
     public void testReadXml_newXml_noMigration_showPermissionNotification() throws Exception {
-        mXmlHelper = new PreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
+        mXmlHelper = new TestPreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, /* showReviewPermissionsNotification= */ true, mClock);
 
@@ -988,7 +993,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
     @Test
     public void testReadXml_newXml_permissionNotificationOff() throws Exception {
-        mHelper = new PreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
+        mHelper = new TestPreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, /* showReviewPermissionsNotification= */ false, mClock);
 
@@ -1047,7 +1052,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
     @Test
     public void testReadXml_newXml_noMigration_noPermissionNotification() throws Exception {
-        mHelper = new PreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
+        mHelper = new TestPreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, /* showReviewPermissionsNotification= */ true, mClock);
 
@@ -1641,7 +1646,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         serializer.flush();
 
         // simulate load after reboot
-        mXmlHelper = new PreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
+        mXmlHelper = new TestPreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, false, mClock);
         loadByteArrayXml(baos.toByteArray(), false, USER_ALL);
@@ -1696,7 +1701,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
                 Duration.ofDays(2).toMillis() + System.currentTimeMillis());
 
         // simulate load after reboot
-        mXmlHelper = new PreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
+        mXmlHelper = new TestPreferencesHelper(getContext(), mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, false, mClock);
         loadByteArrayXml(xml.getBytes(), false, USER_ALL);
@@ -1774,10 +1779,10 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         when(contentResolver.getResourceId(ANDROID_RES_SOUND_URI)).thenReturn(resId).thenThrow(
                 new FileNotFoundException("")).thenReturn(resId);
 
-        mHelper = new PreferencesHelper(mContext, mPm, mHandler, mMockZenModeHelper,
+        mHelper = new TestPreferencesHelper(mContext, mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, false, mClock);
-        mXmlHelper = new PreferencesHelper(mContext, mPm, mHandler, mMockZenModeHelper,
+        mXmlHelper = new TestPreferencesHelper(mContext, mPm, mHandler, mMockZenModeHelper,
                 mPermissionHelper, mPermissionManager, mLogger, mAppOpsManager, mUserProfiles,
                 mUgmInternal, false, mClock);
 
@@ -3190,7 +3195,6 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     }
 
     @Test
-    @EnableFlags(FLAG_NOTIFICATION_VERIFY_CHANNEL_SOUND_URI)
     public void testCreateChannel_noSoundUriPermission_contentSchemeVerified() {
         final Uri sound = Uri.parse(SCHEME_CONTENT + "://media/test/sound/uri");
 
@@ -3210,7 +3214,6 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     }
 
     @Test
-    @EnableFlags(FLAG_NOTIFICATION_VERIFY_CHANNEL_SOUND_URI)
     public void testCreateChannel_noSoundUriPermission_fileSchemaIgnored() {
         final Uri sound = Uri.parse(SCHEME_FILE + "://path/sound");
 
@@ -3229,7 +3232,6 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     }
 
     @Test
-    @EnableFlags(FLAG_NOTIFICATION_VERIFY_CHANNEL_SOUND_URI)
     public void testCreateChannel_noSoundUriPermission_resourceSchemaIgnored() {
         final Uri sound = Uri.parse(SCHEME_ANDROID_RESOURCE + "://resId/sound");
 
@@ -6137,6 +6139,7 @@ public class PreferencesHelperTest extends UiServiceTestCase {
     }
 
     @Test
+    @DisableFlags({FLAG_NOTIFICATION_CLASSIFICATION_UI})
     public void testPullPackagePreferencesStats_postPermissionMigration()
             throws InvalidProtocolBufferException {
         // make sure there's at least one channel for each package we want to test
@@ -6157,15 +6160,17 @@ public class PreferencesHelperTest extends UiServiceTestCase {
         mHelper.canShowBadge(PKG_O, UID_O);
         mHelper.canShowBadge(PKG_P, UID_P);
 
+        ArrayList<StatsEvent> events = new ArrayList<>();
+
+        mHelper.pullPackagePreferencesStats(events, appPermissions,
+                new ArrayMap<String, Set<Integer>>());
+
         // expected output. format: uid -> importance, as only uid (and not package name)
         // is in PackageNotificationPreferences
         ArrayMap<Integer, Pair<Integer, Boolean>> expected = new ArrayMap<>();
         expected.put(UID_N_MR1, new Pair<>(IMPORTANCE_DEFAULT, false));
         expected.put(UID_O, new Pair<>(IMPORTANCE_NONE, true));         // banned by permissions
         expected.put(UID_P, new Pair<>(IMPORTANCE_UNSPECIFIED, false)); // default: unspecified
-
-        ArrayList<StatsEvent> events = new ArrayList<>();
-        mHelper.pullPackagePreferencesStats(events, appPermissions);
 
         assertEquals("total number of packages", 3, events.size());
         for (StatsEvent ev : events) {
@@ -6179,6 +6184,74 @@ public class PreferencesHelperTest extends UiServiceTestCase {
             assertThat(expected.get(uid).first).isEqualTo(p.getImportance());
             assertThat(expected.get(uid).second).isEqualTo(p.getUserSetImportance());
         }
+    }
+
+    @Test
+    @EnableFlags({FLAG_NOTIFICATION_CLASSIFICATION, FLAG_NOTIFICATION_CLASSIFICATION_UI})
+    public void testPullPackagePreferencesStats_createsExpectedStatsEvents()
+            throws InvalidProtocolBufferException {
+        // make sure there's at least one channel for each package we want to test
+        NotificationChannel channelA = new NotificationChannel("a", "a", IMPORTANCE_DEFAULT);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channelA, true, false,
+                UID_N_MR1, false);
+        NotificationChannel channelB = new NotificationChannel("b", "b", IMPORTANCE_DEFAULT);
+        mHelper.createNotificationChannel(PKG_O, UID_O, channelB, true, false, UID_O, false);
+        NotificationChannel channelC = new NotificationChannel("c", "c", IMPORTANCE_DEFAULT);
+        mHelper.createNotificationChannel(PKG_P, UID_P, channelC, true, false, UID_P, false);
+
+        // build a collection of app permissions that should be passed in and used
+        ArrayMap<Pair<Integer, String>, Pair<Boolean, Boolean>> pkgPermissions = new ArrayMap<>();
+        pkgPermissions.put(new Pair<>(UID_N_MR1, PKG_N_MR1), new Pair<>(true, false));
+        pkgPermissions.put(new Pair<>(UID_O, PKG_O), new Pair<>(false, true)); // in local prefs
+
+        // local preferences
+        mHelper.canShowBadge(PKG_O, UID_O);
+        mHelper.canShowBadge(PKG_P, UID_P);
+
+        // Sets bundles_allowed to true for these packages.
+        ArrayMap<String, Set<Integer>> packageSpecificAdjustmentKeyTypes = new ArrayMap<>();
+        Set<Integer> nMr1BundlesSet = new ArraySet<Integer>();
+        nMr1BundlesSet.add(TYPE_NEWS);
+        nMr1BundlesSet.add(TYPE_SOCIAL_MEDIA);
+        packageSpecificAdjustmentKeyTypes.put(PKG_N_MR1, nMr1BundlesSet);
+        Set<Integer> pBundlesSet = new ArraySet<Integer>();
+        packageSpecificAdjustmentKeyTypes.put(PKG_P, pBundlesSet);
+
+        ArrayList<StatsEvent> events = new ArrayList<>();
+
+        mHelper.pullPackagePreferencesStats(events, pkgPermissions,
+                packageSpecificAdjustmentKeyTypes);
+
+        assertEquals("total number of packages", 3, events.size());
+
+        AtomsProto.Atom atom0 = StatsEventTestUtils.convertToAtom(events.get(0));
+        assertTrue(atom0.hasPackageNotificationPreferences());
+        PackageNotificationPreferences p0 = atom0.getPackageNotificationPreferences();
+        assertThat(p0.getUid()).isEqualTo(UID_O);
+        assertThat(p0.getImportance()).isEqualTo(IMPORTANCE_NONE); // banned by permissions
+        assertThat(p0.getUserSetImportance()).isTrue();
+        assertThat(p0.getAllowedBundleTypesList()).hasSize(0);
+
+        AtomsProto.Atom atom1 = StatsEventTestUtils.convertToAtom(events.get(1));
+        assertTrue(atom1.hasPackageNotificationPreferences());
+        PackageNotificationPreferences p1 = atom1.getPackageNotificationPreferences();
+        assertThat(p1.getUid()).isEqualTo(UID_N_MR1);
+        assertThat(p1.getImportance()).isEqualTo(IMPORTANCE_DEFAULT);
+        assertThat(p1.getUserSetImportance()).isFalse();
+        assertThat(p1.getAllowedBundleTypesList()).hasSize(2);
+
+        assertThat(p1.getAllowedBundleTypes(0).getNumber())
+                .isEqualTo(NotificationProtoEnums.TYPE_SOCIAL_MEDIA);
+        assertThat(p1.getAllowedBundleTypes(1).getNumber())
+                .isEqualTo(NotificationProtoEnums.TYPE_NEWS);
+
+        AtomsProto.Atom atom2 = StatsEventTestUtils.convertToAtom(events.get(2));
+        assertTrue(atom2.hasPackageNotificationPreferences());
+        PackageNotificationPreferences p2 = atom2.getPackageNotificationPreferences();
+        assertThat(p2.getUid()).isEqualTo(UID_P);
+        assertThat(p2.getImportance()).isEqualTo(IMPORTANCE_UNSPECIFIED); // default: unspecified
+        assertThat(p2.getUserSetImportance()).isFalse();
+        assertThat(p2.getAllowedBundleTypesList()).hasSize(0);
     }
 
     @Test
@@ -6572,5 +6645,259 @@ public class PreferencesHelperTest extends UiServiceTestCase {
 
         mHelper.setCanBePromoted(PKG_P, UID_P, false, false);
         assertThat(mHelper.canBePromoted(PKG_P, UID_P)).isTrue();
+    }
+
+    @Test
+    @EnableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testInvalidateChannelCache_invalidateOnCreationAndChange() {
+        mHelper.resetCacheInvalidation();
+        NotificationChannel channel = new NotificationChannel("id", "name", IMPORTANCE_DEFAULT);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel, true, false, UID_N_MR1,
+                false);
+
+        // new channel should invalidate the cache.
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+
+        // when the channel data is updated, should invalidate the cache again after that.
+        mHelper.resetCacheInvalidation();
+        NotificationChannel newChannel = channel.copy();
+        newChannel.setName("new name");
+        newChannel.setImportance(IMPORTANCE_HIGH);
+        mHelper.updateNotificationChannel(PKG_N_MR1, UID_N_MR1, newChannel, true, UID_N_MR1, false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+
+        // also for conversations
+        mHelper.resetCacheInvalidation();
+        String parentId = "id";
+        String convId = "conversation";
+        NotificationChannel conv = new NotificationChannel(
+                String.format(CONVERSATION_CHANNEL_ID_FORMAT, parentId, convId), "conversation",
+                IMPORTANCE_DEFAULT);
+        conv.setConversationId(parentId, convId);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, conv, true, false, UID_N_MR1,
+                false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+
+        mHelper.resetCacheInvalidation();
+        NotificationChannel newConv = conv.copy();
+        newConv.setName("changed");
+        mHelper.updateNotificationChannel(PKG_N_MR1, UID_N_MR1, newConv, true, UID_N_MR1, false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+    }
+
+    @Test
+    @EnableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testInvalidateChannelCache_invalidateOnDelete() {
+        NotificationChannel channel = new NotificationChannel("id", "name", IMPORTANCE_DEFAULT);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel, true, false, UID_N_MR1,
+                false);
+
+        // ignore any invalidations up until now
+        mHelper.resetCacheInvalidation();
+
+        mHelper.deleteNotificationChannel(PKG_N_MR1, UID_N_MR1, "id", UID_N_MR1, false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+
+        // recreate channel and now permanently delete
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel, true, false, UID_N_MR1,
+                false);
+        mHelper.resetCacheInvalidation();
+        mHelper.permanentlyDeleteNotificationChannel(PKG_N_MR1, UID_N_MR1, "id");
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+    }
+
+    @Test
+    @EnableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testInvalidateChannelCache_noInvalidationWhenNoChange() {
+        NotificationChannel channel = new NotificationChannel("id", "name", IMPORTANCE_DEFAULT);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel, true, false, UID_N_MR1,
+                false);
+
+        // ignore any invalidations up until now
+        mHelper.resetCacheInvalidation();
+
+        // newChannel, same as the old channel
+        NotificationChannel newChannel = channel.copy();
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, newChannel, true, false, UID_N_MR1,
+                false);
+        mHelper.updateNotificationChannel(PKG_N_MR1, UID_N_MR1, newChannel, true, UID_N_MR1, false);
+
+        // because there were no effective changes, we should not see any cache invalidations
+        assertThat(mHelper.hasCacheBeenInvalidated()).isFalse();
+
+        // deletions of a nonexistent channel also don't change anything
+        mHelper.resetCacheInvalidation();
+        mHelper.deleteNotificationChannel(PKG_N_MR1, UID_N_MR1, "nonexistent", UID_N_MR1, false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isFalse();
+    }
+
+    @Test
+    @EnableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testInvalidateCache_multipleUsersAndPackages() {
+        // Setup: create channels for:
+        // pkg O, user
+        // pkg O, work (same channel ID, different user)
+        // pkg N_MR1, user
+        // pkg N_MR1, user, conversation child of above
+        String p2u1ConvId = String.format(CONVERSATION_CHANNEL_ID_FORMAT, "p2", "conv");
+        NotificationChannel p1u1 = new NotificationChannel("p1", "p1u1", IMPORTANCE_DEFAULT);
+        NotificationChannel p1u2 = new NotificationChannel("p1", "p1u2", IMPORTANCE_DEFAULT);
+        NotificationChannel p2u1 = new NotificationChannel("p2", "p2u1", IMPORTANCE_DEFAULT);
+        NotificationChannel p2u1Conv = new NotificationChannel(p2u1ConvId, "p2u1 conv",
+                IMPORTANCE_DEFAULT);
+        p2u1Conv.setConversationId("p2", "conv");
+
+        mHelper.createNotificationChannel(PKG_O, UID_O, p1u1, true,
+                false, UID_O, false);
+        mHelper.createNotificationChannel(PKG_O, UID_O + UserHandle.PER_USER_RANGE, p1u2, true,
+                false, UID_O + UserHandle.PER_USER_RANGE, false);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, p2u1, true,
+                false, UID_N_MR1, false);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, p2u1Conv, true,
+                false, UID_N_MR1, false);
+        mHelper.resetCacheInvalidation();
+
+        // Update to an existent channel, with a change: should invalidate
+        NotificationChannel p1u1New = p1u1.copy();
+        p1u1New.setName("p1u1 new");
+        mHelper.updateNotificationChannel(PKG_O, UID_O, p1u1New, true, UID_O, false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+
+        // Do it again, but no change for this user
+        mHelper.resetCacheInvalidation();
+        mHelper.updateNotificationChannel(PKG_O, UID_O, p1u1New.copy(), true, UID_O, false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isFalse();
+
+        // Delete conversations, but for a package without those conversations
+        mHelper.resetCacheInvalidation();
+        mHelper.deleteConversations(PKG_O, UID_O, Set.of(p2u1Conv.getConversationId()), UID_O,
+                false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isFalse();
+
+        // Now delete conversations for the right package
+        mHelper.resetCacheInvalidation();
+        mHelper.deleteConversations(PKG_N_MR1, UID_N_MR1, Set.of(p2u1Conv.getConversationId()),
+                UID_N_MR1, false);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+    }
+
+    @Test
+    @EnableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testInvalidateCache_userRemoved() throws Exception {
+        NotificationChannel c1 = new NotificationChannel("id1", "name1", IMPORTANCE_DEFAULT);
+        int uid1 = UserHandle.getUid(1, 1);
+        setUpPackageWithUid("pkg1", uid1);
+        mHelper.createNotificationChannel("pkg1", uid1, c1, true, false, uid1, false);
+        mHelper.resetCacheInvalidation();
+
+        // delete user 1; should invalidate cache
+        mHelper.onUserRemoved(1);
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+    }
+
+    @Test
+    @EnableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testInvalidateCache_packagesChanged() {
+        NotificationChannel channel1 =
+                new NotificationChannel("id1", "name1", NotificationManager.IMPORTANCE_HIGH);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel1, true, false,
+                UID_N_MR1, false);
+
+        // package deleted: expect cache invalidation
+        mHelper.resetCacheInvalidation();
+        mHelper.onPackagesChanged(true, USER_SYSTEM, new String[]{PKG_N_MR1},
+                new int[]{UID_N_MR1});
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+
+        // re-created: expect cache invalidation again
+        mHelper.resetCacheInvalidation();
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel1, true, false,
+                UID_N_MR1, false);
+        mHelper.onPackagesChanged(false, USER_SYSTEM, new String[]{PKG_N_MR1},
+                new int[]{UID_N_MR1});
+        assertThat(mHelper.hasCacheBeenInvalidated()).isTrue();
+    }
+
+    @Test
+    @DisableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testInvalidateCache_flagOff_neverTouchesCache() {
+        // Do a bunch of channel-changing operations.
+        NotificationChannel channel =
+                new NotificationChannel("id", "name1", NotificationManager.IMPORTANCE_HIGH);
+        mHelper.createNotificationChannel(PKG_N_MR1, UID_N_MR1, channel, true, false,
+                UID_N_MR1, false);
+
+        NotificationChannel copy = channel.copy();
+        copy.setName("name2");
+        mHelper.updateNotificationChannel(PKG_N_MR1, UID_N_MR1, copy, true, UID_N_MR1, false);
+        mHelper.deleteNotificationChannel(PKG_N_MR1, UID_N_MR1, "id", UID_N_MR1, false);
+
+        assertThat(mHelper.hasCacheBeenInvalidated()).isFalse();
+    }
+
+    @Test
+    @EnableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testGetNotificationChannels_createIfNeeded() {
+        // Test setup hasn't created any channels or read package preferences yet.
+        // If we ask for notification channels _without_ creating, we should get no result.
+        ParceledListSlice<NotificationChannel> channels = mHelper.getNotificationChannels(PKG_N_MR1,
+                UID_N_MR1, false, false, /* createPrefsIfNeeded= */ false);
+        assertThat(channels.getList().size()).isEqualTo(0);
+
+        // If we ask it to create package preferences, we expect the default channel to be created
+        // for N_MR1.
+        channels = mHelper.getNotificationChannels(PKG_N_MR1, UID_N_MR1, false,
+                false, /* createPrefsIfNeeded= */ true);
+        assertThat(channels.getList().size()).isEqualTo(1);
+        assertThat(channels.getList().getFirst().getId()).isEqualTo(
+                NotificationChannel.DEFAULT_CHANNEL_ID);
+    }
+
+    @Test
+    @DisableFlags(android.app.Flags.FLAG_NM_BINDER_PERF_CACHE_CHANNELS)
+    public void testGetNotificationChannels_neverCreatesWhenFlagOff() {
+        ParceledListSlice<NotificationChannel> channels;
+        try {
+            channels = mHelper.getNotificationChannels(PKG_N_MR1, UID_N_MR1, false,
+                    false, /* createPrefsIfNeeded= */ true);
+        } catch (Exception e) {
+            // Slog.wtf kicks in, presumably
+        } finally {
+            channels = mHelper.getNotificationChannels(PKG_N_MR1, UID_N_MR1, false,
+                    false, /* createPrefsIfNeeded= */ false);
+            assertThat(channels.getList().size()).isEqualTo(0);
+        }
+
+    }
+
+    // Test version of PreferencesHelper whose only functional difference is that it does not
+    // interact with the real IpcDataCache, and instead tracks whether or not the cache has been
+    // invalidated since creation or the last reset.
+    private static class TestPreferencesHelper extends PreferencesHelper {
+        private boolean mCacheInvalidated = false;
+
+        TestPreferencesHelper(Context context, PackageManager pm, RankingHandler rankingHandler,
+                ZenModeHelper zenHelper, PermissionHelper permHelper, PermissionManager permManager,
+                NotificationChannelLogger notificationChannelLogger,
+                AppOpsManager appOpsManager, ManagedServices.UserProfiles userProfiles,
+                UriGrantsManagerInternal ugmInternal,
+                boolean showReviewPermissionsNotification, Clock clock) {
+            super(context, pm, rankingHandler, zenHelper, permHelper, permManager,
+                    notificationChannelLogger, appOpsManager, userProfiles, ugmInternal,
+                    showReviewPermissionsNotification, clock);
+        }
+
+        @Override
+        protected void invalidateNotificationChannelCache() {
+            mCacheInvalidated = true;
+        }
+
+        boolean hasCacheBeenInvalidated() {
+            return mCacheInvalidated;
+        }
+
+        void resetCacheInvalidation() {
+            mCacheInvalidated = false;
+        }
     }
 }

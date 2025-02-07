@@ -111,10 +111,8 @@
     <string name="screenrecord_channel_description" msgid="4147077128486138351">"স্ক্রিন রেকর্ডিং সেশন চলার বিজ্ঞপ্তি"</string>
     <string name="screenrecord_permission_dialog_title" msgid="7415261783188749730">"আপনার স্ক্রিন রেকর্ড করবেন?"</string>
     <string name="screenrecord_permission_dialog_option_text_single_app" msgid="1996450687814647583">"একটি অ্যাপ রেকর্ড করুন"</string>
-    <!-- no translation found for screenrecord_permission_dialog_option_text_entire_screen (4882406311415082016) -->
-    <skip />
-    <!-- no translation found for screenrecord_permission_dialog_option_text_entire_screen_for_display (4169494703993148253) -->
-    <skip />
+    <string name="screenrecord_permission_dialog_option_text_entire_screen" msgid="4882406311415082016">"এই স্ক্রিন রেকর্ড করুন"</string>
+    <string name="screenrecord_permission_dialog_option_text_entire_screen_for_display" msgid="4169494703993148253">"%s রেকর্ড করুন"</string>
     <string name="screenrecord_permission_dialog_warning_entire_screen" msgid="1321758636709366068">"আপনার সম্পূর্ণ স্ক্রিন রেকর্ড করার সময়, আপনার স্ক্রিনে দেখানো সব কিছু রেকর্ড করা হয়। তাই পাসওয়ার্ড, পেমেন্টের বিবরণ, মেসেজ, ফটো এবং অডিও ও ভিডিওর মতো বিষয়ের ক্ষেত্রে সতর্ক থাকুন।"</string>
     <string name="screenrecord_permission_dialog_warning_single_app" msgid="3738199712880063924">"আপনি কোনও অ্যাপ রেকর্ড করার সময়, সেই অ্যাপে দেখানো বা চালানো সব কিছু রেকর্ড করা হয়। তাই পাসওয়ার্ড, পেমেন্টের বিবরণ, মেসেজ, ফটো এবং অডিও ও ভিডিওর মতো বিষয়ের ক্ষেত্রে সতর্ক থাকুন।"</string>
     <string name="screenrecord_permission_dialog_continue_entire_screen" msgid="5557974446773486600">"স্ক্রিন রেকর্ড করুন"</string>
@@ -355,7 +353,7 @@
     <string name="quick_settings_color_correction_label" msgid="5636617913560474664">"রঙ সংশোধন"</string>
     <string name="quick_settings_font_scaling_label" msgid="5289001009876936768">"ফন্ট সাইজ"</string>
     <string name="quick_settings_more_user_settings" msgid="7634653308485206306">"ব্যবহারকারীদের ম্যানেজ করুন"</string>
-    <string name="quick_settings_done" msgid="2163641301648855793">"সম্পন্ন হয়েছে"</string>
+    <string name="quick_settings_done" msgid="2163641301648855793">"হয়ে গেছে"</string>
     <string name="quick_settings_close_user_panel" msgid="5599724542275896849">"বন্ধ করুন"</string>
     <string name="quick_settings_connected" msgid="3873605509184830379">"সংযুক্ত হয়েছে"</string>
     <string name="quick_settings_connected_battery_level" msgid="1322075669498906959">"সংযুক্ত হয়েছে, ব্যাটারি <xliff:g id="BATTERY_LEVEL_AS_PERCENTAGE">%1$s</xliff:g>"</string>
@@ -417,20 +415,13 @@
     <string name="hearing_devices_presets_error" msgid="350363093458408536">"প্রিসেট আপডেট করা যায়নি"</string>
     <string name="hearing_devices_preset_label" msgid="7878267405046232358">"প্রিসেট"</string>
     <string name="hearing_devices_spinner_item_selected" msgid="3137083889662762383">"বেছে নেওয়া হয়েছে"</string>
-    <!-- no translation found for hearing_devices_ambient_label (629440938614895797) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_control_left (3586965448230412600) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_control_right (6192137602448918383) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_expand_controls (2131816068187709200) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_collapse_controls (2261097656446201581) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_mute (1836882837647429416) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_unmute (2187938085943876814) -->
-    <skip />
+    <string name="hearing_devices_ambient_label" msgid="629440938614895797">"সারাউন্ডিং"</string>
+    <string name="hearing_devices_ambient_control_left" msgid="3586965448230412600">"বাঁদিক"</string>
+    <string name="hearing_devices_ambient_control_right" msgid="6192137602448918383">"ডানদিক"</string>
+    <string name="hearing_devices_ambient_expand_controls" msgid="2131816068187709200">"বাঁদিক ও ডানদিকের আলাদা করা কন্ট্রোল বড় করুন"</string>
+    <string name="hearing_devices_ambient_collapse_controls" msgid="2261097656446201581">"ইউনিফায়েড কন্ট্রোল আড়াল করুন"</string>
+    <string name="hearing_devices_ambient_mute" msgid="1836882837647429416">"সারাউন্ডিং মিউট করুন"</string>
+    <string name="hearing_devices_ambient_unmute" msgid="2187938085943876814">"সারাউন্ডিং আনমিউট করুন"</string>
     <string name="hearing_devices_tools_label" msgid="1929081464316074476">"টুল"</string>
     <string name="quick_settings_hearing_devices_live_caption_title" msgid="1054814050932225451">"লাইভ ক্যাপশন"</string>
     <string name="quick_settings_notes_label" msgid="1028004078001002623">"মনে রাখবেন"</string>
@@ -759,6 +750,8 @@
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"আপডেট করা হচ্ছে"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"কাজের প্রোফাইল"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"বিমান মোড"</string>
+    <!-- no translation found for status_bar_supervision (6735015942701134125) -->
+    <skip />
     <string name="zen_alarm_warning" msgid="7844303238486849503">"আপনি আপনার পরবর্তী <xliff:g id="WHEN">%1$s</xliff:g> অ্যালার্ম শুনতে পাবেন না"</string>
     <string name="alarm_template" msgid="2234991538018805736">"<xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template_far" msgid="3561752195856839456">"<xliff:g id="WHEN">%1$s</xliff:g> -তে"</string>
@@ -768,7 +761,7 @@
     <string name="accessibility_status_bar_satellite_good_connection" msgid="308079391708578704">"স্যাটেলাইট, ভালো কানেকশন"</string>
     <string name="accessibility_status_bar_satellite_available" msgid="6514855015496916829">"স্যাটেলাইট, কানেকশন উপলভ্য আছে"</string>
     <string name="satellite_connected_carrier_text" msgid="118524195198532589">"স্যাটেলাইট SOS"</string>
-    <string name="satellite_emergency_only_carrier_text" msgid="828510231597991206">"জরুরি কল বা SOS"</string>
+    <string name="satellite_emergency_only_carrier_text" msgid="9103913890116841786">"শুধুমাত্র জরুরি কল বা SOS"</string>
     <string name="accessibility_phone_string_format" msgid="7798841417881811812">"<xliff:g id="CARRIER_NAME">%1$s</xliff:g>, <xliff:g id="SIGNAL_STRENGTH_DESCRIPTION">%2$s</xliff:g>।"</string>
     <string name="accessibility_no_signal" msgid="7052827511409250167">"কোনও সিগন্যাল নেই"</string>
     <string name="accessibility_one_bar" msgid="5342012847647834506">"একটি বার"</string>
@@ -865,7 +858,6 @@
     <string name="keyboard_shortcut_group_system_back" msgid="1055709713218453863">"পিছনে"</string>
     <string name="keyboard_shortcut_group_system_notifications" msgid="3615971650562485878">"বিজ্ঞপ্তি"</string>
     <string name="keyboard_shortcut_group_system_shortcuts_helper" msgid="4856808328618265589">"কীবোর্ড শর্টকাট"</string>
-    <string name="keyboard_shortcut_group_system_switch_input" msgid="952555530383268166">"কীবোর্ড লে-আউট পাল্টান"</string>
     <string name="keyboard_shortcut_join" msgid="3578314570034512676">"অথবা"</string>
     <string name="keyboard_shortcut_clear_text" msgid="6631051796030377857">"সার্চ কোয়েরি মুছুন"</string>
     <string name="keyboard_shortcut_search_list_title" msgid="4271769465397671138">"কীবোর্ড শর্টকাট"</string>
@@ -976,11 +968,9 @@
     <string name="tuner_low_priority" msgid="8412666814123009820">"কম-গুরুত্বপূর্ণ বিজ্ঞপ্তির আইকন দেখুন"</string>
     <string name="other" msgid="429768510980739978">"অন্যান্য"</string>
     <string name="accessibility_qs_edit_remove_tile_action" msgid="775511891457193480">"টাইল সরান"</string>
-    <!-- no translation found for accessibility_qs_edit_tile_add_action (8311378984458545661) -->
-    <skip />
+    <string name="accessibility_qs_edit_tile_add_action" msgid="8311378984458545661">"শেষ জায়গাতে টাইল যোগ করুন"</string>
     <string name="accessibility_qs_edit_tile_start_move" msgid="2009373939914517817">"টাইল সরান"</string>
-    <!-- no translation found for accessibility_qs_edit_tile_start_add (8141710006899065161) -->
-    <skip />
+    <string name="accessibility_qs_edit_tile_start_add" msgid="8141710006899065161">"আপনার পছন্দের জায়গাতে টাইল যোগ করুন"</string>
     <string name="accessibility_qs_edit_tile_move_to_position" msgid="5198161544045930556">"<xliff:g id="POSITION">%1$d</xliff:g>-এ সরান"</string>
     <string name="accessibility_qs_edit_tile_add_to_position" msgid="9029163095148274690">"অবস্থান <xliff:g id="POSITION">%1$d</xliff:g>-এ যোগ করুন"</string>
     <string name="accessibilit_qs_edit_tile_add_move_invalid_position" msgid="2858467994472624487">"পজিশন সঠিক নয়।"</string>
@@ -996,8 +986,7 @@
     <string name="accessibility_quick_settings_choose_user_action" msgid="4554388498186576087">"ব্যবহারকারী বেছে নিন"</string>
     <string name="data_connection_no_internet" msgid="691058178914184544">"ইন্টারনেট কানেকশন নেই"</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"<xliff:g id="ID_1">%s</xliff:g> সেটিংস খুলুন৷"</string>
-    <!-- no translation found for accessibility_quick_settings_edit (6544873823850165) -->
-    <skip />
+    <string name="accessibility_quick_settings_edit" msgid="6544873823850165">"দ্রুত সেটিংসের ক্রম এডিট করুন"</string>
     <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"পাওয়ার মেনু"</string>
     <string name="accessibility_quick_settings_page" msgid="7506322631645550961">"<xliff:g id="ID_2">%2$d</xliff:g>টির মধ্যে <xliff:g id="ID_1">%1$d</xliff:g> নং পৃষ্ঠা"</string>
     <string name="tuner_lock_screen" msgid="2267383813241144544">"লক স্ক্রিন"</string>
@@ -1301,7 +1290,7 @@
     <string name="accessibility_enter_hint" msgid="2617864063504824834">"ডিভাইস আনলক করুন"</string>
     <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"খুলতে ফিঙ্গারপ্রিন্ট ব্যবহার করুন"</string>
     <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"যাচাইকরণ করতে হবে। যাচাইকরণ করতে আঙুলের ছাপের সেন্সরে টাচ করুন।"</string>
-    <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"ব্যবহারকারী এখন ফোনে কথা বলছেন"</string>
+    <string name="ongoing_call_content_description" msgid="6394763878322348560">"চালু থাকা কল"</string>
     <string name="mobile_data_settings_title" msgid="3955246641380064901">"মোবাইল ডেটা"</string>
     <string name="mobile_data_connection_active" msgid="944490013299018227">"কানেক্ট করা আছে"</string>
     <string name="mobile_data_temp_connection_active" msgid="4590222725908806824">"সাময়িকভাবে কানেক্ট করা হয়েছে"</string>
@@ -1443,15 +1432,17 @@
     <string name="shortcut_helper_category_system_apps" msgid="6001757545472556810">"সিস্টেম অ্যাপ"</string>
     <string name="shortcut_helper_category_multitasking" msgid="7413381961404090136">"মাল্টিটাস্কিং"</string>
     <string name="shortcutHelper_category_split_screen" msgid="1159669813444812244">"স্প্লিট স্ক্রিন"</string>
+    <!-- no translation found for shortcutHelper_category_accessibility (8068337792277570938) -->
+    <skip />
     <string name="shortcut_helper_category_input" msgid="8674018654124839566">"ইনপুট"</string>
     <string name="shortcut_helper_category_app_shortcuts" msgid="8010249408308587117">"অ্যাপ শর্টকাট"</string>
     <string name="shortcut_helper_category_current_app_shortcuts" msgid="4017840565974573628">"বর্তমান অ্যাপ"</string>
     <string name="shortcut_helper_category_a11y" msgid="6314444792641773464">"অ্যাক্সেসিবিলিটি"</string>
     <string name="shortcut_helper_title" msgid="8567500639300970049">"কীবোর্ড শর্টকাট"</string>
-    <string name="shortcut_helper_customize_mode_title" msgid="1467657117101096033">"কীবোর্ড শর্টকাট কাস্টমাইজ করুন"</string>
+    <string name="shortcut_helper_customize_mode_title" msgid="8327297960035006036">"শর্টকাট কাস্টমাইজ করুন"</string>
     <string name="shortcut_customize_mode_remove_shortcut_dialog_title" msgid="7106420484940737208">"শর্টকাট সরাবেন?"</string>
     <string name="shortcut_customize_mode_reset_shortcut_dialog_title" msgid="8131184731313717780">"ডিফল্ট শর্টকার্ট আবার রিসেট করতে চান?"</string>
-    <string name="shortcut_customize_mode_add_shortcut_description" msgid="6866025005347407696">"শর্টকাট অ্যাসাইন করতে কী প্রেস করুন"</string>
+    <string name="shortcut_customize_mode_add_shortcut_description" msgid="7636040209946696120">"এই শর্টকার্ট তৈরি করতে, অ্যাকশন \'কী\' এবং এক বা আরও বেশি \'কী\' একসাথে প্রেস করুন"</string>
     <string name="shortcut_customize_mode_remove_shortcut_description" msgid="6851287900585057128">"এটি আপনার কাস্টম শর্টকাট স্থায়ীভাবে মুছে ফেলবে।"</string>
     <string name="shortcut_customize_mode_reset_shortcut_description" msgid="2081849715634358684">"এটি আপনার সব কাস্টম শর্টকার্ট স্থায়ীভাবে মুছে দেবে।"</string>
     <string name="shortcut_helper_search_placeholder" msgid="5488547526269871819">"শর্টকাট সার্চ করুন"</string>
@@ -1473,9 +1464,11 @@
     <string name="shortcut_helper_customize_dialog_reset_button_label" msgid="7645535254306312685">"হ্যাঁ, রিসেট করতে চাই"</string>
     <string name="shortcut_helper_customize_dialog_cancel_button_label" msgid="5595546460431741178">"বাতিল করুন"</string>
     <string name="shortcut_helper_add_shortcut_dialog_placeholder" msgid="9154297849458741995">"কী প্রেস করুন"</string>
-    <string name="shortcut_customizer_key_combination_in_use_error_message" msgid="7693234470526626327">"কী কম্বিনেশন আগে থেকে ব্যবহার হচ্ছে। অন্য কী ব্যবহার করে দেখুন।"</string>
+    <string name="shortcut_customizer_key_combination_in_use_error_message" msgid="3325858369539848162">"\'কী\' শর্টকার্ট আগে থেকে ব্যবহার হচ্ছে। অন্য শর্টকার্ট ব্যবহার করে দেখুন।"</string>
     <string name="shortcut_customizer_generic_error_message" msgid="3128454624049722741">"শর্টকাট সেট করা যায়নি।"</string>
     <string name="shortcut_helper_plus_symbol" msgid="4534843157353732011">"+"</string>
+    <string name="shortcut_helper_add_shortcut_button_label" msgid="7655779534665954910">"শর্টকাট যোগ করুন"</string>
+    <string name="shortcut_helper_delete_shortcut_button_label" msgid="3148773472696137052">"শর্টকাট মুছুন"</string>
     <string name="launch_keyboard_tutorial_notification_title" msgid="8849933155160522519">"আপনার কীবোর্ড ব্যবহার করে নেভিগেট করুন"</string>
     <string name="launch_keyboard_tutorial_notification_content" msgid="2880339951512757918">"কীবোর্ড শর্টকাট সম্পর্কে জানুন"</string>
     <string name="launch_touchpad_tutorial_notification_title" msgid="2243780062772196901">"আপনার টাচপ্যাড ব্যবহার করে নেভিগেট করুন"</string>
@@ -1485,6 +1478,7 @@
     <string name="touchpad_tutorial_back_gesture_button" msgid="3104716365403620315">"ফিরে যান"</string>
     <string name="touchpad_tutorial_home_gesture_button" msgid="8023973153559885624">"হোমে যান"</string>
     <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"সম্প্রতি ব্যবহার করা হয়েছে এমন অ্যাপ দেখুন"</string>
+    <string name="touchpad_tutorial_switch_apps_gesture_button" msgid="7768255095423767779">"অ্যাপ পরিবর্তন করুন"</string>
     <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"হয়ে গেছে"</string>
     <string name="gesture_error_title" msgid="469064941635578511">"আবার চেষ্টা করুন!"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"ফিরে যান"</string>
@@ -1502,6 +1496,13 @@
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"অসাধারণ!"</string>
     <string name="touchpad_recent_apps_gesture_success_body" msgid="4334263906697493273">"সম্প্রতি ব্যবহার করা হয়েছে এমন অ্যাপের জেসচার দেখা সম্পূর্ণ করেছেন।"</string>
     <string name="touchpad_recent_gesture_error_body" msgid="8695535720378462022">"সাম্প্রতিক অ্যাপ দেখতে, নিজের টাচপ্যাডে তিনটি আঙুল ব্যবহার করে উপরের দিকে সোয়াইপ করে হোল্ড করুন"</string>
+    <string name="touchpad_switch_apps_gesture_action_title" msgid="6835222344612924512">"অ্যাপ পরিবর্তন করুন"</string>
+    <!-- no translation found for touchpad_switch_apps_gesture_guidance (2751565200937541667) -->
+    <skip />
+    <string name="touchpad_switch_apps_gesture_success_title" msgid="4894947244328032458">"অসাধারণ!"</string>
+    <string name="touchpad_switch_apps_gesture_success_body" msgid="8151089866035126312">"আপনি অ্যাপ পরিবর্তন করার জেসচার সম্পূর্ণ করেছেন।"</string>
+    <!-- no translation found for touchpad_switch_gesture_error_body (5508381152326379652) -->
+    <skip />
     <string name="tutorial_action_key_title" msgid="8172535792469008169">"সব অ্যাপ দেখুন"</string>
     <string name="tutorial_action_key_guidance" msgid="5040613427202799294">"আপনার কীবোর্ডে অ্যাকশন কী প্রেস করুন"</string>
     <string name="tutorial_action_key_success_title" msgid="2371827347071979571">"দারুণ!"</string>

@@ -38,6 +38,16 @@ flag {
 }
 
 flag {
+    name: "floating_menu_display_cutout_support"
+    namespace: "accessibility"
+    description: "Makes FAB properly react to and avoid DisplayCutouts."
+    bug: "384399408"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "floating_menu_drag_to_hide"
     namespace: "accessibility"
     description: "Allows users to hide the FAB then use notification to dismiss or bring it back."
@@ -124,4 +134,14 @@ flag {
     namespace: "accessibility"
     description: "Update hearing device icon in floating menu according to the connection status."
     bug: "357882387"
+}
+
+flag {
+    name: "floating_menu_notify_targets_changed_on_strict_diff"
+    namespace: "accessibility"
+    description: "Only notify listeners that the list of accessibility targets has changed if the lists are not identical."
+    bug: "376473165"
+    metadata {
+      purpose: PURPOSE_BUGFIX
+    }
 }

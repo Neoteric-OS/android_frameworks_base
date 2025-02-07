@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.view.SurfaceControl;
 
 import com.android.dx.mockito.inline.extended.ExtendedMockito;
+import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.TestRunningTaskInfoBuilder;
 import com.android.wm.shell.common.DisplayController;
@@ -79,16 +80,17 @@ public class SplitTestUtils {
                 StageTaskListener sideStage, DisplayController displayController,
                 DisplayImeController imeController, DisplayInsetsController insetsController,
                 SplitLayout splitLayout, Transitions transitions, TransactionPool transactionPool,
-                ShellExecutor mainExecutor, Handler mainHandler, ShellExecutor bgExecutor,
+                ShellExecutor mainExecutor, Handler mainHandler,
                 Optional<RecentTasksController> recentTasks,
                 LaunchAdjacentController launchAdjacentController,
                 Optional<WindowDecorViewModel> windowDecorViewModel, SplitState splitState,
-                Optional<DesktopTasksController> desktopTasksController) {
+                Optional<DesktopTasksController> desktopTasksController,
+                RootTaskDisplayAreaOrganizer rootTDAOrganizer) {
             super(context, displayId, syncQueue, taskOrganizer, mainStage,
                     sideStage, displayController, imeController, insetsController, splitLayout,
-                    transitions, transactionPool, mainExecutor, mainHandler, bgExecutor,
-                    recentTasks, launchAdjacentController, windowDecorViewModel, splitState,
-                    desktopTasksController);
+                    transitions, transactionPool, mainExecutor, mainHandler, recentTasks,
+                    launchAdjacentController, windowDecorViewModel, splitState,
+                    desktopTasksController, rootTDAOrganizer);
 
             // Prepare root task for testing.
             mRootTask = new TestRunningTaskInfoBuilder().build();

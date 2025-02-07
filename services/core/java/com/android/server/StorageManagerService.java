@@ -41,6 +41,7 @@ import static android.os.storage.OnObbStateChangeListener.ERROR_NOT_MOUNTED;
 import static android.os.storage.OnObbStateChangeListener.ERROR_PERMISSION_DENIED;
 import static android.os.storage.OnObbStateChangeListener.MOUNTED;
 import static android.os.storage.OnObbStateChangeListener.UNMOUNTED;
+import static android.mmd.flags.Flags.mmdEnabled;
 
 import static com.android.internal.util.XmlUtils.readStringAttribute;
 import static com.android.internal.util.XmlUtils.writeStringAttribute;
@@ -162,7 +163,9 @@ import com.android.server.storage.StorageSessionController;
 import com.android.server.storage.StorageSessionController.ExternalStorageServiceException;
 import com.android.server.wm.ActivityTaskManagerInternal;
 import com.android.server.wm.ActivityTaskManagerInternal.ScreenObserver;
+// QTI_BEGIN: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
 import com.android.internal.widget.ILockSettings;
+// QTI_END: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
 
 import libcore.io.IoUtils;
 import libcore.util.EmptyArray;
@@ -946,12 +949,17 @@ class StorageManagerService extends IStorageManager.Stub
             });
         refreshZramSettings();
 
-        // Schedule zram writeback unless zram is disabled by persist.sys.zram_enabled
-        String zramPropValue = SystemProperties.get(ZRAM_ENABLED_PROPERTY);
-        if (!zramPropValue.equals("0")
-                && mContext.getResources().getBoolean(
+        if (mmdEnabled()) {
+            // TODO: b/375432472 - Start zram maintenance only when zram is enabled.
+            ZramMaintenance.startZramMaintenance(mContext);
+        } else {
+            // Schedule zram writeback unless zram is disabled by persist.sys.zram_enabled
+            String zramPropValue = SystemProperties.get(ZRAM_ENABLED_PROPERTY);
+            if (!zramPropValue.equals("0")
+                    && mContext.getResources().getBoolean(
                     com.android.internal.R.bool.config_zramWriteback)) {
-            ZramWriteback.scheduleZramWriteback(mContext);
+                ZramWriteback.scheduleZramWriteback(mContext);
+            }
         }
 
         configureTranscoding();
@@ -978,7 +986,7 @@ class StorageManagerService extends IStorageManager.Stub
             // sole writer.
             SystemProperties.set(ZRAM_ENABLED_PROPERTY, desiredPropertyValue);
             // Schedule writeback only if zram is being enabled.
-            if (desiredPropertyValue.equals("1")
+            if (!mmdEnabled() && desiredPropertyValue.equals("1")
                     && mContext.getResources().getBoolean(
                         com.android.internal.R.bool.config_zramWriteback)) {
                 ZramWriteback.scheduleZramWriteback(mContext);
@@ -3318,14 +3326,18 @@ class StorageManagerService extends IStorageManager.Stub
 
     /* Only for use by LockSettingsService */
     @android.annotation.EnforcePermission(android.Manifest.permission.STORAGE_INTERNAL)
+// QTI_BEGIN: 2018-07-31: SecureSystems: LockSettingsService: Support for separate clear key api
     @Override
+// QTI_END: 2018-07-31: SecureSystems: LockSettingsService: Support for separate clear key api
     public void setCeStorageProtection(@UserIdInt int userId, byte[] secret)
             throws RemoteException {
         super.setCeStorageProtection_enforcePermission();
 
         mVold.setCeStorageProtection(userId, secret);
+// QTI_BEGIN: 2018-07-31: SecureSystems: LockSettingsService: Support for separate clear key api
     }
 
+// QTI_END: 2018-07-31: SecureSystems: LockSettingsService: Support for separate clear key api
     /* Only for use by LockSettingsService */
     @android.annotation.EnforcePermission(android.Manifest.permission.STORAGE_INTERNAL)
     @Override

@@ -34,7 +34,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.android.compose.animation.scene.SceneScope
+import com.android.compose.animation.scene.ContentScope
 import com.android.compose.modifiers.thenIf
 import com.android.systemui.common.ui.ConfigurationState
 import com.android.systemui.dagger.SysUISingleton
@@ -53,6 +53,8 @@ import com.android.systemui.statusbar.notification.icon.ui.viewbinder.AlwaysOnDi
 import com.android.systemui.statusbar.notification.icon.ui.viewbinder.NotificationIconContainerViewBinder
 import com.android.systemui.statusbar.notification.icon.ui.viewbinder.StatusBarIconViewBindingFailureTracker
 import com.android.systemui.statusbar.notification.icon.ui.viewmodel.NotificationIconContainerAlwaysOnDisplayViewModel
+import com.android.systemui.statusbar.notification.promoted.AODPromotedNotification
+import com.android.systemui.statusbar.notification.promoted.ui.viewmodel.AODPromotedNotificationViewModel
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout
 import com.android.systemui.statusbar.notification.stack.ui.view.NotificationScrollView
 import com.android.systemui.statusbar.notification.stack.ui.view.SharedNotificationContainer
@@ -84,6 +86,7 @@ constructor(
     private val iconBindingFailureTracker: StatusBarIconViewBindingFailureTracker,
     private val nicAodViewModel: NotificationIconContainerAlwaysOnDisplayViewModel,
     private val nicAodIconViewStore: AlwaysOnDisplayNotificationIconViewStore,
+    private val aodPromotedNotificationViewModelFactory: AODPromotedNotificationViewModel.Factory,
     private val systemBarUtilsState: SystemBarUtilsState,
     private val clockInteractor: KeyguardClockInteractor,
 ) {
@@ -104,6 +107,11 @@ constructor(
             sharedNotificationContainer,
             sharedNotificationContainerViewModel,
         )
+    }
+
+    @Composable
+    fun AodPromotedNotification() {
+        AODPromotedNotification(aodPromotedNotificationViewModelFactory)
     }
 
     @Composable
@@ -148,7 +156,7 @@ constructor(
     }
 
     @Composable
-    fun SceneScope.HeadsUpNotifications() {
+    fun ContentScope.HeadsUpNotifications() {
         SnoozeableHeadsUpNotificationSpace(
             stackScrollView = stackScrollView.get(),
             viewModel = rememberViewModel("HeadsUpNotifications") { viewModelFactory.create() },
@@ -160,7 +168,7 @@ constructor(
      *   adjustment
      */
     @Composable
-    fun SceneScope.Notifications(
+    fun ContentScope.Notifications(
         areNotificationsVisible: Boolean,
         isShadeLayoutWide: Boolean,
         burnInParams: BurnInParameters?,

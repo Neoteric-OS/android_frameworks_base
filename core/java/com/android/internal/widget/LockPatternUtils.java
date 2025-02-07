@@ -65,6 +65,7 @@ import android.util.SparseLongArray;
 import android.view.InputDevice;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.ArrayUtils;
 import com.android.server.LocalServices;
 
 import com.google.android.collect.Lists;
@@ -75,6 +76,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -290,6 +292,56 @@ public class LockPatternUtils {
             return mTimeoutMs;
         }
 
+    }
+
+    /**
+     * This exists temporarily due to trunk-stable policies.
+     * Please use ArrayUtils directly if you can.
+     */
+    public static byte[] newNonMovableByteArray(int length) {
+        if (!android.security.Flags.secureArrayZeroization()) {
+            return new byte[length];
+        }
+        return ArrayUtils.newNonMovableByteArray(length);
+    }
+
+    /**
+     * This exists temporarily due to trunk-stable policies.
+     * Please use ArrayUtils directly if you can.
+     */
+    public static char[] newNonMovableCharArray(int length) {
+        if (!android.security.Flags.secureArrayZeroization()) {
+            return new char[length];
+        }
+        return ArrayUtils.newNonMovableCharArray(length);
+    }
+
+    /**
+     * This exists temporarily due to trunk-stable policies.
+     * Please use ArrayUtils directly if you can.
+     */
+    public static void zeroize(byte[] array) {
+        if (!android.security.Flags.secureArrayZeroization()) {
+            if (array != null) {
+                Arrays.fill(array, (byte) 0);
+            }
+            return;
+        }
+        ArrayUtils.zeroize(array);
+    }
+
+    /**
+     * This exists temporarily due to trunk-stable policies.
+     * Please use ArrayUtils directly if you can.
+     */
+    public static void zeroize(char[] array) {
+        if (!android.security.Flags.secureArrayZeroization()) {
+            if (array != null) {
+                Arrays.fill(array, (char) 0);
+            }
+            return;
+        }
+        ArrayUtils.zeroize(array);
     }
 
     @UnsupportedAppUsage
@@ -829,6 +881,7 @@ public class LockPatternUtils {
         return true;
     }
 
+// QTI_BEGIN: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
     /**
      * clears stored password.
      */
@@ -840,6 +893,7 @@ public class LockPatternUtils {
         }
     }
 
+// QTI_END: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void setOwnerInfo(String info, int userId) {
         setString(LOCK_SCREEN_OWNER_INFO, info, userId);
@@ -1014,7 +1068,7 @@ public class LockPatternUtils {
         }
         final int patternSize = pattern.size();
 
-        byte[] res = new byte[patternSize];
+        byte[] res = newNonMovableByteArray(patternSize);
         for (int i = 0; i < patternSize; i++) {
             LockPatternView.Cell cell = pattern.get(i);
             res[i] = (byte) (cell.getRow() * 3 + cell.getColumn() + '1');

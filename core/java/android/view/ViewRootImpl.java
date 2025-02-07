@@ -134,7 +134,6 @@ import static com.android.text.flags.Flags.disableHandwritingInitiatorForIme;
 import static com.android.window.flags.Flags.enableBufferTransformHintFromDisplay;
 import static com.android.window.flags.Flags.predictiveBackSwipeEdgeNoneApi;
 import static com.android.window.flags.Flags.setScPropertiesInClient;
-import static com.android.window.flags.Flags.systemUiImmersiveConfirmationDialog;
 
 import android.Manifest;
 import android.accessibilityservice.AccessibilityService;
@@ -216,7 +215,9 @@ import android.sysprop.DisplayProperties;
 import android.sysprop.ViewProperties;
 import android.text.TextUtils;
 import android.util.AndroidRuntimeException;
+// QTI_BEGIN: 2020-06-15: Performance: Pre-rendering AOSP part
 import android.util.BoostFramework.ScrollOptimizer;
+// QTI_END: 2020-06-15: Performance: Pre-rendering AOSP part
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.IndentingPrintWriter;
@@ -376,16 +377,6 @@ public final class ViewRootImpl implements ViewParent,
      */
     public static final boolean CLIENT_TRANSIENT =
             SystemProperties.getBoolean("persist.wm.debug.client_transient", false);
-
-    /**
-     * Whether the client (system UI) is handling the immersive confirmation window. If
-     * {@link CLIENT_TRANSIENT} is set to true, the immersive confirmation window will always be the
-     * client instance and this flag will be ignored. Otherwise, the immersive confirmation window
-     * can be switched freely by this flag.
-     * @hide
-     */
-    public static final boolean CLIENT_IMMERSIVE_CONFIRMATION =
-            systemUiImmersiveConfirmationDialog();
 
     /**
      * Set this system property to true to force the view hierarchy to render
@@ -1205,7 +1196,9 @@ public final class ViewRootImpl implements ViewParent,
     private String mFpsTraceName;
     private String mLargestViewTraceName;
 
+// QTI_BEGIN: 2018-02-20: Core: BoostFramework: To Enhance performance.
     boolean mHaveMoveEvent = false;
+// QTI_END: 2018-02-20: Core: BoostFramework: To Enhance performance.
 
     private final boolean mAppStartInfoTimestampsFlagValue;
     private AtomicBoolean mAppStartTimestampsSent = new AtomicBoolean(false);
@@ -2773,15 +2766,18 @@ public final class ViewRootImpl implements ViewParent,
         if (mBlastBufferQueue != null) {
             mBlastBufferQueue.destroy();
         }
-        mBlastBufferQueue = new BLASTBufferQueue(mTag, mSurfaceControl,
-                mSurfaceSize.x, mSurfaceSize.y, mWindowAttributes.format);
-        mBlastBufferQueue.setTransactionHangCallback(sTransactionHangCallback);
-        mBlastBufferQueue.setWaitForBufferReleaseCallback(mChoreographer::onWaitForBufferRelease);
+        mBlastBufferQueue = new BLASTBufferQueue(mTag, true /* updateDestinationFrame */);
+// QTI_BEGIN: 2022-03-08: Performance: Correct mismatch hook of pre-rendering FR due to T-upgrade
         ScrollOptimizer.setBLASTBufferQueue(mBlastBufferQueue);
+// QTI_END: 2022-03-08: Performance: Correct mismatch hook of pre-rendering FR due to T-upgrade
         // If we create and destroy BBQ without recreating the SurfaceControl, we can end up
         // queuing buffers on multiple apply tokens causing out of order buffer submissions. We
         // fix this by setting the same apply token on all BBQs created by this VRI.
         mBlastBufferQueue.setApplyToken(mBbqApplyToken);
+        mBlastBufferQueue.update(mSurfaceControl,  mSurfaceSize.x, mSurfaceSize.y,
+                mWindowAttributes.format);
+        mBlastBufferQueue.setTransactionHangCallback(sTransactionHangCallback);
+        mBlastBufferQueue.setWaitForBufferReleaseCallback(mChoreographer::onWaitForBufferRelease);
         Surface blastSurface;
         if (addSchandleToVriSurface()) {
             blastSurface = mBlastBufferQueue.createSurfaceWithHandle();
@@ -2979,6 +2975,20 @@ public final class ViewRootImpl implements ViewParent,
     public void notifyRendererOfExpensiveFrame() {
         if (mAttachInfo.mThreadedRenderer != null) {
             mAttachInfo.mThreadedRenderer.notifyExpensiveFrame();
+        }
+    }
+
+    /**
+     * Same as notifyRendererOfExpensiveFrame(), but adding {@code reason} for tracing.
+     *
+     * @hide
+     */
+    public void notifyRendererOfExpensiveFrame(String reason) {
+        Trace.traceBegin(Trace.TRACE_TAG_VIEW, reason);
+        try {
+            notifyRendererOfExpensiveFrame();
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_VIEW);
         }
     }
 
@@ -5566,6 +5576,9 @@ public final class ViewRootImpl implements ViewParent,
             if (mAttachInfo.mContentCaptureManager != null) {
                 ContentCaptureSession session =
                         mAttachInfo.mContentCaptureManager.getMainContentCaptureSession();
+                if (android.view.contentcapture.flags.Flags.postCreateAndroidBgThread()) {
+                    session.performStart();
+                }
                 session.notifyWindowBoundsChanged(session.getId(),
                         getConfiguration().windowConfiguration.getBounds());
             }
@@ -8123,11 +8136,15 @@ public final class ViewRootImpl implements ViewParent,
             mAttachInfo.mHandlingPointerEvent = true;
             handled = mView.dispatchPointerEvent(event);
             final int action = event.getActionMasked();
+// QTI_BEGIN: 2019-07-16: Performance: perf: Remove Scroll Boosts and use GestureflingBoost
             if (action == MotionEvent.ACTION_MOVE) {
                 mHaveMoveEvent = true;
             } else if (action == MotionEvent.ACTION_UP) {
                 mHaveMoveEvent = false;
+// QTI_END: 2019-07-16: Performance: perf: Remove Scroll Boosts and use GestureflingBoost
+// QTI_BEGIN: 2018-02-20: Core: BoostFramework: To Enhance performance.
             }
+// QTI_END: 2018-02-20: Core: BoostFramework: To Enhance performance.
             maybeUpdatePointerIcon(event);
             maybeUpdateTooltip(event);
             mAttachInfo.mHandlingPointerEvent = false;
@@ -10349,7 +10366,9 @@ public final class ViewRootImpl implements ViewParent,
     }
 
     void doProcessInputEvents() {
+// QTI_BEGIN: 2021-05-11: Performance: refactor pre-rendering feature for BLASTBufferQueue
         ScrollOptimizer.setBLASTBufferQueue(mBlastBufferQueue);
+// QTI_END: 2021-05-11: Performance: refactor pre-rendering feature for BLASTBufferQueue
         // Deliver all pending input events in the queue.
         while (mPendingInputEventHead != null) {
             QueuedInputEvent q = mPendingInputEventHead;
@@ -10365,10 +10384,12 @@ public final class ViewRootImpl implements ViewParent,
 
             mViewFrameInfo.setInputEvent(mInputEventAssigner.processEvent(q.mEvent));
 
+// QTI_BEGIN: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
             if (q.mEvent instanceof MotionEvent) {
                 ScrollOptimizer.setMotionType(((MotionEvent)q.mEvent).getActionMasked());
             }
 
+// QTI_END: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
             deliverInputEvent(q);
         }
 
@@ -10574,13 +10595,13 @@ public final class ViewRootImpl implements ViewParent,
         }
 
         @Override
-        public void onDragEvent(boolean isExiting, float x, float y) {
+        public void onDragEvent(boolean isExiting, float x, float y, int displayId) {
             // force DRAG_EXITED_EVENT if appropriate
             DragEvent event = DragEvent.obtain(
-                    isExiting ? DragEvent.ACTION_DRAG_EXITED : DragEvent.ACTION_DRAG_LOCATION,
-                    x, y, 0 /* offsetX */, 0 /* offsetY */, 0 /* flags */, null/* localState */,
-                    null/* description */, null /* data */, null /* dragSurface */,
-                    null /* dragAndDropPermissions */, false /* result */);
+                    isExiting ? DragEvent.ACTION_DRAG_EXITED : DragEvent.ACTION_DRAG_LOCATION, x, y,
+                    0 /* offsetX */, 0 /* offsetY */, displayId, 0 /* flags */,
+                    null/* localState */, null/* description */, null /* data */,
+                    null /* dragSurface */, null /* dragAndDropPermissions */, false /* result */);
             dispatchDragEvent(event);
         }
 

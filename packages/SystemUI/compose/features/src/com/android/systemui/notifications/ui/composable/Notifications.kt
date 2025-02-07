@@ -43,6 +43,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imeAnimationTarget
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.overscroll
@@ -95,9 +96,7 @@ import com.android.systemui.common.ui.compose.windowinsets.LocalScreenCornerRadi
 import com.android.systemui.res.R
 import com.android.systemui.scene.session.ui.composable.SaveableSession
 import com.android.systemui.scene.session.ui.composable.rememberSession
-import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
-import com.android.systemui.shade.shared.flag.DualShade
 import com.android.systemui.shade.ui.composable.ShadeHeader
 import com.android.systemui.statusbar.notification.stack.shared.model.AccessibilityScrollEvent
 import com.android.systemui.statusbar.notification.stack.shared.model.ShadeScrimBounds
@@ -122,12 +121,6 @@ object Notifications {
         val NotificationStackCutoffGuideline = ElementKey("NotificationStackCutoffGuideline")
     }
 }
-
-private val notificationsShadeContentKey: ContentKey
-    get() = if (DualShade.isEnabled) Overlays.NotificationsShade else Scenes.Shade
-
-private val quickSettingsShadeContentKey: ContentKey
-    get() = if (DualShade.isEnabled) Overlays.QuickSettingsShade else Scenes.QuickSettings
 
 /**
  * Adds the space where heads up notifications can appear in the scene. This should generally be the
@@ -180,10 +173,12 @@ fun ContentScope.SnoozeableHeadsUpNotificationSpace(
     stackScrollView: NotificationScrollView,
     viewModel: NotificationsPlaceholderViewModel,
 ) {
+
     val isHeadsUp by viewModel.isHeadsUpOrAnimatingAway.collectAsStateWithLifecycle(false)
 
     var scrollOffset by remember { mutableFloatStateOf(0f) }
-    val minScrollOffset = -(stackScrollView.getHeadsUpInset().toFloat())
+    val headsUpInset = with(LocalDensity.current) { headsUpTopInset().toPx() }
+    val minScrollOffset = -headsUpInset
     val maxScrollOffset = 0f
 
     val scrollableState = rememberScrollableState { delta ->
@@ -241,6 +236,12 @@ fun ContentScope.SnoozeableHeadsUpNotificationSpace(
     )
 }
 
+/** Y position of the HUNs at rest, when the shade is closed. */
+@Composable
+fun headsUpTopInset(): Dp =
+    WindowInsets.safeDrawing.asPaddingValues().calculateTopPadding() +
+        dimensionResource(R.dimen.heads_up_status_bar_padding)
+
 /** Adds the space where notification stack should appear in the scene. */
 @Composable
 fun ContentScope.ConstrainedNotificationStack(
@@ -261,7 +262,12 @@ fun ContentScope.ConstrainedNotificationStack(
         HeadsUpNotificationSpace(
             stackScrollView = stackScrollView,
             viewModel = viewModel,
-            useHunBounds = { shouldUseLockscreenHunBounds(layoutState.transitionState) },
+            useHunBounds = {
+                shouldUseLockscreenHunBounds(
+                    layoutState.transitionState,
+                    viewModel.quickSettingsShadeContentKey,
+                )
+            },
             modifier = Modifier.align(Alignment.TopCenter),
         )
         NotificationStackCutoffGuideline(
@@ -485,11 +491,11 @@ fun ContentScope.NotificationScrollingStack(
                     if (
                         scrimOffset.value < 0 &&
                             (layoutState.isTransitioning(
-                                from = notificationsShadeContentKey,
+                                from = viewModel.notificationsShadeContentKey,
                                 to = Scenes.Gone,
                             ) ||
                                 layoutState.isTransitioning(
-                                    from = notificationsShadeContentKey,
+                                    from = viewModel.notificationsShadeContentKey,
                                     to = Scenes.Lockscreen,
                                 ))
                     ) {
@@ -518,6 +524,7 @@ fun ContentScope.NotificationScrollingStack(
                                 shouldAnimateScrimCornerRadius(
                                     layoutState,
                                     shouldPunchHoleBehindScrim,
+                                    viewModel.notificationsShadeContentKey,
                                 ),
                             )
                             .let { scrimRounding.value.toRoundedCornerShape(it) }
@@ -604,7 +611,12 @@ fun ContentScope.NotificationScrollingStack(
             HeadsUpNotificationSpace(
                 stackScrollView = stackScrollView,
                 viewModel = viewModel,
-                useHunBounds = { !shouldUseLockscreenHunBounds(layoutState.transitionState) },
+                useHunBounds = {
+                    !shouldUseLockscreenHunBounds(
+                        layoutState.transitionState,
+                        viewModel.quickSettingsShadeContentKey,
+                    )
+                },
                 modifier = Modifier.padding(top = stackTopPadding),
             )
         }
@@ -711,20 +723,24 @@ private fun shouldUseLockscreenStackBounds(state: TransitionState): Boolean {
     return state is TransitionState.Idle && state.isOnLockscreen()
 }
 
-private fun shouldUseLockscreenHunBounds(state: TransitionState): Boolean {
+private fun shouldUseLockscreenHunBounds(
+    state: TransitionState,
+    quickSettingsShade: ContentKey,
+): Boolean {
     return when (state) {
         is TransitionState.Idle -> state.isOnLockscreen()
         is TransitionState.Transition ->
-            state.isTransitioning(from = quickSettingsShadeContentKey, to = Scenes.Lockscreen)
+            state.isTransitioning(from = quickSettingsShade, to = Scenes.Lockscreen)
     }
 }
 
 private fun shouldAnimateScrimCornerRadius(
     state: SceneTransitionLayoutState,
     shouldPunchHoleBehindScrim: Boolean,
+    notificationsShade: ContentKey,
 ): Boolean {
     return shouldPunchHoleBehindScrim ||
-        state.isTransitioning(from = notificationsShadeContentKey, to = Scenes.Lockscreen)
+        state.isTransitioning(from = notificationsShade, to = Scenes.Lockscreen)
 }
 
 private fun calculateCornerRadius(

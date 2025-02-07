@@ -33,7 +33,6 @@ import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.android.internal.logging.testing.UiEventLoggerFake
 import com.android.internal.protolog.ProtoLog
 import com.android.wm.shell.R
-import com.android.wm.shell.TestShellExecutor
 import com.android.wm.shell.bubbles.Bubble
 import com.android.wm.shell.bubbles.BubbleExpandedViewManager
 import com.android.wm.shell.bubbles.BubbleLogger
@@ -44,8 +43,10 @@ import com.android.wm.shell.bubbles.DeviceConfig
 import com.android.wm.shell.bubbles.FakeBubbleExpandedViewManager
 import com.android.wm.shell.bubbles.RegionSamplingProvider
 import com.android.wm.shell.bubbles.UiEventSubject.Companion.assertThat
+import com.android.wm.shell.common.TestShellExecutor
 import com.android.wm.shell.shared.handles.RegionSamplingHelper
 import com.android.wm.shell.taskview.TaskView
+import com.android.wm.shell.taskview.TaskViewController
 import com.android.wm.shell.taskview.TaskViewTaskController
 import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
@@ -356,7 +357,7 @@ class BubbleBarExpandedViewTest {
     private inner class FakeBubbleTaskViewFactory : BubbleTaskViewFactory {
         override fun create(): BubbleTaskView {
             val taskViewTaskController = mock<TaskViewTaskController>()
-            val taskView = TaskView(context, taskViewTaskController)
+            val taskView = TaskView(context, mock<TaskViewController>(), taskViewTaskController)
             val taskInfo = mock<ActivityManager.RunningTaskInfo>()
             whenever(taskViewTaskController.taskInfo).thenReturn(taskInfo)
             return BubbleTaskView(taskView, mainExecutor)

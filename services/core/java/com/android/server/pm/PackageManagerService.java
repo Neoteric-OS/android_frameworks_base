@@ -172,7 +172,9 @@ import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.Xml;
+// QTI_BEGIN: 2018-10-31: Core: IOP/UXE: This change is related to IOP and UXE Feature.
 import android.util.BoostFramework;
+// QTI_END: 2018-10-31: Core: IOP/UXE: This change is related to IOP and UXE Feature.
 import android.view.Display;
 
 import com.android.internal.R;
@@ -374,7 +376,9 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
     private static final int SE_UID = Process.SE_UID;
     private static final int NETWORKSTACK_UID = Process.NETWORK_STACK_UID;
     private static final int UWB_UID = Process.UWB_UID;
+// QTI_BEGIN: 2023-10-10: Data: CACert Framework UID changes
     private static final int VENDOR_DATA_UID = Process.VENDOR_DATA_UID;
+// QTI_END: 2023-10-10: Data: CACert Framework UID changes
 
     static final int SCAN_NO_DEX = 1 << 0;
     static final int SCAN_UPDATE_SIGNATURE = 1 << 1;
@@ -962,11 +966,14 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
     // Stores a list of users whose package restrictions file needs to be updated
     final ArraySet<Integer> mDirtyUsers = new ArraySet<>();
 
+    @GuardedBy("mRunningInstalls")
     final SparseArray<InstallRequest> mRunningInstalls = new SparseArray<>();
     int mNextInstallToken = 1;  // nonzero; will be wrapped back to 1 when ++ overflows
 
     final @NonNull String[] mRequiredVerifierPackages;
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
     final @Nullable String mOptionalVerifierPackage;
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
     final @NonNull String mRequiredInstallerPackage;
     final @NonNull String mRequiredUninstallerPackage;
     final @NonNull String mRequiredPermissionControllerPackage;
@@ -2062,8 +2069,10 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
         mSettings.addSharedUserLPw("android.uid.uwb", UWB_UID,
                 ApplicationInfo.FLAG_SYSTEM, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
+// QTI_BEGIN: 2023-10-10: Data: CACert Framework UID changes
         mSettings.addSharedUserLPw("android.uid.vendordata", VENDOR_DATA_UID,
                 ApplicationInfo.PRIVATE_FLAG_VENDOR, ApplicationInfo.PRIVATE_FLAG_PRIVILEGED);
+// QTI_END: 2023-10-10: Data: CACert Framework UID changes
         final ArrayMap<String, Integer> oemDefinedUids = systemConfig.getOemDefinedUids();
         final int numOemDefinedUids = oemDefinedUids.size();
         for (int i = 0; i < numOemDefinedUids; i++) {
@@ -2142,10 +2151,12 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         mStorageEventHelper = new StorageEventHelper(this, mDeletePackageHelper,
                 mRemovePackageHelper);
 
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
         t.traceBegin("readListOfPackagesToBeDisabled");
         mInstallPackageHelper.readListOfPackagesToBeDisabled();
         t.traceEnd();
 
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
         synchronized (mLock) {
             // Create the computer as soon as the state objects have been installed.  The
             // cached computer is the same as the live computer until the end of the
@@ -3322,20 +3333,23 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         // and been launched through some other means, so it is not in a problematic
         // state for observers to see the FIRST_LAUNCH signal.
         mHandler.post(() -> {
-            for (int i = 0; i < mRunningInstalls.size(); i++) {
-                final InstallRequest installRequest = mRunningInstalls.valueAt(i);
-                if (installRequest.getReturnCode() != PackageManager.INSTALL_SUCCEEDED) {
-                    continue;
-                }
-                if (packageName.equals(installRequest.getPkg().getPackageName())) {
-                    // right package; but is it for the right user?
-                    for (int uIndex = 0; uIndex < installRequest.getNewUsers().length; uIndex++) {
-                        if (userId == installRequest.getNewUsers()[uIndex]) {
-                            if (DEBUG_BACKUP) {
-                                Slog.i(TAG, "Package " + packageName
-                                        + " being restored so deferring FIRST_LAUNCH");
+            synchronized (mRunningInstalls) {
+                for (int i = 0; i < mRunningInstalls.size(); i++) {
+                    final InstallRequest installRequest = mRunningInstalls.valueAt(i);
+                    if (installRequest.getReturnCode() != PackageManager.INSTALL_SUCCEEDED) {
+                        continue;
+                    }
+                    final int[] newUsers = installRequest.getNewUsers();
+                    if (packageName.equals(installRequest.getPkg().getPackageName())) {
+                        // right package; but is it for the right user?
+                        for (int uIndex = 0; uIndex < newUsers.length; uIndex++) {
+                            if (userId == newUsers[uIndex]) {
+                                if (DEBUG_BACKUP) {
+                                    Slog.i(TAG, "Package " + packageName
+                                            + " being restored so deferring FIRST_LAUNCH");
+                                }
+                                return;
                             }
-                            return;
                         }
                     }
                 }
@@ -4282,8 +4296,6 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         CarrierAppUtils.disableCarrierAppsUntilPrivileged(
                 mContext.getOpPackageName(), UserHandle.USER_SYSTEM, mContext);
 
-        disableSkuSpecificApps();
-
         // Read the compatibilty setting when the system is ready.
         boolean compatibilityModeEnabled = android.provider.Settings.Global.getInt(
                 mContext.getContentResolver(),
@@ -4389,7 +4401,9 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         }, overlayFilter);
 
         mModuleInfoProvider.systemReady();
+// QTI_BEGIN: 2020-04-03: Performance: Add support for UxPerformance to receive context information.
         new BoostFramework(mContext, true);
+// QTI_END: 2020-04-03: Performance: Add support for UxPerformance to receive context information.
 
         // Installer service might attempt to install some packages that have been staged for
         // installation on reboot. Make sure this is the last component to be call since the
@@ -4415,29 +4429,6 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         DexUseManagerLocal dexUseManager = DexOptHelper.getDexUseManagerLocal();
         if (dexUseManager != null) {
             dexUseManager.systemReady();
-        }
-    }
-
-    //TODO: b/111402650
-    private void disableSkuSpecificApps() {
-        String[] apkList = mContext.getResources().getStringArray(
-                R.array.config_disableApksUnlessMatchedSku_apk_list);
-        String[] skuArray = mContext.getResources().getStringArray(
-                R.array.config_disableApkUnlessMatchedSku_skus_list);
-        if (ArrayUtils.isEmpty(apkList)) {
-           return;
-        }
-        String sku = SystemProperties.get("ro.boot.hardware.sku");
-        if (!TextUtils.isEmpty(sku) && ArrayUtils.contains(skuArray, sku)) {
-            return;
-        }
-        final Computer snapshot = snapshotComputer();
-        for (String packageName : apkList) {
-            setSystemAppHiddenUntilInstalled(snapshot, packageName, true);
-            final List<UserInfo> users = mInjector.getUserManagerInternal().getUsers(false);
-            for (int i = 0; i < users.size(); i++) {
-                setSystemAppInstallState(snapshot, packageName, false, users.get(i).id);
-            }
         }
     }
 

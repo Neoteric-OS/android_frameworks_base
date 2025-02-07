@@ -214,7 +214,7 @@ flag {
     name: "place_add_user_dialog_within_activity"
     namespace: "multiuser"
     description: "Display dialog within activity to make it traversable by Accessibility"
-    bug: "383034393"
+    bug: "376815882"
     metadata {
         purpose: PURPOSE_BUGFIX
   }
@@ -497,6 +497,16 @@ flag {
     namespace: "multiuser"
     description: "Allow MAIN user to access blocked number provider"
     bug: "338579331"
+}
+
+flag {
+  name: "get_user_switchability_permission"
+  namespace: "multiuser"
+  description: "Update permissions for getUserSwitchability"
+  bug: "390458180"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
 }
 
 flag {

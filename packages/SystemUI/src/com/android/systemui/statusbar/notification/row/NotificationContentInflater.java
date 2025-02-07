@@ -16,8 +16,6 @@
 
 package com.android.systemui.statusbar.notification.row;
 
-import static android.app.Flags.notificationsRedesignTemplates;
-
 import static com.android.internal.annotations.VisibleForTesting.Visibility.PACKAGE;
 import static com.android.systemui.statusbar.NotificationLockscreenUserManager.REDACTION_TYPE_SENSITIVE_CONTENT;
 import static com.android.systemui.statusbar.notification.row.NotificationContentView.VISIBLE_TYPE_CONTRACTED;
@@ -59,6 +57,7 @@ import com.android.systemui.statusbar.notification.ConversationNotificationProce
 import com.android.systemui.statusbar.notification.InflationException;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.promoted.PromotedNotificationContentExtractor;
+import com.android.systemui.statusbar.notification.promoted.PromotedNotificationUiForceExpanded;
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel;
 import com.android.systemui.statusbar.notification.row.shared.AsyncGroupHeaderViewInflation;
 import com.android.systemui.statusbar.notification.row.shared.AsyncHybridViewInflation;
@@ -438,8 +437,7 @@ public class NotificationContentInflater implements NotificationRowContentBinder
 
             if ((reInflateFlags & FLAG_CONTENT_VIEW_CONTRACTED) != 0) {
                 logger.logAsyncTaskProgress(entryForLogging, "creating contracted remote view");
-                result.newContentView = createContentView(builder, bindParams.isMinimized,
-                        bindParams.usesIncreasedHeight);
+                result.newContentView = createContentView(builder, bindParams.isMinimized);
             }
 
             if ((reInflateFlags & FLAG_CONTENT_VIEW_EXPANDED) != 0) {
@@ -453,8 +451,7 @@ public class NotificationContentInflater implements NotificationRowContentBinder
                 if (isHeadsUpCompact) {
                     result.newHeadsUpView = builder.createCompactHeadsUpContentView();
                 } else {
-                    result.newHeadsUpView = builder.createHeadsUpContentView(
-                            bindParams.usesIncreasedHeadsUpHeight);
+                    result.newHeadsUpView = builder.createHeadsUpContentView();
                 }
             }
 
@@ -464,7 +461,7 @@ public class NotificationContentInflater implements NotificationRowContentBinder
                         && bindParams.redactionType == REDACTION_TYPE_SENSITIVE_CONTENT) {
                     result.newPublicView = createSensitiveContentMessageNotification(
                             row.getEntry().getSbn().getNotification(), builder.getStyle(),
-                            systemUiContext, packageContext).createContentView(true);
+                            systemUiContext, packageContext).createContentView();
                 } else {
                     result.newPublicView = builder.makePublicContentView(bindParams.isMinimized);
                 }
@@ -481,16 +478,15 @@ public class NotificationContentInflater implements NotificationRowContentBinder
                     logger.logAsyncTaskProgress(entryForLogging,
                             "creating low-priority group summary remote view");
                     result.mNewMinimizedGroupHeaderView =
-                            builder.makeLowPriorityContentView(/* useRegularSubtext = */ true,
-                                    /* highlightExpander = */ notificationsRedesignTemplates());
+                            builder.makeLowPriorityContentView(true /* useRegularSubtext */);
                 }
             }
             setNotifsViewsInflaterFactory(result, row, notifLayoutInflaterFactoryProvider);
             result.packageContext = packageContext;
             result.headsUpStatusBarText = builder.getHeadsUpStatusBarText(
-                    /* showingPublic = */ false);
+                    false /* showingPublic */);
             result.headsUpStatusBarTextPublic = builder.getHeadsUpStatusBarText(
-                    /* showingPublic = */ true);
+                    true /* showingPublic */);
 
             return result;
         });
@@ -507,6 +503,7 @@ public class NotificationContentInflater implements NotificationRowContentBinder
         CharSequence redactedMessage = systemUiContext.getString(
                 R.string.redacted_notification_single_line_text
         );
+        redacted.setWhen(original.getWhen());
 
         if (originalStyle instanceof MessagingStyle oldStyle) {
             MessagingStyle newStyle = new MessagingStyle(oldStyle.getUser());
@@ -1115,6 +1112,10 @@ public class NotificationContentInflater implements NotificationRowContentBinder
 
         entry.setHeadsUpStatusBarText(result.headsUpStatusBarText);
         entry.setHeadsUpStatusBarTextPublic(result.headsUpStatusBarTextPublic);
+        if (PromotedNotificationUiForceExpanded.isEnabled()) {
+            row.setPromotedOngoing(entry.isOngoingPromoted());
+        }
+
         Trace.endAsyncSection(APPLY_TRACE_METHOD, System.identityHashCode(row));
         if (endListener != null) {
             endListener.onAsyncInflationFinished(entry);
@@ -1137,12 +1138,11 @@ public class NotificationContentInflater implements NotificationRowContentBinder
     }
 
     private static RemoteViews createContentView(Notification.Builder builder,
-            boolean isMinimized, boolean useLarge) {
+            boolean isMinimized) {
         if (isMinimized) {
-            return builder.makeLowPriorityContentView(/* useRegularSubtext = */ false,
-                    /* highlightExpander = */ false);
+            return builder.makeLowPriorityContentView(false /* useRegularSubtext */);
         }
-        return builder.createContentView(useLarge);
+        return builder.createContentView();
     }
 
     /**

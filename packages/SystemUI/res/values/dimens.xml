@@ -254,9 +254,6 @@
     <!-- Reference width used when validating notification layouts -->
     <dimen name="notification_validation_reference_width">320dp</dimen>
 
-    <!-- Increased height of a small notification in the status bar -->
-    <dimen name="notification_min_height_increased">146dp</dimen>
-
     <!-- Height of a small notification in the status bar which was used before android N -->
     <dimen name="notification_min_height_legacy">64dp</dimen>
 
@@ -269,6 +266,9 @@
     <!-- Height of a large notification in the status bar -->
     <dimen name="notification_max_height">358dp</dimen>
 
+    <!-- Height of a large promoted ongoing notification in the status bar -->
+    <dimen name="notification_max_height_for_promoted_ongoing">218dp</dimen>
+
     <!-- Height of a heads up notification in the status bar for legacy custom views -->
     <dimen name="notification_max_heads_up_height_legacy">128dp</dimen>
 
@@ -280,9 +280,6 @@
 
     <!-- Height of a heads up notification in the status bar -->
     <dimen name="notification_max_heads_up_height">136dp</dimen>
-
-    <!-- Height of a heads up notification in the status bar -->
-    <dimen name="notification_max_heads_up_height_increased">188dp</dimen>
 
     <!-- Side padding on the side of notifications -->
     <dimen name="notification_side_paddings">16dp</dimen>
@@ -1128,6 +1125,7 @@
     <dimen name="smart_reply_button_corner_radius">8dp</dimen>
     <dimen name="smart_action_button_icon_size">18dp</dimen>
     <dimen name="smart_action_button_icon_padding">8dp</dimen>
+    <dimen name="smart_action_button_outline_stroke_width">2dp</dimen>
 
     <!-- A reasonable upper bound for the height of the smart reply button. The measuring code
             needs to start with a guess for the maximum size. Currently two-line smart reply buttons
@@ -1278,6 +1276,7 @@
     <dimen name="qs_center_guideline_padding">10dp</dimen>
     <dimen name="qs_media_action_spacing">4dp</dimen>
     <dimen name="qs_media_action_margin">12dp</dimen>
+    <dimen name="qs_media_action_play_pause_width">72dp</dimen>
     <dimen name="qs_seamless_height">24dp</dimen>
     <dimen name="qs_seamless_icon_size">12dp</dimen>
     <dimen name="qs_media_disabled_seekbar_height">1dp</dimen>
@@ -1771,6 +1770,7 @@
 
     <!-- Ongoing activity chip -->
     <dimen name="ongoing_activity_chip_max_text_width">74dp</dimen>
+    <dimen name="ongoing_activity_chip_margin_start">5dp</dimen>
     <!-- The activity chip side padding, used with the default phone icon. -->
     <dimen name="ongoing_activity_chip_side_padding">12dp</dimen>
     <!-- The activity chip side padding, used with an icon that has embedded padding (e.g. if the icon comes from the notification's smallIcon field). If the icon has padding, the chip itself can have less padding. -->
@@ -2060,6 +2060,8 @@
     <dimen name="dream_overlay_status_bar_ambient_text_shadow_dy">0.5dp</dimen>
     <dimen name="dream_overlay_status_bar_ambient_text_shadow_radius">3dp</dimen>
     <dimen name="dream_overlay_icon_inset_dimen">0dp</dimen>
+    <dimen name="dream_overlay_icon_shadow_radius">1dp</dimen>
+    <dimen name="dream_overlay_icon_ambient_shadow_radius">2dp</dimen>
 
     <!-- Default device corner radius, used for assist UI -->
     <dimen name="config_rounded_mask_size">0px</dimen>
@@ -2104,6 +2106,8 @@
 
     <dimen name="volume_dialog_background_corner_radius">30dp</dimen>
     <dimen name="volume_dialog_background_vertical_margin">-10dp</dimen>
+    <!-- top margin covers half the ringer button + components spacing -->
+    <dimen name="volume_dialog_background_top_margin">-28dp</dimen>
 
     <dimen name="volume_dialog_components_spacing">8dp</dimen>
     <dimen name="volume_dialog_floating_sliders_spacing">8dp</dimen>
@@ -2113,6 +2117,11 @@
     <dimen name="volume_dialog_button_size">40dp</dimen>
     <dimen name="volume_dialog_slider_width">52dp</dimen>
     <dimen name="volume_dialog_slider_height">254dp</dimen>
+    <!--
+        A primary goal of this margin is to vertically constraint slider height in the landscape
+        orientation when the vertical space is limited
+    -->
+    <dimen name="volume_dialog_slider_vertical_margin">124dp</dimen>
 
     <fraction name="volume_dialog_half_opened_bias">0.2</fraction>
 

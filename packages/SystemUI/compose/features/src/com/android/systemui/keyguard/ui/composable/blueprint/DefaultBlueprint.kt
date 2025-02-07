@@ -32,7 +32,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.android.compose.animation.scene.SceneScope
+import com.android.compose.animation.scene.ContentScope
 import com.android.compose.modifiers.padding
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.keyguard.ui.composable.LockscreenLongPress
@@ -45,6 +45,7 @@ import com.android.systemui.keyguard.ui.composable.section.StatusBarSection
 import com.android.systemui.keyguard.ui.composable.section.TopAreaSection
 import com.android.systemui.keyguard.ui.viewmodel.LockscreenContentViewModel
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.notification.promoted.PromotedNotificationUiAod
 import java.util.Optional
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -68,7 +69,7 @@ constructor(
     override val id: String = "default"
 
     @Composable
-    override fun SceneScope.Content(viewModel: LockscreenContentViewModel, modifier: Modifier) {
+    override fun ContentScope.Content(viewModel: LockscreenContentViewModel, modifier: Modifier) {
         val isUdfpsVisible = viewModel.isUdfpsVisible
         val isShadeLayoutWide by viewModel.isShadeLayoutWide.collectAsStateWithLifecycle()
         val unfoldTranslations by viewModel.unfoldTranslations.collectAsStateWithLifecycle()
@@ -128,11 +129,14 @@ constructor(
                         with(notificationSection) {
                             if (!isShadeLayoutWide && !isBypassEnabled) {
                                 Box(modifier = Modifier.weight(weight = 1f)) {
-                                    AodNotificationIcons(
-                                        modifier =
-                                            Modifier.align(alignment = Alignment.TopStart)
-                                                .padding(start = aodIconPadding)
-                                    )
+                                    Column(Modifier.align(alignment = Alignment.TopStart)) {
+                                        if (PromotedNotificationUiAod.isEnabled) {
+                                            AodPromotedNotification()
+                                        }
+                                        AodNotificationIcons(
+                                            modifier = Modifier.padding(start = aodIconPadding)
+                                        )
+                                    }
                                     Notifications(
                                         areNotificationsVisible = areNotificationsVisible,
                                         isShadeLayoutWide = false,
@@ -140,9 +144,14 @@ constructor(
                                     )
                                 }
                             } else {
-                                AodNotificationIcons(
-                                    modifier = Modifier.padding(start = aodIconPadding)
-                                )
+                                Column {
+                                    if (PromotedNotificationUiAod.isEnabled) {
+                                        AodPromotedNotification()
+                                    }
+                                    AodNotificationIcons(
+                                        modifier = Modifier.padding(start = aodIconPadding)
+                                    )
+                                }
                             }
                         }
                         if (!isUdfpsVisible && ambientIndicationSectionOptional.isPresent) {

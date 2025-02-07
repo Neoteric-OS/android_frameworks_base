@@ -412,7 +412,9 @@ public abstract class Connection extends Conferenceable {
      * instance with {@link #PROPERTY_IS_ADHOC_CONFERENCE} set to indicate that it is an adhoc
      * conference call.
      */
+// QTI_BEGIN: 2018-02-27: Telephony: PPR1.180219.001_AOSP_Merge
     public static final int CAPABILITY_ADD_PARTICIPANT = 0x04000000;
+// QTI_END: 2018-02-27: Telephony: PPR1.180219.001_AOSP_Merge
 
     /**
      * Indicates that this {@code Connection} can be transferred to another
@@ -569,6 +571,7 @@ public abstract class Connection extends Conferenceable {
      */
     public static final int PROPERTY_CROSS_SIM = 1 << 13;
 
+// QTI_BEGIN: 2020-12-09: Telephony: IMS: Add property PROPERTY_IS_PARTICIPANT_HOST
     /**
      * Set by the framework to indicate that a Connection is participant host, which
      * means the conference participant's handle is the same as the conference host's handle.
@@ -576,6 +579,7 @@ public abstract class Connection extends Conferenceable {
      * This property is specific to IMS conference calls originating in Telephony.
      * @hide
      */
+// QTI_END: 2020-12-09: Telephony: IMS: Add property PROPERTY_IS_PARTICIPANT_HOST
     public static final int PROPERTY_IS_PARTICIPANT_HOST = 1 << 14;
 
     //**********************************************************************************************
@@ -873,14 +877,6 @@ public abstract class Connection extends Conferenceable {
             "android.telecom.extra.IS_DEVICE_TO_DEVICE_COMMUNICATION_AVAILABLE";
 
     /**
-     * Boolean connection extra key set on a {@link Connection} to indicate that swapping
-     * the call is not allowed.
-     * @hide
-     */
-    public static final String EXTRA_DISABLE_SWAP_CALL =
-            "android.telecom.extra.DISABLE_SWAP_CALL";
-
-    /**
      * Connection event used to inform Telecom that it should play the on hold tone.  This is used
      * to play a tone when the peer puts the current call on hold.  Sent to Telecom via
      * {@link #sendConnectionEvent(String, Bundle)}.
@@ -927,17 +923,6 @@ public abstract class Connection extends Conferenceable {
      * expected to be null when this connection event is used.
      */
     public static final String EVENT_CALL_HOLD_FAILED = "android.telecom.event.CALL_HOLD_FAILED";
-
-    /**
-     * Connection event used to inform Telecom when a resume operation on a call has failed.
-     * This event is only sent when concurrent calls (DSDA) are possible
-     * <p>
-     * Sent via {@link #sendConnectionEvent(String, Bundle)}.  The {@link Bundle} parameter is
-     * expected to be null when this connection event is used.
-     * @hide
-     */
-    public static final String EVENT_CALL_RESUME_FAILED =
-            "android.telecom.event.CALL_RESUME_FAILED";
 
     /**
      * Connection event used to inform Telecom when a switch operation on a call has failed.
@@ -1183,7 +1168,9 @@ public abstract class Connection extends Conferenceable {
         if ((capabilities & CAPABILITY_REMOTE_PARTY_SUPPORTS_RTT)
                 == CAPABILITY_REMOTE_PARTY_SUPPORTS_RTT) {
             builder.append(isLong ? " CAPABILITY_REMOTE_PARTY_SUPPORTS_RTT" : " sup_rtt");
+// QTI_BEGIN: 2018-05-21: Telephony: IMS: Propagate RTT capability of the called party to UI
         }
+// QTI_END: 2018-05-21: Telephony: IMS: Propagate RTT capability of the called party to UI
         builder.append("]");
         return builder.toString();
     }
@@ -2969,12 +2956,16 @@ public abstract class Connection extends Conferenceable {
      */
     @SystemApi
     public final void resetConnectionTime() {
+// QTI_BEGIN: 2018-03-22: Telephony: Telecom: Add support for call timer reset on CDMA MO call
         for (Listener l : mListeners) {
+// QTI_END: 2018-03-22: Telephony: Telecom: Add support for call timer reset on CDMA MO call
             l.onConnectionTimeReset(this);
+// QTI_BEGIN: 2018-03-22: Telephony: Telecom: Add support for call timer reset on CDMA MO call
         }
     }
 
     /**
+// QTI_END: 2018-03-22: Telephony: Telecom: Add support for call timer reset on CDMA MO call
      * Returns the connections or conferences with which this connection can be conferenced.
      */
     public final List<Conferenceable> getConferenceables() {

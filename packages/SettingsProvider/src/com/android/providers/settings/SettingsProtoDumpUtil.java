@@ -1130,9 +1130,11 @@ class SettingsProtoDumpUtil {
         dumpSetting(s, p,
                 Settings.Global.NTP_TIMEOUT,
                 GlobalSettingsProto.Ntp.TIMEOUT_MS);
+// QTI_BEGIN: 2018-08-11: Frameworks: base: Secondary NTP Server Settings
         dumpSetting(s, p,
                 Settings.Global.NTP_SERVER_2,
                 GlobalSettingsProto.Ntp.SERVER_2);
+// QTI_END: 2018-08-11: Frameworks: base: Secondary NTP Server Settings
         p.end(ntpToken);
 
         final long uasbToken = p.start(GlobalSettingsProto.USER_ABSENT_SMALL_BATTERY);
@@ -1717,6 +1719,12 @@ class SettingsProtoDumpUtil {
         dumpSetting(s, p,
                 Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,
                 SecureSettingsProto.Accessibility.ENABLED_ACCESSIBILITY_SERVICES);
+        dumpSetting(s, p,
+                Settings.Secure.ACCESSIBILITY_AUTOCLICK_CURSOR_AREA_SIZE,
+                SecureSettingsProto.Accessibility.AUTOCLICK_CURSOR_AREA_SIZE);
+        dumpSetting(s, p,
+                Settings.Secure.ACCESSIBILITY_AUTOCLICK_IGNORE_MINOR_CURSOR_MOVEMENT,
+                SecureSettingsProto.Accessibility.AUTOCLICK_IGNORE_MINOR_CURSOR_MOVEMENT);
         dumpSetting(s, p,
                 Settings.Secure.ACCESSIBILITY_AUTOCLICK_ENABLED,
                 SecureSettingsProto.Accessibility.AUTOCLICK_ENABLED);
@@ -2550,6 +2558,9 @@ class SettingsProtoDumpUtil {
         dumpSetting(s, p,
                 Settings.Secure.SCREENSAVER_DEFAULT_COMPONENT,
                 SecureSettingsProto.Screensaver.DEFAULT_COMPONENT);
+        dumpSetting(s, p,
+                Settings.Secure.SCREENSAVER_ACTIVATE_ON_POSTURED,
+                SecureSettingsProto.Screensaver.ACTIVATE_ON_POSTURED);
         p.end(screensaverToken);
 
         final long searchToken = p.start(SecureSettingsProto.SEARCH);

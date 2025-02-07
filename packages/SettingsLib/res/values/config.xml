@@ -44,4 +44,17 @@
     <string name="config_avatar_picker_class" translatable="false">
         com.android.avatarpicker.ui.AvatarPickerActivity
     </string>
+    <array name="config_override_carrier_5g_plus">
+        <item>@array/carrier_2032_5g_plus</item>
+    </array>
+
+    <integer-array name="carrier_2032_5g_plus">
+        <!-- carrier id: 2032 -->
+        <item>2032</item>
+        <!-- network type: "5G+" -->
+        <item>@string/data_connection_5g_plus_carrier_2032</item>
+    </integer-array>
+<!-- QTI_BEGIN: 2024-06-20: WLAN: SystemUI: adding control to wifiStandard display feature-->
+<!-- QTI_END: 2024-06-20: WLAN: SystemUI: adding control to wifiStandard display feature-->
 </resources>
+

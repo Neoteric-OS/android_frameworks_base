@@ -908,13 +908,13 @@ public final class MediaCodecInfo {
         /** @hide */
         public String[] validFeatures() {
             Feature[] features = getValidFeatures();
-            String[] res = new String[features.length];
-            for (int i = 0; i < res.length; i++) {
+            ArrayList<String> res = new ArrayList();
+            for (int i = 0; i < features.length; i++) {
                 if (!features[i].mInternal) {
-                    res[i] = features[i].mName;
+                    res.add(features[i].mName);
                 }
             }
-            return res;
+            return res.toArray(new String[0]);
         }
 
         private Feature[] getValidFeatures() {
@@ -3641,8 +3641,7 @@ public final class MediaCodecInfo {
                         maxBlocks, maxBlocksPerSecond,
                         blockSize, blockSize,
                         1 /* widthAlignment */, 1 /* heightAlignment */);
-            } else if (mime.equalsIgnoreCase(MediaFormat.MIMETYPE_VIDEO_HEVC)
-                        || mime.equalsIgnoreCase(MediaFormat.MIMETYPE_VIDEO_MVHEVC)) {
+            } else if (mime.equalsIgnoreCase(MediaFormat.MIMETYPE_VIDEO_HEVC)) {
                 // CTBs are at least 8x8 so use 8x8 block size
                 maxBlocks = 36864 >> 6; // 192x192 pixels == 576 8x8 blocks
                 maxBlocksPerSecond = maxBlocks * 15;

@@ -125,7 +125,6 @@ import android.content.pm.SharedLibraryInfo;
 import android.content.pm.Signature;
 import android.content.pm.SigningDetails;
 import android.content.pm.VerifierInfo;
-import android.content.pm.dex.DexMetadataHelper;
 import android.content.pm.parsing.result.ParseResult;
 import android.content.pm.parsing.result.ParseTypeImpl;
 import android.net.Uri;
@@ -137,7 +136,9 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import android.os.SystemProperties;
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import android.os.SELinux;
 import android.os.SystemClock;
 import android.os.Trace;
@@ -173,7 +174,6 @@ import com.android.internal.pm.pkg.component.ParsedIntentInfo;
 import com.android.internal.pm.pkg.component.ParsedPermission;
 import com.android.internal.pm.pkg.component.ParsedPermissionGroup;
 import com.android.internal.pm.pkg.parsing.ParsingPackageUtils;
-import com.android.internal.security.VerityUtils;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.CollectionUtils;
 import com.android.server.EventLogTags;
@@ -188,8 +188,9 @@ import com.android.server.pm.pkg.AndroidPackage;
 import com.android.server.pm.pkg.PackageStateInternal;
 import com.android.server.pm.pkg.SharedLibraryWrapper;
 import com.android.server.rollback.RollbackManagerInternal;
-import com.android.server.security.FileIntegrityService;
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import com.android.server.utils.TimingsTraceAndSlog;
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import com.android.server.utils.WatchedArrayMap;
 import com.android.server.utils.WatchedLongSparseArray;
 
@@ -197,10 +198,11 @@ import dalvik.system.VMRuntime;
 
 import java.io.File;
 import java.io.FileInputStream;
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import java.io.IOException;
-import java.security.DigestException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -209,16 +211,20 @@ import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import java.util.HashMap;
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 
 final class InstallPackageHelper {
     // One minute over PM WATCHDOG_TIMEOUT
@@ -238,12 +244,14 @@ final class InstallPackageHelper {
     private final SharedLibrariesImpl mSharedLibraries;
     private final PackageManagerServiceInjector mInjector;
     private final UpdateOwnershipHelper mUpdateOwnershipHelper;
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
     private static final String PROPERTY_NO_RIL = "ro.radio.noril";
     /**
      * Tracks packages that need to be disabled.
      * Map of package name to its path on the file system.
      */
     final private HashMap<String, String> mPackagesToBeDisabled = new HashMap<>();
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 
     private final Object mInternalLock = new Object();
     @GuardedBy("mInternalLock")
@@ -868,44 +876,52 @@ final class InstallPackageHelper {
         int token;
         if (mPm.mNextInstallToken < 0) mPm.mNextInstallToken = 1;
         token = mPm.mNextInstallToken++;
-        mPm.mRunningInstalls.put(token, request);
+        synchronized (mPm.mRunningInstalls) {
+            mPm.mRunningInstalls.put(token, request);
+        }
 
         if (DEBUG_INSTALL) Log.v(TAG, "+ starting restore round-trip " + token);
 
         final boolean succeeded = request.getReturnCode() == PackageManager.INSTALL_SUCCEEDED;
-        if (succeeded && doRestore) {
-            // Pass responsibility to the Backup Manager.  It will perform a
-            // restore if appropriate, then pass responsibility back to the
-            // Package Manager to run the post-install observer callbacks
-            // and broadcasts.
-            request.closeFreezer();
-            doRestore = performBackupManagerRestore(userId, token, request);
-        }
+        if (succeeded) {
+            request.onRestoreStarted();
+            if (doRestore) {
+                // Pass responsibility to the Backup Manager.  It will perform a
+                // restore if appropriate, then pass responsibility back to the
+                // Package Manager to run the post-install observer callbacks
+                // and broadcasts.
+                // Note: MUST close freezer before backup/restore, otherwise test
+                // of CtsBackupHostTestCases will fail.
+                request.closeFreezer();
+                doRestore = performBackupManagerRestore(userId, token, request);
+            }
 
-        // If this is an update to a package that might be potentially downgraded, then we
-        // need to check with the rollback manager whether there's any userdata that might
-        // need to be snapshotted or restored for the package.
-        //
-        // TODO(narayan): Get this working for cases where userId == UserHandle.USER_ALL.
-        if (succeeded && !doRestore && update) {
-            doRestore = performRollbackManagerRestore(userId, token, request);
-        }
+            // If this is an update to a package that might be potentially downgraded, then we
+            // need to check with the rollback manager whether there's any userdata that might
+            // need to be snapshotted or restored for the package.
+            //
+            // TODO(narayan): Get this working for cases where userId == UserHandle.USER_ALL.
+            if (!doRestore && update) {
+                doRestore = performRollbackManagerRestore(userId, token, request);
+            }
 
-        if (succeeded && doRestore && !request.hasPostInstallRunnable()) {
-            boolean hasNeverBeenRestored =
-                    packageSetting != null && packageSetting.isPendingRestore();
-            request.setPostInstallRunnable(() -> {
-                // Permissions should be restored on each user that has the app installed for the
-                // first time, unless it's an unarchive install for an archived app, in which case
-                // the permissions should be restored on each user that has the app updated.
-                int[] userIdsToRestorePermissions = hasNeverBeenRestored
-                        ? request.getUpdateBroadcastUserIds()
-                        : request.getFirstTimeBroadcastUserIds();
-                for (int restorePermissionUserId : userIdsToRestorePermissions) {
-                    mPm.restorePermissionsAndUpdateRolesForNewUserInstall(request.getName(),
-                            restorePermissionUserId);
-                }
-            });
+            if (doRestore && !request.hasPostInstallRunnable()) {
+                boolean hasNeverBeenRestored =
+                        packageSetting != null && packageSetting.isPendingRestore();
+                request.setPostInstallRunnable(() -> {
+                    // Permissions should be restored on each user that has the app installed for
+                    // the first time, unless it's an unarchive install for an archived app, in
+                    // which case the permissions should be restored on each user that has the
+                    // app updated.
+                    int[] userIdsToRestorePermissions = hasNeverBeenRestored
+                            ? request.getUpdateBroadcastUserIds()
+                            : request.getFirstTimeBroadcastUserIds();
+                    for (int restorePermissionUserId : userIdsToRestorePermissions) {
+                        mPm.restorePermissionsAndUpdateRolesForNewUserInstall(request.getName(),
+                                restorePermissionUserId);
+                    }
+                });
+            }
         }
 
         if (doRestore) {
@@ -915,8 +931,11 @@ final class InstallPackageHelper {
                 }
             }
         } else {
-            // No restore possible, or the Backup Manager was mysteriously not
-            // available -- just fire the post-install work request directly.
+            // No restore possible, or the Backup Manager was mysteriously not available.
+            // we don't need to wait for restore to complete before closing the freezer,
+            // so we can close the freezer right away.
+            // Also just fire the post-install work request directly.
+            request.closeFreezer();
             if (DEBUG_INSTALL) Log.v(TAG, "No restore - queue post-install for " + token);
 
             Trace.asyncTraceBegin(TRACE_TAG_PACKAGE_MANAGER, "postInstall", token);
@@ -1180,11 +1199,8 @@ final class InstallPackageHelper {
                 }
                 try {
                     doRenameLI(request, parsedPackage);
-                    setUpFsVerity(parsedPackage);
-                } catch (Installer.InstallerException | IOException | DigestException
-                         | NoSuchAlgorithmException | PrepareFailure e) {
-                    request.setError(PackageManagerException.INTERNAL_ERROR_VERITY_SETUP,
-                            "Failed to set up verity: " + e);
+                } catch (PrepareFailure e) {
+                    request.setError(e);
                     return false;
                 }
 
@@ -1548,7 +1564,7 @@ final class InstallPackageHelper {
         boolean systemApp = false;
         boolean replace = false;
         synchronized (mPm.mLock) {
-            final PackageSetting ps = mPm.mSettings.getPackageLPr(pkgName);
+            PackageSetting ps = mPm.mSettings.getPackageLPr(pkgName);
             // Check if installing already existing package
             if ((installFlags & PackageManager.INSTALL_REPLACE_EXISTING) != 0) {
                 String oldName = mPm.mSettings.getRenamedPackageLPr(pkgName);
@@ -1559,14 +1575,15 @@ final class InstallPackageHelper {
                     // name.  We must continue using the original name, so
                     // rename the new package here.
                     parsedPackage.setPackageName(oldName);
-                    pkgName = parsedPackage.getPackageName();
-                    replace = true;
+                    pkgName = oldName;
+                    ps = mPm.mSettings.getPackageLPr(oldName);
                     if (DEBUG_INSTALL) {
                         Slog.d(TAG, "Replacing existing renamed package: oldName="
                                 + oldName + " pkgName=" + pkgName);
                     }
-                } else if (ps != null) {
-                    // This package, under its official name, already exists
+                }
+                if (ps != null) {
+                    // This package, under its official name or its old name, already exists
                     // on the device; we should replace it.
                     replace = true;
                     if (DEBUG_INSTALL) Slog.d(TAG, "Replace existing package: " + pkgName);
@@ -2346,68 +2363,6 @@ final class InstallPackageHelper {
         }
     }
 
-    /**
-     * Set up fs-verity for the given package. For older devices that do not support fs-verity,
-     * this is a no-op.
-     */
-    private void setUpFsVerity(AndroidPackage pkg) throws Installer.InstallerException,
-            PrepareFailure, IOException, DigestException, NoSuchAlgorithmException {
-        if (!PackageManagerServiceUtils.isApkVerityEnabled()) {
-            return;
-        }
-
-        if (isIncrementalPath(pkg.getPath()) && IncrementalManager.getVersion()
-                < IncrementalManager.MIN_VERSION_TO_SUPPORT_FSVERITY) {
-            return;
-        }
-
-        // Collect files we care for fs-verity setup.
-        ArrayMap<String, String> fsverityCandidates = new ArrayMap<>();
-        fsverityCandidates.put(pkg.getBaseApkPath(),
-                VerityUtils.getFsveritySignatureFilePath(pkg.getBaseApkPath()));
-
-        final String dmPath = DexMetadataHelper.buildDexMetadataPathForApk(
-                pkg.getBaseApkPath());
-        if (new File(dmPath).exists()) {
-            fsverityCandidates.put(dmPath, VerityUtils.getFsveritySignatureFilePath(dmPath));
-        }
-
-        for (String path : pkg.getSplitCodePaths()) {
-            fsverityCandidates.put(path, VerityUtils.getFsveritySignatureFilePath(path));
-
-            final String splitDmPath = DexMetadataHelper.buildDexMetadataPathForApk(path);
-            if (new File(splitDmPath).exists()) {
-                fsverityCandidates.put(splitDmPath,
-                        VerityUtils.getFsveritySignatureFilePath(splitDmPath));
-            }
-        }
-
-        var fis = FileIntegrityService.getService();
-        for (Map.Entry<String, String> entry : fsverityCandidates.entrySet()) {
-            try {
-                final String filePath = entry.getKey();
-                if (VerityUtils.hasFsverity(filePath)) {
-                    continue;
-                }
-
-                final String signaturePath = entry.getValue();
-                if (new File(signaturePath).exists()) {
-                    // If signature is provided, enable fs-verity first so that the file can be
-                    // measured for signature check below.
-                    VerityUtils.setUpFsverity(filePath);
-
-                    if (!fis.verifyPkcs7DetachedSignature(signaturePath, filePath)) {
-                        throw new PrepareFailure(PackageManager.INSTALL_FAILED_BAD_SIGNATURE,
-                                "fs-verity signature does not verify against a known key");
-                    }
-                }
-            } catch (IOException e) {
-                throw new PrepareFailure(PackageManager.INSTALL_FAILED_BAD_SIGNATURE,
-                        "Failed to enable fs-verity: " + e);
-            }
-        }
-    }
-
     private PackageFreezer freezePackageForInstall(String packageName, int userId, int installFlags,
             String killReason, int exitInfoReason, InstallRequest request) {
         if ((installFlags & PackageManager.INSTALL_DONT_KILL_APP) != 0) {
@@ -3095,6 +3050,8 @@ final class InstallPackageHelper {
         }
 
         if (succeeded) {
+            Slog.i(TAG, "installation completed:" + packageName);
+
             if (Flags.aslInApkAppMetadataSource()
                     && pkgSetting.getAppMetadataSource() == APP_METADATA_SOURCE_APK) {
                 if (!extractAppMetadataFromApk(request.getPkg(),
@@ -3139,13 +3096,14 @@ final class InstallPackageHelper {
             if (android.permission.flags.Flags.enhancedConfirmationModeApisEnabled()
                     && android.security.Flags.extendEcmToAllSettings()) {
                 final int appId = request.getAppId();
-                mPm.mHandler.post(() -> {
+                // TODO: b/388960315 - Implement a long-term solution to race condition
+                mPm.mHandler.postDelayed(() -> {
                     for (int userId : firstUserIds) {
                         // MODE_DEFAULT means that the app's guardedness will be decided lazily
                         setAccessRestrictedSettingsMode(packageName, appId, userId,
                                 AppOpsManager.MODE_DEFAULT);
                     }
-                });
+                }, 1000L);
             } else {
                 // Apply restricted settings on potentially dangerous packages. Needs to happen
                 // after appOpsManager is notified of the new package
@@ -3867,6 +3825,7 @@ final class InstallPackageHelper {
                 Log.w(TAG, "Dropping cache of " + file.getAbsolutePath());
                 cacher.cleanCachedResult(file);
             }
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
 
             if (mPackagesToBeDisabled.values() != null &&
                     (mPackagesToBeDisabled.values().contains(file.toString()) ||
@@ -3876,6 +3835,7 @@ final class InstallPackageHelper {
                 continue;
             }
 
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
             parallelPackageParser.submit(file, parseFlags);
             fileCount++;
         }
@@ -3923,6 +3883,7 @@ final class InstallPackageHelper {
         }
     }
 
+// QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
     /**
      * Read the list of packages that need to be disabled.
      *
@@ -3992,6 +3953,7 @@ final class InstallPackageHelper {
         }
     }
 
+// QTI_END: 2024-11-13: Telephony: Add provision to prevent installation of some apps
     /**
      * Make sure all system apps that we expected to appear on
      * the userdata partition actually showed up. If they never

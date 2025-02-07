@@ -103,6 +103,7 @@ import android.app.PendingIntent;
 import android.app.ProfilerInfo;
 import android.app.WaitResult;
 import android.app.WindowConfiguration;
+import android.app.WindowConfiguration.WindowingMode;
 import android.app.compat.CompatChanges;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.Disabled;
@@ -124,13 +125,16 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.OperationCanceledException;
 import android.os.RemoteException;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.service.voice.IVoiceInteractionSession;
 import android.text.TextUtils;
+// QTI_BEGIN: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
 import android.util.BoostFramework;
+// QTI_END: 2019-01-29: Core: Revert "Temporarily revert am, wm, and policy servers to upstream QP1A.181202.001"
 import android.util.Pools.SynchronizedPool;
 import android.util.Slog;
 import android.widget.Toast;
@@ -233,6 +237,7 @@ class ActivityStarter {
 
     // The task display area to launch the activity onto, barring any strong reason to do otherwise.
     private TaskDisplayArea mPreferredTaskDisplayArea;
+    @WindowingMode
     private int mPreferredWindowingMode;
 
     private Task mInTask;
@@ -1619,7 +1624,9 @@ class ActivityStarter {
         final Task targetTask = r.getTask() != null
                 ? r.getTask()
                 : mTargetTask;
+// QTI_BEGIN: 2021-09-27: Frameworks: RESTRICT AUTOMERGE Avoid the scenario Where taskdisplayarea is null
         if (startedActivityRootTask == null || targetTask == null || !targetTask.isAttached()) {
+// QTI_END: 2021-09-27: Frameworks: RESTRICT AUTOMERGE Avoid the scenario Where taskdisplayarea is null
             return;
         }
 
@@ -1966,7 +1973,6 @@ class ActivityStarter {
             if (mLastStartActivityRecord != null) {
                 targetTaskTop.mLaunchSourceType = mLastStartActivityRecord.mLaunchSourceType;
             }
-            targetTaskTop.mTransitionController.collect(targetTaskTop);
             recordTransientLaunchIfNeeded(targetTaskTop);
             // Recycle the target task for this launch.
             startResult =
@@ -2487,7 +2493,9 @@ class ActivityStarter {
             // removed from calling performClearTaskLocked (For example, if it is being brought out
             // of history or if it is finished immediately), thus disassociating the task. Keep the
             // task-overlay activity because the targetTask will be reused to launch new activity.
+// QTI_BEGIN: 2024-03-28: Core: Revert PhoneLink in framework/base
             targetTask.performClearTaskForReuse(true /* excludingTaskOverlay*/);
+// QTI_END: 2024-03-28: Core: Revert PhoneLink in framework/base
             targetTask.setIntent(mStartActivity);
             mAddingToTask = true;
             mIsTaskCleared = true;
@@ -3167,7 +3175,9 @@ class ActivityStarter {
 
     /** Places {@link #mStartActivity} in {@code task} or an embedded {@link TaskFragment}. */
     private void addOrReparentStartingActivity(@NonNull Task task, String reason) {
+// QTI_BEGIN: 2023-09-19: Performance: Perf: Activity boost optimization.
         mStartActivity.acquireActivityBoost();
+// QTI_END: 2023-09-19: Performance: Perf: Activity boost optimization.
         TaskFragment newParent = task;
         if (mInTaskFragment != null) {
             int embeddingCheckResult = canEmbedActivity(mInTaskFragment, mStartActivity, task);
@@ -3250,11 +3260,14 @@ class ActivityStarter {
     private void sendCanNotEmbedActivityError(TaskFragment taskFragment,
             @EmbeddingCheckResult int result) {
         final String errMsg;
-        switch(result) {
+        boolean fatalError = true;
+        switch (result) {
             case EMBEDDING_DISALLOWED_NEW_TASK: {
                 errMsg = "Cannot embed " + mStartActivity + " that launched on another task"
                         + ",mLaunchMode=" + launchModeToString(mLaunchMode)
                         + ",mLaunchFlag=" + Integer.toHexString(mLaunchFlags);
+                // This is a known possible scenario, which should not be a fatal error.
+                fatalError = false;
                 break;
             }
             case EMBEDDING_DISALLOWED_MIN_DIMENSION_VIOLATION: {
@@ -3274,7 +3287,8 @@ class ActivityStarter {
             mService.mWindowOrganizerController.sendTaskFragmentOperationFailure(
                     taskFragment.getTaskFragmentOrganizer(), mRequest.errorCallbackToken,
                     taskFragment, OP_TYPE_START_ACTIVITY_IN_TASK_FRAGMENT,
-                    new SecurityException(errMsg));
+                    fatalError ? new SecurityException(errMsg)
+                            : new OperationCanceledException(errMsg));
         } else {
             // If the taskFragment is not organized, just dump error message as warning logs.
             Slog.w(TAG, errMsg);

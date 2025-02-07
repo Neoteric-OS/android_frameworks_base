@@ -31,7 +31,6 @@ import android.animation.ValueAnimator;
 import android.annotation.IntDef;
 import android.graphics.Color;
 import android.os.Handler;
-import android.os.Trace;
 import android.util.Log;
 import android.util.MathUtils;
 import android.util.Pair;
@@ -43,6 +42,7 @@ import android.view.animation.Interpolator;
 import androidx.annotation.FloatRange;
 import androidx.annotation.Nullable;
 
+import com.android.app.tracing.coroutines.TrackTracer;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.colorextraction.ColorExtractor.GradientColors;
 import com.android.internal.graphics.ColorUtils;
@@ -52,6 +52,7 @@ import com.android.keyguard.BouncerPanelExpansionCalculator;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.systemui.Dumpable;
+import com.android.systemui.Flags;
 import com.android.systemui.animation.ShadeInterpolation;
 import com.android.systemui.bouncer.shared.constants.KeyguardBouncerConstants;
 import com.android.systemui.dagger.SysUISingleton;
@@ -81,6 +82,9 @@ import com.android.systemui.util.kotlin.JavaAdapter;
 import com.android.systemui.util.wakelock.DelayedWakeLock;
 import com.android.systemui.util.wakelock.WakeLock;
 
+import kotlinx.coroutines.CoroutineDispatcher;
+import kotlinx.coroutines.ExperimentalCoroutinesApi;
+
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -88,9 +92,6 @@ import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
-
-import kotlinx.coroutines.CoroutineDispatcher;
-import kotlinx.coroutines.ExperimentalCoroutinesApi;
 
 /**
  * Controls both the scrim behind the notifications and in front of the notifications (when a
@@ -225,6 +226,8 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     private float mAdditionalScrimBehindAlphaKeyguard = 0f;
     // Combined scrim behind keyguard alpha of default scrim + additional scrim
     private float mScrimBehindAlphaKeyguard = KEYGUARD_SCRIM_ALPHA;
+
+    static final float TRANSPARENT_BOUNCER_SCRIM_ALPHA = 0.54f;
     private final float mDefaultScrimAlpha;
 
     private float mRawPanelExpansionFraction;
@@ -339,7 +342,10 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
             LargeScreenShadeInterpolator largeScreenShadeInterpolator) {
         mScrimStateListener = lightBarController::setScrimState;
         mLargeScreenShadeInterpolator = largeScreenShadeInterpolator;
-        mDefaultScrimAlpha = BUSY_SCRIM_ALPHA;
+        // All scrims default alpha need to match bouncer background alpha to make sure the
+        // transitions involving the bouncer are smooth and don't overshoot the bouncer alpha.
+        mDefaultScrimAlpha =
+                Flags.bouncerUiRevamp() ? TRANSPARENT_BOUNCER_SCRIM_ALPHA : BUSY_SCRIM_ALPHA;
 
         mKeyguardStateController = keyguardStateController;
         mDarkenWhileDragging = !mKeyguardStateController.canDismissLockScreen();
@@ -554,7 +560,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
 
         final ScrimState oldState = mState;
         mState = state;
-        Trace.traceCounter(Trace.TRACE_TAG_APP, "scrim_state", mState.ordinal());
+        TrackTracer.instantForGroup("scrim", "state", mState.ordinal());
 
         if (mCallback != null) {
             mCallback.onCancelled();
@@ -862,6 +868,12 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
      * bounds instead.
      */
     public void setClipsQsScrim(boolean clipScrim) {
+        if (Flags.notificationShadeBlur()) {
+            // Never clip scrims when blur is enabled, colors of UI elements are supposed to "add"
+            // up across the scrims.
+            mClipsQsScrim = false;
+            return;
+        }
         if (clipScrim == mClipsQsScrim) {
             return;
         }
@@ -951,11 +963,20 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                     mBehindAlpha = 1;
                     mNotificationsAlpha = behindFraction * mDefaultScrimAlpha;
                 } else {
-                    mBehindAlpha = mLargeScreenShadeInterpolator.getBehindScrimAlpha(
-                            mPanelExpansionFraction * mDefaultScrimAlpha);
-                    mNotificationsAlpha =
-                            mLargeScreenShadeInterpolator.getNotificationScrimAlpha(
-                                    mPanelExpansionFraction);
+                    if (Flags.notificationShadeBlur()) {
+                        // TODO (b/390730594): match any spec for controlling alpha based on shade
+                        //  expansion fraction.
+                        mBehindAlpha = mState.getBehindAlpha() * mPanelExpansionFraction;
+                        mBehindTint = mState.getBehindTint();
+                        mNotificationsAlpha = mState.getNotifAlpha() * mPanelExpansionFraction;
+                        mNotificationsTint = mState.getNotifTint();
+                    } else {
+                        mBehindAlpha = mLargeScreenShadeInterpolator.getBehindScrimAlpha(
+                                mPanelExpansionFraction * mDefaultScrimAlpha);
+                        mNotificationsAlpha =
+                                mLargeScreenShadeInterpolator.getNotificationScrimAlpha(
+                                        mPanelExpansionFraction);
+                    }
                 }
                 mBehindTint = mState.getBehindTint();
                 mInFrontAlpha = 0;
@@ -973,8 +994,6 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                         mBehindTint,
                         interpolatedFraction);
             }
-        } else if (mState == ScrimState.AUTH_SCRIMMED_SHADE) {
-            mNotificationsAlpha = (float) Math.pow(getInterpolatedFraction(), 0.8f);
         } else if (mState == ScrimState.KEYGUARD || mState == ScrimState.SHADE_LOCKED
                 || mState == ScrimState.PULSING || mState == ScrimState.GLANCEABLE_HUB) {
             Pair<Integer, Float> result = calculateBackStateForState(mState);
@@ -1011,7 +1030,11 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                             .saturate(mTransitionToLockScreenFullShadeNotificationsProgress);
                 } else if (mState == ScrimState.SHADE_LOCKED) {
                     // going from KEYGUARD to SHADE_LOCKED state
-                    mNotificationsAlpha = getInterpolatedFraction();
+                    if (Flags.notificationShadeBlur()) {
+                        mNotificationsAlpha = mState.getNotifAlpha() * getInterpolatedFraction();
+                    } else {
+                        mNotificationsAlpha = getInterpolatedFraction();
+                    }
                 } else if (mState == ScrimState.GLANCEABLE_HUB
                         && mTransitionToFullShadeProgress == 0.0f) {
                     // Notification scrim should not be visible on the glanceable hub unless the
@@ -1279,10 +1302,9 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                 tint = getDebugScrimTint(scrimView);
             }
 
-            Trace.traceCounter(Trace.TRACE_TAG_APP, getScrimName(scrimView) + "_alpha",
+            TrackTracer.instantForGroup("scrim", getScrimName(scrimView) + "_alpha",
                     (int) (alpha * 255));
-
-            Trace.traceCounter(Trace.TRACE_TAG_APP, getScrimName(scrimView) + "_tint",
+            TrackTracer.instantForGroup("scrim", getScrimName(scrimView) + "_tint",
                     Color.alpha(tint));
             scrimView.setTint(tint);
             if (!mIsBouncerToGoneTransitionRunning) {

@@ -85,11 +85,13 @@ filegroup {
 filegroup {
     name: "SystemUI-tests-broken-robofiles-run",
     srcs: [
+        "tests/src/**/systemui/keyguard/data/repository/KeyguardTransitionRepositoryTest.kt",
+        "tests/src/**/systemui/power/PowerNotificationWarningsTest.java",
+        "tests/src/**/systemui/user/domain/interactor/RefreshUsersSchedulerTest.kt",
         "tests/src/**/systemui/dreams/touch/CommunalTouchHandlerTest.java",
         "tests/src/**/systemui/shade/NotificationShadeWindowViewControllerTest.kt",
         "tests/src/**/systemui/keyguard/domain/interactor/KeyguardQuickAffordanceInteractorSceneContainerTest.kt",
         "tests/src/**/systemui/statusbar/pipeline/mobile/ui/model/SignalIconModelParameterizedTest.kt",
-        "tests/src/**/systemui/education/domain/interactor/KeyboardTouchpadEduInteractorTest.kt",
         "tests/src/**/systemui/biometrics/udfps/SinglePointerTouchProcessorTest.kt",
         "tests/src/**/systemui/animation/back/FlingOnBackAnimationCallbackTest.kt",
         "tests/src/**/systemui/education/domain/ui/view/ContextualEduDialogTest.kt",
@@ -285,6 +287,7 @@ filegroup {
         "tests/src/**/systemui/statusbar/phone/KeyguardClockPositionAlgorithmTest.java",
         "tests/src/**/systemui/shared/system/RemoteTransitionTest.java",
         "tests/src/**/systemui/qs/tiles/dialog/InternetDetailsContentControllerTest.java",
+        "tests/src/**/systemui/qs/tiles/dialog/InternetDetailsContentManagerTest.kt",
         "tests/src/**/systemui/qs/external/TileLifecycleManagerTest.java",
         "tests/src/**/systemui/ScreenDecorationsTest.java",
         "tests/src/**/systemui/statusbar/policy/BatteryControllerStartableTest.java",
@@ -420,6 +423,7 @@ android_library {
     ],
     manifest: "AndroidManifest-res.xml",
     flags_packages: [
+        "android.app.flags-aconfig",
         "com_android_systemui_flags",
     ],
 }
@@ -516,11 +520,15 @@ android_library {
         "androidx.activity_activity-compose",
         "androidx.compose.animation_animation-graphics",
         "androidx.lifecycle_lifecycle-viewmodel-compose",
+        "kairos",
+        "aconfig_settings_flags_lib",
     ],
     manifest: "AndroidManifest.xml",
     libs: [
         "android.car",
+// QTI_BEGIN: 2021-02-09: Telephony: Change to move IExtTelephony to IExtPhone
         "extphonelib",
+// QTI_END: 2021-02-09: Telephony: Change to move IExtTelephony to IExtPhone
         "keepanno-annotations",
         "ims-common",
     ],
@@ -529,9 +537,13 @@ android_library {
         "-Adagger.fastInit=enabled",
         "-Adagger.explicitBindingConflictsWithInject=ERROR",
         "-Adagger.strictMultibindingValidation=enabled",
+        "-Adagger.useBindingGraphFix=ENABLED",
         "-Aroom.schemaLocation=frameworks/base/packages/SystemUI/schemas",
     ],
-    kotlincflags: ["-Xjvm-default=all"],
+    kotlincflags: [
+        "-Xjvm-default=all",
+        "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+    ],
 
     plugins: [
         "androidx.room_room-compiler-plugin",
@@ -700,6 +712,7 @@ android_library {
         "androidx.lifecycle_lifecycle-viewmodel-compose",
         "TraceurCommon",
         "Traceur-res",
+        "aconfig_settings_flags_lib",
     ],
 }
 
@@ -708,6 +721,9 @@ android_library {
     use_resource_processor: true,
     manifest: "tests/AndroidManifest-base.xml",
     resource_dirs: [],
+
+    kotlin_lang_version: "1.9",
+
     additional_manifests: ["tests/AndroidManifest.xml"],
     srcs: [
         "tests/src/**/*.kt",
@@ -739,6 +755,7 @@ android_library {
         "PlatformMotionTesting",
         "SystemUICustomizationTestUtils",
         "androidx.compose.runtime_runtime",
+        "kairos",
         "kosmos",
         "testables",
         "androidx.test.rules",
@@ -749,13 +766,20 @@ android_library {
         "android.test.mock.stubs.system",
         "keepanno-annotations",
         "ims-common",
+// QTI_BEGIN: 2021-02-09: Telephony: Change to move IExtTelephony to IExtPhone
         "extphonelib",
+// QTI_END: 2021-02-09: Telephony: Change to move IExtTelephony to IExtPhone
     ],
     kotlincflags: [
         "-Xjvm-default=all",
         // TODO(b/352363800): Why do we need this?
         "-J-Xmx8192M",
+        "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
     ],
+    javacflags: [
+        "-Adagger.useBindingGraphFix=ENABLED",
+    ],
+
     aaptflags: [
         "--extra-packages",
         "com.android.systemui",
@@ -846,8 +870,6 @@ android_robolectric_test {
         "androidx.test.ext.truth",
     ],
 
-    upstream: true,
-
     instrumentation_for: "SystemUIRobo-stub",
     java_resource_dirs: ["tests/robolectric/config"],
     plugins: [
@@ -884,8 +906,6 @@ android_robolectric_test {
         "androidx.test.ext.truth",
     ],
 
-    upstream: true,
-
     instrumentation_for: "SystemUIRobo-stub",
     java_resource_dirs: ["tests/robolectric/config"],
     plugins: [
@@ -921,6 +941,7 @@ android_ravenwood_test {
         "android.test.mock.impl",
     ],
     auto_gen_config: true,
+    team: "trendy_team_ravenwood",
     plugins: [
         "dagger2-compiler",
     ],
@@ -981,7 +1002,9 @@ android_app {
     libs: [
         "android.car",
         "ims-common",
+// QTI_BEGIN: 2021-02-09: Telephony: Change to move IExtTelephony to IExtPhone
         "extphonelib",
+// QTI_END: 2021-02-09: Telephony: Change to move IExtTelephony to IExtPhone
     ],
     enforce_uses_libs: false,
 

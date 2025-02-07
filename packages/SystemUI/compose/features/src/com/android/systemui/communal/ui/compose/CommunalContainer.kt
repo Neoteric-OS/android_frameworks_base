@@ -33,16 +33,17 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentKey
+import com.android.compose.animation.scene.ContentScope
 import com.android.compose.animation.scene.Edge
 import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.ElementMatcher
 import com.android.compose.animation.scene.LowestZIndexContentPicker
 import com.android.compose.animation.scene.MutableSceneTransitionLayoutState
 import com.android.compose.animation.scene.SceneKey
-import com.android.compose.animation.scene.SceneScope
 import com.android.compose.animation.scene.SceneTransitionLayout
 import com.android.compose.animation.scene.Swipe
 import com.android.compose.animation.scene.observableTransitionState
+import com.android.compose.animation.scene.rememberMutableSceneTransitionLayoutState
 import com.android.compose.animation.scene.transitions
 import com.android.compose.modifiers.thenIf
 import com.android.systemui.communal.shared.model.CommunalBackgroundType
@@ -78,6 +79,18 @@ object TransitionDuration {
     const val EDIT_MODE_TO_HUB_GRID_END_MS =
         EDIT_MODE_TO_HUB_GRID_DELAY_MS + EDIT_MODE_TO_HUB_CONTENT_MS
     const val HUB_TO_EDIT_MODE_CONTENT_MS = 250
+    const val TO_GLANCEABLE_HUB_DURATION_MS = 1000
+}
+
+val sceneTransitionsV2 = transitions {
+    to(CommunalScenes.Communal) {
+        spec = tween(durationMillis = TransitionDuration.TO_GLANCEABLE_HUB_DURATION_MS)
+        fade(AllElements)
+    }
+    to(CommunalScenes.Blank) {
+        spec = tween(durationMillis = TO_GONE_DURATION.toInt(DurationUnit.MILLISECONDS))
+        fade(AllElements)
+    }
 }
 
 val sceneTransitions = transitions {
@@ -153,13 +166,13 @@ fun CommunalContainer(
         viewModel.communalBackground.collectAsStateWithLifecycle(
             initialValue = CommunalBackgroundType.ANIMATED
         )
-    val state: MutableSceneTransitionLayoutState = remember {
-        MutableSceneTransitionLayoutState(
+    val state: MutableSceneTransitionLayoutState =
+        rememberMutableSceneTransitionLayoutState(
             initialScene = currentSceneKey,
             canChangeScene = { _ -> viewModel.canChangeScene() },
-            transitions = sceneTransitions,
+            transitions = if (viewModel.v2FlagEnabled()) sceneTransitionsV2 else sceneTransitions,
         )
-    }
+
     val isUiBlurred by viewModel.isUiBlurred.collectAsStateWithLifecycle()
 
     val detector = remember { CommunalSwipeDetector() }
@@ -217,7 +230,7 @@ fun CommunalContainer(
 
 /** Scene containing the glanceable hub UI. */
 @Composable
-fun SceneScope.CommunalScene(
+fun ContentScope.CommunalScene(
     backgroundType: CommunalBackgroundType,
     colors: CommunalColors,
     content: CommunalContent,

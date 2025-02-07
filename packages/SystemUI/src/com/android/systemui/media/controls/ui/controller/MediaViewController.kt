@@ -883,7 +883,6 @@ constructor(
             currentEndLocation = endLocation
             currentStartLocation = startLocation
             currentTransitionProgress = transitionProgress
-            logger.logMediaLocation("setCurrentState", startLocation, endLocation)
 
             val shouldAnimate = animateNextStateChange && !applyImmediately
 
@@ -900,6 +899,7 @@ constructor(
             // If the view isn't bound, we can drop the animation, otherwise we'll execute it
             animateNextStateChange = false
             if (transitionLayout == null) {
+                logger.logMediaLocation("setCurrentState: view not bound", startLocation, endLocation)
                 return
             }
 
@@ -949,7 +949,7 @@ constructor(
                     )
             }
             logger.logMediaSize(
-                "setCurrentState (progress $transitionProgress)",
+                "setCurrentState $startLocation -> $endLocation (progress $transitionProgress)",
                 result.width,
                 result.height,
             )
@@ -1016,7 +1016,22 @@ constructor(
                 expandedLayout.load(context, R.xml.media_recommendations_expanded)
             }
         }
+        readjustPlayPauseWidth()
         refreshState()
+    }
+
+    private fun readjustPlayPauseWidth() {
+        // TODO: move to xml file when flag is removed.
+        if (Flags.mediaControlsUiUpdate()) {
+            collapsedLayout.constrainWidth(
+                R.id.actionPlayPause,
+                context.resources.getDimensionPixelSize(R.dimen.qs_media_action_play_pause_width),
+            )
+            expandedLayout.constrainWidth(
+                R.id.actionPlayPause,
+                context.resources.getDimensionPixelSize(R.dimen.qs_media_action_play_pause_width),
+            )
+        }
     }
 
     /** Get a view state based on the width and height set by the scene */
@@ -1025,6 +1040,18 @@ constructor(
 
         if (state?.measurementInput == null) {
             return null
+        }
+
+        if (state.expansion == 1.0f) {
+            val height =
+                if (state.expandedMatchesParentHeight) {
+                    heightInSceneContainerPx
+                } else {
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.qs_media_session_height_expanded
+                    )
+                }
+            setBackgroundHeights(height)
         }
 
         // Similar to obtainViewState: Let's create a new measurement

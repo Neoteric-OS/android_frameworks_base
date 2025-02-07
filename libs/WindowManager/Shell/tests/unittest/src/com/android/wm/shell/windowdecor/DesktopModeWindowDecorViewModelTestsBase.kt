@@ -31,6 +31,7 @@ import android.platform.test.flag.junit.SetFlagsRule
 import android.testing.TestableContext
 import android.util.SparseArray
 import android.view.Choreographer
+import android.view.Display
 import android.view.Display.DEFAULT_DISPLAY
 import android.view.IWindowManager
 import android.view.InputChannel
@@ -40,6 +41,7 @@ import android.view.SurfaceControl
 import android.view.WindowInsets.Type.statusBars
 import com.android.dx.mockito.inline.extended.StaticMockitoSession
 import com.android.internal.jank.InteractionJankMonitor
+import com.android.window.flags.Flags
 import com.android.wm.shell.RootTaskDisplayAreaOrganizer
 import com.android.wm.shell.ShellTaskOrganizer
 import com.android.wm.shell.ShellTestCase
@@ -65,6 +67,8 @@ import com.android.wm.shell.desktopmode.WindowDecorCaptionHandleRepository
 import com.android.wm.shell.desktopmode.education.AppHandleEducationController
 import com.android.wm.shell.desktopmode.education.AppToWebEducationController
 import com.android.wm.shell.freeform.FreeformTaskTransitionStarter
+import com.android.wm.shell.recents.RecentsTransitionHandler
+import com.android.wm.shell.recents.RecentsTransitionStateListener
 import com.android.wm.shell.splitscreen.SplitScreenController
 import com.android.wm.shell.sysui.ShellCommandHandler
 import com.android.wm.shell.sysui.ShellController
@@ -151,8 +155,10 @@ open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
     protected val mockFocusTransitionObserver = mock<FocusTransitionObserver>()
     protected val mockCaptionHandleRepository = mock<WindowDecorCaptionHandleRepository>()
     protected val mockDesktopRepository: DesktopRepository = mock<DesktopRepository>()
+    protected val mockRecentsTransitionHandler = mock<RecentsTransitionHandler>()
     protected val motionEvent = mock<MotionEvent>()
     val displayLayout = mock<DisplayLayout>()
+    val display = mock<Display>()
     protected lateinit var spyContext: TestableContext
     private lateinit var desktopModeEventLogger: DesktopModeEventLogger
 
@@ -164,6 +170,7 @@ open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
     protected lateinit var mockitoSession: StaticMockitoSession
     protected lateinit var shellInit: ShellInit
     internal lateinit var desktopModeOnInsetsChangedListener: DesktopModeOnInsetsChangedListener
+    protected lateinit var desktopModeRecentsTransitionStateListener: RecentsTransitionStateListener
     protected lateinit var displayChangingListener:
             DisplayChangeController.OnDisplayChangingListener
     internal lateinit var desktopModeOnKeyguardChangedListener: DesktopModeKeyguardChangeListener
@@ -177,6 +184,8 @@ open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
         spyContext.addMockSystemService(InputManager::class.java, mockInputManager)
         desktopModeEventLogger = mock<DesktopModeEventLogger>()
         whenever(mockDesktopUserRepositories.current).thenReturn(mockDesktopRepository)
+        whenever(mockDisplayController.getDisplayContext(any())).thenReturn(spyContext)
+        whenever(mockDisplayController.getDisplay(any())).thenReturn(display)
         whenever(mockDesktopUserRepositories.getProfile(anyInt()))
             .thenReturn(mockDesktopRepository)
         desktopModeWindowDecorViewModel = DesktopModeWindowDecorViewModel(
@@ -219,7 +228,8 @@ open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
             mockFocusTransitionObserver,
             desktopModeEventLogger,
             mock<DesktopModeUiEventLogger>(),
-            mock<WindowDecorTaskResourceLoader>()
+            mock<WindowDecorTaskResourceLoader>(),
+            mockRecentsTransitionHandler,
         )
         desktopModeWindowDecorViewModel.setSplitScreenController(mockSplitScreenController)
         whenever(mockDisplayController.getDisplayLayout(any())).thenReturn(mockDisplayLayout)
@@ -256,6 +266,13 @@ open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
         verify(displayInsetsController)
             .addGlobalInsetsChangedListener(insetsChangedCaptor.capture())
         desktopModeOnInsetsChangedListener = insetsChangedCaptor.firstValue
+        val recentsTransitionStateListenerCaptor = argumentCaptor<RecentsTransitionStateListener>()
+        if (Flags.enableDesktopRecentsTransitionsCornersBugfix()) {
+            verify(mockRecentsTransitionHandler)
+                .addTransitionStateListener(recentsTransitionStateListenerCaptor.capture())
+            desktopModeRecentsTransitionStateListener =
+                recentsTransitionStateListenerCaptor.firstValue
+        }
         val keyguardChangedCaptor =
             argumentCaptor<DesktopModeKeyguardChangeListener>()
         verify(mockShellController).addKeyguardChangeListener(keyguardChangedCaptor.capture())

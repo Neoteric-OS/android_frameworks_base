@@ -29,6 +29,7 @@ import static android.Manifest.permission.MODIFY_HDR_CONVERSION_MODE;
 import static android.Manifest.permission.RESTRICT_DISPLAY_MODES;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_CACHED;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_GONE;
+import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
 import static android.hardware.display.DisplayManagerGlobal.InternalEventFlag;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_ALWAYS_UNLOCKED;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR;
@@ -36,10 +37,12 @@ import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_CAN_S
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_DEVICE_DISPLAY_GROUP;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_DISPLAY_GROUP;
+import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_OWN_FOCUS;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_PRESENTATION;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_SECURE;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS;
+import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_STEAL_TOP_FOCUS_DISABLED;
 import static android.hardware.display.DisplayManager.VIRTUAL_DISPLAY_FLAG_TRUSTED;
 import static android.hardware.display.DisplayManagerGlobal.DisplayEvent;
 import static android.hardware.display.DisplayViewport.VIEWPORT_EXTERNAL;
@@ -69,6 +72,7 @@ import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.ActivityManagerInternal;
 import android.app.AppOpsManager;
+import android.app.backup.BackupManager;
 import android.app.compat.CompatChanges;
 import android.companion.virtual.IVirtualDevice;
 import android.companion.virtual.VirtualDeviceManager;
@@ -156,7 +160,9 @@ import android.view.ContentRecordingSession;
 import android.view.Display;
 import android.view.DisplayEventReceiver;
 import android.view.DisplayInfo;
+// QTI_BEGIN: 2019-05-01: Display: Add support to check for Built-in Display
 import android.view.DisplayAddress;
+// QTI_END: 2019-05-01: Display: Add support to check for Built-in Display
 import android.view.Surface;
 import android.view.SurfaceControl;
 import android.view.SurfaceControl.RefreshRateRange;
@@ -380,6 +386,8 @@ public final class DisplayManagerService extends SystemService {
     /** All {@link DisplayPowerController}s indexed by {@link LogicalDisplay} ID. */
     private final SparseArray<DisplayPowerController> mDisplayPowerControllers =
             new SparseArray<>();
+
+    private int mMaxImportanceForRRCallbacks = IMPORTANCE_VISIBLE;
 
     /** {@link DisplayBlanker} used by all {@link DisplayPowerController}s. */
     private final DisplayBlanker mDisplayBlanker = new DisplayBlanker() {
@@ -619,6 +627,7 @@ public final class DisplayManagerService extends SystemService {
     @EnabledSince(targetSdkVersion = android.os.Build.VERSION_CODES.S)
     static final long DISPLAY_MODE_RETURNS_PHYSICAL_REFRESH_RATE = 170503758L;
 
+// QTI_BEGIN: 2020-10-14: Display: DisplayManager: Fix synchronization issue
     // The synchronization root for the display dumpsys.
     private final SyncRoot mSyncDump = new SyncRoot();
 
@@ -626,6 +635,7 @@ public final class DisplayManagerService extends SystemService {
     @GuardedBy("mSyncDump")
     private boolean mDumpInProgress;
 
+// QTI_END: 2020-10-14: Display: DisplayManager: Fix synchronization issue
     public DisplayManagerService(Context context) {
         this(context, new Injector());
     }
@@ -671,7 +681,9 @@ public final class DisplayManagerService extends SystemService {
         mWideColorSpace = colorSpaces[1];
         mOverlayProperties = SurfaceControl.getOverlaySupport();
         mSystemReady = false;
+// QTI_BEGIN: 2020-10-14: Display: DisplayManager: Fix synchronization issue
         mDumpInProgress = false;
+// QTI_END: 2020-10-14: Display: DisplayManager: Fix synchronization issue
         mConfigParameterProvider = new DeviceConfigParameterProvider(DeviceConfigInterface.REAL);
         mExtraDisplayLoggingPackageName = DisplayProperties.debug_vri_package().orElse(null);
         mExtraDisplayEventLogging = !TextUtils.isEmpty(mExtraDisplayLoggingPackageName);
@@ -682,9 +694,10 @@ public final class DisplayManagerService extends SystemService {
                 mExternalDisplayStatsService);
         mExternalDisplayPolicy = new ExternalDisplayPolicy(new ExternalDisplayPolicyInjector());
         if (mFlags.isDisplayTopologyEnabled()) {
-            mDisplayTopologyCoordinator =
-                    new DisplayTopologyCoordinator(this::isExtendedDisplayEnabled,
-                            this::deliverTopologyUpdate, new HandlerExecutor(mHandler), mSyncRoot);
+            final var backupManager = new BackupManager(mContext);
+            mDisplayTopologyCoordinator = new DisplayTopologyCoordinator(
+                    this::isExtendedDisplayEnabled, this::deliverTopologyUpdate,
+                    new HandlerExecutor(mHandler), mSyncRoot, backupManager::dataChanged);
         } else {
             mDisplayTopologyCoordinator = null;
         }
@@ -764,6 +777,11 @@ public final class DisplayManagerService extends SystemService {
     }
 
     @Override
+    public void onUserUnlocked(@NonNull final TargetUser to) {
+        scheduleTopologiesReload(to.getUserIdentifier(), /*isUserSwitching=*/ true);
+    }
+
+    @Override
     public void onUserSwitching(@Nullable TargetUser from, @NonNull TargetUser to) {
         final int newUserId = to.getUserIdentifier();
         final int userSerial = getUserManager().getUserSerialNumber(newUserId);
@@ -801,6 +819,11 @@ public final class DisplayManagerService extends SystemService {
 
             if (mFlags.isDisplayContentModeManagementEnabled()) {
                 updateMirrorBuiltInDisplaySettingLocked();
+            }
+
+            final UserManager userManager = getUserManager();
+            if (null != userManager && userManager.isUserUnlockingOrUnlocked(mCurrentUserId)) {
+                scheduleTopologiesReload(mCurrentUserId, /*isUserSwitching=*/ true);
             }
         }
     }
@@ -879,6 +902,8 @@ public final class DisplayManagerService extends SystemService {
 
         mSmallAreaDetectionController = (mFlags.isSmallAreaDetectionEnabled())
                 ? SmallAreaDetectionController.create(mContext) : null;
+
+        scheduleTopologiesReload(mCurrentUserId, /*isUserSwitching=*/ false);
     }
 
     @VisibleForTesting
@@ -929,6 +954,15 @@ public final class DisplayManagerService extends SystemService {
 
     DisplayNotificationManager getDisplayNotificationManager() {
         return mDisplayNotificationManager;
+    }
+
+    private void scheduleTopologiesReload(final int userId, final boolean isUserSwitching) {
+        if (mDisplayTopologyCoordinator != null) {
+            // Need background thread due to xml files read operations not allowed on Display thread
+            BackgroundThread.getHandler().post(() ->
+                    mDisplayTopologyCoordinator.reloadTopologies(
+                            userId, isUserSwitching));
+        }
     }
 
     private void loadStableDisplayValuesLocked() {
@@ -1045,8 +1079,10 @@ public final class DisplayManagerService extends SystemService {
             final BrightnessPair brightnessPair =
                     index < 0 ? null : mDisplayBrightnesses.valueAt(index);
             if (index < 0 || (mDisplayStates.valueAt(index) == state
+// QTI_BEGIN: 2023-06-13: Display: Revert "Revert "Use exact brightnesses values for comparison.""
                     && brightnessPair.brightness == brightnessState
                     && brightnessPair.sdrBrightness == sdrBrightnessState)) {
+// QTI_END: 2023-06-13: Display: Revert "Revert "Use exact brightnesses values for comparison.""
                 return; // Display no longer exists or no change.
             }
 
@@ -1806,7 +1842,11 @@ public final class DisplayManagerService extends SystemService {
         }
 
         if ((flags & VIRTUAL_DISPLAY_FLAG_PUBLIC) != 0) {
-            flags |= VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR;
+            if ((flags & VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY) == 0) {
+                Slog.d(TAG, "Public virtual displays are auto mirror by default, hence adding "
+                        + "VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR.");
+                flags |= VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR;
+            }
 
             // Public displays can't be allowed to show content when locked.
             if ((flags & VIRTUAL_DISPLAY_FLAG_CAN_SHOW_WITH_INSECURE_KEYGUARD) != 0) {
@@ -1814,10 +1854,16 @@ public final class DisplayManagerService extends SystemService {
                         "Public display must not be marked as SHOW_WHEN_LOCKED_INSECURE");
             }
         }
-        if ((flags & VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY) != 0) {
+        if ((flags & VIRTUAL_DISPLAY_FLAG_OWN_CONTENT_ONLY) != 0
+                && (flags & VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR) != 0) {
+            Slog.d(TAG, "Own content displays cannot auto mirror other displays, hence ignoring "
+                    + "VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR.");
             flags &= ~VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR;
         }
-        if ((flags & VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR) != 0) {
+        if ((flags & VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR) != 0
+                && (flags & VIRTUAL_DISPLAY_FLAG_OWN_DISPLAY_GROUP) != 0) {
+            Slog.d(TAG, "Auto mirror displays must be in the default display group, hence ignoring "
+                    + "VIRTUAL_DISPLAY_FLAG_OWN_DISPLAY_GROUP.");
             flags &= ~VIRTUAL_DISPLAY_FLAG_OWN_DISPLAY_GROUP;
         }
         // Put the display in the virtual device's display group only if it's not a mirror display,
@@ -1827,6 +1873,8 @@ public final class DisplayManagerService extends SystemService {
                 && (flags & VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR) == 0
                 && (flags & VIRTUAL_DISPLAY_FLAG_TRUSTED) == VIRTUAL_DISPLAY_FLAG_TRUSTED
                 && virtualDevice != null) {
+            Slog.d(TAG, "Own content displays owned by virtual devices are put in that device's "
+                    + "display group, hence adding VIRTUAL_DISPLAY_FLAG_DEVICE_DISPLAY_GROUP.");
             flags |= VIRTUAL_DISPLAY_FLAG_DEVICE_DISPLAY_GROUP;
         }
 
@@ -1858,8 +1906,7 @@ public final class DisplayManagerService extends SystemService {
             Binder.restoreCallingIdentity(firstToken);
         }
 
-        if (callingUid != Process.SYSTEM_UID
-                && (flags & VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR) != 0) {
+        if (callingUid != Process.SYSTEM_UID && (flags & VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR) != 0) {
             // Only a valid media projection or a virtual device can create a mirror virtual
             // display.
             if (!canProjectVideo(projection) && !canCreateMirrorDisplays(virtualDevice)
@@ -1882,7 +1929,9 @@ public final class DisplayManagerService extends SystemService {
         }
 
         if (callingUid != Process.SYSTEM_UID && (flags & VIRTUAL_DISPLAY_FLAG_TRUSTED) != 0) {
+// QTI_BEGIN: 2024-03-28: Core: Revert PhoneLink in framework/base
             if (!checkCallingPermission(ADD_TRUSTED_DISPLAY, "createVirtualDisplay()")) {
+// QTI_END: 2024-03-28: Core: Revert PhoneLink in framework/base
                 EventLog.writeEvent(0x534e4554, "162627132", callingUid,
                         "Attempt to create a trusted display without holding permission!");
                 throw new SecurityException("Requires ADD_TRUSTED_DISPLAY permission to "
@@ -1907,6 +1956,14 @@ public final class DisplayManagerService extends SystemService {
             }
         }
 
+        if ((flags & VIRTUAL_DISPLAY_FLAG_ALWAYS_UNLOCKED) != 0
+                && (flags & VIRTUAL_DISPLAY_FLAG_OWN_DISPLAY_GROUP) == 0
+                && (flags & VIRTUAL_DISPLAY_FLAG_DEVICE_DISPLAY_GROUP) == 0) {
+            Slog.d(TAG, "Always unlocked displays cannot be in the default display group, hence "
+                    + "ignoring flag VIRTUAL_DISPLAY_FLAG_ALWAYS_UNLOCKED.");
+            flags &= ~VIRTUAL_DISPLAY_FLAG_ALWAYS_UNLOCKED;
+        }
+
         if ((flags & VIRTUAL_DISPLAY_FLAG_ALWAYS_UNLOCKED) != 0) {
             if (callingUid != Process.SYSTEM_UID
                     && !checkCallingPermission(ADD_ALWAYS_UNLOCKED_DISPLAY,
@@ -1917,7 +1974,24 @@ public final class DisplayManagerService extends SystemService {
             }
         }
 
-        if ((flags & VIRTUAL_DISPLAY_FLAG_TRUSTED) == 0) {
+        if ((flags & VIRTUAL_DISPLAY_FLAG_OWN_FOCUS) != 0
+                && (flags & VIRTUAL_DISPLAY_FLAG_TRUSTED) == 0) {
+            Slog.d(TAG, "Untrusted displays cannot have own focus, hence ignoring flag "
+                    + "VIRTUAL_DISPLAY_FLAG_OWN_FOCUS.");
+            flags &= ~VIRTUAL_DISPLAY_FLAG_OWN_FOCUS;
+        }
+
+        if ((flags & VIRTUAL_DISPLAY_FLAG_STEAL_TOP_FOCUS_DISABLED) != 0
+                && (flags & VIRTUAL_DISPLAY_FLAG_OWN_FOCUS) == 0) {
+            Slog.d(TAG, "Virtual displays that cannot steal top focus must have their own "
+                    + " focus, hence ignoring flag VIRTUAL_DISPLAY_FLAG_STEAL_TOP_FOCUS_DISABLED.");
+            flags &= ~VIRTUAL_DISPLAY_FLAG_STEAL_TOP_FOCUS_DISABLED;
+        }
+
+        if ((flags & VIRTUAL_DISPLAY_FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS) != 0
+                && (flags & VIRTUAL_DISPLAY_FLAG_TRUSTED) == 0) {
+            Slog.d(TAG, "Untrusted displays cannot show system decorations, hence ignoring flag "
+                    + "VIRTUAL_DISPLAY_FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS.");
             flags &= ~VIRTUAL_DISPLAY_FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS;
         }
 
@@ -2255,10 +2329,6 @@ public final class DisplayManagerService extends SystemService {
 
     @GuardedBy("mSyncRoot")
     private void handleLogicalDisplayDisconnectedLocked(LogicalDisplay display) {
-        if (!mFlags.isConnectedDisplayManagementEnabled()) {
-            Slog.e(TAG, "DisplayDisconnected shouldn't be received when the flag is off");
-            return;
-        }
         releaseDisplayAndEmitEvent(display, DisplayManagerGlobal.EVENT_DISPLAY_DISCONNECTED);
         mExternalDisplayPolicy.handleLogicalDisplayDisconnectedLocked(display);
     }
@@ -2301,7 +2371,9 @@ public final class DisplayManagerService extends SystemService {
             });
         }
 
+// QTI_BEGIN: 2021-06-28: Display: initialize displays to On state
         mDisplayStates.append(displayId, Display.STATE_ON);
+// QTI_END: 2021-06-28: Display: initialize displays to On state
 
         final float brightnessDefault = display.getDisplayInfoLocked().brightnessDefault;
         mDisplayBrightnesses.append(displayId,
@@ -2324,11 +2396,6 @@ public final class DisplayManagerService extends SystemService {
 
     @SuppressLint("AndroidFrameworkRequiresPermission")
     private void handleLogicalDisplayConnectedLocked(LogicalDisplay display) {
-        if (!mFlags.isConnectedDisplayManagementEnabled()) {
-            Slog.e(TAG, "DisplayConnected shouldn't be received when the flag is off");
-            return;
-        }
-
         setupLogicalDisplay(display);
 
         if (ExternalDisplayPolicy.isExternalDisplayLocked(display)) {
@@ -2355,9 +2422,6 @@ public final class DisplayManagerService extends SystemService {
     private void handleLogicalDisplayAddedLocked(LogicalDisplay display) {
         final int displayId = display.getDisplayIdLocked();
         final boolean isDefault = displayId == Display.DEFAULT_DISPLAY;
-        if (!mFlags.isConnectedDisplayManagementEnabled()) {
-            setupLogicalDisplay(display);
-        }
 
         // Wake up waitForDefaultDisplay.
         if (isDefault) {
@@ -2452,21 +2516,17 @@ public final class DisplayManagerService extends SystemService {
     }
 
     private void handleLogicalDisplayRemovedLocked(@NonNull LogicalDisplay display) {
-        // With display management, the display is removed when disabled, and it might still exist.
+        // The display is removed when disabled, and it might still exist.
         // Resources must only be released when the disconnected signal is received.
-        if (mFlags.isConnectedDisplayManagementEnabled()) {
-            if (display.isValidLocked()) {
-                updateViewportPowerStateLocked(display);
-            }
+        if (display.isValidLocked()) {
+            updateViewportPowerStateLocked(display);
+        }
 
-            // Note: This method is only called if the display was enabled before being removed.
-            sendDisplayEventLocked(display, DisplayManagerGlobal.EVENT_DISPLAY_REMOVED);
+        // Note: This method is only called if the display was enabled before being removed.
+        sendDisplayEventLocked(display, DisplayManagerGlobal.EVENT_DISPLAY_REMOVED);
 
-            if (display.isValidLocked()) {
-                applyDisplayChangedLocked(display);
-            }
-        } else {
-            releaseDisplayAndEmitEvent(display, DisplayManagerGlobal.EVENT_DISPLAY_REMOVED);
+        if (display.isValidLocked()) {
+            applyDisplayChangedLocked(display);
         }
         if (mDisplayTopologyCoordinator != null) {
             mDisplayTopologyCoordinator.onDisplayRemoved(display.getDisplayIdLocked());
@@ -3470,8 +3530,11 @@ public final class DisplayManagerService extends SystemService {
     }
 
     private void sendDisplayEventFrameRateOverrideLocked(int displayId) {
+        int event = (mFlags.isFramerateOverrideTriggersRrCallbacksEnabled())
+                ? DisplayManagerGlobal.EVENT_DISPLAY_REFRESH_RATE_CHANGED
+                : DisplayManagerGlobal.EVENT_DISPLAY_BASIC_CHANGED;
         Message msg = mHandler.obtainMessage(MSG_DELIVER_DISPLAY_EVENT_FRAME_RATE_OVERRIDE,
-                displayId, DisplayManagerGlobal.EVENT_DISPLAY_BASIC_CHANGED);
+                displayId, event);
         mHandler.sendMessage(msg);
     }
 
@@ -3634,6 +3697,7 @@ public final class DisplayManagerService extends SystemService {
     }
 
     private void dumpInternal(PrintWriter pw) {
+// QTI_BEGIN: 2020-10-14: Display: DisplayManager: Fix synchronization issue
         synchronized (mSyncDump) {
             if (mDumpInProgress) {
                 pw.println("One dump is in service already.");
@@ -3642,6 +3706,7 @@ public final class DisplayManagerService extends SystemService {
             mDumpInProgress = true;
         }
 
+// QTI_END: 2020-10-14: Display: DisplayManager: Fix synchronization issue
         pw.println("DISPLAY MANAGER (dumpsys display)");
         BrightnessTracker brightnessTrackerLocal;
         SparseArray<DisplayPowerController> displayPowerControllersLocal = new SparseArray<>();
@@ -3666,6 +3731,7 @@ public final class DisplayManagerService extends SystemService {
             pw.println("  mWifiDisplayScanRequestCount=" + mWifiDisplayScanRequestCount);
             pw.println("  mStableDisplaySize=" + mStableDisplaySize);
             pw.println("  mMinimumBrightnessCurve=" + mMinimumBrightnessCurve);
+            pw.println("  mMaxImportanceForRRCallbacks=" + mMaxImportanceForRRCallbacks);
 
             if (mUserPreferredMode != null) {
                 pw.println(" mUserPreferredMode=" + mUserPreferredMode);
@@ -3754,9 +3820,11 @@ public final class DisplayManagerService extends SystemService {
             pw.println();
             mSmallAreaDetectionController.dump(pw);
         }
+// QTI_BEGIN: 2020-10-14: Display: DisplayManager: Fix synchronization issue
         synchronized (mSyncDump) {
             mDumpInProgress = false;
         }
+// QTI_END: 2020-10-14: Display: DisplayManager: Fix synchronization issue
 
         if (mDisplayTopologyCoordinator != null) {
             pw.println();
@@ -3795,6 +3863,10 @@ public final class DisplayManagerService extends SystemService {
                 mLogicalDisplayMapper.setDisplayEnabledLocked(logicalDisplay, enabled);
             }
         }
+    }
+
+    void overrideMaxImportanceForRRCallbacks(int importance) {
+        mMaxImportanceForRRCallbacks = importance;
     }
 
     boolean requestDisplayPower(int displayId, int requestedState) {
@@ -4180,6 +4252,19 @@ public final class DisplayManagerService extends SystemService {
             mPackageName = packageNames == null ? null : packageNames[0];
         }
 
+        public boolean shouldReceiveRefreshRateWithChangeUpdate(int event) {
+            if (mFlags.isRefreshRateEventForForegroundAppsEnabled()
+                    && event == DisplayManagerGlobal.EVENT_DISPLAY_REFRESH_RATE_CHANGED
+                    && mActivityManagerInternal != null) {
+                int procState = mActivityManagerInternal.getUidProcessState(mUid);
+                int importance = ActivityManager.RunningAppProcessInfo
+                        .procStateToImportance(procState);
+                return importance <= mMaxImportanceForRRCallbacks || mUid <= Process.SYSTEM_UID;
+            }
+
+            return true;
+        }
+
         public void updateEventFlagsMask(@InternalEventFlag long internalEventFlag) {
             mInternalEventFlagsMask.set(internalEventFlag);
         }
@@ -4224,6 +4309,9 @@ public final class DisplayManagerService extends SystemService {
             }
         }
 
+        /**
+         * This method must not be called with mCallback held or deadlock will ensue.
+         */
         @Override
         public void binderDied() {
             synchronized (mCallback) {
@@ -4284,17 +4372,13 @@ public final class DisplayManagerService extends SystemService {
                 }
             }
 
-            return transmitDisplayEvent(displayId, event);
-        }
+            if (!shouldReceiveRefreshRateWithChangeUpdate(event)) {
+                // The client is not visible to the user and is not a system service, so do nothing.
+                return true;
+            }
 
-        /**
-         * Transmit a single display event.  The client is presumed ready.  Return true on success
-         * and false if the client died.
-         */
-        private boolean transmitDisplayEvent(int displayId, @DisplayEvent int event) {
-            // The client is ready to receive the event.
             try {
-                mCallback.onDisplayEvent(displayId, event);
+                transmitDisplayEvent(displayId, event);
                 return true;
             } catch (RemoteException ex) {
                 Slog.w(TAG, "Failed to notify process "
@@ -4302,6 +4386,18 @@ public final class DisplayManagerService extends SystemService {
                 binderDied();
                 return false;
             }
+        }
+
+        /**
+         * Transmit a single display event.  The client is presumed ready.  This throws if the
+         * client has died; callers must catch and handle the exception.  The exception cannot be
+         * handled directly here because {@link #binderDied()} must not be called whilst holding
+         * the mCallback lock.
+         */
+        private void transmitDisplayEvent(int displayId, @DisplayEvent int event)
+                throws RemoteException {
+            // The client is ready to receive the event.
+            mCallback.onDisplayEvent(displayId, event);
         }
 
         /**
@@ -4412,6 +4508,7 @@ public final class DisplayManagerService extends SystemService {
         // would be unusual to do so.  The method returns true on success.
         // This is only used if {@link deferDisplayEventsWhenFrozen()} is true.
         public boolean dispatchPending() {
+            Event[] pending;
             synchronized (mCallback) {
                 if (mPendingEvents == null || mPendingEvents.isEmpty() || !mAlive) {
                     return true;
@@ -4419,20 +4516,32 @@ public final class DisplayManagerService extends SystemService {
                 if (!isReadyLocked()) {
                     return false;
                 }
-                for (int i = 0; i < mPendingEvents.size(); i++) {
-                    Event displayEvent = mPendingEvents.get(i);
+                pending = new Event[mPendingEvents.size()];
+                pending = mPendingEvents.toArray(pending);
+                mPendingEvents.clear();
+            }
+            try {
+                for (int i = 0; i < pending.length; i++) {
+                    Event displayEvent = pending[i];
                     if (DEBUG) {
                         Slog.d(TAG, "Send pending display event #" + i + " "
                                 + displayEvent.displayId + "/"
                                 + displayEvent.event + " to " + mUid + "/" + mPid);
                     }
-                    if (!transmitDisplayEvent(displayEvent.displayId, displayEvent.event)) {
-                        Slog.d(TAG, "Drop pending events for dead process " + mPid);
-                        break;
+
+                    if (!shouldReceiveRefreshRateWithChangeUpdate(displayEvent.event)) {
+                        continue;
                     }
+
+                    transmitDisplayEvent(displayEvent.displayId, displayEvent.event);
                 }
-                mPendingEvents.clear();
                 return true;
+            } catch (RemoteException ex) {
+                Slog.w(TAG, "Failed to notify process "
+                        + mPid + " that display topology changed, assuming it died.", ex);
+                binderDied();
+                return false;
+
             }
         }
 
@@ -4585,13 +4694,11 @@ public final class DisplayManagerService extends SystemService {
             final int callingPid = Binder.getCallingPid();
             final int callingUid = Binder.getCallingUid();
 
-            if (mFlags.isConnectedDisplayManagementEnabled()) {
-                if ((internalEventFlagsMask
-                        & DisplayManagerGlobal
-                        .INTERNAL_EVENT_FLAG_DISPLAY_CONNECTION_CHANGED) != 0) {
-                    mContext.enforceCallingOrSelfPermission(MANAGE_DISPLAYS,
-                            "Permission required to get signals about connection events.");
-                }
+            if ((internalEventFlagsMask
+                    & DisplayManagerGlobal
+                    .INTERNAL_EVENT_FLAG_DISPLAY_CONNECTION_CHANGED) != 0) {
+                mContext.enforceCallingOrSelfPermission(MANAGE_DISPLAYS,
+                        "Permission required to get signals about connection events.");
             }
 
             final long token = Binder.clearCallingIdentity();
@@ -5927,6 +6034,14 @@ public final class DisplayManagerService extends SystemService {
         @Override
         public boolean isDisplayReadyForMirroring(int displayId) {
             return mExternalDisplayPolicy.isDisplayReadyForMirroring(displayId);
+        }
+
+        @Override
+        public void reloadTopologies(final int userId) {
+            // Reload topologies only if the userId matches the current user id.
+            if (userId == mCurrentUserId) {
+                scheduleTopologiesReload(mCurrentUserId, /*isUserSwitching=*/ false);
+            }
         }
     }
 

@@ -89,7 +89,7 @@ public class KeyguardSimPukViewController
             SecurityMode securityMode, LockPatternUtils lockPatternUtils,
             KeyguardSecurityCallback keyguardSecurityCallback,
             KeyguardMessageAreaController.Factory messageAreaControllerFactory,
-            LatencyTracker latencyTracker, LiftToActivateListener liftToActivateListener,
+            LatencyTracker latencyTracker,
             TelephonyManager telephonyManager, FalsingCollector falsingCollector,
             EmergencyButtonController emergencyButtonController, FeatureFlags featureFlags,
             SelectedUserInteractor selectedUserInteractor,
@@ -97,7 +97,7 @@ public class KeyguardSimPukViewController
             BouncerHapticPlayer bouncerHapticPlayer,
             UserActivityNotifier userActivityNotifier) {
         super(view, keyguardUpdateMonitor, securityMode, lockPatternUtils, keyguardSecurityCallback,
-                messageAreaControllerFactory, latencyTracker, liftToActivateListener,
+                messageAreaControllerFactory, latencyTracker,
                 emergencyButtonController, falsingCollector, featureFlags, selectedUserInteractor,
                 keyguardKeyboardInteractor, bouncerHapticPlayer, userActivityNotifier);
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
@@ -244,7 +244,9 @@ public class KeyguardSimPukViewController
                 else {
                     Log.d(TAG, "onSimCheckResponse " + " empty One result "
                             + result.toString());
+// QTI_BEGIN: 2023-01-18: Telephony: Fix incorrect text shown at PUK lock screen
                     if (result.getAttemptsRemaining() > 0) {
+// QTI_END: 2023-01-18: Telephony: Fix incorrect text shown at PUK lock screen
                         mRemainingAttempts = result.getAttemptsRemaining();
                         mMessageAreaController.setMessage(
                                 mView.getPukPasswordErrorMessage(

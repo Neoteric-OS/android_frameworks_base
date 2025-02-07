@@ -218,6 +218,13 @@ public class DesktopModeStatus {
         return isDeviceEligibleForDesktopMode(context) && Flags.showDesktopWindowingDevOption();
     }
 
+    /**
+     * Return {@code true} if desktop mode dev option should be shown on current device
+     */
+    public static boolean canShowDesktopExperienceDevOption(@NonNull Context context) {
+        return Flags.showDesktopExperienceDevOption();
+    }
+
     /** Returns if desktop mode dev option should be enabled if there is no user override. */
     public static boolean shouldDevOptionBeEnabledByDefault() {
         return Flags.enableDesktopWindowingMode();
@@ -230,6 +237,16 @@ public class DesktopModeStatus {
         if (!isDeviceEligibleForDesktopMode(context)) return false;
 
         return DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODE.isTrue();
+    }
+
+    /**
+     * Returns whether the multiple desktops feature is enabled for this device (both backend and
+     * frontend implementations).
+     */
+    public static boolean enableMultipleDesktops(@NonNull Context context) {
+        return Flags.enableMultipleDesktopsBackend()
+                && Flags.enableMultipleDesktopsFrontend()
+                && canEnterDesktopMode(context);
     }
 
     /**
@@ -280,7 +297,7 @@ public class DesktopModeStatus {
     /**
      * Return {@code true} if desktop mode is unrestricted and is supported in the device.
      */
-    private static boolean isDeviceEligibleForDesktopMode(@NonNull Context context) {
+    public static boolean isDeviceEligibleForDesktopMode(@NonNull Context context) {
         return !enforceDeviceRestrictions() || isDesktopModeSupported(context);
     }
 

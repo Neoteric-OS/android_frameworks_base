@@ -23,9 +23,11 @@ import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import com.android.systemui.res.R
 import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderScope
+import com.android.systemui.volume.dialog.sliders.ui.viewmodel.VolumeDialogSliderInputEventsViewModel
 import com.android.systemui.volume.dialog.sliders.ui.viewmodel.VolumeDialogSliderStateModel
 import com.android.systemui.volume.dialog.sliders.ui.viewmodel.VolumeDialogSliderViewModel
 import com.google.android.material.slider.Slider
+import com.google.android.material.slider.Slider.OnSliderTouchListener
 import javax.inject.Inject
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
@@ -35,7 +37,10 @@ import kotlinx.coroutines.flow.onEach
 @VolumeDialogSliderScope
 class VolumeDialogSliderViewBinder
 @Inject
-constructor(private val viewModel: VolumeDialogSliderViewModel) {
+constructor(
+    private val viewModel: VolumeDialogSliderViewModel,
+    private val inputViewModel: VolumeDialogSliderInputEventsViewModel,
+) {
 
     private val sliderValueProperty =
         object : FloatPropertyCompat<Slider>("value") {
@@ -51,16 +56,30 @@ constructor(private val viewModel: VolumeDialogSliderViewModel) {
             dampingRatio = SpringForce.DAMPING_RATIO_NO_BOUNCY
         }
 
+    @SuppressLint("ClickableViewAccessibility")
     fun CoroutineScope.bind(view: View) {
         var isInitialUpdate = true
         val sliderView: Slider = view.requireViewById(R.id.volume_dialog_slider)
         val animation = SpringAnimation(sliderView, sliderValueProperty)
         animation.spring = springForce
-
+        sliderView.setOnTouchListener { _, event ->
+            inputViewModel.onTouchEvent(event)
+            false
+        }
         sliderView.addOnChangeListener { _, value, fromUser ->
             viewModel.setStreamVolume(value.roundToInt(), fromUser)
         }
+        sliderView.addOnSliderTouchListener(
+            object : OnSliderTouchListener {
+                override fun onStartTrackingTouch(slider: Slider) {}
 
+                override fun onStopTrackingTouch(slider: Slider) {
+                    viewModel.onStreamChangeFinished(slider.value.roundToInt())
+                }
+            }
+        )
+
+        viewModel.isDisabledByZenMode.onEach { sliderView.isEnabled = !it }.launchIn(this)
         viewModel.state
             .onEach {
                 sliderView.setModel(it, animation, isInitialUpdate)
@@ -82,7 +101,7 @@ constructor(private val viewModel: VolumeDialogSliderViewModel) {
         // coerce the current value to the new value range before animating it. This prevents
         // animating from the value that is outside of current [valueFrom, valueTo].
         value = value.coerceIn(valueFrom, valueTo)
-        setTrackIconActiveStart(model.iconRes)
+        trackIconActiveStart = model.icon
         if (isInitialUpdate) {
             value = model.value
         } else {

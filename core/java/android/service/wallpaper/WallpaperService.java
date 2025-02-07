@@ -325,6 +325,7 @@ public abstract class WallpaperService extends Service {
         IWindowSession mSession;
 
         final Object mLock = new Object();
+        private final Object mSurfaceReleaseLock = new Object();
         boolean mOffsetMessageEnqueued;
 
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
@@ -1075,9 +1076,11 @@ public abstract class WallpaperService extends Service {
                 animator.setDuration(DIMMING_ANIMATION_DURATION_MS);
                 animator.addUpdateListener((ValueAnimator va) -> {
                     final float dimValue = (float) va.getAnimatedValue();
-                    if (mBbqSurfaceControl != null) {
-                        surfaceControlTransaction
-                                .setAlpha(mBbqSurfaceControl, 1 - dimValue).apply();
+                    synchronized (mSurfaceReleaseLock) {
+                        if (mBbqSurfaceControl != null && mBbqSurfaceControl.isValid()) {
+                            surfaceControlTransaction
+                                    .setAlpha(mBbqSurfaceControl, 1 - dimValue).apply();
+                        }
                     }
                 });
                 animator.addListener(new AnimatorListenerAdapter() {
@@ -1209,7 +1212,9 @@ public abstract class WallpaperService extends Service {
         void updateSurface(boolean forceRelayout, boolean forceReport, boolean redrawNeeded) {
             if (mDestroyed) {
                 Log.w(TAG, "Ignoring updateSurface due to destroyed");
+// QTI_BEGIN: 2021-09-08: Android_UI: frameworks/base:NPE in ImageWallpaper
                 return;
+// QTI_END: 2021-09-08: Android_UI: frameworks/base:NPE in ImageWallpaper
             }
 
             boolean fixedSize = false;
@@ -2356,35 +2361,39 @@ public abstract class WallpaperService extends Service {
             if (DEBUG) Log.v(TAG, "onDestroy(): " + this);
             onDestroy();
 
-            if (mCreated) {
-                try {
-                    if (DEBUG) Log.v(TAG, "Removing window and destroying surface "
-                            + mSurfaceHolder.getSurface() + " of: " + this);
+            synchronized (mSurfaceReleaseLock) {
+                if (mCreated) {
+                    try {
+                        if (DEBUG) {
+                            Log.v(TAG, "Removing window and destroying surface "
+                                    + mSurfaceHolder.getSurface() + " of: " + this);
+                        }
 
-                    if (mInputEventReceiver != null) {
-                        mInputEventReceiver.dispose();
-                        mInputEventReceiver = null;
+                        if (mInputEventReceiver != null) {
+                            mInputEventReceiver.dispose();
+                            mInputEventReceiver = null;
+                        }
+
+                        mSession.remove(mWindow.asBinder());
+                    } catch (RemoteException e) {
                     }
+                    mSurfaceHolder.mSurface.release();
+                    if (mBlastBufferQueue != null) {
+                        mBlastBufferQueue.destroy();
+                        mBlastBufferQueue = null;
+                    }
+                    if (mBbqSurfaceControl != null) {
+                        new SurfaceControl.Transaction().remove(mBbqSurfaceControl).apply();
+                        mBbqSurfaceControl = null;
+                    }
+                    mCreated = false;
+                }
 
-                    mSession.remove(mWindow.asBinder());
-                } catch (RemoteException e) {
+                if (mSurfaceControl != null) {
+                    mSurfaceControl.release();
+                    mSurfaceControl = null;
+                    mRelayoutResult = null;
                 }
-                mSurfaceHolder.mSurface.release();
-                if (mBlastBufferQueue != null) {
-                    mBlastBufferQueue.destroy();
-                    mBlastBufferQueue = null;
-                }
-                if (mBbqSurfaceControl != null) {
-                    new SurfaceControl.Transaction().remove(mBbqSurfaceControl).apply();
-                    mBbqSurfaceControl = null;
-                }
-                mCreated = false;
-            }
-
-            if (mSurfaceControl != null) {
-                mSurfaceControl.release();
-                mSurfaceControl = null;
-                mRelayoutResult = null;
             }
         }
 
@@ -2417,9 +2426,10 @@ public abstract class WallpaperService extends Service {
 
             Surface ret = null;
             if (mBlastBufferQueue == null) {
-                mBlastBufferQueue = new BLASTBufferQueue("Wallpaper", mBbqSurfaceControl,
-                        width, height, format);
+                mBlastBufferQueue = new BLASTBufferQueue("Wallpaper",
+                        true /* updateDestinationFrame */);
                 mBlastBufferQueue.setApplyToken(mBbqApplyToken);
+                mBlastBufferQueue.update(mBbqSurfaceControl, width, height, format);
                 // We only return the Surface the first time, as otherwise
                 // it hasn't changed and there is no need to update.
                 ret = mBlastBufferQueue.createSurface();
@@ -2711,7 +2721,9 @@ public abstract class WallpaperService extends Service {
                     return;
                 }
                 case MSG_UPDATE_SURFACE:
+// QTI_BEGIN: 2018-09-20: Android_UI: Wallpaper is half black after rotating quickly
                     mEngine.updateSurface(true, false, true/*false*/);
+// QTI_END: 2018-09-20: Android_UI: Wallpaper is half black after rotating quickly
                     break;
                 case MSG_ZOOM:
                     mEngine.setZoom(Float.intBitsToFloat(message.arg1));

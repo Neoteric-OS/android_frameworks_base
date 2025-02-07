@@ -111,10 +111,8 @@
     <string name="screenrecord_channel_description" msgid="4147077128486138351">"Notifikasi yang sedang berjalan untuk sesi rekaman layar"</string>
     <string name="screenrecord_permission_dialog_title" msgid="7415261783188749730">"Rekam layar Anda?"</string>
     <string name="screenrecord_permission_dialog_option_text_single_app" msgid="1996450687814647583">"Rekam satu aplikasi"</string>
-    <!-- no translation found for screenrecord_permission_dialog_option_text_entire_screen (4882406311415082016) -->
-    <skip />
-    <!-- no translation found for screenrecord_permission_dialog_option_text_entire_screen_for_display (4169494703993148253) -->
-    <skip />
+    <string name="screenrecord_permission_dialog_option_text_entire_screen" msgid="4882406311415082016">"Rekam layar ini"</string>
+    <string name="screenrecord_permission_dialog_option_text_entire_screen_for_display" msgid="4169494703993148253">"Rekam %s"</string>
     <string name="screenrecord_permission_dialog_warning_entire_screen" msgid="1321758636709366068">"Saat Anda merekam seluruh layar, semua hal yang ditampilkan di layar akan direkam. Jadi, berhati-hatilah saat memasukkan sandi, detail pembayaran, pesan, foto, audio, dan video."</string>
     <string name="screenrecord_permission_dialog_warning_single_app" msgid="3738199712880063924">"Jika Anda merekam aplikasi, semua hal yang ditampilkan atau diputar di aplikasi tersebut akan direkam. Jadi, berhati-hatilah saat memasukkan sandi, detail pembayaran, pesan, foto, audio, dan video."</string>
     <string name="screenrecord_permission_dialog_continue_entire_screen" msgid="5557974446773486600">"Rekam layar"</string>
@@ -417,20 +415,13 @@
     <string name="hearing_devices_presets_error" msgid="350363093458408536">"Tidak dapat memperbarui preset"</string>
     <string name="hearing_devices_preset_label" msgid="7878267405046232358">"Preset"</string>
     <string name="hearing_devices_spinner_item_selected" msgid="3137083889662762383">"Dipilih"</string>
-    <!-- no translation found for hearing_devices_ambient_label (629440938614895797) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_control_left (3586965448230412600) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_control_right (6192137602448918383) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_expand_controls (2131816068187709200) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_collapse_controls (2261097656446201581) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_mute (1836882837647429416) -->
-    <skip />
-    <!-- no translation found for hearing_devices_ambient_unmute (2187938085943876814) -->
-    <skip />
+    <string name="hearing_devices_ambient_label" msgid="629440938614895797">"Suara sekitar"</string>
+    <string name="hearing_devices_ambient_control_left" msgid="3586965448230412600">"Kiri"</string>
+    <string name="hearing_devices_ambient_control_right" msgid="6192137602448918383">"Kanan"</string>
+    <string name="hearing_devices_ambient_expand_controls" msgid="2131816068187709200">"Luaskan ke kontrol terpisah kiri dan kanan"</string>
+    <string name="hearing_devices_ambient_collapse_controls" msgid="2261097656446201581">"Ciutkan ke kontrol terpadu"</string>
+    <string name="hearing_devices_ambient_mute" msgid="1836882837647429416">"Bisukan suara sekitar"</string>
+    <string name="hearing_devices_ambient_unmute" msgid="2187938085943876814">"Bunyikan suara sekitar"</string>
     <string name="hearing_devices_tools_label" msgid="1929081464316074476">"Alat"</string>
     <string name="quick_settings_hearing_devices_live_caption_title" msgid="1054814050932225451">"Teks Otomatis"</string>
     <string name="quick_settings_notes_label" msgid="1028004078001002623">"Catatan"</string>
@@ -759,6 +750,8 @@
     <string name="qr_code_scanner_updating_secondary_label" msgid="8344598017007876352">"Update berlangsung"</string>
     <string name="status_bar_work" msgid="5238641949837091056">"Profil kerja"</string>
     <string name="status_bar_airplane" msgid="4848702508684541009">"Mode pesawat"</string>
+    <!-- no translation found for status_bar_supervision (6735015942701134125) -->
+    <skip />
     <string name="zen_alarm_warning" msgid="7844303238486849503">"Anda tidak akan mendengar alarm berikutnya <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template" msgid="2234991538018805736">"pukul <xliff:g id="WHEN">%1$s</xliff:g>"</string>
     <string name="alarm_template_far" msgid="3561752195856839456">"pada <xliff:g id="WHEN">%1$s</xliff:g>"</string>
@@ -768,7 +761,7 @@
     <string name="accessibility_status_bar_satellite_good_connection" msgid="308079391708578704">"Satelit, koneksi baik"</string>
     <string name="accessibility_status_bar_satellite_available" msgid="6514855015496916829">"Satelit, koneksi tersedia"</string>
     <string name="satellite_connected_carrier_text" msgid="118524195198532589">"SOS via Satelit"</string>
-    <string name="satellite_emergency_only_carrier_text" msgid="828510231597991206">"Panggilan darurat atau SOS"</string>
+    <string name="satellite_emergency_only_carrier_text" msgid="9103913890116841786">"Panggilan darurat atau SOS saja"</string>
     <string name="accessibility_phone_string_format" msgid="7798841417881811812">"<xliff:g id="CARRIER_NAME">%1$s</xliff:g>, <xliff:g id="SIGNAL_STRENGTH_DESCRIPTION">%2$s</xliff:g>."</string>
     <string name="accessibility_no_signal" msgid="7052827511409250167">"tidak ada sinyal"</string>
     <string name="accessibility_one_bar" msgid="5342012847647834506">"satu batang"</string>
@@ -865,7 +858,6 @@
     <string name="keyboard_shortcut_group_system_back" msgid="1055709713218453863">"Kembali"</string>
     <string name="keyboard_shortcut_group_system_notifications" msgid="3615971650562485878">"Notifikasi"</string>
     <string name="keyboard_shortcut_group_system_shortcuts_helper" msgid="4856808328618265589">"Pintasan keyboard"</string>
-    <string name="keyboard_shortcut_group_system_switch_input" msgid="952555530383268166">"Ganti tata letak keyboard"</string>
     <string name="keyboard_shortcut_join" msgid="3578314570034512676">"atau"</string>
     <string name="keyboard_shortcut_clear_text" msgid="6631051796030377857">"Hapus kueri penelusuran"</string>
     <string name="keyboard_shortcut_search_list_title" msgid="4271769465397671138">"Pintasan Keyboard"</string>
@@ -976,11 +968,9 @@
     <string name="tuner_low_priority" msgid="8412666814123009820">"Tampilkan ikon notifikasi prioritas rendah"</string>
     <string name="other" msgid="429768510980739978">"Lainnya"</string>
     <string name="accessibility_qs_edit_remove_tile_action" msgid="775511891457193480">"menghapus kartu"</string>
-    <!-- no translation found for accessibility_qs_edit_tile_add_action (8311378984458545661) -->
-    <skip />
+    <string name="accessibility_qs_edit_tile_add_action" msgid="8311378984458545661">"menambahkan kartu ke posisi terakhir"</string>
     <string name="accessibility_qs_edit_tile_start_move" msgid="2009373939914517817">"Pindahkan kartu"</string>
-    <!-- no translation found for accessibility_qs_edit_tile_start_add (8141710006899065161) -->
-    <skip />
+    <string name="accessibility_qs_edit_tile_start_add" msgid="8141710006899065161">"Tambahkan kartu ke posisi yang diinginkan"</string>
     <string name="accessibility_qs_edit_tile_move_to_position" msgid="5198161544045930556">"Pindahkan ke <xliff:g id="POSITION">%1$d</xliff:g>"</string>
     <string name="accessibility_qs_edit_tile_add_to_position" msgid="9029163095148274690">"Tambahkan ke posisi <xliff:g id="POSITION">%1$d</xliff:g>"</string>
     <string name="accessibilit_qs_edit_tile_add_move_invalid_position" msgid="2858467994472624487">"Posisi tidak valid."</string>
@@ -996,8 +986,7 @@
     <string name="accessibility_quick_settings_choose_user_action" msgid="4554388498186576087">"memilih pengguna"</string>
     <string name="data_connection_no_internet" msgid="691058178914184544">"Tidak ada internet"</string>
     <string name="accessibility_quick_settings_open_settings" msgid="536838345505030893">"Buka setelan <xliff:g id="ID_1">%s</xliff:g>."</string>
-    <!-- no translation found for accessibility_quick_settings_edit (6544873823850165) -->
-    <skip />
+    <string name="accessibility_quick_settings_edit" msgid="6544873823850165">"Edit urutan Setelan Cepat."</string>
     <string name="accessibility_quick_settings_power_menu" msgid="6820426108301758412">"Menu daya"</string>
     <string name="accessibility_quick_settings_page" msgid="7506322631645550961">"Halaman <xliff:g id="ID_1">%1$d</xliff:g> dari <xliff:g id="ID_2">%2$d</xliff:g>"</string>
     <string name="tuner_lock_screen" msgid="2267383813241144544">"Layar kunci"</string>
@@ -1246,7 +1235,7 @@
     <string name="media_output_broadcast_name" msgid="8786127091542624618">"Nama Siaran"</string>
     <string name="media_output_broadcast_code" msgid="870795639644728542">"Sandi"</string>
     <string name="media_output_broadcast_dialog_save" msgid="7910865591430010198">"Simpan"</string>
-    <string name="media_output_broadcast_starting" msgid="8130153654166235557">"Memulai …"</string>
+    <string name="media_output_broadcast_starting" msgid="8130153654166235557">"Memulai…"</string>
     <string name="media_output_broadcast_start_failed" msgid="3670835946856129775">"Tidak dapat menyiarkan"</string>
     <string name="media_output_broadcast_update_error" msgid="1420868236079122521">"Tidak dapat menyimpan. Coba lagi."</string>
     <string name="media_output_broadcast_last_update_error" msgid="5484328807296895491">"Tidak dapat menyimpan."</string>
@@ -1301,7 +1290,7 @@
     <string name="accessibility_enter_hint" msgid="2617864063504824834">"masukkan perangkat"</string>
     <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"Gunakan sidik jari untuk membuka"</string>
     <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"Perlu autentikasi. Sentuh sensor sidik jari untuk melakukan autentikasi."</string>
-    <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"Panggilan telepon sedang berlangsung"</string>
+    <string name="ongoing_call_content_description" msgid="6394763878322348560">"Panggilan sedang berlangsung"</string>
     <string name="mobile_data_settings_title" msgid="3955246641380064901">"Data seluler"</string>
     <string name="mobile_data_connection_active" msgid="944490013299018227">"Terhubung"</string>
     <string name="mobile_data_temp_connection_active" msgid="4590222725908806824">"Terhubung sementara"</string>
@@ -1443,15 +1432,17 @@
     <string name="shortcut_helper_category_system_apps" msgid="6001757545472556810">"Aplikasi sistem"</string>
     <string name="shortcut_helper_category_multitasking" msgid="7413381961404090136">"Multitasking"</string>
     <string name="shortcutHelper_category_split_screen" msgid="1159669813444812244">"Layar terpisah"</string>
+    <!-- no translation found for shortcutHelper_category_accessibility (8068337792277570938) -->
+    <skip />
     <string name="shortcut_helper_category_input" msgid="8674018654124839566">"Input"</string>
     <string name="shortcut_helper_category_app_shortcuts" msgid="8010249408308587117">"Pintasan aplikasi"</string>
     <string name="shortcut_helper_category_current_app_shortcuts" msgid="4017840565974573628">"Aplikasi Saat Ini"</string>
     <string name="shortcut_helper_category_a11y" msgid="6314444792641773464">"Aksesibilitas"</string>
     <string name="shortcut_helper_title" msgid="8567500639300970049">"Pintasan keyboard"</string>
-    <string name="shortcut_helper_customize_mode_title" msgid="1467657117101096033">"Menyesuaikan pintasan keyboard"</string>
+    <string name="shortcut_helper_customize_mode_title" msgid="8327297960035006036">"Sesuaikan pintasan"</string>
     <string name="shortcut_customize_mode_remove_shortcut_dialog_title" msgid="7106420484940737208">"Hapus pintasan?"</string>
     <string name="shortcut_customize_mode_reset_shortcut_dialog_title" msgid="8131184731313717780">"Reset kembali ke pintasan default?"</string>
-    <string name="shortcut_customize_mode_add_shortcut_description" msgid="6866025005347407696">"Tekan tombol untuk menetapkan pintasan"</string>
+    <string name="shortcut_customize_mode_add_shortcut_description" msgid="7636040209946696120">"Untuk membuat pintasan ini, tekan tombol Tindakan dan satu atau beberapa tombol lainnya secara bersamaan"</string>
     <string name="shortcut_customize_mode_remove_shortcut_description" msgid="6851287900585057128">"Tindakan ini akan menghapus pintasan kustom Anda secara permanen."</string>
     <string name="shortcut_customize_mode_reset_shortcut_description" msgid="2081849715634358684">"Tindakan ini akan menghapus semua pintasan kustom Anda secara permanen."</string>
     <string name="shortcut_helper_search_placeholder" msgid="5488547526269871819">"Telusuri pintasan"</string>
@@ -1473,9 +1464,11 @@
     <string name="shortcut_helper_customize_dialog_reset_button_label" msgid="7645535254306312685">"Ya, reset"</string>
     <string name="shortcut_helper_customize_dialog_cancel_button_label" msgid="5595546460431741178">"Batal"</string>
     <string name="shortcut_helper_add_shortcut_dialog_placeholder" msgid="9154297849458741995">"Tekan tombol"</string>
-    <string name="shortcut_customizer_key_combination_in_use_error_message" msgid="7693234470526626327">"Kombinasi tombol sudah digunakan. Coba tombol lain."</string>
+    <string name="shortcut_customizer_key_combination_in_use_error_message" msgid="3325858369539848162">"Kombinasi tombol sudah digunakan. Coba kombinasi lain."</string>
     <string name="shortcut_customizer_generic_error_message" msgid="3128454624049722741">"Pintasan tidak dapat disetel."</string>
     <string name="shortcut_helper_plus_symbol" msgid="4534843157353732011">"+"</string>
+    <string name="shortcut_helper_add_shortcut_button_label" msgid="7655779534665954910">"Tambahkan pintasan"</string>
+    <string name="shortcut_helper_delete_shortcut_button_label" msgid="3148773472696137052">"Hapus pintasan"</string>
     <string name="launch_keyboard_tutorial_notification_title" msgid="8849933155160522519">"Menggunakan keyboard untuk navigasi"</string>
     <string name="launch_keyboard_tutorial_notification_content" msgid="2880339951512757918">"Pelajari pintasan keyboard"</string>
     <string name="launch_touchpad_tutorial_notification_title" msgid="2243780062772196901">"Menavigasi menggunakan touchpad"</string>
@@ -1485,6 +1478,7 @@
     <string name="touchpad_tutorial_back_gesture_button" msgid="3104716365403620315">"Kembali"</string>
     <string name="touchpad_tutorial_home_gesture_button" msgid="8023973153559885624">"Buka layar utama"</string>
     <string name="touchpad_tutorial_recent_apps_gesture_button" msgid="8919227647650347359">"Lihat aplikasi terbaru"</string>
+    <string name="touchpad_tutorial_switch_apps_gesture_button" msgid="7768255095423767779">"Beralih aplikasi"</string>
     <string name="touchpad_tutorial_done_button" msgid="176168488821755503">"Selesai"</string>
     <string name="gesture_error_title" msgid="469064941635578511">"Coba lagi"</string>
     <string name="touchpad_back_gesture_action_title" msgid="7199067250654332735">"Kembali"</string>
@@ -1502,6 +1496,13 @@
     <string name="touchpad_recent_apps_gesture_success_title" msgid="8481920554139332593">"Bagus!"</string>
     <string name="touchpad_recent_apps_gesture_success_body" msgid="4334263906697493273">"Anda telah menyelesaikan gestur untuk melihat aplikasi terbaru."</string>
     <string name="touchpad_recent_gesture_error_body" msgid="8695535720378462022">"Untuk melihat aplikasi terbaru, geser ke atas dan tahan menggunakan tiga jari di touchpad"</string>
+    <string name="touchpad_switch_apps_gesture_action_title" msgid="6835222344612924512">"Beralih aplikasi"</string>
+    <!-- no translation found for touchpad_switch_apps_gesture_guidance (2751565200937541667) -->
+    <skip />
+    <string name="touchpad_switch_apps_gesture_success_title" msgid="4894947244328032458">"Bagus!"</string>
+    <string name="touchpad_switch_apps_gesture_success_body" msgid="8151089866035126312">"Anda telah menyelesaikan gestur beralih aplikasi."</string>
+    <!-- no translation found for touchpad_switch_gesture_error_body (5508381152326379652) -->
+    <skip />
     <string name="tutorial_action_key_title" msgid="8172535792469008169">"Lihat semua aplikasi"</string>
     <string name="tutorial_action_key_guidance" msgid="5040613427202799294">"Tekan tombol tindakan di keyboard"</string>
     <string name="tutorial_action_key_success_title" msgid="2371827347071979571">"Oke!"</string>

@@ -370,6 +370,8 @@
   <java-symbol type="bool" name="config_canSwitchToHeadlessSystemUser"/>
   <java-symbol type="bool" name="config_enableMultiUserUI"/>
   <java-symbol type="bool" name="config_enableMultipleAdmins"/>
+  <java-symbol type="bool" name="config_allowAlarmsOnStoppedUsers"/>
+  <java-symbol type="bool" name="config_showNotificationForBackgroundUserAlarms"/>
   <java-symbol type="bool" name="config_bootToHeadlessSystemUser"/>
   <java-symbol type="bool" name="config_omnipresentCommunalUser"/>
   <java-symbol type="bool" name="config_enableNewAutoSelectNetworkUI"/>
@@ -534,6 +536,8 @@
   <java-symbol type="bool" name="config_enableUdcSysfsUsbStateUpdate"/>
   <java-symbol type="bool" name="config_enableSearchTileHideIllustrationInPrivateSpace"/>
 
+  <java-symbol type="color" name="surface_effect_0" />
+  <java-symbol type="color" name="surface_effect_1" />
   <java-symbol type="color" name="tab_indicator_text_v4" />
 
   <java-symbol type="dimen" name="accessibility_touch_slop" />
@@ -579,6 +583,7 @@
   <java-symbol type="dimen" name="notification_top_pad_large_text" />
   <java-symbol type="dimen" name="notification_top_pad_large_text_narrow" />
   <java-symbol type="dimen" name="notification_badge_size" />
+  <java-symbol type="dimen" name="notification_2025_badge_size" />
   <java-symbol type="dimen" name="immersive_mode_cling_width" />
   <java-symbol type="dimen" name="accessibility_magnification_indicator_width" />
   <java-symbol type="dimen" name="circular_display_mask_thickness" />
@@ -2291,6 +2296,7 @@
   <java-symbol type="string" name="heavy_weight_notification" />
   <java-symbol type="string" name="heavy_weight_notification_detail" />
   <java-symbol type="string" name="image_wallpaper_component" />
+  <java-symbol type="string" name="fallback_wallpaper_component" />
   <java-symbol type="string" name="input_method_binding_label" />
   <java-symbol type="string" name="input_method_ime_switch_long_click_action_desc" />
   <java-symbol type="string" name="launch_warning_original" />
@@ -2355,6 +2361,7 @@
   <java-symbol type="bool" name="config_dreamsEnabledOnBattery" />
   <java-symbol type="bool" name="config_dreamsActivatedOnDockByDefault" />
   <java-symbol type="bool" name="config_dreamsActivatedOnSleepByDefault" />
+  <java-symbol type="bool" name="config_dreamsActivatedOnPosturedByDefault" />
   <java-symbol type="integer" name="config_dreamsBatteryLevelMinimumWhenPowered" />
   <java-symbol type="integer" name="config_dreamsBatteryLevelMinimumWhenNotPowered" />
   <java-symbol type="integer" name="config_dreamsBatteryLevelDrainCutoff" />
@@ -2403,6 +2410,9 @@
   <java-symbol type="string" name="config_secondaryLocationTimeZoneProviderPackageName" />
   <java-symbol type="bool" name="config_enableTelephonyTimeZoneDetection" />
   <java-symbol type="bool" name="config_supportTelephonyTimeZoneFallback" />
+  <java-symbol type="bool" name="config_enableTimeZoneNotificationsSupported" />
+  <java-symbol type="bool" name="config_enableTimeZoneNotificationsTrackingSupported" />
+  <java-symbol type="bool" name="config_enableTimeZoneManualChangeTrackingSupported" />
   <java-symbol type="bool" name="config_autoResetAirplaneMode" />
   <java-symbol type="string" name="config_notificationAccessConfirmationActivity" />
   <java-symbol type="bool" name="config_preventImeStartupUnlessTextEditor" />
@@ -3194,8 +3204,8 @@
   <java-symbol type="integer" name="config_cameraLiftTriggerSensorType" />
   <java-symbol type="string" name="config_cameraLiftTriggerSensorStringType" />
   <java-symbol type="bool" name="config_cameraDoubleTapPowerGestureEnabled" />
-  <java-symbol type="bool" name="config_doubleTapPowerGestureEnabled" />
-  <java-symbol type="integer" name="config_defaultDoubleTapPowerGestureAction" />
+  <java-symbol type="integer" name="config_doubleTapPowerGestureMode" />
+  <java-symbol type="integer" name="config_doubleTapPowerGestureMultiTargetDefaultAction" />
   <java-symbol type="bool" name="config_emergencyGestureEnabled" />
   <java-symbol type="bool" name="config_defaultEmergencyGestureEnabled" />
   <java-symbol type="bool" name="config_defaultEmergencyGestureSoundEnabled" />
@@ -3866,6 +3876,13 @@
   <java-symbol type="string" name="reduce_bright_colors_feature_name" />
   <java-symbol type="string" name="one_handed_mode_feature_name" />
 
+  <java-symbol type="string" name="hearing_device_switch_phone_mic_notification_title" />
+  <java-symbol type="string" name="hearing_device_switch_hearing_mic_notification_title" />
+  <java-symbol type="string" name="hearing_device_switch_phone_mic_notification_text" />
+  <java-symbol type="string" name="hearing_device_switch_hearing_mic_notification_text" />
+  <java-symbol type="string" name="hearing_device_notification_switch_button" />
+  <java-symbol type="string" name="hearing_device_notification_settings_button" />
+
   <!-- com.android.internal.widget.RecyclerView -->
   <java-symbol type="id" name="item_touch_helper_previous_elevation"/>
   <java-symbol type="dimen" name="item_touch_helper_max_drag_scroll_per_frame"/>
@@ -3966,6 +3983,7 @@
   <java-symbol type="dimen" name="notification_progress_tracker_height" />
   <java-symbol type="dimen" name="notification_progress_segSeg_gap" />
   <java-symbol type="dimen" name="notification_progress_segPoint_gap" />
+  <java-symbol type="dimen" name="notification_progress_segments_min_width" />
   <java-symbol type="dimen" name="notification_progress_segments_height" />
   <java-symbol type="dimen" name="notification_progress_segments_faded_height" />
   <java-symbol type="dimen" name="notification_progress_segments_corner_radius" />
@@ -4045,6 +4063,7 @@
   <java-symbol type="string" name="notification_channel_network_available" />
   <java-symbol type="array" name="config_defaultCloudSearchServices" />
   <java-symbol type="string" name="notification_channel_vpn" />
+  <java-symbol type="string" name="notification_channel_system_time" />
   <java-symbol type="string" name="notification_channel_device_admin" />
   <java-symbol type="string" name="notification_channel_alerts" />
   <java-symbol type="string" name="notification_channel_retail_mode" />
@@ -4052,8 +4071,11 @@
   <java-symbol type="string" name="notification_channel_heavy_weight_app" />
   <java-symbol type="string" name="notification_channel_system_changes" />
   <java-symbol type="string" name="notification_channel_accessibility_magnification" />
+  <java-symbol type="string" name="notification_channel_accessibility_hearing_device" />
   <java-symbol type="string" name="notification_channel_accessibility_security_policy" />
   <java-symbol type="string" name="notification_channel_display" />
+  <java-symbol type="string" name="time_zone_change_notification_title" />
+  <java-symbol type="string" name="time_zone_change_notification_body" />
   <java-symbol type="string" name="config_defaultAutofillService" />
   <java-symbol type="string" name="config_defaultFieldClassificationService" />
   <java-symbol type="string" name="config_defaultOnDeviceSpeechRecognitionService" />
@@ -4382,10 +4404,6 @@
   <java-symbol type="bool" name="config_unfoldTransitionHapticsEnabled" />
   <java-symbol type="integer" name="config_unfoldTransitionHalfFoldedTimeout" />
   <java-symbol type="array" name="config_perDeviceStateRotationLockDefaults" />
-
-
-  <java-symbol type="array" name="config_disableApksUnlessMatchedSku_apk_list" />
-  <java-symbol type="array" name="config_disableApkUnlessMatchedSku_skus_list" />
 
   <java-symbol type="string" name="config_misprovisionedDeviceModel" />
   <java-symbol type="string" name="config_misprovisionedBrandValue" />
@@ -5672,6 +5690,7 @@
   <!-- System notification for satellite service -->
   <java-symbol type="string" name="satellite_notification_title" />
   <java-symbol type="string" name="satellite_notification_summary" />
+  <java-symbol type="string" name="satellite_notification_summary_with_data" />
   <java-symbol type="string" name="satellite_notification_manual_title" />
   <java-symbol type="string" name="satellite_notification_manual_summary" />
   <java-symbol type="string" name="satellite_notification_open_message" />
@@ -5812,6 +5831,9 @@
   <!-- Fingerprint screen off unlock config -->
   <java-symbol type="bool" name="config_screen_off_udfps_enabled" />
 
+  <!-- Default toggle for fp screen of unlcok-->
+  <java-symbol type="bool" name="config_screen_off_udfps_default_on" />
+
   <!-- Style for Wear Material3 Button. Will only be used for sdk 36 or above. -->
   <java-symbol type="style" name="Widget.DeviceDefault.Button.WearMaterial3" />
 
@@ -5858,5 +5880,7 @@
 
   <!-- Whether the device supports Wi-Fi USD feature. -->
   <java-symbol type="bool" name="config_deviceSupportsWifiUsd" />
+
+  <java-symbol type="array" name="config_notificationDefaultUnsupportedAdjustments" />
 
 </resources>

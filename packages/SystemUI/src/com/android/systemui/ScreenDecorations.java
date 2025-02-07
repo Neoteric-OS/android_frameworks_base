@@ -121,10 +121,12 @@ public class ScreenDecorations implements
             SystemProperties.getBoolean("debug.disable_screen_decorations", false);
     private static final boolean DEBUG_SCREENSHOT_ROUNDED_CORNERS =
             SystemProperties.getBoolean("debug.screenshot_rounded_corners", false);
+// QTI_BEGIN: 2020-03-12: Display: SystemUI: Add support to enable RC & NOTCH dynamically.
 
     private static int mDisableRoundedCorner =
             SystemProperties.getInt("vendor.display.disable_rounded_corner", 0);
 
+// QTI_END: 2020-03-12: Display: SystemUI: Add support to enable RC & NOTCH dynamically.
     private static final boolean sToolkitSetFrameRateReadOnly =
             android.view.flags.Flags.toolkitSetFrameRateReadOnly();
     private boolean mDebug = DEBUG_SCREENSHOT_ROUNDED_CORNERS;
@@ -927,7 +929,6 @@ public class ScreenDecorations implements
                 WindowManager.LayoutParams.TYPE_NAVIGATION_BAR_PANEL,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                        | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH
                         | WindowManager.LayoutParams.FLAG_SLIPPERY
                         | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
                         | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -1257,10 +1258,12 @@ public class ScreenDecorations implements
     }
 
     static boolean shouldDrawCutout(Context context) {
+// QTI_BEGIN: 2020-03-12: Display: SystemUI: Add support to enable RC & NOTCH dynamically.
         if (mDisableRoundedCorner == 1) {
            return false;
         }
 
+// QTI_END: 2020-03-12: Display: SystemUI: Add support to enable RC & NOTCH dynamically.
         return DisplayCutout.getFillBuiltInDisplayCutout(
                 context.getResources(), context.getDisplay().getUniqueId());
     }

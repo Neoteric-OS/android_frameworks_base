@@ -17,7 +17,7 @@
 package com.android.systemui.navigationbar;
 
 import static android.app.ActivityManager.LOCK_TASK_MODE_PINNED;
-import static android.app.StatusBarManager.NAVIGATION_HINT_BACK_ALT;
+import static android.app.StatusBarManager.NAVIGATION_HINT_IME_SHOWN;
 import static android.app.StatusBarManager.NAVIGATION_HINT_IME_SWITCHER_SHOWN;
 import static android.app.StatusBarManager.WINDOW_STATE_SHOWING;
 import static android.view.WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE;
@@ -44,6 +44,7 @@ import android.hardware.display.DisplayManager;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.InputMethodService.BackDispositionMode;
 import android.inputmethodservice.InputMethodService.ImeWindowVisibility;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.os.Trace;
 import android.util.Log;
@@ -61,6 +62,7 @@ import com.android.internal.statusbar.LetterboxDetails;
 import com.android.internal.view.AppearanceRegion;
 import com.android.systemui.Dumpable;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.model.SysUiState;
 import com.android.systemui.navigationbar.gestural.EdgeBackGestureHandler;
@@ -182,15 +184,18 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
     private final StatusBarKeyguardViewManager mStatusBarKeyguardViewManager;
     private final StatusBarStateController mStatusBarStateController;
     private DisplayTracker mDisplayTracker;
+    private final Handler mBgHandler;
 
     @Inject
     public TaskbarDelegate(Context context,
             LightBarTransitionsController.Factory lightBarTransitionsControllerFactory,
             StatusBarKeyguardViewManager statusBarKeyguardViewManager,
-            StatusBarStateController statusBarStateController) {
+            StatusBarStateController statusBarStateController,
+            @Background Handler bgHandler) {
         mLightBarTransitionsControllerFactory = lightBarTransitionsControllerFactory;
 
         mContext = context;
+        mBgHandler = bgHandler;
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
         mPipListener = (bounds) -> {
             mEdgeBackGestureHandler.setPipStashExclusionBounds(bounds);
@@ -231,11 +236,29 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
     @Override
     public void onDisplayReady(int displayId) {
         CommandQueue.Callbacks.super.onDisplayReady(displayId);
+        if (mOverviewProxyService.getProxy() == null) {
+            return;
+        }
+
+        try {
+            mOverviewProxyService.getProxy().onDisplayReady(displayId);
+        } catch (RemoteException e) {
+            Log.e(TAG, "onDisplayReady() failed", e);
+        }
     }
 
     @Override
     public void onDisplayRemoved(int displayId) {
         CommandQueue.Callbacks.super.onDisplayRemoved(displayId);
+        if (mOverviewProxyService.getProxy() == null) {
+            return;
+        }
+
+        try {
+            mOverviewProxyService.getProxy().onDisplayRemoved(displayId);
+        } catch (RemoteException e) {
+            Log.e(TAG, "onDisplayRemoved() failed", e);
+        }
     }
 
     // Separated into a method to keep setDependencies() clean/readable.
@@ -245,7 +268,9 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
                 new LightBarTransitionsController.DarkIntensityApplier() {
                     @Override
                     public void applyDarkIntensity(float darkIntensity) {
-                        mOverviewProxyService.onNavButtonsDarkIntensityChanged(darkIntensity);
+                        mBgHandler.post(() -> {
+                            mOverviewProxyService.onNavButtonsDarkIntensityChanged(darkIntensity);
+                        });
                     }
 
                     @Override
@@ -336,7 +361,7 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
         mSysUiState.setFlag(SYSUI_STATE_A11Y_BUTTON_CLICKABLE, clickable)
                 .setFlag(SYSUI_STATE_A11Y_BUTTON_LONG_CLICKABLE, longClickable)
                 .setFlag(SYSUI_STATE_IME_SHOWING,
-                        (mNavigationIconHints & NAVIGATION_HINT_BACK_ALT) != 0)
+                        (mNavigationIconHints & NAVIGATION_HINT_IME_SHOWN) != 0)
                 .setFlag(SYSUI_STATE_IME_SWITCHER_SHOWING,
                         (mNavigationIconHints & NAVIGATION_HINT_IME_SWITCHER_SHOWN) != 0)
                 .setFlag(SYSUI_STATE_OVERVIEW_DISABLED,

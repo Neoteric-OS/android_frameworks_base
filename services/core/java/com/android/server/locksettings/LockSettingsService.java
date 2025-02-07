@@ -137,6 +137,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.notification.SystemNotificationChannels;
+import com.android.internal.pm.RoSystemFeatures;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.IndentingPrintWriter;
@@ -274,7 +275,9 @@ public class LockSettingsService extends ILockSettings.Stub {
     // Order of holding lock: mSeparateChallengeLock -> mSpManager -> this
     // Do not call into ActivityManager while holding mSpManager lock.
     private final Object mSeparateChallengeLock = new Object();
+// QTI_BEGIN: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
     private static final String DEFAULT_PASSWORD = "default_password";
+// QTI_END: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
 
     private final DeviceProvisionedObserver mDeviceProvisionedObserver =
             new DeviceProvisionedObserver();
@@ -298,7 +301,9 @@ public class LockSettingsService extends ILockSettings.Stub {
 
     private final KeyStore mKeyStore;
     private final KeyStoreAuthorization mKeyStoreAuthorization;
+// QTI_BEGIN: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
     private static String mSavePassword = DEFAULT_PASSWORD;
+// QTI_END: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
 
     private final RecoverableKeyStoreManager mRecoverableKeyStoreManager;
     private final UnifiedProfilePasswordCache mUnifiedProfilePasswordCache;
@@ -441,9 +446,9 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
         LockscreenCredential credential =
                 LockscreenCredential.createUnifiedProfilePassword(newPassword);
-        Arrays.fill(newPasswordChars, '\u0000');
-        Arrays.fill(newPassword, (byte) 0);
-        Arrays.fill(randomLockSeed, (byte) 0);
+        LockPatternUtils.zeroize(newPasswordChars);
+        LockPatternUtils.zeroize(newPassword);
+        LockPatternUtils.zeroize(randomLockSeed);
         return credential;
     }
 
@@ -454,6 +459,7 @@ public class LockSettingsService extends ILockSettings.Stub {
      * @param profileUserId  profile user Id
      * @param profileUserPassword  profile original password (when it has separated lock).
      */
+    @GuardedBy("mSpManager")
     private void tieProfileLockIfNecessary(int profileUserId,
             LockscreenCredential profileUserPassword) {
         // Only for profiles that shares credential with parent
@@ -912,14 +918,8 @@ public class LockSettingsService extends ILockSettings.Stub {
                 // Hide notification first, as tie profile lock takes time
                 hideEncryptionNotification(new UserHandle(userId));
 
-                if (android.app.admin.flags.Flags.fixRaceConditionInTieProfileLock()) {
-                    synchronized (mSpManager) {
-                        tieProfileLockIfNecessary(userId, LockscreenCredential.createNone());
-                    }
-                } else {
-                    if (isCredentialSharableWithParent(userId)) {
-                        tieProfileLockIfNecessary(userId, LockscreenCredential.createNone());
-                    }
+                synchronized (mSpManager) {
+                    tieProfileLockIfNecessary(userId, LockscreenCredential.createNone());
                 }
             }
         });
@@ -1333,7 +1333,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         mContext.enforceCallingOrSelfPermission(
                 Manifest.permission.MANAGE_WEAK_ESCROW_TOKEN,
                 "Requires MANAGE_WEAK_ESCROW_TOKEN permission.");
-        if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE)) {
+        if (!RoSystemFeatures.hasFeatureAutomotive(mContext)) {
             throw new IllegalArgumentException(
                     "Weak escrow token are only for automotive devices.");
         }
@@ -1383,11 +1383,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                 mStorage.removeChildProfileLock(userId);
                 removeKeystoreProfileKey(userId);
             } else {
-                if (android.app.admin.flags.Flags.fixRaceConditionInTieProfileLock()) {
-                    synchronized (mSpManager) {
-                        tieProfileLockIfNecessary(userId, profileUserPassword);
-                    }
-                } else {
+                synchronized (mSpManager) {
                     tieProfileLockIfNecessary(userId, profileUserPassword);
                 }
             }
@@ -1539,6 +1535,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         return getCredentialTypeInternal(userId) != CREDENTIAL_TYPE_NONE;
     }
 
+// QTI_BEGIN: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
     public void retainPassword(String password) {
         if (LockPatternUtils.isDeviceEncryptionEnabled()) {
             if (password != null)
@@ -1572,12 +1569,17 @@ public class LockSettingsService extends ILockSettings.Stub {
          */
        if (checkCryptKeeperPermissions())
             mContext.enforceCallingOrSelfPermission(
+// QTI_END: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
+// QTI_BEGIN: 2019-11-28: SecureSystems: LockSettingsService : Restrict access to getpassword API
                     android.Manifest.permission.ACCESS_KEYGUARD_SECURE_STORAGE,
+// QTI_END: 2019-11-28: SecureSystems: LockSettingsService : Restrict access to getpassword API
+// QTI_BEGIN: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
                     "no crypt_keeper or admin permission to get the password");
 
        return mSavePassword;
     }
 
+// QTI_END: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
     @VisibleForTesting /** Note: this method is overridden in unit tests */
     void initKeystoreSuperKeys(@UserIdInt int userId, SyntheticPassword sp, boolean allowExisting) {
         final byte[] password = sp.deriveKeyStorePassword();
@@ -1588,7 +1590,7 @@ public class LockSettingsService extends ILockSettings.Stub {
                         + userId);
             }
         } finally {
-            Arrays.fill(password, (byte) 0);
+            LockPatternUtils.zeroize(password);
         }
     }
 
@@ -1621,7 +1623,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         decryptionResult = cipher.doFinal(encryptedPassword);
         LockscreenCredential credential = LockscreenCredential.createUnifiedProfilePassword(
                 decryptionResult);
-        Arrays.fill(decryptionResult, (byte) 0);
+        LockPatternUtils.zeroize(decryptionResult);
         try {
             long parentSid = getGateKeeperService().getSecureUserId(
                     mUserManager.getProfileParent(userId).id);
@@ -2276,16 +2278,20 @@ public class LockSettingsService extends ILockSettings.Stub {
 
     private void setCeStorageProtection(@UserIdInt int userId, SyntheticPassword sp) {
         final byte[] secret = sp.deriveFileBasedEncryptionKey();
+// QTI_BEGIN: 2018-07-31: SecureSystems: LockSettingsService: Support for separate clear key api
         final long callingId = Binder.clearCallingIdentity();
         try {
+// QTI_END: 2018-07-31: SecureSystems: LockSettingsService: Support for separate clear key api
             mStorageManager.setCeStorageProtection(userId, secret);
         } catch (RemoteException e) {
             throw new IllegalStateException("Failed to protect CE key for user " + userId, e);
+// QTI_BEGIN: 2018-07-31: SecureSystems: LockSettingsService: Support for separate clear key api
         } finally {
             Binder.restoreCallingIdentity(callingId);
         }
     }
 
+// QTI_END: 2018-07-31: SecureSystems: LockSettingsService: Support for separate clear key api
     private boolean isCeStorageUnlocked(int userId) {
         try {
             return mStorageManager.isCeStorageUnlocked(userId);
@@ -2314,7 +2320,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         } catch (RemoteException e) {
             Slogf.wtf(TAG, e, "Failed to unlock CE storage for %s user %d", userType, userId);
         } finally {
-            Arrays.fill(secret, (byte) 0);
+            LockPatternUtils.zeroize(secret);
         }
     }
 
@@ -2414,7 +2420,9 @@ public class LockSettingsService extends ILockSettings.Stub {
         } finally {
             Binder.restoreCallingIdentity(identity);
             scheduleGc();
+// QTI_BEGIN: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
         }
+// QTI_END: 2018-05-29: SecureSystems: frameworks: base: Port password retention feature
     }
 
     @Override
@@ -3672,7 +3680,7 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
 
         // Escrow tokens are enabled on automotive builds.
-        if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE)) {
+        if (RoSystemFeatures.hasFeatureAutomotive(mContext)) {
             return;
         }
 

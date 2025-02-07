@@ -21,6 +21,7 @@ import android.content.res.ColorStateList
 import androidx.annotation.ColorInt
 import com.android.settingslib.Utils
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel
 
 /** Model representing how the chip in the status bar should be colored. */
 sealed interface ColorsModel {
@@ -39,26 +40,12 @@ sealed interface ColorsModel {
             Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorPrimary)
     }
 
-    /**
-     * The chip should have the given background color and primary text color.
-     *
-     * If [primaryTextColorInt] is null, the text color will match the current UI mode (light/dark).
-     */
-    data class Custom(val backgroundColorInt: Int, val primaryTextColorInt: Int? = null) :
-        ColorsModel {
+    /** The chip should have the given background color and primary text color. */
+    data class Custom(val backgroundColorInt: Int, val primaryTextColorInt: Int) : ColorsModel {
         override fun background(context: Context): ColorStateList =
             ColorStateList.valueOf(backgroundColorInt)
 
-        // TODO(b/361346412): When UI mode changes, the chip should automatically re-render with
-        // the right text color. Right now, it has the right text color when the chip is first
-        // created but the color doesn't update if UI mode changes.
-        override fun text(context: Context): Int {
-            return primaryTextColorInt
-                ?: Utils.getColorAttrDefaultColor(
-                    context,
-                    com.android.internal.R.color.materialColorOnSurface,
-                )
-        }
+        override fun text(context: Context): Int = primaryTextColorInt
     }
 
     /** The chip should have a red background with white text. */
@@ -68,5 +55,15 @@ sealed interface ColorsModel {
         }
 
         override fun text(context: Context) = context.getColor(android.R.color.white)
+    }
+
+    companion object {
+        /** Converts the promoted notification colors to a [Custom] colors model. */
+        fun PromotedNotificationContentModel.toCustomColorsModel(): Custom {
+            return Custom(
+                backgroundColorInt = this.colors.backgroundColor,
+                primaryTextColorInt = this.colors.primaryTextColor,
+            )
+        }
     }
 }

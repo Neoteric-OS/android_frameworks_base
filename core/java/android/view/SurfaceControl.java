@@ -160,6 +160,10 @@ public final class SurfaceControl implements Parcelable {
             float l, float t, float r, float b);
     private static native void nativeSetCornerRadius(long transactionObj, long nativeObject,
             float cornerRadius);
+    private static native void nativeSetClientDrawnCornerRadius(long transactionObj,
+            long nativeObject, float clientDrawnCornerRadius);
+    private static native void nativeSetClientDrawnShadows(long transactionObj,
+            long nativeObject, float clientDrawnShadows);
     private static native void nativeSetBackgroundBlurRadius(long transactionObj, long nativeObject,
             int blurRadius);
     private static native void nativeSetLayerStack(long transactionObj, long nativeObject,
@@ -3025,6 +3029,7 @@ public final class SurfaceControl implements Parcelable {
         // Only non-null if the SurfaceControlRegistry is enabled. This list tracks the set of calls
         // made through this transaction object, and is dumped (and cleared) when the transaction is
         // later applied.
+        @Nullable
         ArrayList<String> mCalls;
 
         Runnable mFreeNativeResources;
@@ -3654,6 +3659,66 @@ public final class SurfaceControl implements Parcelable {
             }
             nativeSetCornerRadius(mNativeObject, sc.mNativeObject, cornerRadius);
 
+            return this;
+        }
+
+
+        /**
+         * Disables corner radius of a {@link SurfaceControl}. When the radius set by
+         * {@link Transaction#setCornerRadius(SurfaceControl, float)} is equal to
+         * clientDrawnCornerRadius the corner radius drawn by SurfaceFlinger is disabled.
+         *
+         * @param sc SurfaceControl
+         * @param clientDrawnCornerRadius Corner radius drawn by the client
+         * @return Itself.
+         * @hide
+         */
+        @NonNull
+        public Transaction setClientDrawnCornerRadius(@NonNull SurfaceControl sc,
+                                                            float clientDrawnCornerRadius) {
+            checkPreconditions(sc);
+            if (SurfaceControlRegistry.sCallStackDebuggingEnabled) {
+                SurfaceControlRegistry.getProcessInstance().checkCallStackDebugging(
+                        "setClientDrawnCornerRadius", this, sc, "clientDrawnCornerRadius="
+                        + clientDrawnCornerRadius);
+            }
+            if (Flags.ignoreCornerRadiusAndShadows()) {
+                nativeSetClientDrawnCornerRadius(mNativeObject, sc.mNativeObject,
+                                                                clientDrawnCornerRadius);
+            } else {
+                Log.w(TAG, "setClientDrawnCornerRadius was called but"
+                            + "ignore_corner_radius_and_shadows flag is disabled");
+            }
+
+            return this;
+        }
+
+        /**
+         * Disables shadows of a {@link SurfaceControl}. When the radius set by
+         * {@link Transaction#setClientDrawnShadows(SurfaceControl, float)} is equal to
+         * clientDrawnShadowRadius the shadows drawn by SurfaceFlinger is disabled.
+         *
+         * @param sc SurfaceControl
+         * @param clientDrawnShadowRadius Shadow radius drawn by the client
+         * @return Itself.
+         * @hide
+         */
+        @NonNull
+        public Transaction setClientDrawnShadows(@NonNull SurfaceControl sc,
+                                                        float clientDrawnShadowRadius) {
+            checkPreconditions(sc);
+            if (SurfaceControlRegistry.sCallStackDebuggingEnabled) {
+                SurfaceControlRegistry.getProcessInstance().checkCallStackDebugging(
+                        "setClientDrawnShadows", this, sc,
+                        "clientDrawnShadowRadius=" + clientDrawnShadowRadius);
+            }
+            if (Flags.ignoreCornerRadiusAndShadows()) {
+                nativeSetClientDrawnShadows(mNativeObject, sc.mNativeObject,
+                                                        clientDrawnShadowRadius);
+            } else {
+                Log.w(TAG, "setClientDrawnShadows was called but"
+                            + "ignore_corner_radius_and_shadows flag is disabled");
+            }
             return this;
         }
 
@@ -4804,7 +4869,7 @@ public final class SurfaceControl implements Parcelable {
         /**
          * @hide
          */
-        public Transaction setDesintationFrame(SurfaceControl sc, @NonNull Rect destinationFrame) {
+        public Transaction setDestinationFrame(SurfaceControl sc, @NonNull Rect destinationFrame) {
             checkPreconditions(sc);
             nativeSetDestinationFrame(mNativeObject, sc.mNativeObject,
                     destinationFrame.left, destinationFrame.top, destinationFrame.right,
@@ -4815,7 +4880,7 @@ public final class SurfaceControl implements Parcelable {
         /**
          * @hide
          */
-        public Transaction setDesintationFrame(SurfaceControl sc, int width, int height) {
+        public Transaction setDestinationFrame(SurfaceControl sc, int width, int height) {
             checkPreconditions(sc);
             nativeSetDestinationFrame(mNativeObject, sc.mNativeObject, 0, 0, width, height);
             return this;
@@ -4837,8 +4902,10 @@ public final class SurfaceControl implements Parcelable {
                 SurfaceControlRegistry.getProcessInstance().checkCallStackDebugging(
                         "merge", this, null, "otherTx=" + other.getId());
                 if (mCalls != null) {
-                    mCalls.addAll(other.mCalls);
-                    other.mCalls.clear();
+                    if (other.mCalls != null) {
+                        mCalls.addAll(other.mCalls);
+                        other.mCalls.clear();
+                    }
                 }
             }
             mResizedSurfaces.putAll(other.mResizedSurfaces);

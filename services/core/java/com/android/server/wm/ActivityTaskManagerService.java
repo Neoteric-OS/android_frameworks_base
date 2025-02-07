@@ -77,7 +77,6 @@ import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_FOCUS;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_IMMERSIVE;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_LOCKTASK;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_TASKS;
-import static com.android.sdksandbox.flags.Flags.sandboxActivitySdkBasedContext;
 import static com.android.server.am.ActivityManagerService.STOCK_PM_FLAGS;
 import static com.android.server.am.ActivityManagerServiceDumpActivitiesProto.ROOT_WINDOW_CONTAINER;
 import static com.android.server.am.ActivityManagerServiceDumpProcessesProto.CONFIG_WILL_CHANGE;
@@ -510,7 +509,6 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         int changes;
         // If the activity was relaunched to match the new configuration.
         boolean activityRelaunched;
-        boolean mIsUpdating;
     }
 
     /** Current sequencing integer of the configuration, for skipping old configurations. */
@@ -782,8 +780,10 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     @Nullable
     private ActivityRecord mTracedResumedActivity;
 
+// QTI_BEGIN: 2023-06-08: Performance: DSR: Fix DSR when we have toast window
     boolean toastWindow = false;
 
+// QTI_END: 2023-06-08: Performance: DSR: Fix DSR when we have toast window
     /** If non-null, we are tracking the time the user spends in the currently focused app. */
     AppTimeTracker mCurAppTimeTracker;
 
@@ -1271,10 +1271,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     }
 
     static boolean isSdkSandboxActivityIntent(Context context, Intent intent) {
-        return intent != null
-                && (sandboxActivitySdkBasedContext()
-                        ? SdkSandboxActivityAuthority.isSdkSandboxActivityIntent(context, intent)
-                        : intent.isSandboxActivity(context));
+        return SdkSandboxActivityAuthority.isSdkSandboxActivityIntent(context, intent);
     }
 
     private int startActivityAsUser(IApplicationThread caller, String callingPackage,
@@ -4700,14 +4697,12 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             if (values != null) {
                 changes = updateGlobalConfigurationLocked(values, initLocale, persistent, userId);
                 mTmpUpdateConfigurationResult.changes = changes;
-                mTmpUpdateConfigurationResult.mIsUpdating = true;
             }
 
             if (!deferResume) {
                 kept = ensureConfigAndVisibilityAfterUpdate(starting, changes);
             }
         } finally {
-            mTmpUpdateConfigurationResult.mIsUpdating = false;
             continueWindowLayout();
         }
         mTmpUpdateConfigurationResult.activityRelaunched = !kept;
@@ -5017,7 +5012,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         return showDialogs;
     }
 
-    private void updateFontScaleIfNeeded(@UserIdInt int userId) {
+    void updateFontScaleIfNeeded(@UserIdInt int userId) {
         if (userId != getCurrentUserId()) {
             return;
         }
@@ -5523,6 +5518,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         return mCompatModePackages.compatibilityInfoForPackageLocked(ai);
     }
 
+// QTI_BEGIN: 2023-06-08: Performance: DSR: Fix DSR when we have toast window
     void setToastWindow() {
         toastWindow = true;
     }
@@ -5535,6 +5531,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         return toastWindow;
     }
 
+// QTI_END: 2023-06-08: Performance: DSR: Fix DSR when we have toast window
     /**
      * Returns the PackageManager. Used by classes hosted by {@link ActivityTaskManagerService}. The
      * PackageManager could be unavailable at construction time and therefore needs to be accessed
@@ -7189,7 +7186,23 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         @Override
         public void onHandleAppCrash(@NonNull WindowProcessController wpc) {
             synchronized (mGlobalLock) {
-                wpc.handleAppCrash();
+                final boolean hasVisibleActivity;
+                mTaskSupervisor.beginDeferResume();
+                try {
+                    hasVisibleActivity = wpc.handleAppCrash();
+                } finally {
+                    mTaskSupervisor.endDeferResume();
+                }
+
+                if (hasVisibleActivity) {
+                    deferWindowLayout();
+                    try {
+                        mRootWindowContainer.ensureVisibilityOnVisibleActivityDiedOrCrashed(
+                                "onHandleAppCrash");
+                    } finally {
+                        continueWindowLayout();
+                    }
+                }
             }
         }
 

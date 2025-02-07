@@ -124,6 +124,11 @@ oneway interface IStatusBar
     void onCameraLaunchGestureDetected(int source);
 
     /**
+     * Notifies the status bar that a wallet launch gesture has been detected.
+     */
+    void onWalletLaunchGestureDetected();
+
+    /**
      * Notifies the status bar that the Emergency Action launch gesture has been detected.
      *
      * TODO(b/169175022) Update method name and docs when feature name is locked.
@@ -207,6 +212,11 @@ oneway interface IStatusBar
      * Notifies System UI that the display is ready to show system decorations.
      */
     void onDisplayReady(int displayId);
+
+    /**
+     * Notifies System UI that the system decorations should be removed from the display.
+     */
+    void onDisplayRemoveSystemDecorations(int displayId);
 
     /**
      * Notifies System UI side of system bar attribute change on the specified display.
@@ -390,4 +400,7 @@ oneway interface IStatusBar
     * @param displayId the id of the current display.
     */
     void moveFocusedTaskToDesktop(int displayId);
+
+    /** Set whether the display should have a navigation bar. */
+    void setHasNavigationBar(int displayId, boolean hasNavigationBar);
 }

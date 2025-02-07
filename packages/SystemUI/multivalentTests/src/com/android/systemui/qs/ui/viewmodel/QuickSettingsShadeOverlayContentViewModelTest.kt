@@ -39,6 +39,9 @@ import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.data.repository.shadeRepository
 import com.android.systemui.shade.domain.interactor.shadeInteractor
 import com.android.systemui.shade.shared.flag.DualShade
+import com.android.systemui.statusbar.notification.stack.shared.model.ShadeScrimBounds
+import com.android.systemui.statusbar.notification.stack.shared.model.ShadeScrimShape
+import com.android.systemui.statusbar.notification.stack.ui.viewmodel.notificationScrollViewModel
 import com.android.systemui.testKosmos
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -141,6 +144,24 @@ class QuickSettingsShadeOverlayContentViewModelTest : SysuiTestCase() {
             runCurrent()
 
             assertThat(underTest.showHeader).isFalse()
+        }
+
+    @Test
+    fun onPanelShapeChanged() =
+        testScope.runTest {
+            var actual: ShadeScrimShape? = null
+            kosmos.notificationScrollViewModel.setQsScrimShapeConsumer { shape -> actual = shape }
+
+            val expected =
+                ShadeScrimShape(
+                    bounds = ShadeScrimBounds(left = 10f, top = 0f, right = 710f, bottom = 600f),
+                    topRadius = 0,
+                    bottomRadius = 100,
+                )
+
+            underTest.onPanelShapeChanged(expected)
+
+            assertThat(actual).isEqualTo(expected)
         }
 
     private fun TestScope.lockDevice() {

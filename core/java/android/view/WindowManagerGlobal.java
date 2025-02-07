@@ -40,7 +40,9 @@ import android.os.SystemProperties;
 import android.util.AndroidRuntimeException;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+// QTI_BEGIN: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
 import android.util.BoostFramework.ScrollOptimizer;
+// QTI_END: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -51,6 +53,7 @@ import android.window.TrustedPresentationThresholds;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
+import com.android.internal.policy.PhoneWindow;
 import com.android.internal.util.FastPrintWriter;
 
 import java.io.FileDescriptor;
@@ -348,6 +351,7 @@ public final class WindowManagerGlobal {
         return null;
     }
 
+// QTI_BEGIN: 2024-02-27: Performance: perf: porting the fixes for pre-rendering from U to V.
     private int getVisibleRootCount (ArrayList<ViewRootImpl> roots) {
         int visibleRootCount = 0;
         int lastLeft = -1;
@@ -378,6 +382,7 @@ public final class WindowManagerGlobal {
         return visibleRootCount;
     }
 
+// QTI_END: 2024-02-27: Performance: perf: porting the fixes for pre-rendering from U to V.
     public void addView(View view, ViewGroup.LayoutParams params,
             Display display, Window parentWindow, int userId) {
         if (view == null) {
@@ -406,7 +411,8 @@ public final class WindowManagerGlobal {
 
         if (context != null && wparams.type > LAST_APPLICATION_WINDOW) {
             final TypedArray styles = context.obtainStyledAttributes(R.styleable.Window);
-            if (styles.getBoolean(R.styleable.Window_windowOptOutEdgeToEdgeEnforcement, false)) {
+            if (PhoneWindow.isOptingOutEdgeToEdgeEnforcement(
+                    context.getApplicationInfo(), true /* local */, styles)) {
                 wparams.privateFlags |= PRIVATE_FLAG_OPT_OUT_EDGE_TO_EDGE;
             }
             styles.recycle();
@@ -476,12 +482,18 @@ public final class WindowManagerGlobal {
 
             view.setLayoutParams(wparams);
 
+// QTI_BEGIN: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
             int visibleRootCount = 0;
+// QTI_END: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
+// QTI_BEGIN: 2024-02-27: Performance: perf: porting the fixes for pre-rendering from U to V.
             visibleRootCount = getVisibleRootCount(mRoots);
             if (visibleRootCount > 1) {
+// QTI_END: 2024-02-27: Performance: perf: porting the fixes for pre-rendering from U to V.
+// QTI_BEGIN: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
                 ScrollOptimizer.disableOptimizer(true);
             }
 
+// QTI_END: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
             mViews.add(view);
             mRoots.add(root);
             mParams.add(wparams);
@@ -490,6 +502,7 @@ public final class WindowManagerGlobal {
             try {
                 root.setView(view, wparams, panelParentView, userId);
             } catch (RuntimeException e) {
+                Log.e(TAG, "Couldn't add view: " + view, e);
                 final int viewIndex = (index >= 0) ? index : (mViews.size() - 1);
                 // BadTokenException or InvalidDisplayException, clean up.
                 if (viewIndex >= 0) {
@@ -609,18 +622,26 @@ public final class WindowManagerGlobal {
                 mDyingViews.remove(view);
             }
 
+// QTI_BEGIN: 2024-02-27: Performance: perf: porting the fixes for pre-rendering from U to V.
             // The visibleRootCount more than one means multi-layer, and multi-layer rendering
             // can result in unexpected pending between UI thread and render thread with
             // pre-rendering enabled. Need to disable pre-rendering for multi-layer cases.
+// QTI_END: 2024-02-27: Performance: perf: porting the fixes for pre-rendering from U to V.
+// QTI_BEGIN: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
             int visibleRootCount = 0;
+// QTI_END: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
+// QTI_BEGIN: 2024-02-27: Performance: perf: porting the fixes for pre-rendering from U to V.
             visibleRootCount = getVisibleRootCount(mRoots);
 
             if (visibleRootCount > 1) {
                 ScrollOptimizer.disableOptimizer(true);
             } else if (visibleRootCount == 1) {
+// QTI_END: 2024-02-27: Performance: perf: porting the fixes for pre-rendering from U to V.
+// QTI_BEGIN: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
                 ScrollOptimizer.disableOptimizer(false);
             }
 
+// QTI_END: 2023-02-15: Performance: perf: recover the pre-rendering feature in the U
             allViewsRemoved = mRoots.isEmpty();
         }
 

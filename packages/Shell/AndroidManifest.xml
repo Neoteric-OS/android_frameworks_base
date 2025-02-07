@@ -169,6 +169,7 @@
     <!-- Internal permissions granted to the shell. -->
     <uses-permission android:name="android.permission.FORCE_BACK" />
     <uses-permission android:name="android.permission.BATTERY_STATS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_POWER_MONITORS" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" />
     <uses-permission android:name="android.permission.REPORT_USAGE_STATS" />
     <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
@@ -996,6 +997,11 @@
 
     <!-- Permission required for CTS test - CtsContentProviderMultiUserTest -->
     <uses-permission android:name="android.permission.RESOLVE_COMPONENT_FOR_UID" />
+
+    <!-- Permissions required for CTS test - MediaQualityTest -->
+    <uses-permission android:name="android.permission.MANAGE_GLOBAL_PICTURE_QUALITY_SERVICE" />
+    <uses-permission android:name="android.permission.MANAGE_GLOBAL_SOUND_QUALITY_SERVICE" />
+    <uses-permission android:name="android.permission.READ_COLOR_ZONES" />
 
     <application
         android:label="@string/app_label"

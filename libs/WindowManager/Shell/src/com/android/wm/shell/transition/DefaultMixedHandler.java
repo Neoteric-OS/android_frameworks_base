@@ -43,7 +43,7 @@ import com.android.internal.protolog.ProtoLog;
 import com.android.window.flags.Flags;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.activityembedding.ActivityEmbeddingController;
-import com.android.wm.shell.common.split.SplitScreenUtils;
+import com.android.wm.shell.common.ComponentUtils;
 import com.android.wm.shell.desktopmode.DesktopTasksController;
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus;
 import com.android.wm.shell.keyguard.KeyguardTransitionHandler;
@@ -368,7 +368,7 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
     }
 
     @Override
-    public Consumer<IBinder> handleRecentsRequest(WindowContainerTransaction outWCT) {
+    public Consumer<IBinder> handleRecentsRequest() {
         if (mRecentsHandler != null) {
             if (mSplitHandler.isSplitScreenVisible()) {
                 return this::setRecentsTransitionDuringSplit;
@@ -382,6 +382,21 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
             }
         }
         return null;
+    }
+
+    @Override
+    public void handleFinishRecents(boolean returnToApp,
+            @NonNull WindowContainerTransaction finishWct,
+            @NonNull SurfaceControl.Transaction finishT) {
+        if (mRecentsHandler != null) {
+            for (int i = mActiveTransitions.size() - 1; i >= 0; --i) {
+                final MixedTransition mixed = mActiveTransitions.get(i);
+                if (mixed.mType == MixedTransition.TYPE_RECENTS_DURING_SPLIT) {
+                    ((RecentsMixedTransition) mixed).onAnimateRecentsDuringSplitFinishing(
+                            returnToApp, finishWct, finishT);
+                }
+            }
+        }
     }
 
     private void setRecentsTransitionDuringSplit(IBinder transition) {
@@ -646,7 +661,7 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
         // task enter split.
         if (mPipHandler != null) {
             return mPipHandler
-                    .isPackageActiveInPip(SplitScreenUtils.getPackageName(intent.getIntent()));
+                    .isPackageActiveInPip(ComponentUtils.getPackageName(intent.getIntent()));
         }
         return false;
     }
@@ -658,7 +673,7 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
         // task enter split.
         if (mPipHandler != null) {
             return mPipHandler.isPackageActiveInPip(
-                    SplitScreenUtils.getPackageName(taskId, shellTaskOrganizer));
+                    ComponentUtils.getPackageName(taskId, shellTaskOrganizer));
         }
         return false;
     }

@@ -31,10 +31,15 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.layout.onPlaced
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentScope
@@ -45,6 +50,7 @@ import com.android.systemui.brightness.ui.compose.BrightnessSliderContainer
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.lifecycle.rememberViewModel
+import com.android.systemui.notifications.ui.composable.NotificationsShade
 import com.android.systemui.notifications.ui.composable.SnoozeableHeadsUpNotificationSpace
 import com.android.systemui.qs.composefragment.ui.GridAnchor
 import com.android.systemui.qs.flags.QsDetailedView
@@ -57,8 +63,13 @@ import com.android.systemui.qs.ui.viewmodel.QuickSettingsShadeOverlayActionsView
 import com.android.systemui.qs.ui.viewmodel.QuickSettingsShadeOverlayContentViewModel
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.ui.composable.Overlay
-import com.android.systemui.shade.ui.composable.CollapsedShadeHeader
 import com.android.systemui.shade.ui.composable.OverlayShade
+import com.android.systemui.shade.ui.composable.OverlayShadeHeader
+import com.android.systemui.shade.ui.composable.QuickSettingsOverlayHeader
+import com.android.systemui.shade.ui.composable.SingleShadeMeasurePolicy
+import com.android.systemui.statusbar.notification.icon.ui.viewbinder.NotificationIconContainerStatusBarViewBinder
+import com.android.systemui.statusbar.notification.stack.shared.model.ShadeScrimBounds
+import com.android.systemui.statusbar.notification.stack.shared.model.ShadeScrimShape
 import com.android.systemui.statusbar.notification.stack.ui.view.NotificationScrollView
 import com.android.systemui.statusbar.notification.stack.ui.viewmodel.NotificationsPlaceholderViewModel
 import com.android.systemui.statusbar.phone.ui.StatusBarIconController
@@ -76,6 +87,8 @@ constructor(
     private val tintedIconManagerFactory: TintedIconManager.Factory,
     private val batteryMeterViewControllerFactory: BatteryMeterViewController.Factory,
     private val statusBarIconController: StatusBarIconController,
+    private val notificationIconContainerStatusBarViewBinder:
+        NotificationIconContainerStatusBarViewBinder,
     private val notificationStackScrollView: Lazy<NotificationScrollView>,
     private val notificationsPlaceholderViewModelFactory: NotificationsPlaceholderViewModel.Factory,
 ) : Overlay {
@@ -96,26 +109,13 @@ constructor(
     override fun ContentScope.Content(modifier: Modifier) {
         val viewModel =
             rememberViewModel("QuickSettingsShadeOverlay") { contentViewModelFactory.create() }
+        val panelCornerRadius =
+            with(LocalDensity.current) { OverlayShade.Dimensions.PanelCornerRadius.toPx().toInt() }
 
-        OverlayShade(
-            panelAlignment = Alignment.TopEnd,
-            modifier = modifier,
-            onScrimClicked = viewModel::onScrimClicked,
-        ) {
-            Column {
-                if (viewModel.showHeader) {
-                    CollapsedShadeHeader(
-                        viewModelFactory = viewModel.shadeHeaderViewModelFactory,
-                        createTintedIconManager = tintedIconManagerFactory::create,
-                        createBatteryMeterViewController =
-                            batteryMeterViewControllerFactory::create,
-                        statusBarIconController = statusBarIconController,
-                    )
-                }
+        // set the bounds to null when the QuickSettings overlay disappears
+        DisposableEffect(Unit) { onDispose { viewModel.onPanelShapeChanged(null) } }
 
-                ShadeBody(viewModel = viewModel.quickSettingsContainerViewModel)
-            }
-
+        Box(modifier = modifier) {
             SnoozeableHeadsUpNotificationSpace(
                 stackScrollView = notificationStackScrollView.get(),
                 viewModel =
@@ -123,6 +123,58 @@ constructor(
                         notificationsPlaceholderViewModelFactory.create()
                     },
             )
+            OverlayShade(
+                isShadeLayoutWide = viewModel.isShadeLayoutWide,
+                panelAlignment = Alignment.TopEnd,
+                onScrimClicked = viewModel::onScrimClicked,
+                header = {
+                    OverlayShadeHeader(
+                        viewModelFactory = viewModel.shadeHeaderViewModelFactory,
+                        createTintedIconManager = tintedIconManagerFactory::create,
+                        createBatteryMeterViewController =
+                            batteryMeterViewControllerFactory::create,
+                        statusBarIconController = statusBarIconController,
+                        notificationIconContainerStatusBarViewBinder =
+                            notificationIconContainerStatusBarViewBinder,
+                        modifier =
+                            Modifier.element(NotificationsShade.Elements.StatusBar)
+                                .layoutId(SingleShadeMeasurePolicy.LayoutId.ShadeHeader),
+                    )
+                },
+            ) {
+                ShadeBody(
+                    viewModel = viewModel.quickSettingsContainerViewModel,
+                    modifier =
+                        Modifier.onPlaced { coordinates ->
+                            val boundsInWindow = coordinates.boundsInWindow()
+                            val shadeScrimBounds =
+                                ShadeScrimBounds(
+                                    left = boundsInWindow.left,
+                                    top = boundsInWindow.top,
+                                    right = boundsInWindow.right,
+                                    bottom = boundsInWindow.bottom,
+                                )
+                            val shape =
+                                ShadeScrimShape(
+                                    bounds = shadeScrimBounds,
+                                    topRadius = 0,
+                                    bottomRadius = panelCornerRadius,
+                                )
+                            viewModel.onPanelShapeChanged(shape)
+                        },
+                    header = {
+                        if (viewModel.isShadeLayoutWide) {
+                            QuickSettingsOverlayHeader(
+                                viewModelFactory = viewModel.shadeHeaderViewModelFactory,
+                                createBatteryMeterViewController =
+                                    batteryMeterViewControllerFactory::create,
+                                modifier =
+                                    Modifier.padding(top = QuickSettingsShade.Dimensions.Padding),
+                            )
+                        }
+                    },
+                )
+            }
         }
     }
 }
@@ -137,7 +189,11 @@ sealed interface ShadeBodyState {
 }
 
 @Composable
-fun ContentScope.ShadeBody(viewModel: QuickSettingsContainerViewModel) {
+fun ContentScope.ShadeBody(
+    viewModel: QuickSettingsContainerViewModel,
+    modifier: Modifier = Modifier,
+    header: @Composable () -> Unit,
+) {
     val isEditing by viewModel.editModeViewModel.isEditing.collectAsStateWithLifecycle()
     val tileDetails =
         if (QsDetailedView.isEnabled) viewModel.detailsViewModel.activeTileDetails else null
@@ -156,16 +212,19 @@ fun ContentScope.ShadeBody(viewModel: QuickSettingsContainerViewModel) {
                 EditMode(
                     viewModel = viewModel.editModeViewModel,
                     modifier =
-                        Modifier.fillMaxWidth().padding(QuickSettingsShade.Dimensions.Padding),
+                        modifier.fillMaxWidth().padding(QuickSettingsShade.Dimensions.Padding),
                 )
             }
+
             ShadeBodyState.TileDetails -> {
-                TileDetails(viewModel.detailsViewModel)
+                TileDetails(modifier = modifier, viewModel.detailsViewModel)
             }
+
             else -> {
                 QuickSettingsLayout(
                     viewModel = viewModel,
-                    modifier = Modifier.sysuiResTag("quick_settings_panel"),
+                    modifier = modifier.sysuiResTag("quick_settings_panel"),
+                    header = header,
                 )
             }
         }
@@ -177,6 +236,7 @@ fun ContentScope.ShadeBody(viewModel: QuickSettingsContainerViewModel) {
 fun ContentScope.QuickSettingsLayout(
     viewModel: QuickSettingsContainerViewModel,
     modifier: Modifier = Modifier,
+    header: @Composable () -> Unit,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(QuickSettingsShade.Dimensions.Padding),
@@ -188,6 +248,7 @@ fun ContentScope.QuickSettingsLayout(
                 bottom = QuickSettingsShade.Dimensions.Padding,
             ),
     ) {
+        header()
         Toolbar(
             modifier =
                 Modifier.fillMaxWidth().requiredHeight(QuickSettingsShade.Dimensions.ToolbarHeight),

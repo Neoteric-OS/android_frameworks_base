@@ -578,7 +578,10 @@ public class BackgroundActivityStartController {
             sb.append("; balAllowedByPiCreator: ").append(mBalAllowedByPiCreator);
             sb.append("; balAllowedByPiCreatorWithHardening: ")
                     .append(mBalAllowedByPiCreatorWithHardening);
-            sb.append("; resultIfPiCreatorAllowsBal: ").append(mResultForCaller);
+            if (mResultForCaller != null) {
+                sb.append("; resultIfPiCreatorAllowsBal: ")
+                        .append(balCodeToString(mResultForCaller.mCode));
+            }
             sb.append("; callerStartMode: ").append(balStartModeToString(
                     mCheckedOptions.getPendingIntentCreatorBackgroundActivityStartMode()));
             sb.append("; hasRealCaller: ").append(hasRealCaller());
@@ -607,7 +610,10 @@ public class BackgroundActivityStartController {
                             .append(mRealCallerApp.hasActivityInVisibleTask());
                 }
                 sb.append("; balAllowedByPiSender: ").append(mBalAllowedByPiSender);
-                sb.append("; resultIfPiSenderAllowsBal: ").append(mResultForRealCaller);
+                if (mResultForRealCaller != null) {
+                    sb.append("; resultIfPiSenderAllowsBal: ")
+                            .append(balCodeToString(mResultForRealCaller.mCode));
+                }
                 sb.append("; realCallerStartMode: ").append(balStartModeToString(
                         mCheckedOptions.getPendingIntentBackgroundActivityStartMode()));
             }
@@ -1031,8 +1037,10 @@ public class BackgroundActivityStartController {
 
         // Normal apps with visible app window will be allowed to start activity if app switching
         // is allowed, or apps like live wallpaper with non app visible window will be allowed.
+        // The home app can start apps even if app switches are usually disallowed.
         final boolean appSwitchAllowedOrFg = state.mAppSwitchState == APP_SWITCH_ALLOW
-                || state.mAppSwitchState == APP_SWITCH_FG_ONLY;
+                || state.mAppSwitchState == APP_SWITCH_FG_ONLY
+                || isHomeApp(state.mCallingUid, state.mCallingPackage);
         if (appSwitchAllowedOrFg && state.mCallingUidHasVisibleActivity) {
             return new BalVerdict(BAL_ALLOW_VISIBLE_WINDOW,
                     /*background*/ false, "callingUid has visible window");

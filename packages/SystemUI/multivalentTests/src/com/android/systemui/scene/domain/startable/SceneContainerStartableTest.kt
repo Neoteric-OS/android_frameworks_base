@@ -36,6 +36,8 @@ import com.android.keyguard.AuthInteractionProperties
 import com.android.keyguard.keyguardUpdateMonitor
 import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.animation.ActivityTransitionAnimator
+import com.android.systemui.animation.activityTransitionAnimator
 import com.android.systemui.authentication.data.repository.FakeAuthenticationRepository
 import com.android.systemui.authentication.data.repository.fakeAuthenticationRepository
 import com.android.systemui.authentication.domain.interactor.authenticationInteractor
@@ -141,6 +143,7 @@ import org.mockito.Mockito.never
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.whenever
 
 @SmallTest
@@ -169,6 +172,7 @@ class SceneContainerStartableTest : SysuiTestCase() {
     private val uiEventLoggerFake = kosmos.uiEventLoggerFake
     private val msdlPlayer = kosmos.fakeMSDLPlayer
     private val authInteractionProperties = AuthInteractionProperties()
+    private val mockActivityTransitionAnimator = mock<ActivityTransitionAnimator>()
 
     private lateinit var underTest: SceneContainerStartable
 
@@ -177,6 +181,8 @@ class SceneContainerStartableTest : SysuiTestCase() {
         MockitoAnnotations.initMocks(this)
         whenever(kosmos.keyguardUpdateMonitor.isUnlockingWithBiometricAllowed(anyBoolean()))
             .thenReturn(true)
+        kosmos.activityTransitionAnimator = mockActivityTransitionAnimator
+
         underTest = kosmos.sceneContainerStartable
     }
 
@@ -1502,10 +1508,8 @@ class SceneContainerStartableTest : SysuiTestCase() {
         }
 
     @Test
-    fun collectFalsingSignals_screenOnAndOff_aodUnavailable() =
+    fun collectFalsingSignals_screenOnAndOff() =
         testScope.runTest {
-            kosmos.fakeKeyguardRepository.setAodAvailable(false)
-            runCurrent()
             prepareState(
                 initialSceneKey = Scenes.Lockscreen,
                 authenticationMethod = AuthenticationMethodModel.Pin,
@@ -1547,53 +1551,6 @@ class SceneContainerStartableTest : SysuiTestCase() {
             verify(falsingCollector, times(2)).onScreenTurningOn()
             verify(falsingCollector, times(1)).onScreenOnFromTouch()
             verify(falsingCollector, times(3)).onScreenOff()
-        }
-
-    @Test
-    fun collectFalsingSignals_screenOnAndOff_aodAvailable() =
-        testScope.runTest {
-            kosmos.fakeKeyguardRepository.setAodAvailable(true)
-            runCurrent()
-            prepareState(
-                initialSceneKey = Scenes.Lockscreen,
-                authenticationMethod = AuthenticationMethodModel.Pin,
-                isDeviceUnlocked = false,
-            )
-            underTest.start()
-            runCurrent()
-            verify(falsingCollector, never()).onScreenTurningOn()
-            verify(falsingCollector, never()).onScreenOnFromTouch()
-            verify(falsingCollector, never()).onScreenOff()
-
-            powerInteractor.setAwakeForTest(reason = PowerManager.WAKE_REASON_POWER_BUTTON)
-            runCurrent()
-            verify(falsingCollector, never()).onScreenTurningOn()
-            verify(falsingCollector, never()).onScreenOnFromTouch()
-            verify(falsingCollector, never()).onScreenOff()
-
-            powerInteractor.setAsleepForTest()
-            runCurrent()
-            verify(falsingCollector, never()).onScreenTurningOn()
-            verify(falsingCollector, never()).onScreenOnFromTouch()
-            verify(falsingCollector, never()).onScreenOff()
-
-            powerInteractor.setAwakeForTest(reason = PowerManager.WAKE_REASON_TAP)
-            runCurrent()
-            verify(falsingCollector, never()).onScreenTurningOn()
-            verify(falsingCollector, never()).onScreenOnFromTouch()
-            verify(falsingCollector, never()).onScreenOff()
-
-            powerInteractor.setAsleepForTest()
-            runCurrent()
-            verify(falsingCollector, never()).onScreenTurningOn()
-            verify(falsingCollector, never()).onScreenOnFromTouch()
-            verify(falsingCollector, never()).onScreenOff()
-
-            powerInteractor.setAwakeForTest(reason = PowerManager.WAKE_REASON_POWER_BUTTON)
-            runCurrent()
-            verify(falsingCollector, never()).onScreenTurningOn()
-            verify(falsingCollector, never()).onScreenOnFromTouch()
-            verify(falsingCollector, never()).onScreenOff()
         }
 
     @Test
@@ -2714,6 +2671,27 @@ class SceneContainerStartableTest : SysuiTestCase() {
 
             assertThat(currentScene).isNotEqualTo(Scenes.Shade)
             assertThat(currentOverlays).isEmpty()
+        }
+
+    @Test
+    fun hydrateActivityTransitionAnimationState() =
+        kosmos.runTest {
+            underTest.start()
+
+            val isVisible by collectLastValue(sceneInteractor.isVisible)
+            assertThat(isVisible).isTrue()
+
+            sceneInteractor.setVisible(false, "reason")
+            assertThat(isVisible).isFalse()
+
+            val argumentCaptor = argumentCaptor<ActivityTransitionAnimator.Listener>()
+            verify(mockActivityTransitionAnimator).addListener(argumentCaptor.capture())
+
+            val listeners = argumentCaptor.allValues
+            listeners.forEach { it.onTransitionAnimationStart() }
+            assertThat(isVisible).isTrue()
+            listeners.forEach { it.onTransitionAnimationEnd() }
+            assertThat(isVisible).isFalse()
         }
 
     private fun TestScope.emulateSceneTransition(

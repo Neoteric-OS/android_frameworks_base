@@ -20,9 +20,11 @@ import com.android.systemui.util.time.SystemClock
 import com.android.systemui.volume.Events
 import com.android.systemui.volume.dialog.dagger.scope.VolumeDialog
 import com.android.systemui.volume.dialog.domain.interactor.VolumeDialogVisibilityInteractor
+import com.android.systemui.volume.dialog.shared.VolumeDialogLogger
 import com.android.systemui.volume.dialog.shared.model.VolumeDialogStreamModel
 import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderScope
 import com.android.systemui.volume.dialog.sliders.domain.interactor.VolumeDialogSliderInteractor
+import com.android.systemui.volume.dialog.sliders.domain.model.VolumeDialogSliderType
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -55,35 +57,49 @@ private const val VOLUME_UPDATE_GRACE_PERIOD = 1000
 class VolumeDialogSliderViewModel
 @Inject
 constructor(
+    private val sliderType: VolumeDialogSliderType,
     private val interactor: VolumeDialogSliderInteractor,
     private val visibilityInteractor: VolumeDialogVisibilityInteractor,
     @VolumeDialog private val coroutineScope: CoroutineScope,
     private val volumeDialogSliderIconProvider: VolumeDialogSliderIconProvider,
     private val systemClock: SystemClock,
+    private val logger: VolumeDialogLogger,
 ) {
 
     private val userVolumeUpdates = MutableStateFlow<VolumeUpdate?>(null)
     private val model: Flow<VolumeDialogStreamModel> =
         interactor.slider
             .filter {
-                val lastVolumeUpdateTime = userVolumeUpdates.value?.timestampMillis ?: 0
+                val currentVolumeUpdate = userVolumeUpdates.value ?: return@filter true
+                val lastVolumeUpdateTime = currentVolumeUpdate.timestampMillis
                 getTimestampMillis() - lastVolumeUpdateTime > VOLUME_UPDATE_GRACE_PERIOD
             }
             .stateIn(coroutineScope, SharingStarted.Eagerly, null)
             .filterNotNull()
 
+    val isDisabledByZenMode: Flow<Boolean> = interactor.isDisabledByZenMode
     val state: Flow<VolumeDialogSliderStateModel> =
         model
             .flatMapLatest { streamModel ->
                 with(streamModel) {
-                        volumeDialogSliderIconProvider.getStreamIcon(
-                            stream = stream,
-                            level = level,
-                            levelMin = levelMin,
-                            levelMax = levelMax,
-                            isMuted = muted,
-                            isRoutedToBluetooth = routedToBluetooth,
-                        )
+                        val isMuted = muteSupported && muted
+                        when (sliderType) {
+                            is VolumeDialogSliderType.Stream ->
+                                volumeDialogSliderIconProvider.getStreamIcon(
+                                    stream = sliderType.audioStream,
+                                    level = level,
+                                    levelMin = levelMin,
+                                    levelMax = levelMax,
+                                    isMuted = isMuted,
+                                    isRoutedToBluetooth = routedToBluetooth,
+                                )
+                            is VolumeDialogSliderType.RemoteMediaStream -> {
+                                volumeDialogSliderIconProvider.getCastIcon(isMuted)
+                            }
+                            is VolumeDialogSliderType.AudioSharingStream -> {
+                                volumeDialogSliderIconProvider.getAudioSharingIcon(isMuted)
+                            }
+                        }
                     }
                     .map { icon -> streamModel.toStateModel(icon) }
             }
@@ -106,6 +122,10 @@ constructor(
             userVolumeUpdates.value =
                 VolumeUpdate(newVolumeLevel = volume, timestampMillis = getTimestampMillis())
         }
+    }
+
+    fun onStreamChangeFinished(volume: Int) {
+        logger.onVolumeSliderAdjustmentFinished(volume = volume, stream = sliderType.audioStream)
     }
 
     private fun getTimestampMillis(): Long = systemClock.uptimeMillis()

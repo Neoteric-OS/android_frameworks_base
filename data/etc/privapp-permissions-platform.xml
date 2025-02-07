@@ -271,6 +271,7 @@ applications that come with the platform
         <!-- Needed for test only -->
         <permission name="android.permission.BATTERY_PREDICTION"/>
         <permission name="android.permission.BATTERY_STATS"/>
+        <permission name="android.permission.ACCESS_FINE_POWER_MONITORS" />
         <!-- BLUETOOTH_PRIVILEGED is needed for test only -->
         <permission name="android.permission.BLUETOOTH_PRIVILEGED"/>
         <permission name="android.permission.BIND_APPWIDGET"/>
@@ -619,6 +620,10 @@ applications that come with the platform
         <permission name="android.permission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE" />
         <!-- Permission required for CTS test - CtsContentProviderMultiUserTest -->
         <permission name="android.permission.RESOLVE_COMPONENT_FOR_UID"/>
+        <!-- Permission required for CTS test - MediaQualityTest -->
+        <permission name="android.permission.MANAGE_GLOBAL_PICTURE_QUALITY_SERVICE"/>
+        <permission name="android.permission.MANAGE_GLOBAL_SOUND_QUALITY_SERVICE"/>
+        <permission name="android.permission.READ_COLOR_ZONES"/>
     </privapp-permissions>
 
     <privapp-permissions package="com.android.statementservice">

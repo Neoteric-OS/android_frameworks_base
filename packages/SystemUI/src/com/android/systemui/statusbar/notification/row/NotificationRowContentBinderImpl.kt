@@ -16,7 +16,6 @@
 package com.android.systemui.statusbar.notification.row
 
 import android.annotation.SuppressLint
-import android.app.Flags.notificationsRedesignTemplates
 import android.app.Notification
 import android.app.Notification.MessagingStyle
 import android.content.Context
@@ -800,6 +799,7 @@ constructor(
             }
             redacted.setLargeIcon(original.getLargeIcon())
             redacted.setSmallIcon(original.smallIcon)
+            redacted.setWhen(original.getWhen())
             return redacted
         }
 
@@ -823,11 +823,7 @@ constructor(
                             entryForLogging,
                             "creating contracted remote view",
                         )
-                        createContentView(
-                            builder,
-                            bindParams.isMinimized,
-                            bindParams.usesIncreasedHeight,
-                        )
+                        createContentView(builder, bindParams.isMinimized)
                     } else null
                 val expanded =
                     if (reInflateFlags and FLAG_CONTENT_VIEW_EXPANDED != 0) {
@@ -847,7 +843,7 @@ constructor(
                         if (isHeadsUpCompact) {
                             builder.createCompactHeadsUpContentView()
                         } else {
-                            builder.createHeadsUpContentView(bindParams.usesIncreasedHeadsUpHeight)
+                            @Suppress("DEPRECATION") builder.createHeadsUpContentView()
                         }
                     } else null
                 val public =
@@ -863,7 +859,7 @@ constructor(
                                     systemUiContext,
                                     packageContext,
                                 )
-                                .createContentView(bindParams.usesIncreasedHeight)
+                                .createContentView()
                         } else {
                             builder.makePublicContentView(bindParams.isMinimized)
                         }
@@ -888,10 +884,7 @@ constructor(
                             entryForLogging,
                             "creating low-priority group summary remote view",
                         )
-                        builder.makeLowPriorityContentView(
-                            /* useRegularSubtext = */ true,
-                            /* highlightExpander = */ notificationsRedesignTemplates(),
-                        )
+                        builder.makeLowPriorityContentView(true /* useRegularSubtext */)
                     } else null
                 NewRemoteViews(
                         contracted = contracted,
@@ -1658,14 +1651,12 @@ constructor(
         private fun createContentView(
             builder: Notification.Builder,
             isMinimized: Boolean,
-            useLarge: Boolean,
         ): RemoteViews {
             return if (isMinimized) {
-                builder.makeLowPriorityContentView(
-                    /* useRegularSubtext = */ false,
-                    /* highlightExpander = */ false,
-                )
-            } else builder.createContentView(useLarge)
+                builder.makeLowPriorityContentView(false /* useRegularSubtext */)
+            } else {
+                @Suppress("DEPRECATION") builder.createContentView()
+            }
         }
 
         /**

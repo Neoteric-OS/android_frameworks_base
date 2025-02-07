@@ -334,8 +334,10 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
         uint32_t seq;
         InputEvent* inputEvent;
 
+// QTI_BEGIN: 2022-11-02: Display: core: Featurize perf optimizations
         status_t status = mInputConsumer.consume(&mInputEventFactory,
                 consumeBatches, frameTime, &seq, &inputEvent);
+// QTI_END: 2022-11-02: Display: core: Featurize perf optimizations
         if (status != OK && status != WOULD_BLOCK) {
             ALOGE("channel '%s' ~ Failed to consume input event.  status=%s(%d)",
                   getInputChannelName().c_str(), statusToString(status).c_str(), status);
@@ -441,7 +443,8 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
                     }
                     env->CallVoidMethod(receiverObj.get(), gInputEventReceiverClassInfo.onDragEvent,
                                         jboolean(dragEvent->isExiting()), dragEvent->getX(),
-                                        dragEvent->getY());
+                                        dragEvent->getY(),
+                                        static_cast<jint>(dragEvent->getDisplayId().val()));
                     finishInputEvent(seq, /*handled=*/true);
                     continue;
                 }
@@ -643,7 +646,7 @@ int register_android_view_InputEventReceiver(JNIEnv* env) {
             GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onPointerCaptureEvent",
                              "(Z)V");
     gInputEventReceiverClassInfo.onDragEvent =
-            GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onDragEvent", "(ZFF)V");
+            GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onDragEvent", "(ZFFI)V");
     gInputEventReceiverClassInfo.onTouchModeChanged =
             GetMethodIDOrDie(env, gInputEventReceiverClassInfo.clazz, "onTouchModeChanged", "(Z)V");
     gInputEventReceiverClassInfo.onBatchedInputEventPending =

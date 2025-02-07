@@ -38,6 +38,7 @@ import static android.window.TaskFragmentOperation.OP_TYPE_REPARENT_ACTIVITY_TO_
 import static android.window.TaskFragmentOperation.OP_TYPE_REQUEST_FOCUS_ON_TASK_FRAGMENT;
 import static android.window.TaskFragmentOperation.OP_TYPE_SET_ADJACENT_TASK_FRAGMENTS;
 import static android.window.TaskFragmentOperation.OP_TYPE_SET_ANIMATION_PARAMS;
+import static android.window.TaskFragmentOperation.OP_TYPE_SET_CAN_AFFECT_SYSTEM_UI_FLAGS;
 import static android.window.TaskFragmentOperation.OP_TYPE_SET_COMPANION_TASK_FRAGMENT;
 import static android.window.TaskFragmentOperation.OP_TYPE_SET_DECOR_SURFACE_BOOSTED;
 import static android.window.TaskFragmentOperation.OP_TYPE_SET_DIM_ON_TASK;
@@ -51,6 +52,7 @@ import static android.window.WindowContainerTransaction.Change.CHANGE_FOCUSABLE;
 import static android.window.WindowContainerTransaction.Change.CHANGE_FORCE_TRANSLUCENT;
 import static android.window.WindowContainerTransaction.Change.CHANGE_HIDDEN;
 import static android.window.WindowContainerTransaction.Change.CHANGE_RELATIVE_BOUNDS;
+import static android.window.WindowContainerTransaction.HierarchyOp.HIERARCHY_OP_TYPE_REMOVE_ROOT_TASK;
 import static android.window.WindowContainerTransaction.HierarchyOp.HIERARCHY_OP_TYPE_SET_KEYGUARD_STATE;
 import static android.window.WindowContainerTransaction.HierarchyOp.HIERARCHY_OP_TYPE_ADD_INSETS_FRAME_PROVIDER;
 import static android.window.WindowContainerTransaction.HierarchyOp.HIERARCHY_OP_TYPE_ADD_TASK_FRAGMENT_OPERATION;
@@ -595,7 +597,10 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                 }
                 final ActionChain chain = mService.mChainTracker.start("tfTransact", transition);
                 final int effects = applyTransaction(wct, -1 /* syncId */, chain, caller, deferred);
-                if (effects == TRANSACT_EFFECTS_NONE && transition.mParticipants.isEmpty()) {
+                if (effects == TRANSACT_EFFECTS_NONE && transition.mParticipants.isEmpty()
+                        // Always send the remote transition even if it is no-op because the remote
+                        // handler may still want to handle it.
+                        && remoteTransition == null) {
                     transition.abort();
                     return;
                 }
@@ -1127,6 +1132,23 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                 }
                 break;
             }
+            case HIERARCHY_OP_TYPE_REMOVE_ROOT_TASK: {
+                final WindowContainer wc = WindowContainer.fromBinder(hop.getContainer());
+                if (wc == null || wc.asTask() == null || !wc.isAttached()
+                        || !wc.asTask().isRootTask() || !wc.asTask().mCreatedByOrganizer) {
+                    Slog.e(TAG, "Attempt to remove invalid task: " + wc);
+                    break;
+                }
+                final Task task = wc.asTask();
+                if (task.isVisibleRequested() || task.isVisible()) {
+                    effects |= TRANSACT_EFFECTS_LIFECYCLE;
+                }
+                // Removes its leaves, but not itself.
+                mService.mTaskSupervisor.removeRootTask(task);
+                // Now that the root has no leaves, remove it too. .
+                task.remove(true /* withTransition */, "remove-root-task-through-hierarchyOp");
+                break;
+            }
             case HIERARCHY_OP_TYPE_SET_LAUNCH_ROOT: {
                 final WindowContainer wc = WindowContainer.fromBinder(hop.getContainer());
                 if (wc == null || !wc.isAttached()) {
@@ -1376,7 +1398,7 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                 break;
             }
             case HIERARCHY_OP_TYPE_RESTORE_TRANSIENT_ORDER: {
-                if (!com.android.wm.shell.Flags.enableShellTopTaskTracking()) {
+                if (!com.android.wm.shell.Flags.enableRecentsBookendTransition()) {
                     // Only allow restoring transient order when finishing a transition
                     if (!chain.isFinishing()) break;
                 }
@@ -1412,7 +1434,7 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                 final TaskDisplayArea taskDisplayArea = thisTask.getTaskDisplayArea();
                 taskDisplayArea.moveRootTaskBehindRootTask(thisTask.getRootTask(), restoreAt);
 
-                if (com.android.wm.shell.Flags.enableShellTopTaskTracking()) {
+                if (com.android.wm.shell.Flags.enableRecentsBookendTransition()) {
                     // Because we are in a transient launch transition, the requested visibility of
                     // tasks does not actually change for the transient-hide tasks, but we do want
                     // the restoration of these transient-hide tasks to top to be a part of this
@@ -1859,6 +1881,13 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                 taskFragment.setPinned(pinned);
                 break;
             }
+            case OP_TYPE_SET_CAN_AFFECT_SYSTEM_UI_FLAGS: {
+                taskFragment.setCanAffectSystemUiFlags(operation.getBooleanValue());
+
+                // Request to apply the flags.
+                mService.mWindowManager.mWindowPlacerLocked.requestTraversal();
+                break;
+            }
         }
         return effects;
     }
@@ -1928,6 +1957,16 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
             final Throwable exception = new SecurityException(
                     "Only a system organizer can perform "
                             + "OP_TYPE_SET_MOVE_TO_BOTTOM_IF_CLEAR_WHEN_LAUNCH."
+            );
+            sendTaskFragmentOperationFailure(organizer, errorCallbackToken, taskFragment,
+                    opType, exception);
+            return false;
+        }
+
+        if ((opType == OP_TYPE_SET_CAN_AFFECT_SYSTEM_UI_FLAGS)
+                && !mTaskFragmentOrganizerController.isSystemOrganizer(organizer.asBinder())) {
+            final Throwable exception = new SecurityException(
+                    "Only a system organizer can perform OP_TYPE_SET_CAN_AFFECT_SYSTEM_UI_FLAGS."
             );
             sendTaskFragmentOperationFailure(organizer, errorCallbackToken, taskFragment,
                     opType, exception);

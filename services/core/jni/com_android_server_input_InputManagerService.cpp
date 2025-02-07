@@ -44,6 +44,7 @@
 #include <batteryservice/include/batteryservice/BatteryServiceConstants.h>
 #include <binder/IServiceManager.h>
 #include <com_android_input_flags.h>
+#include <dispatcher/Entry.h>
 #include <include/gestures.h>
 #include <input/Input.h>
 #include <input/PointerController.h>
@@ -66,6 +67,7 @@
 #include <atomic>
 #include <cinttypes>
 #include <map>
+#include <variant>
 #include <vector>
 
 #include "android_hardware_display_DisplayTopology.h"
@@ -341,9 +343,10 @@ public:
     void setPointerDisplayId(ui::LogicalDisplayId displayId);
     int32_t getMousePointerSpeed();
     void setPointerSpeed(int32_t speed);
-    void setMousePointerAccelerationEnabled(ui::LogicalDisplayId displayId, bool enabled);
+    void setMouseScalingEnabled(ui::LogicalDisplayId displayId, bool enabled);
     void setMouseReverseVerticalScrollingEnabled(bool enabled);
     void setMouseScrollingAccelerationEnabled(bool enabled);
+    void setMouseScrollingSpeed(int32_t speed);
     void setMouseSwapPrimaryButtonEnabled(bool enabled);
     void setMouseAccelerationEnabled(bool enabled);
     void setTouchpadPointerSpeed(int32_t speed);
@@ -354,6 +357,7 @@ public:
     void setTouchpadRightClickZoneEnabled(bool enabled);
     void setTouchpadThreeFingerTapShortcutEnabled(bool enabled);
     void setTouchpadSystemGesturesEnabled(bool enabled);
+    void setTouchpadAccelerationEnabled(bool enabled);
     void setInputDeviceEnabled(uint32_t deviceId, bool enabled);
     void setShowTouches(bool enabled);
     void setNonInteractiveDisplays(const std::set<ui::LogicalDisplayId>& displayIds);
@@ -416,8 +420,9 @@ public:
     void interceptMotionBeforeQueueing(ui::LogicalDisplayId displayId, uint32_t source,
                                        int32_t action, nsecs_t when,
                                        uint32_t& policyFlags) override;
-    nsecs_t interceptKeyBeforeDispatching(const sp<IBinder>& token, const KeyEvent& keyEvent,
-                                          uint32_t policyFlags) override;
+    std::variant<nsecs_t, inputdispatcher::KeyEntry::InterceptKeyResult>
+    interceptKeyBeforeDispatching(const sp<IBinder>& token, const KeyEvent& keyEvent,
+                                  uint32_t policyFlags) override;
     std::optional<KeyEvent> dispatchUnhandledKey(const sp<IBinder>& token, const KeyEvent& keyEvent,
                                                  uint32_t policyFlags) override;
     void pokeUserActivity(nsecs_t eventTime, int32_t eventType,
@@ -470,8 +475,8 @@ private:
         // Pointer speed.
         int32_t pointerSpeed{0};
 
-        // Displays on which its associated mice will have pointer acceleration disabled.
-        std::set<ui::LogicalDisplayId> displaysWithMousePointerAccelerationDisabled{};
+        // Displays on which its associated mice will have all scaling disabled.
+        std::set<ui::LogicalDisplayId> displaysWithMouseScalingDisabled{};
 
         // True if pointer gestures are enabled.
         bool pointerGesturesEnabled{true};
@@ -496,6 +501,9 @@ private:
 
         // True if mouse scrolling acceleration is enabled.
         bool mouseScrollingAccelerationEnabled{true};
+
+        // The mouse scrolling speed, as a number from -7 (slowest) to 7 (fastest).
+        int32_t mouseScrollingSpeed{0};
 
         // True if mouse vertical scrolling is reversed.
         bool mouseReverseVerticalScrollingEnabled{false};
@@ -532,6 +540,10 @@ private:
 
         // True to enable system gestures (three- and four-finger swipes) on touchpads.
         bool touchpadSystemGesturesEnabled{true};
+
+        // True if the speed of the pointer will increase as the user moves
+        // their finger faster on the touchpad.
+        bool touchpadAccelerationEnabled{true};
 
         // True if a pointer icon should be shown for stylus pointers.
         bool stylusPointerIconEnabled{false};
@@ -596,9 +608,8 @@ void NativeInputManager::dump(std::string& dump) {
         dump += StringPrintf(INDENT "System UI Lights Out: %s\n",
                              toString(mLocked.systemUiLightsOut));
         dump += StringPrintf(INDENT "Pointer Speed: %" PRId32 "\n", mLocked.pointerSpeed);
-        dump += StringPrintf(INDENT "Display with Mouse Pointer Acceleration Disabled: %s\n",
-                             dumpSet(mLocked.displaysWithMousePointerAccelerationDisabled,
-                                     streamableToString)
+        dump += StringPrintf(INDENT "Display with Mouse Scaling Disabled: %s\n",
+                             dumpSet(mLocked.displaysWithMouseScalingDisabled, streamableToString)
                                      .c_str());
         dump += StringPrintf(INDENT "Pointer Gestures Enabled: %s\n",
                              toString(mLocked.pointerGesturesEnabled));
@@ -827,19 +838,20 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
         std::scoped_lock _l(mLock);
 
         outConfig->mousePointerSpeed = mLocked.pointerSpeed;
-        outConfig->displaysWithMousePointerAccelerationDisabled =
-                mLocked.displaysWithMousePointerAccelerationDisabled;
+        outConfig->displaysWithMouseScalingDisabled = mLocked.displaysWithMouseScalingDisabled;
         outConfig->pointerVelocityControlParameters.scale =
                 exp2f(mLocked.pointerSpeed * POINTER_SPEED_EXPONENT);
         outConfig->pointerVelocityControlParameters.acceleration =
-                mLocked.displaysWithMousePointerAccelerationDisabled.count(
-                        mLocked.pointerDisplayId) == 0
+                mLocked.displaysWithMouseScalingDisabled.count(mLocked.pointerDisplayId) == 0
                 ? android::os::IInputConstants::DEFAULT_POINTER_ACCELERATION
                 : 1;
         outConfig->wheelVelocityControlParameters.acceleration =
                 mLocked.mouseScrollingAccelerationEnabled
                 ? android::os::IInputConstants::DEFAULT_MOUSE_WHEEL_ACCELERATION
                 : 1;
+        outConfig->wheelVelocityControlParameters.scale = mLocked.mouseScrollingAccelerationEnabled
+                ? 1
+                : exp2f(mLocked.mouseScrollingSpeed * POINTER_SPEED_EXPONENT);
         outConfig->pointerGesturesEnabled = mLocked.pointerGesturesEnabled;
 
         outConfig->pointerCaptureRequest = mLocked.pointerCaptureRequest;
@@ -862,6 +874,7 @@ void NativeInputManager::getReaderConfiguration(InputReaderConfiguration* outCon
         outConfig->touchpadThreeFingerTapShortcutEnabled =
                 mLocked.touchpadThreeFingerTapShortcutEnabled;
         outConfig->touchpadSystemGesturesEnabled = mLocked.touchpadSystemGesturesEnabled;
+        outConfig->touchpadAccelerationEnabled = mLocked.touchpadAccelerationEnabled;
 
         outConfig->disabledDevices = mLocked.disabledInputDevices;
 
@@ -1448,6 +1461,21 @@ void NativeInputManager::setMouseScrollingAccelerationEnabled(bool enabled) {
             InputReaderConfiguration::Change::POINTER_SPEED);
 }
 
+void NativeInputManager::setMouseScrollingSpeed(int32_t speed) {
+    { // acquire lock
+        std::scoped_lock _l(mLock);
+
+        if (mLocked.mouseScrollingSpeed == speed) {
+            return;
+        }
+
+        mLocked.mouseScrollingSpeed = speed;
+    } // release lock
+
+    mInputManager->getReader().requestRefreshConfiguration(
+            InputReaderConfiguration::Change::POINTER_SPEED);
+}
+
 void NativeInputManager::setMouseSwapPrimaryButtonEnabled(bool enabled) {
     { // acquire lock
         std::scoped_lock _l(mLock);
@@ -1494,23 +1522,21 @@ void NativeInputManager::setPointerSpeed(int32_t speed) {
             InputReaderConfiguration::Change::POINTER_SPEED);
 }
 
-void NativeInputManager::setMousePointerAccelerationEnabled(ui::LogicalDisplayId displayId,
-                                                            bool enabled) {
+void NativeInputManager::setMouseScalingEnabled(ui::LogicalDisplayId displayId, bool enabled) {
     { // acquire lock
         std::scoped_lock _l(mLock);
 
-        const bool oldEnabled =
-                mLocked.displaysWithMousePointerAccelerationDisabled.count(displayId) == 0;
+        const bool oldEnabled = mLocked.displaysWithMouseScalingDisabled.count(displayId) == 0;
         if (oldEnabled == enabled) {
             return;
         }
 
-        ALOGI("Setting mouse pointer acceleration to %s on display %s", toString(enabled),
+        ALOGI("Setting mouse pointer scaling to %s on display %s", toString(enabled),
               displayId.toString().c_str());
         if (enabled) {
-            mLocked.displaysWithMousePointerAccelerationDisabled.erase(displayId);
+            mLocked.displaysWithMouseScalingDisabled.erase(displayId);
         } else {
-            mLocked.displaysWithMousePointerAccelerationDisabled.emplace(displayId);
+            mLocked.displaysWithMouseScalingDisabled.emplace(displayId);
         }
     } // release lock
 
@@ -1640,6 +1666,21 @@ void NativeInputManager::setTouchpadSystemGesturesEnabled(bool enabled) {
 
         ALOGI("Setting touchpad system gestures enabled to %s.", toString(enabled));
         mLocked.touchpadSystemGesturesEnabled = enabled;
+    } // release lock
+
+    mInputManager->getReader().requestRefreshConfiguration(
+            InputReaderConfiguration::Change::TOUCHPAD_SETTINGS);
+}
+
+void NativeInputManager::setTouchpadAccelerationEnabled(bool enabled) {
+    { // acquire lock
+        std::scoped_lock _l(mLock);
+
+        if (mLocked.touchpadAccelerationEnabled == enabled) {
+            return;
+        }
+
+        mLocked.touchpadAccelerationEnabled = enabled;
     } // release lock
 
     mInputManager->getReader().requestRefreshConfiguration(
@@ -1905,9 +1946,9 @@ bool NativeInputManager::isDisplayInteractive(ui::LogicalDisplayId displayId) {
     return true;
 }
 
-nsecs_t NativeInputManager::interceptKeyBeforeDispatching(const sp<IBinder>& token,
-                                                          const KeyEvent& keyEvent,
-                                                          uint32_t policyFlags) {
+std::variant<nsecs_t, inputdispatcher::KeyEntry::InterceptKeyResult>
+NativeInputManager::interceptKeyBeforeDispatching(const sp<IBinder>& token,
+                                                  const KeyEvent& keyEvent, uint32_t policyFlags) {
     ATRACE_CALL();
     // Policy:
     // - Ignore untrusted events and pass them along.
@@ -1935,7 +1976,19 @@ nsecs_t NativeInputManager::interceptKeyBeforeDispatching(const sp<IBinder>& tok
     if (checkAndClearExceptionFromCallback(env, "interceptKeyBeforeDispatching")) {
         return 0;
     }
-    return delayMillis < 0 ? -1 : milliseconds_to_nanoseconds(delayMillis);
+
+    // Negative delay represent states from intercepting the key.
+    // 0 : Continue event.
+    if (delayMillis == 0) {
+        return inputdispatcher::KeyEntry::InterceptKeyResult::CONTINUE;
+    }
+
+    // -1 : Drop and skip the key event.
+    if (delayMillis == -1) {
+        return inputdispatcher::KeyEntry::InterceptKeyResult::SKIP;
+    }
+
+    return milliseconds_to_nanoseconds(delayMillis);
 }
 
 std::optional<KeyEvent> NativeInputManager::dispatchUnhandledKey(const sp<IBinder>& token,
@@ -2552,11 +2605,11 @@ static void nativeSetPointerSpeed(JNIEnv* env, jobject nativeImplObj, jint speed
     im->setPointerSpeed(speed);
 }
 
-static void nativeSetMousePointerAccelerationEnabled(JNIEnv* env, jobject nativeImplObj,
-                                                     jint displayId, jboolean enabled) {
+static void nativeSetMouseScalingEnabled(JNIEnv* env, jobject nativeImplObj, jint displayId,
+                                         jboolean enabled) {
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
 
-    im->setMousePointerAccelerationEnabled(ui::LogicalDisplayId{displayId}, enabled);
+    im->setMouseScalingEnabled(ui::LogicalDisplayId{displayId}, enabled);
 }
 
 static void nativeSetTouchpadPointerSpeed(JNIEnv* env, jobject nativeImplObj, jint speed) {
@@ -2610,6 +2663,13 @@ static void nativeSetTouchpadSystemGesturesEnabled(JNIEnv* env, jobject nativeIm
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
 
     im->setTouchpadSystemGesturesEnabled(enabled);
+}
+
+static void nativeSetTouchpadAccelerationEnabled(JNIEnv* env, jobject nativeImplObj,
+                                                 jboolean enabled) {
+    NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
+
+    im->setTouchpadAccelerationEnabled(enabled);
 }
 
 static void nativeSetShowTouches(JNIEnv* env, jobject nativeImplObj, jboolean enabled) {
@@ -3228,6 +3288,11 @@ static void nativeSetMouseScrollingAccelerationEnabled(JNIEnv* env, jobject nati
     im->setMouseScrollingAccelerationEnabled(enabled);
 }
 
+static void nativeSetMouseScrollingSpeed(JNIEnv* env, jobject nativeImplObj, jint speed) {
+    NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
+    im->setMouseScrollingSpeed(speed);
+}
+
 static void nativeSetMouseReverseVerticalScrollingEnabled(JNIEnv* env, jobject nativeImplObj,
                                                           bool enabled) {
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
@@ -3298,12 +3363,12 @@ static const JNINativeMethod gInputManagerMethods[] = {
         {"transferTouch", "(Landroid/os/IBinder;I)Z", (void*)nativeTransferTouchOnDisplay},
         {"getMousePointerSpeed", "()I", (void*)nativeGetMousePointerSpeed},
         {"setPointerSpeed", "(I)V", (void*)nativeSetPointerSpeed},
-        {"setMousePointerAccelerationEnabled", "(IZ)V",
-         (void*)nativeSetMousePointerAccelerationEnabled},
+        {"setMouseScalingEnabled", "(IZ)V", (void*)nativeSetMouseScalingEnabled},
         {"setMouseReverseVerticalScrollingEnabled", "(Z)V",
          (void*)nativeSetMouseReverseVerticalScrollingEnabled},
         {"setMouseScrollingAccelerationEnabled", "(Z)V",
          (void*)nativeSetMouseScrollingAccelerationEnabled},
+        {"setMouseScrollingSpeed", "(I)V", (void*)nativeSetMouseScrollingSpeed},
         {"setMouseSwapPrimaryButtonEnabled", "(Z)V", (void*)nativeSetMouseSwapPrimaryButtonEnabled},
         {"setMouseAccelerationEnabled", "(Z)V", (void*)nativeSetMouseAccelerationEnabled},
         {"setTouchpadPointerSpeed", "(I)V", (void*)nativeSetTouchpadPointerSpeed},
@@ -3317,6 +3382,7 @@ static const JNINativeMethod gInputManagerMethods[] = {
         {"setTouchpadThreeFingerTapShortcutEnabled", "(Z)V",
          (void*)nativeSetTouchpadThreeFingerTapShortcutEnabled},
         {"setTouchpadSystemGesturesEnabled", "(Z)V", (void*)nativeSetTouchpadSystemGesturesEnabled},
+        {"setTouchpadAccelerationEnabled", "(Z)V", (void*)nativeSetTouchpadAccelerationEnabled},
         {"setShowTouches", "(Z)V", (void*)nativeSetShowTouches},
         {"setNonInteractiveDisplays", "([I)V", (void*)nativeSetNonInteractiveDisplays},
         {"reloadCalibration", "()V", (void*)nativeReloadCalibration},

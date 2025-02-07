@@ -35,8 +35,6 @@ import static android.accessibilityservice.AccessibilityTrace.FLAGS_MAGNIFICATIO
 import static android.accessibilityservice.AccessibilityTrace.FLAGS_PACKAGE_BROADCAST_RECEIVER;
 import static android.accessibilityservice.AccessibilityTrace.FLAGS_USER_BROADCAST_RECEIVER;
 import static android.accessibilityservice.AccessibilityTrace.FLAGS_WINDOW_MANAGER_INTERNAL;
-import static android.companion.virtual.VirtualDeviceManager.ACTION_VIRTUAL_DEVICE_REMOVED;
-import static android.companion.virtual.VirtualDeviceManager.EXTRA_VIRTUAL_DEVICE_ID;
 import static android.content.Context.DEVICE_ID_DEFAULT;
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_FLOATING_MENU;
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_GESTURE;
@@ -413,6 +411,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     private SparseArray<SurfaceControl> mA11yOverlayLayers = new SparseArray<>();
 
     private final FlashNotificationsController mFlashNotificationsController;
+    private final HearingDevicePhoneCallNotificationController mHearingDeviceNotificationController;
     private final UserManagerInternal mUmi;
 
     private AccessibilityUserState getCurrentUserStateLocked() {
@@ -541,7 +540,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             MagnificationController magnificationController,
             @Nullable AccessibilityInputFilter inputFilter,
             ProxyManager proxyManager,
-            PermissionEnforcer permissionEnforcer) {
+            PermissionEnforcer permissionEnforcer,
+            HearingDevicePhoneCallNotificationController hearingDeviceNotificationController) {
         super(permissionEnforcer);
         mContext = context;
         mPowerManager =  (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
@@ -569,6 +569,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         // TODO(b/255426725): not used on tests
         mVisibleBgUserIds = null;
         mInputManager = context.getSystemService(InputManager.class);
+        if (com.android.settingslib.flags.Flags.hearingDevicesInputRoutingControl()) {
+            mHearingDeviceNotificationController = hearingDeviceNotificationController;
+        } else {
+            mHearingDeviceNotificationController = null;
+        }
 
         init();
     }
@@ -618,6 +623,12 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         } else {
             mVisibleBgUserIds = null;
         }
+        if (com.android.settingslib.flags.Flags.hearingDevicesInputRoutingControl()) {
+            mHearingDeviceNotificationController = new HearingDevicePhoneCallNotificationController(
+                    context);
+        } else {
+            mHearingDeviceNotificationController = null;
+        }
 
         init();
     }
@@ -629,6 +640,11 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 mContext.getContentResolver());
         if (enableTalkbackAndMagnifierKeyGestures()) {
             mInputManager.registerKeyGestureEventHandler(mKeyGestureEventHandler);
+        }
+        if (com.android.settingslib.flags.Flags.hearingDevicesInputRoutingControl()) {
+            if (mHearingDeviceNotificationController != null) {
+                mHearingDeviceNotificationController.startListenForCallState();
+            }
         }
         disableAccessibilityMenuToMigrateIfNeeded();
     }
@@ -1098,22 +1114,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         mContext.registerReceiverAsUser(
                 receiver, UserHandle.ALL, filter, null, mMainHandler,
                 Context.RECEIVER_EXPORTED);
-
-        if (!android.companion.virtual.flags.Flags.vdmPublicApis()) {
-            final BroadcastReceiver virtualDeviceReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    final int deviceId = intent.getIntExtra(
-                            EXTRA_VIRTUAL_DEVICE_ID, DEVICE_ID_DEFAULT);
-                    mProxyManager.clearConnections(deviceId);
-                }
-            };
-
-            final IntentFilter virtualDeviceFilter = new IntentFilter(
-                    ACTION_VIRTUAL_DEVICE_REMOVED);
-            mContext.registerReceiver(virtualDeviceReceiver, virtualDeviceFilter,
-                    Context.RECEIVER_NOT_EXPORTED);
-        }
     }
 
     /**
@@ -1823,9 +1823,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     public void notifyQuickSettingsTilesChanged(
             @UserIdInt int userId, @NonNull List<ComponentName> tileComponentNames) {
         notifyQuickSettingsTilesChanged_enforcePermission();
-        if (!android.view.accessibility.Flags.a11yQsShortcut()) {
-            return;
-        }
         if (DEBUG) {
             Slog.d(LOG_TAG, TextUtils.formatSimple(
                     "notifyQuickSettingsTilesChanged userId: %d, tileComponentNames: %s",
@@ -2260,9 +2257,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
     private void restoreShortcutTargets(
             String newValue, @UserShortcutType int shortcutType, int userId) {
         assertNoTapShortcut(shortcutType);
-        if (shortcutType == QUICK_SETTINGS && !android.view.accessibility.Flags.a11yQsShortcut()) {
-            return;
-        }
 
         synchronized (mLock) {
             final AccessibilityUserState userState = getUserStateLocked(userId);
@@ -3876,9 +3870,6 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
      */
     private void updateAccessibilityShortcutTargetsLocked(
             AccessibilityUserState userState, @UserShortcutType int shortcutType) {
-        if (shortcutType == QUICK_SETTINGS && !android.view.accessibility.Flags.a11yQsShortcut()) {
-            return;
-        }
         if (shortcutType == SOFTWARE) {
             // Update accessibility button availability.
             for (int i = userState.mBoundServices.size() - 1; i >= 0; i--) {
@@ -4061,9 +4052,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         final List<Integer> shortcutTypes = new ArrayList<>(4);
         shortcutTypes.add(HARDWARE);
         shortcutTypes.add(SOFTWARE);
-        if (android.view.accessibility.Flags.a11yQsShortcut()) {
-            shortcutTypes.add(QUICK_SETTINGS);
-        }
+        shortcutTypes.add(QUICK_SETTINGS);
         if (android.provider.Flags.a11yStandaloneGestureEnabled()) {
             shortcutTypes.add(GESTURE);
         }
@@ -4367,13 +4356,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
 
     private void launchAccessibilityFrameworkFeature(int displayId, ComponentName assignedTarget) {
         if (assignedTarget.equals(ACCESSIBILITY_HEARING_AIDS_COMPONENT_NAME)) {
-            //import com.android.systemui.Flags;
-            if (com.android.systemui.Flags.hearingAidsQsTileDialog()) {
-                launchHearingDevicesDialog();
-            } else {
-                launchAccessibilitySubSettings(displayId,
-                        ACCESSIBILITY_HEARING_AIDS_COMPONENT_NAME);
-            }
+            launchHearingDevicesDialog();
         }
     }
 

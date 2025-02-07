@@ -79,11 +79,9 @@ import static com.android.server.wm.WindowManagerDebugConfig.DEBUG_LAYOUT_REPEAT
 import static com.android.server.wm.WindowManagerDebugConfig.DEBUG_WINDOW_TRACE;
 import static com.android.server.wm.WindowManagerDebugConfig.TAG_WITH_CLASS_NAME;
 import static com.android.server.wm.WindowManagerDebugConfig.TAG_WM;
-import static com.android.server.wm.WindowManagerService.H.WINDOW_FREEZE_TIMEOUT;
 import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_NORMAL;
 import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_PLACING_SURFACES;
 import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_WILL_PLACE_SURFACES;
-import static com.android.server.wm.WindowManagerService.WINDOWS_FREEZING_SCREENS_NONE;
 import static com.android.server.wm.WindowSurfacePlacer.SET_UPDATE_ROTATION;
 import static com.android.server.wm.WindowSurfacePlacer.SET_WALLPAPER_ACTION_PENDING;
 
@@ -130,7 +128,9 @@ import android.provider.Settings;
 import android.service.voice.IVoiceInteractionSession;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
 import android.util.BoostFramework;
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
 import android.util.IntArray;
 import android.util.Pair;
 import android.util.Slog;
@@ -154,12 +154,13 @@ import com.android.server.LocalServices;
 import com.android.server.am.ActivityManagerService;
 import com.android.server.am.AppTimeTracker;
 import com.android.server.am.UserState;
-import com.android.server.display.feature.DisplayManagerFlags;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.policy.PermissionPolicyInternal;
 import com.android.server.policy.WindowManagerPolicy;
 import com.android.server.utils.Slogf;
+// QTI_BEGIN: 2024-05-22: Performance: framework_base: Add process freezer to improve app launch latency
 import com.android.server.am.ProcessFreezerManager;
+// QTI_END: 2024-05-22: Performance: framework_base: Add process freezer to improve app launch latency
 import com.android.server.wm.utils.RegionUtils;
 import com.android.window.flags.Flags;
 
@@ -203,13 +204,6 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
 
     private boolean mSustainedPerformanceModeEnabled = false;
     private boolean mSustainedPerformanceModeCurrent = false;
-
-    // During an orientation change, we track whether all windows have rendered
-    // at the new orientation, and this will be false from changing orientation until that occurs.
-    // For seamless rotation cases this always stays true, as the windows complete their orientation
-    // changes 1 by 1 without disturbing global state.
-    boolean mOrientationChangeComplete = true;
-    boolean mWallpaperActionPending = false;
 
     private final Handler mHandler;
 
@@ -258,12 +252,14 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
     @NonNull
     private final DisplayRotationCoordinator mDisplayRotationCoordinator;
 
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
     public static boolean mPerfSendTapHint = false;
     public static boolean mIsPerfBoostAcquired = false;
     public static int mPerfHandle = -1;
     public BoostFramework mPerfBoost = null;
     public BoostFramework mUxPerf = null;
 
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
     /** Reference to default display so we can quickly look it up. */
     private DisplayContent mDefaultDisplay;
     private final SparseArray<IntArray> mDisplayAccessUIDs = new SparseArray<>();
@@ -852,20 +848,6 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
             }
         }
 
-        if (mWmService.mDisplayFrozen) {
-            ProtoLog.v(WM_DEBUG_ORIENTATION,
-                    "With display frozen, orientationChangeComplete=%b",
-                    mOrientationChangeComplete);
-        }
-        if (mOrientationChangeComplete) {
-            if (mWmService.mWindowsFreezingScreen != WINDOWS_FREEZING_SCREENS_NONE) {
-                mWmService.mWindowsFreezingScreen = WINDOWS_FREEZING_SCREENS_NONE;
-                mWmService.mLastFinishedFreezeSource = mLastWindowFreezeSource;
-                mWmService.mH.removeMessages(WINDOW_FREEZE_TIMEOUT);
-            }
-            mWmService.stopFreezingDisplayLocked();
-        }
-
         // Destroy the surface of any windows that are no longer visible.
         i = mWmService.mDestroySurface.size();
         if (i > 0) {
@@ -892,13 +874,11 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
             }
         }
 
-        if (!mWmService.mDisplayFrozen) {
-            // Post these on a handler such that we don't call into power manager service while
-            // holding the window manager lock to avoid lock contention with power manager lock.
-            mHandler.obtainMessage(SET_SCREEN_BRIGHTNESS_OVERRIDE, mDisplayBrightnessOverrides)
-                    .sendToTarget();
-            mHandler.obtainMessage(SET_USER_ACTIVITY_TIMEOUT, mUserActivityTimeout).sendToTarget();
-        }
+        // Post these on a handler such that we don't call into power manager service while
+        // holding the window manager lock to avoid lock contention with power manager lock.
+        mHandler.obtainMessage(SET_SCREEN_BRIGHTNESS_OVERRIDE, mDisplayBrightnessOverrides)
+                .sendToTarget();
+        mHandler.obtainMessage(SET_USER_ACTIVITY_TIMEOUT, mUserActivityTimeout).sendToTarget();
 
         if (mSustainedPerformanceModeCurrent != mSustainedPerformanceModeEnabled) {
             mSustainedPerformanceModeEnabled = mSustainedPerformanceModeCurrent;
@@ -913,8 +893,7 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         }
 
         if (!mWmService.mWaitingForDrawnCallbacks.isEmpty()
-                || (mOrientationChangeComplete && !isLayoutNeeded()
-                && !mUpdateRotation)) {
+                || (!isLayoutNeeded() && !mUpdateRotation)) {
             mWmService.checkDrawnWindowsLocked();
         }
 
@@ -1002,7 +981,7 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
     private void handleResizingWindows() {
         for (int i = mWmService.mResizingWindows.size() - 1; i >= 0; i--) {
             WindowState win = mWmService.mResizingWindows.get(i);
-            if (win.mAppFreezing || win.getDisplayContent().mWaitingForConfig) {
+            if (win.getDisplayContent().mWaitingForConfig) {
                 // Don't remove this window until rotation has completed and is not waiting for the
                 // complete configuration.
                 continue;
@@ -1102,16 +1081,6 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         if ((bulkUpdateParams & SET_UPDATE_ROTATION) != 0) {
             mUpdateRotation = true;
             doRequest = true;
-        }
-        if (mOrientationChangeComplete) {
-            mLastWindowFreezeSource = mWmService.mAnimator.mLastWindowFreezeSource;
-            if (mWmService.mWindowsFreezingScreen != WINDOWS_FREEZING_SCREENS_NONE) {
-                doRequest = true;
-            }
-        }
-
-        if ((bulkUpdateParams & SET_WALLPAPER_ACTION_PENDING) != 0) {
-            mWallpaperActionPending = true;
         }
 
         return doRequest;
@@ -1550,20 +1519,18 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         ActivityInfo aInfo = resolveHomeActivity(userId, homeIntent);
         boolean lookForSecondaryHomeActivityInPrimaryHomePackage = aInfo != null;
 
-        if (android.companion.virtual.flags.Flags.vdmCustomHome()) {
-            // Resolve the externally set home activity for this display, if any. If it is unset or
-            // we fail to resolve it, fallback to the default secondary home activity.
-            final ComponentName customHomeComponent =
-                    taskDisplayArea.getDisplayContent() != null
-                            ? taskDisplayArea.getDisplayContent().getCustomHomeComponent()
-                            : null;
-            if (customHomeComponent != null) {
-                homeIntent.setComponent(customHomeComponent);
-                ActivityInfo customHomeActivityInfo = resolveHomeActivity(userId, homeIntent);
-                if (customHomeActivityInfo != null) {
-                    aInfo = customHomeActivityInfo;
-                    lookForSecondaryHomeActivityInPrimaryHomePackage = false;
-                }
+        // Resolve the externally set home activity for this display, if any. If it is unset or
+        // we fail to resolve it, fallback to the default secondary home activity.
+        final ComponentName customHomeComponent =
+                taskDisplayArea.getDisplayContent() != null
+                        ? taskDisplayArea.getDisplayContent().getCustomHomeComponent()
+                        : null;
+        if (customHomeComponent != null) {
+            homeIntent.setComponent(customHomeComponent);
+            ActivityInfo customHomeActivityInfo = resolveHomeActivity(userId, homeIntent);
+            if (customHomeActivityInfo != null) {
+                aInfo = customHomeActivityInfo;
+                lookForSecondaryHomeActivityInPrimaryHomePackage = false;
             }
         }
 
@@ -1782,7 +1749,7 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         // Force-update the orientation from the WindowManager, since we need the true configuration
         // to send to the client now.
         final Configuration config =
-                displayContent.updateOrientation(starting, true /* forceUpdate */);
+                displayContent.updateOrientationAndComputeConfig(true /* forceUpdate */);
         // Visibilities may change so let the starting activity have a chance to report. Can't do it
         // when visibility is changed in each AppWindowToken because it may trigger wrong
         // configuration push because the visibility of some activities may not be updated yet.
@@ -2485,19 +2452,30 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         }
     }
 
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
     void acquireAppLaunchPerfLock(ActivityRecord r) {
         /* Acquire perf lock during new app launch */
         if (mPerfBoost == null) {
             mPerfBoost = new BoostFramework();
         }
         if (mPerfBoost != null) {
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
+// QTI_BEGIN: 2022-01-18: Performance: Perf: Added support for app type in launch hint
             int pkgType = mPerfBoost.perfGetFeedback(BoostFramework.VENDOR_FEEDBACK_WORKLOAD_TYPE,
                                                      r.packageName);
             int wpcPid = -1;
             if (mService != null && r != null && r.info != null && r.info.applicationInfo !=null) {
+// QTI_END: 2022-01-18: Performance: Perf: Added support for app type in launch hint
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                 final WindowProcessController wpc =
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
+// QTI_BEGIN: 2022-01-18: Performance: Perf: Added support for app type in launch hint
                         mService.getProcessController(r.processName, r.info.applicationInfo.uid);
+// QTI_END: 2022-01-18: Performance: Perf: Added support for app type in launch hint
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                 if (wpc != null && wpc.hasThread()) {
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
+// QTI_BEGIN: 2022-01-18: Performance: Perf: Added support for app type in launch hint
                    //If target process didn't start yet,
                    // this operation will be done when app call attach
                    wpcPid = wpc.getPid();
@@ -2533,12 +2511,20 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
                 mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST,
                     r.packageName, -1, BoostFramework.Launch.BOOST_V2);
                 if (wpcPid != -1) {
+// QTI_END: 2022-01-18: Performance: Perf: Added support for app type in launch hint
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                     mPerfBoost.perfHint(
                         BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST,
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
+// QTI_BEGIN: 2022-01-18: Performance: Perf: Added support for app type in launch hint
                             r.packageName, wpcPid,
+// QTI_END: 2022-01-18: Performance: Perf: Added support for app type in launch hint
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                             BoostFramework.Launch.TYPE_ATTACH_APPLICATION);
                 }
 
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
+// QTI_BEGIN: 2022-01-18: Performance: Perf: Added support for app type in launch hint
                 if (pkgType  == BoostFramework.WorkloadType.GAME)
                 {
                     mPerfHandle = mPerfBoost.perfHint(
@@ -2549,22 +2535,29 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
                         BoostFramework.VENDOR_HINT_FIRST_LAUNCH_BOOST,
                             r.packageName, -1, BoostFramework.Launch.BOOST_V3);
                 }
+// QTI_END: 2022-01-18: Performance: Perf: Added support for app type in launch hint
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
             }
             if (mPerfHandle > 0)
                 mIsPerfBoostAcquired = true;
             // Start IOP
             if(r.info.applicationInfo != null &&
                 r.info.applicationInfo.sourceDir != null) {
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                   if (mPerfBoost.board_first_api_lvl < BoostFramework.VENDOR_T_API_LEVEL &&
                     mPerfBoost.board_api_lvl < BoostFramework.VENDOR_T_API_LEVEL) {
                       mPerfBoost.perfIOPrefetchStart(-1,r.packageName,
                       r.info.applicationInfo.sourceDir.substring(
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                         0, r.info.applicationInfo.sourceDir.lastIndexOf('/')));
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                   }
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
             }
         }
     }
 
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
     @Nullable
     ActivityRecord findTask(ActivityRecord r, TaskDisplayArea preferredTaskDisplayArea,
             boolean includeLaunchedFromBubble) {
@@ -2586,6 +2579,7 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         if (preferredTaskDisplayArea != null) {
             mTmpFindTaskResult.process(preferredTaskDisplayArea);
             if (mTmpFindTaskResult.mIdealRecord != null) {
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                 if(mTmpFindTaskResult.mIdealRecord.getState() == DESTROYED) {
                     /*It's a new app launch */
                     acquireAppLaunchPerfLock(r);
@@ -2593,6 +2587,7 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
 
                 if(mTmpFindTaskResult.mIdealRecord.getState() == STOPPED) {
                      /*Warm launch */
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                      mUxPerf = new BoostFramework();
                      if (mUxPerf != null) {
                          if (mUxPerf.board_first_api_lvl < BoostFramework.VENDOR_T_API_LEVEL &&
@@ -2602,31 +2597,47 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
                              mUxPerf.perfEvent(BoostFramework.VENDOR_HINT_WARM_LAUNCH, r.packageName, 2, 0, 0);
                          }
                      }
-                    // ProcessFreezerManager freezer = ProcessFreezerManager.getInstance(mService);
-                    // if (freezer != null && freezer.useFreezerManager()) {
-                    //     freezer.startFreeze(r.packageName, ProcessFreezerManager.WARM_LAUNCH_FREEZE);
-                    // }
+// QTI_BEGIN: 2025-01-02: Performance: app freezer: Uncomment app freezer by Google
+                    ProcessFreezerManager freezer = ProcessFreezerManager.getInstance();
+                    if (freezer != null && freezer.useFreezerManager()) {
+                        freezer.startFreeze(r.packageName, ProcessFreezerManager.WARM_LAUNCH_FREEZE);
+                    }
+// QTI_END: 2025-01-02: Performance: app freezer: Uncomment app freezer by Google
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                 }
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
                 return mTmpFindTaskResult.mIdealRecord;
             } else if (mTmpFindTaskResult.mCandidateRecord != null) {
                 candidateActivity = mTmpFindTaskResult.mCandidateRecord;
             }
         }
 
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
         /* Acquire perf lock *only* during new app launch */
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
+// QTI_BEGIN: 2021-10-08: Core: Revert "Perf:fix issue that launch boost worked abnormal"
         if ((mTmpFindTaskResult.mIdealRecord == null) ||
             (mTmpFindTaskResult.mIdealRecord.getState() == DESTROYED)) {
+// QTI_END: 2021-10-08: Core: Revert "Perf:fix issue that launch boost worked abnormal"
+// QTI_BEGIN: 2023-06-28: Performance: Perf:Fix the issue that activity boost duration abnormal.
             if (r != null && r.isMainIntent(r.intent)) {
                 acquireAppLaunchPerfLock(r);
-                // ProcessFreezerManager freezer = ProcessFreezerManager.getInstance(mService);
-                // if (freezer != null && freezer.useFreezerManager()) {
-                //     freezer.startFreeze(r.packageName, ProcessFreezerManager.FIRST_LAUNCH_FREEZE);
-                // }
+// QTI_END: 2023-06-28: Performance: Perf:Fix the issue that activity boost duration abnormal.
+// QTI_BEGIN: 2025-01-02: Performance: app freezer: Uncomment app freezer by Google
+                ProcessFreezerManager freezer = ProcessFreezerManager.getInstance();
+                if (freezer != null && freezer.useFreezerManager()) {
+                    freezer.startFreeze(r.packageName, ProcessFreezerManager.FIRST_LAUNCH_FREEZE);
+                }
+// QTI_END: 2025-01-02: Performance: app freezer: Uncomment app freezer by Google
+// QTI_BEGIN: 2023-06-28: Performance: Perf:Fix the issue that activity boost duration abnormal.
             } else if (r == null) {
                 Slog.w(TAG, "Should not happen! Didn't apply launch boost");
             }
+// QTI_END: 2023-06-28: Performance: Perf:Fix the issue that activity boost duration abnormal.
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
         }
 
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
         final ActivityRecord idealMatchActivity = getItemFromTaskDisplayAreas(taskDisplayArea -> {
             if (taskDisplayArea == preferredTaskDisplayArea) {
                 return null;

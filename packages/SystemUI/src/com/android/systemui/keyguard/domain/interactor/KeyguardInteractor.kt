@@ -44,7 +44,6 @@ import com.android.systemui.keyguard.shared.model.KeyguardState.GONE
 import com.android.systemui.keyguard.shared.model.KeyguardState.LOCKSCREEN
 import com.android.systemui.keyguard.shared.model.KeyguardState.OCCLUDED
 import com.android.systemui.keyguard.shared.model.StatusBarState
-import com.android.systemui.power.domain.interactor.PowerInteractor
 import com.android.systemui.res.R
 import com.android.systemui.scene.domain.interactor.SceneInteractor
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
@@ -57,6 +56,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -84,7 +84,6 @@ class KeyguardInteractor
 @Inject
 constructor(
     private val repository: KeyguardRepository,
-    powerInteractor: PowerInteractor,
     bouncerRepository: KeyguardBouncerRepository,
     @ShadeDisplayAware configurationInteractor: ConfigurationInteractor,
     shadeRepository: ShadeRepository,
@@ -205,6 +204,7 @@ constructor(
      * examining the value of this flow, to let other consumers have enough time to also see that
      * same new value.
      */
+    @OptIn(FlowPreview::class)
     val isAbleToDream: Flow<Boolean> =
         dozeTransitionModel
             .flatMapLatest { dozeTransitionModel ->
@@ -216,11 +216,7 @@ constructor(
                     // should actually be quite strange to leave AOD and then go straight to
                     // DREAMING so this should be fine.
                     delay(IS_ABLE_TO_DREAM_DELAY_MS)
-                    isDreaming
-                        .sample(powerInteractor.isAwake) { isDreaming, isAwake ->
-                            isDreaming && isAwake
-                        }
-                        .debounce(50L)
+                    isDreaming.debounce(50L)
                 } else {
                     flowOf(false)
                 }
@@ -418,8 +414,6 @@ constructor(
                 initialValue = 0f,
             )
 
-    val clockShouldBeCentered: Flow<Boolean> = repository.clockShouldBeCentered
-
     /** Whether to animate the next doze mode transition. */
     val animateDozingTransitions: Flow<Boolean> by lazy {
         if (SceneContainerFlag.isEnabled) {
@@ -483,10 +477,6 @@ constructor(
 
     fun setAnimateDozingTransitions(animate: Boolean) {
         repository.setAnimateDozingTransitions(animate)
-    }
-
-    fun setClockShouldBeCentered(shouldBeCentered: Boolean) {
-        repository.setClockShouldBeCentered(shouldBeCentered)
     }
 
     fun setLastRootViewTapPosition(point: Point?) {

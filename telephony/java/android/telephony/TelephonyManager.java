@@ -180,7 +180,7 @@ import java.util.stream.IntStream;
  * permission-protected. Your application cannot access the protected
  * information unless it has the appropriate permissions declared in
  * its manifest file. Where permissions apply, they are noted in the
- * the methods through which you access the protected information.
+ * methods through which you access the protected information.
  *
  * <p>TelephonyManager is intended for use on devices that implement
  * {@link android.content.pm.PackageManager#FEATURE_TELEPHONY FEATURE_TELEPHONY}. On devices
@@ -633,11 +633,14 @@ public class TelephonyManager {
     }
 
     /**
-     * Returns the multi SIM variant
-     * Returns DSDS for Dual SIM Dual Standby
-     * Returns DSDA for Dual SIM Dual Active
-     * Returns TSTS for Triple SIM Triple Standby
-     * Returns UNKNOWN for others
+     * Returns the multi SIM variant.
+     *
+     * <ul>
+     *   <li>Returns DSDS for Dual SIM Dual Standby.</li>
+     *   <li>Returns DSDA for Dual SIM Dual Active.</li>
+     *   <li>Returns TSTS for Triple SIM Triple Standby.</li>
+     *   <li>Returns UNKNOWN for others.</li>
+     * </ul>
      */
     /** {@hide} */
     @UnsupportedAppUsage
@@ -655,6 +658,7 @@ public class TelephonyManager {
         }
     }
 
+// QTI_BEGIN: 2021-07-13: Telephony: IMS: Define new property for multi sim voice capability
     /**
      * The allowed values for multi sim voice capability
      *
@@ -671,6 +675,8 @@ public class TelephonyManager {
         static final int PSEUDO_DSDA = 2;
         /** Concurrent calls on both subscriptions are possible */
         static final int DSDA = 3;
+        /** MultiSimVoiceCapability is unsupported/deprecated */
+        static final int UNSUPPORTED = 4;
     }
 
     /**
@@ -684,6 +690,8 @@ public class TelephonyManager {
         return mSimVoiceConfig == MultiSimVoiceCapability.DSDA;
     }
 
+// QTI_END: 2021-07-13: Telephony: IMS: Define new property for multi sim voice capability
+// QTI_BEGIN: 2023-03-16: Telephony: DSDA: Add APIs to support DSDA -> DSDS transition use cases
 
     /**
      * Returns true if device is in DSDA mode where concurrent calls on both subscriptions are
@@ -736,6 +744,8 @@ public class TelephonyManager {
         return TelephonyProperties.dsds_transition_supported().orElse(false);
     }
 
+// QTI_END: 2023-03-16: Telephony: DSDA: Add APIs to support DSDA -> DSDS transition use cases
+// QTI_BEGIN: 2023-03-19: Telephony: DSDA: Add API to support DSDS transition use cases
     /**
      * Returns true if Multi SIM voice capability is DSDS.
      * Returns false for other cases.
@@ -747,12 +757,17 @@ public class TelephonyManager {
         return mSimVoiceConfig == MultiSimVoiceCapability.DSDS;
     }
 
+// QTI_END: 2023-03-19: Telephony: DSDA: Add API to support DSDS transition use cases
     /**
      * Returns the number of phones available.
-     * Returns 0 if none of voice, sms, data is not supported
-     * Returns 1 for Single standby mode (Single SIM functionality).
-     * Returns 2 for Dual standby mode (Dual SIM functionality).
-     * Returns 3 for Tri standby mode (Tri SIM functionality).
+     *
+     * <ul>
+     *   <li>Returns 0 if none of voice, sms, data is supported.</li>
+     *   <li>Returns 1 for Single standby mode (Single SIM functionality).</li>
+     *   <li>Returns 2 for Dual standby mode (Dual SIM functionality).</li>
+     *   <li>Returns 3 for Tri standby mode (Tri SIM functionality).</li>
+     * </ul>
+     *
      * @deprecated Use {@link #getActiveModemCount} instead.
      */
     @Deprecated
@@ -763,10 +778,12 @@ public class TelephonyManager {
     /**
      * Returns the number of logical modems currently configured to be activated.
      *
-     * Returns 0 if none of voice, sms, data is not supported
-     * Returns 1 for Single standby mode (Single SIM functionality).
-     * Returns 2 for Dual standby mode (Dual SIM functionality).
-     * Returns 3 for Tri standby mode (Tri SIM functionality).
+     * <ul>
+     *   <li>Returns 0 if none of voice, sms, data is supported.</li>
+     *   <li>Returns 1 for Single standby mode (Single SIM functionality).</li>
+     *   <li>Returns 2 for Dual standby mode (Dual SIM functionality).</li>
+     *   <li>Returns 3 for Tri standby mode (Tri SIM functionality).</li>
+     * </ul>
      */
     public int getActiveModemCount() {
         int modemCount = 1;
@@ -2402,7 +2419,9 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public String getDeviceId(int slotIndex) {
         // FIXME this assumes phoneId == slotIndex
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(8, ""+slotIndex);
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         try {
             IPhoneSubInfo info = getSubscriberInfoService();
             if (info == null)
@@ -2531,6 +2550,7 @@ public class TelephonyManager {
      * as follows:
      *
      * <ul>
+     *     <li>If the device is running Android 25Q2 or later, then null is returned.</li>
      *     <li>If the calling app's target SDK is API level 28 or lower and the app has the
      *     READ_PHONE_STATE permission then null is returned.</li>
      *     <li>If the calling app's target SDK is API level 28 or lower and the app does not have
@@ -2539,7 +2559,8 @@ public class TelephonyManager {
      * </ul>
      *
      * @deprecated Legacy CDMA is unsupported.
-     * @throws UnsupportedOperationException If the device does not have
+     * @throws UnsupportedOperationException If the device is running
+     *          Android 25Q1 or earlier and does not have
      *          {@link PackageManager#FEATURE_TELEPHONY_CDMA}.
      */
     @FlaggedApi(Flags.FLAG_DEPRECATE_CDMA)
@@ -2733,7 +2754,9 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_RADIO_ACCESS)
     public CellLocation getCellLocation() {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record(49);
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null) {
@@ -2772,7 +2795,9 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY_RADIO_ACCESS)
     public List<NeighboringCellInfo> getNeighboringCellInfo() {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record(50);
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         try {
             ITelephony telephony = getITelephony();
             if (telephony == null)
@@ -4413,7 +4438,9 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage
     public String getSimSerialNumber(int subId) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(388, ""+subId);
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         try {
             IPhoneSubInfo info = getSubscriberInfoService();
             if (info == null)
@@ -4854,7 +4881,9 @@ public class TelephonyManager {
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     public String getSubscriberId(int subId) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(389, ""+subId);
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         try {
             IPhoneSubInfo info = getSubscriberInfoService();
             if (info == null)
@@ -5516,7 +5545,9 @@ public class TelephonyManager {
     })
     @UnsupportedAppUsage
     public String getLine1Number(int subId) {
+// QTI_BEGIN: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         android.util.SeempLog.record_str(9, ""+subId);
+// QTI_END: 2018-04-09: Secure Systems: SEEMP: framework instrumentation and AppProtect features
         String number = null;
         try {
             ITelephony telephony = getITelephony();

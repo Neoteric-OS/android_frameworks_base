@@ -16,6 +16,7 @@
 
 package com.android.systemui.scene.ui.composable
 
+import androidx.compose.foundation.LocalOverscrollFactory
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
@@ -33,9 +34,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.compose.animation.scene.ContentKey
-import com.android.compose.animation.scene.MutableSceneTransitionLayoutState
 import com.android.compose.animation.scene.OverlayKey
 import com.android.compose.animation.scene.SceneKey
 import com.android.compose.animation.scene.SceneTransitionLayout
@@ -43,12 +44,17 @@ import com.android.compose.animation.scene.SceneTransitions
 import com.android.compose.animation.scene.UserAction
 import com.android.compose.animation.scene.UserActionResult
 import com.android.compose.animation.scene.observableTransitionState
+import com.android.compose.animation.scene.rememberMutableSceneTransitionLayoutState
+import com.android.compose.gesture.effect.rememberOffsetOverscrollEffectFactory
+import com.android.systemui.lifecycle.rememberActivated
 import com.android.systemui.qs.ui.adapter.QSSceneAdapter
 import com.android.systemui.qs.ui.composable.QuickSettingsTheme
 import com.android.systemui.ribbon.ui.composable.BottomRightCornerRibbon
 import com.android.systemui.scene.shared.model.SceneDataSourceDelegator
 import com.android.systemui.scene.shared.model.Scenes
+import com.android.systemui.scene.ui.view.SceneJankMonitor
 import com.android.systemui.scene.ui.viewmodel.SceneContainerViewModel
+import com.android.systemui.shade.ui.composable.isFullWidthShade
 import javax.inject.Provider
 
 /**
@@ -82,16 +88,36 @@ fun SceneContainer(
     sceneTransitions: SceneTransitions,
     dataSourceDelegator: SceneDataSourceDelegator,
     qsSceneAdapter: Provider<QSSceneAdapter>,
+    sceneJankMonitorFactory: SceneJankMonitor.Factory,
     modifier: Modifier = Modifier,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val state: MutableSceneTransitionLayoutState = remember {
-        MutableSceneTransitionLayoutState(
+
+    val view = LocalView.current
+    val sceneJankMonitor =
+        rememberActivated(traceName = "sceneJankMonitor") { sceneJankMonitorFactory.create() }
+
+    val state =
+        rememberMutableSceneTransitionLayoutState(
             initialScene = initialSceneKey,
             canChangeScene = { toScene -> viewModel.canChangeScene(toScene) },
             transitions = sceneTransitions,
+            onTransitionStart = { transition ->
+                sceneJankMonitor.onTransitionStart(
+                    view = view,
+                    from = transition.fromContent,
+                    to = transition.toContent,
+                    cuj = transition.cuj,
+                )
+            },
+            onTransitionEnd = { transition ->
+                sceneJankMonitor.onTransitionEnd(
+                    from = transition.fromContent,
+                    to = transition.toContent,
+                    cuj = transition.cuj,
+                )
+            },
         )
-    }
 
     DisposableEffect(state) {
         val dataSource = SceneTransitionLayoutDataSource(state, coroutineScope)
@@ -127,6 +153,13 @@ fun SceneContainer(
         }
     }
 
+    // Overlays use the offset overscroll effect when shown on large screens, otherwise they
+    // stretch. All scenes use the OffsetOverscrollEffect.
+    val offsetOverscrollEffectFactory = rememberOffsetOverscrollEffectFactory()
+    val stretchOverscrollEffectFactory = checkNotNull(LocalOverscrollFactory.current)
+    val overlayEffectFactory =
+        if (isFullWidthShade()) stretchOverscrollEffectFactory else offsetOverscrollEffectFactory
+
     // Inflate qsView here so that shade has the correct qqs height in the first measure pass after
     // rebooting
     if (
@@ -154,6 +187,12 @@ fun SceneContainer(
                 }
             }
     ) {
+        SceneRevealScrim(
+            viewModel = viewModel.lightRevealScrim,
+            wallpaperViewModel = viewModel.wallpaperViewModel,
+            modifier = Modifier.fillMaxSize(),
+        )
+
         SceneTransitionLayout(
             state = state,
             modifier = modifier.fillMaxSize(),
@@ -163,6 +202,7 @@ fun SceneContainer(
                 scene(
                     key = sceneKey,
                     userActions = userActionsByContentKey.getOrDefault(sceneKey, emptyMap()),
+                    effectFactory = offsetOverscrollEffectFactory,
                 ) {
                     // Activate the scene.
                     LaunchedEffect(scene) { scene.activate() }
@@ -179,6 +219,7 @@ fun SceneContainer(
                 overlay(
                     key = overlayKey,
                     userActions = userActionsByContentKey.getOrDefault(overlayKey, emptyMap()),
+                    effectFactory = overlayEffectFactory,
                 ) {
                     // Activate the overlay.
                     LaunchedEffect(overlay) { overlay.activate() }

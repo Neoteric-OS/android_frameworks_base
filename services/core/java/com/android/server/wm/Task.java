@@ -164,7 +164,9 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.voice.IVoiceInteractionSession;
 import android.util.ArraySet;
+// QTI_BEGIN: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
 import android.util.BoostFramework;
+// QTI_END: 2021-04-19: Performance: perf: Move app-launch & uxperf boosts
 import android.util.DisplayMetrics;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
@@ -470,9 +472,6 @@ class Task extends TaskFragment {
     // This represents the last resolved activity values for this task
     // NOTE: This value needs to be persisted with each task
     private TaskDescription mTaskDescription;
-
-    /** @see #setCanAffectSystemUiFlags */
-    private boolean mCanAffectSystemUiFlags = true;
 
     private static Exception sTmpException;
 
@@ -1302,11 +1301,15 @@ class Task extends TaskFragment {
                 // Pausing the resumed activity because it is occluded by other task fragment, or
                 // should not be remained in resumed state.
                 if (startPausing(false /* uiSleeping*/, resuming, reason)) {
+// QTI_BEGIN: 2024-05-29: Data: Update pauseActivityIfNeeded to avoid NullPointerException
                     if (mActivityPluginDelegate != null && top != null && top.info != null
+// QTI_END: 2024-05-29: Data: Update pauseActivityIfNeeded to avoid NullPointerException
+// QTI_BEGIN: 2024-04-04: Data: Update ActivityPluginDelegate notifications for V
                             && getWindowingMode() != WINDOWING_MODE_UNDEFINED) {
                         mActivityPluginDelegate.activitySuspendNotification(top.info.packageName,
                                 getWindowingMode() == WINDOWING_MODE_FULLSCREEN, true);
                     }
+// QTI_END: 2024-04-04: Data: Update ActivityPluginDelegate notifications for V
                     someActivityPaused[0]++;
                 }
             }
@@ -1314,14 +1317,20 @@ class Task extends TaskFragment {
 
         forAllLeafTaskFragments((taskFrag) -> {
             final ActivityRecord resumedActivity = taskFrag.getResumedActivity();
+// QTI_BEGIN: 2024-04-04: Data: Update ActivityPluginDelegate notifications for V
             final ActivityRecord top = topRunningActivity();
+// QTI_END: 2024-04-04: Data: Update ActivityPluginDelegate notifications for V
             if (resumedActivity != null && !taskFrag.canBeResumed(resuming)) {
                 if (taskFrag.startPausing(false /* uiSleeping*/, resuming, reason)) {
+// QTI_BEGIN: 2024-05-29: Data: Update pauseActivityIfNeeded to avoid NullPointerException
                     if (mActivityPluginDelegate != null && top != null && top.info != null
+// QTI_END: 2024-05-29: Data: Update pauseActivityIfNeeded to avoid NullPointerException
+// QTI_BEGIN: 2024-04-04: Data: Update ActivityPluginDelegate notifications for V
                             && getWindowingMode() != WINDOWING_MODE_UNDEFINED) {
                         mActivityPluginDelegate.activitySuspendNotification(top.info.packageName,
                                 getWindowingMode() == WINDOWING_MODE_FULLSCREEN, true);
                     }
+// QTI_END: 2024-04-04: Data: Update ActivityPluginDelegate notifications for V
                     someActivityPaused[0]++;
                 }
             }
@@ -3305,21 +3314,6 @@ class Task extends TaskFragment {
         return isRootTask() && callback.test(this) ? this : null;
     }
 
-    /**
-     * @param canAffectSystemUiFlags If false, all windows in this task can not affect SystemUI
-     *                               flags. See {@link WindowState#canAffectSystemUiFlags()}.
-     */
-    void setCanAffectSystemUiFlags(boolean canAffectSystemUiFlags) {
-        mCanAffectSystemUiFlags = canAffectSystemUiFlags;
-    }
-
-    /**
-     * @see #setCanAffectSystemUiFlags
-     */
-    boolean canAffectSystemUiFlags() {
-        return mCanAffectSystemUiFlags;
-    }
-
     void dontAnimateDimExit() {
         mDimmer.dontAnimateExit();
     }
@@ -5136,6 +5130,7 @@ class Task extends TaskFragment {
         mTranslucentActivityWaiting = r;
         mPendingConvertFromTranslucentActivity = r;
         mUndrawnActivitiesBelowTopTranslucent.clear();
+        updateTaskDescription();
         mHandler.sendEmptyMessageDelayed(TRANSLUCENT_TIMEOUT_MSG, TRANSLUCENT_CONVERSION_TIMEOUT);
     }
 
@@ -5145,6 +5140,7 @@ class Task extends TaskFragment {
                     + " but is " + r);
         }
         mPendingConvertFromTranslucentActivity = null;
+        updateTaskDescription();
     }
 
     /**
@@ -5247,9 +5243,15 @@ class Task extends TaskFragment {
             // to ensure any necessary pause logic occurs. In the case where the Activity will be
             // shown regardless of the lock screen, the call to
             // {@link ActivityTaskSupervisor#checkReadyForSleepLocked} is skipped.
-            final ActivityRecord next = topRunningActivity(true /* focusableOnly */);
-            if (next == null || !next.canTurnScreenOn()) {
-                checkReadyForSleep();
+            if (shouldSleepActivities()) {
+                final ActivityRecord next = topRunningActivity(true /* focusableOnly */);
+                if (next != null && next.canTurnScreenOn()
+                        && !mWmService.mPowerManager.isInteractive()) {
+                    mTaskSupervisor.wakeUp(getDisplayId(), "resumeTop-turnScreenOnFlag");
+                    next.setCurrentLaunchCanTurnScreenOn(false);
+                } else {
+                    checkReadyForSleep();
+                }
             }
         } finally {
             mInResumeTopActivity = false;
@@ -5267,10 +5269,11 @@ class Task extends TaskFragment {
     @GuardedBy("mService")
     private boolean resumeTopActivityInnerLocked(ActivityRecord prev, ActivityOptions options,
             boolean deferPause) {
-        if (!mAtmService.isBooting() && !mAtmService.isBooted()) {
+        if (!mAtmService.isBooting() && !mAtmService.isBooted() || !mTaskSupervisor.readyToResume()) {
             // Not ready yet!
             return false;
         }
+
         final ActivityRecord topActivity = topRunningActivity(true /* focusableOnly */);
         if (topActivity == null) {
             // There are no activities left in this task, let's look somewhere else.
@@ -5279,11 +5282,15 @@ class Task extends TaskFragment {
         final boolean[] resumed = new boolean[1];
         final TaskFragment topFragment = topActivity.getTaskFragment();
         resumed[0] = topFragment.resumeTopActivity(prev, options, deferPause);
+// QTI_BEGIN: 2024-05-29: Data: Update pauseActivityIfNeeded to avoid NullPointerException
         if (mActivityPluginDelegate != null && getWindowingMode() != WINDOWING_MODE_UNDEFINED
                     && topActivity.info != null) {
+// QTI_END: 2024-05-29: Data: Update pauseActivityIfNeeded to avoid NullPointerException
+// QTI_BEGIN: 2024-04-04: Data: Update ActivityPluginDelegate notifications for V
             mActivityPluginDelegate.activityInvokeNotification(
                     topActivity.info.packageName, getWindowingMode() == WINDOWING_MODE_FULLSCREEN);
         }
+// QTI_END: 2024-04-04: Data: Update ActivityPluginDelegate notifications for V
         forAllLeafTaskFragments(f -> {
             if (topFragment == f) {
                 return;
@@ -5325,45 +5332,36 @@ class Task extends TaskFragment {
         return mRootWindowContainer.resumeHomeActivity(prev, reason, getDisplayArea());
     }
 
-    void startActivityLocked(ActivityRecord r, @Nullable Task topTask, boolean newTask,
-            boolean isTaskSwitch, ActivityOptions options, @Nullable ActivityRecord sourceRecord) {
-        Task rTask = r.getTask();
+    void startActivityLocked(@NonNull ActivityRecord r, @Nullable Task topTask, boolean newTask,
+            boolean isTaskSwitch, @Nullable ActivityOptions options,
+            @Nullable ActivityRecord sourceRecord) {
         final boolean allowMoveToFront = options == null || !options.getAvoidMoveToFront();
-        final boolean isOrhasTask = rTask == this || hasChild(rTask);
+        final Task activityTask = r.getTask();
+        final boolean isThisOrHasChildTask = activityTask == this || hasChild(activityTask);
+
         // mLaunchTaskBehind tasks get placed at the back of the task stack.
-        if (!r.mLaunchTaskBehind && allowMoveToFront && (!isOrhasTask || newTask)) {
+        if (!r.mLaunchTaskBehind && allowMoveToFront && (!isThisOrHasChildTask || newTask)) {
             // Last activity in task had been removed or ActivityManagerService is reusing task.
             // Insert or replace.
             // Might not even be in.
-            positionChildAtTop(rTask);
+            positionChildAtTop(activityTask);
         }
-        Task task = null;
-        if (!newTask && isOrhasTask && !r.shouldBeVisible()) {
+
+        if (!newTask && isThisOrHasChildTask && !r.shouldBeVisible()) {
             ActivityOptions.abort(options);
             return;
         }
 
-        // Place a new activity at top of root task, so it is next to interact with the user.
-
-        // If we are not placing the new activity frontmost, we do not want to deliver the
-        // onUserLeaving callback to the actual frontmost activity
-        final Task activityTask = r.getTask();
-        if (task == activityTask && mChildren.indexOf(task) != (getChildCount() - 1)) {
-            mTaskSupervisor.mUserLeaving = false;
-            if (DEBUG_USER_LEAVING) Slog.v(TAG_USER_LEAVING,
-                    "startActivity() behind front, mUserLeaving=false");
-        }
-
-        task = activityTask;
-
         // Slot the activity into the history root task and proceed
-        ProtoLog.i(WM_DEBUG_ADD_REMOVE, "Adding activity %s to task %s "
-                        + "callers: %s", r, task, new RuntimeException("here").fillInStackTrace());
+        ProtoLog.i(WM_DEBUG_ADD_REMOVE, "Adding activity %s to task %s callers: %s", r,
+                activityTask, new RuntimeException("here").fillInStackTrace());
 
+// QTI_BEGIN: 2021-02-05: Data: Update ActivityPluginDelegate notifications for S
         if (mActivityPluginDelegate != null) {
             mActivityPluginDelegate.activityInvokeNotification
                 (r.info.packageName, getWindowingMode() == WINDOWING_MODE_FULLSCREEN);
         }
+// QTI_END: 2021-02-05: Data: Update ActivityPluginDelegate notifications for S
         if (isActivityTypeHomeOrRecents() && getActivityBelow(r) == null) {
             // If this is the first activity, don't do any fancy animations,
             // because there is nothing for it to animate on top of.
@@ -5378,15 +5376,15 @@ class Task extends TaskFragment {
             return;
         }
 
-        final DisplayContent dc = mDisplayContent;
-        if (DEBUG_TRANSITION) Slog.v(TAG_TRANSITION,
-                "Prepare open transition: starting " + r);
+        if (DEBUG_TRANSITION) Slog.v(TAG_TRANSITION, "Prepare open transition: starting " + r);
+
+        // Place a new activity at top of root task, so it is next to interact with the user.
         if ((r.intent.getFlags() & Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0) {
-            dc.prepareAppTransition(TRANSIT_NONE);
+            mDisplayContent.prepareAppTransition(TRANSIT_NONE);
             mTaskSupervisor.mNoAnimActivities.add(r);
             mTransitionController.setNoAnimation(r);
         } else {
-            dc.prepareAppTransition(TRANSIT_OPEN);
+            mDisplayContent.prepareAppTransition(TRANSIT_OPEN);
             mTaskSupervisor.mNoAnimActivities.remove(r);
         }
         if (newTask && !r.mLaunchTaskBehind) {
@@ -5437,8 +5435,7 @@ class Task extends TaskFragment {
             // "has the same starting icon" as the next one.  This allows the
             // window manager to keep the previous window it had previously
             // created, if it still had one.
-            Task baseTask = r.getTask();
-            final ActivityRecord prev = baseTask.getActivity(
+            final ActivityRecord prev = activityTask.getActivity(
                     a -> a.mStartingData != null && a.showToCurrentUser());
             mWmService.mStartingSurfaceController.showStartingWindow(r, prev, newTask,
                     isTaskSwitch, sourceRecord);

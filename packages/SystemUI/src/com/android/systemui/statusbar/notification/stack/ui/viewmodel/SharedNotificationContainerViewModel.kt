@@ -42,15 +42,18 @@ import com.android.systemui.keyguard.shared.model.KeyguardState.OCCLUDED
 import com.android.systemui.keyguard.shared.model.KeyguardState.PRIMARY_BOUNCER
 import com.android.systemui.keyguard.shared.model.StatusBarState.SHADE
 import com.android.systemui.keyguard.shared.model.StatusBarState.SHADE_LOCKED
+import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition
 import com.android.systemui.keyguard.ui.viewmodel.AlternateBouncerToGoneTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AlternateBouncerToPrimaryBouncerTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodBurnInViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToGoneTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToOccludedTransitionViewModel
+import com.android.systemui.keyguard.ui.viewmodel.AodToPrimaryBouncerTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToGlanceableHubTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToOccludedTransitionViewModel
+import com.android.systemui.keyguard.ui.viewmodel.DozingToPrimaryBouncerTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DreamingToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.GlanceableHubToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.GoneToAodTransitionViewModel
@@ -130,9 +133,12 @@ constructor(
     private val aodToGoneTransitionViewModel: AodToGoneTransitionViewModel,
     private val aodToLockscreenTransitionViewModel: AodToLockscreenTransitionViewModel,
     private val aodToOccludedTransitionViewModel: AodToOccludedTransitionViewModel,
+    private val aodToPrimaryBouncerTransitionViewModel: AodToPrimaryBouncerTransitionViewModel,
     dozingToGlanceableHubTransitionViewModel: DozingToGlanceableHubTransitionViewModel,
     private val dozingToLockscreenTransitionViewModel: DozingToLockscreenTransitionViewModel,
     private val dozingToOccludedTransitionViewModel: DozingToOccludedTransitionViewModel,
+    private val dozingToPrimaryBouncerTransitionViewModel:
+        DozingToPrimaryBouncerTransitionViewModel,
     private val dreamingToLockscreenTransitionViewModel: DreamingToLockscreenTransitionViewModel,
     private val glanceableHubToLockscreenTransitionViewModel:
         GlanceableHubToLockscreenTransitionViewModel,
@@ -154,6 +160,7 @@ constructor(
     private val primaryBouncerToGoneTransitionViewModel: PrimaryBouncerToGoneTransitionViewModel,
     private val primaryBouncerToLockscreenTransitionViewModel:
         PrimaryBouncerToLockscreenTransitionViewModel,
+    private val primaryBouncerTransitions: Set<@JvmSuppressWildcards PrimaryBouncerTransition>,
     aodBurnInViewModel: AodBurnInViewModel,
     private val communalSceneInteractor: CommunalSceneInteractor,
     // Lazy because it's only used in the SceneContainer + Dual Shade configuration.
@@ -552,8 +559,10 @@ constructor(
             aodToGoneTransitionViewModel.notificationAlpha(viewState),
             aodToLockscreenTransitionViewModel.notificationAlpha,
             aodToOccludedTransitionViewModel.lockscreenAlpha(viewState),
+            aodToPrimaryBouncerTransitionViewModel.notificationAlpha,
             dozingToLockscreenTransitionViewModel.lockscreenAlpha,
             dozingToOccludedTransitionViewModel.lockscreenAlpha(viewState),
+            dozingToPrimaryBouncerTransitionViewModel.notificationAlpha,
             dreamingToLockscreenTransitionViewModel.lockscreenAlpha,
             goneToAodTransitionViewModel.notificationAlpha,
             goneToDreamingTransitionViewModel.lockscreenAlpha,
@@ -562,7 +571,7 @@ constructor(
             lockscreenToDreamingTransitionViewModel.lockscreenAlpha,
             lockscreenToGoneTransitionViewModel.notificationAlpha(viewState),
             lockscreenToOccludedTransitionViewModel.lockscreenAlpha,
-            lockscreenToPrimaryBouncerTransitionViewModel.lockscreenAlpha,
+            lockscreenToPrimaryBouncerTransitionViewModel.notificationAlpha,
             alternateBouncerToPrimaryBouncerTransitionViewModel.notificationAlpha,
             occludedToAodTransitionViewModel.lockscreenAlpha,
             occludedToGoneTransitionViewModel.notificationAlpha(viewState),
@@ -625,6 +634,12 @@ constructor(
             .distinctUntilChanged()
             .dumpWhileCollecting("keyguardAlpha")
     }
+
+    val blurRadius =
+        primaryBouncerTransitions
+            .map { transition -> transition.notificationBlurRadius }
+            .merge()
+            .dumpWhileCollecting("blurRadius")
 
     /**
      * Returns a flow of the expected alpha while running a LOCKSCREEN<->GLANCEABLE_HUB or

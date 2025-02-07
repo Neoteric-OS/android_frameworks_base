@@ -13,6 +13,13 @@ flag {
 }
 
 flag {
+  name: "notifications_redesign_themed_app_icons"
+  namespace: "systemui"
+  description: "Notifications Redesign: Experiment to make app icons in notifications themed"
+  bug: "371174789"
+}
+
+flag {
   name: "notifications_redesign_templates"
   namespace: "systemui"
   description: "Notifications Redesign: Update notification templates"
@@ -174,16 +181,6 @@ flag {
 }
 
 flag {
-  name: "update_ranking_time"
-  namespace: "systemui"
-  description: "Updates notification sorting criteria to highlight new content while maintaining stability"
-  bug: "326016985"
-  metadata {
-    purpose: PURPOSE_BUGFIX
-  }
-}
-
-flag {
   name: "sort_section_by_time"
   namespace: "systemui"
   description: "Changes notification sort order to be by time within a section"
@@ -295,6 +292,16 @@ flag {
   namespace: "systemui"
   description: "Rate-limit calls to enqueueNotificationWithTag client-side"
   bug: "362981561"
+}
+
+flag {
+  name: "nm_binder_perf_log_nm_throttling"
+  namespace: "systemui"
+  description: "Log throttled operations (notify, cancel) to statsd. This flag will NOT be pushed past Trunkfood."
+  bug: "389918945"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
 }
 
 flag {

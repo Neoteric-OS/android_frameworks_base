@@ -36,10 +36,13 @@ import static android.window.TransitionInfo.FLAG_IS_OCCLUDED;
 import static android.window.TransitionInfo.FLAG_IS_WALLPAPER;
 import static android.window.TransitionInfo.FLAG_NO_ANIMATION;
 import static android.window.TransitionInfo.FLAG_STARTING_WINDOW_TRANSFER_RECIPIENT;
+// QTI_BEGIN: 2024-07-09: Display: wm: Keep Wallpaper always at the bottom
 import static android.window.TransitionInfo.FLAG_IS_WALLPAPER;
+// QTI_END: 2024-07-09: Display: wm: Keep Wallpaper always at the bottom
 
 import static com.android.systemui.shared.Flags.returnAnimationFrameworkLongLived;
 import static com.android.window.flags.Flags.ensureWallpaperInTransitions;
+import static com.android.wm.shell.shared.TransitionUtil.FLAG_IS_DESKTOP_WALLPAPER_ACTIVITY;
 import static com.android.wm.shell.shared.TransitionUtil.isClosingType;
 import static com.android.wm.shell.shared.TransitionUtil.isOpeningType;
 
@@ -85,6 +88,7 @@ import com.android.wm.shell.common.ExternalInterfaceBinder;
 import com.android.wm.shell.common.RemoteCallable;
 import com.android.wm.shell.common.ShellExecutor;
 import com.android.wm.shell.desktopmode.DesktopModeTransitionTypes;
+import com.android.wm.shell.desktopmode.DesktopWallpaperActivity;
 import com.android.wm.shell.keyguard.KeyguardTransitionHandler;
 import com.android.wm.shell.protolog.ShellProtoLogGroup;
 import com.android.wm.shell.shared.FocusTransitionListener;
@@ -599,6 +603,7 @@ public class Transitions implements RemoteCallable<Transitions>,
         final boolean isClosing = isClosingType(transitType);
         final int mode = change.getMode();
         // Put all the OPEN/SHOW on top
+// QTI_BEGIN: 2024-07-09: Display: wm: Keep Wallpaper always at the bottom
         if ((change.getFlags() & FLAG_IS_WALLPAPER) != 0) {
             // Wallpaper is always at the bottom, opening wallpaper on top of closing one.
             if (mode == TRANSIT_OPEN || mode == TRANSIT_TO_FRONT) {
@@ -607,6 +612,7 @@ public class Transitions implements RemoteCallable<Transitions>,
                 return -zSplitLine - i;
             }
         } else if (mode == TRANSIT_OPEN || mode == TRANSIT_TO_FRONT) {
+// QTI_END: 2024-07-09: Display: wm: Keep Wallpaper always at the bottom
             if (isOpening) {
                 // put on top
                 return zSplitLine + numChanges - i;
@@ -676,46 +682,6 @@ public class Transitions implements RemoteCallable<Transitions>,
             if (list.get(i).mToken == token) return i;
         }
         return -1;
-    }
-
-    /**
-     * Look through a transition and see if all non-closing changes are no-animation. If so, no
-     * animation should play.
-     */
-    static boolean isAllNoAnimation(TransitionInfo info) {
-        if (isClosingType(info.getType())) {
-            // no-animation is only relevant for launching (open) activities.
-            return false;
-        }
-        boolean hasNoAnimation = false;
-        final int changeSize = info.getChanges().size();
-        for (int i = changeSize - 1; i >= 0; --i) {
-            final TransitionInfo.Change change = info.getChanges().get(i);
-            if (isClosingType(change.getMode())) {
-                // ignore closing apps since they are a side-effect of the transition and don't
-                // animate.
-                continue;
-            }
-            if (change.hasFlags(FLAG_NO_ANIMATION)) {
-                hasNoAnimation = true;
-            } else if (!TransitionUtil.isOrderOnly(change) && !change.hasFlags(FLAG_IS_OCCLUDED)) {
-                // Ignore the order only or occluded changes since they shouldn't be visible during
-                // animation. For anything else, we need to animate if at-least one relevant
-                // participant *is* animated,
-                return false;
-            }
-        }
-        return hasNoAnimation;
-    }
-
-    /**
-     * Check if all changes in this transition are only ordering changes. If so, we won't animate.
-     */
-    static boolean isAllOrderOnly(TransitionInfo info) {
-        for (int i = info.getChanges().size() - 1; i >= 0; --i) {
-            if (!TransitionUtil.isOrderOnly(info.getChanges().get(i))) return false;
-        }
-        return true;
     }
 
     private Track getOrCreateTrack(int trackId) {
@@ -801,6 +767,14 @@ public class Transitions implements RemoteCallable<Transitions>,
             // Actually able to process the sleep now, so re-remove it from the queue and continue
             // the normal flow.
             mReadyDuringSync.remove(active);
+        }
+
+        // If any of the changes are on DesktopWallpaperActivity, add the flag to the change.
+        for (TransitionInfo.Change change : info.getChanges()) {
+            if (change.getTaskInfo() != null
+                    && DesktopWallpaperActivity.isWallpaperTask(change.getTaskInfo())) {
+                change.setFlags(FLAG_IS_DESKTOP_WALLPAPER_ACTIVITY);
+            }
         }
 
         final Track track = getOrCreateTrack(info.getTrack());
@@ -1754,6 +1728,10 @@ public class Transitions implements RemoteCallable<Transitions>,
 
     @Override
     public boolean onShellCommand(String[] args, PrintWriter pw) {
+        if (args.length == 0) {
+            printShellCommandHelp(pw, "");
+            return false;
+        }
         switch (args[0]) {
             case "tracing": {
                 if (!android.tracing.Flags.perfettoTransitionTracing()) {
