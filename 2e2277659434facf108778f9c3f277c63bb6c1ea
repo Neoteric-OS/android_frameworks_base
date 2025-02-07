@@ -22,6 +22,30 @@
       },
       "revId": "2e2277659434facf108778f9c3f277c63bb6c1ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "583bce9e_b69fa73d",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3188,
+      "author": {
+        "id": 1986696
+      },
+      "writtenOn": "2025-02-07T13:32:06Z",
+      "side": 1,
+      "message": "You are correct. I overlooked that in the code in the beginning as well, but Piotr pointed that out.",
+      "parentUuid": "4c930842_56fafd85",
+      "range": {
+        "startLine": 3188,
+        "startChar": 36,
+        "endLine": 3188,
+        "endChar": 48
+      },
+      "revId": "2e2277659434facf108778f9c3f277c63bb6c1ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
