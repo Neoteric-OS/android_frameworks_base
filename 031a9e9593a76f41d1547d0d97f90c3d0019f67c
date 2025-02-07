@@ -16,6 +16,24 @@
       "message": "If some devs have logic/behavior issues and try to find OWNER here, I feel like the main 44215 component could be a better place since they\u0027re not automation test bugs. Shall we only use the test component under test dirs?",
       "revId": "031a9e9593a76f41d1547d0d97f90c3d0019f67c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76159c25_f6a777d9",
+        "filename": "services/accessibility/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2025-02-07T19:44:37Z",
+      "side": 0,
+      "message": "Per go/android-codereviews#buganizer-component-links-in-owners this machine-read tag is only used for test infra.\n\nI added a second tag in a different format to let humans know where to file issues.",
+      "parentUuid": "10b52938_11aafd73",
+      "revId": "031a9e9593a76f41d1547d0d97f90c3d0019f67c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
