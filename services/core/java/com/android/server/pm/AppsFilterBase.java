@@ -622,8 +622,9 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
                         }
                     }
                 } else {
-                    if (mOverlayReferenceMapper.isValidActor(targetName,
-                            callingPkgSetting.getPackageName())) {
+                    if (callingPkgSetting ! = null
+                            && mOverlayReferenceMapper.isValidActor(targetName,
+                                callingPkgSetting.getPackageName())) {
                         if (DEBUG_LOGGING) {
                             log(callingPkgSetting, targetPkgSetting, "acts on target of overlay");
                         }
