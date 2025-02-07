@@ -426,7 +426,7 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
                 return false;
             }
 
-            final PackageStateInternal callingPkgSetting;
+            PackageStateInternal callingPkgSetting = null;
             if (DEBUG_TRACING) {
                 Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "callingSetting instanceof");
             }
@@ -434,12 +434,13 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
 
             if (callingSetting instanceof PackageStateInternal) {
                 final PackageStateInternal packageState = (PackageStateInternal) callingSetting;
-                if (packageState.hasSharedUser()) {
-                    callingPkgSetting = null;
+                callingPkgSetting = packageState;
+                if (callingPkgSetting.hasSharedUser()) {
                     final SharedUserApi sharedUserApi =
                             snapshot.getSharedUser(packageState.getSharedUserAppId());
                     if (sharedUserApi != null) {
                         callingSharedPkgSettings.addAll(sharedUserApi.getPackageStates());
+                        callingPkgSetting = null;
                     }
                 } else {
                     callingPkgSetting = packageState;
@@ -622,8 +623,9 @@ public abstract class AppsFilterBase implements AppsFilterSnapshot {
                         }
                     }
                 } else {
-                    if (mOverlayReferenceMapper.isValidActor(targetName,
-                            callingPkgSetting.getPackageName())) {
+                    if (callingPkgSetting != null
+                            && mOverlayReferenceMapper.isValidActor(targetName,
+                                callingPkgSetting.getPackageName())) {
                         if (DEBUG_LOGGING) {
                             log(callingPkgSetting, targetPkgSetting, "acts on target of overlay");
                         }
