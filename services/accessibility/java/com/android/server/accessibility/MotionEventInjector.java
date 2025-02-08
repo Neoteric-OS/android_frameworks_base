@@ -211,6 +211,7 @@ public class MotionEventInjector extends BaseEventStreamTransformation implement
             cancelAnyPendingInjectedEvents();
             // Injected gestures have been canceled, but real gestures still need cancelling
             cancelAnyGestureInProgress(EVENT_SOURCE);
+            mStrokeIdToPointerId.clear();
         }
         mServiceInterfaceForCurrentGesture = serviceInterface;
 
