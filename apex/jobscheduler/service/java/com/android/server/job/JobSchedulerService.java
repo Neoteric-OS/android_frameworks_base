@@ -3321,11 +3321,9 @@ public class JobSchedulerService extends com.android.server.SystemService
                 mChangedJobList.addAll(changedJobs);
             }
             mHandler.obtainMessage(MSG_CHECK_CHANGED_JOB_LIST).sendToTarget();
-            synchronized (mPendingJobReasonCache) {
-                for (int i = changedJobs.size() - 1; i >= 0; --i) {
-                    final JobStatus job = changedJobs.valueAt(i);
-                    resetPendingJobReasonCache(job);
-                }
+            for (int i = changedJobs.size() - 1; i >= 0; --i) {
+                final JobStatus job = changedJobs.valueAt(i);
+                resetPendingJobReasonCache(job);
             }
         }
     }
