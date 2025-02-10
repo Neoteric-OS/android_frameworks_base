@@ -105,6 +105,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c41dc7a6_2907e688",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2025-02-10T12:18:54Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c8dec4f8_5271fbfc",
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a05534f_fded98bc",
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "No problem with adding log as you suggested. is it OK without DEBUG flag?",
       "parentUuid": "7a05534f_fded98bc",
+      "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b56f93a9_3b9596cf",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3734,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2025-02-10T12:18:54Z",
+      "side": 1,
+      "message": "Yes thats fine!",
+      "parentUuid": "33a01bac_7d302ae0",
       "revId": "d216de9dcfc508805e2cd9a951df4a65f817f277",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
