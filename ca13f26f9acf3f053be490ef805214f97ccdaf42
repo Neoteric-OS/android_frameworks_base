@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef65587f_bab86c42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2025-02-10T18:25:16Z",
+      "side": 1,
+      "message": "Hi wangpuruo@xiaomi, thank you for sharing this fix. I\u0027m currently working on this issue with a slightly different approach, so I\u0027ll respond on your bug b/395244620 with more details.\n\nFor future changes please prefer to add just one or two OWNERS reviewers instead of pinging the entire list. Thank you!",
+      "revId": "ca13f26f9acf3f053be490ef805214f97ccdaf42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
