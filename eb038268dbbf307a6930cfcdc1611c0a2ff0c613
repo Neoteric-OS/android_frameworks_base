@@ -34,6 +34,24 @@
       "parentUuid": "04a1ac03_0919e066",
       "revId": "eb038268dbbf307a6930cfcdc1611c0a2ff0c613",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a00d4694_5db59171",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2025-02-10T18:29:41Z",
+      "side": 1,
+      "message": "Sure. Rebased it. Running presubmit.",
+      "parentUuid": "2b1ecba4_a4c9dfe5",
+      "revId": "eb038268dbbf307a6930cfcdc1611c0a2ff0c613",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
