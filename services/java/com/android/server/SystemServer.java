@@ -3030,6 +3030,21 @@ public final class SystemServer implements Dumpable {
             t.traceEnd();
         }
 
+        // No dependency on Webview preparation in system server. But this should
+        // be completed before allowing 3rd party
+        final String WEBVIEW_PREPARATION = "WebViewFactoryPreparation";
+        final Future<?> webviewPrep = mWebViewUpdateService != null
+                ? SystemServerInitThreadPool.submit(() -> {
+                      Slog.i(TAG, WEBVIEW_PREPARATION);
+                      TimingsTraceAndSlog traceLog = TimingsTraceAndSlog.newAsyncLog();
+                      traceLog.traceBegin(WEBVIEW_PREPARATION);
+                      ConcurrentUtils.waitForFutureNoInterrupt(mZygotePreload, "Zygote preload");
+                      mZygotePreload = null;
+                      mWebViewUpdateService.prepareWebViewInSystemServer();
+                      traceLog.traceEnd();
+                  }, WEBVIEW_PREPARATION)
+                : null;
+
         if (com.android.ranging.flags.Flags.rangingStackEnabled()) {
             if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_UWB)
                     || context.getPackageManager().hasSystemFeature(
@@ -3127,22 +3142,6 @@ public final class SystemServer implements Dumpable {
                 reportWtf("registering app ops policy", e);
             }
             t.traceEnd();
-
-            // No dependency on Webview preparation in system server. But this should
-            // be completed before allowing 3rd party
-            final String WEBVIEW_PREPARATION = "WebViewFactoryPreparation";
-            Future<?> webviewPrep = null;
-            if (mWebViewUpdateService != null) {
-                webviewPrep = SystemServerInitThreadPool.submit(() -> {
-                    Slog.i(TAG, WEBVIEW_PREPARATION);
-                    TimingsTraceAndSlog traceLog = TimingsTraceAndSlog.newAsyncLog();
-                    traceLog.traceBegin(WEBVIEW_PREPARATION);
-                    ConcurrentUtils.waitForFutureNoInterrupt(mZygotePreload, "Zygote preload");
-                    mZygotePreload = null;
-                    mWebViewUpdateService.prepareWebViewInSystemServer();
-                    traceLog.traceEnd();
-                }, WEBVIEW_PREPARATION);
-            }
 
             if (RoSystemFeatures.hasFeatureAutomotive(context)) {
                 t.traceBegin("StartCarServiceHelperService");
