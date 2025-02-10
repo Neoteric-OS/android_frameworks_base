@@ -21,7 +21,10 @@ android_test {
         "java/**/*.kt",
     ],
     platform_apis: true,
-    test_suites: ["device-tests"],
+    test_suites: [
+        "general-tests",
+        "mts-tethering",
+    ],
     certificate: "platform",
     static_libs: [
         "android.net.vcn.flags-aconfig-java-export",

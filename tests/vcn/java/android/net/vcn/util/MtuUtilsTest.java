@@ -33,9 +33,12 @@ import static org.junit.Assert.assertTrue;
 import static java.util.Collections.emptyList;
 
 import android.net.ipsec.ike.ChildSaProposal;
+import android.os.Build;
 
 import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
+
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRunner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,8 +46,11 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.List;
 
-@RunWith(AndroidJUnit4.class)
 @SmallTest
+// TODO: b/374174952 Use Sdk36ModuleController to ensure the mainline updated VCN tests only run in
+// Android B/B+
+@RunWith(DevSdkIgnoreRunner.class)
+@DevSdkIgnoreRule.IgnoreUpTo(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 public class MtuUtilsTest {
     private void verifyUnderlyingMtuZero(boolean isIpv4) {
         assertEquals(

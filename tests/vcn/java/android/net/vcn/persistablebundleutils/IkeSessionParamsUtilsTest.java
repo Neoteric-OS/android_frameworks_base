@@ -29,14 +29,16 @@ import android.net.InetAddresses;
 import android.net.eap.EapSessionConfig;
 import android.net.ipsec.ike.IkeFqdnIdentification;
 import android.net.ipsec.ike.IkeSessionParams;
+import android.os.Build;
 import android.os.PersistableBundle;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.org.bouncycastle.util.io.pem.PemObject;
 import com.android.internal.org.bouncycastle.util.io.pem.PemReader;
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRunner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,8 +54,11 @@ import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPrivateKey;
 import java.util.concurrent.TimeUnit;
 
-@RunWith(AndroidJUnit4.class)
 @SmallTest
+// TODO: b/374174952 Use Sdk36ModuleController to ensure the mainline updated VCN tests only run in
+// Android B/B+
+@RunWith(DevSdkIgnoreRunner.class)
+@DevSdkIgnoreRule.IgnoreUpTo(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 public class IkeSessionParamsUtilsTest {
     // Public for use in VcnGatewayConnectionConfigTest, EncryptedTunnelParamsUtilsTest
     public static IkeSessionParams.Builder createBuilderMinimum() {

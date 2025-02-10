@@ -20,6 +20,13 @@
 
     <option name="test-suite-tag" value="apct" />
     <option name="test-tag" value="FrameworksVcnTests" />
+
+    <!-- Run tests in MTS only if the Tethering Mainline module is installed. -->
+    <object type="module_controller"
+            class="com.android.tradefed.testtype.suite.module.MainlineTestModuleController">
+        <option name="mainline-module-package-name" value="com.google.android.tethering" />
+    </object>
+
     <test class="com.android.tradefed.testtype.AndroidJUnitTest" >
         <option name="package" value="com.android.frameworks.tests.vcn" />
         <option name="runner" value="androidx.test.runner.AndroidJUnitRunner" />

@@ -20,18 +20,24 @@ import static org.junit.Assert.assertEquals;
 
 import android.net.InetAddresses;
 import android.net.ipsec.ike.IkeTrafficSelector;
+import android.os.Build;
 import android.os.PersistableBundle;
 
 import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
+
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRunner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.net.InetAddress;
 
-@RunWith(AndroidJUnit4.class)
 @SmallTest
+// TODO: b/374174952 Use Sdk36ModuleController to ensure the mainline updated VCN tests only run in
+// Android B/B+
+@RunWith(DevSdkIgnoreRunner.class)
+@DevSdkIgnoreRule.IgnoreUpTo(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 public class IkeTrafficSelectorUtilsTest {
     private static final int START_PORT = 16;
     private static final int END_PORT = 65520;
