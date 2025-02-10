@@ -54,6 +54,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.vcn.VcnManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.ParcelUuid;
 import android.os.PersistableBundle;
@@ -69,9 +70,10 @@ import android.util.ArrayMap;
 import android.util.ArraySet;
 
 import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.android.modules.utils.HandlerExecutor;
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -87,9 +89,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-/** Tests for TelephonySubscriptionTracker */
-@RunWith(AndroidJUnit4.class)
 @SmallTest
+// TODO: b/374174952 Use Sdk36ModuleController to ensure the mainline updated VCN tests only run in
+// Android B/B+
+@RunWith(DevSdkIgnoreRunner.class)
+@DevSdkIgnoreRule.IgnoreUpTo(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+/** Tests for TelephonySubscriptionTracker */
 public class TelephonySubscriptionTrackerTest {
     private static final String PACKAGE_NAME =
             TelephonySubscriptionTrackerTest.class.getPackage().getName();

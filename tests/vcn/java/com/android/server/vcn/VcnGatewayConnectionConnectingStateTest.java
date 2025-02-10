@@ -26,18 +26,24 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import android.net.ipsec.ike.IkeSessionParams;
+import android.os.Build;
 
 import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
+
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRunner;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
-/** Tests for VcnGatewayConnection.ConnectingState */
-@RunWith(AndroidJUnit4.class)
 @SmallTest
+// TODO: b/374174952 Use Sdk36ModuleController to ensure the mainline updated VCN tests only run in
+// Android B/B+
+@RunWith(DevSdkIgnoreRunner.class)
+@DevSdkIgnoreRule.IgnoreUpTo(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+/** Tests for VcnGatewayConnection.ConnectingState */
 public class VcnGatewayConnectionConnectingStateTest extends VcnGatewayConnectionTestBase {
     private VcnIkeSession mIkeSession;
 

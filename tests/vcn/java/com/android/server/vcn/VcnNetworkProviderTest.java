@@ -29,12 +29,14 @@ import android.annotation.NonNull;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.test.TestLooper;
 
 import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.android.server.vcn.VcnNetworkProvider.NetworkRequestListener;
+import com.android.testutils.DevSdkIgnoreRule;
+import com.android.testutils.DevSdkIgnoreRunner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,9 +46,12 @@ import org.mockito.ArgumentCaptor;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Tests for TelephonySubscriptionTracker */
-@RunWith(AndroidJUnit4.class)
 @SmallTest
+// TODO: b/374174952 Use Sdk36ModuleController to ensure the mainline updated VCN tests only run in
+// Android B/B+
+@RunWith(DevSdkIgnoreRunner.class)
+@DevSdkIgnoreRule.IgnoreUpTo(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+/** Tests for TelephonySubscriptionTracker */
 public class VcnNetworkProviderTest {
     private static final int TEST_SCORE_UNSATISFIED = 0;
     private static final int TEST_PROVIDER_ID = 1;
