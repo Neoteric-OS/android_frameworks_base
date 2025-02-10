@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d1ee590_323c7fed",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2025-02-10T14:58:01Z",
+      "side": 1,
+      "message": "note - there are a few soft failures here. If you did not check the logs, you may want to manually.",
+      "range": {
+        "startLine": 473,
+        "startChar": 40,
+        "endLine": 473,
+        "endChar": 88
+      },
+      "revId": "28f2e4b4f2a3f060f7782135d6f713dcf9e841c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
