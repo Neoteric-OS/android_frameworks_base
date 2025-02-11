@@ -124,6 +124,11 @@ class ZygoteServer {
     private int mUsapPoolRefillDelayMs = -1;
 
     /**
+     * Determines whether it's the primary Zygote that is listening on the server socket.
+     */
+    private boolean mPrimaryZygote;
+
+    /**
      * If and when we should refill the USAP pool.
      */
     private UsapPoolRefillAction mUsapPoolRefillAction;
@@ -150,6 +155,7 @@ class ZygoteServer {
      * @param isPrimaryZygote  If this is the primary Zygote or not.
      */
     ZygoteServer(boolean isPrimaryZygote) {
+        this.mPrimaryZygote = isPrimaryZygote;
         mUsapPoolEventFD = Zygote.getUsapPoolEventFD();
 
         if (isPrimaryZygote) {
@@ -174,6 +180,10 @@ class ZygoteServer {
 
     public boolean isUsapPoolEnabled() {
         return mUsapPoolEnabled;
+    }
+
+    public boolean isPrimaryZygote() {
+        return mPrimaryZygote;
     }
 
     /**
