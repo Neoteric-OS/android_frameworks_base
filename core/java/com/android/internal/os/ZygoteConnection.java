@@ -161,7 +161,7 @@ class ZygoteConnection {
                 }
 
                 if (parsedArgs.mPreloadDefault) {
-                    handlePreload();
+                    handlePreload(zygoteServer.isPrimaryZygote());
                     return null;
                 }
 
@@ -351,12 +351,12 @@ class ZygoteConnection {
      * if no preload was initiated. The latter implies that the zygote is not configured to load
      * resources lazy or that the zygote has already handled a previous request to handlePreload.
      */
-    private void handlePreload() {
+    private void handlePreload(boolean isPrimaryZygote) {
         try {
             if (isPreloadComplete()) {
                 mSocketOutStream.writeInt(1);
             } else {
-                preload();
+                preload(isPrimaryZygote);
                 mSocketOutStream.writeInt(0);
             }
         } catch (IOException ioe) {
@@ -455,8 +455,8 @@ class ZygoteConnection {
         });
     }
 
-    protected void preload() {
-        ZygoteInit.lazyPreload();
+    protected void preload(boolean isPrimaryZygote) {
+        ZygoteInit.lazyPreload(isPrimaryZygote);
     }
 
     protected boolean isPreloadComplete() {

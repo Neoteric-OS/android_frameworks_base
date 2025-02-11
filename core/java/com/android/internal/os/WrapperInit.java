@@ -84,7 +84,7 @@ public class WrapperInit {
 
         // Mimic system Zygote preloading.
         ZygoteInit.preload(new TimingsTraceLog("WrapperInitTiming",
-                Trace.TRACE_TAG_DALVIK));
+                Trace.TRACE_TAG_DALVIK), false);
 
         // Launch the application.
         String[] runtimeArgs = new String[args.length - 2];

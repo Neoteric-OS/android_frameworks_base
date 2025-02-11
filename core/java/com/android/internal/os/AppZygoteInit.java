@@ -54,7 +54,7 @@ class AppZygoteInit {
         }
 
         @Override
-        protected void preload() {
+        protected void preload(boolean isPrimaryZygote) {
             // Nothing to preload by default.
         }
 

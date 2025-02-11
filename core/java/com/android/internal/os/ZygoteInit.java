@@ -16,10 +16,9 @@
 
 package com.android.internal.os;
 
+import static android.net.http.Flags.preloadHttpengineInZygote;
 import static android.system.OsConstants.S_IRWXG;
 import static android.system.OsConstants.S_IRWXO;
-
-import static android.net.http.Flags.preloadHttpengineInZygote;
 
 import static com.android.internal.util.FrameworkStatsLog.BOOT_TIME_EVENT_ELAPSED_TIME__EVENT__SECONDARY_ZYGOTE_INIT_START;
 import static com.android.internal.util.FrameworkStatsLog.BOOT_TIME_EVENT_ELAPSED_TIME__EVENT__ZYGOTE_INIT_START;
@@ -28,8 +27,8 @@ import android.app.ApplicationLoaders;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.pm.SharedLibraryInfo;
 import android.content.res.Resources;
-import android.os.Build;
 import android.net.http.HttpEngine;
+import android.os.Build;
 import android.os.Environment;
 import android.os.IInstalld;
 import android.os.Process;
@@ -125,7 +124,7 @@ public class ZygoteInit {
      */
     private static ClassLoader sCachedSystemServerClassLoader = null;
 
-    static void preload(TimingsTraceLog bootTimingsTraceLog) {
+    static void preload(TimingsTraceLog bootTimingsTraceLog, boolean isPrimaryZygote) {
         Log.d(TAG, "begin preload");
         bootTimingsTraceLog.traceBegin("BeginPreload");
         beginPreload();
@@ -150,7 +149,7 @@ public class ZygoteInit {
 
         // TODO: remove the try/catch and the flag read as soon as the flag is ramped and 25Q2
         // starts building from source.
-        if (preloadHttpengineInZygote()) {
+        if (preloadHttpengineInZygote() && isPrimaryZygote) {
             try {
                 HttpEngine.preload();
             } catch (NoSuchMethodError e){
@@ -174,11 +173,13 @@ public class ZygoteInit {
         sPreloadComplete = true;
     }
 
-    static void lazyPreload() {
+    static void lazyPreload(boolean isPrimaryZygote) {
         Preconditions.checkState(!sPreloadComplete);
         Log.i(TAG, "Lazily preloading resources.");
 
-        preload(new TimingsTraceLog("ZygoteInitTiming_lazy", Trace.TRACE_TAG_DALVIK));
+        preload(
+                new TimingsTraceLog("ZygoteInitTiming_lazy", Trace.TRACE_TAG_DALVIK),
+                isPrimaryZygote);
     }
 
     private static void beginPreload() {
@@ -882,7 +883,7 @@ public class ZygoteInit {
                 bootTimingsTraceLog.traceBegin("ZygotePreload");
                 EventLog.writeEvent(LOG_BOOT_PROGRESS_PRELOAD_START,
                         SystemClock.uptimeMillis());
-                preload(bootTimingsTraceLog);
+                preload(bootTimingsTraceLog, isPrimaryZygote);
                 EventLog.writeEvent(LOG_BOOT_PROGRESS_PRELOAD_END,
                         SystemClock.uptimeMillis());
                 bootTimingsTraceLog.traceEnd(); // ZygotePreload
