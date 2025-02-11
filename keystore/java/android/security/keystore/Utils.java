@@ -23,7 +23,7 @@ import java.util.Date;
  *
  * @hide
  */
-abstract class Utils {
+public class Utils {
     private Utils() {}
 
     static Date cloneIfNotNull(Date value) {
