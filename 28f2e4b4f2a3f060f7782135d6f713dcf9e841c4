@@ -22,6 +22,30 @@
       },
       "revId": "28f2e4b4f2a3f060f7782135d6f713dcf9e841c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33670ed2_b906bf4e",
+        "filename": "core/java/com/android/internal/os/ZygoteInit.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-02-11T09:27:16Z",
+      "side": 1,
+      "message": "Confirmed nothing unexpected from the logs after a manual boot test run w/ the flag enabled.",
+      "parentUuid": "3d1ee590_323c7fed",
+      "range": {
+        "startLine": 473,
+        "startChar": 40,
+        "endLine": 473,
+        "endChar": 88
+      },
+      "revId": "28f2e4b4f2a3f060f7782135d6f713dcf9e841c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
