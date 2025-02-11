@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "399a2db0_8610c8d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2025-02-11T02:24:21Z",
+      "side": 1,
+      "message": "Following the steps in go/mainline-test-suite#how-to-add-my-tests-to-mts",
+      "revId": "5f56272a7d254d5b146e5dea3e7d0e049ebf1810",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
