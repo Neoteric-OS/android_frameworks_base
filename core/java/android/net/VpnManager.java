@@ -20,6 +20,7 @@ import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
 
+import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -32,6 +33,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.platform.flags.Flags;
 import android.os.RemoteException;
 
 import com.android.internal.net.LegacyVpnInfo;
@@ -85,11 +87,29 @@ public class VpnManager {
     public static final int TYPE_VPN_LEGACY = 3;
 
     /**
-     * An VPN created by OEM code through other means than {@link VpnService} or {@link VpnManager}.
+     * A VPN created by OEM code through other means than {@link VpnService} or {@link VpnManager}.
      * @hide
      */
     @SystemApi(client = MODULE_LIBRARIES)
     public static final int TYPE_VPN_OEM = 4;
+
+    /**
+     A VPN created by OEM code through {@link VpnService}, and that is intended to serve enterprise
+     * use cases.
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_VPN_TYPE_OEM_ENTERPRISE)
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int TYPE_VPN_OEM_ENTERPRISE_SERVICE = 5;
+
+    /**
+     * An IPsec VPN created by the built-in LegacyVpnRunner, and that is intended to serve
+     * enterprise use cases.
+     * @hide
+     */
+    @FlaggedApi(Flags.FLAG_VPN_TYPE_OEM_ENTERPRISE)
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static final int TYPE_VPN_OEM_ENTERPRISE_LEGACY = 6;
 
     /**
      * Channel for VPN notifications.
@@ -308,7 +328,7 @@ public class VpnManager {
 
     /** @hide */
     @IntDef(value = {TYPE_VPN_NONE, TYPE_VPN_SERVICE, TYPE_VPN_PLATFORM, TYPE_VPN_LEGACY,
-            TYPE_VPN_OEM})
+            TYPE_VPN_OEM, TYPE_VPN_OEM_ENTERPRISE_SERVICE, TYPE_VPN_OEM_ENTERPRISE_LEGACY})
     @Retention(RetentionPolicy.SOURCE)
     public @interface VpnType {}
 
