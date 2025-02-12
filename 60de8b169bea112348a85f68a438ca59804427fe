@@ -113,6 +113,48 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bc08969_3a09282e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3735984
+      },
+      "writtenOn": "2025-02-12T02:38:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e2e1f5a_02324ef6",
+      "revId": "60de8b169bea112348a85f68a438ca59804427fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca887451_cc1499b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3735984
+      },
+      "writtenOn": "2025-02-12T02:38:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e8fa75_5d4f76ac",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "60de8b169bea112348a85f68a438ca59804427fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "efbcc6ff_6696fdf0",
@@ -126,6 +168,24 @@
       "writtenOn": "2025-02-05T09:10:12Z",
       "side": 1,
       "message": "Please format the message like this, and also add a test case in `ZoneGetterTest.java` to ensure your patch is safe.\n\n```suggestion\n\nSolution: Add condition if LONG_DAYLIGHT and LONG_STANDARD are null,\nthen get EXEMPLAR_LOCATION\n\nBug: 350054006\nTest: atest ZoneGetterTest\n```",
+      "revId": "60de8b169bea112348a85f68a438ca59804427fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3c23fb9_1030b675",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3735984
+      },
+      "writtenOn": "2025-02-12T02:38:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efbcc6ff_6696fdf0",
       "revId": "60de8b169bea112348a85f68a438ca59804427fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
