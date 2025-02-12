@@ -188,6 +188,24 @@
       "parentUuid": "efbcc6ff_6696fdf0",
       "revId": "60de8b169bea112348a85f68a438ca59804427fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfe45242_4e607433",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1393882
+      },
+      "writtenOn": "2025-02-12T03:16:21Z",
+      "side": 1,
+      "message": "Did you add a test case in `ZoneGetterTest.java` and run it, which demonostrates that the fix is working. If so, please also upload the test case.",
+      "parentUuid": "b3c23fb9_1030b675",
+      "revId": "60de8b169bea112348a85f68a438ca59804427fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
