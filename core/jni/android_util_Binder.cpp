@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#undef ANDROID_UTILS_REF_BASE_DISABLE_IMPLICIT_CONSTRUCTION // TODO:remove this and fix code
+
 #define LOG_TAG "JavaBinder"
-// #define LOG_NDEBUG 0
+//#define LOG_NDEBUG 0
 
 #include "android_util_Binder.h"
 
@@ -478,7 +480,7 @@ public:
         if (b) return b;
 
         // b/360067751: constructor may trigger GC, so call outside lock
-        b = sp<JavaBBinder>::make(env, obj);
+        b = new JavaBBinder(env, obj);
 
         {
             AutoMutex _l(mLock);
@@ -639,17 +641,11 @@ public:
         } else {
             mObject = env->NewGlobalRef(object);
         }
-    }
-
-    void onFirstRef() override {
-        T::onFirstRef();
-
-        sp<RecipientList<T>> list = mList.promote();
         // These objects manage their own lifetimes so are responsible for final bookkeeping.
         // The list holds a strong reference to this object.
         LOG_DEATH_FREEZE("%s Adding JavaRecipient %p to RecipientList %p", logPrefix<T>(), this,
                          list.get());
-        list->add(sp<JavaRecipient>::fromExisting(this));
+        list->add(this);
     }
 
     void clearReference() {
@@ -657,7 +653,7 @@ public:
         if (list != NULL) {
             LOG_DEATH_FREEZE("%s Removing JavaRecipient %p from RecipientList %p", logPrefix<T>(),
                              this, list.get());
-            list->remove(sp<JavaRecipient>::fromExisting(this));
+            list->remove(this);
         } else {
             LOG_DEATH_FREEZE("%s clearReference() on JavaRecipient %p but RecipientList wp purged",
                              logPrefix<T>(), this);
@@ -939,7 +935,7 @@ struct BinderProxyNativeData {
     // Frozen state change callbacks for mObject. Reference counted only because
     // JavaFrozenStateChangeCallback hold a weak reference that can be
     // temporarily promoted.
-    sp<FrozenStateChangeCallbackList> mFrozenStateChangeCallbackList;
+    sp<FrozenStateChangeCallbackList> mFrozenStateChangCallbackList;
 };
 
 BinderProxyNativeData* getBPNativeData(JNIEnv* env, jobject obj) {
@@ -964,8 +960,8 @@ jobject javaObjectForIBinder(JNIEnv* env, const sp<IBinder>& val)
     }
 
     BinderProxyNativeData* nativeData = new BinderProxyNativeData();
-    nativeData->mOrgue = sp<DeathRecipientList>::make();
-    nativeData->mFrozenStateChangeCallbackList = sp<FrozenStateChangeCallbackList>::make();
+    nativeData->mOrgue = new DeathRecipientList;
+    nativeData->mFrozenStateChangCallbackList = new FrozenStateChangeCallbackList;
     nativeData->mObject = val;
 
     jobject object = env->CallStaticObjectMethod(gBinderProxyOffsets.mClass,
@@ -1568,8 +1564,8 @@ static void android_os_BinderProxy_linkToDeath(JNIEnv* env, jobject obj,
     LOG_DEATH_FREEZE("linkToDeath: binder=%p recipient=%p\n", target, recipient);
 
     if (!target->localBinder()) {
-        sp<DeathRecipientList> list = nd->mOrgue;
-        sp<JavaDeathRecipient> jdr = sp<JavaDeathRecipient>::make(env, recipient, list);
+        DeathRecipientList* list = nd->mOrgue.get();
+        sp<JavaDeathRecipient> jdr = new JavaDeathRecipient(env, recipient, list);
         status_t err = target->linkToDeath(jdr, NULL, flags);
         if (err != NO_ERROR) {
             // Failure adding the death recipient, so clear its reference
@@ -1645,7 +1641,7 @@ static void android_os_BinderProxy_addFrozenStateChangeCallback(
     LOG_DEATH_FREEZE("addFrozenStateChangeCallback: binder=%p callback=%p\n", target, callback);
 
     if (!target->localBinder()) {
-        sp<FrozenStateChangeCallbackList> list = nd->mFrozenStateChangeCallbackList;
+        FrozenStateChangeCallbackList* list = nd->mFrozenStateChangCallbackList.get();
         auto jfscc = sp<JavaFrozenStateChangeCallback>::make(env, callback, list);
         status_t err = target->addFrozenStateChangeCallback(jfscc);
         if (err != NO_ERROR) {
@@ -1679,7 +1675,7 @@ static jboolean android_os_BinderProxy_removeFrozenStateChangeCallback(JNIEnv* e
         status_t err = NAME_NOT_FOUND;
 
         // If we find the matching callback, proceed to unlink using that
-        FrozenStateChangeCallbackList* list = nd->mFrozenStateChangeCallbackList.get();
+        FrozenStateChangeCallbackList* list = nd->mFrozenStateChangCallbackList.get();
         sp<JavaRecipient<IBinder::FrozenStateChangeCallback> > origJFSCC = list->find(callback);
         LOG_DEATH_FREEZE("   removeFrozenStateChangeCallback found list %p and JFSCC %p", list,
                          origJFSCC.get());
@@ -1708,7 +1704,7 @@ static void BinderProxy_destroy(void* rawNativeData)
     BinderProxyNativeData * nativeData = (BinderProxyNativeData *) rawNativeData;
     LOG_DEATH_FREEZE("Destroying BinderProxy: binder=%p drl=%p fsccl=%p\n",
                      nativeData->mObject.get(), nativeData->mOrgue.get(),
-                     nativeData->mFrozenStateChangeCallbackList.get());
+                     nativeData->mFrozenStateChangCallbackList.get());
     delete nativeData;
     IPCThreadState::self()->flushCommands();
 }
