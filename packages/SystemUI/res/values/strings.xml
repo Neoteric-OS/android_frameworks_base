@@ -2448,6 +2448,8 @@
 <!-- QTI_BEGIN: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
 <!-- QTI_END: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
     <string name="hub_onboarding_bottom_sheet_action_button">Let\u2019s go</string>
+    <!-- Text for a tooltip that appears over the "show screensaver" button on glanceable hub. [CHAR LIMIT=NONE] -->
+    <string name="glanceable_hub_to_dream_button_tooltip">Show your favorite screensavers while charging</string>
 
     <!-- Related to user switcher --><skip/>
 
