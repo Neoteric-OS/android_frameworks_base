@@ -16,6 +16,24 @@
       "message": "Hi Qualcomm, please add suitalbe reviewer for Qualcomm-Review approval. Thanks!",
       "revId": "1c6c8013196867f9cced43dd1e4e8912cf072deb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e58a1c8f_255ad8db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1367652
+      },
+      "writtenOn": "2025-02-12T20:57:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "08014fd3_da4b7f47",
+      "revId": "1c6c8013196867f9cced43dd1e4e8912cf072deb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
