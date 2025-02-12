@@ -33,6 +33,23 @@
       "message": "link:https://partnerissuetracker.corp.google.com/u/0/issues/395736075\nlog:https://issuetracker.google.com/395736075#attachment62818801",
       "revId": "b327803588c3a988e495e90bf79cda570abb09e9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27046570_57f4dbfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2025-02-12T21:31:24Z",
+      "side": 1,
+      "message": "`-fno-exceptions` isn\u0027t the issue here, adding `-fexceptions` would just cause this to throw an unhandled exception instead of immediately aborting, with the same end result of crashing.",
+      "revId": "b327803588c3a988e495e90bf79cda570abb09e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
