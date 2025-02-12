@@ -73,6 +73,7 @@ static struct bindernative_offsets_t
     jmethodID mExecTransact;
     jmethodID mGetInterfaceDescriptor;
     jmethodID mTransactionCallback;
+    jmethodID mGetTransactionName;
 
     // Object state.
     jfieldID mObject;
@@ -386,6 +387,26 @@ protected:
         });
 
         return mDescriptor;
+    }
+
+    const std::string getTransactionName(uint32_t transactionCode) override {
+        // cache this so that we don't have do a JNI txn?
+        JNIEnv* env = javavm_to_jnienv(mVM);
+        ALOGV("getTransactionName() on %p calling object %p in env %p vm %p\n", this, mObject, env,
+              mVM);
+
+        jstring transactionName =
+                (jstring)env->CallObjectMethod(mObject, gBinderOffsets.mGetTransactionName,
+                                               transactionCode);
+
+        if (transactionName == nullptr) {
+            return "";
+        }
+        const char* cstr = env->GetStringUTFChars(transactionName, nullptr);
+        std::string out = std::string(cstr);
+        env->ReleaseStringUTFChars(transactionName, cstr);
+
+        return out;
     }
 
     status_t onTransact(
@@ -1317,6 +1338,8 @@ static int int_register_android_os_Binder(JNIEnv* env)
         "()Ljava/lang/String;");
     gBinderOffsets.mTransactionCallback =
             GetStaticMethodIDOrDie(env, clazz, "transactionCallback", "(IIII)V");
+    gBinderOffsets.mGetTransactionName =
+        GetMethodIDOrDie(env, clazz, "getTransactionName", "(I)Ljava/lang/String;");
     gBinderOffsets.mObject = GetFieldIDOrDie(env, clazz, "mObject", "J");
 
     return RegisterMethodsOrDie(
