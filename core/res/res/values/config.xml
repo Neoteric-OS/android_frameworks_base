@@ -3885,6 +3885,9 @@
      If it is not supported due to modem limitations, USSD send over the CS pipe instead.-->
     <bool name="config_allow_ussd_over_ims">false</bool>
 
+    <!-- Flag specifying whether AOSP DSDA WLAN behavior is available on device -->
+    <bool name="config_enable_aosp_wlan_dsda_logic">false</bool>
+
     <!-- String array containing numbers that shouldn't be logged. Country-specific. -->
     <string-array name="unloggable_phone_numbers" />
 
@@ -5977,6 +5980,9 @@
         <!-- <item>com.google</item> -->
     </string-array>
 
+    <!-- Whether to restrict the accounts that raw contacts can be created in. -->
+    <bool name = "config_rawContactsAccountRestrictionEnabled">true</bool>
+
     <!-- Whether or not to use assistant stream volume separately from music volume -->
     <bool name="config_useAssistantVolume">false</bool>
 
@@ -7268,6 +7274,9 @@
 
     <!-- Whether desktop mode is supported on the current device  -->
     <bool name="config_isDesktopModeSupported">false</bool>
+
+    <!-- Whether the developer option for desktop mode is supported on the current device  -->
+    <bool name="config_isDesktopModeDevOptionSupported">false</bool>
 
     <!-- Maximum number of active tasks on a given Desktop Windowing session. Set to 0 for unlimited. -->
     <integer name="config_maxDesktopWindowingActiveTasks">0</integer>

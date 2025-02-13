@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+/*
+ * Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
+ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+ */
+
 package com.android.systemui.keyguard.data.repository
 
 import android.content.applicationContext
@@ -62,6 +68,7 @@ val Kosmos.defaultKeyguardBlueprint by
             defaultSettingsPopupMenuSection = mock(),
             defaultStatusBarSection = mock(),
             defaultNotificationStackScrollLayoutSection = mock(),
+            aodPromotedNotificationSection = mock(),
             aodNotificationIconsSection = mock(),
             aodBurnInSection = mock(),
             clockSection = keyguardClockSection,
@@ -69,7 +76,7 @@ val Kosmos.defaultKeyguardBlueprint by
             keyguardSliceViewSection = mock(),
             udfpsAccessibilityOverlaySection = mock(),
             accessibilityActionsSection = mock(),
-            aodPromotedNotificationSection = mock(),
+            defaultEmergencyButtonSection = mock(),
         )
     }
 
@@ -84,6 +91,7 @@ val Kosmos.splitShadeBlueprint by
             defaultStatusBarSection = mock(),
             splitShadeNotificationStackScrollLayoutSection = mock(),
             splitShadeGuidelines = mock(),
+            aodPromotedNotificationSection = mock(),
             aodNotificationIconsSection = mock(),
             aodBurnInSection = mock(),
             clockSection = keyguardClockSection,
