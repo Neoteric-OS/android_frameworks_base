@@ -63,6 +63,30 @@
       },
       "revId": "73075880787bd355de7ae7e1cc82967b922624d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3c21e58_234c01c8",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2025-02-13T11:29:33Z",
+      "side": 1,
+      "message": "You\u0027re right. This is OK.\nI suspect the 64-bit version is also OK. Changing the size of uid_t or gid_t would be a C ABI break, which doesn\u0027t seem likely anytime soon.\nYour call.",
+      "parentUuid": "456bcebc_c374af85",
+      "range": {
+        "startLine": 277,
+        "startChar": 6,
+        "endLine": 280,
+        "endChar": 7
+      },
+      "revId": "73075880787bd355de7ae7e1cc82967b922624d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
