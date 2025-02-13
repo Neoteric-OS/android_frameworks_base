@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28f07848_4790f90e",
+        "filename": "tests/vcn/AndroidTest.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2025-02-13T09:10:31Z",
+      "side": 1,
+      "message": "Would you be able to define a SDK36ModuleController like this one: http://google3/third_party/java_src/tradefederation_core/tools/tradefederation/core/src/com/android/tradefed/testtype/suite/module/Sdk35ModuleController.java?l\u003d26\n\nAnd use that, instead of having excludes in every test ?",
+      "revId": "ca3c92a6a1c9be2afc8da755cfe610b76b57bac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
