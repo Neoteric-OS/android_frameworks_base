@@ -16,6 +16,24 @@
       "message": "Would you be able to define a SDK36ModuleController like this one: http://google3/third_party/java_src/tradefederation_core/tools/tradefederation/core/src/com/android/tradefed/testtype/suite/module/Sdk35ModuleController.java?l\u003d26\n\nAnd use that, instead of having excludes in every test ?",
       "revId": "ca3c92a6a1c9be2afc8da755cfe610b76b57bac4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c78a60dd_bdb7febc",
+        "filename": "tests/vcn/AndroidTest.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2025-02-13T18:12:20Z",
+      "side": 1,
+      "message": "36 is still not finalized so I don\u0027t think it will work as expected. go/mainline-test-suite#filter-tests-on-certain-platforms also mentions \"the controller can only be used on platforms that have finalized SDK int.\"",
+      "parentUuid": "28f07848_4790f90e",
+      "revId": "ca3c92a6a1c9be2afc8da755cfe610b76b57bac4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
