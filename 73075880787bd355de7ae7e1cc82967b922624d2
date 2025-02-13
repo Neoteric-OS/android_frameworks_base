@@ -39,6 +39,30 @@
       },
       "revId": "73075880787bd355de7ae7e1cc82967b922624d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "456bcebc_c374af85",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 3376383
+      },
+      "writtenOn": "2025-02-13T08:43:11Z",
+      "side": 1,
+      "message": "If result \u003d\u003d (vmax / 10 + 1) then result * 10 will overflow (think with a small vmax like 15 for example). So this is a tight bound.\n\nWe can compute result as a 64-bit value but I feel it could be a bit ugly if we need to extend this to long in the future.",
+      "parentUuid": "e27f1339_628e826d",
+      "range": {
+        "startLine": 277,
+        "startChar": 6,
+        "endLine": 280,
+        "endChar": 7
+      },
+      "revId": "73075880787bd355de7ae7e1cc82967b922624d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
