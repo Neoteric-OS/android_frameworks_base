@@ -17,6 +17,7 @@
 package android.media;
 
 import static android.media.audio.Flags.FLAG_DOLBY_AC4_LEVEL4_ENCODING_API;
+import static android.media.audio.Flags.FLAG_DOLBY_AC4_LEVELS_5_TO_7_ENCODING_API;
 
 import android.annotation.FlaggedApi;
 import android.annotation.IntDef;
@@ -381,6 +382,15 @@ public final class AudioFormat implements Parcelable {
     /** Audio data format: AC-4 level 4 sync frame transport format */
     @FlaggedApi(FLAG_DOLBY_AC4_LEVEL4_ENCODING_API)
     public static final int ENCODING_AC4_L4 = 32;
+    /** Audio data format: AC-4 level 5 sync frame transport format */
+    @FlaggedApi(FLAG_DOLBY_AC4_LEVELS_5_TO_7_ENCODING_API)
+    public static final int ENCODING_AC4_L5 = 33;
+    /** Audio data format: AC-4 level 6 sync frame transport format */
+    @FlaggedApi(FLAG_DOLBY_AC4_LEVELS_5_TO_7_ENCODING_API)
+    public static final int ENCODING_AC4_L6 = 34;
+    /** Audio data format: AC-4 level 7 sync frame transport format */
+    @FlaggedApi(FLAG_DOLBY_AC4_LEVELS_5_TO_7_ENCODING_API)
+    public static final int ENCODING_AC4_L7 = 35;
 
     /** @hide */
     public static String toLogFriendlyEncoding(int enc) {
@@ -421,6 +431,12 @@ public final class AudioFormat implements Parcelable {
                 return "ENCODING_AC4";
             case ENCODING_AC4_L4:
                 return "ENCODING_AC4_L4";
+            case ENCODING_AC4_L5:
+                return "ENCODING_AC4_L5";
+            case ENCODING_AC4_L6:
+                return "ENCODING_AC4_L6";
+            case ENCODING_AC4_L7:
+                return "ENCODING_AC4_L7";
             case ENCODING_E_AC3_JOC:
                 return "ENCODING_E_AC3_JOC";
             case ENCODING_DOLBY_MAT:
@@ -832,6 +848,9 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_AAC_XHE:
             case ENCODING_AC4:
             case ENCODING_AC4_L4:
+            case ENCODING_AC4_L5:
+            case ENCODING_AC4_L6:
+            case ENCODING_AC4_L7:
             case ENCODING_E_AC3_JOC:
             case ENCODING_DOLBY_MAT:
             case ENCODING_OPUS:
@@ -873,6 +892,9 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_AAC_XHE:
             case ENCODING_AC4:
             case ENCODING_AC4_L4:
+            case ENCODING_AC4_L5:
+            case ENCODING_AC4_L6:
+            case ENCODING_AC4_L7:
             case ENCODING_E_AC3_JOC:
             case ENCODING_DOLBY_MAT:
             case ENCODING_OPUS:
@@ -919,6 +941,9 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_AAC_XHE:
             case ENCODING_AC4:
             case ENCODING_AC4_L4:
+            case ENCODING_AC4_L5:
+            case ENCODING_AC4_L6:
+            case ENCODING_AC4_L7:
             case ENCODING_E_AC3_JOC:
             case ENCODING_DOLBY_MAT:
             case ENCODING_OPUS:
@@ -962,6 +987,9 @@ public final class AudioFormat implements Parcelable {
             case ENCODING_AAC_XHE:
             case ENCODING_AC4:
             case ENCODING_AC4_L4:
+            case ENCODING_AC4_L5:
+            case ENCODING_AC4_L6:
+            case ENCODING_AC4_L7:
             case ENCODING_E_AC3_JOC:
             case ENCODING_DOLBY_MAT:
             case ENCODING_OPUS:
@@ -1251,6 +1279,9 @@ public final class AudioFormat implements Parcelable {
                 case ENCODING_AAC_XHE:
                 case ENCODING_AC4:
                 case ENCODING_AC4_L4:
+                case ENCODING_AC4_L5:
+                case ENCODING_AC4_L6:
+                case ENCODING_AC4_L7:
                 case ENCODING_E_AC3_JOC:
                 case ENCODING_DOLBY_MAT:
                 case ENCODING_OPUS:
@@ -1482,6 +1513,9 @@ public final class AudioFormat implements Parcelable {
         ENCODING_AAC_XHE,
         ENCODING_AC4,
         ENCODING_AC4_L4,
+        ENCODING_AC4_L5,
+        ENCODING_AC4_L6,
+        ENCODING_AC4_L7,
         ENCODING_E_AC3_JOC,
         ENCODING_DOLBY_MAT,
         ENCODING_OPUS,
@@ -1521,6 +1555,9 @@ public final class AudioFormat implements Parcelable {
             ENCODING_AAC_XHE,
             ENCODING_AC4,
             ENCODING_AC4_L4,
+            ENCODING_AC4_L5,
+            ENCODING_AC4_L6,
+            ENCODING_AC4_L7,
             ENCODING_E_AC3_JOC,
             ENCODING_DOLBY_MAT,
             ENCODING_OPUS,
@@ -1549,6 +1586,9 @@ public final class AudioFormat implements Parcelable {
             ENCODING_DOLBY_TRUEHD,
             ENCODING_AC4,
             ENCODING_AC4_L4,
+            ENCODING_AC4_L5,
+            ENCODING_AC4_L6,
+            ENCODING_AC4_L7,
             ENCODING_E_AC3_JOC,
             ENCODING_DOLBY_MAT,
             ENCODING_MPEGH_BL_L3,
@@ -1571,6 +1611,9 @@ public final class AudioFormat implements Parcelable {
             ENCODING_DOLBY_TRUEHD,
             ENCODING_AC4,
             ENCODING_AC4_L4,
+            ENCODING_AC4_L5,
+            ENCODING_AC4_L6,
+            ENCODING_AC4_L7,
             ENCODING_E_AC3_JOC,
             ENCODING_DOLBY_MAT,
             ENCODING_MPEGH_BL_L3,
@@ -1612,6 +1655,12 @@ public final class AudioFormat implements Parcelable {
                 return "Dolby AC-4 levels 0-3";
             case ENCODING_AC4_L4:
                 return "Dolby AC-4 level 4";
+            case ENCODING_AC4_L5:
+                return "Dolby AC-4 level 5";
+            case ENCODING_AC4_L6:
+                return "Dolby AC-4 level 6";
+            case ENCODING_AC4_L7:
+                return "Dolby AC-4 level 7";
             case ENCODING_E_AC3_JOC:
                 return "Dolby Atmos in Dolby Digital Plus";
             case ENCODING_DOLBY_MAT:

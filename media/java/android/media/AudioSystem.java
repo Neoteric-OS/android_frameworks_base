@@ -544,6 +544,12 @@ public class AudioSystem
                 return "AUDIO_FORMAT_E_AC3_JOC";  // (E_AC3 | E_AC3_SUB_JOC)
             case /* AUDIO_FORMAT_AC4_L4            */ 0x22000001:
                 return "AUDIO_FORMAT_AC4_L4";  // (AC4 | AC4_SUB_L4)
+            case /* AUDIO_FORMAT_AC4_L5            */ 0x22000002:
+                return "AUDIO_FORMAT_AC4_L5";  // (AC4 | AC4_SUB_L5)
+            case /* AUDIO_FORMAT_AC4_L6            */ 0x22000003:
+                return "AUDIO_FORMAT_AC4_L6";  // (AC4 | AC4_SUB_L6)
+            case /* AUDIO_FORMAT_AC4_L7            */ 0x22000004:
+                return "AUDIO_FORMAT_AC4_L7";  // (AC4 | AC4_SUB_L7)
             case /* AUDIO_FORMAT_MAT_1_0           */ 0x24000001:
                 return "AUDIO_FORMAT_MAT_1_0"; // (MAT | MAT_SUB_1_0)
             case /* AUDIO_FORMAT_MAT_2_0           */ 0x24000002:

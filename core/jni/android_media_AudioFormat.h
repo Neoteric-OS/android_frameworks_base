@@ -51,6 +51,9 @@
 #define ENCODING_DTS_UHD_P2 30
 #define ENCODING_DSD 31
 #define ENCODING_AC4_L4 32
+#define ENCODING_AC4_L5 33
+#define ENCODING_AC4_L6 34
+#define ENCODING_AC4_L7 35
 
 #define ENCODING_INVALID    0
 #define ENCODING_DEFAULT    1
@@ -98,6 +101,12 @@ static inline audio_format_t audioFormatToNative(int audioFormat)
         return AUDIO_FORMAT_AC4;
     case ENCODING_AC4_L4:
         return AUDIO_FORMAT_AC4_L4;
+    case ENCODING_AC4_L5:
+        return AUDIO_FORMAT_AC4_L5;
+    case ENCODING_AC4_L6:
+        return AUDIO_FORMAT_AC4_L6;
+    case ENCODING_AC4_L7:
+        return AUDIO_FORMAT_AC4_L7;
     case ENCODING_E_AC3_JOC:
         return AUDIO_FORMAT_E_AC3_JOC;
     case ENCODING_DEFAULT:
@@ -182,6 +191,12 @@ static inline int audioFormatFromNative(audio_format_t nativeFormat)
         return ENCODING_AC4;
     case AUDIO_FORMAT_AC4_L4:
         return ENCODING_AC4_L4;
+    case AUDIO_FORMAT_AC4_L5:
+        return ENCODING_AC4_L5;
+    case AUDIO_FORMAT_AC4_L6:
+        return ENCODING_AC4_L6;
+    case AUDIO_FORMAT_AC4_L7:
+        return ENCODING_AC4_L7;
     case AUDIO_FORMAT_E_AC3_JOC:
         return ENCODING_E_AC3_JOC;
     case AUDIO_FORMAT_MAT:

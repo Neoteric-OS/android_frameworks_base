@@ -18,6 +18,7 @@ package android.media;
 
 import static android.media.Utils.intersectSortedDistinctRanges;
 import static android.media.Utils.sortDistinctRanges;
+import static android.media.audio.Flags.FLAG_DOLBY_AC4_LEVELS_5_TO_7_ENCODING_API;
 import static android.media.codec.Flags.FLAG_DYNAMIC_COLOR_ASPECTS;
 import static android.media.codec.Flags.FLAG_HLG_EDITING;
 import static android.media.codec.Flags.FLAG_IN_PROCESS_SW_AUDIO_CODEC;
@@ -4498,6 +4499,18 @@ public final class MediaCodecInfo {
         /** AC-4 codec level corresponding to mdcompat 4 as per ETSI TS 103 190-2 v1.2.1 */
         @SuppressLint("AllUpper")
         public static final int AC4Level4       = 0x10;
+        /** AC-4 codec level corresponding to mdcompat 5 as per ETSI TS 103 190-2 v1.2.1 */
+        @SuppressLint("AllUpper")
+        @FlaggedApi(FLAG_DOLBY_AC4_LEVELS_5_TO_7_ENCODING_API)
+        public static final int AC4Level5       = 0x20;
+        /** AC-4 codec level corresponding to mdcompat 6 as per ETSI TS 103 190-2 v1.2.1 */
+        @SuppressLint("AllUpper")
+        @FlaggedApi(FLAG_DOLBY_AC4_LEVELS_5_TO_7_ENCODING_API)
+        public static final int AC4Level6       = 0x40;
+        /** AC-4 codec level corresponding to mdcompat 7 as per ETSI TS 103 190-2 v1.2.1 */
+        @SuppressLint("AllUpper")
+        @FlaggedApi(FLAG_DOLBY_AC4_LEVELS_5_TO_7_ENCODING_API)
+        public static final int AC4Level7       = 0x80;
 
         // Profiles and levels/bands for APV Codec, corresponding to the definitions in
         // "Advanced Professional Video", 10.1.3 Profiles, 10.1.4 Levels and Bands
