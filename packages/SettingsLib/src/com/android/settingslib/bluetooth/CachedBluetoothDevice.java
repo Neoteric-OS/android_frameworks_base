@@ -1389,6 +1389,33 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                 lowBatteryColorRes);
     }
 
+    private String getCurrentCodecName() {
+        String codecName = null;
+        if (mIsActiveDeviceA2dp) {
+            A2dpProfile a2dpProfile = mProfileManager.getA2dpProfile();
+            if (a2dpProfile != null && isConnectedProfile(a2dpProfile)) {
+                if (a2dpProfile.getCodecType(mDevice) != null) {
+                    codecName = a2dpProfile.getCodecType(mDevice).getCodecName();
+                }
+            }
+        }
+        if (mIsActiveDeviceLeAudio) {
+            LeAudioProfile leAudioProfile = mProfileManager.getLeAudioProfile();
+            if (leAudioProfile != null && isConnectedProfile(leAudioProfile)) {
+                codecName = leAudioProfile.getCodecName(mDevice);
+            }
+        }
+        Log.d(
+                TAG,
+                "getCurrentCodecName: codecName="
+                        + codecName
+                        + ", mIsActiveDeviceA2dp="
+                        + mIsActiveDeviceA2dp
+                        + ", mIsActiveDeviceLeAudio="
+                        + mIsActiveDeviceLeAudio);
+        return codecName;
+    }
+
     /**
      * Return summary that describes connection state of this device. Summary depends on:
      * 1. Whether device has battery info
@@ -1512,20 +1539,37 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                     lowBatteryColorRes);
         }
 
+        if (a2dpConnected || leAudioConnected) {
+            String codecName = getCurrentCodecName();
+            if (codecName != null && stringRes == R.string.bluetooth_active_no_battery_level) {
+                return mContext.getString(R.string.bluetooth_active_with_codec, codecName);
+            }
+            if (codecName != null && stringRes == R.string.bluetooth_active_battery_level) {
+                return mContext.getString(
+                        R.string.bluetooth_active_with_codec_and_battery_level,
+                        codecName,
+                        batteryLevelPercentageString);
+            }
+        }
+
         if (isTwsBatteryAvailable(leftBattery, rightBattery)) {
             return mContext.getString(stringRes, Utils.formatPercentage(leftBattery),
                     Utils.formatPercentage(rightBattery));
-        } else if (leftBattery > BluetoothDevice.BATTERY_LEVEL_UNKNOWN
-                && !BluetoothUtils.getBooleanMetaData(mDevice,
-                BluetoothDevice.METADATA_IS_UNTETHERED_HEADSET)) {
-            return mContext.getString(stringRes, Utils.formatPercentage(leftBattery));
-        } else if (rightBattery > BluetoothDevice.BATTERY_LEVEL_UNKNOWN
-                && !BluetoothUtils.getBooleanMetaData(mDevice,
-                BluetoothDevice.METADATA_IS_UNTETHERED_HEADSET)) {
-            return mContext.getString(stringRes, Utils.formatPercentage(rightBattery));
-        } else {
-            return mContext.getString(stringRes, batteryLevelPercentageString);
         }
+
+        if (leftBattery > BluetoothDevice.BATTERY_LEVEL_UNKNOWN
+                && !BluetoothUtils.getBooleanMetaData(
+                        mDevice, BluetoothDevice.METADATA_IS_UNTETHERED_HEADSET)) {
+            return mContext.getString(stringRes, Utils.formatPercentage(leftBattery));
+        }
+
+        if (rightBattery > BluetoothDevice.BATTERY_LEVEL_UNKNOWN
+                && !BluetoothUtils.getBooleanMetaData(
+                        mDevice, BluetoothDevice.METADATA_IS_UNTETHERED_HEADSET)) {
+            return mContext.getString(stringRes, Utils.formatPercentage(rightBattery));
+        }
+
+        return mContext.getString(stringRes, batteryLevelPercentageString);
     }
 
     private CharSequence getTvBatterySummary(int mainBattery, int leftBattery, int rightBattery,
