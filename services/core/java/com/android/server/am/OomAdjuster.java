@@ -4294,7 +4294,6 @@ public class OomAdjuster {
                 + " mNewNumServiceProcs=" + mNewNumServiceProcs);
     }
 
-    @GuardedBy("mProcLock")
     void dumpCachedAppOptimizerSettings(PrintWriter pw) {
         mCachedAppOptimizer.dump(pw);
     }
