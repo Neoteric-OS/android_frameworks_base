@@ -747,8 +747,14 @@ public class WindowManagerService extends IWindowManager.Stub
             new WallpaperVisibilityListeners();
 
     IDisplayChangeWindowController mDisplayChangeController = null;
-    private final DeathRecipient mDisplayChangeControllerDeath =
-            () -> mDisplayChangeController = null;
+    private final DeathRecipient mDisplayChangeControllerDeath = new DeathRecipient() {
+        @Override
+        public void binderDied() {
+            synchronized (mGlobalLock) {
+                mDisplayChangeController = null;
+            }
+        }
+    };
 
     final DisplayWindowListenerController mDisplayNotificationController;
     final TaskSystemBarsListenerController mTaskSystemBarsListenerController;
