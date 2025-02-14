@@ -78,7 +78,6 @@ import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.L
 import static com.android.server.wm.WindowManagerDebugConfig.DEBUG_LAYOUT;
 import static com.android.server.wm.WindowManagerDebugConfig.TAG_WITH_CLASS_NAME;
 import static com.android.server.wm.WindowManagerDebugConfig.TAG_WM;
-import static com.android.window.flags.Flags.enableFullyImmersiveInDesktop;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -131,6 +130,7 @@ import android.view.WindowManager.LayoutParams;
 import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
 import android.window.ClientWindowFrames;
+import android.window.DesktopModeFlags;
 
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
@@ -2772,7 +2772,7 @@ public class DisplayPolicy {
                 && !topFreeformTask.getBounds().equals(mDisplayContent.getBounds());
 
         getInsetsPolicy().updateSystemBars(win, adjacentTasksVisible,
-                enableFullyImmersiveInDesktop()
+                DesktopModeFlags.ENABLE_FULLY_IMMERSIVE_IN_DESKTOP.isTrue()
                         ? inNonFullscreenFreeformMode : freeformRootTaskVisible);
 
         final boolean topAppHidesStatusBar = topAppHidesSystemBar(Type.statusBars());
