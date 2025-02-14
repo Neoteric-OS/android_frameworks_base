@@ -87,6 +87,30 @@
       },
       "revId": "73075880787bd355de7ae7e1cc82967b922624d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "754524a8_0d7a1489",
+        "filename": "core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 3376383
+      },
+      "writtenOn": "2025-02-14T02:43:52Z",
+      "side": 1,
+      "message": "Ack about uid_t and gid_t being a part of ABI.\n\nI think I\u0027ll proceed with the current impl, based on the ground that I\u0027ve already tested this (with Zygote as whole and with just the function on INT_MAX and INT_MAX+1) and don\u0027t want to risk breaking it.",
+      "parentUuid": "f3c21e58_234c01c8",
+      "range": {
+        "startLine": 277,
+        "startChar": 6,
+        "endLine": 280,
+        "endChar": 7
+      },
+      "revId": "73075880787bd355de7ae7e1cc82967b922624d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
