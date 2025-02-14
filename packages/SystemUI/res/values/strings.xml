@@ -3692,11 +3692,8 @@
 <!-- QTI_END: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
     <string name="no_shortcut"><xliff:g id="app_name" example="YouTube">%1$s</xliff:g> doesn\u2019t support conversation features</string>
 
-    <!-- TODO: b/381099727 - Mark translatable once feedback layout is finalized. -->
     <!-- [CHAR LIMIT=80] Text shown in feedback button in notification guts for a bundled notification -->
-<!-- QTI_BEGIN: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
-<!-- QTI_END: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
-    <string name="notification_guts_bundle_feedback" translatable="false">Provide Bundle Feedback</string>
+    <string name="notification_guts_bundle_feedback">Feedback</string>
 
     <!-- [CHAR LIMIT=30] Text shown in button used to dismiss this single notification. -->
     <string name="notification_inline_dismiss">Dismiss</string>
