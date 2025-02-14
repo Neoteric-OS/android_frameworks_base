@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "498ecd1b_d1b126ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087574
+      },
+      "writtenOn": "2025-02-14T03:30:13Z",
+      "side": 1,
+      "message": "Made this change via Gerrit editor, but it\u0027s quite trivial, so assuming presubmit checks are enough to validate it.",
+      "revId": "01975dec5dbf3c4733f529805968a7ea8207094d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
