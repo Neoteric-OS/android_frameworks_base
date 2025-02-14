@@ -619,6 +619,7 @@ public abstract class InfoMediaManager {
         return getActiveRoutingSession().getVolume();
     }
 
+    @Nullable
     CharSequence getSessionName() {
         return getActiveRoutingSession().getName();
     }
@@ -878,8 +879,7 @@ public abstract class InfoMediaManager {
             }
 
             // Add selected routes first.
-            if (com.android.media.flags.Flags.enableOutputSwitcherSessionGrouping()
-                    && sortedRouteIds.size() != selectedRoutes.size()) {
+            if (sortedRouteIds.size() != selectedRoutes.size()) {
                 for (MediaRoute2Info selectedRoute : selectedRoutes) {
                     sortedRouteIds.add(selectedRoute.getId());
                 }

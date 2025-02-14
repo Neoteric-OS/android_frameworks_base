@@ -1477,6 +1477,7 @@ public class KeyguardViewMediatorTest extends SysuiTestCase {
                 mSelectedUserInteractor,
                 mKeyguardInteractor,
                 mKeyguardTransitionBootInteractor,
+                mKosmos::getCommunalSceneInteractor,
                 mock(WindowManagerOcclusionManager.class));
         mViewMediator.mUserChangedCallback = mUserTrackerCallback;
         mViewMediator.start();
