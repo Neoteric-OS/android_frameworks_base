@@ -16,8 +16,6 @@
 
 package com.android.keyguard;
 
-import static com.android.systemui.Flags.gsfBouncer;
-
 import android.content.Context;
 import com.android.systemui.Dependency;
 import android.graphics.Typeface;
@@ -30,9 +28,10 @@ import android.view.ViewConfiguration;
 import android.widget.Button;
 
 import com.android.internal.util.EmergencyAffordanceManager;
+import com.android.systemui.Flags;
+import com.android.systemui.FontStyles;
 import com.android.systemui.bouncer.shared.constants.KeyguardBouncerConstants;
 import com.android.systemui.res.R;
-import com.android.systemui.Flags;
 
 // QTI_BEGIN: 2020-09-10: Android_UI: SystemUI: show emergency button on lock screen
 import java.util.List;
@@ -81,10 +80,8 @@ public class EmergencyButton extends Button {
                 return false;
             });
         }
-        if (gsfBouncer() || Flags.bouncerUiRevamp2()) {
-            setTypeface(Typeface.create("gsf-title-medium", Typeface.NORMAL));
-        }
         if (Flags.bouncerUiRevamp2()) {
+            setTypeface(Typeface.create(FontStyles.GSF_TITLE_MEDIUM, Typeface.NORMAL));
             Drawable background = getBackground();
             int bgColor = mContext.getColor(KeyguardBouncerConstants.Color.actionButtonBg);
             if (background != null) {

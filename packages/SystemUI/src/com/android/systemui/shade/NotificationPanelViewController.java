@@ -189,6 +189,7 @@ import com.android.systemui.unfold.SysUIUnfoldComponent;
 import com.android.systemui.util.Compile;
 import com.android.systemui.util.Utils;
 import com.android.systemui.util.time.SystemClock;
+import com.android.systemui.wallpapers.ui.viewmodel.WallpaperFocalAreaViewModel;
 import com.android.wm.shell.animation.FlingAnimationUtils;
 
 import dalvik.annotation.optimization.NeverCompile;
@@ -263,7 +264,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private final ShadeLogger mShadeLog;
     private final DozeParameters mDozeParameters;
     private final NotificationStackScrollLayout.OnEmptySpaceClickListener
-            mOnEmptySpaceClickListener = (x, y) -> onEmptySpaceClick();
+            mOnEmptySpaceClickListener = this::onEmptySpaceClick;
     private final ShadeHeadsUpChangedListener mOnHeadsUpChangedListener =
             new ShadeHeadsUpChangedListener();
     private final ConfigurationListener mConfigurationListener = new ConfigurationListener();
@@ -465,6 +466,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private final NotificationListContainer mNotificationListContainer;
     private final NPVCDownEventState.Buffer mLastDownEvents;
     private final KeyguardClockInteractor mKeyguardClockInteractor;
+    private final WallpaperFocalAreaViewModel mWallpaperFocalAreaViewModel;
     private float mMinExpandHeight;
     private boolean mPanelUpdateWhenAnimatorEnds;
     private boolean mHasVibratedOnOpen = false;
@@ -598,6 +600,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             KeyguardTransitionInteractor keyguardTransitionInteractor,
             DumpManager dumpManager,
             KeyguardTouchHandlingViewModel keyguardTouchHandlingViewModel,
+            WallpaperFocalAreaViewModel wallpaperFocalAreaViewModel,
             KeyguardInteractor keyguardInteractor,
             ActivityStarter activityStarter,
             SharedNotificationContainerInteractor sharedNotificationContainerInteractor,
@@ -755,11 +758,13 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 SysUIUnfoldComponent::getKeyguardUnfoldTransition);
 
         mKeyguardClockInteractor = keyguardClockInteractor;
+        mWallpaperFocalAreaViewModel = wallpaperFocalAreaViewModel;
+
         KeyguardLongPressViewBinder.bind(
                 mView.requireViewById(R.id.keyguard_long_press),
                 keyguardTouchHandlingViewModel,
-                () -> {
-                    onEmptySpaceClick();
+                (x, y) -> {
+                    onEmptySpaceClick(x, y);
                     return Unit.INSTANCE;
                 },
                 mFalsingManager);
@@ -2079,7 +2084,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         }
     }
 
-    private void onMiddleClicked() {
+    private void onMiddleClicked(float x, float y) {
         switch (mBarState) {
             case KEYGUARD:
                 if (!mDozingOnDown) {
@@ -2098,6 +2103,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                         mLockscreenGestureLogger
                                 .log(LockscreenUiEvent.LOCKSCREEN_LOCK_SHOW_HINT);
                         mKeyguardIndicationController.showActionToUnlock();
+                        mWallpaperFocalAreaViewModel.setTapPosition(x, y);
                     }
                 }
                 break;
@@ -2842,7 +2848,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         } else if (!mCentralSurfaces.isBouncerShowing()
                 && !mAlternateBouncerInteractor.isVisibleState()
                 && !mKeyguardStateController.isKeyguardGoingAway()) {
-            onEmptySpaceClick();
+            onEmptySpaceClick(x, y);
             onTrackingStopped(true);
         }
         mVelocityTracker.clear();
@@ -3150,8 +3156,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     }
 
     /** Called when the user performs a click anywhere in the empty area of the panel. */
-    private void onEmptySpaceClick() {
-        onMiddleClicked();
+    private void onEmptySpaceClick(float x, float y) {
+        onMiddleClicked(x, y);
     }
 
     @VisibleForTesting
