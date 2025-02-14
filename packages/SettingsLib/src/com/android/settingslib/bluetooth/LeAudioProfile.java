@@ -26,6 +26,7 @@ import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothCsipSetCoordinator;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothLeAudio;
+import android.bluetooth.BluetoothLeAudioCodecConfig;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.os.Build;
@@ -315,6 +316,33 @@ public class LeAudioProfile implements LocalBluetoothProfile {
             return BluetoothLeAudio.AUDIO_LOCATION_INVALID;
         }
         return mService.getAudioLocation(device);
+    }
+
+    /**
+     * Gets the current codec name from currently active Bluetooth device.
+     *
+     * @param device to get codec name from
+     * @return the codec name
+     */
+    public @Nullable String getCodecName(BluetoothDevice device) {
+        BluetoothLeAudioCodecConfig codecConfig = null;
+        if (mService == null) {
+            Log.d(TAG, "mService is null");
+            return null;
+        }
+        int groupId = mService.getGroupId(device);
+        try {
+            if (mService.getCodecStatus(groupId) != null) {
+                codecConfig = mService.getCodecStatus(groupId).getOutputCodecConfig();
+            }
+            if (codecConfig == null) {
+                Log.d(TAG, "codecConfig is null");
+                return null;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Exception while getting status of " + device, e);
+        }
+        return codecConfig.getCodecName();
     }
 
     @RequiresApi(Build.VERSION_CODES.S)

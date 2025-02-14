@@ -24,6 +24,7 @@ import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothCodecConfig;
+import android.bluetooth.BluetoothCodecType;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothUuid;
@@ -32,6 +33,7 @@ import android.os.Build;
 import android.os.ParcelUuid;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.android.settingslib.R;
@@ -221,6 +223,28 @@ public class A2dpProfile implements LocalBluetoothProfile {
             }
         }
         return false;
+    }
+
+    /**
+     * Gets the current codec type from currently active Bluetooth device.
+     *
+     * @param device to get codec type from
+     * @return the codec type
+     */
+    public @Nullable BluetoothCodecType getCodecType(BluetoothDevice device) {
+        BluetoothCodecConfig codecConfig = null;
+        if (mService == null) {
+            Log.d(TAG, "mService is null");
+            return null;
+        }
+        if (mService.getCodecStatus(device) != null) {
+            codecConfig = mService.getCodecStatus(device).getCodecConfig();
+        }
+        if (codecConfig == null) {
+            Log.d(TAG, "codecConfig is null");
+            return null;
+        }
+        return codecConfig.getExtendedCodecType();
     }
 
     public boolean supportsHighQualityAudio(BluetoothDevice device) {

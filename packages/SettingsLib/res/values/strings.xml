@@ -220,6 +220,10 @@
     <string name="tv_bluetooth_battery_level_untethered_right">Right <xliff:g id="battery_level_as_percentage" example="25%">%1$s</xliff:g></string>
     <!-- Connected devices settings. Message when Bluetooth is connected and active but no battery information, showing remote device status. [CHAR LIMIT=NONE] -->
     <string name="bluetooth_active_no_battery_level">Active</string>
+    <!-- Connected devices settings. Message when Bluetooth is connected and active with current codec information. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_active_with_codec">Active wtih <xliff:g id="codec_name">%1$s</xliff:g></string>
+    <!-- Connected devices settings. Message when Bluetooth is connected and active, showing remote device status, codec and battery level. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_active_with_codec_and_battery_level">Active wtih <xliff:g id="codec_name">%1$s</xliff:g>. <xliff:g id="battery_level_as_percentage">%2$s</xliff:g> battery.</string>
     <!-- Connected devices settings. Message shown when bluetooth device is disconnected but is a known, previously connected device [CHAR LIMIT=NONE] -->
     <string name="bluetooth_saved_device">Saved</string>
 
