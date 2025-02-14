@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da8f0500_32a49e63",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 19325,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2025-02-14T19:08:14Z",
+      "side": 1,
+      "message": "Is there any reason for this to be marked as `@Readable`?",
+      "fixSuggestions": [
+        {
+          "fixId": "1344ffae_a44e1512",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/Settings.java",
+              "range": {
+                "startLine": 19325,
+                "startChar": 0,
+                "endLine": 19326,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "7e5de9dfd1c52cbdebee8f17712af88336624de8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
