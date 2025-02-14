@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec04a222_035e2596",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2025-02-14T06:45:45Z",
+      "side": 1,
+      "message": "The documentation doesn\u0027t help differentiate this from TYPE_VPN_OEM; what about the enterprise part, and how is this supposed to behave differently / why should/shouldn\u0027t someone use this over TYPE_VPN_OEM ?",
+      "revId": "58474d4ac3eaef47cad9549e37435f289295f41f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2be1b325_b761b2fd",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2025-02-14T06:45:45Z",
+      "side": 1,
+      "message": "We need 100% API coverage so there should be some kind of test exercising the constant",
+      "revId": "58474d4ac3eaef47cad9549e37435f289295f41f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3b3801e_12e3b12a",
+        "filename": "core/java/android/net/flags.aconfig",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2025-02-14T06:45:45Z",
+      "side": 1,
+      "message": "Nit: TYPE_VPN_OEM_ENTERPRISE",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 56
+      },
+      "revId": "58474d4ac3eaef47cad9549e37435f289295f41f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
