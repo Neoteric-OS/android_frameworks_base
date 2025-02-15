@@ -993,6 +993,11 @@ public class RecentsTransitionHandler implements Transitions.TransitionHandler,
                 return;
             }
             if (recentsOpening != null) {
+                if (info.getType() == TRANSIT_OPEN && info.getChanges().size() == 1) {
+                    mWillFinishToHome = true;
+                    cancel(true /* toHome */, false /* withScreenshots */, "didn't merge");
+                    return;
+                }
                 // the recents task re-appeared. This happens if the user gestures before the
                 // task-switch (NEW_TASK) animation finishes.
                 if (mState == STATE_NORMAL) {
