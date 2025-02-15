@@ -45,7 +45,7 @@ constructor(
 ) : Dumpable {
 
     private val tag = "AvalancheController"
-    private val debug = Compile.IS_DEBUG && Log.isLoggable(tag, Log.DEBUG)
+    private val debug = false // Compile.IS_DEBUG && Log.isLoggable(tag, Log.DEBUG)
     var baseEntryMapStr : () -> String = { "baseEntryMapStr not initialized" }
 
     var enableAtRuntime = true
