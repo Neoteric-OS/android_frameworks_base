@@ -6,8 +6,8 @@ per-file libandroid.map.txt = jreck@google.com, zyy@google.com, mattbuckley@goog
 
 # Networking
 per-file libandroid_net.map.txt, net.c = set noparent
-per-file libandroid_net.map.txt, net.c = codewiz@google.com, jchalard@google.com, junyulai@google.com
-per-file libandroid_net.map.txt, net.c = lorenzo@google.com, reminv@google.com, satk@google.com
+per-file libandroid_net.map.txt, net.c = jchalard@google.com, junyulai@google.com, lorenzo@google.com
+per-file libandroid_net.map.txt, net.c = maze@google.com, reminv@google.com, satk@google.com
 
 # Fonts
 per-file system_fonts.cpp = file:/graphics/java/android/graphics/fonts/OWNERS
