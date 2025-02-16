@@ -16,6 +16,23 @@
       "message": "I would like invite you to review this change, thank you!",
       "revId": "ab73b49fabfdb78d547c74c9aa0df7d2ba35f1d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60c8679e_d4433b6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040388
+      },
+      "writtenOn": "2025-02-16T20:24:42Z",
+      "side": 1,
+      "message": "Thanks for the patch, but I\u0027m concerned that this change may have unintended side effects. Window titles are used for more than debugging, and are exposed to users through accessibility events and in some cases, UI such as taskbars. Non-localized strings are not usually appropriate for these titles.",
+      "revId": "ab73b49fabfdb78d547c74c9aa0df7d2ba35f1d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
