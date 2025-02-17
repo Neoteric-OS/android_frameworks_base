@@ -131,6 +131,7 @@ import static android.provider.Settings.Global.ALWAYS_FINISH_ACTIVITIES;
 import static android.provider.Settings.Global.DEBUG_APP;
 import static android.provider.Settings.Global.WAIT_FOR_DEBUGGER;
 import static android.util.FeatureFlagUtils.SETTINGS_ENABLE_MONITOR_PHANTOM_PROCS;
+import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.Display.INVALID_DISPLAY;
 
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_CONFIGURATION;
@@ -9820,6 +9821,15 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         if (Debug.isDebuggerConnected()) {
             sb.append("Debugger: Connected\n");
+        }
+        DisplayManager displayManager = mContext.getSystemService(DisplayManager.class);
+        if (displayManager != null) {
+            sb.append("Screen: ").append(Display.stateToString(displayManager
+                .getDisplay(DEFAULT_DISPLAY).getState())).append("\n");
+        }
+        KeyguardManager keyguardManager = mContext.getSystemService(KeyguardManager.class);
+        if (keyguardManager != null) {
+            sb.append("LockScreen: ").append(keyguardManager.isKeyguardLocked()).append("\n");
         }
         if (crashInfo != null && crashInfo.exceptionHandlerClassName != null
                 && !crashInfo.exceptionHandlerClassName.isEmpty()) {
