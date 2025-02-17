@@ -34,6 +34,24 @@
       ],
       "revId": "7e5de9dfd1c52cbdebee8f17712af88336624de8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1636f028_964df708",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 19325,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2025-02-17T08:49:22Z",
+      "side": 1,
+      "message": "No reason that I could find internally.  Updated!",
+      "parentUuid": "da8f0500_32a49e63",
+      "revId": "7e5de9dfd1c52cbdebee8f17712af88336624de8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
