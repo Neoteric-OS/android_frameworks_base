@@ -16,6 +16,24 @@
       "message": "Why are you making this change? Can you please file a bug first and describe the issue you are facing?",
       "revId": "d7ce9ba8ac308481193ca69d8fdf695803458eaf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b1704ac_9b71a0ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1949170
+      },
+      "writtenOn": "2025-02-18T18:42:20Z",
+      "side": 1,
+      "message": "AconfigFlags does not check if file exists before creating the inputstream but checks every partition for flags. So whenever an application creates a new instance of AconfigFlags, you get error stacktraces for every partition that does not have flags (i.e. system_ext) because it is opening an inputstream to a nonexistant file, hence logspam etc.",
+      "parentUuid": "718db2cb_f7b09609",
+      "revId": "d7ce9ba8ac308481193ca69d8fdf695803458eaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
