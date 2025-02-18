@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "718db2cb_f7b09609",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-02-18T18:37:02Z",
+      "side": 1,
+      "message": "Why are you making this change? Can you please file a bug first and describe the issue you are facing?",
+      "revId": "d7ce9ba8ac308481193ca69d8fdf695803458eaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
