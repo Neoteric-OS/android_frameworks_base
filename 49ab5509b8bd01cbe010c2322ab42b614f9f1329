@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c52138d_6a7c0eb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3392411
+      },
+      "writtenOn": "2025-02-18T19:34:25Z",
+      "side": 1,
+      "message": "Hi Team, any update on this patch?",
+      "revId": "49ab5509b8bd01cbe010c2322ab42b614f9f1329",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
