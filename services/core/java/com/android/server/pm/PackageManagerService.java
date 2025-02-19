@@ -1486,7 +1486,7 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
         ArchiveState archiveState;
         synchronized (mLock) {
             PackageSetting ps = mSettings.getPackageLPr(packageName);
-            if (ps == null) {
+            if (ps == null || snapshot.shouldFilterApplication(ps, binderUid, userId)) {
                 return null;
             }
             var psi = ps.getUserStateOrDefault(userId);
@@ -2150,6 +2150,10 @@ public class PackageManagerService implements PackageSender, TestUtilityService 
                 mSuspendPackageHelper);
         mStorageEventHelper = new StorageEventHelper(this, mDeletePackageHelper,
                 mRemovePackageHelper);
+
+        t.traceBegin("readListOfTelephonyPackagesToBeDisabled");
+        mInstallPackageHelper.readListOfTelephonyPackagesToBeDisabled();
+        t.traceEnd();
 
 // QTI_BEGIN: 2024-11-13: Telephony: Add provision to prevent installation of some apps
         t.traceBegin("readListOfPackagesToBeDisabled");
