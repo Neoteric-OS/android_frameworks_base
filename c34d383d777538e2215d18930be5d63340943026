@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13034997_5d5ea906",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965240
+      },
+      "writtenOn": "2025-02-19T14:20:41Z",
+      "side": 1,
+      "message": "Dear Googlers,\n\nThis is my first patch to AOSP, may missing steps.\nSo, could you please take a time to review it?\n\nThank you.",
+      "revId": "c34d383d777538e2215d18930be5d63340943026",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
