@@ -27,7 +27,6 @@ import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.android.internal.jank.InteractionJankMonitor
 import com.android.systemui.CoreStartable
-import com.android.systemui.Dumpable
 import com.android.systemui.Flags
 import com.android.systemui.animation.ActivityTransitionAnimator
 import com.android.systemui.dagger.SysUISingleton
@@ -79,7 +78,7 @@ constructor(
     private val swipeStatusBarAwayGestureHandler: SwipeStatusBarAwayGestureHandler,
     private val statusBarModeRepository: StatusBarModeRepositoryStore,
     @OngoingCallLog private val logger: LogBuffer,
-) : CallbackController<OngoingCallListener>, Dumpable, CoreStartable {
+) : CallbackController<OngoingCallListener>, CoreStartable {
     private var isFullscreen: Boolean = false
     /** Non-null if there's an active call notification. */
     private var callNotificationInfo: CallNotificationInfo? = null

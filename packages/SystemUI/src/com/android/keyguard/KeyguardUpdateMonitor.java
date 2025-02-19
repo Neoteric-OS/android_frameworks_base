@@ -118,7 +118,6 @@ import com.android.settingslib.Utils;
 import com.android.settingslib.WirelessUtils;
 import com.android.settingslib.fuelgauge.BatteryStatus;
 import com.android.systemui.CoreStartable;
-import com.android.systemui.Dumpable;
 import com.android.systemui.biometrics.AuthController;
 import com.android.systemui.biometrics.FingerprintInteractiveToAuthProvider;
 import com.android.systemui.bouncer.domain.interactor.AlternateBouncerInteractor;
@@ -188,7 +187,7 @@ import javax.inject.Provider;
  * to be updated.
  */
 @SysUISingleton
-public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpable, CoreStartable {
+public class KeyguardUpdateMonitor implements TrustManager.TrustListener, CoreStartable {
 
     private static final String TAG = "KeyguardUpdateMonitor";
     private static final int BIOMETRIC_LOCKOUT_RESET_DELAY_MS = 600;
