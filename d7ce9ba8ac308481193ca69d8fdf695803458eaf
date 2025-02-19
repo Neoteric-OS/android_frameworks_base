@@ -51,6 +51,95 @@
       "message": "Can we get some attention on this?\n\nThese stacktraces make it hard to parse logs for actual issues.",
       "revId": "d7ce9ba8ac308481193ca69d8fdf695803458eaf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e31a5962_81a4a26b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-02-19T18:14:07Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6b1704ac_9b71a0ee",
+      "revId": "d7ce9ba8ac308481193ca69d8fdf695803458eaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c17d882_09d87486",
+        "filename": "core/java/com/android/internal/pm/pkg/component/AconfigFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-02-19T18:14:07Z",
+      "side": 1,
+      "message": "nit: Let\u0027s return early to reduce code indentation below",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4ad9719a_c16f40cd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/com/android/internal/pm/pkg/component/AconfigFlags.java",
+              "range": {
+                "startLine": 115,
+                "startChar": 0,
+                "endLine": 175,
+                "endChar": 0
+              },
+              "replacement": "        if (!settingsFile.isFile() || !settingsFile.canRead()) {\n            Slog.d(LOG_TAG, \"No Aconfig flags at settings_config.xml\");\n            return;\n        }\n        try (var inputStream \u003d new FileInputStream(settingsFile)) {\n            TypedXmlPullParser parser \u003d Xml.resolvePullParser(inputStream);\n            if (parser.next() !\u003d XmlPullParser.END_TAG \u0026\u0026 \"settings\".equals(parser.getName())) {\n                final var flagPriority \u003d new ArrayMap\u003cString, Integer\u003e();\n                final int outerDepth \u003d parser.getDepth();\n                int type;\n                while ((type \u003d parser.next()) !\u003d XmlPullParser.END_DOCUMENT\n                        \u0026\u0026 (type !\u003d XmlPullParser.END_TAG || parser.getDepth() \u003e outerDepth)) {\n                    if (type \u003d\u003d XmlPullParser.END_TAG || type \u003d\u003d XmlPullParser.TEXT) {\n                        continue;\n                    }\n                    if (!\"setting\".equals(parser.getName())) {\n                        continue;\n                    }\n                    String name \u003d parser.getAttributeValue(null, \"name\");\n                    final String value \u003d parser.getAttributeValue(null, \"value\");\n                    if (name \u003d\u003d null || value \u003d\u003d null) {\n                        continue;\n                    }\n                    // A non-boolean setting is definitely not an Aconfig flag value.\n                    if (!\"false\".equalsIgnoreCase(value) \u0026\u0026 !\"true\".equalsIgnoreCase(value)) {\n                        continue;\n                    }\n                    final var overridePrefix \u003d \"device_config_overrides/\";\n                    final var stagedPrefix \u003d \"staged/\";\n                    String separator \u003d \"/\";\n                    String prefix \u003d \"default\";\n                    int priority \u003d 0;\n                    if (name.startsWith(overridePrefix)) {\n                        prefix \u003d overridePrefix;\n                        name \u003d name.substring(overridePrefix.length());\n                        separator \u003d \":\";\n                        priority \u003d 20;\n                    } else if (name.startsWith(stagedPrefix)) {\n                        prefix \u003d stagedPrefix;\n                        name \u003d name.substring(stagedPrefix.length());\n                        separator \u003d \"*\";\n                        priority \u003d 10;\n                    }\n                    final String flagPackageAndName \u003d parseFlagPackageAndName(name, separator);\n                    if (flagPackageAndName \u003d\u003d null) {\n                        continue;\n                    }\n                    // We ignore all settings that aren\u0027t for flags. We\u0027ll know they are\n                    // for flags if they correspond to flags read from the proto files.\n                    if (!mFlagValues.containsKey(flagPackageAndName)) {\n                        continue;\n                    }\n                    Slog.d(LOG_TAG, \"Found \" + prefix\n                            + \" Aconfig flag value for \" + flagPackageAndName + \" \u003d \" + value);\n                    final Integer currentPriority \u003d flagPriority.get(flagPackageAndName);\n                    if (currentPriority !\u003d null \u0026\u0026 currentPriority \u003e\u003d priority) {\n                        Slog.i(LOG_TAG, \"Skipping \" + prefix + \" flag \" + flagPackageAndName\n                                + \" because of the existing one with priority \"\n                                + currentPriority);\n                        continue;\n"
+            },
+            {
+              "path": "core/java/com/android/internal/pm/pkg/component/AconfigFlags.java",
+              "range": {
+                "startLine": 176,
+                "startChar": 0,
+                "endLine": 176,
+                "endChar": 0
+              },
+              "replacement": "                    flagPriority.put(flagPackageAndName, priority);\n                    mFlagValues.put(flagPackageAndName, Boolean.parseBoolean(value));\n"
+            },
+            {
+              "path": "core/java/com/android/internal/pm/pkg/component/AconfigFlags.java",
+              "range": {
+                "startLine": 177,
+                "startChar": 0,
+                "endLine": 179,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "core/java/com/android/internal/pm/pkg/component/AconfigFlags.java",
+              "range": {
+                "startLine": 180,
+                "startChar": 0,
+                "endLine": 182,
+                "endChar": 0
+              },
+              "replacement": "        } catch (IOException | XmlPullParserException e) {\n            Slog.e(LOG_TAG, \"Failed to read Aconfig values from settings_config.xml\", e);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d7ce9ba8ac308481193ca69d8fdf695803458eaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
