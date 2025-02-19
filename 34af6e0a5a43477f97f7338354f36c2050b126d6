@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9509164_995f91c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2025-02-19T08:13:09Z",
+      "side": 1,
+      "message": "The default AVRCP version is still 1.5 unless the avrcp_default_version_1_6 flag is active, so we need to gate this change behind it.",
+      "revId": "34af6e0a5a43477f97f7338354f36c2050b126d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
