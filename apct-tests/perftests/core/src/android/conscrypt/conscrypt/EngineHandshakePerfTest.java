@@ -34,6 +34,7 @@ package android.conscrypt;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import javax.net.ssl.SSLEngine;
@@ -87,11 +88,21 @@ public final class EngineHandshakePerfTest {
         }
     }
 
+    private List<String> ciphers = Arrays.asList(
+        "TLS_RSA_WITH_AES_128_GCM_SHA256",
+        "TLS_RSA_WITH_AES_256_GCM_SHA384",
+        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+        "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+        "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256"
+    );
+
+
     public Collection getParams() {
         final List<Object[]> params = new ArrayList<>();
         for (BufferType bufferType : BufferType.values()) {
-            params.add(new Object[] {new Config(bufferType,
-                "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", 100)});
+            for (String cipher : ciphers) {
+                params.add(new Object[] {new Config(bufferType, cipher, 100)});
+            }
         }
         return params;
     }
