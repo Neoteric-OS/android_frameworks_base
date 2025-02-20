@@ -79,7 +79,8 @@ public class StatusBarWindowView extends FrameLayout {
             ev.setLocation(ev.getRawX(), mTopInset);
         } else if (ev.getAction() == ACTION_MOVE && mTouchDownY != 0) {
             ev.setLocation(ev.getRawX(), mTopInset + ev.getRawY() - mTouchDownY);
-        } else if (ev.getAction() == ACTION_UP) {
+        } else if (ev.getAction() == ACTION_UP && mTouchDownY != 0) {
+            ev.setLocation(ev.getRawX(), mTopInset + ev.getRawY() - mTouchDownY);
             mTouchDownY = 0;
         }
         return super.dispatchTouchEvent(ev);
