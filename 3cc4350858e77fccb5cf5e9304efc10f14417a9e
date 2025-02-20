@@ -16,6 +16,24 @@
       "message": "Please replace tabs with spaces.",
       "revId": "3cc4350858e77fccb5cf5e9304efc10f14417a9e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7056eacd_49547806",
+        "filename": "services/core/java/com/android/server/appop/AppOpsUidStateTrackerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 2008184
+      },
+      "writtenOn": "2025-02-20T12:43:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db72bc8e_6e5e1f50",
+      "revId": "3cc4350858e77fccb5cf5e9304efc10f14417a9e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
