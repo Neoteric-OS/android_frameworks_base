@@ -34,7 +34,7 @@ import static android.window.DisplayAreaOrganizer.FEATURE_IME_PLACEHOLDER;
 import static android.window.DisplayAreaOrganizer.FEATURE_VENDOR_FIRST;
 import static android.window.DisplayAreaOrganizer.FEATURE_WINDOWED_MAGNIFICATION;
 
-import static com.android.compatibility.common.util.PackageUtil.supportsRotation;
+import static com.android.compatibility.common.util.DisplayUtil.supportsRotation;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.spyOn;
 import static com.android.server.wm.SizeCompatTests.prepareLimitedBounds;
 import static com.android.server.wm.SizeCompatTests.prepareUnresizable;
