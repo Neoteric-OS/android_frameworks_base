@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -98,19 +99,41 @@ public final class ServerSocketPerfTest {
         }
     }
 
+    private List<String> ciphers = Arrays.asList(
+        // tlsv1.2 ciphers
+        // "TLS_RSA_WITH_AES_128_GCM_SHA256",
+        // "TLS_RSA_WITH_AES_256_GCM_SHA384",
+        // "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+        // "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+        // "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+        // "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
+        // "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256",
+        // "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
+
+        // tlsv1.3 ciphers
+        "TLS_AES_128_GCM_SHA256",
+        "TLS_AES_128_GCM_SHA256",
+        "TLS_AES_128_GCM_SHA256"
+        // "TLS_AES_256_GCM_SHA384",
+        // "TLS_CHACHA20_POLY1305_SHA256"
+    );
+
+    private List<Integer> messageSizes = Arrays.asList(
+        64,
+        512,
+        4096
+    );
+
     public Collection getParams() {
         final List<Object[]> params = new ArrayList<>();
         for (EndpointFactory endpointFactory : EndpointFactory.values()) {
             for (ChannelType channelType : ChannelType.values()) {
-                params.add(new Object[] {new Config(endpointFactory,
-                    endpointFactory, 64,
-                    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", channelType)});
-                params.add(new Object[] {new Config(endpointFactory,
-                    endpointFactory, 512,
-                    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", channelType)});
-                params.add(new Object[] {new Config(endpointFactory,
-                    endpointFactory, 4096,
-                    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", channelType)});
+                for (int messageSize : messageSizes) {
+                    for (String cipher : ciphers) {
+                        params.add(new Object[] {new Config(endpointFactory,
+                            endpointFactory, messageSize, cipher, channelType)});
+                    }
+                }
             }
         }
         return params;
