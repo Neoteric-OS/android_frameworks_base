@@ -3,6 +3,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5e051d0_c73901a9",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5107,
+      "author": {
+        "id": 1942866
+      },
+      "writtenOn": "2025-02-20T19:14:36Z",
+      "side": 1,
+      "message": "Lets also `Slog.e()` with an error message",
+      "range": {
+        "startLine": 5107,
+        "startChar": 28,
+        "endLine": 5107,
+        "endChar": 29
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6e930338_d55dc3f4",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 5108,
+                "startChar": 0,
+                "endLine": 5108,
+                "endChar": 0
+              },
+              "replacement": "            Slog.e(TAG, \"Missing receiver for preapproval status.\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4228a007de834a3c587cdefec95aae375eae937d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "478a3f52_5cbf0999",
         "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
         "patchSetId": 1
@@ -28,6 +69,98 @@
                 "endChar": 0
               },
               "replacement": "        if (statusReceiver \u003d\u003d null) {\n            throw new IllegalArgumentException(\"Status receiver cannot be null.\");\n        }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4228a007de834a3c587cdefec95aae375eae937d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3608c569_dea5f16c",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5503,
+      "author": {
+        "id": 1942866
+      },
+      "writtenOn": "2025-02-20T19:14:36Z",
+      "side": 1,
+      "message": "Please add a `Slog.e` here too",
+      "range": {
+        "startLine": 5503,
+        "startChar": 28,
+        "endLine": 5503,
+        "endChar": 29
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8406ca53_48821f14",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 5504,
+                "startChar": 0,
+                "endLine": 5504,
+                "endChar": 0
+              },
+              "replacement": "            Slog.e(TAG, \"Missing receiver for pending user action.\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4228a007de834a3c587cdefec95aae375eae937d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55cc78bb_203b672a",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5565,
+      "author": {
+        "id": 1942866
+      },
+      "writtenOn": "2025-02-20T19:14:36Z",
+      "side": 1,
+      "message": "This could also be `null` like other instance. Please add a similar check for this `target` too. Thanks!",
+      "range": {
+        "startLine": 5565,
+        "startChar": 12,
+        "endLine": 5565,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b47acd6f_c72ea453",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 5506,
+                "startChar": 0,
+                "endLine": 5506,
+                "endChar": 0
+              },
+              "replacement": "\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 5542,
+                "startChar": 0,
+                "endLine": 5542,
+                "endChar": 0
+              },
+              "replacement": "\n        if (target \u003d\u003d null) {\n            return;\n        }\n\n"
             }
           ]
         }
