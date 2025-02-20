@@ -89,10 +89,10 @@ public final class Choreographer {
     private static final String TAG = "Choreographer";
 
     // Prints debug messages about jank which was detected (low volume).
-    private static final boolean DEBUG_JANK = false;
+    private static final boolean DEBUG_JANK = true;
 
     // Prints debug messages about every frame and callback registered (high volume).
-    private static final boolean DEBUG_FRAMES = false;
+    private static final boolean DEBUG_FRAMES = true;
 
     // The default amount of time in ms between animation frames.
     // When vsync is not enabled, we want to have some idea of how long we should
