@@ -1101,14 +1101,12 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
         if (svcConnTracingEnabled()) {
             logTraceSvcConn("performGlobalAction", "action=" + action);
         }
-        int currentUserId;
         synchronized (mLock) {
             if (!hasRightsToCurrentUserLocked()) {
                 return false;
             }
-            currentUserId = mSystemSupport.getCurrentUserIdLocked();
         }
-        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
+        enforceCurrentUserIfVisibleBackgroundEnabled();
         final long identity = Binder.clearCallingIdentity();
         try {
             return mSystemActionPerformer.performSystemAction(action);
@@ -2766,11 +2764,7 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
     @RequiresNoPermission
     @Override
     public void setAnimationScale(float scale) {
-        int currentUserId;
-        synchronized (mLock) {
-            currentUserId = mSystemSupport.getCurrentUserIdLocked();
-        }
-        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
+        enforceCurrentUserIfVisibleBackgroundEnabled();
         final long identity = Binder.clearCallingIdentity();
         try {
             Settings.Global.putFloat(
