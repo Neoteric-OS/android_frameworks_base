@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "478a3f52_5cbf0999",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5150,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-02-20T18:57:03Z",
+      "side": 1,
+      "message": "We should just throw here if `statusReceiver` is null. We already have `Preconditions.checkArgument` on the client side, but it\u0027s possible that some 3p app directly called the `requestUserPreapproval` AIDL method, so another NPE check is necessary.",
+      "fixSuggestions": [
+        {
+          "fixId": "b40b1d39_21395bb7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 5145,
+                "startChar": 0,
+                "endLine": 5145,
+                "endChar": 0
+              },
+              "replacement": "        if (statusReceiver \u003d\u003d null) {\n            throw new IllegalArgumentException(\"Status receiver cannot be null.\");\n        }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4228a007de834a3c587cdefec95aae375eae937d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
