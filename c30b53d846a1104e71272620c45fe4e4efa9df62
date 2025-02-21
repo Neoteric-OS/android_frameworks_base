@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d34d11bf_06e427da",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5471,
+      "author": {
+        "id": 1979493
+      },
+      "writtenOn": "2025-02-21T12:11:10Z",
+      "side": 1,
+      "message": "this would also cause a NPE",
+      "range": {
+        "startLine": 5471,
+        "startChar": 13,
+        "endLine": 5471,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7ceba565_5d5f436c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/wm/WindowState.java",
+              "range": {
+                "startLine": 5471,
+                "startChar": 0,
+                "endLine": 5472,
+                "endChar": 0
+              },
+              "replacement": "        if (getDisplayContent() !\u003d null \u0026\u0026 !getDisplayContent().getImeContainer().isVisible()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c30b53d846a1104e71272620c45fe4e4efa9df62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
