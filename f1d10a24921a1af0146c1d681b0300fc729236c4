@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56ec467a_72cbb5c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2025-02-21T20:31:44Z",
+      "side": 1,
+      "message": "Can you please document the root cause to the exception? I\u0027m guessing there are conccurent reads and writes to the data structure.",
+      "revId": "f1d10a24921a1af0146c1d681b0300fc729236c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
