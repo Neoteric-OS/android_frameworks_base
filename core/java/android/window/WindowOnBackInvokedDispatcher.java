@@ -416,6 +416,8 @@ public class WindowOnBackInvokedDispatcher implements OnBackInvokedDispatcher {
         private final Handler mHandler;
         @NonNull
         private final BooleanSupplier mOnKeyPreIme;
+        @Nullable
+        private BackMotionEvent mBackEvent;
 
         OnBackInvokedCallbackWrapper(
                 @NonNull OnBackInvokedCallback callback,
@@ -432,6 +434,7 @@ public class WindowOnBackInvokedDispatcher implements OnBackInvokedDispatcher {
 
         @Override
         public void onBackStarted(BackMotionEvent backEvent) {
+            mBackEvent = backEvent;
             mHandler.post(() -> {
                 final OnBackAnimationCallback callback = getBackAnimationCallback();
 
@@ -444,11 +447,11 @@ public class WindowOnBackInvokedDispatcher implements OnBackInvokedDispatcher {
                 mTouchTracker.setState(BackTouchTracker.TouchTrackerState.ACTIVE);
                 mTouchTracker.setShouldUpdateStartLocation(true);
                 mTouchTracker.setGestureStartLocation(
-                        backEvent.getTouchX(), backEvent.getTouchY(), backEvent.getSwipeEdge());
+                        mBackEvent.getTouchX(), mBackEvent.getTouchY(), mBackEvent.getSwipeEdge());
 
                 if (callback != null) {
-                    callback.onBackStarted(BackEvent.fromBackMotionEvent(backEvent));
-                    mProgressAnimator.onBackStarted(backEvent, callback::onBackProgressed);
+                    callback.onBackStarted(BackEvent.fromBackMotionEvent(mBackEvent));
+                    mProgressAnimator.onBackStarted(mBackEvent, callback::onBackProgressed);
                 }
             });
         }
@@ -458,9 +461,10 @@ public class WindowOnBackInvokedDispatcher implements OnBackInvokedDispatcher {
             // This is only called in some special cases such as when activity embedding is active
             // or when the activity is letterboxed. Otherwise mProgressAnimator#onBackProgressed is
             // called from WindowOnBackInvokedDispatcher#onMotionEvent
+            mBackEvent = backEvent;
             mHandler.post(() -> {
                 if (getBackAnimationCallback() != null) {
-                    mProgressAnimator.onBackProgressed(backEvent);
+                    mProgressAnimator.onBackProgressed(mBackEvent);
                 }
             });
         }
