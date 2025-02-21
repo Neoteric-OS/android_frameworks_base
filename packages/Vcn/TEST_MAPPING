@@ -14,13 +14,5 @@
     {
       "name": "CtsVcnTestCases"
     }
-  ],
-  "tethering-mainline-presubmit": [
-    {
-      "name": "FrameworksVcnTests"
-    },
-    {
-      "name": "CtsVcnTestCases"
-    }
   ]
 }
