@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "414d2f66_cf64a06f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165189
+      },
+      "writtenOn": "2025-02-21T00:48:21Z",
+      "side": 1,
+      "message": "For reviewer\u0027s information, this is a part of MUMD feature.",
+      "revId": "43df372a42743f8ebec5912c422ee3afd7864928",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
