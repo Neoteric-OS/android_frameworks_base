@@ -50,6 +50,24 @@
       "message": "It looks like the following classes had `import` changes around the same line as the `Dumpable` import, which will cause merge conflicts on another branch:\n\n  packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java\n  packages/SystemUI/src/com/android/systemui/keyguard/KeyguardViewMediator.java\n  packages/SystemUI/src/com/android/systemui/statusbar/phone/ongoingcall/OngoingCallController.kt\n  \nIf you update this CL to still keep the `Dumpable` import around (even though it\u0027s unused), then this CL can be merged. After this CL is merged, we can then remove the unused `Dumpable` import internally.",
       "revId": "c34d383d777538e2215d18930be5d63340943026",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "385bf890_f2ce9e03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1965240
+      },
+      "writtenOn": "2025-02-21T15:09:05Z",
+      "side": 1,
+      "message": "Hi Caitlin \u0026 other Googlers,\n\nVery happy for your acceptance.\nI updated the CL under your guidance.\nPlease go ahead.\n\nBRs.",
+      "parentUuid": "aa17c8f3_17cc0166",
+      "revId": "c34d383d777538e2215d18930be5d63340943026",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
