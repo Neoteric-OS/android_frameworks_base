@@ -432,6 +432,10 @@ public class WindowOnBackInvokedDispatcher implements OnBackInvokedDispatcher {
 
         @Override
         public void onBackStarted(BackMotionEvent backEvent) {
+            // backEvent may have been recycled when the startSystemAnimation method of
+            // the BackAnimationController file is executed. We make an event copy to
+            // avoid null pointer exception when handler thread execute.
+            final BackMotionEvent backEventCopy = new BackMotionEvent(backEvent);
             mHandler.post(() -> {
                 final OnBackAnimationCallback callback = getBackAnimationCallback();
 
@@ -444,11 +448,11 @@ public class WindowOnBackInvokedDispatcher implements OnBackInvokedDispatcher {
                 mTouchTracker.setState(BackTouchTracker.TouchTrackerState.ACTIVE);
                 mTouchTracker.setShouldUpdateStartLocation(true);
                 mTouchTracker.setGestureStartLocation(
-                        backEvent.getTouchX(), backEvent.getTouchY(), backEvent.getSwipeEdge());
+                        backEventCopy.getTouchX(), backEventCopy.getTouchY(), backEventCopy.getSwipeEdge());
 
                 if (callback != null) {
-                    callback.onBackStarted(BackEvent.fromBackMotionEvent(backEvent));
-                    mProgressAnimator.onBackStarted(backEvent, callback::onBackProgressed);
+                    callback.onBackStarted(BackEvent.fromBackMotionEvent(backEventCopy));
+                    mProgressAnimator.onBackStarted(backEventCopy, callback::onBackProgressed);
                 }
             });
         }
