@@ -18,6 +18,7 @@ package com.android.server.wm;
 
 import static android.Manifest.permission.START_ACTIVITIES_FROM_BACKGROUND;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.os.Process.SYSTEM_UID;
 import static android.provider.DeviceConfig.NAMESPACE_WINDOW_MANAGER;
 
 import static com.android.internal.util.Preconditions.checkState;
@@ -155,9 +156,10 @@ public class BackgroundActivityStartController {
     }
 
     private boolean isHomeApp(int uid, @Nullable String packageName) {
-        if (mService.mHomeProcess != null) {
-            // Fast check
-            return uid == mService.mHomeProcess.mUid;
+        WindowProcessController homeProcess = mService.mHomeProcess;
+        if (homeProcess != null && (homeProcess.mUid != SYSTEM_UID || packageName == null)) {
+            // Fast check (skip if sharing system UID and we have a package name)
+            return uid == homeProcess.mUid;
         }
         if (packageName == null) {
             return false;
