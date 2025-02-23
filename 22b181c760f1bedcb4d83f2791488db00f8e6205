@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a61bb930_c794f582",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5464,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-02-23T03:34:21Z",
+      "side": 1,
+      "message": "This should never happen.\n\nOnce mDisplayContent is set in WindowState, I can\u0027t find a code path for it to be set to null.\n\nIn fact, only Task could have its mDisplayContent set to null on removal.\n\nCan you please check your code path to see where mDisplayContent can be set to null?",
+      "range": {
+        "startLine": 5464,
+        "startChar": 12,
+        "endLine": 5464,
+        "endChar": 35
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "13fcad30_3d114143",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/wm/WindowState.java",
+              "range": {
+                "startLine": 5464,
+                "startChar": 0,
+                "endLine": 5465,
+                "endChar": 0
+              },
+              "replacement": "        if (mDisplayContent.shouldImeAttachedToApp()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "22b181c760f1bedcb4d83f2791488db00f8e6205",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
