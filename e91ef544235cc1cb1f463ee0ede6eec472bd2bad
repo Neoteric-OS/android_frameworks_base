@@ -44,6 +44,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fb318190_4b3aee76",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5110,
+      "author": {
+        "id": 1942866
+      },
+      "writtenOn": "2025-02-24T19:05:02Z",
+      "side": 1,
+      "message": "Yup, agreed with Song. Sorry for the confusion with my previous comment Yue, we no longer need this check here.",
+      "parentUuid": "fa74af94_feba6127",
+      "range": {
+        "startLine": 5107,
+        "startChar": 8,
+        "endLine": 5110,
+        "endChar": 9
+      },
+      "revId": "e91ef544235cc1cb1f463ee0ede6eec472bd2bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "80819c78_90bb67e6",
         "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
         "patchSetId": 2
