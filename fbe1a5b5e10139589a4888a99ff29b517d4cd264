@@ -34,6 +34,24 @@
       ],
       "revId": "fbe1a5b5e10139589a4888a99ff29b517d4cd264",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "967f363a_695b5707",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/QSPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2025-02-24T14:36:11Z",
+      "side": 1,
+      "message": "Sorry. I was trying to write that BrightnessSliderController already calls this every time that the mirror should be shown.",
+      "parentUuid": "119b1105_7117432a",
+      "revId": "fbe1a5b5e10139589a4888a99ff29b517d4cd264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
