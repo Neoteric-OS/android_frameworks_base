@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e09d155b_78ecb74f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2025-02-24T11:42:02Z",
+      "side": 1,
+      "message": "I am wondering why the remote controller cannot resolve the requested visible types on their own.",
+      "revId": "52109a0ce9a56bbac49798159758b6ea69714aae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
