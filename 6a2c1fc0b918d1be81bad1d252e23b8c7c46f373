@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12dfc0b4_1543e1e5",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2025-02-24T05:54:32Z",
+      "side": 1,
+      "message": "nit: +8 indentation",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 6
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1db12393_5e5fad96",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/LoadedApk.java",
+              "range": {
+                "startLine": 112,
+                "startChar": 0,
+                "endLine": 113,
+                "endChar": 0
+              },
+              "replacement": "            com.android.internal.os.Flags.debugStoreEnabled();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6a2c1fc0b918d1be81bad1d252e23b8c7c46f373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92fca6e5_986332c4",
+        "filename": "core/java/com/android/internal/os/DebugStore.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2025-02-24T05:54:32Z",
+      "side": 1,
+      "message": "Is it not useful to include pendingResult here too?",
+      "range": {
+        "startLine": 188,
+        "startChar": 23,
+        "endLine": 188,
+        "endChar": 72
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d9661a28_62e506c9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/com/android/internal/os/DebugStore.java",
+              "range": {
+                "startLine": 185,
+                "startChar": 0,
+                "endLine": 185,
+                "endChar": 0
+              },
+              "replacement": "     * @param pendingResultId The object ID of the PendingResult associated with the broadcast.\n"
+            },
+            {
+              "path": "core/java/com/android/internal/os/DebugStore.java",
+              "range": {
+                "startLine": 188,
+                "startChar": 0,
+                "endLine": 189,
+                "endChar": 0
+              },
+              "replacement": "    public static long recordBroadcastReceive(@Nullable Intent intent, int pendingResultId) {\n"
+            },
+            {
+              "path": "core/java/com/android/internal/os/DebugStore.java",
+              "range": {
+                "startLine": 196,
+                "startChar": 0,
+                "endLine": 197,
+                "endChar": 0
+              },
+              "replacement": "                        \"pkg\", Objects.toString(intent !\u003d null ? intent.getPackage() : null),\n                        \"prid\", Integer.toHexString(pendingResultId)));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6a2c1fc0b918d1be81bad1d252e23b8c7c46f373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
