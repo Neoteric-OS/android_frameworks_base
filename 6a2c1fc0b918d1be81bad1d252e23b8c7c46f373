@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a12ff1a2_7aa894c2",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1898965
+      },
+      "writtenOn": "2025-02-24T12:06:12Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "12dfc0b4_1543e1e5",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 6
+      },
+      "revId": "6a2c1fc0b918d1be81bad1d252e23b8c7c46f373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92fca6e5_986332c4",
@@ -99,6 +123,30 @@
           ]
         }
       ],
+      "revId": "6a2c1fc0b918d1be81bad1d252e23b8c7c46f373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58bbb369_6deaeea5",
+        "filename": "core/java/com/android/internal/os/DebugStore.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1898965
+      },
+      "writtenOn": "2025-02-24T12:06:12Z",
+      "side": 1,
+      "message": "Ah yes, good idea. Done.",
+      "parentUuid": "92fca6e5_986332c4",
+      "range": {
+        "startLine": 188,
+        "startChar": 23,
+        "endLine": 188,
+        "endChar": 72
+      },
       "revId": "6a2c1fc0b918d1be81bad1d252e23b8c7c46f373",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
