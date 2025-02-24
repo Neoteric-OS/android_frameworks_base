@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "119b1105_7117432a",
+        "filename": "packages/SystemUI/src/com/android/systemui/qs/QSPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2025-02-24T14:35:37Z",
+      "side": 1,
+      "message": "Could you explain why this is necessary? BrightnessSliderCotnroller",
+      "fixSuggestions": [
+        {
+          "fixId": "0f9c9bd2_213871ca",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/qs/QSPanel.java",
+              "range": {
+                "startLine": 315,
+                "startChar": 0,
+                "endLine": 315,
+                "endChar": 0
+              },
+              "replacement": "            // BrightnessSliderController needs to know the size of the panel to calculate the\n            // correct size of the slider.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fbe1a5b5e10139589a4888a99ff29b517d4cd264",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
