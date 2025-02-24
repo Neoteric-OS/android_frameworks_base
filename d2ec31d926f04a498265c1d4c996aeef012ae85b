@@ -88,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38a7ad28_5ddb4759",
+        "filename": "ravenwood/tests/coretest/test/com/android/ravenwoodtest/coretest/RavenwoodRefectorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2025-02-24T23:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e13a4e3f_556af66f",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "d2ec31d926f04a498265c1d4c996aeef012ae85b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be6f8f55_41e49d14",
@@ -101,6 +125,30 @@
       "writtenOn": "2025-02-21T23:58:43Z",
       "side": 1,
       "message": "Enabled by accident?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 75
+      },
+      "revId": "d2ec31d926f04a498265c1d4c996aeef012ae85b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e225448a_9f4707b4",
+        "filename": "ravenwood/texts/ravenwood-standard-options.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1891746
+      },
+      "writtenOn": "2025-02-24T23:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6f8f55_41e49d14",
       "range": {
         "startLine": 13,
         "startChar": 0,
