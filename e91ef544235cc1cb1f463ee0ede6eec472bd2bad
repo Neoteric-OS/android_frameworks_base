@@ -1,0 +1,68 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa74af94_feba6127",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5110,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-02-24T18:31:59Z",
+      "side": 1,
+      "message": "Is this still needed with the check added in line #5151? Let\u0027s remove it",
+      "range": {
+        "startLine": 5107,
+        "startChar": 8,
+        "endLine": 5110,
+        "endChar": 9
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d77ae4dd_35bb1648",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 5107,
+                "startChar": 0,
+                "endLine": 5111,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "e91ef544235cc1cb1f463ee0ede6eec472bd2bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80819c78_90bb67e6",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5509,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-02-24T18:31:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 5506,
+        "startChar": 8,
+        "endLine": 5509,
+        "endChar": 9
+      },
+      "revId": "e91ef544235cc1cb1f463ee0ede6eec472bd2bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
