@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b19084a_a649ca3f",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5107,
+      "author": {
+        "id": 3820438
+      },
+      "writtenOn": "2025-02-24T02:14:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5e051d0_c73901a9",
+      "range": {
+        "startLine": 5107,
+        "startChar": 28,
+        "endLine": 5107,
+        "endChar": 29
+      },
+      "revId": "4228a007de834a3c587cdefec95aae375eae937d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "478a3f52_5cbf0999",
@@ -73,6 +97,24 @@
           ]
         }
       ],
+      "revId": "4228a007de834a3c587cdefec95aae375eae937d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a027b28a_fa02f007",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5150,
+      "author": {
+        "id": 3820438
+      },
+      "writtenOn": "2025-02-24T02:14:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "478a3f52_5cbf0999",
       "revId": "4228a007de834a3c587cdefec95aae375eae937d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -114,6 +156,30 @@
           ]
         }
       ],
+      "revId": "4228a007de834a3c587cdefec95aae375eae937d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43ad967a_08e53aa9",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5503,
+      "author": {
+        "id": 3820438
+      },
+      "writtenOn": "2025-02-24T02:14:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3608c569_dea5f16c",
+      "range": {
+        "startLine": 5503,
+        "startChar": 28,
+        "endLine": 5503,
+        "endChar": 29
+      },
       "revId": "4228a007de834a3c587cdefec95aae375eae937d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -165,6 +231,30 @@
           ]
         }
       ],
+      "revId": "4228a007de834a3c587cdefec95aae375eae937d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c693b4ac_0683ecc1",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5565,
+      "author": {
+        "id": 3820438
+      },
+      "writtenOn": "2025-02-24T02:14:52Z",
+      "side": 1,
+      "message": "This place does not need to check again because it has already been checked in the method \n private void sendUpdateToRemoteStatusReceiver(XXX) {\n        if (statusReceiver !\u003d null) {......  (Line 5090)",
+      "parentUuid": "55cc78bb_203b672a",
+      "range": {
+        "startLine": 5565,
+        "startChar": 12,
+        "endLine": 5565,
+        "endChar": 18
+      },
       "revId": "4228a007de834a3c587cdefec95aae375eae937d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
