@@ -16,6 +16,24 @@
       "message": "Can you please document the root cause to the exception? I\u0027m guessing there are conccurent reads and writes to the data structure.",
       "revId": "f1d10a24921a1af0146c1d681b0300fc729236c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "192085d9_eb3dd411",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1978915
+      },
+      "writtenOn": "2025-02-24T05:56:00Z",
+      "side": 1,
+      "message": "Yes, I also suspect the issue is related to a concurrency problem. However, I couldn\u0027t determine the exact scenario in which the issue occurs. This issue is reported by a market user (market feedback). The user claims that the device is stuck in a boot loop. The user\u0027s device was recovered after replacing PCBA board \u0026 replace flashing at the service center.\n\nI realized that optimizing the nested get calls on SparseIntArray will reduce ambiguity in default value calculations, help identify which data structure is causing the out-of-bounds issue, and improve code readability.",
+      "parentUuid": "56ec467a_72cbb5c7",
+      "revId": "f1d10a24921a1af0146c1d681b0300fc729236c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
