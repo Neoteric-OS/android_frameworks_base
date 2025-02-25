@@ -87,6 +87,24 @@
       "parentUuid": "9319bbde_101571ae",
       "revId": "41c431f08539fb6e1f5388027c343953ff49e939",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "357aa2c6_2203d4cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1574225
+      },
+      "writtenOn": "2025-02-25T07:48:25Z",
+      "side": 1,
+      "message": "The merge conflict is due to other changes to this file (AconfigFlags.java) in our internal repo that unfortunately we can\u0027t cherry-pick right now to AOSP. So we\u0027ll have to abandon this change. Thanks for pointing out this issue!",
+      "parentUuid": "e925f5c1_1e4ef58f",
+      "revId": "41c431f08539fb6e1f5388027c343953ff49e939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
