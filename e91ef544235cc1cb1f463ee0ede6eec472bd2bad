@@ -135,6 +135,30 @@
       },
       "revId": "e91ef544235cc1cb1f463ee0ede6eec472bd2bad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a784bde5_ded008a6",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5509,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-02-25T19:25:51Z",
+      "side": 1,
+      "message": "Understood. `RemoteStatusReceiver` is allowed to be null for a child session. Even though technically for a child session, the code should never come here, it doesn\u0027t hurt to add the check.",
+      "parentUuid": "de2971cc_5757a494",
+      "range": {
+        "startLine": 5506,
+        "startChar": 8,
+        "endLine": 5509,
+        "endChar": 9
+      },
+      "revId": "e91ef544235cc1cb1f463ee0ede6eec472bd2bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
