@@ -51,6 +51,24 @@
       "message": "+2 given it\u0027s a cherrypick of an existing CL",
       "revId": "52109a0ce9a56bbac49798159758b6ea69714aae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67345609_bed2a40b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2025-02-25T06:01:55Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6ff3c3f6_a596a078",
+      "revId": "52109a0ce9a56bbac49798159758b6ea69714aae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
