@@ -86,6 +86,23 @@
       "message": "+ @samgarg@google.com for Dr.No approval",
       "revId": "52109a0ce9a56bbac49798159758b6ea69714aae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beba1221_a810b3e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1973455
+      },
+      "writtenOn": "2025-02-25T19:26:53Z",
+      "side": 1,
+      "message": "I dont have a DrNo vote on this branch.",
+      "revId": "52109a0ce9a56bbac49798159758b6ea69714aae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
