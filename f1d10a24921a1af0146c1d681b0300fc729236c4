@@ -52,6 +52,47 @@
       "parentUuid": "192085d9_eb3dd411",
       "revId": "f1d10a24921a1af0146c1d681b0300fc729236c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f447b343_f46fec5f",
+        "filename": "services/core/java/com/android/server/appop/AppOpsUidStateTrackerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2025-02-25T20:00:51Z",
+      "side": 1,
+      "message": "Please add spaces between parameters to meet our style guidelines",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 0
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "abee0f03_4368ed31",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/appop/AppOpsUidStateTrackerImpl.java",
+              "range": {
+                "startLine": 342,
+                "startChar": 0,
+                "endLine": 345,
+                "endChar": 0
+              },
+              "replacement": "        int pendingUidState \u003d mPendingUidStates.get(uid, uidState);\n        int pendingCapability \u003d mPendingCapability.get(uid, capability);\n        boolean pendingAppWidgetVisible \u003d mPendingAppWidgetVisible.get(uid, appWidgetVisible);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f1d10a24921a1af0146c1d681b0300fc729236c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
