@@ -5612,7 +5612,7 @@ public final class ViewRootImpl implements ViewParent,
                     invalidateRoot = true;
                 }
 
-                if (invalidateRoot) {
+                if (mAttachInfo.mThreadedRenderer != null && invalidateRoot) {
                     mAttachInfo.mThreadedRenderer.invalidateRoot();
                 }
 
@@ -5622,7 +5622,7 @@ public final class ViewRootImpl implements ViewParent,
                 // shortly before the draw commands get send to the renderer.
                 final boolean updated = updateContentDrawBounds();
 
-                if (mReportNextDraw) {
+                if (mAttachInfo.mThreadedRenderer != null && mReportNextDraw) {
                     // report next draw overrides setStopped()
                     // This value is re-sync'd to the value of mStopped
                     // in the handling of mReportNextDraw post-draw.
@@ -5635,7 +5635,8 @@ public final class ViewRootImpl implements ViewParent,
 
                 useAsyncReport = true;
 
-                if (mHdrRenderState.updateForFrame(mAttachInfo.mDrawingTime)) {
+                if (mAttachInfo.mThreadedRenderer != null &&
+                        mHdrRenderState.updateForFrame(mAttachInfo.mDrawingTime)) {
                     final float renderRatio = mHdrRenderState.getRenderHdrSdrRatio();
                     applyTransactionOnDraw(mTransaction.setExtendedRangeBrightness(
                             getSurfaceControl(), renderRatio,
@@ -5643,7 +5644,7 @@ public final class ViewRootImpl implements ViewParent,
                     mAttachInfo.mThreadedRenderer.setTargetHdrSdrRatio(renderRatio);
                 }
 
-                if (activeSyncGroup != null) {
+                if (activeSyncGroup != null && mAttachInfo.mThreadedRenderer != null) {
                     registerCallbacksForSync(syncBuffer, activeSyncGroup);
                     if (syncBuffer) {
                         mAttachInfo.mThreadedRenderer.forceDrawNextFrame();
@@ -5656,7 +5657,9 @@ public final class ViewRootImpl implements ViewParent,
                 }
 
                 long timeNs = SystemClock.uptimeNanos();
-                mAttachInfo.mThreadedRenderer.draw(mView, mAttachInfo, this);
+                if (mAttachInfo.mThreadedRenderer != null) {
+                    mAttachInfo.mThreadedRenderer.draw(mView, mAttachInfo, this);
+                }
 
                 // Only trigger once per {@link ViewRootImpl} instance.
                 if (mAppStartInfoTimestampsFlagValue && mRenderThreadDrawStartTimeNs == -1) {
