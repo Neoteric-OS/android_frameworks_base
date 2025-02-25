@@ -68,6 +68,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "443cea5e_eb6d0615",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2025-02-25T20:15:15Z",
+      "side": 1,
+      "message": "The latest PS still shows +2 indentation.",
+      "parentUuid": "a12ff1a2_7aa894c2",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 6
+      },
+      "revId": "6a2c1fc0b918d1be81bad1d252e23b8c7c46f373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "92fca6e5_986332c4",
         "filename": "core/java/com/android/internal/os/DebugStore.java",
         "patchSetId": 16

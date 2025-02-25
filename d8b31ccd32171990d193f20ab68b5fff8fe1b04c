@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ee9304_548f4930",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2025-02-25T20:15:15Z",
+      "side": 1,
+      "message": "Ques: Is it alright if we don\u0027t end up recording the event end record? In some failure cases, we throw an exception and return early without recording the end record. Just wondering if this is okay or if we should wrap the event end recording in a finally block.",
+      "range": {
+        "startLine": 1814,
+        "startChar": 24,
+        "endLine": 1816,
+        "endChar": 79
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ad1024da_9ab11e59",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/app/LoadedApk.java",
+              "range": {
+                "startLine": 1812,
+                "startChar": 0,
+                "endLine": 1818,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "core/java/android/app/LoadedApk.java",
+              "range": {
+                "startLine": 1820,
+                "startChar": 0,
+                "endLine": 1820,
+                "endChar": 0
+              },
+              "replacement": "                        long debugStoreId \u003d -1;\n                        if (DEBUG_STORE_ENABLED) {\n                            debugStoreId \u003d\n                                    DebugStore.recordBroadcastReceiveReg(\n                                            intent, System.identityHashCode(this));\n                        }\n\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d8b31ccd32171990d193f20ab68b5fff8fe1b04c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
