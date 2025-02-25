@@ -6881,6 +6881,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
 
     /** The entry for proceeding to handle {@link #mFixedRotationLaunchingApp}. */
     class FixedRotationTransitionListener extends WindowManagerInternal.AppTransitionListener {
+        boolean mIsNeedToRotate = false;
 
         FixedRotationTransitionListener(int displayId) {
             super(displayId);
@@ -6907,6 +6908,9 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
 
         @Override
         public void onAppTransitionFinishedLocked(IBinder token) {
+            boolean tempIsNeedToRotate = mIsNeedToRotate;
+            mIsNeedToRotate = false;
+
             final ActivityRecord r = ActivityRecord.forTokenLocked(token);
             if (r == null) {
                 return;
@@ -6941,7 +6945,9 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
                         && (!mWmService.mFlags.mRespectNonTopVisibleFixedOrientation
                                 || r.fillsParent())) {
                     // Different tasks won't be in one activity transition animation.
-                    return;
+                    if (!tempIsNeedToRotate) {
+                        return;
+                    }
                 }
                 if (task.getActivity(ActivityRecord::isInTransition) != null) {
                     return;

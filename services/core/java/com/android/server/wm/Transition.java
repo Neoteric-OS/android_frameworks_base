@@ -1443,6 +1443,10 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
             // launch-task-behind to make the activity become visible.
             if ((ar.isVisibleRequested() || !ar.isState(ActivityRecord.State.INITIALIZING))
                     && !ar.isAnimating(PARENTS, ANIMATION_TYPE_PREDICT_BACK)) {
+                if ((mFlags & TRANSIT_FLAG_IS_RECENTS) != 0) {
+                    Slog.i(TAG, "finishTransition, this is need to rotate.");
+                    ar.mDisplayContent.mFixedRotationTransitionListener.isNeedToRotate = true;
+                }
                 mController.dispatchLegacyAppTransitionFinished(ar);
             }
 
