@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fa8d9d9_8b1a43c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-02-25T11:35:28Z",
+      "side": 1,
+      "message": "Please post a bug and attach a video on an AOSP build.",
+      "revId": "8aea42ec1896177af96505bf5d70090aaf4f7789",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
