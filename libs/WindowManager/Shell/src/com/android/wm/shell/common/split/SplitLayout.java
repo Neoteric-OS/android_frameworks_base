@@ -1043,6 +1043,10 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
         }
     }
 
+    public void onTransitionFinished() {
+        mImePositionProcessor.onTransitionFinished(mContext.getDisplayId());
+    }
+
     /** Dumps the current split bounds recorded in this layout. */
     public void dump(@NonNull PrintWriter pw, String prefix) {
         final String innerPrefix = prefix + "\t";
@@ -1372,6 +1376,12 @@ public final class SplitLayout implements DisplayInsetsController.OnInsetsChange
             if (displayId != mDisplayId || !mHasImeFocus || cancel) return;
             ProtoLog.v(ShellProtoLogGroup.WM_SHELL_SPLIT_SCREEN,
                     "Split IME animation ending, canceled=%b", cancel);
+            onProgress(1.0f);
+            mSplitLayoutHandler.onLayoutPositionChanging(SplitLayout.this);
+        }
+
+        public void onTransitionFinished(int displayId) {
+            if (displayId != mDisplayId) return;
             onProgress(1.0f);
             mSplitLayoutHandler.onLayoutPositionChanging(SplitLayout.this);
         }

@@ -302,6 +302,29 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                 }
             };
 
+    private final Transitions.TransitionObserver transitionObserver =
+            new Transitions.TransitionObserver() {
+        @Override
+        public void onTransitionReady(IBinder transition, TransitionInfo info,
+                                      SurfaceControl.Transaction startTransaction,
+                                      SurfaceControl.Transaction finishTransaction) { }
+
+        @Override
+        public void onTransitionStarting(IBinder transition) { }
+
+        @Override
+        public void onTransitionMerged(IBinder merged, IBinder playing) { }
+
+        @Override
+        public void onTransitionFinished(IBinder transition, boolean aborted) {
+            mMainExecutor.executeDelayed(() -> {
+                if (isSplitActive() && mSplitLayout != null && isSplitScreenVisible()) {
+                    mSplitLayout.onTransitionFinished();
+                }
+            }, 0);
+        }
+    };
+
     protected StageCoordinator(Context context, int displayId, SyncTransactionQueue syncQueue,
             ShellTaskOrganizer taskOrganizer, DisplayController displayController,
             DisplayImeController displayImeController,
@@ -354,6 +377,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         transitions.addHandler(this);
         mSplitUnsupportedToast = Toast.makeText(mContext,
                 R.string.dock_non_resizeble_failed_to_dock_text, Toast.LENGTH_SHORT);
+        transitions.registerObserver(transitionObserver);
         mFoldLockSettingsObserver = new FoldLockSettingsObserver(mainHandler, context);
         mFoldLockSettingsObserver.register();
     }
