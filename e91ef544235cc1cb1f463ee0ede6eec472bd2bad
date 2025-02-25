@@ -66,6 +66,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1fe40d6_23a00fcd",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5110,
+      "author": {
+        "id": 3820438
+      },
+      "writtenOn": "2025-02-25T06:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb318190_4b3aee76",
+      "range": {
+        "startLine": 5107,
+        "startChar": 8,
+        "endLine": 5110,
+        "endChar": 9
+      },
+      "revId": "e91ef544235cc1cb1f463ee0ede6eec472bd2bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80819c78_90bb67e6",
@@ -79,6 +103,30 @@
       "writtenOn": "2025-02-24T18:31:59Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 5506,
+        "startChar": 8,
+        "endLine": 5509,
+        "endChar": 9
+      },
+      "revId": "e91ef544235cc1cb1f463ee0ede6eec472bd2bad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de2971cc_5757a494",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5509,
+      "author": {
+        "id": 3820438
+      },
+      "writtenOn": "2025-02-25T06:52:57Z",
+      "side": 1,
+      "message": "I not delete this check because if the getRemoteStatusReceiver() is used on line #2810 to obtain an IntentSender, the value is Nullable.\n\nLine#2810\nfinal IntentSender statusReceiver \u003d forPreapproval ? getPreapprovalRemoteStatusReceiver() : getRemoteStatusReceiver();\n\nLine#2408\n private boolean markAsSealed(@Nullable IntentSender statusReceiver, boolean forTransfer) {\n        Preconditions.checkState(statusReceiver !\u003d null || hasParentSessionId(),\n                \"statusReceiver can\u0027t be null for the root session\");\n                ......\n        setRemoteStatusReceiver(statusReceiver);\n        ......\n }",
+      "parentUuid": "80819c78_90bb67e6",
       "range": {
         "startLine": 5506,
         "startChar": 8,
