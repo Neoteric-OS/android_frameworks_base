@@ -16,6 +16,23 @@
       "message": "hi, google teams, I found a line of wrong comment code, If it is necessary to merge, please help review，thinks.",
       "revId": "089f8e32ef7f202aad558546d2b350d08bad33fd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f50fdb30_c2342d99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3698570
+      },
+      "writtenOn": "2025-02-26T07:41:33Z",
+      "side": 1,
+      "message": "hi,Jiaming, Presubmit-Verified is failed, can you help to try it again，thanks",
+      "revId": "089f8e32ef7f202aad558546d2b350d08bad33fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
