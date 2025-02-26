@@ -2949,6 +2949,12 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
                 return;
             }
 
+            if (enableDisplayContentModeManagement() && display.allowContentModeSwitch()) {
+                mWindowManager.mDisplayWindowSettings
+                        .setShouldShowSystemDecorsInternalLocked(display,
+                                display.mDisplay.canHostTasks());
+            }
+
             startSystemDecorations(display, "displayAdded");
 
             // Drop any cached DisplayInfos associated with this display id - the values are now

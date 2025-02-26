@@ -827,7 +827,7 @@ public final class DisplayManagerService extends SystemService {
             handleMinimalPostProcessingAllowedSettingChange();
 
             if (mFlags.isDisplayContentModeManagementEnabled()) {
-                updateMirrorBuiltInDisplaySettingLocked();
+                updateMirrorBuiltInDisplaySettingLocked(/*shouldSendDisplayChangeEvent=*/ true);
             }
 
             final UserManager userManager = getUserManager();
@@ -883,7 +883,7 @@ public final class DisplayManagerService extends SystemService {
                 updateHdrConversionModeSettingsLocked();
             }
             if (mFlags.isDisplayContentModeManagementEnabled()) {
-                updateMirrorBuiltInDisplaySettingLocked();
+                updateMirrorBuiltInDisplaySettingLocked(/*shouldSendDisplayChangeEvent=*/ false);
             }
         }
 
@@ -1254,8 +1254,11 @@ public final class DisplayManagerService extends SystemService {
             }
 
             if (Settings.Secure.getUriFor(MIRROR_BUILT_IN_DISPLAY).equals(uri)) {
-                if (mFlags.isDisplayContentModeManagementEnabled()) {
-                    updateMirrorBuiltInDisplaySettingLocked();
+                synchronized (mSyncRoot) {
+                    if (mFlags.isDisplayContentModeManagementEnabled()) {
+                        updateMirrorBuiltInDisplaySettingLocked(/*shouldSendDisplayChangeEvent=*/
+                                true);
+                    }
                 }
                 return;
             }
@@ -1275,18 +1278,19 @@ public final class DisplayManagerService extends SystemService {
                 1, UserHandle.USER_CURRENT) != 0);
     }
 
-    private void updateMirrorBuiltInDisplaySettingLocked() {
-        synchronized (mSyncRoot) {
-            ContentResolver resolver = mContext.getContentResolver();
-            final boolean mirrorBuiltInDisplay = Settings.Secure.getIntForUser(resolver,
-                    MIRROR_BUILT_IN_DISPLAY, 0, UserHandle.USER_CURRENT) != 0;
-            if (mMirrorBuiltInDisplay == mirrorBuiltInDisplay) {
-                return;
-            }
-            mMirrorBuiltInDisplay = mirrorBuiltInDisplay;
-            if (mFlags.isDisplayContentModeManagementEnabled()) {
-                mLogicalDisplayMapper.forEachLocked(this::updateCanHostTasksIfNeededLocked);
-            }
+    private void updateMirrorBuiltInDisplaySettingLocked(boolean shouldSendDisplayChangeEvent) {
+        ContentResolver resolver = mContext.getContentResolver();
+        final boolean mirrorBuiltInDisplay = Settings.Secure.getIntForUser(resolver,
+                MIRROR_BUILT_IN_DISPLAY, 0, UserHandle.USER_CURRENT) != 0;
+        if (mMirrorBuiltInDisplay == mirrorBuiltInDisplay) {
+            return;
+        }
+        mMirrorBuiltInDisplay = mirrorBuiltInDisplay;
+        if (mFlags.isDisplayContentModeManagementEnabled()) {
+            mLogicalDisplayMapper.forEachLocked(logicalDisplay -> {
+                    updateCanHostTasksIfNeededLocked(logicalDisplay,
+                            shouldSendDisplayChangeEvent);
+            });
         }
     }
 
@@ -2401,7 +2405,7 @@ public final class DisplayManagerService extends SystemService {
                 new BrightnessPair(brightnessDefault, brightnessDefault));
 
         if (mFlags.isDisplayContentModeManagementEnabled()) {
-            updateCanHostTasksIfNeededLocked(display);
+            updateCanHostTasksIfNeededLocked(display, /*shouldSendDisplayChangeEvent=*/ false);
         }
 
         DisplayManagerGlobal.invalidateLocalDisplayInfoCaches();
@@ -2724,8 +2728,9 @@ public final class DisplayManagerService extends SystemService {
         }
     }
 
-    private void updateCanHostTasksIfNeededLocked(LogicalDisplay display) {
-        if (display.setCanHostTasksLocked(!mMirrorBuiltInDisplay)) {
+    private void updateCanHostTasksIfNeededLocked(LogicalDisplay display,
+            boolean shouldSendDisplayChangeEvent) {
+        if (display.setCanHostTasksLocked(!mMirrorBuiltInDisplay) && shouldSendDisplayChangeEvent) {
             sendDisplayEventIfEnabledLocked(display,
                     DisplayManagerGlobal.EVENT_DISPLAY_BASIC_CHANGED);
         }
