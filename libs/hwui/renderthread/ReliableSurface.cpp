@@ -149,9 +149,20 @@ ANativeWindowBuffer* ReliableSurface::acquireFallbackBuffer(int error) {
         return AHardwareBuffer_to_ANativeWindowBuffer(mScratchBuffer.get());
     }
 
+    int32_t width = ANativeWindow_getWidth(mWindow);
+    if (width < 0) {
+        ALOGW("Failed to query ANativeWindow width.");
+        width = 1;
+    }
+    int32_t height = ANativeWindow_getHeight(mWindow);
+    if (height < 0) {
+        ALOGW("Failed to query ANativeWindow height.");
+        height = 1;
+    }
+
     AHardwareBuffer_Desc desc = AHardwareBuffer_Desc{
-            .width = 1,
-            .height = 1,
+            .width = static_cast<uint32_t>(width),
+            .height = static_cast<uint32_t>(height),
             .layers = 1,
             .format = mFormat,
             .usage = mUsage,
