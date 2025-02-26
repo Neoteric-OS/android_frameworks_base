@@ -22,6 +22,30 @@
       },
       "revId": "91edc7f69a86fc2566e812e6132c2fa035a668a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e441453_6463c25f",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6172,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-02-26T05:27:23Z",
+      "side": 0,
+      "message": "That won\u0027t prevent the same NPE to happen in other places, so I think it is more importent to find the root cause.\n\nIf you suspect `onDisplayChanged`, can you please add a null check to throw exception there to test locally? That would help us understand when it will be set to null.",
+      "parentUuid": "f98e995c_9be4f7a3",
+      "range": {
+        "startLine": 6172,
+        "startChar": 11,
+        "endLine": 6172,
+        "endChar": 38
+      },
+      "revId": "91edc7f69a86fc2566e812e6132c2fa035a668a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

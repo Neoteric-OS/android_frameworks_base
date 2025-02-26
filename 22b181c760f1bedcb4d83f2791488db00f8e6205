@@ -64,6 +64,30 @@
       },
       "revId": "22b181c760f1bedcb4d83f2791488db00f8e6205",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edbee9d5_1e9526ed",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5464,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-02-26T05:27:23Z",
+      "side": 1,
+      "message": "But which call into `WindowContainer#onDisplayChanged` can pass in a null?\n\nNeither `reparent` nor `setParent` can pass null to `onDisplayChanged`.",
+      "parentUuid": "6055d694_930a1e5d",
+      "range": {
+        "startLine": 5464,
+        "startChar": 12,
+        "endLine": 5464,
+        "endChar": 35
+      },
+      "revId": "22b181c760f1bedcb4d83f2791488db00f8e6205",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
