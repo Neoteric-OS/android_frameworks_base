@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a7be193_5104523b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3256380
+      },
+      "writtenOn": "2025-02-26T14:25:23Z",
+      "side": 1,
+      "message": "Hello team, could you please review and approve if you are good with this CP? Thanks you.",
+      "revId": "f7a2137a18e5b9f81d31ee3165f62b481ef16cb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
