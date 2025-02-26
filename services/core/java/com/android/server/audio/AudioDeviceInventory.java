@@ -995,8 +995,10 @@ public class AudioDeviceInventory {
                 "onBluetoothDeviceConfigChange addr=" + address
                     + " event=" + BtHelper.deviceEventToString(event)));
 
+        int deviceType = BtHelper.getTypeFromProfile(btInfo.mProfile, btInfo.mIsLeOutput);
+
         synchronized (mDevicesLock) {
-            if (mDeviceBroker.hasScheduledA2dpConnection(btDevice)) {
+            if (mDeviceBroker.hasScheduledA2dpConnection(btDevice, btInfo.mProfile)) {
                 AudioService.sDeviceLogger.enqueue(new EventLogger.StringEvent(
 // QTI_BEGIN: 2020-12-09: Audio: Update mApmConnectedDevice properly
                         "A2dp config change ignored (scheduled connection change)")
@@ -1013,8 +1015,7 @@ public class AudioDeviceInventory {
             }
 // QTI_END: 2020-12-09: Audio: Update mApmConnectedDevice properly
 // QTI_BEGIN: 2024-05-11: Audio: base: Remove A2DP to A2DP quick SHO changes
-            final String key = DeviceInfo.makeDeviceListKey(
-                    AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, address);
+            final String key = DeviceInfo.makeDeviceListKey(deviceType, address);
             final DeviceInfo di = mConnectedDevices.get(key);
 // QTI_END: 2024-05-11: Audio: base: Remove A2DP to A2DP quick SHO changes
 // QTI_BEGIN: 2022-10-07: Bluetooth: Merge "base: Reduce A2SP SHO time" into t-keystone-qcom-dev
@@ -1048,7 +1049,6 @@ public class AudioDeviceInventory {
 // QTI_BEGIN: 2024-05-11: Audio: base: Remove A2DP to A2DP quick SHO changes
                     final int res = mAudioSystem.handleDeviceConfigChange(
                             btInfo.mAudioSystemDevice, address, BtHelper.getName(btDevice), codec);
-
                     if (res != AudioSystem.AUDIO_STATUS_OK) {
                         AudioService.sDeviceLogger.enqueue(new EventLogger.StringEvent(
                                 "APM handleDeviceConfigChange failed for A2DP device addr="

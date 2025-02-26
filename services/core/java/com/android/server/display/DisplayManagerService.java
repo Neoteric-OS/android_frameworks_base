@@ -3143,7 +3143,6 @@ public final class DisplayManagerService extends SystemService {
                     displayTransactions.get(display.getDisplayIdLocked(), t);
             if (device != null) {
                 configureDisplayLocked(displayTransaction, device);
-                device.performTraversalLocked(displayTransaction);
             }
         });
 
