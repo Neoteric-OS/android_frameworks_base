@@ -4135,6 +4135,8 @@
 <!-- QTI_BEGIN: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
 <!-- QTI_END: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
     <string name="system_multitasking_full_screen">Switch to full screen</string>
+    <!-- User visible title for the keyboard shortcut that switches to desktop view [CHAR LIMIT=70] -->
+    <string name="system_multitasking_desktop_view">Use desktop view</string>
     <!-- User visible title for the keyboard shortcut that switches to app on right or below while using split screen [CHAR LIMIT=70] -->
 <!-- QTI_BEGIN: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
 <!-- QTI_END: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
