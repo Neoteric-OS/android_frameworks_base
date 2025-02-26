@@ -541,6 +541,11 @@ public final class ViewRootImpl implements ViewParent,
     private static boolean sAlwaysAssignFocus;
 
     /**
+     * whether we pre-initialized the Buffer Allocator
+     */
+    private static boolean sPreInitializedBufferAllocator = false;
+
+    /**
      * This list must only be modified by the main thread.
      */
     final ArrayList<WindowCallbacks> mWindowCallbacks = new ArrayList<>();
@@ -1349,6 +1354,11 @@ public final class ViewRootImpl implements ViewParent,
                 com.android.server.display.feature.flags.Flags.subscribeGranularDisplayEvents();
 
         mSendPerfHintOnTouch = adpfViewrootimplActionDownBoost();
+
+        if (!sPreInitializedBufferAllocator) {
+            preInitBufferAllocator();
+            sPreInitializedBufferAllocator = true;
+        }
     }
 
     public static void addFirstDrawHandler(Runnable callback) {
@@ -13587,6 +13597,12 @@ public final class ViewRootImpl implements ViewParent,
         if (!sProtoLogInitialized) {
             ProtoLog.init(ViewProtoLogGroups.ALL_GROUPS);
             sProtoLogInitialized = true;
+        }
+    }
+
+    private void preInitBufferAllocator() {
+        if (com.android.graphics.hwui.flags.Flags.earlyPreinitBufferAllocator()) {
+            ThreadedRenderer.preInitBufferAllocator();
         }
     }
 }

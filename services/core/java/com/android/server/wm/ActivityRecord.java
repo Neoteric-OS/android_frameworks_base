@@ -8304,6 +8304,7 @@ public final class ActivityRecord extends WindowToken {
         mConfigurationSeq = Math.max(++mConfigurationSeq, 1);
         getResolvedOverrideConfiguration().seq = mConfigurationSeq;
 
+        // TODO(b/392069771): Move to AppCompatSandboxingPolicy.
         // Sandbox max bounds by setting it to the activity bounds, if activity is letterboxed, or
         // has or will have mAppCompatDisplayInsets for size compat. Also forces an activity to be
         // sandboxed or not depending upon the configuration settings.
@@ -8331,6 +8332,9 @@ public final class ActivityRecord extends WindowToken {
             }
             resolvedConfig.windowConfiguration.setMaxBounds(mTmpBounds);
         }
+
+        mAppCompatController.getSandboxingPolicy().sandboxBoundsIfNeeded(resolvedConfig,
+                parentWindowingMode);
 
         applySizeOverrideIfNeeded(
                 mDisplayContent,
