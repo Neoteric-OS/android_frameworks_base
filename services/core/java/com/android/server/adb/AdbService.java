@@ -34,6 +34,7 @@ import android.debug.IAdbTransport;
 import android.debug.PairDevice;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
@@ -43,7 +44,6 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.adb.AdbServiceDumpProto;
-import android.sysprop.AdbProperties;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Slog;
@@ -206,6 +206,7 @@ public class AdbService extends IAdbManager.Stub {
 
         @Override
         public void onChange(boolean selfChange, @NonNull Uri uri, @UserIdInt int userId) {
+            Slog.d("AdbSettingsObserver", "onChange " + uri.toString());
             if (mAdbUsbUri.equals(uri)) {
                 boolean shouldEnable = (Settings.Global.getInt(mContentResolver,
                         Settings.Global.ADB_ENABLED, 0) > 0);
@@ -223,6 +224,7 @@ public class AdbService extends IAdbManager.Stub {
     }
 
     private static final String TAG = "AdbService";
+
     private static final boolean DEBUG = false;
 
     /**
@@ -499,6 +501,28 @@ public class AdbService extends IAdbManager.Stub {
         }
     }
 
+    private WifiManager.MulticastLock mAdbMulticastLock;
+
+    private void acquireMulticastLock() {
+        WifiManager wifiManager = (WifiManager)
+                mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (mAdbMulticastLock == null) {
+            mAdbMulticastLock = wifiManager.createMulticastLock("AdbMulticastLock");
+        }
+
+        if (!mAdbMulticastLock.isHeld()) {
+            mAdbMulticastLock.acquire();
+            Slog.d(TAG, "Acquiring multicast lock");
+        }
+    }
+
+    private void releaseMulticastLock() {
+        if (mAdbMulticastLock != null && mAdbMulticastLock.isHeld()) {
+            mAdbMulticastLock.release();
+            Slog.d(TAG, "Releasing multicast lock");
+        }
+    }
+
     private void setAdbEnabled(boolean enable, byte transportType) {
         if (DEBUG) {
             Slog.d(TAG, "setAdbEnabled(" + enable + "), mIsAdbUsbEnabled=" + mIsAdbUsbEnabled
@@ -511,15 +535,15 @@ public class AdbService extends IAdbManager.Stub {
         } else if (transportType == AdbTransportType.WIFI && enable != mIsAdbWifiEnabled) {
             mIsAdbWifiEnabled = enable;
             if (mIsAdbWifiEnabled) {
-                if (!AdbProperties.secure().orElse(false) && mDebuggingManager == null) {
-                    // Start adbd. If this is secure adb, then we defer enabling adb over WiFi.
-                    SystemProperties.set(WIFI_PERSISTENT_CONFIG_PROPERTY, "1");
-                    mConnectionPortPoller =
-                            new AdbDebuggingManager.AdbConnectionPortPoller(mPortListener);
-                    mConnectionPortPoller.start();
-                }
+                acquireMulticastLock();
+                // Start adbd. If this is secure adb, then we defer enabling adb over WiFi.
+                SystemProperties.set(WIFI_PERSISTENT_CONFIG_PROPERTY, "1");
+                mConnectionPortPoller =
+                        new AdbDebuggingManager.AdbConnectionPortPoller(mPortListener);
+                mConnectionPortPoller.start();
             } else {
                 // Stop adb over WiFi.
+                releaseMulticastLock();
                 SystemProperties.set(WIFI_PERSISTENT_CONFIG_PROPERTY, "0");
                 if (mConnectionPortPoller != null) {
                     mConnectionPortPoller.cancelAndWait();
