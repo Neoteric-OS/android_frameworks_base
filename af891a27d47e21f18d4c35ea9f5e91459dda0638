@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dc3723f_044c5373",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060062
+      },
+      "writtenOn": "2025-02-26T20:01:16Z",
+      "side": 1,
+      "message": "@kozynski@google.com is it okay to load resources during these methods?",
+      "revId": "af891a27d47e21f18d4c35ea9f5e91459dda0638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
