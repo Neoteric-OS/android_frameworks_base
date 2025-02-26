@@ -820,7 +820,7 @@ public final class ApduServiceInfo implements Parcelable {
         if (!mOnHost && !autoTransact) {
             return;
         }
-        mAutoTransact.put(pollingLoopFilter, autoTransact);
+        mAutoTransact.put(pollingLoopFilter.toUpperCase(Locale.ROOT), autoTransact);
     }
 
     /**
@@ -848,7 +848,8 @@ public final class ApduServiceInfo implements Parcelable {
         if (!mOnHost && !autoTransact) {
             return;
         }
-        mAutoTransactPatterns.put(Pattern.compile(pollingLoopPatternFilter), autoTransact);
+        mAutoTransactPatterns.put(Pattern.compile(
+                pollingLoopPatternFilter.toUpperCase(Locale.ROOT)), autoTransact);
     }
 
     /**
