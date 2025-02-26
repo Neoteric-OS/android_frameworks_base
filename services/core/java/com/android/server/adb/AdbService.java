@@ -34,6 +34,7 @@ import android.debug.IAdbTransport;
 import android.debug.PairDevice;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
@@ -203,6 +204,7 @@ public class AdbService extends IAdbManager.Stub {
 
         @Override
         public void onChange(boolean selfChange, @NonNull Uri uri, @UserIdInt int userId) {
+            Slog.d("AdbSettingsObserver", "onChange " + uri.toString());
             if (mAdbUsbUri.equals(uri)) {
                 boolean shouldEnable = (Settings.Global.getInt(mContentResolver,
                         Settings.Global.ADB_ENABLED, 0) > 0);
@@ -461,6 +463,28 @@ public class AdbService extends IAdbManager.Stub {
         }
     }
 
+    private WifiManager.MulticastLock mAdbMulticastLock = null;
+
+    private void acquireMulticastLock() {
+        if (mAdbMulticastLock == null) {
+            WifiManager wifiManager = (WifiManager)
+                    mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            mAdbMulticastLock = wifiManager.createMulticastLock("AdbMulticastLock");
+        }
+
+        if (!mAdbMulticastLock.isHeld()) {
+            mAdbMulticastLock.acquire();
+            Slog.d(TAG, "Acquired multicast lock");
+        }
+    }
+
+    private void releaseMulticastLock() {
+        if (mAdbMulticastLock != null && mAdbMulticastLock.isHeld()) {
+            mAdbMulticastLock.release();
+            Slog.d(TAG, "Released multicast lock");
+        }
+    }
+
     private void setAdbEnabled(boolean enable, byte transportType) {
         Slog.d(TAG, "setAdbEnabled(" + enable + "), mIsAdbUsbEnabled=" + mIsAdbUsbEnabled
                  + ", mIsAdbWifiEnabled=" + mIsAdbWifiEnabled + ", transportType=" + transportType);
@@ -472,6 +496,7 @@ public class AdbService extends IAdbManager.Stub {
             if (mIsAdbWifiEnabled) {
                 if (!AdbProperties.secure().orElse(false)) {
                     // Start adbd. If this is secure adb, then we defer enabling adb over WiFi.
+                    acquireMulticastLock();
                     SystemProperties.set(WIFI_PERSISTENT_CONFIG_PROPERTY, "1");
                     mConnectionPortPoller =
                             new AdbDebuggingManager.AdbConnectionPortPoller(mPortListener);
@@ -479,6 +504,7 @@ public class AdbService extends IAdbManager.Stub {
                 }
             } else {
                 // Stop adb over WiFi.
+                releaseMulticastLock();
                 SystemProperties.set(WIFI_PERSISTENT_CONFIG_PROPERTY, "0");
                 if (mConnectionPortPoller != null) {
                     mConnectionPortPoller.cancelAndWait();
