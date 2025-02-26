@@ -274,9 +274,18 @@ fun prependArgTypeToMethodDescriptor(methodDescriptor: String, classInternalName
     val returnType = Type.getReturnType(methodDescriptor)
     val argTypes = Type.getArgumentTypes(methodDescriptor).toMutableList()
 
-    argTypes.add(0, Type.getType("L" + classInternalName + ";"))
+    argTypes.add(0, Type.getType("L$classInternalName;"))
 
     return Type.getMethodDescriptor(returnType, *argTypes.toTypedArray())
+}
+
+/**
+ * Given a method descriptor, change the return type to [classInternalName].
+ */
+fun changeMethodDescriptorReturnType(methodDescriptor: String, classInternalName: String): String {
+    val argTypes = Type.getArgumentTypes(methodDescriptor)
+    val returnType = Type.getType("L$classInternalName;")
+    return Type.getMethodDescriptor(returnType, *argTypes)
 }
 
 /**
