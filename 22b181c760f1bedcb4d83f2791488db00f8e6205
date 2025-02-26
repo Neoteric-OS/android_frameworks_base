@@ -40,6 +40,30 @@
       ],
       "revId": "22b181c760f1bedcb4d83f2791488db00f8e6205",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6055d694_930a1e5d",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5464,
+      "author": {
+        "id": 3869110
+      },
+      "writtenOn": "2025-02-26T01:30:30Z",
+      "side": 1,
+      "message": "I think there may be a possibility that `mDisplayContent \u003d dc` is set to null in `WindowContainer#onDisplayChanged`. What do you think? thanks.",
+      "parentUuid": "a61bb930_c794f582",
+      "range": {
+        "startLine": 5464,
+        "startChar": 12,
+        "endLine": 5464,
+        "endChar": 35
+      },
+      "revId": "22b181c760f1bedcb4d83f2791488db00f8e6205",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

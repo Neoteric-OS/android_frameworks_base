@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f98e995c_9be4f7a3",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6172,
+      "author": {
+        "id": 3869110
+      },
+      "writtenOn": "2025-02-26T01:30:30Z",
+      "side": 0,
+      "message": "@lihongyu@google.com\nIn fact, in `WindowState` or `WindowContainer`, there are many `mDisplayContent ! \u003d null`, and I think adding a non-null judgment avoids the low-probability NPE. what do you think? thanks.",
+      "range": {
+        "startLine": 6172,
+        "startChar": 11,
+        "endLine": 6172,
+        "endChar": 38
+      },
+      "revId": "91edc7f69a86fc2566e812e6132c2fa035a668a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
