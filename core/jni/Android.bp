@@ -48,6 +48,7 @@ cc_library_shared_for_libandroid_runtime {
         "-Werror",
         "-Wextra",
         "-Wthread-safety",
+        "-Wno-cast-function-type-mismatch",
         "-Wno-error=deprecated-declarations",
         "-Wno-unused-parameter",
         "-Wunused",
