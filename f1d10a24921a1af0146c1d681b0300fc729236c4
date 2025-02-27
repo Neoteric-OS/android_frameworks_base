@@ -93,6 +93,30 @@
       ],
       "revId": "f1d10a24921a1af0146c1d681b0300fc729236c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f632f8b3_843f5a7e",
+        "filename": "services/core/java/com/android/server/appop/AppOpsUidStateTrackerImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1978915
+      },
+      "writtenOn": "2025-02-27T04:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f447b343_f46fec5f",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 0
+      },
+      "revId": "f1d10a24921a1af0146c1d681b0300fc729236c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
