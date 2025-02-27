@@ -73,6 +73,47 @@
       },
       "revId": "c0608d2083167a693f4f748593adbed5b9562299",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dc5ef48_dd7b9744",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2025-02-27T17:47:40Z",
+      "side": 1,
+      "message": "Sorry, one more thing, can you please add a CTS test for this?  You can probably just add one [here](https://cs.android.com/android/platform/superproject/main/+/main:cts/tests/tests/telecom/src/android/telecom/cts/ConnectionServiceTest.java).  I\u0027d recommend just adding a new incoming call with a null number but with a presentation specified with the new extra; we just need to ensure that this gets passed on the `ConnectionService#onCreateIncomingConnection` API properly.",
+      "range": {
+        "startLine": 990,
+        "startChar": 31,
+        "endLine": 990,
+        "endChar": 54
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5a53248f_7d2d09d2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "telecomm/java/android/telecom/TelecomManager.java",
+              "range": {
+                "startLine": 977,
+                "startChar": 0,
+                "endLine": 979,
+                "endChar": 0
+              },
+              "replacement": "     * The extra to provide the call number presentation that has initiated a new incoming call. It\n     * is mainly used by missed incoming call SMS feature.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c0608d2083167a693f4f748593adbed5b9562299",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
