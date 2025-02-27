@@ -1,0 +1,18 @@
+# Build file owners for System UI. Owners should consider 1) whether the change
+# will negatively affect developer builds, and 2) whether the change will add
+# unnecessary dependencies or compilation steps that will make the build more
+# difficult to refactor in the future. For more information, see
+# http://go/sysui-build-owners
+
+dsandler@android.com
+
+caitlinshk@google.com
+ccross@android.com
+cinek@google.com
+jernej@google.com
+mankoff@google.com
+nicomazz@google.com
+peskal@google.com
+pixel@google.com
+saff@google.com
+vadimt@google.com
