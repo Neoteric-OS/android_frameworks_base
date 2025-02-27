@@ -16,6 +16,24 @@
       "message": "To be honest I don\u0027t want to use MobileIconCarrierIdOverrides. Since this only modifies the icon, but it does NOT changed the `dataContentDesc`. \nScend reason: I do not prefer to do the hard code for carrier customization.\n\nWe can resolve it by other ways.\n1. [prefer] create the new carrier config and replace the 4G with 4G+\nhttps://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/packages/SettingsLib/src/com/android/settingslib/mobile/MobileMappings.java;l\u003d150;bpv\u003d1\n\n2. To do resource overlay by carrierId. For example aosp/3512273 which was merged in the 25Q2.",
       "revId": "046e165e78da9764d2fc3a6d09376dbba0d7fd58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5938cf51_fb4e1d90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308560
+      },
+      "writtenOn": "2025-02-27T05:04:25Z",
+      "side": 1,
+      "message": "undo the \"resolved\"",
+      "parentUuid": "8438ce92_f624a54d",
+      "revId": "046e165e78da9764d2fc3a6d09376dbba0d7fd58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
