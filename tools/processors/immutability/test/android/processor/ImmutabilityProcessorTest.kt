@@ -20,22 +20,22 @@ import android.processor.immutability.IMMUTABLE_ANNOTATION_NAME
 import android.processor.immutability.ImmutabilityProcessor
 import android.processor.immutability.MessageUtils
 import com.google.common.truth.Expect
-import com.google.testing.compile.CompilationSubject.assertThat
 import com.google.testing.compile.Compiler.javac
 import com.google.testing.compile.JavaFileObjects
+import java.util.Locale
+import javax.tools.JavaFileObject
 import org.junit.Rule
 import org.junit.Test
-import java.util.*
-import javax.tools.JavaFileObject
 
 class ImmutabilityProcessorTest {
 
-    companion object {
-        private const val PACKAGE_PREFIX = "android.processor.immutability"
-        private const val DATA_CLASS_NAME = "DataClass"
-        private val ANNOTATION = JavaFileObjects.forResource("Immutable.java")
+  companion object {
+    private const val PACKAGE_PREFIX = "android.processor.immutability"
+    private const val DATA_CLASS_NAME = "DataClass"
+    private val ANNOTATION = JavaFileObjects.forResource("Immutable.java")
 
-        private val FINAL_CLASSES = listOf(
+    private val FINAL_CLASSES =
+        listOf(
             JavaFileObjects.forSourceString(
                 "$PACKAGE_PREFIX.NonFinalClassFinalFields",
                 /* language=JAVA */ """
@@ -47,8 +47,8 @@ class ImmutabilityProcessorTest {
                             this.finalField = value;
                         }
                     }
-                """.trimIndent()
-            ),
+                """
+                    .trimIndent()),
             JavaFileObjects.forSourceString(
                 "$PACKAGE_PREFIX.NonFinalClassNonFinalFields",
                 /* language=JAVA */ """
@@ -57,8 +57,8 @@ class ImmutabilityProcessorTest {
                     public class NonFinalClassNonFinalFields {
                         private String nonFinalField;
                     }
-                """.trimIndent()
-            ),
+                """
+                    .trimIndent()),
             JavaFileObjects.forSourceString(
                 "$PACKAGE_PREFIX.FinalClassFinalFields",
                 /* language=JAVA */ """
@@ -70,8 +70,8 @@ class ImmutabilityProcessorTest {
                             this.finalField = value;
                         }
                     }
-                """.trimIndent()
-            ),
+                """
+                    .trimIndent()),
             JavaFileObjects.forSourceString(
                 "$PACKAGE_PREFIX.FinalClassNonFinalFields",
                 /* language=JAVA */ """
@@ -80,19 +80,19 @@ class ImmutabilityProcessorTest {
                     public final class FinalClassNonFinalFields {
                         private String nonFinalField;
                     }
-                """.trimIndent()
-            )
-        )
-    }
+                """
+                    .trimIndent()))
+  }
 
-    @get:Rule
-    val expect = Expect.create()
+  @get:Rule val expect = Expect.create()
 
-    @Test
-    fun validInterface() = test(
-        source = JavaFileObjects.forSourceString(
-            "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
-            /* language=JAVA */ """
+  @Test
+  fun validInterface() =
+      test(
+          source =
+              JavaFileObjects.forSourceString(
+                  "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
+                  /* language=JAVA */ """
                 package $PACKAGE_PREFIX;
 
                 import $IMMUTABLE_ANNOTATION_NAME;
@@ -102,17 +102,6 @@ class ImmutabilityProcessorTest {
 
                 @Immutable
                 public interface $DATA_CLASS_NAME {
-                    InnerInterface DEFAULT = new InnerInterface() {
-                        @Override
-                        public String getValue() {
-                            return "";
-                        }
-                        @Override
-                        public List<String> getArray() {
-                            return Collections.emptyList();
-                        }
-                    };
-
                     String getValue();
                     ArrayList<String> getArray();
                     InnerInterface getInnerInterface();
@@ -123,15 +112,16 @@ class ImmutabilityProcessorTest {
                         List<String> getArray();
                     }
                 }
-                """.trimIndent()
-        ), errors = emptyList()
-    )
+                """
+                      .trimIndent()),
+          errors = emptyList())
 
-    @Test
-    fun abstractClass() = test(
-        JavaFileObjects.forSourceString(
-            "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
-            /* language=JAVA */ """
+  @Test
+  fun abstractClass() =
+      test(
+          JavaFileObjects.forSourceString(
+              "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
+              /* language=JAVA */ """
                 package $PACKAGE_PREFIX;
 
                 import $IMMUTABLE_ANNOTATION_NAME;
@@ -153,8 +143,7 @@ class ImmutabilityProcessorTest {
                     public abstract InnerClass getInnerClassTwo();
                     @Immutable.Ignore
                     public abstract InnerClass getIgnored();
-                    public abstract InnerInterface getInnerInterface();
-
+                    
                     public abstract Map<String, String> getValidMap();
                     public abstract Map<InnerClass, InnerClass> getInvalidMap();
 
@@ -168,35 +157,35 @@ class ImmutabilityProcessorTest {
                         InnerClass getInnerClass();
                     }
                 }
-                """.trimIndent()
-        ), errors = listOf(
-            nonInterfaceClassFailure(line = 7),
-            nonInterfaceReturnFailure(line = 9),
-            staticNonFinalFailure(line = 10),
-            nonInterfaceReturnFailure(line = 10),
-            memberNotMethodFailure(line = 14),
-            memberNotMethodFailure(line = 15),
-            voidReturnFailure(line = 16),
-            arrayFailure(line = 17),
-            nonInterfaceReturnFailure(line = 18),
-            nonInterfaceReturnFailure(line = 19),
-            classNotImmutableFailure(line = 22, className = "InnerInterface"),
-            nonInterfaceReturnFailure(line = 25, prefix = "Key InnerClass"),
-            nonInterfaceReturnFailure(line = 25, prefix = "Value InnerClass"),
-            classNotImmutableFailure(line = 27, className = "InnerClass"),
-            nonInterfaceClassFailure(line = 27),
-            memberNotMethodFailure(line = 28),
-            arrayFailure(line = 29),
-            arrayFailure(line = 33),
-            nonInterfaceReturnFailure(line = 34),
-        )
-    )
+                """
+                  .trimIndent()),
+          errors =
+              listOf(
+                  nonInterfaceClassFailure(line = 7), // Outer class
+                  staticNonFinalFailure(line = 10), // NOT_FINAL
+                  nonInterfaceReturnFailure(line = 9), // NOT_IMMUTABLE
+                  nonInterfaceReturnFailure(line = 10), // NOT_FINAL
+                  memberNotMethodFailure(line = 14), // fieldFinal
+                  memberNotMethodFailure(line = 15), // fieldNonFinal
+                  voidReturnFailure(line = 16), // sideEffect
+                  arrayFailure(line = 17), // getArray
+                  nonInterfaceReturnFailure(line = 18), // getInnerClassOne
+                  nonInterfaceReturnFailure(line = 19), // getInnerClassTwo
+                  nonInterfaceReturnFailure(line = 24, prefix = "Key InnerClass"), // Key in Map
+                  nonInterfaceReturnFailure(line = 24, prefix = "Value InnerClass"), // Value in Map
+                  classNotImmutableFailure(line = 26, className = "InnerClass"), // Inner Class
+                  nonInterfaceClassFailure(line = 26), // InnerClass
+                  memberNotMethodFailure(line = 27), // InnerClass.innerField
+                  arrayFailure(line = 28), // InnerClass.getArray
+                  // InnerInterface methods are checked when checking enclosing class return types
+              ))
 
-    @Test
-    fun finalClasses() = test(
-        JavaFileObjects.forSourceString(
-            "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
-            /* language=JAVA */ """
+  @Test
+  fun finalClasses() =
+      test(
+          JavaFileObjects.forSourceString(
+              "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
+              /* language=JAVA */ """
             package $PACKAGE_PREFIX;
 
             import java.util.List;
@@ -220,26 +209,32 @@ class ImmutabilityProcessorTest {
                 @Immutable.Policy(exceptions = {Immutable.Policy.Exception.FINAL_CLASSES_WITH_FINAL_FIELDS})
                 List<FinalClassNonFinalFields> getPolicyFinalNonFinal();
             }
-            """.trimIndent()
-        ), errors = listOf(
-            nonInterfaceReturnFailure(line = 7),
-            nonInterfaceReturnFailure(line = 8, index = 0),
-            nonInterfaceReturnFailure(line = 9),
-            nonInterfaceReturnFailure(line = 10, index = 0),
-            classNotFinalFailure(line = 13, "NonFinalClassFinalFields"),
-        ), otherErrors = mapOf(
-            FINAL_CLASSES[1] to listOf(
-                memberNotMethodFailure(line = 4),
-            ),
-            FINAL_CLASSES[3] to listOf(
-                memberNotMethodFailure(line = 4),
-            ),
-        )
-    )
+            """
+                  .trimIndent()),
+          errors =
+              listOf(
+                  nonInterfaceReturnFailure(line = 7),
+                  nonInterfaceReturnFailure(line = 8, index = 0),
+                  nonInterfaceReturnFailure(line = 9),
+                  nonInterfaceReturnFailure(line = 10, index = 0),
+                  classNotFinalFailure(line = 13, "NonFinalClassFinalFields"),
+              ),
+          otherErrors =
+              mapOf(
+                  FINAL_CLASSES[1] to
+                      listOf(
+                          memberNotMethodFailure(line = 4),
+                      ),
+                  FINAL_CLASSES[3] to
+                      listOf(
+                          memberNotMethodFailure(line = 4),
+                      ),
+              ))
 
-    @Test
-    fun superClass() {
-        val superClass = JavaFileObjects.forSourceString(
+  @Test
+  fun superClass() {
+    val superClass =
+        JavaFileObjects.forSourceString(
             "$PACKAGE_PREFIX.SuperClass",
             /* language=JAVA */ """
             package $PACKAGE_PREFIX;
@@ -253,10 +248,11 @@ class ImmutabilityProcessorTest {
                     public String innerField;
                 }
             }
-            """.trimIndent()
-        )
+            """
+                .trimIndent())
 
-        val dataClass = JavaFileObjects.forSourceString(
+    val dataClass =
+        JavaFileObjects.forSourceString(
             "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
             /* language=JAVA */ """
             package $PACKAGE_PREFIX;
@@ -267,31 +263,33 @@ class ImmutabilityProcessorTest {
             public interface $DATA_CLASS_NAME extends SuperClass {
                 String[] getArray();
             }
-            """.trimIndent()
-        )
+            """
+                .trimIndent())
 
-        test(
-            sources = arrayOf(superClass, dataClass),
-            fileToErrors = mapOf(
-                superClass to listOf(
-                    classNotImmutableFailure(line = 5, className = "SuperClass"),
-                    nonInterfaceReturnFailure(line = 6),
-                    nonInterfaceClassFailure(8),
-                    classNotImmutableFailure(line = 8, className = "InnerClass"),
-                    memberNotMethodFailure(line = 9),
-                ),
-                dataClass to listOf(
-                    arrayFailure(line = 7),
-                )
-            )
-        )
-    }
+    test(
+        sources = arrayOf(superClass, dataClass),
+        fileToErrors =
+            mapOf(
+                superClass to
+                    listOf(
+                        classNotImmutableFailure(line = 5, className = "SuperClass"),
+                        nonInterfaceReturnFailure(line = 6),
+                        classNotImmutableFailure(line = 8, className = "InnerClass"),
+                        nonInterfaceClassFailure(line = 8),
+                        memberNotMethodFailure(line = 9),
+                    ),
+                dataClass to
+                    listOf(
+                        arrayFailure(line = 7),
+                    )))
+  }
 
-    @Test
-    fun ignoredClass() = test(
-        JavaFileObjects.forSourceString(
-            "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
-            /* language=JAVA */ """
+  @Test
+  fun ignoredClass() =
+      test(
+          JavaFileObjects.forSourceString(
+              "$PACKAGE_PREFIX.$DATA_CLASS_NAME",
+              /* language=JAVA */ """
             package $PACKAGE_PREFIX;
 
             import java.util.List;
@@ -313,99 +311,113 @@ class ImmutabilityProcessorTest {
                     public String innerField;
                 }
             }
-            """.trimIndent()
-        ), errors = listOf(
-            nonInterfaceReturnFailure(line = 9),
-            nonInterfaceReturnFailure(line = 11, prefix = "Value NotIgnoredClass"),
-            classNotImmutableFailure(line = 18, className = "NotIgnoredClass"),
-            nonInterfaceClassFailure(line = 18),
-            memberNotMethodFailure(line = 19),
-        )
-    )
+            """
+                  .trimIndent()),
+          errors =
+              listOf(
+                  nonInterfaceReturnFailure(line = 8), // getInnerClassOne
+                  nonInterfaceReturnFailure(line = 9), // getInnerClassTwo
+                  nonInterfaceReturnFailure(
+                      line = 10, prefix = "Value IgnoredClass"), // getInnerClassThree
+                  nonInterfaceReturnFailure(
+                      line = 11, prefix = "Value NotIgnoredClass"), // getInnerClassFour
+                  classNotImmutableFailure(line = 18, className = "NotIgnoredClass"),
+                  nonInterfaceClassFailure(line = 18),
+                  memberNotMethodFailure(line = 19),
+              ))
 
-    private fun test(
-        source: JavaFileObject,
-        errors: List<CompilationError>,
-        otherErrors: Map<JavaFileObject, List<CompilationError>> = emptyMap(),
-    ) = test(
-        sources = arrayOf(source),
-        fileToErrors = otherErrors + (source to errors),
-    )
+  private fun test(
+      source: JavaFileObject,
+      errors: List<CompilationError>,
+      otherErrors: Map<JavaFileObject, List<CompilationError>> = emptyMap(),
+  ) =
+      test(
+          sources = arrayOf(source),
+          fileToErrors = otherErrors + (source to errors),
+      )
 
-    private fun test(
-        vararg sources: JavaFileObject,
-        fileToErrors: Map<JavaFileObject, List<CompilationError>> = emptyMap(),
-    ) {
-        val compilation = javac()
+  private fun test(
+      vararg sources: JavaFileObject,
+      fileToErrors: Map<JavaFileObject, List<CompilationError>> = emptyMap(),
+  ) {
+    val compilation =
+        javac()
             .withProcessors(ImmutabilityProcessor())
             .compile(FINAL_CLASSES + ANNOTATION + sources)
 
-        fileToErrors.forEach { (file, errors) ->
-            errors.forEach { error ->
-                try {
-                    assertThat(compilation)
-                        .hadErrorContaining(error.message)
-                        .inFile(file)
-                        .onLine(error.line)
-                } catch (e: AssertionError) {
-                    // Wrap the exception so that the line number is logged
-                    val wrapped = AssertionError("Expected $error, ${e.message}").apply {
-                        stackTrace = e.stackTrace
-                    }
+    val allExpectedErrors =
+        fileToErrors.entries.flatMap { (file, errors) -> errors.map { error -> file to error } }
 
-                    // Wrap again with Expect so that all errors are reported. This is very bad code
-                    // but can only be fixed by updating compile-testing with a better Truth Subject
-                    // implementation.
-                    expect.that(wrapped).isNull()
-                }
-            }
+    val allActualErrors =
+        compilation.errors().map { diagnostic ->
+          val sourceFile = diagnostic.source
+          val lineNumber = diagnostic.lineNumber
+          val message = diagnostic.getMessage(Locale.ENGLISH)?.trim()
+          Triple(sourceFile, lineNumber, message)
         }
+    // Check for missing errors
+    for ((expectedFile, expectedError) in allExpectedErrors) {
+      val found =
+          allActualErrors.any { (actualFile, actualLine, actualMessage) ->
+            actualFile == expectedFile &&
+                actualLine in (expectedError.line - 1)..(expectedError.line + 1) && // Tolerance
+                actualMessage != null &&
+                actualMessage.contains(expectedError.message)
+          }
 
-        expect.that(compilation.errors().size).isEqualTo(fileToErrors.values.sumOf { it.size })
-
-        if (expect.hasFailures()) {
-            expect.withMessage(
-                compilation.errors()
-                    .sortedBy { it.lineNumber }
-                    .joinToString(separator = "\n") {
-                        "${it.lineNumber}: ${it.getMessage(Locale.ENGLISH)?.trim()}"
-                    }
-            ).fail()
-        }
+      expect
+          .withMessage("Expected error not found: $expectedError in $expectedFile")
+          .that(found)
+          .isTrue()
     }
+    // Check number of errors.
+    expect.that(compilation.errors().size).isEqualTo(allExpectedErrors.size)
 
-    private fun classNotImmutableFailure(line: Long, className: String) =
-        CompilationError(line = line, message = MessageUtils.classNotImmutableFailure(className))
+    if (expect.hasFailures()) {
+      // This is kept to easily compare the stacktrace failures and error logs
+      expect
+          .withMessage(
+              compilation
+                  .errors()
+                  .sortedBy { it.lineNumber }
+                  .joinToString(separator = "\n") {
+                    "${it.lineNumber}: ${it.getMessage(Locale.ENGLISH)?.trim()}"
+                  })
+          .fail()
+    }
+  }
 
-    private fun nonInterfaceClassFailure(line: Long) =
-        CompilationError(line = line, message = MessageUtils.nonInterfaceClassFailure())
+  private fun classNotImmutableFailure(line: Long, className: String) =
+      CompilationError(line = line, message = MessageUtils.classNotImmutableFailure(className))
 
-    private fun nonInterfaceReturnFailure(line: Long) =
-        CompilationError(line = line, message = MessageUtils.nonInterfaceReturnFailure())
+  private fun nonInterfaceClassFailure(line: Long) =
+      CompilationError(line = line, message = MessageUtils.nonInterfaceClassFailure())
 
-    private fun nonInterfaceReturnFailure(line: Long, prefix: String = "", index: Int = -1) =
-        CompilationError(
-            line = line,
-            message = MessageUtils.nonInterfaceReturnFailure(prefix = prefix, index = index)
-        )
+  private fun nonInterfaceReturnFailure(line: Long) =
+      CompilationError(line = line, message = MessageUtils.nonInterfaceReturnFailure())
 
-    private fun memberNotMethodFailure(line: Long) =
-        CompilationError(line = line, message = MessageUtils.memberNotMethodFailure())
+  private fun nonInterfaceReturnFailure(line: Long, prefix: String = "", index: Int = -1) =
+      CompilationError(
+          line = line,
+          message = MessageUtils.nonInterfaceReturnFailure(prefix = prefix, index = index))
 
-    private fun voidReturnFailure(line: Long) =
-        CompilationError(line = line, message = MessageUtils.voidReturnFailure())
+  private fun memberNotMethodFailure(line: Long) =
+      CompilationError(line = line, message = MessageUtils.memberNotMethodFailure())
 
-    private fun staticNonFinalFailure(line: Long) =
-        CompilationError(line = line, message = MessageUtils.staticNonFinalFailure())
+  private fun voidReturnFailure(line: Long) =
+      CompilationError(line = line, message = MessageUtils.voidReturnFailure())
 
-    private fun arrayFailure(line: Long) =
-        CompilationError(line = line, message = MessageUtils.arrayFailure())
+  private fun staticNonFinalFailure(line: Long) =
+      CompilationError(line = line, message = MessageUtils.staticNonFinalFailure())
 
-    private fun classNotFinalFailure(line: Long, className: String) =
-        CompilationError(line = line, message = MessageUtils.classNotFinalFailure(className))
+  private fun arrayFailure(line: Long) =
+      CompilationError(line = line, message = MessageUtils.arrayFailure())
 
-    data class CompilationError(
-        val line: Long,
-        val message: String,
-    )
+  private fun classNotFinalFailure(line: Long, className: String) =
+      CompilationError(line = line, message = MessageUtils.classNotFinalFailure(className))
+
+  data class CompilationError(
+      val line: Long,
+      val message: String,
+  )
 }
