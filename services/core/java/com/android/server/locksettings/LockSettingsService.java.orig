@@ -3687,12 +3687,7 @@ public class LockSettingsService extends ILockSettings.Stub {
 
         private void reportDeviceSetupComplete() {
             try {
-                IGateKeeperService gateKeeperService = getGateKeeperService();
-                if (gateKeeperService == null) {
-                    Slog.e(TAG, "IGateKeeperService is not available");
-                    return;
-                }
-                gateKeeperService.reportDeviceSetupComplete();
+                getGateKeeperService().reportDeviceSetupComplete();
             } catch (RemoteException e) {
                 Slog.e(TAG, "Failure reporting to IGateKeeperService", e);
             }
