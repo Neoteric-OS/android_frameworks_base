@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbe554fd_5c01871e",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2025-02-27T17:44:09Z",
+      "side": 1,
+      "message": "I think it is entirely reasonable to expose this as a public API.  This is actually a gap for `TelecomManager#addNewIncomingCall` which is pre-existing.  An app can already set the phone number for an incoming call via `EXTRA_INCOMING_CALL_ADDRESS`. \n\nFor consistency, let\u0027s name this `EXTRA_INCOMING_CALL_PRESENTATION`.  Can you also please references this from the API docs for `TelecomManager#addNewIncomingCall` for consistency as well?",
+      "range": {
+        "startLine": 989,
+        "startChar": 5,
+        "endLine": 989,
+        "endChar": 14
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b6650bb7_bfcf5038",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "telecomm/java/android/telecom/TelecomManager.java",
+              "range": {
+                "startLine": 987,
+                "startChar": 0,
+                "endLine": 988,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "telecomm/java/android/telecom/TelecomManager.java",
+              "range": {
+                "startLine": 989,
+                "startChar": 0,
+                "endLine": 990,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "c0608d2083167a693f4f748593adbed5b9562299",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de653a02_27dd965e",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2025-02-27T17:44:09Z",
+      "side": 1,
+      "message": "Please declare a flag for this new API; it can go into the TElecom flags aconfig [here](https://cs.android.com/android/platform/superproject/main/+/main:packages/services/Telecomm/flags/telecom_api_flags.aconfig).  The @FlaggedApi annotation should be used here for the new API (see example [here](https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/telecomm/java/android/telecom/TelecomManager.java;drc\u003d46fddbb14a6ede877b31a75f8f68ed07ef99fff9;l\u003d1449)).\n\n\n\nFor more info see https://source.android.com/docs/setup/contribute/release-lifecycle",
+      "range": {
+        "startLine": 990,
+        "startChar": 31,
+        "endLine": 990,
+        "endChar": 54
+      },
+      "revId": "c0608d2083167a693f4f748593adbed5b9562299",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
