@@ -105,8 +105,8 @@ public final class AppCompatOverridesService {
 
     @Override
     public void finalize() {
-        unregisterDeviceConfigListeners();
         unregisterPackageReceiver();
+        unregisterDeviceConfigListeners();
     }
 
     @VisibleForTesting
