@@ -19,8 +19,6 @@ package com.android.systemui.bluetooth.qsdialog
 import android.bluetooth.BluetoothDevice
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
-import android.platform.test.annotations.DisableFlags
-import android.platform.test.annotations.EnableFlags
 import android.testing.TestableLooper
 import android.util.Pair
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -30,7 +28,6 @@ import com.android.dx.mockito.inline.extended.StaticMockitoSession
 import com.android.settingslib.bluetooth.BluetoothUtils
 import com.android.settingslib.bluetooth.CachedBluetoothDevice
 import com.android.settingslib.bluetooth.LocalBluetoothManager
-import com.android.settingslib.flags.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.res.R
 import com.google.common.truth.Truth.assertThat
@@ -133,8 +130,8 @@ class DeviceItemFactoryTest : SysuiTestCase() {
 
     @Test
     fun testAvailableAudioSharingMediaDeviceItemFactory_isFilterMatched_flagOff_returnsFalse() {
-         // Flags.FLAG_ENABLE_LE_AUDIO_SHARING off or the device doesn't support broadcast
-         // source or assistant.
+        // Flags.FLAG_ENABLE_LE_AUDIO_SHARING off or the device doesn't support broadcast
+        // source or assistant.
         `when`(BluetoothUtils.isAudioSharingEnabled()).thenReturn(false)
 
         assertThat(
@@ -146,8 +143,8 @@ class DeviceItemFactoryTest : SysuiTestCase() {
 
     @Test
     fun testAvailableAudioSharingMediaDeviceItemFactory_isFilterMatched_isActiveDevice_returnsFalse() {
-         // Flags.FLAG_ENABLE_LE_AUDIO_SHARING on and the device support broadcast source and
-         // assistant.
+        // Flags.FLAG_ENABLE_LE_AUDIO_SHARING on and the device support broadcast source and
+        // assistant.
         `when`(BluetoothUtils.isAudioSharingEnabled()).thenReturn(true)
         `when`(BluetoothUtils.isActiveMediaDevice(any())).thenReturn(true)
 
@@ -160,8 +157,8 @@ class DeviceItemFactoryTest : SysuiTestCase() {
 
     @Test
     fun testAvailableAudioSharingMediaDeviceItemFactory_isFilterMatched_isNotAvailable_returnsFalse() {
-         // Flags.FLAG_ENABLE_LE_AUDIO_SHARING on and the device support broadcast source and
-         // assistant.
+        // Flags.FLAG_ENABLE_LE_AUDIO_SHARING on and the device support broadcast source and
+        // assistant.
         `when`(BluetoothUtils.isAudioSharingEnabled()).thenReturn(true)
         `when`(BluetoothUtils.isActiveMediaDevice(any())).thenReturn(false)
         `when`(BluetoothUtils.isAvailableMediaBluetoothDevice(any(), any())).thenReturn(true)
@@ -177,8 +174,8 @@ class DeviceItemFactoryTest : SysuiTestCase() {
 
     @Test
     fun testAvailableAudioSharingMediaDeviceItemFactory_isFilterMatched_returnsTrue() {
-         // Flags.FLAG_ENABLE_LE_AUDIO_SHARING on and the device support broadcast source and
-         // assistant.
+        // Flags.FLAG_ENABLE_LE_AUDIO_SHARING on and the device support broadcast source and
+        // assistant.
         `when`(BluetoothUtils.isAudioSharingEnabled()).thenReturn(true)
         `when`(BluetoothUtils.isActiveMediaDevice(any())).thenReturn(false)
         `when`(BluetoothUtils.isAvailableMediaBluetoothDevice(any(), any())).thenReturn(true)
@@ -193,36 +190,6 @@ class DeviceItemFactoryTest : SysuiTestCase() {
     }
 
     @Test
-    @DisableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
-    fun testSavedFactory_isFilterMatched_bondedAndNotConnected_returnsTrue() {
-        `when`(cachedDevice.bondState).thenReturn(BluetoothDevice.BOND_BONDED)
-        `when`(cachedDevice.isConnected).thenReturn(false)
-
-        assertThat(savedDeviceItemFactory.isFilterMatched(context, cachedDevice, audioManager))
-            .isTrue()
-    }
-
-    @Test
-    @DisableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
-    fun testSavedFactory_isFilterMatched_connected_returnsFalse() {
-        `when`(cachedDevice.bondState).thenReturn(BluetoothDevice.BOND_BONDED)
-        `when`(cachedDevice.isConnected).thenReturn(true)
-
-        assertThat(savedDeviceItemFactory.isFilterMatched(context, cachedDevice, audioManager))
-            .isFalse()
-    }
-
-    @Test
-    @DisableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
-    fun testSavedFactory_isFilterMatched_notBonded_returnsFalse() {
-        `when`(cachedDevice.bondState).thenReturn(BluetoothDevice.BOND_NONE)
-
-        assertThat(savedDeviceItemFactory.isFilterMatched(context, cachedDevice, audioManager))
-            .isFalse()
-    }
-
-    @Test
-    @EnableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
     fun testSavedFactory_isFilterMatched_exclusivelyManaged_returnsFalse() {
         `when`(cachedDevice.device).thenReturn(bluetoothDevice)
         `when`(BluetoothUtils.isExclusivelyManagedBluetoothDevice(any(), any())).thenReturn(true)
@@ -232,7 +199,6 @@ class DeviceItemFactoryTest : SysuiTestCase() {
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
     fun testSavedFactory_isFilterMatched_notExclusiveManaged_returnsTrue() {
         `when`(cachedDevice.device).thenReturn(bluetoothDevice)
         `when`(BluetoothUtils.isExclusivelyManagedBluetoothDevice(any(), any())).thenReturn(false)
@@ -244,7 +210,6 @@ class DeviceItemFactoryTest : SysuiTestCase() {
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
     fun testSavedFactory_isFilterMatched_notExclusivelyManaged_connected_returnsFalse() {
         `when`(cachedDevice.device).thenReturn(bluetoothDevice)
         `when`(BluetoothUtils.isExclusivelyManagedBluetoothDevice(any(), any())).thenReturn(false)
@@ -256,23 +221,6 @@ class DeviceItemFactoryTest : SysuiTestCase() {
     }
 
     @Test
-    @DisableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
-    fun testConnectedFactory_isFilterMatched_bondedAndConnected_returnsTrue() {
-        `when`(BluetoothUtils.isConnectedBluetoothDevice(any(), any())).thenReturn(true)
-
-        assertThat(connectedDeviceItemFactory.isFilterMatched(context, cachedDevice, audioManager))
-            .isTrue()
-    }
-
-    @Test
-    @DisableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
-    fun testConnectedFactory_isFilterMatched_notConnected_returnsFalse() {
-        assertThat(connectedDeviceItemFactory.isFilterMatched(context, cachedDevice, audioManager))
-            .isFalse()
-    }
-
-    @Test
-    @EnableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
     fun testConnectedFactory_isFilterMatched_exclusivelyManaged_returnsFalse() {
         `when`(cachedDevice.device).thenReturn(bluetoothDevice)
         `when`(BluetoothUtils.isExclusivelyManagedBluetoothDevice(any(), any())).thenReturn(true)
@@ -282,7 +230,6 @@ class DeviceItemFactoryTest : SysuiTestCase() {
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
     fun testConnectedFactory_isFilterMatched_noExclusiveManager_returnsTrue() {
         `when`(cachedDevice.device).thenReturn(bluetoothDevice)
         `when`(BluetoothUtils.isExclusivelyManagedBluetoothDevice(any(), any())).thenReturn(false)
@@ -293,7 +240,6 @@ class DeviceItemFactoryTest : SysuiTestCase() {
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_HIDE_EXCLUSIVELY_MANAGED_BLUETOOTH_DEVICE)
     fun testConnectedFactory_isFilterMatched_notExclusivelyManaged_notConnected_returnsFalse() {
         `when`(cachedDevice.device).thenReturn(bluetoothDevice)
         `when`(BluetoothUtils.isExclusivelyManagedBluetoothDevice(any(), any())).thenReturn(false)
