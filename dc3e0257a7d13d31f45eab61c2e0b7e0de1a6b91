@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b703b0c_881fe77b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2025-02-28T11:23:52Z",
+      "side": 1,
+      "message": "Unfortunately, because `Dialog` and `getWindow()` aren\u0027t `final`, this is an incompatible API change.",
+      "revId": "dc3e0257a7d13d31f45eab61c2e0b7e0de1a6b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
