@@ -28,6 +28,15 @@ filegroup {
     exclude_srcs: [
         "android/os/*MessageQueue/**/*.java",
         "android/ranging/**/*.java",
+        "**/*_ravenwood.java",
+    ],
+    visibility: ["//frameworks/base"],
+}
+
+filegroup {
+    name: "framework-ravenwood-sources",
+    srcs: [
+        "**/*_ravenwood.java",
     ],
     visibility: ["//frameworks/base"],
 }
