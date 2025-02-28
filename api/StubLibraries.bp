@@ -721,7 +721,6 @@ java_library {
     static_libs: [
         "all-modules-public-stubs",
         "android-non-updatable.stubs",
-        "private-stub-annotations-jar",
     ],
     defaults: ["android.jar_defaults"],
 }
@@ -741,7 +740,6 @@ java_library {
     static_libs: [
         "all-modules-system-stubs",
         "android-non-updatable.stubs.system",
-        "private-stub-annotations-jar",
     ],
     defaults: [
         "android.jar_defaults",
@@ -782,7 +780,6 @@ java_library {
         // Non-updatable modules on the other hand can have test APIs, so include their test-stubs.
         "all-non-updatable-modules-test-stubs",
         "android-non-updatable.stubs.test",
-        "private-stub-annotations-jar",
     ],
     defaults: [
         "android.jar_defaults",
