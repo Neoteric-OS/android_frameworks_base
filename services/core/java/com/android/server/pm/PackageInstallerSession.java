@@ -21,6 +21,7 @@ import static android.app.admin.DevicePolicyResources.Strings.Core.PACKAGE_INSTA
 import static android.app.admin.DevicePolicyResources.Strings.Core.PACKAGE_UPDATED_BY_DO;
 import static android.content.pm.DataLoaderType.INCREMENTAL;
 import static android.content.pm.DataLoaderType.STREAMING;
+import static android.content.pm.Flags.cloudCompilationVerification;
 import static android.content.pm.PackageInstaller.LOCATION_DATA_APP;
 import static android.content.pm.PackageInstaller.UNARCHIVAL_OK;
 import static android.content.pm.PackageInstaller.UNARCHIVAL_STATUS_UNSET;
@@ -3570,6 +3571,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             CollectionUtils.addAll(stagedSplitTypes, apk.getSplitTypes());
         }
 
+        verifySdmSignatures(artManagedFilePaths, mSigningDetails);
+
         if (removeSplitList.size() > 0) {
             if (pkgInfo == null) {
                 throw new PackageManagerException(INSTALL_FAILED_INVALID_APK,
@@ -4259,6 +4262,31 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             return false;
         }
         return true;
+    }
+
+    private static void verifySdmSignatures(List<String> artManagedFilePaths,
+            SigningDetails expectedSigningDetails) throws PackageManagerException {
+        if (!cloudCompilationVerification()) {
+            return;
+        }
+        ParseTypeImpl input = ParseTypeImpl.forDefaultParsing();
+        for (String path : artManagedFilePaths) {
+            if (path.endsWith(".sdm")) {
+                // SDM is a format introduced in Android 16, so we don't need to support older
+                // signature schemes.
+                int minSignatureScheme = SigningDetails.SignatureSchemeVersion.SIGNING_BLOCK_V3;
+                ParseResult<SigningDetails> verified =
+                        ApkSignatureVerifier.verify(input, path, minSignatureScheme);
+                if (verified.isError()) {
+                    throw new PackageManagerException(
+                            INSTALL_FAILED_INVALID_APK, "Failed to verify SDM signatures");
+                }
+                if (!expectedSigningDetails.signaturesMatchExactly(verified.getResult())) {
+                    throw new PackageManagerException(
+                            INSTALL_FAILED_INVALID_APK, "SDM signatures are inconsistent with APK");
+                }
+            }
+        }
     }
 
     /**
