@@ -100,6 +100,7 @@ interface PolicyFileProcessor {
         methodName: String,
         methodDesc: String,
         replaceSpec: TextFilePolicyMethodReplaceFilter.MethodCallReplaceSpec,
+        policy: FilterPolicyWithReason,
     )
 }
 
@@ -285,10 +286,9 @@ class TextFileFilterPolicyBuilder(
             methodName: String,
             methodDesc: String,
             replaceSpec: TextFilePolicyMethodReplaceFilter.MethodCallReplaceSpec,
+            policy: FilterPolicyWithReason,
         ) {
-            // Keep the source method, because the target method may call it.
-            imf.setPolicyForMethod(className, methodName, methodDesc,
-                FilterPolicy.Keep.withReason(FILTER_REASON))
+            imf.setPolicyForMethod(className, methodName, methodDesc, policy)
             methodReplaceSpec.add(replaceSpec)
         }
     }
@@ -642,6 +642,7 @@ class TextFileFilterPolicyParser {
                     methodName,
                     signature,
                     spec,
+                    policyWithReason,
                 )
             } else {
                 // It's an in-class replace.
