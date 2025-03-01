@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ /*
+ * Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
+ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+ */
 package com.android.server.pm;
 
 import static android.content.pm.Flags.disallowSdkLibsToBeApps;
@@ -1185,6 +1189,7 @@ final class InstallPackageHelper {
                 return;
             }
             request.setKeepArtProfile(true);
+            // TODO(b/388159696): Use performDexoptIfNeededAsync.
             DexOptHelper.performDexoptIfNeeded(request, mDexManager, mContext, null);
         }
     }

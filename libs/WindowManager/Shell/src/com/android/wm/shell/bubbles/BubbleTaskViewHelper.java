@@ -36,7 +36,7 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import com.android.internal.protolog.ProtoLog;
-import com.android.wm.shell.Flags;
+import com.android.wm.shell.shared.bubbles.BubbleAnythingFlagHelper;
 import com.android.wm.shell.taskview.TaskView;
 
 /**
@@ -108,7 +108,8 @@ public class BubbleTaskViewHelper {
                     options.setPendingIntentBackgroundActivityStartMode(
                             MODE_BACKGROUND_ACTIVITY_START_ALLOW_ALWAYS);
                     final boolean isShortcutBubble = (mBubble.hasMetadataShortcutId()
-                            || (mBubble.getShortcutInfo() != null && Flags.enableBubbleAnything()));
+                            || (mBubble.getShortcutInfo() != null
+                            && BubbleAnythingFlagHelper.enableCreateAnyBubble()));
                     if (mBubble.getPreparingTransition() != null) {
                         mBubble.getPreparingTransition().surfaceCreated();
                     } else if (mBubble.isAppBubble()) {
@@ -166,9 +167,9 @@ public class BubbleTaskViewHelper {
             // The taskId is saved to use for removeTask, preventing appearance in recent tasks.
             mTaskId = taskId;
 
-            if (mBubble != null && mBubble.isAppBubble()) {
+            if (mBubble != null && mBubble.isNoteBubble()) {
                 // Let the controller know sooner what the taskId is.
-                mExpandedViewManager.setAppBubbleTaskId(mBubble.getKey(), mTaskId);
+                mExpandedViewManager.setNoteBubbleTaskId(mBubble.getKey(), mTaskId);
             }
 
             // With the task org, the taskAppeared callback will only happen once the task has

@@ -28,6 +28,7 @@ import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.keyguard.ui.viewmodel.ViewStateAccessor
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
+import com.android.systemui.shared.Flags.extendedWallpaperEffects
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController
 import com.android.systemui.statusbar.notification.stack.NotificationStackSizeCalculator
 import com.android.systemui.statusbar.notification.stack.ui.view.SharedNotificationContainer
@@ -36,6 +37,8 @@ import com.android.systemui.util.kotlin.DisposableHandles
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.DisposableHandle
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 
 /** Binds the shared notification container to its view-model. */
 @SysUISingleton
@@ -141,23 +144,27 @@ constructor(
                     }
 
                     if (!SceneContainerFlag.isEnabled) {
-                        if (Flags.magicPortraitWallpapers()) {
+                        if (extendedWallpaperEffects()) {
                             launch {
-                                viewModel
-                                    .getNotificationStackAbsoluteBottom(
-                                        calculateMaxNotifications = calculateMaxNotifications,
-                                        calculateHeight = { maxNotifications ->
-                                            notificationStackSizeCalculator.computeHeight(
-                                                maxNotifs = maxNotifications,
-                                                shelfHeight = controller.getShelfHeight().toFloat(),
-                                                stack = controller.view,
-                                            )
-                                        },
-                                        controller.getShelfHeight().toFloat(),
+                                combine(
+                                        viewModel.getNotificationStackAbsoluteBottom(
+                                            calculateMaxNotifications = calculateMaxNotifications,
+                                            calculateHeight = { maxNotifications ->
+                                                notificationStackSizeCalculator.computeHeight(
+                                                    maxNotifs = maxNotifications,
+                                                    shelfHeight =
+                                                        controller.getShelfHeight().toFloat(),
+                                                    stack = controller.view,
+                                                )
+                                            },
+                                            controller.getShelfHeight().toFloat(),
+                                        ),
+                                        viewModel.configurationBasedDimensions.map { it.marginTop },
+                                        ::Pair,
                                     )
-                                    .collect { bottom ->
+                                    .collect { (bottom: Float, marginTop: Int) ->
                                         keyguardInteractor.setNotificationStackAbsoluteBottom(
-                                            bottom
+                                            marginTop + bottom
                                         )
                                     }
                             }

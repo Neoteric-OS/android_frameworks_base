@@ -16,10 +16,14 @@
 
 package com.android.systemui.statusbar.chips.notification.ui.viewmodel
 
+import android.content.Context
 import android.view.View
 import com.android.systemui.Flags
+import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.res.R
 import com.android.systemui.statusbar.chips.notification.domain.interactor.StatusBarNotificationChipsInteractor
 import com.android.systemui.statusbar.chips.notification.domain.model.NotificationChipModel
 import com.android.systemui.statusbar.chips.notification.shared.StatusBarNotifChips
@@ -30,6 +34,7 @@ import com.android.systemui.statusbar.notification.domain.interactor.HeadsUpNoti
 import com.android.systemui.statusbar.notification.domain.model.TopPinnedState
 import com.android.systemui.statusbar.notification.headsup.PinnedStatus
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel
+import com.android.systemui.statusbar.phone.ongoingcall.StatusBarChipsModernization
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +47,7 @@ import kotlinx.coroutines.launch
 class NotifChipsViewModel
 @Inject
 constructor(
+    @Main private val context: Context,
     @Application private val applicationScope: CoroutineScope,
     private val notifChipsInteractor: StatusBarNotificationChipsInteractor,
     headsUpNotificationInteractor: HeadsUpNotificationInteractor,
@@ -64,26 +70,41 @@ constructor(
         headsUpState: TopPinnedState
     ): OngoingActivityChipModel.Shown {
         StatusBarNotifChips.assertInNewMode()
+        val contentDescription = getContentDescription(this.appName)
         val icon =
             if (this.statusBarChipIconView != null) {
                 StatusBarConnectedDisplays.assertInLegacyMode()
-                OngoingActivityChipModel.ChipIcon.StatusBarView(this.statusBarChipIconView)
+                OngoingActivityChipModel.ChipIcon.StatusBarView(
+                    this.statusBarChipIconView,
+                    contentDescription,
+                )
             } else {
                 StatusBarConnectedDisplays.assertInNewMode()
-                OngoingActivityChipModel.ChipIcon.StatusBarNotificationIcon(this.key)
+                OngoingActivityChipModel.ChipIcon.StatusBarNotificationIcon(
+                    this.key,
+                    contentDescription,
+                )
             }
         val colors = this.promotedContent.toCustomColorsModel()
-        val onClickListener =
-            View.OnClickListener {
-                // The notification pipeline needs everything to run on the main thread, so keep
-                // this event on the main thread.
-                applicationScope.launch {
-                    notifChipsInteractor.onPromotedNotificationChipTapped(
-                        this@toActivityChipModel.key
-                    )
-                }
+
+        val clickListener: () -> Unit = {
+            // The notification pipeline needs everything to run on the main thread, so keep
+            // this event on the main thread.
+            applicationScope.launch {
+                // TODO(b/364653005): Move accessibility focus to the HUN when chip is tapped.
+                notifChipsInteractor.onPromotedNotificationChipTapped(this@toActivityChipModel.key)
             }
-        val clickBehavior = OngoingActivityChipModel.ClickBehavior.None
+        }
+        val onClickListenerLegacy =
+            View.OnClickListener {
+                StatusBarChipsModernization.assertInLegacyMode()
+                clickListener.invoke()
+            }
+        val clickBehavior =
+            OngoingActivityChipModel.ClickBehavior.ShowHeadsUpNotification({
+                StatusBarChipsModernization.assertInNewMode()
+                clickListener.invoke()
+            })
 
         val isShowingHeadsUpFromChipTap =
             headsUpState is TopPinnedState.Pinned &&
@@ -95,7 +116,7 @@ constructor(
             return OngoingActivityChipModel.Shown.IconOnly(
                 icon,
                 colors,
-                onClickListener,
+                onClickListenerLegacy,
                 clickBehavior,
             )
         }
@@ -105,7 +126,7 @@ constructor(
                 icon,
                 colors,
                 this.promotedContent.shortCriticalText,
-                onClickListener,
+                onClickListenerLegacy,
                 clickBehavior,
             )
         }
@@ -121,7 +142,7 @@ constructor(
             return OngoingActivityChipModel.Shown.IconOnly(
                 icon,
                 colors,
-                onClickListener,
+                onClickListenerLegacy,
                 clickBehavior,
             )
         }
@@ -130,7 +151,7 @@ constructor(
             return OngoingActivityChipModel.Shown.IconOnly(
                 icon,
                 colors,
-                onClickListener,
+                onClickListenerLegacy,
                 clickBehavior,
             )
         }
@@ -140,7 +161,7 @@ constructor(
                     icon,
                     colors,
                     time = this.promotedContent.time.time,
-                    onClickListener,
+                    onClickListenerLegacy,
                     clickBehavior,
                 )
             }
@@ -149,7 +170,7 @@ constructor(
                     icon,
                     colors,
                     startTimeMs = this.promotedContent.time.time,
-                    onClickListener,
+                    onClickListenerLegacy,
                     clickBehavior,
                 )
             }
@@ -159,10 +180,22 @@ constructor(
                     icon,
                     colors,
                     startTimeMs = this.promotedContent.time.time,
-                    onClickListener,
+                    onClickListenerLegacy,
                     clickBehavior,
                 )
             }
         }
+    }
+
+    private fun getContentDescription(appName: String): ContentDescription {
+        val ongoingDescription =
+            context.getString(R.string.ongoing_notification_extra_content_description)
+        return ContentDescription.Loaded(
+            context.getString(
+                R.string.accessibility_desc_notification_icon,
+                appName,
+                ongoingDescription,
+            )
+        )
     }
 }

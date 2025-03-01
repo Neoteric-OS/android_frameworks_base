@@ -32,7 +32,7 @@ import com.android.systemui.inputdevice.tutorial.data.repository.DeviceType
 import com.android.systemui.inputdevice.tutorial.tutorialSchedulerRepository
 import com.android.systemui.keyboard.data.repository.keyboardRepository
 import com.android.systemui.kosmos.testScope
-import com.android.systemui.recents.OverviewProxyService.OverviewProxyListener
+import com.android.systemui.recents.LauncherProxyService.LauncherProxyListener
 import com.android.systemui.testKosmos
 import com.android.systemui.touchpad.data.repository.touchpadRepository
 import com.google.common.truth.Truth.assertThat
@@ -50,7 +50,6 @@ import org.mockito.kotlin.verify
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
-@kotlinx.coroutines.ExperimentalCoroutinesApi
 class KeyboardTouchpadEduInteractorTest : SysuiTestCase() {
     private val kosmos = testKosmos()
     private val testScope = kosmos.testScope
@@ -58,7 +57,7 @@ class KeyboardTouchpadEduInteractorTest : SysuiTestCase() {
     private val touchpadRepository = kosmos.touchpadRepository
     private val keyboardRepository = kosmos.keyboardRepository
     private val tutorialSchedulerRepository = kosmos.tutorialSchedulerRepository
-    private val overviewProxyService = kosmos.mockOverviewProxyService
+    private val launcherProxyService = kosmos.mockLauncherProxyService
 
     private val underTest: KeyboardTouchpadEduInteractor = kosmos.keyboardTouchpadEduInteractor
     private val eduClock = kosmos.fakeEduClock
@@ -167,16 +166,16 @@ class KeyboardTouchpadEduInteractorTest : SysuiTestCase() {
         keyboardRepository.setIsAnyKeyboardConnected(true)
     }
 
-    private fun getOverviewProxyListener(): OverviewProxyListener {
-        val listenerCaptor = argumentCaptor<OverviewProxyListener>()
-        verify(overviewProxyService).addCallback(listenerCaptor.capture())
+    private fun getLauncherProxyListener(): LauncherProxyListener {
+        val listenerCaptor = argumentCaptor<LauncherProxyListener>()
+        verify(launcherProxyService).addCallback(listenerCaptor.capture())
         return listenerCaptor.firstValue
     }
 
     private fun TestScope.triggerEducation(gestureType: GestureType) {
         // Increment max number of signal to try triggering education
         for (i in 1..KeyboardTouchpadEduInteractor.MAX_SIGNAL_COUNT) {
-            val listener = getOverviewProxyListener()
+            val listener = getLauncherProxyListener()
             listener.updateContextualEduStats(/* isTrackpadGesture= */ false, gestureType)
         }
         runCurrent()

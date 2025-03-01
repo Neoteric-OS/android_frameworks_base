@@ -109,6 +109,7 @@ import android.util.ArraySet;
 import android.util.IntArray;
 import android.util.Log;
 import android.util.Slog;
+import android.util.SparseIntArray;
 import android.view.Choreographer;
 import android.view.IRemoteAnimationFinishedCallback;
 import android.view.IRemoteAnimationRunner;
@@ -189,7 +190,8 @@ import java.util.function.Predicate;
  */
 public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         DisplayController.OnDisplaysChangedListener, Transitions.TransitionHandler,
-        ShellTaskOrganizer.TaskListener, StageTaskListener.StageListenerCallbacks {
+        ShellTaskOrganizer.TaskListener, StageTaskListener.StageListenerCallbacks,
+        SplitMultiDisplayProvider {
 
     private static final String TAG = StageCoordinator.class.getSimpleName();
 
@@ -285,6 +287,16 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         mSplitInvocationListener = listener;
         mSplitInvocationListenerExecutor = executor;
         mSplitTransitions.registerSplitAnimListener(listener, executor);
+    }
+
+    @Override
+    public WindowContainerToken getDisplayRootForDisplayId(int displayId) {
+        if (displayId == DEFAULT_DISPLAY) {
+            return mRootTaskInfo != null ? mRootTaskInfo.token : null;
+        }
+
+        // TODO(b/393217881): support different root task on external displays.
+        return null; // Return null for unknown display IDs
     }
 
     class SplitRequest {
@@ -2977,10 +2989,13 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
 
     @Override
     public void mergeAnimation(IBinder transition, TransitionInfo info,
-            SurfaceControl.Transaction t, IBinder mergeTarget,
+            @NonNull SurfaceControl.Transaction startT,
+            @NonNull SurfaceControl.Transaction finishT,
+            IBinder mergeTarget,
             Transitions.TransitionFinishCallback finishCallback) {
         ProtoLog.d(WM_SHELL_SPLIT_SCREEN, "mergeAnimation: transition=%d", info.getDebugId());
-        mSplitTransitions.mergeAnimation(transition, info, t, mergeTarget, finishCallback);
+        mSplitTransitions.mergeAnimation(transition, info, startT, finishT, mergeTarget,
+                finishCallback);
     }
 
     /** Jump the current transition animation to the end. */
@@ -3013,11 +3028,18 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             final int transitType = info.getType();
             TransitionInfo.Change pipChange = null;
             int closingSplitTaskId = -1;
-            // This array tracks where we are sending stages (TO_BACK/TO_FRONT) in this transition.
-            // TODO (b/349828130): Update for n apps (needs to handle different indices than 0/1).
-            //  Also make sure having multiple changes per stage (2+ tasks in one stage) is being
-            //  handled properly.
-            int[] stageChanges = new int[2];
+            // This array tracks if we are sending stages TO_BACK/TO_FRONT in this transition.
+            // TODO (b/349828130): Also make sure having multiple changes per stage (2+ tasks in
+            //  one stage) is being handled properly.
+            SparseIntArray stageChanges = new SparseIntArray();
+            if (enableFlexibleSplit()) {
+                mStageOrderOperator.getActiveStages()
+                        .forEach(stage -> stageChanges.put(stage.getId(), -1));
+            } else {
+                stageChanges.put(STAGE_TYPE_MAIN, -1);
+                stageChanges.put(STAGE_TYPE_SIDE, -1);
+            }
+
 
             for (int iC = 0; iC < info.getChanges().size(); ++iC) {
                 final TransitionInfo.Change change = info.getChanges().get(iC);
@@ -3091,14 +3113,12 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                     // we'll break split
                     closingSplitTaskId = taskId;
                 }
-                if (transitType == WindowManager.TRANSIT_WAKE) {
-                    // Record which stages are receiving which changes
-                    if ((change.getMode() == TRANSIT_TO_BACK
-                            || change.getMode() == TRANSIT_TO_FRONT)
-                            && (stageOfTaskId == STAGE_TYPE_MAIN
-                            || stageOfTaskId == STAGE_TYPE_SIDE)) {
-                        stageChanges[stageOfTaskId] = change.getMode();
-                    }
+                // Record which stages are receiving which changes
+                if ((change.getMode() == TRANSIT_TO_BACK
+                        || change.getMode() == TRANSIT_TO_FRONT)
+                        && (stageOfTaskId == STAGE_TYPE_MAIN
+                        || stageOfTaskId == STAGE_TYPE_SIDE)) {
+                    stageChanges.put(getStageOfTask(taskId), change.getMode());
                 }
             }
 
@@ -3127,8 +3147,16 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             // If keyguard is active, check to see if we have all our stages showing. If one stage
             // was moved but not the other (which can happen with SHOW_ABOVE_LOCKED apps), we should
             // break split.
-            if (mKeyguardActive && stageChanges[STAGE_TYPE_MAIN] != stageChanges[STAGE_TYPE_SIDE]) {
-                dismissSplitKeepingLastActiveStage(EXIT_REASON_SCREEN_LOCKED_SHOW_ON_TOP);
+            if (mKeyguardActive && stageChanges.size() > 0) {
+                int firstChangeMode = stageChanges.valueAt(0);
+                for (int i = 0; i < stageChanges.size(); i++) {
+                    int changeMode = stageChanges.valueAt(i);
+                    // Compare each changeMode to the first one. If any are different, break split.
+                    if (changeMode != firstChangeMode) {
+                        dismissSplitKeepingLastActiveStage(EXIT_REASON_SCREEN_LOCKED_SHOW_ON_TOP);
+                        break;
+                    }
+                }
             }
 
             final ArraySet<StageTaskListener> dismissStages = record.getShouldDismissedStage();

@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Slog;
+import android.window.DesktopExperienceFlags;
 
 import com.android.server.display.feature.flags.Flags;
 import com.android.server.display.utils.DebugUtils;
@@ -60,7 +61,7 @@ public class DisplayManagerFlags {
 
     private final FlagState mDisplayTopology = new FlagState(
             Flags.FLAG_DISPLAY_TOPOLOGY,
-            Flags::displayTopology);
+            DesktopExperienceFlags.DISPLAY_TOPOLOGY::isTrue);
 
     private final FlagState mConnectedDisplayErrorHandlingFlagState = new FlagState(
             Flags.FLAG_ENABLE_CONNECTED_DISPLAY_ERROR_HANDLING,
@@ -244,13 +245,19 @@ public class DisplayManagerFlags {
             Flags.FLAG_ENABLE_PLUGIN_MANAGER,
             Flags::enablePluginManager
     );
+
+    private final FlagState mEnableHdrOverridePluginTypeFlagState = new FlagState(
+            Flags.FLAG_ENABLE_HDR_OVERRIDE_PLUGIN_TYPE,
+            Flags::enableHdrOverridePluginType
+    );
+
     private final FlagState mDisplayListenerPerformanceImprovementsFlagState = new FlagState(
             Flags.FLAG_DISPLAY_LISTENER_PERFORMANCE_IMPROVEMENTS,
             Flags::displayListenerPerformanceImprovements
     );
     private final FlagState mEnableDisplayContentModeManagementFlagState = new FlagState(
             Flags.FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT,
-            Flags::enableDisplayContentModeManagement
+            DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT::isTrue
     );
 
     private final FlagState mSubscribeGranularDisplayEvents = new FlagState(
@@ -260,7 +267,7 @@ public class DisplayManagerFlags {
 
     private final FlagState mBaseDensityForExternalDisplays = new FlagState(
             Flags.FLAG_BASE_DENSITY_FOR_EXTERNAL_DISPLAYS,
-            Flags::baseDensityForExternalDisplays
+            DesktopExperienceFlags.BASE_DENSITY_FOR_EXTERNAL_DISPLAYS::isTrue
     );
 
     private final FlagState mFramerateOverrideTriggersRrCallbacks = new FlagState(
@@ -547,6 +554,10 @@ public class DisplayManagerFlags {
 
     public boolean isPluginManagerEnabled() {
         return mEnablePluginManagerFlagState.isEnabled();
+    }
+
+    public boolean isHdrOverrideEnabled() {
+        return mEnableHdrOverridePluginTypeFlagState.isEnabled();
     }
 
     /**

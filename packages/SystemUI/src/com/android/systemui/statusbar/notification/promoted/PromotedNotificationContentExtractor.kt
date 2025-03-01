@@ -21,17 +21,23 @@ import android.app.Notification.BigPictureStyle
 import android.app.Notification.BigTextStyle
 import android.app.Notification.CallStyle
 import android.app.Notification.EXTRA_CHRONOMETER_COUNT_DOWN
+import android.app.Notification.EXTRA_PROGRESS
+import android.app.Notification.EXTRA_PROGRESS_INDETERMINATE
+import android.app.Notification.EXTRA_PROGRESS_MAX
 import android.app.Notification.EXTRA_SUB_TEXT
 import android.app.Notification.EXTRA_TEXT
 import android.app.Notification.EXTRA_TITLE
 import android.app.Notification.ProgressStyle
 import android.content.Context
+import com.android.systemui.Flags
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.statusbar.notification.collection.NotificationEntry
+import com.android.systemui.statusbar.notification.promoted.AutomaticPromotionCoordinator.Companion.EXTRA_AUTOMATICALLY_EXTRACTED_SHORT_CRITICAL_TEXT
 import com.android.systemui.statusbar.notification.promoted.AutomaticPromotionCoordinator.Companion.EXTRA_WAS_AUTOMATICALLY_PROMOTED
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.Companion.isPromotedForStatusBarChip
+import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.OldProgress
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.Style
 import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel.When
 import javax.inject.Inject
@@ -88,6 +94,7 @@ constructor(
         contentBuilder.title = notification.title()
         contentBuilder.text = notification.text()
         contentBuilder.skeletonLargeIcon = null // TODO
+        contentBuilder.oldProgress = notification.oldProgress()
 
         val colorsFromNotif = recoveredBuilder.getColors(/* header= */ false)
         contentBuilder.colors =
@@ -96,8 +103,7 @@ constructor(
                 primaryTextColor = colorsFromNotif.primaryTextColor,
             )
 
-        recoveredBuilder.style?.extractContent(contentBuilder)
-            ?: run { contentBuilder.style = Style.Ineligible }
+        recoveredBuilder.extractStyleContent(contentBuilder)
 
         return contentBuilder.build().also { logger.logExtractionSucceeded(entry, it) }
     }
@@ -113,11 +119,32 @@ private fun Notification.shortCriticalText(): String? {
     if (!android.app.Flags.apiRichOngoing()) {
         return null
     }
-    return this.shortCriticalText
+    if (this.shortCriticalText != null) {
+        return this.shortCriticalText
+    }
+    if (Flags.promoteNotificationsAutomatically()) {
+        return this.extras?.getString(EXTRA_AUTOMATICALLY_EXTRACTED_SHORT_CRITICAL_TEXT)
+    }
+    return null
 }
 
 private fun Notification.chronometerCountDown(): Boolean =
     extras?.getBoolean(EXTRA_CHRONOMETER_COUNT_DOWN, /* defaultValue= */ false) ?: false
+
+private fun Notification.oldProgress(): OldProgress? {
+    val progress = progress() ?: return null
+    val max = progressMax() ?: return null
+    val isIndeterminate = progressIndeterminate() ?: return null
+
+    return OldProgress(progress = progress, max = max, isIndeterminate = isIndeterminate)
+}
+
+private fun Notification.progress(): Int? = extras?.getInt(EXTRA_PROGRESS)
+
+private fun Notification.progressMax(): Int? = extras?.getInt(EXTRA_PROGRESS_MAX)
+
+private fun Notification.progressIndeterminate(): Boolean? =
+    extras?.getBoolean(EXTRA_PROGRESS_INDETERMINATE)
 
 private fun Notification.extractWhen(): When? {
     val time = `when`
@@ -132,28 +159,32 @@ private fun Notification.extractWhen(): When? {
     }
 }
 
-private fun Notification.Style.extractContent(
+private fun Notification.Builder.extractStyleContent(
     contentBuilder: PromotedNotificationContentModel.Builder
 ) {
+    val style = this.style
+
     contentBuilder.style =
-        when (this) {
+        when (style) {
+            null -> Style.Base
+
             is BigPictureStyle -> {
-                extractContent(contentBuilder)
+                style.extractContent(contentBuilder)
                 Style.BigPicture
             }
 
             is BigTextStyle -> {
-                extractContent(contentBuilder)
+                style.extractContent(contentBuilder)
                 Style.BigText
             }
 
             is CallStyle -> {
-                extractContent(contentBuilder)
+                style.extractContent(contentBuilder)
                 Style.Call
             }
 
             is ProgressStyle -> {
-                extractContent(contentBuilder)
+                style.extractContent(contentBuilder)
                 Style.Progress
             }
 
@@ -180,5 +211,5 @@ private fun CallStyle.extractContent(contentBuilder: PromotedNotificationContent
 
 private fun ProgressStyle.extractContent(contentBuilder: PromotedNotificationContentModel.Builder) {
     // TODO: Create NotificationProgressModel.toSkeleton, or something similar.
-    contentBuilder.progress = createProgressModel(0xffffffff.toInt(), 0xff000000.toInt())
+    contentBuilder.newProgress = createProgressModel(0xffffffff.toInt(), 0xff000000.toInt())
 }

@@ -21,6 +21,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
+import com.android.systemui.animation.GSFAxes
 import com.android.systemui.customization.R
 import com.android.systemui.plugins.clocks.AlarmData
 import com.android.systemui.plugins.clocks.ClockAnimations
@@ -36,6 +37,7 @@ import com.android.systemui.plugins.clocks.WeatherData
 import com.android.systemui.plugins.clocks.ZenData
 import com.android.systemui.shared.clocks.view.FlexClockView
 import com.android.systemui.shared.clocks.view.HorizontalAlignment
+import com.android.systemui.shared.clocks.view.VerticalAlignment
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.math.max
@@ -125,7 +127,19 @@ class FlexClockFaceController(clockCtx: ClockContext, private val isLargeClock: 
             layerController.faceEvents.onThemeChanged(theme)
         }
 
-        override fun onFontAxesChanged(axes: List<ClockFontAxisSetting>) {
+        override fun onFontAxesChanged(settings: List<ClockFontAxisSetting>) {
+            var axes = settings
+            if (!isLargeClock) {
+                axes =
+                    axes.map { axis ->
+                        if (axis.key == GSFAxes.WIDTH && axis.value > SMALL_CLOCK_MAX_WDTH) {
+                            axis.copy(value = SMALL_CLOCK_MAX_WDTH)
+                        } else {
+                            axis
+                        }
+                    }
+            }
+
             layerController.events.onFontAxesChanged(axes)
         }
 
@@ -236,12 +250,13 @@ class FlexClockFaceController(clockCtx: ClockContext, private val isLargeClock: 
         }
 
     companion object {
+        val SMALL_CLOCK_MAX_WDTH = 120f
         val SMALL_LAYER_CONFIG =
             LayerConfig(
                 timespec = DigitalTimespec.TIME_FULL_FORMAT,
                 style = FontTextStyle(fontSizeScale = 0.98f),
                 aodStyle = FontTextStyle(),
-                alignment = DigitalAlignment(HorizontalAlignment.LEFT, null),
+                alignment = DigitalAlignment(HorizontalAlignment.LEFT, VerticalAlignment.CENTER),
                 dateTimeFormat = "h:mm",
             )
     }

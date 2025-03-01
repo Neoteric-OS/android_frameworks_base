@@ -20,6 +20,7 @@ import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.systemui.Flags.glanceableHubAllowKeyguardWhenDreaming
 import com.android.systemui.common.ui.domain.interactor.ConfigurationInteractor
 import com.android.systemui.communal.domain.interactor.CommunalInteractor
+import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.keyguard.domain.interactor.FromDreamingTransitionInteractor
@@ -34,14 +35,12 @@ import com.android.systemui.res.R
 import com.android.systemui.settings.UserTracker
 import com.android.systemui.util.kotlin.FlowDumperImpl
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.merge
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @SysUISingleton
 class DreamViewModel
 @Inject
@@ -53,6 +52,7 @@ constructor(
     private val toLockscreenTransitionViewModel: DreamingToLockscreenTransitionViewModel,
     private val fromDreamingTransitionInteractor: FromDreamingTransitionInteractor,
     private val communalInteractor: CommunalInteractor,
+    private val communalSettingsInteractor: CommunalSettingsInteractor,
     private val keyguardUpdateMonitor: KeyguardUpdateMonitor,
     private val userTracker: UserTracker,
     dumpManager: DumpManager,
@@ -60,8 +60,12 @@ constructor(
 
     fun startTransitionFromDream() {
         val showGlanceableHub =
-            communalInteractor.isCommunalEnabled.value &&
-                !keyguardUpdateMonitor.isEncryptedOrLockdown(userTracker.userId)
+            if (communalSettingsInteractor.isV2FlagEnabled()) {
+                communalInteractor.shouldShowCommunal.value
+            } else {
+                communalInteractor.isCommunalEnabled.value &&
+                    !keyguardUpdateMonitor.isEncryptedOrLockdown(userTracker.userId)
+            }
         fromDreamingTransitionInteractor.startToLockscreenOrGlanceableHubTransition(
             showGlanceableHub && !glanceableHubAllowKeyguardWhenDreaming()
         )

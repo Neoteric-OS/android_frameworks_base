@@ -31,6 +31,7 @@ import android.os.SystemProperties;
 import android.provider.Settings;
 import android.view.IWindowManager;
 import android.view.accessibility.AccessibilityManager;
+import android.window.DesktopModeFlags;
 import android.window.SystemPerformanceHinter;
 
 import com.android.internal.logging.UiEventLogger;
@@ -43,6 +44,8 @@ import com.android.wm.shell.RootTaskDisplayAreaOrganizer;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.WindowManagerShellWrapper;
 import com.android.wm.shell.activityembedding.ActivityEmbeddingController;
+import com.android.wm.shell.appzoomout.AppZoomOut;
+import com.android.wm.shell.appzoomout.AppZoomOutController;
 import com.android.wm.shell.back.BackAnimation;
 import com.android.wm.shell.back.BackAnimationBackground;
 import com.android.wm.shell.back.BackAnimationController;
@@ -112,9 +115,8 @@ import com.android.wm.shell.shared.TransactionPool;
 import com.android.wm.shell.shared.annotations.ShellAnimationThread;
 import com.android.wm.shell.shared.annotations.ShellMainThread;
 import com.android.wm.shell.shared.annotations.ShellSplashscreenThread;
+import com.android.wm.shell.shared.desktopmode.DesktopModeCompatPolicy;
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus;
-import com.android.wm.shell.appzoomout.AppZoomOut;
-import com.android.wm.shell.appzoomout.AppZoomOutController;
 import com.android.wm.shell.splitscreen.SplitScreen;
 import com.android.wm.shell.splitscreen.SplitScreenController;
 import com.android.wm.shell.startingsurface.StartingSurface;
@@ -258,6 +260,12 @@ public abstract class WMShellBaseModule {
 
     @WMSingleton
     @Provides
+    static DesktopModeCompatPolicy provideDesktopModeCompatPolicy(Context context) {
+        return new DesktopModeCompatPolicy(context);
+    }
+
+    @WMSingleton
+    @Provides
     static Optional<CompatUIHandler> provideCompatUIController(
             Context context,
             ShellInit shellInit,
@@ -308,7 +316,7 @@ public abstract class WMShellBaseModule {
     @WMSingleton
     @Provides
     static CompatUIStatusManager provideCompatUIStatusManager(@NonNull Context context) {
-        if (Flags.enableCompatUiVisibilityStatus()) {
+        if (DesktopModeFlags.ENABLE_DESKTOP_COMPAT_UI_VISIBILITY_STATUS.isTrue()) {
             return new CompatUIStatusManager(
                     newState -> Settings.Secure.putInt(context.getContentResolver(),
                             COMPAT_UI_EDUCATION_SHOWING, newState),
@@ -410,9 +418,13 @@ public abstract class WMShellBaseModule {
 
     @WMSingleton
     @Provides
-    static MultiInstanceHelper provideMultiInstanceHelper(Context context) {
+    static MultiInstanceHelper provideMultiInstanceHelper(
+            Context context,
+            ShellInit shellInit,
+            ShellCommandHandler shellCommandHandler
+    ) {
         return new MultiInstanceHelper(context, context.getPackageManager(),
-                Flags.supportsMultiInstanceSystemUi());
+                shellInit, shellCommandHandler, Flags.supportsMultiInstanceSystemUi());
     }
 
     //

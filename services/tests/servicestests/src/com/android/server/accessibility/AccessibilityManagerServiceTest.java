@@ -29,6 +29,7 @@ import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_3BUTTON;
 import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL;
 import static android.view.accessibility.Flags.FLAG_SKIP_ACCESSIBILITY_WARNING_DIALOG_FOR_TRUSTED_SERVICES;
 
+import static com.android.input.flags.Flags.FLAG_KEYBOARD_REPEAT_KEYS;
 import static com.android.internal.accessibility.AccessibilityShortcutController.ACCESSIBILITY_HEARING_AIDS_COMPONENT_NAME;
 import static com.android.internal.accessibility.AccessibilityShortcutController.MAGNIFICATION_CONTROLLER_NAME;
 import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.GESTURE;
@@ -38,6 +39,7 @@ import static com.android.internal.accessibility.common.ShortcutConstants.UserSh
 import static com.android.internal.accessibility.common.ShortcutConstants.UserShortcutType.SOFTWARE;
 import static com.android.internal.accessibility.dialog.AccessibilityButtonChooserActivity.EXTRA_TYPE_TO_CHOOSE;
 import static com.android.server.accessibility.AccessibilityManagerService.ACTION_LAUNCH_HEARING_DEVICES_DIALOG;
+import static com.android.server.accessibility.Flags.FLAG_ENABLE_MAGNIFICATION_KEYBOARD_CONTROL;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -68,7 +70,6 @@ import android.annotation.UserIdInt;
 import android.app.PendingIntent;
 import android.app.RemoteAction;
 import android.app.admin.DevicePolicyManager;
-import android.app.ecm.EnhancedConfirmationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -94,6 +95,7 @@ import android.os.UserHandle;
 import android.os.test.FakePermissionEnforcer;
 import android.platform.test.annotations.DisableFlags;
 import android.platform.test.annotations.EnableFlags;
+import android.platform.test.annotations.RequiresFlagsEnabled;
 import android.platform.test.flag.junit.SetFlagsRule;
 import android.provider.Settings;
 import android.testing.AndroidTestingRunner;
@@ -582,6 +584,31 @@ public class AccessibilityManagerServiceTest {
         mA11yms.readMagnificationFollowTypingLocked(userState);
 
         verify(mMockMagnificationController).setMagnificationFollowTypingEnabled(false);
+    }
+
+    @Test
+    @RequiresFlagsEnabled({FLAG_ENABLE_MAGNIFICATION_KEYBOARD_CONTROL, FLAG_KEYBOARD_REPEAT_KEYS})
+    public void testRepeatKeysSettingsChanges_propagateToMagnificationController() {
+        final AccessibilityUserState userState = mA11yms.mUserStates.get(
+                mA11yms.getCurrentUserIdLocked());
+        Settings.Secure.putIntForUser(
+                mTestableContext.getContentResolver(),
+                Settings.Secure.KEY_REPEAT_ENABLED,
+                0, mA11yms.getCurrentUserIdLocked());
+
+        mA11yms.readRepeatKeysSettingsLocked(userState);
+
+        verify(mMockMagnificationController).setRepeatKeysEnabled(false);
+
+        final int timeoutMs = 42;
+        Settings.Secure.putIntForUser(
+                mTestableContext.getContentResolver(),
+                Settings.Secure.KEY_REPEAT_TIMEOUT_MS,
+                timeoutMs, mA11yms.getCurrentUserIdLocked());
+
+        mA11yms.readRepeatKeysSettingsLocked(userState);
+
+        verify(mMockMagnificationController).setRepeatKeysTimeoutMs(timeoutMs);
     }
 
     @Test
@@ -2117,23 +2144,6 @@ public class AccessibilityManagerServiceTest {
 
         assertThat(mA11yms.getShortcutTypeForGenericShortcutCalls(userState.mUserId))
                 .isEqualTo(SOFTWARE);
-    }
-
-    @Test
-    @EnableFlags({android.permission.flags.Flags.FLAG_ENHANCED_CONFIRMATION_MODE_APIS_ENABLED,
-            android.security.Flags.FLAG_EXTEND_ECM_TO_ALL_SETTINGS})
-    public void isAccessibilityTargetAllowed_nonSystemUserId_useEcmWithNonSystemUserId() {
-        String fakePackageName = "FAKE_PACKAGE_NAME";
-        int uid = 0; // uid is not used in the actual implementation when flags are on
-        int userId = mTestableContext.getUserId() + 1234;
-        when(mDevicePolicyManager.getPermittedAccessibilityServices(userId)).thenReturn(
-                List.of(fakePackageName));
-        Context mockUserContext = mock(Context.class);
-        mTestableContext.addMockUserContext(userId, mockUserContext);
-
-        mA11yms.isAccessibilityTargetAllowed(fakePackageName, uid, userId);
-
-        verify(mockUserContext).getSystemService(EnhancedConfirmationManager.class);
     }
 
     @Test

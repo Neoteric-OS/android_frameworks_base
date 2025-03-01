@@ -54,9 +54,10 @@ import static android.media.AudioManager.RINGER_MODE_NORMAL;
 import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static android.media.AudioManager.RINGER_MODE_VIBRATE;
 import static android.media.AudioManager.STREAM_SYSTEM;
-import static android.media.IAudioManagerNative.HardeningType;
 import static android.media.audio.Flags.autoPublicVolumeApiHardening;
 import static android.media.audio.Flags.automaticBtDeviceType;
+import static android.media.audio.Flags.cacheGetStreamMinMaxVolume;
+import static android.media.audio.Flags.cacheGetStreamVolume;
 import static android.media.audio.Flags.concurrentAudioRecordBypassPermission;
 import static android.media.audio.Flags.featureSpatialAudioHeadtrackingLowLatency;
 import static android.media.audio.Flags.focusFreezeTestApi;
@@ -797,7 +798,8 @@ public class AudioService extends IAudioService.Stub
     private int mRingerModeExternal = -1;  // reported ringer mode to outside clients (AudioManager)
 
     /** @see System#MODE_RINGER_STREAMS_AFFECTED */
-    private int mRingerModeAffectedStreams = 0;
+    @VisibleForTesting
+    protected int mRingerModeAffectedStreams = 0;
 
     private int mZenModeAffectedStreams = 0;
 
@@ -853,6 +855,7 @@ public class AudioService extends IAudioService.Stub
 
     private final Executor mAudioServerLifecycleExecutor;
     private long mSysPropListenerNativeHandle;
+    private CacheWatcher mCacheWatcher;
     private final List<Future> mScheduledPermissionTasks = new ArrayList();
 
     private IMediaProjectionManager mProjectionService; // to validate projection token
@@ -914,6 +917,16 @@ public class AudioService extends IAudioService.Stub
         @Override
         public void permissionUpdateBarrier() {
             AudioService.this.permissionUpdateBarrier();
+        }
+
+        /**
+         * Update mute state event for port
+         * @param portId Port id to update
+         * @param event the mute event containing info about the mute
+         */
+        @Override
+        public void portMuteEvent(int portId, int event) {
+            mPlaybackMonitor.portMuteEvent(portId, event, Binder.getCallingUid());
         }
     };
 
@@ -1196,6 +1209,11 @@ public class AudioService extends IAudioService.Stub
     private @AttributeSystemUsage int[] mSupportedSystemUsages =
             new int[]{AudioAttributes.USAGE_CALL_ASSISTANT};
 
+    // Tracks the API/shell override of hardening enforcement used for debugging
+    // When this is set to true, enforcement is on regardless of flag state and any specific
+    // exemptions in place for compat purposes.
+    private final AtomicBoolean mShouldEnableAllHardening = new AtomicBoolean(false);
+
     // Defines the format for the connection "address" for ALSA devices
     public static String makeAlsaAddressString(int card, int device) {
         return "card=" + card + ";device=" + device;
@@ -1339,6 +1357,10 @@ public class AudioService extends IAudioService.Stub
         mAudioVolumeGroupHelper = audioVolumeGroupHelper;
         mSettings = settings;
         mAudioPolicy = audioPolicy;
+        mAudioPolicy.registerOnStartTask(() -> {
+            mAudioPolicy.setEnableHardening(mShouldEnableAllHardening.get());
+        });
+
         mPlatformType = AudioSystem.getPlatformType(context);
 
         mBroadcastHandlerThread = new HandlerThread("AudioService Broadcast");
@@ -1930,6 +1952,12 @@ public class AudioService extends IAudioService.Stub
             mSpatializerHelper.onRoutingUpdated();
         }
         checkMuteAwaitConnection();
+        if (cacheGetStreamVolume()) {
+            if (DEBUG_VOL) {
+                Log.d(TAG, "Clear volume cache after routing update");
+            }
+            AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
+        }
     }
 
     //-----------------------------------------------------------------
@@ -5044,6 +5072,10 @@ public class AudioService extends IAudioService.Stub
                 + ringMyCar());
         pw.println("\tandroid.media.audio.Flags.concurrentAudioRecordBypassPermission:"
                 + concurrentAudioRecordBypassPermission());
+        pw.println("\tandroid.media.audio.Flags.cacheGetStreamMinMaxVolume:"
+                + cacheGetStreamMinMaxVolume());
+        pw.println("\tandroid.media.audio.Flags.cacheGetStreamVolume:"
+                + cacheGetStreamVolume());
     }
 
     private void dumpAudioMode(PrintWriter pw) {
@@ -6362,17 +6394,15 @@ public class AudioService extends IAudioService.Stub
                     }
                 }
                 sRingerAndZenModeMutedStreams &= ~(1 << streamType);
-                sMuteLogger.enqueue(new AudioServiceEvents.RingerZenMutedStreamsEvent(
-                        sRingerAndZenModeMutedStreams, "muteRingerModeStreams"));
                 vss.mute(false, "muteRingerModeStreams");
             } else {
                 // mute
                 sRingerAndZenModeMutedStreams |= (1 << streamType);
-                sMuteLogger.enqueue(new AudioServiceEvents.RingerZenMutedStreamsEvent(
-                        sRingerAndZenModeMutedStreams, "muteRingerModeStreams"));
                 vss.mute(true, "muteRingerModeStreams");
             }
         }
+        sMuteLogger.enqueue(new AudioServiceEvents.RingerZenMutedStreamsEvent(
+                sRingerAndZenModeMutedStreams, "muteRingerModeStreams"));
     }
 
     private boolean isAlarm(int streamType) {
@@ -7110,6 +7140,13 @@ public class AudioService extends IAudioService.Stub
                         !isStreamMutedByRingerOrZenMode(streamType)) || mUseFixedVolume)) {
                     streamState.mIsMuted = false;
                 }
+            }
+            if (cacheGetStreamVolume()) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG,
+                            "Clear volume cache after possibly changing mute in readAudioSettings");
+                }
+                AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
             }
         }
 
@@ -9389,11 +9426,23 @@ public class AudioService extends IAudioService.Stub
             public void put(int key, int value) {
                 super.put(key, value);
                 record("put", key, value);
+                if (cacheGetStreamVolume()) {
+                    if (DEBUG_VOL) {
+                        Log.d(TAG, "Clear volume cache after update index map");
+                    }
+                    AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
+                }
             }
             @Override
             public void setValueAt(int index, int value) {
                 super.setValueAt(index, value);
                 record("setValueAt", keyAt(index), value);
+                if (cacheGetStreamVolume()) {
+                    if (DEBUG_VOL) {
+                        Log.d(TAG, "Clear volume cache after update index map");
+                    }
+                    AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
+                }
             }
 
             // Record all changes in the VolumeStreamState
@@ -9493,6 +9542,12 @@ public class AudioService extends IAudioService.Stub
                     mIndexMinNoPerm = mIndexMin;
                 }
             }
+            if (cacheGetStreamMinMaxVolume() && mStreamType == AudioSystem.STREAM_VOICE_CALL) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "Clear min volume cache from updateIndexFactors");
+                }
+                AudioManager.clearVolumeCache(AudioManager.VOLUME_MIN_CACHING_API);
+            }
 
             final int status = AudioSystem.initStreamVolume(
                     mStreamType, indexMinVolCurve, indexMaxVolCurve);
@@ -9530,10 +9585,18 @@ public class AudioService extends IAudioService.Stub
          * @param index minimum index expressed in "UI units", i.e. no 10x factor
          */
         public void updateNoPermMinIndex(int index) {
+            boolean changedNoPermMinIndex =
+                    cacheGetStreamMinMaxVolume() && (index * 10) != mIndexMinNoPerm;
             mIndexMinNoPerm = index * 10;
             if (mIndexMinNoPerm < mIndexMin) {
                 Log.e(TAG, "Invalid mIndexMinNoPerm for stream " + mStreamType);
                 mIndexMinNoPerm = mIndexMin;
+            }
+            if (changedNoPermMinIndex) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "Clear min volume cache from updateNoPermMinIndex");
+                }
+                AudioManager.clearVolumeCache(AudioManager.VOLUME_MIN_CACHING_API);
             }
         }
 
@@ -10109,27 +10172,38 @@ public class AudioService extends IAudioService.Stub
          * @return true if the mute state was changed
          */
         public boolean mute(boolean state, boolean apply, String src) {
+            boolean changed;
             synchronized (VolumeStreamState.class) {
-                boolean changed = state != mIsMuted;
+                changed = state != mIsMuted;
                 if (changed) {
                     sMuteLogger.enqueue(
                             new AudioServiceEvents.StreamMuteEvent(mStreamType, state, src));
                     // check to see if unmuting should not have happened due to ringer muted streams
                     if (!state && isStreamMutedByRingerOrZenMode(mStreamType)) {
-                        Log.e(TAG, "Unmuting stream " + mStreamType
+                        Slog.e(TAG, "Attempt to unmute stream " + mStreamType
                                 + " despite ringer-zen muted stream 0x"
                                 + Integer.toHexString(AudioService.sRingerAndZenModeMutedStreams),
                                 new Exception()); // this will put a stack trace in the logs
                         sMuteLogger.enqueue(new AudioServiceEvents.StreamUnmuteErrorEvent(
                                 mStreamType, AudioService.sRingerAndZenModeMutedStreams));
+                        // do not change mute state
+                        return false;
                     }
                     mIsMuted = state;
                     if (apply) {
                         doMute();
                     }
                 }
-                return changed;
             }
+
+            if (cacheGetStreamVolume() && changed) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "Clear volume cache after changing mute state");
+                }
+                AudioManager.clearVolumeCache(AudioManager.VOLUME_CACHING_API);
+            }
+
+            return changed;
         }
 
         public void doMute() {
@@ -11159,31 +11233,26 @@ public class AudioService extends IAudioService.Stub
                     }, getAudioPermissionsDelay(), TimeUnit.MILLISECONDS));
                 }
             };
-            mSysPropListenerNativeHandle = mAudioSystem.listenForSystemPropertyChange(
-                    PermissionManager.CACHE_KEY_PACKAGE_INFO_NOTIFY,
-                    task);
+            if (PropertyInvalidatedCache.separatePermissionNotificationsEnabled()) {
+                mCacheWatcher = new CacheWatcher(task);
+                mCacheWatcher.start();
+            } else {
+                mSysPropListenerNativeHandle = mAudioSystem.listenForSystemPropertyChange(
+                        PermissionManager.CACHE_KEY_PACKAGE_INFO_NOTIFY,
+                        task);
+            }
         } else {
             mAudioSystem.listenForSystemPropertyChange(
                     PermissionManager.CACHE_KEY_PACKAGE_INFO_NOTIFY,
                     () -> mAudioServerLifecycleExecutor.execute(
                                 mPermissionProvider::onPermissionStateChanged));
         }
-
-        if (PropertyInvalidatedCache.separatePermissionNotificationsEnabled()) {
-            new PackageInfoTransducer().start();
-        }
     }
 
     /**
-     * A transducer that converts high-speed changes in the CACHE_KEY_PACKAGE_INFO_CACHE
-     * PropertyInvalidatedCache into low-speed changes in the CACHE_KEY_PACKAGE_INFO_NOTIFY system
-     * property.  This operates on the popcorn principle: changes in the source are done when the
-     * source has been quiet for the soak interval.
-     *
-     * TODO(b/381097912) This is a temporary measure to support migration away from sysprop
-     * sniffing.  It should be cleaned up.
+     * Listens for CACHE_KEY_PACKAGE_INFO_CACHE invalidations to trigger permission syncing
      */
-    private static class PackageInfoTransducer extends Thread {
+    private static class CacheWatcher extends Thread {
 
         // The run/stop signal.
         private final AtomicBoolean mRunning = new AtomicBoolean(false);
@@ -11191,81 +11260,33 @@ public class AudioService extends IAudioService.Stub
         // The source of change information.
         private final PropertyInvalidatedCache.NonceWatcher mWatcher;
 
-        // The handler for scheduling delayed reactions to changes.
-        private final Handler mHandler;
+        // Task to trigger when cache changes
+        private final Runnable mTask;
 
-        // How long to soak changes: 50ms is the legacy choice.
-        private final static long SOAK_TIME_MS = 50;
-
-        // The ubiquitous lock.
-        private final Object mLock = new Object();
-
-        // If positive, this is the soak expiration time.
-        @GuardedBy("mLock")
-        private long mSoakDeadlineMs = -1;
-
-        // A source of unique long values.
-        @GuardedBy("mLock")
-        private long mToken = 0;
-
-        PackageInfoTransducer() {
-            mWatcher = PropertyInvalidatedCache
-                       .getNonceWatcher(PermissionManager.CACHE_KEY_PACKAGE_INFO_CACHE);
-            mHandler = new Handler(BackgroundThread.getHandler().getLooper()) {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        PackageInfoTransducer.this.handleMessage(msg);
-                    }};
+        public CacheWatcher(Runnable r) {
+            mWatcher = PropertyInvalidatedCache.getNonceWatcher(
+                    PermissionManager.CACHE_KEY_PACKAGE_INFO_CACHE);
+            mTask = r;
         }
 
         public void run() {
             mRunning.set(true);
             while (mRunning.get()) {
+                doCheck();
                 try {
-                    final int changes = mWatcher.waitForChange();
-                    if (changes == 0 || !mRunning.get()) {
-                        continue;
-                    }
+                    mWatcher.waitForChange();
                 } catch (InterruptedException e) {
+                    Log.wtf(TAG, "Unexpected Interrupt", e);
                     // We don't know why the exception occurred but keep running until told to
                     // stop.
                     continue;
                 }
-                trigger();
             }
         }
 
-        @GuardedBy("mLock")
-        private void updateLocked() {
-            String n = Long.toString(mToken++);
-            SystemPropertySetter.setWithRetry(PermissionManager.CACHE_KEY_PACKAGE_INFO_NOTIFY, n);
-        }
-
-        private void trigger() {
-            synchronized (mLock) {
-                boolean alreadyQueued = mSoakDeadlineMs >= 0;
-                final long nowMs = SystemClock.uptimeMillis();
-                mSoakDeadlineMs = nowMs + SOAK_TIME_MS;
-                if (!alreadyQueued) {
-                    mHandler.sendEmptyMessageAtTime(0, mSoakDeadlineMs);
-                    updateLocked();
-                }
-            }
-        }
-
-        private void handleMessage(Message msg) {
-            synchronized (mLock) {
-                if (mSoakDeadlineMs < 0) {
-                    return;  // ???
-                }
-                final long nowMs = SystemClock.uptimeMillis();
-                if (mSoakDeadlineMs > nowMs) {
-                    mSoakDeadlineMs = nowMs + SOAK_TIME_MS;
-                    mHandler.sendEmptyMessageAtTime(0, mSoakDeadlineMs);
-                    return;
-                }
-                mSoakDeadlineMs = -1;
-                updateLocked();
+        public synchronized void doCheck() {
+            if (mWatcher.isChanged()) {
+                mTask.run();
             }
         }
 
@@ -14813,6 +14834,7 @@ public class AudioService extends IAudioService.Stub
                 for (AudioMix mix : mMixes) {
                     mix.setVirtualDeviceId(mAttributionSource.getDeviceId());
                 }
+                mAudioSystem.registerPolicyMixes(mMixes, false);
                 return mAudioSystem.registerPolicyMixes(mMixes, true);
             } finally {
                 Binder.restoreCallingIdentity(identity);
@@ -15139,6 +15161,16 @@ public class AudioService extends IAudioService.Stub
         return true;
     }
 
+    /**
+     * @see AudioManager#setEnableHardening(boolean)
+     */
+    @android.annotation.EnforcePermission(MODIFY_AUDIO_SETTINGS_PRIVILEGED)
+    public void setEnableHardening(boolean shouldEnable) {
+        super.setEnableHardening_enforcePermission();
+        mShouldEnableAllHardening.set(shouldEnable);
+        mAudioPolicy.setEnableHardening(shouldEnable);
+    }
+
     //======================
     // Audioserver state dispatch
     //======================
@@ -15457,7 +15489,11 @@ public class AudioService extends IAudioService.Stub
     /** @see AudioManager#permissionUpdateBarrier() */
     public void permissionUpdateBarrier() {
         if (!audioserverPermissions()) return;
-        mAudioSystem.triggerSystemPropertyUpdate(mSysPropListenerNativeHandle);
+        if (PropertyInvalidatedCache.separatePermissionNotificationsEnabled()) {
+            mCacheWatcher.doCheck();
+        } else {
+            mAudioSystem.triggerSystemPropertyUpdate(mSysPropListenerNativeHandle);
+        }
         List<Future> snapshot;
         synchronized (mScheduledPermissionTasks) {
             snapshot = List.copyOf(mScheduledPermissionTasks);

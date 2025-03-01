@@ -196,6 +196,18 @@ flag {
 }
 
 flag {
+    name: "notification_undo_guts_on_config_changed"
+    namespace: "systemui"
+    description: "Fixes a bug where a theme or font change while notification guts were open"
+        " (e.g. the snooze options or notification info) would show an empty notification by"
+        " closing the guts and undoing changes."
+    bug: "379267630"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
    name: "pss_app_selector_recents_split_screen"
    namespace: "systemui"
    description: "Allows recent apps selected for partial screenshare to be launched in split screen mode"
@@ -234,6 +246,13 @@ flag {
     namespace: "systemui"
     description: "After notification avalanche floodgate event, suppress HUNs completely."
     bug: "321089634"
+}
+
+flag {
+  name: "notification_bundle_ui"
+  namespace: "systemui"
+  description: "Three-level group UI for notification bundles"
+  bug: "367996732"
 }
 
 flag {
@@ -534,6 +553,16 @@ flag {
 }
 
 flag {
+   name: "face_scanning_animation_npe_fix"
+   namespace: "systemui"
+   description: "Fix for the face scanning animation NPE"
+   bug: "392032258"
+   metadata {
+       purpose: PURPOSE_BUGFIX
+   }
+}
+
+flag {
     name: "indication_text_a11y_fix"
     namespace: "systemui"
     description: "add double shadow to the indication text at the bottom of the lock screen"
@@ -555,20 +584,6 @@ flag {
    namespace: "systemui"
    description: "Replace Record Trace QS Tile with expanded Record Issue QS Tile"
    bug: "305049544"
-}
-
-flag {
-   name: "clock_reactive_variants"
-   namespace: "systemui"
-   description: "Add reactive variant fonts to some clocks"
-   bug: "343495953"
-}
-
-flag {
-   name: "lockscreen_custom_clocks"
-   namespace: "systemui"
-   description: "Enable lockscreen custom clocks"
-   bug: "378486437"
 }
 
 flag {
@@ -613,13 +628,6 @@ flag {
   namespace: "systemui"
   description: "Enables detailed traversal slices during measure and layout in perfetto traces"
   bug: "315274804"
-}
-
-flag {
-   name: "quick_settings_visual_haptics_longpress"
-   namespace: "systemui"
-   description: "Enable special visual and haptic effects for quick settings tiles with long-press actions"
-   bug: "229856884"
 }
 
 flag {
@@ -1197,6 +1205,13 @@ flag {
 }
 
 flag {
+  name: "glanceable_hub_blurred_background"
+  namespace: "systemui"
+  description: "Allow blurred background on glanceable hub"
+  bug: "389788272"
+}
+
+flag {
   name: "communal_widget_resizing"
   namespace: "systemui"
   description: "Allow resizing of widgets on glanceable hub"
@@ -1318,10 +1333,13 @@ flag {
 }
 
 flag {
-  name: "media_controls_drawables_reuse"
+  name: "media_controls_drawables_reuse_bugfix"
   namespace: "systemui"
   description: "Re-use created media drawables for media controls"
   bug: "358402034"
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
 }
 
 flag {
@@ -1679,13 +1697,6 @@ flag {
 }
 
 flag {
-   name: "magic_portrait_wallpapers"
-   namespace: "systemui"
-   description: "Magic Portrait related changes in systemui"
-   bug: "370863642"
-}
-
-flag {
   name: "notes_role_qs_tile"
   namespace: "systemui"
   description: "Enables notes role qs tile which opens default notes role app in app bubbles"
@@ -1805,6 +1816,13 @@ flag {
     namespace: "systemui"
     description: "Enables the new blur effect on the Notification Shade."
     bug: "370555223"
+}
+
+flag {
+    name: "notification_row_transparency"
+    namespace: "systemui"
+    description: "Enables transparency on the Notification Shade."
+    bug: "392187268"
 }
 
 flag {
@@ -1942,23 +1960,10 @@ flag {
 }
 
 flag {
-    name: "stabilize_heads_up_group"
-    namespace: "systemui"
-    description: "Stabilize heads up groups in VisualStabilityCoordinator"
-    bug: "381864715"
-    metadata {
-      purpose: PURPOSE_BUGFIX
-    }
-}
-
-flag {
-   name: "magnetic_notification_horizontal_swipe"
+   name: "magnetic_notification_swipes"
    namespace: "systemui"
    description: "Add support for magnetic behavior on horizontal notification swipes."
    bug: "390179908"
-   metadata {
-        purpose: PURPOSE_BUGFIX
-   }
 }
 
 flag {
@@ -1966,6 +1971,13 @@ flag {
     namespace: "systemui"
     description: "Force promoted notifications to always be expanded"
     bug: "380901479"
+}
+
+flag {
+  name: "permission_helper_ui_rich_ongoing"
+  namespace: "systemui"
+  description: "[RONs] Guards inline permission helper for demoting RONs"
+  bug: "379186372"
 }
 
 flag {
@@ -1983,4 +1995,28 @@ flag {
     metadata {
       purpose: PURPOSE_BUGFIX
     }
+}
+
+flag {
+   name: "shade_launch_accessibility"
+   namespace: "systemui"
+   description: "Intercept accessibility focus events for the Shade during launch animations to avoid stray TalkBack events."
+   bug: "379222226"
+   metadata {
+        purpose: PURPOSE_BUGFIX
+   }
+}
+
+flag {
+    name: "show_locked_by_your_watch_keyguard_indicator"
+    namespace: "systemui"
+    description: "Show a Locked by your watch indicator on the keyguard when the device is locked by the watch."
+    bug: "387322459"
+}
+
+flag {
+    name: "decouple_view_controller_in_animlib"
+    namespace: "systemui"
+    description: "Decouple view and controller in AnimLib."
+    bug: "393241010"
 }

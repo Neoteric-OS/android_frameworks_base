@@ -38,7 +38,6 @@ import com.android.systemui.util.kotlin.sample
 import dagger.Lazy
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -55,7 +54,6 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 
 /** Models the UI state for the containing device entry icon & long-press handling view. */
-@ExperimentalCoroutinesApi
 @SysUISingleton
 class DeviceEntryIconViewModel
 @Inject
@@ -264,16 +262,6 @@ constructor(
         deviceEntrySourceInteractor.attemptEnterDeviceFromDeviceEntryIcon()
     }
 
-    private fun DeviceEntryIconView.IconType.toAccessibilityHintType():
-        DeviceEntryIconView.AccessibilityHintType {
-        return when (this) {
-            DeviceEntryIconView.IconType.FINGERPRINT,
-            DeviceEntryIconView.IconType.LOCK -> DeviceEntryIconView.AccessibilityHintType.BOUNCER
-            DeviceEntryIconView.IconType.UNLOCK -> DeviceEntryIconView.AccessibilityHintType.ENTER
-            DeviceEntryIconView.IconType.NONE -> DeviceEntryIconView.AccessibilityHintType.NONE
-        }
-    }
-
     companion object {
         const val UNLOCKED_DELAY_MS = 50L
     }
@@ -284,3 +272,13 @@ data class BurnInOffsets(
     val y: Int, // current y burn in offset based on the aodTransitionAmount
     val progress: Float, // current progress based on the aodTransitionAmount
 )
+
+fun DeviceEntryIconView.IconType.toAccessibilityHintType():
+    DeviceEntryIconView.AccessibilityHintType {
+    return when (this) {
+        DeviceEntryIconView.IconType.FINGERPRINT,
+        DeviceEntryIconView.IconType.LOCK -> DeviceEntryIconView.AccessibilityHintType.BOUNCER
+        DeviceEntryIconView.IconType.UNLOCK -> DeviceEntryIconView.AccessibilityHintType.ENTER
+        DeviceEntryIconView.IconType.NONE -> DeviceEntryIconView.AccessibilityHintType.NONE
+    }
+}

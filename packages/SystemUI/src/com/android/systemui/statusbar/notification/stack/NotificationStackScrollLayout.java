@@ -24,6 +24,7 @@ import static android.view.MotionEvent.ACTION_UP;
 import static com.android.app.tracing.TrackGroupUtils.trackGroup;
 import static com.android.internal.jank.InteractionJankMonitor.CUJ_NOTIFICATION_SHADE_SCROLL_FLING;
 import static com.android.internal.jank.InteractionJankMonitor.CUJ_SHADE_CLEAR_ALL;
+import static com.android.systemui.Flags.magneticNotificationSwipes;
 import static com.android.systemui.Flags.notificationOverExpansionClippingFix;
 import static com.android.systemui.statusbar.notification.stack.NotificationPriorityBucketKt.BUCKET_SILENT;
 import static com.android.systemui.statusbar.notification.stack.StackStateAnimator.ANIMATION_DURATION_SWIPE;
@@ -5787,17 +5788,21 @@ public class NotificationStackScrollLayout
                 getChildrenWithBackground()
         );
 
-        RoundableTargets targets = mController.getNotificationTargetsHelper().findRoundableTargets(
-                (ExpandableNotificationRow) viewSwiped,
-                this,
-                mSectionsManager
-        );
+        if (!magneticNotificationSwipes()) {
+            RoundableTargets targets = mController
+                    .getNotificationTargetsHelper()
+                    .findRoundableTargets(
+                            (ExpandableNotificationRow) viewSwiped,
+                            this,
+                            mSectionsManager);
 
-        mController.getNotificationRoundnessManager()
-                .setViewsAffectedBySwipe(
-                        targets.getBefore(),
-                        targets.getSwiped(),
-                        targets.getAfter());
+            mController.getNotificationRoundnessManager()
+                    .setViewsAffectedBySwipe(
+                            targets.getBefore(),
+                            targets.getSwiped(),
+                            targets.getAfter());
+
+        }
 
         updateFirstAndLastBackgroundViews();
         requestDisallowInterceptTouchEvent(true);
@@ -6678,8 +6683,21 @@ public class NotificationStackScrollLayout
         }
         NotificationHeaderView header = childrenContainer.getGroupHeader();
         if (header != null) {
+            resetYTranslation(header.getTopLineView());
+            resetYTranslation(header.getExpandButton());
             header.centerTopLine(expanded);
         }
+    }
+
+    /**
+     * Reset the y translation of the {@code view} via the {@link ViewState}, to ensure that the
+     * animation state is updated correctly.
+     */
+    private static void resetYTranslation(View view) {
+        ViewState viewState = new ViewState();
+        viewState.initFrom(view);
+        viewState.setYTranslation(0);
+        viewState.applyToView(view);
     }
 
     private final ExpandHelper.Callback mExpandHelperCallback = new ExpandHelper.Callback() {

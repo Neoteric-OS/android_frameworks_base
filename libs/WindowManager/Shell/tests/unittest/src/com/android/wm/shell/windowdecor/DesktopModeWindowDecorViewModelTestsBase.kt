@@ -25,9 +25,6 @@ import android.graphics.Rect
 import android.hardware.input.InputManager
 import android.os.Handler
 import android.os.UserHandle
-import android.platform.test.flag.junit.CheckFlagsRule
-import android.platform.test.flag.junit.DeviceFlagsValueProvider
-import android.platform.test.flag.junit.SetFlagsRule
 import android.testing.TestableContext
 import android.util.SparseArray
 import android.view.Choreographer
@@ -69,6 +66,7 @@ import com.android.wm.shell.desktopmode.education.AppToWebEducationController
 import com.android.wm.shell.freeform.FreeformTaskTransitionStarter
 import com.android.wm.shell.recents.RecentsTransitionHandler
 import com.android.wm.shell.recents.RecentsTransitionStateListener
+import com.android.wm.shell.shared.desktopmode.DesktopModeCompatPolicy
 import com.android.wm.shell.splitscreen.SplitScreenController
 import com.android.wm.shell.sysui.ShellCommandHandler
 import com.android.wm.shell.sysui.ShellController
@@ -83,7 +81,6 @@ import com.android.wm.shell.windowdecor.common.viewhost.WindowDecorViewHost
 import com.android.wm.shell.windowdecor.common.viewhost.WindowDecorViewHostSupplier
 import com.android.wm.shell.windowdecor.viewholder.AppHeaderViewHolder
 import org.junit.After
-import org.junit.Rule
 import org.mockito.Mockito
 import org.mockito.Mockito.anyInt
 import org.mockito.kotlin.any
@@ -104,14 +101,6 @@ import kotlinx.coroutines.MainCoroutineDispatcher
  */
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
-    @JvmField
-    @Rule
-    val setFlagsRule = SetFlagsRule()
-
-    @JvmField
-    @Rule
-    val checkFlagsRule: CheckFlagsRule = DeviceFlagsValueProvider.createCheckFlagsRule()
-
     private val mockDesktopModeWindowDecorFactory = mock<DesktopModeWindowDecoration.Factory>()
     protected val mockMainHandler = mock<Handler>()
     protected val mockMainChoreographer = mock<Choreographer>()
@@ -175,6 +164,7 @@ open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
             DisplayChangeController.OnDisplayChangingListener
     internal lateinit var desktopModeOnKeyguardChangedListener: DesktopModeKeyguardChangeListener
     protected lateinit var desktopModeWindowDecorViewModel: DesktopModeWindowDecorViewModel
+    protected lateinit var desktopModeCompatPolicy: DesktopModeCompatPolicy
 
     fun setUpCommon() {
         spyContext = spy(mContext)
@@ -188,6 +178,7 @@ open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
         whenever(mockDisplayController.getDisplay(any())).thenReturn(display)
         whenever(mockDesktopUserRepositories.getProfile(anyInt()))
             .thenReturn(mockDesktopRepository)
+        desktopModeCompatPolicy = DesktopModeCompatPolicy(context)
         desktopModeWindowDecorViewModel = DesktopModeWindowDecorViewModel(
             spyContext,
             testShellExecutor,
@@ -230,6 +221,7 @@ open class DesktopModeWindowDecorViewModelTestsBase : ShellTestCase() {
             mock<DesktopModeUiEventLogger>(),
             mock<WindowDecorTaskResourceLoader>(),
             mockRecentsTransitionHandler,
+            desktopModeCompatPolicy,
         )
         desktopModeWindowDecorViewModel.setSplitScreenController(mockSplitScreenController)
         whenever(mockDisplayController.getDisplayLayout(any())).thenReturn(mockDisplayLayout)

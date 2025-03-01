@@ -27,15 +27,19 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.deviceentry.domain.interactor.DeviceUnlockedInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardEnabledInteractor
+import com.android.systemui.log.table.Diffable
+import com.android.systemui.log.table.TableLogBuffer
+import com.android.systemui.log.table.TableRowLogger
 import com.android.systemui.scene.data.repository.SceneContainerRepository
 import com.android.systemui.scene.domain.resolver.SceneResolver
 import com.android.systemui.scene.shared.logger.SceneLogger
 import com.android.systemui.scene.shared.model.SceneFamilies
 import com.android.systemui.scene.shared.model.Scenes
+import com.android.systemui.util.kotlin.pairwise
 import dagger.Lazy
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -48,6 +52,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 /**
  * Generic business logic and app state accessors for the scene framework.
@@ -56,7 +61,6 @@ import kotlinx.coroutines.flow.update
  * other feature modules should depend on and call into this class when their parts of the
  * application state change.
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @SysUISingleton
 class SceneInteractor
 @Inject
@@ -149,7 +153,6 @@ constructor(
      * their finger to transition between scenes, this value will be true while their finger is on
      * the screen, then false for the rest of the transition.
      */
-    @OptIn(ExperimentalCoroutinesApi::class)
     val isTransitionUserInputOngoing: StateFlow<Boolean> =
         transitionState
             .flatMapLatest {
@@ -565,6 +568,28 @@ constructor(
         decrementActiveTransitionAnimationCount()
     }
 
+    suspend fun hydrateTableLogBuffer(tableLogBuffer: TableLogBuffer) {
+        coroutineScope {
+            launch {
+                currentScene
+                    .map { sceneKey -> DiffableSceneKey(key = sceneKey) }
+                    .pairwise()
+                    .collect { (prev, current) ->
+                        tableLogBuffer.logDiffs(prevVal = prev, newVal = current)
+                    }
+            }
+
+            launch {
+                currentOverlays
+                    .map { overlayKeys -> DiffableOverlayKeys(keys = overlayKeys) }
+                    .pairwise()
+                    .collect { (prev, current) ->
+                        tableLogBuffer.logDiffs(prevVal = prev, newVal = current)
+                    }
+            }
+        }
+    }
+
     private fun decrementActiveTransitionAnimationCount() {
         repository.activeTransitionAnimationCount.update { current ->
             (current - 1).also {
@@ -574,6 +599,22 @@ constructor(
                         " many times!"
                 }
             }
+        }
+    }
+
+    private class DiffableSceneKey(private val key: SceneKey) : Diffable<DiffableSceneKey> {
+        override fun logDiffs(prevVal: DiffableSceneKey, row: TableRowLogger) {
+            row.logChange(columnName = "currentScene", value = key.debugName)
+        }
+    }
+
+    private class DiffableOverlayKeys(private val keys: Set<OverlayKey>) :
+        Diffable<DiffableOverlayKeys> {
+        override fun logDiffs(prevVal: DiffableOverlayKeys, row: TableRowLogger) {
+            row.logChange(
+                columnName = "currentOverlays",
+                value = keys.joinToString { key -> key.debugName },
+            )
         }
     }
 }

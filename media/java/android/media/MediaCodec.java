@@ -20,6 +20,8 @@ import static android.media.codec.Flags.FLAG_CODEC_AVAILABILITY;
 import static android.media.codec.Flags.FLAG_NULL_OUTPUT_SURFACE;
 import static android.media.codec.Flags.FLAG_REGION_OF_INTEREST;
 import static android.media.codec.Flags.FLAG_SUBSESSION_METRICS;
+import static android.media.tv.flags.Flags.applyPictureProfiles;
+import static android.media.tv.flags.Flags.mediaQualityFw;
 
 import static com.android.media.codec.flags.Flags.FLAG_LARGE_AUDIO_FRAME;
 
@@ -37,6 +39,8 @@ import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.hardware.HardwareBuffer;
 import android.media.MediaCodecInfo.CodecCapabilities;
+import android.media.quality.PictureProfile;
+import android.media.quality.PictureProfileHandle;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +48,7 @@ import android.os.IHwBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.os.Trace;
 import android.view.Surface;
 
 import java.io.IOException;
@@ -3103,6 +3108,7 @@ final public class MediaCodec {
             int index,
             int offset, int size, long presentationTimeUs, int flags)
         throws CryptoException {
+        Trace.traceBegin(Trace.TRACE_TAG_VIDEO, "MediaCodec::queueInputBuffer#java");
         if ((flags & BUFFER_FLAG_DECODE_ONLY) != 0
                 && (flags & BUFFER_FLAG_END_OF_STREAM) != 0) {
             throw new InvalidBufferFlagsException(EOS_AND_DECODE_ONLY_ERROR_MESSAGE);
@@ -3122,6 +3128,8 @@ final public class MediaCodec {
         } catch (CryptoException | IllegalStateException e) {
             revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
             throw e;
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_VIDEO);
         }
     }
 
@@ -3163,6 +3171,7 @@ final public class MediaCodec {
     public final void queueInputBuffers(
             int index,
             @NonNull ArrayDeque<BufferInfo> bufferInfos) {
+        Trace.traceBegin(Trace.TRACE_TAG_VIDEO, "MediaCodec::queueInputBuffers#java");
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("queueInputBuffers() "
@@ -3178,6 +3187,8 @@ final public class MediaCodec {
         } catch (CryptoException | IllegalStateException | IllegalArgumentException e) {
             revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
             throw e;
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_VIDEO);
         }
     }
 
@@ -3438,6 +3449,7 @@ final public class MediaCodec {
             @NonNull CryptoInfo info,
             long presentationTimeUs,
             int flags) throws CryptoException {
+        Trace.traceBegin(Trace.TRACE_TAG_VIDEO, "MediaCodec::queueSecureInputBuffer#java");
         if ((flags & BUFFER_FLAG_DECODE_ONLY) != 0
                 && (flags & BUFFER_FLAG_END_OF_STREAM) != 0) {
             throw new InvalidBufferFlagsException(EOS_AND_DECODE_ONLY_ERROR_MESSAGE);
@@ -3457,6 +3469,8 @@ final public class MediaCodec {
         } catch (CryptoException | IllegalStateException e) {
             revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
             throw e;
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_VIDEO);
         }
     }
 
@@ -3487,6 +3501,7 @@ final public class MediaCodec {
             int index,
             @NonNull ArrayDeque<BufferInfo> bufferInfos,
             @NonNull ArrayDeque<CryptoInfo> cryptoInfos) {
+        Trace.traceBegin(Trace.TRACE_TAG_VIDEO, "MediaCodec::queueSecureInputBuffers#java");
         synchronized(mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("queueSecureInputBuffers() "
@@ -3502,6 +3517,8 @@ final public class MediaCodec {
         } catch (CryptoException | IllegalStateException | IllegalArgumentException e) {
             revalidateByteBuffer(mCachedInputBuffers, index, true /* input */);
             throw e;
+        } finally {
+            Trace.traceEnd(Trace.TRACE_TAG_VIDEO);
         }
     }
 
@@ -3529,6 +3546,7 @@ final public class MediaCodec {
      * @throws MediaCodec.CodecException upon codec error.
      */
     public final int dequeueInputBuffer(long timeoutUs) {
+        Trace.traceBegin(Trace.TRACE_TAG_VIDEO, "MediaCodec::dequeueInputBuffer#java");
         synchronized (mBufferLock) {
             if (mBufferMode == BUFFER_MODE_BLOCK) {
                 throw new IncompatibleWithBlockModelException("dequeueInputBuffer() "
@@ -3542,6 +3560,7 @@ final public class MediaCodec {
                 validateInputByteBufferLocked(mCachedInputBuffers, res);
             }
         }
+        Trace.traceEnd(Trace.TRACE_TAG_VIDEO);
         return res;
     }
 
@@ -3869,7 +3888,9 @@ final public class MediaCodec {
 
         /**
          * Set a hardware graphic buffer to this queue request. Exactly one buffer must
-         * be set for a queue request before calling {@link #queue}.
+         * be set for a queue request before calling {@link #queue}. Ownership of the
+         * hardware buffer is not transferred to this queue request, nor will it be transferred
+         * to the codec once {@link #queue} is called.
          * <p>
          * Note: buffers should have format {@link HardwareBuffer#YCBCR_420_888},
          * a single layer, and an appropriate usage ({@link HardwareBuffer#USAGE_CPU_READ_OFTEN}
@@ -5370,6 +5391,9 @@ final public class MediaCodec {
      * @param params The bundle of parameters to set.
      * @throws IllegalStateException if in the Released state.
      */
+
+    private static final String PARAMETER_KEY_PICTURE_PROFILE_HANDLE = "picture-profile-handle";
+
     public final void setParameters(@Nullable Bundle params) {
         if (params == null) {
             return;
@@ -5383,19 +5407,41 @@ final public class MediaCodec {
             if (key.equals(MediaFormat.KEY_AUDIO_SESSION_ID)) {
                 int sessionId = 0;
                 try {
-                    sessionId = (Integer)params.get(key);
+                    sessionId = (Integer) params.get(key);
                 } catch (Exception e) {
                     throw new IllegalArgumentException("Wrong Session ID Parameter!");
                 }
                 keys[i] = "audio-hw-sync";
                 values[i] = AudioSystem.getAudioHwSyncForSession(sessionId);
+            } else if (applyPictureProfiles() && mediaQualityFw()
+                    && key.equals(MediaFormat.KEY_PICTURE_PROFILE_INSTANCE)) {
+                PictureProfile pictureProfile = null;
+                try {
+                    pictureProfile = (PictureProfile) params.get(key);
+                } catch (ClassCastException e) {
+                    throw new IllegalArgumentException(
+                            "Cannot cast the instance parameter to PictureProfile!");
+                } catch (Exception e) {
+                    android.util.Log.getStackTraceString(e);
+                    throw new IllegalArgumentException("Unexpected exception when casting the "
+                                                       + "instance parameter to PictureProfile!");
+                }
+                if (pictureProfile == null) {
+                    throw new IllegalArgumentException(
+                            "Picture profile instance parameter is null!");
+                }
+                PictureProfileHandle handle = pictureProfile.getHandle();
+                if (handle != PictureProfileHandle.NONE) {
+                    keys[i] = PARAMETER_KEY_PICTURE_PROFILE_HANDLE;
+                    values[i] = Long.valueOf(handle.getId());
+                }
             } else {
                 keys[i] = key;
                 Object value = params.get(key);
 
                 // Bundle's byte array is a byte[], JNI layer only takes ByteBuffer
                 if (value instanceof byte[]) {
-                    values[i] = ByteBuffer.wrap((byte[])value);
+                    values[i] = ByteBuffer.wrap((byte[]) value);
                 } else {
                     values[i] = value;
                 }

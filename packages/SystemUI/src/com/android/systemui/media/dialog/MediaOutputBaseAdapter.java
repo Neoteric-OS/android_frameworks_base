@@ -16,14 +16,11 @@
 
 package com.android.systemui.media.dialog;
 
-import static com.android.systemui.media.dialog.MediaOutputSeekbar.VOLUME_PERCENTAGE_SCALE_SIZE;
-
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.app.WallpaperColors;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Typeface;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -37,7 +34,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -46,6 +42,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.media.flags.Flags;
 import com.android.settingslib.media.InputMediaDevice;
 import com.android.settingslib.media.MediaDevice;
 import com.android.settingslib.utils.ThreadUtils;
@@ -95,10 +92,6 @@ public abstract class MediaOutputBaseAdapter extends
         mController.setCurrentColorScheme(wallpaperColors, isDarkTheme);
     }
 
-    CharSequence getItemTitle(MediaDevice device) {
-        return device.getName();
-    }
-
     boolean isCurrentlyConnected(MediaDevice device) {
         return TextUtils.equals(device.getId(),
                 mController.getCurrentConnectedMediaDevice().getId())
@@ -138,12 +131,10 @@ public abstract class MediaOutputBaseAdapter extends
         final FrameLayout mItemLayout;
         final FrameLayout mIconAreaLayout;
         final TextView mTitleText;
-        final TextView mTwoLineTitleText;
         final TextView mSubTitleText;
         final TextView mVolumeValueText;
         final ImageView mTitleIcon;
         final ProgressBar mProgressBar;
-        final LinearLayout mTwoLineLayout;
         final ImageView mStatusIcon;
         final CheckBox mCheckBox;
         final ViewGroup mEndTouchArea;
@@ -161,8 +152,6 @@ public abstract class MediaOutputBaseAdapter extends
             mItemLayout = view.requireViewById(R.id.item_layout);
             mTitleText = view.requireViewById(R.id.title);
             mSubTitleText = view.requireViewById(R.id.subtitle);
-            mTwoLineLayout = view.requireViewById(R.id.two_line_layout);
-            mTwoLineTitleText = view.requireViewById(R.id.two_line_title);
             mTitleIcon = view.requireViewById(R.id.title_icon);
             mProgressBar = view.requireViewById(R.id.volume_indeterminate_progress);
             mSeekBar = view.requireViewById(R.id.volume_seekbar);
@@ -185,9 +174,8 @@ public abstract class MediaOutputBaseAdapter extends
             mContainerLayout.setContentDescription(null);
             mTitleText.setTextColor(mController.getColorItemContent());
             mSubTitleText.setTextColor(mController.getColorItemContent());
-            mSubTitleText.setSelected(true);
-            mTwoLineTitleText.setTextColor(mController.getColorItemContent());
             mVolumeValueText.setTextColor(mController.getColorItemContent());
+            mIconAreaLayout.setBackground(null);
             mSeekBar.setProgressTintList(
                     ColorStateList.valueOf(mController.getColorSeekbarProgress()));
         }
@@ -198,7 +186,6 @@ public abstract class MediaOutputBaseAdapter extends
 
         void setSingleLineLayout(CharSequence title, boolean showSeekBar,
                 boolean showProgressBar, boolean showCheckBox, boolean showEndTouchArea) {
-            mTwoLineLayout.setVisibility(View.GONE);
             boolean isActive = showSeekBar || showProgressBar;
             if (!mCornerAnimator.isRunning()) {
                 final Drawable backgroundDrawable =
@@ -216,10 +203,6 @@ public abstract class MediaOutputBaseAdapter extends
             mItemLayout.setBackgroundTintList(
                     ColorStateList.valueOf(isActive ? mController.getColorConnectedItemBackground()
                             : mController.getColorItemBackground()));
-            mIconAreaLayout.setBackgroundTintList(
-                    ColorStateList.valueOf(showSeekBar ? mController.getColorSeekbarProgress()
-                            : showProgressBar ? mController.getColorConnectedItemBackground()
-                                    : mController.getColorItemBackground()));
             mProgressBar.setVisibility(showProgressBar ? View.VISIBLE : View.GONE);
             mSeekBar.setAlpha(1);
             mSeekBar.setVisibility(showSeekBar ? View.VISIBLE : View.GONE);
@@ -227,43 +210,37 @@ public abstract class MediaOutputBaseAdapter extends
                 mSeekBar.resetVolume();
             }
             mTitleText.setText(title);
-            mTitleText.setVisibility(View.VISIBLE);
             mCheckBox.setVisibility(showCheckBox ? View.VISIBLE : View.GONE);
             mEndTouchArea.setVisibility(showEndTouchArea ? View.VISIBLE : View.GONE);
+            if (Flags.enableOutputSwitcherSessionGrouping()) {
+                mEndClickIcon.setVisibility(
+                        !showCheckBox && showEndTouchArea ? View.VISIBLE : View.GONE);
+            }
             ViewGroup.MarginLayoutParams params =
                     (ViewGroup.MarginLayoutParams) mItemLayout.getLayoutParams();
             params.rightMargin = showEndTouchArea ? mController.getItemMarginEndSelectable()
                     : mController.getItemMarginEndDefault();
         }
 
-        void setTwoLineLayout(MediaDevice device, boolean bFocused, boolean showSeekBar,
-                boolean showProgressBar, boolean showSubtitle, boolean showStatus,
-                boolean isFakeActive) {
-            setTwoLineLayout(device, null, bFocused, showSeekBar, showProgressBar, showSubtitle,
-                    showStatus, false, isFakeActive);
+        void setTwoLineLayout(CharSequence title, boolean showSeekBar,
+                boolean showProgressBar, boolean showSubtitle, boolean showStatus) {
+            setTwoLineLayout(title, showSeekBar, showProgressBar, showSubtitle, showStatus, false);
         }
 
-        void setTwoLineLayout(MediaDevice device, CharSequence title, boolean bFocused,
+        void setTwoLineLayout(CharSequence title,
                 boolean showSeekBar, boolean showProgressBar, boolean showSubtitle,
-                boolean showStatus , boolean showEndTouchArea, boolean isFakeActive) {
-            mTitleText.setVisibility(View.GONE);
-            mTwoLineLayout.setVisibility(View.VISIBLE);
+                boolean showStatus , boolean showEndTouchArea) {
             mStatusIcon.setVisibility(showStatus ? View.VISIBLE : View.GONE);
             mSeekBar.setAlpha(1);
             mSeekBar.setVisibility(showSeekBar ? View.VISIBLE : View.GONE);
             final Drawable backgroundDrawable;
             backgroundDrawable = mContext.getDrawable(
-                    showSeekBar || isFakeActive ? R.drawable.media_output_item_background_active
+                    showSeekBar ? R.drawable.media_output_item_background_active
                             : R.drawable.media_output_item_background).mutate();
             mItemLayout.setBackgroundTintList(ColorStateList.valueOf(
-                    showSeekBar || isFakeActive ? mController.getColorConnectedItemBackground()
+                    showSeekBar ? mController.getColorConnectedItemBackground()
                             : mController.getColorItemBackground()
             ));
-            mIconAreaLayout.setBackgroundTintList(
-                    ColorStateList.valueOf(showProgressBar || isFakeActive
-                            ? mController.getColorConnectedItemBackground()
-                            : showSeekBar ? mController.getColorSeekbarProgress()
-                                    : mController.getColorItemBackground()));
             if (showSeekBar) {
                 updateSeekbarProgressBackground();
             }
@@ -277,12 +254,7 @@ public abstract class MediaOutputBaseAdapter extends
             mItemLayout.setBackground(backgroundDrawable);
             mProgressBar.setVisibility(showProgressBar ? View.VISIBLE : View.GONE);
             mSubTitleText.setVisibility(showSubtitle ? View.VISIBLE : View.GONE);
-            mTwoLineTitleText.setTranslationY(0);
-            mTwoLineTitleText.setText(device == null ? title : getItemTitle(device));
-            mTwoLineTitleText.setTypeface(Typeface.create(mContext.getString(
-                            bFocused ? com.android.internal.R.string.config_headlineFontFamilyMedium
-                                    : com.android.internal.R.string.config_headlineFontFamily),
-                    Typeface.NORMAL));
+            mTitleText.setText(title);
         }
 
         void updateSeekbarProgressBackground() {
@@ -298,14 +270,8 @@ public abstract class MediaOutputBaseAdapter extends
                             mController.getActiveRadius(), 0, 0});
         }
 
-        void initSeekbar(MediaDevice device, boolean isCurrentSeekbarInvisible) {
-            if (!mController.isVolumeControlEnabled(device)) {
-                disableSeekBar();
-            } else {
-                enableSeekBar(device);
-            }
-            mSeekBar.setMaxVolume(device.getMaxVolume());
-            final int currentVolume = device.getCurrentVolume();
+        private void initializeSeekbarVolume(
+                MediaDevice device, int currentVolume, boolean isCurrentSeekbarInvisible) {
             if (!mIsDragging) {
                 if (mSeekBar.getVolume() != currentVolume && (mLatestUpdateVolume == -1
                         || currentVolume == mLatestUpdateVolume)) {
@@ -320,10 +286,7 @@ public abstract class MediaOutputBaseAdapter extends
                         }
                     } else {
                         if (!mVolumeAnimator.isStarted()) {
-                            int percentage =
-                                    (int) ((double) currentVolume * VOLUME_PERCENTAGE_SCALE_SIZE
-                                            / (double) mSeekBar.getMax());
-                            if (percentage == 0) {
+                            if (currentVolume == 0) {
                                 updateMutedVolumeIcon(device);
                             } else {
                                 updateUnmutedVolumeIcon(device);
@@ -343,54 +306,75 @@ public abstract class MediaOutputBaseAdapter extends
             if (mIsInitVolumeFirstTime) {
                 mIsInitVolumeFirstTime = false;
             }
-            mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                boolean mStartFromMute = false;
+        }
+
+        void initSeekbar(MediaDevice device, boolean isCurrentSeekbarInvisible) {
+            SeekBarVolumeControl volumeControl = new SeekBarVolumeControl() {
                 @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    if (device == null || !fromUser) {
-                        return;
-                    }
-                    int progressToVolume = MediaOutputSeekbar.scaleProgressToVolume(progress);
-                    int deviceVolume = device.getCurrentVolume();
-                    int percentage =
-                            (int) ((double) progressToVolume * VOLUME_PERCENTAGE_SCALE_SIZE
-                                    / (double) seekBar.getMax());
-                    mVolumeValueText.setText(mContext.getResources().getString(
-                            R.string.media_output_dialog_volume_percentage, percentage));
-                    if (mStartFromMute) {
-                        updateUnmutedVolumeIcon(device);
-                        mStartFromMute = false;
-                    }
-                    if (progressToVolume != deviceVolume) {
-                        mLatestUpdateVolume = progressToVolume;
-                        mController.adjustVolume(device, progressToVolume);
-                    }
+                public int getVolume() {
+                    return device.getCurrentVolume();
+                }
+                @Override
+                public void setVolume(int volume) {
+                    mController.adjustVolume(device, volume);
                 }
 
                 @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    mTitleIcon.setVisibility(View.INVISIBLE);
-                    mVolumeValueText.setVisibility(View.VISIBLE);
-                    int currentVolume = MediaOutputSeekbar.scaleProgressToVolume(
-                            seekBar.getProgress());
-                    mStartFromMute = (currentVolume == 0);
-                    mIsDragging = true;
+                public void onMute() {
+                    mController.logInteractionUnmuteDevice(device);
                 }
+            };
 
+            if (!mController.isVolumeControlEnabled(device)) {
+                disableSeekBar();
+            } else {
+                enableSeekBar(volumeControl);
+            }
+            mSeekBar.setMaxVolume(device.getMaxVolume());
+            final int currentVolume = device.getCurrentVolume();
+            initializeSeekbarVolume(device, currentVolume, isCurrentSeekbarInvisible);
+
+            mSeekBar.setOnSeekBarChangeListener(new MediaSeekBarChangedListener(
+                    device, volumeControl) {
                 @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    int currentVolume = MediaOutputSeekbar.scaleProgressToVolume(
-                            seekBar.getProgress());
-                    if (currentVolume == 0) {
-                        seekBar.setProgress(0);
-                        updateMutedVolumeIcon(device);
-                    } else {
-                        updateUnmutedVolumeIcon(device);
-                    }
-                    mTitleIcon.setVisibility(View.VISIBLE);
-                    mVolumeValueText.setVisibility(View.GONE);
+                public void onStopTrackingTouch(SeekBar seekbar) {
+                    super.onStopTrackingTouch(seekbar);
                     mController.logInteractionAdjustVolume(device);
-                    mIsDragging = false;
+                }
+            });
+        }
+
+        // Initializes the seekbar for a group of devices.
+        void initGroupSeekbar(boolean isCurrentSeekbarInvisible) {
+            SeekBarVolumeControl volumeControl = new SeekBarVolumeControl() {
+                @Override
+                public int getVolume() {
+                    return mController.getSessionVolume();
+                }
+
+                @Override
+                public void setVolume(int volume) {
+                    mController.adjustSessionVolume(volume);
+                }
+
+                @Override
+                public void onMute() {}
+            };
+
+            if (!mController.isVolumeControlEnabledForSession()) {
+                disableSeekBar();
+            } else {
+                enableSeekBar(volumeControl);
+            }
+            mSeekBar.setMaxVolume(mController.getSessionVolumeMax());
+
+            final int currentVolume = mController.getSessionVolume();
+            initializeSeekbarVolume(null, currentVolume, isCurrentSeekbarInvisible);
+            mSeekBar.setOnSeekBarChangeListener(new MediaSeekBarChangedListener(
+                    null, volumeControl) {
+                @Override
+                protected boolean shouldHandleProgressChanged() {
+                    return true;
                 }
             });
         }
@@ -421,7 +405,7 @@ public abstract class MediaOutputBaseAdapter extends
         int getDrawableId(boolean isInputDevice, boolean isMutedVolumeIcon) {
             // Returns the microphone icon when the flag is enabled and the device is an input
             // device.
-            if (com.android.media.flags.Flags.enableAudioInputDeviceRoutingAndVolumeControl()
+            if (Flags.enableAudioInputDeviceRoutingAndVolumeControl()
                     && isInputDevice) {
                 return isMutedVolumeIcon ? R.drawable.ic_mic_off : R.drawable.ic_mic_26dp;
             }
@@ -443,8 +427,7 @@ public abstract class MediaOutputBaseAdapter extends
             mItemLayout.setBackground(backgroundDrawable);
             mItemLayout.setBackgroundTintList(
                     ColorStateList.valueOf(mController.getColorConnectedItemBackground()));
-            mIconAreaLayout.setBackgroundTintList(
-                    ColorStateList.valueOf(mController.getColorConnectedItemBackground()));
+            mIconAreaLayout.setBackground(null);
         }
 
         private void endAnimateCornerAndVolume() {
@@ -494,27 +477,28 @@ public abstract class MediaOutputBaseAdapter extends
             updateIconAreaClickListener(null);
         }
 
-        private void enableSeekBar(MediaDevice device) {
+        private void enableSeekBar(SeekBarVolumeControl volumeControl) {
             mSeekBar.setEnabled(true);
+
             mSeekBar.setOnTouchListener((v, event) -> false);
             updateIconAreaClickListener((v) -> {
-                if (device.getCurrentVolume() == 0) {
-                    mController.logInteractionUnmuteDevice(device);
+                if (volumeControl.getVolume() == 0) {
                     mSeekBar.setVolume(UNMUTE_DEFAULT_VOLUME);
-                    mController.adjustVolume(device, UNMUTE_DEFAULT_VOLUME);
-                    updateUnmutedVolumeIcon(device);
+                    volumeControl.setVolume(UNMUTE_DEFAULT_VOLUME);
+                    updateUnmutedVolumeIcon(null);
                     mIconAreaLayout.setOnTouchListener(((iconV, event) -> false));
                 } else {
-                    mController.logInteractionMuteDevice(device);
+                    volumeControl.onMute();
                     mSeekBar.resetVolume();
-                    mController.adjustVolume(device, 0);
-                    updateMutedVolumeIcon(device);
+                    volumeControl.setVolume(0);
+                    updateMutedVolumeIcon(null);
                     mIconAreaLayout.setOnTouchListener(((iconV, event) -> {
                         mSeekBar.dispatchTouchEvent(event);
                         return false;
                     }));
                 }
             });
+
         }
 
         protected void setUpDeviceIcon(MediaDevice device) {
@@ -530,5 +514,74 @@ public abstract class MediaOutputBaseAdapter extends
                 });
             });
         }
+
+        interface SeekBarVolumeControl {
+            int getVolume();
+            void setVolume(int volume);
+            void onMute();
+        }
+
+        private abstract class MediaSeekBarChangedListener
+                implements SeekBar.OnSeekBarChangeListener {
+            boolean mStartFromMute = false;
+            private MediaDevice mMediaDevice;
+            private SeekBarVolumeControl mVolumeControl;
+
+            MediaSeekBarChangedListener(MediaDevice device, SeekBarVolumeControl volumeControl) {
+                mMediaDevice = device;
+                mVolumeControl = volumeControl;
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (!shouldHandleProgressChanged() || !fromUser) {
+                    return;
+                }
+
+                final String percentageString = mContext.getResources().getString(
+                        R.string.media_output_dialog_volume_percentage,
+                        mSeekBar.getPercentage());
+                mVolumeValueText.setText(percentageString);
+
+                if (mStartFromMute) {
+                    updateUnmutedVolumeIcon(mMediaDevice);
+                    mStartFromMute = false;
+                }
+
+                int seekBarVolume = MediaOutputSeekbar.scaleProgressToVolume(progress);
+                if (seekBarVolume != mVolumeControl.getVolume()) {
+                    mLatestUpdateVolume = seekBarVolume;
+                    mVolumeControl.setVolume(seekBarVolume);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                mTitleIcon.setVisibility(View.INVISIBLE);
+                mVolumeValueText.setVisibility(View.VISIBLE);
+                int currentVolume = MediaOutputSeekbar.scaleProgressToVolume(
+                        seekBar.getProgress());
+                mStartFromMute = (currentVolume == 0);
+                mIsDragging = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int currentVolume = MediaOutputSeekbar.scaleProgressToVolume(
+                        seekBar.getProgress());
+                if (currentVolume == 0) {
+                    seekBar.setProgress(0);
+                    updateMutedVolumeIcon(mMediaDevice);
+                } else {
+                    updateUnmutedVolumeIcon(mMediaDevice);
+                }
+                mTitleIcon.setVisibility(View.VISIBLE);
+                mVolumeValueText.setVisibility(View.GONE);
+                mIsDragging = false;
+            }
+            protected boolean shouldHandleProgressChanged() {
+                return mMediaDevice != null;
+            }
+        };
     }
 }

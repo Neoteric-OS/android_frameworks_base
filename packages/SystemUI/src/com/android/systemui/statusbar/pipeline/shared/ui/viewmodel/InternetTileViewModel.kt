@@ -22,7 +22,7 @@ import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.ContentDescription.Companion.loadContentDescription
 import com.android.systemui.common.shared.model.Text
 import com.android.systemui.dagger.SysUISingleton
-import com.android.systemui.dagger.qualifiers.Application
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import com.android.systemui.qs.tileimpl.QSTileImpl.ResourceIcon
 import com.android.systemui.res.R
@@ -38,7 +38,6 @@ import com.android.systemui.statusbar.pipeline.wifi.shared.model.WifiNetworkMode
 import com.android.systemui.statusbar.pipeline.wifi.ui.model.WifiIcon
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -52,7 +51,6 @@ import kotlinx.coroutines.flow.stateIn
  * InternetTileModel objects, so that updating the tile is as simple as collecting on this state
  * flow and then calling [QSTileImpl.refreshState]
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @SysUISingleton
 class InternetTileViewModel
 @Inject
@@ -63,7 +61,7 @@ constructor(
     mobileIconsInteractor: MobileIconsInteractor,
     wifiInteractor: WifiInteractor,
     private val context: Context,
-    @Application scope: CoroutineScope,
+    @Background scope: CoroutineScope,
 ) {
     private val internetLabel: String = context.getString(R.string.quick_settings_internet_label)
 
@@ -125,7 +123,7 @@ constructor(
                             val secondary =
                                 mobileDataContentConcat(
                                     networkNameModel.name,
-                                    dataContentDescription
+                                    dataContentDescription,
                                 )
                             InternetTileModel.Active(
                                 secondaryTitle = secondary,
@@ -151,7 +149,7 @@ constructor(
 
     private fun mobileDataContentConcat(
         networkName: String?,
-        dataContentDescription: CharSequence?
+        dataContentDescription: CharSequence?,
     ): CharSequence {
         if (dataContentDescription == null) {
             return networkName ?: ""
@@ -164,9 +162,9 @@ constructor(
             context.getString(
                 R.string.mobile_carrier_text_format,
                 networkName,
-                dataContentDescription
+                dataContentDescription,
             ),
-            0
+            0,
         )
     }
 
@@ -195,10 +193,9 @@ constructor(
         }
 
     private val notConnectedFlow: StateFlow<InternetTileModel> =
-        combine(
-                wifiInteractor.areNetworksAvailable,
-                airplaneModeRepository.isAirplaneMode,
-            ) { networksAvailable, isAirplaneMode ->
+        combine(wifiInteractor.areNetworksAvailable, airplaneModeRepository.isAirplaneMode) {
+                networksAvailable,
+                isAirplaneMode ->
                 when {
                     isAirplaneMode -> {
                         val secondary = context.getString(R.string.status_bar_airplane)
@@ -217,7 +214,7 @@ constructor(
                             iconId = R.drawable.ic_qs_no_internet_available,
                             stateDescription = null,
                             contentDescription =
-                                ContentDescription.Loaded("$internetLabel,$secondary")
+                                ContentDescription.Loaded("$internetLabel,$secondary"),
                         )
                     }
                     else -> {

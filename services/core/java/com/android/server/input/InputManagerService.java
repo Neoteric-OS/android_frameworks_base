@@ -52,7 +52,7 @@ import android.hardware.SensorPrivacyManager;
 import android.hardware.SensorPrivacyManager.Sensors;
 import android.hardware.SensorPrivacyManagerInternal;
 import android.hardware.display.DisplayManagerInternal;
-import android.hardware.display.DisplayTopology;
+import android.hardware.display.DisplayTopologyGraph;
 import android.hardware.display.DisplayViewport;
 import android.hardware.input.AidlInputGestureData;
 import android.hardware.input.HostUsiVersion;
@@ -662,8 +662,8 @@ public class InputManagerService extends IInputManager.Stub
         mNative.setPointerDisplayId(mWindowManagerCallbacks.getPointerDisplayId());
     }
 
-    private void setDisplayTopologyInternal(DisplayTopology topology) {
-        mNative.setDisplayTopology(topology.getGraph());
+    private void setDisplayTopologyInternal(DisplayTopologyGraph topology) {
+        mNative.setDisplayTopology(topology);
     }
 
     /**
@@ -1257,6 +1257,15 @@ public class InputManagerService extends IInputManager.Stub
             @NonNull InputMethodInfo imeInfo, @Nullable InputMethodSubtype imeSubtype) {
         return mKeyboardLayoutManager.getKeyboardLayoutForInputDevice(identifier, userId,
                 imeInfo, imeSubtype);
+    }
+
+    @EnforcePermission(Manifest.permission.SET_KEYBOARD_LAYOUT)
+    @Override // Binder call
+    public void setKeyboardLayoutOverrideForInputDevice(InputDeviceIdentifier identifier,
+            String keyboardLayoutDescriptor) {
+        super.setKeyboardLayoutOverrideForInputDevice_enforcePermission();
+        mKeyboardLayoutManager.setKeyboardLayoutOverrideForInputDevice(identifier,
+                keyboardLayoutDescriptor);
     }
 
     @EnforcePermission(Manifest.permission.SET_KEYBOARD_LAYOUT)
@@ -3524,7 +3533,7 @@ public class InputManagerService extends IInputManager.Stub
         }
 
         @Override
-        public void setDisplayTopology(DisplayTopology topology) {
+        public void setDisplayTopology(DisplayTopologyGraph topology) {
             setDisplayTopologyInternal(topology);
         }
 

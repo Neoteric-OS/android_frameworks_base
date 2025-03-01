@@ -4461,7 +4461,46 @@ public class SizeCompatTests extends WindowTestsBase {
         // are aligned to the top of the parentAppBounds
         assertEquals(new Rect(0, notchHeight, 1000, 1200), appBounds);
         assertEquals(new Rect(0, 0, 1000, 1200), bounds);
+    }
 
+    @Test
+    @DisableCompatChanges({ActivityInfo.INSETS_DECOUPLED_CONFIGURATION_ENFORCED})
+    public void testInFreeform_boundsSandboxedToAppBounds() {
+        final int dw = 2800;
+        final int dh = 1400;
+        final int notchHeight = 100;
+        final DisplayContent display = new TestDisplayContent.Builder(mAtm, dw, dh)
+                .setNotch(notchHeight)
+                .build();
+        setUpApp(display);
+        prepareUnresizable(mActivity, SCREEN_ORIENTATION_PORTRAIT);
+
+        mTask.mDisplayContent.getDefaultTaskDisplayArea()
+                .setWindowingMode(WindowConfiguration.WINDOWING_MODE_FREEFORM);
+        mTask.setWindowingMode(WINDOWING_MODE_FREEFORM);
+        Rect appBounds = new Rect(0, 0, 1000, 500);
+        Rect bounds = new Rect(0, 0, 1000, 600);
+        mTask.getWindowConfiguration().setAppBounds(appBounds);
+        mTask.getWindowConfiguration().setBounds(bounds);
+        mActivity.onConfigurationChanged(mTask.getConfiguration());
+
+        // Bounds are sandboxed to appBounds in freeform.
+        assertDownScaled();
+        assertEquals(mActivity.getWindowConfiguration().getAppBounds(),
+                mActivity.getWindowConfiguration().getBounds());
+
+        // Exit freeform.
+        mTask.mDisplayContent.getDefaultTaskDisplayArea()
+                .setWindowingMode(WindowConfiguration.WINDOWING_MODE_FULLSCREEN);
+        mTask.setWindowingMode(WINDOWING_MODE_FULLSCREEN);
+        mTask.getWindowConfiguration().setBounds(new Rect(0, 0, dw, dh));
+        mActivity.onConfigurationChanged(mTask.getConfiguration());
+        assertFitted();
+        appBounds = mActivity.getWindowConfiguration().getAppBounds();
+        bounds = mActivity.getWindowConfiguration().getBounds();
+        // Bounds are not sandboxed to appBounds.
+        assertNotEquals(appBounds, bounds);
+        assertEquals(notchHeight, appBounds.top - bounds.top);
     }
 
     @Test
@@ -4914,7 +4953,8 @@ public class SizeCompatTests extends WindowTestsBase {
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING)
+    @EnableFlags({Flags.FLAG_IGNORE_ASPECT_RATIO_RESTRICTIONS_FOR_RESIZEABLE_FREEFORM_ACTIVITIES,
+            Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING})
     public void testCameraCompatAspectRatioAppliedForFixedOrientationCameraActivities() {
         // Needed to create camera compat policy in DisplayContent.
         allowDesktopMode();
@@ -4926,7 +4966,8 @@ public class SizeCompatTests extends WindowTestsBase {
         setupCameraCompatAspectRatio(cameraCompatAspectRatio, display);
 
         // Create task on test display.
-        final Task task = new TaskBuilder(mSupervisor).setDisplay(display).build();
+        final Task task = new TaskBuilder(mSupervisor).setDisplay(display)
+                .setWindowingMode(WINDOWING_MODE_FREEFORM).build();
 
         // Create fixed portrait activity.
         final ActivityRecord fixedOrientationActivity = new ActivityBuilder(mAtm)
@@ -4939,7 +4980,8 @@ public class SizeCompatTests extends WindowTestsBase {
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING)
+    @EnableFlags({Flags.FLAG_IGNORE_ASPECT_RATIO_RESTRICTIONS_FOR_RESIZEABLE_FREEFORM_ACTIVITIES,
+            Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING})
     public void testCameraCompatAspectRatioForFixedOrientationCameraActivitiesPortraitWindow() {
         // Needed to create camera compat policy in DisplayContent.
         allowDesktopMode();
@@ -4951,7 +4993,8 @@ public class SizeCompatTests extends WindowTestsBase {
         setupCameraCompatAspectRatio(cameraCompatAspectRatio, display);
 
         // Create task on test display.
-        final Task task = new TaskBuilder(mSupervisor).setDisplay(display).build();
+        final Task task = new TaskBuilder(mSupervisor).setDisplay(display)
+                .setWindowingMode(WINDOWING_MODE_FREEFORM).build();
 
         // Create fixed portrait activity.
         final ActivityRecord fixedOrientationActivity = new ActivityBuilder(mAtm)
@@ -4964,7 +5007,8 @@ public class SizeCompatTests extends WindowTestsBase {
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING)
+    @EnableFlags({Flags.FLAG_IGNORE_ASPECT_RATIO_RESTRICTIONS_FOR_RESIZEABLE_FREEFORM_ACTIVITIES,
+            Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING})
     public void testCameraCompatAspectRatioAppliedInsteadOfDefaultAspectRatio() {
         // Needed to create camera compat policy in DisplayContent.
         allowDesktopMode();
@@ -4976,7 +5020,8 @@ public class SizeCompatTests extends WindowTestsBase {
         setupCameraCompatAspectRatio(cameraCompatAspectRatio, display);
 
         // Create task on test display.
-        final Task task = new TaskBuilder(mSupervisor).setDisplay(display).build();
+        final Task task = new TaskBuilder(mSupervisor).setDisplay(display)
+                .setWindowingMode(WINDOWING_MODE_FREEFORM).build();
 
         // App's target min aspect ratio - this should not be used, as camera controls aspect ratio.
         final float targetMinAspectRatio = 4.0f;
@@ -4993,7 +5038,8 @@ public class SizeCompatTests extends WindowTestsBase {
     }
 
     @Test
-    @EnableFlags(Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING)
+    @EnableFlags({Flags.FLAG_IGNORE_ASPECT_RATIO_RESTRICTIONS_FOR_RESIZEABLE_FREEFORM_ACTIVITIES,
+            Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING})
     public void testCameraCompatAspectRatio_defaultAspectRatioAppliedWhenGreater() {
         // Needed to create camera compat policy in DisplayContent.
         allowDesktopMode();
@@ -5005,7 +5051,8 @@ public class SizeCompatTests extends WindowTestsBase {
         setupCameraCompatAspectRatio(cameraCompatAspectRatio, display);
 
         // Create task on test display.
-        final Task task = new TaskBuilder(mSupervisor).setDisplay(display).build();
+        final Task task = new TaskBuilder(mSupervisor).setDisplay(display)
+                .setWindowingMode(WINDOWING_MODE_FREEFORM).build();
 
         // App's target min aspect ratio bigger than camera compat aspect ratio - use that instead.
         final float targetMinAspectRatio = 6.0f;

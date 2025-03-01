@@ -31,6 +31,7 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -45,6 +46,7 @@ import android.view.MotionEvent.PointerProperties;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.android.server.LocalServices;
+import com.android.server.accessibility.autoclick.AutoclickController;
 import com.android.server.accessibility.gestures.TouchExplorer;
 import com.android.server.accessibility.magnification.FullScreenMagnificationController;
 import com.android.server.accessibility.magnification.FullScreenMagnificationGestureHandler;
@@ -70,9 +72,9 @@ import java.util.StringJoiner;
  */
 class AccessibilityInputFilter extends InputFilter implements EventStreamTransformation {
 
-    private static final String TAG = AccessibilityInputFilter.class.getSimpleName();
+    private static final String TAG = "A11yInputFilter";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     /**
      * Flag for enabling the screen magnification feature.

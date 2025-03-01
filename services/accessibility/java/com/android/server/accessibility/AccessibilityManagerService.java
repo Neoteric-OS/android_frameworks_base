@@ -36,6 +36,7 @@ import static android.accessibilityservice.AccessibilityTrace.FLAGS_PACKAGE_BROA
 import static android.accessibilityservice.AccessibilityTrace.FLAGS_USER_BROADCAST_RECEIVER;
 import static android.accessibilityservice.AccessibilityTrace.FLAGS_WINDOW_MANAGER_INTERNAL;
 import static android.content.Context.DEVICE_ID_DEFAULT;
+import static android.hardware.input.InputSettings.isRepeatKeysFeatureFlagEnabled;
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_FLOATING_MENU;
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_GESTURE;
 import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_NAVIGATION_BAR;
@@ -156,6 +157,7 @@ import android.view.KeyEvent;
 import android.view.MagnificationSpec;
 import android.view.MotionEvent;
 import android.view.SurfaceControl;
+import android.view.ViewConfiguration;
 import android.view.WindowInfo;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
@@ -607,7 +609,8 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                 mLock,
                 mContext,
                 new MagnificationScaleProvider(mContext),
-                Executors.newSingleThreadExecutor()
+                Executors.newSingleThreadExecutor(),
+                mContext.getMainLooper()
         );
         mMagnificationProcessor = new MagnificationProcessor(mMagnificationController);
         mCaptioningManagerImpl = new CaptioningManagerImpl(mContext);
@@ -3493,6 +3496,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         somethingChanged |= readMagnificationFollowTypingLocked(userState);
         somethingChanged |= readAlwaysOnMagnificationLocked(userState);
         somethingChanged |= readMouseKeysEnabledLocked(userState);
+        somethingChanged |= readRepeatKeysSettingsLocked(userState);
         return somethingChanged;
     }
 
@@ -5084,39 +5088,7 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             final List<String> permittedServices = dpm.getPermittedAccessibilityServices(userId);
 
             // permittedServices null means all accessibility services are allowed.
-            boolean allowed = permittedServices == null || permittedServices.contains(packageName);
-            if (allowed) {
-                if (android.permission.flags.Flags.enhancedConfirmationModeApisEnabled()
-                        && android.security.Flags.extendEcmToAllSettings()) {
-                    try {
-                        final EnhancedConfirmationManager userContextEcm =
-                                mContext.createContextAsUser(UserHandle.of(userId), /* flags = */ 0)
-                                        .getSystemService(EnhancedConfirmationManager.class);
-                        if (userContextEcm != null) {
-                            return !userContextEcm.isRestricted(packageName,
-                                    AppOpsManager.OPSTR_BIND_ACCESSIBILITY_SERVICE);
-                        }
-                        return false;
-                    } catch (PackageManager.NameNotFoundException e) {
-                        Log.e(LOG_TAG, "Exception when retrieving package:" + packageName, e);
-                        return false;
-                    }
-                } else {
-                    try {
-                        final int mode = mContext.getSystemService(AppOpsManager.class)
-                                .noteOpNoThrow(AppOpsManager.OP_ACCESS_RESTRICTED_SETTINGS,
-                                        uid, packageName);
-                        final boolean ecmEnabled = mContext.getResources().getBoolean(
-                                com.android.internal.R.bool.config_enhancedConfirmationModeEnabled);
-                        return !ecmEnabled || mode == AppOpsManager.MODE_ALLOWED
-                                || mode == AppOpsManager.MODE_DEFAULT;
-                    } catch (Exception e) {
-                        // Fallback in case if app ops is not available in testing.
-                        return false;
-                    }
-                }
-            }
-            return false;
+            return permittedServices == null || permittedServices.contains(packageName);
         } finally {
             Binder.restoreCallingIdentity(identity);
         }
@@ -5802,6 +5774,12 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
         private final Uri mUserSetupCompleteUri = Settings.Secure.getUriFor(
                 Settings.Secure.USER_SETUP_COMPLETE);
 
+        private final Uri mRepeatKeysEnabledUri = Settings.Secure.getUriFor(
+                Settings.Secure.KEY_REPEAT_ENABLED);
+
+        private final Uri mRepeatKeysTimeoutMsUri = Settings.Secure.getUriFor(
+                Settings.Secure.KEY_REPEAT_TIMEOUT_MS);
+
         public AccessibilityContentObserver(Handler handler) {
             super(handler);
         }
@@ -5858,6 +5836,12 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                     mNavigationModeUri, false, this, UserHandle.USER_ALL);
             contentResolver.registerContentObserver(
                     mUserSetupCompleteUri, false, this, UserHandle.USER_ALL);
+            if (isRepeatKeysFeatureFlagEnabled() && Flags.enableMagnificationKeyboardControl()) {
+                contentResolver.registerContentObserver(
+                        mRepeatKeysEnabledUri, false, this, UserHandle.USER_ALL);
+                contentResolver.registerContentObserver(
+                        mRepeatKeysTimeoutMsUri, false, this, UserHandle.USER_ALL);
+            }
         }
 
         @Override
@@ -5948,6 +5932,9 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
                     }
                 } else if (mNavigationModeUri.equals(uri) || mUserSetupCompleteUri.equals(uri)) {
                     updateShortcutsForCurrentNavigationMode();
+                } else if (mRepeatKeysEnabledUri.equals(uri)
+                        || mRepeatKeysTimeoutMsUri.equals(uri)) {
+                    readRepeatKeysSettingsLocked(userState);
                 }
             }
         }
@@ -6083,6 +6070,24 @@ public class AccessibilityManagerService extends IAccessibilityManager.Stub
             mMagnificationController.setAlwaysOnMagnificationEnabled(isAlwaysOnEnabled);
             return true;
         }
+        return false;
+    }
+
+    boolean readRepeatKeysSettingsLocked(AccessibilityUserState userState) {
+        if (!isRepeatKeysFeatureFlagEnabled() || !Flags.enableMagnificationKeyboardControl()) {
+            return false;
+        }
+        final boolean isRepeatKeysEnabled = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(),
+                Settings.Secure.KEY_REPEAT_ENABLED,
+                1, userState.mUserId) == 1;
+        final int repeatKeysTimeoutMs = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.KEY_REPEAT_TIMEOUT_MS,
+                ViewConfiguration.DEFAULT_LONG_PRESS_TIMEOUT, userState.mUserId);
+        mMagnificationController.setRepeatKeysEnabled(isRepeatKeysEnabled);
+        mMagnificationController.setRepeatKeysTimeoutMs(repeatKeysTimeoutMs);
+
+        // No need to update any other state, so always return false.
         return false;
     }
 

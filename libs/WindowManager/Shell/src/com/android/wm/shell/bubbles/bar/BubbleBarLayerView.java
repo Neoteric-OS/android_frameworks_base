@@ -45,11 +45,11 @@ import com.android.wm.shell.bubbles.BubbleLogger;
 import com.android.wm.shell.bubbles.BubbleOverflow;
 import com.android.wm.shell.bubbles.BubblePositioner;
 import com.android.wm.shell.bubbles.BubbleViewProvider;
-import com.android.wm.shell.bubbles.DeviceConfig;
 import com.android.wm.shell.bubbles.DismissViewUtils;
 import com.android.wm.shell.bubbles.bar.BubbleBarExpandedViewDragController.DragListener;
 import com.android.wm.shell.shared.bubbles.BaseBubblePinController;
 import com.android.wm.shell.shared.bubbles.BubbleBarLocation;
+import com.android.wm.shell.shared.bubbles.DeviceConfig;
 import com.android.wm.shell.shared.bubbles.DismissView;
 
 import kotlin.Unit;
@@ -355,8 +355,10 @@ public class BubbleBarLayerView extends FrameLayout
 
     /** Removes the given {@code bubble}. */
     public void removeBubble(Bubble bubble, Runnable endAction) {
+        final boolean inTransition = bubble.getPreparingTransition() != null;
         Runnable cleanUp = () -> {
-            bubble.cleanupViews();
+            // The transition is already managing the task/wm state.
+            bubble.cleanupViews(!inTransition);
             endAction.run();
         };
         if (mBubbleData.getBubbles().isEmpty()) {

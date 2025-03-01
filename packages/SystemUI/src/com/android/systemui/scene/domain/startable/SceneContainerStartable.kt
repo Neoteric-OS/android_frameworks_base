@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalCoroutinesApi::class)
-
 package com.android.systemui.scene.domain.startable
 
 import android.app.StatusBarManager
@@ -46,7 +44,9 @@ import com.android.systemui.deviceentry.shared.model.DeviceUnlockSource
 import com.android.systemui.keyguard.DismissCallbackRegistry
 import com.android.systemui.keyguard.domain.interactor.KeyguardEnabledInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
+import com.android.systemui.keyguard.domain.interactor.TrustInteractor
 import com.android.systemui.keyguard.domain.interactor.WindowManagerLockscreenVisibilityInteractor.Companion.keyguardScenes
+import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.model.SceneContainerPlugin
 import com.android.systemui.model.SysUiState
 import com.android.systemui.model.updateFlags
@@ -56,6 +56,7 @@ import com.android.systemui.power.domain.interactor.PowerInteractor
 import com.android.systemui.power.shared.model.WakeSleepReason
 import com.android.systemui.scene.data.model.asIterable
 import com.android.systemui.scene.data.model.sceneStackOf
+import com.android.systemui.scene.domain.SceneFrameworkTableLog
 import com.android.systemui.scene.domain.interactor.DisabledContentInteractor
 import com.android.systemui.scene.domain.interactor.SceneBackInteractor
 import com.android.systemui.scene.domain.interactor.SceneContainerOcclusionInteractor
@@ -67,6 +68,7 @@ import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.SceneFamilies
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
+import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
 import com.android.systemui.statusbar.NotificationShadeWindowController
 import com.android.systemui.statusbar.SysuiStatusBarStateController
 import com.android.systemui.statusbar.VibratorHelper
@@ -86,7 +88,6 @@ import java.io.PrintWriter
 import java.util.Optional
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -109,7 +110,6 @@ import kotlinx.coroutines.launch
  * Hooks up business logic that manipulates the state of the [SceneInteractor] for the system UI
  * scene container based on state from other systems.
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 @SysUISingleton
 class SceneContainerStartable
 @Inject
@@ -147,6 +147,9 @@ constructor(
     private val msdlPlayer: MSDLPlayer,
     private val disabledContentInteractor: DisabledContentInteractor,
     private val activityTransitionAnimator: ActivityTransitionAnimator,
+    private val shadeModeInteractor: ShadeModeInteractor,
+    @SceneFrameworkTableLog private val tableLogBuffer: TableLogBuffer,
+    private val trustInteractor: TrustInteractor,
 ) : CoreStartable {
     private val centralSurfaces: CentralSurfaces?
         get() = centralSurfacesOptLazy.get().getOrNull()
@@ -156,6 +159,7 @@ constructor(
     override fun start() {
         if (SceneContainerFlag.isEnabled) {
             sceneLogger.logFrameworkEnabled(isEnabled = true)
+            applicationScope.launch { hydrateTableLogBuffer() }
             hydrateVisibility()
             automaticallySwitchScenes()
             hydrateSystemUiState()
@@ -171,6 +175,7 @@ constructor(
             notifyKeyguardDismissCancelledCallbacks()
             refreshLockscreenEnabled()
             hydrateActivityTransitionAnimationState()
+            lockWhenDeviceBecomesUntrusted()
         } else {
             sceneLogger.logFrameworkEnabled(
                 isEnabled = false,
@@ -179,15 +184,62 @@ constructor(
         }
     }
 
-    override fun dump(pw: PrintWriter, args: Array<out String>) =
-        pw.asIndenting().run {
+    override fun dump(pw: PrintWriter, args: Array<out String>) {
+        with(pw.asIndenting()) {
             printSection("SceneContainerFlag") {
-                println("isEnabled", SceneContainerFlag.isEnabled)
-                printSection("requirementDescription") {
+                printSection("Framework availability") {
+                    println("isEnabled", SceneContainerFlag.isEnabled)
                     println(SceneContainerFlag.requirementDescription())
+                }
+
+                if (!SceneContainerFlag.isEnabled) {
+                    return
+                }
+
+                printSection("Scene state") {
+                    println("currentScene", sceneInteractor.currentScene.value.debugName)
+                    println(
+                        "currentOverlays",
+                        sceneInteractor.currentOverlays.value.joinToString(", ") { overlay ->
+                            overlay.debugName
+                        },
+                    )
+                    println("backStack", sceneBackInteractor.backStack.value)
+                    println("shadeMode", shadeModeInteractor.shadeMode.value)
+                }
+
+                printSection("Authentication state") {
+                    println("isKeyguardEnabled", keyguardEnabledInteractor.isKeyguardEnabled.value)
+                    println(
+                        "isUnlocked",
+                        deviceUnlockedInteractor.deviceUnlockStatus.value.isUnlocked,
+                    )
+                    println("isDeviceEntered", deviceEntryInteractor.isDeviceEntered.value)
+                    println(
+                        "isFaceAuthEnabledAndEnrolled",
+                        faceUnlockInteractor.isFaceAuthEnabledAndEnrolled(),
+                    )
+                    println("canSwipeToEnter", deviceEntryInteractor.canSwipeToEnter.value)
+                }
+
+                printSection("Power state") {
+                    println("detailedWakefulness", powerInteractor.detailedWakefulness.value)
+                    println("isDozing", keyguardInteractor.isDozing.value)
+                    println("isAodAvailable", keyguardInteractor.isAodAvailable.value)
                 }
             }
         }
+    }
+
+    private suspend fun hydrateTableLogBuffer() {
+        coroutineScope {
+            launch { sceneInteractor.hydrateTableLogBuffer(tableLogBuffer) }
+            launch { keyguardEnabledInteractor.hydrateTableLogBuffer(tableLogBuffer) }
+            launch { faceUnlockInteractor.hydrateTableLogBuffer(tableLogBuffer) }
+            launch { powerInteractor.hydrateTableLogBuffer(tableLogBuffer) }
+            launch { keyguardInteractor.hydrateTableLogBuffer(tableLogBuffer) }
+        }
+    }
 
     private fun resetShadeSessions() {
         applicationScope.launch {
@@ -945,12 +997,20 @@ constructor(
                 override fun onTransitionAnimationEnd() {
                     sceneInteractor.onTransitionAnimationEnd()
                 }
-
-                override fun onTransitionAnimationCancelled() {
-                    sceneInteractor.onTransitionAnimationCancelled()
-                }
             }
         )
+    }
+
+    private fun lockWhenDeviceBecomesUntrusted() {
+        applicationScope.launch {
+            trustInteractor.isTrusted.pairwise().collect { (wasTrusted, isTrusted) ->
+                if (wasTrusted && !isTrusted && !deviceEntryInteractor.isDeviceEntered.value) {
+                    deviceEntryInteractor.lockNow(
+                        "Exited trusted environment while not device not entered"
+                    )
+                }
+            }
+        }
     }
 
     companion object {
