@@ -15,12 +15,14 @@
  *
  */
 
+// QTI_BEGIN: 2025-02-09: Android_UI: SystemUI: Refactor Emergency button on keyguard
 /*
  * Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
  * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause-Clear
  */
 
+// QTI_END: 2025-02-09: Android_UI: SystemUI: Refactor Emergency button on keyguard
 package com.android.systemui.keyguard.ui.view.layout.blueprints
 
 import android.testing.TestableLooper.RunWithLooper
@@ -38,7 +40,9 @@ import com.android.systemui.keyguard.ui.view.layout.sections.AodNotificationIcon
 import com.android.systemui.keyguard.ui.view.layout.sections.AodPromotedNotificationSection
 import com.android.systemui.keyguard.ui.view.layout.sections.ClockSection
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultDeviceEntrySection
+// QTI_BEGIN: 2025-02-09: Android_UI: SystemUI: Refactor Emergency button on keyguard
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultEmergencyButtonSection
+// QTI_END: 2025-02-09: Android_UI: SystemUI: Refactor Emergency button on keyguard
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultIndicationAreaSection
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultNotificationStackScrollLayoutSection
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultSettingsPopupMenuSection
@@ -47,7 +51,6 @@ import com.android.systemui.keyguard.ui.view.layout.sections.DefaultStatusBarSec
 import com.android.systemui.keyguard.ui.view.layout.sections.DefaultUdfpsAccessibilityOverlaySection
 import com.android.systemui.keyguard.ui.view.layout.sections.KeyguardSliceViewSection
 import com.android.systemui.keyguard.ui.view.layout.sections.SmartspaceSection
-import com.android.systemui.keyguard.ui.view.layout.sections.SplitShadeGuidelines
 import com.android.systemui.util.mockito.whenever
 import java.util.Optional
 import org.junit.Before
@@ -73,7 +76,6 @@ class DefaultKeyguardBlueprintTest : SysuiTestCase() {
     @Mock private lateinit var defaultSettingsPopupMenuSection: DefaultSettingsPopupMenuSection
     @Mock private lateinit var defaultStatusBarViewSection: DefaultStatusBarSection
     @Mock private lateinit var defaultNSSLSection: DefaultNotificationStackScrollLayoutSection
-    @Mock private lateinit var splitShadeGuidelines: SplitShadeGuidelines
     @Mock private lateinit var aodPromotedNotificationSection: AodPromotedNotificationSection
     @Mock private lateinit var aodNotificationIconsSection: AodNotificationIconsSection
     @Mock private lateinit var aodBurnInSection: AodBurnInSection
@@ -82,7 +84,9 @@ class DefaultKeyguardBlueprintTest : SysuiTestCase() {
     @Mock private lateinit var keyguardSliceViewSection: KeyguardSliceViewSection
     @Mock
     private lateinit var udfpsAccessibilityOverlaySection: DefaultUdfpsAccessibilityOverlaySection
+// QTI_BEGIN: 2025-02-09: Android_UI: SystemUI: Refactor Emergency button on keyguard
     @Mock private lateinit var defaultEmergencyButtonSection: DefaultEmergencyButtonSection
+// QTI_END: 2025-02-09: Android_UI: SystemUI: Refactor Emergency button on keyguard
 
     @Before
     fun setup() {
@@ -105,7 +109,9 @@ class DefaultKeyguardBlueprintTest : SysuiTestCase() {
                 smartspaceSection,
                 keyguardSliceViewSection,
                 udfpsAccessibilityOverlaySection,
+// QTI_BEGIN: 2025-02-09: Android_UI: SystemUI: Refactor Emergency button on keyguard
                 defaultEmergencyButtonSection,
+// QTI_END: 2025-02-09: Android_UI: SystemUI: Refactor Emergency button on keyguard
             )
     }
 
