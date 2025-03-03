@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c0e332c_2f328180",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1294681
+      },
+      "writtenOn": "2025-03-03T21:14:53Z",
+      "side": 1,
+      "message": "Thanks for including me! This will only check that the current signer of the sdm is the same as the current signer of the APK without taking into account the lineage, but for this case where previous signers in the history are not supported, it looks good to me.",
+      "parentUuid": "57d6d1de_38085ad0",
+      "revId": "da07d4f08e75e0ee4eba8ada4547381acd14f9ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2290aa72_66c2805a",
