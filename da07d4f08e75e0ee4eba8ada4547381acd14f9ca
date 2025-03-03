@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97b3592f_1b92d858",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-03-03T19:42:04Z",
+      "side": 1,
+      "message": "+Michael FYI",
+      "revId": "da07d4f08e75e0ee4eba8ada4547381acd14f9ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2290aa72_66c2805a",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3574,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-03-03T19:42:04Z",
+      "side": 1,
+      "message": "Let\u0027s check `Flags.cloudCompilationVerification` flag here instead of embedding it in the method (retain `Flags` to make it clear that this is a feature flag)",
+      "range": {
+        "startLine": 3574,
+        "startChar": 6,
+        "endLine": 3574,
+        "endChar": 8
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e8e816d8_48e7aca3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 3574,
+                "startChar": 0,
+                "endLine": 3575,
+                "endChar": 0
+              },
+              "replacement": "        if (android.security.Flags.cloudCompilationVerification()) {\n            verifySdmSignatures(artManagedFilePaths, mSigningDetails);\n        }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 4269,
+                "startChar": 0,
+                "endLine": 4272,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "da07d4f08e75e0ee4eba8ada4547381acd14f9ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "301c9549_be5e7ae2",
+        "filename": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4274,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-03-03T19:42:04Z",
+      "side": 1,
+      "message": "nit: check for the negative case and `continue`, to avoid many lines of code indentation below",
+      "range": {
+        "startLine": 4274,
+        "startChar": 12,
+        "endLine": 4274,
+        "endChar": 14
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b626d889_769b346f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/PackageInstallerSession.java",
+              "range": {
+                "startLine": 4274,
+                "startChar": 0,
+                "endLine": 4288,
+                "endChar": 0
+              },
+              "replacement": "            if (!path.endsWith(\".sdm\")) {\n                continue;\n            }\n            // SDM is a format introduced in Android 16, so we don\u0027t need to support older\n            // signature schemes.\n            int minSignatureScheme \u003d SigningDetails.SignatureSchemeVersion.SIGNING_BLOCK_V3;\n            ParseResult\u003cSigningDetails\u003e verified \u003d\n                    ApkSignatureVerifier.verify(input, path, minSignatureScheme);\n            if (verified.isError()) {\n                throw new PackageManagerException(\n                        INSTALL_FAILED_INVALID_APK, \"Failed to verify SDM signatures\");\n            }\n            if (!expectedSigningDetails.signaturesMatchExactly(verified.getResult())) {\n                throw new PackageManagerException(\n                        INSTALL_FAILED_INVALID_APK, \"SDM signatures are inconsistent with APK\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "da07d4f08e75e0ee4eba8ada4547381acd14f9ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
