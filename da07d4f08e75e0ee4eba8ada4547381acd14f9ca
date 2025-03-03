@@ -72,6 +72,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e46d7cf_a400e357",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2025-03-03T22:14:33Z",
+      "side": 1,
+      "message": "Thanks for the review, Michael! To give you some background, after talking to some other folks in the security team (ebiggers@, victorhsieh@), the feedback I got is that they feel it\u0027s cleaner and easy to reason about to reject the sdm file with the wrong signatur at install time, instead of verifying the sdm in a later stage and adding an sdc file as a stamp. I\u0027ll update the design doc later. Right now, I want to submit this change soon, to get enough soak time.",
+      "parentUuid": "2c0e332c_2f328180",
+      "revId": "da07d4f08e75e0ee4eba8ada4547381acd14f9ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2290aa72_66c2805a",
