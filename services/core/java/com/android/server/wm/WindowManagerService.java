@@ -4936,7 +4936,7 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }
 
-    /** Unregister a hierarchy listener so that it stops receiving callbacks. */
+    /** Unregisters a hierarchy listener so that it stops receiving callbacks. */
     @Override
     public void unregisterDisplayWindowListener(IDisplayWindowListener listener) {
         mAtmService.enforceTaskPermission("unregisterDisplayWindowListener");
