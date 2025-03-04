@@ -17,21 +17,19 @@
 package android.processor
 
 import android.annotation.IntDef
-import com.sun.source.tree.IdentifierTree
-import com.sun.source.tree.MemberSelectTree
-import com.sun.source.tree.NewArrayTree
-import com.sun.source.util.SimpleTreeVisitor
-import com.sun.source.util.Trees
 import java.io.IOException
 import java.io.Writer
 import javax.annotation.processing.AbstractProcessor
+import javax.annotation.processing.ProcessingEnvironment
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.AnnotationValue
+import javax.lang.model.element.Element
 import javax.lang.model.element.TypeElement
+import javax.lang.model.element.VariableElement
+import javax.lang.model.type.DeclaredType
 import javax.tools.Diagnostic.Kind
-import javax.tools.StandardLocation.SOURCE_OUTPUT
-import kotlin.collections.set
+import javax.tools.StandardLocation
 
 /**
  * The IntDefProcessor is intended to generate a mapping from ints to their respective string
@@ -41,149 +39,168 @@ import kotlin.collections.set
  * mappings found in the files that make up the build target as json to outputPath.
  */
 class IntDefProcessor : AbstractProcessor() {
-    private val outputName = "intDefMapping.json"
+  private val outputName = "intDefMapping.json"
+  private lateinit var elementUtils: javax.lang.model.util.Elements // Helper for elements
 
-    override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latest()
+  override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latestSupported()
 
-    // Define what the annotation we care about are for compiler optimization
-    override fun getSupportedAnnotationTypes() = LinkedHashSet<String>().apply {
-        add(IntDef::class.java.name)
-    }
+  // Define what the annotation we care about are for compiler optimization
+  override fun getSupportedAnnotationTypes() =
+      LinkedHashSet<String>().apply { add(IntDef::class.java.name) }
 
-    override fun process(annotations: Set<TypeElement>, roundEnv: RoundEnvironment): Boolean {
-        // There should only be one matching annotation definition for intDef
-        val annotationType = annotations.firstOrNull() ?: return false
-        val annotatedElements = roundEnv.getElementsAnnotatedWith(annotationType)
+  override fun init(processingEnv: ProcessingEnvironment) {
+    super.init(processingEnv)
+    elementUtils = processingEnv.elementUtils
+  }
 
-        val annotationTypeToIntDefMapping = annotatedElements.associate { annotatedElement ->
-            val type = (annotatedElement as TypeElement).qualifiedName.toString()
-            val mapping = generateIntDefMapping(annotatedElement, annotationType)
-            val intDef = annotatedElement.getAnnotation(IntDef::class.java)
-            type to IntDefMapping(mapping, intDef.flag)
+  override fun process(annotations: Set<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
+    // There should only be one matching annotation definition for intDef
+    val annotationType = annotations.firstOrNull() ?: return false
+    val annotatedElements = roundEnv.getElementsAnnotatedWith(annotationType)
+
+    val annotationTypeToIntDefMapping =
+        annotatedElements.associate { annotatedElement ->
+          val type = (annotatedElement as TypeElement).qualifiedName.toString()
+          val mapping = generateIntDefMapping(annotatedElement) // Simplified call
+          val intDef = annotatedElement.getAnnotation(IntDef::class.java)
+          type to IntDefMapping(mapping, intDef.flag)
         }
 
-        try {
-            outputToFile(annotationTypeToIntDefMapping)
-        } catch (e: IOException) {
-            error("Failed to write IntDef mappings :: $e")
-        }
-        return false
+    try {
+      outputToFile(annotationTypeToIntDefMapping)
+    } catch (e: IOException) {
+      error("Failed to write IntDef mappings :: $e") // Better error message
     }
 
-    private fun generateIntDefMapping(
-        annotatedElement: TypeElement,
-        annotationType: TypeElement
-    ): Map<Int, String> {
-        // LinkedHashMap makes sure ordering is the same as in the code
-        val mapping = LinkedHashMap<Int, String>()
+    return true // We processed the annotation.
+  }
 
-        val annotationMirror = annotatedElement.annotationMirrors
-                // Should only ever be one matching this condition
-                .first { it.annotationType.asElement() == annotationType }
+  private fun generateIntDefMapping(annotatedElement: TypeElement): Map<Int, String> {
+    val mapping = LinkedHashMap<Int, String>()
 
-        val value = annotationMirror.elementValues.entries
-                .first { entry -> entry.key.simpleName.contentEquals("value") }
-                .value
+    val annotationMirror =
+        annotatedElement.annotationMirrors.firstOrNull {
+          it.annotationType.asElement().simpleName.toString() == "IntDef"
+        } // More precise check
 
-        val trees = Trees.instance(processingEnv)
-        val tree = trees.getTree(annotatedElement, annotationMirror, value)
-
-        val identifiers = ArrayList<String>()
-        tree.accept(IdentifierVisitor(), identifiers)
-
-        val values = value.value as List<AnnotationValue>
-
-        for (i in identifiers.indices) {
-            mapping[values[i].value as Int] = identifiers[i]
-        }
-
-        return mapping
+    if (annotationMirror == null) {
+      return mapping // Or perhaps throw an exception if @IntDef is REALLY required.
     }
 
-    private class IdentifierVisitor : SimpleTreeVisitor<Void, ArrayList<String>>() {
-        override fun visitNewArray(node: NewArrayTree, indentifiers: ArrayList<String>): Void? {
-            for (initializer in node.initializers) {
-                initializer.accept(this, indentifiers)
+    val valueAttribute =
+        annotationMirror.elementValues.entries
+            .firstOrNull { entry -> entry.key.simpleName.contentEquals("value") }
+            ?.value ?: return mapping
+
+    val annotationValues =
+        (valueAttribute.value as? List<*>)?.filterIsInstance<AnnotationValue>() ?: emptyList()
+    for (annotationValue in annotationValues) {
+
+      // Direct handling, not visitor use:
+      val constVal = annotationValue.value
+      when (constVal) {
+        is VariableElement -> {
+
+          val constValValue = constVal.constantValue
+
+          if (constValValue is Int) {
+            mapping[constValValue] = constVal.simpleName.toString()
+          } else {
+            error(
+                "Invalid value in annotation IntDef, only int constants expected ",
+                annotatedElement)
+          }
+        }
+        is DeclaredType -> {
+          val element = constVal.asElement()
+          if (element is VariableElement) {
+
+            val constValValue = element.constantValue
+            if (constValValue is Int) { // Changed verification also
+
+              mapping[constValValue] = element.simpleName.toString()
+            } else {
+              error(
+                  "Invalid value in annotation IntDef, only int constants expected",
+                  element) // Added element, to more appropiate error pointing.
             }
-
-            return null
+          }
         }
-
-        override fun visitMemberSelect(node: MemberSelectTree, indentifiers: ArrayList<String>):
-                Void? {
-            indentifiers.add(node.identifier.toString())
-
-            return null
+        is Int -> { // Direct usage of the Constant Value,
+          mapping[constVal] = constVal.toString()
         }
+        else -> {
 
-        override fun visitIdentifier(node: IdentifierTree, indentifiers: ArrayList<String>): Void? {
-            indentifiers.add(node.name.toString())
-
-            return null
+          error(
+              "Unexpected value type: " + constVal?.javaClass?.name, annotatedElement) // Put error
         }
+      }
     }
+    return mapping
+  }
 
-    @Throws(IOException::class)
-    private fun outputToFile(annotationTypeToIntDefMapping: Map<String, IntDefMapping>) {
-        val resource = processingEnv.filer.createResource(
-                SOURCE_OUTPUT, "com.android.winscope", outputName)
-        val writer = resource.openWriter()
-        serializeTo(annotationTypeToIntDefMapping, writer)
-        writer.close()
-    }
+  @Throws(IOException::class)
+  private fun outputToFile(annotationTypeToIntDefMapping: Map<String, IntDefMapping>) {
+    val resource =
+        processingEnv.filer.createResource(
+            StandardLocation.SOURCE_OUTPUT, "com.android.winscope", outputName)
+    val writer = resource.openWriter()
+    serializeTo(annotationTypeToIntDefMapping, writer)
+    writer.close()
+  }
 
-    private fun error(message: String) {
-        processingEnv.messager.printMessage(Kind.ERROR, message)
-    }
+  private fun error(message: String) {
+    processingEnv.messager.printMessage(Kind.ERROR, message)
+  }
 
-    private fun note(message: String) {
-        processingEnv.messager.printMessage(Kind.NOTE, message)
-    }
+  // Overload for printing with element location:
+  private fun error(message: String, element: Element) {
+    processingEnv.messager.printMessage(Kind.ERROR, message, element)
+  }
 
-    class IntDefMapping(val mapping: Map<Int, String>, val flag: Boolean) {
-        val size
-            get() = this.mapping.size
+  private fun note(message: String) {
+    processingEnv.messager.printMessage(Kind.NOTE, message)
+  }
 
-        val entries
-            get() = this.mapping.entries
-    }
+  class IntDefMapping(val mapping: Map<Int, String>, val flag: Boolean) {
+    val size
+      get() = this.mapping.size
 
-    companion object {
-        fun serializeTo(
-            annotationTypeToIntDefMapping: Map<String, IntDefMapping>,
-            writer: Writer
-        ) {
-            val indent = "  "
+    val entries
+      get() = this.mapping.entries
+  }
 
-            writer.appendln("{")
+  companion object {
+    fun serializeTo(annotationTypeToIntDefMapping: Map<String, IntDefMapping>, writer: Writer) {
+      val indent = "  "
+      writer.appendLine("{")
+      val intDefTypesCount = annotationTypeToIntDefMapping.size
+      var currentIntDefTypesCount = 0
+      for ((field, intDefMapping) in annotationTypeToIntDefMapping) {
+        writer.appendln("""$indent"$field": {""")
 
-            val intDefTypesCount = annotationTypeToIntDefMapping.size
-            var currentIntDefTypesCount = 0
-            for ((field, intDefMapping) in annotationTypeToIntDefMapping) {
-                writer.appendln("""$indent"$field": {""")
+        // Start IntDef
 
-                // Start IntDef
+        writer.appendln("""$indent$indent"flag": ${intDefMapping.flag},""")
 
-                writer.appendln("""$indent$indent"flag": ${intDefMapping.flag},""")
-
-                writer.appendln("""$indent$indent"values": {""")
-                intDefMapping.entries.joinTo(writer, separator = ",\n") { (value, identifier) ->
-                    """$indent$indent$indent"$value": "$identifier""""
-                }
-                writer.appendln()
-                writer.appendln("$indent$indent}")
-
-                // End IntDef
-
-                writer.append("$indent}")
-                if (++currentIntDefTypesCount < intDefTypesCount) {
-                    writer.appendln(",")
-                } else {
-                    writer.appendln("")
-                }
-            }
-
-            writer.appendln("}")
+        writer.appendln("""$indent$indent"values": {""")
+        intDefMapping.mapping.entries.joinTo(writer, separator = ",\n") { (value, identifier) ->
+          """$indent$indent$indent"$value": "$identifier""""
         }
+        writer.appendln()
+        writer.appendln("$indent$indent}")
+
+        // End IntDef
+
+        writer.append("$indent}") // Keep expected identation.
+        if (++currentIntDefTypesCount < intDefTypesCount) {
+          writer.appendln(",")
+        } else {
+          writer.appendln("") // Avoids last comma
+        }
+      }
+
+      writer.appendln("}")
     }
+  }
 }
