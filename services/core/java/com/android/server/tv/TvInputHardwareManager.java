@@ -1124,9 +1124,18 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                     int steps = (sourceGain.maxValue() - sourceGain.minValue())
                             / sourceGain.stepValue();
                     int gainValue = sourceGain.minValue();
-                    if (volume < 1.0f) {
-                        gainValue += sourceGain.stepValue() * (int) (volume * steps + 0.5);
+                    if (mSourceVolume < 1.0f) {
+                        gainValue += sourceGain.stepValue() * (int) (mSourceVolume * steps + 0.5);
                     } else {
+                        gainValue = sourceGain.maxValue();
+                    }
+                    // get the stream volume from the first sink device
+                    gainValue += (int)(100.0f * AudioSystem.getStreamVolumeDB(
+                            AudioManager.STREAM_MUSIC, mCurrentIndex, mAudioSink.get(0).type()));
+                    if (gainValue < sourceGain.minValue()) {
+                        gainValue = sourceGain.minValue();
+                    }
+                    if (gainValue > sourceGain.maxValue()) {
                         gainValue = sourceGain.maxValue();
                     }
                     // size of gain values is 1 in MODE_JOINT
