@@ -40,6 +40,30 @@
       ],
       "revId": "f36c547bd643be428b62b05f15441df1121d4a18",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13ddfa20_9817b8cf",
+        "filename": "telecomm/java/android/telecom/CallerInfoAsyncQuery.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2025-03-04T23:39:05Z",
+      "side": 1,
+      "message": "This change is a cherry-pick of ag/28454948.",
+      "parentUuid": "0f9d86f0_36f108b6",
+      "range": {
+        "startLine": 495,
+        "startChar": 32,
+        "endLine": 495,
+        "endChar": 89
+      },
+      "revId": "f36c547bd643be428b62b05f15441df1121d4a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
