@@ -136,8 +136,7 @@ public final class AppOpsPolicy implements AppOpsManagerInternal.CheckOpsDelegat
 
         final LocationManagerInternal locationManagerInternal = LocalServices.getService(
                 LocationManagerInternal.class);
-        if (locationManagerInternal != null) {
-            locationManagerInternal.setLocationPackageTagsListener(
+        locationManagerInternal.setLocationPackageTagsListener(
                 (uid, packageTagsList) -> {
                     synchronized (mLock) {
                         if (packageTagsList.isEmpty()) {
@@ -159,7 +158,6 @@ public final class AppOpsPolicy implements AppOpsManagerInternal.CheckOpsDelegat
                                 mLocationTags);
                     }
                 });
-        }
 
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
