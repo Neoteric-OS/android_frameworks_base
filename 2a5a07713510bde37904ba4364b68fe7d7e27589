@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb7040a2_a74778f5",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/mobile/MobileMappings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2025-03-04T09:52:56Z",
+      "side": 1,
+      "message": "Thank you for the advice. I have updated the patch.",
+      "parentUuid": "1a81c009_4e259297",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 9
+      },
+      "revId": "2a5a07713510bde37904ba4364b68fe7d7e27589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd5eabd6_0ae9a91b",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a9a0e00_5e1a9015",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/mobile/MobileMappings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2025-03-04T09:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5eabd6_0ae9a91b",
+      "range": {
+        "startLine": 222,
+        "startChar": 23,
+        "endLine": 222,
+        "endChar": 39
+      },
+      "revId": "2a5a07713510bde37904ba4364b68fe7d7e27589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ac5d0fb_d6359bce",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-03-03T06:01:34Z",
       "side": 1,
       "message": "KEY_ALWAYS_SHOW_LTE_PLUS_FOR_LTE_DATA_ICON_BOOL",
+      "range": {
+        "startLine": 1984,
+        "startChar": 31,
+        "endLine": 1984,
+        "endChar": 70
+      },
+      "revId": "2a5a07713510bde37904ba4364b68fe7d7e27589",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32e18bbf_d65018c2",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2025-03-04T09:52:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac5d0fb_d6359bce",
       "range": {
         "startLine": 1984,
         "startChar": 31,
