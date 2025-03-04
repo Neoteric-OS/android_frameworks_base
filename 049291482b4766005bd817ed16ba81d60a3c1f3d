@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ae176e5_3bbb1ac0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308560
+      },
+      "writtenOn": "2025-03-04T10:34:38Z",
+      "side": 1,
+      "message": "Hi Jack,\nCould you help to review the carrier config part? Thanks",
+      "revId": "049291482b4766005bd817ed16ba81d60a3c1f3d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
