@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f9d86f0_36f108b6",
+        "filename": "telecomm/java/android/telecom/CallerInfoAsyncQuery.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2025-03-04T23:32:07Z",
+      "side": 1,
+      "message": "Why are we trying to use this library here? It looks like it just calls TelephonyManager#isEmergencyNumber again: https://source.corp.google.com/h/googleplex-android/platform/superproject/main/+/main:frameworks/base/telephony/java/android/telephony/PhoneNumberUtils.java;l\u003d1862;drc\u003ddec6a508f824d108be87253504c6971ab1897dfc?q\u003disLocalEmergencyNumber\u0026sq\u003drepo:googleplex-android%2Fplatform%2Fsuperproject%2Fmain%20b:main",
+      "range": {
+        "startLine": 495,
+        "startChar": 32,
+        "endLine": 495,
+        "endChar": 89
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7298012b_175049bc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "telecomm/java/android/telecom/CallerInfoAsyncQuery.java",
+              "range": {
+                "startLine": 490,
+                "startChar": 0,
+                "endLine": 496,
+                "endChar": 0
+              },
+              "replacement": "        } catch (IllegalStateException ise) {\n            // Ignore the exception that Telephony is not up.\n            // Ideally the TelephonyManager#isEmergencyNumber API needs to be removed once the\n            // telphony service not up issue can be fixed (b/187412989).\n            // IllegalStateException: Telephony is not ready yet.\n            isEmergencyNumber \u003d false;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f36c547bd643be428b62b05f15441df1121d4a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
