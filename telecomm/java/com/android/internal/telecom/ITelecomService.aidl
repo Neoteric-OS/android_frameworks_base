@@ -408,4 +408,9 @@ interface ITelecomService {
      */
     void addCall(in CallAttributes callAttributes, in ICallEventCallback callback, String callId,
         String callingPackage);
+
+    /**
+     * @see TelecomServiceImpl#waitForAudioToUpdate
+     */
+     void waitForAudioToUpdate(boolean expectActive);
 }
