@@ -30,6 +30,7 @@ import android.transition.Transition;
 import android.util.Slog;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
@@ -199,23 +200,36 @@ public final class InlineTooltipUi extends PopupWindow implements AutoCloseable 
         // set to the application type with the highest z-order
         setWindowLayoutType(WindowManager.LayoutParams.TYPE_APPLICATION_ABOVE_SUB_PANEL);
 
-        final int offsetY = -anchor.getHeight() - getPreferHeight(anchor);
-
         if (!isShowing()) {
             setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
             setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-            showAsDropDown(anchor, 0 , offsetY, Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+            showAsDropDown(anchor, 0, 0, Gravity.TOP | Gravity.CENTER_HORIZONTAL);
         } else {
-            update(anchor, 0 , offsetY, WindowManager.LayoutParams.WRAP_CONTENT,
+            update(anchor, 0, 0, WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.WRAP_CONTENT);
         }
     }
 
-    private int getPreferHeight(View anchor) {
-        // The first time to show up, the height of tooltip is zero, so make its height
-        // the same as anchor.
-        final int achoredHeight = mContentContainer.getHeight();
-        return (achoredHeight == 0) ? anchor.getHeight() : achoredHeight;
+    /**
+     * Returns the height of the Tooltip. This value should be > 0, which is
+     * different from {@link getHeight()}.
+     */
+    private int getMeasuredHeight() {
+        int height = super.getHeight();  // could be WRAP_CONTENT
+        if (height > 0) {
+          return height;
+        }
+        // mContentContainer.getHeight() = 0 prior to the tooltip being shown for the first time.
+        height = mContentContainer.getHeight();
+        if (height > 0) {
+          return height;
+        }
+        height = mContentContainer.getMeasuredHeight();
+        if (height > 0) {
+          return height;
+        }
+        mContentContainer.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
+        return mContentContainer.getMeasuredHeight();
     }
 
     @Override
@@ -223,20 +237,13 @@ public final class InlineTooltipUi extends PopupWindow implements AutoCloseable 
             int xOffset, int yOffset, int width, int height, int gravity, boolean allowScroll) {
         boolean isAbove = super.findDropDownPosition(anchor, outParams, xOffset, yOffset, width,
                 height, gravity, allowScroll);
-        // Make the tooltips y fo position is above or under the parent of the anchor,
-        // otherwise suggestions doesn't clickable.
-        ViewParent parent = anchor.getParent();
-        if (parent instanceof View) {
-            final Rect r = mTmpRect;
-            ((View) parent).getGlobalVisibleRect(r);
-            if (isAbove) {
-                outParams.y = r.top - getPreferHeight(anchor);
-            } else {
-                outParams.y = r.bottom + 1;
-            }
-        }
-
-        return isAbove;
+        // Ignore the value of isAbove and the y position provided by the super
+        // method; tooltips for inline suggestions are always shown above the anchor.
+        final Rect anchorRect = mTmpRect;
+        anchor.getGlobalVisibleRect(anchorRect);
+        int measuredHeight = height > 0 ? height : getMeasuredHeight();
+        outParams.y = anchorRect.top - measuredHeight;
+        return /*isAbove=*/ true;
     }
 
     @Override
