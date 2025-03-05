@@ -16,6 +16,23 @@
       "message": "The default AVRCP version is still 1.5 unless the avrcp_default_version_1_6 flag is active, so we need to gate this change behind it.",
       "revId": "34af6e0a5a43477f97f7338354f36c2050b126d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b0d57c7_6a1ff44c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1971855
+      },
+      "writtenOn": "2025-03-05T09:12:18Z",
+      "side": 1,
+      "message": "Since +1 is there on this CL, should we go ahead to merge this?",
+      "revId": "34af6e0a5a43477f97f7338354f36c2050b126d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
