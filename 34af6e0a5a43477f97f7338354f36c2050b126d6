@@ -33,6 +33,24 @@
       "message": "Since +1 is there on this CL, should we go ahead to merge this?",
       "revId": "34af6e0a5a43477f97f7338354f36c2050b126d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38befc5e_06146b34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2025-03-05T09:29:12Z",
+      "side": 1,
+      "message": "Hi no sorry there is still a need for either a flag check or waiting for a version where the flag is already enabled unfortunately. I\u0027ll discuss this internally to be sure how to handle it properly.",
+      "parentUuid": "8b0d57c7_6a1ff44c",
+      "revId": "34af6e0a5a43477f97f7338354f36c2050b126d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
