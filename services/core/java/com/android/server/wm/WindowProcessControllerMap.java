@@ -72,6 +72,9 @@ final class WindowProcessControllerMap {
     }
 
     private void removeProcessFromUidMap(WindowProcessController proc) {
+        if (proc == null) {
+            return;
+        }
         final int uid = proc.mUid;
         ArraySet<WindowProcessController> procSet = mUidMap.get(uid);
         if (procSet != null) {
