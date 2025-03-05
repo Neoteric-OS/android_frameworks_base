@@ -64,6 +64,30 @@
       },
       "revId": "f36c547bd643be428b62b05f15441df1121d4a18",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e3491f8_c93866b7",
+        "filename": "telecomm/java/android/telecom/CallerInfoAsyncQuery.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2025-03-05T00:41:19Z",
+      "side": 1,
+      "message": "When this condition is hit, I am wondering if we actually recover properly. Since it is a CP, it should\u0027ve been tested internally, so applying +2",
+      "parentUuid": "13ddfa20_9817b8cf",
+      "range": {
+        "startLine": 495,
+        "startChar": 32,
+        "endLine": 495,
+        "endChar": 89
+      },
+      "revId": "f36c547bd643be428b62b05f15441df1121d4a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
