@@ -33,4 +33,5 @@
         <option name="runner" value="androidx.test.runner.AndroidJUnitRunner" />
         <option name="hidden-api-checks" value="false"/>
     </test>
+    <object type="module_controller" class="com.android.tradefed.testtype.suite.module.Sdk35ModuleController" />
 </configuration>
