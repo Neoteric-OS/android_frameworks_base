@@ -16,6 +16,24 @@
       "message": "How difficult would it be to move the actual `*SmartReply*` files instead?",
       "revId": "42f61ecb92de812cfad87f8bead6700234b56bb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e7864f2_f19c2514",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1995975
+      },
+      "writtenOn": "2025-03-06T15:32:41Z",
+      "side": 1,
+      "message": "@jeffdq@google.com suggested it would be better to update the OWNERS file, so I\u0027ll let him comment on that.",
+      "parentUuid": "69aa6b9a_95b95fdd",
+      "revId": "42f61ecb92de812cfad87f8bead6700234b56bb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
