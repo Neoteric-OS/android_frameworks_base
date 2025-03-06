@@ -2669,4 +2669,10 @@ public class AudioSystem
      * @hide
      */
     public static native void triggerSystemPropertyUpdate(long handle);
+
+    /**
+     * Simulates the device connections at AudioHal
+     * @hide
+     */
+    public static native int setSimulateDeviceConnections(boolean enabled);
 }
