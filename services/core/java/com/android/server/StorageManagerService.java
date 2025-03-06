@@ -159,6 +159,7 @@ import com.android.server.pm.UserManagerInternal;
 import com.android.server.storage.AppFuseBridge;
 import com.android.server.storage.StorageSessionController;
 import com.android.server.storage.StorageSessionController.ExternalStorageServiceException;
+import com.android.server.storage.StorageUserConnection;
 import com.android.server.wm.ActivityTaskManagerInternal;
 import com.android.server.wm.ActivityTaskManagerInternal.ScreenObserver;
 
@@ -1542,7 +1543,19 @@ class StorageManagerService extends IStorageManager.Stub
             }
 
             if (vol != null) {
-                mStorageSessionController.onVolumeRemove(vol);
+                Slog.i(TAG, "On volume destroyed " + vol);
+                StorageUserConnection connection = mStorageSessionController.onVolumeRemove(vol);
+                if (connection != null && isMediaSharedWithParent(vol)) {
+                    String sessionId = vol.getId();
+                    final long token = Binder.clearCallingIdentity();
+                    try {
+                        connection.removeSessionAndWait(sessionId);
+                    } catch (ExternalStorageServiceException e) {
+                        Slog.e(TAG, "Failed to end session for vol with id: " + sessionId, e);
+                    } finally {
+                        Binder.restoreCallingIdentity(token);
+                    }
+                }
                 try {
                     if (vol.type == VolumeInfo.TYPE_PRIVATE) {
                         mInstaller.onPrivateVolumeRemoved(vol.getFsUuid());
@@ -1553,6 +1566,20 @@ class StorageManagerService extends IStorageManager.Stub
             }
         }
     };
+
+    private boolean isMediaSharedWithParent(@NonNull VolumeInfo vol) {
+        if (vol.type != VolumeInfo.TYPE_EMULATED) {
+            return false;
+        }
+        try {
+            return mContext.getSystemService(UserManager.class)
+                    .getUserProperties(UserHandle.of(vol.getMountUserId()))
+                    .isMediaSharedWithParent();
+        } catch(Exception e) {
+            Slog.w(TAG, "Failed to check isMediaSharedWithParent: " + vol, e);
+        }
+        return false;
+    }
 
     @GuardedBy("mLock")
     private void onDiskScannedLocked(DiskInfo disk) {
@@ -1595,9 +1622,7 @@ class StorageManagerService extends IStorageManager.Stub
             final Context volumeUserContext = mContext.createContextAsUser(
                     UserHandle.of(vol.mountUserId), 0);
 
-            boolean isMediaSharedWithParent =
-                    (volumeUserContext != null) ? volumeUserContext.getSystemService(
-                            UserManager.class).isMediaSharedWithParent() : false;
+            boolean isMediaSharedWithParent = isMediaSharedWithParent(vol);
 
             // For all the users where media is shared with parent, creation of emulated volume
             // should not be skipped even if media provider instance is not running in that user
