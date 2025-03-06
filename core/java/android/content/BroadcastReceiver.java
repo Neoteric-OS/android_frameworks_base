@@ -263,7 +263,7 @@ public abstract class BroadcastReceiver {
                         1);
             }
             if (DEBUG_STORE_ENABLED) {
-                DebugStore.recordFinish(System.identityHashCode(this));
+                DebugStore.recordFinish(mReceiverClassName);
             }
 
             if (mType == TYPE_COMPONENT) {
@@ -445,7 +445,7 @@ public abstract class BroadcastReceiver {
         PendingResult res = mPendingResult;
         mPendingResult = null;
         if (DEBUG_STORE_ENABLED) {
-            DebugStore.recordGoAsync(System.identityHashCode(res));
+            DebugStore.recordGoAsync(getClass().getName());
         }
         if (res != null && Trace.isTagEnabled(Trace.TRACE_TAG_ACTIVITY_MANAGER)) {
             res.mReceiverClassName = getClass().getName();

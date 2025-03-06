@@ -20,7 +20,6 @@ import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Intent;
 import android.content.pm.ServiceInfo;
-import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
 
@@ -44,9 +43,6 @@ import java.util.Objects;
  * @hide
  */
 public class DebugStore {
-    private static final boolean DEBUG_EVENTS = false;
-    private static final String TAG = "DebugStore";
-
     private static DebugStoreNative sDebugStoreNative = new DebugStoreNativeImpl();
 
     @UnsupportedAppUsage
@@ -124,7 +120,7 @@ public class DebugStore {
      * @param receiverClassName The class name of the broadcast receiver.
      */
     @UnsupportedAppUsage
-    public static void recordGoAsync(int pendingResultId) {
+    public static void recordGoAsync(String receiverClassName) {
         sDebugStoreNative.recordEvent(
                 "GoAsync",
                 List.of(
@@ -132,8 +128,8 @@ public class DebugStore {
                         Thread.currentThread().getName(),
                         "tid",
                         String.valueOf(Thread.currentThread().getId()),
-                        "prid",
-                        Integer.toHexString(pendingResultId)));
+                        "rcv",
+                        Objects.toString(receiverClassName)));
     }
 
     /**
@@ -142,7 +138,7 @@ public class DebugStore {
      * @param receiverClassName The class of the broadcast receiver that completed the operation.
      */
     @UnsupportedAppUsage
-    public static void recordFinish(int pendingResultId) {
+    public static void recordFinish(String receiverClassName) {
         sDebugStoreNative.recordEvent(
                 "Finish",
                 List.of(
@@ -150,10 +146,9 @@ public class DebugStore {
                         Thread.currentThread().getName(),
                         "tid",
                         String.valueOf(Thread.currentThread().getId()),
-                        "prid",
-                        Integer.toHexString(pendingResultId)));
+                        "rcv",
+                        Objects.toString(receiverClassName)));
     }
-
     /**
      * Records the completion of a long-running looper message.
      *
@@ -177,92 +172,21 @@ public class DebugStore {
 
 
     /**
-     * Records the reception of a broadcast by a manifest-declared receiver.
+     * Records the reception of a broadcast.
      *
      * @param intent The Intent associated with the broadcast.
      * @return A unique ID for the recorded event.
      */
     @UnsupportedAppUsage
-    public static long recordBroadcastReceive(@Nullable Intent intent, int pendingResultId) {
+    public static long recordBroadcastHandleReceiver(@Nullable Intent intent) {
         return sDebugStoreNative.beginEvent(
-                "BcRcv",
-                List.of(
-                        "tname",
-                        Thread.currentThread().getName(),
-                        "tid",
-                        String.valueOf(Thread.currentThread().getId()),
-                        "act",
-                        Objects.toString(intent != null ? intent.getAction() : null),
-                        "cmp",
-                        Objects.toString(intent != null ? intent.getComponent() : null),
-                        "pkg",
-                        Objects.toString(intent != null ? intent.getPackage() : null),
-                        "prid",
-                        Integer.toHexString(pendingResultId)));
-    }
-
-    /**
-     * Records the reception of a broadcast by a context-registered receiver.
-     *
-     * @param intent The Intent associated with the broadcast.
-     * @param pendingResultId The object ID of the PendingResult associated with the broadcast.
-     * @return A unique ID for the recorded event.
-     */
-    @UnsupportedAppUsage
-    public static long recordBroadcastReceiveReg(@Nullable Intent intent, int pendingResultId) {
-        return sDebugStoreNative.beginEvent(
-                "BcRcvReg",
-                List.of(
-                        "tname",
-                        Thread.currentThread().getName(),
-                        "tid",
-                        String.valueOf(Thread.currentThread().getId()),
-                        "act",
-                        Objects.toString(intent != null ? intent.getAction() : null),
-                        "cmp",
-                        Objects.toString(intent != null ? intent.getComponent() : null),
-                        "pkg",
-                        Objects.toString(intent != null ? intent.getPackage() : null),
-                        "prid",
-                        Integer.toHexString(pendingResultId)));
-    }
-
-    /**
-     * Records the binding of an application.
-     *
-     * @return A unique ID for the recorded event.
-     */
-    @UnsupportedAppUsage
-    public static long recordHandleBindApplication() {
-        return sDebugStoreNative.beginEvent("BindApp", List.of());
-    }
-
-    /**
-     * Records the scheduling of a receiver.
-     *
-     * @return A unique ID for the recorded event.
-     */
-    @UnsupportedAppUsage
-    public static long recordScheduleReceiver() {
-        return sDebugStoreNative.beginEvent(
-                "SchRcv",
+                "HandleReceiver",
                 List.of(
                         "tname", Thread.currentThread().getName(),
-                        "tid", String.valueOf(Thread.currentThread().getId())));
-    }
-
-    /**
-     * Records the scheduling of a registered receiver.
-     *
-     * @return A unique ID for the recorded event.
-     */
-    @UnsupportedAppUsage
-    public static long recordScheduleRegisteredReceiver() {
-        return sDebugStoreNative.beginEvent(
-                "SchRcvReg",
-                List.of(
-                        "tname", Thread.currentThread().getName(),
-                        "tid", String.valueOf(Thread.currentThread().getId())));
+                        "tid", String.valueOf(Thread.currentThread().getId()),
+                        "act", Objects.toString(intent != null ? intent.getAction() : null),
+                        "cmp", Objects.toString(intent != null ? intent.getComponent() : null),
+                        "pkg", Objects.toString(intent != null ? intent.getPackage() : null)));
     }
 
     /**
@@ -301,47 +225,17 @@ public class DebugStore {
     private static class DebugStoreNativeImpl implements DebugStoreNative {
         @Override
         public long beginEvent(String eventName, List<String> attributes) {
-            long id = DebugStore.beginEventNative(eventName, attributes);
-            if (DEBUG_EVENTS) {
-                Log.i(
-                        TAG,
-                        "beginEvent: " + id + " " + eventName + " " + attributeString(attributes));
-            }
-            return id;
+            return DebugStore.beginEventNative(eventName, attributes);
         }
 
         @Override
         public void endEvent(long id, List<String> attributes) {
-            if (DEBUG_EVENTS) {
-                Log.i(TAG, "endEvent: " + id + " " + attributeString(attributes));
-            }
             DebugStore.endEventNative(id, attributes);
         }
 
         @Override
         public void recordEvent(String eventName, List<String> attributes) {
-            if (DEBUG_EVENTS) {
-                Log.i(TAG, "recordEvent: " + eventName + " " + attributeString(attributes));
-            }
             DebugStore.recordEventNative(eventName, attributes);
-        }
-
-        /**
-         * Returns a string like "[key1=foo, key2=bar]"
-         */
-        private String attributeString(List<String> attributes) {
-            StringBuilder sb = new StringBuilder().append("[");
-
-            for (int i = 0; i < attributes.size(); i++) {
-                sb.append(attributes.get(i));
-
-                if (i % 2 == 0) {
-                    sb.append("=");
-                } else if (i < attributes.size() - 1) {
-                    sb.append(", ");
-                }
-            }
-            return sb.append("]").toString();
         }
     }
 
