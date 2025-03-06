@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69aa6b9a_95b95fdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1553715
+      },
+      "writtenOn": "2025-03-06T15:17:39Z",
+      "side": 1,
+      "message": "How difficult would it be to move the actual `*SmartReply*` files instead?",
+      "revId": "42f61ecb92de812cfad87f8bead6700234b56bb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
