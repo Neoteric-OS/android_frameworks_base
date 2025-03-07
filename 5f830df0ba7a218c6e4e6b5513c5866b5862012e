@@ -16,6 +16,23 @@
       "message": "Adding George for codeowners vote",
       "revId": "5f830df0ba7a218c6e4e6b5513c5866b5862012e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07854991_6061d4f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1361834
+      },
+      "writtenOn": "2025-03-07T13:22:35Z",
+      "side": 1,
+      "message": "Aurimas, can you please approve it? thanks",
+      "revId": "5f830df0ba7a218c6e4e6b5513c5866b5862012e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
