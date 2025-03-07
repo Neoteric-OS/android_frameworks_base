@@ -845,7 +845,7 @@
          Ex: Setting the config to true and the "SYSTEM_BAR_VISIBILITY_OVERRIDE" setting to
          "immersive.status=apps" will force show navigation bar for all apps and force hide status
          bar for all apps. -->
-    <bool name="config_remoteInsetsControllerControlsSystemBars">false</bool>
+    <bool name="config_remoteInsetsControllerControlsSystemBars">true</bool>
 
     <!-- Control whether the system bars can be requested when using a remote insets control target.
          This allows for specifying whether or not system bars can be shown by the user (via swipe
@@ -7067,6 +7067,17 @@
     <!-- Allowlisted activities for launch on a private display. specific to automotive.-->
     <!--TODO(b/343733988): Remove this allowlisting when GMS is ready with the allowlisting mechanism.-->
     <string-array name="config_defaultAllowlistLaunchOnPrivateDisplayPackages"></string-array>
+
+    <string-array name="config_defaultAllowlistSafeRegionActivities">
+        <item>com.google.android.apps.gmm.car.embedded.auxiliarymap.EmbeddedClusterActivity</item>
+        <item>com.android.car.cluster.home.ClusterHomeActivity</item>
+        <item>com.google.android.maps.LimitedMapsActivity</item>
+        <item>com.android.car.carlauncher.CarLauncher</item>
+        <item>com.google.android.car.setupwizard.CarSetupWizardActivity</item>
+        <item>com.google.android.maps.MapsActivity</item>
+        <item>com.android.car.cluster.osdouble.ClusterOsDoubleActivity</item>
+        <item>com.android.car.carlauncher.GASAppGridActivity</item>
+    </string-array>
 
     <!-- Whether to use file hashes cache in watchlist-->
     <bool name="config_watchlistUseFileHashesCache">false</bool>
