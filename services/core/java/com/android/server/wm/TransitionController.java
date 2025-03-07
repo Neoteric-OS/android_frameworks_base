@@ -19,6 +19,7 @@ package com.android.server.wm;
 import static android.view.WindowManager.KEYGUARD_VISIBILITY_TRANSIT_FLAGS;
 import static android.view.WindowManager.TRANSIT_CHANGE;
 import static android.view.WindowManager.TRANSIT_CLOSE;
+import static android.view.WindowManager.TRANSIT_FLAG_KEYGUARD_APPEARING;
 import static android.view.WindowManager.TRANSIT_NONE;
 
 import static com.android.server.wm.ActivityTaskManagerService.POWER_MODE_REASON_CHANGE_DISPLAY;
@@ -1158,6 +1159,10 @@ class TransitionController {
         // For tests
         if (running.mParallelCollectType == Transition.PARALLEL_TYPE_MUTUAL
                 && incoming.mParallelCollectType == Transition.PARALLEL_TYPE_MUTUAL) {
+            return true;
+        }
+        if ((incoming.getFlags() & TRANSIT_FLAG_KEYGUARD_APPEARING) != 0
+                && (running.getFlags() & KEYGUARD_VISIBILITY_TRANSIT_FLAGS) == 0) {
             return true;
         }
         // For now there's only one mutually-independent pair: an all activity-level transition and
