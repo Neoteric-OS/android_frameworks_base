@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3166be3_8ef4ea3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2025-03-10T16:52:54Z",
+      "side": 1,
+      "message": "Good with me. There is a merge conflict, Jaideep please re-upload the CL.",
+      "revId": "d4b2a60423fd99e68316b30afbe325bf95293a1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
