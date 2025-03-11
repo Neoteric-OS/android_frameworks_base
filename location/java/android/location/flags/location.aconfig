@@ -168,3 +168,13 @@ flag {
     description: "Flag for GNSS assistance interface"
     bug: "209078566"
 }
+flag {
+    name: "limit_fused_gps"
+    namespace: "location"
+    description: "Limits when GPS can be used for fused location requests"
+    bug: "401885179"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+

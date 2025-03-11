@@ -34,6 +34,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationRequest;
+import android.location.flags.Flags;
 import android.location.provider.LocationProviderBase;
 import android.location.provider.ProviderProperties;
 import android.location.provider.ProviderRequest;
@@ -60,6 +61,9 @@ public class FusedLocationProvider extends LocationProviderBase {
                 .build();
 
     private static final long MAX_LOCATION_COMPARISON_NS = 11 * 1000000000L; // 11 seconds
+    // Maximum request interval at which we will activate GPS (because GPS consumes excessive
+    // power with large intervals).
+    private static final long MAX_GPS_INTERVAL_MS = 5 * 1000; // 5 seconds
 
     private final Object mLock = new Object();
 
@@ -164,8 +168,13 @@ public class FusedLocationProvider extends LocationProviderBase {
             mNlpPresent = mLocationManager.hasProvider(NETWORK_PROVIDER);
         }
 
+        boolean requestSupportsGps =
+                Flags.limitFusedGps()
+                    ? mRequest.getQuality() == QUALITY_HIGH_ACCURACY
+                        && mRequest.getIntervalMillis() <= MAX_GPS_INTERVAL_MS
+                    : !mNlpPresent || mRequest.getQuality() < QUALITY_LOW_POWER;
         long gpsInterval =
-                mGpsPresent && (!mNlpPresent || mRequest.getQuality() < QUALITY_LOW_POWER)
+                mGpsPresent && requestSupportsGps
                         ? mRequest.getIntervalMillis() : INTERVAL_DISABLED;
         long networkInterval = mNlpPresent ? mRequest.getIntervalMillis() : INTERVAL_DISABLED;
 
