@@ -112,6 +112,8 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
             whenever(keyguardUpdateMonitor.getServiceState(any()))
                 .thenReturn(ServiceState().also { it.state = ServiceState.STATE_IN_SERVICE })
+            whenever(view.resources.getInteger(com.android.internal.R.integer.config_showOperatorNameDefault))
+                .thenReturn(1)
             subscriptionManagerProxy.defaultDataSubId = 1
             airplaneModeRepository.setIsAirplaneMode(false)
 
@@ -137,6 +139,8 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
             whenever(keyguardUpdateMonitor.getServiceState(any()))
                 .thenReturn(ServiceState().also { it.state = ServiceState.STATE_IN_SERVICE })
+            whenever(view.resources.getInteger(com.android.internal.R.integer.config_showOperatorNameDefault))
+                .thenReturn(0)
             subscriptionManagerProxy.defaultDataSubId = 1
             airplaneModeRepository.setIsAirplaneMode(false)
 
@@ -161,6 +165,8 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
             whenever(keyguardUpdateMonitor.getServiceState(any()))
                 .thenReturn(ServiceState().also { it.state = ServiceState.STATE_IN_SERVICE })
+            whenever(view.resources.getInteger(com.android.internal.R.integer.config_showOperatorNameDefault))
+                .thenReturn(0)
             subscriptionManagerProxy.defaultDataSubId = 1
             airplaneModeRepository.setIsAirplaneMode(true)
 
@@ -186,6 +192,8 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
                 .thenReturn(mockSubInfo)
             whenever(keyguardUpdateMonitor.getSimState(any()))
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
+            whenever(view.resources.getInteger(com.android.internal.R.integer.config_showOperatorNameDefault))
+                .thenReturn(0)
 
             // Not in service
             whenever(keyguardUpdateMonitor.getServiceState(any()))
