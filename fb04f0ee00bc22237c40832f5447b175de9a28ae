@@ -16,6 +16,29 @@
       "message": "Hi Antonio. Can someone please take a look at this? Thanks!",
       "revId": "fb04f0ee00bc22237c40832f5447b175de9a28ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b150b592_43ad6a20",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6398,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2025-03-11T17:47:20Z",
+      "side": 1,
+      "message": "This seems to be a very heavy solution to the problem. It looks like you\u0027re freezing all displays for any change to any one display.\n\nIf the issue (as mentioned in the commit message) is that subsequent freezes don\u0027t happen if default display is frozen, is there a more targeted fix for that (eg. checking if the relevant display is frozen vs checking the default)?\n\nIf the \"blast radius\" can be reduced to only the changing displays, then you also shouldn\u0027t need `FLAG_NO_FREEZE`.",
+      "range": {
+        "startLine": 6398,
+        "startChar": 14,
+        "endLine": 6398,
+        "endChar": 28
+      },
+      "revId": "fb04f0ee00bc22237c40832f5447b175de9a28ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
