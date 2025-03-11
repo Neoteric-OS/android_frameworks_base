@@ -3373,6 +3373,10 @@ static jboolean android_media_AudioSystem_isBluetoothVariableLatencyEnabled(JNIE
     return enabled;
 }
 
+static int android_media_AudioSystem_setSimulateDeviceConnections(JNIEnv *env, jobject thiz,
+                                                                  jboolean enabled) {
+    return check_AudioSystem_Command(AudioSystem::setSimulateDeviceConnections(enabled));
+}
 class JavaSystemPropertyListener {
   public:
     JavaSystemPropertyListener(JNIEnv* env, jobject javaCallback, std::string sysPropName) :
@@ -3618,6 +3622,7 @@ static const JNINativeMethod gMethods[] = {
                                android_media_AudioSystem_listenForSystemPropertyChange),
         MAKE_JNI_NATIVE_METHOD("triggerSystemPropertyUpdate", "(J)V",
                                android_media_AudioSystem_triggerSystemPropertyUpdate),
+        MAKE_AUDIO_SYSTEM_METHOD(setSimulateDeviceConnections),
 };
 
 static const JNINativeMethod gEventHandlerMethods[] =
