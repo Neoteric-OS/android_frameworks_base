@@ -39,6 +39,30 @@
       },
       "revId": "fb04f0ee00bc22237c40832f5447b175de9a28ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1f17a81_7da9806c",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6398,
+      "author": {
+        "id": 1961565
+      },
+      "writtenOn": "2025-03-11T19:19:40Z",
+      "side": 1,
+      "message": "The use case is around full-scale theme changes (RROs that apply themes to the framework resources, etc). In these cases, all displays need to be frozen. For our automotive use case this is what we need (we do not have rotatable displays or anything like that) but for the more general case, this may not be what is wanted.\n\nTo properly do this on a per-display basis would, from what we can see, require a massive rewrite of this entire area.\n\nI\u0027m not entirely sure how we would decide \"the whole system needs to freeze\" vs a rotate. But if we could somehow make it a per-display freeze that should alleviate this. I\u0027m just not sure what it would take to do that.",
+      "parentUuid": "b150b592_43ad6a20",
+      "range": {
+        "startLine": 6398,
+        "startChar": 14,
+        "endLine": 6398,
+        "endChar": 28
+      },
+      "revId": "fb04f0ee00bc22237c40832f5447b175de9a28ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

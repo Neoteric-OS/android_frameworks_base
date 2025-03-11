@@ -51,6 +51,24 @@
       "parentUuid": "974b90f0_94bee31c",
       "revId": "dae495d224007354d62fc3ca1a0f513060f4c31b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a67ccd63_f6b8a3b0",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1961565
+      },
+      "writtenOn": "2025-03-11T19:19:40Z",
+      "side": 1,
+      "message": "We did not change any of the logic around freezing the individual displays. What we added was \"loop around each display and freeze them\" instead of \"freeze the display, unless another display is already frozen in which case do nothing\"",
+      "parentUuid": "028125c7_9c49bde0",
+      "revId": "dae495d224007354d62fc3ca1a0f513060f4c31b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
