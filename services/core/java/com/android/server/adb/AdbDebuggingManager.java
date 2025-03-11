@@ -130,6 +130,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class AdbDebuggingManager {
     private static final String TAG = AdbDebuggingManager.class.getSimpleName();
+    private static final boolean DEBUG = false;
+    private static final boolean MDNS_DEBUG = false;
 
     private static final String ADBD_SOCKET = "adbd";
     private static final String ADB_DIRECTORY = "misc/adb";
@@ -259,10 +261,12 @@ public class AdbDebuggingManager {
             mHandler.sendMessage(msg);
 
             boolean paired = native_pairing_wait();
-            if (mPublicKey != null) {
-                Slog.i(TAG, "Pairing succeeded key=" + mPublicKey);
-            } else {
-                Slog.i(TAG, "Pairing failed");
+            if (DEBUG) {
+                if (mPublicKey != null) {
+                    Slog.i(TAG, "Pairing succeeded key=" + mPublicKey);
+                } else {
+                    Slog.i(TAG, "Pairing failed");
+                }
             }
 
             mNsdManager.unregisterService(this);
@@ -303,7 +307,7 @@ public class AdbDebuggingManager {
 
         @Override
         public void onServiceRegistered(NsdServiceInfo serviceInfo) {
-            Slog.i(TAG, "Registered pairing service: " + serviceInfo);
+            if (MDNS_DEBUG) Slog.i(TAG, "Registered pairing service: " + serviceInfo);
         }
 
         @Override
@@ -315,7 +319,7 @@ public class AdbDebuggingManager {
 
         @Override
         public void onServiceUnregistered(NsdServiceInfo serviceInfo) {
-            Slog.i(TAG, "Unregistered pairing service: " + serviceInfo);
+            if (MDNS_DEBUG) Slog.i(TAG, "Unregistered pairing service: " + serviceInfo);
         }
 
         @Override
@@ -350,7 +354,7 @@ public class AdbDebuggingManager {
 
         @Override
         public void run() {
-            Slog.d(TAG, "Starting adb port property poller");
+            if (DEBUG) Slog.d(TAG, "Starting adb port property poller");
             // Once adbwifi is enabled, we poll the service.adb.tls.port
             // system property until we get the port, or -1 on failure.
             // Let's also limit the polling to 10 seconds, just in case
@@ -386,7 +390,7 @@ public class AdbDebuggingManager {
 
     class PortListenerImpl implements AdbConnectionPortListener {
         public void onPortReceived(int port) {
-            Slog.d(TAG, "Received tls port=" + port);
+            if (DEBUG) Slog.d(TAG, "Received tls port=" + port);
             Message msg = mHandler.obtainMessage(port > 0
                      ? AdbDebuggingHandler.MSG_SERVER_CONNECTED
                      : AdbDebuggingHandler.MSG_SERVER_DISCONNECTED);
@@ -415,11 +419,11 @@ public class AdbDebuggingManager {
 
         @Override
         public void run() {
-            Slog.d(TAG, "Entering thread");
+            if (DEBUG) Slog.d(TAG, "Entering thread");
             while (true) {
                 synchronized (this) {
                     if (mStopped) {
-                        Slog.d(TAG, "Exiting thread");
+                        if (DEBUG) Slog.d(TAG, "Exiting thread");
                         return;
                     }
                     try {
@@ -444,7 +448,7 @@ public class AdbDebuggingManager {
                         LocalSocketAddress.Namespace.RESERVED);
                 mInputStream = null;
 
-                Slog.d(TAG, "Creating socket");
+                if (DEBUG) Slog.d(TAG, "Creating socket");
                 mSocket = new LocalSocket(LocalSocket.SOCKET_SEQPACKET);
                 mSocket.connect(address);
 
@@ -545,7 +549,7 @@ public class AdbDebuggingManager {
         }
 
         private void closeSocketLocked() {
-            Slog.d(TAG, "Closing socket");
+            if (DEBUG) Slog.d(TAG, "Closing socket");
             try {
                 if (mOutputStream != null) {
                     mOutputStream.close();
@@ -855,7 +859,7 @@ public class AdbDebuggingManager {
 
         private void startAdbDebuggingThread() {
             ++mAdbEnabledRefCount;
-            Slog.i(TAG, "startAdbDebuggingThread ref=" + mAdbEnabledRefCount);
+            if (DEBUG) Slog.i(TAG, "startAdbDebuggingThread ref=" + mAdbEnabledRefCount);
             if (mAdbEnabledRefCount > 1) {
                 return;
             }
@@ -871,7 +875,7 @@ public class AdbDebuggingManager {
 
         private void stopAdbDebuggingThread() {
             --mAdbEnabledRefCount;
-            Slog.i(TAG, "stopAdbDebuggingThread ref=" + mAdbEnabledRefCount);
+            if (DEBUG) Slog.i(TAG, "stopAdbDebuggingThread ref=" + mAdbEnabledRefCount);
             if (mAdbEnabledRefCount > 0) {
                 return;
             }
@@ -1097,7 +1101,7 @@ public class AdbDebuggingManager {
                     startAdbDebuggingThread();
                     mAdbWifiEnabled = true;
 
-                    Slog.i(TAG, "adb start wireless adb");
+                    if (DEBUG) Slog.i(TAG, "adb start wireless adb");
                     break;
                 }
                 case MSG_ADBDWIFI_DISABLE:
@@ -1147,7 +1151,7 @@ public class AdbDebuggingManager {
                     startAdbDebuggingThread();
                     mAdbWifiEnabled = true;
 
-                    Slog.i(TAG, "adb start wireless adb");
+                    if (DEBUG) Slog.i(TAG, "adb start wireless adb");
                     break;
                 case MSG_ADBWIFI_DENY:
                     Settings.Global.putInt(mContentResolver,
@@ -1255,7 +1259,7 @@ public class AdbDebuggingManager {
                     break;
                 }
                 case MSG_ADBD_SOCKET_CONNECTED: {
-                    Slog.d(TAG, "adbd socket connected");
+                    if (DEBUG) Slog.d(TAG, "adbd socket connected");
                     if (mAdbWifiEnabled) {
                         // In scenarios where adbd is restarted, the tls port may change.
                         mConnectionPortPoller =
@@ -1265,7 +1269,7 @@ public class AdbDebuggingManager {
                     break;
                 }
                 case MSG_ADBD_SOCKET_DISCONNECTED: {
-                    Slog.d(TAG, "adbd socket disconnected");
+                    if (DEBUG) Slog.d(TAG, "adbd socket disconnected");
                     if (mConnectionPortPoller != null) {
                         mConnectionPortPoller.cancelAndWait();
                         mConnectionPortPoller = null;
@@ -1473,7 +1477,7 @@ public class AdbDebuggingManager {
         }
 
         private void updateUIPairCode(String code) {
-            Slog.i(TAG, "updateUIPairCode: " + code);
+            if (DEBUG) Slog.i(TAG, "updateUIPairCode: " + code);
 
             Intent intent = new Intent(AdbManager.WIRELESS_DEBUG_PAIRING_RESULT_ACTION);
             intent.putExtra(AdbManager.WIRELESS_PAIRING_CODE_EXTRA, code);

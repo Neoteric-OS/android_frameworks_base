@@ -222,7 +222,8 @@ public class AdbService extends IAdbManager.Stub {
         }
     }
 
-    private static final String TAG = AdbService.class.getSimpleName();
+    private static final String TAG = "AdbService";
+    private static final boolean DEBUG = false;
 
     /**
      * The persistent property which stores whether adb is enabled or not.
@@ -255,7 +256,7 @@ public class AdbService extends IAdbManager.Stub {
      * SystemServer}.
      */
     public void systemReady() {
-        Slog.d(TAG, "systemReady");
+        if (DEBUG) Slog.d(TAG, "systemReady");
 
         /*
          * Use the normal bootmode persistent prop to maintain state of adb across
@@ -286,7 +287,7 @@ public class AdbService extends IAdbManager.Stub {
      * Called in response to {@code SystemService.PHASE_BOOT_COMPLETED} from {@code SystemServer}.
      */
     public void bootCompleted() {
-        Slog.d(TAG, "boot completed");
+        if (DEBUG) Slog.d(TAG, "boot completed");
         if (mDebuggingManager != null) {
             mDebuggingManager.setAdbEnabled(mIsAdbUsbEnabled, AdbTransportType.USB);
             mDebuggingManager.setAdbEnabled(mIsAdbWifiEnabled, AdbTransportType.WIFI);
@@ -428,13 +429,17 @@ public class AdbService extends IAdbManager.Stub {
 
     @Override
     public void registerCallback(IAdbCallback callback) throws RemoteException {
-        Slog.d(TAG, "Registering callback " + callback);
+        if (DEBUG) {
+            Slog.d(TAG, "Registering callback " + callback);
+        }
         mCallbacks.register(callback);
     }
 
     @Override
     public void unregisterCallback(IAdbCallback callback) throws RemoteException {
-        Slog.d(TAG, "Unregistering callback " + callback);
+        if (DEBUG) {
+            Slog.d(TAG, "Unregistering callback " + callback);
+        }
         mCallbacks.unregister(callback);
     }
     /**
@@ -495,8 +500,11 @@ public class AdbService extends IAdbManager.Stub {
     }
 
     private void setAdbEnabled(boolean enable, byte transportType) {
-        Slog.d(TAG, "setAdbEnabled(" + enable + "), mIsAdbUsbEnabled=" + mIsAdbUsbEnabled
-                 + ", mIsAdbWifiEnabled=" + mIsAdbWifiEnabled + ", transportType=" + transportType);
+        if (DEBUG) {
+            Slog.d(TAG, "setAdbEnabled(" + enable + "), mIsAdbUsbEnabled=" + mIsAdbUsbEnabled
+                    + ", mIsAdbWifiEnabled=" + mIsAdbWifiEnabled + ", transportType="
+                        + transportType);
+        }
 
         if (transportType == AdbTransportType.USB && enable != mIsAdbUsbEnabled) {
             mIsAdbUsbEnabled = enable;
@@ -541,14 +549,20 @@ public class AdbService extends IAdbManager.Stub {
             mDebuggingManager.setAdbEnabled(enable, transportType);
         }
 
-        Slog.d(TAG, "Broadcasting enable = " + enable + ", type = " + transportType);
+        if (DEBUG) {
+            Slog.d(TAG, "Broadcasting enable = " + enable + ", type = " + transportType);
+        }
         mCallbacks.broadcast((callback) -> {
-            Slog.d(TAG, "Sending enable = " + enable + ", type = " + transportType + " to "
-                    + callback);
+            if (DEBUG) {
+                Slog.d(TAG, "Sending enable = " + enable + ", type = " + transportType
+                        + " to " + callback);
+            }
             try {
                 callback.onDebuggingChanged(enable, transportType);
             } catch (RemoteException ex) {
-                Slog.w(TAG, "Unable to send onDebuggingChanged:", ex);
+                if (DEBUG) {
+                    Slog.d(TAG, "Unable to send onDebuggingChanged:", ex);
+                }
             }
         });
     }
