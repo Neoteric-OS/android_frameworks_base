@@ -52,6 +52,24 @@
       "parentUuid": "72f81cdd_5de22b48",
       "revId": "dc3e0257a7d13d31f45eab61c2e0b7e0de1a6b91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da719646_8759bbed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2053882
+      },
+      "writtenOn": "2025-03-12T15:32:06Z",
+      "side": 1,
+      "message": "when call `getWindow()` in kotlin code, always need to use `getWindow()!!`, it\u0027s very strange",
+      "parentUuid": "4a5894f0_efef9894",
+      "revId": "dc3e0257a7d13d31f45eab61c2e0b7e0de1a6b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
