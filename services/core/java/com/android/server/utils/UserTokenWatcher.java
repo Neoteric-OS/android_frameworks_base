@@ -63,14 +63,15 @@ public final class UserTokenWatcher {
      * @param userId A user id
      */
     public void acquire(IBinder token, String tag, @UserIdInt int userId) {
+        TokenWatcher watcher = null;
         synchronized (mWatchers) {
-            TokenWatcher watcher = mWatchers.get(userId);
+            watcher = mWatchers.get(userId);
             if (watcher == null) {
                 watcher = new InnerTokenWatcher(userId, mHandler, mTag);
                 mWatchers.put(userId, watcher);
             }
-            watcher.acquire(token, tag);
         }
+        watcher.acquire(token, tag);
     }
 
     /**
@@ -82,11 +83,12 @@ public final class UserTokenWatcher {
      * @param userId A user id
      */
     public void release(IBinder token, @UserIdInt int userId) {
+        TokenWatcher watcher = null;
         synchronized (mWatchers) {
-            TokenWatcher watcher = mWatchers.get(userId);
-            if (watcher != null) {
-                watcher.release(token);
-            }
+            watcher = mWatchers.get(userId);
+        }
+        if (watcher != null) {
+            watcher.release(token);
         }
     }
 
