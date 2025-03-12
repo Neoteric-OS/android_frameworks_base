@@ -33,6 +33,23 @@
       "message": "Mikhail,\n\npresubmit failed, i don\u0027t have the access to logs, could you please help to get logs to see i can check if it is caused by this change or not.",
       "revId": "6dd9828373ebeb58a467a11f40107117abd6aecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2d9eaa7_5f19cf79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2025-03-12T17:50:07Z",
+      "side": 1,
+      "message": "Jaideep, the failure is not related to your change. Retrying.",
+      "revId": "6dd9828373ebeb58a467a11f40107117abd6aecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
