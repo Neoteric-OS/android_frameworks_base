@@ -34,6 +34,24 @@
       "parentUuid": "8b703b0c_881fe77b",
       "revId": "dc3e0257a7d13d31f45eab61c2e0b7e0de1a6b91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a5894f0_efef9894",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061009
+      },
+      "writtenOn": "2025-03-12T15:27:59Z",
+      "side": 1,
+      "message": "mWindow may not be public, but `getWindow()` is. I understand the intent here, but this simply isn\u0027t allowed by the API evolution rules, and I don\u0027t see a sufficient reason to make an exception here.",
+      "parentUuid": "72f81cdd_5de22b48",
+      "revId": "dc3e0257a7d13d31f45eab61c2e0b7e0de1a6b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
