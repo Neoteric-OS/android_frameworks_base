@@ -70,6 +70,24 @@
       "parentUuid": "4a5894f0_efef9894",
       "revId": "dc3e0257a7d13d31f45eab61c2e0b7e0de1a6b91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a898ff8e_dac8fb0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2053882
+      },
+      "writtenOn": "2025-03-12T15:35:51Z",
+      "side": 1,
+      "message": "if we do not change this in `core/java/android/app/Dialog.java`, can we change this in `androidx/activity/ComponentDialog` ?",
+      "parentUuid": "da719646_8759bbed",
+      "revId": "dc3e0257a7d13d31f45eab61c2e0b7e0de1a6b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
