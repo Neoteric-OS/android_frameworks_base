@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10d3507b_7941b0ee",
+        "filename": "services/core/java/com/android/server/wm/Transition.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4034,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-03-12T04:23:06Z",
+      "side": 1,
+      "message": "Now the freeze is done by here. Other freeze code have been removed.\nAnd it should already freeze all displays if a global config change happens (from DisplayContent#performDisplayOverrideConfigUpdate -\u003e requestChangeTransition -\u003e DisplayArea#onConfigurationChanged -\u003e TransitionController#collectForDisplayAreaChange -\u003e collectVisibleChange -\u003e freeze).\n\nBTW, I didn\u0027t see VIRTUAL_DISPLAY_FLAG_NO_FREEZE. And it shouldn\u0027t be needed if the freeze only happens for the actual changed displays.",
+      "revId": "fb04f0ee00bc22237c40832f5447b175de9a28ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b150b592_43ad6a20",
         "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
         "patchSetId": 3
