@@ -1603,6 +1603,49 @@ public abstract class WebSettings {
 
 
     /**
+     * Sets whether PaymentRequest API is enabled. This API enables websites to launch
+     * Android payment apps on user's device.
+     *
+     * <p>PaymentRequest API is disabled by default.
+     *
+     * @param enabled Whether PaymentRequest API is enabled.
+     */
+     public abstract void setPaymentRequestEnabled(boolean enabled);
+
+    /**
+     * Gets whether PaymentRequest API is enabled.
+     * See {@link #setPaymentRequestEnabled}.
+     *
+     * @retiurn {@code true} if PaymentRequest API is enabled and {@code false} otherwise.
+     */
+     public abstract boolean getPaymentRequestEnabled();
+
+    /**
+     * Sets whether the PaymentRequest.hasEnrolledInstrument() API is enabled.
+     * This API enables websites to query the installed Android payment apps
+     * to check whether they have at least one enrolled payment instrument.
+     *
+     * <p>If disabled, then PaymentRequest.hasEnrolledInstrument() always
+     * returns {@code false}.
+     *
+     * <p>When PaymentRequest API is enabled via {@link #setPaymentRequestEnabled},
+     * then the PaymentRequest.hasEnrolledInstrument() API is enabled by default.
+     *
+     * @param enabled Whether PaymentRequest.hasEnrolledInstrument() API is enabled.
+     */
+     public abstract void setHasEnrolledInstrumentEnabled(boolean enabled);
+
+    /**
+     * Gets whether PaymentRequest.hasEnrolledInstrument() API is enabled.
+     * See {@link #setHasEnrolledInstrumentEnabled}.
+     *
+     * @retiurn {@code true} if PaymentRequest.hasEnrolledInstrument() API is
+     *     enabled and {@code false} otherwise.
+     */
+     public abstract boolean getHasEnrolledInstrumentEnabled();
+
+
+    /**
      * Set the force dark mode for this WebView.
      *
      * @param forceDark the force dark mode to set.
