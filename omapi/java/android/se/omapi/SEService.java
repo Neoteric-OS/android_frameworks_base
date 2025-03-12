@@ -176,6 +176,10 @@ public final class SEService {
         if (context == null || listener == null || executor == null) {
             throw new NullPointerException("Arguments must not be null");
         }
+        if (UserHandle.myUserId() != 0) {
+            Log.w(TAG, "SEService is not supported for non-primary users");
+            return;
+        }
 
         mContext = context;
         mSEListener.mListener = listener;
@@ -275,7 +279,9 @@ public final class SEService {
                 }
             }
             try {
-                mContext.unbindService(mConnection);
+                if (mConnection != null) {
+                    mContext.unbindService(mConnection);
+                }
             } catch (IllegalArgumentException e) {
                 // Do nothing and fail silently since an error here indicates
                 // that binding never succeeded in the first place.
