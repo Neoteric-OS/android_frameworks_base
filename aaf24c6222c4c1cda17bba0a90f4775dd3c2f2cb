@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "534afae3_a21a5ac6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3917593
+      },
+      "writtenOn": "2025-03-12T09:58:04Z",
+      "side": 1,
+      "message": "Hi,\n\nI resolved this issue that is described here:\nhttps://github.com/google/oboe/issues/2153\n\nThanks in advance for your review.",
+      "revId": "aaf24c6222c4c1cda17bba0a90f4775dd3c2f2cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
