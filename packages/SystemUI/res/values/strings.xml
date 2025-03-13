@@ -1840,6 +1840,12 @@
 <!-- QTI_BEGIN: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
 <!-- QTI_END: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
     <string name="hearing_devices_ambient_control_right">Right</string>
+    <!-- QuickSettings: Content description for unified ambient control slider. [CHAR LIMIT=NONE] -->
+    <string name="hearing_devices_ambient_control_description">Surroundings</string>
+    <!-- QuickSettings: Content description for left ambient control slider. [CHAR LIMIT=NONE] -->
+    <string name="hearing_devices_ambient_control_left_description">Left surroundings</string>
+    <!-- QuickSettings: Content description for left ambient control slider. [CHAR LIMIT=NONE] -->
+    <string name="hearing_devices_ambient_control_right_description">Right surroundings</string>
     <!-- QuickSettings: Content description for a button, that expands ambient volume sliders [CHAR_LIMIT=NONE] -->
 <!-- QTI_BEGIN: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
 <!-- QTI_END: 2022-03-27: Telephony: Add conditions to prevent disabling of mobile data-->
