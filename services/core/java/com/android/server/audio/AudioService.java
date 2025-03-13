@@ -971,7 +971,8 @@ public class AudioService extends IAudioService.Stub
     /**
      * Stores information about a device using absolute volume behavior.
      */
-    private static final class AbsoluteVolumeDeviceInfo {
+    private static final class AbsoluteVolumeDeviceInfo implements IBinder.DeathRecipient {
+        private final AudioService mParent;
         private final AudioDeviceAttributes mDevice;
         private final List<VolumeInfo> mVolumeInfos;
         private final IAudioDeviceVolumeDispatcher mCallback;
@@ -979,16 +980,26 @@ public class AudioService extends IAudioService.Stub
         private @AudioManager.AbsoluteDeviceVolumeBehavior int mDeviceVolumeBehavior;
 
         private AbsoluteVolumeDeviceInfo(
+                AudioService parent,
                 AudioDeviceAttributes device,
                 List<VolumeInfo> volumeInfos,
                 IAudioDeviceVolumeDispatcher callback,
                 boolean handlesVolumeAdjustment,
                 @AudioManager.AbsoluteDeviceVolumeBehavior int behavior) {
+            this.mParent = parent;
             this.mDevice = device;
             this.mVolumeInfos = volumeInfos;
             this.mCallback = callback;
             this.mHandlesVolumeAdjustment = handlesVolumeAdjustment;
             this.mDeviceVolumeBehavior = behavior;
+
+            try {
+                this.mCallback.asBinder().linkToDeath(this, 0);
+            } catch (RemoteException | NullPointerException e) {
+                // NPE can be raised when mocking the callback object
+                Slog.w(TAG, "Exception: " + e
+                        + "\nCannot listen to callback binder death for device " + mDevice);
+            }
         }
 
         /**
@@ -1007,6 +1018,25 @@ public class AudioService extends IAudioService.Stub
                 }
             }
             return null;
+        }
+
+        @Override
+        public void binderDied() {
+            if (mParent.removeAudioSystemDeviceOutFromAbsVolumeDevices(mDevice.getInternalType())
+                    != null) {
+                mParent.dispatchDeviceVolumeBehavior(mDevice,
+                        AudioManager.DEVICE_VOLUME_BEHAVIOR_VARIABLE);
+            }
+        }
+
+        public void unlinkToDeath() {
+            try {
+                mCallback.asBinder().unlinkToDeath(this, 0);
+            } catch (NullPointerException e) {
+                // NPE can be raised when mocking the callback object
+                Slog.w(TAG, "Exception: " + e
+                        + "\nCannot unlink to death, null binder object for device " + mDevice);
+            }
         }
     }
 
@@ -8244,16 +8274,16 @@ public class AudioService extends IAudioService.Stub
 
         int deviceOut = device.getInternalType();
         if (register) {
-            AbsoluteVolumeDeviceInfo info = new AbsoluteVolumeDeviceInfo(
+            AbsoluteVolumeDeviceInfo info = new AbsoluteVolumeDeviceInfo(this,
                     device, volumes, cb, handlesVolumeAdjustment, deviceVolumeBehavior);
             final AbsoluteVolumeDeviceInfo oldInfo = getAbsoluteVolumeDeviceInfo(deviceOut);
+            addAudioSystemDeviceOutToAbsVolumeDevices(deviceOut, info);
 
             boolean volumeBehaviorChanged = (oldInfo == null)
                     || (oldInfo.mDeviceVolumeBehavior != deviceVolumeBehavior);
             if (volumeBehaviorChanged) {
                 removeAudioSystemDeviceOutFromFullVolumeDevices(deviceOut);
                 removeAudioSystemDeviceOutFromFixedVolumeDevices(deviceOut);
-                addAudioSystemDeviceOutToAbsVolumeDevices(deviceOut, info);
 
                 dispatchDeviceVolumeBehavior(device, deviceVolumeBehavior);
             }
@@ -8279,8 +8309,10 @@ public class AudioService extends IAudioService.Stub
                 }
             }
         } else {
-            boolean wasAbsVol = removeAudioSystemDeviceOutFromAbsVolumeDevices(deviceOut) != null;
-            if (wasAbsVol) {
+            AbsoluteVolumeDeviceInfo deviceInfo = removeAudioSystemDeviceOutFromAbsVolumeDevices(
+                    deviceOut);
+            if (deviceInfo != null) {
+                deviceInfo.unlinkToDeath();
                 dispatchDeviceVolumeBehavior(device, AudioManager.DEVICE_VOLUME_BEHAVIOR_VARIABLE);
             }
         }
