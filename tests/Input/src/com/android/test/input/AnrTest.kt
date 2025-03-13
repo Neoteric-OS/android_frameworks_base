@@ -36,7 +36,6 @@ import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 
 import com.android.cts.input.DebugInputRule
-import com.android.cts.input.ShowErrorDialogsRule
 import com.android.cts.input.UinputTouchScreen
 
 import java.time.Duration
@@ -77,9 +76,6 @@ class AnrTest {
 
     @get:Rule
     val debugInputRule = DebugInputRule()
-
-    @get:Rule
-    val showErrorDialogs = ShowErrorDialogsRule()
 
     @Before
     fun setUp() {
