@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a74dc967_de19fd41",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2025-03-13T22:20:37Z",
+      "side": 1,
+      "message": "hmm... this has ruined your \"messages from adbd\"/\"messages from other parts of the system\" formatting...",
+      "revId": "c4bc7e83b9f4a4bc9bcccea69e3944c5838d9ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
