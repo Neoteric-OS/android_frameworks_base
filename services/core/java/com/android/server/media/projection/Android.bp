@@ -1,0 +1,6 @@
+team {
+    name: "trendy_team_media_projection",
+
+    // go/trendy/manage/engineers/6362947212640256
+    trendy_team_id: "6362947212640256",
+}
