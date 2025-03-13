@@ -16,6 +16,23 @@
       "message": "Hi,\n\nI resolved this issue that is described here:\nhttps://github.com/google/oboe/issues/2153\n\nThanks in advance for your review.",
       "revId": "aaf24c6222c4c1cda17bba0a90f4775dd3c2f2cb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23209dfa_3657ecbf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1643016
+      },
+      "writtenOn": "2025-03-13T12:30:07Z",
+      "side": 1,
+      "message": "Could you provide more details about what exactly this is fixing and why this fix is the right approach? Volume key routing is a bit fiddly, and we\u0027d need to understand exactly what this is addressing. If we agree to move forward with the change, we\u0027d probably also a need a CTS test and guard it via Android\u0027s flagging system as this is a behavior change with partially unknown consequences.",
+      "revId": "aaf24c6222c4c1cda17bba0a90f4775dd3c2f2cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
