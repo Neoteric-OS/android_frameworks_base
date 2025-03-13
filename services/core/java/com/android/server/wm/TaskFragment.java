@@ -1776,9 +1776,6 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                 next.setVisibility(true);
             }
 
-            // schedule launch ticks to collect information about slow apps.
-            next.startLaunchTickingLocked();
-
             ActivityRecord lastResumedActivity =
                     lastFocusedRootTask == null ? null
                             : lastFocusedRootTask.getTopResumedActivity();
