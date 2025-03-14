@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a37fe5a8_5a8441a3",
+        "filename": "services/core/java/com/android/server/wm/WindowManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2553,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-03-14T04:38:46Z",
+      "side": 1,
+      "message": "Could you add `if (!w.mHaveFrame \u0026\u0026 displayContent.mWaitingForConfig)` so the condition is clearer?",
+      "fixSuggestions": [
+        {
+          "fixId": "2e1e1163_d1954baf",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/wm/WindowManagerService.java",
+              "range": {
+                "startLine": 2553,
+                "startChar": 0,
+                "endLine": 2554,
+                "endChar": 0
+              },
+              "replacement": "            if (!win.mHaveFrame \u0026\u0026 displayContent.mWaitingForConfig) {\n                win.mLayoutSeq \u003d displayContent.mLayoutSeq;\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1c5b77f5678c0034292a4444825fb687471fae33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
