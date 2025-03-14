@@ -303,7 +303,7 @@ public class PropertyInvalidatedCache<Query, Result> {
     private static final String TAG = "PropertyInvalidatedCache";
 
     // Set this true to enable very chatty logging.  Never commit this true.
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     // Set this true to enable cache verification.  On every cache hit, the cache will compare the
     // cached value to a value pulled directly from the source.  This completely negates any
