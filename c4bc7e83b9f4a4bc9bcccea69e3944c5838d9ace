@@ -34,6 +34,24 @@
       "parentUuid": "a74dc967_de19fd41",
       "revId": "c4bc7e83b9f4a4bc9bcccea69e3944c5838d9ace",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa6da471_95b965da",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2025-03-14T12:56:38Z",
+      "side": 1,
+      "message": "yeah, i didn\u0027t really have a good suggestion (beyond \"go back in time and have a gap of 100 between each group, as room for expansion\").\n\nprobably the least worst i could think of was losing the group comments and prefixing each message\u0027s comment with the source? (the first two are already kind of in that style.)\n\neven if you want to do that, best in a separate change though.",
+      "parentUuid": "d47138db_4bb73aec",
+      "revId": "c4bc7e83b9f4a4bc9bcccea69e3944c5838d9ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
