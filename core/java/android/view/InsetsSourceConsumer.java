@@ -455,6 +455,11 @@ public class InsetsSourceConsumer {
             return;
         }
 
+        if (!leash.isValid()) {
+            if (DEBUG) Log.d(TAG, "applyRequestedVisibilityAndPositionToControl: leash is not valid");
+            return;
+        }
+
         final boolean visible = (mController.getRequestedVisibleTypes() & mType) != 0;
         final Point surfacePosition = mSourceControl.getSurfacePosition();
 
