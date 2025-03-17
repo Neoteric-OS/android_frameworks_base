@@ -455,6 +455,10 @@ public class InsetsSourceConsumer {
             return;
         }
 
+        if (!leash.isValid()) {
+            return;
+        }
+
         final boolean visible = (mController.getRequestedVisibleTypes() & mType) != 0;
         final Point surfacePosition = mSourceControl.getSurfacePosition();
 
