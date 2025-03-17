@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4334ee1e_18a3047a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2025-03-17T15:17:48Z",
+      "side": 1,
+      "message": "Does this mean the aconfig subcommands create-device-config-defaults and create-device-config-sysprops can be removed?",
+      "revId": "1278c2ffd15935726bd01bded2358449148ebd8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
