@@ -368,6 +368,10 @@ public class AudioDeviceBroker {
      */
     @GuardedBy("mDeviceStateLock")
     /*package*/ void onSetCommunicationDeviceForClient(CommunicationDeviceInfo deviceInfo) {
+        if (deviceInfo != null && deviceInfo.mCb == null) {
+            Log.w(TAG, "onSetCommunicationDeviceForClient: could not add a client due to null mCb.");
+            return false;
+        }
         if (AudioService.DEBUG_COMM_RTE) {
             Log.v(TAG, "onSetCommunicationDeviceForClient: " + deviceInfo);
         }
