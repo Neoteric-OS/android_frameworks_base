@@ -535,7 +535,7 @@ public class SyncStorageEngine {
         mCal = Calendar.getInstance(TimeZone.getTimeZone("GMT+0"));
 
         mDefaultMasterSyncAutomatically = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_syncstorageengine_masterSyncAutomatically);
+                mContext.getResources.getIdentifier("config_syncstorageengine_masterSyncAutomatically", "bool", "android"));
 
         mPackageManagerInternal = LocalServices.getService(PackageManagerInternal.class);
 
