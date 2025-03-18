@@ -52,6 +52,24 @@
       "parentUuid": "d47138db_4bb73aec",
       "revId": "c4bc7e83b9f4a4bc9bcccea69e3944c5838d9ace",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "960daacb_c8b9501c",
+        "filename": "services/core/java/com/android/server/adb/AdbDebuggingManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1083168
+      },
+      "writtenOn": "2025-03-18T02:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa6da471_95b965da",
+      "revId": "c4bc7e83b9f4a4bc9bcccea69e3944c5838d9ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
