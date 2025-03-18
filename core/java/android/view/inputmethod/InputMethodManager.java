@@ -1370,6 +1370,11 @@ public final class InputMethodManager {
                                         return;
                                     }
                                 }
+
+                                if (currentViewRootImpl == null) {
+                                    return;
+                                }
+
                                 final View curRootView = currentViewRootImpl.getView();
                                 if (curRootView == null) {
                                     // View was removed, ignore request.
