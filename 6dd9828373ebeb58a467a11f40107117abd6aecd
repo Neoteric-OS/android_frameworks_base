@@ -50,6 +50,23 @@
       "message": "Jaideep, the failure is not related to your change. Retrying.",
       "revId": "6dd9828373ebeb58a467a11f40107117abd6aecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a959459a_89537507",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1630064
+      },
+      "writtenOn": "2025-03-18T09:59:10Z",
+      "side": 1,
+      "message": "Hi Mikhail,\n\nPresubmit is still failing, could you please help to check?",
+      "revId": "6dd9828373ebeb58a467a11f40107117abd6aecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
