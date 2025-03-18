@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4154b362_8d76145e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2025-03-18T05:45:46Z",
+      "side": 1,
+      "message": "API changes are trivial, just two new values in an existing @IntDef.",
+      "revId": "26b2fd39cadeffbf5c1b064675958ace52e96baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
