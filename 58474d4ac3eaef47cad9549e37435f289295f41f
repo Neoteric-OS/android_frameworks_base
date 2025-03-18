@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5d3f9a8_ea7664ed",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2025-03-18T00:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec04a222_035e2596",
+      "revId": "58474d4ac3eaef47cad9549e37435f289295f41f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2be1b325_b761b2fd",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc50c657_d50c57bf",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2025-03-18T00:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2be1b325_b761b2fd",
+      "revId": "58474d4ac3eaef47cad9549e37435f289295f41f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3b3801e_12e3b12a",
@@ -48,6 +84,30 @@
       "writtenOn": "2025-02-14T06:45:45Z",
       "side": 1,
       "message": "Nit: TYPE_VPN_OEM_ENTERPRISE",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 56
+      },
+      "revId": "58474d4ac3eaef47cad9549e37435f289295f41f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa80c992_5514ac5b",
+        "filename": "core/java/android/net/flags.aconfig",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2025-03-18T00:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b3801e_12e3b12a",
       "range": {
         "startLine": 44,
         "startChar": 37,
