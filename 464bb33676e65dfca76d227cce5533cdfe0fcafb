@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8932c995_cbac67c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3735984
+      },
+      "writtenOn": "2025-03-18T05:04:21Z",
+      "side": 1,
+      "message": "Dear all,\nWhat is the next step?\nCurrently, I only provide the ZoneGetter.java\nI can not provide and run the ZoneGetterTest.java.",
+      "revId": "464bb33676e65dfca76d227cce5533cdfe0fcafb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
