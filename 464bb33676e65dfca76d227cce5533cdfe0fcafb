@@ -16,6 +16,24 @@
       "message": "Dear all,\nWhat is the next step?\nCurrently, I only provide the ZoneGetter.java\nI can not provide and run the ZoneGetterTest.java.",
       "revId": "464bb33676e65dfca76d227cce5533cdfe0fcafb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae49d96a_f8bc8976",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2025-03-18T08:51:17Z",
+      "side": 1,
+      "message": "\u003e I can not provide and run the ZoneGetterTest.java.\n\nWhat do you mean? Can you add a test cases which demonstrates that this fix is working?",
+      "parentUuid": "8932c995_cbac67c5",
+      "revId": "464bb33676e65dfca76d227cce5533cdfe0fcafb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
