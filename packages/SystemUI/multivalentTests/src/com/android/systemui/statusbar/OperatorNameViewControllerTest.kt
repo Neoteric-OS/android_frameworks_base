@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar
 
+import android.content.res.Resources
 import android.telephony.ServiceState
 import android.telephony.SubscriptionInfo
 import android.telephony.TelephonyManager
@@ -72,9 +73,17 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
     private val airplaneModeRepository = FakeAirplaneModeRepository()
     private val connectivityRepository = FakeConnectivityRepository()
 
+    @Mock private lateinit var resources: Resources
+
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
+
+    whenever(mContext.resources).thenReturn(resources)
+
+    whenever(resources.getInteger(
+        com.android.internal.R.integer.config_showOperatorNameDefault))
+            .thenReturn(1)
 
         airplaneModeInteractor =
             AirplaneModeInteractor(
@@ -112,6 +121,9 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
             whenever(keyguardUpdateMonitor.getServiceState(any()))
                 .thenReturn(ServiceState().also { it.state = ServiceState.STATE_IN_SERVICE })
+            whenever(resources.getInteger(
+                com.android.internal.R.integer.config_showOperatorNameDefault))
+                    .thenReturn(1)
             subscriptionManagerProxy.defaultDataSubId = 1
             airplaneModeRepository.setIsAirplaneMode(false)
 
@@ -137,6 +149,9 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
             whenever(keyguardUpdateMonitor.getServiceState(any()))
                 .thenReturn(ServiceState().also { it.state = ServiceState.STATE_IN_SERVICE })
+            whenever(resources.getInteger(
+                com.android.internal.R.integer.config_showOperatorNameDefault))
+                    .thenReturn(0)
             subscriptionManagerProxy.defaultDataSubId = 1
             airplaneModeRepository.setIsAirplaneMode(false)
 
@@ -161,6 +176,9 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
             whenever(keyguardUpdateMonitor.getServiceState(any()))
                 .thenReturn(ServiceState().also { it.state = ServiceState.STATE_IN_SERVICE })
+            whenever(resources.getInteger(
+                com.android.internal.R.integer.config_showOperatorNameDefault))
+                    .thenReturn(0)
             subscriptionManagerProxy.defaultDataSubId = 1
             airplaneModeRepository.setIsAirplaneMode(true)
 
@@ -186,6 +204,9 @@ class OperatorNameViewControllerTest : SysuiTestCase() {
                 .thenReturn(mockSubInfo)
             whenever(keyguardUpdateMonitor.getSimState(any()))
                 .thenReturn(TelephonyManager.SIM_STATE_READY)
+            whenever(resources.getInteger(
+                com.android.internal.R.integer.config_showOperatorNameDefault))
+                    .thenReturn(0)
 
             // Not in service
             whenever(keyguardUpdateMonitor.getServiceState(any()))
