@@ -77,7 +77,10 @@ public final class SystemBarUtils {
                 context.getResources().getDimensionPixelSize(R.dimen.status_bar_height_default);
         // The status bar height should be:
         // Max(top cutout size, (status bar default height + waterfall top size))
-        return Math.max(insets.top, defaultSize + waterfallInsets.top);
+        // The insets top should be calculated from real rotation
+        int physicalTopInset = (targetRot == Surface.ROTATION_0 || targetRot == Surface.ROTATION_180) ?
+                insets.top : insets.left;
+        return Math.max(physicalTopInset, defaultSize + waterfallInsets.top);
     }
 
     /**
