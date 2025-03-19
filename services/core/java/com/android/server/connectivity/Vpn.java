@@ -152,8 +152,10 @@ import com.android.net.module.util.NetworkStackConstants;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
+import com.android.server.utils.LazyJniRegistrar;
 
 import libcore.io.IoUtils;
+
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -335,6 +337,10 @@ public class Vpn {
      */
     @VisibleForTesting
     public static final int PREFERRED_IKE_PROTOCOL_IPV6_ESP = 61;
+
+    static {
+        LazyJniRegistrar.registerVpn();
+    }
 
     // TODO: create separate trackers for each unique VPN to support
     // automated reconnection
