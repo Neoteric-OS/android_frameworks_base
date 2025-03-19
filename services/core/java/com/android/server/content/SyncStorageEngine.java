@@ -534,9 +534,10 @@ public class SyncStorageEngine {
 
         mCal = Calendar.getInstance(TimeZone.getTimeZone("GMT+0"));
 
-        mDefaultMasterSyncAutomatically = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_syncstorageengine_masterSyncAutomatically);
-
+       // mDefaultMasterSyncAutomatically = mContext.getResources().getBoolean(
+                //com.android.internal.R.bool.config_syncstorageengine_masterSyncAutomatically);
+	Slog.d("yunfei", "start SyncStorageEngine, ", new Throwable());
+	mDefaultMasterSyncAutomatically = getIdentifierResBoolean(mContext, "config_syncstorageengine_masterSyncAutomatically");
         mPackageManagerInternal = LocalServices.getService(PackageManagerInternal.class);
 
         File systemDir = new File(dataDir, "system");
@@ -563,6 +564,16 @@ public class SyncStorageEngine {
         }
     }
 
+    private boolean getIdentifierResBoolean(Context context, String resName) {
+	Slog.d("yunfei", "start getIdentifierResBoolean, " + " resName= " + resName, new Throwable());
+	int resId = context.getResources().getIdentifier(resName, "bool", "andrioid");
+	boolean resBoolean = false;
+	if (resId > 0) {
+	    resBoolean = context.getResources().getBoolean(resId);
+	 }
+	Slog.d("yunfei", "getIdentifierResBoolean, " + " resBoolean= " + resBoolean + ", resId= " + resId);
+	return resBoolean;
+    }
     public static SyncStorageEngine newTestInstance(Context context) {
         return new SyncStorageEngine(context, context.getFilesDir(), Looper.getMainLooper());
     }
