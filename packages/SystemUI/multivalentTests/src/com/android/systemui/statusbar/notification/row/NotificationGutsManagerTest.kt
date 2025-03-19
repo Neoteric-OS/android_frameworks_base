@@ -71,14 +71,15 @@ import com.android.systemui.statusbar.notification.collection.provider.HighPrior
 import com.android.systemui.statusbar.notification.domain.interactor.activeNotificationsInteractor
 import com.android.systemui.statusbar.notification.headsup.HeadsUpManager
 import com.android.systemui.statusbar.notification.people.PeopleNotificationIdentifier
+import com.android.systemui.statusbar.notification.row.icon.AppIconProvider
+import com.android.systemui.statusbar.notification.row.icon.NotificationIconStyleProvider
+import com.android.systemui.statusbar.notification.row.icon.appIconProvider
+import com.android.systemui.statusbar.notification.row.icon.notificationIconStyleProvider
 import com.android.systemui.statusbar.notification.stack.NotificationListContainer
 import com.android.systemui.statusbar.policy.DeviceProvisionedController
 import com.android.systemui.testKosmos
 import com.android.systemui.util.kotlin.JavaAdapter
 import com.android.systemui.wmshell.BubblesManager
-import java.util.Optional
-import kotlin.test.assertNotNull
-import kotlin.test.fail
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -106,6 +107,9 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import platform.test.runner.parameterized.ParameterizedAndroidJunit4
 import platform.test.runner.parameterized.Parameters
+import java.util.Optional
+import kotlin.test.assertNotNull
+import kotlin.test.fail
 
 /** Tests for [NotificationGutsManager]. */
 @SmallTest
@@ -203,6 +207,8 @@ class NotificationGutsManagerTest(flags: FlagsParameterization) : SysuiTestCase(
                 accessibilityManager,
                 highPriorityProvider,
                 iNotificationManager,
+                kosmos.appIconProvider,
+                kosmos.notificationIconStyleProvider,
                 userManager,
                 peopleSpaceWidgetManager,
                 launcherApps,
@@ -503,7 +509,6 @@ class NotificationGutsManagerTest(flags: FlagsParameterization) : SysuiTestCase(
             .setImportance(NotificationManager.IMPORTANCE_HIGH)
             .build()
 
-        whenever(row.isNonblockable).thenReturn(false)
         whenever(highPriorityProvider.isHighPriority(entry)).thenReturn(true)
         val statusBarNotification = entry.sbn
         gutsManager.initializeNotificationInfo(row, notificationInfoView)
@@ -512,6 +517,8 @@ class NotificationGutsManagerTest(flags: FlagsParameterization) : SysuiTestCase(
             .bindNotification(
                 any<PackageManager>(),
                 any<INotificationManager>(),
+                any<AppIconProvider>(),
+                any<NotificationIconStyleProvider>(),
                 eq(onUserInteractionCallback),
                 eq(channelEditorDialogController),
                 eq(statusBarNotification.packageName),
@@ -538,7 +545,6 @@ class NotificationGutsManagerTest(flags: FlagsParameterization) : SysuiTestCase(
         NotificationEntryHelper.modifyRanking(row.entry)
             .setUserSentiment(NotificationListenerService.Ranking.USER_SENTIMENT_NEGATIVE)
             .build()
-        whenever(row.isNonblockable).thenReturn(false)
         val statusBarNotification = row.entry.sbn
         val entry = row.entry
 
@@ -550,6 +556,8 @@ class NotificationGutsManagerTest(flags: FlagsParameterization) : SysuiTestCase(
             .bindNotification(
                 any<PackageManager>(),
                 any<INotificationManager>(),
+                any<AppIconProvider>(),
+                any<NotificationIconStyleProvider>(),
                 eq(onUserInteractionCallback),
                 eq(channelEditorDialogController),
                 eq(statusBarNotification.packageName),
@@ -576,7 +584,6 @@ class NotificationGutsManagerTest(flags: FlagsParameterization) : SysuiTestCase(
         NotificationEntryHelper.modifyRanking(row.entry)
             .setUserSentiment(NotificationListenerService.Ranking.USER_SENTIMENT_NEGATIVE)
             .build()
-        whenever(row.isNonblockable).thenReturn(false)
         val statusBarNotification = row.entry.sbn
         val entry = row.entry
 
@@ -586,6 +593,8 @@ class NotificationGutsManagerTest(flags: FlagsParameterization) : SysuiTestCase(
             .bindNotification(
                 any<PackageManager>(),
                 any<INotificationManager>(),
+                any<AppIconProvider>(),
+                any<NotificationIconStyleProvider>(),
                 eq(onUserInteractionCallback),
                 eq(channelEditorDialogController),
                 eq(statusBarNotification.packageName),
@@ -629,7 +638,7 @@ class NotificationGutsManagerTest(flags: FlagsParameterization) : SysuiTestCase(
     ): NotificationMenuRowPlugin.MenuItem {
         val menuRow: NotificationMenuRowPlugin =
             NotificationMenuRow(mContext, peopleNotificationIdentifier)
-        menuRow.createMenu(row, row.entry.sbn)
+        menuRow.createMenu(row)
 
         val menuItem = menuRow.getLongpressMenuItem(mContext)
         assertNotNull(menuItem)

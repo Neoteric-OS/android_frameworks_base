@@ -502,6 +502,8 @@ public class OomAdjuster {
     private static final int CACHING_UI_SERVICE_CLIENT_ADJ_THRESHOLD =
             Flags.raiseBoundUiServiceThreshold() ? SERVICE_ADJ : PERCEPTIBLE_APP_ADJ;
 
+    static final long PERCEPTIBLE_TASK_TIMEOUT_MILLIS = 5 * 60 * 1000;
+
     @VisibleForTesting
     public static class Injector {
         boolean isChangeEnabled(@CachedCompatChangeId int cachedCompatChangeId,
@@ -527,13 +529,6 @@ public class OomAdjuster {
         }
 
         void setThreadPriority(int tid, int priority) {
-            if (Flags.resetOnForkEnabled()) {
-                if (Process.getThreadScheduler(tid) == Process.SCHED_OTHER) {
-                    Process.setThreadScheduler(tid,
-                        Process.SCHED_OTHER | Process.SCHED_RESET_ON_FORK,
-                        0);
-                }
-            }
             Process.setThreadPriority(tid, priority);
         }
     }
@@ -1985,13 +1980,35 @@ public class OomAdjuster {
             mHasVisibleActivities = false;
         }
 
-        void onOtherActivity() {
+        void onOtherActivity(long perceptibleTaskStoppedTimeMillis) {
             if (procState > PROCESS_STATE_CACHED_ACTIVITY) {
                 procState = PROCESS_STATE_CACHED_ACTIVITY;
                 mAdjType = "cch-act";
                 if (DEBUG_OOM_ADJ_REASON || logUid == appUid) {
                     reportOomAdjMessageLocked(TAG_OOM_ADJ,
                             "Raise procstate to cached activity: " + app);
+                }
+            }
+            if (Flags.perceptibleTasks() && adj > PERCEPTIBLE_MEDIUM_APP_ADJ) {
+                if (perceptibleTaskStoppedTimeMillis >= 0) {
+                    final long now = mInjector.getUptimeMillis();
+                    if (now - perceptibleTaskStoppedTimeMillis < PERCEPTIBLE_TASK_TIMEOUT_MILLIS) {
+                        adj = PERCEPTIBLE_MEDIUM_APP_ADJ;
+                        mAdjType = "perceptible-act";
+                        if (procState > PROCESS_STATE_IMPORTANT_BACKGROUND) {
+                            procState = PROCESS_STATE_IMPORTANT_BACKGROUND;
+                        }
+
+                        maybeSetProcessFollowUpUpdateLocked(app,
+                                perceptibleTaskStoppedTimeMillis + PERCEPTIBLE_TASK_TIMEOUT_MILLIS,
+                                now);
+                    } else if (adj > PREVIOUS_APP_ADJ) {
+                        adj = PREVIOUS_APP_ADJ;
+                        mAdjType = "stale-perceptible-act";
+                        if (procState > PROCESS_STATE_LAST_ACTIVITY) {
+                            procState = PROCESS_STATE_LAST_ACTIVITY;
+                        }
+                    }
                 }
             }
             mHasVisibleActivities = false;
@@ -2174,7 +2191,7 @@ public class OomAdjuster {
                                + app.processName + ", renderThreadTid: " + app.getRenderThreadTid());
 // QTI_BEGIN: 2020-06-16: Performance: Send top-app's render thread tid to perf HAL
                         if (mPerfHandle >= 0) {
-                            mPerfBoost.perfLockRelease();
+                            mPerfBoost.perfLockReleaseHandler(mPerfHandle);
                             mPerfHandle = -1;
                         }
                         mPerfHandle = mPerfBoost.perfHint(BoostFramework.VENDOR_HINT_BOOST_RENDERTHREAD,

@@ -55,7 +55,6 @@ import static android.view.WindowManager.LayoutParams.TYPE_BASE_APPLICATION;
 import static android.view.WindowManager.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES;
 import static android.view.WindowManager.TRANSIT_CLOSE;
 import static android.view.WindowManager.TRANSIT_FLAG_APP_CRASHED;
-import static android.view.WindowManager.TRANSIT_NONE;
 import static android.view.WindowManager.TRANSIT_OPEN;
 import static android.view.WindowManager.TRANSIT_TO_BACK;
 import static android.view.WindowManager.TRANSIT_TO_FRONT;
@@ -171,6 +170,7 @@ import android.view.InsetsState;
 import android.view.SurfaceControl;
 import android.view.WindowInsets;
 import android.view.WindowManager;
+import android.window.DesktopExperienceFlags;
 import android.window.DesktopModeFlags;
 import android.window.ITaskOrganizer;
 import android.window.PictureInPictureSurfaceTransaction;
@@ -508,13 +508,21 @@ class Task extends TaskFragment {
     int mOffsetYForInsets;
 
     /**
+     * When set to true, the task will be kept at a PERCEPTIBLE_APP_ADJ, and downgraded
+     * to PREVIOUS_APP_ADJ if not in foreground for a period of time.
+     * One example use case is for desktop form factors, where it is important keep tasks in the
+     * perceptible state (rather than cached where it may be frozen) when a user moves it to the
+     * foreground.
+     * On startup, restored Tasks will not be perceptible, until user actually interacts with it
+     * (i.e. brings it to the foreground)
+     */
+    boolean mIsPerceptible = false;
+
+    /**
      * Whether the compatibility overrides that change the resizability of the app should be allowed
      * for the specific app.
      */
     boolean mAllowForceResizeOverride = true;
-
-    private final AnimatingActivityRegistry mAnimatingActivityRegistry =
-            new AnimatingActivityRegistry();
 
     private static final int TRANSLUCENT_TIMEOUT_MSG = FIRST_ACTIVITY_TASK_MSG + 1;
 
@@ -1130,17 +1138,6 @@ class Task extends TaskFragment {
         // already ran fully within super.onParentChanged
         updateTaskOrganizerState();
 
-        // TODO(b/168037178): The check for null display content and setting it to null doesn't
-        //                    really make sense here...
-
-        // TODO(b/168037178): This is mostly taking care of the case where the stask is removing
-        //                    from the display, so we should probably consolidate it there instead.
-
-        if (getParent() == null && mDisplayContent != null) {
-            mDisplayContent = null;
-            mWmService.mWindowPlacerLocked.requestTraversal();
-        }
-
         if (oldParent != null) {
             final Task oldParentTask = oldParent.asTask();
             if (oldParentTask != null) {
@@ -1193,9 +1190,6 @@ class Task extends TaskFragment {
         }
 
         mRootWindowContainer.updateUIDsPresentOnDisplay();
-
-        // Ensure all animations are finished at same time in split-screen mode.
-        forAllActivities(ActivityRecord::updateAnimatingActivityRegistry);
     }
 
     @Override
@@ -1692,8 +1686,7 @@ class Task extends TaskFragment {
                 // Prevent the transition from being executed too early if the top activity is
                 // resumed but the mVisibleRequested of any other activity is true, the transition
                 // should wait until next activity resumed.
-                if (r.isState(RESUMED) || (r.isVisible()
-                        && !mDisplayContent.mAppTransition.containsTransitRequest(TRANSIT_CLOSE))) {
+                if (r.isState(RESUMED) || r.isVisible()) {
                     r.finishIfPossible(reason, false /* oomAdj */);
                 } else {
                     r.destroyIfPossible(reason);
@@ -2073,7 +2066,7 @@ class Task extends TaskFragment {
         }
 
         if (shouldStartChangeTransition(prevWinMode, mTmpPrevBounds)) {
-            initializeChangeTransition(mTmpPrevBounds);
+            mTransitionController.collectVisibleChange(this);
         }
 
         // If the configuration supports persistent bounds (eg. Freeform), keep track of the
@@ -2369,11 +2362,6 @@ class Task extends TaskFragment {
         mLastSurfaceSize.set(width, height);
     }
 
-    @VisibleForTesting
-    boolean isInChangeTransition() {
-        return AppTransition.isChangeTransitOld(mTransit);
-    }
-
     @Override
     void writeIdentifierToProto(ProtoOutputStream proto, long fieldId) {
         final long token = proto.start(fieldId);
@@ -2424,7 +2412,7 @@ class Task extends TaskFragment {
         // configurations and let its parent (organized task) to control it;
         final Task rootTask = getRootTask();
         boolean shouldInheritBounds = rootTask != this && rootTask.isOrganized();
-        if (Flags.enableMultipleDesktopsBackend()) {
+        if (DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue()) {
             // Only inherit from organized parent when this task is not organized.
             shouldInheritBounds &= !isOrganized();
         }
@@ -2799,6 +2787,7 @@ class Task extends TaskFragment {
         }
 
         super.removeImmediately();
+        mDisplayContent = null;
         mRemoving = false;
     }
 
@@ -3374,13 +3363,6 @@ class Task extends TaskFragment {
         mLastSurfaceShowing = show;
     }
 
-    @Override
-    void dump(PrintWriter pw, String prefix, boolean dumpAll) {
-        super.dump(pw, prefix, dumpAll);
-        mAnimatingActivityRegistry.dump(pw, "AnimatingApps:", prefix);
-    }
-
-
     /**
      * Fills in a {@link TaskInfo} with information from this task. Note that the base intent in the
      * task info will not include any extras or clip data.
@@ -3905,6 +3887,7 @@ class Task extends TaskFragment {
         pw.print(ActivityInfo.resizeModeToString(mResizeMode));
         pw.print(" mSupportsPictureInPicture="); pw.print(mSupportsPictureInPicture);
         pw.print(" isResizeable="); pw.println(isResizeable());
+        pw.print(" isPerceptible="); pw.println(mIsPerceptible);
         pw.print(prefix); pw.print("lastActiveTime="); pw.print(lastActiveTime);
         pw.println(" (inactive for " + (getInactiveDuration() / 1000) + "s)");
         pw.print(prefix); pw.println(" isTrimmable=" + mIsTrimmableFromRecents);
@@ -5354,11 +5337,9 @@ class Task extends TaskFragment {
 
         // Place a new activity at top of root task, so it is next to interact with the user.
         if ((r.intent.getFlags() & Intent.FLAG_ACTIVITY_NO_ANIMATION) != 0) {
-            mDisplayContent.prepareAppTransition(TRANSIT_NONE);
             mTaskSupervisor.mNoAnimActivities.add(r);
             mTransitionController.setNoAnimation(r);
         } else {
-            mDisplayContent.prepareAppTransition(TRANSIT_OPEN);
             mTaskSupervisor.mNoAnimActivities.remove(r);
         }
         if (newTask && !r.mLaunchTaskBehind) {
@@ -5538,7 +5519,8 @@ class Task extends TaskFragment {
         Slog.w(TAG, "  Force finishing activity "
                 + r.intent.getComponent().flattenToShortString());
         Task finishedTask = r.getTask();
-        mDisplayContent.requestTransitionAndLegacyPrepare(TRANSIT_CLOSE, TRANSIT_FLAG_APP_CRASHED);
+        mDisplayContent.requestTransitionAndLegacyPrepare(TRANSIT_CLOSE, TRANSIT_FLAG_APP_CRASHED,
+                finishedTask);
         r.finishIfPossible(reason, false /* oomAdj */);
 
         // Also terminate any activities below it that aren't yet stopped, to avoid a situation
@@ -5756,7 +5738,6 @@ class Task extends TaskFragment {
                 ActivityOptions.abort(options);
             }
         }
-        mDisplayContent.prepareAppTransition(transit);
     }
 
     final void moveTaskToFront(Task tr, boolean noAnimation, ActivityOptions options,
@@ -5808,12 +5789,9 @@ class Task extends TaskFragment {
 
             if (DEBUG_TRANSITION) Slog.v(TAG_TRANSITION, "Prepare to front transition: task=" + tr);
             if (noAnimation) {
-                mDisplayContent.prepareAppTransition(TRANSIT_NONE);
                 mTaskSupervisor.mNoAnimActivities.add(top);
-                if (mTransitionController.isShellTransitionsEnabled()) {
-                    mTransitionController.collect(top);
-                    mTransitionController.setNoAnimation(top);
-                }
+                mTransitionController.collect(top);
+                mTransitionController.setNoAnimation(top);
                 ActivityOptions.abort(options);
             } else {
                 updateTransitLocked(TRANSIT_TO_FRONT, options);
@@ -5923,10 +5901,6 @@ class Task extends TaskFragment {
                         moveTaskToBackInner(tr, transition);
                     });
         } else {
-            // Skip the transition for pinned task.
-            if (!inPinnedWindowingMode()) {
-                mDisplayContent.prepareAppTransition(TRANSIT_TO_BACK);
-            }
             moveTaskToBackInner(tr, null /* transition */);
         }
         return true;
@@ -6350,10 +6324,6 @@ class Task extends TaskFragment {
 
     public DisplayInfo getDisplayInfo() {
         return mDisplayContent.getDisplayInfo();
-    }
-
-    AnimatingActivityRegistry getAnimatingActivityRegistry() {
-        return mAnimatingActivityRegistry;
     }
 
     public void onARStopTriggered(ActivityRecord r) {

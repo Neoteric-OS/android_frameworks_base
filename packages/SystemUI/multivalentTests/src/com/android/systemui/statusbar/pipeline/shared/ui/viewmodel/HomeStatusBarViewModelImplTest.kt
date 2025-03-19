@@ -86,6 +86,7 @@ import com.android.systemui.statusbar.notification.shared.NotificationsLiveDataS
 import com.android.systemui.statusbar.notification.stack.data.repository.headsUpNotificationRepository
 import com.android.systemui.statusbar.phone.SysuiDarkIconDispatcher
 import com.android.systemui.statusbar.phone.data.repository.fakeDarkIconRepository
+import com.android.systemui.statusbar.phone.ongoingcall.EnableChipsModernization
 import com.android.systemui.statusbar.phone.ongoingcall.StatusBarChipsModernization
 import com.android.systemui.statusbar.pipeline.shared.domain.interactor.setHomeStatusBarIconBlockList
 import com.android.systemui.statusbar.pipeline.shared.domain.interactor.setHomeStatusBarInteractorShowOperatorName
@@ -677,6 +678,60 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         }
 
     @Test
+    fun canShowOngoingActivityChips_statusBarHidden_noSecureCamera_noHun_false() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.canShowOngoingActivityChips)
+
+            // home status bar not allowed
+            kosmos.sceneContainerRepository.snapToScene(Scenes.Lockscreen)
+            kosmos.keyguardOcclusionRepository.setShowWhenLockedActivityInfo(false, taskInfo = null)
+
+            assertThat(latest).isFalse()
+        }
+
+    @Test
+    fun canShowOngoingActivityChips_statusBarNotHidden_noSecureCamera_noHun_true() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.canShowOngoingActivityChips)
+
+            transitionKeyguardToGone()
+
+            assertThat(latest).isTrue()
+        }
+
+    @Test
+    fun canShowOngoingActivityChips_statusBarNotHidden_secureCamera_noHun_false() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.canShowOngoingActivityChips)
+
+            fakeKeyguardTransitionRepository.sendTransitionSteps(
+                from = KeyguardState.LOCKSCREEN,
+                to = KeyguardState.OCCLUDED,
+                testScope = testScope,
+            )
+            kosmos.keyguardInteractor.onCameraLaunchDetected(CAMERA_LAUNCH_SOURCE_POWER_DOUBLE_TAP)
+
+            assertThat(latest).isFalse()
+        }
+
+    @Test
+    fun canShowOngoingActivityChips_statusBarNotHidden_noSecureCamera_hun_false() =
+        kosmos.runTest {
+            val latest by collectLastValue(underTest.canShowOngoingActivityChips)
+
+            transitionKeyguardToGone()
+
+            headsUpNotificationRepository.setNotifications(
+                UnconfinedFakeHeadsUpRowRepository(
+                    key = "key",
+                    pinnedStatus = MutableStateFlow(PinnedStatus.PinnedByUser),
+                )
+            )
+
+            assertThat(latest).isFalse()
+        }
+
+    @Test
     fun isClockVisible_allowedByDisableFlags_visible() =
         kosmos.runTest {
             val latest by collectLastValue(underTest.isClockVisible)
@@ -835,7 +890,7 @@ class HomeStatusBarViewModelImplTest : SysuiTestCase() {
         }
 
     @Test
-    @EnableFlags(StatusBarRootModernization.FLAG_NAME, StatusBarChipsModernization.FLAG_NAME)
+    @EnableChipsModernization
     fun isNotificationIconContainerVisible_anyChipShowing_ChipsModernizationOn() =
         kosmos.runTest {
             val latest by collectLastValue(underTest.isNotificationIconContainerVisible)

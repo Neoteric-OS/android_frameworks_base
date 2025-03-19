@@ -19,6 +19,7 @@ package com.android.systemui.communal.ui.viewmodel
 import android.content.ComponentName
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.Flags
+import com.android.systemui.communal.dagger.CommunalModule.Companion.SWIPE_TO_HUB
 import com.android.systemui.communal.domain.interactor.CommunalInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor
@@ -92,6 +93,7 @@ constructor(
     private val metricsLogger: CommunalMetricsLogger,
     mediaCarouselController: MediaCarouselController,
     blurConfig: BlurConfig,
+    @Named(SWIPE_TO_HUB) private val swipeToHub: Boolean,
 ) :
     BaseCommunalViewModel(
         communalSceneInteractor,
@@ -235,7 +237,15 @@ constructor(
         with(mediaHost) {
             expansion = MediaHostState.EXPANDED
             expandedMatchesParentHeight = true
-            showsOnlyActiveMedia = false
+            if (v2FlagEnabled()) {
+                // Only show active media to match lock screen, not resumable media, which can
+                // persist
+                // for up to 2 days.
+                showsOnlyActiveMedia = true
+            } else {
+                // Maintain old behavior on tablet until V2 flag rolls out.
+                showsOnlyActiveMedia = false
+            }
             falsingProtectionNeeded = false
             disablePagination = true
             init(MediaHierarchyManager.LOCATION_COMMUNAL_HUB)
@@ -356,6 +366,14 @@ constructor(
 
     /** See [CommunalSettingsInteractor.isV2FlagEnabled] */
     fun v2FlagEnabled(): Boolean = communalSettingsInteractor.isV2FlagEnabled()
+
+    val swipeToHubEnabled: StateFlow<Boolean> by lazy {
+        if (v2FlagEnabled()) {
+            communalInteractor.shouldShowCommunal
+        } else {
+            MutableStateFlow(swipeToHub)
+        }
+    }
 
     companion object {
         const val POPUP_AUTO_HIDE_TIMEOUT_MS = 12000L

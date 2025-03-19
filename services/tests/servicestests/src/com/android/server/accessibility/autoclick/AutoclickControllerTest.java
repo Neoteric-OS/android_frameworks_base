@@ -25,6 +25,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.platform.test.annotations.DisableFlags;
@@ -324,6 +325,120 @@ public class AutoclickControllerTest {
 
         // Verify there is a pending click.
         assertThat(mController.mClickScheduler.getIsActiveForTesting()).isTrue();
+    }
+
+    @Test
+    public void smallJitteryMovement_doesNotTriggerClick() {
+        // Initial hover move to set an anchor point.
+        MotionEvent initialHoverMove = MotionEvent.obtain(
+                /* downTime= */ 0,
+                /* eventTime= */ 100,
+                /* action= */ MotionEvent.ACTION_HOVER_MOVE,
+                /* x= */ 30f,
+                /* y= */ 40f,
+                /* metaState= */ 0);
+        initialHoverMove.setSource(InputDevice.SOURCE_MOUSE);
+        mController.onMotionEvent(initialHoverMove, initialHoverMove, /* policyFlags= */ 0);
+
+        // Get the initial scheduled click time.
+        long initialScheduledTime = mController.mClickScheduler.getScheduledClickTimeForTesting();
+
+        // Simulate small, jittery movements (all within the default slop).
+        MotionEvent jitteryMove1 = MotionEvent.obtain(
+                /* downTime= */ 0,
+                /* eventTime= */ 150,
+                /* action= */ MotionEvent.ACTION_HOVER_MOVE,
+                /* x= */ 31f,  // Small change in x
+                /* y= */ 41f,  // Small change in y
+                /* metaState= */ 0);
+        jitteryMove1.setSource(InputDevice.SOURCE_MOUSE);
+        mController.onMotionEvent(jitteryMove1, jitteryMove1, /* policyFlags= */ 0);
+
+        MotionEvent jitteryMove2 = MotionEvent.obtain(
+                /* downTime= */ 0,
+                /* eventTime= */ 200,
+                /* action= */ MotionEvent.ACTION_HOVER_MOVE,
+                /* x= */ 30.5f, // Small change in x
+                /* y= */ 39.8f, // Small change in y
+                /* metaState= */ 0);
+        jitteryMove2.setSource(InputDevice.SOURCE_MOUSE);
+        mController.onMotionEvent(jitteryMove2, jitteryMove2, /* policyFlags= */ 0);
+
+        // Verify that the scheduled click time has NOT changed.
+        assertThat(mController.mClickScheduler.getScheduledClickTimeForTesting())
+                .isEqualTo(initialScheduledTime);
+    }
+
+    @Test
+    public void singleSignificantMovement_triggersClick() {
+        // Initial hover move to set an anchor point.
+        MotionEvent initialHoverMove = MotionEvent.obtain(
+                /* downTime= */ 0,
+                /* eventTime= */ 100,
+                /* action= */ MotionEvent.ACTION_HOVER_MOVE,
+                /* x= */ 30f,
+                /* y= */ 40f,
+                /* metaState= */ 0);
+        initialHoverMove.setSource(InputDevice.SOURCE_MOUSE);
+        mController.onMotionEvent(initialHoverMove, initialHoverMove, /* policyFlags= */ 0);
+
+        // Get the initial scheduled click time.
+        long initialScheduledTime = mController.mClickScheduler.getScheduledClickTimeForTesting();
+
+        // Simulate a single, significant movement (greater than the default slop).
+        MotionEvent significantMove = MotionEvent.obtain(
+                /* downTime= */ 0,
+                /* eventTime= */ 150,
+                /* action= */ MotionEvent.ACTION_HOVER_MOVE,
+                /* x= */ 60f,  // Significant change in x (30f difference)
+                /* y= */ 70f,  // Significant change in y (30f difference)
+                /* metaState= */ 0);
+        significantMove.setSource(InputDevice.SOURCE_MOUSE);
+        mController.onMotionEvent(significantMove, significantMove, /* policyFlags= */ 0);
+
+        // Verify that the scheduled click time has changed (click was rescheduled).
+        assertThat(mController.mClickScheduler.getScheduledClickTimeForTesting())
+                .isNotEqualTo(initialScheduledTime);
+    }
+
+    @Test
+    @EnableFlags(com.android.server.accessibility.Flags.FLAG_ENABLE_AUTOCLICK_INDICATOR)
+    public void pauseButton_flagOn_clickNotTriggeredWhenPaused() {
+        injectFakeMouseActionHoverMoveEvent();
+
+        // Pause autoclick.
+        AutoclickTypePanel mockAutoclickTypePanel = mock(AutoclickTypePanel.class);
+        when(mockAutoclickTypePanel.isPaused()).thenReturn(true);
+        mController.mAutoclickTypePanel = mockAutoclickTypePanel;
+
+        // Send hover move event.
+        MotionEvent hoverMove = MotionEvent.obtain(
+                /* downTime= */ 0,
+                /* eventTime= */ 100,
+                /* action= */ MotionEvent.ACTION_HOVER_MOVE,
+                /* x= */ 30f,
+                /* y= */ 0f,
+                /* metaState= */ 0);
+        hoverMove.setSource(InputDevice.SOURCE_MOUSE);
+        mController.onMotionEvent(hoverMove, hoverMove, /* policyFlags= */ 0);
+
+        // Verify there is not a pending click.
+        assertThat(mController.mClickScheduler.getIsActiveForTesting()).isFalse();
+        assertThat(mController.mClickScheduler.getScheduledClickTimeForTesting()).isEqualTo(-1);
+
+        // Resume autoclick.
+        when(mockAutoclickTypePanel.isPaused()).thenReturn(false);
+
+        // Send initial move event again. Because this is the first recorded move, a click won't be
+        // scheduled.
+        injectFakeMouseActionHoverMoveEvent();
+        assertThat(mController.mClickScheduler.getIsActiveForTesting()).isFalse();
+        assertThat(mController.mClickScheduler.getScheduledClickTimeForTesting()).isEqualTo(-1);
+
+        // Send move again to trigger click and verify there is now a pending click.
+        mController.onMotionEvent(hoverMove, hoverMove, /* policyFlags= */ 0);
+        assertThat(mController.mClickScheduler.getIsActiveForTesting()).isTrue();
+        assertThat(mController.mClickScheduler.getScheduledClickTimeForTesting()).isNotEqualTo(-1);
     }
 
     private void injectFakeMouseActionHoverMoveEvent() {

@@ -53,6 +53,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -287,7 +288,7 @@ constructor(
     private fun CollapsableQuickSettingsSTL() {
         val sceneState =
             rememberMutableSceneTransitionLayoutState(
-                viewModel.expansionState.toIdleSceneKey(),
+                initialScene = remember { viewModel.expansionState.toIdleSceneKey() },
                 transitions =
                     transitions {
                         from(QuickQuickSettings, QuickSettings) {
@@ -305,6 +306,7 @@ constructor(
                 sceneState,
                 viewModel.containerViewModel.editModeViewModel.isEditing,
                 snapshotFlow { viewModel.expansionState }.map { it.progress },
+                snapshotFlow { viewModel.isQSExpandingOrCollapsing },
             )
         }
 
@@ -534,6 +536,10 @@ constructor(
 
     override fun isHeaderShown(): Boolean {
         return qqsVisible.value
+    }
+
+    override fun setQSExpandingOrCollapsing(isQSExpandingOrCollapsing: Boolean) {
+        viewModel.isQSExpandingOrCollapsing = isQSExpandingOrCollapsing
     }
 
     private fun setListenerCollections() {
@@ -876,6 +882,7 @@ private suspend fun synchronizeQsState(
     state: MutableSceneTransitionLayoutState,
     editMode: Flow<Boolean>,
     expansion: Flow<Float>,
+    isQSExpandingOrCollapsing: Flow<Boolean>,
 ) {
     coroutineScope {
         val animationScope = this
@@ -883,35 +890,50 @@ private suspend fun synchronizeQsState(
         var currentTransition: ExpansionTransition? = null
 
         fun snapTo(scene: SceneKey) {
-            state.snapToScene(scene)
+            state.snapTo(scene)
             currentTransition = null
         }
 
-        editMode.combine(expansion, ::Pair).collectLatest { (editMode, progress) ->
+        var lastValidProgress = 0f
+        combine(editMode, expansion, isQSExpandingOrCollapsing, ::Triple).collectLatest {
+            (editMode, progress, isQSExpandingOrCollapsing) ->
             if (editMode && state.currentScene != SceneKeys.EditMode) {
                 state.setTargetScene(SceneKeys.EditMode, animationScope)?.second?.join()
             } else if (!editMode && state.currentScene == SceneKeys.EditMode) {
                 state.setTargetScene(SceneKeys.QuickSettings, animationScope)?.second?.join()
             }
-            if (!editMode) {
-                when (progress) {
-                    0f -> snapTo(QuickQuickSettings)
-                    1f -> snapTo(QuickSettings)
-                    else -> {
-                        val transition = currentTransition
-                        if (transition != null) {
-                            transition.progress = progress
-                            return@collectLatest
-                        }
 
-                        val newTransition =
-                            ExpansionTransition(progress).also { currentTransition = it }
-                        state.startTransitionImmediately(
-                            animationScope = animationScope,
-                            transition = newTransition,
-                        )
+            if (!editMode) {
+                if (!isQSExpandingOrCollapsing) {
+                    if (progress == 0f) {
+                        snapTo(QuickQuickSettings)
+                        return@collectLatest
+                    }
+
+                    if (progress == 1f) {
+                        snapTo(QuickSettings)
+                        return@collectLatest
                     }
                 }
+
+                var progress = progress
+                if (progress >= 0f || progress <= 1f) {
+                    lastValidProgress = progress
+                } else {
+                    progress = lastValidProgress
+                }
+
+                val transition = currentTransition
+                if (transition != null) {
+                    transition.progress = progress
+                    return@collectLatest
+                }
+
+                val newTransition = ExpansionTransition(progress).also { currentTransition = it }
+                state.startTransitionImmediately(
+                    animationScope = animationScope,
+                    transition = newTransition,
+                )
             }
         }
     }

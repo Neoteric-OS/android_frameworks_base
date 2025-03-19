@@ -29,6 +29,8 @@ import static android.app.NotificationManager.Policy.SUPPRESSED_EFFECT_NOTIFICAT
 import static android.app.NotificationManager.Policy.SUPPRESSED_EFFECT_PEEK;
 import static android.app.NotificationManager.Policy.SUPPRESSED_EFFECT_STATUS_BAR;
 
+import static com.android.systemui.statusbar.notification.collection.BundleEntry.ROOT_BUNDLES;
+import static com.android.systemui.statusbar.notification.collection.GroupEntry.ROOT_ENTRY;
 import static com.android.systemui.statusbar.notification.collection.NotifCollection.REASON_NOT_CANCELED;
 import static com.android.systemui.statusbar.notification.stack.NotificationPriorityBucketKt.BUCKET_ALERTING;
 
@@ -76,6 +78,7 @@ import com.android.systemui.statusbar.notification.row.NotificationGuts;
 import com.android.systemui.statusbar.notification.row.shared.HeadsUpStatusBarModel;
 import com.android.systemui.statusbar.notification.row.shared.NotificationContentModel;
 import com.android.systemui.statusbar.notification.row.shared.NotificationRowContentBinderRefactor;
+import com.android.systemui.statusbar.notification.shared.NotificationBundleUi;
 import com.android.systemui.statusbar.notification.stack.PriorityBucket;
 import com.android.systemui.util.ListenerSet;
 
@@ -107,6 +110,7 @@ public final class NotificationEntry extends ListEntry {
     private final String mKey;
     private StatusBarNotification mSbn;
     private Ranking mRanking;
+    private final NotifEntryAdapter mEntryAdapter;
 
     /*
      * Bookkeeping members
@@ -268,6 +272,89 @@ public final class NotificationEntry extends ListEntry {
         mKey = sbn.getKey();
         setSbn(sbn);
         setRanking(ranking);
+        mEntryAdapter = new NotifEntryAdapter();
+    }
+
+    public class NotifEntryAdapter implements EntryAdapter {
+        @Override
+        public PipelineEntry getParent() {
+            return NotificationEntry.this.getParent();
+        }
+
+        @Override
+        public boolean isTopLevelEntry() {
+            return getParent() != null
+                    && (getParent() == ROOT_ENTRY || ROOT_BUNDLES.contains(getParent()));
+        }
+
+        @Override
+        public String getKey() {
+            return NotificationEntry.this.getKey();
+        }
+
+        @Override
+        public ExpandableNotificationRow getRow() {
+            return NotificationEntry.this.getRow();
+        }
+
+        @Nullable
+        @Override
+        public EntryAdapter getGroupRoot() {
+            // TODO (b/395857098): for backwards compatibility this will return null if called
+            // on a group summary that's not in a bundles, but it should return itself.
+            if (isTopLevelEntry() || getParent() == null) {
+                return null;
+            }
+            if (NotificationEntry.this.getParent().getSummary() != null) {
+                return NotificationEntry.this.getParent().getSummary().mEntryAdapter;
+            }
+            return null;
+        }
+
+        @Override
+        public boolean isClearable() {
+            return NotificationEntry.this.isClearable();
+        }
+
+        @Override
+        public int getTargetSdk() {
+            return NotificationEntry.this.targetSdk;
+        }
+
+        @Override
+        public String getSummarization() {
+            return getRanking().getSummarization();
+        }
+
+        @Override
+        public void prepareForInflation() {
+            getSbn().clearPackageContext();
+        }
+
+        @Override
+        public int getContrastedColor(Context context, boolean isLowPriority, int backgroundColor) {
+            return NotificationEntry.this.getContrastedColor(
+                    context, isLowPriority, backgroundColor);
+        }
+
+        @Override
+        public boolean canPeek() {
+            return isStickyAndNotDemoted();
+        }
+
+        @Override
+        public long getWhen() {
+            return getSbn().getNotification().getWhen();
+        }
+
+        @Override
+        public IconPack getIcons() {
+            return NotificationEntry.this.getIcons();
+        }
+    }
+
+    public EntryAdapter getEntryAdapter() {
+        return mEntryAdapter;
     }
 
     @Override
@@ -535,6 +622,7 @@ public final class NotificationEntry extends ListEntry {
     }
 
     public boolean hasFinishedInitialization() {
+        NotificationBundleUi.assertInLegacyMode();
         return initializationTime != -1
                 && SystemClock.elapsedRealtime() > initializationTime + INITIALIZATION_DELAY;
     }
@@ -618,10 +706,12 @@ public final class NotificationEntry extends ListEntry {
     }
 
     public void resetInitializationTime() {
+        NotificationBundleUi.assertInLegacyMode();
         initializationTime = -1;
     }
 
     public void setInitializationTime(long time) {
+        NotificationBundleUi.assertInLegacyMode();
         if (initializationTime == -1) {
             initializationTime = time;
         }
@@ -638,9 +728,13 @@ public final class NotificationEntry extends ListEntry {
      * @return {@code true} if we are a media notification
      */
     public boolean isMediaNotification() {
-        if (row == null) return false;
+        if (NotificationBundleUi.isEnabled()) {
+            return getSbn().getNotification().isMediaNotification();
+        } else {
+            if (row == null) return false;
 
-        return row.isMediaRow();
+            return row.isMediaRow();
+        }
     }
 
     public boolean containsCustomViews() {

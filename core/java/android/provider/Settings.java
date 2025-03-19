@@ -153,7 +153,6 @@ public final class Settings {
      * Output: Nothing.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
-    @FlaggedApi(com.android.internal.telephony.flags.Flags.FLAG_CARRIER_ENABLED_SATELLITE_FLAG)
     public static final String ACTION_SATELLITE_SETTING = "android.settings.SATELLITE_SETTING";
 
     /**
@@ -2119,7 +2118,6 @@ public final class Settings {
      * <p>
      * Output: Nothing.
      */
-    @FlaggedApi(android.app.Flags.FLAG_MODES_API)
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_AUTOMATIC_ZEN_RULE_SETTINGS
             = "android.settings.AUTOMATIC_ZEN_RULE_SETTINGS";
@@ -2129,7 +2127,6 @@ public final class Settings {
      * <p>
      * This must be passed as an extra field to the {@link #ACTION_AUTOMATIC_ZEN_RULE_SETTINGS}.
      */
-    @FlaggedApi(android.app.Flags.FLAG_MODES_API)
     public static final String EXTRA_AUTOMATIC_ZEN_RULE_ID
             = "android.provider.extra.AUTOMATIC_ZEN_RULE_ID";
 
@@ -10290,6 +10287,16 @@ public final class Settings {
         public static final String DOZE_ALWAYS_ON = "doze_always_on";
 
         /**
+         * Indicates whether ambient wallpaper is visible with AOD.
+         * <p>
+         * Type: int (0 for false, 1 for true)
+         *
+         * @hide
+         */
+        public static final String DOZE_ALWAYS_ON_WALLPAPER_ENABLED =
+                "doze_always_on_wallpaper_enabled";
+
+        /**
          * Whether the device should pulse on pick up gesture.
          * @hide
          */
@@ -13031,18 +13038,16 @@ public final class Settings {
          * false/0.
          * @hide
          */
-        @Readable
         public static final String REDACT_OTP_NOTIFICATION_WHILE_CONNECTED_TO_WIFI =
                 "redact_otp_on_wifi";
 
         /**
-         * Toggle for whether to immediately redact OTP notifications, or require the device to be
-         * locked for 10 minutes. Defaults to false/0
+         * Time (in milliseconds) that the device should need to be locked, in order for an OTP
+         * notification to be redacted. Default is 10 minutes (600,000 ms)
          * @hide
          */
-        @Readable
-        public static final String REDACT_OTP_NOTIFICATION_IMMEDIATELY =
-                "remove_otp_redaction_delay";
+        public static final String OTP_NOTIFICATION_REDACTION_LOCK_TIME =
+                "otp_redaction_lock_time";
 
         /**
          * These entries are considered common between the personal and the managed profile,

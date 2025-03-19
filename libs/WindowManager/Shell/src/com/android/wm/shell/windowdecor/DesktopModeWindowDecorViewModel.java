@@ -103,6 +103,7 @@ import com.android.wm.shell.common.DisplayChangeController;
 import com.android.wm.shell.common.DisplayController;
 import com.android.wm.shell.common.DisplayInsetsController;
 import com.android.wm.shell.common.DisplayLayout;
+import com.android.wm.shell.common.MultiDisplayDragMoveIndicatorController;
 import com.android.wm.shell.common.MultiInstanceHelper;
 import com.android.wm.shell.common.ShellExecutor;
 import com.android.wm.shell.common.SyncTransactionQueue;
@@ -149,6 +150,8 @@ import com.android.wm.shell.windowdecor.common.viewhost.WindowDecorViewHost;
 import com.android.wm.shell.windowdecor.common.viewhost.WindowDecorViewHostSupplier;
 import com.android.wm.shell.windowdecor.extension.InsetsStateKt;
 import com.android.wm.shell.windowdecor.extension.TaskInfoKt;
+import com.android.wm.shell.windowdecor.tiling.DesktopTilingDecorViewModel;
+import com.android.wm.shell.windowdecor.tiling.SnapEventHandler;
 import com.android.wm.shell.windowdecor.viewholder.AppHeaderViewHolder;
 
 import kotlin.Pair;
@@ -173,7 +176,7 @@ import java.util.function.Supplier;
  */
 
 public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
-        FocusTransitionListener {
+        FocusTransitionListener, SnapEventHandler {
     private static final String TAG = "DesktopModeWindowDecorViewModel";
 
     private final DesktopModeWindowDecoration.Factory mDesktopModeWindowDecorFactory;
@@ -255,6 +258,8 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
     private final WindowDecorTaskResourceLoader mTaskResourceLoader;
     private final RecentsTransitionHandler mRecentsTransitionHandler;
     private final DesktopModeCompatPolicy mDesktopModeCompatPolicy;
+    private final DesktopTilingDecorViewModel mDesktopTilingDecorViewModel;
+    private final MultiDisplayDragMoveIndicatorController mMultiDisplayDragMoveIndicatorController;
 
     public DesktopModeWindowDecorViewModel(
             Context context,
@@ -292,7 +297,9 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
             DesktopModeUiEventLogger desktopModeUiEventLogger,
             WindowDecorTaskResourceLoader taskResourceLoader,
             RecentsTransitionHandler recentsTransitionHandler,
-            DesktopModeCompatPolicy desktopModeCompatPolicy) {
+            DesktopModeCompatPolicy desktopModeCompatPolicy,
+            DesktopTilingDecorViewModel desktopTilingDecorViewModel,
+            MultiDisplayDragMoveIndicatorController multiDisplayDragMoveIndicatorController) {
         this(
                 context,
                 shellExecutor,
@@ -335,7 +342,9 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                 desktopModeUiEventLogger,
                 taskResourceLoader,
                 recentsTransitionHandler,
-                desktopModeCompatPolicy);
+                desktopModeCompatPolicy,
+                desktopTilingDecorViewModel,
+                multiDisplayDragMoveIndicatorController);
     }
 
     @VisibleForTesting
@@ -381,7 +390,9 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
             DesktopModeUiEventLogger desktopModeUiEventLogger,
             WindowDecorTaskResourceLoader taskResourceLoader,
             RecentsTransitionHandler recentsTransitionHandler,
-            DesktopModeCompatPolicy desktopModeCompatPolicy) {
+            DesktopModeCompatPolicy desktopModeCompatPolicy,
+            DesktopTilingDecorViewModel desktopTilingDecorViewModel,
+            MultiDisplayDragMoveIndicatorController multiDisplayDragMoveIndicatorController) {
         mContext = context;
         mMainExecutor = shellExecutor;
         mMainHandler = mainHandler;
@@ -452,7 +463,9 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
         mTaskResourceLoader = taskResourceLoader;
         mRecentsTransitionHandler = recentsTransitionHandler;
         mDesktopModeCompatPolicy = desktopModeCompatPolicy;
-
+        mDesktopTilingDecorViewModel = desktopTilingDecorViewModel;
+        mDesktopTasksController.setSnapEventHandler(this);
+        mMultiDisplayDragMoveIndicatorController = multiDisplayDragMoveIndicatorController;
         shellInit.addInitCallback(this::onInit, this);
     }
 
@@ -723,8 +736,7 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                 decoration.mTaskInfo,
                 left ? SnapPosition.LEFT : SnapPosition.RIGHT,
                 left ? ResizeTrigger.SNAP_LEFT_MENU : ResizeTrigger.SNAP_RIGHT_MENU,
-                inputMethod,
-                decoration);
+                inputMethod);
 
         decoration.closeHandleMenu();
         decoration.closeMaximizeMenu();
@@ -885,6 +897,33 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
         return snapshotList;
     }
 
+    @Override
+    public boolean snapToHalfScreen(@NonNull RunningTaskInfo taskInfo,
+            @NonNull Rect currentDragBounds, @NonNull SnapPosition position) {
+        return mDesktopTilingDecorViewModel.snapToHalfScreen(taskInfo,
+                mWindowDecorByTaskId.get(taskInfo.taskId), position, currentDragBounds);
+    }
+
+    @Override
+    public void removeTaskIfTiled(int displayId, int taskId) {
+        mDesktopTilingDecorViewModel.removeTaskIfTiled(displayId, taskId);
+    }
+
+    @Override
+    public void onUserChange() {
+        mDesktopTilingDecorViewModel.onUserChange();
+    }
+
+    @Override
+    public void onOverviewAnimationStateChange(boolean running) {
+        mDesktopTilingDecorViewModel.onOverviewAnimationStateChange(running);
+    }
+
+    @Override
+    public boolean moveTaskToFrontIfTiled(@NonNull RunningTaskInfo taskInfo) {
+        return mDesktopTilingDecorViewModel.moveTaskToFrontIfTiled(taskInfo);
+    }
+
     private class DesktopModeTouchEventListener extends GestureDetector.SimpleOnGestureListener
             implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener,
             View.OnGenericMotionListener, DragDetector.MotionEventHandler {
@@ -951,7 +990,7 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                             mDesktopTasksController.onDesktopWindowClose(
                                     wct, mDisplayId, decoration.mTaskInfo);
                     final IBinder transition = mTaskOperations.closeTask(mTaskToken, wct);
-                    if (transition != null && runOnTransitionStart != null) {
+                    if (transition != null) {
                         runOnTransitionStart.invoke(transition);
                     }
                 }
@@ -1238,8 +1277,7 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                             taskInfo, decoration.mTaskSurface,
                             new PointF(e.getRawX(dragPointerIdx), e.getRawY(dragPointerIdx)),
                             newTaskBounds, decoration.calculateValidDragArea(),
-                            new Rect(mOnDragStartInitialBounds), e,
-                            mWindowDecorByTaskId.get(taskInfo.taskId));
+                            new Rect(mOnDragStartInitialBounds), e);
                     if (touchingButton) {
                         // We need the input event to not be consumed here to end the ripple
                         // effect on the touched button. We will reset drag state in the ensuing
@@ -1444,15 +1482,12 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                         relevantDecor.mTaskInfo.configuration.windowConfiguration.getBounds());
                 boolean dragFromStatusBarAllowed = false;
                 final int windowingMode = relevantDecor.mTaskInfo.getWindowingMode();
-                if (DesktopModeStatus.canEnterDesktopMode(mContext)) {
+                if (DesktopModeStatus.canEnterDesktopMode(mContext)
+                        || BubbleAnythingFlagHelper.enableBubbleToFullscreen()) {
                     // In proto2 any full screen or multi-window task can be dragged to
                     // freeform.
                     dragFromStatusBarAllowed = windowingMode == WINDOWING_MODE_FULLSCREEN
                             || windowingMode == WINDOWING_MODE_MULTI_WINDOW;
-                }
-                if (BubbleAnythingFlagHelper.enableBubbleToFullscreen()) {
-                    // TODO(b/388851898): add support for split screen (multi-window wm mode)
-                    dragFromStatusBarAllowed = windowingMode == WINDOWING_MODE_FULLSCREEN;
                 }
                 final boolean shouldStartTransitionDrag =
                         relevantDecor.checkTouchEventInFocusedCaptionHandle(ev)
@@ -1502,7 +1537,11 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                     // Do not create an indicator at all if we're not past transition height.
                     DisplayLayout layout = mDisplayController
                             .getDisplayLayout(relevantDecor.mTaskInfo.displayId);
-                    if (ev.getRawY() < 2 * layout.stableInsets().top
+                    // It's possible task is not at the top of the screen (e.g. bottom of vertical
+                    // Splitscreen)
+                    final int taskTop = relevantDecor.mTaskInfo.configuration.windowConfiguration
+                            .getBounds().top;
+                    if (ev.getRawY() < 2 * layout.stableInsets().top + taskTop
                             && mMoveToDesktopAnimator == null) {
                         return;
                     }
@@ -1726,7 +1765,8 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                 mTransitions,
                 mInteractionJankMonitor,
                 mTransactionFactory,
-                mMainHandler);
+                mMainHandler,
+                mMultiDisplayDragMoveIndicatorController);
         windowDecoration.setTaskDragResizer(taskPositioner);
 
         final DesktopModeTouchEventListener touchEventListener =
@@ -2023,7 +2063,8 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                 Transitions transitions,
                 InteractionJankMonitor interactionJankMonitor,
                 Supplier<SurfaceControl.Transaction> transactionFactory,
-                Handler handler) {
+                Handler handler,
+                MultiDisplayDragMoveIndicatorController multiDisplayDragMoveIndicatorController) {
             final TaskPositioner taskPositioner = DesktopModeStatus.isVeiledResizeEnabled()
                     // TODO(b/383632995): Update when the flag is launched.
                     ? (Flags.enableConnectedDisplaysWindowDrag()
@@ -2034,7 +2075,8 @@ public class DesktopModeWindowDecorViewModel implements WindowDecorViewModel,
                             dragEventListener,
                             transitions,
                             interactionJankMonitor,
-                            handler)
+                            handler,
+                            multiDisplayDragMoveIndicatorController)
                         : new VeiledResizeTaskPositioner(
                             taskOrganizer,
                             windowDecoration,

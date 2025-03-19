@@ -36,6 +36,8 @@ import com.android.systemui.flags.FeatureFlagsClassic
 import com.android.systemui.flags.Flags.FILTER_PROVISIONING_NETWORK_SUBSCRIPTIONS
 import com.android.systemui.log.table.TableLogBuffer
 import com.android.systemui.log.table.logDiffsForTable
+import com.android.systemui.statusbar.core.NewStatusBarIcons
+import com.android.systemui.statusbar.core.StatusBarRootModernization
 import com.android.systemui.statusbar.pipeline.dagger.MobileSummaryLog
 import com.android.systemui.statusbar.pipeline.mobile.data.model.SubscriptionModel
 import com.android.systemui.statusbar.pipeline.mobile.data.repository.MobileConnectionRepository
@@ -56,6 +58,7 @@ import com.android.systemui.util.CarrierNameCustomization
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -98,6 +101,15 @@ interface MobileIconsInteractor {
      * [filteredSubscriptions]
      */
     val icons: StateFlow<List<MobileIconInteractor>>
+
+    /** Whether the mobile icons can be stacked vertically. */
+    val isStackable: StateFlow<Boolean>
+
+    /**
+     * Observable for the subscriptionId of the current mobile data connection. Null if we don't
+     * have a valid subscription id
+     */
+    val activeMobileDataSubscriptionId: StateFlow<Int?>
 
     /** True if the active mobile data subscription has data enabled */
     val activeDataConnectionHasDataEnabled: StateFlow<Boolean>
@@ -170,6 +182,7 @@ interface MobileIconsInteractor {
 // QTI_END: 2024-01-30: Android_UI: SystemUI: Implementation for MSIM C_IWLAN feature
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
 @SysUISingleton
 class MobileIconsInteractorImpl
@@ -216,6 +229,9 @@ constructor(
                 initialValue = false,
             )
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
+    override val activeMobileDataSubscriptionId: StateFlow<Int?> =
+        mobileConnectionsRepo.activeMobileDataSubscriptionId
 
     override val activeDataConnectionHasDataEnabled: StateFlow<Boolean> =
         mobileConnectionsRepo.activeMobileDataRepository
@@ -343,6 +359,24 @@ constructor(
                 subs.map { getMobileConnectionInteractorForSubId(it.subscriptionId) }
             }
             .stateIn(scope, SharingStarted.WhileSubscribed(), emptyList())
+
+    override val isStackable =
+        if (NewStatusBarIcons.isEnabled && StatusBarRootModernization.isEnabled) {
+                icons.flatMapLatest { icons ->
+                    combine(icons.map { it.signalLevelIcon }) { signalLevelIcons ->
+                        // These are only stackable if:
+                        // - They are cellular
+                        // - There's exactly two
+                        // - They have the same number of levels
+                        signalLevelIcons.filterIsInstance<SignalIconModel.Cellular>().let {
+                            it.size == 2 && it[0].numberOfLevels == it[1].numberOfLevels
+                        }
+                    }
+                }
+            } else {
+                flowOf(false)
+            }
+            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     /**
      * Copied from the old pipeline. We maintain a 2s period of time where we will keep the

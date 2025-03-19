@@ -63,13 +63,14 @@ import com.google.common.collect.ImmutableList;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -84,6 +85,8 @@ import java.util.stream.Collectors;
 public class LocalBluetoothLeBroadcast implements LocalBluetoothProfile {
     public static final String ACTION_LE_AUDIO_SHARING_STATE_CHANGE =
             "com.android.settings.action.BLUETOOTH_LE_AUDIO_SHARING_STATE_CHANGE";
+    public static final String ACTION_LE_AUDIO_SHARING_DEVICE_CONNECTED =
+            "com.android.settings.action.BLUETOOTH_LE_AUDIO_SHARING_DEVICE_CONNECTED";
     public static final String EXTRA_LE_AUDIO_SHARING_STATE = "BLUETOOTH_LE_AUDIO_SHARING_STATE";
     public static final String EXTRA_BLUETOOTH_DEVICE = "BLUETOOTH_DEVICE";
     public static final String EXTRA_BT_DEVICE_TO_AUTO_ADD_SOURCE = "BT_DEVICE_TO_AUTO_ADD_SOURCE";
@@ -105,6 +108,10 @@ public class LocalBluetoothLeBroadcast implements LocalBluetoothProfile {
     private static final String SYSUI_PKG = "com.android.systemui";
     private static final String TAG = "LocalBluetoothLeBroadcast";
     private static final boolean DEBUG = BluetoothUtils.D;
+    private static final String VALID_PASSWORD_CHARACTERS =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,"
+                    + ".<>?/";
+    private static final int PASSWORD_LENGTH = 16;
 
     static final String NAME = "LE_AUDIO_BROADCAST";
     private static final String UNDERLINE = "_";
@@ -1085,11 +1092,16 @@ public class LocalBluetoothLeBroadcast implements LocalBluetoothProfile {
         mBroadcastId = UNKNOWN_VALUE_PLACEHOLDER;
     }
 
-    private String generateRandomPassword() {
-        String randomUUID = UUID.randomUUID().toString();
-        // first 16 chars from xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
-        return randomUUID.substring(0, 8) + randomUUID.substring(9, 13) + randomUUID.substring(14,
-                18);
+    private static String generateRandomPassword() {
+        SecureRandom random = new SecureRandom();
+        StringBuilder stringBuilder = new StringBuilder(PASSWORD_LENGTH);
+
+        for (int i = 0; i < PASSWORD_LENGTH; i++) {
+            int randomIndex = random.nextInt(VALID_PASSWORD_CHARACTERS.length());
+            stringBuilder.append(VALID_PASSWORD_CHARACTERS.charAt(randomIndex));
+        }
+
+        return stringBuilder.toString();
     }
 
     private void registerContentObserver() {
@@ -1189,6 +1201,7 @@ public class LocalBluetoothLeBroadcast implements LocalBluetoothProfile {
 
     @NonNull
     private Map<Integer, List<BluetoothDevice>> getDeviceGroupsInBroadcast() {
+        if (mServiceBroadcastAssistant == null) return new HashMap<>();
         boolean hysteresisModeFixEnabled =
                 BluetoothUtils.isAudioSharingHysteresisModeFixAvailable(mContext);
         List<BluetoothDevice> connectedDevices = mServiceBroadcastAssistant.getConnectedDevices();

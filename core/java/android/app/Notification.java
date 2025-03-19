@@ -18,6 +18,7 @@ package android.app;
 
 import static android.annotation.Dimension.DP;
 import static android.app.Flags.evenlyDividedCallStyleActionLayout;
+import static android.app.Flags.notificationsRedesignTemplates;
 import static android.app.admin.DevicePolicyResources.Drawables.Source.NOTIFICATION;
 import static android.app.admin.DevicePolicyResources.Drawables.Style.SOLID_COLORED;
 import static android.app.admin.DevicePolicyResources.Drawables.WORK_PROFILE_ICON;
@@ -818,7 +819,8 @@ public class Notification implements Parcelable
                      R.layout.notification_2025_template_expanded_base,
                      R.layout.notification_2025_template_heads_up_base,
                      R.layout.notification_2025_template_header,
-                     R.layout.notification_2025_template_conversation,
+                     R.layout.notification_2025_template_collapsed_conversation,
+                     R.layout.notification_2025_template_expanded_conversation,
                      R.layout.notification_2025_template_collapsed_call,
                      R.layout.notification_2025_template_expanded_call,
                      R.layout.notification_2025_template_collapsed_messaging,
@@ -5963,7 +5965,10 @@ public class Notification implements Parcelable
                     || resId == getCompactHeadsUpBaseLayoutResource()
                     || resId == getMessagingCompactHeadsUpLayoutResource()
                     || resId == getCollapsedMessagingLayoutResource()
-                    || resId == getCollapsedMediaLayoutResource());
+                    || resId == getCollapsedMediaLayoutResource()
+                    || resId == getCollapsedConversationLayoutResource()
+                    || (notificationsRedesignTemplates()
+                    && resId == getCollapsedCallLayoutResource()));
             RemoteViews contentView = new BuilderRemoteViews(mContext.getApplicationInfo(), resId);
 
             resetStandardTemplate(contentView);
@@ -6001,8 +6006,7 @@ public class Notification implements Parcelable
             // Update margins to leave space for the top line (but not for headerless views like
             // HUNS, which use a different layout that already accounts for that). Templates that
             // have content that will be displayed under the small icon also use a different margin.
-            if (Flags.notificationsRedesignTemplates()
-                    && !p.mHeaderless && !p.mHasContentInLeftMargin) {
+            if (Flags.notificationsRedesignTemplates() && !p.mHeaderless) {
                 int margin = getContentMarginTop(mContext,
                         R.dimen.notification_2025_content_margin_top);
                 contentView.setViewLayoutMargin(R.id.notification_main_column,
@@ -6594,13 +6598,8 @@ public class Notification implements Parcelable
             int notifMargin = resources.getDimensionPixelSize(R.dimen.notification_2025_margin);
             // Spacing between the text lines, scaling with the font size (originally in sp)
             int spacing = resources.getDimensionPixelSize(spacingRes);
-
             // Size of the text in the notification top line (originally in sp)
-            int[] textSizeAttr = new int[] { android.R.attr.textSize };
-            TypedArray typedArray = context.obtainStyledAttributes(
-                    R.style.TextAppearance_DeviceDefault_Notification_Info, textSizeAttr);
-            int textSize = typedArray.getDimensionPixelSize(0 /* index */, -1 /* default */);
-            typedArray.recycle();
+            int textSize = resources.getDimensionPixelSize(R.dimen.notification_subtext_size);
 
             // Adding up all the values as pixels
             return notifMargin + spacing + textSize;
@@ -7678,12 +7677,18 @@ public class Notification implements Parcelable
             }
         }
 
+        // Note: In the 2025 redesign, we use two separate layouts for the collapsed and expanded
+        //  version of conversations. See below.
         private int getConversationLayoutResource() {
-            if (Flags.notificationsRedesignTemplates()) {
-                return R.layout.notification_2025_template_conversation;
-            } else {
-                return R.layout.notification_template_material_conversation;
-            }
+            return R.layout.notification_template_material_conversation;
+        }
+
+        private int getCollapsedConversationLayoutResource() {
+            return R.layout.notification_2025_template_collapsed_conversation;
+        }
+
+        private int getExpandedConversationLayoutResource() {
+            return R.layout.notification_2025_template_expanded_conversation;
         }
 
         private int getCollapsedCallLayoutResource() {
@@ -9467,7 +9472,7 @@ public class Notification implements Parcelable
             boolean hideRightIcons = viewType != StandardTemplateParams.VIEW_TYPE_NORMAL;
             boolean isConversationLayout = mConversationType != CONVERSATION_TYPE_LEGACY;
             boolean isImportantConversation = mConversationType == CONVERSATION_TYPE_IMPORTANT;
-            boolean isHeaderless = !isConversationLayout && isCollapsed;
+            boolean isLegacyHeaderless = !isConversationLayout && isCollapsed;
 
             //TODO (b/217799515): ensure mConversationTitle always returns the correct
             // conversationTitle, probably set mConversationTitle = conversationTitle after this
@@ -9488,7 +9493,8 @@ public class Notification implements Parcelable
             } else {
                 isOneToOne = !isGroupConversation();
             }
-            if (isHeaderless && isOneToOne && TextUtils.isEmpty(conversationTitle)) {
+            if ((isLegacyHeaderless || notificationsRedesignTemplates())
+                    && isOneToOne && TextUtils.isEmpty(conversationTitle)) {
                 conversationTitle = getOtherPersonName();
             }
 
@@ -9498,22 +9504,24 @@ public class Notification implements Parcelable
                     .viewType(viewType)
                     .highlightExpander(isConversationLayout)
                     .hideProgress(true)
-                    .title(isHeaderless ? conversationTitle : null)
                     .text(null)
                     .hideLeftIcon(isOneToOne)
-                    .hideRightIcon(hideRightIcons || isOneToOne)
-                    .headerTextSecondary(isHeaderless ? null : conversationTitle)
-                    .hasContentInLeftMargin(true);
+                    .hideRightIcon(hideRightIcons || isOneToOne);
+            if (notificationsRedesignTemplates()) {
+                p.title(conversationTitle)
+                        .hideAppName(isCollapsed);
+            } else {
+                p.title(isLegacyHeaderless ? conversationTitle : null)
+                        .headerTextSecondary(isLegacyHeaderless ? null : conversationTitle);
+            }
             RemoteViews contentView = mBuilder.applyStandardTemplateWithActions(
-                    isConversationLayout
-                            ? mBuilder.getConversationLayoutResource()
-                            : isCollapsed
-                                    ? mBuilder.getCollapsedMessagingLayoutResource()
-                                    : mBuilder.getExpandedMessagingLayoutResource(),
+                    getMessagingLayoutResource(isConversationLayout, isCollapsed),
                     p,
                     bindResult);
-            if (isConversationLayout) {
+            if (isConversationLayout && !notificationsRedesignTemplates()) {
+                // Redesign note: This view is replaced by the `title`, which is handled normally.
                 mBuilder.setTextViewColorPrimary(contentView, R.id.conversation_text, p);
+                // Redesign note: This special divider is no longer needed.
                 mBuilder.setTextViewColorSecondary(contentView, R.id.app_name_divider, p);
             }
 
@@ -9543,7 +9551,18 @@ public class Notification implements Parcelable
                 contentView.setBoolean(R.id.status_bar_latest_event_content,
                         "setIsImportantConversation", isImportantConversation);
             }
-            if (isHeaderless) {
+            if (notificationsRedesignTemplates() && !isCollapsed) {
+                // Align the title to the app/small icon in the expanded form. In other layouts,
+                // this margin is added directly to the notification_main_column parent, but for
+                // messages we don't want the margin to be applied to the actual messaging
+                // content since it can contain icons that are displayed below the app icon.
+                Resources res = mBuilder.mContext.getResources();
+                int marginStart = res.getDimensionPixelSize(
+                        R.dimen.notification_2025_content_margin_start);
+                contentView.setViewLayoutMargin(R.id.title,
+                        RemoteViews.MARGIN_START, marginStart, TypedValue.COMPLEX_UNIT_PX);
+            }
+            if (isLegacyHeaderless) {
                 // Collapsed legacy messaging style has a 1-line limit.
                 contentView.setInt(R.id.notification_messaging, "setMaxDisplayedLines", 1);
             }
@@ -9552,6 +9571,33 @@ public class Notification implements Parcelable
             contentView.setBundle(R.id.status_bar_latest_event_content, "setData",
                     mBuilder.mN.extras);
             return contentView;
+        }
+
+        private int getMessagingLayoutResource(boolean isConversationLayout, boolean isCollapsed) {
+            if (notificationsRedesignTemplates()) {
+                // Note: We eventually would like to use the same layouts for both conversations and
+                //  regular messaging notifications.
+                if (isConversationLayout) {
+                    if (isCollapsed) {
+                        return mBuilder.getCollapsedConversationLayoutResource();
+                    } else {
+                        return mBuilder.getExpandedConversationLayoutResource();
+                    }
+                } else {
+                    if (isCollapsed) {
+                        return mBuilder.getCollapsedMessagingLayoutResource();
+                    } else {
+                        return mBuilder.getExpandedMessagingLayoutResource();
+                    }
+                }
+
+            } else {
+                return isConversationLayout
+                        ? mBuilder.getConversationLayoutResource()
+                        : isCollapsed
+                                ? mBuilder.getCollapsedMessagingLayoutResource()
+                                : mBuilder.getExpandedMessagingLayoutResource();
+            }
         }
 
         private CharSequence getKey(Person person) {
@@ -10991,6 +11037,7 @@ public class Notification implements Parcelable
 
         private RemoteViews makeCallLayout(int viewType) {
             final boolean isCollapsed = viewType == StandardTemplateParams.VIEW_TYPE_NORMAL;
+            final boolean isHeadsUp = viewType == StandardTemplateParams.VIEW_TYPE_HEADS_UP;
             Bundle extras = mBuilder.mN.extras;
             CharSequence title = mPerson != null ? mPerson.getName() : null;
             CharSequence text = mBuilder.processLegacyText(extras.getCharSequence(EXTRA_TEXT));
@@ -11006,14 +11053,22 @@ public class Notification implements Parcelable
                     .hideLeftIcon(true)
                     .hideRightIcon(true)
                     .hideAppName(isCollapsed)
-                    .titleViewId(R.id.conversation_text)
                     .title(title)
-                    .text(text)
-                    .summaryText(mBuilder.processLegacyText(mVerificationText));
+                    .text(text);
+            if (!notificationsRedesignTemplates()) {
+                // We're using the normal title in the redesign, not a special text.
+                p.titleViewId(R.id.conversation_text)
+                        // The verification text is now part of the top line views, so this is no
+                        // longer necessary.
+                        .summaryText(mBuilder.processLegacyText(mVerificationText));
+            }
             mBuilder.mActions = getActionsListWithSystemActions();
             final RemoteViews contentView;
             if (isCollapsed) {
                 contentView = mBuilder.applyStandardTemplate(
+                        mBuilder.getCollapsedCallLayoutResource(), p, null /* result */);
+            } else if (notificationsRedesignTemplates() && isHeadsUp) {
+                contentView = mBuilder.applyStandardTemplateWithActions(
                         mBuilder.getCollapsedCallLayoutResource(), p, null /* result */);
             } else {
                 contentView = mBuilder.applyStandardTemplateWithActions(
@@ -11021,7 +11076,8 @@ public class Notification implements Parcelable
             }
 
             // Bind some extra conversation-specific header fields.
-            if (!p.mHideAppName) {
+            if (!notificationsRedesignTemplates() && !p.mHideAppName) {
+                // Redesign note: This special divider is no longer needed.
                 mBuilder.setTextViewColorSecondary(contentView, R.id.app_name_divider, p);
                 contentView.setViewVisibility(R.id.app_name_divider, View.VISIBLE);
             }
@@ -11204,10 +11260,15 @@ public class Notification implements Parcelable
      * </pre>
      *
      *
-     *
+     * <p>
      * NOTE: The progress bar layout will be mirrored for RTL layout.
+     * </p>
+     *
+     * <p>
      * NOTE: The extras set by {@link Notification.Builder#setProgress} will be overridden by
-     * the values set on this style object when the notification is built.
+     * the values set on this style object when the notification is built.  Therefore, that method
+     * is not used with this style.
+     * </p>
      *
      */
     @FlaggedApi(Flags.FLAG_API_RICH_ONGOING)
@@ -11370,7 +11431,7 @@ public class Notification implements Parcelable
             if (mProgressPoints == null) {
                 mProgressPoints = new ArrayList<>();
             }
-            if (point.getPosition() >= 0) {
+            if (point.getPosition() > 0) {
                 mProgressPoints.add(point);
 
                 if (mProgressPoints.size() > MAX_PROGRESS_POINT_LIMIT) {
@@ -11379,7 +11440,7 @@ public class Notification implements Parcelable
                 }
 
             } else {
-                Log.w(TAG, "Dropped the point. The position is a negative integer.");
+                Log.w(TAG, "Dropped the point. The position is a negative or zero integer.");
             }
 
             return this;
@@ -11893,7 +11954,9 @@ public class Notification implements Parcelable
                 final List<Point> points = new ArrayList<>();
                 for (Point point : mProgressPoints) {
                     final int position = point.getPosition();
-                    if (position < 0 || position > totalLength) continue;
+                    // The points at start/end aren't supposed to show in the progress bar.
+                    // Therefore those are also dropped here.
+                    if (position <= 0 || position >= totalLength) continue;
                     points.add(sanitizePoint(point, backgroundColor, defaultProgressColor));
                     if (points.size() == MAX_PROGRESS_POINT_LIMIT) {
                         break;
@@ -14674,7 +14737,6 @@ public class Notification implements Parcelable
         Icon mPromotedPicture;
         boolean mCallStyleActions;
         boolean mAllowTextWithProgress;
-        boolean mHasContentInLeftMargin;
         int mTitleViewId;
         int mTextViewId;
         @Nullable CharSequence mTitle;
@@ -14700,7 +14762,6 @@ public class Notification implements Parcelable
             mPromotedPicture = null;
             mCallStyleActions = false;
             mAllowTextWithProgress = false;
-            mHasContentInLeftMargin = false;
             mTitleViewId = R.id.title;
             mTextViewId = R.id.text;
             mTitle = null;
@@ -14764,11 +14825,6 @@ public class Notification implements Parcelable
 
         final StandardTemplateParams allowTextWithProgress(boolean allowTextWithProgress) {
             this.mAllowTextWithProgress = allowTextWithProgress;
-            return this;
-        }
-
-        public StandardTemplateParams hasContentInLeftMargin(boolean hasContentInLeftMargin) {
-            mHasContentInLeftMargin = hasContentInLeftMargin;
             return this;
         }
 

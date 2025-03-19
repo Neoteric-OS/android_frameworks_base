@@ -16,15 +16,16 @@
 
 package com.android.wm.shell.shared.desktopmode
 
+import android.Manifest.permission.SYSTEM_ALERT_WINDOW
 import android.app.TaskInfo
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.pm.ActivityInfo.INSETS_DECOUPLED_CONFIGURATION_ENFORCED
 import android.content.pm.ActivityInfo.OVERRIDE_ENABLE_INSETS_DECOUPLED_CONFIGURATION
 import android.content.pm.ActivityInfo.OVERRIDE_EXCLUDE_CAPTION_INSETS_FROM_APP_BOUNDS
+import android.content.pm.PackageManager
 import android.window.DesktopModeFlags
 import com.android.internal.R
-import com.android.window.flags.Flags
 
 /**
  * Class to decide whether to apply app compat policies in desktop mode.
@@ -33,8 +34,10 @@ import com.android.window.flags.Flags
 class DesktopModeCompatPolicy(private val context: Context) {
 
     private val systemUiPackage: String = context.resources.getString(R.string.config_systemUi)
+    private val pkgManager: PackageManager
+        get() = context.getPackageManager()
     private val defaultHomePackage: String?
-        get() = context.getPackageManager().getHomeActivities(ArrayList())?.packageName
+        get() = pkgManager.getHomeActivities(ArrayList())?.packageName
 
     /**
      * If the top activity should be exempt from desktop windowing and forced back to fullscreen.
@@ -48,11 +51,12 @@ class DesktopModeCompatPolicy(private val context: Context) {
 
     fun isTopActivityExemptFromDesktopWindowing(packageName: String?,
         numActivities: Int, isTopActivityNoDisplay: Boolean, isActivityStackTransparent: Boolean) =
-        DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODALS_POLICY.isTrue
-                && ((isSystemUiTask(packageName)
-                || isPartOfDefaultHomePackage(packageName)
-                || isTransparentTask(isActivityStackTransparent, numActivities))
-                && !isTopActivityNoDisplay)
+        DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODALS_POLICY.isTrue &&
+                ((isSystemUiTask(packageName) ||
+                        isPartOfDefaultHomePackageOrNoHomeAvailable(packageName) ||
+                        (isTransparentTask(isActivityStackTransparent, numActivities) &&
+                                hasFullscreenTransparentPermission(packageName))) &&
+                        !isTopActivityNoDisplay)
 
     /**
      * Whether the caption insets should be excluded from configuration for system to handle.
@@ -64,7 +68,7 @@ class DesktopModeCompatPolicy(private val context: Context) {
      * is enabled.
      */
     fun shouldExcludeCaptionFromAppBounds(taskInfo: TaskInfo): Boolean =
-        Flags.excludeCaptionFromAppBounds()
+        DesktopModeFlags.EXCLUDE_CAPTION_FROM_APP_BOUNDS.isTrue
                 && isAnyForceConsumptionFlagsEnabled()
                 && taskInfo.topActivityInfo?.let {
             isInsetsCoupledWithConfiguration(it) && (!taskInfo.isResizeable || it.isChangeEnabled(
@@ -84,11 +88,32 @@ class DesktopModeCompatPolicy(private val context: Context) {
 
     private fun isSystemUiTask(packageName: String?) = packageName == systemUiPackage
 
+    // Checks if the app for the given package has the SYSTEM_ALERT_WINDOW permission.
+    private fun hasFullscreenTransparentPermission(packageName: String?): Boolean {
+        if (DesktopModeFlags.ENABLE_MODALS_FULLSCREEN_WITH_PERMISSIONS.isTrue) {
+            if (packageName == null) {
+                return false
+            }
+            return try {
+                val packageInfo = pkgManager.getPackageInfo(
+                    packageName,
+                    PackageManager.GET_PERMISSIONS
+                )
+                packageInfo?.requestedPermissions?.contains(SYSTEM_ALERT_WINDOW) == true
+            } catch (e: PackageManager.NameNotFoundException) {
+                false // Package not found
+            }
+        }
+        // If the flag is disabled we make this condition neutral.
+        return true
+    }
+
     /**
-     * Returns true if the tasks base activity is part of the default home package.
+     * Returns true if the tasks base activity is part of the default home package, or there is
+     * currently no default home package available.
      */
-    private fun isPartOfDefaultHomePackage(packageName: String?) =
-        packageName != null && packageName == defaultHomePackage
+    private fun isPartOfDefaultHomePackageOrNoHomeAvailable(packageName: String?) =
+        defaultHomePackage == null || (packageName != null && packageName == defaultHomePackage)
 
     private fun isAnyForceConsumptionFlagsEnabled(): Boolean =
         DesktopModeFlags.ENABLE_CAPTION_COMPAT_INSET_FORCE_CONSUMPTION_ALWAYS.isTrue

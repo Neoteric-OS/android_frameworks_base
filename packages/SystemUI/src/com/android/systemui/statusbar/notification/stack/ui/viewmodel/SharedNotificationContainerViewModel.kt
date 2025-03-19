@@ -20,6 +20,7 @@ package com.android.systemui.statusbar.notification.stack.ui.viewmodel
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.android.app.tracing.coroutines.flow.flowName
+import com.android.systemui.Flags.glanceableHubV2
 import com.android.systemui.common.shared.model.NotificationContainerBounds
 import com.android.systemui.common.ui.domain.interactor.ConfigurationInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor
@@ -44,15 +45,18 @@ import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition
 import com.android.systemui.keyguard.ui.viewmodel.AlternateBouncerToGoneTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AlternateBouncerToPrimaryBouncerTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodBurnInViewModel
+import com.android.systemui.keyguard.ui.viewmodel.AodToGlanceableHubTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToGoneTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToOccludedTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToPrimaryBouncerTransitionViewModel
+import com.android.systemui.keyguard.ui.viewmodel.DozingToDreamingTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToGlanceableHubTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToOccludedTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToPrimaryBouncerTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DreamingToLockscreenTransitionViewModel
+import com.android.systemui.keyguard.ui.viewmodel.GlanceableHubToAodTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.GlanceableHubToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.GoneToAodTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.GoneToDozingTransitionViewModel
@@ -84,7 +88,9 @@ import com.android.systemui.statusbar.notification.domain.interactor.HeadsUpNoti
 import com.android.systemui.statusbar.notification.stack.domain.interactor.NotificationStackAppearanceInteractor
 import com.android.systemui.statusbar.notification.stack.domain.interactor.SharedNotificationContainerInteractor
 import com.android.systemui.unfold.domain.interactor.UnfoldTransitionInteractor
+import com.android.systemui.util.kotlin.BooleanFlowOperators.allOf
 import com.android.systemui.util.kotlin.BooleanFlowOperators.anyOf
+import com.android.systemui.util.kotlin.BooleanFlowOperators.not
 import com.android.systemui.util.kotlin.FlowDumperImpl
 import com.android.systemui.util.kotlin.Utils.Companion.sample as sampleCombine
 import com.android.systemui.util.kotlin.sample
@@ -135,7 +141,9 @@ constructor(
     private val aodToGoneTransitionViewModel: AodToGoneTransitionViewModel,
     private val aodToLockscreenTransitionViewModel: AodToLockscreenTransitionViewModel,
     private val aodToOccludedTransitionViewModel: AodToOccludedTransitionViewModel,
+    private val aodToGlanceableHubTransitionViewModel: AodToGlanceableHubTransitionViewModel,
     private val aodToPrimaryBouncerTransitionViewModel: AodToPrimaryBouncerTransitionViewModel,
+    private val dozingToDreamingTransitionViewModel: DozingToDreamingTransitionViewModel,
     dozingToGlanceableHubTransitionViewModel: DozingToGlanceableHubTransitionViewModel,
     private val dozingToLockscreenTransitionViewModel: DozingToLockscreenTransitionViewModel,
     private val dozingToOccludedTransitionViewModel: DozingToOccludedTransitionViewModel,
@@ -144,6 +152,7 @@ constructor(
     private val dreamingToLockscreenTransitionViewModel: DreamingToLockscreenTransitionViewModel,
     private val glanceableHubToLockscreenTransitionViewModel:
         GlanceableHubToLockscreenTransitionViewModel,
+    private val glanceableHubToAodTransitionViewModel: GlanceableHubToAodTransitionViewModel,
     private val goneToAodTransitionViewModel: GoneToAodTransitionViewModel,
     private val goneToDozingTransitionViewModel: GoneToDozingTransitionViewModel,
     private val goneToDreamingTransitionViewModel: GoneToDreamingTransitionViewModel,
@@ -293,20 +302,40 @@ constructor(
             .distinctUntilChanged()
             .dumpWhileCollecting("configurationBasedDimensions")
 
+    private val isOnAnyBouncer: Flow<Boolean> =
+        anyOf(
+            keyguardTransitionInteractor.transitionValue(ALTERNATE_BOUNCER).map { it > 0f },
+            keyguardTransitionInteractor
+                .transitionValue(
+                    scene = Scenes.Bouncer,
+                    stateWithoutSceneContainer = PRIMARY_BOUNCER,
+                )
+                .map { it > 0f },
+        )
+
     /** If the user is visually on one of the unoccluded lockscreen states. */
     val isOnLockscreen: Flow<Boolean> =
-        anyOf(
-                keyguardTransitionInteractor.transitionValue(AOD).map { it > 0f },
-                keyguardTransitionInteractor.transitionValue(DOZING).map { it > 0f },
-                keyguardTransitionInteractor.transitionValue(ALTERNATE_BOUNCER).map { it > 0f },
-                keyguardTransitionInteractor
-                    .transitionValue(
-                        scene = Scenes.Bouncer,
-                        stateWithoutSceneContainer = PRIMARY_BOUNCER,
-                    )
-                    .map { it > 0f },
-                keyguardTransitionInteractor.transitionValue(LOCKSCREEN).map { it > 0f },
-            )
+        if (glanceableHubV2()) {
+                anyOf(
+                    keyguardTransitionInteractor.transitionValue(AOD).map { it > 0f },
+                    keyguardTransitionInteractor.transitionValue(DOZING).map { it > 0f },
+                    keyguardTransitionInteractor.transitionValue(LOCKSCREEN).map { it > 0f },
+                    allOf(
+                        // Exclude bouncer showing over communal hub, as this should not be
+                        // considered
+                        // "lockscreen"
+                        not(communalSceneInteractor.isCommunalVisible),
+                        isOnAnyBouncer,
+                    ),
+                )
+            } else {
+                anyOf(
+                    keyguardTransitionInteractor.transitionValue(AOD).map { it > 0f },
+                    keyguardTransitionInteractor.transitionValue(DOZING).map { it > 0f },
+                    keyguardTransitionInteractor.transitionValue(LOCKSCREEN).map { it > 0f },
+                    isOnAnyBouncer,
+                )
+            }
             .flowName("isOnLockscreen")
             .stateIn(
                 scope = applicationScope,
@@ -571,7 +600,9 @@ constructor(
             aodToGoneTransitionViewModel.notificationAlpha(viewState),
             aodToLockscreenTransitionViewModel.notificationAlpha,
             aodToOccludedTransitionViewModel.lockscreenAlpha(viewState),
+            aodToGlanceableHubTransitionViewModel.lockscreenAlpha(viewState),
             aodToPrimaryBouncerTransitionViewModel.notificationAlpha,
+            dozingToDreamingTransitionViewModel.notificationAlpha,
             dozingToLockscreenTransitionViewModel.lockscreenAlpha,
             dozingToOccludedTransitionViewModel.lockscreenAlpha(viewState),
             dozingToPrimaryBouncerTransitionViewModel.notificationAlpha,
@@ -591,6 +622,7 @@ constructor(
             offToLockscreenTransitionViewModel.lockscreenAlpha,
             primaryBouncerToLockscreenTransitionViewModel.lockscreenAlpha(viewState),
             glanceableHubToLockscreenTransitionViewModel.keyguardAlpha,
+            glanceableHubToAodTransitionViewModel.lockscreenAlpha,
             lockscreenToGlanceableHubTransitionViewModel.keyguardAlpha,
         )
     }

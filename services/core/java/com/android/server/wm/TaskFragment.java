@@ -44,10 +44,6 @@ import static android.view.Display.INVALID_DISPLAY;
 import static android.view.Surface.ROTATION_270;
 import static android.view.Surface.ROTATION_90;
 import static android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-import static android.view.WindowManager.TRANSIT_CLOSE;
-import static android.view.WindowManager.TRANSIT_FLAG_OPEN_BEHIND;
-import static android.view.WindowManager.TRANSIT_NONE;
-import static android.view.WindowManager.TRANSIT_OPEN;
 
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_STATES;
 import static com.android.server.wm.ActivityRecord.State.PAUSED;
@@ -56,7 +52,6 @@ import static com.android.server.wm.ActivityRecord.State.RESUMED;
 import static com.android.server.wm.ActivityRecord.State.STOPPING;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_RESULTS;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_SWITCH;
-import static com.android.server.wm.ActivityTaskManagerDebugConfig.DEBUG_TRANSITION;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_RESULTS;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_SWITCH;
 import static com.android.server.wm.ActivityTaskManagerDebugConfig.POSTFIX_TRANSITION;
@@ -102,7 +97,6 @@ import android.util.DisplayMetrics;
 import android.util.Slog;
 import android.util.proto.ProtoOutputStream;
 import android.view.DisplayInfo;
-import android.view.RemoteAnimationTarget;
 import android.view.SurfaceControl;
 import android.window.ITaskFragmentOrganizer;
 import android.window.TaskFragmentAnimationParams;
@@ -408,6 +402,12 @@ class TaskFragment extends WindowContainer<WindowContainer> {
      */
     private boolean mAllowTransitionWhenEmpty;
 
+    /**
+     * Specifies which configuration changes should trigger TaskFragment info changed callbacks.
+     * Only system TaskFragment organizers are allowed to set this value.
+     */
+    private @ActivityInfo.Config int mConfigurationChangeMaskForOrganizer;
+
     /** When set, will force the task to report as invisible. */
     static final int FLAG_FORCE_HIDDEN_FOR_PINNED_TASK = 1;
     static final int FLAG_FORCE_HIDDEN_FOR_TASK_ORG = 1 << 1;
@@ -668,6 +668,17 @@ class TaskFragment extends WindowContainer<WindowContainer> {
             return;
         }
         mAllowTransitionWhenEmpty = allowTransitionWhenEmpty;
+    }
+
+    void setConfigurationChangeMaskForOrganizer(@ActivityInfo.Config int mask) {
+        // Only system organizers are allowed to set configuration change mask.
+        if (mTaskFragmentOrganizerController.isSystemOrganizer(mTaskFragmentOrganizer.asBinder())) {
+            mConfigurationChangeMaskForOrganizer = mask;
+        }
+    }
+
+    @ActivityInfo.Config int getConfigurationChangeMaskForOrganizer() {
+        return mConfigurationChangeMaskForOrganizer;
     }
 
     /** @see #mIsolatedNav */
@@ -1701,29 +1712,19 @@ class TaskFragment extends WindowContainer<WindowContainer> {
 // QTI_END: 2021-11-22: Performance: perf: Refactor Animation Boost
         if (prev != null) {
             if (prev.finishing) {
-                if (DEBUG_TRANSITION) {
-                    Slog.v(TAG_TRANSITION, "Prepare close transition: prev=" + prev);
-                }
                 if (mTaskSupervisor.mNoAnimActivities.contains(prev)) {
                     anim = false;
-                    dc.prepareAppTransition(TRANSIT_NONE);
-                } else {
 // QTI_BEGIN: 2021-11-22: Performance: perf: Refactor Animation Boost
                     if(prev.getTask() != next.getTask() && mPerf != null) {
                        mPerf.perfHint(BoostFramework.VENDOR_HINT_ANIM_BOOST,
                            next.packageName);
                     }
 // QTI_END: 2021-11-22: Performance: perf: Refactor Animation Boost
-                    dc.prepareAppTransition(TRANSIT_CLOSE);
                 }
                 prev.setVisibility(false);
             } else {
-                if (DEBUG_TRANSITION) {
-                    Slog.v(TAG_TRANSITION, "Prepare open transition: prev=" + prev);
-                }
                 if (mTaskSupervisor.mNoAnimActivities.contains(next)) {
                     anim = false;
-                    dc.prepareAppTransition(TRANSIT_NONE);
                 } else {
 // QTI_BEGIN: 2021-11-22: Performance: perf: Refactor Animation Boost
                     if(prev.getTask() != next.getTask() && mPerf != null) {
@@ -1731,17 +1732,11 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                            next.packageName);
                     }
 // QTI_END: 2021-11-22: Performance: perf: Refactor Animation Boost
-                    dc.prepareAppTransition(TRANSIT_OPEN,
-                            next.mLaunchTaskBehind ? TRANSIT_FLAG_OPEN_BEHIND : 0);
                 }
             }
         } else {
-            if (DEBUG_TRANSITION) Slog.v(TAG_TRANSITION, "Prepare open transition: no previous");
             if (mTaskSupervisor.mNoAnimActivities.contains(next)) {
                 anim = false;
-                dc.prepareAppTransition(TRANSIT_NONE);
-            } else {
-                dc.prepareAppTransition(TRANSIT_OPEN);
 // QTI_BEGIN: 2023-10-24: Performance: perf: add exit app animation boost for apps exit.
                 // Exit app animation boost
                 if (next != null && mPerf != null) {
@@ -1749,7 +1744,7 @@ class TaskFragment extends WindowContainer<WindowContainer> {
                 }
 // QTI_END: 2023-10-24: Performance: perf: add exit app animation boost for apps exit.
             }
-        }
+        } 
 
         if (anim) {
             next.applyOptionsAnimation();
@@ -1947,14 +1942,17 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         if (!hasDirectChildActivities()) {
             return false;
         }
-        if (mResumedActivity != null && mTransitionController.isTransientLaunch(mResumedActivity)) {
+        if (mResumedActivity != null && !mResumedActivity.finishing
+                && mTransitionController.isTransientLaunch(mResumedActivity)) {
             // Even if the transient activity is occluded, defer pausing (addToStopping will still
             // be called) it until the transient transition is done. So the current resuming
             // activity won't need to wait for additional pause complete.
+            ProtoLog.d(WM_DEBUG_STATES, "startPausing: Skipping pause for transient "
+                            + "resumed activity=%s", mResumedActivity);
             return false;
         }
 
-        ProtoLog.d(WM_DEBUG_STATES, "startPausing: taskFrag =%s " + "mResumedActivity=%s", this,
+        ProtoLog.d(WM_DEBUG_STATES, "startPausing: taskFrag=%s mResumedActivity=%s", this,
                 mResumedActivity);
 
         if (mPausingActivity != null) {
@@ -2355,18 +2353,6 @@ class TaskFragment extends WindowContainer<WindowContainer> {
     void executeAppTransition(ActivityOptions options) {
         mDisplayContent.executeAppTransition();
         ActivityOptions.abort(options);
-    }
-
-    @Override
-    RemoteAnimationTarget createRemoteAnimationTarget(
-            RemoteAnimationController.RemoteAnimationRecord record) {
-        final ActivityRecord activity = record.getMode() == RemoteAnimationTarget.MODE_OPENING
-                // There may be a launching (e.g. trampoline or embedded) activity without a window
-                // on top of the existing task which is moving to front. Exclude finishing activity
-                // so the window of next activity can be chosen to create the animation target.
-                ? getActivity(r -> !r.finishing && r.hasChild())
-                : getTopMostActivity();
-        return activity != null ? activity.createRemoteAnimationTarget(record) : null;
     }
 
     @Override
@@ -2844,9 +2830,7 @@ class TaskFragment extends WindowContainer<WindowContainer> {
         }
 
         // If this TaskFragment is closing while resizing, crop to the starting bounds instead.
-        final Rect bounds = isClosingWhenResizing()
-                ? mDisplayContent.mClosingChangingContainers.get(this)
-                : getBounds();
+        final Rect bounds = getBounds();
         final int width = bounds.width();
         final int height = bounds.height();
         if (!forceUpdate && width == mLastSurfaceSize.x && height == mLastSurfaceSize.y) {
