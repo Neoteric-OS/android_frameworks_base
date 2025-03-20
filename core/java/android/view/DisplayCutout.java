@@ -1392,11 +1392,14 @@ public final class DisplayCutout {
 
     private static Rect computeSafeInsets(int displayW, int displayH, Insets waterFallInsets,
             Rect[] bounds) {
+        boolean isLandscape = displayW > displayH;
 
         int leftInset = Math.max(waterFallInsets.left, findCutoutInsetForSide(
                 displayW, displayH, bounds[BOUNDS_POSITION_LEFT], Gravity.LEFT));
-        int topInset = Math.max(waterFallInsets.top, findCutoutInsetForSide(
-                displayW, displayH, bounds[BOUNDS_POSITION_TOP], Gravity.TOP));
+        //  Only care about waterfall insets when landscape
+        int topInset = isLandscape ? waterFallInsets.top :
+                Math.max(waterFallInsets.top, findCutoutInsetForSide(
+                        displayW, displayH, bounds[BOUNDS_POSITION_TOP], Gravity.TOP));
         int rightInset = Math.max(waterFallInsets.right, findCutoutInsetForSide(
                 displayW, displayH, bounds[BOUNDS_POSITION_RIGHT], Gravity.RIGHT));
         int bottomInset = Math.max(waterFallInsets.bottom, findCutoutInsetForSide(
