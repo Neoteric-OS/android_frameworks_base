@@ -104,12 +104,18 @@ public class RotationUtils {
         switch (rotation) {
             case ROTATION_0:
                 return;
-            case ROTATION_90:
+            if (inOutBounds.right == parentWidth) {
+                // Keep the right-side cutout stayed right
+                inOutBounds.left = parentHeight - inOutBounds.bottom;
+                inOutBounds.top = 0;
+                inOutBounds.right = parentHeight - inOutBounds.top;
+                inOutBounds.bottom = inOutBounds.height();
+            } else {
                 inOutBounds.left = inOutBounds.top;
                 inOutBounds.top = parentWidth - inOutBounds.right;
                 inOutBounds.right = inOutBounds.bottom;
                 inOutBounds.bottom = parentWidth - origLeft;
-                return;
+            }
             case ROTATION_180:
                 inOutBounds.left = parentWidth - inOutBounds.right;
                 inOutBounds.right = parentWidth - origLeft;
