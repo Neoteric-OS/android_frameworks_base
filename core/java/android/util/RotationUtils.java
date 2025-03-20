@@ -101,14 +101,31 @@ public class RotationUtils {
             @Rotation int rotation) {
         final int origLeft = inOutBounds.left;
         final int origTop = inOutBounds.top;
+        final int origRight = inOutBounds.right;
+        final int origBottom = inOutBounds.bottom;
+
         switch (rotation) {
             case ROTATION_0:
                 return;
             case ROTATION_90:
-                inOutBounds.left = inOutBounds.top;
-                inOutBounds.top = parentWidth - inOutBounds.right;
-                inOutBounds.right = inOutBounds.bottom;
-                inOutBounds.bottom = parentWidth - origLeft;
+                if (origRight == parentWidth) {
+                    // Keep the right-side cutout stayed right
+                    inOutBounds.left = parentHeight - origBottom;
+                    inOutBounds.top = 0;
+                    inOutBounds.right = parentHeight;
+                    inOutBounds.bottom = origBottom - origTop;
+                } else if (origLeft == 0) {
+                    // Keep the left-side cutout stayed left
+                    inOutBounds.left = parentHeight - origBottom;
+                    inOutBounds.top = parentWidth - origRight;
+                    inOutBounds.right = parentHeight - origTop;
+                    inOutBounds.bottom = parentWidth;
+                } else {
+                    inOutBounds.left = origTop;
+                    inOutBounds.top = parentWidth - origRight;
+                    inOutBounds.right = origBottom;
+                    inOutBounds.bottom = parentWidth - origLeft;
+                }
                 return;
             case ROTATION_180:
                 inOutBounds.left = parentWidth - inOutBounds.right;
@@ -117,10 +134,25 @@ public class RotationUtils {
                 inOutBounds.bottom = parentHeight - origTop;
                 return;
             case ROTATION_270:
-                inOutBounds.left = parentHeight - inOutBounds.bottom;
-                inOutBounds.bottom = inOutBounds.right;
-                inOutBounds.right = parentHeight - inOutBounds.top;
-                inOutBounds.top = origLeft;
+                if (origRight == parentWidth) {
+                    // Keep the right-side cutout stayed right
+                    inOutBounds.left = 0;
+                    inOutBounds.top = origLeft;
+                    inOutBounds.right = origBottom - origTop;
+                    inOutBounds.bottom = parentHeight - origLeft;
+                } else if (origLeft == 0) {
+                    // Keep the left-side cutout stayed left
+                    inOutBounds.left = parentHeight - origBottom;
+                    inOutBounds.top = origLeft;
+                    inOutBounds.right = parentHeight;
+                    inOutBounds.bottom = origRight;
+                } else {
+                    inOutBounds.left = parentHeight - origBottom;
+                    inOutBounds.bottom = origRight;
+                    inOutBounds.right = parentHeight - origTop;
+                    inOutBounds.top = origLeft;
+                }
+                return;
         }
     }
 
