@@ -1325,7 +1325,8 @@ public final class DisplayCutout {
         final Rect displayBounds = new Rect(0, 0, startWidth, startHeight);
         for (int i = 0; i < newBounds.length; ++i) {
             if (newBounds[i].isEmpty()) continue;
-            RotationUtils.rotateBounds(newBounds[i], displayBounds, rotation);
+            RotationUtils.rotateCutoutBounds(newBounds[i], startWidth, startHeight,
+                    RotationUtils.deltaRotation(fromRotation, toRotation));
         }
         final int defaultRotation = -rotation;
         final int override = getSideOverride(mSideOverrides, toRotation);
@@ -1392,17 +1393,31 @@ public final class DisplayCutout {
 
     private static Rect computeSafeInsets(int displayW, int displayH, Insets waterFallInsets,
             Rect[] bounds) {
+        boolean isLandscape = displayW > displayH;
 
-        int leftInset = Math.max(waterFallInsets.left, findCutoutInsetForSide(
-                displayW, displayH, bounds[BOUNDS_POSITION_LEFT], Gravity.LEFT));
-        int topInset = Math.max(waterFallInsets.top, findCutoutInsetForSide(
-                displayW, displayH, bounds[BOUNDS_POSITION_TOP], Gravity.TOP));
-        int rightInset = Math.max(waterFallInsets.right, findCutoutInsetForSide(
-                displayW, displayH, bounds[BOUNDS_POSITION_RIGHT], Gravity.RIGHT));
-        int bottomInset = Math.max(waterFallInsets.bottom, findCutoutInsetForSide(
-                displayW, displayH, bounds[BOUNDS_POSITION_BOTTOM], Gravity.BOTTOM));
+        int leftInset = computeInset(displayW, displayH, bounds[BOUNDS_POSITION_LEFT],
+              waterFallInsets.left, Gravity.LEFT, isLandscape);
+        int topInset = computeInset(displayW, displayH, bounds[BOUNDS_POSITION_TOP],
+              waterFallInsets.top, Gravity.TOP, isLandscape);
+        int rightInset = computeInset(displayW, displayH, bounds[BOUNDS_POSITION_RIGHT],
+              waterFallInsets.right, Gravity.RIGHT, isLandscape);
+        int bottomInset = computeInset(displayW, displayH, bounds[BOUNDS_POSITION_BOTTOM],
+              waterFallInsets.bottom, Gravity.BOTTOM, isLandscape);
 
         return new Rect(leftInset, topInset, rightInset, bottomInset);
+    }
+
+    private static int computeInset(int displayW, int displayH, Rect bound,
+            int waterfallInset, int gravity, boolean isLandscape) {
+        int cutoutInset = findCutoutInsetForSide(displayW, displayH, bound, gravity);
+
+        // The top/bottom cutout seen as left/right safe insets when landscape
+        if (isLandscape) {
+            if (gravity == Gravity.TOP || gravity == Gravity.BOTTOM) {
+                return waterfallInset;
+            }
+        }
+        return Math.max(waterfallInset, cutoutInset);
     }
 
     private static int findCutoutInsetForSide(int displayW, int displayH,

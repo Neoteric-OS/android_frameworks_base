@@ -266,4 +266,72 @@ public class RotationUtils {
         }
         return rotation;
     }
+
+    /**
+     * Rotates the bounds of the cutout with the given rotation.
+     *
+     * @param inOutBounds The bounds of the cutout
+     * @param parentWidth Width of the parent container
+     * @param parentHeight Height of the parent container
+     * @param rotation Rotation of the cutout
+     */
+    public static void rotateCutoutBounds(Rect inOutBounds, int parentWidth, int parentHeight,
+                                          @Rotation int rotation) {
+        final int POS_LEFT = 0, POS_TOP = 1, POS_RIGHT = 2, POS_BOTTOM = 3, POS_UNKNOWN = -1;
+
+        // Detect the cutout original position
+        int originalPos = POS_UNKNOWN;
+        if (inOutBounds.right == parentWidth && inOutBounds.left > 0) {
+            originalPos = POS_RIGHT;
+        } else if (inOutBounds.bottom == parentHeight && inOutBounds.top > 0) {
+            originalPos = POS_BOTTOM;
+        } else if (inOutBounds.left == 0 && inOutBounds.right < parentWidth) {
+            originalPos = POS_LEFT;
+        } else if (inOutBounds.top == 0 && inOutBounds.bottom < parentHeight) {
+            originalPos = POS_TOP;
+        }
+        if (originalPos == POS_UNKNOWN) return;
+
+        // Calculate the new position after rotation
+        final int rotationSteps = rotation / 90;
+        final int newPos = (originalPos + rotationSteps) % 4;
+
+        // Handle the cutout rotation with all possibles
+        final int origW = inOutBounds.width();
+        final int origH = inOutBounds.height();
+        switch (originalPos) {
+            case POS_LEFT -> {
+                switch (newPos) {
+                    case POS_BOTTOM ->
+                            inOutBounds.set(0, parentHeight - origW, origH, parentHeight);
+                    case POS_TOP ->
+                            inOutBounds.set(parentHeight - origH, 0, parentHeight, origW);
+                }
+            }
+            case POS_TOP -> {
+                switch (newPos) {
+                    case POS_RIGHT ->
+                            inOutBounds.set(parentWidth - origW, 0, parentWidth, origH);
+                    case POS_LEFT ->
+                            inOutBounds.set(0, parentHeight - origW, origH, parentHeight);
+                }
+            }
+            case POS_RIGHT -> {
+                switch (newPos) {
+                    case POS_TOP ->
+                            inOutBounds.set(parentHeight - origH, 0, parentHeight, origH);
+                    case POS_BOTTOM ->
+                            inOutBounds.set(0, parentWidth - origW, origW, parentWidth);
+                }
+            }
+            case POS_BOTTOM -> {
+                switch (newPos) {
+                    case POS_LEFT ->
+                            inOutBounds.set(0, parentHeight - origH, origH, parentHeight);
+                    case POS_RIGHT ->
+                            inOutBounds.set(parentWidth - origH, 0, parentWidth, origW);
+                }
+            }
+        }
+    }
 }
