@@ -266,4 +266,48 @@ public class RotationUtils {
         }
         return rotation;
     }
+
+    /**
+     * Rotates the bounds of the cutout with the given rotation.
+     *
+     * @param inOutBounds The bounds of the cutout
+     * @param parentWidth Width of the parent container
+     * @param parentHeight Height of the parent container
+     * @param rotation Rotation of the cutout
+     */
+    public static void rotateCutoutBounds(Rect inOutBounds, int parentWidth, int parentHeight,
+                                          @Rotation int rotation) {
+        final int origLeft = inOutBounds.left;
+        final int origTop = inOutBounds.top;
+        final int origRight = inOutBounds.right;
+        final int origBottom = inOutBounds.bottom;
+
+        switch (rotation) {
+            case ROTATION_0 -> {
+                return;
+            }
+            case ROTATION_90 -> {
+                int newLeft = parentHeight - origBottom;
+                int newTop = origLeft;
+                int newRight = parentHeight - origTop;
+                int newBottom = origRight;
+                inOutBounds.set(newLeft, newTop, newRight, newBottom);
+            }
+            case ROTATION_180 -> {
+                int newLeft = parentWidth - origRight;
+                int newTop = parentHeight - origBottom;
+                int newRight = parentWidth - origLeft;
+                int newBottom = parentHeight - origTop;
+                inOutBounds.set(newLeft, newTop, newRight, newBottom);
+            }
+            case ROTATION_270 -> {
+                int newLeft = origTop;
+                int newTop = parentWidth - origRight;
+                int newRight = origBottom;
+                int newBottom = parentWidth - origLeft;
+                inOutBounds.set(newLeft, newTop, newRight, newBottom);
+            }
+        }
+        inOutBounds.sort();
+    }
 }
