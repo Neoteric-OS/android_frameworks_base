@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5b19e13_609ebf1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2032917
+      },
+      "writtenOn": "2025-03-20T02:31:20Z",
+      "side": 1,
+      "message": "It has been modified, if there is no problem, please help +2, thank you",
+      "revId": "b2ee4e66bc7e9a56abdb15ac103d7e92a3e75374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7bf43e0_2598c6a6",
@@ -38,6 +55,30 @@
           ]
         }
       ],
+      "revId": "b2ee4e66bc7e9a56abdb15ac103d7e92a3e75374",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb3990fc_16d8dfb8",
+        "filename": "core/java/android/view/inputmethod/InputMethodManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 2032917
+      },
+      "writtenOn": "2025-03-20T02:31:20Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "b7bf43e0_2598c6a6",
+      "range": {
+        "startLine": 1374,
+        "startChar": 36,
+        "endLine": 1374,
+        "endChar": 55
+      },
       "revId": "b2ee4e66bc7e9a56abdb15ac103d7e92a3e75374",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
