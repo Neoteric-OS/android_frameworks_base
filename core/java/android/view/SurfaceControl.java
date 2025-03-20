@@ -3785,11 +3785,18 @@ public final class SurfaceControl implements Parcelable {
         }
 
         /**
-         * Sets the security of the surface.  Setting the flag is equivalent to creating the
-         * Surface with the {@link #SECURE} flag.
-         * @hide
+         * Sets whether the {@link SurfaceControl} should be marked as secure.
+         * <p>
+         * By default a SurfaceControl is not secure. When a SurfaceControl is marked as secure, its
+         * content will not be included in screen capture. This is useful for surfaces that contain
+         * sensitive information.
+         *
+         * @param sc The SurfaceControl to update.
+         * @param isSecure The intended secure state.
+         * @return This transaction object.
          */
-        public Transaction setSecure(SurfaceControl sc, boolean isSecure) {
+        @NonNull
+        public Transaction setSecure(@NonNull SurfaceControl sc, boolean isSecure) {
             checkPreconditions(sc);
             if (SurfaceControlRegistry.sCallStackDebuggingEnabled) {
                 SurfaceControlRegistry.getProcessInstance().checkCallStackDebugging(
