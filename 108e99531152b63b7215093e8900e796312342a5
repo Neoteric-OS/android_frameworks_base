@@ -1,0 +1,185 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fcad340_3b4eff5e",
+        "filename": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2025-03-20T17:50:16Z",
+      "side": 1,
+      "message": "Why not put this all in the isUpdate method and use mOrigUsers? Keep in mind there are alias user IDs this could represent as well ALL_USERS. We\u0027ll need to handle that special cases as well.",
+      "range": {
+        "startLine": 837,
+        "startChar": 24,
+        "endLine": 841,
+        "endChar": 40
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2d2cf89d_0a84b400",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 122,
+                "startChar": 0,
+                "endLine": 122,
+                "endChar": 0
+              },
+              "replacement": "import android.content.pm.PackageManager.InstallReason;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 162,
+                "startChar": 0,
+                "endLine": 163,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 165,
+                "startChar": 0,
+                "endLine": 166,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 168,
+                "startChar": 0,
+                "endLine": 169,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 170,
+                "startChar": 0,
+                "endLine": 171,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 176,
+                "startChar": 0,
+                "endLine": 178,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 181,
+                "startChar": 0,
+                "endLine": 182,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 190,
+                "startChar": 0,
+                "endLine": 191,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 193,
+                "startChar": 0,
+                "endLine": 195,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 202,
+                "startChar": 0,
+                "endLine": 204,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 207,
+                "startChar": 0,
+                "endLine": 208,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 211,
+                "startChar": 0,
+                "endLine": 212,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 835,
+                "startChar": 0,
+                "endLine": 842,
+                "endChar": 0
+              },
+              "replacement": "        final boolean update \u003d request.isUpdate(userId);\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 1402,
+                "startChar": 0,
+                "endLine": 1404,
+                "endChar": 0
+              },
+              "replacement": "        final boolean isRollback \u003d request.isRollback();\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/pm/InstallPackageHelper.java",
+              "range": {
+                "startLine": 2535,
+                "startChar": 0,
+                "endLine": 2536,
+                "endChar": 0
+              },
+              "replacement": "        final @InstallReason int installReason \u003d installRequest.getInstallReason();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "108e99531152b63b7215093e8900e796312342a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
