@@ -315,6 +315,7 @@ LIBANDROID {
     ASurfaceTransaction_setCrop; # introduced=31
     ASurfaceTransaction_setBufferTransform; # introduced=31
     ASurfaceTransaction_setScale; # introduced=31
+    ASurfaceTransaction_setSecure; # introduced=37
     ASurfaceTransaction_setVisibility; # introduced=29
     ASurfaceTransaction_setZOrder; # introduced=29
     ASystemFontIterator_open; # introduced=29
