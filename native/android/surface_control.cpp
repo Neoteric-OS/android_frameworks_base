@@ -858,3 +858,15 @@ void ASurfaceTransaction_setFrameTimeline(ASurfaceTransaction* aSurfaceTransacti
     ftInfo.startTimeNanos = startTime;
     ASurfaceTransaction_to_Transaction(aSurfaceTransaction)->setFrameTimelineInfo(ftInfo);
 }
+
+void ASurfaceTransaction_setSecure(ASurfaceTransaction* aSurfaceTransaction,
+                                   ASurfaceControl* aSurfaceControl, bool isSecure) {
+    CHECK_NOT_NULL(aSurfaceTransaction);
+    CHECK_NOT_NULL(aSurfaceControl);
+
+    sp<SurfaceControl> surfaceControl = ASurfaceControl_to_SurfaceControl(aSurfaceControl);
+    Transaction* transaction = ASurfaceTransaction_to_Transaction(aSurfaceTransaction);
+
+    uint32_t flags = isSecure ? layer_state_t::eLayerSecure : 0;
+    transaction->setFlags(surfaceControl, flags, layer_state_t::eLayerSecure);
+}
