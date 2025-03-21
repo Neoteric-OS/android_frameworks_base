@@ -2035,31 +2035,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         }
     }
 
-    private void perfBoostFrames() {
-        if (mPerf != null) {
-            String currentPackage = mView.getContext().getPackageName();
-            mPerf.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST, currentPackage, -1, BoostFramework.Scroll.PANEL_VIEW);
-        }
-    }
-
-    private void boostFrames() {
-        if (mView != null && mView.getViewRootImpl() != null) {
-            perfBoostFrames();
-            mView.getViewRootImpl().notifyRendererOfExpensiveFrame();
-            perfBoostFrames();
-        }
-    }
-
-    private void boostFramesDuringRelayout() {
-        boostFrames();
-        this.mView.requestLayout();
-        boostFrames();
-    }
-
     @Override
     public void transitionToExpandedShade(long delay) {
         mNotificationStackScrollLayoutController.goToFullShade(delay);
-        boostFramesDuringRelayout();
+        mView.requestLayout();
         mAnimateNextPositionUpdate = true;
     }
 
@@ -2216,7 +2195,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                         && vel >= 0;
         final boolean shouldSpringBack = addOverscroll || (mOverExpansion != 0.0f && expand);
         float overshootAmount = 0.0f;
-        boostFrames();
         if (addOverscroll) {
             // Let's overshoot depending on the amount of velocity
             overshootAmount = MathUtils.lerp(
@@ -2270,6 +2248,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                     resetBackTransformation();
                 }
             });
+        }
+        if (mPerf != null) {
+            String currentPackage = mView.getContext().getPackageName();
+            mPerf.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST, currentPackage, -1, BoostFramework.Scroll.PANEL_VIEW);
         }
         animator.addListener(new AnimatorListenerAdapter() {
             private boolean mCancelled;
@@ -2977,7 +2959,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                         }
                     });
             // Make sure a layout really happens.
-            boostFramesDuringRelayout();
+            this.mView.requestLayout();
         }
 
         setListening(true);
@@ -4032,7 +4014,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             onFlingEnd(false /* cancelled */);
             return;
         }
-        boostFrames();
         mIsSpringBackAnimation = true;
         ValueAnimator animator = ValueAnimator.ofFloat(mOverExpansion, 0);
         animator.addUpdateListener(
@@ -4380,7 +4361,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         //A layout will ensure that onComputeInternalInsets will be called and after that we can
         // resize the layout. Make sure that the window stays small for one frame until the
         // touchableRegion is set.
-        boostFramesDuringRelayout();
+        mView.requestLayout();
         mNotificationShadeWindowController.setForceWindowCollapsed(true);
         postToView(() -> {
             mNotificationShadeWindowController.setForceWindowCollapsed(false);
@@ -4494,7 +4475,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private void onFlingQsWithoutClick(ValueAnimator animator, float qsExpansionHeight,
             float target, float vel) {
         mFlingAnimationUtils.apply(animator, qsExpansionHeight, target, vel);
-        boostFrames();
     }
 
     private void onExpansionHeightSetToMax(boolean requestPaddingUpdate) {
@@ -4569,7 +4549,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
 
             if (!isKeyguardShowing()) {
                 mNotificationStackScrollLayoutController.generateHeadsUpAnimation(entry, true);
-                boostFrames();
             }
         }
 
