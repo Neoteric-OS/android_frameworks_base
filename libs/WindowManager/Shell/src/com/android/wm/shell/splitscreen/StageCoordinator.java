@@ -2945,10 +2945,13 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             // If we're not in split-mode, just abort so something else can handle it.
             if (!isSplitActive()) return false;
 
+            final int transitType = info.getType();
+            if (mMixedHandler.isRepeatingMix(transition, transitType)) return false;
+
             ProtoLog.d(WM_SHELL_SPLIT_SCREEN, "startAnimation: transition=%d", info.getDebugId());
             mSplitLayout.setFreezeDividerWindow(false);
             final StageChangeRecord record = new StageChangeRecord();
-            final int transitType = info.getType();
+
             TransitionInfo.Change pipChange = null;
             int closingSplitTaskId = -1;
             // This array tracks if we are sending stages TO_BACK in this transition.

@@ -667,6 +667,17 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
         return mPipHandler.requestHasPipEnter(request);
     }
 
+    public boolean isRepeatingMix(@NonNull IBinder transition,
+            @WindowManager.TransitionType int transitType) {
+        for (int i = 0; i < mActiveTransitions.size(); ++i) {
+            MixedTransition mixed = mActiveTransitions.get(i);
+            if (mixed.mTransition == transition && mixed.mType == transitType) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /** Whether a particular change is a window that is entering pip. */
     // TODO(b/287704263): Remove when split/mixed are reversed.
     public boolean isEnteringPip(TransitionInfo.Change change,
