@@ -52,6 +52,24 @@
       "parentUuid": "c1e7bde9_caadb985",
       "revId": "1278c2ffd15935726bd01bded2358449148ebd8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbbe7624_9c19bb37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1937565
+      },
+      "writtenOn": "2025-03-21T09:21:34Z",
+      "side": 1,
+      "message": "`create-device-config-defaults` was intended to bootstrap the device config database on first boot. `create-device-config-sysprops` was intended to export the default values as sysprops for the C++ lib that read device config / flags.\n\nI think both are obsolete with the new storage system. If you can\u0027t find any references to soong calling them, you should remove them.",
+      "parentUuid": "3d277631_a5378a3e",
+      "revId": "1278c2ffd15935726bd01bded2358449148ebd8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
