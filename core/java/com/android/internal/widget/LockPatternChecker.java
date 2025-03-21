@@ -107,6 +107,7 @@ public final class LockPatternChecker {
             @Override
             protected Boolean doInBackground(Void... args) {
                 try {
+                    Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
                     return utils.checkCredential(credentialCopy, userId, callback::onEarlyMatched);
                 } catch (RequestThrottledException ex) {
                     mThrottleTimeout = ex.getTimeoutMs();

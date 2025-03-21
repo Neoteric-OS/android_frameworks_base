@@ -591,7 +591,6 @@ public class LockPatternUtils {
     public boolean checkCredential(@NonNull LockscreenCredential credential, int userId,
             @Nullable CheckCredentialProgressCallback progressCallback)
             throws RequestThrottledException {
-        throwIfCalledOnMainThread();
         try {
             VerifyCredentialResponse response = getLockSettings().checkCredential(
                     credential, userId, wrapCallback(progressCallback));
