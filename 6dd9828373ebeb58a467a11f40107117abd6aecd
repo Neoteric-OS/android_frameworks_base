@@ -67,6 +67,23 @@
       "message": "Hi Mikhail,\n\nPresubmit is still failing, could you please help to check?",
       "revId": "6dd9828373ebeb58a467a11f40107117abd6aecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8f39638_a5a66f46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1630064
+      },
+      "writtenOn": "2025-03-21T07:44:42Z",
+      "side": 1,
+      "message": "Mikhail,\nit says \"merge failed in internal branch\", could you please check ?",
+      "revId": "6dd9828373ebeb58a467a11f40107117abd6aecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
