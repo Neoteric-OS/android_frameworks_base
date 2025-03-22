@@ -2295,6 +2295,7 @@ public final class CameraManager {
         private final Object mLock = new Object();
 
         // Access only through getCameraService to deal with binder death
+        @GuardedBy("mLock")
         private ICameraService mCameraService;
         private boolean mHasOpenCloseListenerPermission = false;
 
@@ -2376,7 +2377,7 @@ public final class CameraManager {
 
             Log.i(TAG, "Connecting to camera service");
 
-            IBinder cameraServiceBinder = ServiceManager.getService(CAMERA_SERVICE_BINDER_NAME);
+            IBinder cameraServiceBinder = ServiceManager.waitForService(CAMERA_SERVICE_BINDER_NAME);
             if (cameraServiceBinder == null) {
                 // Camera service is now down, leave mCameraService as null
                 return;
