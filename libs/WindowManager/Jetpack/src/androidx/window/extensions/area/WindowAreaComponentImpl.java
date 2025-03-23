@@ -23,6 +23,7 @@ import android.content.Context;
 import android.hardware.devicestate.DeviceState;
 import android.hardware.devicestate.DeviceStateManager;
 import android.hardware.devicestate.DeviceStateRequest;
+import android.hardware.devicestate.feature.flags.Flags;
 import android.hardware.display.DisplayManager;
 import android.util.ArraySet;
 import android.util.DisplayMetrics;
@@ -505,7 +506,11 @@ public class WindowAreaComponentImpl implements WindowAreaComponent,
      */
     @GuardedBy("mLock")
     private boolean isRearDisplayActive() {
-        return mCurrentDeviceState == mRearDisplayState;
+        if (Flags.deviceStatePropertyApi()) {
+            return mCurrentDeviceState.hasProperty(PROPERTY_FEATURE_REAR_DISPLAY);
+        } else {
+            return mCurrentDeviceState == mRearDisplayState;
+        }
     }
 
     @GuardedBy("mLock")
