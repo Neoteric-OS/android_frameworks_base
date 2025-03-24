@@ -39,6 +39,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.CoreStartable;
 import com.android.systemui.dagger.SysUISingleton;
+import com.android.systemui.res.R;
 import com.android.systemui.user.utils.UserScopedService;
 
 import javax.inject.Inject;
@@ -66,6 +67,7 @@ public class ClipboardListener implements
     private final UiEventLogger mUiEventLogger;
     private final ClipboardOverlaySuppressionController mClipboardOverlaySuppressionController;
     private ClipboardOverlay mClipboardOverlay;
+    private boolean mClipboardOverlayEnabled;
 
     @Inject
     public ClipboardListener(Context context,
@@ -82,10 +84,16 @@ public class ClipboardListener implements
         mKeyguardManager = keyguardManager;
         mUiEventLogger = uiEventLogger;
         mClipboardOverlaySuppressionController = clipboardOverlaySuppressionController;
+
+        mClipboardOverlayEnabled = mContext.getResources()
+                .getBoolean(R.bool.config_enableClipboardOverlay);
     }
 
     @Override
     public void start() {
+        if (!mClipboardOverlayEnabled) {
+            return;
+        }
         mClipboardManager.addPrimaryClipChangedListener(this);
     }
 
@@ -160,6 +168,11 @@ public class ClipboardListener implements
             return !mClipboardToast.isShowing();
         }
         return true;
+    }
+
+    @VisibleForTesting()
+    void setClipboardOverlayEnabled(boolean enabled) {
+        mClipboardOverlayEnabled = enabled;
     }
 
     private boolean isUserSetupComplete() {
