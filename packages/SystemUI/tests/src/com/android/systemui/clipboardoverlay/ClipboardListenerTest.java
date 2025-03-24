@@ -119,11 +119,21 @@ public class ClipboardListenerTest extends SysuiTestCase {
                 mKeyguardManager,
                 mUiEventLogger,
                 mClipboardOverlaySuppressionController);
+        mClipboardListener.setClipboardOverlayEnabled(true);
     }
 
 
     @Test
-    public void test_initialization() {
+    public void test_disabled() {
+        mClipboardListener.setClipboardOverlayEnabled(false);
+        mClipboardListener.start();
+        verifyNoMoreInteractions(mClipboardManager);
+        verifyNoMoreInteractions(mUiEventLogger);
+    }
+
+    @Test
+    public void test_enabled() {
+        mClipboardListener.setClipboardOverlayEnabled(true);
         mClipboardListener.start();
         verify(mClipboardManager).addPrimaryClipChangedListener(any());
         verifyNoMoreInteractions(mUiEventLogger);
