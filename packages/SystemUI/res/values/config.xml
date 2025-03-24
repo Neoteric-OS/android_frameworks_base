@@ -1065,4 +1065,7 @@
     enable the desktop specific features.
     -->
     <bool name="config_enableDesktopFeatureSet">false</bool>
+
+    <!-- Whether to enable clipboard overlay -->
+    <bool name="config_enableClipboardOverlay">true</bool>
 </resources>
