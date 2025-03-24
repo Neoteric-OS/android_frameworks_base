@@ -1,0 +1,68 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dacbe9f_56b2e6be",
+        "filename": "libs/WindowManager/Jetpack/src/androidx/window/extensions/area/WindowAreaComponentImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2025-03-24T23:37:08Z",
+      "side": 1,
+      "message": "should this be @NonNull?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 60
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2084e13d_20e81ebe",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "libs/WindowManager/Jetpack/src/androidx/window/extensions/area/WindowAreaComponentImpl.java",
+              "range": {
+                "startLine": 88,
+                "startChar": 0,
+                "endLine": 88,
+                "endChar": 0
+              },
+              "replacement": "    @NonNull\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7ebc138e366c6be60807a993b1dee3b3ef4002db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb87cc8a_ce6c3695",
+        "filename": "libs/WindowManager/Jetpack/src/androidx/window/extensions/area/WindowAreaComponentImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1157913
+      },
+      "writtenOn": "2025-03-24T23:37:08Z",
+      "side": 1,
+      "message": "Should this also be @NonNull",
+      "range": {
+        "startLine": 611,
+        "startChar": 54,
+        "endLine": 611,
+        "endChar": 84
+      },
+      "revId": "7ebc138e366c6be60807a993b1dee3b3ef4002db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
