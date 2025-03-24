@@ -152,6 +152,7 @@ import com.android.net.module.util.NetworkStackConstants;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
+import com.android.tools.r8.keepanno.annotations.UsedByNative;
 
 import libcore.io.IoUtils;
 
@@ -191,6 +192,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * @hide
  */
+// TODO(b/404563673): Remove this annotation after switching to lazy JNI registration.
+@UsedByNative(
+        description = "Referenced from JNI in jni/com_android_server_connectivity_Vpn.cpp")
 public class Vpn {
     private static final String NETWORKTYPE = "VPN";
     private static final String TAG = "Vpn";
