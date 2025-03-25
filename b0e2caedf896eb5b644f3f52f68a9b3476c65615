@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf0c90a6_414d5e6f",
+        "filename": "services/core/java/com/android/server/wm/WallpaperVisibilityListeners.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-03-25T12:03:16Z",
+      "side": 1,
+      "message": "This is internal interface and only used by SystemUI\nBesides, currently the only usage is for default display.\nIf there is a real case, it is preferred to fix in SystemUI side (in case they might have other local data need to be removed together).\nSo it seems to be not very meaningful to handle display removal.",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 77
+      },
+      "revId": "b0e2caedf896eb5b644f3f52f68a9b3476c65615",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
