@@ -50,6 +50,30 @@
       ],
       "revId": "757c9ccecd2b058bfb2f49508eae2ed50f081ace",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b60ec50_9b0040c2",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3953922
+      },
+      "writtenOn": "2025-03-25T21:53:17Z",
+      "side": 1,
+      "message": "We are using the WRITEBACK_RATE sysprop as the gate to control writeback, if the rate is set to 0, then there is no writeback limit, i.e. ZRAM writeback can write as much as it wants to the flash. If the sysprop is set, we enable the writeback limit, and we set the limit value.\n\nSince ZramWriteback.java is the only one who controls the writeback of this zram device, we are the ones who should turn it ON/OFF.",
+      "parentUuid": "ad99ccad_65b16795",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 160,
+        "endChar": 69
+      },
+      "revId": "757c9ccecd2b058bfb2f49508eae2ed50f081ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
