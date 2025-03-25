@@ -66,42 +66,6 @@ java_genrule {
 }
 
 //##########################################################
-// Variant: Privileged app
-
-android_app {
-    name: "CtsShimPriv",
-    // this needs to be a privileged application
-    privileged: true,
-
-    sdk_version: "current",
-    optimize: {
-        enabled: false,
-    },
-    dex_preopt: {
-        enabled: false,
-    },
-
-    manifest: ":generate_priv_manifest",
-
-    compile_multilib: "both",
-    jni_libs: ["libshim_jni"],
-    // Explicitly uncompress native libs rather than letting the build system doing it and destroy the
-    // v2/v3 signature.
-    use_embedded_native_libs: true,
-    apex_available: [
-        "//apex_available:platform",
-        "com.android.apex.cts.shim.v1",
-        "com.android.apex.cts.shim.v2",
-        "com.android.apex.cts.shim.v2_apk_in_apex_upgrades",
-        "com.android.apex.cts.shim.v2_legacy",
-        "com.android.apex.cts.shim.v2_sdk_target_p",
-        "com.android.apex.cts.shim.v2_unsigned_payload",
-        "com.android.apex.cts.shim.v3",
-    ],
-    min_sdk_version: "24",
-}
-
-//##########################################################
 // Variant: Privileged app upgrade w/ the wrong SHA
 
 android_app {
@@ -177,34 +141,6 @@ java_genrule {
     ],
     out: ["AndroidManifest.xml"],
     cmd: "sed -e s/__HASH__/`sha512sum -b $(location :CtsShimUpgrade) | cut -d' ' -f1`/ $(location shim/AndroidManifest.xml) > $(out)",
-}
-
-//##########################################################
-// Variant: System app
-
-android_app {
-    name: "CtsShim",
-
-    sdk_version: "current",
-    optimize: {
-        enabled: false,
-    },
-    dex_preopt: {
-        enabled: false,
-    },
-
-    manifest: ":generate_shim_manifest",
-    apex_available: [
-        "//apex_available:platform",
-        "com.android.apex.cts.shim.v1",
-        "com.android.apex.cts.shim.v2",
-        "com.android.apex.cts.shim.v2_apk_in_apex_upgrades",
-        "com.android.apex.cts.shim.v2_legacy",
-        "com.android.apex.cts.shim.v2_sdk_target_p",
-        "com.android.apex.cts.shim.v2_unsigned_payload",
-        "com.android.apex.cts.shim.v3",
-    ],
-    min_sdk_version: "24",
 }
 
 //##########################################################
