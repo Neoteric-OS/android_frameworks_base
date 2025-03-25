@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6ab5de9_809d7af1",
+        "filename": "core/java/com/android/internal/policy/SystemBarUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1348425
+      },
+      "writtenOn": "2025-03-25T10:27:42Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "fixSuggestions": [
+        {
+          "fixId": "477df32a_81599a74",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/com/android/internal/policy/SystemBarUtils.java",
+              "range": {
+                "startLine": 24,
+                "startChar": 0,
+                "endLine": 25,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b7be350750a08faee088822f144789ffddece3b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
