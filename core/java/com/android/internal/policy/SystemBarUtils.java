@@ -60,8 +60,6 @@ public final class SystemBarUtils {
         final Display display = context.getDisplay();
         final int rotation = display.getRotation();
         final DisplayCutout cutout = display.getCutout();
-        DisplayInfo info = new DisplayInfo();
-        display.getDisplayInfo(info);
         Insets insets;
         Insets waterfallInsets;
         final int localWidth = context.getResources().getDisplayMetrics().widthPixels;
