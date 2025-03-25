@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5bcc976d_2cd3f632",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1972759
+      },
+      "writtenOn": "2025-03-25T18:34:06Z",
+      "side": 1,
+      "message": "Is this fix only needed for the test branch, or is it needed for the platform as well?",
+      "revId": "7ebc138e366c6be60807a993b1dee3b3ef4002db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0dacbe9f_56b2e6be",
         "filename": "libs/WindowManager/Jetpack/src/androidx/window/extensions/area/WindowAreaComponentImpl.java",
         "patchSetId": 3
