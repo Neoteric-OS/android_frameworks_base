@@ -60,7 +60,7 @@ class WallpaperVisibilityListeners {
                 mDisplayListeners.get(displayId);
 
         // No listeners for this display.
-        if (displayListeners == null) {
+        if (displayListeners == null || displayListeners.getRegisteredCallbackCount() == 0) {
             return;
         }
 
@@ -75,5 +75,14 @@ class WallpaperVisibilityListeners {
             }
         }
         displayListeners.finishBroadcast();
+    }
+
+    void onDisplayRemoved(int displayId) {
+        RemoteCallbackList<IWallpaperVisibilityListener> listeners =
+                mDisplayListeners.get(displayId);
+        if (listeners == null) {
+            return;
+        }
+        mDisplayListeners.remove(displayId);
     }
 }

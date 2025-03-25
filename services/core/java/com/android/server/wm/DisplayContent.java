@@ -3398,6 +3398,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
                     .getKeyguardController().onDisplayRemoved(mDisplayId);
             mWallpaperController.resetLargestDisplay(mDisplay);
             mWmService.mDisplayWindowSettings.onDisplayRemoved(this);
+            mWmService.mWallpaperVisibilityListeners.onDisplayRemoved(mDisplayId);
         } finally {
             mDisplayReady = false;
         }
