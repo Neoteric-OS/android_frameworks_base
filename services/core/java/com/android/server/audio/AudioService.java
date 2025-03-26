@@ -4998,7 +4998,7 @@ public class AudioService extends IAudioService.Stub
                     getVssForStreamOrDefault(streamType).getMaxIndex(), streamType);
         } else if (device == AudioSystem.DEVICE_OUT_HEARING_AID) {
             mDeviceBroker.postSetHearingAidVolumeIndex(index * 10, streamType);
-        } else if (AudioSystem.DEVICE_OUT_ALL_A2DP_SET.contains(device)) {
+        } else if (AudioSystem.DEVICE_OUT_ALL_A2DP_SET.contains(device) && !isStreamMute(streamType)) {
             mDeviceBroker.postSetAvrcpAbsoluteVolumeIndex(index);
         } else {
             return;
