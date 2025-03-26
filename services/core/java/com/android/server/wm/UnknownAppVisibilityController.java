@@ -34,7 +34,8 @@ import java.io.PrintWriter;
  */
 class UnknownAppVisibilityController {
 
-    private static final String TAG = TAG_WITH_CLASS_NAME ? "UnknownAppVisibility" : TAG_WM;
+    private static final String TAG =
+            TAG_WITH_CLASS_NAME ? "UnknownAppVisibilityController" : TAG_WM;
 
     /**
      * We are currently waiting until the app is done resuming.
@@ -155,7 +156,7 @@ class UnknownAppVisibilityController {
             notifyVisibilitiesUpdated();
         } else if (state == UNKNOWN_STATE_WAITING_RESUME
                 && !activity.isState(ActivityRecord.State.RESUMED)) {
-            Slog.d(TAG, "UAVC: skip waiting for non-resumed relayouted " + activity);
+            Slog.d(TAG, "Skip waiting for non-resumed relayouted appWindow=" + activity);
             mUnknownApps.remove(activity);
         }
     }
