@@ -74,6 +74,30 @@
       },
       "revId": "757c9ccecd2b058bfb2f49508eae2ed50f081ace",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "318611cc_9d6c137f",
+        "filename": "services/core/java/com/android/server/ZramWriteback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1894539
+      },
+      "writtenOn": "2025-03-26T03:22:25Z",
+      "side": 1,
+      "message": "Not exactly true. Vendors can also use init.rc to turn on/off writeback_limit_enable.\n\nI understand you want a single sysprop to control the writeback limit.\nThen how about making property WRITEBACK_RATE_DAILY writable (without ro.)?\nIf vendors set WRITEBACK_RATE_DAILY \u003d 0, then turn off the writeback limit.\nIt also allows vendors change the budgets without rebooting.\nWDYT?",
+      "parentUuid": "9b60ec50_9b0040c2",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 160,
+        "endChar": 69
+      },
+      "revId": "757c9ccecd2b058bfb2f49508eae2ed50f081ace",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
