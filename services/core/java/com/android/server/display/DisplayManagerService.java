@@ -3339,7 +3339,7 @@ public final class DisplayManagerService extends SystemService {
                 // fallthrough
             default:
                 if (DEBUG) {
-                    Slog.w(TAG, "Display " + info + " does not support input device matching.");
+                    Slog.d(TAG, "Display " + info + " does not support input device matching.");
                 }
         }
         return Optional.empty();
