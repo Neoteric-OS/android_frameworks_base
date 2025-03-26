@@ -22,6 +22,30 @@
       },
       "revId": "b0e2caedf896eb5b644f3f52f68a9b3476c65615",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94514171_e4ef872f",
+        "filename": "services/core/java/com/android/server/wm/WallpaperVisibilityListeners.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-03-26T02:05:02Z",
+      "side": 1,
+      "message": "OK, I understand, thanks for your help.",
+      "parentUuid": "cf0c90a6_414d5e6f",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 77
+      },
+      "revId": "b0e2caedf896eb5b644f3f52f68a9b3476c65615",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
