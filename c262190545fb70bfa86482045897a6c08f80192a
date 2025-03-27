@@ -34,6 +34,24 @@
       "parentUuid": "b9bc3842_b08f9cf0",
       "revId": "c262190545fb70bfa86482045897a6c08f80192a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e88dd8b2_f4efea54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-03-27T16:58:15Z",
+      "side": 1,
+      "message": "I\u0027ve shared the SHA in the referenced bug",
+      "parentUuid": "4482bbda_39e9ed5d",
+      "revId": "c262190545fb70bfa86482045897a6c08f80192a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
