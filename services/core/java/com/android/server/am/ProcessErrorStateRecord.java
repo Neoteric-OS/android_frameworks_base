@@ -274,6 +274,9 @@ class ProcessErrorStateRecord {
         if (mService.mAtmInternal.isShuttingDown()) {
             Slog.i(TAG, "During shutdown skipping ANR: " + this + " " + annotation);
             return true;
+        } else if (mApp.isDebugging()) {
+            Slog.i(TAG, "Skipping debugged app ANR: " + this + " " + annotation);
+            return true;
         } else if (isNotResponding()) {
             Slog.i(TAG, "Skipping duplicate ANR: " + this + " " + annotation);
             return true;
