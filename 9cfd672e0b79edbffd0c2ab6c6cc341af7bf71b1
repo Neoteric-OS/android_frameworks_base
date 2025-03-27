@@ -34,6 +34,24 @@
       ],
       "revId": "9cfd672e0b79edbffd0c2ab6c6cc341af7bf71b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "786ba442_97577f75",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4599,
+      "author": {
+        "id": 3947158
+      },
+      "writtenOn": "2025-03-27T17:23:13Z",
+      "side": 1,
+      "message": "As the activity A(fromActivity) wants to monitor the splash screen exit status judged from the parameter handleExitSplashScreen\u003dtrue, we are transfering the starting window to activity B (this).\nTried with your approach but it doesn\u0027t fixed the issue, its reproducible.\nBelow is my analysis document with respective to this scenario,\nhttps://docs.google.com/document/d/1MaVJpP53g29AztC0W7eqCVxCGr1AGqJ0phBryTw2Ejw/edit?usp\u003ddrivesdk\ncan you please check and clarify it with your input, appriciate your response.\nThanks!",
+      "parentUuid": "7659dae0_0408849e",
+      "revId": "9cfd672e0b79edbffd0c2ab6c6cc341af7bf71b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
