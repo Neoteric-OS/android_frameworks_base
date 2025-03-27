@@ -16,6 +16,24 @@
       "message": "This issue was addressed already internally by retrieving the index value without taking into account the mute state. Next sync will contain fix",
       "revId": "c262190545fb70bfa86482045897a6c08f80192a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4482bbda_39e9ed5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3232842
+      },
+      "writtenOn": "2025-03-27T01:39:04Z",
+      "side": 1,
+      "message": "Could you tell me the fixed gerrit",
+      "parentUuid": "b9bc3842_b08f9cf0",
+      "revId": "c262190545fb70bfa86482045897a6c08f80192a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
