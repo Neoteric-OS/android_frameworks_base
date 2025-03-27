@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,49 +42,46 @@ import com.android.server.SystemService;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Helper service for incidentd and dumpstated to provide user feedback
- * and authorization for bug and inicdent reports to be taken.
+ * and authorization for bug and incident reports to be taken.
  */
 public class IncidentCompanionService extends SystemService {
     static final String TAG = "IncidentCompanionService";
 
-    /**
-     * Dump argument for proxying restricted image dumps to the services
-     * listed in the config.
-     */
-    private static String[] RESTRICTED_IMAGE_DUMP_ARGS = new String[] {
-        "--hal", "--restricted_image" };
+    private static final String[] RESTRICTED_IMAGE_DUMP_ARGS = new String[]{
+            "--hal", "--restricted_image"};
 
-    /**
-     * The two permissions, for sendBroadcastAsUserMultiplePermissions.
-     */
-    private static final String[] DUMP_AND_USAGE_STATS_PERMISSIONS = new String[] {
-        android.Manifest.permission.DUMP,
-        android.Manifest.permission.PACKAGE_USAGE_STATS
+    private static final String[] DUMP_AND_USAGE_STATS_PERMISSIONS = new String[]{
+            android.Manifest.permission.DUMP,
+            android.Manifest.permission.PACKAGE_USAGE_STATS
     };
 
-    /**
-     * Tracker for reports pending approval.
-     */
+    private static final Pattern PATTERN_REPORT_ID =
+            Pattern.compile("^[a-zA-Z0-9_-]+$");
+    private static final Pattern PATTERN_PACKAGE_NAME =
+            Pattern.compile("^[a-zA-Z0-9_.]+$");
+    private static final Pattern PATTERN_CLASS_NAME =
+            Pattern.compile("^[a-zA-Z0-9_.$]+$");
+
+    private static final int MAX_ID_LENGTH = 128;
+    private static final int MAX_PACKAGE_LENGTH = 256;
+    private static final int MAX_URI_LENGTH = 1024;
+
     private PendingReports mPendingReports;
 
-    /**
-     * Implementation of the IIncidentCompanion binder interface.
-     */
     private final class BinderService extends IIncidentCompanion.Stub {
-        /**
-         * ONEWAY binder call to initiate authorizing the report. If you don't need
-         * IncidentCompanionService to check whether the calling UID matches then
-         * pass 0 for callingUid.  Either way, the caller must have DUMP and USAGE_STATS
-         * permissions to retrieve the data, so it ends up being about the same.
-         */
+
         @Override
         public void authorizeReport(int callingUid, final String callingPackage,
                 final String receiverClass, final String reportId,
                 final int flags, final IIncidentAuthListener listener) {
             enforceRequestAuthorizationPermission();
+            requireValidPackageName(callingPackage);
+            requireValidClassName(receiverClass);
+            requireValidReportId(reportId);
 
             final long ident = Binder.clearCallingIdentity();
             try {
@@ -95,19 +92,10 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * ONEWAY binder call to cancel the inbound authorization request.
-         * <p>
-         * This is a oneway call, and so is authorizeReport, so the
-         * caller's ordering is preserved.  The other calls on this object are synchronous, so
-         * their ordering is not guaranteed with respect to these calls.  So the implementation
-         * sends out extra broadcasts to allow for eventual consistency.
-         */
+        @Override
         public void cancelAuthorization(final IIncidentAuthListener listener) {
             enforceRequestAuthorizationPermission();
 
-            // Caller can cancel if they don't want it anymore, and mRequestQueue elides
-            // authorize/cancel pairs.
             final long ident = Binder.clearCallingIdentity();
             try {
                 mPendingReports.cancelAuthorization(listener);
@@ -116,18 +104,15 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * ONEWAY implementation to send broadcast from incidentd, which is native.
-         */
         @Override
         public void sendReportReadyBroadcast(String pkg, String cls) {
             enforceRequestAuthorizationPermission();
+            requireValidPackageName(pkg);
+            requireValidClassName(cls);
 
             final long ident = Binder.clearCallingIdentity();
             try {
                 final Context context = getContext();
-
-                // Get the current admin user. Only they can do incident reports.
                 final int currentAdminUser = getCurrentUserIfAdmin();
                 if (currentAdminUser == UserHandle.USER_NULL) {
                     return;
@@ -148,22 +133,16 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * SYNCHRONOUS binder call to get the list of reports that are pending confirmation
-         * by the user.
-         */
         @Override
         public List<String> getPendingReports() {
             enforceAuthorizePermission();
             return mPendingReports.getPendingReports();
         }
 
-        /**
-         * SYNCHRONOUS binder call to mark a report as approved.
-         */
         @Override
         public void approveReport(String uri) {
             enforceAuthorizePermission();
+            requireValidUri(uri);
 
             final long ident = Binder.clearCallingIdentity();
             try {
@@ -173,12 +152,10 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * SYNCHRONOUS binder call to mark a report as NOT approved.
-         */
         @Override
         public void denyReport(String uri) {
             enforceAuthorizePermission();
+            requireValidUri(uri);
 
             final long ident = Binder.clearCallingIdentity();
             try {
@@ -188,12 +165,12 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * SYNCHRONOUS binder call to get the list of incident reports waiting for a receiver.
-         */
         @Override
-        public List<String> getIncidentReportList(String pkg, String cls) throws RemoteException {
-            enforceAccessReportsPermissions(null);
+        public List<String> getIncidentReportList(String pkg, String cls)
+                throws RemoteException {
+            enforceAccessReportsPermissions(pkg);
+            requireValidPackageName(pkg);
+            requireValidClassName(cls);
 
             final long ident = Binder.clearCallingIdentity();
             try {
@@ -203,17 +180,13 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * SYNCHRONOUS binder call to commit an incident report
-         */
         @Override
         public void deleteIncidentReports(String pkg, String cls, String id)
                 throws RemoteException {
-            if (pkg == null || cls == null || id == null
-                    || pkg.length() == 0 || cls.length() == 0 || id.length() == 0) {
-                throw new RuntimeException("Invalid pkg, cls or id");
-            }
             enforceAccessReportsPermissions(pkg);
+            requireValidPackageName(pkg);
+            requireValidClassName(cls);
+            requireValidReportId(id);
 
             final long ident = Binder.clearCallingIdentity();
             try {
@@ -223,15 +196,10 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * SYNCHRONOUS binder call to delete all incident reports for a package.
-         */
         @Override
         public void deleteAllIncidentReports(String pkg) throws RemoteException {
-            if (pkg == null || pkg.length() == 0) {
-                throw new RuntimeException("Invalid pkg");
-            }
             enforceAccessReportsPermissions(pkg);
+            requireValidPackageName(pkg);
 
             final long ident = Binder.clearCallingIdentity();
             try {
@@ -241,17 +209,13 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * SYNCHRONOUS binder call to get the IncidentReport object.
-         */
         @Override
-        public IncidentManager.IncidentReport getIncidentReport(String pkg, String cls, String id)
-                throws RemoteException {
-            if (pkg == null || cls == null || id == null
-                    || pkg.length() == 0 || cls.length() == 0 || id.length() == 0) {
-                throw new RuntimeException("Invalid pkg, cls or id");
-            }
+        public IncidentManager.IncidentReport getIncidentReport(
+                String pkg, String cls, String id) throws RemoteException {
             enforceAccessReportsPermissions(pkg);
+            requireValidPackageName(pkg);
+            requireValidClassName(cls);
+            requireValidReportId(id);
 
             final long ident = Binder.clearCallingIdentity();
             try {
@@ -261,33 +225,22 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * SYNCHRONOUS implementation of adb shell dumpsys debugreportcompanion.
-         */
         @Override
         protected void dump(FileDescriptor fd, final PrintWriter writer, String[] args) {
             if (!DumpUtils.checkDumpPermission(getContext(), TAG, writer)) {
                 return;
             }
-
             if (args.length == 1 && "--restricted_image".equals(args[0])) {
-                // Does NOT clearCallingIdentity
                 dumpRestrictedImages(fd);
             } else {
-                // Regular dump
                 mPendingReports.dump(fd, writer, args);
             }
         }
 
-        /**
-         * Proxy for the restricted images section.
-         */
         private void dumpRestrictedImages(FileDescriptor fd) {
-            // Only supported on eng or userdebug.
             if (!(Build.IS_ENG || Build.IS_USERDEBUG)) {
                 return;
             }
-
             final Resources res = getContext().getResources();
             final String[] services = res.getStringArray(
                     com.android.internal.R.array.config_restrictedImagesServices);
@@ -307,38 +260,67 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * Inside the binder interface class because we want to do all of the authorization
-         * here, before calling out to the helper objects.
-         */
+        private void requireValidReportId(String id) {
+            if (id == null || id.isEmpty() || id.length() > MAX_ID_LENGTH) {
+                throw new IllegalArgumentException(
+                        "Report ID is missing or exceeds maximum length");
+            }
+            if (!PATTERN_REPORT_ID.matcher(id).matches()) {
+                throw new IllegalArgumentException(
+                        "Report ID contains unsupported characters");
+            }
+        }
+
+        private void requireValidPackageName(String pkg) {
+            if (pkg == null || pkg.isEmpty() || pkg.length() > MAX_PACKAGE_LENGTH) {
+                throw new IllegalArgumentException(
+                        "Package name is missing or exceeds maximum length");
+            }
+            if (!PATTERN_PACKAGE_NAME.matcher(pkg).matches()) {
+                throw new IllegalArgumentException(
+                        "Package name contains unsupported characters");
+            }
+        }
+
+        private void requireValidClassName(String cls) {
+            if (cls == null || cls.isEmpty() || cls.length() > MAX_PACKAGE_LENGTH) {
+                throw new IllegalArgumentException(
+                        "Class name is missing or exceeds maximum length");
+            }
+            if (!PATTERN_CLASS_NAME.matcher(cls).matches()) {
+                throw new IllegalArgumentException(
+                        "Class name contains unsupported characters");
+            }
+        }
+
+        private void requireValidUri(String uri) {
+            if (uri == null || uri.isEmpty() || uri.length() > MAX_URI_LENGTH) {
+                throw new IllegalArgumentException(
+                        "URI is missing or exceeds maximum length");
+            }
+            if (uri.contains("..")) {
+                throw new IllegalArgumentException("URI format is not supported");
+            }
+            android.net.Uri parsed = android.net.Uri.parse(uri);
+            String scheme = parsed.getScheme();
+            if (!"content".equals(scheme) && !"file".equals(scheme)) {
+                throw new IllegalArgumentException("Unsupported URI scheme: " + scheme);
+            }
+        }
+
         private void enforceRequestAuthorizationPermission() {
             getContext().enforceCallingOrSelfPermission(
                     android.Manifest.permission.REQUEST_INCIDENT_REPORT_APPROVAL, null);
         }
 
-        /**
-         * Inside the binder interface class because we want to do all of the authorization
-         * here, before calling out to the helper objects.
-         */
         private void enforceAuthorizePermission() {
             getContext().enforceCallingOrSelfPermission(
                     android.Manifest.permission.APPROVE_INCIDENT_REPORTS, null);
         }
 
-        /**
-         * Enforce that the calling process either has APPROVE_INCIDENT_REPORTS or
-         * (DUMP and PACKAGE_USAGE_STATS). This lets the approver get, because showing
-         * information about the report is a prerequisite for letting the user decide.
-         *
-         * If pkg is null, it is not checked, so make sure that you check it for null first
-         * if you do need the packages to match.
-         *
-         * Inside the binder interface class because we want to do all of the authorization
-         * here, before calling out to the helper objects.
-         */
         private void enforceAccessReportsPermissions(String pkg) {
             if (getContext().checkCallingPermission(
-                        android.Manifest.permission.APPROVE_INCIDENT_REPORTS)
+                    android.Manifest.permission.APPROVE_INCIDENT_REPORTS)
                     != PackageManager.PERMISSION_GRANTED) {
                 getContext().enforceCallingOrSelfPermission(
                         android.Manifest.permission.DUMP, null);
@@ -350,9 +332,6 @@ public class IncidentCompanionService extends SystemService {
             }
         }
 
-        /**
-         * Throw a SecurityException if the incoming binder call is not from pkg.
-         */
         private void enforceCallerIsSameApp(String pkg) throws SecurityException {
             try {
                 final int uid = Binder.getCallingUid();
@@ -363,8 +342,9 @@ public class IncidentCompanionService extends SystemService {
                     throw new SecurityException("Unknown package " + pkg);
                 }
                 if (!UserHandle.isSameApp(ai.uid, uid)) {
-                    throw new SecurityException("Calling uid " + uid + " gave package "
-                            + pkg + " which is owned by uid " + ai.uid);
+                    throw new SecurityException("Calling uid " + uid
+                            + " gave package " + pkg
+                            + " which is owned by uid " + ai.uid);
                 }
             } catch (PackageManager.NameNotFoundException re) {
                 throw new SecurityException("Unknown package " + pkg + "\n" + re);
@@ -372,27 +352,16 @@ public class IncidentCompanionService extends SystemService {
         }
     }
 
-    /**
-     * Construct new IncidentCompanionService with the context.
-     */
     public IncidentCompanionService(Context context) {
         super(context);
         mPendingReports = new PendingReports(context);
     }
 
-    /**
-     * Initialize the service.  It is still not safe to do UI until
-     * onBootPhase(SystemService.PHASE_BOOT_COMPLETED).
-     */
     @Override
     public void onStart() {
         publishBinderService(Context.INCIDENT_COMPANION_SERVICE, new BinderService());
     }
 
-    /**
-     * Handle the boot process... Starts everything running once the system is
-     * up enough for us to do UI.
-     */
     @Override
     public void onBootPhase(int phase) {
         super.onBootPhase(phase);
@@ -403,44 +372,34 @@ public class IncidentCompanionService extends SystemService {
         }
     }
 
-    /**
-     * Looks up incidentd every time, so we don't need a complex handshake between
-     * incidentd and IncidentCompanionService.
-     */
     private IIncidentManager getIIncidentManager() throws RemoteException {
         return IIncidentManager.Stub.asInterface(
                 ServiceManager.getService(Context.INCIDENT_SERVICE));
     }
 
-    /**
-     * Check whether the current user is an admin user, and return the user id if they are.
-     * Returns UserHandle.USER_NULL if not valid.
-     */
     public static int getCurrentUserIfAdmin() {
-        // Current user
         UserInfo currentUser;
         try {
             currentUser = ActivityManager.getService().getCurrentUser();
         } catch (RemoteException ex) {
-            // We're already inside the system process.
             throw new RuntimeException(ex);
         }
 
-        // Check that we're using the right user.
         if (currentUser == null) {
-            Log.w(TAG, "No current user.  Nobody to approve the report."
+            Log.w(TAG, "No current user. Nobody to approve the report."
                     + " The report will be denied.");
             return UserHandle.USER_NULL;
         }
 
         if (!currentUser.isAdmin()) {
-            Log.w(TAG, "Only an admin user running in foreground can approve "
-                    + "bugreports, but the current foreground user is not an admin user. "
-                    + "The report will be denied.");
+            Log.w(TAG, "Only an admin user running in foreground can approve"
+                    + " bugreports, but the current foreground user is not an admin user."
+                    + " The report will be denied.");
             return UserHandle.USER_NULL;
         }
 
         return currentUser.id;
     }
 }
+
 
