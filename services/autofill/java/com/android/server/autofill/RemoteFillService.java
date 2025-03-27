@@ -358,69 +358,71 @@ final class RemoteFillService extends ServiceConnector.Impl<IAutoFillService> {
         if (sVerbose) {
             Slog.v(TAG, "onFillRequest:" + request);
         }
-        AtomicReference<ICancellationSignal> cancellationSink = new AtomicReference<>();
-        AtomicReference<CompletableFuture<FillResponse>> futureRef = new AtomicReference<>();
+        Handler.getMain().postDelayed(()->{
+            AtomicReference<ICancellationSignal> cancellationSink = new AtomicReference<>();
+            AtomicReference<CompletableFuture<FillResponse>> futureRef = new AtomicReference<>();
 
-        CompletableFuture<FillResponse> connectThenFillRequest = postAsync(remoteService -> {
-            if (sVerbose) {
-                Slog.v(TAG, "calling onFillRequest() for id=" + request.getId());
-            }
-
-            CompletableFuture<FillResponse> fillRequest = new CompletableFuture<>();
-            remoteService.onFillRequest(
-                    request, maybeWrapWithWeakReference(new IFillCallback.Stub() {
-                        @Override
-                        public void onCancellable(ICancellationSignal cancellation) {
-                            CompletableFuture<FillResponse> future = futureRef.get();
-                            if (future != null && future.isCancelled()) {
-                                dispatchCancellationSignal(cancellation);
-                            } else {
-                                cancellationSink.set(cancellation);
-                            }
-                        }
-
-                        @Override
-                        public void onSuccess(FillResponse response) {
-                            fillRequest.complete(response);
-                        }
-
-                        @Override
-                        public void onFailure(int requestId, CharSequence message) {
-                            String errorMessage = message == null ? "" : String.valueOf(message);
-                            fillRequest.completeExceptionally(
-                                    new RuntimeException(errorMessage));
-                        }
-                    }));
-            return fillRequest;
-        }).orTimeout(TIMEOUT_REMOTE_REQUEST_MILLIS, TimeUnit.MILLISECONDS);
-        futureRef.set(connectThenFillRequest);
-
-        synchronized (mLock) {
-            mPendingFillRequest = connectThenFillRequest;
-            mPendingFillRequestId = request.getId();
-        }
-
-        connectThenFillRequest.whenComplete((res, err) -> Handler.getMain().post(() -> {
-            synchronized (mLock) {
-                mPendingFillRequest = null;
-                mPendingFillRequestId = INVALID_REQUEST_ID;
-            }
-            if (err == null) {
-                mCallbacks.onFillRequestSuccess(request.getId(), res,
-                        mComponentName.getPackageName(), request.getFlags());
-            } else {
-                Slog.e(TAG, "Error calling on fill request", err);
-                if (err instanceof TimeoutException) {
-                    dispatchCancellationSignal(cancellationSink.get());
-                    mCallbacks.onFillRequestFailure(request.getId(), err);
-                } else if (err instanceof CancellationException) {
-                    // Cancellation is a part of the user flow - don't mark as failure
-                    dispatchCancellationSignal(cancellationSink.get());
-                } else {
-                    mCallbacks.onFillRequestFailure(request.getId(), err);
+            CompletableFuture<FillResponse> connectThenFillRequest = postAsync(remoteService -> {
+                if (sVerbose) {
+                    Slog.v(TAG, "calling onFillRequest() for id=" + request.getId());
                 }
+
+                CompletableFuture<FillResponse> fillRequest = new CompletableFuture<>();
+                remoteService.onFillRequest(
+                        request, maybeWrapWithWeakReference(new IFillCallback.Stub() {
+                            @Override
+                            public void onCancellable(ICancellationSignal cancellation) {
+                                CompletableFuture<FillResponse> future = futureRef.get();
+                                if (future != null && future.isCancelled()) {
+                                    dispatchCancellationSignal(cancellation);
+                                } else {
+                                    cancellationSink.set(cancellation);
+                                }
+                            }
+
+                            @Override
+                            public void onSuccess(FillResponse response) {
+                                fillRequest.complete(response);
+                            }
+
+                            @Override
+                            public void onFailure(int requestId, CharSequence message) {
+                                String errorMessage = message == null ? "" : String.valueOf(message);
+                                fillRequest.completeExceptionally(
+                                        new RuntimeException(errorMessage));
+                            }
+                        }));
+                return fillRequest;
+            }).orTimeout(TIMEOUT_REMOTE_REQUEST_MILLIS, TimeUnit.MILLISECONDS);
+            futureRef.set(connectThenFillRequest);
+
+            synchronized (mLock) {
+                mPendingFillRequest = connectThenFillRequest;
+                mPendingFillRequestId = request.getId();
             }
-        }));
+
+            connectThenFillRequest.whenComplete((res, err) -> Handler.getMain().post(() -> {
+                synchronized (mLock) {
+                    mPendingFillRequest = null;
+                    mPendingFillRequestId = INVALID_REQUEST_ID;
+                }
+                if (err == null) {
+                    mCallbacks.onFillRequestSuccess(request.getId(), res,
+                            mComponentName.getPackageName(), request.getFlags());
+                } else {
+                    Slog.e(TAG, "Error calling on fill request", err);
+                    if (err instanceof TimeoutException) {
+                        dispatchCancellationSignal(cancellationSink.get());
+                        mCallbacks.onFillRequestFailure(request.getId(), err);
+                    } else if (err instanceof CancellationException) {
+                        // Cancellation is a part of the user flow - don't mark as failure
+                        dispatchCancellationSignal(cancellationSink.get());
+                    } else {
+                        mCallbacks.onFillRequestFailure(request.getId(), err);
+                    }
+                }
+            }));
+    },20);
     }
 
     public void onConvertCredentialRequest(
