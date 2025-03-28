@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de8a5a47_008750b3",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-03-28T03:24:39Z",
+      "side": 1,
+      "message": "This is outdated method which is only called by unit test. It will be removed in future release.",
+      "revId": "66de25dd1eefaf65d99445d447b227d150b04384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
