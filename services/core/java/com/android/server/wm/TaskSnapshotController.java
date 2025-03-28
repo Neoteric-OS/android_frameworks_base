@@ -282,10 +282,11 @@ class TaskSnapshotController extends AbsAppSnapshotController<Task, TaskSnapshot
         // No need additional task capture while task is controlled by RecentsAnimation.
         if (isAnimatingByRecents(task)) {
             mSkipClosingAppSnapshotTasks.add(task.mTaskId);
+            return;
         }
         // If the task of the app is not visible anymore, it means no other app in that task
         // is opening. Thus, the task is closing.
-        if (!task.isVisible() && mSkipClosingAppSnapshotTasks.indexOf(task.mTaskId) < 0) {
+        if (!task.isVisible()) {
             outClosingTasks.add(task);
         }
     }
