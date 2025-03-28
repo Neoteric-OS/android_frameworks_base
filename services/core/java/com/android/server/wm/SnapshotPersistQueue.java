@@ -480,10 +480,10 @@ class SnapshotPersistQueue {
     void dump(PrintWriter pw, String prefix) {
         final WriteQueueItem[] items;
         synchronized (mLock) {
+            if (mWriteQueue.isEmpty()) {
+                return;
+            }
             items = mWriteQueue.toArray(new WriteQueueItem[0]);
-        }
-        if (items.length == 0) {
-            return;
         }
         pw.println(prefix + "PersistQueue contains:");
         for (int i = items.length - 1; i >= 0; --i) {
