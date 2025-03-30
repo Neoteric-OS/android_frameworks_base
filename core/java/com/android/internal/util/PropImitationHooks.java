@@ -58,6 +58,7 @@ public class PropImitationHooks {
 
     private static final Map<String, Object> propsToChangePixelXL;
     private static final Map<String, Object> propsToChangeROG6;
+    private static final Map<String, Object> propsToChangeS24U;
     private static final Map<String, Object> propsToChangeLenovoY700;
     private static final Map<String, Object> propsToChangeOP8P;
     private static final Map<String, Object> propsToChangeOP9P;
@@ -80,6 +81,17 @@ public class PropImitationHooks {
             "com.pearlabyss.blackdesertm.gl"
     );
 
+    // Packages to Spoof as Samsung Galaxy S24 Ultra
+    private static final Set<String> packagesToChangeS24U = Set.of(
+            "com.pubg.imobile",
+            "com.pubg.krmobile",
+            "com.rekoo.pubgm",
+            "com.tencent.ig",
+            "com.kurogame.wutheringwaves.global",
+            "com.vng.pubgmobile",
+            "com.proxima.dfm"
+    );
+
     // Packages to Spoof as Lenovo Y700
     private static final Set<String> packagesToChangeLenovoY700 = Set.of(
             "com.activision.callofduty.warzone",
@@ -97,14 +109,7 @@ public class PropImitationHooks {
             "com.riotgames.league.wildriftvn",
             "com.riotgames.league.teamfighttactics",
             "com.riotgames.league.teamfighttacticstw",
-            "com.riotgames.league.teamfighttacticsvn",
-            "com.pubg.imobile",
-            "com.pubg.krmobile",
-            "com.rekoo.pubgm",
-            "com.tencent.ig",
-            "com.tencent.tmgp.pubgmhd",
-            "com.kurogame.wutheringwaves.global",
-            "com.vng.pubgmobile"
+            "com.riotgames.league.teamfighttacticsvn"
     );
 
     // Packages to Spoof as OnePlus 9 Pro
@@ -155,6 +160,11 @@ public class PropImitationHooks {
         propsToChangeROG6.put("MANUFACTURER", "asus");
         propsToChangeROG6.put("DEVICE", "AI2201");
         propsToChangeROG6.put("MODEL", "ASUS_AI2201");
+        propsToChangeS24U = new HashMap<>();
+        propsToChangeS24U.put("BRAND", "samsung");
+        propsToChangeS24U.put("DEVICE", "e3q");
+        propsToChangeS24U.put("MODEL", "SM-S928B");
+        propsToChangeS24U.put("MANUFACTURER", "samsung");
         propsToChangeLenovoY700 = new HashMap<>();
         propsToChangeLenovoY700.put("MODEL", "Lenovo TB-9707F");
         propsToChangeLenovoY700.put("MANUFACTURER", "lenovo");
@@ -257,6 +267,8 @@ public class PropImitationHooks {
             propsToChange.putAll(propsToChangePixelXL);
         } else if (packagesToChangeROG6.contains(packageName)) {
             propsToChange.putAll(propsToChangeROG6);
+        } else if (packagesToChangeS24U.contains(packageName)) {
+            propsToChange.putAll(propsToChangeS24U);
         } else if (packagesToChangeLenovoY700.contains(packageName)) {
             propsToChange.putAll(propsToChangeLenovoY700);
         } else if (packagesToChangeOP8P.contains(packageName)) {
