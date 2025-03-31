@@ -53,6 +53,7 @@ data class Permission(
     inline val isNormal: Boolean
         get() = protection == PermissionInfo.PROTECTION_NORMAL
 
+
     inline val isRuntime: Boolean
         get() = protection == PermissionInfo.PROTECTION_DANGEROUS
 
