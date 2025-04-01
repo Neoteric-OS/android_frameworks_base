@@ -16,6 +16,29 @@
       "message": "This was already fixed in I1a0734bbb7e5b4b28f1dbe73f7e7a3e8e4441396 (note the `curRootView \u003d\u003d null` below. The fix was included in Android 14 QPR 2",
       "revId": "2194417d33f0fca62ebf398ffab86e4efb490919",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed088ce0_24f51c73",
+        "filename": "core/java/android/view/inputmethod/InputMethodManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1072749
+      },
+      "writtenOn": "2025-04-01T22:52:06Z",
+      "side": 1,
+      "message": "this is already checked at line #1379",
+      "range": {
+        "startLine": 1374,
+        "startChar": 32,
+        "endLine": 1376,
+        "endChar": 33
+      },
+      "revId": "2194417d33f0fca62ebf398ffab86e4efb490919",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
