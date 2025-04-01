@@ -3856,7 +3856,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
         mLogger.logExit(exitReason,
                 SPLIT_POSITION_UNDEFINED, 0 /* mainStageUid */,
                 SPLIT_POSITION_UNDEFINED, 0 /* sideStageUid */,
-                mSplitLayout.isLeftRightSplit());
+                isLeftRightSplit());
     }
 
     private void handleUnsupportedSplitStart() {
@@ -3886,6 +3886,6 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                 toMainStage ? mMainStage.getTopChildTaskUid() : 0 /* mainStageUid */,
                 !toMainStage ? getSideStagePosition() : SPLIT_POSITION_UNDEFINED,
                 !toMainStage ? mSideStage.getTopChildTaskUid() : 0 /* sideStageUid */,
-                mSplitLayout.isLeftRightSplit());
+                isLeftRightSplit());
     }
 }
