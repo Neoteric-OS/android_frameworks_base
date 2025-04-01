@@ -1253,6 +1253,9 @@ class StorageManagerService extends IStorageManager.Stub
             }
             mSystemUnlockedUsers = ArrayUtils.appendInt(mSystemUnlockedUsers, userId);
         }
+        // Invalidate the StorageManager cache to ensure that
+        // getVolumeList function returns the latest volumes.
+        StorageManager.invalidateVolumeListCache();
     }
 
     private void extendWatchdogTimeout(String reason) {
