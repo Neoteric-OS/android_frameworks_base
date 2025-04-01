@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9489e19_c7772111",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1964555
+      },
+      "writtenOn": "2025-04-01T12:52:03Z",
+      "side": 1,
+      "message": "This was already fixed in I1a0734bbb7e5b4b28f1dbe73f7e7a3e8e4441396 (note the `curRootView \u003d\u003d null` below. The fix was included in Android 14 QPR 2",
+      "revId": "2194417d33f0fca62ebf398ffab86e4efb490919",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
