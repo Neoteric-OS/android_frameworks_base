@@ -1252,8 +1252,7 @@ class StorageManagerService extends IStorageManager.Stub
         synchronized (mLock) {
             for (int i = 0; i < mVolumes.size(); i++) {
                 final VolumeInfo vol = mVolumes.valueAt(i);
-                if (!vol.isPrimary() && vol.isMountedWritable() && vol.isVisible()
-                        && vol.getMountUserId() != mCurrentUserId) {
+                if (!vol.isPrimary() && vol.isMountedWritable() && vol.isVisible()) {
                     // If there's a visible secondary volume mounted,
                     // we need to update the currentUserId and remount
                     vol.mountUserId = mCurrentUserId;
