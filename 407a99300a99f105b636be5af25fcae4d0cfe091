@@ -16,6 +16,24 @@
       "message": "Please remove `\"conscrypt.module.public.api.stubs\"`.\n\nYou cannot have it and `conscrypt.module.public.api.stubs.system` as they will overlap and conflict as `conscrypt.module.public.api.stubs.system` includes everything in `conscrypt.module.public.api.stubs`.",
       "revId": "407a99300a99f105b636be5af25fcae4d0cfe091",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3825ff5_87b638bd",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1841165
+      },
+      "writtenOn": "2025-04-03T18:39:01Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "6b4879bd_3d43b1cc",
+      "revId": "407a99300a99f105b636be5af25fcae4d0cfe091",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
