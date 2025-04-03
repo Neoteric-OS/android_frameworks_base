@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "512bf861_8bdbacee",
+        "filename": "media/java/android/media/Image.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2025-04-03T15:27:49Z",
+      "side": 1,
+      "message": "this is a transform flag, not a matrix.\n\nThe surfaceTexture variant also populates a float[]: https://developer.android.com/reference/android/graphics/SurfaceTexture#getTransformMatrix(float[]), so Image should do the same",
+      "range": {
+        "startLine": 221,
+        "startChar": 20,
+        "endLine": 221,
+        "endChar": 23
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4b13b446_76d49c6a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/Image.java",
+              "range": {
+                "startLine": 218,
+                "startChar": 0,
+                "endLine": 219,
+                "endChar": 0
+              },
+              "replacement": "     * Get the transformation flags associated with this frame.\n"
+            },
+            {
+              "path": "media/java/android/media/Image.java",
+              "range": {
+                "startLine": 221,
+                "startChar": 0,
+                "endLine": 222,
+                "endChar": 0
+              },
+              "replacement": "    public abstract int getTransformFlags();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a8c1fd827c4e9bf17d82e8d2d42e3e1a47cc7841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
