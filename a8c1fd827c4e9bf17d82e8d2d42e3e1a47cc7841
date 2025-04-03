@@ -50,6 +50,30 @@
       ],
       "revId": "a8c1fd827c4e9bf17d82e8d2d42e3e1a47cc7841",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04fc6006_e6d2fb92",
+        "filename": "media/java/android/media/Image.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1527730
+      },
+      "writtenOn": "2025-04-03T15:35:05Z",
+      "side": 1,
+      "message": "Right, I missed this. I\u0027ll update the code.",
+      "parentUuid": "512bf861_8bdbacee",
+      "range": {
+        "startLine": 221,
+        "startChar": 20,
+        "endLine": 221,
+        "endChar": 23
+      },
+      "revId": "a8c1fd827c4e9bf17d82e8d2d42e3e1a47cc7841",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
