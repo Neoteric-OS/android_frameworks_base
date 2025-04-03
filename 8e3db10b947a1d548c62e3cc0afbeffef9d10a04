@@ -52,6 +52,24 @@
       "parentUuid": "a636b8f1_ec5d5941",
       "revId": "8e3db10b947a1d548c62e3cc0afbeffef9d10a04",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1cc367f_38558365",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-04-03T07:12:07Z",
+      "side": 1,
+      "message": "Thanks for help.\n@lihongyu@google.com\nAlso, I would like to ask, do the modifications only need to be merged into the internal branch? Does the submitted release branch not need to be merged?\nThanks.",
+      "parentUuid": "a636b8f1_ec5d5941",
+      "revId": "8e3db10b947a1d548c62e3cc0afbeffef9d10a04",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
